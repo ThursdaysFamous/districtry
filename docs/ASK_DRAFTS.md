@@ -1293,8 +1293,11 @@ than assumed.
 
 ## Ask 19 — Whiteside County GIS: permission to display three derived boundaries
 
-> **DRAFTED 2026-09-05, HELD. Not sent.** Ask 18 is Grundy's, on an unmerged
-> branch; this takes 19 so the two cannot collide whichever lands first.
+> **DRAFTED 2026-09-05, HELD. Not sent.** Ask 18 is Grundy's; this takes 19 so
+> the two cannot collide whichever lands first. Revised 2026-09-05 on review to
+> put the question the record already carried — whether the agreement binds a
+> user of the county's public service at all — to the county rather than
+> answering it here.
 
 **To:** Whiteside County GIS, `llee@whiteside.org` (815-772-5185, 200 East Knox
 Street, Morrison IL 61270) — the office that published both documents this ask
@@ -1347,10 +1350,12 @@ the same clause.
 > without the county's express written permission.
 >
 > So my question is that permission, not the data — I already have everything I
-> need from your public services and the Clerk's report. Concretely, I am asking
-> whether Whiteside County will permit districtry to display three derived
-> district boundaries publicly, on these conditions, which I will follow whether
-> or not you require them:
+> need from your public services and the Clerk's report. I am asking whether or
+> not the agreement binds someone who has only used your public map service: I
+> have not signed it, and I would rather have your answer than my own reading of
+> it. Concretely, I am asking whether Whiteside County will permit districtry to
+> display three derived district boundaries publicly, on these conditions, which
+> I will follow whether or not you require them:
 >
 > * every card naming a Whiteside district credits Whiteside County GIS as the
 >   source of the underlying parcel data;

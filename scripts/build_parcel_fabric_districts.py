@@ -84,6 +84,9 @@ from arcgis_nesting import assert_nesting_repaired  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DIR = os.path.join(REPO_ROOT, "il", "data", "app")
+# Where a --force-blocked build writes instead. Gitignored, outside every
+# path the deploy publishes and every path validate_index.py reads.
+FORCED_OUT_DIR = os.path.join(REPO_ROOT, "scratch", "forced-blocked")
 
 CLOSE_FT = 75.0       # bridges voids < 150 ft; survey medians run 39-107 ft
 SIMPLIFY_FT = 10.0
@@ -363,9 +366,37 @@ WOODFORD_PARK_PROBES = [
 # never saw — the two are indistinguishable downstream, and a card would say
 # "no fire district" about a parcel nobody looked up. So the 140-code universe
 # is declared as `code_universe` and the builder fails on any parcel code
-# outside it. Boone carries the same hole and is not fixed here; its own
-# crosswalk covers every code it maps, so the guard would be vacuous there
-# until someone re-measures it.
+# outside it — asked of the SERVICE, not of the rows this build fetched, which
+# is the whole of the fix made on review: the fetch's own where clause selects
+# `CVTTXCD IN (<mapped codes>)`, so the parcel the gate exists to catch is
+# excluded before the gate can see it, and a scan of the response could only
+# ever report zero. Perturbed by dropping one code from the universe, the live
+# query returns 76 parcels and the build refuses; the response scan returned
+# zero. Boone carries the same hole and is not fixed here; its own crosswalk
+# covers every code it maps, so the guard would be vacuous there until someone
+# re-measures it.
+#
+# WHY NOTHING HERE SHIPS, WITH ALL FIVE SOURCES THE GAP RECORD CARRIES. The
+# three sources below are `blocked` and this file only ever derives them. The
+# evidence, mirrored from `whiteside-special-districts` so a reader of the code
+# is not sent to the docs to learn why the builder refuses:
+#   1. The AGOL item is shared PUBLIC with an EMPTY licenseInfo — which is
+#      permission to VIEW and says nothing about redistribution, and is the
+#      thing that made this look open at first read.
+#   2. GIS Data Fee Schedule (whitesidecountyil.gov/282/GIS): parcels $0.10
+#      each or $2,500 for the feature layer, "Other Boundaries" $100, a data
+#      subscription $2,000 for the first year on a three-year commitment, and
+#      "Whiteside County licenses our data. We require a signed license
+#      agreement before the data will be released."
+#   3. License Agreement for Data Sharing, same page: "Reproduction or
+#      redistribution of the data or products derived therefrom outside of
+#      licensee's organization or entity is expressly forbidden." Three
+#      dissolved boundary files served to every visitor are products derived
+#      from the parcel layer.
+#   4. The county website's copyright page reserves its content.
+#   5. robots.txt, honoured here as an honesty rule rather than an obstacle.
+# The operative document is the LICENCE, not the terms page — EXPANSION_GUIDE
+# §5.1 — and permission is drafted and held as Ask 19.
 #
 # A SECOND CHECK WAS TRIED AND IS NOT CLAIMED. The Tax Computation Report gives
 # each district's County Total EAV, so summing the parcel layer's CNTASSDVAL
@@ -625,9 +656,15 @@ SOURCES = [
                 (41.63076, -89.78513, "Tampico Fire"),
                 # the three city holes, which are the probes that matter: a
                 # layer that covered everything would pass every positive
-                (41.79961, -89.69553, None),   # Sterling — own fire department
-                (41.77238, -89.69271, None),   # Rock Falls — own fire department
-                (41.80764, -89.96170, None)]}, # Morrison — own fire department
+                # What proves all three is the Clerk's own rate report: not one
+                # of their tax codes carries a fire line. The county's ETSB page
+                # corroborates the first two by name ("Twin City Communication
+                # Center, Sterling, IL (Sterling, Rock Falls Police & Fire)") and
+                # says nothing about Morrison — so the citation covers two of the
+                # three, and the rate report covers all three.
+                (41.79961, -89.69553, None),   # Sterling — no fire line on its tax codes
+                (41.77238, -89.69271, None),   # Rock Falls — no fire line on its tax codes
+                (41.80764, -89.96170, None)]}, # Morrison — no fire line on its tax codes
     {"slug": "whiteside-library", "out": "whiteside-library-districts.json",
      "edit_pin": 1788362255421,   # the service DOES publish one
      "code_universe": WHITESIDE_CODE_UNIVERSE,
@@ -642,8 +679,8 @@ SOURCES = [
      "probes": [(41.86500, -90.15932, "Fulton Library"),
                 (41.65885, -90.08136, "Erie Library"),
                 (41.77238, -89.69271, "Rock Falls Library"),
-                (41.79961, -89.69553, None),   # Sterling — municipal library
-                (41.80764, -89.96170, None)]}, # Morrison — municipal library
+                (41.79961, -89.69553, None),   # Sterling — no library line on its tax codes
+                (41.80764, -89.96170, None)]}, # Morrison — no library line on its tax codes
     {"slug": "whiteside-park", "out": "whiteside-park-districts.json",
      "edit_pin": 1788362255421,   # the service DOES publish one
      "code_universe": WHITESIDE_CODE_UNIVERSE,
@@ -803,7 +840,7 @@ def residual_voids(final_ft):
     return unexplained, seams
 
 
-def build_source(cfg):
+def build_source(cfg, forced=False):
     meta = requests.get(cfg["layer"], params={"f": "json"}, timeout=90).json()
     edit_ms = (meta.get("editingInfo") or {}).get("dataLastEditDate")
     pin = cfg.get("edit_pin")
@@ -923,16 +960,32 @@ def build_source(cfg):
     # nobody looked up. A source that declares its code universe fails instead.
     if cfg.get("code_universe"):
         universe = set(cfg["code_universe"])
-        stray = sorted({" ".join(str((f.get("properties") or {}).get(k) or "").split())
-                        for f in features
-                        for k in (f.get("properties") or {})
-                        if k.lower() == cfg["name_prop"].lower()} - universe - {""})
-        if stray:
-            fail("%s: %d parcel code(s) are outside the declared crosswalk "
-                 "universe and would read as 'no district': %s"
-                 % (cfg["slug"], len(stray), stray[:12]))
-        print("  every parcel code is one of the %d the crosswalk covers"
-              % len(universe))
+        # THE CHECK HAS TO BE A LIVE QUERY, NOT A SCAN OF WHAT CAME BACK.
+        # Reviewing the first draft of this gate (#758): `features` was fetched
+        # with `where = <name_prop> IN (<mapped codes>)`, so the parcel this
+        # gate exists to catch — one carrying a code the crosswalk never saw —
+        # is EXCLUDED BY THE WHERE CLAUSE BEFORE THE GATE CAN SEE IT. Scanning
+        # the response could only ever report zero, so it did, and read as
+        # proof. The count below asks the SERVER the complementary question,
+        # in the shape of the IS NULL probe above.
+        chunks = sorted(universe)
+        in_list = ",".join("'%s'" % c for c in chunks)
+        where = "%s IS NOT NULL AND %s NOT IN (%s)" % (
+            cfg["name_prop"], cfg["name_prop"], in_list)
+        outside = requests.get(cfg["layer"] + "/query", params={
+            "where": where, "returnCountOnly": "true", "f": "json",
+        }, timeout=120).json()
+        if outside.get("error") or not isinstance(outside.get("count"), int):
+            fail("%s: the crosswalk-universe count query did not answer (%s) — "
+                 "it is the only thing standing between an unmapped parcel code "
+                 "and a card reading 'no district'"
+                 % (cfg["slug"], str(outside)[:160]))
+        if outside["count"]:
+            fail("%s: %d parcel(s) carry a %s outside the declared %d-code "
+                 "crosswalk universe and would read as 'no district'"
+                 % (cfg["slug"], outside["count"], cfg["name_prop"], len(universe)))
+        print("  0 parcels carry a code outside the %d the crosswalk covers "
+              "(asked of the service, not of this fetch)" % len(universe))
 
     if cfg.get("code_map") is not None:
         seen = set()
@@ -1194,14 +1247,35 @@ def build_source(cfg):
     payload = json.dumps(fc, separators=(",", ":"))
     if len(json.loads(payload)["features"]) != cfg["expect"]:
         fail("%s round-trip mismatch" % cfg["out"])
-    with open(os.path.join(APP_DIR, cfg["out"]), "w", encoding="utf-8") as f:
+    # A FORCED BUILD OF A LICENSED SOURCE NEVER LANDS IN THE TREE, not even
+    # transiently. `--force-blocked` exists so a licence claim can be re-derived
+    # and re-checked; writing that derivative into il/data/app/ is the exact act
+    # the licence forbids, and a forgotten file there ships on the next merge.
+    # It goes to a scratch directory the deploy cannot see, and the path is
+    # printed so the operator knows where to look.
+    out_dir = FORCED_OUT_DIR if forced else APP_DIR
+    if forced and not os.path.isdir(out_dir):
+        os.makedirs(out_dir)
+    with open(os.path.join(out_dir, cfg["out"]), "w", encoding="utf-8") as f:
         f.write(payload)
-    print("  wrote data/app/%s (%d features, %.0f KB)"
-          % (cfg["out"], cfg["expect"], len(payload) / 1024.0))
+    print("  wrote %s/%s (%d features, %.0f KB)"
+          % (os.path.relpath(out_dir, REPO_ROOT), cfg["out"], cfg["expect"],
+             len(payload) / 1024.0))
 
 
 def main():
-    only = set(sys.argv[1:])
+    args = list(sys.argv[1:])
+    # THE FLAG IS A FLAG, NOT A SLUG. It used to fall into `only` with the
+    # source names, so `--force-blocked` on its own selected a source called
+    # "--force-blocked" and built nothing at all while printing as though it
+    # had run (#758 review). Stripping it first means the bare flag means what
+    # it reads as: force every blocked source.
+    forced = "--force-blocked" in args
+    only = set(a for a in args if not a.startswith("--"))
+    unknown = sorted(a for a in args if a.startswith("--") and a != "--force-blocked")
+    if unknown:
+        raise SystemExit("build-parcel-fabric-districts: unknown flag(s) %s"
+                         % " ".join(unknown))
     print("build-parcel-fabric-districts: closing %g ft, simplify %g ft"
           % (CLOSE_FT, SIMPLIFY_FT))
     for cfg in SOURCES:
@@ -1213,11 +1287,11 @@ def main():
         # it `--force-blocked` and refusing by default means the licensed county
         # cannot be shipped by someone re-running the builder to refresh
         # everything else.
-        if cfg.get("blocked") and "--force-blocked" not in only:
+        if cfg.get("blocked") and not forced:
             print("%s: SKIPPED — %s" % (cfg["slug"], cfg["blocked"]))
             continue
         print("%s:" % cfg["slug"])
-        build_source(cfg)
+        build_source(cfg, forced=bool(cfg.get("blocked")) and forced)
 
 
 if __name__ == "__main__":
