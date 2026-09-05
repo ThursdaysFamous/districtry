@@ -14050,6 +14050,25 @@ function initChiExplorer() {
   // of plain strings reads identically and would never be probed, so a district
   // that moved or folded would keep a dead link on its card indefinitely — the
   // same reason the six statewide library loaders name their files literally.
+  /* ---------- Grundy's fire, library and park districts ------------------
+   * The THIRD parcel-fabric shape, after Woodford's one-column-per-concept and
+   * Boone's bare tax code. Grundy's mapping has a FireDepartments folder with
+   * nothing in it — the gap record's claim, re-verified — and its parcel fabric
+   * carries one `Districts` column per parcel naming EVERY taxing body it pays
+   * into, comma-separated. scripts/build_parcel_fabric_districts.py picks out
+   * the one this concept maps and dissolves it; the county's own 2025 Tax
+   * Distribution List with EAV is the second witness and the source of the
+   * names the cards show.
+   */
+  var loadGrundyFireDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/grundy-fire-districts.json", {}, 2);
+  });
+  var loadGrundyLibraryDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/grundy-library-districts.json", {}, 2);
+  });
+  var loadGrundyParkDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/grundy-park-districts.json", {}, 2);
+  });
   /* ---------- Woodford's fire, library and park districts ----------------
    * Boone's shape without Boone's crosswalk. The county publishes no district
    * tiling: its "Fire Protection Districts", "Library Districts" and "Park
@@ -14057,7 +14076,7 @@ function initChiExplorer() {
    * record per property. What makes it easy is that each parcel carries the
    * district's NAME rather than a bare tax code, so no Clerk report has to be
    * transcribed — scripts/build_parcel_fabric_districts.py dissolves the column
-   * and closes the road voids, and the Clerk's certified 2025 settlement sheets
+   * and closes the road voids, and the county's own 2025 settlement sheets
    * levy for exactly the 17 / 6 / 3 districts that come out.
    *
    * Cache-first geometry like every other pre-built tiling here.
@@ -23330,6 +23349,25 @@ function initChiExplorer() {
           { label: "County", value: "Woodford County" }
         ]
       }),
+      // Grundy — 13 districts dissolved from the county's parcel fabric. MVK
+      // RESCUE SQUAD is deliberately absent though the Clerk codes it FDMV,
+      // the same FD prefix every fire district carries. IT IS A DISTRICT, not
+      // a levy: the county names it the Mazon Verona Kinsman Rescue Squad
+      // District (70 ILCS 2005/6, its own five trustees and its own levy). It
+      // is excluded because a rescue-squad district is not a fire protection
+      // district, and this card must name the body that answers a fire call.
+      // Three county documents agree it OVERLAYS two fire districts rather
+      // than sitting beside them — see the builder's note.
+      polygonCountyEntry({
+        key: "grundy",
+        coverage: grundyCountyCoverage,
+        loader: loadGrundyFireDistricts,
+        snapFeet: PARCEL_FABRIC_SNAP_FT,
+        fields: [
+          { name: "name", label: "Fire District", keys: ["district"], primary: true },
+          { label: "County", value: "Grundy County" }
+        ]
+      }),
       // Hamilton — three named districts from the county's own layer (a
       // fourth, unnamed ~0.4 km² sliver is excluded in the loader); most of
       // the county sits in none, and the empty state says so
@@ -23599,6 +23637,16 @@ function initChiExplorer() {
       // Woodford — 3 districts dissolved from the county's parcel fabric. Only
       // 4,113 of its 25,824 parcels are in one, so most of the county sits in
       // no park district and the empty state is the true answer there.
+      polygonCountyEntry({
+        key: "grundy",
+        coverage: grundyCountyCoverage,
+        loader: loadGrundyParkDistricts,
+        snapFeet: PARCEL_FABRIC_SNAP_FT,
+        fields: [
+          { name: "name", label: "Park District", keys: ["district"], primary: true },
+          { label: "County", value: "Grundy County" }
+        ]
+      }),
       polygonCountyEntry({
         key: "woodford",
         coverage: woodfordCountyCoverage,
@@ -23917,6 +23965,18 @@ function initChiExplorer() {
           { name: "name", label: "Library District", keys: ["district"], primary: true },
           { name: "note", label: "Governance", keys: ["note"] },
           { label: "County", value: "Woodford County" }
+        ]
+      }),
+      // Grundy — 6 library districts. Only 69.8% of the county is in one, so
+      // the empty state is the true answer over the rest.
+      polygonCountyEntry({
+        key: "grundy",
+        coverage: grundyCountyCoverage,
+        loader: loadGrundyLibraryDistricts,
+        snapFeet: PARCEL_FABRIC_SNAP_FT,
+        fields: [
+          { name: "name", label: "Library District", keys: ["district"], primary: true },
+          { label: "County", value: "Grundy County" }
         ]
       }),
       // Adams — 7 library districts on a 10-polygon tiling. One polygon is named

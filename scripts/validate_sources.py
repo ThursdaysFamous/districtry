@@ -123,6 +123,8 @@ SERVICE_RI_TAX = ("https://services9.arcgis.com/6FnscPPlUa9DXXOk/arcgis/rest/"
 # provenance for its three pre-built tax tilings specifically.
 SERVICE_KENDALL_TAX = ("https://maps.co.kendall.il.us/server/rest/services/"
                        "Hosted?f=json")
+SERVICE_GRUNDY_PARCELS = ("https://maps.grundyco.org/arcgis/rest/services/CountyWebsiteMaps/"
+                          "CountyParcelsBaseLayer_ParcelFabric_SPIE/MapServer/0")
 SERVICE_WOODFORD = ("https://services1.arcgis.com/iOG1OLysrxLAswZi/arcgis/rest/"
                     "services/%s/FeatureServer/%d")
 SERVICE_WOODFORD_FIRE = SERVICE_WOODFORD % ("Fire_Protection_Districts", 2)
@@ -284,6 +286,33 @@ PROVENANCE = [
              "as the live layer answers. The Clerk refreshes tilings in "
              "place with no edit stamp, so the builder pins count+names and "
              "this monthly probe is the freshness watch."},
+    # Grundy's three come off ONE 27,661-row parcel fabric whose single
+    # `Districts` column lists every taxing body a parcel pays into. The service
+    # publishes no edit stamp AND cannot page (supportsPagination false), so the
+    # builder pins the row count per concept and this probe is the freshness
+    # watch on the service itself.
+    {"layer": "Grundy County fire districts (pre-built from the parcel fabric)",
+     "app_file": "grundy-fire-districts.json",
+     "source_url": SERVICE_GRUNDY_PARCELS + "?f=json",
+     "note": "13 districts dissolved from the 27,141 parcels whose Districts "
+             "cell names one; the set and the shipped names both come from the "
+             "county's own 2025 Tax Distribution List with EAV (which names "
+             "no office and does not say 'certified'). MVK "
+             "RESCUE SQUAD is excluded: the county names it the Mazon Verona "
+             "Kinsman Rescue Squad District (70 ILCS 2005/6, its own board and "
+             "levy), and a rescue-squad district is not a fire protection "
+             "district. Its 2,257 parcels are exactly the union of Mazon and "
+             "Verona-Kinsman."},
+    {"layer": "Grundy County library districts (pre-built from the parcel fabric)",
+     "app_file": "grundy-library-districts.json",
+     "source_url": SERVICE_GRUNDY_PARCELS + "?f=json",
+     "note": "6 library districts from 24,485 parcels; 69.8% of the county is "
+             "in one and the rest is honestly in none."},
+    {"layer": "Grundy County park districts (pre-built from the parcel fabric)",
+     "app_file": "grundy-park-districts.json",
+     "source_url": SERVICE_GRUNDY_PARCELS + "?f=json",
+     "note": "2 districts (Channahon, Godley) from 1,779 parcels — most of the "
+             "county sits in no park district."},
     # Woodford's three come off ONE 25,824-row parcel fabric published three
     # times over — the county draws no district tiling at all — so each entry
     # names the service its own column lives on. The builder PINS each layer's

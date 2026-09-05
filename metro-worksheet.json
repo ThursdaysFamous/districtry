@@ -971,6 +971,24 @@
         "note": "Boone's 2 park districts, pre-built by scripts/build_parcel_fabric_districts.py from the parcels the county's own fabric assigns to the tax codes its Clerk's 2025 Taxcode Value within District Report puts in PDBV (25) and PDRF (1) — the county publishes no park boundary of any kind. Same 75 ft road-void closing and probe gates as its library sibling; Rockford Park District is seated in Winnebago and only its Boone slice is drawn. Bounds are an EQUALITY: the county levies exactly these two, and the rest of Boone genuinely sits in no park district."
       },
       {
+        "file": "grundy-fire-districts.json",
+        "min_features": 13,
+        "max_features": 13,
+        "note": "Grundy's 13 fire protection districts, pre-built by scripts/build_parcel_fabric_districts.py. The county's mapping has a FireDepartments folder with NOTHING in it; what it does publish is a 27,661-row PARCEL FABRIC whose one `Districts` column lists every taxing body a parcel pays into, comma-separated, so each district is the DISSOLVE of the parcels that name it. Road voids closed at 75 ft by the Rock Island rules. The set and the shipped NAMES both come from the county's own 2025 Tax Distribution List with EAV, which names no office and does not say “certified”, so neither does this note. Bounds are an EQUALITY. MVK RESCUE SQUAD is excluded, and it IS a district rather than a levy: the county's own Appointed Local Public Entity Report names it the Mazon Verona Kinsman Rescue Squad District, established under 70 ILCS 2005/6 with its own five-trustee board and levy. It is excluded because a rescue-squad district is not a fire protection district. Three county documents agree it overlays two fire districts rather than sitting beside them — all 2,257 of its parcels are also in Mazon (1,224) or Verona-Kinsman (1,033), and in the county's District Rates by Taxcode report every one of its twelve tax codes also carries a fire district."
+      },
+      {
+        "file": "grundy-library-districts.json",
+        "min_features": 6,
+        "max_features": 6,
+        "note": "Grundy's 6 library districts, pre-built by scripts/build_parcel_fabric_districts.py from the same 27,661-row parcel fabric and the same county tax list, with the same 75 ft closing and probe gates as its fire sibling. Bounds are an EQUALITY: 69.8% of the county is in a library district and the rest is honestly in none."
+      },
+      {
+        "file": "grundy-park-districts.json",
+        "min_features": 2,
+        "max_features": 2,
+        "note": "Grundy's 2 park districts (Channahon and Godley), pre-built by scripts/build_parcel_fabric_districts.py from the same parcel fabric. Bounds are an EQUALITY: only 1,779 of the county's 27,661 parcels are in a park district, so the empty state covers most of the county and is the true answer there."
+      },
+      {
         "file": "woodford-fire-districts.json",
         "min_features": 17,
         "max_features": 17,

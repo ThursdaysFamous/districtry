@@ -135,6 +135,34 @@ def build(payload):
     }
 
 
+# A SCRAPER WARNING NOBODY GREPS FOR IS NOT A GATE. The scraper checks the
+# North Suburban roster PDF's Last-Modified against the last Illinois
+# consolidated election — the real test of whether a document describes a board
+# that still sits — and wrote the answer to a WARN line. Nothing read it: the
+# weekly workflow does not grep the scraper's output, so a document that went
+# stale through an election would have surfaced only in a run log nobody opens,
+# while the PR it opened looked entirely normal. These prefixes are therefore
+# FATAL to the build. Keep this list to warnings that mean THE DATA IS WRONG,
+# not ones that mean a field is merely absent; everything else still prints.
+FATAL_WARNINGS = (
+    "NORTH SUBURBAN DISTRICT LIBRARY: ",
+)
+FATAL_WARNING_SUBSTRINGS = (
+    "BEFORE the ",          # …consolidated election — the document predates it
+    "carries no usable Last-Modified",   # its age cannot be checked at all
+)
+
+
+def check_warnings(payload):
+    """FAIL on any scraper warning that says the shipped data would be wrong."""
+    hits = [w for w in (payload.get("warnings") or [])
+            if w.startswith(FATAL_WARNINGS)
+            and any(x in w for x in FATAL_WARNING_SUBSTRINGS)]
+    if hits:
+        fail("the scraper reported %d warning(s) that make this data unsafe to "
+             "ship:\n  - %s" % (len(hits), "\n  - ".join(hits)))
+
+
 def check(out):
     districts = out["districts"]
     if len(districts) < MIN_BODIES:
@@ -200,6 +228,7 @@ def main():
 
     with open(args.input, encoding="utf-8") as fh:
         payload = json.load(fh)
+    check_warnings(payload)
     out = build(payload)
     check(out)
     with open(args.out, "w", encoding="utf-8") as fh:
