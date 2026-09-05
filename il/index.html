@@ -7941,13 +7941,176 @@ function initChiExplorer() {
   }
 
   /* ==== ENGINE:BEGIN arcgis-loader ==== */
+  /* ---------- Esri JSON -> GeoJSON, because ArcGIS's own GeoJSON export
+   * silently UNNESTS interior rings.
+   *
+   * WHAT THE DEFECT IS. Asked for `f=geojson`, an ArcGIS service can return a
+   * feature's HOLES as separate SHELLS — a MultiPolygon whose parts sit inside
+   * one another. Under GeoJSON semantics each part is its own area, so ground
+   * the publisher deliberately cut out becomes ground the layer claims, and
+   * `pointInGeometry`'s per-part even-odd test says a click inside the cutout
+   * is inside the district. Asked for `f=json`, the SAME query on the SAME
+   * service returns the same rings with the holes wound counter-clockwise,
+   * which is Esri's normative signal for an interior ring.
+   *
+   * MEASURED, twice, on live services rather than inferred. Wisconsin found it
+   * first (2026-09-05, an NG911 law-enforcement zone that swallowed the Village
+   * of Westfield). Illinois was then swept the same day across every ArcGIS
+   * layer this app fetches at runtime: 41 of 156 polygon layers lose rings,
+   * 1,376 of them, and at an interior point of each lost ring — shapely's
+   * representative_point, never a centroid, which for a non-convex hole falls
+   * outside it and reads as agreement — 1,372 points get geometry the service's
+   * own point query denies and 1,135 get a CARD naming a district that does not
+   * cover them. Will County's four layers lost 551 rings and 112 km2 between
+   * them — its fire districts alone 222 rings and 42.9 km2 — and Springfield's
+   * ten wards claimed 7.8 km2 of unincorporated ground. Total across the 41:
+   * 298.2 km2 claimed that publishers had cut out.
+   *
+   * SO EVERY LOADER HERE ASKS FOR `f=json` AND NESTS THE RINGS ITSELF, where
+   * the rule is normative rather than inferred. Winding alone is not enough to
+   * lean on — RFC 7946 wants exterior rings counter-clockwise, the opposite
+   * convention — so this reads Esri's orientation AND requires containment
+   * before treating a ring as a hole; a counter-clockwise ring contained by
+   * nothing is kept as its own shell rather than silently dropped.
+   *
+   * THE OTHER HALF OF THE SAME BUG. DeKalb's org was found in 2026-08 to
+   * flatten a MULTIPART polygon into one ring list, so a part inside another
+   * part became a false hole and 1.6 km2 of its park tiling answered "no
+   * district" while being in one. That is this defect's mirror image and this
+   * is the same fix: Esri JSON keeps the part structure in ring WINDING, so
+   * reading it is what makes both cases right.
+   *
+   * Ring ORIENTATION is left as Esri emits it. Nothing here reads winding —
+   * the app's containment test and Leaflet both work on nesting alone — and
+   * rewinding would be work done for no reader. ---------- */
+  function esriSignedRingArea(ring) {
+    var sum = 0;
+    for (var i = 0; i < ring.length - 1; i++) {
+      sum += ring[i][0] * ring[i + 1][1] - ring[i + 1][0] * ring[i][1];
+    }
+    return sum / 2;
+  }
+  function esriRingsToParts(rings) {
+    var outers = [], holes = [], i;
+    for (i = 0; i < rings.length; i++) {
+      // A ring of fewer than 4 positions cannot close; keep it as its own part
+      // rather than discarding ground silently.
+      if (rings[i].length < 4) { outers.push(rings[i]); continue; }
+      (esriSignedRingArea(rings[i]) < 0 ? outers : holes).push(rings[i]);
+    }
+    // Every ring counter-clockwise means the orientation signal is absent on
+    // this service; treat them all as shells rather than inventing holes.
+    if (!outers.length) { outers = rings; holes = []; }
+    var parts = [], areas = [];
+    for (i = 0; i < outers.length; i++) {
+      parts.push([outers[i]]);
+      areas.push(Math.abs(esriSignedRingArea(outers[i])));
+    }
+    for (i = 0; i < holes.length; i++) {
+      // WHICH SHELL OWNS A HOLE. Two guards, both earned: the shell must be
+      // LARGER than the hole, because an even-odd test against a ZERO-AREA
+      // sliver is unreliable and one such sliver was measured "containing" a
+      // hole it could not (Wisconsin, Marathon County, 2026-09-05); and
+      // containment is a majority vote over three of the hole's own vertices,
+      // because a single vertex can sit exactly on a neighbouring ring.
+      var hole = holes[i], hArea = Math.abs(esriSignedRingArea(hole));
+      var probes = [hole[0], hole[Math.floor(hole.length / 3)],
+                    hole[Math.floor((2 * hole.length) / 3)]];
+      var best = -1, bestArea = Infinity;
+      for (var k = 0; k < outers.length; k++) {
+        if (areas[k] <= hArea) continue;
+        var hits = 0;
+        for (var p = 0; p < probes.length; p++) {
+          if (pointInRing(probes[p], outers[k])) hits++;
+        }
+        if (hits < 2) continue;
+        if (areas[k] < bestArea) { bestArea = areas[k]; best = k; }
+      }
+      // A hole contained by nothing becomes its own part rather than being
+      // dropped — dropping it would lose ground the service does publish.
+      if (best >= 0) parts[best].push(hole); else parts.push([hole]);
+    }
+    return parts;
+  }
+  function esriGeometryToGeoJSON(geom) {
+    if (!geom) return null;
+    if (geom.rings && geom.rings.length) {
+      var parts = esriRingsToParts(geom.rings);
+      return parts.length === 1
+        ? { type: "Polygon", coordinates: parts[0] }
+        : { type: "MultiPolygon", coordinates: parts };
+    }
+    if (geom.paths && geom.paths.length) {
+      return geom.paths.length === 1
+        ? { type: "LineString", coordinates: geom.paths[0] }
+        : { type: "MultiLineString", coordinates: geom.paths };
+    }
+    if (typeof geom.x === "number" && typeof geom.y === "number") {
+      return { type: "Point", coordinates: [geom.x, geom.y] };
+    }
+    // A row the service publishes with no shape. ArcGIS's own GeoJSON export
+    // emits `"geometry": null` for these, so this matches it rather than
+    // dropping the row: hasUsableGeometry is what decides a layer is unusable.
+    return null;
+  }
+  /* The contract is "produce what f=geojson should have produced", including
+   * the transfer-cap flag the paged loader reads. `fieldNames` is optional; a
+   * caller that requested outFields=* passes nothing and gets every attribute,
+   * which is what the GeoJSON export does. */
+  function esriToGeoJSON(payload, fieldNames) {
+    var src = (payload && payload.features) || [];
+    var out = [];
+    for (var i = 0; i < src.length; i++) {
+      var attrs = src[i].attributes || {}, props = {}, k;
+      if (fieldNames && fieldNames.length) {
+        for (var f = 0; f < fieldNames.length; f++) props[fieldNames[f]] = attrs[fieldNames[f]];
+      } else {
+        for (k in attrs) {
+          if (Object.prototype.hasOwnProperty.call(attrs, k)) props[k] = attrs[k];
+        }
+      }
+      out.push({ type: "Feature", properties: props,
+                 geometry: esriGeometryToGeoJSON(src[i].geometry) });
+    }
+    var fc = { type: "FeatureCollection", features: out };
+    if (payload && payload.exceededTransferLimit) fc.exceededTransferLimit = true;
+    return fc;
+  }
+  /* Any ArcGIS query URL, fetched as Esri JSON and handed back as GeoJSON.
+   *
+   * The three loaders in this block cover the layers whose URL the engine
+   * builds. They are not most of them: Illinois alone has 51 county loaders
+   * that build their own query string, because each carries that county's own
+   * outFields, where clause and precision — and every one of the 41 layers the
+   * 2026-09-05 sweep found losing rings is behind one of those, not behind
+   * loadArcGISGeoJSON. So this is the entry point they share. A caller writes
+   * its URL with `f=json` exactly as it reads and passes it here; `fieldNames`
+   * is optional and defaults to every attribute, matching outFields=*.
+   *
+   * It REFUSES a url that does not ask for `f=json`, rather than fetching it
+   * anyway: the one way to reintroduce the defect after this change is to add
+   * a loader that asks for `f=geojson` and calls this, and a silent pass in
+   * that case is a wrong answer nobody would see. */
+  function fetchArcGISAsGeoJSON(url, opts, retries, fieldNames) {
+    if (!/[?&]f=json(&|$)/.test(url)) {
+      return Promise.reject(new Error(
+        "fetchArcGISAsGeoJSON needs f=json (the GeoJSON export unnests interior rings): " + url));
+    }
+    return fetchJSONWithRetry(url, opts || {}, retries === undefined ? 2 : retries)
+      .then(function (payload) { return esriToGeoJSON(payload, fieldNames); });
+  }
   function loadArcGISGeoJSON(serviceUrl) {
     // geometryPrecision=6 (~0.11 m) trims coordinate digits the server would
     // otherwise send at full float precision — no visible or classification
     // change at any zoom this map allows; a server that ignores it is unharmed.
-    var url = serviceUrl + "/query?where=1%3D1&outFields=*&f=geojson&outSR=4326&geometryPrecision=6";
+    // It is NOT a free parameter: LaSalle's precinct layer drops one interior
+    // ring from its GeoJSON export at precision 6 and keeps it at full
+    // precision, so a builder that omits it measures a layer this app fetches
+    // as clean. Esri JSON keeps the ring either way.
+    var url = serviceUrl + "/query?where=1%3D1&outFields=*&f=json&outSR=4326&geometryPrecision=6";
     return fetchJSONWithRetry(url, {}, 2)
-      .then(function (geojson) {
+      .then(function (payload) {
+        var geojson = esriToGeoJSON(payload);
         if (!hasUsableGeometry(geojson)) throw new Error("no usable geometry from " + serviceUrl);
         return geojson;
       });
@@ -7962,15 +8125,22 @@ function initChiExplorer() {
    * caller whose full load filters (e.g. STATE='17') may pass the same
    * clause for exact parity. An empty result rejects like a null-geometry
    * one, so "no district here" is only ever concluded from the validated
-   * full set, never from a server quirk on the spatial query. ---------- */
+   * full set, never from a server quirk on the spatial query.
+   *
+   * This one asks for Esri JSON too. The SERVER decides containment here, so
+   * the exporter cannot change WHICH feature comes back — but the geometry it
+   * returns is what the map highlights and what the relationship outlines are
+   * drawn from, and an unnested hole draws a district over ground it does not
+   * cover. ---------- */
   function loadArcGISPointGeoJSON(serviceUrl, point, outFields, where) {
     var url = serviceUrl + "/query?where=" + encodeURIComponent(where || "1=1") +
       "&geometry=" + encodeURIComponent(point.lng + "," + point.lat) +
       "&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects" +
       "&outFields=" + encodeURIComponent(outFields || "*") +
-      "&outSR=4326&f=geojson&geometryPrecision=6";
+      "&outSR=4326&f=json&geometryPrecision=6";
     return fetchJSONWithRetry(url, {}, 1)
-      .then(function (geojson) {
+      .then(function (payload) {
+        var geojson = esriToGeoJSON(payload);
         if (!hasUsableGeometry(geojson)) throw new Error("point query returned no usable geometry: " + serviceUrl);
         return geojson;
       });
@@ -7990,8 +8160,12 @@ function initChiExplorer() {
     var PAGE = 1000;
     function page(offset, acc) {
       var url = layerUrl + "/query?where=1%3D1&outFields=" + encodeURIComponent(outFields || "*") +
-        "&outSR=4326&f=geojson&geometryPrecision=6&resultRecordCount=" + PAGE + "&resultOffset=" + offset;
-      return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2).then(function (gj) {
+        "&outSR=4326&f=json&geometryPrecision=6&resultRecordCount=" + PAGE + "&resultOffset=" + offset;
+      // f=json, not f=geojson: the GeoJSON export unnests interior rings (see
+      // the arcgis-loader block for the measurement). esriToGeoJSON carries
+      // exceededTransferLimit through, which is what this loop pages on.
+      return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+        .then(esriToGeoJSON).then(function (gj) {
         var feats = (gj && gj.features) || [];
         acc = acc.concat(feats);
         var more = gj && (gj.exceededTransferLimit || (gj.properties && gj.properties.exceededTransferLimit));
@@ -8325,8 +8499,8 @@ function initChiExplorer() {
     // gets pinned in the session cache.
     var where = encodeURIComponent("STATE='17'");
     var url = tigerLayerUrl(service, layerIndex) + "/query?where=" + where +
-      "&outFields=" + outFields + "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&outFields=" + outFields + "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("TIGERweb " + label + " returned no usable geometry");
         return geojson;
@@ -8370,9 +8544,9 @@ function initChiExplorer() {
       "?where=" + encodeURIComponent("BASENAME='Michigan'") +
       "&geometry=" + encodeURIComponent(JSON.stringify(env)) +
       "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects" +
-      "&outFields=NAME&returnGeometry=true&outSR=4326&f=geojson" +
+      "&outFields=NAME&returnGeometry=true&outSR=4326&f=json" +
       "&geometryPrecision=5&maxAllowableOffset=0.0005";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("TIGERweb Lake Michigan returned no usable geometry");
         return geojson;
@@ -8383,9 +8557,9 @@ function initChiExplorer() {
     // ~75 KB for all 102 counties, enough to name the county under a point.
     var url = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query" +
       "?where=" + encodeURIComponent("STATE='17'") +
-      "&outFields=NAME&returnGeometry=true&outSR=4326&f=geojson" +
+      "&outFields=NAME&returnGeometry=true&outSR=4326&f=json" +
       "&geometryPrecision=4&maxAllowableOffset=0.002";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("TIGERweb generalized counties returned no usable geometry");
         return geojson;
@@ -9096,8 +9270,8 @@ function initChiExplorer() {
   var WILL_GIS = "https://services.arcgis.com/fGsbyIOAuxHnF97m/arcgis/rest/services/";
   function loadWillFeatureServer(service, layerIndex, outFields, label) {
     var url = WILL_GIS + service + "/FeatureServer/" + layerIndex +
-      "/query?where=1%3D1&outFields=" + outFields + "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "/query?where=1%3D1&outFields=" + outFields + "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("Will County " + label + " returned no usable geometry");
         return geojson;
@@ -9199,8 +9373,8 @@ function initChiExplorer() {
   var DUPAGE_GIS = "https://services.arcgis.com/neJvtQ4PXvnQ86MJ/arcgis/rest/services/";
   var loadDupageCountyBoard = makeCached(function () {
     var url = DUPAGE_GIS + "County_Board_Dist_new/FeatureServer/0" +
-      "/query?where=1%3D1&outFields=District&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "/query?where=1%3D1&outFields=District&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("DuPage County Board returned no usable geometry");
         return geojson;
@@ -9233,8 +9407,8 @@ function initChiExplorer() {
   // co-render, being gated to different counties.
   var loadDupageJudicial = makeCached(function () {
     var url = DUPAGE_GIS + "Judicial_Subcircuits/FeatureServer/0" +
-      "/query?where=1%3D1&outFields=DISTRICT&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "/query?where=1%3D1&outFields=DISTRICT&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("DuPage Judicial Subcircuits returned no usable geometry");
         return geojson;
@@ -9262,8 +9436,8 @@ function initChiExplorer() {
   // toggle at boot.
   var loadDupageFire = makeCached(function () {
     var url = DUPAGE_GIS + "Fire_Protection_Districts_/FeatureServer/3" +
-      "/query?where=1%3D1&outFields=FIRE&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "/query?where=1%3D1&outFields=FIRE&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("DuPage Fire Protection Districts returned no usable geometry");
         return geojson;
@@ -9296,8 +9470,8 @@ function initChiExplorer() {
   // Special Police District" (its own concept — no Will County analog).
   var loadDupageSpecialPolice = makeCached(function () {
     var url = DUPAGE_GIS + "Special_Police_Districts_/FeatureServer/13" +
-      "/query?where=1%3D1&outFields=SPECIAL_POLICE&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "/query?where=1%3D1&outFields=SPECIAL_POLICE&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("DuPage Special Police Districts returned no usable geometry");
         return geojson;
@@ -9331,8 +9505,8 @@ function initChiExplorer() {
   // doesn't collide with Will's "Park District" toggle at boot.
   var loadDupageParks = makeCached(function () {
     var url = DUPAGE_GIS + "Park_Districts_/FeatureServer/11" +
-      "/query?where=1%3D1&outFields=PARK&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "/query?where=1%3D1&outFields=PARK&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("DuPage Park Districts returned no usable geometry");
         return geojson;
@@ -9359,8 +9533,8 @@ function initChiExplorer() {
   // counties.
   var loadDupagePrecincts = makeCached(function () {
     var url = DUPAGE_GIS + "Precincts_2024/FeatureServer/0" +
-      "/query?where=1%3D1&outFields=PrecinctName,TownshipName&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "/query?where=1%3D1&outFields=PrecinctName,TownshipName&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("DuPage Voting Precincts returned no usable geometry");
         return geojson;
@@ -9399,8 +9573,8 @@ function initChiExplorer() {
   function loadLakeFeatureServer(service, layerIndex, where, outFields, label) {
     var url = LAKE_GIS + service + "/FeatureServer/" + layerIndex +
       "/query?where=" + encodeURIComponent(where) + "&outFields=" + outFields +
-      "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("Lake County " + label + " returned no usable geometry");
         return geojson;
@@ -9518,19 +9692,30 @@ function initChiExplorer() {
   }
 
   var KANE_GIS = "https://services1.arcgis.com/oRKmdBXD6EbdmVgJ/arcgis/rest/services/";
-  function loadKaneFeatureServer(service, where, outFields, label) {
-    // the KaneCo_IL_* services all publish their single layer at index 1
-    var url = KANE_GIS + service + "/FeatureServer/1" +
+  /* THE LAYER INDEX IS PER SERVICE, and assuming otherwise cost two live
+   * cards. This read "the KaneCo_IL_* services all publish their single layer
+   * at index 1" and hardcoded /FeatureServer/1, which is true of four of the
+   * six — CountyBoard, Districts_Fire, ElectionsPrecincts and
+   * Elections_PollingPlaces — and false of Districts_Park and
+   * Districts_Library, which publish their single layer at index 0. Measured
+   * 2026-09-05 from each service's own layer list: index 1 answers those two
+   * with `{"error":{"code":400,"message":"Invalid URL"}}`, a 200 carrying no
+   * features, so Kane's park and library cards had been showing the shared
+   * "data source didn't respond" state rather than a wrong answer. Layer 0
+   * returns 12 park districts and 17 library districts, each with its own
+   * officer name and phone, which is what those cards were written to show. */
+  function loadKaneFeatureServer(service, layerIndex, where, outFields, label) {
+    var url = KANE_GIS + service + "/FeatureServer/" + layerIndex +
       "/query?where=" + encodeURIComponent(where) + "&outFields=" + outFields +
-      "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("Kane County " + label + " returned no usable geometry");
         return geojson;
       });
   }
   var loadKaneCountyBoard = makeCached(function () {
-    return loadKaneFeatureServer("KaneCo_IL_County_Board", "1=1", "CBDist,CBName", "Board");
+    return loadKaneFeatureServer("KaneCo_IL_County_Board", 1, "1=1", "CBDist,CBName", "Board");
   });
   // Weekly-scraped roster from the county's own SharePoint directory list
   // (kane_county_board_scraper.py — the same list the boardMembers.aspx page
@@ -9561,8 +9746,8 @@ function initChiExplorer() {
    * failure costs the polling rows, never the precinct. */
   var loadKanePrecincts = makeCached(function () {
     return Promise.all([
-      loadKaneFeatureServer("KaneCo_IL_ElectionsPrecincts", "1=1", "PRECINCT,CBDist", "precincts"),
-      loadKaneFeatureServer("KaneCo_IL_Elections_PollingPlaces", "LocationType='ElectionDay'",
+      loadKaneFeatureServer("KaneCo_IL_ElectionsPrecincts", 1, "1=1", "PRECINCT,CBDist", "precincts"),
+      loadKaneFeatureServer("KaneCo_IL_Elections_PollingPlaces", 1, "LocationType='ElectionDay'",
         "Precinct,LocationName,Address,City,Election", "polling places")
         .catch(function () { return null; })
     ]).then(function (results) {
@@ -9598,16 +9783,16 @@ function initChiExplorer() {
   // counties' entries) and also drops the service's null filler feature and a
   // legacy duplicate of the Carpentersville district.
   var loadKaneFire = makeCached(function () {
-    return loadKaneFeatureServer("KaneCo_IL_Districts_Fire",
+    return loadKaneFeatureServer("KaneCo_IL_Districts_Fire", 1,
       "FPDID IS NOT NULL AND FPDID NOT LIKE '-%'",
       "DistrictName,Rep_Name,Rep_Title,Rep_Phone,Rep_Email,WebSite,Addr1,Addr1_City,Addr1_ST,Addr1_Zip", "fire districts");
   });
   var loadKaneParks = makeCached(function () {
-    return loadKaneFeatureServer("KaneCo_IL_Districts_Park", "DistrictName IS NOT NULL",
+    return loadKaneFeatureServer("KaneCo_IL_Districts_Park", 0, "DistrictName IS NOT NULL",
       "DistrictName,Rep_Name,Rep_Title,Rep_Phone,Rep_Email,WebSite,Addr1,Addr1_City,Addr1_ST,Addr1_Zip", "park districts");
   });
   var loadKaneLibraries = makeCached(function () {
-    return loadKaneFeatureServer("KaneCo_IL_Districts_Library", "DistrictName IS NOT NULL",
+    return loadKaneFeatureServer("KaneCo_IL_Districts_Library", 0, "DistrictName IS NOT NULL",
       "DistrictName,Rep_Name,Rep_Title,Rep_Phone,Rep_Email,WebSite,Addr1,Addr1_City,Addr1_ST,Addr1_Zip", "library districts");
   });
   // 16th-Circuit judicial subcircuits — the one Kane boundary served
@@ -9737,8 +9922,8 @@ function initChiExplorer() {
   function loadMchenryFeatureServer(service, where, outFields, label) {
     var url = MCHENRY_GIS + service + "/FeatureServer/0" +
       "/query?where=" + encodeURIComponent(where) + "&outFields=" + outFields +
-      "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("McHenry County " + label + " returned no usable geometry");
         return geojson;
@@ -9824,8 +10009,8 @@ function initChiExplorer() {
   function loadKendallLayer(service, layerIndex, where, outFields, label) {
     var url = KENDALL_GIS + service + "/FeatureServer/" + layerIndex +
       "/query?where=" + encodeURIComponent(where) + "&outFields=" + outFields +
-      "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("Kendall County " + label + " returned no usable geometry");
         return geojson;
@@ -9996,8 +10181,8 @@ function initChiExplorer() {
   var loadKankakeeCountyBoard = makeCached(function () {
     var url = "https://k3gis.net/arcgis/rest/services/BASE/Elected_Officials/MapServer/1" +
       "/query?where=1%3D1&outFields=district,membername,party,phone,email&outSR=4326" +
-      "&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("Kankakee County Board returned no usable geometry");
         return geojson;
@@ -10014,8 +10199,8 @@ function initChiExplorer() {
   var LASALLE_GIS = "https://gis.lasallecounty.org/arcgis/rest/services/PollingPlaceLocator/MapServer/";
   function loadLasalleLayer(layerIndex, outFields, label) {
     var url = LASALLE_GIS + layerIndex + "/query?where=1%3D1&outFields=" + outFields +
-      "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("LaSalle County " + label + " returned no usable geometry");
         return geojson;
@@ -10063,8 +10248,8 @@ function initChiExplorer() {
   var K3_GIS = "https://k3gis.net/arcgis/rest/services/BASE/";
   function loadK3Layer(service, layerIndex, outFields, label) {
     var url = K3_GIS + service + "/MapServer/" + layerIndex + "/query?where=1%3D1&outFields=" +
-      outFields + "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      outFields + "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("Kankakee County " + label + " returned no usable geometry");
         return geojson;
@@ -10541,8 +10726,8 @@ function initChiExplorer() {
   }
   function loadColesLayer(url, outFields, label) {
     var full = url + "/query?where=1%3D1&outFields=" + outFields +
-      "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(full, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(full, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) {
           throw new Error("Coles County " + label + " returned no usable geometry");
@@ -11695,8 +11880,8 @@ function initChiExplorer() {
   var FULTON_GIS = "https://gis.fultoncountyil.gov/arcgis/rest/services/Hosted/";
   function loadFultonLayer(service, layerIndex, outFields, label) {
     var url = FULTON_GIS + service + "/FeatureServer/" + layerIndex +
-      "/query?where=1%3D1&outFields=" + outFields + "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "/query?where=1%3D1&outFields=" + outFields + "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("Fulton County " + label + " returned no usable geometry");
         return geojson;
@@ -11724,8 +11909,8 @@ function initChiExplorer() {
   var ADAMS_GIS = "https://services3.arcgis.com/BXTAaNPMn1VANOeH/arcgis/rest/services/";
   function loadAdamsLayer(service, layerIndex, outFields, label) {
     var url = ADAMS_GIS + service + "/FeatureServer/" + layerIndex +
-      "/query?where=1%3D1&outFields=" + outFields + "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "/query?where=1%3D1&outFields=" + outFields + "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("Adams County " + label + " returned no usable geometry");
         return geojson;
@@ -11881,8 +12066,8 @@ function initChiExplorer() {
   var IROQUOIS_GIS = "https://services6.arcgis.com/6FZQl5a5SiSFMv8P/arcgis/rest/services/";
   function loadIroquoisLayer(service, layerIndex, outFields, label) {
     var url = IROQUOIS_GIS + service + "/FeatureServer/" + layerIndex +
-      "/query?where=1%3D1&outFields=" + outFields + "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "/query?where=1%3D1&outFields=" + outFields + "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("Iroquois County " + label + " returned no usable geometry");
         return geojson;
@@ -11957,8 +12142,8 @@ function initChiExplorer() {
   var RANDOLPH_GIS = "https://services5.arcgis.com/pweYHqdOby1TE9DD/arcgis/rest/services/";
   function loadSimpleFeatureLayer(base, service, layerIndex, outFields, label) {
     var url = base + service + "/FeatureServer/" + layerIndex +
-      "/query?where=1%3D1&outFields=" + outFields + "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "/query?where=1%3D1&outFields=" + outFields + "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error(label + " returned no usable geometry");
         return geojson;
@@ -12060,8 +12245,8 @@ function initChiExplorer() {
   var PEORIA_GIS = "https://services.arcgis.com/iPiPjILCMYxPZWTc/arcgis/rest/services/";
   function loadPeoriaLayer(service, outFields, label, layerIndex) {
     var url = PEORIA_GIS + service + "/FeatureServer/" + (layerIndex == null ? 0 : layerIndex) +
-      "/query?where=1%3D1&outFields=" + outFields + "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "/query?where=1%3D1&outFields=" + outFields + "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("Peoria County " + label + " returned no usable geometry");
         return geojson;
@@ -12097,9 +12282,9 @@ function initChiExplorer() {
    * third stale officer column this pass. */
   var PEORIA_CITY_DISTRICTS = "https://services1.arcgis.com/Vm4J3EDyqMzmDYgP/arcgis/" +
     "rest/services/Council_Districts/FeatureServer/0/query?where=1%3D1" +
-    "&outFields=DISTRICTID&outSR=4326&f=geojson&geometryPrecision=5";
+    "&outFields=DISTRICTID&outSR=4326&f=json&geometryPrecision=5";
   var loadPeoriaCityDistricts = makeCached(function () {
-    return fetchJSONWithRetry(PEORIA_CITY_DISTRICTS, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+    return fetchArcGISAsGeoJSON(PEORIA_CITY_DISTRICTS, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) {
           throw new Error("Peoria city council districts returned no usable geometry");
@@ -12137,9 +12322,9 @@ function initChiExplorer() {
    * municipal-officials.json like every other suburban entry. */
   var ELMWOOD_WARDS = "https://gis.peoriacounty.gov/arcgis/rest/services/DP/Elections/" +
     "MapServer/13/query?where=CORP_NAME%3D%27ELMWOOD%27&outFields=Ward&outSR=4326" +
-    "&f=geojson&geometryPrecision=5";
+    "&f=json&geometryPrecision=5";
   var loadElmwoodWards = makeCached(function () {
-    return fetchJSONWithRetry(ELMWOOD_WARDS, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+    return fetchArcGISAsGeoJSON(ELMWOOD_WARDS, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) {
           throw new Error("Elmwood ward layer returned no usable geometry");
@@ -12219,8 +12404,8 @@ function initChiExplorer() {
   function loadTazewellLayer(layerIndex, where, outFields, label) {
     var url = TAZEWELL_ELECTION_SERVICE + layerIndex + "/query?where=" +
       encodeURIComponent(where) + "&outFields=" + outFields +
-      "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("Tazewell County " + label + " returned no usable geometry");
         return geojson;
@@ -12342,8 +12527,8 @@ function initChiExplorer() {
   }
   function loadMaconLayer(url, where, outFields, label) {
     var full = url + "/query?where=" + encodeURIComponent(where) +
-      "&outFields=" + outFields + "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(full, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&outFields=" + outFields + "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(full, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("Macon County " + label + " returned no usable geometry");
         return geojson;
@@ -12489,8 +12674,8 @@ function initChiExplorer() {
   }
   function loadEffinghamLayer(url, where, outFields, label) {
     var full = url + "/query?where=" + encodeURIComponent(where) +
-      "&outFields=" + outFields + "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(full, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&outFields=" + outFields + "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(full, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("Effingham County " + label + " returned no usable geometry");
         return geojson;
@@ -12593,8 +12778,8 @@ function initChiExplorer() {
     "https://services.arcgis.com/4YineAQdtmx0tv46/arcgis/rest/services/";
   function loadHamiltonLayer(url, where, outFields, label) {
     var full = url + "/query?where=" + encodeURIComponent(where) +
-      "&outFields=" + outFields + "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(full, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&outFields=" + outFields + "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(full, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("Hamilton County " + label + " returned no usable geometry");
         return geojson;
@@ -12738,8 +12923,8 @@ function initChiExplorer() {
       "2024_General_Primary_Election___March_19th__2024_WFL1/FeatureServer/";
     function layer(index, outFields, label) {
       var url = base + index + "/query?where=1%3D1&outFields=" + outFields +
-        "&outSR=4326&f=geojson&geometryPrecision=5";
-      return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+        "&outSR=4326&f=json&geometryPrecision=5";
+      return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
         .then(function (geojson) {
           if (!hasUsableGeometry(geojson)) throw new Error("Woodford County " + label + " returned no usable geometry");
           return geojson;
@@ -12775,8 +12960,8 @@ function initChiExplorer() {
 
   function loadCountyMapServerLayer(base, layerIndex, outFields, label) {
     var url = base + "/MapServer/" + layerIndex + "/query?where=1%3D1&outFields=" +
-      outFields + "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      outFields + "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error(label + " returned no usable geometry");
         return geojson;
@@ -12932,8 +13117,8 @@ function initChiExplorer() {
   var loadLoganCountyBoard = makeCached(function () {
     var url = "https://services.arcgis.com/pPTAs43AFhhk0pXQ/arcgis/rest/services/" +
       "Logan_County_Districts_and_Zoning/FeatureServer/39/query?where=1%3D1&outFields=District" +
-      "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("Logan County Board returned no usable geometry");
         return geojson;
@@ -12948,8 +13133,8 @@ function initChiExplorer() {
   var loadSangamonCountyBoard = makeCached(function () {
     var url = "https://services.arcgis.com/XqG0RpqsNfIBGGb2/arcgis/rest/services/" +
       "CountyBoardDistricts2020_WithURLs/FeatureServer/0/query?where=1%3D1" +
-      "&outFields=DISTRICT&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&outFields=DISTRICT&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("Sangamon County Board returned no usable geometry");
         return geojson;
@@ -12971,8 +13156,8 @@ function initChiExplorer() {
   var loadSangamonFire = makeCached(function () {
     var url = "https://services.arcgis.com/XqG0RpqsNfIBGGb2/arcgis/rest/services/" +
       "FireDistrictEtc/FeatureServer/2/query?where=1%3D1&outFields=District" +
-      "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("Sangamon fire districts returned no usable geometry");
         var groups = {};
@@ -13009,9 +13194,9 @@ function initChiExplorer() {
   var loadLoganPrecincts = makeCached(function () {
     var url = "https://services.arcgis.com/pPTAs43AFhhk0pXQ/arcgis/rest/services/" +
       "Logan_County_Districts_and_Zoning/FeatureServer/40/query?where=1%3D1" +
-      "&outFields=Name&outSR=4326&f=geojson&geometryPrecision=5";
+      "&outFields=Name&outSR=4326&f=json&geometryPrecision=5";
     return Promise.all([
-      fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
         .then(function (geojson) {
           if (!hasUsableGeometry(geojson)) throw new Error("Logan County precincts returned no usable geometry");
           return geojson;
@@ -13057,8 +13242,8 @@ function initChiExplorer() {
     var base = "https://services.arcgis.com/XqG0RpqsNfIBGGb2/arcgis/rest/services/";
     function layer(service, outFields, label) {
       var url = base + service + "/FeatureServer/0/query?where=1%3D1&outFields=" +
-        outFields + "&outSR=4326&f=geojson&geometryPrecision=5";
-      return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+        outFields + "&outSR=4326&f=json&geometryPrecision=5";
+      return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
         .then(function (geojson) {
           if (!hasUsableGeometry(geojson)) throw new Error("Sangamon County " + label + " returned no usable geometry");
           return geojson;
@@ -13192,8 +13377,8 @@ function initChiExplorer() {
   var MADISON_AGOL = "https://services.arcgis.com/Z0kKj2K728ngqqrp/arcgis/rest/services/";
   function loadMadisonAgolLayer(service, layerIndex, outFields, label) {
     var url = MADISON_AGOL + service + "/FeatureServer/" + layerIndex +
-      "/query?where=1%3D1&outFields=" + outFields + "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "/query?where=1%3D1&outFields=" + outFields + "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error(label + " returned no usable geometry");
         return geojson;
@@ -13215,8 +13400,8 @@ function initChiExplorer() {
   var loadMadisonPrecincts = makeCached(function () {
     function layer(index, outFields, label) {
       var url = MADISON_ELECTION + index + "/query?where=1%3D1&outFields=" + outFields +
-        "&outSR=4326&f=geojson&geometryPrecision=5";
-      return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+        "&outSR=4326&f=json&geometryPrecision=5";
+      return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
         .then(function (geojson) {
           if (!hasUsableGeometry(geojson)) throw new Error("Madison County " + label + " returned no usable geometry");
           return geojson;
@@ -13269,8 +13454,8 @@ function initChiExplorer() {
     "SCC_voting_districts/MapServer/";
   function loadStClairLayer(index, outFields, label) {
     var url = STCLAIR_GIS + index + "/query?where=1%3D1&outFields=" + outFields +
-      "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("St. Clair County " + label + " returned no usable geometry");
         return geojson;
@@ -13288,8 +13473,8 @@ function initChiExplorer() {
   var loadStClairFire = makeCached(function () {
     var url = "https://arcgispublicmap.co.st-clair.il.us/server/rest/services/" +
       "CentralSquare/DATA/MapServer/8/query?where=1%3D1&outFields=name" +
-      "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("St. Clair fire districts returned no usable geometry");
         return geojson;
@@ -13333,74 +13518,18 @@ function initChiExplorer() {
    * layers (docs/EXPANSION_GUIDE.md Part 3). */
   var DEKALB_GIS = "https://services7.arcgis.com/hEXJrPwm89CLXBYe/arcgis/rest/services/";
 
-  /* THIS SERVICE'S f=geojson OUTPUT IS LOSSY, so these layers are fetched as
-   * Esri JSON and assembled here. A multi-PART polygon comes back from the
-   * GeoJSON writer as a single Polygon with every part's ring concatenated into
-   * one ring list — DeKalb Park is 48 separate parts flattened into a 49-ring
-   * "Polygon". GeoJSON says ring 0 is the outside and the rest are holes, and
-   * the app's even-odd containment test says a point crossing two rings is
-   * outside, so every part that happens to sit INSIDE another part becomes a
-   * false hole. Measured against the same features read as Esri JSON: 1.6 km²
-   * of the park tiling (0.44%) and 1.2 km² of the fire tiling (0.08%) answer
-   * "no district" when they are in one, with two single holes over 1 km² each —
-   * a quarter-square-mile of DeKalb reporting no park district.
-   *
-   * Esri JSON does not lose this, because Esri encodes part structure in ring
-   * WINDING rather than in nesting: clockwise is an outer ring, counter-
-   * clockwise is a hole in the outer that contains it. So rings are split by
-   * winding and each hole is attached to the smallest outer ring containing it,
-   * which is the standard disambiguation when outers nest. The result is a real
-   * MultiPolygon, and pointInGeometry's per-part even-odd is then correct.
-   *
-   * Ring ORIENTATION is left as Esri emits it. RFC 7946 wants exterior rings
-   * counter-clockwise, but nothing here reads winding — the app's containment
-   * test and Leaflet both work on nesting alone — and rewinding would be work
-   * done for no reader. */
-  function esriRingsToGeoJSON(features, fieldNames) {
-    var out = [];
-    for (var i = 0; i < features.length; i++) {
-      var rings = (features[i].geometry || {}).rings;
-      if (!rings || !rings.length) continue;
-      var outers = [], holes = [], j;
-      for (j = 0; j < rings.length; j++) {
-        (signedRingArea(rings[j]) < 0 ? outers : holes).push(rings[j]);
-      }
-      // A feature with no clockwise ring at all would mean the winding
-      // convention doesn't hold on this service; treat every ring as its own
-      // part rather than silently dropping the feature.
-      if (!outers.length) { outers = rings; holes = []; }
-      var parts = [];
-      for (j = 0; j < outers.length; j++) parts.push([outers[j]]);
-      for (j = 0; j < holes.length; j++) {
-        var best = -1, bestArea = Infinity;
-        for (var k = 0; k < outers.length; k++) {
-          if (!pointInRing(holes[j][0], outers[k])) continue;
-          var area = Math.abs(signedRingArea(outers[k]));
-          if (area < bestArea) { bestArea = area; best = k; }
-        }
-        // an unattached hole (numeric edge case) is dropped, never promoted to
-        // a part — promoting it would ADD area the county never mapped
-        if (best >= 0) parts[best].push(holes[j]);
-      }
-      var props = {}, attrs = features[i].attributes || {};
-      for (var f = 0; f < fieldNames.length; f++) props[fieldNames[f]] = attrs[fieldNames[f]];
-      out.push({
-        type: "Feature",
-        properties: props,
-        geometry: parts.length === 1
-          ? { type: "Polygon", coordinates: parts[0] }
-          : { type: "MultiPolygon", coordinates: parts }
-      });
-    }
-    return { type: "FeatureCollection", features: out };
-  }
-  function signedRingArea(ring) {
-    var sum = 0;
-    for (var i = 0; i < ring.length - 1; i++) {
-      sum += ring[i][0] * ring[i + 1][1] - ring[i + 1][0] * ring[i][1];
-    }
-    return sum / 2;
-  }
+  /* DeKalb's org publishes the OTHER HALF of the ArcGIS GeoJSON defect the
+   * shared loaders now read around: its GeoJSON writer flattens a multi-PART
+   * polygon into one ring list — DeKalb Park is 48 parts concatenated into a
+   * 49-ring "Polygon" — so every part sitting inside another became a false
+   * hole, and 1.6 km² of the park tiling (0.44%) and 1.2 km² of the fire
+   * tiling (0.08%) answered "no district" while being in one. Two single holes
+   * were over 1 km² each. This loader is what found it, in 2026-08, and it
+   * carried its own Esri-JSON converter until the 2026-09-05 fleet sweep
+   * measured the same writer losing INTERIOR rings on 41 of Illinois's other
+   * ArcGIS layers; esriToGeoJSON in the arcgis-loader engine block is that
+   * converter, generalised, and this now calls it. The loader stays separate
+   * only because its layer index and error wording are the county's. */
   function loadDekalbLayer(service, layerIndex, outFields, label) {
     var url = DEKALB_GIS + service + "/FeatureServer/" + layerIndex +
       "/query?where=1%3D1&outFields=" + outFields +
@@ -13413,7 +13542,7 @@ function initChiExplorer() {
           // this it would read as "the county publishes nothing here"
           throw new Error("DeKalb County " + label + " returned no features");
         }
-        var geojson = esriRingsToGeoJSON(features, outFields.split(","));
+        var geojson = esriToGeoJSON(payload, outFields.split(","));
         if (!hasUsableGeometry(geojson)) throw new Error("DeKalb County " + label + " returned no usable geometry");
         return geojson;
       });
@@ -13603,9 +13732,9 @@ function initChiExplorer() {
     var url = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/" +
       "tigerWMS_Census2020/MapServer/58/query?where=" +
       encodeURIComponent("STATE='17' AND COUNTY='015'") +
-      "&outFields=BASENAME,GEOID&outSR=4326&f=geojson&geometryPrecision=5";
+      "&outFields=BASENAME,GEOID&outSR=4326&f=json&geometryPrecision=5";
     return Promise.all([
-      fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
         .then(function (geojson) {
           if (!hasUsableGeometry(geojson)) throw new Error("Carroll County precincts returned no usable geometry");
           return geojson;
@@ -13673,8 +13802,8 @@ function initChiExplorer() {
   var WHITESIDE_GIS = "https://services.arcgis.com/l0M0OC6J9QAHCiGx/arcgis/rest/services/";
   function loadWhitesideLayer(layerIndex, outFields, label) {
     var url = WHITESIDE_GIS + "ElectionGeography_public/FeatureServer/" + layerIndex +
-      "/query?where=1%3D1&outFields=" + outFields + "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "/query?where=1%3D1&outFields=" + outFields + "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error(label + " returned no usable geometry");
         return geojson;
@@ -13704,11 +13833,11 @@ function initChiExplorer() {
    * posture as Quincy and McHenry city. */
   var WHITESIDE_WARD_SERVICE = WHITESIDE_GIS +
     "PrecinctWardMap/FeatureServer/0/query?where=1%3D1&outFields=NAME&outSR=4326" +
-    "&f=geojson&geometryPrecision=5";
+    "&f=json&geometryPrecision=5";
   // "Sterling Ward 1" -> municipality "Sterling", ward "1".
   var WHITESIDE_WARD_NAME_RE = /^(.+?)\s+Ward\s+(\d+)\s*$/i;
   var loadWhitesideWards = makeCached(function () {
-    return fetchJSONWithRetry(WHITESIDE_WARD_SERVICE, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+    return fetchArcGISAsGeoJSON(WHITESIDE_WARD_SERVICE, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) {
           throw new Error("Whiteside ward layer returned no usable geometry");
@@ -13769,8 +13898,8 @@ function initChiExplorer() {
   var ROCK_ISLAND_GIS = "https://services9.arcgis.com/6FnscPPlUa9DXXOk/arcgis/rest/services/";
   function loadRockIslandLayer(layerIndex, outFields, label) {
     var url = ROCK_ISLAND_GIS + "Other_Layers/FeatureServer/" + layerIndex +
-      "/query?where=1%3D1&outFields=" + outFields + "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "/query?where=1%3D1&outFields=" + outFields + "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error(label + " returned no usable geometry");
         return geojson;
@@ -14357,9 +14486,9 @@ function initChiExplorer() {
       "?where=" + encodeURIComponent("1=1") +
       "&geometry=" + encodeURIComponent(JSON.stringify(IL_BBOX_ENVELOPE)) +
       "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects" +
-      "&outFields=ZCTA5&returnGeometry=true&outSR=4326&f=geojson" +
+      "&outFields=ZCTA5&returnGeometry=true&outSR=4326&f=json" +
       "&geometryPrecision=4&maxAllowableOffset=0.0005";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("TIGERweb ZCTA layer returned no usable geometry");
         return geojson;
@@ -14940,8 +15069,10 @@ function initChiExplorer() {
    * One national service (public domain, CORS-open), queried per layer with
    * the METRO_BBOX envelope, powers every station/amenity layer that must
    * work beyond the city line: post offices (L38), fire stations (L51), and
-   * police stations (L53). f=geojson serves lowercase property names
-   * (name/address/city/state/zipcode). The fire/police layers moved here from
+   * police stations (L53). The service serves LOWERCASE property names
+   * (name/address/city/state/zipcode) — that is this service's own schema and
+   * not a property of the format, measured both ways on 2026-09-05 when every
+   * loader here moved to Esri JSON. The fire/police layers moved here from
    * the city datasets (CFD 28km-gtjn / CPD stations) so the collar counties
    * get the same nearest-3 answer as Chicago — completeness was verified
    * before the swap (2026-07): 91/92 CFD firehouses and 22/22 CPD district
@@ -14978,10 +15109,10 @@ function initChiExplorer() {
       var base = USGS_STRUCTURES + "/" + layerIndex + "/query?geometry=" +
         [METRO_BBOX.minLng, METRO_BBOX.minLat, METRO_BBOX.maxLng, METRO_BBOX.maxLat].join(",") +
         "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects" +
-        "&where=1%3D1&outFields=NAME,ADDRESS,CITY,STATE,ZIPCODE&outSR=4326&f=geojson&geometryPrecision=6";
+        "&where=1%3D1&outFields=NAME,ADDRESS,CITY,STATE,ZIPCODE&outSR=4326&f=json&geometryPrecision=6";
       function page(offset, acc) {
         var url = base + "&resultRecordCount=" + PAGE + "&resultOffset=" + offset;
-        return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2).then(function (gj) {
+        return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2).then(function (gj) {
           var feats = (gj && gj.features) || [];
           acc = acc.concat(feats);
           var more = gj && (gj.exceededTransferLimit ||
@@ -15776,8 +15907,8 @@ function initChiExplorer() {
     // extractDistrictNumber's name-field fallback keeps working across the
     // per-Congress/GA field renames the comment above documents.
     var url = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/" +
-      layerIndex + "/query?where=" + where + "&outFields=*&outSR=4326&f=geojson&geometryPrecision=6";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      layerIndex + "/query?where=" + where + "&outFields=*&outSR=4326&f=json&geometryPrecision=6";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         // Esri REST can answer HTTP 200 with a JSON error envelope (throttling,
         // bad params) carrying no features; without this guard makeCached would
@@ -17447,8 +17578,8 @@ function initChiExplorer() {
 
   function loadCookCountyLayerGeoJSON(layerIndex) {
     var url = COOK_COUNTY_POLITICAL_BOUNDARY + "/" + layerIndex + "/query?where=" +
-      encodeURIComponent("1=1") + "&outFields=*&outSR=4326&f=geojson&geometryPrecision=6";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      encodeURIComponent("1=1") + "&outFields=*&outSR=4326&f=json&geometryPrecision=6";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         // same error-envelope guard as loadTigerLayer — a 200-with-no-features
         // must not be cached as a successful boundary set for the session.
@@ -17487,8 +17618,8 @@ function initChiExplorer() {
     "https://gis.cookcountyil.gov/traditional/rest/services/precinctHistorical/MapServer/0";
   var loadCookSuburbanPrecincts = makeCached(function () {
     var url = COOK_SUBURBAN_PRECINCTS + "/query?where=" + encodeURIComponent("1=1") +
-      "&outFields=name,Township_Name,Precinct_Number&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&outFields=name,Township_Name,Precinct_Number&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("Cook County suburban precincts returned no usable geometry");
         return geojson;
@@ -17538,8 +17669,8 @@ function initChiExplorer() {
   var loadCookTifDistricts = makeCached(function () {
     var url = "https://gis.cookcountyil.gov/traditional/rest/services/clerkTaxDistricts/MapServer/18" +
       "/query?where=" + encodeURIComponent("1=1") +
-      "&outFields=AGENCY_DESCRIPTION,AGENCYNUM&outSR=4326&f=geojson&geometryPrecision=6";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&outFields=AGENCY_DESCRIPTION,AGENCYNUM&outSR=4326&f=json&geometryPrecision=6";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("Cook County TIF districts returned no usable geometry");
         return geojson;
@@ -23649,8 +23780,8 @@ function initChiExplorer() {
   });
   var loadDupageLibraries = makeCached(function () {
     var url = DUPAGE_GIS + "Library_Districts_/FeatureServer/6" +
-      "/query?where=1%3D1&outFields=LIBRARY&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "/query?where=1%3D1&outFields=LIBRARY&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("DuPage Library Districts returned no usable geometry");
         return geojson;

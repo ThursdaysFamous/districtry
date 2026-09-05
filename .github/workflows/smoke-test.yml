@@ -268,6 +268,16 @@ jobs:
       - name: Skills point at things that exist
         run: python3 scripts/validate_skills.py
 
+      # No app may ask an ArcGIS service for f=geojson. The export unnests a
+      # feature's interior rings, so a publisher's cutout becomes ground the
+      # layer claims — measured 2026-09-05 at 41 of 153 live polygon layers,
+      # 1,376 rings and 298.2 km². fetchArcGISAsGeoJSON refuses such a url at
+      # fetch time, but that is a card a reader has to reach first, and a
+      # failed fetch renders as the honest "data source didn't respond" state,
+      # so nothing looks wrong. This is the static half.
+      - name: No app requests the lossy ArcGIS GeoJSON export
+        run: python3 scripts/validate_arcgis_format.py
+
       # ADDING A STATE IS NOT ONE EDIT. The instance is a folder, and a dozen
       # other places have to learn its tag — the generator's table, the fleet
       # manifest, four hand-kept tables in four builders, and the three literal

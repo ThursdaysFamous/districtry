@@ -76,7 +76,7 @@
 | Mason | 17125 | dispatch | districted | `county-board` | 3 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source); `mason-precinct-vintage` (data-quality) |
 | Massac | 17127 | County card | at-large — County card | — | 2 — `library-districts-unmapped-counties` (no-source); `massac-precinct-geometry` (no-source) |
 | McDonough | 17109 | dispatch | districted | `county-board`, `county-precinct` | 2 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source) |
-| McHenry | 17111 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district` | 4 — `blocked-crawlers` (blocked); `county-board-office-addresses` (no-source); `mchenry-park-district` (no-source); `mchenry-ward-cities` (blocked) |
+| McHenry | 17111 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district` | 5 — `blocked-crawlers` (blocked); `county-board-office-addresses` (no-source); `mchenry-park-district` (no-source); `mchenry-precinct-service` (data-quality); `mchenry-ward-cities` (blocked) |
 | McLean | 17113 | dispatch | districted | `county-board`, `county-precinct` | 3 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source); `mclean-special-districts` (no-source) |
 | Menard | 17129 | dispatch | districted | `county-board`, `county-precinct` | 2 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source) |
 | Mercer | 17131 | dispatch | districted | `county-board`, `county-precinct` | 2 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source) |
@@ -139,4 +139,4 @@ Counties outside the coverage ring that a research pass has already measured; ea
 
 ## Gap records not tagged to a county (1)
 
-City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 100 records in the Data gaps panel: `chicago-amenity-phones`.
+City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 101 records in the Data gaps panel: `chicago-amenity-phones`.

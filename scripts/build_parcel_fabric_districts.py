@@ -80,6 +80,7 @@ from shapely.geometry import mapping, shape, Point
 from shapely.ops import transform, unary_union
 from shapely.strtree import STRtree
 from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
+from arcgis_nesting import assert_nesting_repaired  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DIR = os.path.join(REPO_ROOT, "il", "data", "app")
@@ -691,7 +692,7 @@ def build_source(cfg):
     # any usable time over Boone's 12,264 parcels, which is what a parcel fabric
     # costs. Same geometry either way; a single unary_union over a list is the
     # call shapely is built for.
-    parts, blanks, no_geom = {}, 0, {}
+    parts, blanks, no_geom, nesting_pairs = {}, 0, {}, []
     excl = set(cfg.get("exclude_names", []))
     for f in geo.get("features", []):
         props = f.get("properties") or {}
@@ -724,10 +725,19 @@ def build_source(cfg):
         if not f.get("geometry"):
             no_geom[name] = no_geom.get(name, 0) + 1
             continue
-        g = polygonal(clean(shape(f["geometry"])))
+        raw_shape = shape(f["geometry"])
+        g = polygonal(clean(raw_shape))
         if g is None or g.is_empty:
             fail("%s: %r has no usable geometry" % (cfg["slug"], name))
+        # The exporter's unnest signature, checked per feature rather than
+        # trusted to clean(). Six of the layers below lose interior rings to
+        # the GeoJSON export and every one is re-nested by make_valid above —
+        # a real property that was stated nowhere and that nothing would have
+        # noticed losing (scripts/arcgis_nesting.py).
+        nesting_pairs.append((raw_shape, g))
         parts.setdefault(name, []).append(g)
+
+    assert_nesting_repaired(nesting_pairs, cfg["slug"], fail)
 
     named = {n: (unary_union(v) if len(v) > 1 else v[0]) for n, v in parts.items()}
 

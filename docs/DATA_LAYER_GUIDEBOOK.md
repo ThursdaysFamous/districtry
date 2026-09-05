@@ -1068,6 +1068,20 @@ detail into `blocker`.
       "wanted": "The 17 precinct boundaries in any form, even a scanned paper map — or the Clerk's word that they exist on paper only."
     },
     {
+      "id": "mchenry-precinct-service",
+      "concept": "Voting precincts",
+      "area": "McHenry County",
+      "counties": [
+        "mchenry"
+      ],
+      "kind": "data-quality",
+      "layer": "county-precinct",
+      "summary": "McHenry County's precinct card can't answer — the county's precinct map moved and the two maps that could replace it disagree about how many precincts there are.",
+      "why": "The service this app read has been emptied out. The county still publishes precincts in two other places, one with 223 and one with 212, and picking the wrong one would name the wrong precinct rather than none.",
+      "blocker": "MEASURED 2026-09-05, as a side finding of the ArcGIS ring-nesting sweep — nothing was looking for it, and no gate could see it: the layer fails at fetch time, so it degrades to the shared per-layer error card, which is honest and invisible to every static check. `services1.arcgis.com/6iYC5AXXYapRVNzl/arcgis/rest/services/Precincts/FeatureServer` answers 200 with an EMPTY `layers` array, so `loadMchenryPrecincts` resolves to nothing. The org still carries four precinct-ish services and TWO ARE PLAUSIBLE AND DISAGREE: `Voting_Precincts` layer 0 is a 223-feature polygon layer carrying the exact `PrecinctName` field the loader asks for, and `2021_Proposed_Precincts` layer 1 — titled \"Current Precincts\" inside a service named PROPOSED — carries 212, which is also exactly the Census 2020 voting-district count for FIPS 17111. A census match is evidence, not proof: a county that re-precincted AFTER 2020 would no longer match it, and 223 is the shape of a pre-2021 plan. Neither service publishes a lastEditDate. THE NAMES ARE THE LEAST RELIABLE THING HERE, which is the Vermilion lesson exactly — that county's well-labelled `CountyBoardDistricts` held the superseded plan while the one in force sat under `CountyBoardDistrcts2021`, a typo — so this is recorded rather than guessed. McHenry is one of the three counties whose site blocks all automated fetch (#235), so the county's own precinct page cannot be read to settle it, and the roster it already ships is hand-verified for the same reason. WHAT WOULD SETTLE IT: a certified McHenry canvass with a per-precinct table (the county's election authority publishes separately from its website — the Johnson/Perry route), or one line from the Clerk naming which service is current. Either answer is a one-word change to `loadMchenryPrecincts`.",
+      "wanted": "Which of the county's two published precinct layers is current — 223 features or 212 — or any certified per-precinct canvass that settles the count."
+    },
+    {
       "id": "mchenry-park-district",
       "concept": "Park districts",
       "area": "McHenry County",
@@ -2303,6 +2317,185 @@ template at `.github/ISSUE_TEMPLATE/source-submission.yml`.
 The block above is the machine truth `fleet_status.py` checks — one array per metro
 (keys = `metros.json` ids), each listing that fork's registered layer ids exactly as its
 `metro-worksheet.json` declares them. Everything below is the human explanation.
+
+## The ArcGIS GeoJSON export unnests interior rings (measured 2026-09-05)
+
+**WHAT THE DEFECT IS.** Asked for `f=geojson`, an ArcGIS service can return a feature's
+HOLES as separate SHELLS — a MultiPolygon whose parts sit inside one another. Under
+GeoJSON semantics each part is its own area, so ground a publisher deliberately cut out
+becomes ground the layer claims, and `pointInGeometry`'s per-part even-odd test says a
+click inside the cutout is inside the district. Asked for `f=json`, the SAME query on
+the SAME service returns the same rings with the holes wound counter-clockwise, which is
+Esri's normative signal for an interior ring. **Nothing is wrong with the data; the
+export is lossy.**
+
+Wisconsin found it first, on an NG911 law-enforcement zone that swallowed the Village of
+Westfield. Illinois was swept the same day. **Two surfaces were swept and they answered
+very differently, which is the finding.**
+
+### The builders are CLEAN, and it is shapely doing it rather than anything anyone wrote
+
+Every Illinois builder that fetches an ArcGIS FeatureServer/MapServer layer as GeoJSON —
+33 scripts, 41 distinct layer/query pairs — was fetched both ways and its interior rings
+counted after the containment-aware nesting Wisconsin wrote
+(`wi/scripts/build_wi_supervisory_districts.py`'s `esri_rings_to_geojson`, reused, not
+re-implemented). Nine layers lose rings at the source:
+
+| Builder | Layer | holes as `f=geojson` | as `f=json` |
+|---|---|---:|---:|
+| `build_statewide_library_districts.py` | IL Broadband `IL_Boundary_Layers/11` | 446 | 1,663 |
+| `build_parcel_fabric_districts.py` | Macon `ParkJoin_Dissolve/0` | 0 | 62 |
+| `build_parcel_fabric_districts.py` | Macon `Fire/0` | 0 | 50 |
+| `build_parcel_fabric_districts.py` | Macon `LibraryJoin_Dissolved/0` | 0 | 15 |
+| `build_parcel_fabric_districts.py` | Rock Island `TaxDistricts/5` | 0 | 45 |
+| `build_parcel_fabric_districts.py` | Rock Island `TaxDistricts/2` | 0 | 33 |
+| `build_parcel_fabric_districts.py` | Woodford `Fire_Protection_Districts/2` | 51 | 57 |
+| `build_parcel_fabric_districts.py` | Woodford `Library_Districts/8` | 51 | 57 |
+| `build_parcel_fabric_districts.py` | Woodford `Park_Districts/9` | 51 | 57 |
+
+**Not one reaches a shipped file.** An unnested inner shell makes a geometry INVALID, and
+both builders repair with shapely before using it: run through each builder's OWN
+`clean()`, the two fetches give identical hole counts, identical unions and a symmetric
+difference of **0.000000 km²** on all nine. `build_statewide_library_districts.py
+--check` passes against the live layer, and rebuilding `macon-park-districts.json` through
+the corrected path produced a byte-identical file. The other 32 layer/query pairs are
+identical at the source in both formats, TIGERweb included — every legislative, county,
+county-subdivision, voting-district, block, place, hydrography and roads layer this fleet
+reads from the Census answers the same both ways, which is worth stating because those
+feed most of the derived boards.
+
+**So no cache-first file was rebuilt and no cache was bumped: there was nothing to
+correct.** What there was, was an unstated dependency. Neither builder says `make_valid`
+is what re-nests the exporter's rings, and nothing would have noticed a refactor that
+dropped it — the counts, the areas and the probes all compare the build against the same
+fetch, so they agree with themselves. `scripts/arcgis_nesting.py` now asserts the
+property per feature, for free, and prints how many features arrived unnested on every
+run (131 of the library layer's 642; 5 of Macon's park tiling). Its own subtlety is
+recorded there: a first draft compared parts' bare EXTERIOR rings and fired on 19 real
+polygons — a district whose island sits inside another of its parts' HOLES overlaps
+nothing, and the giveaway is that the same 19 appear identically in both formats.
+
+### The RUNTIME layers were not clean, and that is where the readers were
+
+The app has no shapely. `pointInGeometry` runs per-part even-odd on whatever GeoJSON
+arrives, so a hole returned as its own part is a part a reader's click lands inside.
+Every ArcGIS URL the shipped app requests was recorded from a real boot — 178 layers,
+because every one is composed inside a factory and no regex can read them out of the
+source — then fetched both ways. 19 are point layers and cannot carry a ring and three could
+not be queried at all (McHenry's emptied precinct service and the two Kane layers whose
+index was wrong, both below); of the 156 that answered, **41 lose 1,376 interior rings.**
+
+Reader impact was measured at an INTERIOR point of every lost ring — shapely's
+`representative_point`, never a centroid, which for a non-convex hole falls outside it,
+lands in the owner's shell and reads as agreement. **Geometry-wrong and card-wrong are
+different counts and are kept apart**, because the app renders the FIRST containing
+feature: a point the old fetch put in two districts showed one of them by file order.
+
+| Publisher | Layer | rings lost | geometry wrong | card wrong | of which sliver | km² claimed |
+|---|---|---:|---:|---:|---:|---:|
+| Will | `Fire_District/FeatureServer/0` | 222 | 222 | 132 | 50 | 42.93 |
+| Will | `Library_District/FeatureServer/1` | 174 | 172 | 123 | 27 | 42.11 |
+| Will | `Ward_Districts/FeatureServer/3` | 55 | 55 | 55 | 9 | 40.84 |
+| Will | `Park_District/FeatureServer/0` | 100 | 100 | 100 | 12 | 26.04 |
+| Monroe | `VoterPrecinct/FeatureServer/0` | 2 | 2 | 1 | 0 | 18.04 |
+| Lake | `LakeCounty_TaxDistricts/FeatureServer/11` | 58 | 58 | 58 | 13 | 17.57 |
+| Sangamon / Springfield | `FireDistrictEtc/FeatureServer/2` | 166 | 166 | 116 | 9 | 15.42 |
+| Madison | `MadCo_LibraryDistricts/FeatureServer/40` | 89 | 90 | 90 | 24 | 14.35 |
+| DuPage | `Library_Districts_/FeatureServer/6` | 136 | 136 | 135 | 5 | 11.76 |
+| Madison | `MadCo_Wards/FeatureServer/40` | 22 | 22 | 22 | 1 | 10.50 |
+| DuPage | `Park_Districts_/FeatureServer/11` | 57 | 56 | 55 | 9 | 8.70 |
+| Sangamon / Springfield | `Springfield_Wards_2022/FeatureServer/4` | 38 | 38 | 38 | 1 | 7.77 |
+| Madison | `MadCo_ParkDistricts/FeatureServer/40` | 19 | 19 | 19 | 4 | 6.47 |
+| Peoria | `Park_Districts/FeatureServer/0` | 17 | 17 | 16 | 4 | 5.68 |
+| Peoria | `Library_Districts/FeatureServer/0` | 16 | 16 | 11 | 1 | 5.04 |
+| Peoria | `Fire_Protection_Districts/FeatureServer/0` | 10 | 10 | 10 | 0 | 3.99 |
+| Kane | `KaneCo_IL_Districts_Fire/FeatureServer/1` | 19 | 19 | 17 | 0 | 3.98 |
+| DuPage | `Special_Police_Districts_/FeatureServer/13` | 6 | 6 | 6 | 0 | 2.64 |
+| Will | `Ward_Districts/FeatureServer/0` | 27 | 27 | 27 | 1 | 2.41 |
+| Sangamon / Springfield | `ApprovedPrecincts20231012/FeatureServer/0` | 46 | 46 | 20 | 6 | 2.19 |
+| Peoria (city) | `Council_Districts/FeatureServer/0` | 7 | 7 | 7 | 0 | 1.54 |
+| Waukegan | `CITY_OF_WAUKEGAN_WARDS_LOCATOR_MAP_2025_WFL1/FeatureServer/2` | 2 | 2 | 2 | 0 | 0.91 |
+| Effingham | `Districts/FeatureServer/5` | 7 | 7 | 6 | 0 | 0.83 |
+| Lake | `LakeCounty_TaxDistricts/FeatureServer/4` | 5 | 5 | 4 | 0 | 0.77 |
+| McHenry | `Library_Districts/FeatureServer/0` | 3 | 3 | 3 | 0 | 0.71 |
+| Lake | `LakeCounty_PoliticalBoundaries/FeatureServer/7` | 2 | 2 | 0 | 0 | 0.71 |
+| Iroquois | `FireDistricts_REACH/FeatureServer/5` | 3 | 3 | 0 | 0 | 0.69 |
+| Moline | `MolineWards2020/FeatureServer/0` | 6 | 6 | 6 | 0 | 0.65 |
+| Galesburg | `Galesburg_City_Council_Wards/FeatureServer/0` | 3 | 3 | 3 | 0 | 0.64 |
+| St Charles | `St_Charles_Ward_Boundary/FeatureServer/1` | 10 | 10 | 10 | 0 | 0.49 |
+| Will | `Ward_Districts/FeatureServer/1` | 4 | 4 | 4 | 0 | 0.41 |
+| Lake | `LakeCounty_TaxDistricts/FeatureServer/8` | 8 | 8 | 8 | 1 | 0.40 |
+| Rock Island (city) | `Wards_Map/FeatureServer/0` | 5 | 5 | 5 | 0 | 0.37 |
+| Geneva | `Wards_view/FeatureServer/0` | 9 | 9 | 9 | 2 | 0.28 |
+| DuPage | `Fire_Protection_Districts_/FeatureServer/3` | 13 | 13 | 11 | 0 | 0.20 |
+| McHenry | `Fire_Districts/FeatureServer/0` | 4 | 4 | 4 | 0 | 0.13 |
+| Adams | `Web_Voting_Data/FeatureServer/2` | 2 | 2 | 0 | 0 | 0.01 |
+| Effingham | `TaxDistricts_public/FeatureServer/6` | 1 | 1 | 1 | 0 | 0.01 |
+| Will | `Ward_Districts/FeatureServer/2` | 1 | 1 | 1 | 0 | 0.00 |
+| McHenry | `McHenry_County_Board_Districts/FeatureServer/0` | 1 | 0 | 0 | 0 | 0.00 |
+| LaSalle | `PollingPlaceLocator/MapServer/1` | 1 | 0 | 0 | 0 | -0.00 |
+| **41 layers** | | **1376** | **1372** | **1135** | **179** | **298.2** |
+
+Slivers are holes under 0.001 km²; they are counted in the wrong column, not excused out
+of it. The two layers with zero reader impact are in the table for the same reason —
+LaSalle loses one ring of 0.00000 km², and McHenry's board layer one that nothing
+occupies either way.
+
+**THE FIX IS FORMAT, NOT GEOMETRY.** Every loader now asks for `f=json` and nests the
+rings itself: the three engine loaders (`loadArcGISGeoJSON`, `loadArcGISPointGeoJSON`,
+`loadArcGISPaged`) plus `fetchArcGISAsGeoJSON`, the shared entry point for the 51 Illinois
+county loaders that build their own query string — which is where 40 of the 41 affected
+layers actually live, so an engine-only change would have fixed almost none of them.
+`esriToGeoJSON` is DeKalb's own converter, generalised and moved into the engine; it was
+checked against Wisconsin's Python one on three of the worst layers and produces
+identical hole counts and identical area to six decimals. Booted after the change, the
+app makes **217 ArcGIS requests and not one asks for `f=geojson`**. The corrected CARDS
+were not proven in a browser from this sandbox — its egress proxy dropped the county
+services under the load of the sweep itself — so that check is owed to CI or to a local
+run, and no claim is made here that a reader's card was watched changing.
+
+**Two things were checked before the format was switched, and both had to be.** Attribute
+VALUES were compared across all 156 layers and 321 distinct fields: **zero mismatches**,
+so nothing a card renders changes (the USGS structures service serves lowercase property
+names in BOTH formats — that is the service's schema, not the format's, and the comment
+in `il/index.html` that said otherwise is corrected). And two smoke-test stubs answered
+GeoJSON to loaders that now ask for Esri JSON; both were converted, because a stub's job
+is to reproduce the service's contract and the contract changed.
+
+### Three things this sweep found that are not the ring defect
+
+* **`geometryPrecision` can trigger it.** LaSalle's precinct layer keeps its interior
+  ring in the GeoJSON export at full precision and DROPS it at `geometryPrecision=6`,
+  which is what the app sends. A builder that omits the parameter measures a layer this
+  app fetches as clean. Esri JSON keeps the ring either way.
+* **Kane's park and library cards were dead.** `loadKaneFeatureServer` hardcoded
+  `/FeatureServer/1` under the comment "the KaneCo_IL_* services all publish their single
+  layer at index 1" — true of four of six and false of `Districts_Park` and
+  `Districts_Library`, which publish at index 0. Index 1 answers those two with a 200
+  carrying `{"error":{"code":400,"message":"Invalid URL"}}`, so both cards had been
+  showing the "data source didn't respond" state. Layer 0 returns 12 park districts and
+  17 library districts with officer names and phones. Fixed; the index is a parameter now.
+  (Fulton's record already carried this lesson — "NOTE THE LAYER ID" — for a different
+  county.)
+* **McHenry's precinct service publishes NO layers, and picking its replacement is not
+  this change's to make.** `services1.arcgis.com/6iYC5AXXYapRVNzl/.../Precincts/FeatureServer`
+  answers with an empty `layers` array, so `loadMchenryPrecincts` resolves to nothing and
+  McHenry's precinct card has been showing the "data source didn't respond" state. The
+  org still publishes four precinct-ish services and **they disagree**: `Voting_Precincts`
+  carries 223 features with the exact `PrecinctName` field the loader asks for, while
+  `2021_Proposed_Precincts` layer 1 — named "Current Precincts", inside a service named
+  *Proposed* — carries **212**, which is also exactly the Census 2020 voting-district
+  count for McHenry (FIPS 17111). A count matching the census is evidence and not proof,
+  the two candidates cannot both be current, and the county is one of the three that
+  block automated fetch, so this ships as a recorded gap (`mchenry-precinct-service`)
+  rather than as a guess between two layers whose own names are the least reliable thing
+  about them — the Vermilion lesson, where the well-labelled board layer was the obsolete
+  one and the plan in force sat under a typo.
+
+**HOW TO RE-RUN IT.** `scripts/probe_arcgis_ring_nesting.mjs` records every ArcGIS URL the
+shipped apps request, fetches each both ways, and prints the table. It is an operator
+command rather than a CI gate: it needs 178 live county services, and a gate that needs a
+third party up fails on somebody else's schedule.
 
 ## How to read the tables
 
@@ -8700,9 +8893,19 @@ matrix; when one is rejected, move the rationale into a NO HONEST ANALOG footnot
      Measured against the same features read as Esri JSON: **1.6 km² of the park tiling
      (0.44%) and 1.2 km² of the fire tiling (0.08%)** answered "no district" while being
      in one, with two single holes over 1 km² each. Esri JSON keeps the part structure in
-     ring WINDING, so the DeKalb loaders fetch `f=json` and reassemble
-     (`esriRingsToGeoJSON`). **Worth re-testing on the other AGOL-hosted counties**
-     (Logan, Sangamon, Madison's `/serverh`) — the quirk is the writer's, not DeKalb's.
+     ring WINDING, so the DeKalb loaders fetch `f=json` and reassemble.
+
+     **THAT LAST SENTENCE — "worth re-testing on the other AGOL-hosted counties (Logan,
+     Sangamon, Madison's `/serverh`) — the quirk is the writer's, not DeKalb's" — WAS
+     RIGHT AND WAS NEVER RUN, for three weeks.** It was run on 2026-09-05, after
+     Wisconsin hit the same writer's OTHER failure mode, and the answer is far larger
+     than the counties it named: **41 of the 156 polygon layers this app fetches live
+     lose interior rings to the GeoJSON export, 1,376 of them, worth 298.2 km² of ground
+     the publishers had cut out.** See *The ArcGIS GeoJSON export unnests interior rings*
+     above for the sweep, the per-layer table and the fix. The lesson is not about
+     ArcGIS: a line that says a defect is the WRITER's rather than one county's has
+     already told you the blast radius, and leaving it as a note keeps the other forty
+     wrong.
 
   **The other three northern counties are blocked on geometry, not on rosters** — each is
   a recorded gap with a measured blocker:

@@ -2,8 +2,12 @@
     var PAGE = 1000;
     function page(offset, acc) {
       var url = layerUrl + "/query?where=1%3D1&outFields=" + encodeURIComponent(outFields || "*") +
-        "&outSR=4326&f=geojson&geometryPrecision=6&resultRecordCount=" + PAGE + "&resultOffset=" + offset;
-      return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2).then(function (gj) {
+        "&outSR=4326&f=json&geometryPrecision=6&resultRecordCount=" + PAGE + "&resultOffset=" + offset;
+      // f=json, not f=geojson: the GeoJSON export unnests interior rings (see
+      // the arcgis-loader block for the measurement). esriToGeoJSON carries
+      // exceededTransferLimit through, which is what this loop pages on.
+      return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+        .then(esriToGeoJSON).then(function (gj) {
         var feats = (gj && gj.features) || [];
         acc = acc.concat(feats);
         var more = gj && (gj.exceededTransferLimit || (gj.properties && gj.properties.exceededTransferLimit));

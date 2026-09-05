@@ -898,10 +898,15 @@ try {
   {
     const CAP = 2000, TOTAL = 2820;      // the live cap and the live Illinois count
     const seen = [];
+    // ESRI JSON, not GeoJSON — the shape the app now asks these services for.
+    // Every ArcGIS loader moved to f=json on 2026-09-05, because the GeoJSON
+    // export unnests interior rings (engine/index.html/arcgis-loader.txt), and
+    // a stub that keeps answering GeoJSON is no longer reproducing the
+    // service's contract. The assertion below is unchanged; only the wire
+    // format is.
     const stubFeature = (i) => ({
-      type: "Feature",
-      properties: { name: "Station " + i, address: i + " Main St", city: "Town", state: "IL", zipcode: "60000" },
-      geometry: { type: "Point", coordinates: [-87.63 + (i % 100) * 0.001, 41.88 + Math.floor(i / 100) * 0.001] },
+      attributes: { name: "Station " + i, address: i + " Main St", city: "Town", state: "IL", zipcode: "60000" },
+      geometry: { x: -87.63 + (i % 100) * 0.001, y: 41.88 + Math.floor(i / 100) * 0.001 },
     });
     const context = await browser.newContext({ serviceWorkers: "block" });
     // ONE handler for every structures layer, branching on the layer index:
@@ -914,7 +919,7 @@ try {
         if (!m) return r.continue();
         const body = (feats, more) => r.fulfill({
           status: 200, contentType: "application/json",
-          body: JSON.stringify({ type: "FeatureCollection", features: feats, exceededTransferLimit: more }),
+          body: JSON.stringify({ features: feats, exceededTransferLimit: more }),
         });
         if (m[1] !== "51") return body([stubFeature(0)], false);
         const offset = parseInt(u.searchParams.get("resultOffset") || "0", 10);
