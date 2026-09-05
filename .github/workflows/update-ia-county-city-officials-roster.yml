@@ -1,7 +1,7 @@
 name: Update IA county-published city officials
 
-# Weekly refresh of the mayors, clerks and council members EIGHT IOWA COUNTIES
-# publish for the 84 cities inside them (ia/data/app/ia-county-city-officials.json,
+# Weekly refresh of the mayors, clerks and council members NINE IOWA COUNTIES
+# publish for the 98 cities inside them (ia/data/app/ia-county-city-officials.json,
 # read by ia/index.html's City card).
 #
 # THE ROUTE THIS FILE REFRESHES WAS SITTING IN ITS OWN GAP RECORD. The
@@ -10,15 +10,21 @@ name: Update IA county-published city officials
 # of elections under Iowa Code 47.2, publishes a city-clerk list — and noted
 # that seven counties' HOME pages had been fetched, "which is what a homepage
 # looks like either way and settles nothing". Probed properly on 2026-09-05 it
-# yields 84 cities against the eight this app could previously name.
+# yields 98 cities against the eight this app could previously name.
+#
+# JASPER IS THE ONE TO READ BEFORE ADDING A COUNTY: its publisher is the county's
+# ELECTION AUTHORITY on its own host, jaspercountyelections.iowa.gov, linked from
+# jasperia.org -- a domain cited in three of this app's own data files while every
+# host permuted from the auditor's MAIL domain failed. Consult the shipped data
+# before permuting hostnames.
 #
 # THE CURRENCY GATE IS WHAT THIS RUN IS REALLY WATCHING, and it is dated rather
 # than a hand list. Iowa city officers are elected in November of ODD years and
 # take office the following January, so a page maintained since the last city
 # election cannot still publish a term that has already ended. Three of the
-# eleven counties that publish this page do — Sac (29 of 61 officials), Shelby
+# twelve counties that publish this page do — Sac (29 of 61 officials), Shelby
 # (38 of 77) and Winnebago (22 of 51) — and all three show their four-year seats
-# split across 2025 and 2027 where the other eight straddle 2027 and 2029: a
+# split across 2025 and 2027 where the other nine straddle 2027 and 2029: a
 # page last maintained after the November 2023 election. So the builder refuses
 # any county publishing one expired term, which means:
 #
@@ -33,23 +39,23 @@ name: Update IA county-published city officials
 # answer would otherwise ship:
 #
 #   * THE ROLE SITS IN TWO DIFFERENT PLACES AND THE COUNTY DECIDES WHICH.
-#     FIVE of the eleven put the clerk's and mayor's role in a <b> INSIDE the
+#     FIVE of the twelve put the clerk's and mayor's role in a <b> INSIDE the
 #     name's own div (Boone 19, Crawford 32, Iowa 7, Marion 16, Winnebago 14);
-#     the other SIX put every role in a positionTitle heading. Crawford uses
+#     the other SEVEN put every role in a positionTitle heading. Crawford uses
 #     both. Read the div flat and the clerk becomes a person called "City Clerk
 #     Sarah Miller"; key on the heading alone and, in those five, the clerk and
 #     the mayor are filed as council members. The scraper reads the <b> when
 #     there is one and falls back to the heading, so it needs neither to be
 #     universal — which is the point, because neither is.
 #   * THE SEAT FOLLOWS A <br/> IN THAT SAME DIV — 93 shipped officials carry the
-#     ward or at-large seat their county states (106 across all eleven), which
+#     ward or at-large seat their county states (117 across all twelve), which
 #     no other Iowa source pairs with a name — so a parser reading the div's
 #     text ships people whose surname appears to be "Ward".
 #   * THE mailto: HREF IS EMPTY IN SOME COUNTIES AND POPULATED IN OTHERS, so the
 #     address is read from the link TEXT, which is right either way. Measured
-#     across the eleven: Boone (59) and Crawford (13) publish EMPTY hrefs,
-#     Cerro Gordo (56), Shelby (11) and Marion (8) publish POPULATED ones, and
-#     the other six publish no mailto at all. An href-keyed scrape would return
+#     across the twelve: Boone (59) and Crawford (13) publish EMPTY hrefs,
+#     Cerro Gordo (56), Jasper (37), Shelby (11) and Marion (8) publish POPULATED
+#     ones, and the other five publish no mailto at all. An href-keyed scrape would return
 #     an e-mail for nobody in two counties while every count guard still passed
 #     — the shape that took Brown County's seven addresses out silently.
 #
@@ -63,7 +69,7 @@ name: Update IA county-published city officials
 # name, which is the whole reason the test runs against the SHIPPED name.
 #
 # THIS WORKFLOW IS EXPECTED TO GO RED, AND KNOWING WHEN IS THE POINT. Exactly
-# eight counties are current and MIN_COUNTIES is 8, so ONE county letting its
+# nine counties are current and MIN_COUNTIES is 9, so ONE county letting its
 # page go stale fails the build — not "a real collapse", one county. And every
 # EVEN-YEAR JANUARY, when the terms elected in the previous November's city
 # election begin, every one of the eight will publish terms that have just
@@ -71,8 +77,8 @@ name: Update IA county-published city officials
 # each cycle. That is the gate working. NEVER lower MIN_COUNTIES to get past it:
 # the floor is what makes a county quietly going stale visible at all.
 #
-# This is 84 cities out of 939 and must never be described as a statewide
-# roster: `ia-municipal-officeholders` stays open for the other 847, and the
+# This is 98 cities out of 939 and must never be described as a statewide
+# roster: `ia-municipal-officeholders` stays open for the other 833, and the
 # City card says so on every one of their cards.
 
 on:
@@ -104,7 +110,7 @@ jobs:
       - name: Install dependencies
         run: pip install -c ia/scripts/requirements.txt requests beautifulsoup4
 
-      - name: Scrape the eleven counties' city-officials pages
+      - name: Scrape the twelve counties' city-officials pages
         run: python3 ia/scripts/ia_county_city_officials_scraper.py
 
       - name: Rebuild the roster (expired-term gate, then every address re-witnessed)
@@ -137,19 +143,19 @@ jobs:
           # way and never executed a step; scripts/validate_workflow_deps.py
           # now refuses it.
           PR_BODY: |
-            Automated weekly refresh of the City card's officials block for the 84 Iowa cities whose own COUNTY publishes their mayor, clerk and council — generated by `ia/scripts/build_ia_county_city_officials.py` from `ia_county_city_officials_scraper.py`.
+            Automated weekly refresh of the City card's officials block for the 98 Iowa cities whose own COUNTY publishes their mayor, clerk and council — generated by `ia/scripts/build_ia_county_city_officials.py` from `ia_county_city_officials_scraper.py`.
 
             Please review the diff before merging — this changes data about real officeholders.
 
             **Three things worth reading closely here.**
 
-            A county appearing or disappearing is the expired-term gate firing, not a scrape failure. Eleven counties publish this page; a county ships only if it publishes no term that has already ended. Sac, Shelby and Winnebago fail that test today, and if one of them starts passing it is because the county updated its page — which is the outcome this gate exists to notice.
+            A county appearing or disappearing is the expired-term gate firing, not a scrape failure. Twelve counties publish this page; a county ships only if it publishes no term that has already ended. Sac, Shelby and Winnebago fail that test today, and if one of them starts passing it is because the county updated its page — which is the outcome this gate exists to notice.
 
             A name changing spelling matters more than usual: the shipped e-mail addresses are witnessed against the name they are attached to, so a scrape that slips a name will also silently re-witness an address.
 
             A seat (`Ward 3`, `At Large`) is published by the county and shipped on the row. It is not geometry and makes no claim about where a reader is standing — the `city-ward` layer is still only the three cities whose boundaries this app has.
 
-            This is **84 cities out of 939** and must not be described as a statewide roster; `ia-municipal-officeholders` stays open for the other 847.
+            This is **98 cities out of 939** and must not be described as a statewide roster; `ia-municipal-officeholders` stays open for the other 833.
         run: |
           # Fixed branch (not per-run): an unmerged roster PR is refreshed in
           # place by the force-push below instead of spawning a duplicate PR

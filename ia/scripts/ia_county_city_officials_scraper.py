@@ -11,7 +11,7 @@ any state clerk file -- publishes a city-clerk list. Seven large counties'
 HOME pages were fetched and none mentions a city clerk, which is what a
 homepage looks like either way and settles nothing."
 
-It does. Eleven counties publish, for every city inside them, the city's own
+It does. Twelve counties publish, for every city inside them, the city's own
 address and phone, its CITY CLERK by name, its MAYOR, and the whole CITY
 COUNCIL -- each with a term end, a term length, and often a phone and an
 e-mail. That is the WEC-shaped answer Iowa was assumed not to have, arriving
@@ -27,30 +27,36 @@ sandbox's own egress proxy and not the county at all.
 THREE TRAPS, ALL IN THE MARKUP AND ALL SILENT
 -----------------------------------------------
 1. THE ROLE SITS IN TWO DIFFERENT PLACES AND THE COUNTY DECIDES WHICH. FIVE of
-   the eleven put the clerk's and mayor's role in a <b> INSIDE the name's own
+   the twelve put the clerk's and mayor's role in a <b> INSIDE the name's own
    div -- `<div class="offName"><b>City Clerk </b><br>Sarah Miller</div>` --
-   and the other SIX give every role a `div.positionTitle` heading instead.
+   and the other SEVEN give every role a `div.positionTitle` heading instead.
    Measured 2026-09-05: <b> in Boone (19), Crawford (32), Iowa (7), Marion (16)
-   and Winnebago (14); headings only in Cerro Gordo, Jackson, Keokuk,
-   Muscatine, Sac and Shelby; Crawford uses BOTH. Read the text flat and the
+   and Winnebago (14); headings only in Cerro Gordo, Jackson, Jasper, Keokuk,
+   Muscatine, Sac and Shelby. THE <b> IS AN ADDITION, NOT AN ALTERNATIVE: in all
+   five, City Council still comes from a positionTitle heading exactly as it does
+   in the other seven, and what the <b> carries is the NON-COUNCIL roles -- so
+   "Crawford uses both" is no distinction, every one of the five does. What IS
+   distinctive about Crawford is a THIRD <b> role, Library (6); Boone and
+   Winnebago carry City Administrator there instead, and Iowa carries only Mayor
+   because it publishes no clerk at all. Read the text flat and the
    clerk is a person called "City Clerk Sarah Miller"; take positionTitle for
    every row and, in those five, the clerk and the mayor are filed as council
    members. That is the Franklin trap in both directions at once, so the role
    is read STRUCTURALLY: the <b> when the row has one, the heading when it does
    not. AN EARLIER VERSION OF THIS PARAGRAPH CALLED THE <b> UNIVERSAL, which is
    the fleet's own recurring error -- a correct parser described by a record
-   that generalises one county's markup to eleven.
-2. THE SEAT FOLLOWS A <br/> INSIDE THE SAME DIV. 106 of the officials across
-   the eleven carry `Ward 1` or `At Large` after the break, 93 of them in the
-   eight counties that ship -- so these counties publish which ward a council
+   that generalises one county's markup to the whole fleet of publishers.
+2. THE SEAT FOLLOWS A <br/> INSIDE THE SAME DIV. 117 of the officials across
+   the twelve carry `Ward 1` or `At Large` after the break, 104 of them in the
+   nine counties that ship -- so these counties publish which ward a council
    member holds, which no other Iowa source does -- and a parser that takes the
    div's text ships people whose surname is "Ward". (An earlier draft said 109,
    which came from a throwaway parse before this scraper existed.)
 3. THE mailto: HREF IS EMPTY IN SOME COUNTIES AND POPULATED IN OTHERS, so the
    address is read from the link TEXT, which is correct either way. Measured
    2026-09-05: Boone (59 of 59) and Crawford (13 of 13) publish EMPTY hrefs;
-   Cerro Gordo (56), Shelby (11) and Marion (8) publish POPULATED ones; the
-   other six publish no mailto at all. An href-keyed scrape would return an
+   Cerro Gordo (56), Jasper (37), Shelby (11) and Marion (8) publish POPULATED
+   ones; the other five publish no mailto at all. An href-keyed scrape would return an
    e-mail for nobody in Boone and Crawford while every count guard still
    passed -- the shape that took Brown County's seven addresses out silently --
    and it would work perfectly in the three that populate them, which is
@@ -80,7 +86,7 @@ HEADERS = {"User-Agent": "districtry/1.0 (+https://districtry.com/ia/)",
            "Accept": "text/html,application/xhtml+xml"}
 TIMEOUT = 45
 
-# The eleven counties whose city-officials page this sweep found, PINNED rather
+# The twelve counties whose city-officials page this sweep found, PINNED rather
 # than re-discovered: a county that redesigns its site should fail loudly here,
 # not disappear from a roster nobody is watching. Re-run the sweep in the gap
 # blocker to look for new ones; a twelfth county is an entry, not a code change.
@@ -89,6 +95,15 @@ COUNTIES = [
     ("19033", "Cerro Gordo", "https://cerrogordo.gov/about/elected_officials/city/"),
     ("19047", "Crawford", "https://www.crawfordcounty.iowa.gov/about/elected_officials/city/"),
     ("19095", "Iowa", "https://iowacounty.iowa.gov/about/elected_officials/city/"),
+    # JASPER'S PUBLISHER IS ITS ELECTION AUTHORITY, ON ITS OWN HOST -- the Knox
+    # and Johnson rule, and the reason this county was nearly recorded absent.
+    # The county's site is jasperia.org (already cited in three of this app's
+    # own data files) and it LINKS OUT to the auditor's elections host for the
+    # city officials; `jaspercounty.iowa.gov`, permuted from the auditor's mail
+    # domain, has no A record at all, so a failure there was never evidence
+    # about the county.
+    ("19099", "Jasper",
+     "https://jaspercountyelections.iowa.gov/elected_officials/city/"),
     ("19097", "Jackson", "https://jacksoncounty.iowa.gov/about/elected_officials/city/"),
     ("19107", "Keokuk", "https://keokukcounty.iowa.gov/about/elected_officials/city/"),
     ("19125", "Marion", "https://www.marioncountyiowa.gov/about/elected_officials/city/"),

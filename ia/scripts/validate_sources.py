@@ -491,11 +491,11 @@ PROVENANCE = [
             "the sweep and not of the city."
         ),
     },
-    # THE COUNTY-PUBLISHED CITY OFFICIALS -- 8 counties, 84 cities, 605 people.
+    # THE COUNTY-PUBLISHED CITY OFFICIALS -- 9 counties, 98 cities, 710 people.
     # This is the route ia-municipal-officeholders recorded as NOT YET PROBED:
     # the county auditors, Iowa's statutory commissioners of elections under
-    # Iowa Code 47.2. Eleven counties publish a full city-officials page and
-    # ELEVEN ARE LISTED HERE, including the three the builder currently refuses
+    # Iowa Code 47.2. Twelve counties publish a full city-officials page and
+    # ALL TWELVE ARE LISTED HERE, including the three the builder currently refuses
     # -- Sac, Shelby and Winnebago still publish terms that ended in January
     # 2026. They are registered deliberately: their pages are exactly what a
     # monthly human look should re-check, because one of them updating is how
@@ -570,6 +570,22 @@ PROVENANCE = [
             "both named and neither annotated, which is the reason nothing here assumes "
             "one clerk per city -- a builder keyed on a single clerk would silently "
             "drop one real person's name."
+        ),
+    },
+    {
+        "layer": "municipality",
+        "app_file": "ia-county-city-officials.json",
+        "source_url": "https://jaspercountyelections.iowa.gov/elected_officials/city/",
+        "note": (
+            "Jasper County's fourteen cities, Newton among them. THE ONLY ONE OF THE "
+            "TWELVE WHOSE PUBLISHER IS NOT THE COUNTY'S MAIN SITE: this is the county's "
+            "ELECTION AUTHORITY on its own host, linked from jasperia.org, and it is why "
+            "Jasper was nearly recorded unmeasurable. Every host permuted from the "
+            "auditor's MAIL domain failed and `jaspercounty.iowa.gov` has no A record at "
+            "all -- while `jasperia.org` sat in three of this app's own data files the "
+            "whole time. If this row ever goes dark, read jasperia.org for the current "
+            "elections host before concluding anything: a county's election authority is "
+            "a separate publisher, and the county's own domain is in the shipped data."
         ),
     },
     {
