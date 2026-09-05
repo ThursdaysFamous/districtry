@@ -461,7 +461,7 @@
             "label": "Pre-built from the county's published district map, for the counties that publish no vector data"
           },
           {
-            "label": "Illinois Broadband Office / Connected Nation, IL_Boundary_Layers layer 11 — Carroll, Lee, Randolph, Sangamon, St. Clair and Stephenson ONLY. Not a county or library publication: every attribute besides the library name and type is a broadband service metric. Its licence (AGOL item 675906ae06b5460296154760b7fb1367) permits public use, disclaims warranty, says the data is NOT for legal boundary determinations, and requires both attribution and disclosure of any changes — so each of those cards names this publisher AND states that the boundary shown was clipped to the county and simplified to 5 m.",
+            "label": "Illinois Broadband Office / Connected Nation, IL_Boundary_Layers layer 11 — Carroll, Lee, Macoupin, Randolph, Sangamon, St. Clair and Stephenson ONLY. Not a county or library publication: every attribute besides the library name and type is a broadband service metric. Its licence (AGOL item 675906ae06b5460296154760b7fb1367) permits public use, disclaims warranty, says the data is NOT for legal boundary determinations, and requires both attribution and disclosure of any changes — so each of those cards names this publisher AND states that the boundary shown was clipped to the county and simplified to 5 m.",
             "url": "https://services.arcgis.com/R0IGaIgf2sox9aCY/arcgis/rest/services/IL_Boundary_Layers/FeatureServer/11"
           },
           {
@@ -470,7 +470,7 @@
           }
         ],
         "people": "Name-only in most counties; where a county's GIS carries trustees or a district office, the card shows them. Cicero's library board comes from the Cook County Clerk's directory of elected officials (cook-library-trustees.json, rebuilt weekly by CI).",
-        "applies": "The counties that publish a library-district layer, plus six that publish none and are drawn from a statewide layer instead."
+        "applies": "The counties that publish a library-district layer, plus seven that publish none and are drawn from a statewide layer instead."
       }
     },
     {
@@ -1037,6 +1037,12 @@
         "min_features": 1,
         "max_features": 1,
         "note": "Carroll County coverage outline (scripts/build_county_outline.py) — gates the county's dispatch entries."
+      },
+      {
+        "file": "macoupin-library-districts.json",
+        "min_features": 11,
+        "max_features": 11,
+        "note": "Boundaries from the Illinois Broadband Office / Connected Nation IL_Boundary_Layers service, layer 11, pre-built by scripts/build_statewide_library_districts.py — the same source, licence and disclosure as its six siblings (see carroll-library-districts.json). MACOUPIN IS THE SECOND COUNTY IN THAT SET WHOSE OWN CLERK PUBLISHES A LIST TO CHECK IT AGAINST, and the stronger of the two: her DEVNET Taxcode Value within District Report names, across all 224 of the county's tax codes, five LY* library districts, one TL* township library and five VL* municipal libraries — exactly the eleven the layer draws inside the county, with the layer's own LibraryType agreeing with the Clerk's code prefix on every one. The builder refuses to write if that stops being true. ONE NAME DISAGREEMENT IS CARRIED RATHER THAN RESOLVED SILENTLY: the Clerk writes “Virden Library District” under the code LYGP where the layer writes “Grand Prairie of the West Public Library District”; the Clerk's own GP code shows the county knows both names, so this is one body under two labels. TWO BODIES SEATED IN NEIGHBOURING COUNTIES REACH OVER THE LINE AND NEITHER SHIPS, for different reasons that are both measured: Divernon Township Library reaches 0.9 m and falls to the existing reach rule, while Hayner Public Library District reaches 20.6 m over 0.060 km² — past that rule — and is excluded because not one of the county's 224 tax codes levies for it. The exclusion is DECLARED in the builder and the builder MEASURES the reach and refuses to write if it has moved, so an undeclared newcomer fails the build instead of shipping and a stale entry fails it instead of rotting."
       },
       {
         "file": "carroll-library-districts.json",
@@ -2638,7 +2644,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-il-shell-v14",
+    "cache_name": "districtry-il-shell-v16",
     "shell_urls": [
       "./",
       "./sources.html",

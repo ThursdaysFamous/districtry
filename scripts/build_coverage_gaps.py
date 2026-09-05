@@ -211,7 +211,19 @@ def validate(entries, layer_ids, outlines):
 # multi-replacement edit whose last assertion failed, so none of the earlier
 # replacements were written and nobody re-read the file; the count then went
 # stale silently for one release. This makes the prose answer to the data.
-COUNTED_PROSE = re.compile(r"(?i)\bIn (\d+) of\b")
+# A gap record that states how many counties it covers must state the number it
+# LISTS. Three shapes appear in practice and all three are checked, because the
+# first pattern here caught only one of them: "In 12 of ..." (the original),
+# "... 67 of the 91 this site serves" (a summary written for a reader), and an
+# `area` of "67 served counties". The second and third went unchecked, which
+# matters most exactly when it is easiest to get wrong — two changes in flight
+# each removing one county from the same list, each correctly decrementing the
+# count to the same value, and the merge of the two leaving the list one shorter
+# than the number above it. The gate turns that silent wrong answer into a
+# failed build. `ward-polling-places` deliberately does not match: its area
+# counts WARDS and municipalities, not counties.
+COUNTED_PROSE = re.compile(r"(?i)\bIn (\d+) of\b|\b(\d+) of the \d+\b"
+                           r"|^(\d+) served counties$")
 
 
 def counted_prose_problems(where, entry):
@@ -219,12 +231,17 @@ def counted_prose_problems(where, entry):
     counties = entry.get("counties") or []
     if not counties:
         return []                        # a gap with no county list counts nothing
-    said = COUNTED_PROSE.search(str(entry.get("summary") or ""))
-    if said and int(said.group(1)) != len(counties):
-        return ["%s: the summary says %s counties and `counties` lists %d — the "
-                "panel would print a number above a list that contradicts it"
-                % (where, said.group(1), len(counties))]
-    return []
+    out = []
+    for field in ("summary", "area"):
+        said = COUNTED_PROSE.search(str(entry.get(field) or ""))
+        if not said:
+            continue
+        n = int(next(g for g in said.groups() if g))
+        if n != len(counties):
+            out.append("%s: the %s says %d counties and `counties` lists %d — the "
+                       "panel would print a number above a list that contradicts it"
+                       % (where, field, n, len(counties)))
+    return out
 
 
 def render(entries):

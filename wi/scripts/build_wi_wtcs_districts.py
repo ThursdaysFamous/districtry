@@ -52,6 +52,65 @@ GATES, each a measurement made 2026-08-27 and not an assumption:
     school-district fabric, which carries the same lake water. TIGER
     geographies include territorial water — test a tiling's integrity
     from its own union, not from a water-bearing reference.)
+
+  * NO NESTED SHELLS, and a FLOOR ON INTERIOR RINGS. Added 2026-09-05,
+    and the reason is that every gate above was blind to a wrong answer
+    this file shipped for a week.
+
+THE HOLE THIS BUILDER FILLED, AND WHY NOTHING CAUGHT IT.
+
+ArcGIS's GeoJSON export silently UNNESTS interior rings: it returns a
+feature's holes as separate PARTS, so ground the publisher cut out of a
+district becomes ground the district claims. Measured on this layer's own
+endpoint, same query, same generalization, only the format changed:
+`f=geojson` returns the 16 districts with ZERO interior rings, `f=json`
+returns the same 16 with 109. The part counts say it plainly — Madison
+came back as 55 parts and 27, Southwest as 40 and 21, Blackhawk as 9 and
+4; every missing hole is an extra part.
+
+THE LAKE WINNEBAGO GATE ABOVE CANNOT SEE THIS, and it is blind by
+construction rather than merely unlucky — which matters, because it was
+written BECAUSE holes matter here:
+
+  1. it runs at the UNION level on make_valid copies, and shapely's
+     make_valid RE-NESTS an unnested inner shell as a hole. Measured: a
+     10x10 square with a 2x2 hole gives Polygon/holes=1/area=96.0 from
+     both the nested form and the unnested one, so the two fetches are
+     the same object by the time any gate downstream of make_valid looks
+     (112 union holes either way);
+  2. these districts TILE the state, so a hole in one district is
+     usually another district and the UNION fills it from the neighbour
+     regardless of format. A union-level hole count says nothing about
+     per-feature holes even without (1).
+
+So the two gates added here run on the geometry as SHIPPED, before any
+make_valid. The nested-shell test is the stronger of the two: a part
+inside a part is never lawful — two disjoint pieces of one district
+cannot contain one another — so it catches the unnesting whatever
+produced it, without pinning a count or assuming the upstream bug
+persists. The ring floor catches the other failure, holes dropped
+outright rather than unnested.
+
+WHAT A READER SAW, measured at an interior point of each source hole
+(never a centroid: the centroid of a non-convex hole falls outside it,
+lands in the owner's shell and reads as agreement):
+
+  109 interior rings at source; 103 enclose real ground and 6 are
+  zero-area 4-vertex artifacts of the generalization. Of the 103, the
+  shipped file named TWO colleges at 100 points and named one where the
+  source names none at 3. None agreed. 27.9 km² of holes, six over
+  1 km², the largest 2.26 km².
+
+  The CARD count is smaller and is the one to quote to a reader: the app
+  renders the FIRST containing feature, so at 44 of the 103 file order
+  already showed the true district and a reader saw the right answer
+  from a wrong geometry. The card's answer changes at 59, three of them
+  onto "no district".
+
+  Unlike the county supervisory rebuild there is NO RESIDUAL: that file
+  is mapshaper-simplified at 9% retain, which drops small rings in both
+  versions, while this builder ships the server's geometry as answered.
+  All 103 are fixed.
 """
 
 import json
@@ -71,7 +130,7 @@ LAYER = ("https://services8.arcgis.com/o4NJgD3NfeHnWy06/arcgis/rest/services/"
          # is 9.2 MB for 16 features; ~55 m offset ships 316 KB. Per-feature
          # generalization breaks shared-edge vertex identity, so the fabric
          # gates below carry sliver tolerances measured at THIS precision.
-         "&maxAllowableOffset=0.0005&geometryPrecision=4&f=geojson")
+         "&maxAllowableOffset=0.0005&geometryPrecision=4&f=json")
 WI_BBOX = (-92.95, 42.40, -86.20, 47.40)
 
 # Each district's own college home city — every pin verified against the
@@ -96,6 +155,75 @@ SEATS = {
 }
 WINNEBAGO = (44.02, -88.41)   # the one lawful hole's centroid
 WINNEBAGO_AREA = 0.0599       # deg², measured 2026-08-27
+
+# Interior rings across the 16 districts, measured 2026-09-05 through f=json:
+# 109, of which 103 enclose real ground and 6 are zero-area 4-vertex artifacts
+# of the server generalization. The floor sits below the measurement so a
+# boundary amendment does not fail the build, and far above the 0 that
+# f=geojson returns.
+HOLE_MEASURED = 109
+HOLE_FLOOR = 90
+
+# Parts sitting inside another part of the same district, after excluding the
+# one lawful case (a part inside a HOLE of another part — Madison's enclave).
+# Measured 2026-09-05: 6, one in Fox Valley and five in Northeast, every one a
+# 4-vertex micro-part of at most 1.5e-8 deg² that the server generalization
+# emits. They are NOT separable from real holes by area or vertex count — see
+# nested_shells — so the number is pinned rather than tolerated by shape, and
+# a rise is a thing to read rather than to re-pin.
+NESTED_SHELL_ARTIFACTS = 6
+
+
+def esri_feature_to_geojson(f):
+    """Esri JSON -> GeoJSON, nesting each interior ring inside its owner.
+
+    The converter lives in build_wi_supervisory_districts, which is where the
+    exporter defect was first measured; it is imported rather than copied so
+    the two builders cannot drift on the containment rule.
+    """
+    sys.path.insert(0, SCRIPT_DIR)
+    from build_wi_supervisory_districts import _esri_feature_to_geojson
+    return _esri_feature_to_geojson(f)
+
+
+def interior_rings(geom):
+    """Every interior ring in a GeoJSON Polygon/MultiPolygon."""
+    polys = ([geom["coordinates"]] if geom["type"] == "Polygon"
+             else geom["coordinates"])
+    return [r for p in polys for r in p[1:]]
+
+
+def nested_shells(geom, contains):
+    """Parts whose shell sits inside another part's shell, minus the lawful ones.
+
+    `f=geojson` returns a feature's holes as separate PARTS, so a shell inside
+    a shell is the defect's own signature. ONE containment is lawful and is
+    excluded structurally: a part sitting inside a HOLE of another part is a
+    genuine enclave, not an unnested ring.
+
+    THIS IS A SECOND OPINION, NOT THE GATE. A zero-tolerance version was
+    written first and it does not survive contact with the data: the server
+    generalization emits degenerate micro-parts, and they are not separable
+    from real holes by any shape test tried. Area fails — 22 of the 103 real
+    interior rings are smaller than the largest such micro-part, so a
+    threshold clearing the noise would blind the gate to 22 real holes.
+    Vertex count fails — every micro-part has 4 vertices and so do 29 of the
+    real rings. So the count is pinned to what was MEASURED (see
+    NESTED_SHELL_ARTIFACTS) and a rise is the news; the interior-ring FLOOR
+    is what actually catches an unnested fetch, which shows up there as 0.
+    """
+    if geom["type"] == "Polygon":
+        return []
+    parts = geom["coordinates"]
+    out = []
+    for i, a in enumerate(parts):
+        for j, b in enumerate(parts):
+            if i == j or not contains(a[0], b[0]):
+                continue
+            if any(contains(h, b[0]) for h in a[1:]):
+                continue            # inside a hole of a — a lawful enclave
+            out.append(j)
+    return out
 
 
 def fetch(url, tries=6, timeout=120):
@@ -127,7 +255,9 @@ def main():
         return g
 
     doc = json.loads(fetch(LAYER))
-    feats = doc.get("features") or []
+    if isinstance(doc, dict) and doc.get("error"):
+        raise SystemExit("ArcGIS error from the WTCS layer: %r" % doc["error"])
+    feats = [esri_feature_to_geojson(f) for f in (doc.get("features") or [])]
     if len(feats) != 16:
         raise SystemExit("expected exactly 16 WTCS districts, got %d — the "
                          "system reorganized; re-measure" % len(feats))
@@ -171,6 +301,43 @@ def main():
                              "[%s] — a district moved or is mislabeled"
                              % (city, ab, hits, ab))
 
+    # ---- THE PER-FEATURE HOLE GATES -------------------------------------
+    # Both run on out_feats — the geometry as SHIPPED — and NOT on the
+    # make_valid copies the gates below use, because shapely's make_valid
+    # RE-NESTS an unnested inner shell as a hole. Measured 2026-09-05: a
+    # 10x10 square with a 2x2 hole gives Polygon/holes=1/area=96.0 from both
+    # the properly nested form and the unnested one, so every gate downstream
+    # of make_valid is blind to this by construction. The union-level Lake
+    # Winnebago gate is doubly blind: these districts TILE the state, so a
+    # hole in one is usually another district and the union fills it from the
+    # neighbour whatever the fetch returned.
+    def ring_contains(outer, pt_ring):
+        from build_wi_supervisory_districts import _ring_contains
+        probes = [pt_ring[0], pt_ring[len(pt_ring) // 3],
+                  pt_ring[(2 * len(pt_ring)) // 3]]
+        return sum(1 for pt in probes if _ring_contains(outer, pt)) >= 2
+
+    nested = {f["properties"]["ABBREV"]: nested_shells(f["geometry"], ring_contains)
+              for f in out_feats}
+    n_nested = sum(len(v) for v in nested.values())
+    if n_nested > NESTED_SHELL_ARTIFACTS:
+        raise SystemExit(
+            "%d parts sit inside another part of their own district, above "
+            "the %d measured on 2026-09-05 (%s). A part inside a part is what "
+            "the GeoJSON exporter makes of a hole, so this is either an "
+            "unnested fetch or new generalization noise — read them before "
+            "moving the pin; do not ship."
+            % (n_nested, NESTED_SHELL_ARTIFACTS,
+               ", ".join("%s:%d" % (k, len(v)) for k, v in sorted(nested.items()) if v)))
+
+    holes_shipped = sum(len(interior_rings(f["geometry"])) for f in out_feats)
+    if holes_shipped < HOLE_FLOOR:
+        raise SystemExit(
+            "the 16 districts carry %d interior rings, under the floor of %d "
+            "(measured %d on 2026-09-05) — the publisher's own cutouts have "
+            "gone missing, which is what f=geojson does silently; do not ship"
+            % (holes_shipped, HOLE_FLOOR, HOLE_MEASURED))
+
     abs_ = sorted(valid_shapes)
     overlap = 0.0
     for i in range(len(abs_)):
@@ -207,9 +374,12 @@ def main():
         json.dump({"type": "FeatureCollection", "features": out_feats}, f,
                   separators=(",", ":"), ensure_ascii=False)
         f.write("\n")
-    print("wrote %s — 16 districts; seat witness 16/16; overlap %.1e deg²; "
+    print("wrote %s — 16 districts; seat witness 16/16; %d interior rings "
+          "shipped (floor %d), %d nested micro-parts (pinned %d); "
+          "overlap %.1e deg²; "
           "Lake Winnebago hole %.4f deg² present, other holes %.1e deg²"
-          % (os.path.relpath(OUT, REPO_ROOT), overlap, winnebago, other_holes),
+          % (os.path.relpath(OUT, REPO_ROOT), holes_shipped, HOLE_FLOOR,
+             n_nested, NESTED_SHELL_ARTIFACTS, overlap, winnebago, other_holes),
           file=sys.stderr)
 
 

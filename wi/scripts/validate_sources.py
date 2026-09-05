@@ -1328,8 +1328,9 @@ def _check_shipped_is_current(findings, spec):
 
     # A ROW COUNT CANNOT SEE A REDRAW, so read the layer's own edit timestamp
     # too. Measured 2026-09-05: the OEC edited all four layers on 2026-08-31,
-    # moving boundaries in ~300 features, while three of the four row counts did
-    # not move at all — the blind spot this file first documented and then
+    # moving boundaries in 397 features (138 fire, 161 law, 19 PSAP,
+    # 79 EMS), while three of the four row counts did not move at all —
+    # the blind spot this file first documented and then
     # immediately hit.
     was_edit = (pin.get("dataLastEdit") or {}).get(key)
     live_edit = None

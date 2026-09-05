@@ -135,6 +135,36 @@ M2_PER_DEG2 = (111320.0 ** 2) * 0.766   # ~40.5N; used only for the sliver floor
 # recorded in this repo's gap record BEFORE this layer was found. This is the
 # gate, not a comment: if the layer stops returning exactly these, the build
 # stops.
+# Macoupin's eleven, from the County Clerk's DEVNET "Taxcode Value within
+# District Report" (tax year 2025, linked from the county's own Socrata portal
+# alongside the 2023 and 2024 editions). This is the SECOND county with a
+# published tax list to check the contractor's layer against, and it is a
+# stronger check than Carroll's because the county publishes the crosswalk for
+# every one of its 224 tax codes: the report's five LY* library districts, its
+# one TL* township library and its five VL* municipal libraries are exactly the
+# eleven bodies the layer returns inside the county, and the layer's own
+# LibraryType agrees with the Clerk's code prefix on all eleven.
+#
+# ONE NAME DISAGREEMENT IS CARRIED RATHER THAN RESOLVED SILENTLY. The Clerk
+# writes "Virden Library District" under the code LYGP; the layer writes "Grand
+# Prairie of the West Public Library District". The Clerk's own code — GP for
+# Grand Prairie — shows the county knows both names, so this is one body under
+# two labels and not a mismatch. The layer's name is what ships, because it is
+# the string on the polygon a reader's card renders.
+MACOUPIN_CLERK_LIBRARIES = {
+    "Bunker Hill Public Library District",        # LYBH
+    "Brighton Memorial Library District",         # LYBR
+    "Farmersville-Waggoner Public Library District",  # LYFW
+    "Grand Prairie of the West Public Library District",  # LYGP, the Clerk's "Virden"
+    "Litchfield Public Library District",         # LYL
+    "Girard Township Library",                    # TL07
+    "Frank Bertetti Benld Public Library",        # VLBE
+    "Carlinville Public Library",                 # VLCA
+    "Gillespie Public Library",                   # VLGI
+    "Mount Olive Public Library",                 # VLMV
+    "Staunton Public Library",                    # VLST
+}
+
 CARROLL_CLERK_LIBRARIES = {
     "Savanna Public Library District",
     "Mount Carroll District Library",
@@ -156,6 +186,27 @@ COUNTIES = [
     {"slug": "lee", "label": "Lee County", "expect": 11,
      "probes": [(41.8389, -89.4795, "Dixon Public Library"),
                 (41.7114, -89.3290, "Pankhurst Memorial Library")]},
+    {"slug": "macoupin", "label": "Macoupin County", "expect": 11,
+     "clerk_names": MACOUPIN_CLERK_LIBRARIES,
+     # Hayner is seated in Madison County and reaches 20.6 m over the line —
+     # past SLIVER_REACH_M, so shape alone keeps it; the Clerk levies nothing
+     # for it, so it is not a Macoupin library. Divernon reaches 0.9 m and the
+     # reach rule drops it without needing this list.
+     "clerk_excluded": {"Hayner Public Library District": 20.6},
+     # every probe is a Census 2020 incorporated-place centroid, so the points
+     # are independent of the layer being tested
+     "probes": [(39.27748, -89.87612, "Carlinville Public Library"),
+                (39.12582, -89.81736, "Gillespie Public Library"),
+                (39.04155, -89.95119, "Bunker Hill Public Library District"),
+                (39.50606, -89.77110, "Grand Prairie of the West Public Library District"),
+                (39.09300, -89.80233, "Frank Bertetti Benld Public Library"),
+                (39.44658, -89.78205, "Girard Township Library"),
+                # the negatives, which matter more than the positives: a layer
+                # covering everything would pass every one above, and the
+                # Clerk's tax roll independently agrees these villages pay no
+                # library line
+                (39.35574, -90.03741, None),   # Hettick
+                (39.47771, -90.10379, None)]}, # Scottville
     {"slug": "randolph", "label": "Randolph County", "expect": 9,
      "probes": [(37.9134, -89.8221, "Chester Public Library"),
                 (38.1236, -89.7018, "Sparta Public Library")]},
@@ -228,7 +279,7 @@ def county_outline(slug):
 def build_county(cfg, libs, tree, verbose=True):
     outline = county_outline(cfg["slug"])
     inland = outline.boundary.buffer(SLIVER_REACH_M * DEG)
-    kept, dropped = [], []
+    kept, dropped, excluded = [], [], []
     for idx in tree.query(outline):
         name, ltype, geom = libs[idx]
         if not geom.intersects(outline):
@@ -239,6 +290,29 @@ def build_county(cfg, libs, tree, verbose=True):
         m2 = clip.area * M2_PER_DEG2
         if clean(clip.difference(inland)).is_empty:
             dropped.append((name, m2))
+            continue
+        # A BODY THE COUNTY'S OWN TAX ROLL DOES NOT LEVY FOR IS NOT IN THIS
+        # COUNTY, however far its polygon reaches in. SLIVER_REACH_M settles a
+        # border patch by SHAPE and cannot settle one that reaches further:
+        # Hayner Public Library District, seated in Madison County, reaches
+        # 21 m into Macoupin over 0.060 km2 — twice the reach rule and so
+        # kept by it — while not one of Macoupin's 224 tax codes pays Hayner a
+        # cent. Two independently drawn boundaries disagreeing along a county
+        # line is what that is, and the Clerk is the authority on membership.
+        # Each such body is DECLARED with the reach that was measured, never
+        # derived from the expected set: an undeclared newcomer must fail the
+        # count gate below rather than be filtered away, and a declared one
+        # that stops reaching in must fail too, so the entry cannot rot.
+        if name in (cfg.get("clerk_excluded") or {}):
+            # MEASURE the reach rather than echo the declared one. A printed
+            # number a builder did not compute is a comment wearing a
+            # measurement's clothes, and the declared value is here to be
+            # CHECKED: if the polygon moves, the entry must stop matching.
+            polys = ([clip] if clip.geom_type == "Polygon" else list(clip.geoms))
+            reach_m = max((outline.boundary.distance(Point(c))
+                           for poly in polys
+                           for c in poly.exterior.coords), default=0.0) / DEG
+            excluded.append((name, m2, reach_m))
             continue
         if not name or not str(name).strip():
             fail("%s: a polygon has no Library name" % cfg["slug"])
@@ -257,6 +331,30 @@ def build_county(cfg, libs, tree, verbose=True):
         kept.append((str(name).strip(), (str(ltype).strip() if ltype else None), simple))
 
     kept.sort(key=lambda k: k[0])
+
+    # THE EXCLUSION LIST IS RE-AUDITED EVERY RUN, in both directions — the shape
+    # ACCEPTED_DROPS and EXPECTED_UNREACHABLE already have in this repo.
+    if cfg.get("clerk_excluded"):
+        seen = {n for n, _, _ in excluded}
+        declared = set(cfg["clerk_excluded"])
+        if seen != declared:
+            fail("%s: the Clerk-excluded set moved. no longer reaching in: %s; "
+                 "reaching in but not declared: %s"
+                 % (cfg["slug"], sorted(declared - seen), sorted(seen - declared)))
+        for n, m2, reach_m in sorted(excluded):
+            want_m = cfg["clerk_excluded"][n]
+            if abs(reach_m - want_m) > 1.0:
+                fail("%s: %r now reaches %.1f m into the county, not the %.1f m "
+                     "this exclusion was measured at — re-measure before "
+                     "re-declaring it" % (cfg["slug"], n, reach_m, want_m))
+            if reach_m <= SLIVER_REACH_M:
+                fail("%s: %r reaches only %.1f m in, which the sliver rule "
+                     "already drops — retire this exclusion rather than keeping "
+                     "a second reason for the same outcome"
+                     % (cfg["slug"], n, reach_m))
+            print("  excluded %r — reaches %.1f m into the county over %.3f km2, "
+                  "and no county tax code levies for it" % (n, reach_m, m2 / 1e6))
+
     if len(kept) != cfg["expect"]:
         fail("%s: %d libraries, expected %d (got: %s)"
              % (cfg["slug"], len(kept), cfg["expect"], [k[0] for k in kept]))

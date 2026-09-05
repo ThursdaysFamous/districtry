@@ -70,7 +70,7 @@
 | Livingston | 17105 | dispatch | districted | `county-board` | 4 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source); `livingston-precincts` (no-source); `livingston-special-districts` (no-source) |
 | Logan | 17107 | dispatch | districted | `county-board`, `county-precinct` | 2 — `library-districts-unmapped-counties` (no-source); `logan-fire-districts` (no-source) |
 | Macon | 17115 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 3 — `county-board-office-addresses` (no-source); `macon-board-phone-area-code` (data-quality); `macon-district-name-formatting` (data-quality) |
-| Macoupin | 17117 | dispatch | no board layer — see gaps | `county-precinct` | 4 — `library-districts-unmapped-counties` (no-source); `macoupin-county-board-districts` (no-source); `macoupin-special-districts` (no-source); `macoupin-ward-geometry` (no-source) |
+| Macoupin | 17117 | dispatch | no board layer — see gaps | `county-precinct`, `library-district` | 3 — `macoupin-county-board-districts` (no-source); `macoupin-special-districts` (no-source); `macoupin-ward-geometry` (no-source) |
 | Madison | 17119 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 2 — `county-board-office-addresses` (no-source); `madison-ward-officials` (no-source) |
 | Marshall | 17123 | dispatch | districted | `county-board` | 4 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source); `marshall-precinct-geometry` (no-source); `wenona-two-clerks-disagree` (data-quality) |
 | Mason | 17125 | dispatch | districted | `county-board` | 3 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source); `mason-precinct-vintage` (data-quality) |
@@ -109,7 +109,7 @@
 | Washington | 17189 | dispatch | districted | `county-board` | 3 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source); `washington-precinct-geometry` (no-source) |
 | Wayne | 17191 | dispatch | districted | `county-board`, `county-precinct` | 2 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source) |
 | White | 17193 | dispatch | districted | `county-board`, `county-precinct` | 2 — `library-districts-unmapped-counties` (no-source); `white-special-districts` (no-source) |
-| Whiteside | 17195 | dispatch | districted | `county-board`, `county-precinct` | 5 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source); `whiteside-municipal-officials` (no-source); `whiteside-precinct-polling` (data-quality); `whiteside-special-districts` (no-source) |
+| Whiteside | 17195 | dispatch | districted | `county-board`, `county-precinct` | 6 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source); `whiteside-municipal-officials` (no-source); `whiteside-precinct-polling` (data-quality); `whiteside-special-district-boards` (no-source); `whiteside-special-districts` (blocked) |
 | Will | 17197 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 4 — `aurora-council-contact` (blocked); `county-board-office-addresses` (no-source); `crete-municipal-clerk` (no-source); `joliet-municipal-contact` (blocked) |
 | Williamson | 17199 | County card | at-large — County card | — | 2 — `captcha-county-commissioner-contact` (blocked); `library-districts-unmapped-counties` (no-source) |
 | Winnebago | 17201 | dispatch | districted | `county-board`, `county-precinct`, `judicial-subcircuit` | 4 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source); `rockford-city-precincts` (no-source); `winnebago-special-districts` (no-source) |
@@ -139,4 +139,4 @@ Counties outside the coverage ring that a research pass has already measured; ea
 
 ## Gap records not tagged to a county (1)
 
-City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 100 records in the Data gaps panel: `chicago-amenity-phones`.
+City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 101 records in the Data gaps panel: `chicago-amenity-phones`.

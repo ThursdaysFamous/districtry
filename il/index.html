@@ -14172,6 +14172,9 @@ function initChiExplorer() {
   var loadCarrollLibraries = makeCached(function () {
     return fetchJSONWithRetry("data/app/carroll-library-districts.json", {}, 2);
   });
+  var loadMacoupinLibraries = makeCached(function () {
+    return fetchJSONWithRetry("data/app/macoupin-library-districts.json", {}, 2);
+  });
   var loadLeeLibraries = makeCached(function () {
     return fetchJSONWithRetry("data/app/lee-library-districts.json", {}, 2);
   });
@@ -23913,7 +23916,7 @@ function initChiExplorer() {
           { label: "County", value: "Kendall County" }
         ]
       }),
-      // Six counties that publish no library boundary of their own, all from
+      // Seven counties that publish no library boundary of their own, all from
       // ONE statewide layer — see statewideLibraryEntry and its loader block for
       // the provenance argument and why every one of these cards names the
       // publisher. These are the ONLY entries here not sourced from the county
@@ -23921,6 +23924,15 @@ function initChiExplorer() {
       // rather than slipped in among the county-published ones.
       statewideLibraryEntry({ key: "carroll", county: "Carroll County",
                               coverage: carrollCountyCoverage, loader: loadCarrollLibraries }),
+      // Macoupin is the SECOND of the seven whose own County Clerk publishes a
+      // list to check the contractor's layer against, and the stronger of the
+      // two: its Taxcode Value within District Report names, for all 224 of the
+      // county's tax codes, which bodies levy on each — and the eleven that
+      // come out are exactly the eleven the layer draws inside the county, with
+      // the layer's own LibraryType agreeing with the Clerk's code prefix on
+      // every one. The builder refuses to write if that stops being true.
+      statewideLibraryEntry({ key: "macoupin", county: "Macoupin County",
+                              coverage: macoupinCountyCoverage, loader: loadMacoupinLibraries }),
       statewideLibraryEntry({ key: "lee", county: "Lee County",
                               coverage: leeCountyCoverage, loader: loadLeeLibraries }),
       statewideLibraryEntry({ key: "randolph", county: "Randolph County",

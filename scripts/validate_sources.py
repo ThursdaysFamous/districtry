@@ -342,6 +342,26 @@ PROVENANCE = [
      "source_url": SERVICE_WOODFORD_PARK + "?f=json",
      "note": "3 districts from 4,113 parcels; most of the county sits in no "
              "park district and the empty state is the true answer there."},
+    # The statewide library layer behind SEVEN counties' library cards, and it
+    # had NO entry here at all until Macoupin joined it — six counties' geometry
+    # riding an unwatched source. It is the one boundary in this instance
+    # published by neither the county nor the body, so a monthly probe matters
+    # more here than most: the publisher is a broadband contractor and the
+    # counties it covers have no other library boundary to fall back on.
+    {"layer": "Illinois library districts (statewide layer behind 7 counties)",
+     "app_file": "macoupin-library-districts.json",
+     "source_url": "https://services.arcgis.com/R0IGaIgf2sox9aCY/arcgis/rest/services/"
+                   "IL_Boundary_Layers/FeatureServer/11?f=json",
+     "note": "Illinois Broadband Office / Connected Nation, layer 11 — 642 polygons "
+             "statewide, clipped per county by build_statewide_library_districts.py "
+             "for Carroll, Lee, Macoupin, Randolph, Sangamon, St. Clair and "
+             "Stephenson. NOT a county or library publication; the item states "
+             "public use permitted, no warranty, not for legal boundary "
+             "determinations, with attribution and modification-disclosure "
+             "requirements the cards carry. TWO counties check it against their own "
+             "Clerk's tax lines and the builder refuses to write if either stops "
+             "matching: Carroll's seven, and Macoupin's eleven across all 224 of "
+             "that county's tax codes."},
     {"layer": "Kane County Board members (roster)",
      "app_file": "kane-county-board-members.json",
      "source_url": "https://www2.kanecountyil.gov/pages/countyboard/boardMembers.aspx",
