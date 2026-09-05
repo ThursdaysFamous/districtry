@@ -1,4 +1,29 @@
 {
+ "01550": {
+  "members": {
+   "01": {
+    "name": "Dale Stuber"
+   },
+   "02": {
+    "name": "Timothy Lima"
+   },
+   "03": {
+    "name": "Bruce Thielen"
+   },
+   "04": {
+    "name": "Matthew Biren"
+   },
+   "05": {
+    "name": "Susie Zillmer"
+   },
+   "06": {
+    "name": "Susan Rowe"
+   }
+  },
+  "municipality": "Altoona",
+  "seats": 6,
+  "sourceUrl": "https://www.altoonawi.gov/government/elected_officials.php"
+ },
  "02375": {
   "members": {
    "01": {
@@ -81,6 +106,25 @@
   "seats": 15,
   "sourceUrl": "https://www.appletonwi.gov/government/common_council.php"
  },
+ "21625": {
+  "members": {
+   "01": {
+    "name": "Vic Washelesky"
+   },
+   "02": {
+    "name": "Dan Grosskopf"
+   },
+   "03": {
+    "name": "Kim Schaffer"
+   },
+   "04": {
+    "name": "Dan Dumas"
+   }
+  },
+  "municipality": "Eagle River",
+  "seats": 4,
+  "sourceUrl": "https://eagleriverwi.gov/city-government/elected-officials/"
+ },
  "22300": {
   "members": {
    "01": {
@@ -107,6 +151,25 @@
   "municipality": "Eau Claire",
   "seats": 5,
   "sourceUrl": "https://www.eauclairewi.gov/310/City-Council"
+ },
+ "28875": {
+  "members": {
+   "01": {
+    "name": "Terri Kaminski"
+   },
+   "02": {
+    "name": "Meg Cutts"
+   },
+   "03": {
+    "name": "Robert Warren"
+   },
+   "04": {
+    "name": "Jan Miller"
+   }
+  },
+  "municipality": "Germantown",
+  "seats": 4,
+  "sourceUrl": "https://www.germantownwi.gov/299/Village-Board"
  },
  "31000": {
   "members": {
@@ -586,6 +649,34 @@
   "seats": 15,
   "sourceUrl": "https://webapi.legistar.com/v1/milwaukee/officerecords?$filter=OfficeRecordBodyId%20eq%201&$top=1000"
  },
+ "56375": {
+  "members": {
+   "01": {
+    "name": "John Hopkins"
+   },
+   "02": {
+    "name": "Meg Gardner"
+   },
+   "03": {
+    "name": "Dave Maxey"
+   },
+   "04": {
+    "name": "Kenneth A. Harenda II"
+   },
+   "05": {
+    "name": "Joseph Stribl"
+   },
+   "06": {
+    "name": "Dennis Horbinski"
+   },
+   "07": {
+    "name": "Charlotte Kroupa"
+   }
+  },
+  "municipality": "New Berlin",
+  "seats": 7,
+  "sourceUrl": "https://www.newberlinwi.gov/"
+ },
  "64100": {
   "members": {
    "01": {
@@ -813,6 +904,34 @@
   "municipality": "Stevens Point",
   "seats": 11,
   "sourceUrl": "https://stevenspoint.com/Directory.aspx?DID=23"
+ },
+ "77875": {
+  "members": {
+   "01": {
+    "name": "Helen L. Bacon"
+   },
+   "02": {
+    "name": "Matthew Huston"
+   },
+   "03": {
+    "name": "Dan Williams"
+   },
+   "04": {
+    "name": "J. Spencer Gustafson"
+   },
+   "05": {
+    "name": "Gary Nault"
+   },
+   "06": {
+    "name": "Seth Wiederanders"
+   },
+   "07": {
+    "name": "Nicole Matson"
+   }
+  },
+  "municipality": "Sturgeon Bay",
+  "seats": 7,
+  "sourceUrl": "https://www.sturgeonbaywi.org/government/city_council/index.php"
  },
  "78650": {
   "members": {
