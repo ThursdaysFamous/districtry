@@ -339,3 +339,47 @@ instance-side, between the `chamber-factory` and `hover-explorer` fences. Scrape
 through `sanitize()`/`textContent`. The officeholder story ships with each boundary — a roster,
 or a recorded gap, never silence. `min_register_layer` only rises. Files inside `mi/data/app/`
 are named `mi-*`, never `michigan-*`.
+
+---
+
+## Phase 5 — the next three cities, measured (2026-09-05)
+
+**Nothing shipped, and that is the finding.** Michigan stays at 15 layers and `city-ward`
+keeps its two entries. Three gap records carry the measurement: `lansing-ward-boundary`,
+`annarbor-ward-boundary`, `sterling-heights-council-form`.
+
+**LANSING is build-ready on every axis except terms.** Its `VotingWards` service is exactly
+four features, WARDID 1-4, and dissolved against the state's own 2026 precinct WARD column
+(27 precincts, 7/7/6/7) it agrees on **99.893%** of sampled points — tighter than Grand
+Rapids shipped at. The blocker is that the city publishes the same plan three times and the
+one that states terms says **CC BY-NC 4.0**. The clean four-feature copy states nothing,
+and **an unstated licence is silence, not a grant**: the same publisher states NonCommercial
+terms on the same plan one item away, so taking the copy without the notice would be choosing
+the reading that suits us. `mi/scripts/build_mi_lansing_wards.py` runs every gate, re-reads
+the licence clause live each run, and **refuses to write** without `--licence-approved` —
+"build it dark" is not enough in a public repository, where committing the derived file
+would itself distribute the data.
+
+**ANN ARBOR'S OBVIOUS CANDIDATES ARE ALL WRONG, EACH DIFFERENTLY**, and the city's own
+publisher was not reached. `Wards and Precincts` is readable and **superseded** (47 features
+against the state's current 41; per ward 9/8/9/10/11 against 9/6/8/8/10) — the Vermilion
+shape. `City Council Districts` in the same org is **Los Angeles**, by its own service
+description. That org also serves NYDOT labels and the NYC borough fabric, so it is not
+Ann Arbor's publisher at all. The city's own portal answers and is a JavaScript application;
+`gis.a2gov.org` fails at this environment's egress proxy, which says nothing about the host.
+**Not measured shut** — two routes remain.
+
+**STERLING HEIGHTS MAY NOT BE A `city-ward` CITY AT ALL.** Four signals point at an at-large
+council, the sharpest being that the state's 2026 precinct fabric assigns `WARD='00'` to all
+40 of its precincts where Grand Rapids reads 01-03, Lansing 01-04 and Ann Arbor 01-05. None
+is the city or county saying so, so nothing is claimed: **an absence in one publisher's column
+is a fact about that publisher.** Both witness routes were tried and are named in the record —
+the city's own charter link serves a water-billing portal, Municode needs a browser, and
+Clarity carries the Macomb slot but publishes an **empty election list**.
+
+**THREE NAME TRAPS IN ONE PASS**, all caught by testing content rather than title:
+`Lansing Ward Boundaries` is owned by `lansingks.org` — Lansing, **Kansas**; Ann Arbor's
+`City Council Districts` is Los Angeles; and Ann Arbor's correctly-named ward layer is the
+obsolete plan. **The catalogue tells you what a thing is called; only the content tells you
+what it is.**
+

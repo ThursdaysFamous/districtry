@@ -2189,8 +2189,43 @@ detail into `blocker`.
         "why": "Michigan school boards are elected, and the district boundaries this app draws come from the Census, which records geography and no people at all.",
         "blocker": "MEASURED 2026-09-04. The boundary source is TIGERweb's School MapServer, whose fields are geographic plus grade range (LOGRADE/HIGRADE) — no board field exists to reject. The Michigan Department of Education's Educational Entity Master is the obvious state-level candidate and is an entity directory: it identifies districts and their administrators rather than their elected boards. The Michigan Association of School Boards is membership-facing. So the honest surface today is the district's identity, on both the unified and the elementary card, and this gap is filed against the unified layer because it is the one that answers for all but 27 pockets of the state — the same absence covers both.",
         "wanted": "A statewide board roster from the department or the association, or a district-by-district build refreshed weekly, the way this project names officeholders everywhere else."
-    }
-  ]
+    },
+    {
+      "id": "lansing-ward-boundary",
+      "kind": "blocked",
+      "concept": "City council district",
+      "area": "Lansing",
+      "layer": "city-ward",
+      "counties": [],
+      "summary": "Lansing elects four of its eight council members by ward, and this app does not show you which ward you live in.",
+      "why": "The city publishes its ward map on terms that bar commercial use. That is a condition on the map rather than a technical block, and it has not been resolved instead of being worked around.",
+      "wanted": "Permission to use the city's ward map on a free public site, or the same boundary published on open terms.",
+      "blocker": "MEASURED 2026-09-05. THE GEOMETRY IS FINE AND THE LICENCE IS THE WHOLE BLOCKER. The city's ArcGIS org (services1.arcgis.com/pNPbgWy7hpfFGWoZ) publishes the current plan TWICE. `VotingWards` is the clean one: exactly 4 features, WARDID 1-4, snippet 'Wards for the City of Lansing, updated for the 2022 elections', and its licenseInfo is EMPTY. `City_Wards` carries the SAME plan ('City of Lansing wards, as defined in the 2020 redistricting cycle') and states, verbatim: 'This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.' It also carries 9 features rather than 4 - ward 2 in four parts plus two non-ward features keyed DT and MR - and a third service, `Wards`, repeats that shape with 10 features and no licence. AN UNSTATED LICENCE IS SILENCE, NOT A GRANT: the same publisher states NonCommercial terms on the same plan, so reading the copy that omits the notice as permissive would be choosing the reading that suits us. The operative licence is therefore CC BY-NC 4.0 and the call is the operator's, not this build's. CURRENCY IS NOT IN DOUBT and was measured before the licence was: dissolved by the state's own 2026 precinct WARD column (27 precincts, 7/7/6/7), `VotingWards` agrees with the state on 1860 of 1862 sampled points (99.893%), as the builder itself reports - the same test Grand Rapids passed at 99.575%. mi/scripts/build_mi_lansing_wards.py is written, records the licence clause verbatim, and REFUSES TO WRITE without an explicit --licence-approved flag, so no derived geometry is committed while the question is open; committing the file would itself distribute the data."
+    },
+    {
+      "id": "annarbor-ward-boundary",
+      "kind": "blocked",
+      "concept": "City council district",
+      "area": "Ann Arbor",
+      "layer": "city-ward",
+      "counties": [],
+      "summary": "Ann Arbor elects two council members from each of five wards, and this app does not show you which ward you live in.",
+      "why": "The only copy of the ward map this app can read automatically is an older plan that no longer matches the state's current precincts, and the city's own data portal needs a browser to search.",
+      "wanted": "The city's current ward boundary as a downloadable file or a public map service, from the city's own data portal.",
+      "blocker": "MEASURED 2026-09-05. THE OBVIOUS CANDIDATES ARE ALL WRONG AND EACH IS WRONG DIFFERENTLY. (1) `Wards and Precincts` (services.arcgis.com/G3nmNsarwQblLhip) is readable, carries WARD+PRECINCT and a licence naming 'The City of Ann Arbor' - and is SUPERSEDED: 47 features against the state's current 41, per ward 9/8/9/10/11 against the state's 9/6/8/8/10. The Vermilion shape: a well-labelled layer that is not the plan in force. (2) `City Council Districts` in that SAME org is LOS ANGELES - its own serviceDescription reads 'LA City Council Districts as of 2021. Downloaded from LA County GeoHub'. (3) That org is not Ann Arbor's publisher at all: it also serves NYDOT label layers and nybb_26b, the NYC borough fabric. TEST BY CONTENT, NEVER BY TITLE - a third trap the same afternoon, after `Lansing Ward Boundaries` turned out to be owned by lansingks.org, i.e. Lansing, KANSAS. (4) The city DOES run its own portal: data.a2gov.org answers 200 and titles itself 'City of Ann Arbor Open Data Portal', but it is a JavaScript application - its dataset index is not in the served HTML, that HTML references no ArcGIS org, and both Hub-style API paths (api/v3/datasets, datasets) 404. A browser would settle it and none was used here. (5) gis.a2gov.org COULD NOT BE TESTED: it fails at this environment's egress proxy with 'CONNECT tunnel failed, response 502', which says nothing about the host - the same rule this project already records for a 403 from a proxy. NOT MEASURED SHUT: two routes remain, the portal read in a browser and gis.a2gov.org from a network that can reach it."
+    },
+    {
+      "id": "sterling-heights-council-form",
+      "kind": "no-source",
+      "concept": "City council district",
+      "area": "Sterling Heights",
+      "layer": "city-ward",
+      "counties": [],
+      "summary": "Sterling Heights is one of Michigan's largest cities and has no council district card here, because it is not yet settled whether it elects its council by district at all.",
+      "why": "Four separate signals all point to a council elected by the whole city, which would mean there is no district to show. None of them is the city or the county saying so outright, so nothing is claimed either way.",
+      "wanted": "The city charter's own words on how the council is elected, or a certified county canvass showing the council contest and how many seats each voter fills.",
+      "blocker": "MEASURED 2026-09-05, AND DELIBERATELY NOT CONCLUDED. Four signals agree and none is decisive: (1) the state's own 2026 precinct fabric assigns WARD='00' to all 40 Sterling Heights precincts, where Grand Rapids reads 01-03, Lansing 01-04 and Ann Arbor 01-05; (2) an ArcGIS catalogue query for ward/district/precinct services in the city returns ZERO; (3) the city's council page (/148/City-Council, reached from the site's own nav) titles only a Mayor and carries no ward or district language; (4) no ward service exists in any org reached. AN ABSENCE IN ONE PUBLISHER'S COLUMN IS A FACT ABOUT THAT PUBLISHER - the Knox error - so at-large is the working expectation and not a recorded fact. THE TWO WITNESS ROUTES WERE TRIED AND ARE NAMED. The charter: /1094/City-Charter answers HTTP 200 AND IS A VERTEXONE WATER-BILLING PORTAL, not the charter; library.municode.com/mi/sterling_heights serves a 6 KB JavaScript shell with no content; the Municode API path Clients/name 404s; the DocumentCenter index surfaces no charter document. The canvass: Macomb County's own results hosts do not resolve (electionresults.macombgov.org, www.mcclerk.org), and Clarity/Scytl DOES carry the county slot - results.enr.clarityelections.com/MI/Macomb/ answers 200 - but its elections.json returns an EMPTY ARRAY, so the vendor publishes no elections for Macomb and that route is measured shut rather than unexamined. IF THE COUNCIL IS AT LARGE THERE IS NO GAP TO CLOSE, only a record to correct: an at-large body gets roster rows on a city card and never a polygon."
+    }]
 }
 ```
 
