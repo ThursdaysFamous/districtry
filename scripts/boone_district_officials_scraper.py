@@ -266,12 +266,15 @@ OWN_BOARDS = {
         # not a page that is not there.
         #
         # It matters because the page states the seat count in words — "our
-        # community-elected, five member Board of Commissioners" — and lists
-        # FOUR. The county's yearbook lists the same four and, being an annual
-        # snapshot, has no way to say the fifth seat is empty. The district also
-        # posts a "Legal Notice — Board Vacancy". So a card built on the
-        # yearbook alone would have named four commissioners of a five-seat
-        # board with nothing saying why.
+        # community-elected, five member Board of Commissioners" — and NAMES
+        # ALL FIVE, where the county's yearbook names four: the yearbook is an
+        # annual snapshot and the district's own page is current. (An earlier
+        # version of this comment said the page listed four and cited a "Legal
+        # Notice — Board Vacancy"; both were wrong. The four/five gap was a
+        # PARSE MISS in this scraper — one member's address is split across a
+        # <span>, which the old visible-text reader dropped — and it published
+        # a vacancy that does not exist. Vacancies are never arithmetic here;
+        # only a body's own word for one counts.)
         "url": "https://www.belviderepark.org/about-us/board/",
         "label": "Belvidere Township Park District Board of Commissioners",
         "seats_phrase": r"([a-z]+)[ -]member Board of Commissioners",
@@ -996,16 +999,22 @@ def _http_date(value):
 def _last_consolidated_election(today):
     """-> the date of the most recent Illinois consolidated election.
 
-    10 ILCS 5/2A-1.1: the first Tuesday after the first Monday in April of
-    odd-numbered years. Library-district and park-district boards are elected
-    there, so it is the line a roster document has to be newer than.
+    10 ILCS 5/2A-1.1(b): the FIRST TUESDAY IN APRIL of odd-numbered years.
+    Library-district and park-district boards are elected there, so it is the
+    line a roster document has to be newer than.
+
+    THIS WAS WRITTEN AS "the first Tuesday AFTER THE FIRST MONDAY in April" —
+    the general-election rule, not this one — and the two agree in every
+    odd year EXCEPT when April 1 is itself a Tuesday. That is 2025, whose
+    consolidated election was April 1 and which this helper placed on April 8:
+    a week-wide hole, in exactly the cycle the shipped documents sit in.
     """
     import datetime as _dt
 
     def april_election(year):
         first = _dt.date(year, 4, 1)
-        first_monday = first + _dt.timedelta(days=(7 - first.weekday()) % 7)
-        return first_monday + _dt.timedelta(days=1)
+        # weekday(): Monday 0 … Tuesday 1
+        return first + _dt.timedelta(days=(1 - first.weekday()) % 7)
 
     year = today.year if today.year % 2 else today.year - 1
     day = april_election(year)

@@ -49,7 +49,7 @@
 | Fulton | 17057 | dispatch | districted | `county-board`, `county-precinct` | 2 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source) |
 | Gallatin | 17059 | dispatch | at-large — County card | `county-precinct` | 2 — `gallatin-board-contact` (data-quality); `library-districts-unmapped-counties` (no-source) |
 | Greene | 17061 | dispatch | at-large — County card | `county-precinct` | 1 — `library-districts-unmapped-counties` (no-source) |
-| Grundy | 17063 | dispatch | districted | `county-board`, `county-precinct` | 4 — `grundy-special-districts` (no-source); `library-districts-unmapped-counties` (no-source); `morris-ward-geometry` (no-source); `municipal-website-dead-ends` (data-quality) |
+| Grundy | 17063 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 3 — `grundy-special-district-boards` (data-quality); `morris-ward-geometry` (no-source); `municipal-website-dead-ends` (data-quality) |
 | Hamilton | 17065 | dispatch | at-large — County card | `county-precinct`, `fire-district` | 2 — `hamilton-municipal-officials` (no-source); `library-districts-unmapped-counties` (no-source) |
 | Hancock | 17067 | dispatch | districted | `county-board`, `county-precinct` | 2 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source) |
 | Hardin | 17069 | dispatch | no board layer — see gaps | `county-precinct` | 2 — `hardin-county-board` (no-source); `library-districts-unmapped-counties` (no-source) |
