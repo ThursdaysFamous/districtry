@@ -47,6 +47,19 @@ unique enough to survive a dedupe. A plausible seat count does NOT catch it --
 Waterloo parses to eight council members, which is an entirely ordinary
 council. The duplicate check is what catches it, so it runs here on every city.
 
+ROBOTS IS CONSULTED BEFORE EVERY FETCH, AND ONE OF THE FIVE SAYS NO.
+Added 2026-09-05 after review. `cityofpalo.com/robots.txt` names Googlebot,
+bingbot, ia_archiver, archive.org_bot, W3C-checklink and CCBot, allows each of
+them everything but /admin/ and /manager/ -- and ends `User-agent: * /
+Disallow: /`. It reads as permissive for four hundred bytes and refuses in the
+last two lines, which is exactly why this is now a machine check and not a
+human reading a file. Palo is therefore SKIPPED: its page is not requested at
+all, its six officials leave the card, and the entry stays in CITIES so the
+check runs weekly and the city re-enters by itself if its file changes. The
+other four allow (moraviaiowa.com serves a permissive file; Norwalk, Riverside
+and Tiffin serve none, which RFC 9309 makes allow-all). See
+`ia/scripts/robots_gate.py`.
+
 Usage:
     python3 ia/scripts/ia_city_officials_scraper.py
 """
@@ -59,7 +72,11 @@ import sys
 
 import requests
 
-CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".cache")
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)          # robots_gate is a sibling, not a package
+from robots_gate import RobotsGate  # noqa: E402
+
+CACHE_DIR = os.path.join(HERE, ".cache")
 OUT_PATH = os.path.join(CACHE_DIR, "ia_city_officials.json")
 HEADERS = {"User-Agent": "districtry/1.0 (+https://districtry.com/ia/)",
            "Accept": "text/html,application/xhtml+xml"}
@@ -135,9 +152,20 @@ def parse(page, convention):
 
 def main():
     os.makedirs(CACHE_DIR, exist_ok=True)
-    payload = {}
+    session = requests.Session()
+    gate = RobotsGate(session, HEADERS["User-Agent"])
+    payload, refused = {}, []
     for city in CITIES:
-        r = requests.get(city["url"], headers=HEADERS, timeout=45)
+        allowed, why = gate.allows(city["url"])
+        if not allowed:
+            # The city's own robots.txt refuses this agent, so its page is
+            # never requested. The entry STAYS in CITIES: the check runs every
+            # week, so a city that changes its file re-enters by itself.
+            refused.append((city["name"], why))
+            print("  %-11s SKIPPED — robots.txt refuses districtry (%s)"
+                  % (city["name"], why), file=sys.stderr)
+            continue
+        r = session.get(city["url"], headers=HEADERS, timeout=45)
         r.raise_for_status()
         recs = parse(r.text, city["convention"])
 
@@ -178,8 +206,8 @@ def main():
     with open(OUT_PATH, "w") as f:
         json.dump(payload, f, indent=1, sort_keys=True)
         f.write("\n")
-    print("ia-city-officials: %d cities cached to %s" % (len(payload), OUT_PATH),
-          file=sys.stderr)
+    print("ia-city-officials: %d cities cached to %s (%d refused by robots.txt)"
+          % (len(payload), OUT_PATH, len(refused)), file=sys.stderr)
 
 
 if __name__ == "__main__":

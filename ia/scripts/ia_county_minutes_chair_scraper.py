@@ -15,8 +15,22 @@ county's own minutes), and it is why this file exists beside the other
 rather than replacing it.
 
 MEASURED 2026-09-05 over the ten largest counties with no chair. FIVE
-publish minutes this can read and FIVE do not, and the five refusals are
-recorded here because the next pass should not redo them:
+publish minutes this can read, FOUR of them SHIP, and the six that do not are
+recorded here because the next pass should not redo them.
+
+JOHNSON RESOLVES AND IS NOT SHIPPED, WHICH IS THE ONE WORTH READING FIRST.
+Its minutes are on `johnson-county.granicus.com`, and that host's robots.txt
+names Googlebot, Slurp, msnbot and search-one-scgov, allows each of them
+everything but /JSON.php -- and ends `User-agent: * / Disallow: /`. So the
+portal refuses `districtry` on every path. `robots_gate.py` asks before any
+fetch and the county is skipped with its reason printed; its entry stays in
+COUNTIES, so it re-enters by itself if that file changes. The parser is fine
+and the chair it found (Jon Green, on the 27 and 26 August 2026 minutes) is
+correct -- what is missing is permission, and this project does not route
+around an access control. THE FILE READS AS PERMISSIVE FOR THE FIRST TWO
+HUNDRED BYTES: the refusal is the last two lines.
+
+The other five:
 
   Polk           minutes only through a CivicClerk single-page portal. The
                  OData API answers -- /v1/Events lists every Board of
@@ -125,6 +139,7 @@ from urllib.parse import urljoin
 # the workflows that run the SCRAPE install both.
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)          # robots_gate is a sibling, not a package
 DATA = os.path.join(HERE, "..", "data", "app")
 CACHE_DIR = os.path.join(HERE, ".cache")
 OUT_PATH = os.path.join(CACHE_DIR, "ia_county_minutes_chairs.json")
@@ -350,10 +365,18 @@ def discover(session, kind, index_url):
     return sorted(found, key=lambda t: t[0], reverse=True)
 
 
-def read_county(session, fips, county, kind, index_url, roster):
+def read_county(session, gate, fips, county, kind, index_url, roster):
     row = {"fips": fips, "county": county, "sourceUrl": index_url}
     if not roster:
         row["verdict"] = "no-roster"
+        return row
+    allowed, why = gate.allows(index_url)
+    if not allowed:
+        # Never fetch a page the host's robots.txt refuses this agent. The
+        # entry STAYS in COUNTIES so the check runs again next week and the
+        # county re-enters by itself if the file changes.
+        row["verdict"] = "robots-disallowed"
+        row["error"] = why
         return row
     try:
         docs = discover(session, kind, index_url)
@@ -465,8 +488,11 @@ def main():
 
     import requests
 
+    from robots_gate import RobotsGate
+
     officers = json.load(open(OFFICERS, encoding="utf-8"))
     session = requests.Session()
+    gate = RobotsGate(session, BOT["User-Agent"])
     wanted = {c.lower() for c in args.county}
     rows = []
     for fips, county, kind, index_url in COUNTIES:
@@ -474,7 +500,7 @@ def main():
             continue
         roster = [m["name"] for m in
                   (officers.get("19" + fips) or {}).get("supervisors", [])]
-        row = read_county(session, fips, county, kind, index_url, roster)
+        row = read_county(session, gate, fips, county, kind, index_url, roster)
         rows.append(row)
         print("  %-13s %-16s %s" % (county, row["verdict"],
                                     row.get("chair") or row.get("error", "")[:70]))

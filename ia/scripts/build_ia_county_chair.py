@@ -13,12 +13,14 @@ TWO ROUTES, FLOORED SEPARATELY
 --------------------------------
 `ia_county_chair_scraper.py` reads each county's BOARD PAGE and answers 35
 counties. `ia_county_minutes_chair_scraper.py` reads each county's own
-MINUTES and answers 5 more -- the big ones whose board pages never use the
-word, Johnson and Polk's neighbours among them. Each route has its OWN floor
+MINUTES and answers 4 more -- big counties whose board pages never use the
+word. It RESOLVES a fifth, Johnson, and does not ship it: Johnson publishes
+its minutes through a Granicus portal whose robots.txt refuses this agent on
+every path, so the scraper asks first and never fetches. Each route has its OWN floor
 and its own count in the log, because a pooled floor cannot see one route
-collapse behind the other's healthy number: 5 of 40 is a fifth of this file
-and a tenth of the pooled floor, so the minutes route could stop working
-entirely without a single gate noticing. That is the same lesson
+collapse behind the other's healthy number: 4 of 39 is a tenth of this file,
+so the minutes route could stop working entirely without a single gate
+noticing. That is the same lesson
 `check_roster_retention.py` records as "coverage is measured PER SOURCE, not
 per file", applied one layer up.
 
@@ -76,9 +78,14 @@ OUT_PATH = os.path.join(DATA, "ia-county-board-chairs.json")
 
 MIN_PAGE = 30               # measured 35 of 98 on 2026-09-05 (36 before the
                             # qualified-chair and expired-term refusals)
-MIN_MINUTES = 4             # measured 5 of the 10 largest chair-less counties
-                            # on 2026-09-05; the other five are recorded, with
-                            # what refused each, in the minutes scraper
+MIN_MINUTES = 3             # measured 4 of the 10 largest chair-less counties
+                            # on 2026-09-05; the other six are recorded, with
+                            # what refused each, in the minutes scraper. FIVE
+                            # counties yield a chair and only four ship:
+                            # Johnson's minutes live on johnson-county.
+                            # granicus.com, whose robots.txt refuses
+                            # `districtry` on every path, so its pages are
+                            # never requested.
 SOURCE_NOTE = ("each county's own board-of-supervisors page or its own board "
                "minutes, paired structurally and gated on the county's "
                "supervisor roster")

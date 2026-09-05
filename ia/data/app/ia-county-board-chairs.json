@@ -139,13 +139,6 @@
   "route": "page",
   "sourceUrl": "https://www.jasperia.org/board_of_supervisors/"
  },
- "19103": {
-  "chair": "Jon Green",
-  "county": "Johnson",
-  "meetingDate": "2026-08-27",
-  "route": "minutes",
-  "sourceUrl": "https://johnson-county.granicus.com/ViewPublisher.php?view_id=1&count=20"
- },
  "19107": {
   "chair": "Mr. Mike Hadley",
   "county": "Keokuk",
