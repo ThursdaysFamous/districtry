@@ -1288,3 +1288,103 @@ signing or paying.
 rostered municipalities need nothing from the League, and neither does the
 per-municipality route — that route is simply a poor one, which the sweep measured rather
 than assumed.
+
+---
+
+## Ask 19 — Whiteside County GIS: permission to display three derived boundaries
+
+> **DRAFTED 2026-09-05, HELD. Not sent.** Ask 18 is Grundy's, on an unmerged
+> branch; this takes 19 so the two cannot collide whichever lands first.
+
+**To:** Whiteside County GIS, `llee@whiteside.org` (815-772-5185, 200 East Knox
+Street, Morrison IL 61270) — the office that published both documents this ask
+is about.
+
+**Why this ask exists.** Whiteside's fire, park and library districts are
+derivable today from two things the county already publishes: the `CVTTXCD` tax
+code on its public `Tax Parcels` layer, and the County Clerk's `District Rates
+by Taxcode Report`. Dissolved, they give 13 fire, 7 library and 5 park
+districts, and the crosswalk checks out on the report's own arithmetic. Nothing
+is missing.
+
+What stops it is the county's own licence. Its GIS Data Fee Schedule says
+"Whiteside County licenses our data. We require a signed license agreement
+before the data will be released", and its License Agreement for Data Sharing
+says "Reproduction or redistribution of the data or products derived therefrom
+outside of licensee's organization or entity is expressly forbidden … None of
+the data shall be electronically duplicated by any means for use by others, in
+whole or in part, without express written permission of Whiteside County."
+
+Three published boundary files are products derived from the parcel layer, so
+this is not a question the fee schedule answers — buying the data would not make
+displaying a derivative permitted. The clause's own tail is the route: express
+written permission. **This is the Jo Daviess shape** (`LICENSE-DATA.md` §3),
+where a county's GIS director authorized display in writing over a licence with
+the same clause.
+
+### Draft
+
+> Subject: Permission to display three district boundaries derived from Whiteside County parcel data
+>
+> Dear Whiteside County GIS,
+>
+> I run districtry (https://districtry.com/il/), a free, non-commercial civic
+> map. You click a point in Illinois and it tells you every district you are in
+> and who represents you there. It carries no advertising and sells nothing.
+>
+> Whiteside County already appears on it: its county board districts, its
+> precincts and its municipal officials, all from sources the county publishes.
+>
+> I would like to add its fire protection, park and library districts. Those are
+> derivable from two things the county publishes — the `CVTTXCD` tax code on the
+> public Tax Parcels layer, and the County Clerk's District Rates by Taxcode
+> Report — and the result is 13 fire, 7 library and 5 park districts.
+>
+> I have read your GIS Data Fee Schedule and your License Agreement for Data
+> Sharing, and I am writing rather than building because of the Protection of
+> Proprietary Rights clause: what I would publish is a boundary derived from
+> your parcel data, and the clause forbids redistributing a derived product
+> without the county's express written permission.
+>
+> So my question is that permission, not the data — I already have everything I
+> need from your public services and the Clerk's report. Concretely, I am asking
+> whether Whiteside County will permit districtry to display three derived
+> district boundaries publicly, on these conditions, which I will follow whether
+> or not you require them:
+>
+> * every card naming a Whiteside district credits Whiteside County GIS as the
+>   source of the underlying parcel data;
+> * every card states that the boundary is DERIVED — dissolved from tax codes,
+>   not surveyed — and is not for legal boundary determination;
+> * no parcel data is republished: what is served is a dissolved district
+>   outline, not the parcels, attributes or any part of the parcel file;
+> * if the county later withdraws permission, the layers come down.
+>
+> If a signed agreement, a form or a fee is the right route for that permission
+> rather than an e-mail, please tell me which and I will follow it.
+>
+> **A "no" is a genuinely useful answer** and I will record it as the county's
+> decision and take the question no further. What I would rather not do is
+> publish something your licence forbids because nobody asked.
+>
+> Thank you for your time,
+> <YOUR NAME>
+> <YOUR E-MAIL>
+
+### What each answer means
+
+* **Yes** — the three layers ship. `build_parcel_fabric_districts.py` already
+  holds the sources, the code maps and the probe gates, guarded behind a
+  `blocked` flag; permission retires the flag and the build runs. Record the
+  permission in `LICENSE-DATA.md` beside Jo Daviess's, and put the wording on
+  the cards.
+* **No** — a clean, citable no. `whiteside-special-districts` stays `blocked`
+  with the county's own decision recorded, and the builder's guard stays. The
+  county keeps its precincts, board districts and municipal officials on the
+  map, none of which are affected.
+* **"Buy a licence"** — that is the fee schedule, and it does not answer this
+  question: the signed agreement forbids the derived product at any price. Worth
+  saying so plainly and asking again for permission specifically.
+
+**Nothing currently shipped depends on this.** Whiteside's other layers are from
+unaffected sources; the three district files are not in the tree.

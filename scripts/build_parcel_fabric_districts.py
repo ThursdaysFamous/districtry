@@ -304,8 +304,198 @@ WOODFORD_PARK_PROBES = [
 ]
 
 
-def _in_clause(codes):
-    return "tax_code IN (%s)" % ", ".join("'%s'" % c for c in sorted(codes))
+# --- Whiteside ------------------------------------------------------------
+# The Boone shape, and the county that shows why the shape is worth looking for
+# twice. Its record read "no taxing district boundaries of any kind" for five
+# weeks and that was true and beside the point: Whiteside publishes both halves
+# of a dissolve and neither is a district layer.
+#
+# THE FABRIC. `Tax Parcels - Whiteside County` in the county's own ArcGIS
+# Online org (`whiteside.maps.arcgis.com`, org l0M0OC6J9QAHCiGx, item public,
+# licenseInfo EMPTY, accessInformation "Whiteside County IL GIS"), linked as
+# "GIS Maps" from the county's own home page. 36,499 parcels over 70 fields.
+# THE COLUMN IS `CVTTXCD` AND A SCREENING REGEX CANNOT FIND IT: it is named for
+# the CIVIL TAXING UNIT and abbreviates "code" to CD, so a pattern match for
+# fire|librar|park|dist|code|tax answers NONE — while the column holds a
+# five-digit TAX CODE, 138 distinct values on 36,267 of the 36,499 parcels
+# (99.4%). Its declared siblings are empty on every parcel in the county
+# (CVTTXDSCRP, SCHLTXCD, SCHLDSCRP, USECD, USEDSCRP: 0 of 36,499), so the code
+# is the whole of what the layer gives — exactly what Boone gives.
+#
+# ONE PARCEL IN THE COUNTY HAS NO SHAPE, and it is declared rather than
+# skipped: PIN 1127382016, 805 Ave D in Rock Falls, tax code 01110, assessed
+# at $53,448 — an assessment record the county has not drawn. It appears in
+# the LIBRARY and PARK sets and in no fire set, because Rock Falls's city tax
+# codes carry no fire district at all, which is the same fact the three
+# negative fire probes below test. 232 further parcels carry no CVTTXCD and
+# never enter a where clause, so they are holes by construction and printed
+# on every run.
+#
+# THE CROSSWALK, AND THE ONE WAY THIS COUNTY IS RISKIER THAN BOONE. Boone's
+# build takes its code sets from the Clerk's "Taxcode Value within District
+# Report" and warns in this very file that her "District Rates by Taxcode
+# Report" is the NARROWER document — read as a membership list it omitted
+# twelve of Boone's codes on 956 parcels. WHITESIDE PUBLISHES ONLY THE RATES
+# REPORT. Its Clerk's "Tax Computation & District Rate Information" page
+# carries exactly two documents per tax year, ten years deep, and neither is a
+# value-within-district report.
+#
+# SO THE COMPLETENESS OF THE MEMBERSHIP LIST IS TESTED RATHER THAN ASSUMED, and
+# the report tests itself. Every tax-code block prints each levying district's
+# rate and then its own "Totals for <code> <rate>" line. SPLIT ON THAT
+# TERMINATOR AND NEVER ON THE BLOCK HEADER: the header form (`NNNNN - `) is
+# lost at page breaks for twelve of the 140 codes, so a header split yields 128
+# and manufactures a ten-code shortfall against the parcel layer's 138 that is
+# a parse artefact and not a gap in the county's document. Split on the
+# terminator and all 138 parcel codes are present, with two the report carries
+# that no parcel does (00923, 01111). A district omitted
+# from a code would leave that arithmetic short. ALL 140 TAX CODES BALANCE TO
+# FOUR DECIMALS across 1,140 district rate lines, 140 of 140. And the omission
+# mechanism that would evade an arithmetic test — a district present at a rate
+# of exactly 0.0000 — is ruled out by the document's own behaviour: it PRINTS
+# 16 zero-rate lines over 12 districts, including a VILLAGE (VDGR - Deer Grove
+# Village), rather than suppressing them.
+#
+# A CODE THE REPORT DOES NOT CARRY WOULD READ AS "NO DISTRICT" AND MUST NOT.
+# `code_map` skips an unmapped value silently, which is right for a code the
+# county genuinely puts in no fire district and WRONG for one the crosswalk
+# never saw — the two are indistinguishable downstream, and a card would say
+# "no fire district" about a parcel nobody looked up. So the 140-code universe
+# is declared as `code_universe` and the builder fails on any parcel code
+# outside it. Boone carries the same hole and is not fixed here; its own
+# crosswalk covers every code it maps, so the guard would be vacuous there
+# until someone re-measures it.
+#
+# A SECOND CHECK WAS TRIED AND IS NOT CLAIMED. The Tax Computation Report gives
+# each district's County Total EAV, so summing the parcel layer's CNTASSDVAL
+# over a district's tax codes ought to reproduce it. It does not: the sums run
+# +12% to +32% on twenty-one districts and NEGATIVE on four, because a parcel
+# layer's current assessed value and a tax year's rate-setting EAV are not the
+# same quantity. Recorded here because a reader would otherwise try it, and
+# because a check that does not work must not be dressed as one that does.
+WHITESIDE_PARCELS = ("https://services.arcgis.com/l0M0OC6J9QAHCiGx/arcgis/rest/"
+                     "services/Tax_Parcels_Ver_2_Parcels_Only/FeatureServer/0")
+WHITESIDE_TAX_YEAR = 2025
+WHITESIDE_REPORTS = {
+    # the membership list, and the ONLY one this county publishes
+    "rates": "https://www.whitesidecountyil.gov/DocumentCenter/View/1285/"
+             "2025-District-Tax-Rates-PDF",
+    # per-district EAV and levy detail; used for the district NAMES, which it
+    # writes identically to the rates report, and for the EAV check above that
+    # does not work
+    "computation": "https://www.whitesidecountyil.gov/DocumentCenter/View/1284/"
+                   "2025-Tax-Computation-Rates-PDF",
+}
+# THE NAMES ARE THE COUNTY'S OWN AND ARE NOT EXPANDED. Both county documents
+# write every body the same way — `FALB - ALBANY FIRE`, `LWAL - WALNUT PUBLIC
+# LIBRARY`, `PCOL - COLOMA PARK` — in a column narrow enough that "Albany Fire"
+# is plainly an abbreviation of a fire protection district's real name. It is
+# rendered in title case and NOTHING IS EXPANDED: the county's ETSB page writes
+# "Prophetstown Fire District" in full, which is one body of thirteen, and
+# inventing the other twelve from a pattern is exactly the guess this project
+# does not make. The four-letter code ships beside the name, as Woodford's
+# does, so a reader or a re-verifier can find the row in the county's document.
+WHITESIDE_CODE_RE = WOODFORD_CODE_RE
+
+# THE CITY HOLES ARE MEASURED, AND ONLY TWO OF THEM ARE ATTRIBUTED. TWELVE tax
+# codes carrying STERLING CITY or ROCK FALLS CITY have no fire district at all
+# (seven VSTG, five VRFL, one of the five being 01111, which no parcel carries),
+# which is the Metamora shape: both cities run their own departments, and the
+# county's own ETSB/911 page names the "Twin City Communication Center,
+# Sterling, IL (Sterling, Rock Falls Police & Fire, CGH Ambulance)". MORRISON IS
+# NOT ATTRIBUTED, only measured: its two tax codes 00715 and 00805 carry no fire
+# line, and no county page read here says why. Thirty-three of the 140 codes
+# carry no fire line in total.
+
+# THE 140 TAX CODES THE CLERK'S REPORT COVERS. Declared so a parcel carrying a
+# code the crosswalk never saw FAILS rather than reading as "no district" —
+# see code_universe in build_source. All 138 codes on the parcel layer are
+# among these; 00923 and 01111 are report-only.
+WHITESIDE_CODE_UNIVERSE = (
+    "00101 00105 00110 00115 00116 00117 00120 00125 00201 00205 "
+    "00210 00215 00220 00301 00305 00310 00315 00320 00325 00330 "
+    "00401 00405 00410 00415 00420 00425 00430 00435 00440 00445 "
+    "00450 00455 00460 00505 00510 00515 00520 00525 00530 00535 "
+    "00540 00545 00550 00601 00605 00606 00610 00615 00625 00626 "
+    "00701 00705 00710 00715 00720 00801 00805 00905 00910 00915 "
+    "00920 00921 00922 00923 00925 00930 00935 01001 01005 01006 "
+    "01011 01012 01013 01014 01101 01105 01110 01111 01115 01121 "
+    "01201 01205 01215 01305 01320 01401 01405 01410 01415 01421 "
+    "01430 01505 01510 01520 01525 01530 01535 01540 01545 01601 "
+    "01605 01615 01620 01625 01630 01701 01705 01715 01720 01725 "
+    "01730 01735 01805 01810 01811 01815 01820 01905 01915 01920 "
+    "01925 01945 01955 02001 02005 02006 02010 02101 02105 02115 "
+    "02120 02125 02201 02205 02210 02215 02220 02225 02230 02235"
+).split()
+
+WHITESIDE_FIRE_CODES = {}
+for _code in ("00605 00606 01201 01205 01215 01305").split():
+    WHITESIDE_FIRE_CODES[_code] = "FALB - Albany Fire"
+for _code in ("00305 00330").split():
+    WHITESIDE_FIRE_CODES[_code] = "FCHA - Chadwick Fire"
+for _code in ("01320 01405 01410 01510 01805 01810 01811 01820 01905").split():
+    WHITESIDE_FIRE_CODES[_code] = "FERI - Erie Fire"
+for _code in ("00101 00105 00110 00115 00116 00117 00205 00210 00610 00615 "
+              "00625 00626 00705 00720").split():
+    WHITESIDE_FIRE_CODES[_code] = "FFUL - Fulton Fire"
+for _code in ("01915 01955").split():
+    WHITESIDE_FIRE_CODES[_code] = "FHIL - Hillsdale Fire"
+for _code in ("00310 00315 00320 00410 00415 00420 00425 00445 00450 00455 "
+              "00460 00505 00510 00540 00545 00910 00915 00935").split():
+    WHITESIDE_FIRE_CODES[_code] = "FMLV - Milledgeville Fire"
+for _code in ("00515 00530").split():
+    WHITESIDE_FIRE_CODES[_code] = "FPOL - Polo Fire"
+for _code in ("01415 01421 01520 01525 01545 01601 01815 01920 01925 01945 "
+              "02001 02005 02006 02101 02115").split():
+    WHITESIDE_FIRE_CODES[_code] = "FPTN - Prophetstown Fire"
+for _code in ("01105 01115 01620 01625 01705 01715 01730").split():
+    WHITESIDE_FIRE_CODES[_code] = "FRFL - Rock Falls Fire"
+for _code in ("00430 00520 00535 00550 00920 00922 00923 00925 01001 01535 "
+              "01540").split():
+    WHITESIDE_FIRE_CODES[_code] = "FSTG - Sterling Fire"
+for _code in ("01605 01615 01630 01701 01720 02010 02105 02120 02125 02205 "
+              "02215 02225 02230").split():
+    WHITESIDE_FIRE_CODES[_code] = "FTAM - Tampico Fire"
+for _code in ("00120 00125 00215").split():
+    WHITESIDE_FIRE_CODES[_code] = "FTHO - Thomson Fire"
+for _code in ("01725 02201 02210 02220 02235").split():
+    WHITESIDE_FIRE_CODES[_code] = "FWAL - Walnut Fire"
+
+WHITESIDE_LIBRARY_CODES = {}
+for _code in ("00606 01215").split():
+    WHITESIDE_LIBRARY_CODES[_code] = "LALB - Albany Library"
+for _code in ("00325 00330").split():
+    WHITESIDE_LIBRARY_CODES[_code] = "LCHA - Chadwick Library"
+for _code in ("01305 01320 01401 01410 01430 01805 01810 01811 01815 01820 "
+              "01905 01915 01925 01955").split():
+    WHITESIDE_LIBRARY_CODES[_code] = "LERI - Erie Library"
+for _code in ("00110 00115 00116 00117 00625 00626").split():
+    WHITESIDE_LIBRARY_CODES[_code] = "LFUL - Fulton Library"
+for _code in ("00315 00320 00455 00460 00540 00545 00550").split():
+    WHITESIDE_LIBRARY_CODES[_code] = "LMLV - Milledgeville Library"
+for _code in ("01101 01105 01110 01111 01115 01121").split():
+    WHITESIDE_LIBRARY_CODES[_code] = "LRFL - Rock Falls Library"
+for _code in ("02230 02235").split():
+    WHITESIDE_LIBRARY_CODES[_code] = "LWAL - Walnut Public Library"
+
+WHITESIDE_PARK_CODES = {}
+for _code in ("01101 01105 01110 01111 01115 01121 01730").split():
+    WHITESIDE_PARK_CODES[_code] = "PCOL - Coloma Park"
+for _code in ("00320 00420 00460 00510 00545").split():
+    WHITESIDE_PARK_CODES[_code] = "PMLV - Milledgeville Park"
+for _code in ("01601 01605 01920 01945 02001 02005 02006 02010 02101 02105").split():
+    WHITESIDE_PARK_CODES[_code] = "PPTN - Prophetstown Park"
+for _code in ("01001 01005 01006 01011 01012 01013 01014").split():
+    WHITESIDE_PARK_CODES[_code] = "PSTG - Sterling Park"
+for _code in ("02230 02235").split():
+    WHITESIDE_PARK_CODES[_code] = "PWAL - Walnut Park"
+
+def _in_clause(codes, col="tax_code"):
+    # The column holding the code is per-county: Boone's is `tax_code`,
+    # Whiteside's is `CVTTXCD` — a name that says CIVIL TAXING UNIT and holds a
+    # whole five-digit tax code, which is why a screening regex over field names
+    # missed it for a month (EXPANSION_GUIDE §3.5.1).
+    return "%s IN (%s)" % (col, ", ".join("'%s'" % c for c in sorted(codes)))
 
 # slug -> source config. name_prop is the case-insensitive read key, and by
 # default also the property the shipped feature carries (upstream casing
@@ -411,6 +601,64 @@ SOURCES = [
     # The shape is a subdivision addressed before the assessor split its lots.
     # So the layer says nothing exactly where the county says nothing, which is the
     # right answer rather than a defect to close over.
+    # Whiteside's three. Same machinery as Boone's — a bare tax code plus a
+    # county crosswalk — with the code_map's VALUE carrying the county's own
+    # four-letter district code on the front, so code_split then peels it onto
+    # its own property exactly as Woodford's does. `expect_empty_codes` names
+    # the codes the Clerk's report carries that no parcel does: 00923 (fire)
+    # and 01111 (library and park). They are declared rather than skipped, so a
+    # county that starts or stops using one fails the build.
+    {"slug": "whiteside-fire", "out": "whiteside-fire-districts.json",
+     "edit_pin": 1788362255421,   # the service DOES publish one
+     "code_universe": WHITESIDE_CODE_UNIVERSE,
+     "blocked": "Whiteside County LICENSES its GIS data and its Data License Agreement forbids redistributing products derived from it. Nothing here ships until the county gives written permission — docs/ASK_DRAFTS.md Ask 19, and the gap record whiteside-special-districts.",
+     "layer": WHITESIDE_PARCELS, "name_prop": "CVTTXCD", "expect": 13,
+     "where": _in_clause(WHITESIDE_FIRE_CODES, "CVTTXCD"),
+     "out_prop": "district", "code_map": WHITESIDE_FIRE_CODES,
+     "code_split": WHITESIDE_CODE_RE,
+     "expect_rows": 19805, "expect_empty_codes": ["00923"],
+     "probes": [(41.78613, -90.21635, "Albany Fire"),
+                (41.86500, -90.15932, "Fulton Fire"),
+                (41.65885, -90.08136, "Erie Fire"),
+                (41.67015, -89.93485, "Prophetstown Fire"),
+                (41.63076, -89.78513, "Tampico Fire"),
+                # the three city holes, which are the probes that matter: a
+                # layer that covered everything would pass every positive
+                (41.79961, -89.69553, None),   # Sterling — own fire department
+                (41.77238, -89.69271, None),   # Rock Falls — own fire department
+                (41.80764, -89.96170, None)]}, # Morrison — own fire department
+    {"slug": "whiteside-library", "out": "whiteside-library-districts.json",
+     "edit_pin": 1788362255421,   # the service DOES publish one
+     "code_universe": WHITESIDE_CODE_UNIVERSE,
+     "blocked": "Whiteside County LICENSES its GIS data and its Data License Agreement forbids redistributing products derived from it. Nothing here ships until the county gives written permission — docs/ASK_DRAFTS.md Ask 19, and the gap record whiteside-special-districts.",
+     "layer": WHITESIDE_PARCELS, "name_prop": "CVTTXCD", "expect": 7,
+     "where": _in_clause(WHITESIDE_LIBRARY_CODES, "CVTTXCD"),
+     "out_prop": "district", "code_map": WHITESIDE_LIBRARY_CODES,
+     "code_split": WHITESIDE_CODE_RE,
+     "expect_rows": 11640, "expect_empty_codes": ["01111"],
+     "expect_no_geometry": 1,   # PIN 1127382016, 805 Ave D, code 01110
+
+     "probes": [(41.86500, -90.15932, "Fulton Library"),
+                (41.65885, -90.08136, "Erie Library"),
+                (41.77238, -89.69271, "Rock Falls Library"),
+                (41.79961, -89.69553, None),   # Sterling — municipal library
+                (41.80764, -89.96170, None)]}, # Morrison — municipal library
+    {"slug": "whiteside-park", "out": "whiteside-park-districts.json",
+     "edit_pin": 1788362255421,   # the service DOES publish one
+     "code_universe": WHITESIDE_CODE_UNIVERSE,
+     "blocked": "Whiteside County LICENSES its GIS data and its Data License Agreement forbids redistributing products derived from it. Nothing here ships until the county gives written permission — docs/ASK_DRAFTS.md Ask 19, and the gap record whiteside-special-districts.",
+     "layer": WHITESIDE_PARCELS, "name_prop": "CVTTXCD", "expect": 5,
+     "where": _in_clause(WHITESIDE_PARK_CODES, "CVTTXCD"),
+     "out_prop": "district", "code_map": WHITESIDE_PARK_CODES,
+     "code_split": WHITESIDE_CODE_RE,
+     "expect_rows": 15931, "expect_empty_codes": ["01111"],
+     "expect_no_geometry": 1,   # the same parcel — 01110 is in both sets
+
+     "probes": [(41.79961, -89.69553, "Sterling Park"),
+                (41.77238, -89.69271, "Coloma Park"),
+                (41.67015, -89.93485, "Prophetstown Park"),
+                (41.86500, -90.15932, None),   # Fulton — no park district
+                (41.80764, -89.96170, None)]}, # Morrison — no park district
     {"slug": "woodford-fire", "out": "woodford-fire-districts.json",
      "layer": WOODFORD_FIRE, "name_prop": "Fire_Prote", "expect": 17,
      "out_fields": "Fire_Prote", "where": "Fire_Prote <> ' '",
@@ -563,8 +811,14 @@ def build_source(cfg):
              "re-verify this script's measurements before rebuilding"
              % (cfg["slug"], edit_ms, pin))
     if pin is None:
-        print("  (no edit stamp published — count+name pin is the guard; "
-              "live stamp: %r)" % edit_ms)
+        # SAY WHICH IS MISSING, the pin or the stamp. This printed "no edit
+        # stamp published" whenever no pin was declared, including on services
+        # that publish one perfectly well — Whiteside's dataLastEditDate is
+        # live — which reads as a fact about the county and is a fact about
+        # this config.
+        print("  (%s; count+name pin is the guard; live stamp: %r)"
+              % ("no edit_pin declared" if edit_ms is not None
+                 else "no edit stamp published by the service", edit_ms))
 
     # A source whose SHIPPED value is not the column's own value must say what
     # column it ships under. Two ways that happens, and both mislabel the data
@@ -661,6 +915,24 @@ def build_source(cfg):
             fail("%s: %d parcels, expected %d — the county re-coded its roll; "
                  "re-verify this source's measurements before re-pinning"
                  % (cfg["slug"], len(features), want_rows))
+    # EVERY PARCEL CODE MUST BE ONE THE CROSSWALK SAW. `code_map` skips an
+    # unmapped value silently, which is right for a code the county puts in no
+    # district and WRONG for one the crosswalk never covered — downstream the
+    # two are identical, and a card would say "no fire district" about a parcel
+    # nobody looked up. A source that declares its code universe fails instead.
+    if cfg.get("code_universe"):
+        universe = set(cfg["code_universe"])
+        stray = sorted({" ".join(str((f.get("properties") or {}).get(k) or "").split())
+                        for f in features
+                        for k in (f.get("properties") or {})
+                        if k.lower() == cfg["name_prop"].lower()} - universe - {""})
+        if stray:
+            fail("%s: %d parcel code(s) are outside the declared crosswalk "
+                 "universe and would read as 'no district': %s"
+                 % (cfg["slug"], len(stray), stray[:12]))
+        print("  every parcel code is one of the %d the crosswalk covers"
+              % len(universe))
+
     if cfg.get("code_map") is not None:
         seen = set()
         for f in features:
@@ -924,6 +1196,15 @@ def main():
           % (CLOSE_FT, SIMPLIFY_FT))
     for cfg in SOURCES:
         if only and cfg["slug"] not in only:
+            continue
+        # A SOURCE THE PUBLISHER LICENSES IS NOT BUILT, and the guard is here
+        # rather than in a comment because the file this builder writes is
+        # exactly the "product derived therefrom" such a licence forbids. Naming
+        # it `--force-blocked` and refusing by default means the licensed county
+        # cannot be shipped by someone re-running the builder to refresh
+        # everything else.
+        if cfg.get("blocked") and "--force-blocked" not in only:
+            print("%s: SKIPPED — %s" % (cfg["slug"], cfg["blocked"]))
             continue
         print("%s:" % cfg["slug"])
         build_source(cfg)
