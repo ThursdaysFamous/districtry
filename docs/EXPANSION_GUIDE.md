@@ -1476,6 +1476,22 @@ the two overlap Part 5 is the shorter statement of the same rule.
   not its column's own value must declare `out_prop`. Woodford shipped under `Fire_Prote`
   while the app read `district`; every static gate passed, every card rendered, and every
   district name read "Unknown" — caught only by looking at it in a browser.
+  **When only the NARROWER document exists, test it against itself.** Boone's build takes
+  its code sets from the Clerk's *Taxcode Value within District Report* because her
+  *District Rates by Taxcode Report* is a rate list, not a membership list — read as one it
+  omitted twelve of Boone's codes on 956 parcels. Whiteside publishes only the rates
+  report, and a county that publishes only the narrower document is not automatically shut:
+  that document has an internal arithmetic. Each tax-code block prints every levying
+  district's rate and then the code's own total, so a district omitted from a code leaves
+  the sum short — and Whiteside's 140 codes balance to four decimals across 1,140 rate
+  lines, 140 of 140. Rule out the one omission arithmetic cannot see, a district present at
+  0.0000, by checking whether the document prints zero-rate lines at all (Whiteside prints
+  16, over 12 districts, one of them a village). **And do not promote a check that fails.**
+  The obvious second witness here — summing the parcel layer's assessed value per district
+  against the computation report's County Total EAV — runs +12% to +32% on twenty-one
+  districts and negative on four, because a current assessed value and a tax year's
+  rate-setting EAV are different quantities. Record that it does not work, so the next
+  reader does not re-derive it and so nobody mistakes it for corroboration.
 
 - **FETCHABLE IS NOT LICENSED. Read the publisher's terms before you build, and treat
   the answer as part of "is there a source?"** This is now step zero of county research,

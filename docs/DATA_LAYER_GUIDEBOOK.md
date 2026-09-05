@@ -1611,12 +1611,26 @@ detail into `blocker`.
       "counties": [
         "whiteside"
       ],
+      "kind": "blocked",
+      "layer": "fire-district",
+      "summary": "Whiteside County's fire, park and library districts aren't shown. The county sells its map data and its licence forbids publishing anything built from it.",
+      "why": "Everything needed to draw these districts is public, and the county's own licence agreement forbids redistributing a product derived from it \u2014 so the boundaries exist here and are not published, pending the county's written permission.",
+      "blocker": "OPENED 2026-09-05, REPLACING the older record that said the county's 63 published datasets carry no taxing district boundary of any kind. That was true and was never the whole question, and the answer it was missing turned out to be two documents rather than a dataset.  WHAT IS BUILDABLE, and it is the Boone shape: the county's own ArcGIS Online org (`whiteside.maps.arcgis.com`, org l0M0OC6J9QAHCiGx, linked \"GIS Maps\" from its home page) publishes `Tax Parcels - Whiteside County`, whose `CVTTXCD` column holds a five-digit TAX CODE \u2014 138 distinct values on 36,267 of 36,499 parcels \u2014 and its County Clerk publishes a `District Rates by Taxcode Report` naming which districts each code pays. Dissolved, that gives 13 fire, 7 library and 5 park districts, and the crosswalk is COMPLETE on the report's own arithmetic: all 140 tax codes' district rates sum to their printed totals across 1,140 lines, and the report prints 16 zero-rate lines rather than suppressing them, so an omitted district would leave the sum short. All 138 parcel codes are among the 140. That work is kept in `scripts/build_parcel_fabric_districts.py` and it is GUARDED: the three sources carry a `blocked` reason and the builder SKIPS them unless run with `--force-blocked`, because the file it would write is exactly the thing the licence forbids.  AND THE LICENCE IS WHY NOTHING SHIPS. The county's GIS page (`whitesidecountyil.gov/282/GIS`) links two PDFs. Its GIS Data Fee Schedule prices parcels at $0.10 each or $2,500 for the feature layer, \u201cOther Boundaries\u201d at $100, a data subscription at $2,000 for the first year with a three-year commitment, and states: \u201cWhiteside County licenses our data. We require a signed license agreement before the data will be released.\u201d Its License Agreement for Data Sharing states: \u201cReproduction or redistribution of the data or products derived therefrom outside of licensee's organization or entity is expressly forbidden \u2026 All rights to share or sell said data and any product derived therefrom shall remain with Whiteside County. None of the data shall be electronically duplicated by any means for use by others, in whole or in part, without express written permission of Whiteside County.\u201d That is the BUREAU CLAUSE word for word \u2014 the same one WinGIS's agreement carries against Winnebago \u2014 and three dissolved boundary files served to every visitor are products derived from the parcel layer.  THE CONTRARY EVIDENCE IS RECORDED RATHER THAN DISMISSED, because it is real: the AGOL item is shared PUBLIC with an EMPTY `licenseInfo` and an `accessInformation` of \u201cWhiteside County IL GIS\u201d, which is the Des Moines argument \u2014 an all-rights-reserved string that turns out to be a required NOTICE rather than a refusal. The county website's blanket footer (\u201cAll content \u00a9 2006-2026 \u2026 All rights reserved\u201d) is weak evidence either way. What settles it is that the county's own GIS office states a price and a signing requirement for this exact data, and forbids derived products by name. A judgement made from the copyright page alone was made without the document that decides it.  HOW THE DOCUMENTS WERE MISSED IS PART OF THE RECORD. \u00a73.5.1 step zero was run and the right page was fetched: `/282/GIS` was read, and the county's 232-loc sitemap was searched for fee/licence labels. Both searched PROSE \u2014 paragraphs over 35 characters, and sitemap link TEXT \u2014 and the two PDFs are `<a>` elements on that page labelled \u201cGIS Data Fee Schedule\u201d and \u201cData License Agreement\u201d. Screening one representation and concluding absence is the same failure this project recorded twice the same day, over a field list and over a hostname list. ENUMERATE THE LINKS ON A TERMS PAGE, NEVER ONLY ITS PROSE.  THE ROUTE IS WRITTEN PERMISSION, the Jo Daviess precedent, and the clause's own tail leaves it open (\u201cwithout express written permission of Whiteside County\u201d). ASK: NOT YET ASKED — DRAFTED (docs/ASK_DRAFTS.md Ask 19, held unsent, 2026-09-05) to the GIS office that published both documents. The third route, the county's DEVNET Wedge, would give the same crosswalk per parcel and is closed by its robots.txt (`Disallow: /parcel/*`).",
+      "wanted": "Written permission to display boundaries derived from the county's parcel data \u2014 or a fire, park and library district layer the county publishes without the licence. The derivation is already done and gated."
+    },
+    {
+      "id": "whiteside-special-district-boards",
+      "concept": "Fire, park and library districts",
+      "area": "Whiteside County",
+      "counties": [
+        "whiteside"
+      ],
       "kind": "no-source",
       "layer": "fire-district",
-      "summary": "Whiteside County's fire, park and library districts aren't shown.",
-      "why": "The county publishes unusually rich election mapping and no taxing district boundaries of any kind.",
-      "blocker": "The county's 63 published datasets, re-checked 31 Jul 2026: election geography, precincts, polling places and board districts — and no taxing district boundaries of any kind.  THAT IS STILL TRUE AND IS NO LONGER THE ANSWER. RE-MEASURED 2026-09-05: WHITESIDE IS THE BOONE SHAPE, AND BOTH HALVES OF IT ARE ALREADY PUBLISHED BY THE COUNTY. This record said its GIS host was not identified from here; the host is the county’s own ArcGIS Online org, `whiteside.maps.arcgis.com` (org `l0M0OC6J9QAHCiGx`, 240 items), linked as “GIS Maps” from the county’s own home page. (1) THE FABRIC. That org publishes `Tax Parcels - Whiteside County` (`Tax_Parcels_Ver_2_Parcels_Only/FeatureServer/0`, `licenseInfo` empty), 36,499 parcels over 70 fields. THE COLUMN WAS NEARLY MISSED BY A SCREENING REGEX, AND THAT IS WORTH RECORDING: `CVTTXCD` contains neither “code” nor “dist”, and is named for the civil taxing unit, but it carries a FIVE-DIGIT TAX CODE — 138 distinct values across the county’s 22 township groups, populated on 36,267 of 36,499 parcels (99.4%). A pattern match over field NAMES answered NONE where the field list read by eye answers yes. Its declared siblings are empty on every parcel — `CVTTXDSCRP`, `SCHLTXCD`, `SCHLDSCRP`, `USECD` and `USEDSCRP` are 0 of 36,499, the Kankakee declared-and-empty shape — so the CODE is the whole of what the layer gives, which is exactly what Boone gives. (2) THE CROSSWALK. The County Clerk’s Tax Computation & District Rate Information page publishes a `District Rates by Taxcode Report` for every tax year back to 2016 (2025 at /DocumentCenter/View/1285) — 32 pages with a full text layer, produced by DEVNET, the same vendor and the same document Boone and Grundy were built from. It names, per tax code, every district that levies on it: THIRTEEN FIRE (Albany, Chadwick, Erie, Fulton, Hillsdale, Milledgeville, Polo, Prophetstown, Rock Falls, Sterling, Tampico, Thomson, Walnut), SEVEN LIBRARY (Albany, Chadwick, Erie, Fulton, Milledgeville, Rock Falls, Walnut) and FIVE PARK (Coloma, Milledgeville, Prophetstown, Sterling, Walnut). THE CROSSWALK IS COMPLETE, and an earlier version of this record said ten codes were unaccounted for. That was a PARSE ARTEFACT, not a gap in the county’s document: splitting the report on its block HEADER (`NNNNN - `) loses twelve codes whose header falls across a page break, giving 128. Splitting on the block TERMINATOR (`Totals for NNNNN`), which is present for every block, recovers 140 — and all 138 of the parcel layer’s codes are among them, with two the report carries that no parcel does (00923, 01111). The completeness gate is still the right gate and it is MET. A THIRD ROUTE WAS TESTED AND IS CLOSED BY ROBOTS RATHER THAN BY ACCESS: the county’s DEVNET Wedge (`whitesideil.devnetwedge.com`) would give the same crosswalk per parcel, and its robots.txt disallows `/parcel/*`, which this project treats as an instruction and not an obstacle. What the org does NOT carry is any district polygon — `Drainage Districts Only`, `SchoolTaxDistricts`, `ParkRecreationFacilities_public` (facilities, as this record already said) and `Zoning Districts` are the nearest — and an unauthenticated arcgis.com catalog search for Whiteside fire, park or library feature services returns nothing county-authored. So the county publishes no boundary and publishes everything needed to derive one.",
-      "wanted": "Fire, park and library district boundaries on the county’s map account — or a build from what it already publishes: the tax code on each parcel, and the Clerk’s report of which districts each tax code pays."
+      "summary": "Nobody publishes who runs Whiteside County's 25 fire, park and library districts.",
+      "why": "The county names all 25 bodies in its Clerk's tax report, and no county document names a trustee, an address or a telephone number for any of them.",
+      "blocker": "OPENED 2026-09-05 beside the boundary work, and REWORDED THE SAME DAY when that work turned out to be licence-blocked — it no longer describes CARDS, because none draw (see `whiteside-special-districts`). What it records instead is that the county NAMES all 25 of these bodies, in its Clerk's District Rates by Taxcode Report: 13 fire, 7 library, 5 park. It names not one PERSON who runs any of them. That absence is real whether or not the boundaries ever ship, which is why it stays its own record rather than being folded into the blocked one. THE COUNTY WAS CHECKED, not assumed: its 232-URL sitemap has no directory of officials, no yearbook and no list of taxing bodies — where Boone's and Grundy's clerks both publish an annual directory naming these bodies’ trustees — and its ETSB/911 page names exactly one of the 25, Prophetstown Fire District, and no officer of it. The two documents the boundaries come from carry a four-letter code, a name abbreviated to a column width, and a tax rate. So this is the Woodford shape: a name alone, without even the per-district website link Peoria’s cards carry. THE ROUTE IS EACH BODY’S OWN PAGE, ONE AT A TIME, which is how Boone’s five were built (boone_district_officials_scraper.py); 25 bodies is its own piece of work rather than a line in a boundary change, and several are small rural departments that may publish nothing. THE 25 ARE NAMED HERE so a reader of this record knows WHICH bodies are unnamed rather than only how many, in the county’s own spelling. FIRE (13): Albany, Chadwick, Erie, Fulton, Hillsdale, Milledgeville, Polo, Prophetstown, Rock Falls, Sterling, Tampico, Thomson, Walnut. LIBRARY (7): Albany, Chadwick, Erie, Fulton, Milledgeville, Rock Falls, Walnut Public Library. PARK (5): Coloma, Milledgeville, Prophetstown, Sterling, Walnut. THOSE NAMES ARE THE COUNTY’S ABBREVIATIONS AND ARE NOT EXPANDED: both county documents write “ALBANY FIRE” in a narrow column, the ETSB page writes “Prophetstown Fire District” in full for one body of thirteen, and inventing the other twelve from that pattern is a guess this project does not make. Trustees of Illinois fire, park and library districts are elected at the consolidated election in April of odd years or appointed, separately from any county office, so a county roster would not exist even if the county kept one.",
+      "wanted": "Trustees, an address or a phone for any of Whiteside’s 25 fire, park and library districts — from the district itself or from a county list. The boundaries are built but held back under the county's licence."
     },
     {
       "id": "woodford-special-district-boards",
@@ -1946,17 +1960,6 @@ detail into `blocker`.
       "why": "The statewide layer is the Office of Emergency Communications' aggregate of each county 911 authority's own filing, and it can only carry what a county files — no other statewide publisher of call-routing boundaries exists.",
       "blocker": "MEASURED 2026-08-26 with the same per-authority provisioning-polygon sampling the fire and law gaps record (recomputed and gated on every build of wi/scripts/build_wi_ng911_service_areas.py): Iowa, Vilas and Walworth file no PSAP boundaries, and Langlade has no provisioning boundary at all. Jefferson and Polk — each short on one of the other two tilings — file their PSAP boundaries in full. RE-MEASURED 2026-09-05 AND UNCHANGED: the same authorities, the same absences, Langlade still carrying no provisioning polygon, the builder's own gate agreeing across all 72. THE RE-MEASURE HAPPENED ONLY BECAUSE SOMEBODY RAN THE BUILDER, and that is the finding worth keeping. This is an OPERATOR build with no schedule, reading a source the state refreshes roughly weekly, and nothing was comparing the two: validate_sources.py asked each of these layers for returnCountOnly every month and read only whether the endpoint answered, throwing the number away, so its own comment calling a count change the operator's rebuild trigger described an intention and never a mechanism — the same shape as sw.js's bump-CACHE_NAME sentence before check_cache_version.py existed. The builder now writes wi/data/source/ng911/built-rows.json on every run and the monthly check compares the live counts against it; a county REDRAWING a boundary without changing its row count still does not show up, which is why that finding is a WARN a human reads.",
       "wanted": "The missing counties' PSAP-boundary filings reaching the OEC aggregate — the state's roughly weekly refresh carries them the moment a county files."
-    },
-    {
-      "id": "wtcs-district-holes",
-      "concept": "Technical College District",
-      "area": "Wisconsin — statewide",
-      "kind": "data-quality",
-      "layer": "wtcs-district",
-      "summary": "The technical college card draws each district with its interior cutouts filled in, so a point the state excludes from a district is still shown inside one. Every other answer on that card is right.",
-      "why": "The state's map service can hand the same shapes over in two formats, and one of them quietly turns a cut-out into solid ground. This layer was built through that one; the county board layer has been rebuilt through the other.",
-      "wanted": "Nothing from the state \u2014 the shapes are already published correctly. This is a rebuild of the layer through the corrected reader, which is queued.",
-      "blocker": "MEASURED 2026-09-05, as a side finding of the supervisory-district rebuild. ArcGIS's GeoJSON export silently UNNESTS interior rings: it returns a feature's holes as separate SHELLS, so an area the publisher cut out becomes an area the layer claims. Measured on this layer's own DPI endpoint, same query, same generalisation, only the format changed: f=geojson returns 16 features with ZERO holes, f=json returns the same 16 with 109. The shipped wtcs-districts.json carries 0, so it fills all 109. THE BUILDER'S OWN GATE CANNOT SEE THIS: build_wi_wtcs_districts.py asserts that the union's one lawful interior hole is Lake Winnebago, a check written because holes matter here, but it runs on make_valid copies at the UNION level, and shapely's make_valid re-nests an unnested inner shell as a hole, so the gate passes identically on either fetch (112 union holes both ways, measured 2026-09-05) and will not certify the rebuild; the rebuild needs a per-feature hole assertion. The fix is not new code \u2014 fetch_layer in build_wi_supervisory_districts.py was switched to f=json with a containment-aware converter on 2026-09-05 and every caller of it is correct; this builder fetches f=geojson itself and is one of eight that still do (wi/WATCH.md names all eight, and records that build_metro_outline.py was MEASURED unaffected because TIGERweb's county layer has no interior rings either way). WHAT IS NOT YET MEASURED IS THE READER IMPACT: a hole in one technical college district is often another district, so the card may still answer correctly at many of these points, and no count of wrong answers is claimed here. The supervisory layer's equivalent rebuild (2026-09-05) restored 277 source holes on 95 features; at an interior point of each, 133 went from wrong to right against the service's own answer and about 100 stay wrong inside slivers under 0.008 km2 that simplification keeps. GEOMETRY AND CARD ARE DIFFERENT COUNTS: the app renders the FIRST containing feature, so where main's geometry held two districts at one point the card showed one of them by file order, and the card-visible correction is 62 to 63 points. Retire this record by rebuilding the layer through the corrected path and diffing at an INTERIOR POINT of each restored hole — never its centroid, which for a non-convex hole falls outside it, lands in the owner's shell and reads as agreement. The supervisory rebuild measured that way found 133 points corrected and 108 still wrong, every one of the 108 under 0.0073 km2 and dropped by simplification in both versions, so expect a residual here too and state it rather than claiming the rebuild closes everything."
     },
     {
       "id": "ng911-ems-filings",
@@ -6338,6 +6341,108 @@ recorded as a candidate rather than made in passing.
 
 Every entry cites where it's recorded and the blocker.
 
+### FLEET-WIDE — 69 builders ask ArcGIS for GeoJSON, and that exporter unnests holes
+
+**Recorded 2026-09-05, measured, and open on every instance except the two
+Wisconsin layers already rebuilt.** This is a backlog item rather than a gap
+record because nobody has measured which of the remaining layers HAS interior
+rings, and a layer with none is unaffected no matter how it is fetched.
+
+**The defect.** ArcGIS's GeoJSON export silently UNNESTS interior rings: it
+returns a feature's holes as separate PARTS, so ground the publisher cut out
+of a district becomes ground the district claims, and the app's
+point-in-polygon test — which subtracts `ring[1:]` from each part's shell —
+has nothing left to subtract. Esri JSON (`f=json`) carries the rings with
+their orientation intact and converts correctly. Two Wisconsin layers were
+measured and both were wrong:
+
+| layer | holes as `f=geojson` | as `f=json` | card answers corrected |
+|---|---|---|---|
+| `county-supervisory-districts` | 607 | 847 | 63 |
+| `wtcs-districts` | 0 | 109 | 59 |
+
+**THE TEST IS PER LAYER AND COSTS TWO FETCHES.** Ask the same query both
+ways and compare interior-ring counts. A layer that returns the same count
+either way has no interior rings and is not affected — `build_metro_outline.py`
+was measured that way and is clean, because TIGERweb's county layer has none.
+
+**The surface, measured 2026-09-05** — files whose Python asks a server for
+GeoJSON, counting BOTH spellings (`f=geojson` inside a URL string and the dict
+form `"f": "geojson"`):
+
+| tree | files | call sites |
+|---|---|---|
+| `scripts/` (Illinois) | 35 | 43 |
+| `ia/scripts/` | 15 | 18 |
+| `wi/scripts/` | 10 | 11 |
+| `mi/scripts/` | 7 | 7 |
+| `ny/scripts/` | 1 | 1 |
+| `ca/scripts/` | 1 | 1 |
+
+**COUNT BOTH SPELLINGS.** Grepping only `f=geojson` reports Illinois as 3
+files instead of 35 — that mistake was made here first, and the dict form is
+the commoner one by an order of magnitude.
+
+**THE DEFECT TRACKS THE HOST, NOT ARCGIS IN GENERAL — so 26 of those 69 files
+are the ones to check first.** Measured 2026-09-05 across twelve layers on six
+hosts:
+
+| host class | layers | interior rings `f=geojson` vs `f=json` |
+|---|---|---|
+| ArcGIS Online (`services*.arcgis.com`) | 2 | **both AFFECTED** — LTSB 1 vs 2 on Marathon alone; DPI 0 vs 109 |
+| on-premises ArcGIS Server + TIGERweb | 10 | all identical, on four hosts |
+
+The clean ten are not a null result: Madison's ward layer keeps **44** interior
+rings through the GeoJSON exporter, its association layer 14, its TIF layer 4,
+Milwaukee's MPS layer 2, its TID layer 1, and LTSB's on-premises ward layer 1.
+Rings that survive are evidence the exporter nests correctly; **a layer with no
+interior rings either way proves nothing about the exporter** and is merely
+unaffected — TIGERweb's legislative and county layers are clean only in that
+weaker sense.
+
+**LTSB IS ITS OWN CONTROL, which is what makes this more than a correlation**:
+the same publisher's on-premises ward layer keeps its ring while its ArcGIS
+Online supervisory layer drops one, so the difference is the HOST rather than
+the publisher, the data or the query.
+
+Twelve layers on six hosts is a strong signal, not a proof, so the per-layer
+test above stays the rule. But it says where to look first — files naming an
+ArcGIS Online host: 11 in `ia/`, 8 in `scripts/`, 4 in `wi/`, 3 in `mi/`, none
+in `ny/` or `ca/`.
+
+Two narrowings worth carrying, both measured:
+
+* A fetch with `returnGeometry=false` cannot be affected, whatever its format.
+  `wi_county_board_scraper.py` names both formats but only its line 4000 is
+  exposed; the other five set `returnGeometry=false`.
+* Wisconsin's `build_wi_supervisory_districts.py` appears in a naive grep and
+  is CLEAN — its two hits are comments explaining the defect. Read the line
+  before counting the file.
+* A file that reaches many hosts may reach only ONE with geometry. Wisconsin's
+  `wi_county_board_scraper.py` was first recorded as unmeasurable "because its
+  line 4000 hits a different county-owned host per county"; it carries three
+  layer specs, and that line runs solely for a county declaring a
+  `district_witness` — Lincoln alone, on-premises and measured clean. COUNT THE
+  CALL SITES THAT ASK FOR GEOMETRY, not the hosts a file mentions.
+
+**A GATE DOWNSTREAM OF `make_valid` CANNOT SEE THIS.** shapely's `make_valid`
+RE-NESTS an unnested inner shell as a hole — a 10×10 square with a 2×2 hole
+gives `Polygon, holes=1, area=96.0` from both forms — so any check that
+validates before it measures is blind by construction. The WTCS builder's
+Lake Winnebago rule was doubly blind, because a tiling's UNION also fills a
+district's hole from its neighbour. A gate for this must run on the geometry
+as SHIPPED: `build_wi_wtcs_districts.py` carries the pattern (an interior-ring
+floor, plus a pinned count of parts nested inside another part of the same
+district).
+
+**Do not tune that nested-part gate by shape.** Attempted and refused here:
+the server generalization emits degenerate micro-parts, and 22 of WTCS's 103
+real holes are smaller than the largest of them while 29 share their 4-vertex
+count — so an area or vertex threshold blinds the gate to real cutouts. The
+interior-ring floor is what actually catches an unnested fetch, which shows up
+there as zero.
+
+
 ### The Wisconsin ask ledger — opened 2026-08-27, nine asks SENT, awaiting replies
 
 Wisconsin's frontier is no longer software. Every remaining gap is a
@@ -8091,6 +8196,7 @@ matrix; when one is rejected, move the rationale into a NO HONEST ANALOG footnot
 > | **The pass-7 build-ready ledger** (RESEARCH PASS 7, below) — ~~Peoria + Tazewell~~ **SHIPPED** (29th/30th), ~~Iroquois + Monroe + Randolph~~ **SHIPPED** (31st-33rd, the at-large posture's debut), ~~De Witt~~ **SHIPPED** (34th), ~~Washington~~ **SHIPPED** (35th), ~~Cass~~ **SHIPPED** (36th), ~~Marshall~~ **SHIPPED** (37th), ~~Mason~~ **SHIPPED** (38th) — the derivation tier is COMPLETE. ~~Pike + Putnam + Brown + Calhoun~~ **SHIPPED** (the at-large tier — served through the County card, no dispatch entries). **Champaign + Piatt WITHDRAWN — licensed, not open** (see the tranche-2 entry). STILL OPEN: nothing from pass 7 — the ledger is CLEARED | nothing for the open tiers — every source measured live 2026-08-02 | **yes — the live work queue** |
 > | **The pass-6 build-ready ledger** — ~~8 counties' municipal-officials sources~~ **SHIPPED 2026-08-01** (Grundy, Livingston, Logan, McLean's three ward cities, Sangamon, Madison, St. Clair, Rock Island — the roster grew 360 → 492 municipalities; McLean's county-wide Airtable route stays open, see its row); ~~4 precinct counties + 3 polling/naming joins~~ **SHIPPED 2026-08-02**; ~~Woodford's board~~ shipped with the county 2026-08-02; ~~3 board-geometry builds~~ **ALL SHIPPED 2026-08-02** (Boone + Grundy + Henry — Henry as the twenty-eighth county), ~~the Logan board roster scraper~~ (SHIPPED 2026-08-02), still open: Aurora per-seat contact (re-measured 2026-08-02: Akamai 403s every rung reachable from CI — see its ledger row), ~~2 fire tilings~~ **SHIPPED 2026-08-02** (Sangamon 29 FPDs + St. Clair 44, each with its recorded caveat on the card), ~~Stephenson fire~~ **SHIPPED 2026-08-02** (georeferenced; its park/library maps measured RASTER-baked — see the new gap), ~~the verified city ward layers~~ **SHIPPED 2026-08-02** (22 cities across 13 sources; Lake Forest + 4 DuPage cities still to chase — see the ward ledger) | nothing — every source verified live 2026-07-31 | done — Aurora per-seat contact is the one open remainder |
 > | ~~**Woodford County**~~ **SHIPPED 2026-08-02 — the twenty-seventh dispatched county**: board (3 DERIVED districts per Ord 2020/21 #005 + 15-member weekly roster with phones and e-mails) and precincts (TCRPC, 37, polling 37/37). **ITS FIRE, PARK AND LIBRARY DISTRICTS SHIPPED 2026-09-05 and `woodford-special-districts` is RETIRED** — 17 / 3 / 6 of them, pre-built by `scripts/build_parcel_fabric_districts.py`. The record that had been open since 31 Jul asked the wrong question: it found that the county's three district services are one 25,824-row PARCEL FABRIC, one record per property, and treated that as the end of the road — a month before the fabric dissolve shipped for Rock Island, Macon, Kendall and Boone. Woodford is the EASY half of Boone's shape: its parcels carry the district's NAME (`Fire_Prote`, `Library_Di`, `Park_Distr`) rather than a bare tax code, so no crosswalk is transcribed at all, and the county's own 2025 settlement sheets levy for exactly the 26 districts that come out, code for code. **CITE THAT WITNESS AS WHAT IT IS**: it names no office and never says “certified”, and an earlier draft of this row called it “the Clerk's certified” sheets on the strength of nothing. Its FIRE item's own description dates the ORIGINAL district shapes to 2007 IDOR data — which does not describe what is dissolved here, because a parcel's district follows its TAX CODE and all 119 `Tax_Code_1` values map to exactly one district per concept, so the attribution is a crosswalk current with the 2025 levy. Its 26 BOARDS are named by nobody and that is recorded rather than left silent (`woodford-special-district-boards`): the county's staff directory and Elected Officials page contain the words fire, library and park zero times between them. **A COUNTY THAT PUBLISHES ITS PARCEL LAYER UNDER A DISTRICT'S NAME HAS PUBLISHED THE DISTRICT** — ask that before writing any county off for want of a boundary layer, which is what the five remaining `*-special-districts` records now say on their own blockers (Grundy's parcel layer turned out to carry the same kind of field; McLean's measurably does not) | — | done |
+> | **Whiteside County's fire, park and library districts** — **DERIVED 2026-09-05 AND NOT SHIPPED: the county LICENSES this data and its agreement forbids derived products** (gap `whiteside-special-districts`, now `blocked`; docs/ASK_DRAFTS.md Ask 19 drafted and held). Everything below was measured and is kept because it is what permission would release; the record of how the licence was missed is in the gap. The county's record had also named the boundary answer while measuring something else — 13 / 7 / 5, `whiteside-special-districts` RETIRED. That record said the county's 63 published datasets carry "no taxing district boundaries of any kind", which was true and stayed true; it also said the county's GIS host "was not identified from here", which was not. The host is the county's own ArcGIS Online org, `whiteside.maps.arcgis.com`, linked as "GIS Maps" FROM ITS OWN HOME PAGE. **THE TAX-CODE COLUMN WAS NEARLY MISSED TWICE AND THE SECOND MISS IS THE LESSON**: a screening regex over the 70 field names for `fire|librar|park|dist|code|tax` answers NONE, because `CVTTXCD` is named for the CIVIL TAXING UNIT and abbreviates *code* to `CD` — while holding 138 distinct five-digit tax codes on 36,267 of 36,499 parcels. A regex ranks a field list for reading; it never proves one empty (EXPANSION_GUIDE §3.5.1). **THE RISK THIS COUNTY CARRIES THAT BOONE DID NOT** is that Whiteside publishes only the `District Rates by Taxcode Report` and no `Taxcode Value within District Report` — and this builder's own Boone comment warns the rates report is the NARROWER document, having omitted twelve of Boone's codes on 956 parcels. So completeness is TESTED rather than assumed, by the document against itself: every tax-code block prints each district's rate and then its own total, a district omitted would leave that arithmetic short, and **140 of 140 codes balance to four decimals across 1,140 rate lines**. The evasion that arithmetic cannot see — a district present at 0.0000 — is ruled out by the report's own behaviour: it PRINTS 16 zero-rate lines over 12 districts, one of them a village. **A SECOND CHECK WAS TRIED AND IS NOT CLAIMED**: summing the parcel layer's `CNTASSDVAL` per district against the Tax Computation Report's County Total EAV runs +12% to +32% on twenty-one districts and NEGATIVE on four, because a current assessed value and a tax year's rate-setting EAV are not the same quantity — recorded so nobody re-derives it, and never dressed up as corroboration. **THREE CITIES ARE HOLES AND THE COUNTY SAYS SO**: Sterling, Rock Falls and Morrison run their own fire departments, their tax codes carry no fire line, and the county's ETSB/911 page names the "Twin City Communication Center, Sterling, IL (Sterling, Rock Falls Police & Fire)" — which is what the three NEGATIVE probes in the builder test, the checks a layer covering everything would fail. One parcel in the county has no shape at all (PIN 1127382016, 805 Ave D, tax code 01110) and is declared rather than skipped. The 25 boards are named by nobody and are recorded (`whiteside-special-district-boards`); the names on the cards are the county's own abbreviations and are NOT expanded — its ETSB page writes "Prophetstown Fire District" in full for one body of thirteen, and inventing the other twelve from that pattern is a guess (`scripts/build_parcel_fabric_districts.py`) | — | done |
 > | The 64 no-source + 5 blocked + 16 data-quality gap entries — **85 in all as of 2026-08-02** (fire/park/library tilings in a dozen counties, precinct geometry or polling assignments in seventeen counties and cities, ward geometry in nine cities, three municipal-officials counties, and the frontier boards incl. the two Champaign-consortium counties whose data is sold rather than published). Every entry was rewritten in plain language on 2026-08-02 for the reader who could actually close it | publishers — each entry's `wanted` says exactly what | no — recorded, panel-visible |
 > | McHenry / Kendall / Joliet | hard WAF denies (the two board directories now have verified 2026 Archive captures; McHenry's yearbook page and Kendall's municipal PDF still don't) | no — rule-4 terminal |
 > | DuPage municipal phones; Will's `party` field | unchanged (re-verified 2026-07-31); deliberate non-ship | no |
