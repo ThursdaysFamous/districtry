@@ -27,22 +27,27 @@ ward layer is.
 
 THE PER-CITY COMPLETENESS GATE — the reason this file is not a one-liner.
 Fourteen municipalities mix '00' placeholders with real district ids, and
-the mix splits two ways, measured by uncoded-ward count and area share:
+the mix splits three ways, measured by uncoded-ward count and area share:
 
-  * TEN ARE INCOMPLETE SUBMISSIONS and are EXCLUDED, each on the record in
-    EXCLUDED below (uncoded share 9.4%-99.9% of the city's area). Appleton
-    is the flagship: Outagamie County submits all 50 of its Appleton wards
-    uncoded, only the Calumet/Winnebago fringes carry ids, and the city's
-    own GIS publishes no aldermanic layer either (its pubserver's full
-    service list and a portal-wide "alder" search both answer empty,
-    measured 2026-08-26) — two dead routes, so the gap record stands.
-    Bellevue is the INVERSE error and the reason the gate cuts both ways: a
-    village with ONE spuriously coded ward (99.9% uncoded) would otherwise
-    ship a single sliver posing as a trustee district.
-  * FOUR ARE THE SLIVER SHAPE and SHIP WITH A HOLE: exactly one uncoded
-    ward, 0.0%-1.4% of the city's area (Delavan, De Pere, Green Bay,
-    Howard). Inside that sliver the card honestly answers no-district; the
-    builder pins each and fails if a second uncoded ward ever appears.
+  * SIX ARE INCOMPLETE SUBMISSIONS and are EXCLUDED, each on the record in
+    EXCLUDED below (uncoded share 9.4%-99.9% of the city's area). Bellevue
+    is the INVERSE error and the reason the gate cuts both ways: a village
+    with ONE spuriously coded ward (99.9% uncoded) would otherwise ship a
+    single sliver posing as a trustee district. There were TEN until
+    2026-09-06; see LOCAL_COMPOSITION.
+  * FOUR ARE LOCALLY COMPOSED and ship: the county files their wards
+    uncoded and the CITY publishes the assignment itself — Appleton from
+    its clerk's polling-locations page, Kaukauna from the text layer of the
+    city's own district-map PDF, Berlin from its council page's prose, and
+    Edgerton derived from the city's own district SERVICE. Each is gated in
+    LOCAL_COMPOSITION below.
+  * SIX ARE THE SLIVER SHAPE and SHIP WITH A HOLE. Four reached that by the
+    automatic rule — exactly one uncoded ward, 0.0%-1.4% of the city's area
+    (Delavan, De Pere, Green Bay, Howard) — and two by DECLARATION, their
+    compositions naming the wards their own sources leave out (Kaukauna 18;
+    Edgerton 8 and 9). Inside a sliver the card honestly answers
+    no-district; every one is pinned, and the automatic rule still fails if
+    a second uncoded ward appears in a city that did not declare one.
 
 An OPERATOR rebuild after each Jan-15 / Jul-15 filing window, exactly like
 the supervisory build this file leans on (fetch/validate/mapshaper are
@@ -57,6 +62,7 @@ Usage:
 import json
 import os
 import random
+import re
 import subprocess
 import sys
 import tempfile
@@ -64,7 +70,8 @@ import tempfile
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
 from build_wi_supervisory_districts import (  # noqa: E402
-    _curl, fetch_layer, _model, _districts_at, MAPSHAPER, STATE_BBOX, WARDS)
+    _curl, fetch_layer, _model, _districts_at, LTSB_ORG, MAPSHAPER, STATE_BBOX,
+    WARDS)
 
 REPO_ROOT = os.path.dirname(SCRIPT_DIR)
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
@@ -77,8 +84,11 @@ EXPECT_CODED_WARDS = 2580      # all coded wards, towns included
 EXPECT_TOWN_CODED = 4          # the Town of Mercer anomaly, Iron County
 EXPECT_DISTRICT_KEYS = 867     # distinct COUSUBFP+ALDERID over C/V, AS FILED
 EXPECT_MUNICIPALITIES = 165    # C/V municipalities with any coded ward
-EXPECT_COMPOSED_WARDS = 50     # Appleton's uncoded Outagamie wards, composed below
-EXPECT_TOTAL_KEYS = 878        # 867 filed + Appleton's 11 the state does not file
+EXPECT_COMPOSED_WARDS = 78     # uncoded wards the four compositions assign:
+                               # Appleton 50, Kaukauna 16, Berlin 6, Edgerton 6
+                               # (each city's one county-coded ward is not one)
+EXPECT_TOTAL_KEYS = 888        # 867 filed + 21 the state does not file:
+                               # Appleton 11, Berlin 5, Kaukauna 3, Edgerton 2
 
 # The NINE measurably incomplete submissions: COUSUBFP -> (name, uncoded
 # wards, uncoded share of the municipality's ward area). Computed fresh from
@@ -94,18 +104,20 @@ EXPECT_TOTAL_KEYS = 878        # 867 filed + Appleton's 11 the state does not fi
 # name a district there, whatever their own pages say.
 EXCLUDED = {
     "06350": ("Bellevue", 11, 0.999),
-    "06925": ("Berlin", 6, 0.874),
     "09725": ("Brillion", 2, 0.094),
     "17950": ("Cuba City", 1, 0.158),
     "21225": ("Durand", 1, 0.274),
-    "22575": ("Edgerton", 8, 0.873),
-    "38800": ("Kaukauna", 17, 0.998),
     "56925": ("New London", 3, 0.429),
     "64450": ("Port Washington", 1, 0.318),
 }
-# The four sliver-hole cities: ship, with exactly one uncoded ward each.
+# The sliver-hole cities: ship, with a hole answering "no district".
+# The first four reached this list by the automatic rule in classify() —
+# exactly one uncoded ward, under 5% of the city. Kaukauna and Edgerton reach
+# it a different way: their compositions NAME the wards their own sources leave
+# out, so the leftovers are declared rather than discovered.
 SLIVER_OK = {"19450": "Delavan", "19775": "De Pere",
-             "31000": "Green Bay", "35950": "Howard"}
+             "31000": "Green Bay", "35950": "Howard",
+             "22575": "Edgerton", "38800": "Kaukauna"}
 
 # ---------------------------------------------------------------------------
 # LOCAL COMPOSITION — a municipality whose COUNTY files its wards uncoded and
@@ -205,6 +217,118 @@ LOCAL_COMPOSITION = {
         # clerk's page says which, so the two must agree ward for ward.
         "polling_counties": ("outagamie", "calumet", "winnebago"),
         "polling_key": "C|APPLETON|",
+        # Measured on the SAME column as the three below, so all four are one
+        # source rather than a census figure for one city and a state column for
+        # the others: 75,913 over fifteen, ideal 5,061, worst D4 -6.40%. The
+        # header above records 75,862 / 5,057 / 6.3% from Census 2020 itself;
+        # the small difference is ward 60, which the 2025 edition does not carry.
+        "balance": 6.40,
+    },
+    "06925": {
+        "name": "Berlin",
+        "seats": 6,
+        # cityofberlin.net/city-council/ read 2026-09-06. THE PAGE STATES THE
+        # COMPOSITION IN PROSE RATHER THAN IN A TABLE: "The common council is
+        # comprised of six members who are elected, by Ward", and then names
+        # each member's ward — "Council Member Terry Przybyl, Alderperson Ward 1
+        # and Ward 7", "…Ward 2", and so on. Berlin is the ONE of these three
+        # whose source names every ward it has: 7 wards, 6 districts, nothing
+        # left over.
+        #
+        # THE RECORD SAID THIS CITY WAS SHUT AND IT WAS SHUT ON A DIFFERENT
+        # QUESTION. What was measured on 2026-09-05 is that Berlin votes at a
+        # SINGLE polling place, so no ward-to-place grouping can name a district
+        # there — true, and about the polling route only. The gap's own `wanted`
+        # asked for three things and "a city page naming the wards in each
+        # district" was the third; nobody had read the page.
+        "source_url": "https://cityofberlin.net/city-council/",
+        "read_on": "2026-09-06",
+        "districts": {
+            "01": [1, 7],
+            "02": [2],
+            "03": [3],
+            "04": [4],
+            "05": [5],
+            "06": [6],
+        },
+        # LTSB codes exactly one Berlin ward — 7 -> 01, filed by WAUSHARA while
+        # Green Lake files the other six uncoded — and 7 is precisely the ward
+        # the page pairs with ward 1 under one alderperson. The counties' filing
+        # and the city's page agree on the single ward both describe.
+        "balance": 12.55,
+    },
+    "22575": {
+        "name": "Edgerton",
+        "seats": 3,
+        # THE ONLY ONE OF THE THREE WHOSE SOURCE IS A SERVICE RATHER THAN A
+        # DOCUMENT. The city publishes `Voting_Districts` (3 polygons, named
+        # "District 1".."District 3") and `Wards` from its own ArcGIS Online org
+        # — found by an unauthenticated catalogue search that needed nothing
+        # from the city's website, the Vermilion move. So this composition is
+        # not transcribed from prose: it is DERIVED by overlaying LTSB's ward
+        # polygons on the city's own district polygons, and re-derived by
+        # service_witness below on every run.
+        "source_url": ("https://services7.arcgis.com/Sngx5exQaxXjq6qG/arcgis/rest"
+                       "/services/Voting_Districts/FeatureServer/0"),
+        "read_on": "2026-09-06",
+        "districts": {
+            "01": [1, 2],
+            "02": [3, 4],
+            "03": [5, 6, 7],
+        },
+        # Wards 8 and 9 are annexation slivers the city's district layer does
+        # not cover at all (0.68% and 0.36% of their own area lands in any
+        # district — digitisation contact, not membership). See `unplaced`.
+        "unplaced": {8: 0.0009, 9: 0.0061},
+        "service_witness": {
+            "url": ("https://services7.arcgis.com/Sngx5exQaxXjq6qG/arcgis/rest"
+                    "/services/Voting_Districts/FeatureServer/0"),
+            "field": "Voting_District",
+            # "District 3" -> "03"
+            "label_re": r"^District\s+(\d+)$",
+            "min_share": 0.99,
+        },
+        # LTSB codes exactly one Edgerton ward — 7 -> 03, filed by DANE while
+        # Rock files the other eight uncoded — and the city's own layer puts
+        # ward 7 in "District 3" at 99.76% of its area. Two publishers, one
+        # ward, agreeing.
+        "balance": 2.35,
+    },
+    "38800": {
+        "name": "Kaukauna",
+        "seats": 4,
+        # kaukauna.gov/common-council/ links "Map of Aldermanic Districts",
+        # 2025-DISTRICT-MAP-11-24-25.pdf, read 2026-09-06. IT IS A VECTOR PDF
+        # AND THE COMPOSITION IS IN ITS TEXT LAYER, so nothing here reads a map:
+        #
+        #     DIST. #1 - WARDS 1,2,3
+        #     DIST. #2 - WARDS 4,5,16
+        #     DIST. #3 - WARDS 6,7
+        #     DIST. #4 - WARDS 8,9,10,11,12,13,14,15,17
+        #
+        # The Jackson rule says read a district map's filled path OBJECTS rather
+        # than its pixels; the rule before that one is to check whether the map
+        # simply SAYS it, which this one does. The page also prints the polling
+        # arrangement that closed the Appleton route here — districts 1 & 2 vote
+        # at one building, 3 & 4 at another — so the same document that cannot
+        # answer through polling places answers directly.
+        "source_url": ("https://kaukauna.gov/wp-content/uploads/2025/12"
+                       "/2025-DISTRICT-MAP-11-24-25.pdf"),
+        "read_on": "2026-09-06",
+        "districts": {
+            "01": [1, 2, 3],
+            "02": [4, 5, 16],
+            "03": [6, 7],
+            "04": [8, 9, 10, 11, 12, 13, 14, 15, 17],
+        },
+        # Ward 18 is a 0.29% annexation sliver the map does not name; it is also
+        # absent from LTSB's own 2025-ward population edition, i.e. newer than
+        # both. It is NOT placed by inference from its neighbours.
+        "unplaced": {18: 0.0029},
+        # LTSB codes exactly one Kaukauna ward — 12 -> 04, filed by CALUMET
+        # while Outagamie files all seventeen of its own uncoded (the Appleton
+        # county, again) — and the map puts ward 12 in DIST. #4.
+        "balance": 6.38,
     },
 }
 
@@ -222,8 +346,27 @@ def is_coded(alderid):
 
 def apply_local_composition(attr_feats):
     """Give each locally-composed municipality's wards the district its own
-    election authority publishes, and GATE that assignment three ways before
-    a single polygon is drawn.
+    source publishes, and GATE that assignment before a single polygon is drawn.
+
+    THE GATES ARE PER CITY BECAUSE THE SOURCES ARE. Appleton's composition comes
+    from a clerk's polling-locations page and is checked against the Elections
+    Commission's own ward-to-place file; Berlin's comes from a council page in
+    prose, Kaukauna's from the text layer of the city's own district map, and
+    Edgerton's from the city's own district SERVICE. A polling-place partition
+    is a real witness for exactly one of those four — the other three vote at
+    one or two places for all their districts, which is what closed that route
+    on 2026-09-05 — so demanding it of all four would refuse three correct
+    compositions, and skipping it for all four would drop Appleton's best check.
+
+    What every city is held to:
+      * every ward placed, or named in `unplaced` with its area share pinned
+        and RE-MEASURED here (below),
+      * agreement with every ward the counties DO code (`is_coded`), which is a
+        different publisher and the check that catches the city being wrong,
+      * a population balance on LTSB's own 2024-election/2025-ward layer, held
+        to the pinned figure in BOTH directions.
+    plus, where the city's source supports it, the polling partition (Appleton)
+    or a live re-derivation from the city's service (Edgerton).
 
     Returns (n_wards_composed, {cousubfp: n_districts}).
     """
@@ -259,14 +402,48 @@ def apply_local_composition(attr_feats):
             except (TypeError, ValueError):
                 raise RuntimeError("%s: a ward with no numeric WARDID (%r)"
                                    % (spec["name"], f["properties"].get("WARDID")))
-        missing = sorted(have - set(ward_to_dist))
+        unplaced = spec.get("unplaced") or {}
+        missing = sorted(have - set(ward_to_dist) - set(unplaced))
         extra = sorted(set(ward_to_dist) - have)
         if missing or extra:
             raise RuntimeError(
                 "%s: the composition and the ward layer disagree about which wards "
-                "exist — %d in the layer and not composed (%s), %d composed and not "
-                "in the layer (%s). A re-warding has happened; re-read the source."
+                "exist — %d in the layer and neither composed nor declared unplaced "
+                "(%s), %d composed and not in the layer (%s). A re-warding has "
+                "happened; re-read the source."
                 % (spec["name"], len(missing), missing[:8], len(extra), extra[:8]))
+
+        # 1b. A DECLARED-UNPLACED WARD IS A MEASUREMENT, NOT A PERMISSION. Each
+        #     one is a recent annexation the city's own source does not name, and
+        #     it ships answering "no district" rather than being inferred from a
+        #     neighbour. Its share of the municipality's ward area is pinned in
+        #     the spec and re-measured here, so a sliver that grows into real
+        #     territory stops the build instead of quietly staying a hole. This
+        #     needs Shape__Area, which the attribute pass fetches and the
+        #     geometry pass now fetches too — both passes check.
+        if unplaced:
+            gone = sorted(set(unplaced) - have)
+            if gone:
+                raise RuntimeError("%s: ward(s) %s are declared unplaced and are no "
+                                   "longer in the ward layer — re-read the source"
+                                   % (spec["name"], gone))
+            areas = {}
+            for f in feats:
+                a = f["properties"].get("Shape__Area")
+                if a is None:
+                    areas = None
+                    break
+                areas[int(f["properties"]["WARDID"])] = a
+            if areas:
+                total = sum(areas.values())
+                for w, pinned in sorted(unplaced.items()):
+                    share = areas[w] / total
+                    if abs(share - pinned) > 0.002:
+                        raise RuntimeError(
+                            "%s: unplaced ward %d is %.4f%% of the municipality's "
+                            "ward area, pinned at %.4f%%. It has moved; re-measure "
+                            "and decide again whether it can ship unplaced."
+                            % (spec["name"], w, 100 * share, 100 * pinned))
 
         # 2. IT MUST AGREE WITH EVERY WARD THE STATE DOES CODE. The county files
         #    a handful of these wards with real ids; those are an independent
@@ -284,11 +461,53 @@ def apply_local_composition(attr_feats):
                     "build does not prefer one."
                     % (spec["name"], w, p["ALDERID"].strip(), ward_to_dist[w]))
 
-        # 3. THE STATE'S POLLING FILE MUST PARTITION THE WARDS THE SAME WAY.
-        #    Appleton votes one place per district and its clerk's page says
-        #    which; so the grouping the Elections Commission publishes has to be
-        #    the composition, group for group. This reads files already in this
-        #    repo — no network, and it fires on every build.
+        # 3. THE STATE'S POLLING FILE MUST PARTITION THE WARDS THE SAME WAY —
+        #    FOR THE ONE CITY WHERE THAT IS A QUESTION WITH AN ANSWER. Appleton
+        #    votes one place per district and its clerk's page says which, so
+        #    the grouping the Elections Commission publishes has to be the
+        #    composition, group for group. This reads files already in this repo
+        #    — no network, and it fires on every build.
+        #
+        #    IT IS SKIPPED, NOT WEAKENED, WHERE IT CANNOT APPLY: Berlin votes at
+        #    a single place for all six districts, Edgerton at one for three,
+        #    Kaukauna at two for four. A city that consolidates polling places
+        #    makes this witness say nothing, and running it anyway would either
+        #    fail three correct compositions or be quietly satisfied by a
+        #    partition of one group. Their fourth witness is `balance` below;
+        #    Edgerton also re-derives its whole composition from the city's own
+        #    service in service_witness().
+        if spec.get("polling_key"):
+            _polling_witness(spec, feats, have, ward_to_dist)
+
+        # 4. POPULATION BALANCE, on LTSB's own 2024-election/2025-ward layer.
+        #    A plan drawn to a census balances on that census; a composition
+        #    that is internally consistent and simply not the plan does not.
+        #    Gated in BOTH directions — a figure that improves is a different
+        #    plan just as surely as one that worsens, and must be re-read rather
+        #    than absorbed.
+        _balance_witness(cousub, spec, ward_to_dist)
+
+        # 5. Where the source is a service, re-derive the whole composition from
+        #    it rather than trusting the transcription (Edgerton only).
+        if spec.get("service_witness"):
+            _service_witness(spec, feats, ward_to_dist)
+
+        for f in feats:
+            p = f["properties"]
+            w = int(p["WARDID"])
+            if w not in ward_to_dist:
+                continue          # declared unplaced: it stays uncoded
+            if not is_coded(p.get("ALDERID")):
+                composed += 1
+            p["ALDERID"] = ward_to_dist[w]
+        shipped[cousub] = len(spec["districts"])
+    return composed, shipped
+
+
+def _polling_witness(spec, feats, have, ward_to_dist):
+    """The Elections Commission's ward-to-place file must partition the wards
+    exactly the way the composition does. Appleton only — see gate 3."""
+    if True:
         places = {}
         for county in spec["polling_counties"]:
             path = os.path.join(APP_DATA_DIR, "%s-polling-places.json" % county)
@@ -320,19 +539,120 @@ def apply_local_composition(attr_feats):
                    sorted(map(sorted, by_place.values())),
                    sorted(map(sorted, by_dist.values()))))
 
-        for f in feats:
-            p = f["properties"]
-            w = int(p["WARDID"])
-            if not is_coded(p.get("ALDERID")):
-                composed += 1
-            p["ALDERID"] = ward_to_dist[w]
-        shipped[cousub] = len(spec["districts"])
-    return composed, shipped
+
+POP_WARDS = (LTSB_ORG + "/2024_Election_Data_with_2025_Wards/FeatureServer/0")
+BALANCE_TOL = 0.25      # percentage points
+
+
+def _balance_witness(cousub, spec, ward_to_dist):
+    """Worst population deviation across the composed districts, held to the
+    figure pinned in the spec.
+
+    THE POPULATION COLUMN IS LTSB'S OWN, on a DIFFERENT service from the ward
+    geometry — the same publisher, so this is a cross-service check rather than
+    an independent voice, and it is worth running for what it does catch: a
+    composition that groups the right wards into the wrong districts balances
+    differently, and a re-warding moves it immediately.
+
+    IT IS NOT ASSERTED AS A CENSUS IDENTITY. That column runs a little above or
+    below each city's Census 2020 count (Berlin 5,571 against 5,486; Edgerton
+    5,945 against 5,974) because ward lines have moved since, so the CLAIM here
+    is the balance and not the total — the Grand Rapids posture.
+
+    A ward the 2025 edition does not carry contributes nothing. That is honest
+    for the deviation (an annexation sliver holds no measured population) and is
+    why every such ward is ALSO named in `unplaced` or, for Appleton's ward 60,
+    placed by a source that does carry it.
+    """
+    pinned = spec.get("balance")
+    if pinned is None:
+        raise RuntimeError("%s: no `balance` pinned — every composition carries "
+                           "one" % spec["name"])
+    feats = fetch_layer(POP_WARDS, "WARDID,PERSONS", geometry=False,
+                        where="COUSUBFP = '%s'" % cousub)
+    pop = {}
+    for f in feats:
+        try:
+            pop[int(f["properties"]["WARDID"])] = f["properties"]["PERSONS"] or 0
+        except (TypeError, ValueError):
+            continue
+    if not pop:
+        raise RuntimeError("%s: the population layer returned no wards for %s"
+                           % (spec["name"], cousub))
+    by_dist = {}
+    for w, d in ward_to_dist.items():
+        by_dist[d] = by_dist.get(d, 0) + pop.get(w, 0)
+    ideal = sum(by_dist.values()) / float(len(by_dist))
+    if ideal <= 0:
+        raise RuntimeError("%s: composed districts hold no population at all"
+                           % spec["name"])
+    worst = max(abs(v - ideal) / ideal for v in by_dist.values()) * 100
+    if abs(worst - pinned) > BALANCE_TOL:
+        raise RuntimeError(
+            "%s: worst population deviation is %.2f%%, pinned at %.2f%% "
+            "(total %d over %d districts, ideal %.0f). The composition or the "
+            "wards under it have moved — re-read the source, then re-pin."
+            % (spec["name"], worst, pinned, sum(by_dist.values()),
+               len(by_dist), ideal))
+    return worst
+
+
+def _service_witness(spec, feats, ward_to_dist):
+    """Re-derive the composition from the city's own district service.
+
+    EDGERTON'S SOURCE IS A SERVICE, so its transcription can be checked against
+    the thing it transcribes on every run — which is the difference between a
+    table someone typed and one the build re-derives. Each composed ward's
+    polygon must sit at least `min_share` inside the district the table gives
+    it, measured against the city's own polygons.
+
+    IT IS FETCHED AS ESRI JSON, not f=geojson: this is an ArcGIS ONLINE host
+    (services7.arcgis.com), which is the host class whose GeoJSON exporter
+    silently unnests interior rings — see esri_rings_to_geojson.
+    """
+    from shapely.geometry import shape
+    w = spec["service_witness"]
+    got = fetch_layer(w["url"], w["field"])
+    dists = {}
+    for f in got:
+        label = (f["properties"].get(w["field"]) or "").strip()
+        m = re.match(w["label_re"], label)
+        if not m:
+            raise RuntimeError("%s: the service labels a district %r, which does "
+                               "not match %s" % (spec["name"], label, w["label_re"]))
+        dists["%02d" % int(m.group(1))] = shape(f["geometry"]).buffer(0)
+    if set(dists) != set(spec["districts"]):
+        raise RuntimeError("%s: the service publishes districts %s; the composition "
+                           "names %s" % (spec["name"], sorted(dists),
+                                         sorted(spec["districts"])))
+    worst = (1.0, None)
+    for f in feats:
+        ward = int(f["properties"]["WARDID"])
+        d = ward_to_dist.get(ward)
+        if d is None or not f.get("geometry"):
+            continue          # declared unplaced, or the attribute-only pass
+        g = shape(f["geometry"]).buffer(0)
+        if not g.area:
+            continue
+        share = g.intersection(dists[d]).area / g.area
+        if share < worst[0]:
+            worst = (share, ward)
+        if share < w["min_share"]:
+            best = max(((g.intersection(dg).area / g.area, k)
+                        for k, dg in dists.items()))
+            raise RuntimeError(
+                "%s: ward %d is composed into district %s but only %.4f of it "
+                "lands there in the city's own layer (its largest share is %.4f "
+                "in %s). The transcription and the service disagree."
+                % (spec["name"], ward, d, share, best[0], best[1]))
+    return worst
 
 
 def classify(attr_feats):
     """Group ward attributes by municipality; return (shipped keys by
     municipality, computed exclusions, computed slivers, town-coded count)."""
+    composed_unplaced = {k for k, spec in LOCAL_COMPOSITION.items()
+                         if spec.get("unplaced")}
     mun = {}
     town_coded = 0
     for f in attr_feats:
@@ -360,7 +680,17 @@ def classify(attr_feats):
         if not m["uncoded"]:
             continue
         share = m["uncoded_area"] / (m["coded_area"] + m["uncoded_area"])
-        if m["uncoded"] == 1 and share < 0.05:
+        if k in composed_unplaced:
+            # A COMPOSED CITY'S LEFTOVERS ARE ALREADY NAMED, ONE BY ONE, in its
+            # own `unplaced` table, where each ward's share of the municipality
+            # is pinned and re-measured by apply_local_composition. The
+            # "exactly one" rule below is NOT relaxed for it: that rule guards a
+            # COUNTY's filing, where a second uncoded ward means a submission is
+            # incomplete in a way nobody has looked at. Here the city's own
+            # source has been read and the wards it does not name are known —
+            # Edgerton has two (0.09% and 0.61%), Kaukauna one (0.29%).
+            slivers[k] = m["name"]
+        elif m["uncoded"] == 1 and share < 0.05:
             slivers[k] = m["name"]
         else:
             excluded[k] = (m["name"], m["uncoded"], round(share, 3))
@@ -497,7 +827,8 @@ def main():
     where = ("CTV IN ('C','V') AND (ALDERID IS NOT NULL AND "
              "ALDERID NOT IN ('00','0000','')%s)"
              % "".join(" OR COUSUBFP = '%s'" % k for k in sorted(LOCAL_COMPOSITION)))
-    wards = fetch_layer(WARDS, "WARDID,COUSUBFP,MCD_NAME,CTV,ALDERID", where=where)
+    wards = fetch_layer(WARDS, "WARDID,COUSUBFP,MCD_NAME,CTV,ALDERID,Shape__Area",
+                        where=where)
     apply_local_composition(wards)
     wards = [w for w in wards if w["properties"]["COUSUBFP"] in shipped_mun
              and is_coded(w["properties"].get("ALDERID"))]
