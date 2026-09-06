@@ -9707,6 +9707,12 @@ function initMichiganExplorer() {
   var loadFlintWards = makeCached(function () {
     return fetchJSONWithRetry("data/app/mi-flint-wards.json", {}, 2);
   });
+  var loadBattleCreekWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-battle-creek-wards.json", {}, 2);
+  });
+  var loadBattleCreekRoster = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-battle-creek-commission-members.json", {}, 2);
+  });
 
   function detroitCoverage(point) {
     // The districts tile the city exactly (the builder asserts the population
@@ -10057,6 +10063,137 @@ function initMichiganExplorer() {
     }
   };
 
+  function battleCreekCoverage(point) {
+    return loadBattleCreekWards().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
+
+  // BATTLE CREEK'S OWN WARD LAYER CARRIES A COMMISSIONER NAME PER WARD, AND THIS
+  // APP STILL SHIPS NONE OF THEM — the names on this card come from the city's
+  // commission page instead. Four of the five layer records were last edited in
+  // March 2023 and nothing in the layer says whether a name is current, which is
+  // the refusal Michigan's statewide county-commissioner layer already earned: a
+  // name field is not a roster. The two happen to agree on all five wards today,
+  // which corroborates the page rather than rehabilitating the layer.
+  //
+  // An earlier version of this comment said the city's commission page answered
+  // 403 to this client. It does not, and never did — the 403 came from a page id
+  // that had been GUESSED. The real page is /380/City-Commission.
+  var battleCreekEntry = {
+    key: "battle-creek",
+    label: "Battle Creek",
+    coverage: battleCreekCoverage,
+    loadGeometry: loadBattleCreekWards,
+    hoverName: function (feature) {
+      var v = findPropCI(feature.properties || {}, ["ward"]);
+      return (v == null || v === "") ? null : "Ward " + String(v);
+    },
+    query: function (point, seq) {
+      return Promise.all([
+        queryFeatureAt(loadBattleCreekWards, point),
+        loadBattleCreekRoster().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
+        if (!feature) return null;
+        var ward = findPropCI(feature.properties || {}, ["ward"]);
+        var roster = parts[1];
+        return {
+          seq: seq,
+          ward: ward,
+          members: (roster && roster.wards && ward != null)
+            ? (roster.wards[String(ward)] || []) : [],
+          citywide: (roster && roster.citywide) || null,
+          office: (roster && roster.office) || null,
+          seats: roster ? roster.seats : null,
+          seatsPerWard: roster ? roster.seatsPerWard : null,
+          rosterUrl: roster ? roster.sourceUrl : null
+        };
+      });
+    },
+    cardIdentifier: function (result) {
+      return result.ward ? "Ward " + String(result.ward) : "Unknown ward";
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      var named = (result.members && result.members.length) || 0;
+      if (named) {
+        wrap.appendChild(renderPersonRows(result.members.map(function (rec) {
+          return {
+            name: rec.name,
+            badge: "City Commissioner",
+            phone: rec.phone || null,
+            links: rec.profileUrl ? [{ label: "Profile", url: rec.profileUrl }] : null
+          };
+        })));
+      } else if (result.seatsPerWard) {
+        // Every ward elects one commissioner, so a ward naming nobody is a seat
+        // the city is not publishing rather than a ward with no representative.
+        // Say which it is instead of rendering an empty card.
+        wrap.appendChild(renderLinkRow({
+          title: "This ward's seat",
+          note: "Battle Creek elects one commissioner from each of its five wards, "
+              + "and the City Commission's page names nobody for this one, so this "
+              + "app names nobody either.",
+          links: safeHttpUrl(result.rosterUrl)
+            ? [{ label: "City Commission", url: result.rosterUrl }] : null
+        }));
+      }
+      if (result.citywide && result.citywide.length) {
+        wrap.appendChild(renderSectionLabel("ELECTED BY THE WHOLE CITY"));
+        wrap.appendChild(renderPersonRows(result.citywide.map(function (rec) {
+          return {
+            name: rec.name,
+            badge: rec.seat || "Citywide",
+            phone: rec.phone || null,
+            links: rec.profileUrl ? [{ label: "Profile", url: rec.profileUrl }] : null
+          };
+        }), { tinted: true }));
+      }
+      if (result.office && (result.office.phone || (result.office.lines || []).length)) {
+        wrap.appendChild(renderOfficeGroup({
+          label: result.office.label || "City Hall",
+          offices: [{
+            label: "Battle Creek City Commission",
+            lines: result.office.lines || [],
+            phone: result.office.phone
+          }]
+        }));
+      }
+      // ONE CONTACT FORM FOR ALL NINE SEATS, so it is the body's address and not
+      // any commissioner's. The city publishes no per-member e-mail at all, and
+      // none is invented to fill the row.
+      if (result.office && safeHttpUrl(result.office.contactUrl)) {
+        wrap.appendChild(renderLinkRow({
+          title: "Contacting a commissioner",
+          note: "The city publishes no e-mail address for individual "
+              + "commissioners. Its contact form reaches the whole commission, "
+              + "and each commissioner's own page carries a direct phone number.",
+          links: [{ label: "Contact form", url: result.office.contactUrl }]
+        }));
+      }
+      var rows = [{ label: "Ward", value: result.ward ? String(result.ward) : "Unknown",
+                    primary: true }];
+      // EVERY CLAUSE HERE IS THE CITY'S OWN SENTENCE, and a draft carried one
+      // that was not: that the commission appoints a City Manager who runs the
+      // city's departments. Battle Creek plainly HAS a manager — its commission
+      // runs a City Manager Performance Evaluation Committee — but the source
+      // page states neither the appointment nor the duties, so the clause was an
+      // inference wearing a civic fact's clothes, and it is gone.
+      rows.push({ label: "How this ward is represented",
+                  value: "Battle Creek's City Commission seats nine: one commissioner "
+                       + "from each of five wards, three commissioners elected at "
+                       + "large, and the Mayor, elected by the whole city." });
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      var url = safeHttpUrl(result.rosterUrl)
+        || "https://www.battlecreekmi.gov/380/City-Commission";
+      return { label: "Battle Creek City Commission", url: url };
+    }
+  };
+
   registerCountyLayer({
     id: "city-ward",
     group: "political",
@@ -10071,8 +10208,8 @@ function initMichiganExplorer() {
     // ORDERED BY POPULATION: §3.1 says to order the table so the cheapest
     // already-cached coverage test short-circuits the OR, and the city most
     // selections land in should be tried first. Detroit, then Warren, then
-    // Grand Rapids, then Flint.
-    entries: [detroitEntry, warrenEntry, grandRapidsEntry, flintEntry]
+    // Grand Rapids, then Flint, then Battle Creek.
+    entries: [detroitEntry, warrenEntry, grandRapidsEntry, flintEntry, battleCreekEntry]
   });
 
 

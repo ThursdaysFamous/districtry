@@ -1,0 +1,82 @@
+{
+ "citywide": [
+  {
+   "name": "Carla Reynolds",
+   "phone": "269-274-0040",
+   "profileUrl": "https://www.battlecreekmi.gov/m/directory/employee?eid=69",
+   "seat": "Commissioner, At-Large"
+  },
+  {
+   "name": "Mark Behnke",
+   "phone": "269-441-7663",
+   "profileUrl": "https://www.battlecreekmi.gov/m/directory/employee?eid=70",
+   "seat": "Mayor, At-Large"
+  },
+  {
+   "name": "Paige Katsarsky-Smith",
+   "phone": "269-601-9145",
+   "profileUrl": "https://www.battlecreekmi.gov/m/directory/employee?eid=144",
+   "seat": "Commissioner, At-Large"
+  },
+  {
+   "name": "Sherry Sofia",
+   "phone": "269-967-8272",
+   "profileUrl": "https://www.battlecreekmi.gov/m/directory/employee?eid=97",
+   "seat": "Vice Mayor, At-Large"
+  }
+ ],
+ "office": {
+  "contactUrl": "https://www.battlecreekmi.gov/formcenter/Contact-Commissioners-Civic-Boards-38/Contact-Commissioners-Form-45",
+  "label": "City Hall",
+  "lines": [
+   "10 N. Division St.",
+   "Battle Creek, MI 49014"
+  ],
+  "phone": "269-966-3311"
+ },
+ "seats": 9,
+ "seatsPerWard": 1,
+ "sourceUrl": "https://www.battlecreekmi.gov/380/City-Commission",
+ "wards": {
+  "1": [
+   {
+    "name": "Jessica LaCosse",
+    "phone": "906-241-0493",
+    "profileUrl": "https://www.battlecreekmi.gov/m/directory/employee?eid=141",
+    "seat": "Commissioner, Ward 1"
+   }
+  ],
+  "2": [
+   {
+    "name": "Jenasia Morris",
+    "phone": "269-986-8451",
+    "profileUrl": "https://www.battlecreekmi.gov/m/directory/employee?eid=64",
+    "seat": "Commissioner, Ward 2"
+   }
+  ],
+  "3": [
+   {
+    "name": "Patrick O'Donnell",
+    "phone": "269-966-4040",
+    "profileUrl": "https://www.battlecreekmi.gov/m/directory/employee?eid=142",
+    "seat": "Commissioner, Ward 3"
+   }
+  ],
+  "4": [
+   {
+    "name": "Christopher Simmons",
+    "phone": "269-274-8993",
+    "profileUrl": "https://www.battlecreekmi.gov/m/directory/employee?eid=143",
+    "seat": "Commissioner, Ward 4"
+   }
+  ],
+  "5": [
+   {
+    "name": "Jim Lance",
+    "phone": "269-441-4522",
+    "profileUrl": "https://www.battlecreekmi.gov/m/directory/employee?eid=71",
+    "seat": "Commissioner, Ward 5"
+   }
+  ]
+ }
+}

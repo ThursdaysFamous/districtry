@@ -219,6 +219,46 @@ PROVENANCE = [
         ),
     },
     {
+        "layer": "city-ward",
+        "app_file": "mi-battle-creek-wards.json",
+        "source_url": ("https://services6.arcgis.com/cuKwt0IKP5B84jop/arcgis/rest/"
+                       "services/Wards_BC/FeatureServer/0"),
+        "note": (
+            "Battle Creek's five commission wards, from the City of Battle Creek's own "
+            "ArcGIS org. Pre-built by mi/scripts/build_mi_battle_creek_wards.py. "
+            "THE LAYER CARRIES A COMMISSIONER NAME PER WARD AND NONE OF THEM SHIP -- four "
+            "of the five records were last edited 2023-03-23, Michigan cities elect in odd "
+            "Novembers, and a name field carries no publication date and nothing that would "
+            "change it when a seat changes hands. The names on the card come from the "
+            "city's own commission page instead (the row below). The build strips the "
+            "column at the fetch and its shipped-shape check refuses any property but the "
+            "ward number. Currency is gated against Michigan's own 2026 voting-precinct "
+            "layer, whose WARD column assigns the city's 13 precincts 2/2/3/3/3; dissolved "
+            "by it, it agrees with these polygons on 99.450% of 4,000 points, and the build "
+            "refuses below 99% or if those per-ward counts move."
+        ),
+    },
+    {
+        "layer": "city-ward",
+        "app_file": "mi-battle-creek-commission-members.json",
+        "source_url": "https://www.battlecreekmi.gov/380/City-Commission",
+        "note": (
+            "Battle Creek's City Commission -- nine seats: one commissioner from each of "
+            "five wards, three at large, and the Mayor. Built by "
+            "mi/scripts/mi_battle_creek_commission_scraper.py into "
+            "build_mi_battle_creek_commission.py, weekly. "
+            "THE PAGE ID MATTERS AND WAS ONCE GUESSED WRONG: /165/City-Commission answers "
+            "403 and is not this city's page; /380/City-Commission answers 200. A 403 from "
+            "an invented path is a fact about the guess, not about the site, whose "
+            "robots.txt permits general crawling. "
+            "The page is h-card microformat and is parsed per block, never by document "
+            "order -- it renders wards 5, 2, 1, 3, 4. The city states its own composition "
+            "in prose on the same page, and the scraper refuses to write unless that prose "
+            "and the published cards agree. No per-member e-mail exists: every card's "
+            "contact slot is one shared city form, hoisted to the body."
+        ),
+    },
+    {
         "layer": "county-commissioner",
         "app_file": "mi-commissioner-districts.json",
         "source_url": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
