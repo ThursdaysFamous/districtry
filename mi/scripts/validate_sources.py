@@ -220,6 +220,31 @@ PROVENANCE = [
     },
     {
         "layer": "city-ward",
+        "app_file": "mi-rochester-hills-wards.json",
+        "source_url": ("https://gis.rochesterhills.org/server/rest/services/"
+                       "ElectoralDistricts/Election_Dataset/MapServer"),
+        "note": (
+            "Rochester Hills's four city council districts, from the CITY's own ArcGIS "
+            "Server. Pre-built by mi/scripts/build_mi_rochester_hills_wards.py. "
+            "THE LAYER IS ONE OF THREE on this service (0 is polling PLACES, a point "
+            "layer; 1 is voting precincts), so the index is read from the root and the "
+            "name asserted. The district key is `districtid`; `OBJECTID` starts at 6 "
+            "because earlier rows were deleted, so a build keyed on it would number the "
+            "districts 6..9. Terms are read from the AGO item on arcgis.com "
+            "(ac140f8d81b94edc804e34470308c865, shared public, licenseInfo empty) because "
+            "this server's root carries no serviceItemId to follow. Currency is gated "
+            "against Michigan's own 2026 voting-precinct layer, whose WARD column assigns "
+            "the city's 21 precincts 6/5/5/5; dissolved by it, it agrees with these "
+            "polygons on 99.725% of 4,000 points. "
+            "NO OFFICEHOLDER SHIPS AND THAT IS THE CITY'S OWN CHOICE: "
+            "www.rochesterhills.org/robots.txt allows five named bots and then disallows "
+            "`*` site-wide, so its maintained council page is not read. The GIS host is "
+            "separate, serves no robots.txt, and is not covered by that rule (the Knox "
+            "precedent). The layer's own `repname` column is not read either."
+        ),
+    },
+    {
+        "layer": "city-ward",
         "app_file": "mi-battle-creek-wards.json",
         "source_url": ("https://services6.arcgis.com/cuKwt0IKP5B84jop/arcgis/rest/"
                        "services/Wards_BC/FeatureServer/0"),
