@@ -3,9 +3,10 @@
 
 WHY THIS EXISTS, AND WHAT IT COST TO NOT HAVE IT
 -------------------------------------------------
-Two Iowa scrapers fetch other people's pages on a weekly schedule under the
-user-agent `districtry/1.0`, and neither asked whether the site wanted that.
-Reviewed 2026-09-05, and TWO of the 21 hosts they read say no:
+THREE Iowa scrapers fetch other people's pages on a weekly schedule under the
+user-agent `districtry/1.0`, and none of them asked whether the site wanted
+that. Reviewed 2026-09-05 and re-measured 2026-09-06, and TWO of the 21 hosts
+they read say no:
 
   cityofpalo.com                 ends its robots.txt `User-agent: * /
                                  Disallow: /`, after naming Googlebot,
@@ -23,10 +24,13 @@ than a note in a docstring: a human skimming either file concludes it only
 protects an admin path. READ THE WHOLE FILE, or better, do not read it by eye
 at all.
 
-The other nineteen hosts allow: sixteen serve no robots.txt at all (a 404,
-which RFC 9309 makes "allow all"), and moraviaiowa.com,
-www.marioncountyiowa.gov and www.dallascountyiowa.gov serve one that permits
-the paths we read.
+The other NINETEEN allow: sixteen serve no robots.txt at all (a 404, which
+RFC 9309 makes "allow all"), and moraviaiowa.com, www.marioncountyiowa.gov
+and www.dallascountyiowa.gov serve one that permits the paths we read. The
+county city-officials scrape's twelve hosts are the last to get this check
+(2026-09-06) and NONE of them refuses, which is why it changed no output --
+and is exactly why the check is machine-made rather than a reading somebody
+did once.
 
 WHAT A REFUSAL DOES, AND WHY IT IS NOT A HAND LIST
 ----------------------------------------------------
