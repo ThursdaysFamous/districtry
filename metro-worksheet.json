@@ -2695,6 +2695,12 @@
         "min_features": 9,
         "max_features": 9,
         "note": "Winnebago County's 9 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "putnam-precincts.json",
+        "min_features": 8,
+        "max_features": 8,
+        "note": "Putnam County's 8 voting precincts — the Census 2020 voting districts ONE FOR ONE, pre-built by scripts/build_putnam_precincts.py: the Jasper test passes 8/8 after two aliases and they sum to the county's exact 2020 population of 5,637. THE GAP RECORD THAT SHUT THIS COUNTY WAS ACCURATE AND OUT OF DATE — written 2 Aug 2026, before this project found the election-results vendors, it said Putnam publishes no map data and its Clerk publishes documents rather than data. Both are still true and neither is the question: the precinct NAMES come from the Clerk's own certified canvasses at il-putnam.pollresults.net, which report \\\"8 PRECINCTS REPORTING / 0 NOT REPORTING\\\" and name all eight. THE VENDOR WAS TESTED BY CONTENT, NOT BY A STATUS CODE: pollresults answers 200 with a generic shell for a county it does not carry, and the control is a FABRICATED county name — Putnam returns 139,297 unique bytes where il-zzzfakecounty, il-notarealcounty AND il-washington all return the same 7,720-byte body, which is why Washington's own precinct gap stays shut. TWO ALIASES, both the Greene case: the county numbers its two single-precinct townships (Hennepin 1, Senachwine 1) where the census leaves them bare, so the county's designation wins and the alias renames the census. No board district ships — Putnam elects its five commissioners countywide — and no polling place ships, since the Clerk publishes them as documents."
       }
     ],
     "rosters": [
@@ -3104,7 +3110,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-il-shell-v17",
+    "cache_name": "districtry-il-shell-v18",
     "shell_urls": [
       "./",
       "./sources.html",

@@ -89,7 +89,7 @@
 | Perry | 17145 | dispatch | no board layer — see gaps | `county-precinct`, `library-district` | 1 — `perry-county-website-blocked` (blocked) |
 | Pike | 17149 | dispatch | at-large — County card | `library-district` | 1 — `pike-precinct-geometry` (no-source) |
 | Pulaski | 17153 | dispatch | at-large — County card | `county-precinct`, `library-district` | none |
-| Putnam | 17155 | dispatch | at-large — County card | `library-district` | 1 — `putnam-precinct-geometry` (no-source) |
+| Putnam | 17155 | dispatch | at-large — County card | `county-precinct`, `library-district` | none |
 | Randolph | 17157 | dispatch | at-large — County card | `county-precinct`, `library-district` | 3 — `coulterville-library-extent` (data-quality); `randolph-fire-park-library` (no-source); `randolph-precinct-polling` (data-quality) |
 | Richland | 17159 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `county-board-office-addresses` (no-source) |
 | Rock Island | 17161 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 1 — `rock-island-andalusia-township-library` (no-source) |
@@ -139,4 +139,4 @@ Counties outside the coverage ring that a research pass has already measured; ea
 
 ## Gap records not tagged to a county (1)
 
-City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 101 records in the Data gaps panel: `chicago-amenity-phones`.
+City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 100 records in the Data gaps panel: `chicago-amenity-phones`.
