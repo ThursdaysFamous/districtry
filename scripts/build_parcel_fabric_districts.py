@@ -100,6 +100,16 @@ RI = ("https://services9.arcgis.com/6FnscPPlUa9DXXOk/arcgis/rest/services/"
       "TaxDistricts/FeatureServer/")
 KENDALL = "https://maps.co.kendall.il.us/server/rest/services/Hosted/"
 MACON = "https://services1.arcgis.com/a3k0qIja5SolIRYR/arcgis/rest/services/"
+
+STATEWIDE_LIBRARY_URL = (
+    "https://services.arcgis.com/R0IGaIgf2sox9aCY/arcgis/rest/services/"
+    "IL_Boundary_Layers/FeatureServer/11/query")
+
+# A label with a lowercase letter followed directly by an uppercase one, and no
+# space anywhere. This is the defect, and it is what an undeclared name is
+# tested against.
+STRIPPED_LABEL = re.compile(r"^\S*[a-z][A-Z]\S*$")
+WITNESS_IOU_TOLERANCE = 0.02
 BOONE_PARCELS = ("https://maps.boonecountyil.org/arcgis/rest/services/"
                  "Boone_Sales_Locator/Devnet_Parcels/MapServer/0")
 
@@ -954,6 +964,27 @@ SOURCES = [
     {"slug": "macon-library", "out": "macon-library-districts.json",
      "layer": MACON + "LibraryJoin_Dissolved/FeatureServer/0",
      "name_prop": "Library", "expect": 10, "edit_pin": 1770745259078,
+     # The county's own labels have their spaces stripped. Each is paired with
+     # the name the statewide library publisher gives the SAME polygon, with
+     # the IoU measured 2026-09-06; witness_names re-proves every pairing on
+     # every build. Barclay, Harristown and Maroa are NOT here: their labels
+     # carry no defect, and repairing what is not broken would churn three more
+     # names for nothing. Harristown is also the one body the second publisher
+     # does not carry at all — its best match is Barclay's polygon at 0.243,
+     # which the floor rejects, so nothing would have been carried over anyway.
+     "witness_names": {
+         "url": STATEWIDE_LIBRARY_URL, "field": "Library", "min_iou": 0.60,
+         "county": "macon",
+         "pairs": {
+             "BlueMound":  ("Blue Mound Memorial Library District", 0.990),
+             "HopeWelty":  ("Hope Welty Public Library District", 0.990),
+             "IlliopNian": ("Illiopolis/Niantic Public Library District", 0.978),
+             "MarrowBone": ("Marrowbone Public Library District", 0.984),
+             "MtPulaski":  ("Mount Pulaski Public Library District", 0.720),
+             "MtZion":     ("Mount Zion District Library", 0.685),
+             "SouthMacon": ("South Macon Public Library District", 0.907),
+         },
+     },
      "probes": []},
     {"slug": "macon-park", "out": "macon-park-districts.json",
      "layer": MACON + "ParkJoin_Dissolve/FeatureServer/0", "name_prop": "Park",
@@ -976,6 +1007,107 @@ SOURCES = [
      "probes": [(41.91589, -87.86480, "LEYDEN FIRE PROTECTION DISTRICT"),
                 (41.88250, -87.62850, None)]},  # the Loop: Chicago has CFD, no FPD
 ]
+
+
+# ---------------------------------------------------------------------------
+# A SECOND PUBLISHER'S SPELLING, WHERE THE COUNTY'S LABEL IS A MACHINE ARTIFACT.
+#
+# Macon publishes its taxing districts under labels whose spaces have been
+# stripped — MtZion, BlueMound, MarrowBone, IlliopNian — and the gap record
+# `macon-district-name-formatting` refused to repair them, correctly: splitting
+# on the capitals gives "Marrow Bone" and "Illiop Nian", and neither is the name
+# of anything. It asked instead for "the districts' names as the county
+# actually spells them".
+#
+# THE RECORD'S OWN WORRY IS THE PROOF THAT NO RULE COULD WORK. The two bodies it
+# named are really MARROWBONE (one word, small b) and ILLIOPOLIS/NIANTIC (a
+# contraction of two town names). An algorithm recovers neither. A publisher
+# does: the Illinois Broadband Office / Connected Nation statewide library layer
+# names the same bodies in full, and this project already ships and gates that
+# layer for 71 counties (scripts/build_statewide_library_districts.py).
+#
+# ONLY LIBRARIES. That layer carries no fire or park districts — measured
+# 2026-09-06 by listing the service, which publishes congressional, county,
+# electric-utility, federal-lands, opportunity-zone, school, library, house,
+# senate and village/township layers and nothing else. So Macon's 8 fire and 2
+# park labels keep the county's spelling and stay on the gap record.
+#
+# EVERY PAIRING IS DECLARED WITH ITS MEASURED IoU AND RE-PROVEN ON EVERY BUILD,
+# in both directions — the shape ACCEPTED_DROPS, EXPECTED_UNREACHABLE and
+# WITNESS_ANOMALIES already have here. A pairing whose geometry stops agreeing
+# fails; a declared name the layer no longer publishes fails; and a
+# space-stripped label that is NOT declared fails, so a new one cannot ship
+# quietly on the strength of the ones that were checked.
+def witness_names(cfg, county_geom_by_name):
+    """Rename a source's space-stripped labels from a second publisher.
+
+    Returns {county label -> published name}. Fails rather than guessing.
+    """
+    spec = cfg.get("witness_names")
+    stripped = sorted(n for n in county_geom_by_name if STRIPPED_LABEL.match(n))
+    if not spec:
+        return {}
+    undeclared = [n for n in stripped if n not in spec["pairs"]]
+    if undeclared:
+        fail("%s: %s carry the space-stripped label defect and are not declared "
+             "in witness_names — a name is never repaired by rule here, so each "
+             "one needs a publisher that spells it out"
+             % (cfg["slug"], undeclared))
+
+    outline_path = os.path.join(APP_DIR, "%s-county-outline.json" % spec["county"])
+    with open(outline_path, encoding="utf-8") as fh:
+        outline = clean(unary_union([shape(f["geometry"])
+                                     for f in json.load(fh)["features"]]))
+
+    payload = requests.get(spec["url"], params={
+        "where": "1=1", "outFields": spec["field"], "outSR": 4326,
+        "f": "geojson", "geometryPrecision": 6, "resultRecordCount": 2000,
+    }, timeout=300).json()
+    published = {}
+    for f in payload.get("features") or []:
+        if not f.get("geometry"):
+            continue
+        g = polygonal(clean(shape(f["geometry"])))
+        if g is None or g.is_empty:
+            continue
+        published.setdefault(f["properties"][spec["field"]], []).append(g)
+
+    renames = {}
+    for label, (name, want_iou) in sorted(spec["pairs"].items()):
+        if label not in county_geom_by_name:
+            fail("%s: witness_names declares %r, which this source no longer "
+                 "publishes — retire the entry rather than leaving it to rot"
+                 % (cfg["slug"], label))
+        if name not in published:
+            fail("%s: the second publisher no longer carries %r, so %r has no "
+                 "source for its spelling" % (cfg["slug"], name, label))
+        mine = county_geom_by_name[label]
+        # CLIP THE PUBLISHED BODY TO THE COUNTY FIRST. The county's own layer
+        # stops at the county line; the statewide one does not, and several of
+        # these districts are mostly outside Macon — Hope Welty is 43% inside
+        # it. Comparing a county-clipped polygon against a full-extent one
+        # measured Hope Welty at 0.428 and the floor correctly refused the
+        # rename, which is the gate working on a fault in the COMPARISON rather
+        # than in the data. Same clip build_statewide_library_districts.py makes
+        # for the same reason.
+        theirs = polygonal(clean(unary_union(published[name]).intersection(outline)))
+        if theirs is None or theirs.is_empty:
+            fail("%s: %r does not reach into this county at all, so it cannot "
+                 "be the body labelled %r" % (cfg["slug"], name, label))
+        union = mine.union(theirs).area
+        got = (mine.intersection(theirs).area / union) if union else 0.0
+        if got < spec["min_iou"]:
+            fail("%s: %r and %r agree on only %.3f of their combined area "
+                 "(floor %.2f) — that is not the same body and the name is not "
+                 "carried over" % (cfg["slug"], label, name, got, spec["min_iou"]))
+        if abs(got - want_iou) > WITNESS_IOU_TOLERANCE:
+            fail("%s: %r/%r now agree at %.3f, not the %.3f this pairing was "
+                 "declared at — re-measure before re-declaring it"
+                 % (cfg["slug"], label, name, got, want_iou))
+        renames[label] = name
+        print("  name from the second publisher: %-12s -> %-46s (IoU %.3f)"
+              % (label, name, got))
+    return renames
 
 
 fail = make_fail("build-parcel-fabric-districts")
@@ -1514,6 +1646,14 @@ def build_source(cfg, forced=False):
             fail("%s: splitting the code off leaves duplicate names (%s) — the "
                  "code was carrying the distinction" % (cfg["slug"], sorted(shown)))
 
+    # A SECOND PUBLISHER'S SPELLING, proven per polygon — see witness_names.
+    # A source that declares no witness is left entirely alone: Macon's fire and
+    # park labels are stripped too and NOTHING publishes their full names, so
+    # they must be allowed to ship as the county writes them. The undeclared-
+    # label refusal applies only WITHIN a source that has a publisher, where a
+    # newly stripped label would otherwise ride in beside the checked ones.
+    renames = witness_names(cfg, {n: from_ft(final_ft[n]) for n in ordered})
+
     features = []
     for n in ordered:
         g = from_ft(final_ft[n])
@@ -1524,7 +1664,7 @@ def build_source(cfg, forced=False):
                 return round(c, 5)
             return [rnd(x) for x in c]
         geom["coordinates"] = rnd(geom["coordinates"])
-        props = {out_prop: n}
+        props = {out_prop: renames.get(n, n)}
         if split_re:
             props = {out_prop: codes[n][1], "code": codes[n][0]}
         note = (cfg.get("notes") or {}).get(n)
