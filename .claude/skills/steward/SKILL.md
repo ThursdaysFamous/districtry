@@ -56,6 +56,7 @@ python3 scripts/validate_contrast.py                     # text vs ground, both 
 python3 scripts/compose_app.py --check                   # engine/ vs every instance's fences
 python3 scripts/build_county_status.py --check
 python3 scripts/backfill_board_seats.py --check
+python3 scripts/build_county_board_offices.py --check  # ISBE addresses still agree with the counties' own
 python3 scripts/build_dark_map_palette.py --check
 python3 scripts/build_landing_page.py --check
 python3 scripts/build_coverage_map.py --check            # every instance's outline path resolves

@@ -17951,6 +17951,56 @@ function initChiExplorer() {
     return missing + " of " + seats + " seats not listed in the county's directory";
   }
 
+  /* ---------- the board card's LOCATION row, where the county publishes none.
+   * Fifty of Illinois's sixty-three districted board cards named no office at
+   * all — the instance's largest card-order gap (county-board-office-addresses)
+   * — while the fleet's card order is identity -> LOCATION -> contact -> link.
+   *
+   * WHERE THE ADDRESS COMES FROM, AND WHY IT IS SAFE TO PRINT. ISBE's County
+   * Officers Book names one officer per office in all 102 counties. Its CHAIR
+   * NAME column is read NOWHERE in this app and must stay that way — measured
+   * 29% wrong against the counties whose boards it already ships — but the
+   * ADDRESS is a different column with a different failure mode: a chair turns
+   * over every cycle, a courthouse does not move. Two measurements license it,
+   * both re-run on every build by scripts/build_county_board_offices.py: the
+   * address is emitted only when a SECOND courthouse office on the same
+   * county's page prints the same street and city (so it is a shared public
+   * building, never anyone's home — the Madison/Peoria rule), and it agrees
+   * with all seven counties that publish their own board address.
+   *
+   * A COUNTY'S OWN PUBLICATION ALWAYS WINS: the file excludes every county
+   * that ships an address of its own, so this can only ever fill a blank.
+   * The row says where it came from and how old the document is, because a
+   * second-hand address that reads as the county's own is a small lie. ------ */
+  var loadCountyBoardOffices = makeCached(function () {
+    return fetchJSONWithRetry("data/app/il-county-board-offices.json", {}, 2);
+  });
+  function countyBoardOfficeFallback(key) {
+    if (!key) return null;
+    // Filled ASYNCHRONOUSLY into a container returned now: the dispatcher's
+    // render is synchronous, and a fallback that could only appear once the
+    // file happened to be cached would be a race rather than a row.
+    var wrap = cardEl("div", "card-flush");
+    loadCountyBoardOffices().then(function (data) {
+      var rec = data && data.offices ? data.offices[key] : null;
+      if (!rec || !rec.address) return;
+      var rows = [{ label: "Board office", value: String(rec.address) }];
+      var asOf = rec.asOf ? String(rec.asOf) : null;
+      var by = rec.confirmedBy ? String(rec.confirmedBy) : null;
+      rows.push({ label: "Address source", value:
+        "Illinois State Board of Elections, County Officers Book"
+        + (asOf ? " (updated " + asOf + ")" : "")
+        // "County Clerk" under a phrase that already says "the county's"
+        // reads as "the county's county clerk" — strip the redundant word,
+        // which leaves "clerk", "circuit clerk", "state's attorney" and the
+        // two offices that never carried it (treasurer, sheriff).
+        + (by ? " \u00b7 same building as the county's "
+              + by.toLowerCase().replace(/^county\s+/, "") : "") });
+      wrap.appendChild(renderFieldStack(rows));
+    }).catch(function () { /* one missing file never breaks a card */ });
+    return wrap;
+  }
+
   function registerCountyLayer(opts) {
     // opts.entries is the general form; opts.counties is the original name and
     // still the one every county-dispatched concept uses. The dispatch itself
@@ -18148,7 +18198,26 @@ function initChiExplorer() {
         });
       },
       render: function (result) {
-        return byKey[result.dxCounty].render(result);
+        var node = byKey[result.dxCounty].render(result);
+        // THE CARD'S LOCATION ROW, WHERE THE COUNTY PUBLISHES NONE. The fleet's
+        // card order is identity -> LOCATION -> contact -> link, and fifty of
+        // Illinois's sixty-three districted board cards were skipping the
+        // location outright — the instance's largest card-order gap. Appended
+        // HERE rather than in each entry's own renderer because there are
+        // sixty-three of those and no shared card path among them; a hook the
+        // concept declares reaches every one of them at a single site.
+        //
+        // It only ever ADDS. `opts.officeFallback` is asked for a county key
+        // and answers for the counties whose OWN roster publishes no address —
+        // the file it reads excludes every county that publishes one, so a
+        // county's own publication can never be overwritten or duplicated by
+        // this path (scripts/build_county_board_offices.py maintains that
+        // exclusion by measurement rather than by hand).
+        if (node && opts.officeFallback) {
+          var extra = opts.officeFallback(result.dxCounty);
+          if (extra) node.appendChild(extra);
+        }
+        return node;
       },
       // per-county pill + footer link (docs/CARD_RENDER_API.md), dispatched
       // like render — an entry that declares neither renders extras-free
@@ -18413,6 +18482,10 @@ function initChiExplorer() {
     id: "county-board",
     group: "political",
     label: "County Board District",
+    // The location row for the counties whose own roster publishes no board
+    // address. Declared on the CONCEPT, so it reaches all sixty-three entries
+    // at one site rather than being pasted into each of their renderers.
+    officeFallback: countyBoardOfficeFallback,
     // one legend identity for the concept (the pre-consolidation Will blue)
     style: { color: "#1F6FB2", weight: 2, fillColor: "#3B8FD4", fillOpacity: 0.05, dashArray: "9 3 3 3" },
     counties: [
