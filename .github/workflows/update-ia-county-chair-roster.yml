@@ -12,17 +12,46 @@ name: Update IA county board chair roster
 # A page this app re-reads every Friday tracks a January vote; a 2026 reply
 # does not.
 #
-# THIRTY-SIX OF NINETY-NINE, AND THE GAP STAYS OPEN for the rest. No statewide
+# THIRTY-NINE OF NINETY-NINE, AND THE GAP STAYS OPEN for the rest. No statewide
 # publisher records this at all: ISAC's member directory, which is where this
 # app's supervisor names come from, has no chair field, and the auditors'
 # association publishes auditors, who are not board members. So each county's
-# own board page is the only source, and 17 counties are unreachable to this
-# client, 38 name no chair anywhere a machine can find, and 7 have no
+# own surfaces are the only source, and this run reads TWO of them.
+#
+# ROUTE ONE, THE BOARD PAGE, answers 35: 17 counties are unreachable to this
+# client, 39 name no chair anywhere a machine can find, and 7 have no
 # supervisor roster to gate against.
 #
+# ROUTE TWO, THE COUNTY'S OWN MINUTES, ships 4 more, and it exists because
+# route one missed the biggest counties in the state. Of the ten largest with
+# no chair, seven had a board page that never uses the word, two refused the
+# client and one has no roster. Their MINUTES are a second statutory surface,
+# and Iowa boards open them with an attendance line naming the chair outright
+# — the Knox shape from the Illinois work. Cerro Gordo, Clinton, Dallas, Des
+# Moines and Johnson answer, and JOHNSON DOES NOT SHIP: its Granicus portal's
+# robots.txt names four crawlers, allows each of them everything but /JSON.php,
+# and ends `User-agent: * / Disallow: /`, so it refuses `districtry` on every
+# path. The scraper asks before it fetches and never requests the page; the
+# parser is fine and the chair it found is correct, and what is missing is
+# permission. Polk (CivicClerk portal, every file endpoint shut
+# to this client), Dubuque (client-side AgendaCenter whose own AJAX endpoint
+# 404s), Warren (year tabs with no document links, and no roster either),
+# Pottawattamie (Cloudflare 403) and STORY do not. Story is the one worth
+# reading twice: its minutes are perfectly reachable and say "with Murken
+# presiding", never "chair" — and who gavelled a meeting is not who holds the
+# office, so it is refused on vocabulary rather than on reach.
+#
+# THE TWO ROUTES ARE FLOORED SEPARATELY. Four counties is a tenth of this
+# file, so a pooled floor could not see the minutes route collapse behind the
+# page route's healthy number. Where the two routes disagree about a county,
+# the county is DROPPED with a printed line — two surfaces a county publishes
+# itself naming different chairs is the case this project asks about rather
+# than resolving by preference.
+#
 # WHAT THIS RUN IS REALLY WATCHING is whether a role can still be paired with
-# a person on 36 hand-built county pages. Three structural tests decide it and
-# each exists because a plausible answer would otherwise ship:
+# a person on 35 hand-built county pages and in four counties' minutes. Three
+# structural tests decide the page route and each exists because a plausible
+# answer would otherwise ship:
 #
 #   * CONTAINMENT — role and name must share the smallest DOM element that
 #     holds no OTHER supervisor. Scott County's board page wraps each member's
@@ -44,6 +73,24 @@ name: Update IA county board chair roster
 # "with Chair Shane McCampbell, Vice-Chair Tom Broeker". All three tests above
 # passed that pairing, because as a pairing it is clean. Only excluding the
 # page catches it, and only an independent document found it.
+#
+# THE MINUTES ROUTE HAS ITS OWN VERSION OF THE FRANKLIN TRAP, and it is made
+# by flattening rather than by markup. Des Moines County signs its minutes
+#
+#     Shane McCampbell, Chair
+#     Tom Broeker, Vice Chair
+#
+# which flattens to `Shane McCampbell, Chair Tom Broeker, Vice Chair`, where
+# the role word has a name on BOTH sides and each reading names a different
+# supervisor. So every role occurrence is resolved in both directions and
+# refused when they disagree; the attendance line, where the role has a name
+# on one side only, is what settles the county. Two further refusals: a role
+# preceded by "Vice" is never the chair, and the name must TOUCH the role —
+# nothing but whitespace, a comma or "/s/" between them — because Clinton's
+# "MOTION by Supervisor Irwin to authorize the Chairperson to sign" puts a
+# supervisor's name 18 characters from a chair word. And two documents, not
+# one: each county's two most recent minutes are read independently and must
+# name the same chair.
 #
 # THE BUILDER RE-GATES ON THE ROSTER. A chair who is not on that county's own
 # supervisor list in ia-county-officers.json is dropped, not carried forward:
@@ -77,11 +124,17 @@ jobs:
         with:
           python-version: "3.x"
 
+      # pdfplumber for the minutes route: county minutes are PDFs. It is
+      # already pinned for the sheriff and county-attorney directories, so
+      # this adds no new dependency to the weekly job.
       - name: Install dependencies
-        run: pip install -c ia/scripts/requirements.txt requests
+        run: pip install -c ia/scripts/requirements.txt requests pdfplumber
 
       - name: Sweep every county's own board-of-supervisors page
         run: python3 ia/scripts/ia_county_chair_scraper.py
+
+      - name: Read the board minutes the page route misses
+        run: python3 ia/scripts/ia_county_minutes_chair_scraper.py
 
       - name: Rebuild the chair roster (re-gated on each county's supervisors)
         run: python3 ia/scripts/build_ia_county_chair.py
@@ -111,13 +164,13 @@ jobs:
           # GitHub then rejects the whole file as an invalid workflow and every
           # run instant-fails with zero jobs.
           PR_BODY: |
-            Automated weekly refresh of which supervisor chairs each Iowa county board — `ia/data/app/ia-county-board-chairs.json`, generated by `ia/scripts/build_ia_county_chair.py` from `ia_county_chair_scraper.py`.
+            Automated weekly refresh of which supervisor chairs each Iowa county board — `ia/data/app/ia-county-board-chairs.json`, generated by `ia/scripts/build_ia_county_chair.py` from `ia_county_chair_scraper.py` (each county's board page, 35 counties) and `ia_county_minutes_chair_scraper.py` (each county's own board minutes, 4 more).
 
             Please review the diff before merging — this changes data about real officeholders.
 
             **What a change here usually means.** Iowa boards elect their chair at the January reorganisation, so a swap in January is the expected event and is worth a quick look at the county's page. A swap at any other time of year is worth a closer one: it is more often a page being rebuilt than a board voting again.
 
-            **What a COUNT change means.** Counties enter and leave this file as their pages change shape, not as their boards change. A county appearing is its page starting to name a chair somewhere a machine can pair; a county disappearing is the opposite, and neither is a claim that the board has or lacks a chair. The builder floor is 30 of the 36 that first resolved — it is there to catch the parser or the network collapsing, not ordinary churn.
+            **What a COUNT change means.** Counties enter and leave this file as their pages and their minutes change shape, not as their boards change. A county appearing is a surface starting to name a chair somewhere a machine can pair; a county disappearing is the opposite, and neither is a claim that the board has or lacks a chair. The two routes are floored SEPARATELY — 30 of the 35 the board pages resolve, 3 of the 4 the minutes ship — so a route collapsing cannot hide behind the other's healthy number. A county the two routes DISAGREE about is dropped with a `CONFLICT` line in the build log, and that line is worth reading before anything else in this PR.
 
             **The name join is printed in the build log.** Four counties are matched across a diminutive or a shortened first name (Adams, Appanoose, Keokuk, Winneshiek), and the log prints each one as `roster <- page` so the join can be read rather than trusted.
         run: |

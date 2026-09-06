@@ -63,10 +63,20 @@ CACHE = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".cache",
 OUT_NAME = "ia-city-officials.json"
 CONTACT_FILE = "ia-city-contact.json"
 
-EXPECT_CITIES = 5
-SEATS_PER_CITY = 6            # a mayor plus five council members, in all five
-MIN_EMAILS = 30               # measured 30 of 30; the cities publish one for everyone
-MIN_PHONES = 18               # measured 18 of 30 -- Palo publishes none at all
+# A FLOOR, NOT AN EQUALITY, AND THE CHANGE IS NOT A LOOSENING. This was
+# `EXPECT_CITIES = 5` while every city in the table was fetchable. Since
+# 2026-09-05 the scraper consults each city's robots.txt first, and
+# cityofpalo.com refuses `districtry` on every path (an otherwise-permissive
+# file ending `User-agent: * / Disallow: /`), so its page is never requested
+# and four cities arrive. A city refused by robots re-enters by itself the
+# week its file changes, which an equality gate would turn into a build
+# failure rather than a measurement.
+MIN_CITIES = 4                # measured 4 of the 5 in the scraper's table
+SEATS_PER_CITY = 6            # a mayor plus five council members, in all of them
+MIN_EMAILS = 24               # measured 24 of 24; the cities publish one for
+                              # everyone. Was 30 when Palo's six shipped.
+MIN_PHONES = 18               # measured 18 of 24 -- unchanged by Palo leaving,
+                              # because Palo published no phone at all
 
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[a-z]{2,}$", re.I)
 OFFICE_FORM = re.compile(r"^(mayor|clerk|council|city|admin|info|office)", re.I)
@@ -108,9 +118,12 @@ def main():
     contact = load(os.path.join(APP_DATA_DIR, CONTACT_FILE),
                    "the City card's contact file is this build's place-key witness")
 
-    if len(cache) != EXPECT_CITIES:
-        raise RuntimeError("the cache holds %d cities, expected %d"
-                           % (len(cache), EXPECT_CITIES))
+    if len(cache) < MIN_CITIES:
+        raise RuntimeError("the cache holds %d cities, floor %d -- read the "
+                           "scraper's log before touching this: a city leaves "
+                           "either because its page changed shape or because "
+                           "its robots.txt now refuses us, and those are "
+                           "different problems" % (len(cache), MIN_CITIES))
 
     payload_obj, emails, phones, offices = {}, 0, 0, 0
     for geoid in sorted(cache):

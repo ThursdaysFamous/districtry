@@ -209,7 +209,19 @@ PROVENANCE = [
         # ships. Duplicating them here would be a second hand-kept list of the
         # same URLs, going stale in the way that gate exists to prevent. What
         # this row registers is the PIPELINE.
-        "note": "Which supervisor chairs each county board -- 35 of 99 counties, probed here at one representative county (Linn); the run reads all 98 in ia-county-board-directory.json and keys the ones that pass its gates, and the other 34 shipped URLs are probed by validate_card_links.py out of the data file itself. THERE IS NO STATEWIDE SOURCE AND THE TWO OBVIOUS CANDIDATES WERE MEASURED, NOT ASSUMED: the ISAC member portal is already this app's source for the supervisors themselves and its per-county pages contain ZERO occurrences of chair, chairperson, chairman, chairwoman or vice-chair; and iowaauditors.org answers 200 on /, /directory/ and /county-auditors/ with zero occurrences of the same, because it publishes county AUDITORS, who are not board members. The chair is chosen by each board's own January vote, so a weekly re-read tracks it where a one-time answer from 99 offices would not -- which is why the gap record carries NOT YET ASKED rather than a drafted ask. Built by ia/scripts/ia_county_chair_scraper.py + build_ia_county_chair.py; refreshed weekly by update-ia-county-chair-roster.yml.",
+        "note": "Which supervisor chairs each county board -- the BOARD-PAGE route, 35 of the 39 counties this app ships (the other 4 come from the minutes route in the next row), probed here at one representative county (Linn); the run reads all 98 in ia-county-board-directory.json and keys the ones that pass its gates, and the other 34 shipped URLs are probed by validate_card_links.py out of the data file itself. THERE IS NO STATEWIDE SOURCE AND THE TWO OBVIOUS CANDIDATES WERE MEASURED, NOT ASSUMED: the ISAC member portal is already this app's source for the supervisors themselves and its per-county pages contain ZERO occurrences of chair, chairperson, chairman, chairwoman or vice-chair; and iowaauditors.org answers 200 on /, /directory/ and /county-auditors/ with zero occurrences of the same, because it publishes county AUDITORS, who are not board members. The chair is chosen by each board's own January vote, so a weekly re-read tracks it where a one-time answer from 99 offices would not -- which is why the gap record carries NOT YET ASKED rather than a drafted ask. Built by ia/scripts/ia_county_chair_scraper.py + build_ia_county_chair.py; refreshed weekly by update-ia-county-chair-roster.yml.",
+    },
+    {
+        "layer": "county-supervisor",
+        "app_file": "ia-county-board-chairs.json",
+        "source_url": "https://cerrogordo.gov/supervisors/meetings_minutes/",
+        # The SECOND route, and it needs its own row for the reason the first
+        # one gives for having only one: what a row registers is a PIPELINE,
+        # and these are two pipelines against two different kinds of document.
+        # The four shipped index URLs ride the data file and are probed
+        # monthly by validate_card_links.py; this row is what notices the
+        # minutes route itself going away.
+        "note": "Which supervisor chairs each county board -- the MINUTES route, 4 of the 39 counties this app ships, probed here at one representative county (Cerro Gordo). The board-page route above answers 35 and misses the state's biggest counties, whose pages never use the word at all; a county's MINUTES are a second surface it publishes about its own board, and Iowa boards open them with an attendance line that names the chair outright. Measured over the ten largest chair-less counties on 2026-09-05: Cerro Gordo, Clinton, Dallas, Des Moines and Johnson answer, each on two consecutive meetings naming the same chair -- and JOHNSON DOES NOT SHIP, because its Granicus portal's robots.txt refuses this project's agent on every path, so the scraper asks first and never fetches. Five more do not answer -- Polk publishes only through a CivicClerk portal whose every file endpoint refuses this client, Dubuque through a CivicPlus AgendaCenter that renders client-side and whose own AJAX endpoint 404s, Warren through year tabs that contain no document links, Pottawattamie behind a Cloudflare 403, and STORY on vocabulary rather than reach -- three consecutive packets say `with Murken presiding` and never name a chair, and who gavelled a meeting is not who holds the office. Built by ia/scripts/ia_county_minutes_chair_scraper.py + build_ia_county_chair.py; refreshed weekly by update-ia-county-chair-roster.yml.",
     },
     {
         "layer": "city-ward",
@@ -458,12 +470,19 @@ PROVENANCE = [
         "app_file": "ia-city-officials.json",
         "source_url": "https://cityofpalo.com/council",
         "note": (
-            "Palo's mayor and five council members. PALO PUBLISHES NO TELEPHONE NUMBER "
-            "FOR ANY OF THEM, which is the whole of the reason this file's phone floor is "
-            "18 of 30 rather than 30: the floor measures what the sources publish, not "
-            "what would be convenient. Its markup is also what the first sweep MISSED — "
-            "the splitter did not break on </span>, so Palo returned nothing and the "
-            "statewide yield read 1% instead of 3%."
+            "Palo's mayor and five council members, WHICH THIS APP NO LONGER READS. Since "
+            "2026-09-05 the scraper consults robots.txt before every fetch, and this "
+            "host's file names six crawlers, allows each of them everything but /admin/ "
+            "and /manager/, and ends `User-agent: * / Disallow: /` — a refusal of this "
+            "project's agent on every path, in the last two lines of a file that reads "
+            "as permissive for four hundred bytes. The page is not requested and the six "
+            "officials are off the card; the row stays here so this monthly check keeps "
+            "asking about the host, and the scraper entry stays so the city re-enters by "
+            "itself if the file changes. Palo ALSO PUBLISHED NO TELEPHONE NUMBER for any "
+            "of them, which is why this file's phone floor did not move when it left. Its "
+            "markup is what the first sweep MISSED — the splitter did not break on "
+            "</span>, so Palo returned nothing and the statewide yield read 1% instead "
+            "of 3%."
         ),
     },
     {

@@ -371,6 +371,30 @@ jobs:
       - name: Precinct-fabric reconciliation causes still hold
         run: python3 scripts/isbe_precinct_fabric.py --selftest
 
+      # The Iowa board-chair minutes parser refuses four things, and every one
+      # of them was a wrong answer first: a role claimed from BOTH sides of a
+      # flattened signature block (Des Moines prints `Shane McCampbell, Chair`
+      # above `Tom Broeker, Vice Chair`, so one reading names each man), a role
+      # preceded by `Vice`, a role whose nearest name is 18 characters away
+      # across `to authorize the`, and `presiding`, which is who gavelled a
+      # meeting rather than who holds the office. Those refusals are what stand
+      # between the County Supervisor card and a confidently wrong name, and
+      # they live in one regex pair that any edit can loosen. This runs them
+      # against the lines the counties really print — no network, and every
+      # case is a literal string.
+      #
+      # pdfplumber is installed even though --selftest never opens a PDF, for
+      # the reason the coverage-ring step gives about requests:
+      # validate_workflow_deps.py walks an entry point WITH its function-local
+      # imports and cannot know which argv path CI takes, and pdfplumber is a
+      # real dependency of the scrape path. Installing it is the honest fix;
+      # splitting the self-test into a second entry point to dodge a true
+      # dependency is not.
+      - name: Iowa board-chair minutes parser still refuses its traps
+        run: |
+          pip install -c ia/scripts/requirements.txt pdfplumber
+          python3 ia/scripts/ia_county_minutes_chair_scraper.py --selftest
+
       # A roster's count guard proves it still has twelve members; it proves
       # nothing about whether those twelve still carry an e-mail. On 2026-08-08
       # Cloudflare's e-mail obfuscation quietly emptied all seven of Brown
