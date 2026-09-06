@@ -187,6 +187,7 @@ WAUKESHA_INDEX = "https://www.waukesha-wi.gov/about_the_common_council/index.php
 #
 #   Waupaca           C 5  https://cityofwaupaca.org/government/mayor-city-council/
 #   Algoma            C 4  https://www.algomacity.org/government/city_council.php
+#   Horicon           C 3  https://www.horiconwi.gov/185/Elected-Officials
 #   Black River Falls C 4  https://blackriverfallswi.gov/common-council-committee-of-the-whole
 #   Cumberland        C 4  https://cityofcumberland.net/city-council
 #   Dodgeville        C 4  https://www.cityofdodgeville.com/council
@@ -229,6 +230,12 @@ TOMAH_INDEX = "https://www.tomahwi.gov/citycouncil"
 EAU_CLAIRE_INDEX = "https://www.eauclairewi.gov/310/City-Council"
 
 # ---- the tranche of 2026-09-05 evening, from the 22 the sweep had measured ----
+# FIVE constants, for the five cities actually fetched. Algoma, Dodgeville,
+# Oconomowoc and Horicon were built and then withdrawn (two members per
+# district, see below), and their addresses go back to the queue comment
+# rather than staying here: validate_robots.py reads an upper-case module
+# attribute as a SCHEDULED FETCH and would report policies for requests this
+# module no longer makes.
 # Each address moves from the queue comment above into a constant HERE in the
 # same change that starts fetching it, never before: validate_robots.py reads
 # upper-case module attributes as scheduled fetches and would otherwise report
@@ -238,11 +245,9 @@ NEW_BERLIN_INDEX = "https://www.newberlinwi.gov/"
 STURGEON_BAY_INDEX = ("https://www.sturgeonbaywi.org/government/"
                       "city_council/index.php")
 ALTOONA_INDEX = "https://www.altoonawi.gov/government/elected_officials.php"
-ALGOMA_INDEX = "https://www.algomacity.org/government/city_council.php"
-DODGEVILLE_INDEX = "https://www.cityofdodgeville.com/council"
 EAGLE_RIVER_INDEX = "https://eagleriverwi.gov/city-government/elected-officials/"
 GERMANTOWN_INDEX = "https://www.germantownwi.gov/299/Village-Board"
-OCONOMOWOC_INDEX = "https://oconomowoc-wi.gov/225/Common-Council"
+
 APPLETON_INDEX = "https://www.appletonwi.gov/government/common_council.php"
 
 ORDINALS = {"first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5,
@@ -1060,18 +1065,20 @@ def scrape_portage():
     return members, PORTAGE_INDEX
 
 
-# ============================ the tranche of 2026-09-05 evening (eight cities)
-# All eight pair every district with a name, and NONE was parsed by a shared
+# ============================= the tranche of 2026-09-05 evening (five cities)
+# All five pair every district with a name, and NONE was parsed by a shared
 # routine: a generic "nearest name to District N" pass was written first and
 # would have shipped "City Council President" as Eagle River's district 3 and
 # "Edit Form" as Altoona's district 6. Per-city functions, as the fleet does.
 #
-# Two of the ten measured-ready cities are DELIBERATELY NOT HERE:
-#   * HORICON seats TWO alderpersons per district (its own page lists Forrest
-#     Frami AND Lisa Sullivan for district 1, and so on for 2 and 3). The
-#     roster schema is members[district] -> one member, so shipping Horicon
-#     would name one of each pair and conceal the other. Shut on the SCHEMA,
-#     not on the source, and recorded that way.
+# FIVE of the ten cities worked are DELIBERATELY NOT HERE:
+#   * ALGOMA, DODGEVILLE, OCONOMOWOC and HORICON each seat TWO alderpersons
+#     per district on staggered terms (Dodgeville's district 1 is Shaun Sersch
+#     2025-2027 AND Roxanne Reynolds-Lair 2026-2028; Horicon's is Forrest
+#     Frami AND Lisa Sullivan). The roster schema is members[district] -> one
+#     member, so shipping any of them would name one of each pair and conceal
+#     the other. Shut on the SCHEMA, not on the source. All four WERE built
+#     and then withdrawn once _put() refused the second name.
 #   * WAUPACA's page numbers its districts 1-5 while LTSB keys its geometry
 #     41-45. That correspondence is plausible and NOT witnessed by anything
 #     read here, and a wrong offset moves every name one seat, so it is not
@@ -1137,14 +1144,28 @@ def scrape_new_berlin():
 
 # -------------------------------------------------------------- Sturgeon Bay
 def scrape_sturgeon_bay():
-    """"District N" then the member's name. The page also carries an AT-LARGE
-    mayor, who has no district and is therefore never matched."""
+    """"District N | <name> | <home address> | <phone> | sbdistrictN@...".
+
+    The page also carries an AT-LARGE mayor, who has no district and so is
+    never matched. THE CELL AFTER THE NAME IS A HOME ADDRESS and is stepped
+    over by shape — the phone and the per-seat district mailbox after it are
+    the city's own official contact for the seat and do ship.
+    """
     page = fetch(STURGEON_BAY_INDEX)
     flat = re.sub(r"\|+", "|", re.sub(r"<[^>]+>", "|", H.unescape(page)))
     members = {}
     for m in re.finditer(r"District\s+(\d{1,2})\b[\s|]+"
-                         r"([A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]*\.?){1,3})", flat):
-        _put("sturgeon bay", members, "%02d" % int(m.group(1)), {"name": m.group(2).strip()})
+                         r"([A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]*\.?){1,3})"
+                         r"([^|]*(?:\|[^|]*){0,3})", flat):
+        entry = {"name": m.group(2).strip()}
+        tail = m.group(3)
+        ph = re.search(r"\(?\d{3}\)?[ .-]\d{3}-\d{4}", tail)
+        if ph:
+            entry["phone"] = ph.group(0).strip()
+        em = re.search(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", tail)
+        if em:
+            entry["email"] = em.group(0).strip()
+        _put("sturgeon bay", members, "%02d" % int(m.group(1)), entry)
     return _seats_or_die("sturgeon bay", members, 7), STURGEON_BAY_INDEX
 
 
@@ -1179,14 +1200,22 @@ def scrape_eagle_river():
     titles = ("City Council President", "Council President", "Mayor",
               "City Council Vice President")
     members = {}
-    for m in re.finditer(r"Aldermanic\s+District\s+(\d{1,2})\b[^|]*((?:\|[^|]*){1,4})",
+    for m in re.finditer(r"Aldermanic\s+District\s+(\d{1,2})\b[^|]*((?:\|[^|]*){1,16})",
                          flat):
         cells = [c.strip() for c in m.group(2).split("|") if c.strip()]
         cells = [c for c in cells if c not in titles]
         if not cells:
             raise SystemExit("eagle river: district %s has only a title"
                              % m.group(1))
-        _put("eagle river", members, "%02d" % int(m.group(1)), {"name": cells[0]})
+        entry = {"name": cells[0]}
+        tail = m.group(2)
+        ph = re.search(r"\(?\d{3}\)?[ .-]?\d{3}-\d{4}", tail)
+        if ph:
+            entry["phone"] = " ".join(ph.group(0).split())
+        em = re.search(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", tail)
+        if em:
+            entry["email"] = em.group(0).strip()
+        _put("eagle river", members, "%02d" % int(m.group(1)), entry)
     return _seats_or_die("eagle river", members, 4), EAGLE_RIVER_INDEX
 
 

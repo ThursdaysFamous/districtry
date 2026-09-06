@@ -57,15 +57,20 @@ FLOORS = {
     "78650": ("Superior", 10, 10, 9, 9, 0),
     "64100": ("Portage", 9, 9, 8, 8, 0),
     "82925": ("Viroqua", 9, 9, 8, 8, 0),
-    # the tranche of 2026-09-05 evening — names only, so the contact floors are
-    # 0 by measurement rather than by leniency: none of these five pages puts a
-    # per-member e-mail or phone anywhere this scrape reads, and two of them
-    # (Algoma, Sturgeon Bay) print HOME ADDRESSES beside the name, which are
-    # never read for anyone.
+    # the tranche of 2026-09-05 evening. THE CONTACT FLOORS ARE MEASURED, NOT
+    # ASSUMED, and the first version of this block got that wrong: it set them
+    # all to 0 and said "no page here puts a per-member e-mail or phone where
+    # this scrape reads", which was false for two of the five. Sturgeon Bay
+    # carries a per-seat district mailbox and phone beside every name, and
+    # Eagle River a Phone: line and a COERWardN@ mailbox in every block; both
+    # now ship, because the card-order convention says surface contact where
+    # the source has it. New Berlin, Altoona and Germantown genuinely publish
+    # none where this scrape reads. Sturgeon Bay prints a HOME ADDRESS between
+    # the name and the phone; it is stepped over and never stored.
     "56375": ("New Berlin", 7, 7, 0, 0, 0),
-    "77875": ("Sturgeon Bay", 7, 7, 0, 0, 0),
+    "77875": ("Sturgeon Bay", 7, 7, 7, 7, 0),
     "01550": ("Altoona", 6, 6, 0, 0, 0),
-    "21625": ("Eagle River", 4, 4, 0, 0, 0),
+    "21625": ("Eagle River", 4, 4, 4, 4, 0),
     "28875": ("Germantown", 4, 4, 0, 0, 0),
     "50825": ("Menasha", 8, 8, 0, 7, 0),
     "35950": ("Howard", 8, 8, 0, 0, 7),
