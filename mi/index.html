@@ -9704,6 +9704,9 @@ function initMichiganExplorer() {
   var loadWarrenWards = makeCached(function () {
     return fetchJSONWithRetry("data/app/mi-warren-wards.json", {}, 2);
   });
+  var loadFlintWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-flint-wards.json", {}, 2);
+  });
 
   function detroitCoverage(point) {
     // The districts tile the city exactly (the builder asserts the population
@@ -10007,6 +10010,53 @@ function initMichiganExplorer() {
     }
   };
 
+  function flintCoverage(point) {
+    // Nine wards drawn to within a few people of each other; the builder
+    // measures them against the Census place and bounds the difference at ten
+    // people over ten edge blocks. A load failure rejects to the fail-open.
+    return loadFlintWards().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
+
+  // FLINT NAMES NO COUNCIL MEMBER HERE. Its council page runs to 1.4 MB and the
+  // ONLY ward-to-name pairing anywhere in it is an In Memoriam for the First
+  // Ward councilman who died in 2024 — so a scraper that paired a ward with the
+  // nearest name would ship a dead man as sitting. The card names your ward and
+  // links the Council. Recorded as gap `flint-council-roster`.
+  var flintEntry = {
+    key: "flint",
+    label: "Flint",
+    coverage: flintCoverage,
+    loadGeometry: loadFlintWards,
+    hoverName: function (feature) {
+      var v = findPropCI(feature.properties || {}, ["ward"]);
+      return (v == null || v === "") ? null : "Ward " + String(v);
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadFlintWards, point).then(function (feature) {
+        if (!feature) return null;
+        return { seq: seq, ward: findPropCI(feature.properties || {}, ["ward"]) };
+      });
+    },
+    cardIdentifier: function (result) {
+      return result.ward ? "Ward " + String(result.ward) : "Unknown ward";
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderLinkRow({
+        title: result.ward ? "Ward " + String(result.ward) : "Flint City Council",
+        note: "Flint elects one council member from each of nine wards. The city "
+            + "publishes its ward map but no current list of who holds each seat, "
+            + "so this app names your ward and not your member."
+      }));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Flint City Council", url: "https://www.cityofflint.com/city-council/" };
+    }
+  };
+
   registerCountyLayer({
     id: "city-ward",
     group: "political",
@@ -10021,8 +10071,8 @@ function initMichiganExplorer() {
     // ORDERED BY POPULATION: §3.1 says to order the table so the cheapest
     // already-cached coverage test short-circuits the OR, and the city most
     // selections land in should be tried first. Detroit, then Warren, then
-    // Grand Rapids.
-    entries: [detroitEntry, warrenEntry, grandRapidsEntry]
+    // Grand Rapids, then Flint.
+    entries: [detroitEntry, warrenEntry, grandRapidsEntry, flintEntry]
   });
 
 

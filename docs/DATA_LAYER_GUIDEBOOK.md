@@ -2262,6 +2262,18 @@ detail into `blocker`.
       "why": "The state records no ward number for any Dearborn precinct, where it records them for every other Michigan city this app covers, which points to a council elected by the whole city rather than by ward.",
       "wanted": "The city charter's own words on how the council is elected, or a certified county canvass showing the council contest and how many seats each voter fills.",
       "blocker": "MEASURED 2026-09-05. THE SECOND CITY OF THIS SHAPE, after Sterling Heights, and measured the same way: the state's own 2026 precinct fabric assigns WARD='00' to all 42 Dearborn precincts, where Warren reads 01-05, Flint 01-09, Lansing 01-04, Ann Arbor 01-05 and Grand Rapids 01-03. An ArcGIS catalogue query for ward, council-district or precinct services naming Dearborn returns ZERO. AN ABSENCE IN ONE PUBLISHER'S COLUMN IS A FACT ABOUT THAT PUBLISHER (the Knox error), so at-large is the working expectation and not a recorded fact; the charter or a certified Wayne County canvass is what would settle it, and neither was read. IF THE COUNCIL IS AT LARGE THERE IS NO GAP TO CLOSE, only a record to correct — an at-large body gets roster rows on a city card and never a polygon."
+    },
+    {
+      "id": "flint-council-roster",
+      "kind": "no-source",
+      "concept": "City council district",
+      "area": "Flint",
+      "layer": "city-ward",
+      "counties": [],
+      "summary": "In Flint the City Council District card names your ward but not the council member who represents it.",
+      "why": "The city's council page does not list who holds each ward, and the one place it does pair a ward with a name is a memorial notice, so this app names the ward and links the Council rather than risking a name that is wrong.",
+      "wanted": "A current list of Flint's nine council members by ward on the city's own council pages, with a phone number or e-mail for each.",
+      "blocker": "MEASURED 2026-09-06. THE BOUNDARY SHIPS AND THE ROSTER DOES NOT, the Detroit and Warren posture. cityofflint.com answers 200 and its robots.txt permits everything with `Crawl-Delay: 20` (honoured), so this is not an access problem. The council page is 1.4 MB and flattens to ~206,000 characters, and /department/city-council/ serves the SAME document. THE ONLY WARD-TO-NAME PAIRING ANYWHERE IN IT IS AN IN MEMORIAM: \"In Memoriam: Councilman Eric Mays First Ward ... passed away February 24, 2024\". A scraper that paired a ward token with the nearest capitalised name would therefore ship a man who died two years ago as the sitting First Ward member — the sharpest version of the trap Will County's Crete entry records, where a directory's surviving text names somebody who no longer holds the seat. There are zero mailto: links on the page. The ward layer carries LONGNAME/SHORTNAME/DISTRICT/COLOR and no officeholder field, so there is not even a stale name in the geometry to reject. Naming the ward and not the member is the honesty floor."
     }]
 }
 ```
