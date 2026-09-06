@@ -6167,6 +6167,12 @@ measured and both were wrong:
 | `county-supervisory-districts` | 607 | 847 | 63 |
 | `wtcs-districts` | 0 | 109 | 59 |
 
+The supervisory row's two counts differ by **240**, not by the 277 holes
+`wi/WATCH.md` records as source-restored: the other **37** are zero-area
+CLOCKWISE slivers on 19 features that the converter keeps as shells rather
+than promoting to holes — the same artifact class as the WTCS layer's own 6
+zero-area rings, and benign, since a zero-area ring can contain no point.
+
 **THE TEST IS PER LAYER AND COSTS TWO FETCHES.** Ask the same query both
 ways and compare interior-ring counts. A layer that returns the same count
 either way has no interior rings and is not affected — `build_metro_outline.py`
@@ -6190,17 +6196,18 @@ files instead of 35 — that mistake was made here first, and the dict form is
 the commoner one by an order of magnitude.
 
 **THE DEFECT TRACKS THE HOST, NOT ARCGIS IN GENERAL — so 26 of those 69 files
-are the ones to check first.** Measured 2026-09-05 across twelve layers on six
-hosts:
+are the ones to check first.** Measured 2026-09-05 across thirteen layers on
+seven hosts:
 
 | host class | layers | interior rings `f=geojson` vs `f=json` |
 |---|---|---|
 | ArcGIS Online (`services*.arcgis.com`) | 2 | **both AFFECTED** — LTSB 1 vs 2 on Marathon alone; DPI 0 vs 109 |
-| on-premises ArcGIS Server + TIGERweb | 10 | all identical, on four hosts |
+| on-premises ArcGIS Server + TIGERweb | 11 | all identical, on five hosts |
 
-The clean ten are not a null result: Madison's ward layer keeps **44** interior
-rings through the GeoJSON exporter, its association layer 14, its TIF layer 4,
-Milwaukee's MPS layer 2, its TID layer 1, and LTSB's on-premises ward layer 1.
+The clean eleven are not a null result: Madison's ward layer keeps **44**
+interior rings through the GeoJSON exporter, its association layer 14, its TIF
+layer 4, Milwaukee's MPS layer 2, its TID layer 1, LTSB's on-premises ward
+layer 1, and Lincoln County's supervisory layer 2.
 Rings that survive are evidence the exporter nests correctly; **a layer with no
 interior rings either way proves nothing about the exporter** and is merely
 unaffected — TIGERweb's legislative and county layers are clean only in that
@@ -6211,7 +6218,7 @@ the same publisher's on-premises ward layer keeps its ring while its ArcGIS
 Online supervisory layer drops one, so the difference is the HOST rather than
 the publisher, the data or the query.
 
-Twelve layers on six hosts is a strong signal, not a proof, so the per-layer
+Thirteen layers on seven hosts is a strong signal, not a proof, so the per-layer
 test above stays the rule. But it says where to look first — files naming an
 ArcGIS Online host: 11 in `ia/`, 8 in `scripts/`, 4 in `wi/`, 3 in `mi/`, none
 in `ny/` or `ca/`.

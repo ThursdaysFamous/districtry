@@ -84,12 +84,13 @@ written BECAUSE holes matter here:
      per-feature holes even without (1).
 
 So the two gates added here run on the geometry as SHIPPED, before any
-make_valid. The nested-shell test is the stronger of the two: a part
-inside a part is never lawful — two disjoint pieces of one district
-cannot contain one another — so it catches the unnesting whatever
-produced it, without pinning a count or assuming the upstream bug
-persists. The ring floor catches the other failure, holes dropped
-outright rather than unnested.
+make_valid. THE RING FLOOR IS THE GATE: an unnested fetch shows up there
+as zero, decisively and with nothing to tune. The nested-shell test — a
+part inside a part is never lawful, since two disjoint pieces of one
+district cannot contain one another — reads as the stronger idea and is
+NOT, because the server generalization emits micro-parts that no shape
+test separates from real holes; it is a pinned second opinion, and
+nested_shells() below says exactly why.
 
 WHAT A READER SAW, measured at an interior point of each source hole
 (never a centroid: the centroid of a non-convex hole falls outside it,
@@ -107,10 +108,24 @@ lands in the owner's shell and reads as agreement):
   from a wrong geometry. The card's answer changes at 59, three of them
   onto "no district".
 
-  Unlike the county supervisory rebuild there is NO RESIDUAL: that file
-  is mapshaper-simplified at 9% retain, which drops small rings in both
-  versions, while this builder ships the server's geometry as answered.
-  All 103 are fixed.
+  THE RESIDUAL IS 3, AND MEASURING IT NEEDED THE RIGHT COMPARAND. Against
+  the generalized f=json fetch THIS BUILDER ITSELF USES, the rebuild agrees
+  at 103 of 103 — but that compares the file against the same fetch that
+  produced it, which is the error build_wi_supervisory_districts.py's
+  gate_against_server exists to prevent. Against the DPI service's own
+  POINT QUERY it is 100 of 103: three 4-vertex slivers of 0.003-0.005 km2
+  lying between neighbours are dropped by maxAllowableOffset=0.0005 and
+  answer "no district" —
+
+      44.00305,-88.83933  service Fox Valley    (this file said Moraine Park)
+      43.36800,-91.01153  service Western       (this file said Southwest)
+      43.10150,-90.15895  service Madison Area  (this file said Southwest)
+
+  That is a residual of GENERALIZATION, not of the fetch, and it is
+  strictly better than what it replaces: an empty state is honest where a
+  confidently wrong college is not. The county supervisory rebuild's
+  residual is a different and larger thing — ~100 points still naming a
+  WRONG district, because that file is mapshaper-simplified at 9% retain.
 """
 
 import json
