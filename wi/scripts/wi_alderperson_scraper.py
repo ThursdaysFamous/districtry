@@ -239,8 +239,9 @@ EAU_CLAIRE_INDEX = "https://www.eauclairewi.gov/310/City-Council"
 # Each address moves from the queue comment above into a constant HERE in the
 # same change that starts fetching it, never before: validate_robots.py reads
 # upper-case module attributes as scheduled fetches and would otherwise report
-# policies for requests nobody makes. robots.txt read for all eight first —
-# none carries a Disallow reaching these paths.
+# policies for requests nobody makes. robots.txt was read for ALL TWENTY-TWO
+# candidate hosts before any page fetch, not just the five kept — none
+# carries a Disallow reaching these paths.
 NEW_BERLIN_INDEX = "https://www.newberlinwi.gov/"
 STURGEON_BAY_INDEX = ("https://www.sturgeonbaywi.org/government/"
                       "city_council/index.php")
