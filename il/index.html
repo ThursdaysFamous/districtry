@@ -9942,7 +9942,20 @@ function initChiExplorer() {
     return fetchJSONWithRetry("data/app/mchenry-county-board-members.json", {}, 2);
   });
   var loadMchenryPrecincts = makeCached(function () {
-    return loadMchenryFeatureServer("Precincts", "1=1", "PrecinctName", "precincts");
+    // `Precincts` — the service this read until 2026-09-06 — answers 200 with an
+    // EMPTY `layers` array, so this loader resolved to nothing and McHenry's
+    // precinct card showed the shared "data source didn't respond" state. The
+    // county still publishes precincts, in two services that DISAGREE, and the
+    // one whose name says it is current is the one that is not:
+    // `2021_Proposed_Precincts` layer 1 is titled "Current Precincts" and holds
+    // 212, while `Voting_Precincts` holds 223. ISBE's own certified returns
+    // settle it — McHenry reported 212 precincts in the 2020 General and 223 in
+    // every election from the 2022 General through the 2026 Primary — and the
+    // 223 names match this layer's PrecinctName values 223/223 with no alias
+    // (scripts/isbe_precinct_fabric.py --compare 58 69 --county MCHENRY). The
+    // 212 is the pre-2021 fabric, which is also why it equals the Census 2020
+    // voting-district count: that agreement was evidence for the WRONG layer.
+    return loadMchenryFeatureServer("Voting_Precincts", "1=1", "PrecinctName", "precincts");
   });
   // McHenry's fire tiling carries its own honesty markers: eight filler
   // polygons literally named "Z NO FIRE DISTRICT" (unserved areas), one
