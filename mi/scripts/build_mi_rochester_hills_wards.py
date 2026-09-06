@@ -351,11 +351,19 @@ def assert_no_stated_terms():
     CC BY-NC and the build refuses to write; here the item is shared public with
     an empty licenseInfo, which is the Detroit case.
 
-    THE ITEM ID IS PINNED RATHER THAN DISCOVERED, because the service is on the
-    city's own ArcGIS Server and its root carries no `serviceItemId` to follow —
-    the sibling builders' trick does not work here. A pinned id can drift onto
-    some other item, so the title is asserted: a licence check against the wrong
-    item is worse than no check at all.
+    THE ITEM ID IS PINNED RATHER THAN DISCOVERED, AND THE FIRST STATED REASON FOR
+    THAT WAS WRONG. It said the service root "carries no serviceItemId to
+    follow". Both roots carry one — MapServer bc72422739c447389ba0c5e47a000a21,
+    FeatureServer baa80629113e4c3b9dcc860ade0dbb3f — and the sibling builders'
+    trick fails for a different and sharper reason: those are ids in the CITY's
+    own portal, and arcgis.com answers `Item does not exist or is inaccessible`
+    for them. So a builder that followed the root's own id would look the item
+    up where it does not live and read a licence from an error envelope. A ROOT
+    THAT CARRIES A serviceItemId IS NOT A ROOT WHOSE serviceItemId RESOLVES
+    WHERE YOU WILL LOOK IT UP. The pinned id is a genuine AGOL item on the
+    city's public org; a pinned id can still drift onto some other item, so the
+    title is asserted, because a licence check against the wrong item is worse
+    than no check at all.
     """
     item = json.loads(subprocess.run(
         ["curl", "-sS", "--fail", "--max-time", "120", TERMS_ITEM + "?f=json"],

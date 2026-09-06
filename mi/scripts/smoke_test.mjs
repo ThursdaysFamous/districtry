@@ -746,9 +746,20 @@ try {
       const text = card.text || "";
       check(`city-ward resolves a Rochester Hills point to district ${rh.d}`,
         pill === `District ${rh.d}`, `pill=${JSON.stringify(pill)}`);
+      // NAMED PEOPLE ARE NOT LISTED HERE, AND THAT IS THE POINT. An earlier
+      // version of this check listed five council members by surname — names
+      // this project learned only from a fetch of a site whose robots.txt
+      // disallows it, so hardcoding them would have carried that fetch forward
+      // in the repo forever. The structural assertion is also STRICTER: it
+      // catches ANY person the card might start naming, not the five somebody
+      // happened to think of.
+      const people = await page.evaluate(() => {
+        const el = document.getElementById("card-city-ward");
+        return el ? el.querySelectorAll(".card-person, .card-person-row").length : -1;
+      });
       check(`Rochester Hills district ${rh.d} names nobody and says why`,
-        /asks automated visitors not to read it/.test(text) &&
-        !/Mannino|Blair|Carlock|Limberg|Morlan|Deel/.test(text), text.slice(0, 170));
+        /asks automated visitors not to read it/.test(text) && people === 0,
+        `personRows=${people} :: ${text.slice(0, 150)}`);
       await page.close();
     }
 

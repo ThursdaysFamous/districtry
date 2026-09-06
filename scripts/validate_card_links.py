@@ -321,6 +321,38 @@ RATE_LIMIT_PAUSE = 8
 # Four of the six are the same blocks validate_sources.py records against its
 # own `blocked` entries, measured independently there — they agree.
 # ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# HOSTS THIS PROBE DECLINES TO FETCH, WHICH IS THE OPPOSITE OF THE TABLE BELOW.
+# EXPECTED_UNREACHABLE is "the host refuses us"; this is "the host does not
+# refuse us and has asked us not to come". A robots.txt that disallows this
+# client is a request, not a lock — nothing here would fail — which is exactly
+# why it has to be honoured in code rather than left to whoever remembers.
+#
+# The cost of getting this wrong is specific: this checker runs MONTHLY over
+# every `url:` literal in every authored page, so one card link on such a host
+# is a scheduled, recurring GET of a path its owner asked crawlers to leave
+# alone — and it would be issued by the same project whose builder for that
+# city declines to read the very same site. A card may still LINK the page: a
+# reader following a link is not a crawler, and robots.txt governs automated
+# retrieval. It is this script that must not fetch it.
+#
+# NOT A SILENT SKIP. Each entry is reported every run, and robots.txt itself is
+# re-read — the one file a crawler is always meant to fetch — so the entry
+# INVERTS like its neighbour: still disallowed is OK, and a rule that has
+# LIFTED is the WARN, because that is the state a human can act on. An entry
+# whose host nobody cites any more is warned about too.
+# ---------------------------------------------------------------------------
+ROBOTS_DECLINED = {
+    "www.rochesterhills.org":
+        "robots.txt (served via a redirect to the city's CMS host) allows exactly five "
+        "named bots — Googlebot, Bingbot, FacebookBot, LinkedInBot, Twitterbot — and "
+        "then states `User-agent: *` / `Disallow: /`. Measured 2026-09-06. The mi "
+        "`city-ward` card links the city for a READER while naming no council member, "
+        "and mi/scripts/build_mi_rochester_hills_wards.py takes its geometry from "
+        "gis.rochesterhills.org, a different host that serves no robots.txt at all",
+}
+
+
 EXPECTED_UNREACHABLE = {
     "chicagopolice.org":
         "Cloudflare managed challenge (\"Just a moment…\", cf-ray present) — the same "
@@ -886,12 +918,56 @@ def urllib_get(url):
         return None
 
 
+def robots_still_disallows(host):
+    """Does this host's robots.txt still shut `*` out of everything?
+
+    Fetching robots.txt is the one retrieval a crawler is always meant to make,
+    so this is not an exception to the rule above — it is the rule's own
+    mechanism. FOLLOWS REDIRECTS ON PURPOSE: www.rochesterhills.org answers
+    /robots.txt with an "Object Moved" stub pointing at its CMS host, and a
+    reader that stops there sees no rules at all and concludes the site is open.
+    That is exactly how this host was first misread.
+
+    Returns True (still shut), False (the rule has gone) or None (could not
+    tell), and None is never reported as good news.
+    """
+    for scheme in ("https", "http"):
+        try:
+            resp = requests.get("%s://%s/robots.txt" % (scheme, host), headers=HONEST_UA,
+                                timeout=HTTP_TIMEOUT, allow_redirects=True)
+        except Exception:
+            continue
+        if resp.status_code >= 400:
+            continue
+        star, disallowed = False, False
+        for raw in resp.text.splitlines():
+            line = raw.split("#", 1)[0].strip()
+            if not line or ":" not in line:
+                continue
+            field, value = (p.strip() for p in line.split(":", 1))
+            field = field.lower()
+            if field == "user-agent":
+                star = value == "*"
+            elif field == "disallow" and star and value == "/":
+                disallowed = True
+        return disallowed
+    return None
+
+
 def probe(url, resolved=None):
     """Fetch one URL. Returns a dict; never raises.
 
     state: ok | gone | blocked | unreachable | root-redirect
     """
     host = host_of(url)
+    # BEFORE ANY REQUEST FOR THIS URL, and before DNS: a host that asked us not
+    # to come is not probed at all. Only its robots.txt is read, to notice the
+    # day the request is withdrawn.
+    declined = ROBOTS_DECLINED.get(host) or ROBOTS_DECLINED.get("www." + host) \
+        or ROBOTS_DECLINED.get(host[4:] if host.startswith("www.") else host)
+    if declined:
+        still = robots_still_disallows(host)
+        return {"state": "declined", "detail": declined, "still": still}
     if resolved is None:
         resolved = resolves(host)
     ok_dns, why = resolved
@@ -1054,7 +1130,24 @@ def evaluate(cites, origin, results):
             # FAIL list has to stay short enough that someone reads it.
             rows.append((WARN if (sev == FAIL and who == PUBLISHED) else sev, url, msg, who))
 
-        if state == "ok":
+        if state == "declined":
+            still = res.get("still")
+            if still is True:
+                row(OK, "NOT PROBED, and that is deliberate — this host's robots.txt "
+                        "still disallows this client and the request is honoured rather "
+                        "than worked around. %s. Cited at %s" % (detail, where))
+            elif still is False:
+                row(WARN,
+                    "this host's robots.txt NO LONGER disallows `*` — the request this "
+                    "checker has been honouring appears to have been withdrawn. Re-read "
+                    "it, and if it is really gone drop %s from ROBOTS_DECLINED so the "
+                    "link is checked again (and reconsider any roster gap recorded "
+                    "against it). Recorded: %s. Cited at %s" % (host, detail, where))
+            else:
+                row(OK, "NOT PROBED (robots.txt declined) and its robots.txt could not "
+                        "be re-read this run, so the recorded request stands. %s"
+                        % detail)
+        elif state == "ok":
             if expected:
                 row(WARN,
                     "REACHABLE again (%s) — the recorded block on %s appears to have "
@@ -1144,6 +1237,13 @@ def check_expected_list_still_earned(cites, rows):
             rows.append((WARN, host,
                          "listed in EXPECTED_UNREACHABLE but the app no longer cites any URL "
                          "on this host — delete the entry. Recorded block: %s" % reason,
+                         AUTHORED))
+    for host, reason in sorted(ROBOTS_DECLINED.items()):
+        bare = host[4:] if host.startswith("www.") else host
+        if host not in cited_hosts and bare not in cited_hosts:
+            rows.append((WARN, host,
+                         "listed in ROBOTS_DECLINED but the app no longer cites any URL on "
+                         "this host — delete the entry. Recorded request: %s" % reason,
                          AUTHORED))
 
 

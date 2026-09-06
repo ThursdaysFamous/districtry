@@ -10245,8 +10245,15 @@ function initMichiganExplorer() {
             + "publishes who holds each seat on its own website, which asks "
             + "automated visitors not to read it — so this app names your "
             + "district and sends you to the city for the people in it.",
-        links: [{ label: "City Council members",
-                  url: "https://www.rochesterhills.org/government/city_council/council_members.php" }]
+        // THE BARE ORIGIN, AND THE PATH IS OMITTED ON PURPOSE. A reader
+        // following a link is not a crawler, so linking a site that asks
+        // crawlers away is fine — but every deeper path this project knows for
+        // this host was learned from a fetch it should not have made, so none
+        // of them is a path anyone here may cite. The origin needs no such
+        // knowledge. scripts/validate_card_links.py carries the host in
+        // ROBOTS_DECLINED so its monthly sweep never requests even this.
+        links: [{ label: "City of Rochester Hills",
+                  url: "https://www.rochesterhills.org/" }]
       }));
       wrap.appendChild(renderFieldStack([
         { label: "District", value: result.ward ? String(result.ward) : "Unknown",
@@ -10260,8 +10267,7 @@ function initMichiganExplorer() {
       return wrap;
     },
     primaryLink: function () {
-      return { label: "Rochester Hills City Council",
-               url: "https://www.rochesterhills.org/government/city_council/index.php" };
+      return { label: "City of Rochester Hills", url: "https://www.rochesterhills.org/" };
     }
   };
 
