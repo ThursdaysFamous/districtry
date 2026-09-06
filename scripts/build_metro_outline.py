@@ -804,6 +804,28 @@ STATE_FIPS = "17"
 # counties served only through a circuit-keyed layer (the judicial-subcircuit
 # secondary counties), which have no dispatch entry of their own.
 DISPATCH_COUNTY_FIPS = {
+    # TWELVE COUNTIES THAT MOVE FROM THE CARD/JUDICIAL TIER TO THE DISPATCH
+    # TIER, 2026-09-06, WITHOUT THE RING MOVING. Each was already served —
+    # nine through the at-large County card, Jersey through a judicial circuit
+    # — so each is already in METRO_COUNTY_FIPS and already has an anchor; what
+    # changes is that each now has a county-DISPATCHED layer, its library
+    # districts, which is what this table means. Greene made the same kind of
+    # tier move in the other direction on 2026-08-08 without touching the ring
+    # or an anchor. validate_index.py fails if a county gains a dispatch entry
+    # and is not listed here, which is how these twelve were found: the entries
+    # were added first and the gate refused them.
+    "alexander": "003",
+    "bond": "005",
+    "brown": "009",
+    "edwards": "047",
+    "jersey": "083",
+    "massac": "127",
+    "pike": "149",
+    "putnam": "155",
+    "saline": "165",
+    "union": "181",
+    "wabash": "185",
+    "williamson": "199",
     "hardin": "069",
     "pulaski": "153",
     "gallatin": "059",

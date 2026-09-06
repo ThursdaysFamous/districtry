@@ -2240,6 +2240,461 @@
         "min_features": 27,
         "max_features": 27,
         "note": "Wayne County's 27 voting precincts — the Census 2020 voting districts, which ARE the county's own fabric and are measured to be: the names match the county's own 27/27 (one spelling aliased, Massillon/Massilon) and their POP100 sums to its exact 2020 population of 16,179. Bounds are an EQUALITY because the fabric is the county's whole precinct list. Each feature carries its census GEOID, POP100 and its County Board district, which is whole-precinct — no precinct is split between districts. NO POLLING PLACE ships: nothing the county publishes pairs its precincts with buildings as data (the Calhoun rule; scripts/build_wayne_boundaries.py)."
+      },
+      {
+        "file": "alexander-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 3,
+        "max_features": 3,
+        "note": "Alexander County's 3 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "bond-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 3,
+        "max_features": 3,
+        "note": "Bond County's 3 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "brown-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 5,
+        "max_features": 5,
+        "note": "Brown County's 5 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "calhoun-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Calhoun County's 1 library service area, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "cass-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 6,
+        "max_features": 6,
+        "note": "Cass County's 6 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "clark-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 5,
+        "max_features": 5,
+        "note": "Clark County's 5 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, District (contracting), Township. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "clay-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Clay County's 1 library service area, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "clinton-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 7,
+        "max_features": 7,
+        "note": "Clinton County's 7 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, Village. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "coles-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 5,
+        "max_features": 5,
+        "note": "Coles County's 5 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, Township. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "crawford-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 5,
+        "max_features": 5,
+        "note": "Crawford County's 5 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "cumberland-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 4,
+        "max_features": 4,
+        "note": "Cumberland County's 4 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: District, Township. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "dewitt-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 11,
+        "max_features": 11,
+        "note": "De Witt County's 11 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, Township. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "douglas-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 6,
+        "max_features": 6,
+        "note": "Douglas County's 6 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "edgar-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 8,
+        "max_features": 8,
+        "note": "Edgar County's 8 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, District (contracting), Township. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "edwards-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 3,
+        "max_features": 3,
+        "note": "Edwards County's 3 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, Village. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "franklin-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 9,
+        "max_features": 9,
+        "note": "Franklin County's 9 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "fulton-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 14,
+        "max_features": 14,
+        "note": "Fulton County's 14 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, Village. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "gallatin-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 4,
+        "max_features": 4,
+        "note": "Gallatin County's 4 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "greene-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 4,
+        "max_features": 4,
+        "note": "Greene County's 4 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, Township. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "hamilton-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 6,
+        "max_features": 6,
+        "note": "Hamilton County's 6 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, Village. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "hancock-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 10,
+        "max_features": 10,
+        "note": "Hancock County's 10 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "hardin-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Hardin County's 1 library service area, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "henry-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 20,
+        "max_features": 20,
+        "note": "Henry County's 20 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, District (contracting), Township. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "iroquois-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 12,
+        "max_features": 12,
+        "note": "Iroquois County's 12 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, Township, Village. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "jackson-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 5,
+        "max_features": 5,
+        "note": "Jackson County's 5 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "jefferson-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 4,
+        "max_features": 4,
+        "note": "Jefferson County's 4 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "jersey-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 4,
+        "max_features": 4,
+        "note": "Jersey County's 4 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "jo-daviess-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 9,
+        "max_features": 9,
+        "note": "Jo Daviess County's 9 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: District, Township. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "johnson-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 3,
+        "max_features": 3,
+        "note": "Johnson County's 3 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "knox-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 16,
+        "max_features": 16,
+        "note": "Knox County's 16 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, Township. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "lasalle-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 19,
+        "max_features": 19,
+        "note": "LaSalle County's 19 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "livingston-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 14,
+        "max_features": 14,
+        "note": "Livingston County's 14 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, Township. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "logan-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 11,
+        "max_features": 11,
+        "note": "Logan County's 11 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "marshall-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 10,
+        "max_features": 10,
+        "note": "Marshall County's 10 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "mason-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 4,
+        "max_features": 4,
+        "note": "Mason County's 4 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "massac-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Massac County's 1 library service area, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "mcdonough-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 9,
+        "max_features": 9,
+        "note": "McDonough County's 9 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "mclean-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 23,
+        "max_features": 23,
+        "note": "McLean County's 23 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, District (contracting), Town, Township. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "menard-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 6,
+        "max_features": 6,
+        "note": "Menard County's 6 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "mercer-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 9,
+        "max_features": 9,
+        "note": "Mercer County's 9 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: District, District (contracting). The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "monroe-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 5,
+        "max_features": 5,
+        "note": "Monroe County's 5 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "montgomery-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 11,
+        "max_features": 11,
+        "note": "Montgomery County's 11 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: District, Township. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "morgan-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 6,
+        "max_features": 6,
+        "note": "Morgan County's 6 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "moultrie-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 7,
+        "max_features": 7,
+        "note": "Moultrie County's 7 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "ogle-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 13,
+        "max_features": 13,
+        "note": "Ogle County's 13 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, Township, Village. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "perry-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 6,
+        "max_features": 6,
+        "note": "Perry County's 6 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, Village. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "pike-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 5,
+        "max_features": 5,
+        "note": "Pike County's 5 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "pulaski-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 5,
+        "max_features": 5,
+        "note": "Pulaski County's 5 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, Village. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "putnam-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 5,
+        "max_features": 5,
+        "note": "Putnam County's 5 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, Township. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "richland-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 2,
+        "max_features": 2,
+        "note": "Richland County's 2 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "saline-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 6,
+        "max_features": 6,
+        "note": "Saline County's 6 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "schuyler-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 6,
+        "max_features": 6,
+        "note": "Schuyler County's 6 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "scott-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 4,
+        "max_features": 4,
+        "note": "Scott County's 4 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, Village. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "shelby-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 10,
+        "max_features": 10,
+        "note": "Shelby County's 10 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, Township. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "tazewell-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 18,
+        "max_features": 18,
+        "note": "Tazewell County's 18 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, Township, Village (contracting). The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "union-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 3,
+        "max_features": 3,
+        "note": "Union County's 3 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "vermilion-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 11,
+        "max_features": 11,
+        "note": "Vermilion County's 11 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, Township. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "wabash-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 3,
+        "max_features": 3,
+        "note": "Wabash County's 3 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "warren-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 5,
+        "max_features": 5,
+        "note": "Warren County's 5 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: District, Village. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "washington-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 6,
+        "max_features": 6,
+        "note": "Washington County's 6 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, Village. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "wayne-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 3,
+        "max_features": 3,
+        "note": "Wayne County's 3 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, Village. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "white-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 3,
+        "max_features": 3,
+        "note": "White County's 3 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "whiteside-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 11,
+        "max_features": 11,
+        "note": "Whiteside County's 11 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District, Township. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "williamson-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 9,
+        "max_features": 9,
+        "note": "Williamson County's 9 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
+      },
+      {
+        "file": "winnebago-library-districts.json",
+        "dynamic_reference": true,
+        "min_features": 9,
+        "max_features": 9,
+        "note": "Winnebago County's 9 library service areas, clipped to the county from the statewide Illinois Broadband Office / Connected Nation layer by scripts/build_statewide_library_districts.py. Governance: City, District. The source, its licence and the on-card disclosure are argued once on carroll-library-districts.json. One of the 65 counties added 2026-09-06 to close library-districts-unmapped-counties; these carry no hand-verified probe points and are gated instead by the builder's statewide PLACE WITNESS. The count is exact because the builder is the only writer: it refuses to write fewer than ship today, and a library the publisher ADDS is meant to fail here so a human looks."
       }
     ],
     "rosters": [
@@ -2644,7 +3099,7 @@
       {
         "file": "il-county-board-offices.json",
         "min_keys": 2,
-        "note": "County board OFFICE ADDRESSES for the 33 districted counties whose own roster publishes none — the location row the fleet's card order asks for and the instance's largest card-order gap (county-board-office-addresses) was skipping on fifty of sixty-three cards. Each address is from ISBE's County Officers Book, published on the board chair's own row and emitted ONLY where a second courthouse office on the same county page prints the same street and city, so what ships is a shared public building and never anyone's home (the Madison/Peoria rule). THE SAME DOCUMENT'S CHAIR NAME COLUMN IS READ NOWHERE IN THIS APP and must stay that way — it is 29% wrong against the counties whose boards ship from their own sources — which is why the address column carries its own standing proof: build_county_board_offices.py re-runs the agreement test against every county that publishes its own board address (7 of 7 today) and refuses to write on any disagreement. A county that publishes its own address is excluded from this file, so its publication can never be overwritten; the card names the source and the document's date on the row."
+        "note": "County board OFFICE ADDRESSES for the 33 districted counties whose own roster publishes none — the location row the fleet's card order asks for and the instance's largest card-order gap (county-board-office-addresses) was skipping on fifty of sixty-three cards. Each address is from ISBE's County Officers Book, published on the board chair's own row and emitted ONLY where a second courthouse office on the same county page prints the same street and city, so what ships is a shared public building and never anyone's home (the Madison/Peoria rule). THE SAME DOCUMENT'S CHAIR NAME COLUMN IS READ NOWHERE IN THIS APP and must stay that way — its disagreement rate with the counties' own rosters was 16 of the 56 counties then comparable (29%) when measured 2026-08-20, and 23 of 75 (30.7%) on a fresh rebuild 2026-09-06; it moves because the COMPARABLE SET grows as counties ship rosters, not because the document decays, so quote it with its date. The address column is a different column with a different failure mode — a chair turns over every cycle, a courthouse does not move — which is why it carries its own standing proof: build_county_board_offices.py re-runs the agreement test against every county that publishes its own board address (7 of 7 today) and refuses to write on any disagreement. THE REAL FLOOR ON THIS FILE IS MIN_OFFICES = 30 IN THAT BUILDER, not min_keys below: the top level holds exactly two keys, `note` and `offices`, so min_keys 2 asserts the file has a shape and nothing about how many counties are in it. A county that publishes its own address is excluded from this file, so its publication can never be overwritten; the card names the source and the document's date on the row."
       }
     ]
   },

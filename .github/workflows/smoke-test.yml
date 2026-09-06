@@ -156,12 +156,21 @@ jobs:
 
       # Illinois's shared board-office fallback. 33 districted board cards name
       # an office only because the state's County Officers Book does, and that
-      # document's OTHER column — the chair's name — is 29% wrong, so the file
-      # is licensed by measurement rather than by the publisher's standing: the
-      # builder re-runs the corroboration on every build and REFUSES to write
-      # if the state's address disagrees with any county that publishes its
-      # own. This is the drift gate for both halves — a stale file, or that
-      # agreement thinning out. Stdlib only.
+      # document's OTHER column — the chair's name — disagrees with the
+      # counties' own rosters at 23 of 75 comparable (30.7%, 2026-09-06), so
+      # the file is licensed by measurement rather than by the publisher's
+      # standing.
+      #
+      # WHAT --check ACTUALLY RE-RUNS IS THE AGREEMENT TEST AGAINST A FROZEN
+      # SNAPSHOT, not a re-reading of ISBE: the document is a committed file
+      # (il/data/source/isbe-county-board-chairs.json) and nothing here fetches
+      # it. So this does not catch ISBE changing. What it DOES catch is the
+      # other side moving, which is the side that moves weekly: a county board
+      # roster refresh that gives a county its OWN published address, or edits
+      # one it already had, turns an agreement into a disagreement or an
+      # overlap — and the builder then refuses to write, which fails here.
+      # Sixty roster workflows open bot PRs into this gate, so that is the
+      # realistic failure and it is the one worth guarding. Stdlib only.
       - name: Shared board-office addresses still corroborated
         run: python3 scripts/build_county_board_offices.py --check
 

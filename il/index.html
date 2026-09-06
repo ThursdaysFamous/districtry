@@ -14311,6 +14311,61 @@ function initChiExplorer() {
   // referenced by index.html, and a concatenated path is invisible to it — so
   // six lines of boilerplate keep a real gate working instead of six worksheet
   // entries opting out of it.
+  /* ---------- ONE COVERAGE TEST AND ONE LOADER, BUILT FROM A SLUG.
+   *
+   * Seventy-one counties take their library boundaries from the statewide
+   * layer, and the per-county shape they need is four lines that differ only
+   * in a noun:
+   *
+   *     var loadXCountyOutline = makeCached(function () { ...x-county-outline... });
+   *     function xCountyCoverage(point) { ...loadXCountyOutline()... }
+   *     var loadXLibraries = makeCached(function () { ...x-library-districts... });
+   *
+   * Written out that would be ~280 lines of boilerplate for the sixty-five
+   * counties added on 2026-09-06. Both files follow a naming CONTRACT that
+   * already exists — `<slug>-county-outline.json` is the same convention the
+   * gaps panel resolves against, and every one of Illinois's 102 outlines
+   * ships — so the slug is genuinely all the information there is.
+   *
+   * WHAT IS DELIBERATELY *NOT* GENERATED IS THE `key:` LITERAL. Each dispatch
+   * entry still spells `key: "<slug>"` out, because scripts/build_county_status.py
+   * and scripts/validate_index.py both read those keys with a regex over the
+   * registerCountyLayer body; a key that arrived from a loop variable would
+   * drop sixty-five counties out of the generated status table with every gate
+   * still green. That warning is already written above statewideLibraryEntry
+   * and it is the reason these are factories for the two VALUES rather than a
+   * loop over the whole table.
+   *
+   * The gaps panel keeps its own outline cache inside wireCoverageGaps. That
+   * duplication is real and is left alone on purpose: hoisting it would mean
+   * editing an ENGINE fence and porting the change to five other instances for
+   * no reader-visible gain. ------------------------------------------------ */
+  var countyOutlineLoaders = {};
+  function loadCountyOutlineFor(slug) {
+    if (!countyOutlineLoaders[slug]) {
+      countyOutlineLoaders[slug] = makeCached(function () {
+        return fetchJSONWithRetry("data/app/" + slug + "-county-outline.json", {}, 2);
+      });
+    }
+    return countyOutlineLoaders[slug]();
+  }
+  function countyOutlineCoverage(slug) {
+    return function (point) {
+      return loadCountyOutlineFor(slug).then(function (geojson) {
+        return !!findFeatureContaining(geojson, point);
+      });
+    };
+  }
+  var countyLibraryLoaders = {};
+  function countyLibraryLoader(slug) {
+    if (!countyLibraryLoaders[slug]) {
+      countyLibraryLoaders[slug] = makeCached(function () {
+        return fetchJSONWithRetry("data/app/" + slug + "-library-districts.json", {}, 2);
+      });
+    }
+    return countyLibraryLoaders[slug];
+  }
+
   var loadCarrollLibraries = makeCached(function () {
     return fetchJSONWithRetry("data/app/carroll-library-districts.json", {}, 2);
   });
@@ -14339,10 +14394,18 @@ function initChiExplorer() {
   // swallowed the key would quietly drop six counties out of the generated
   // status page while every gate stayed green.
   function statewideLibraryEntry(opts) {
+    // THE SLUG IS WRITTEN ONCE. Both the county outline and the library file
+    // are named after the same key by contract, so an entry that repeated it
+    // three times — key, coverage, loader — would let two of them disagree,
+    // and nothing would catch it: these files are resolved at RUNTIME from a
+    // string, so validate_index.py exempts them from its reference check (the
+    // dynamic_reference flag) and a typo'd slug would be a 404 in one county
+    // that every gate passes. The seven counties written before this helper
+    // gained defaults still pass their own hand-written pair.
     return polygonCountyEntry({
       key: opts.key,
-      coverage: opts.coverage,
-      loader: opts.loader,
+      coverage: opts.coverage || countyOutlineCoverage(opts.key),
+      loader: opts.loader || countyLibraryLoader(opts.key),
       snapFeet: PARCEL_FABRIC_SNAP_FT,
       fields: [
         { name: "name", label: "Library", keys: ["library"], primary: true },
@@ -24327,7 +24390,95 @@ function initChiExplorer() {
           { name: "name", label: "Library District", keys: ["name"], primary: true },
           { label: "County", value: "Effingham County" }
         ]
-      })
+      }),
+      /* ---------- THE OTHER SIXTY-FIVE, added 2026-09-06.
+       *
+       * Same source, same card, same credit as the seven above: the statewide
+       * layer, with the publisher named on every card because a reader is
+       * entitled to know the line was drawn by a broadband planner rather than
+       * filed by the library.
+       *
+       * These close `library-districts-unmapped-counties`, which recorded that
+       * 65 of the 91 counties this app serves showed no library district at
+       * all. The route had been measured since 2026-09-05 and what was missing
+       * was a decision, not a source: 65 county-scoped files a reader loads one
+       * of, or one 2.35 MB statewide file every reader loads whole. The files
+       * are 3-80 KB each and only the county you clicked is fetched.
+       *
+       * They carry no hand-verified probe points, and that is deliberate — 130
+       * probes nobody actually checked would be guesses wearing a gate's
+       * clothes. They lean instead on the PLACE WITNESS in
+       * scripts/build_statewide_library_districts.py, which checks 236 of the
+       * layer's polygons against Census 2020 geography and, unlike a probe,
+       * discriminates in both directions: municipal libraries match their own
+       * municipality at a median IoU of 0.968 while library DISTRICTS match at
+       * 0.056, so the layer is not quietly redrawing municipalities.
+       * ------------------------------------------------------------------ */
+      statewideLibraryEntry({ key: "alexander", county: "Alexander County" }),
+      statewideLibraryEntry({ key: "bond", county: "Bond County" }),
+      statewideLibraryEntry({ key: "brown", county: "Brown County" }),
+      statewideLibraryEntry({ key: "calhoun", county: "Calhoun County" }),
+      statewideLibraryEntry({ key: "cass", county: "Cass County" }),
+      statewideLibraryEntry({ key: "clark", county: "Clark County" }),
+      statewideLibraryEntry({ key: "clay", county: "Clay County" }),
+      statewideLibraryEntry({ key: "clinton", county: "Clinton County" }),
+      statewideLibraryEntry({ key: "coles", county: "Coles County" }),
+      statewideLibraryEntry({ key: "crawford", county: "Crawford County" }),
+      statewideLibraryEntry({ key: "cumberland", county: "Cumberland County" }),
+      statewideLibraryEntry({ key: "dewitt", county: "De Witt County" }),
+      statewideLibraryEntry({ key: "douglas", county: "Douglas County" }),
+      statewideLibraryEntry({ key: "edgar", county: "Edgar County" }),
+      statewideLibraryEntry({ key: "edwards", county: "Edwards County" }),
+      statewideLibraryEntry({ key: "franklin", county: "Franklin County" }),
+      statewideLibraryEntry({ key: "fulton", county: "Fulton County" }),
+      statewideLibraryEntry({ key: "gallatin", county: "Gallatin County" }),
+      statewideLibraryEntry({ key: "greene", county: "Greene County" }),
+      statewideLibraryEntry({ key: "hamilton", county: "Hamilton County" }),
+      statewideLibraryEntry({ key: "hancock", county: "Hancock County" }),
+      statewideLibraryEntry({ key: "hardin", county: "Hardin County" }),
+      statewideLibraryEntry({ key: "henry", county: "Henry County" }),
+      statewideLibraryEntry({ key: "iroquois", county: "Iroquois County" }),
+      statewideLibraryEntry({ key: "jackson", county: "Jackson County" }),
+      statewideLibraryEntry({ key: "jefferson", county: "Jefferson County" }),
+      statewideLibraryEntry({ key: "jersey", county: "Jersey County" }),
+      statewideLibraryEntry({ key: "jo-daviess", county: "Jo Daviess County" }),
+      statewideLibraryEntry({ key: "johnson", county: "Johnson County" }),
+      statewideLibraryEntry({ key: "knox", county: "Knox County" }),
+      statewideLibraryEntry({ key: "lasalle", county: "LaSalle County" }),
+      statewideLibraryEntry({ key: "livingston", county: "Livingston County" }),
+      statewideLibraryEntry({ key: "logan", county: "Logan County" }),
+      statewideLibraryEntry({ key: "marshall", county: "Marshall County" }),
+      statewideLibraryEntry({ key: "mason", county: "Mason County" }),
+      statewideLibraryEntry({ key: "massac", county: "Massac County" }),
+      statewideLibraryEntry({ key: "mcdonough", county: "McDonough County" }),
+      statewideLibraryEntry({ key: "mclean", county: "McLean County" }),
+      statewideLibraryEntry({ key: "menard", county: "Menard County" }),
+      statewideLibraryEntry({ key: "mercer", county: "Mercer County" }),
+      statewideLibraryEntry({ key: "monroe", county: "Monroe County" }),
+      statewideLibraryEntry({ key: "montgomery", county: "Montgomery County" }),
+      statewideLibraryEntry({ key: "morgan", county: "Morgan County" }),
+      statewideLibraryEntry({ key: "moultrie", county: "Moultrie County" }),
+      statewideLibraryEntry({ key: "ogle", county: "Ogle County" }),
+      statewideLibraryEntry({ key: "perry", county: "Perry County" }),
+      statewideLibraryEntry({ key: "pike", county: "Pike County" }),
+      statewideLibraryEntry({ key: "pulaski", county: "Pulaski County" }),
+      statewideLibraryEntry({ key: "putnam", county: "Putnam County" }),
+      statewideLibraryEntry({ key: "richland", county: "Richland County" }),
+      statewideLibraryEntry({ key: "saline", county: "Saline County" }),
+      statewideLibraryEntry({ key: "schuyler", county: "Schuyler County" }),
+      statewideLibraryEntry({ key: "scott", county: "Scott County" }),
+      statewideLibraryEntry({ key: "shelby", county: "Shelby County" }),
+      statewideLibraryEntry({ key: "tazewell", county: "Tazewell County" }),
+      statewideLibraryEntry({ key: "union", county: "Union County" }),
+      statewideLibraryEntry({ key: "vermilion", county: "Vermilion County" }),
+      statewideLibraryEntry({ key: "wabash", county: "Wabash County" }),
+      statewideLibraryEntry({ key: "warren", county: "Warren County" }),
+      statewideLibraryEntry({ key: "washington", county: "Washington County" }),
+      statewideLibraryEntry({ key: "wayne", county: "Wayne County" }),
+      statewideLibraryEntry({ key: "white", county: "White County" }),
+      statewideLibraryEntry({ key: "whiteside", county: "Whiteside County" }),
+      statewideLibraryEntry({ key: "williamson", county: "Williamson County" }),
+      statewideLibraryEntry({ key: "winnebago", county: "Winnebago County" }),
     ]
   });
 

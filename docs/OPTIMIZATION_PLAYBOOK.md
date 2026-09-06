@@ -652,7 +652,10 @@ heuristic.
 **Explicit KEEP decisions, so the next audit reads the count instead of
 repeating the work:** the ISBE pair (`isbe_county_officers_scraper.py` +
 `build_county_board_chairs.py`) is a reproducible negative measurement — its
-output is proof ISBE's chair data is 29% wrong, "kept reproducible so the
+output is proof ISBE's chair data is substantially wrong (16 of 56 comparable,
+29%, on 2026-08-20; 23 of 75, 30.7%, on a fresh 2026-09-06 rebuild — the
+denominator grows as counties ship rosters, so the figure is quoted with its
+date), "kept reproducible so the
 claim can be re-tested rather than re-argued" — and is not dead code;
 `build_og_image.mjs` belongs to the districtry
 product track and is allowed-stale by its own design (`build_districtry_preview.py`
