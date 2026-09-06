@@ -9527,6 +9527,9 @@ function initMichiganExplorer() {
   var loadGrandRapidsRoster = makeCached(function () {
     return fetchJSONWithRetry("data/app/mi-grand-rapids-council-members.json", {}, 2);
   });
+  var loadWarrenWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-warren-wards.json", {}, 2);
+  });
 
   function detroitCoverage(point) {
     // The districts tile the city exactly (the builder asserts the population
@@ -9779,6 +9782,57 @@ function initMichiganExplorer() {
     }
   };
 
+  function warrenCoverage(point) {
+    // Warren's five wards tile the city EXACTLY — the builder measures the
+    // wards' Census 2020 population against the Census place's and gets the
+    // same number with zero blocks on the wrong side, the Detroit identity
+    // rather than Grand Rapids's bounded edge disagreement. A load failure
+    // rejects to the engine's fail-open.
+    return loadWarrenWards().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
+
+  // WARREN NAMES NO COUNCIL MEMBERS HERE, and that is the honesty floor rather
+  // than an oversight: the city's council page publishes meeting documents and
+  // no member roster, so the card names your ward and links the Council itself
+  // instead of inventing a name. Recorded as gap `warren-council-roster`.
+  var warrenEntry = {
+    key: "warren",
+    label: "Warren",
+    coverage: warrenCoverage,
+    loadGeometry: loadWarrenWards,
+    hoverName: function (feature) {
+      var v = findPropCI(feature.properties || {}, ["ward"]);
+      return (v == null || v === "") ? null : "Ward " + String(v);
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadWarrenWards, point).then(function (feature) {
+        if (!feature) return null;
+        return {
+          seq: seq,
+          ward: findPropCI(feature.properties || {}, ["ward"])
+        };
+      });
+    },
+    cardIdentifier: function (result) {
+      return result.ward ? "Ward " + String(result.ward) : "Unknown ward";
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderLinkRow({
+        title: result.ward ? "Ward " + String(result.ward) : "Warren City Council",
+        note: "Warren elects one council member from each of five wards. The city "
+            + "publishes its ward map but no list of who holds each seat, so this "
+            + "app names your ward and not your member."
+      }));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Warren City Council", url: "https://www.cityofwarren.org/city-council/" };
+    }
+  };
+
   registerCountyLayer({
     id: "city-ward",
     group: "political",
@@ -9790,10 +9844,11 @@ function initMichiganExplorer() {
     // Commissioner". The toggle names the concept; the card names the thing.
     label: "City Council District",
     style: { color: "#0F5C8C", weight: 2, fillColor: "#2E8FC4", fillOpacity: 0.06 },
-    // DETROIT FIRST: §3.1 says to order the table so the cheapest
-    // already-cached coverage test short-circuits the OR. Detroit is far the
-    // larger city and the one most selections land in.
-    entries: [detroitEntry, grandRapidsEntry]
+    // ORDERED BY POPULATION: §3.1 says to order the table so the cheapest
+    // already-cached coverage test short-circuits the OR, and the city most
+    // selections land in should be tried first. Detroit, then Warren, then
+    // Grand Rapids.
+    entries: [detroitEntry, warrenEntry, grandRapidsEntry]
   });
 
 
