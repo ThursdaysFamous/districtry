@@ -1441,6 +1441,19 @@ the two overlap Part 5 is the shorter statement of the same rule.
   records, one per parcel of land … it publishes the individual parcels instead of the
   combined district" — an accurate measurement and the wrong conclusion, because a dissolve
   is exactly what turns one into the other. Two shapes, easiest first:
+  - **A SCREENING REGEX OVER FIELD NAMES IS NOT A FIELD LIST.** Whiteside's 70-field
+    parcel layer was recorded as carrying no district or tax-code column on the strength
+    of a pattern match for `fire|librar|park|dist|code|tax`. Its tax code is `CVTTXCD` —
+    138 distinct five-digit values on 36,267 of 36,499 parcels — and it matches none of
+    those tokens, because the column is named for the civil taxing unit and abbreviates
+    "code" to `CD`. A regex is a way to rank a field list for reading, never a way to
+    conclude one is empty. Read all of it; 70 names is a screenful.
+    **THIS HAPPENED TWICE IN ONE DAY AND THE SECOND TIME WAS OVER HOSTNAMES**, which is
+    what makes it a class rather than a field-naming quirk: the same pass screened
+    Livingston's home page for `gis|arcgis|map|beacon|devnet|schneider|parcel` and reported
+    NO GIS HOST, on a page linking `livingston.illinoisassessors.com` and
+    `livingstoncountyiltax.us` — neither of which contains one of those tokens. Twenty-seven
+    hosts; print them.
   - **The parcel carries the district's NAME** (Woodford: `Fire_Prote`, `Library_Di`,
     `Park_Distr`; Grundy: one comma-separated `Districts` field listing every body a
     parcel pays into). Nothing is transcribed and nothing is hand-mapped — dissolve the
@@ -1463,6 +1476,22 @@ the two overlap Part 5 is the shorter statement of the same rule.
   not its column's own value must declare `out_prop`. Woodford shipped under `Fire_Prote`
   while the app read `district`; every static gate passed, every card rendered, and every
   district name read "Unknown" — caught only by looking at it in a browser.
+  **When only the NARROWER document exists, test it against itself.** Boone's build takes
+  its code sets from the Clerk's *Taxcode Value within District Report* because her
+  *District Rates by Taxcode Report* is a rate list, not a membership list — read as one it
+  omitted twelve of Boone's codes on 956 parcels. Whiteside publishes only the rates
+  report, and a county that publishes only the narrower document is not automatically shut:
+  that document has an internal arithmetic. Each tax-code block prints every levying
+  district's rate and then the code's own total, so a district omitted from a code leaves
+  the sum short — and Whiteside's 140 codes balance to four decimals across 1,140 rate
+  lines, 140 of 140. Rule out the one omission arithmetic cannot see, a district present at
+  0.0000, by checking whether the document prints zero-rate lines at all (Whiteside prints
+  16, over 12 districts, one of them a village). **And do not promote a check that fails.**
+  The obvious second witness here — summing the parcel layer's assessed value per district
+  against the computation report's County Total EAV — runs +12% to +32% on twenty-one
+  districts and negative on four, because a current assessed value and a tax year's
+  rate-setting EAV are different quantities. Record that it does not work, so the next
+  reader does not re-derive it and so nobody mistakes it for corroboration.
 
 - **FETCHABLE IS NOT LICENSED. Read the publisher's terms before you build, and treat
   the answer as part of "is there a source?"** This is now step zero of county research,
@@ -2198,6 +2227,42 @@ Two corollaries the same day earned:
   differently; when they disagree, one of them is a shipped bug. Audit them against each
   other on a schedule, and treat a long, confident blocker as a place to look rather than
   a reason not to.
+- **GREP THE SHIPPED APP BEFORE PROBING A HOSTNAME — the strongest form of the rule
+  above.** On 2026-09-05 two Illinois gap records were corrected in one pass, and both
+  said the same false thing: that the county's GIS host "was not identified from here".
+  Winnebago's host is `maps.wingis.org/public`, hard-coded in `il/index.html` as
+  `WINNEBAGO_GIS` and read on every visit for that county's board districts, precincts,
+  Rockford's wards and eleven municipalities' officials. Macoupin's is
+  `data.macoupincountyil.gov`, likewise read on every visit. Both records were written
+  while probing GUESSED hostnames (`gis.wincoil.gov`, `maps.wincoil.gov`) — and the rule
+  that a guessed host's failure must not be recorded as the county's is right, but it
+  stops one step short: **the host was not unknown, it was in the repo.** A gap record and
+  a loader in the same repository are two descriptions of one county.
+  **AND THE SEARCH INCLUDES THE GAP RECORDS THEMSELVES — the same change failed this rule
+  one record down while writing it.** Its Livingston entry said the county "references no
+  GIS, mapping, parcel or tax-inquiry host of ANY kind", and the SIBLING record
+  `livingston-precincts`, fourteen lines above it in the same file, had said since July
+  that the county's "only mapping product is the assessment office's mail-order parcel
+  program, at 10 to 20 cents per parcel". No probe was needed to know better; a `grep -n
+  livingston` would have done it. A county's own gap records are written at different
+  times by different passes asking different questions, so they are the cheapest place a
+  contradiction shows up and the last place anyone looks. Before any probe, grep for the
+  county's name in: the instance's `index.html`, its `scripts/`, `validate_sources.py`,
+  **and `docs/DATA_LAYER_GUIDEBOOK.md` itself** — every record, not the one being edited.
+- **READ THE OPERATIVE LICENCE, NOT THE TERMS PAGE.** A public "Terms of Use" page and the
+  data licence a purchaser signs are different documents that answer different questions,
+  and the permissive one is the one a probe finds first. WinGIS's `/Terms` carries no
+  redistribution clause at all — a no-warranty clause, a limitation of liability, and a
+  credits requirement — and reading it alone produced the conclusion that Winnebago was
+  freely licensable. Its Data License Agreement, a PDF linked from its /GISData page and NOT from
+  /Terms (which carries no occurrence of "licens" at all), says
+  "reproduction or redistribution of digital datasets or products derived therefrom
+  outside of licensee's organization or entity is expressly forbidden" — WORD FOR WORD the
+  clause that stopped Bureau, and the same class as the CCGISC licence that withdrew
+  Champaign and Piatt. The same mistake was made on Grundy the same week in the other
+  direction: the fee schedule was recorded from its parcel line while the line above it
+  priced "Individual Boundary Data of Taxing Bodies". **Find the document that binds, quote
+  the clause, and note which document you did NOT read.**
 - **The ask is a route, not a last resort.** Put it in the ladder beside the technical
   probes. Its cost is one e-mail; its yield in this fleet includes a statewide polling
   file, a licence-gated county's written permission, several precinct tables no county

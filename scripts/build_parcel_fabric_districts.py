@@ -190,6 +190,183 @@ for _code in ("05009", "07005"):
 for _code in ("03004", "03007", "03011", "05008"):
     BOONE_LIBRARY_CODES[_code] = NORTH_SUBURBAN_LIBRARY
 
+# --- Grundy -------------------------------------------------------------
+# The THIRD shape a parcel fabric comes in, after Woodford's one-column-per-
+# concept and Boone's bare tax code: Grundy publishes ONE `Districts` column
+# per parcel listing EVERY taxing body it pays into, comma-separated —
+# "CITY OF MORRIS, COUNTY, JOLIET JR COLL 525, MORRIS AREA LIBRARY, MORRIS FIRE
+# AND AMBUL, MORRIS GRADE 54, MORRIS HIGH 101, MORRIS TWP". 116 distinct bodies
+# across 27,661 parcels; three of the concepts this app maps are in there.
+#
+# THE SERVICE DOES NOT PAGE (`supportsPagination: false`, and a resultOffset
+# query is refused outright with "Pagination is not supported"), which is safe
+# only because maxRecordCount is 50,000 against 27,661 rows. The row pin below
+# is what keeps that true: if the roll ever passes the cap, the count check
+# fails rather than the fetch silently truncating.
+GRUNDY_PARCELS = ("https://maps.grundyco.org/arcgis/rest/services/CountyWebsiteMaps/"
+                  "CountyParcelsBaseLayer_ParcelFabric_SPIE/MapServer/0")
+GRUNDY_DISTRICTS_COL = ("GrundyParcels.dbo.GISParcelsJoinedDistrictCodes_"
+                        "SingleField.Districts")
+
+# THE TERMS QUESTION, ASKED AFTER THE BUILD RATHER THAN BEFORE IT, which is the
+# wrong order: EXPANSION_GUIDE §3.5.1 makes reading the publisher's terms step
+# ZERO of county research, ahead of every technical probe, and this build did
+# not. Asked afterwards (2026-09-05) the answer is genuinely ambiguous rather
+# than obviously fine, so it is recorded here and put to the county rather than
+# resolved by this script in either direction (docs/ASK_DRAFTS.md Ask 18,
+# DRAFTED and HELD):
+#   - the county SELLS BOTH OF THE THINGS THIS BUILD PRODUCES. Its GIS Data
+#     Request page publishes a fee schedule with a "Tax Parcel Data" line
+#     ($0.35 per parcel, real-estate information built in at $0.10 of that,
+#     plus a $100 processing and handling fee, ordered by section, township,
+#     full county or custom area) AND a "Government Boundary Data" line reading
+#     "Individual Boundary Data of Taxing Bodies $100.00". This build bulk-read
+#     27,661 parcels and dissolved taxing-body boundaries — the two priced
+#     products. Cheques are payable to the Grundy County GIS Automation Fund
+#     and requests go to gisdatarequest@grundycountyil.gov;
+#   - the county ALSO runs THIS server open and unauthenticated, backing the
+#     "GIS Interactive Map" property viewer it links from its own home page. No
+#     token, no referer check, and the service's copyrightText is EMPTY;
+#   - the county's site-wide Terms of Use carry NO data clause at all — a
+#     boilerplate agreement about user submissions and acceptable use, with no
+#     redistribution or copyright assertion over GIS data.
+# So this is NOT Champaign/Piatt, whose terms expressly forbid copying, public
+# display and transfer, and NOT WinGIS, whose data is sold under a signed Data
+# License Agreement. It is a county that sells a bulk product and separately
+# publishes a resident-facing service that says nothing. Whether the fee
+# schedule reaches a derived layer built from the public service is the county's
+# to say. Contrast WOODFORD, built the same day, where the question does not
+# arise: its three items are `access: public` with empty licenceInfo and empty
+# accessInformation, and its Maps page publishes a viewer and a PDF gallery with
+# no fee schedule and no data-request form anywhere on the county site.
+
+# THE SECOND WITNESS IS THE COUNTY'S OWN TAX DISTRIBUTION LIST, and it is also
+# where the NAMES come from — the Boone division of labour, where one county
+# document owns the lines and another owns the names. The parcel column
+# abbreviates ("CHANNAHON PARK DIST", "S. WILMINGTON FIRE"); this list gives
+# each body a code and its fuller name.
+#
+# CITE IT AS WHAT IT IS. An earlier draft called it "the Clerk's certified"
+# list and neither half is supported: the document names NO OFFICE and the
+# word "certified" does not appear in it. (Woodford's witness was miscited the
+# same way in the same week — check before writing an office onto a document.)
+#
+# BOTH GRUNDY DOCUMENTS GET THE SAME TREATMENT, which an earlier draft did not
+# give them: it called the Rates by Taxcode report "the Clerk's" in the same
+# breath as saying the Distribution List names no office, and they sit on the
+# SAME PAGE. Applied here, Woodford's navigation rule does not reach an office:
+# communities/taxes.php has the H1 and title "Tax Extension" — a County Clerk
+# function in Illinois — but breadcrumbs Home > Communities > Taxes, naming no
+# department, where Woodford's page breadcrumbed to its Treasurer outright. The
+# county DOES file a sibling document under a path segment it named "County
+# Clerk/Tax Extension/" (the Rates & Extensions scan), which points at the
+# Clerk for that family; it is not these two documents' own path. So both are
+# "the county's own" here, and the Clerk evidence is recorded rather than
+# asserted.
+# The county's "Rates & Extensions" PDF would have been the obvious witness and
+# is NOT usable: all 102 pages are a scan with no text layer, and 101
+# characters extract from the whole document.
+#
+# A THIRD WITNESS EXISTS AND AN EARLIER DRAFT SAID IT DID NOT — the "Rates &
+# Extensions" scan is not the county's only rates document. GRUNDY_RATES_BY_CODE
+# below is 51 pages of TEXT giving, per tax code, every district that levies on
+# it with its code and rate. Joined to the parcels' own VPTaxCode it covers all
+# 167 tax codes the fabric uses and agrees with the fabric on EVERY fire,
+# library and park membership. That makes the composition corroborated per TAX
+# CODE and not only per district name, and it is what independently establishes
+# the MVK overlay described above.
+GRUNDY_RATES_BY_CODE = ("https://www.grundycountyil.gov/Documents/Communities/"
+                        "Taxes/District%20Rates%20By%20Tax%20Code%202025.pdf")
+GRUNDY_TAX_YEAR = 2025
+GRUNDY_REPORT = ("https://www.grundycountyil.gov/Documents/Communities/Taxes/"
+                 "Tax%20Distribution%20Listing%20with%20EAV%202025.pdf")
+
+# parcel-column name -> the county's own fuller name. Both sides are pinned: the
+# build fails if a parcel lists a body this map does not carry (it would come
+# through as a blank and miss expect_blanks=0), and the district COUNT is an
+# equality, so a name that stops appearing fails too.
+GRUNDY_FIRE = {
+    "ALLEN FIRE": "ALLEN FIRE",
+    "BRACEVILLE FIRE": "BRACEVILLE FIRE",
+    "BRAIDWOOD FIRE": "BRAIDWOOD FIRE",
+    "COAL CITY FIRE": "COAL CITY FIRE",
+    "DWIGHT FIRE": "DWIGHT FIRE",
+    "GARDNER FIRE": "GARDNER FIRE",
+    "MAZON FIRE": "MAZON FIRE",
+    "MINOOKA FIRE": "MINOOKA FIRE",
+    "MORRIS FIRE AND AMBUL": "MORRIS FIRE & AMBUL",
+    "REDDICK FIRE": "REDDICK FIRE",
+    "S. WILMINGTON FIRE": "S WILMINGTON FIRE",
+    "SENECA FIRE AND AMBUL": "SENECA FIRE PROT & AMBUL",
+    "VERONA-KINSMAN FIRE": "VERONA-KINSMAN FIRE",
+}
+# MVK RESCUE SQUAD IS DELIBERATELY NOT HERE, and the EXCLUSION IS RIGHT WHILE
+# AN EARLIER DRAFT'S REASON FOR IT WAS WRONG. That draft called it "an EMS levy
+# laid over those two and not a fourteenth district". It IS a district: the
+# county's own Appointed Local Public Entity Report names it the MAZON VERONA
+# KINSMAN RESCUE SQUAD DISTRICT, established under 70 ILCS 2005/6, with its own
+# five-trustee board appointed by the County Board Chairman and its own annual
+# property tax levy. It is excluded because a RESCUE SQUAD DISTRICT IS NOT A
+# FIRE PROTECTION DISTRICT — the same distinction the fleet draws elsewhere —
+# and the fire card must name the body that answers a fire call.
+#
+# THREE COUNTY DOCUMENTS AGREE THAT IT SITS ON TOP OF TWO FIRE DISTRICTS RATHER
+# THAN BESIDE THEM:
+#   - the parcel fabric: all 2,257 of its parcels are ALSO in Mazon (1,224) or
+#     Verona-Kinsman (1,033), summing to exactly its own total;
+#   - the county's District Rates by Taxcode report (below): twelve tax codes
+#     carry MVK, and every one of them ALSO carries a fire protection district
+#     — Mazon on seven, Verona-Kinsman on five. MVK never appears alone;
+#   - the entity report: its service description is the same "fire and EMS
+#     services to its residents and townships" as the districts it overlays.
+GRUNDY_LIBRARY = {n: n for n in (
+    "COAL CITY LIBRARY", "FOSSIL RIDGE LIBRARY", "MORRIS AREA LIBRARY",
+    "PRAIRIE CREEK LIBRARY", "SENECA LIBRARY", "THREE RIVERS LIBRARY")}
+GRUNDY_PARK = {
+    "CHANNAHON PARK DIST": "CHANNAHON PARK DISTRICT",
+    "GODLEY PARK DISTRICT": "GODLEY PARK DISTRICT",
+}
+
+# One positive probe per district. Each point is a real parcel's representative
+# point and its expected answer is that parcel's own Districts cell, read from
+# the county's table before this build ran.
+GRUNDY_FIRE_PROBES = [
+    (41.12780, -88.58314, "ALLEN FIRE"),
+    (41.23609, -88.27253, "BRACEVILLE FIRE"),
+    (41.23098, -88.24718, "BRAIDWOOD FIRE"),
+    (41.35240, -88.31806, "COAL CITY FIRE"),
+    (41.11567, -88.51916, "DWIGHT FIRE"),
+    (41.14566, -88.37007, "GARDNER FIRE"),
+    (41.18525, -88.45056, "MAZON FIRE"),
+    (41.39445, -88.31342, "MINOOKA FIRE"),
+    (41.36628, -88.35430, "MORRIS FIRE & AMBUL"),
+    (41.11570, -88.27450, "REDDICK FIRE"),
+    (41.17974, -88.25280, "S WILMINGTON FIRE"),
+    (41.41029, -88.54595, "SENECA FIRE PROT & AMBUL"),
+    (41.14112, -88.54087, "VERONA-KINSMAN FIRE"),
+]
+GRUNDY_LIBRARY_PROBES = [
+    (41.35240, -88.31806, "COAL CITY LIBRARY"),
+    (41.14840, -88.34791, "FOSSIL RIDGE LIBRARY"),
+    (41.36628, -88.35430, "MORRIS AREA LIBRARY"),
+    (41.11567, -88.51916, "PRAIRIE CREEK LIBRARY"),
+    (41.41029, -88.54595, "SENECA LIBRARY"),
+    (41.38241, -88.34018, "THREE RIVERS LIBRARY"),
+    # three fire-positive points the county puts in NO library district
+    (41.14566, -88.37007, None),   # Gardner
+    (41.18525, -88.45056, None),   # Mazon
+    (41.11570, -88.27450, None),   # Reddick
+]
+GRUNDY_PARK_PROBES = [
+    (41.39766, -88.35622, "CHANNAHON PARK DISTRICT"),
+    (41.23943, -88.25065, "GODLEY PARK DISTRICT"),
+    # only 1,779 of 27,661 parcels are in a park district; most of the county
+    # is honestly in none
+    (41.36628, -88.35430, None),   # Morris
+    (41.41029, -88.54595, None),   # Seneca
+    (41.11567, -88.51916, None),   # Dwight
+]
+
 # --- Woodford ------------------------------------------------------------
 # One 25,824-parcel fabric, published three times over under three names. Every
 # name it carries is `<CODE> - <District>`, the same form the County Clerk's
@@ -206,6 +383,16 @@ WOODFORD_CODE_RE = r"^(?P<code>[A-Z]{2}[A-Z0-9]{2}) - (?P<name>.+)$"
 # 2025, in the county's own "County Taxes" archive and linked from its Real
 # Estate Tax Information page. Re-verifying the district SET means re-reading
 # these two, not searching the county's site again.
+#
+# WHOSE DOCUMENT IT IS, ANSWERED. An earlier note said the office could not be
+# established because the archive page is titled only "County Taxes" and the
+# document names none — true of both pages read on their own, and wrong about
+# the county, because the NAVIGATION says it: the Real Estate Tax Information
+# page that links the archive breadcrumbs Home > Government > Departments >
+# TREASURER, and its "Tax Distribution" menu item is this archive
+# (Archive.aspx?AMID=44), which holds ADID=3720. So it is the Treasurer's
+# distribution archive. The document still says no such thing itself and still
+# never says "certified", so neither does any card.
 WOODFORD_TAX_YEAR = 2025
 WOODFORD_SETTLEMENT_SHEETS = "https://www.woodford-county.org/Archive.aspx?ADID=3720"
 WOODFORD_COUNTY_SUMMARY = "https://www.woodford-county.org/Archive.aspx?ADID=3719"
@@ -232,10 +419,13 @@ WOODFORD_COUNTY_SUMMARY = "https://www.woodford-county.org/Archive.aspx?ADID=371
 # resident lives inside. Measured, not inferred: all 1,230 of its parcels are
 # in the City of Minonk and all 1,230 of the city's parcels are in it. The
 # app's existing LIBRARY_GOVERNANCE wording for a city library ("levies no
-# district tax of its own") is NOT reused, because the Clerk's own 2025
-# settlement sheet shows LYMI levying $99,987.82 under a `016 - Library` fund —
-# so the note states the territory, which is what was measured, and makes no
-# claim about which body votes the levy.
+# district tax of its own") is NOT reused, because the county's own 2025
+# settlement sheet shows LYMI levying $51,791.31 on its `016 - Library` fund
+# ($99,987.82 across both of its funds) — so the note states the territory,
+# which is what was measured, and makes no claim about which body votes the
+# levy. (Both halves of that sentence were wrong in an earlier draft: it said
+# "the Clerk's", the attribution retracted fourteen lines below, and quoted the
+# two-fund total as if it were the Library line.)
 # THE FIRST VERSION OF THIS NOTE SAID "its area is exactly the city" AND THAT
 # WAS FALSE, because it was measured against the county's parcel ATTRIBUTE
 # (`Village`) and never against the county's corporate-boundary LAYER. Both
@@ -304,8 +494,198 @@ WOODFORD_PARK_PROBES = [
 ]
 
 
-def _in_clause(codes):
-    return "tax_code IN (%s)" % ", ".join("'%s'" % c for c in sorted(codes))
+# --- Whiteside ------------------------------------------------------------
+# The Boone shape, and the county that shows why the shape is worth looking for
+# twice. Its record read "no taxing district boundaries of any kind" for five
+# weeks and that was true and beside the point: Whiteside publishes both halves
+# of a dissolve and neither is a district layer.
+#
+# THE FABRIC. `Tax Parcels - Whiteside County` in the county's own ArcGIS
+# Online org (`whiteside.maps.arcgis.com`, org l0M0OC6J9QAHCiGx, item public,
+# licenseInfo EMPTY, accessInformation "Whiteside County IL GIS"), linked as
+# "GIS Maps" from the county's own home page. 36,499 parcels over 70 fields.
+# THE COLUMN IS `CVTTXCD` AND A SCREENING REGEX CANNOT FIND IT: it is named for
+# the CIVIL TAXING UNIT and abbreviates "code" to CD, so a pattern match for
+# fire|librar|park|dist|code|tax answers NONE — while the column holds a
+# five-digit TAX CODE, 138 distinct values on 36,267 of the 36,499 parcels
+# (99.4%). Its declared siblings are empty on every parcel in the county
+# (CVTTXDSCRP, SCHLTXCD, SCHLDSCRP, USECD, USEDSCRP: 0 of 36,499), so the code
+# is the whole of what the layer gives — exactly what Boone gives.
+#
+# ONE PARCEL IN THE COUNTY HAS NO SHAPE, and it is declared rather than
+# skipped: PIN 1127382016, 805 Ave D in Rock Falls, tax code 01110, assessed
+# at $53,448 — an assessment record the county has not drawn. It appears in
+# the LIBRARY and PARK sets and in no fire set, because Rock Falls's city tax
+# codes carry no fire district at all, which is the same fact the three
+# negative fire probes below test. 232 further parcels carry no CVTTXCD and
+# never enter a where clause, so they are holes by construction and printed
+# on every run.
+#
+# THE CROSSWALK, AND THE ONE WAY THIS COUNTY IS RISKIER THAN BOONE. Boone's
+# build takes its code sets from the Clerk's "Taxcode Value within District
+# Report" and warns in this very file that her "District Rates by Taxcode
+# Report" is the NARROWER document — read as a membership list it omitted
+# twelve of Boone's codes on 956 parcels. WHITESIDE PUBLISHES ONLY THE RATES
+# REPORT. Its Clerk's "Tax Computation & District Rate Information" page
+# carries exactly two documents per tax year, ten years deep, and neither is a
+# value-within-district report.
+#
+# SO THE COMPLETENESS OF THE MEMBERSHIP LIST IS TESTED RATHER THAN ASSUMED, and
+# the report tests itself. Every tax-code block prints each levying district's
+# rate and then its own "Totals for <code> <rate>" line. SPLIT ON THAT
+# TERMINATOR AND NEVER ON THE BLOCK HEADER: the header form (`NNNNN - `) is
+# lost at page breaks for twelve of the 140 codes, so a header split yields 128
+# and manufactures a ten-code shortfall against the parcel layer's 138 that is
+# a parse artefact and not a gap in the county's document. Split on the
+# terminator and all 138 parcel codes are present, with two the report carries
+# that no parcel does (00923, 01111). A district omitted
+# from a code would leave that arithmetic short. ALL 140 TAX CODES BALANCE TO
+# FOUR DECIMALS across 1,140 district rate lines, 140 of 140. And the omission
+# mechanism that would evade an arithmetic test — a district present at a rate
+# of exactly 0.0000 — is ruled out by the document's own behaviour: it PRINTS
+# 16 zero-rate lines over 12 districts, including a VILLAGE (VDGR - Deer Grove
+# Village), rather than suppressing them.
+#
+# A CODE THE REPORT DOES NOT CARRY WOULD READ AS "NO DISTRICT" AND MUST NOT.
+# `code_map` skips an unmapped value silently, which is right for a code the
+# county genuinely puts in no fire district and WRONG for one the crosswalk
+# never saw — the two are indistinguishable downstream, and a card would say
+# "no fire district" about a parcel nobody looked up. So the 140-code universe
+# is declared as `code_universe` and the builder fails on any parcel code
+# outside it. Boone carries the same hole and is not fixed here; its own
+# crosswalk covers every code it maps, so the guard would be vacuous there
+# until someone re-measures it.
+#
+# A SECOND CHECK WAS TRIED AND IS NOT CLAIMED. The Tax Computation Report gives
+# each district's County Total EAV, so summing the parcel layer's CNTASSDVAL
+# over a district's tax codes ought to reproduce it. It does not: the sums run
+# +12% to +32% on twenty-one districts and NEGATIVE on four, because a parcel
+# layer's current assessed value and a tax year's rate-setting EAV are not the
+# same quantity. Recorded here because a reader would otherwise try it, and
+# because a check that does not work must not be dressed as one that does.
+WHITESIDE_PARCELS = ("https://services.arcgis.com/l0M0OC6J9QAHCiGx/arcgis/rest/"
+                     "services/Tax_Parcels_Ver_2_Parcels_Only/FeatureServer/0")
+WHITESIDE_TAX_YEAR = 2025
+WHITESIDE_REPORTS = {
+    # the membership list, and the ONLY one this county publishes
+    "rates": "https://www.whitesidecountyil.gov/DocumentCenter/View/1285/"
+             "2025-District-Tax-Rates-PDF",
+    # per-district EAV and levy detail; used for the district NAMES, which it
+    # writes identically to the rates report, and for the EAV check above that
+    # does not work
+    "computation": "https://www.whitesidecountyil.gov/DocumentCenter/View/1284/"
+                   "2025-Tax-Computation-Rates-PDF",
+}
+# THE NAMES ARE THE COUNTY'S OWN AND ARE NOT EXPANDED. Both county documents
+# write every body the same way — `FALB - ALBANY FIRE`, `LWAL - WALNUT PUBLIC
+# LIBRARY`, `PCOL - COLOMA PARK` — in a column narrow enough that "Albany Fire"
+# is plainly an abbreviation of a fire protection district's real name. It is
+# rendered in title case and NOTHING IS EXPANDED: the county's ETSB page writes
+# "Prophetstown Fire District" in full, which is one body of thirteen, and
+# inventing the other twelve from a pattern is exactly the guess this project
+# does not make. The four-letter code ships beside the name, as Woodford's
+# does, so a reader or a re-verifier can find the row in the county's document.
+WHITESIDE_CODE_RE = WOODFORD_CODE_RE
+
+# THE CITY HOLES ARE MEASURED, AND ONLY TWO OF THEM ARE ATTRIBUTED. TWELVE tax
+# codes carrying STERLING CITY or ROCK FALLS CITY have no fire district at all
+# (seven VSTG, five VRFL, one of the five being 01111, which no parcel carries),
+# which is the Metamora shape: both cities run their own departments, and the
+# county's own ETSB/911 page names the "Twin City Communication Center,
+# Sterling, IL (Sterling, Rock Falls Police & Fire, CGH Ambulance)". MORRISON IS
+# NOT ATTRIBUTED, only measured: its two tax codes 00715 and 00805 carry no fire
+# line, and no county page read here says why. Thirty-three of the 140 codes
+# carry no fire line in total.
+
+# THE 140 TAX CODES THE CLERK'S REPORT COVERS. Declared so a parcel carrying a
+# code the crosswalk never saw FAILS rather than reading as "no district" —
+# see code_universe in build_source. All 138 codes on the parcel layer are
+# among these; 00923 and 01111 are report-only.
+WHITESIDE_CODE_UNIVERSE = (
+    "00101 00105 00110 00115 00116 00117 00120 00125 00201 00205 "
+    "00210 00215 00220 00301 00305 00310 00315 00320 00325 00330 "
+    "00401 00405 00410 00415 00420 00425 00430 00435 00440 00445 "
+    "00450 00455 00460 00505 00510 00515 00520 00525 00530 00535 "
+    "00540 00545 00550 00601 00605 00606 00610 00615 00625 00626 "
+    "00701 00705 00710 00715 00720 00801 00805 00905 00910 00915 "
+    "00920 00921 00922 00923 00925 00930 00935 01001 01005 01006 "
+    "01011 01012 01013 01014 01101 01105 01110 01111 01115 01121 "
+    "01201 01205 01215 01305 01320 01401 01405 01410 01415 01421 "
+    "01430 01505 01510 01520 01525 01530 01535 01540 01545 01601 "
+    "01605 01615 01620 01625 01630 01701 01705 01715 01720 01725 "
+    "01730 01735 01805 01810 01811 01815 01820 01905 01915 01920 "
+    "01925 01945 01955 02001 02005 02006 02010 02101 02105 02115 "
+    "02120 02125 02201 02205 02210 02215 02220 02225 02230 02235"
+).split()
+
+WHITESIDE_FIRE_CODES = {}
+for _code in ("00605 00606 01201 01205 01215 01305").split():
+    WHITESIDE_FIRE_CODES[_code] = "FALB - Albany Fire"
+for _code in ("00305 00330").split():
+    WHITESIDE_FIRE_CODES[_code] = "FCHA - Chadwick Fire"
+for _code in ("01320 01405 01410 01510 01805 01810 01811 01820 01905").split():
+    WHITESIDE_FIRE_CODES[_code] = "FERI - Erie Fire"
+for _code in ("00101 00105 00110 00115 00116 00117 00205 00210 00610 00615 "
+              "00625 00626 00705 00720").split():
+    WHITESIDE_FIRE_CODES[_code] = "FFUL - Fulton Fire"
+for _code in ("01915 01955").split():
+    WHITESIDE_FIRE_CODES[_code] = "FHIL - Hillsdale Fire"
+for _code in ("00310 00315 00320 00410 00415 00420 00425 00445 00450 00455 "
+              "00460 00505 00510 00540 00545 00910 00915 00935").split():
+    WHITESIDE_FIRE_CODES[_code] = "FMLV - Milledgeville Fire"
+for _code in ("00515 00530").split():
+    WHITESIDE_FIRE_CODES[_code] = "FPOL - Polo Fire"
+for _code in ("01415 01421 01520 01525 01545 01601 01815 01920 01925 01945 "
+              "02001 02005 02006 02101 02115").split():
+    WHITESIDE_FIRE_CODES[_code] = "FPTN - Prophetstown Fire"
+for _code in ("01105 01115 01620 01625 01705 01715 01730").split():
+    WHITESIDE_FIRE_CODES[_code] = "FRFL - Rock Falls Fire"
+for _code in ("00430 00520 00535 00550 00920 00922 00923 00925 01001 01535 "
+              "01540").split():
+    WHITESIDE_FIRE_CODES[_code] = "FSTG - Sterling Fire"
+for _code in ("01605 01615 01630 01701 01720 02010 02105 02120 02125 02205 "
+              "02215 02225 02230").split():
+    WHITESIDE_FIRE_CODES[_code] = "FTAM - Tampico Fire"
+for _code in ("00120 00125 00215").split():
+    WHITESIDE_FIRE_CODES[_code] = "FTHO - Thomson Fire"
+for _code in ("01725 02201 02210 02220 02235").split():
+    WHITESIDE_FIRE_CODES[_code] = "FWAL - Walnut Fire"
+
+WHITESIDE_LIBRARY_CODES = {}
+for _code in ("00606 01215").split():
+    WHITESIDE_LIBRARY_CODES[_code] = "LALB - Albany Library"
+for _code in ("00325 00330").split():
+    WHITESIDE_LIBRARY_CODES[_code] = "LCHA - Chadwick Library"
+for _code in ("01305 01320 01401 01410 01430 01805 01810 01811 01815 01820 "
+              "01905 01915 01925 01955").split():
+    WHITESIDE_LIBRARY_CODES[_code] = "LERI - Erie Library"
+for _code in ("00110 00115 00116 00117 00625 00626").split():
+    WHITESIDE_LIBRARY_CODES[_code] = "LFUL - Fulton Library"
+for _code in ("00315 00320 00455 00460 00540 00545 00550").split():
+    WHITESIDE_LIBRARY_CODES[_code] = "LMLV - Milledgeville Library"
+for _code in ("01101 01105 01110 01111 01115 01121").split():
+    WHITESIDE_LIBRARY_CODES[_code] = "LRFL - Rock Falls Library"
+for _code in ("02230 02235").split():
+    WHITESIDE_LIBRARY_CODES[_code] = "LWAL - Walnut Public Library"
+
+WHITESIDE_PARK_CODES = {}
+for _code in ("01101 01105 01110 01111 01115 01121 01730").split():
+    WHITESIDE_PARK_CODES[_code] = "PCOL - Coloma Park"
+for _code in ("00320 00420 00460 00510 00545").split():
+    WHITESIDE_PARK_CODES[_code] = "PMLV - Milledgeville Park"
+for _code in ("01601 01605 01920 01945 02001 02005 02006 02010 02101 02105").split():
+    WHITESIDE_PARK_CODES[_code] = "PPTN - Prophetstown Park"
+for _code in ("01001 01005 01006 01011 01012 01013 01014").split():
+    WHITESIDE_PARK_CODES[_code] = "PSTG - Sterling Park"
+for _code in ("02230 02235").split():
+    WHITESIDE_PARK_CODES[_code] = "PWAL - Walnut Park"
+
+def _in_clause(codes, col="tax_code"):
+    # The column holding the code is per-county: Boone's is `tax_code`,
+    # Whiteside's is `CVTTXCD` — a name that says CIVIL TAXING UNIT and holds a
+    # whole five-digit tax code, which is why a screening regex over field names
+    # missed it for a month (EXPANSION_GUIDE §3.5.1).
+    return "%s IN (%s)" % (col, ", ".join("'%s'" % c for c in sorted(codes)))
 
 # slug -> source config. name_prop is the case-insensitive read key, and by
 # default also the property the shipped feature carries (upstream casing
@@ -411,6 +791,64 @@ SOURCES = [
     # The shape is a subdivision addressed before the assessor split its lots.
     # So the layer says nothing exactly where the county says nothing, which is the
     # right answer rather than a defect to close over.
+    # Whiteside's three. Same machinery as Boone's — a bare tax code plus a
+    # county crosswalk — with the code_map's VALUE carrying the county's own
+    # four-letter district code on the front, so code_split then peels it onto
+    # its own property exactly as Woodford's does. `expect_empty_codes` names
+    # the codes the Clerk's report carries that no parcel does: 00923 (fire)
+    # and 01111 (library and park). They are declared rather than skipped, so a
+    # county that starts or stops using one fails the build.
+    {"slug": "whiteside-fire", "out": "whiteside-fire-districts.json",
+     "edit_pin": 1788362255421,   # the service DOES publish one
+     "code_universe": WHITESIDE_CODE_UNIVERSE,
+     "blocked": "Whiteside County LICENSES its GIS data and its Data License Agreement forbids redistributing products derived from it. Nothing here ships until the county gives written permission — docs/ASK_DRAFTS.md Ask 19, and the gap record whiteside-special-districts.",
+     "layer": WHITESIDE_PARCELS, "name_prop": "CVTTXCD", "expect": 13,
+     "where": _in_clause(WHITESIDE_FIRE_CODES, "CVTTXCD"),
+     "out_prop": "district", "code_map": WHITESIDE_FIRE_CODES,
+     "code_split": WHITESIDE_CODE_RE,
+     "expect_rows": 19805, "expect_empty_codes": ["00923"],
+     "probes": [(41.78613, -90.21635, "Albany Fire"),
+                (41.86500, -90.15932, "Fulton Fire"),
+                (41.65885, -90.08136, "Erie Fire"),
+                (41.67015, -89.93485, "Prophetstown Fire"),
+                (41.63076, -89.78513, "Tampico Fire"),
+                # the three city holes, which are the probes that matter: a
+                # layer that covered everything would pass every positive
+                (41.79961, -89.69553, None),   # Sterling — own fire department
+                (41.77238, -89.69271, None),   # Rock Falls — own fire department
+                (41.80764, -89.96170, None)]}, # Morrison — own fire department
+    {"slug": "whiteside-library", "out": "whiteside-library-districts.json",
+     "edit_pin": 1788362255421,   # the service DOES publish one
+     "code_universe": WHITESIDE_CODE_UNIVERSE,
+     "blocked": "Whiteside County LICENSES its GIS data and its Data License Agreement forbids redistributing products derived from it. Nothing here ships until the county gives written permission — docs/ASK_DRAFTS.md Ask 19, and the gap record whiteside-special-districts.",
+     "layer": WHITESIDE_PARCELS, "name_prop": "CVTTXCD", "expect": 7,
+     "where": _in_clause(WHITESIDE_LIBRARY_CODES, "CVTTXCD"),
+     "out_prop": "district", "code_map": WHITESIDE_LIBRARY_CODES,
+     "code_split": WHITESIDE_CODE_RE,
+     "expect_rows": 11640, "expect_empty_codes": ["01111"],
+     "expect_no_geometry": 1,   # PIN 1127382016, 805 Ave D, code 01110
+
+     "probes": [(41.86500, -90.15932, "Fulton Library"),
+                (41.65885, -90.08136, "Erie Library"),
+                (41.77238, -89.69271, "Rock Falls Library"),
+                (41.79961, -89.69553, None),   # Sterling — municipal library
+                (41.80764, -89.96170, None)]}, # Morrison — municipal library
+    {"slug": "whiteside-park", "out": "whiteside-park-districts.json",
+     "edit_pin": 1788362255421,   # the service DOES publish one
+     "code_universe": WHITESIDE_CODE_UNIVERSE,
+     "blocked": "Whiteside County LICENSES its GIS data and its Data License Agreement forbids redistributing products derived from it. Nothing here ships until the county gives written permission — docs/ASK_DRAFTS.md Ask 19, and the gap record whiteside-special-districts.",
+     "layer": WHITESIDE_PARCELS, "name_prop": "CVTTXCD", "expect": 5,
+     "where": _in_clause(WHITESIDE_PARK_CODES, "CVTTXCD"),
+     "out_prop": "district", "code_map": WHITESIDE_PARK_CODES,
+     "code_split": WHITESIDE_CODE_RE,
+     "expect_rows": 15931, "expect_empty_codes": ["01111"],
+     "expect_no_geometry": 1,   # the same parcel — 01110 is in both sets
+
+     "probes": [(41.79961, -89.69553, "Sterling Park"),
+                (41.77238, -89.69271, "Coloma Park"),
+                (41.67015, -89.93485, "Prophetstown Park"),
+                (41.86500, -90.15932, None),   # Fulton — no park district
+                (41.80764, -89.96170, None)]}, # Morrison — no park district
     {"slug": "woodford-fire", "out": "woodford-fire-districts.json",
      "layer": WOODFORD_FIRE, "name_prop": "Fire_Prote", "expect": 17,
      "out_fields": "Fire_Prote", "where": "Fire_Prote <> ' '",
@@ -434,6 +872,32 @@ SOURCES = [
      "expect_rows": 4113, "edit_pin": 1770655529993,
      "code_split": WOODFORD_CODE_RE,
      "probes": WOODFORD_PARK_PROBES},
+    # Grundy's three — the multi_value shape. Each fetches only the parcels
+    # whose Districts cell mentions this concept, which the server can filter
+    # even on the joined column; those LIKE counts were checked against a full
+    # client-side pass over all 27,661 rows and agree exactly (27,141 / 24,485
+    # / 1,779), so the filter is not quietly dropping a district.
+    {"slug": "grundy-fire", "out": "grundy-fire-districts.json",
+     "layer": GRUNDY_PARCELS, "name_prop": GRUNDY_DISTRICTS_COL, "expect": 13,
+     "out_fields": GRUNDY_DISTRICTS_COL,
+     "where": GRUNDY_DISTRICTS_COL + " LIKE '%FIRE%'",
+     "expect_rows": 27141, "multi_value": ",", "code_map": GRUNDY_FIRE,
+     "expect_unmapped": ["MVK RESCUE SQUAD"], "token_re": r"\bFIRE\b|RESCUE SQUAD",
+     "out_prop": "district", "probes": GRUNDY_FIRE_PROBES},
+    {"slug": "grundy-library", "out": "grundy-library-districts.json",
+     "layer": GRUNDY_PARCELS, "name_prop": GRUNDY_DISTRICTS_COL, "expect": 6,
+     "out_fields": GRUNDY_DISTRICTS_COL,
+     "where": GRUNDY_DISTRICTS_COL + " LIKE '%LIBRARY%'",
+     "expect_rows": 24485, "multi_value": ",", "code_map": GRUNDY_LIBRARY,
+     "expect_unmapped": [], "token_re": r"\bLIBRARY\b",
+     "out_prop": "district", "probes": GRUNDY_LIBRARY_PROBES},
+    {"slug": "grundy-park", "out": "grundy-park-districts.json",
+     "layer": GRUNDY_PARCELS, "name_prop": GRUNDY_DISTRICTS_COL, "expect": 2,
+     "out_fields": GRUNDY_DISTRICTS_COL,
+     "where": GRUNDY_DISTRICTS_COL + " LIKE '%PARK DIST%'",
+     "expect_rows": 1779, "multi_value": ",", "code_map": GRUNDY_PARK,
+     "expect_unmapped": [], "token_re": r"PARK DIST",
+     "out_prop": "district", "probes": GRUNDY_PARK_PROBES},
     {"slug": "kendall-fire", "out": "kendall-fire-districts.json",
      "layer": KENDALL + "Fire_Protection_Districts/FeatureServer/0",
      "name_prop": "fire", "expect": 10,
@@ -563,8 +1027,14 @@ def build_source(cfg):
              "re-verify this script's measurements before rebuilding"
              % (cfg["slug"], edit_ms, pin))
     if pin is None:
-        print("  (no edit stamp published — count+name pin is the guard; "
-              "live stamp: %r)" % edit_ms)
+        # SAY WHICH IS MISSING, the pin or the stamp. This printed "no edit
+        # stamp published" whenever no pin was declared, including on services
+        # that publish one perfectly well — Whiteside's dataLastEditDate is
+        # live — which reads as a fact about the county and is a fact about
+        # this config.
+        print("  (%s; count+name pin is the guard; live stamp: %r)"
+              % ("no edit_pin declared" if edit_ms is not None
+                 else "no edit stamp published by the service", edit_ms))
 
     # A source whose SHIPPED value is not the column's own value must say what
     # column it ships under. Two ways that happens, and both mislabel the data
@@ -575,6 +1045,10 @@ def build_source(cfg):
     # files shipped under `Fire_Prote`/`Library_Di`/`Park_Distr` while the app
     # read `district`, so every static gate passed and every card rendered with
     # its district name reading "Unknown".
+    if cfg.get("multi_value") and cfg.get("code_map") is None:
+        fail("%s: a multi_value source needs a code_map — the column is a list "
+             "of every taxing body, and which member is this concept's is a "
+             "lookup, never a guess" % cfg["slug"])
     if (cfg.get("code_map") is not None or cfg.get("code_split")) \
             and not cfg.get("out_prop"):
         fail("%s: a source that transforms its name (code_map or code_split) "
@@ -614,17 +1088,39 @@ def build_source(cfg):
     # carries 100 columns per row including owner names, home addresses and
     # billing addresses, and the honest handling of data this app would never
     # show is not to fetch it.
+    # SOME SERVICES REFUSE TO PAGE AT ALL. Grundy's MapServer declares
+    # advancedQueryCapabilities.supportsPagination false and answers a query
+    # carrying resultOffset with an outright error — "Pagination is not
+    # supported" — so the paging loop got ZERO rows where the server had 1,779.
+    # It is safe to ask such a service for everything at once only because its
+    # maxRecordCount (50,000) is well above its row count (27,661), and the
+    # count check below is what keeps that true: if the roll ever passes the
+    # cap, this fails rather than silently truncating.
+    pages = ((meta.get("advancedQueryCapabilities") or {})
+             .get("supportsPagination", True))
     features, offset = [], 0
     while True:
-        page = requests.get(cfg["layer"] + "/query", params={
-            "where": where, "outFields": cfg.get("out_fields", "*"),
-            "outSR": 4326, "f": "geojson",
-            "resultOffset": offset, "resultRecordCount": PAGE_SIZE,
-        }, timeout=180).json()
+        params = {"where": where, "outFields": cfg.get("out_fields", "*"),
+                  "outSR": 4326, "f": "geojson"}
+        if pages:
+            params["resultOffset"] = offset
+            params["resultRecordCount"] = PAGE_SIZE
+        page = requests.get(cfg["layer"] + "/query", params=params,
+                            timeout=600).json()
+        if page.get("error"):
+            fail("%s: the service refused the query — %s"
+                 % (cfg["slug"], str(page["error"])[:200]))
         got = page.get("features") or []
         features += got
         more = page.get("exceededTransferLimit") or \
             (page.get("properties") or {}).get("exceededTransferLimit")
+        if not pages:
+            if more:
+                fail("%s: the service cannot page AND says it had more to give "
+                     "— %d rows returned against maxRecordCount %s; nothing "
+                     "here can fetch the rest"
+                     % (cfg["slug"], len(got), meta.get("maxRecordCount")))
+            break
         if not more or not got:
             break
         offset += len(got)
@@ -661,13 +1157,35 @@ def build_source(cfg):
             fail("%s: %d parcels, expected %d — the county re-coded its roll; "
                  "re-verify this source's measurements before re-pinning"
                  % (cfg["slug"], len(features), want_rows))
+    # EVERY PARCEL CODE MUST BE ONE THE CROSSWALK SAW. `code_map` skips an
+    # unmapped value silently, which is right for a code the county puts in no
+    # district and WRONG for one the crosswalk never covered — downstream the
+    # two are identical, and a card would say "no fire district" about a parcel
+    # nobody looked up. A source that declares its code universe fails instead.
+    if cfg.get("code_universe"):
+        universe = set(cfg["code_universe"])
+        stray = sorted({" ".join(str((f.get("properties") or {}).get(k) or "").split())
+                        for f in features
+                        for k in (f.get("properties") or {})
+                        if k.lower() == cfg["name_prop"].lower()} - universe - {""})
+        if stray:
+            fail("%s: %d parcel code(s) are outside the declared crosswalk "
+                 "universe and would read as 'no district': %s"
+                 % (cfg["slug"], len(stray), stray[:12]))
+        print("  every parcel code is one of the %d the crosswalk covers"
+              % len(universe))
+
     if cfg.get("code_map") is not None:
         seen = set()
         for f in features:
             props = f.get("properties") or {}
             for k in props:
                 if k.lower() == cfg["name_prop"].lower() and props[k]:
-                    seen.add(" ".join(str(props[k]).split()))
+                    if cfg.get("multi_value"):
+                        for x in str(props[k]).split(cfg["multi_value"]):
+                            seen.add(" ".join(x.split()))
+                    else:
+                        seen.add(" ".join(str(props[k]).split()))
         empty = sorted(set(cfg["code_map"]) - seen)
         if empty != sorted(cfg.get("expect_empty_codes", [])):
             fail("%s: codes with no parcel changed — got %s, expected %s"
@@ -691,7 +1209,15 @@ def build_source(cfg):
     # any usable time over Boone's 12,264 parcels, which is what a parcel fabric
     # costs. Same geometry either way; a single unary_union over a list is the
     # call shapely is built for.
-    parts, blanks, no_geom = {}, 0, {}
+    parts, blanks, no_geom, unmapped = {}, 0, {}, {}
+    # The row lists EVERY taxing body the parcel pays into, so "unmapped" has to
+    # mean "looks like this concept and is not in the map", never "is on the
+    # row and is not in the map" — the latter is every township, school and TIF
+    # in the county. token_re is the source's own keyword, the same one its
+    # where clause filters on, so the two cannot drift apart.
+    _tok = re.compile(cfg["token_re"], re.I) if cfg.get("token_re") else None
+    def concept_token(x):
+        return bool(_tok.search(x)) if _tok else False
     excl = set(cfg.get("exclude_names", []))
     for f in geo.get("features", []):
         props = f.get("properties") or {}
@@ -705,7 +1231,37 @@ def build_source(cfg):
         # District Report". A code the map does not carry is skipped, not
         # guessed — the where clause should already have excluded it, and a row
         # arriving anyway means the county changed something.
-        if cfg.get("code_map") is not None:
+        #
+        # A multi_value source's cell is a LIST rather than one code. Grundy
+        # publishes one `Districts` column naming EVERY taxing body a parcel
+        # pays into — "CITY OF MORRIS, COUNTY, JOLIET JR COLL 525, MORRIS AREA
+        # LIBRARY, MORRIS FIRE AND AMBUL, ..." — so the concept being built is
+        # whichever member of that list the code_map knows. TWO MATCHES IS A
+        # FAILURE, NOT A CHOICE: a parcel in two fire districts means either the
+        # county changed something or the map is wrong, and picking one would
+        # publish a coin-flip. (Measured 2026-09-05: zero parcels match twice.)
+        if cfg.get("multi_value"):
+            # NOT `parts` — that name is the accumulator this loop fills
+            listed = [" ".join(x.split()) for x in
+                      str(v or "").split(cfg["multi_value"])]
+            hits = [cfg["code_map"][x] for x in listed if x in cfg["code_map"]]
+            # EVERY TOKEN THE WHERE CLAUSE LET THROUGH BUT THE MAP DOES NOT
+            # CARRY is collected and reported below. The where clause is a
+            # KEYWORD filter (`LIKE '%FIRE%'`), so a body whose name lacks the
+            # keyword never reaches this loop at all — that is what
+            # expect_rows and the district-count equality catch. What this
+            # catches is the other half: a body that DOES match the keyword,
+            # arrives here, and is silently dropped because nobody added it to
+            # the map. Both halves were invisible before.
+            for x in listed:
+                if x and x not in cfg["code_map"] and concept_token(x):
+                    unmapped[x] = unmapped.get(x, 0) + 1
+            if len(set(hits)) > 1:
+                fail("%s: a parcel lists %d of this concept's districts (%s) — "
+                     "the county's roll changed or the map is wrong; refusing "
+                     "to pick one" % (cfg["slug"], len(set(hits)), sorted(set(hits))))
+            v = hits[0] if hits else None
+        elif cfg.get("code_map") is not None:
             v = cfg["code_map"].get(" ".join(str(v or "").split()))
         name = " ".join(str(v or "").split())
         if not name:
@@ -731,6 +1287,24 @@ def build_source(cfg):
 
     named = {n: (unary_union(v) if len(v) > 1 else v[0]) for n, v in parts.items()}
 
+    # The multi_value vocabulary, DECLARED rather than assumed. `expect_unmapped`
+    # pins the tokens the where clause admits and the map deliberately ignores —
+    # Grundy's fire filter admits MVK RESCUE SQUAD, which is a rescue-squad
+    # district and not a fire protection district. A token appearing here that
+    # is not pinned means the county added a body nobody has classified, and the
+    # build stops rather than quietly drawing one district fewer.
+    if cfg.get("multi_value"):
+        got = sorted(unmapped)
+        want = sorted(cfg.get("expect_unmapped", []))
+        if got != want:
+            fail("%s: the %s filter admitted token(s) the map does not carry — "
+                 "got %s, expected %s. Classify each one (is it this concept?) "
+                 "and pin it in expect_unmapped."
+                 % (cfg["slug"], cfg["name_prop"].split(".")[-1], got, want))
+        if got:
+            print("  %d token(s) admitted by the filter and deliberately not "
+                  "mapped: %s" % (len(got), ", ".join("%s (%d parcels)"
+                                                      % (k, unmapped[k]) for k in got)))
     if sum(no_geom.values()) != cfg.get("expect_no_geometry", 0):
         fail("%s: %d rows carry no geometry, expected %d (%s) — the county's "
              "roll changed; re-verify before re-pinning"
@@ -924,6 +1498,15 @@ def main():
           % (CLOSE_FT, SIMPLIFY_FT))
     for cfg in SOURCES:
         if only and cfg["slug"] not in only:
+            continue
+        # A SOURCE THE PUBLISHER LICENSES IS NOT BUILT, and the guard is here
+        # rather than in a comment because the file this builder writes is
+        # exactly the "product derived therefrom" such a licence forbids. Naming
+        # it `--force-blocked` and refusing by default means the licensed county
+        # cannot be shipped by someone re-running the builder to refresh
+        # everything else.
+        if cfg.get("blocked") and "--force-blocked" not in only:
+            print("%s: SKIPPED — %s" % (cfg["slug"], cfg["blocked"]))
             continue
         print("%s:" % cfg["slug"])
         build_source(cfg)

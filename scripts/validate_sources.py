@@ -123,6 +123,8 @@ SERVICE_RI_TAX = ("https://services9.arcgis.com/6FnscPPlUa9DXXOk/arcgis/rest/"
 # provenance for its three pre-built tax tilings specifically.
 SERVICE_KENDALL_TAX = ("https://maps.co.kendall.il.us/server/rest/services/"
                        "Hosted?f=json")
+SERVICE_GRUNDY_PARCELS = ("https://maps.grundyco.org/arcgis/rest/services/CountyWebsiteMaps/"
+                          "CountyParcelsBaseLayer_ParcelFabric_SPIE/MapServer/0")
 SERVICE_WOODFORD = ("https://services1.arcgis.com/iOG1OLysrxLAswZi/arcgis/rest/"
                     "services/%s/FeatureServer/%d")
 SERVICE_WOODFORD_FIRE = SERVICE_WOODFORD % ("Fire_Protection_Districts", 2)
@@ -284,6 +286,33 @@ PROVENANCE = [
              "as the live layer answers. The Clerk refreshes tilings in "
              "place with no edit stamp, so the builder pins count+names and "
              "this monthly probe is the freshness watch."},
+    # Grundy's three come off ONE 27,661-row parcel fabric whose single
+    # `Districts` column lists every taxing body a parcel pays into. The service
+    # publishes no edit stamp AND cannot page (supportsPagination false), so the
+    # builder pins the row count per concept and this probe is the freshness
+    # watch on the service itself.
+    {"layer": "Grundy County fire districts (pre-built from the parcel fabric)",
+     "app_file": "grundy-fire-districts.json",
+     "source_url": SERVICE_GRUNDY_PARCELS + "?f=json",
+     "note": "13 districts dissolved from the 27,141 parcels whose Districts "
+             "cell names one; the set and the shipped names both come from the "
+             "county's own 2025 Tax Distribution List with EAV (which names "
+             "no office and does not say 'certified'). MVK "
+             "RESCUE SQUAD is excluded: the county names it the Mazon Verona "
+             "Kinsman Rescue Squad District (70 ILCS 2005/6, its own board and "
+             "levy), and a rescue-squad district is not a fire protection "
+             "district. Its 2,257 parcels are exactly the union of Mazon and "
+             "Verona-Kinsman."},
+    {"layer": "Grundy County library districts (pre-built from the parcel fabric)",
+     "app_file": "grundy-library-districts.json",
+     "source_url": SERVICE_GRUNDY_PARCELS + "?f=json",
+     "note": "6 library districts from 24,485 parcels; 69.8% of the county is "
+             "in one and the rest is honestly in none."},
+    {"layer": "Grundy County park districts (pre-built from the parcel fabric)",
+     "app_file": "grundy-park-districts.json",
+     "source_url": SERVICE_GRUNDY_PARCELS + "?f=json",
+     "note": "2 districts (Channahon, Godley) from 1,779 parcels — most of the "
+             "county sits in no park district."},
     # Woodford's three come off ONE 25,824-row parcel fabric published three
     # times over — the county draws no district tiling at all — so each entry
     # names the service its own column lives on. The builder PINS each layer's
@@ -313,6 +342,26 @@ PROVENANCE = [
      "source_url": SERVICE_WOODFORD_PARK + "?f=json",
      "note": "3 districts from 4,113 parcels; most of the county sits in no "
              "park district and the empty state is the true answer there."},
+    # The statewide library layer behind SEVEN counties' library cards, and it
+    # had NO entry here at all until Macoupin joined it — six counties' geometry
+    # riding an unwatched source. It is the one boundary in this instance
+    # published by neither the county nor the body, so a monthly probe matters
+    # more here than most: the publisher is a broadband contractor and the
+    # counties it covers have no other library boundary to fall back on.
+    {"layer": "Illinois library districts (statewide layer behind 7 counties)",
+     "app_file": "macoupin-library-districts.json",
+     "source_url": "https://services.arcgis.com/R0IGaIgf2sox9aCY/arcgis/rest/services/"
+                   "IL_Boundary_Layers/FeatureServer/11?f=json",
+     "note": "Illinois Broadband Office / Connected Nation, layer 11 — 642 polygons "
+             "statewide, clipped per county by build_statewide_library_districts.py "
+             "for Carroll, Lee, Macoupin, Randolph, Sangamon, St. Clair and "
+             "Stephenson. NOT a county or library publication; the item states "
+             "public use permitted, no warranty, not for legal boundary "
+             "determinations, with attribution and modification-disclosure "
+             "requirements the cards carry. TWO counties check it against their own "
+             "Clerk's tax lines and the builder refuses to write if either stops "
+             "matching: Carroll's seven, and Macoupin's eleven across all 224 of "
+             "that county's tax codes."},
     {"layer": "Kane County Board members (roster)",
      "app_file": "kane-county-board-members.json",
      "source_url": "https://www2.kanecountyil.gov/pages/countyboard/boardMembers.aspx",

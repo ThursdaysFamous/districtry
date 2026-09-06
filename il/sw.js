@@ -43,7 +43,7 @@
 // refreshed per election.)
 /* ==== TEMPLATE:END sw-version-history ==== */
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-il-shell-v14";
+const CACHE_NAME = "districtry-il-shell-v16";
 
 const SHELL_URLS = [
   "./",
@@ -75,6 +75,9 @@ const GEOMETRY_URLS = [
   "./data/app/boone-county-outline.json",
   "./data/app/boone-library-districts.json",
   "./data/app/boone-park-districts.json",
+  "./data/app/grundy-fire-districts.json",
+  "./data/app/grundy-library-districts.json",
+  "./data/app/grundy-park-districts.json",
   "./data/app/woodford-fire-districts.json",
   "./data/app/woodford-library-districts.json",
   "./data/app/woodford-park-districts.json",
@@ -83,6 +86,7 @@ const GEOMETRY_URLS = [
   "./data/app/calhoun-county-outline.json",
   "./data/app/carroll-county-board-districts.json",
   "./data/app/carroll-county-outline.json",
+  "./data/app/macoupin-library-districts.json",
   "./data/app/carroll-library-districts.json",
   "./data/app/cass-county-board-districts.json",
   "./data/app/cass-county-outline.json",
