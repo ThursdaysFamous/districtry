@@ -7579,13 +7579,176 @@ function initIowaExplorer() {
 
   /* ==== ENGINE:END cached-loaders ==== */
   /* ==== ENGINE:BEGIN arcgis-loader ==== */
+  /* ---------- Esri JSON -> GeoJSON, because ArcGIS's own GeoJSON export
+   * silently UNNESTS interior rings.
+   *
+   * WHAT THE DEFECT IS. Asked for `f=geojson`, an ArcGIS service can return a
+   * feature's HOLES as separate SHELLS — a MultiPolygon whose parts sit inside
+   * one another. Under GeoJSON semantics each part is its own area, so ground
+   * the publisher deliberately cut out becomes ground the layer claims, and
+   * `pointInGeometry`'s per-part even-odd test says a click inside the cutout
+   * is inside the district. Asked for `f=json`, the SAME query on the SAME
+   * service returns the same rings with the holes wound counter-clockwise,
+   * which is Esri's normative signal for an interior ring.
+   *
+   * MEASURED, twice, on live services rather than inferred. Wisconsin found it
+   * first (2026-09-05, an NG911 law-enforcement zone that swallowed the Village
+   * of Westfield). Illinois was then swept the same day across every ArcGIS
+   * layer this app fetches at runtime: 41 of 156 polygon layers lose rings,
+   * 1,376 of them, and at an interior point of each lost ring — shapely's
+   * representative_point, never a centroid, which for a non-convex hole falls
+   * outside it and reads as agreement — 1,372 points get geometry the service's
+   * own point query denies and 1,135 get a CARD naming a district that does not
+   * cover them. Will County's four layers lost 551 rings and 112 km2 between
+   * them — its fire districts alone 222 rings and 42.9 km2 — and Springfield's
+   * ten wards claimed 7.8 km2 of unincorporated ground. Total across the 41:
+   * 298.2 km2 claimed that publishers had cut out.
+   *
+   * SO EVERY LOADER HERE ASKS FOR `f=json` AND NESTS THE RINGS ITSELF, where
+   * the rule is normative rather than inferred. Winding alone is not enough to
+   * lean on — RFC 7946 wants exterior rings counter-clockwise, the opposite
+   * convention — so this reads Esri's orientation AND requires containment
+   * before treating a ring as a hole; a counter-clockwise ring contained by
+   * nothing is kept as its own shell rather than silently dropped.
+   *
+   * THE OTHER HALF OF THE SAME BUG. DeKalb's org was found in 2026-08 to
+   * flatten a MULTIPART polygon into one ring list, so a part inside another
+   * part became a false hole and 1.6 km2 of its park tiling answered "no
+   * district" while being in one. That is this defect's mirror image and this
+   * is the same fix: Esri JSON keeps the part structure in ring WINDING, so
+   * reading it is what makes both cases right.
+   *
+   * Ring ORIENTATION is left as Esri emits it. Nothing here reads winding —
+   * the app's containment test and Leaflet both work on nesting alone — and
+   * rewinding would be work done for no reader. ---------- */
+  function esriSignedRingArea(ring) {
+    var sum = 0;
+    for (var i = 0; i < ring.length - 1; i++) {
+      sum += ring[i][0] * ring[i + 1][1] - ring[i + 1][0] * ring[i][1];
+    }
+    return sum / 2;
+  }
+  function esriRingsToParts(rings) {
+    var outers = [], holes = [], i;
+    for (i = 0; i < rings.length; i++) {
+      // A ring of fewer than 4 positions cannot close; keep it as its own part
+      // rather than discarding ground silently.
+      if (rings[i].length < 4) { outers.push(rings[i]); continue; }
+      (esriSignedRingArea(rings[i]) < 0 ? outers : holes).push(rings[i]);
+    }
+    // Every ring counter-clockwise means the orientation signal is absent on
+    // this service; treat them all as shells rather than inventing holes.
+    if (!outers.length) { outers = rings; holes = []; }
+    var parts = [], areas = [];
+    for (i = 0; i < outers.length; i++) {
+      parts.push([outers[i]]);
+      areas.push(Math.abs(esriSignedRingArea(outers[i])));
+    }
+    for (i = 0; i < holes.length; i++) {
+      // WHICH SHELL OWNS A HOLE. Two guards, both earned: the shell must be
+      // LARGER than the hole, because an even-odd test against a ZERO-AREA
+      // sliver is unreliable and one such sliver was measured "containing" a
+      // hole it could not (Wisconsin, Marathon County, 2026-09-05); and
+      // containment is a majority vote over three of the hole's own vertices,
+      // because a single vertex can sit exactly on a neighbouring ring.
+      var hole = holes[i], hArea = Math.abs(esriSignedRingArea(hole));
+      var probes = [hole[0], hole[Math.floor(hole.length / 3)],
+                    hole[Math.floor((2 * hole.length) / 3)]];
+      var best = -1, bestArea = Infinity;
+      for (var k = 0; k < outers.length; k++) {
+        if (areas[k] <= hArea) continue;
+        var hits = 0;
+        for (var p = 0; p < probes.length; p++) {
+          if (pointInRing(probes[p], outers[k])) hits++;
+        }
+        if (hits < 2) continue;
+        if (areas[k] < bestArea) { bestArea = areas[k]; best = k; }
+      }
+      // A hole contained by nothing becomes its own part rather than being
+      // dropped — dropping it would lose ground the service does publish.
+      if (best >= 0) parts[best].push(hole); else parts.push([hole]);
+    }
+    return parts;
+  }
+  function esriGeometryToGeoJSON(geom) {
+    if (!geom) return null;
+    if (geom.rings && geom.rings.length) {
+      var parts = esriRingsToParts(geom.rings);
+      return parts.length === 1
+        ? { type: "Polygon", coordinates: parts[0] }
+        : { type: "MultiPolygon", coordinates: parts };
+    }
+    if (geom.paths && geom.paths.length) {
+      return geom.paths.length === 1
+        ? { type: "LineString", coordinates: geom.paths[0] }
+        : { type: "MultiLineString", coordinates: geom.paths };
+    }
+    if (typeof geom.x === "number" && typeof geom.y === "number") {
+      return { type: "Point", coordinates: [geom.x, geom.y] };
+    }
+    // A row the service publishes with no shape. ArcGIS's own GeoJSON export
+    // emits `"geometry": null` for these, so this matches it rather than
+    // dropping the row: hasUsableGeometry is what decides a layer is unusable.
+    return null;
+  }
+  /* The contract is "produce what f=geojson should have produced", including
+   * the transfer-cap flag the paged loader reads. `fieldNames` is optional; a
+   * caller that requested outFields=* passes nothing and gets every attribute,
+   * which is what the GeoJSON export does. */
+  function esriToGeoJSON(payload, fieldNames) {
+    var src = (payload && payload.features) || [];
+    var out = [];
+    for (var i = 0; i < src.length; i++) {
+      var attrs = src[i].attributes || {}, props = {}, k;
+      if (fieldNames && fieldNames.length) {
+        for (var f = 0; f < fieldNames.length; f++) props[fieldNames[f]] = attrs[fieldNames[f]];
+      } else {
+        for (k in attrs) {
+          if (Object.prototype.hasOwnProperty.call(attrs, k)) props[k] = attrs[k];
+        }
+      }
+      out.push({ type: "Feature", properties: props,
+                 geometry: esriGeometryToGeoJSON(src[i].geometry) });
+    }
+    var fc = { type: "FeatureCollection", features: out };
+    if (payload && payload.exceededTransferLimit) fc.exceededTransferLimit = true;
+    return fc;
+  }
+  /* Any ArcGIS query URL, fetched as Esri JSON and handed back as GeoJSON.
+   *
+   * The three loaders in this block cover the layers whose URL the engine
+   * builds. They are not most of them: Illinois alone has 51 county loaders
+   * that build their own query string, because each carries that county's own
+   * outFields, where clause and precision — and every one of the 41 layers the
+   * 2026-09-05 sweep found losing rings is behind one of those, not behind
+   * loadArcGISGeoJSON. So this is the entry point they share. A caller writes
+   * its URL with `f=json` exactly as it reads and passes it here; `fieldNames`
+   * is optional and defaults to every attribute, matching outFields=*.
+   *
+   * It REFUSES a url that does not ask for `f=json`, rather than fetching it
+   * anyway: the one way to reintroduce the defect after this change is to add
+   * a loader that asks for `f=geojson` and calls this, and a silent pass in
+   * that case is a wrong answer nobody would see. */
+  function fetchArcGISAsGeoJSON(url, opts, retries, fieldNames) {
+    if (!/[?&]f=json(&|$)/.test(url)) {
+      return Promise.reject(new Error(
+        "fetchArcGISAsGeoJSON needs f=json (the GeoJSON export unnests interior rings): " + url));
+    }
+    return fetchJSONWithRetry(url, opts || {}, retries === undefined ? 2 : retries)
+      .then(function (payload) { return esriToGeoJSON(payload, fieldNames); });
+  }
   function loadArcGISGeoJSON(serviceUrl) {
     // geometryPrecision=6 (~0.11 m) trims coordinate digits the server would
     // otherwise send at full float precision — no visible or classification
     // change at any zoom this map allows; a server that ignores it is unharmed.
-    var url = serviceUrl + "/query?where=1%3D1&outFields=*&f=geojson&outSR=4326&geometryPrecision=6";
+    // It is NOT a free parameter: LaSalle's precinct layer drops one interior
+    // ring from its GeoJSON export at precision 6 and keeps it at full
+    // precision, so a builder that omits it measures a layer this app fetches
+    // as clean. Esri JSON keeps the ring either way.
+    var url = serviceUrl + "/query?where=1%3D1&outFields=*&f=json&outSR=4326&geometryPrecision=6";
     return fetchJSONWithRetry(url, {}, 2)
-      .then(function (geojson) {
+      .then(function (payload) {
+        var geojson = esriToGeoJSON(payload);
         if (!hasUsableGeometry(geojson)) throw new Error("no usable geometry from " + serviceUrl);
         return geojson;
       });
@@ -7600,15 +7763,22 @@ function initIowaExplorer() {
    * caller whose full load filters (e.g. STATE='17') may pass the same
    * clause for exact parity. An empty result rejects like a null-geometry
    * one, so "no district here" is only ever concluded from the validated
-   * full set, never from a server quirk on the spatial query. ---------- */
+   * full set, never from a server quirk on the spatial query.
+   *
+   * This one asks for Esri JSON too. The SERVER decides containment here, so
+   * the exporter cannot change WHICH feature comes back — but the geometry it
+   * returns is what the map highlights and what the relationship outlines are
+   * drawn from, and an unnested hole draws a district over ground it does not
+   * cover. ---------- */
   function loadArcGISPointGeoJSON(serviceUrl, point, outFields, where) {
     var url = serviceUrl + "/query?where=" + encodeURIComponent(where || "1=1") +
       "&geometry=" + encodeURIComponent(point.lng + "," + point.lat) +
       "&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects" +
       "&outFields=" + encodeURIComponent(outFields || "*") +
-      "&outSR=4326&f=geojson&geometryPrecision=6";
+      "&outSR=4326&f=json&geometryPrecision=6";
     return fetchJSONWithRetry(url, {}, 1)
-      .then(function (geojson) {
+      .then(function (payload) {
+        var geojson = esriToGeoJSON(payload);
         if (!hasUsableGeometry(geojson)) throw new Error("point query returned no usable geometry: " + serviceUrl);
         return geojson;
       });
@@ -7620,8 +7790,12 @@ function initIowaExplorer() {
     var PAGE = 1000;
     function page(offset, acc) {
       var url = layerUrl + "/query?where=1%3D1&outFields=" + encodeURIComponent(outFields || "*") +
-        "&outSR=4326&f=geojson&geometryPrecision=6&resultRecordCount=" + PAGE + "&resultOffset=" + offset;
-      return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2).then(function (gj) {
+        "&outSR=4326&f=json&geometryPrecision=6&resultRecordCount=" + PAGE + "&resultOffset=" + offset;
+      // f=json, not f=geojson: the GeoJSON export unnests interior rings (see
+      // the arcgis-loader block for the measurement). esriToGeoJSON carries
+      // exceededTransferLimit through, which is what this loop pages on.
+      return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+        .then(esriToGeoJSON).then(function (gj) {
         var feats = (gj && gj.features) || [];
         acc = acc.concat(feats);
         var more = gj && (gj.exceededTransferLimit || (gj.properties && gj.properties.exceededTransferLimit));
@@ -8363,8 +8537,8 @@ function initIowaExplorer() {
     }
     var url = servicePath + "/" + layerIndex + "/query" +
       "?where=" + encodeURIComponent("STATE='" + STATE_FIPS + "'") +
-      "&outFields=" + (outFields || "*") + "&outSR=4326&f=geojson&geometryPrecision=5";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      "&outFields=" + (outFields || "*") + "&outSR=4326&f=json&geometryPrecision=5";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         // Esri REST can answer HTTP 200 with a JSON error envelope (throttling,
         // bad params) carrying no features; without this guard makeCached would
@@ -9191,7 +9365,7 @@ function initIowaExplorer() {
     if (names.length === 1) return names[0];
     return names.slice(0, -1).join(", ") + " and " + names[names.length - 1];
   }
-  // EIGHTY-FOUR MORE CITIES, AND THE PUBLISHER IS THE COUNTY. Eight Iowa
+  // NINETY-EIGHT MORE CITIES, AND THE PUBLISHER IS THE COUNTY. Nine Iowa
   // counties publish every city inside them with its clerk, its mayor and its
   // whole council -- the route ia-municipal-officeholders recorded as NOT YET
   // PROBED (the county auditors, Iowa Code 47.2). Three more counties publish
@@ -9292,8 +9466,8 @@ function initIowaExplorer() {
       // THE FIVE CITIES THIS APP CAN NAME FROM THEIR OWN PAGES, which is a
       // different thing from the 84 its COUNTY names in the branch below --
       // and where a city appears in both, the city's own page wins.
-      // 847 cities name nobody anywhere in this app (939 less these five, the
-      // 84 their counties publish, and the three that elect by ward).
+      // 833 cities name nobody anywhere in this app (939 less these five, the
+      // 98 their counties publish, and the three that elect by ward).
       // THAT NUMBER IS TYPED, NOT DERIVED, and this comment used to claim
       // otherwise. It has already been stale twice -- it read 932 and named
       // "the two that elect by ward" for a day after Cedar Rapids shipped as
@@ -9320,7 +9494,7 @@ function initIowaExplorer() {
       } else if (result.countyOfficials && result.countyOfficials.members &&
                  result.countyOfficials.members.length) {
         // NAMED BY THE COUNTY, NOT BY THE CITY, and the card says which.
-        // Nothing here asserts at-large: 93 of these officials carry a ward
+        // Nothing here asserts at-large: 104 of these officials carry a ward
         // their own county publishes, so the seat rides the row and the copy
         // makes no claim about how the rest are elected.
         wrap.appendChild(renderSectionLabel("CITY OFFICIALS"));
@@ -9884,9 +10058,9 @@ function initIowaExplorer() {
       "?where=" + encodeURIComponent("1=1") +
       "&geometry=" + encodeURIComponent(JSON.stringify(IA_BBOX_ENVELOPE)) +
       "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects" +
-      "&outFields=ZCTA5&returnGeometry=true&outSR=4326&f=geojson" +
+      "&outFields=ZCTA5&returnGeometry=true&outSR=4326&f=json" +
       "&geometryPrecision=4&maxAllowableOffset=0.0005";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
       .then(function (geojson) {
         if (!hasUsableGeometry(geojson)) throw new Error("TIGERweb ZCTA layer returned no usable geometry");
         return geojson;
@@ -9925,8 +10099,8 @@ function initIowaExplorer() {
     var url = USGS_POST_OFFICE_LAYER + "/query?geometry=" +
       [METRO_BBOX.minLng, METRO_BBOX.minLat, METRO_BBOX.maxLng, METRO_BBOX.maxLat].join(",") +
       "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects" +
-      "&where=1%3D1&outFields=NAME,ADDRESS,CITY,ZIPCODE&outSR=4326&f=geojson&geometryPrecision=6";
-    return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2).then(function (gj) {
+      "&where=1%3D1&outFields=NAME,ADDRESS,CITY,ZIPCODE&outSR=4326&f=json&geometryPrecision=6";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2).then(function (gj) {
       if (!hasUsableGeometry(gj)) throw new Error("no usable geometry from USGS structures layer 38");
       return gj;
     });
@@ -9981,8 +10155,8 @@ function initIowaExplorer() {
       var url = layerUrl + "/query?geometry=" +
         [METRO_BBOX.minLng, METRO_BBOX.minLat, METRO_BBOX.maxLng, METRO_BBOX.maxLat].join(",") +
         "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects" +
-        "&where=1%3D1&outFields=NAME,ADDRESS,CITY,ZIPCODE&outSR=4326&f=geojson&geometryPrecision=6";
-      return fetchJSONWithRetry(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2).then(function (gj) {
+        "&where=1%3D1&outFields=NAME,ADDRESS,CITY,ZIPCODE&outSR=4326&f=json&geometryPrecision=6";
+      return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2).then(function (gj) {
         if (!hasUsableGeometry(gj)) throw new Error("no usable geometry from " + label);
         return gj;
       });

@@ -12,21 +12,31 @@ Iowa's statutory commissioners of elections under Iowa Code 47.2 -- and noted
 that seven counties' HOME pages had been fetched, "which is what a homepage
 looks like either way and settles nothing".
 
-Probed properly on 2026-09-05 it settles a great deal. Eleven counties publish
-a full city-officials page; eight of them are current. Those eight name 84
+Probed properly on 2026-09-05 it settles a great deal. TWELVE counties publish
+a full city-officials page; NINE of them are current. Those nine name 98
 cities' officeholders, where this app could previously name EIGHT cities in
 the whole state. The answer was never a state office; it is the counties, one
 at a time, which is this project's own Knox lesson for the nth time: a level
 of government that has no answer is not evidence about the datum.
 
+AND THE TWELFTH IS THAT LESSON AGAIN, ONE LEVEL DOWN. Jasper was very nearly
+recorded as unmeasurable: every host permuted from its auditor's MAIL domain
+failed, and `jaspercounty.iowa.gov` has no A record at all. Its site is
+`jasperia.org` -- cited in three of this app's own data files the whole time --
+and that site LINKS OUT to the county's ELECTION AUTHORITY on its own host,
+`jaspercountyelections.iowa.gov`, which is where the city officials live. A
+county's election authority is a separate publisher on a separate host (the
+Knox and Johnson rule), and the county's own domain was already in the repo.
+Consult the data this app ships before permuting hostnames.
+
 THE CURRENCY GATE IS THE LOAD-BEARING ONE, AND IT IS A MEASUREMENT
 -------------------------------------------------------------------
 Iowa city officers are elected in November of ODD years and take office the
 following January, so a page maintained since the last city election cannot
-still be publishing a term that has already ended. Three of the eleven do:
+still be publishing a term that has already ended. Three of the twelve do:
 Sac (29 of its 61 officials), Shelby (38 of 77) and Winnebago (22 of 51), and
 all three show their four-year seats split across the SAME TWO CYCLES (2025
-and 2027) where the other eight straddle 2027 and 2029 -- the signature of a
+and 2027) where the other nine straddle 2027 and 2029 -- the signature of a
 page last touched after the November 2023 election, two years and one city
 election ago.
 
@@ -40,9 +50,10 @@ refusing loses a possibly-right answer, and that is the safe direction.
 
 WHAT THE 605 ACTUALLY ARE, SINCE "MAYOR, CLERK AND COUNCIL" UNDERSTATES IT
 ---------------------------------------------------------------------------
-421 council members, 84 mayors and 75 city clerks -- and 25 people who are
-none of those: 8 city administrators, 5 park commissioners, 5 park board
-members, 5 library trustees, a city manager and an administrative secretary.
+487 council members, 98 mayors and 86 city clerk rows across 85 cities (Andrew
+publishes two) -- and 39 people who are none of those: 12 city administrators,
+10 city attorneys, 5 park commissioners, 5 park board members, 5 library
+trustees, a city manager and an administrative secretary.
 They ship under the role their own county publishes, on the same card, because
 dropping them would be this app deciding which of a city's officials a reader
 is allowed to see. Several are appointed rather than elected, which is why the
@@ -50,9 +61,9 @@ card's block is headed CITY OFFICIALS and not a claim about who was elected.
 
 THE FLOOR IS EXPECTED TO FAIL, PERIODICALLY, BY DESIGN
 --------------------------------------------------------
-Exactly eight counties are current and MIN_COUNTIES is 8, so ONE county letting
+Exactly nine counties are current and MIN_COUNTIES is 9, so ONE county letting
 its page go stale fails this build -- not a collapse, one county. And every
-EVEN-YEAR JANUARY, when terms elected the previous November begin, all eight
+EVEN-YEAR JANUARY, when terms elected the previous November begin, all nine
 will briefly publish expired terms until each page is updated, so expect red
 for days or weeks each cycle. NEVER lower the floor to get past that: it is the
 only thing that makes a county quietly going stale visible.
@@ -60,7 +71,7 @@ only thing that makes a county quietly going stale visible.
 WHAT IS DELIBERATELY NOT CLAIMED
 ----------------------------------
 The seat ("Ward 3", "At Large") is carried where the county publishes it --
-93 of the 605 officials that ship, 106 across all eleven counties -- and no
+104 of the 710 officials that ship, 117 across all twelve counties -- and no
 other Iowa source pairs a council member with a ward at all. It is NOT a district card and NOT geometry: this
 file names a person and the seat their own county says they hold, and the
 `city-ward` layer stays the three cities whose boundaries this app actually
@@ -68,8 +79,8 @@ has. A city here that elects by ward gets its members named without any claim
 about which part of the city a reader is standing in.
 
 Nothing asserts at-large either. The five cities on `ia-city-officials.json`
-were each read from the city's own page and each verified at-large; these 84
-were not, and 109 of their officials carry a seat that says otherwise, so the
+were each read from the city's own page and each verified at-large; these 98
+were not, and 104 of their officials carry a seat that says otherwise, so the
 card's copy for them says who published the roster and stops there.
 
 NO HOME ADDRESSES. The county pages publish CITY HALL's address and phone
@@ -90,21 +101,30 @@ OUT_PATH = os.path.join(APP, "ia-county-city-officials.json")
 CONTACT = os.path.join(APP, "ia-city-contact.json")
 CITY_OWN = os.path.join(APP, "ia-city-officials.json")
 
-# Measured 2026-09-05 on the eight CURRENT counties, after the expired-term gate
-# and after the address test below: 84 distinct cities, 605 officials, 84 of 84
-# naming a mayor, 74 naming a clerk, 93 carrying a seat, 115 e-mails and 83
+# Measured 2026-09-05 on the NINE current counties, after the expired-term gate
+# and after the address test below: 98 distinct cities, 710 officials, 98 of 98
+# naming a mayor, 85 naming a clerk, 104 carrying a seat, 142 e-mails and 116
 # phones. The floors sit just under each measurement -- close enough that a
 # source quietly dropping a field fails here, loose enough that ordinary
 # turnover does not.
-MIN_COUNTIES = 8
-MIN_CITIES = 80
-MIN_OFFICIALS = 550
-MIN_MAYORS = 80               # measured 84 of 84. North English straddles the
+#
+# MIN_COUNTIES TRACKS THE CURRENT COUNT ON PURPOSE. It was 8 when eight were
+# current and is 9 now that Jasper ships, because the property worth keeping is
+# that ONE county going stale fails this build loudly. A floor left behind the
+# count would let the first county quietly drop out, which is the whole thing
+# the gate exists to prevent. Raise it when a county joins; never lower it to
+# get past a county going stale.
+MIN_COUNTIES = 9
+MIN_CITIES = 92
+MIN_OFFICIALS = 650
+MIN_MAYORS = 92               # measured 98 of 98. North English straddles the
                               # Iowa/Keokuk line: its mayor and council come
                               # from Iowa County's page and its clerk from
-                              # Keokuk's, so the merge is what makes it 84.
-MIN_EMAILS = 100              # measured 115; three of the eight publish none
-MIN_PHONES = 75               # measured 83; five of the eight publish none
+                              # Keokuk's, so the merge is what makes it whole.
+MIN_EMAILS = 125              # measured 142; FOUR of the nine publish none
+                              # (Iowa, Jackson, Keokuk, Muscatine)
+MIN_PHONES = 100              # measured 116; FIVE of the nine publish none
+                              # (Cerro Gordo, Iowa, Jackson, Keokuk, Muscatine)
 
 # Lifted unchanged in behaviour from build_ia_city_officials.py, which lifted it
 # from build_ia_county_officers.py: an address ships only if the officeholder's

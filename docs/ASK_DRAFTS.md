@@ -1288,13 +1288,101 @@ signing or paying.
 rostered municipalities need nothing from the League, and neither does the
 per-municipality route — that route is simply a poor one, which the sweep measured rather
 than assumed.
+## Ask 18 — Grundy County GIS: does your fee schedule cover the public map service too?
+
+**NOT YET ASKED — DRAFTED 2026-09-05. HELD.** The operator sends; nothing here
+is sent by the agent that wrote it.
+
+**Why this exists, and it is a question I should have asked before building.**
+`docs/EXPANSION_GUIDE.md` §3.5.1 makes reading the publisher's terms *step zero*
+of county research, ahead of every technical probe, and Grundy's fire, park and
+library districts were built without it. Asked afterwards, the answer is
+genuinely ambiguous rather than obviously fine:
+
+- The county **sells both of the things this build produced**.
+  `services/gis/gis_data_request.php` publishes a Data Request form and a fee
+  schedule with a **Tax Parcel Data** line — Parcel Data Package **$0.35 per
+  parcel** (real-estate information built into the price at $0.10 of it), plus a
+  **$100.00 processing and handling fee**, requested by section, township, full
+  county or custom area — **and a Government Boundary Data line reading
+  "Individual Boundary Data of Taxing Bodies $100.00"**. This build bulk-read
+  27,661 parcels and dissolved taxing-body boundaries: the two priced products.
+  Cheques are payable to the **Grundy County GIS Automation Fund**.
+- The county **also runs an open public ArcGIS Server** at
+  `maps.grundyco.org/arcgis/rest/services/…`, backing the "GIS Interactive Map"
+  property viewer it links from its own home page. **No token, no referer check,
+  no authentication**, and the service's `copyrightText` is **empty**.
+- The county's site-wide **Terms of Use carry no data clause at all** — it is a
+  boilerplate website agreement about user submissions and acceptable use, with
+  no redistribution, reuse or copyright assertion over GIS data.
+
+So this is NOT the Champaign/Piatt case, whose terms expressly forbid copying,
+public display and transfer, and NOT WinGIS's, whose data is sold under a signed
+Data License Agreement. It is a county that sells a bulk product and separately
+publishes a resident-facing service that says nothing. **Whether the fee
+schedule is meant to reach a derived layer built from that public service is the
+county's to say, not this project's to assume in either direction.**
+
+**Recipient:** the Data Request page names the office mailbox for exactly this
+question — **`gisdatarequest@grundycountyil.gov`** — and the county's GIS staff
+page (`services/gis/gis_database.php`) names Dave Ostrander, GIS Staff,
+(815) 941-6778. Send to the office mailbox and name him; both are
+county-published.
+
+---
+
+**Subject:** Using Grundy County's public GIS map service on a free civic site
+
+To the Grundy County GIS office (for the attention of Dave Ostrander),
+
+I run districtry, a free, non-commercial civic site that tells an Illinois
+resident which districts contain a point they click — https://districtry.com/il/
+
+Grundy County is already on it: your board districts and precincts, and your
+County Clerk's roster. I have also built fire protection, park and library
+district boundaries for the county, and I would like to check with you before
+they go live.
+
+They are not a copy of a dataset. Your public parcel map service at
+maps.grundyco.org publishes a `Districts` column naming every taxing body a
+parcel pays into; I read that column and merged the parcels into one shape per
+district, so what the site would draw is 13 fire, 6 library and 2 park district
+outlines and nothing else — no parcel numbers, no owner names, no assessment or
+billing information. The district names come from the county's own 2025 Tax
+Distribution List.
+
+What I want to be sure of is this. Your GIS Data Request page sets a fee
+schedule that covers both halves of what I have done — "Parcel Data Package"
+per parcel, and "Government Boundary Data — Individual Boundary Data of Taxing
+Bodies" at $100.00 — and I do not want to have taken through the public map
+service something the county intends to sell. Two questions, and a one-line
+answer to each is plenty:
+
+1. Does that fee schedule apply to data read from the public map service at
+   maps.grundyco.org, or only to files ordered through the Data Request form?
+2. Either way, may the county permit the district outlines described above to be
+   displayed on this site? I am glad to pay the boundary-data fee, to sign
+   whatever agreement the county uses, and to credit Grundy County GIS on every
+   card.
+
+**A "no" is a genuinely useful answer** and I will record it and remove the
+layers; I would rather have the county's word than my own reading of a terms
+page.
+
+Many thanks,
+
+<YOUR NAME>
+<YOUR E-MAIL>
 
 ---
 
 ## Ask 19 — Whiteside County GIS: permission to display three derived boundaries
 
-> **DRAFTED 2026-09-05, HELD. Not sent.** Ask 18 is Grundy's, on an unmerged
-> branch; this takes 19 so the two cannot collide whichever lands first.
+> **DRAFTED 2026-09-05, HELD. Not sent.** Ask 18 is Grundy's; this takes 19 so
+> the two cannot collide whichever lands first. Revised 2026-09-05 on review to
+> put the question the record already carried — whether the agreement binds a
+> user of the county's public service at all — to the county rather than
+> answering it here.
 
 **To:** Whiteside County GIS, `llee@whiteside.org` (815-772-5185, 200 East Knox
 Street, Morrison IL 61270) — the office that published both documents this ask
@@ -1347,10 +1435,12 @@ the same clause.
 > without the county's express written permission.
 >
 > So my question is that permission, not the data — I already have everything I
-> need from your public services and the Clerk's report. Concretely, I am asking
-> whether Whiteside County will permit districtry to display three derived
-> district boundaries publicly, on these conditions, which I will follow whether
-> or not you require them:
+> need from your public services and the Clerk's report. I am asking whether or
+> not the agreement binds someone who has only used your public map service: I
+> have not signed it, and I would rather have your answer than my own reading of
+> it. Concretely, I am asking whether Whiteside County will permit districtry to
+> display three derived district boundaries publicly, on these conditions, which
+> I will follow whether or not you require them:
 >
 > * every card naming a Whiteside district credits Whiteside County GIS as the
 >   source of the underlying parcel data;

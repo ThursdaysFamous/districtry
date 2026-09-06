@@ -45,3 +45,9 @@ dist/
 # and no exclude names them. Name a scratch harness like this and it cannot.
 /.scratch-*.mjs
 /.*-test.mjs
+
+# A --force-blocked build of a LICENSED source writes here, never into
+# il/data/app/. The licence forbids redistributing a derived product, and a
+# forgotten file in the tree is exactly how one would ship
+# (scripts/build_parcel_fabric_districts.py).
+/scratch/

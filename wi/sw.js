@@ -27,7 +27,7 @@
 // template starts at -v1: the app shell, icons, and the starter data
 // files bootstrap_state.py builds.)
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-wi-shell-v36";
+const CACHE_NAME = "districtry-wi-shell-v37";
 
 const SHELL_URLS = [
   "./",

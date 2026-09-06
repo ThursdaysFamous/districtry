@@ -286,6 +286,74 @@
    }
   ]
  },
+ "1904915": {
+  "city": "Baxter",
+  "members": [
+   {
+    "county": "Jasper",
+    "name": "Lucas Battani",
+    "role": "City Administrator"
+   },
+   {
+    "county": "Jasper",
+    "name": "Matt Brick",
+    "role": "City Attorney"
+   },
+   {
+    "county": "Jasper",
+    "email": "dkunkle@baxter-iowa.com",
+    "name": "Daniel Kunkle",
+    "role": "Mayor",
+    "termEnds": "2027",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Lindsay Bethards",
+    "role": "City Council",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Michael Churchill",
+    "role": "City Council",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Jamie Milligan",
+    "phone": "(641) 275-7527",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Joel Schabilion",
+    "role": "City Council",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Stephen Smith",
+    "phone": "(641) 417-1262",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   }
+  ],
+  "officeAddress": "P.O. Box 415 Baxter, IA 50028-0415",
+  "officePhone": "(641) 227-3120",
+  "sources": [
+   {
+    "county": "Jasper",
+    "url": "https://jaspercountyelections.iowa.gov/elected_officials/city/"
+   }
+  ]
+ },
  "1905185": {
   "city": "Beaver",
   "members": [
@@ -949,6 +1017,88 @@
    {
     "county": "Cerro Gordo",
     "url": "https://cerrogordo.gov/about/elected_officials/city/"
+   }
+  ]
+ },
+ "1915060": {
+  "city": "Colfax",
+  "members": [
+   {
+    "county": "Jasper",
+    "email": "colfaxcityclerk@gmail.com",
+    "name": "Nancy Earles",
+    "role": "City Clerk"
+   },
+   {
+    "county": "Jasper",
+    "name": "Wade Wagoner",
+    "role": "City Administrator"
+   },
+   {
+    "county": "Jasper",
+    "name": "Billy Mallory",
+    "phone": "(515) 274-1450",
+    "role": "City Attorney"
+   },
+   {
+    "county": "Jasper",
+    "email": "mastdlsa@yahoo.com",
+    "name": "David Mast",
+    "role": "Mayor",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Brad Magg",
+    "phone": "(515) 669-2239",
+    "role": "City Council",
+    "seat": "At Large",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Curtis Small",
+    "phone": "(515) 975-0822",
+    "role": "City Council",
+    "seat": "At Large",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Bryan Poulter",
+    "phone": "(515) 674-3278",
+    "role": "City Council",
+    "seat": "Ward 1",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Karla Jones",
+    "phone": "(515) 313-7375",
+    "role": "City Council",
+    "seat": "Ward 2",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "name": "Wes Snyder",
+    "phone": "(515) 313-1936",
+    "role": "City Council",
+    "seat": "Ward 3",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   }
+  ],
+  "officeAddress": "19 E Howard Street Colfax, IA 50054-1020",
+  "officePhone": "(515) 674-4096",
+  "sources": [
+   {
+    "county": "Jasper",
+    "url": "https://jaspercountyelections.iowa.gov/elected_officials/city/"
    }
   ]
  },
@@ -1808,6 +1958,62 @@
    }
   ]
  },
+ "1940440": {
+  "city": "Kellogg",
+  "members": [
+   {
+    "county": "Jasper",
+    "name": "Beth Steenhoek",
+    "role": "City Clerk"
+   },
+   {
+    "county": "Jasper",
+    "name": "Virgil Chance",
+    "role": "Mayor",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "name": "Larkin Christy",
+    "role": "City Council",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "name": "Chris Clark",
+    "role": "City Council",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "name": "Sherry Esqueda",
+    "role": "City Council",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "name": "Tenny Hinshaw",
+    "phone": "(641) 526-3258",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Arnold O'Dell",
+    "role": "City Council",
+    "termEnds": "2029"
+   }
+  ],
+  "officeAddress": "P.O. Box 45 Kellogg, IA 50135-0045",
+  "officePhone": "(641) 526-3403",
+  "sources": [
+   {
+    "county": "Jasper",
+    "url": "https://jaspercountyelections.iowa.gov/elected_officials/city/"
+   }
+  ]
+ },
  "1940980": {
   "city": "Keota",
   "members": [
@@ -2162,6 +2368,74 @@
    }
   ]
  },
+ "1942870": {
+  "city": "Lambs Grove",
+  "members": [
+   {
+    "county": "Jasper",
+    "email": "cityoflambsgrove@aol.com",
+    "name": "Brenda Hysell",
+    "role": "City Clerk",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "name": "Randy Caldwell",
+    "phone": "(641) 792-4160",
+    "role": "City Attorney",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "name": "Patrick Edwards",
+    "role": "Mayor",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "name": "John Bartello",
+    "phone": "(641) 792-1682",
+    "role": "City Council",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "name": "Catherine Fouts",
+    "phone": "(641) 792-9215",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Chris Norman",
+    "phone": "(515) 778-3027",
+    "role": "City Council",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "name": "Kathryn Strumpell",
+    "phone": "(817) 564-1552",
+    "role": "City Council",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "name": "(Matthew) Mason Strumpell",
+    "role": "City Council",
+    "termEnds": "2027"
+   }
+  ],
+  "officeAddress": "P.O. Box 1388 Lambs Grove, IA 50208",
+  "officePhone": "(641) 891-1309",
+  "sources": [
+   {
+    "county": "Jasper",
+    "url": "https://jaspercountyelections.iowa.gov/elected_officials/city/"
+   }
+  ]
+ },
  "1943050": {
   "city": "La Motte",
   "members": [
@@ -2287,6 +2561,70 @@
    {
     "county": "Boone",
     "url": "https://boonecounty.iowa.gov/about/elected_officials/city/"
+   }
+  ]
+ },
+ "1947595": {
+  "city": "Lynnville",
+  "members": [
+   {
+    "county": "Jasper",
+    "name": "Bev Arthur",
+    "role": "City Clerk"
+   },
+   {
+    "county": "Jasper",
+    "name": "Randy Caldwell",
+    "phone": "(641) 792-4160",
+    "role": "City Attorney"
+   },
+   {
+    "county": "Jasper",
+    "name": "Mark Newberg",
+    "phone": "(641) 780-4298",
+    "role": "Mayor",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "name": "Tanis Comegys",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Garrett DeHoedt",
+    "role": "City Council",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "name": "Jack Hill",
+    "role": "City Council",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "name": "Curt Routier",
+    "role": "City Council",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "email": "baileyterp@gmail.com",
+    "name": "Bailey Tompkins",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   }
+  ],
+  "officeAddress": "P.O. Box 115 Lynnville, IA 50153-0115",
+  "officePhone": "(641) 527-2790",
+  "sources": [
+   {
+    "county": "Jasper",
+    "url": "https://jaspercountyelections.iowa.gov/elected_officials/city/"
    }
   ]
  },
@@ -3056,6 +3394,91 @@
    }
   ]
  },
+ "1952815": {
+  "city": "Mingo",
+  "members": [
+   {
+    "county": "Jasper",
+    "email": "cityofmingo@outlook.com",
+    "name": "Sondra Kenney",
+    "role": "City Clerk"
+   },
+   {
+    "county": "Jasper",
+    "name": "Billingsley and Blair Walker",
+    "phone": "(641) 792-3595",
+    "role": "City Attorney"
+   },
+   {
+    "county": "Jasper",
+    "name": "Robert Perry",
+    "phone": "(515) 707-7102",
+    "role": "Mayor",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "email": "corybode@gmail.com",
+    "name": "Cory Bode",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Kristen Crozier",
+    "phone": "(515) 865-8991",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Tim Freeman",
+    "role": "City Council",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "name": "Evan Karsjen",
+    "role": "City Council",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "name": "Melanie Pleggenkuhle",
+    "phone": "(641) 363-4643",
+    "role": "City Council",
+    "termEnds": "2029"
+   }
+  ],
+  "officeAddress": "100 N Station P.O. Box 153 Mingo, IA 50168-0153",
+  "officePhone": "(641) 363-4441",
+  "sources": [
+   {
+    "county": "Jasper",
+    "url": "https://jaspercountyelections.iowa.gov/elected_officials/city/"
+   }
+  ]
+ },
+ "1952950": {
+  "city": "Mitchellville",
+  "members": [
+   {
+    "county": "Jasper",
+    "name": "Tony Jensen",
+    "role": "Mayor"
+   }
+  ],
+  "officeAddress": "204 Center Avenue N. P.O. Box 817 Mitchellville, IA 50169",
+  "officePhone": "(515) 967-2935",
+  "sources": [
+   {
+    "county": "Jasper",
+    "url": "https://jaspercountyelections.iowa.gov/elected_officials/city/"
+   }
+  ]
+ },
  "1953265": {
   "city": "Monmouth",
   "members": [
@@ -3111,6 +3534,78 @@
    {
     "county": "Jackson",
     "url": "https://jacksoncounty.iowa.gov/about/elected_officials/city/"
+   }
+  ]
+ },
+ "1953355": {
+  "city": "Monroe",
+  "members": [
+   {
+    "county": "Jasper",
+    "email": "monroecityhall@mchsi.com",
+    "name": "Kim Thomas",
+    "phone": "(641) 259-2319",
+    "role": "City Clerk"
+   },
+   {
+    "county": "Jasper",
+    "name": "Gil Caldwell",
+    "phone": "(641) 792-4160",
+    "role": "City Attorney"
+   },
+   {
+    "county": "Jasper",
+    "email": "dduinink@medacombb.net",
+    "name": "Douglas P. Duinink",
+    "role": "Mayor",
+    "termEnds": "2027",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Jasper",
+    "email": "aaalgreen10@gmail.com",
+    "name": "Andy Algreen",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Hayden Johnston",
+    "role": "City Council",
+    "status": "Elected to Fill Vacancy for Term Remainder",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "name": "Jennifer St. Peter",
+    "phone": "(515) 229-4950",
+    "role": "City Council",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "name": "Andrea Steenhoek",
+    "phone": "(515) 577-4724",
+    "role": "City Council",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "email": "butchumble@gmail.com",
+    "name": "Earl Butch Umble",
+    "phone": "(515) 210-0447",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   }
+  ],
+  "officeAddress": "P.O. Box 370 Monroe, IA 50170-0370",
+  "officePhone": "(641) 259-2319",
+  "sources": [
+   {
+    "county": "Jasper",
+    "url": "https://jaspercountyelections.iowa.gov/elected_officials/city/"
    }
   ]
  },
@@ -3195,6 +3690,86 @@
    {
     "county": "Muscatine",
     "url": "https://muscatinecountyiowa.gov/about/elected_officials/city/"
+   }
+  ]
+ },
+ "1956505": {
+  "city": "Newton",
+  "members": [
+   {
+    "county": "Jasper",
+    "email": "katrinad@newtongov.org",
+    "name": "Katrina Davis",
+    "phone": "(641) 792-2787",
+    "role": "City Clerk"
+   },
+   {
+    "county": "Jasper",
+    "email": "matt@newtongov.org",
+    "name": "Matt Muckler",
+    "phone": "(641) 792-2787",
+    "role": "City Administrator"
+   },
+   {
+    "county": "Jasper",
+    "name": "Randy J. Ervin",
+    "role": "Mayor",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "name": "Jeff Holshuh",
+    "role": "City Council",
+    "seat": "At Large",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "name": "Joe Mills",
+    "role": "City Council",
+    "seat": "At Large",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "email": "mark.hallam@usa.net",
+    "name": "Mark Hallam",
+    "role": "City Council",
+    "seat": "Ward 1",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Melissa Dalton",
+    "phone": "(641) 792-9916",
+    "role": "City Council",
+    "seat": "Ward 2",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "name": "Stacy Simbro",
+    "role": "City Council",
+    "seat": "Ward 3",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Amy Roth",
+    "role": "City Council",
+    "seat": "Ward 4",
+    "termEnds": "2029"
+   }
+  ],
+  "officeAddress": "101 W 4th Street South P.O. Box 399 Newton, IA 50208-0399",
+  "officePhone": "(641) 792-2787",
+  "sources": [
+   {
+    "county": "Jasper",
+    "url": "https://jaspercountyelections.iowa.gov/elected_officials/city/"
    }
   ]
  },
@@ -3318,6 +3893,63 @@
    {
     "county": "Keokuk",
     "url": "https://keokukcounty.iowa.gov/about/elected_officials/city/"
+   }
+  ]
+ },
+ "1958170": {
+  "city": "Oakland Acres",
+  "members": [
+   {
+    "county": "Jasper",
+    "name": "Mike Marquess",
+    "role": "City Attorney"
+   },
+   {
+    "county": "Jasper",
+    "email": "mayor.cityofOA@gmail.com",
+    "name": "Clinton Follette",
+    "role": "Mayor",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "name": "Lisa Griffith",
+    "role": "City Council",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "name": "Jared Johnston",
+    "role": "City Council",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "name": "Susan Martin",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Don Smith",
+    "phone": "(641) 236-3268",
+    "role": "City Council",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "name": "Zane Strawser-Picado",
+    "role": "City Council",
+    "termEnds": "2029"
+   }
+  ],
+  "officeAddress": "39 Fore Seasons Dr Oakland Acres, IA 50112-3007",
+  "officePhone": "(641) 521-9545",
+  "sources": [
+   {
+    "county": "Jasper",
+    "url": "https://jaspercountyelections.iowa.gov/elected_officials/city/"
    }
   ]
  },
@@ -3787,6 +4419,72 @@
    }
   ]
  },
+ "1964470": {
+  "city": "Prairie City",
+  "members": [
+   {
+    "county": "Jasper",
+    "email": "Jadi.brown@prairiecityiowa.us",
+    "name": "Jadi Brown",
+    "role": "City Clerk"
+   },
+   {
+    "county": "Jasper",
+    "email": "jerry.moore@prairiecityiowa.us",
+    "name": "Jerry Moore",
+    "role": "City Administrator"
+   },
+   {
+    "county": "Jasper",
+    "name": "Phil Holland",
+    "role": "Mayor",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "email": "joe.disney@prairiecityiowa.us",
+    "name": "Joe Disney",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "email": "derek.ingle@prairiecityiowa.us",
+    "name": "Derek Ingle",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "email": "beth.james@prairiecityiowa.us",
+    "name": "Beth James",
+    "role": "City Council",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "name": "Pam St. John",
+    "role": "City Council",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "name": "Darrin Telfer",
+    "role": "City Council",
+    "termEnds": "2029"
+   }
+  ],
+  "officeAddress": "P.O. Box 607 Prairie City, IA 50228-0607",
+  "officePhone": "(515) 994-2649",
+  "sources": [
+   {
+    "county": "Jasper",
+    "url": "https://jaspercountyelections.iowa.gov/elected_officials/city/"
+   }
+  ]
+ },
  "1964605": {
   "city": "Preston",
   "members": [
@@ -3842,6 +4540,71 @@
    {
     "county": "Jackson",
     "url": "https://jacksoncounty.iowa.gov/about/elected_officials/city/"
+   }
+  ]
+ },
+ "1965955": {
+  "city": "Reasnor",
+  "members": [
+   {
+    "county": "Jasper",
+    "name": "Randi Hofer",
+    "role": "City Clerk"
+   },
+   {
+    "county": "Jasper",
+    "name": "Nicholas Bailey",
+    "role": "City Attorney"
+   },
+   {
+    "county": "Jasper",
+    "email": "tami.weishaar@gmail.com",
+    "name": "Tami Weishaar",
+    "role": "Mayor",
+    "termEnds": "2027",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Darin Galbraith",
+    "role": "City Council",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "email": "bmorris@gmail.com",
+    "name": "Brandon Morris",
+    "role": "City Council",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "name": "Derek Rice",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Tara Rose Rice",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Pat Woody",
+    "role": "City Council",
+    "termEnds": "2029",
+    "termLength": "4 Years"
+   }
+  ],
+  "officeAddress": "P.O. Box 68 Reasnor, IA 50232-0068",
+  "officePhone": "(641) 793-2307",
+  "sources": [
+   {
+    "county": "Jasper",
+    "url": "https://jaspercountyelections.iowa.gov/elected_officials/city/"
    }
   ]
  },
@@ -4570,6 +5333,71 @@
    }
   ]
  },
+ "1976035": {
+  "city": "Sully",
+  "members": [
+   {
+    "county": "Jasper",
+    "email": "sullycty@netins.net",
+    "name": "Barbara Maasdam",
+    "phone": "(641) 594-3493",
+    "role": "City Clerk"
+   },
+   {
+    "county": "Jasper",
+    "name": "Gil Caldwell",
+    "phone": "(641) 792-4160",
+    "role": "City Attorney"
+   },
+   {
+    "county": "Jasper",
+    "name": "Brent Vander Molen",
+    "role": "Mayor",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "name": "Arnold Alt",
+    "role": "City Council",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "name": "Mary Carol Cross",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Tim LeCompte",
+    "role": "City Council",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Jasper",
+    "name": "Justin Van Soelen",
+    "role": "City Council",
+    "termEnds": "2029"
+   },
+   {
+    "county": "Jasper",
+    "name": "Jon VanWyk",
+    "role": "City Council",
+    "status": "Appointed to Fill Vacancy until Election",
+    "termEnds": "2029"
+   }
+  ],
+  "officeAddress": "P.O. Box 247 Sully, IA 50251-0247",
+  "officePhone": "(641) 594-3493",
+  "sources": [
+   {
+    "county": "Jasper",
+    "url": "https://jaspercountyelections.iowa.gov/elected_officials/city/"
+   }
+  ]
+ },
  "1976620": {
   "city": "Swaledale",
   "members": [
@@ -4810,6 +5638,71 @@
    {
     "county": "Crawford",
     "url": "https://www.crawfordcounty.iowa.gov/about/elected_officials/city/"
+   }
+  ]
+ },
+ "1980175": {
+  "city": "Valeria",
+  "members": [
+   {
+    "county": "Jasper",
+    "email": "cityofvaleria@yahoo.com",
+    "name": "Angie Craft",
+    "phone": "(515) 689-0201",
+    "role": "City Clerk"
+   },
+   {
+    "county": "Jasper",
+    "name": "Brian Kern",
+    "phone": "(515) 674-4242",
+    "role": "City Attorney"
+   },
+   {
+    "county": "Jasper",
+    "email": "zaclee2@msn.com",
+    "name": "Zach Lee",
+    "role": "Mayor",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "email": "sdcraft32@gmail.com",
+    "name": "Shane Craft",
+    "role": "City Council",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "name": "Jordan Dreher",
+    "role": "City Council",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "name": "Kathie Forck",
+    "role": "City Council",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "name": "Chris Molano",
+    "role": "City Council",
+    "termEnds": "2027"
+   },
+   {
+    "county": "Jasper",
+    "email": "nicoldsen@hotmail.com",
+    "name": "Nichol Oldsen",
+    "role": "City Council",
+    "termEnds": "2027"
+   }
+  ],
+  "officeAddress": "13922 Center Street Valeria, IA 50054",
+  "officePhone": "(515) 689-0201",
+  "sources": [
+   {
+    "county": "Jasper",
+    "url": "https://jaspercountyelections.iowa.gov/elected_officials/city/"
    }
   ]
  },

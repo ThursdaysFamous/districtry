@@ -2342,6 +2342,34 @@ Two corollaries the same day earned:
 
 ## 5.2 Is it the right source? — verification
 
+- **ASK ARCGIS FOR `f=json`, NEVER `f=geojson`.** The GeoJSON export is lossy in two
+  directions and both silently claim ground. It can UNNEST a feature's interior rings —
+  returning holes as separate shells, so a publisher's cutout becomes area the layer
+  claims — and on at least one org it FLATTENS a multipart polygon into one ring list, so
+  a part inside another part becomes a false hole. Esri JSON carries the structure in ring
+  WINDING and loses neither. Measured across the six shipped apps on 2026-09-05: **41 of
+  156 live polygon layers lost 1,376 interior rings**, 1,135 hole points got a card naming
+  a district that does not cover them, and 298.2 km² was claimed that publishers had cut
+  out. Three things follow.
+  - The nesting is done by `esriToGeoJSON` in `engine/index.html/arcgis-loader.txt`, and
+    the shared entry point for a loader that builds its own query string is
+    `fetchArcGISAsGeoJSON`, which REFUSES a url that does not ask for `f=json`. Reuse
+    them; do not write a fourth converter.
+  - **A python builder is usually saved by shapely and must not rely on it.** An unnested
+    inner shell is INVALID, so `make_valid` re-nests it — measured identical to the
+    corrected fetch, 0.000000 km² apart, on all nine Illinois builder layers that lose
+    rings. That is a real property that nothing stated and nothing checked; assert it per
+    feature with `scripts/arcgis_nesting.py` rather than trusting the repair to stay.
+  - **`geometryPrecision` can trigger the loss.** One county's precinct layer keeps its
+    interior ring in the GeoJSON export at full precision and drops it at
+    `geometryPrecision=6`. A probe that omits the parameter the app sends can measure a
+    layer as clean when it is not.
+- **A service's LAYER INDEX is per service, and a comment saying otherwise is not a
+  measurement.** One county's six hosted services publish their single layer at index 1
+  four times and at index 0 twice; the loader hardcoded 1 under a comment claiming they
+  all did, and two cards had been failing at fetch time — which the app renders as its
+  honest "data source didn't respond" state, so nothing looked wrong and no gate could
+  see it. Read the index from each service's own `?f=json` layer list.
 - **Currency is a measurement, not a reading of a name.** One county publishes three
   board-district layers; the best-labelled one holds the superseded 2011 plan and the plan
   in force sits in an undocumented layer with a typo in its own name. A plan drawn to a

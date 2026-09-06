@@ -40,12 +40,12 @@ Chicago District Explorer: a single-file, dependency-light web app. Click a poin
 
 ## Running & testing
 
-This list undercounts what actually runs: CI (`.github/workflows/smoke-test.yml`) had grown to 26
-static gates when this was last counted (2026-09-04), plus a Playwright smoke test per
+This list undercounts what actually runs: CI (`.github/workflows/smoke-test.yml`) had grown to 27
+static gates when this was last counted (2026-09-05), plus a Playwright smoke test per
 instance (`il`/`ca`/`ny`/`wi`/`ia`/`mi`), 2 root-page tests and the fleet
 point-transmission probe — one static-gate addition
-at a time, and nobody kept this section in step; the figure it carried before that count
-was 19, stale by six. It is dated rather than merely corrected because the next
+at a time, and nobody kept this section in step; the figure it carried before the 2026-09-04
+count was 19, stale by six, and that count lasted one day. It is dated rather than merely corrected because the next
 addition makes it wrong again and a bare number gives a reader no way to know. Treat the workflow
 file as the source of truth for the full battery and its order; `.claude/skills/steward/SKILL.md`
 mirrors it as locally-runnable commands with per-gate rationale, for driving a PR to green. What

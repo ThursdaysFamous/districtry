@@ -49,7 +49,7 @@
 | Fulton | 17057 | dispatch | districted | `county-board`, `county-precinct` | 2 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source) |
 | Gallatin | 17059 | dispatch | at-large — County card | `county-precinct` | 2 — `gallatin-board-contact` (data-quality); `library-districts-unmapped-counties` (no-source) |
 | Greene | 17061 | dispatch | at-large — County card | `county-precinct` | 1 — `library-districts-unmapped-counties` (no-source) |
-| Grundy | 17063 | dispatch | districted | `county-board`, `county-precinct` | 4 — `grundy-special-districts` (no-source); `library-districts-unmapped-counties` (no-source); `morris-ward-geometry` (no-source); `municipal-website-dead-ends` (data-quality) |
+| Grundy | 17063 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 3 — `grundy-special-district-boards` (data-quality); `morris-ward-geometry` (no-source); `municipal-website-dead-ends` (data-quality) |
 | Hamilton | 17065 | dispatch | at-large — County card | `county-precinct`, `fire-district` | 2 — `hamilton-municipal-officials` (no-source); `library-districts-unmapped-counties` (no-source) |
 | Hancock | 17067 | dispatch | districted | `county-board`, `county-precinct` | 2 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source) |
 | Hardin | 17069 | dispatch | no board layer — see gaps | `county-precinct` | 2 — `hardin-county-board` (no-source); `library-districts-unmapped-counties` (no-source) |
@@ -76,7 +76,7 @@
 | Mason | 17125 | dispatch | districted | `county-board` | 3 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source); `mason-precinct-vintage` (data-quality) |
 | Massac | 17127 | County card | at-large — County card | — | 2 — `library-districts-unmapped-counties` (no-source); `massac-precinct-geometry` (no-source) |
 | McDonough | 17109 | dispatch | districted | `county-board`, `county-precinct` | 2 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source) |
-| McHenry | 17111 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district` | 4 — `blocked-crawlers` (blocked); `county-board-office-addresses` (no-source); `mchenry-park-district` (no-source); `mchenry-ward-cities` (blocked) |
+| McHenry | 17111 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district` | 5 — `blocked-crawlers` (blocked); `county-board-office-addresses` (no-source); `mchenry-park-district` (no-source); `mchenry-precinct-service` (data-quality); `mchenry-ward-cities` (blocked) |
 | McLean | 17113 | dispatch | districted | `county-board`, `county-precinct` | 3 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source); `mclean-special-districts` (no-source) |
 | Menard | 17129 | dispatch | districted | `county-board`, `county-precinct` | 2 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source) |
 | Mercer | 17131 | dispatch | districted | `county-board`, `county-precinct` | 2 — `county-board-office-addresses` (no-source); `library-districts-unmapped-counties` (no-source) |
@@ -139,4 +139,4 @@ Counties outside the coverage ring that a research pass has already measured; ea
 
 ## Gap records not tagged to a county (1)
 
-City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 101 records in the Data gaps panel: `chicago-amenity-phones`.
+City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 102 records in the Data gaps panel: `chicago-amenity-phones`.
