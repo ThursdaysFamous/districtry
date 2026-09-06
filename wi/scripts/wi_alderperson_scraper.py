@@ -242,6 +242,7 @@ EAU_CLAIRE_INDEX = "https://www.eauclairewi.gov/310/City-Council"
 # policies for requests nobody makes. robots.txt was read for ALL TWENTY-TWO
 # candidate hosts before any page fetch, not just the five kept — none
 # carries a Disallow reaching these paths.
+NEW_LISBON_INDEX = "https://cityofnewlisbon.com/common-council"
 NEW_BERLIN_INDEX = "https://www.newberlinwi.gov/"
 STURGEON_BAY_INDEX = ("https://www.sturgeonbaywi.org/government/"
                       "city_council/index.php")
@@ -1130,6 +1131,44 @@ def _seats_or_die(city, members, seats):
     return members
 
 
+# ---------------------------------------------------------------- New Lisbon
+def scrape_new_lisbon():
+    """"Ward <list> Council Member | <name> | Phone: | ... | Term Expires:".
+
+    THE CITY NUMBERS ITS SEATS BY WARD GROUP, not by district: "Ward 1, 6 and
+    7 Council Member", "Ward 2 Council Member", "Ward 3", "Ward 4 and 5". That
+    grouping IS the district plan and LTSB says so independently — its ward
+    layer maps 1, 6 and 7 to ALDERID 01, 2 to 02, 3 to 03, and 4 and 5 to 04 —
+    so the pairing is witnessed live on every run rather than assumed, the same
+    posture Menomonie and Viroqua take for their one-ward-per-district pages.
+    A re-warding that broke the grouping fails here instead of moving a name.
+
+    E-MAIL IS NOT READ: the page serves every address through Cloudflare's
+    obfuscation ("[email protected]"), which is an access control and is not
+    worked around. The phones are published in the clear and do ship.
+    """
+    ward_to_alder = ltsb_ward_to_alder("New Lisbon", "C")
+    page = fetch(NEW_LISBON_INDEX)
+    flat = re.sub(r"\|+", "|", re.sub(r"<[^>]+>", "|", H.unescape(page)))
+    members = {}
+    for m in re.finditer(r"Ward\s+([\d,\s and]+?)\s+Council Member[\s|]+"
+                         r"([A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]*\.?){1,3})"
+                         r"((?:[^|]*\|){0,4})", flat):
+        wards = [int(w) for w in re.findall(r"\d+", m.group(1))]
+        ids = {ward_to_alder.get(w) for w in wards}
+        if len(ids) != 1 or None in ids:
+            raise SystemExit(
+                "new lisbon: the page groups wards %s as one seat and LTSB puts "
+                "them in districts %s — the ward plan moved, so which seat this "
+                "name holds is not settled" % (wards, sorted(x for x in ids if x)))
+        entry = {"name": m.group(2).strip()}
+        ph = re.search(r"\(?\d{3}\)?[ .-]?\d{3}-\d{4}", m.group(3))
+        if ph:
+            entry["phone"] = " ".join(ph.group(0).split())
+        _put("new lisbon", members, ids.pop(), entry)
+    return _seats_or_die("new lisbon", members, 4), NEW_LISBON_INDEX
+
+
 # ---------------------------------------------------------------- New Berlin
 def scrape_new_berlin():
     """Cards whose NAME PRECEDES the "District N" label."""
@@ -1507,7 +1546,8 @@ def main():
             ("77875", "Sturgeon Bay", 7, scrape_sturgeon_bay),
             ("01550", "Altoona", 6, scrape_altoona),
             ("21625", "Eagle River", 4, scrape_eagle_river),
-            ("28875", "Germantown", 4, scrape_germantown)):
+            ("28875", "Germantown", 4, scrape_germantown),
+            ("56900", "New Lisbon", 4, scrape_new_lisbon)):
         result, reason = attempt(name, fn)
         if result is None:
             failures[code] = {"municipality": name, "reason": reason}

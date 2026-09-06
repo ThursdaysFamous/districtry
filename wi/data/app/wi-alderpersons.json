@@ -685,6 +685,29 @@
   "seats": 7,
   "sourceUrl": "https://www.newberlinwi.gov/"
  },
+ "56900": {
+  "members": {
+   "01": {
+    "name": "Ken Southworth",
+    "phone": "(608) 562-3024"
+   },
+   "02": {
+    "name": "Sheldon LaBudda",
+    "phone": "(608) 343-5562"
+   },
+   "03": {
+    "name": "Christopher Ulrich",
+    "phone": "(608) 542-0422"
+   },
+   "04": {
+    "name": "Marv Newlun",
+    "phone": "(608) 562-3035"
+   }
+  },
+  "municipality": "New Lisbon",
+  "seats": 4,
+  "sourceUrl": "https://cityofnewlisbon.com/common-council"
+ },
  "64100": {
   "members": {
    "01": {
