@@ -278,6 +278,13 @@ jobs:
       - name: No app requests the lossy ArcGIS GeoJSON export
         run: python3 scripts/validate_arcgis_format.py
 
+      # The nesting itself, on fixtures rather than on whichever county server
+      # happens to answer. Every ArcGIS response the smoke tests touch is
+      # stubbed, so before this the polygon path — orphan CCW rings, collapsed
+      # rings, a shell no larger than its hole — ran in CI only by accident.
+      - name: Esri ring nesting behaves on fixtures
+        run: node scripts/esri_rings_test.mjs
+
       # ADDING A STATE IS NOT ONE EDIT. The instance is a folder, and a dozen
       # other places have to learn its tag — the generator's table, the fleet
       # manifest, four hand-kept tables in four builders, and the three literal

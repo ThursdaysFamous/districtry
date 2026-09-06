@@ -429,7 +429,8 @@ def run(check):
         # This layer is the fleet's worst case for the ArcGIS GeoJSON export's
         # unnesting: the same query answers 446 interior rings as GeoJSON and
         # 1,663 as Esri JSON. clean() re-nests every one of them — measured
-        # 2026-09-05, identical hole counts and 0.000000 km2 apart — and that
+        # 2026-09-05, 0.000000 km2 apart once repaired (the RING COUNTS match
+        # only after the repair, never before it) — and that
         # is a property, not a coincidence, so it is asserted rather than
         # assumed (scripts/arcgis_nesting.py).
         nesting_pairs.append((raw, g))

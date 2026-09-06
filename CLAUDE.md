@@ -40,8 +40,8 @@ Chicago District Explorer: a single-file, dependency-light web app. Click a poin
 
 ## Running & testing
 
-This list undercounts what actually runs: CI (`.github/workflows/smoke-test.yml`) had grown to 27
-static gates when this was last counted (2026-09-05), plus a Playwright smoke test per
+This list undercounts what actually runs: CI (`.github/workflows/smoke-test.yml`) had grown to 28
+static gates when this was last counted (2026-09-06), plus a Playwright smoke test per
 instance (`il`/`ca`/`ny`/`wi`/`ia`/`mi`), 2 root-page tests and the fleet
 point-transmission probe — one static-gate addition
 at a time, and nobody kept this section in step; the figure it carried before the 2026-09-04
