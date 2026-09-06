@@ -255,6 +255,20 @@ LOCAL_COMPOSITION = {
         # Green Lake files the other six uncoded — and 7 is precisely the ward
         # the page pairs with ward 1 under one alderperson. The counties' filing
         # and the city's page agree on the single ward both describe.
+        #
+        # BERLIN CARRIES ONE INFERENCE THE OTHER THREE DO NOT, AND IT IS NAMED
+        # HERE RATHER THAN LEFT IMPLICIT IN THE TABLE ABOVE. The page gives the
+        # GROUPING and never a district NUMBER — it names wards, not districts —
+        # so `district N = ward N` for the five single-ward seats is this
+        # project's reading, not the city's statement. One label is anchored:
+        # Waushara's 7 -> 01 fixes the {1,7} seat as district 01. The other five
+        # are the inference, and NO GATE HERE CAN CATCH IT: each of those
+        # districts is a single ward, so any permutation among them leaves the
+        # balance below identical. It is the only reading the page admits.
+        # Compare WAUPACA, which stays out of this table for the same class of
+        # problem — its page numbers 1-5 where LTSB keys 41-45, with nothing
+        # witnessing the correspondence. Berlin has an anchor that agrees;
+        # Waupaca has a visible mismatch.
         "balance": 12.55,
     },
     "22575": {
@@ -449,6 +463,15 @@ def apply_local_composition(attr_feats):
         #    a handful of these wards with real ids; those are an independent
         #    edition of the same fact and a disagreement means one of the two is
         #    describing a different plan.
+        #
+        #    FOR THREE OF THE FOUR CITIES THIS IS ONE WARD, AND ONE WARD IS A
+        #    KEYING CHECK RATHER THAN A COMPOSITION CHECK. It proves the city's
+        #    district NUMBERING is the numbering LTSB keys the geometry by —
+        #    ruling out an off-by-one or a relabelled plan — and says nothing
+        #    about where the city's other wards sit. Appleton is the exception
+        #    at ten of sixty; Edgerton is covered a different way, by
+        #    _service_witness re-deriving every ward from the city's polygons.
+        #    Kaukauna and Berlin rest on ONE PUBLISHER plus the balance figure.
         for f in feats:
             p = f["properties"]
             if not is_coded(p.get("ALDERID")):
@@ -553,6 +576,14 @@ def _balance_witness(cousub, spec, ward_to_dist):
     an independent voice, and it is worth running for what it does catch: a
     composition that groups the right wards into the wrong districts balances
     differently, and a re-warding moves it immediately.
+
+    IT IS DRIFT DETECTION AND NOT A CEILING. It pins each city's MEASURED
+    figure and fails at +/-BALANCE_TOL in EITHER direction, so a re-warding or a
+    mis-transcription stops the build; it enforces no maximum deviation at all,
+    and it is NOT the 30% BALANCE_DEV_MAX the Illinois county-board dissolves
+    carry. Berlin's 12.55% is not a shortfall against anything — it is what a
+    six-seat city of 5,571 people measures. A figure that IMPROVES fails exactly
+    as one that worsens, because both mean the plan under it moved.
 
     IT IS NOT ASSERTED AS A CENSUS IDENTITY. That column runs a little above or
     below each city's Census 2020 count (Berlin 5,571 against 5,486; Edgerton
