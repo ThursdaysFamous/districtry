@@ -112,7 +112,55 @@ const OUT = join(ROOT, "point-transmission.json");
 const BASE = (process.env.BASE_URL || "http://localhost:8000").replace(/\/+$/, "") + "/";
 const CHECK = process.argv.includes("--check");
 const BOOT_TIMEOUT = 45000;
-const SETTLE_MS = 6000;   // time for every layer's query to reach its loader
+
+// WAIT FOR THE CONDITION, NEVER FOR THE CLOCK. This used to be a fixed
+// SETTLE_MS = 6000 per selected point, and a fixed wall-clock wait is a race
+// dressed as a constant: it failed CI on four unrelated PRs on 2026-09-06,
+// every time with the same signature — Illinois measuring 18 of 39 instead of
+// 19, `ward` dropping out — and every time went green on a re-run of the
+// identical tree.
+//
+// SETTLED AS "THE PROBE READ TOO EARLY", not "the layer stopped sending", and
+// settled on the code rather than by re-running until green: `loadWards` is a
+// makeCachedLoader, so its .atPoint is the generic Socrata point query, and
+// neither that helper nor queryFeatureAt nor the ward entry appears in the
+// diff of #769 (the f=json loader switch) or #785.
+//
+// REPRODUCED by shrinking the constant: at 6000 ms and 1500 ms Illinois reads
+// 19, at 800 ms it reads 18. `ward` dispatches through registerCountyLayer,
+// and THAT PATH ASKS COVERAGE TWICE — the layer-level OR decides whether the
+// query runs at all, and the dispatcher's own coverageMatches() runs AGAIN
+// inside query(), before any entry's query reaches queryFeatureAt. So one
+// root cause puts `ward` in either of two buckets depending on which round the
+// clock expires in, and both have been observed: CI reported "holds a hook and
+// never fires it" (asked, still resolving the INNER round), while here — the
+// ERSB tiling fetch never succeeding — it reads `layers_unexercised` (never
+// asked, still resolving the OUTER one). A wait watching only one of the two
+// would leave half the flake in place.
+//
+// SO "NO QUERY STILL RUNNING" IS THE WRONG CONDITION IN BOTH DIRECTIONS, and
+// both halves were measured rather than reasoned about. Too EARLY: while a
+// coverage test is still resolving nothing is in flight at all, and a drain
+// test calls that settled and reads before `ward` is ever asked. Too LATE: a
+// query whose answer is already recorded can go on running for a minute
+// against an unreachable service — with the government APIs down, Illinois
+// still had 22 queries open 40 s after the click, `ward` among them, having
+// fired its hook in the first second. Waiting for those makes the gate
+// hostage to the slowest government API instead of to the app's own control
+// flow.
+//
+// The condition is that nothing remains pending that could still CHANGE an
+// answer, sustained for QUIET_MS with at least one layer asked. Two things
+// can: a coverage test still resolving (the layer has not been asked yet),
+// and a running query on a layer that still holds an .atPoint token which has
+// not fired (both its own verdict and the distinct-hook count can still move).
+// A running query whose every token has already fired is not pending.
+const QUIET_MS = 750;
+// Generous on purpose: this bounds how long an undecided layer may take, and
+// one fetchJSONWithRetry alone runs ~28 s against a dead host (3 attempts,
+// 9 s each, 0.5 s + 1 s between). Reached only when a layer never resolves,
+// which is the case that MUST fail rather than record a smaller number.
+const SETTLE_TIMEOUT_MS = 90000;   // per point, before this fails LOUDLY
 
 // The point to select. Each instance's own worksheet anchor is used because it
 // is chosen to be INSIDE that instance's coverage — a point outside it would
@@ -235,7 +283,7 @@ async function measure(browser, tag) {
     problem(`${tag}: registerCountyLayer injection matched ${injectedCounty} of ${countySites} sites`);
 
   const points = [anchorOf(tag), ...(EXTRA_POINTS[tag] || [])];
-  const observed = await page.evaluate(async ({ points, settle }) => {
+  const observed = await page.evaluate(async (opts) => {
     const ns = Object.keys(window).find((k) => /Explorer$/.test(k) && window[k] && window[k].__probeLayers);
     const api = window[ns];
     const layers = api.__probeLayers;
@@ -260,6 +308,8 @@ async function measure(browser, tag) {
 
     const fired = new Set();        // loader tokens whose .atPoint actually ran
     const queried = new Set();      // layer ids whose query() was invoked
+    const running = new Set();      // query() promises not yet settled
+    const resolving = new Set();    // coverage() promises not yet settled
     const holders = new Map();      // layer id -> loader tokens it holds
     const bodies = new Map();       // loader token -> the hook's source text
     const tokenOf = new WeakMap();
@@ -304,10 +354,28 @@ async function measure(browser, tag) {
       holders.set(m.id, mine);
 
       // Record that a layer was actually ASKED. Without this, a layer supp-
-      // ressed by coverage reads exactly like one that does not send.
+      // ressed by coverage reads exactly like one that does not send. Both the
+      // coverage test and the query are tracked in flight, because the wait
+      // below is on the app's own control flow reaching a state where no
+      // answer can still move — see QUIET_MS.
+      function track(fn, set) {
+        return function () {
+          const out = fn.apply(this, arguments);
+          if (out && typeof out.then === "function") {
+            const rec = { id: m.id };
+            set.add(rec);
+            out.then(function () { set.delete(rec); },
+                     function () { set.delete(rec); });
+          }
+          return out;
+        };
+      }
+      // A layer with no coverage test is dispatched straight away and needs no
+      // tracking; one that answers synchronously is never in flight.
+      if (typeof m.coverage === "function") m.coverage = track(m.coverage, resolving);
       if (typeof m.query === "function") {
-        const original = m.query;
-        m.query = function () { queried.add(m.id); return original.apply(this, arguments); };
+        const asked = track(m.query, running);
+        m.query = function () { queried.add(m.id); return asked.apply(this, arguments); };
       }
     }
 
@@ -316,9 +384,55 @@ async function measure(browser, tag) {
     // accumulate, so a layer only has to be in coverage at ONE of them.
     for (const box of document.querySelectorAll('input[type="checkbox"][id^="toggle-"]'))
       if (!box.checked) box.click();
-    for (const pt of points) {
+    // Everything still pending that could change an answer — see QUIET_MS.
+    function pending() {
+      const out = [];
+      for (const r of resolving) out.push("coverage:" + r.id);
+      for (const r of running) {
+        const held = holders.get(r.id) || [];
+        if (held.some(function (t) { return !fired.has(t); })) out.push("query:" + r.id);
+      }
+      return [...new Set(out)].sort();
+    }
+
+    // WAIT FOR THE CONDITION, never for the clock. `queried.size > 0` stops an
+    // instant accept in the moment before the app has dispatched anything, and
+    // holding the asked and fired counts steady across the quiet interval
+    // covers the microtask gap between a coverage test resolving and the query
+    // it releases being dispatched.
+    const timedOut = [];
+    async function settleAfterSelect(label) {
+      const start = Date.now();
+      let quietSince = null, lastAsked = -1, lastFired = -1;
+      for (;;) {
+        const stuck = pending();
+        const asked = queried.size, hooks = fired.size;
+        if (!stuck.length && asked === lastAsked && hooks === lastFired && asked > 0) {
+          if (quietSince === null) quietSince = Date.now();
+          else if (Date.now() - quietSince >= opts.quiet) return;
+        } else {
+          quietSince = null;
+        }
+        lastAsked = asked; lastFired = hooks;
+        if (Date.now() - start >= opts.timeout) {
+          // NEVER return a smaller number quietly. A gate whose failure mode is
+          // "measured less than is there" publishes an app confessing to fewer
+          // transmissions than it makes.
+          timedOut.push({ point: label, pending: stuck, asked: asked });
+          return;
+        }
+        await new Promise((r) => setTimeout(r, 50));
+      }
+    }
+
+    for (const pt of opts.points) {
+      // Work left over from the previous point cannot change an answer — the
+      // app's own `sequence` guard discards its result — so it is not waited
+      // on. A late hook from one still counts: the app really did send.
+      running.clear();
+      resolving.clear();
       api.setSelectedPoint(pt.lat, pt.lng);
-      await new Promise((r) => setTimeout(r, settle));
+      await settleAfterSelect(pt.lat.toFixed(5) + "," + pt.lng.toFixed(5));
     }
 
     return {
@@ -330,9 +444,23 @@ async function measure(browser, tag) {
       })),
       firedBodies: [...fired].map((t) => bodies.get(t)),
       allBodies: [...bodies.values()],
+      timedOut,
     };
-  }, { points: points.map((p) => ({ lat: p.lat, lng: p.lng })), settle: SETTLE_MS });
+  }, { points: points.map((p) => ({ lat: p.lat, lng: p.lng })),
+       quiet: QUIET_MS, timeout: SETTLE_TIMEOUT_MS });
   await ctx.close();
+
+  // FAIL LOUDLY ON A TIMED-OUT WAIT. The whole point of waiting for the
+  // condition is that the probe knows when it has seen everything; when it does
+  // not, the only honest outcome is an error. A smaller number recorded quietly
+  // is worse than a red gate — it publishes an app confessing to fewer
+  // transmissions than it makes, on a page whose entire standard is that the
+  // number was measured rather than believed.
+  for (const t of observed.timedOut)
+    problem(`${tag}: not settled ${SETTLE_TIMEOUT_MS} ms after selecting ${t.point} — pending: ` +
+            `${t.pending.join(", ") || "nothing, so the quiet interval never elapsed"}; ` +
+            `${t.asked} layer(s) asked. Any count from this run would UNDERSTATE what this ` +
+            `app sends, so it is failed rather than recorded.`);
 
   const sending = observed.layers.filter((o) => o.sends).map((o) => o.id).sort();
   // Asked, holds a hook, did not fire it: a real measurement — its query does
