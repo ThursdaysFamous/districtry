@@ -159,6 +159,13 @@
   "route": "page",
   "sourceUrl": "https://madisoncounty.iowa.gov/offices/board-of-supervisors/"
  },
+ "19123": {
+  "chair": "Mark Groenendyk",
+  "county": "Mahaska",
+  "meetingDate": "2026-08-03",
+  "route": "minutes",
+  "sourceUrl": "https://www.mahaskacountyia.gov/board_of_supervisors/minutes/"
+ },
  "19125": {
   "chair": "Kisha Jahner",
   "county": "Marion",
