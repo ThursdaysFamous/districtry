@@ -696,6 +696,26 @@ try {
       await page.close();
     }
 
+    // FLINT, the fourth entry — the one furthest down the dispatcher's OR, so
+    // this is also the check that the table has not started shadowing its tail.
+    {
+      const page = await booted(context, `${BASE}#point=43.02123,-83.70302&layers=city-ward`);
+      const card = await cardText(page, "city-ward");
+      const pill = await page.evaluate(() => {
+        const el = document.getElementById("card-city-ward");
+        const p = el && el.parentElement ? el.parentElement.querySelector(".card-id-pill") : null;
+        return p ? p.textContent.trim() : null;
+      });
+      check("city-ward resolves a Flint point to its own ward",
+        pill === "Ward 5", `pill=${JSON.stringify(pill)}`);
+      // Flint's council page names exactly one person beside a ward and he died
+      // in 2024. Nobody is named on this card, deliberately.
+      check("Flint's card names nobody",
+        /no current list of who holds each seat/.test(card.text || "") &&
+        !/Mays/.test(card.text || ""), (card.text || "").slice(0, 130));
+      await page.close();
+    }
+
     // THE SCENARIO THAT ACTUALLY CATCHES THE ORIGINAL BUG, and the two checks
     // above do not. The ward-agnostic literal only misfired on a ward the city
     // named SHORT, and Wards 2 and 3 are named in full — so under the broken
