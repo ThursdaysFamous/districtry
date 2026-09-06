@@ -1067,20 +1067,6 @@ detail into `blocker`.
       "wanted": "The 17 precinct boundaries in any form, even a scanned paper map — or the Clerk's word that they exist on paper only."
     },
     {
-      "id": "mchenry-precinct-service",
-      "concept": "Voting precincts",
-      "area": "McHenry County",
-      "counties": [
-        "mchenry"
-      ],
-      "kind": "data-quality",
-      "layer": "county-precinct",
-      "summary": "McHenry County's precinct card can't answer — the county's precinct map moved and the two maps that could replace it disagree about how many precincts there are.",
-      "why": "The service this app read has been emptied out. The county still publishes precincts in two other places, one with 223 and one with 212, and picking the wrong one would name the wrong precinct rather than none.",
-      "blocker": "MEASURED 2026-09-05, as a side finding of the ArcGIS ring-nesting sweep — nothing was looking for it, and no gate could see it: the layer fails at fetch time, so it degrades to the shared per-layer error card, which is honest and invisible to every static check. `services1.arcgis.com/6iYC5AXXYapRVNzl/arcgis/rest/services/Precincts/FeatureServer` answers 200 with an EMPTY `layers` array, so `loadMchenryPrecincts` resolves to nothing. The org still carries four precinct-ish services and TWO ARE PLAUSIBLE AND DISAGREE: `Voting_Precincts` layer 0 is a 223-feature polygon layer carrying the exact `PrecinctName` field the loader asks for, and `2021_Proposed_Precincts` layer 1 — titled \"Current Precincts\" inside a service named PROPOSED — carries 212, which is also exactly the Census 2020 voting-district count for FIPS 17111. A census match is evidence, not proof: a county that re-precincted AFTER 2020 would no longer match it, and 223 is the shape of a pre-2021 plan. Neither service publishes a lastEditDate. THE NAMES ARE THE LEAST RELIABLE THING HERE, which is the Vermilion lesson exactly — that county's well-labelled `CountyBoardDistricts` held the superseded plan while the one in force sat under `CountyBoardDistrcts2021`, a typo — so this is recorded rather than guessed. McHenry is one of the three counties whose site blocks all automated fetch (#235), so the county's own precinct page cannot be read to settle it, and the roster it already ships is hand-verified for the same reason. WHAT WOULD SETTLE IT: a certified McHenry canvass with a per-precinct table (the county's election authority publishes separately from its website — the Johnson/Perry route), or one line from the Clerk naming which service is current. Either answer is a one-word change to `loadMchenryPrecincts`.",
-      "wanted": "Which of the county's two published precinct layers is current — 223 features or 212 — or any certified per-precinct canvass that settles the count."
-    },
-    {
       "id": "mchenry-park-district",
       "concept": "Park districts",
       "area": "McHenry County",
@@ -2541,20 +2527,29 @@ is to reproduce the service's contract and the contract changed.
   17 library districts with officer names and phones. Fixed; the index is a parameter now.
   (Fulton's record already carried this lesson — "NOTE THE LAYER ID" — for a different
   county.)
-* **McHenry's precinct service publishes NO layers, and picking its replacement is not
-  this change's to make.** `services1.arcgis.com/6iYC5AXXYapRVNzl/.../Precincts/FeatureServer`
-  answers with an empty `layers` array, so `loadMchenryPrecincts` resolves to nothing and
-  McHenry's precinct card has been showing the "data source didn't respond" state. The
-  org still publishes four precinct-ish services and **they disagree**: `Voting_Precincts`
-  carries 223 features with the exact `PrecinctName` field the loader asks for, while
-  `2021_Proposed_Precincts` layer 1 — named "Current Precincts", inside a service named
-  *Proposed* — carries **212**, which is also exactly the Census 2020 voting-district
-  count for McHenry (FIPS 17111). A count matching the census is evidence and not proof,
-  the two candidates cannot both be current, and the county is one of the three that
-  block automated fetch, so this ships as a recorded gap (`mchenry-precinct-service`)
-  rather than as a guess between two layers whose own names are the least reliable thing
-  about them — the Vermilion lesson, where the well-labelled board layer was the obsolete
-  one and the plan in force sat under a typo.
+* **McHenry's precinct service published NO layers — SETTLED AND SHIPPED 2026-09-06, and
+  the layer whose NAME said it was current was the wrong one.**
+  `services1.arcgis.com/6iYC5AXXYapRVNzl/.../Precincts/FeatureServer` answers 200 with an
+  empty `layers` array, so `loadMchenryPrecincts` resolved to nothing and the county's
+  precinct card had been showing the shared "data source didn't respond" state — honest,
+  invisible to every static gate, and wrong. The org still publishes two candidates that
+  DISAGREE: `Voting_Precincts` layer 0 with 223 features, and `2021_Proposed_Precincts`
+  layer 1 — titled **"Current Precincts"**, inside a service named *Proposed* — with 212.
+  The gap record shipped rather than guessing between them, and it was right to: **212 is
+  the SUPERSEDED plan.** ISBE's certified returns settle it from outside the county
+  entirely — McHenry reported 212 precincts in the 2020 General and 223 in every election
+  from the 2022 General through the 2026 Primary (`scripts/isbe_precinct_fabric.py
+  --compare 58 69 --county MCHENRY`, then `--compare 62 69` for the stability check) — and
+  the 2026 names match `Voting_Precincts`' own `PrecinctName` values **223/223 with no
+  alias**. **THE CENSUS AGREEMENT WAS EVIDENCE FOR THE WRONG LAYER**: 212 equals the
+  Census 2020 voting-district count for FIPS 17111 *because* 212 was the 2020 fabric, so
+  the check that looked like corroboration was pointing at the plan the county had already
+  replaced. A count matching the census dates a layer; it does not make it current. This
+  is the Vermilion trap with the labels swapped — there the well-named layer held the old
+  plan and a typo held the new one; here a service named *Proposed* holds a layer titled
+  *Current* that is neither. **AND IT WAS SETTLED WITHOUT READING THE COUNTY'S SITE**,
+  which is one of the three that block automated fetch: the state's own certified returns
+  answered a question about a county nobody here can ask directly.
 
 **HOW TO RE-RUN IT.** `scripts/probe_arcgis_ring_nesting.mjs` records every ArcGIS URL the
 shipped apps request, fetches each both ways, and prints the table. It is an operator
