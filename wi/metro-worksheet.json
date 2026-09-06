@@ -1338,9 +1338,9 @@
       },
       {
         "file": "aldermanic-districts.json",
-        "min_features": 853,
-        "max_features": 853,
-        "note": "Every aldermanic (and village trustee) district the ward fabric composes completely — coded city/village wards dissolved on the statewide municipality key by wi/scripts/build_wi_aldermanic_districts.py under its completeness, BAS-witness and point-agreement gates (853 districts, 156 municipalities; nine incomplete submissions still excluded on the record). Appleton's fifteen are LOCALLY COMPOSED: its county files every ward uncoded, so the city clerk's own polling-locations page supplies the ward-to-district assignment, gated against a second edition of that same assignment in the state's polling file, against the ten wards the state does code, and against Census 2020 population balance. Rebuild after each Jan/Jul filing window; a count change is expected news."
+        "min_features": 866,
+        "max_features": 866,
+        "note": "Every aldermanic (and village trustee) district the ward fabric composes completely — coded city/village wards dissolved on the statewide municipality key by wi/scripts/build_wi_aldermanic_districts.py under its completeness, BAS-witness and point-agreement gates (866 districts, 159 municipalities; six incomplete submissions still excluded on the record). FOUR CITIES ARE LOCALLY COMPOSED, because their counties file their wards uncoded and the cities themselves publish the assignment: Appleton 15 from its clerk's polling-locations page, Berlin 6 from its council page's prose, Kaukauna 4 from the TEXT LAYER of the city's own district map PDF, and Edgerton 3 DERIVED from the city's own Voting_Districts service and re-derived from it on every run. Every composition is gated against the wards its county does code, against a population balance on LTSB's own election-data layer, and — for Appleton alone, the only one of the four whose polling places are one per district — against the state's ward-to-place file. Rebuild after each Jan/Jul filing window; a count change is expected news."
       },
       {
         "file": "library-sites.json",
@@ -2361,7 +2361,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-wi-shell-v37",
+    "cache_name": "districtry-wi-shell-v38",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
