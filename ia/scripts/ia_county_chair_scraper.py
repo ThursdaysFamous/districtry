@@ -60,7 +60,15 @@ county -- Mahaska, whose page says "Term: 2017 - 2020":
 two refusals above are applied, 39 none, 17 unreachable, 7 have no roster to gate
 with -- 98, and the arithmetic is the check: Mahaska moved from the one column
 to the none column, so a split that still reads 38 there sums to 97 and is a
-count taken before the refusal it describes. ZERO counties yield two candidates. The widest accepted pairing is 28
+count taken before the refusal it describes. ZERO counties yield two candidates.
+
+RE-MEASURED 2026-09-06, WHEN THIS SCRAPE FINALLY GOT A ROBOTS GATE and the
+split moved: 34 one, 35 none, 20 unreachable, 2 robots-refused, 7 no-roster --
+still 98, and the same arithmetic is still the check. Only ONE county left the
+one column: Cherokee, whose page this app had been reading and whose
+robots.txt refuses `districtry` on every path. The other counted change is a
+relabelling, not a loss -- three hosts whose robots.txt was unreachable moved
+from none to unreachable, because RFC 9309 makes us abstain rather than guess. The widest accepted pairing is 28
 characters (Muscatine's `Danny Chick Supervisor - 1st District (Chair)`, two
 under the cap); the tightest REJECTED one is 84, exactly three times that, so
 GAP_CAP at 30 sits in the middle of a wide gap and is not a knob to turn when
@@ -93,8 +101,14 @@ OUT_PATH = os.path.join(CACHE_DIR, "ia_county_chairs.json")
 DIRECTORY = os.path.join(DATA, "ia-county-board-directory.json")
 OFFICERS = os.path.join(DATA, "ia-county-officers.json")
 
+sys.path.insert(0, HERE)          # robots_gate is a sibling, not a package
+from robots_gate import RobotsGate  # noqa: E402
+
 HEADERS = {"User-Agent": "districtry/1.0 (+https://districtry.com/ia/)",
            "Accept": "text/html,application/xhtml+xml"}
+# One gate for the whole run, shared across the worker pool (it locks its own
+# fetches). Set in main(); None only when a caller imports this module.
+GATE = None
 TIMEOUT = 25
 WORKERS = 6
 MAX_PAGES = 8
@@ -377,6 +391,21 @@ def get(url, cache=None):
                 raw = f.read()
             head, _, body = raw.partition("\n")
             return (int(head) if head.isdigit() else head, body)
+    if GATE is not None:
+        allowed, why = GATE.allows(url)
+        if not allowed:
+            # The page is never requested either way, but WHICH no it is
+            # matters and must not be flattened. A host that SERVED a file
+            # saying no has stated a policy; one whose robots.txt was
+            # unreachable (the HTTP 202 captcha shape, a reset, a 500) has
+            # stated nothing, and RFC 9309 makes us abstain rather than
+            # assume. Recording the second as a refusal would put words in a
+            # county's mouth; recording the first as an outage would invite a
+            # re-probe with different headers, which is the wrong answer to a
+            # site that has said no.
+            stated = why.startswith("robots.txt served")
+            return ("%s: %s" % ("robots-refused" if stated
+                                else "robots-unknown", why), "")
     try:
         r = requests.get(url, headers=HEADERS, timeout=TIMEOUT, allow_redirects=True)
         out = (r.status_code, r.text if r.status_code == 200 else "")
@@ -530,7 +559,13 @@ def one_county(fips, meta, officers, cache=None):
     pages, code = pages_for(meta["url"], cache)
     pages = [(u, b) for u, b in pages if not OTHERBODYRX.search(u)]
     if not pages:
-        return {"fips": fips, "county": meta["county"], "verdict": "unreachable",
+        # A ROBOTS REFUSAL IS NOT AN OUTAGE and must not be counted as one:
+        # "unreachable" is a fact about the network and invites a re-probe
+        # with different headers, which is exactly the wrong response to a
+        # site that has said no. The entry stays in the directory either way.
+        refused = str(code).startswith("robots-refused")   # stated, not merely silent
+        return {"fips": fips, "county": meta["county"],
+                "verdict": "robots-refused" if refused else "unreachable",
                 "code": str(code)}
     hits = []
     for url, body in pages:
@@ -558,6 +593,9 @@ def main():
     if args.cache:
         cache = os.path.join(CACHE_DIR, "pages")
         os.makedirs(cache, exist_ok=True)
+
+    global GATE
+    GATE = RobotsGate(requests.Session(), HEADERS["User-Agent"])
 
     directory = json.load(open(DIRECTORY, encoding="utf-8"))
     officers = json.load(open(OFFICERS, encoding="utf-8"))

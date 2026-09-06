@@ -52,12 +52,6 @@
   "route": "minutes",
   "sourceUrl": "https://cerrogordo.gov/supervisors/meetings_minutes/"
  },
- "19035": {
-  "chair": "Bryan Petersen",
-  "county": "Cherokee",
-  "route": "page",
-  "sourceUrl": "https://www.cherokeecounty.iowa.gov/departments/offices_a_-_e/board_of_supervisors/index.php"
- },
  "19039": {
   "chair": "Randy Dunbar",
   "county": "Clarke",
