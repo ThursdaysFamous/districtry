@@ -2303,8 +2303,8 @@
       },
       {
         "file": "wi-alderpersons.json",
-        "min_keys": 23,
-        "note": "The alderperson roster for the 23 municipalities with a verified, witnessed route — the six big cities of 2026-08-26 (Milwaukee, Madison, Green Bay, Kenosha, Racine, Waukesha) plus the twelve of 2026-09-05 (Stevens Point, Menomonie, Manitowoc, Sheboygan, Superior, Portage, Viroqua, Menasha, Howard, Tomah, Eau Claire, Appleton) and the five of 2026-09-05 evening (New Berlin, Sturgeon Bay, Altoona, Eagle River, Germantown), 235 seats — keyed by the municipality's statewide COUSUBFP and zero-padded district id, the geometry file's exact key pair. Built by wi/scripts/build_wi_alderperson_roster.py with per-municipality, per-field floors and a geometry cross-gate; a municipality whose page could not be read keeps its last shipped rows and carries a carriedFrom date the card renders, so nothing rides stale silently. Refreshed weekly by update-wi-alderperson-roster.yml."
+        "min_keys": 24,
+        "note": "The alderperson roster for the 24 municipalities with a verified, witnessed route — the six big cities of 2026-08-26 (Milwaukee, Madison, Green Bay, Kenosha, Racine, Waukesha) plus the twelve of 2026-09-05 (Stevens Point, Menomonie, Manitowoc, Sheboygan, Superior, Portage, Viroqua, Menasha, Howard, Tomah, Eau Claire, Appleton) and the five of 2026-09-05 evening (New Berlin, Sturgeon Bay, Altoona, Eagle River, Germantown) and New Lisbon (2026-09-06), 239 seats — keyed by the municipality's statewide COUSUBFP and zero-padded district id, the geometry file's exact key pair. Built by wi/scripts/build_wi_alderperson_roster.py with per-municipality, per-field floors and a geometry cross-gate; a municipality whose page could not be read keeps its last shipped rows and carries a carriedFrom date the card renders, so nothing rides stale silently. Refreshed weekly by update-wi-alderperson-roster.yml."
       },
       {
         "file": "wi-assembly-members.json",

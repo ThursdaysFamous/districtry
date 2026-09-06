@@ -72,6 +72,10 @@ FLOORS = {
     "01550": ("Altoona", 6, 6, 0, 0, 0),
     "21625": ("Eagle River", 4, 4, 4, 4, 0),
     "28875": ("Germantown", 4, 4, 0, 0, 0),
+    # New Lisbon numbers its seats by WARD GROUP and LTSB witnesses the
+    # grouping live. E-mail is 0 by ACCESS CONTROL, not by absence: every
+    # address on the page is Cloudflare-obfuscated, which is not worked around.
+    "56900": ("New Lisbon", 4, 4, 0, 4, 0),
     "50825": ("Menasha", 8, 8, 0, 7, 0),
     "35950": ("Howard", 8, 8, 0, 0, 7),
     "80075": ("Tomah", 8, 8, 0, 0, 7),
