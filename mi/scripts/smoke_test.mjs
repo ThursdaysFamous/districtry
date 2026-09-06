@@ -716,25 +716,60 @@ try {
       await page.close();
     }
 
-    // BATTLE CREEK, the fifth entry — and the one whose source layer carries
-    // officeholder names this app deliberately refuses. The second check is the
-    // one that matters: the city's own ward file has a COMMISSIONER field, four
-    // of whose five records date from 2023, and none of those names may reach a
-    // card. A future edit that "helpfully" surfaces them fails here.
+    // BATTLE CREEK, the fifth entry, and the one whose card is built to defeat
+    // a specific trap: the city's commission page renders its wards in the
+    // order 5, 2, 1, 3, 4, interleaved with four at-large seats. A parser that
+    // paired each name with the nearest preceding ward label would put the
+    // WARD 2 commissioner in WARD 5. So this selects points in TWO wards and
+    // asserts each names its own commissioner AND NOT the other's — a check
+    // that one point could not make, because a wrong-but-consistent pairing
+    // still names somebody.
+    //
+    // Ward 2 is the point that matters: it is the seat the positional read
+    // misplaces. Both points are verified interior to exactly one ward.
+    // THE LAYER'S OWN NAMES STILL DO NOT SHIP, and that can no longer be
+    // checked by looking at the card: the ward layer's COMMISSIONER column and
+    // the city's commission page happen to agree on all five names today, so a
+    // text assertion cannot tell which source a name came from. The guarantee
+    // is structural instead — the shipped geometry carries the ward number and
+    // nothing else — so assert THAT. A future edit that "helpfully" surfaces
+    // the 2023 column has to get past this.
     {
-      const page = await booted(context, `${BASE}#point=42.33185,-85.15855&layers=city-ward`);
+      const wards = JSON.parse(readFileSync(join(INSTANCE_DIR, "data", "app",
+        "mi-battle-creek-wards.json"), "utf8"));
+      const keys = [...new Set(wards.features.flatMap((f) => Object.keys(f.properties || {})))];
+      check("Battle Creek's shipped ward geometry carries no officeholder field",
+        keys.every((k) => /^ward$/i.test(k)), JSON.stringify(keys.sort()));
+    }
+
+    for (const bc of [
+      { ward: "3", point: "42.33185,-85.15855", name: "Patrick O'Donnell", other: "Jenasia Morris" },
+      { ward: "2", point: "42.32441,-85.20775", name: "Jenasia Morris", other: "Patrick O'Donnell" }
+    ]) {
+      const page = await booted(context, `${BASE}#point=${bc.point}&layers=city-ward`);
       const card = await cardText(page, "city-ward");
       const pill = await page.evaluate(() => {
         const el = document.getElementById("card-city-ward");
         const p = el && el.parentElement ? el.parentElement.querySelector(".card-id-pill") : null;
         return p ? p.textContent.trim() : null;
       });
-      check("city-ward resolves a Battle Creek point to its own ward",
-        pill === "Ward 3", `pill=${JSON.stringify(pill)}`);
-      check("Battle Creek's card names no commissioner from the ward layer",
-        /not been updated since 2023/.test(card.text || "") &&
-        !/LaCosse|Morris|O.Donnell|Simmons|Lance/.test(card.text || ""),
-        (card.text || "").slice(0, 140));
+      const text = card.text || "";
+      check(`city-ward resolves a Battle Creek point to ward ${bc.ward}`,
+        pill === `Ward ${bc.ward}`, `pill=${JSON.stringify(pill)}`);
+      check(`Battle Creek ward ${bc.ward} names its own commissioner`,
+        text.includes(bc.name), text.slice(0, 160));
+      check(`Battle Creek ward ${bc.ward} does not name ward ${bc.ward === "3" ? "2" : "3"}'s`,
+        !text.includes(bc.other), text.slice(0, 160));
+      // The four at-large seats are part of every reader's representation, so
+      // a card naming one of nine would understate it.
+      check(`Battle Creek ward ${bc.ward} carries the four citywide seats`,
+        /ELECTED BY THE WHOLE CITY/i.test(text) &&
+        ["Mark Behnke", "Sherry Sofia", "Carla Reynolds", "Paige Katsarsky-Smith"]
+          .every((n) => text.includes(n)), text.slice(0, 220));
+      // No per-member e-mail exists; the card must SAY that rather than leave
+      // a reader to notice the row is missing.
+      check(`Battle Creek ward ${bc.ward} explains the absent e-mail`,
+        /publishes no e-mail address for individual/.test(text), text.slice(0, 200));
       await page.close();
     }
 

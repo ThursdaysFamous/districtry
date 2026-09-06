@@ -14,13 +14,28 @@ holds the seat now. Here the evidence is on the records themselves — four of t
 five were last edited 2023-03-23 and only ward 1 has been touched since
 (2025-03-25). Michigan cities elect in odd Novembers, so a 2023 edit predates at
 least one city election. A name that old, with nothing current corroborating it,
-is exactly what the honesty rules mean by guessing; the city's own commission
-page would settle it and answers HTTP 403 to this client. So the card names your
-ward and links the city, and `battle-creek-commission-roster` records the gap.
+is exactly what the honesty rules mean by guessing, so this build strips it.
+
+THE NAMES ON THE CARD COME FROM THE CITY'S COMMISSION PAGE INSTEAD, and getting
+to them cost a correction. The change that first shipped these wards recorded,
+in four places, that "the city's own commission page answers HTTP 403 to this
+client". It does not. The 403 came from a page id that had been GUESSED —
+/165/City-Commission — while the real page, /380/City-Commission, answers 200
+with 160 KB of h-card markup naming all nine commissioners. A 403 from a path
+you invented is a fact about your guess, not about the city, and two things
+should have made it suspicious rather than conclusive: the site's robots.txt
+permits general crawling, and its home page answers 200. See
+mi/scripts/mi_battle_creek_commission_scraper.py, which reads that page, and
+mi/scripts/build_mi_battle_creek_commission.py, which ships it.
+
+The two sources agree on all five ward names today. That corroborates the page;
+it does not rehabilitate the column, which still carries no publication date, no
+office-holding claim, and nothing that would change it when a seat changes
+hands.
 
 CURRENCY. The state's own 2026 precinct fabric assigns Battle Creek's 13
 precincts 2/2/3/3/3 across wards 1-5. Dissolved by that column, the city's five
-polygons agree with the state on 99.899% of sampled points. That agreement and
+polygons agree with the state on 99.450% of sampled points. That agreement and
 the per-ward precinct counts are both GATES.
 
 WHY THIS CITY AND NOT THE LARGER ONES AHEAD OF IT. Bay City's own ward layer
@@ -62,7 +77,7 @@ PLACE_GEOID = "2605920"          # Battle Creek city, MI — NAME asserted at ru
                                  # assertion below caught it. Never hand-guess a place FIPS.
 
 OUT_FILE = "mi-battle-creek-wards.json"
-SIMPLIFY = "50%"                 # nine features; the fleet tolerance, verified below
+SIMPLIFY = "50%"                 # five features; the fleet tolerance, verified below
 PRECISION = "0.000001"
 
 EXPECT_FEATURES = 5
@@ -243,7 +258,7 @@ def check_shape(feats, require_derived=False):
     own input."""
     problems = []
     if len(feats) != EXPECT_FEATURES:
-        problems.append("%d features, expected %d — Grand Rapids has three wards"
+        problems.append("%d features, expected %d — Battle Creek has five wards"
                         % (len(feats), EXPECT_FEATURES))
     seen = tuple(sorted((ward_of(f.get("properties") or {}) or "?") for f in feats))
     if seen != EXPECT_WARDS:
@@ -342,7 +357,7 @@ def main():
     service = ward_layer_url()
     print("  ward layer: %s" % service)
 
-    wards = esri(service, {"where": "1=1", "outFields": "WARDNUM,COMMISSIONER"})
+    wards = esri(service, {"where": "1=1", "outFields": "WARDNUM"})
     if len(wards) != EXPECT_FEATURES:
         fail("expected %d wards, got %d" % (EXPECT_FEATURES, len(wards)))
     got = tuple(sorted(ward_of(f["properties"]) for f in wards))
