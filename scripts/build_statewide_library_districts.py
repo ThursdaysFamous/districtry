@@ -85,6 +85,9 @@ from shapely.ops import unary_union
 from shapely.strtree import STRtree
 from shapely.validation import make_valid
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from arcgis_nesting import assert_nesting_repaired  # noqa: E402
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP_DIR = os.path.join(os.path.dirname(HERE), "il", "data", "app")
 
@@ -415,15 +418,24 @@ def run(check):
     feats = fetch_layer()
     print("build-statewide-library-districts: %d polygons from %s layer 11 (%s)"
           % (len(feats), "IL_Boundary_Layers", SOURCE_LABEL))
-    libs = []
+    libs, nesting_pairs = [], []
     for f in feats:
         if not f.get("geometry"):
             continue
-        g = clean(shape(f["geometry"]))
+        raw = shape(f["geometry"])
+        g = clean(raw)
         if g.is_empty or g.geom_type not in ("Polygon", "MultiPolygon"):
             continue
+        # This layer is the fleet's worst case for the ArcGIS GeoJSON export's
+        # unnesting: the same query answers 446 interior rings as GeoJSON and
+        # 1,663 as Esri JSON. clean() re-nests every one of them — measured
+        # 2026-09-05, identical hole counts and 0.000000 km2 apart — and that
+        # is a property, not a coincidence, so it is asserted rather than
+        # assumed (scripts/arcgis_nesting.py).
+        nesting_pairs.append((raw, g))
         libs.append((f["properties"].get("Library"),
                      f["properties"].get("LibraryType"), g))
+    assert_nesting_repaired(nesting_pairs, "statewide library layer", fail)
     tree = STRtree([g for _, _, g in libs])
 
     stale = []

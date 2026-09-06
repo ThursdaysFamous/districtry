@@ -66,6 +66,7 @@ python3 scripts/validate_favicon.py
 python3 scripts/validate_shell_continuations.py
 python3 scripts/validate_workflow_deps.py
 python3 scripts/validate_skills.py                       # every skill's pointers resolve
+python3 scripts/validate_arcgis_format.py                # no app asks ArcGIS for f=geojson
 python3 scripts/validate_instance_registration.py         # every instance named in every table
 python3 scripts/validate_instance_assets.py               # every same-origin asset a page names exists
 python3 scripts/build_metro_outline.py --check           # IL ring + anchor registry

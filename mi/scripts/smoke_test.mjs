@@ -555,9 +555,8 @@ try {
     const offsets = [];
     const fieldsAsked = [];
     const far = (i) => ({
-      type: "Feature",
-      properties: { NAME: `FAR STATION ${i}`, ADDRESS: "1 Far Rd", CITY: "Detroit", STATE: "MI", ZIPCODE: "48226" },
-      geometry: { type: "Point", coordinates: [-83.0458, 42.3314] },
+      attributes: { NAME: `FAR STATION ${i}`, ADDRESS: "1 Far Rd", CITY: "Detroit", STATE: "MI", ZIPCODE: "48226" },
+      geometry: { x: -83.0458, y: 42.3314 },
     });
     const [lat, lng] = POINT.split(",").map(Number);
     const page = await booted(context, BASE, (p) =>
@@ -566,15 +565,17 @@ try {
         const offset = Number(params.get("resultOffset"));
         offsets.push(offset);
         fieldsAsked.push(params.get("outFields") || "");
+        // ESRI JSON, not GeoJSON — the shape the app now asks for. Every
+        // ArcGIS loader moved to f=json on 2026-09-05 because the GeoJSON
+        // export unnests interior rings (engine/index.html/arcgis-loader.txt);
+        // a stub still answering GeoJSON stops reproducing the contract. The
+        // assertions are unchanged; only the wire format is.
         const body = offset === 0
-          ? { type: "FeatureCollection", exceededTransferLimit: true,
-              features: [far(1), far(2), far(3)] }
-          : { type: "FeatureCollection",
-              features: [{
-                type: "Feature",
-                properties: { NAME: "PAGE TWO STATION", ADDRESS: "2 Second Page Way",
+          ? { exceededTransferLimit: true, features: [far(1), far(2), far(3)] }
+          : { features: [{
+                attributes: { NAME: "PAGE TWO STATION", ADDRESS: "2 Second Page Way",
                               CITY: "Lansing", STATE: "MI", ZIPCODE: "48933" },
-                geometry: { type: "Point", coordinates: [lng, lat] },
+                geometry: { x: lng, y: lat },
               }] };
         route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(body) });
       })
