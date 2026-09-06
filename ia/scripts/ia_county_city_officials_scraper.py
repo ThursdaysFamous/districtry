@@ -24,6 +24,19 @@ domains, none permuted from a county name). 71 answered; the other 28 are
 recorded in the gap blocker BY WHO REFUSED, because seven of them are this
 sandbox's own egress proxy and not the county at all.
 
+ROBOTS IS CONSULTED BEFORE EVERY FETCH, AND NO COUNTY IS REFUSED TODAY.
+Added 2026-09-06, third and last of this instance's weekly scrapes to get the
+check (`ia/scripts/robots_gate.py`). Measured across all twelve county hosts:
+ELEVEN serve no robots.txt at all, which RFC 9309 makes allow-all, and
+`www.marioncountyiowa.gov` serves one that permits the path read. Jasper's
+election host serves none either. So this changes no output and that is the
+point -- the two refusals the other two scrapes found (`cityofpalo.com` and
+`johnson-county.granicus.com`) each read as permissive for hundreds of bytes
+before refusing in their last two lines, so whether a host allows is not
+something to decide by eye once and carry forward. A county refused here is
+SKIPPED with its reason printed, its page never requested, and its entry kept
+so it re-enters by itself.
+
 THREE TRAPS, ALL IN THE MARKUP AND ALL SILENT
 -----------------------------------------------
 1. THE ROLE SITS IN TWO DIFFERENT PLACES AND THE COUNTY DECIDES WHICH. SIX of
@@ -92,7 +105,11 @@ import time
 import requests
 from bs4 import BeautifulSoup
 
-CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".cache")
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)          # robots_gate is a sibling, not a package
+from robots_gate import RobotsGate  # noqa: E402
+
+CACHE_DIR = os.path.join(HERE, ".cache")
 OUT_PATH = os.path.join(CACHE_DIR, "ia_county_city_officials.json")
 HEADERS = {"User-Agent": "districtry/1.0 (+https://districtry.com/ia/)",
            "Accept": "text/html,application/xhtml+xml"}
@@ -229,8 +246,18 @@ def scrape(session, url):
 def main():
     os.makedirs(CACHE_DIR, exist_ok=True)
     session = requests.Session()
+    gate = RobotsGate(session, HEADERS["User-Agent"])
     out, failed = {}, []
     for fips, county, url in COUNTIES:
+        allowed, why = gate.allows(url)
+        if not allowed:
+            # The county's own robots.txt refuses this agent, so its page is
+            # never requested. The entry STAYS in COUNTIES: the check runs
+            # weekly, so a county that changes its file re-enters by itself.
+            failed.append((county, "robots.txt refuses districtry (%s)" % why))
+            print("  %-14s SKIPPED — robots.txt refuses districtry (%s)"
+                  % (county, why), file=sys.stderr)
+            continue
         try:
             cities = scrape(session, url)
         except Exception as exc:
