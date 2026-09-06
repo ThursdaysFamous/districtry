@@ -169,6 +169,14 @@ COUNTIES = [
      "https://www.desmoinescounty.iowa.gov/board_of_supervisors/meetings_minutes/"),
     ("103", "Johnson", "granicus",
      "https://johnson-county.granicus.com/ViewPublisher.php?view_id=1&count=20"),
+    # MAHASKA IS THE ONE THE PAGE ROUTE THREW AWAY. Its board page dates
+    # itself "Term: 2017 - 2020", which the expired-term refusal correctly
+    # declines to read -- and its minutes are current, published in the same
+    # dated-filename shape as Cerro Gordo's. A county the page route drops for
+    # STALENESS is exactly the county the minutes route should be asked about,
+    # because the two surfaces go stale independently.
+    ("123", "Mahaska", "files-meetings",
+     "https://www.mahaskacountyia.gov/board_of_supervisors/minutes/"),
 ]
 
 WITNESSES = 2                      # documents that must agree, per county
