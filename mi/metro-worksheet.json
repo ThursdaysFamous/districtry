@@ -446,6 +446,12 @@
         "min_features": 9,
         "max_features": 9,
         "note": "Flint's nine council wards, effective 2 August 2022, built by mi/scripts/build_mi_flint_wards.py. THE SERVICE NAMES ARE ALL BUT INVERTED and nothing here is decided by a name: the plan in force is service `Wards22` (whose AGO item is titled \"Wards23\"), while `Wards2022` is the 2012 plan (its item honestly titled \"City of Flint - Old Wards\") and `Wards_Outline`, published by the city's own account, is also 2012. All three carry nine features called Ward 1..Ward 9; the currency gate separates them by twenty-three points — 99.525% for the shipped layer against 76.9% for both old ones. The item states no terms and is shared public, and the builder refuses to rebuild if that changes. The nine wards are the most evenly drawn in the fleet: -0.30% to +0.39% on Census 2020, 81,242 against the Census place's 81,252 across ten edge blocks."
+      },
+      {
+        "file": "mi-battle-creek-wards.json",
+        "min_features": 5,
+        "max_features": 5,
+        "note": "Battle Creek's five commission wards, from the City of Battle Creek's own ArcGIS org, built by mi/scripts/build_mi_battle_creek_wards.py. The item states no terms and is shared public (the Detroit/Warren/Flint case). Currency measured against the state's own 2026 precinct WARD column (13 precincts, 2/2/3/3/3) at 99.450%; balance -4.09% to +4.18% on Census 2020, 52,706 against the Census place's 52,721 across 12 edge blocks. THE LAYER CARRIES A COMMISSIONER NAME PER WARD AND NONE OF THEM SHIP: four of five records were last edited in March 2023 and Michigan cities elect in odd Novembers, so a name field with no publication date is not a roster. The names on the card come from the city's own commission page instead — an earlier version of this note said that page answered 403, which was true only of a page id that had been guessed."
       }
     ],
     "rosters": [
@@ -478,11 +484,16 @@
         "file": "mi-grand-rapids-council-members.json",
         "min_keys": 5,
         "note": "Grand Rapids's City Commission — six of seven seats, the city publishing no second Ward 1 commissioner. Built by mi/scripts/build_mi_grand_rapids_council.py from mi_grand_rapids_council_scraper.py's cache. Seven top-level keys: wards, citywide, office (the city switchboard and City Hall, hoisted), seats, seatsPerWard (how many commissioners a ward elects — the card counts the shortfall against it rather than hardcoding the city's arithmetic), vacancies (per ward: the cause, the predecessor, the date and the city page that states them — the card renders the explanation from this rather than from a literal, so one ward's resignation cannot appear on another ward's card), sourceUrl."
+      },
+      {
+        "file": "mi-battle-creek-commission-members.json",
+        "min_keys": 5,
+        "note": "Battle Creek's City Commission — all nine seats: one commissioner per ward for five wards, three at-large commissioners and the Mayor, the split the city states in its own prose on the page the roster is read from. Built by mi/scripts/build_mi_battle_creek_commission.py from mi_battle_creek_commission_scraper.py's cache. Six top-level keys: wards, citywide, office (City Hall's address, the city switchboard and the shared contact form, all hoisted to the body), seats, seatsPerWard, sourceUrl."
       }
     ]
   },
   "sw": {
-    "cache_name": "districtry-mi-shell-v8",
+    "cache_name": "districtry-mi-shell-v10",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
@@ -523,6 +534,11 @@
       "file": "update-mi-grand-rapids-council-roster.yml",
       "purpose": "Grand Rapids City Commission roster (the city's own pages)",
       "schedule": "Thu 20:30 UTC"
+    },
+    {
+      "file": "update-mi-battle-creek-commission-roster.yml",
+      "purpose": "Battle Creek City Commission roster (the city's own commission page)",
+      "schedule": "Fri 20:30 UTC"
     }
   ],
   "geocoder": {
@@ -572,6 +588,11 @@
     "file": "history.html",
     "intro": "districtry Michigan answers for all 83 counties: the county commissioner districts Michigan's own Bureau of Elections compiles from every county's apportionment filing, plus the national tier every U.S. state can serve from national publishers. It was built dark across three changes in one day — the national tier, the commissioner flagship, then publication — rather than going live on arrival.",
     "entries": [
+      {
+        "date": "2026-09-06",
+        "title": "Three more cities, and a page nobody had actually looked at",
+        "body": "Warren, Flint and Battle Creek joined the city ward toggle this week, which now answers for five Michigan cities. Battle Creek's arrival is worth telling properly, because it very nearly shipped less than it could have. When its ward map went in, this app recorded that the city's own commission page refused to answer — and wrote that down in five places, so the map named your ward and nobody in it. The page had never actually been asked for. A web address for it had been guessed, the guess did not exist, and the refusal that came back was mistaken for the city turning us away. The real page answers perfectly well, and it names all nine of the city's commissioners. So the wards now come with the people in them: the commissioner elected by your ward, and the four elected by the whole city — three at large and the Mayor — because those four represent you too, and a card naming one of nine would tell you less than the truth. Battle Creek's own page lists its commissioners out of order, wards five, two, one, three, four, mixed in with the at-large seats. Read carelessly, that hands you the wrong person's phone number with complete confidence, so the app reads each commissioner from their own entry rather than from where they happen to sit on the page — and a test now checks two different wards and insists neither shows the other's commissioner. One thing the city does not publish is an e-mail address for any individual commissioner; every one of them routes through a single shared contact form. The card says that outright instead of leaving a blank where an address ought to be. The city's ward map does carry a name for each ward, and those names are not what you are shown. Four of the five were last touched in March 2023, and Michigan cities hold elections in odd-numbered Novembers, so a name that old may already have been overtaken by an election — and nothing in that map would change if it had been. The names on the card come from the page the city actually maintains for the purpose. As it happens the two agree today, which is reassuring about the page and changes nothing about the map."
+      },
       {
         "date": "2026-09-05",
         "title": "Grand Rapids, and what a 2018 file had to prove",

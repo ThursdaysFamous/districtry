@@ -1,0 +1,90 @@
+name: Update Battle Creek commission roster
+
+# Weekly refresh of Battle Creek's City Commission
+# (mi/data/app/mi-battle-creek-commission-members.json, read by the Battle Creek
+# entry of mi/index.html's `city-ward` card).
+#
+# The commission seats NINE — one commissioner from each of five wards, three
+# commissioners at large, and the Mayor — and the city states that arithmetic in
+# its own prose on the page the roster is read from. The scraper reads BOTH: the
+# prose and the published cards are two witnesses to one fact, and it refuses to
+# write unless they agree. So a charter change fails this run rather than
+# quietly reshaping the card.
+#
+# The page is h-card microformat and is parsed per block, never by document
+# order — it renders wards 5, 2, 1, 3, 4, so a positional read would put the
+# Ward 2 commissioner in Ward 5.
+#
+# There is deliberately no archive rung. If the city ever starts refusing this
+# client, the run fails and a human decides, rather than silently switching to
+# an older copy — which matters more here than usual, because this city's first
+# record wrongly called the page blocked on the strength of a guessed URL.
+
+on:
+  schedule:
+    - cron: "30 20 * * 5" # Friday 20:30 UTC (Hancock 20:00, Wayne 21:00 either side)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI; falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # Stdlib only — mi/scripts carries no third-party HTTP dependency.
+      - name: Scrape the City Commission page
+        run: python3 mi/scripts/mi_battle_creek_commission_scraper.py
+
+      - name: Rebuild the Battle Creek commission roster
+        run: python3 mi/scripts/build_mi_battle_creek_commission.py
+
+      - name: Validate app + data files
+        run: python3 mi/scripts/validate_index.py mi/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- mi/data/app/mi-battle-creek-commission-members.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          # Fixed branch (not per-run): an unmerged roster PR is refreshed in
+          # place by the force-push below instead of spawning a duplicate PR.
+          branch="bot/battle-creek-commission-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's CURRENT tip — see update-mi-legislature-roster.yml
+          # for the measured reason.
+          git fetch --depth=1 origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add mi/data/app/mi-battle-creek-commission-members.json
+          git commit -m "Update Battle Creek commission roster"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Battle Creek commission roster" \
+              --body "Automated weekly refresh of the Battle Creek entry of the \`city-ward\` card — the City Commission, read from the city's own commission page. The commission seats nine: one commissioner from each of five wards, three at large, and the Mayor. The scraper checks the city's own composition sentence against the cards it publishes and refuses to write unless they agree, so a charter change fails the run instead of reshaping the card. No per-member e-mail ships — the city routes every commissioner through one shared contact form, which is hoisted to the body beside City Hall's address and the switchboard. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

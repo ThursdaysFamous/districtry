@@ -420,3 +420,98 @@ without touching the city at all — but making the state the SOURCE rather than
 independent currency CHECK is a posture change, so it is recorded and left to the operator.
 See gap `wyoming-mi-ward-boundary`.
 
+
+---
+
+## Phase 5 continued — Battle Creek ships, and a 403 that was never the city's
+
+**Battle Creek joins `city-ward` as its fifth entry.** No new layer: Michigan stays at 15,
+because the expansion invariant says coverage changes which ENTRIES exist, never which
+LAYERS do.
+
+**The boundary** is the City of Battle Creek's own `Wards_BC` — item shared public,
+`licenseInfo` empty, the Detroit/Warren/Flint case rather than Lansing's CC BY-NC — and the
+builder re-reads those terms before every build and refuses if a licence appears. Currency
+is the gate Grand Rapids introduced: Michigan's own 2026 precinct layer carries a WARD
+column assigning the city's 13 precincts 2/2/3/3/3, and dissolved by it, it agrees with the
+city's five polygons on **99.450%** of 4,000 sampled points. Balance runs -4.09% to +4.18%
+on Census 2020, 52,706 against the Census place's 52,721 across 12 edge blocks.
+
+**TWO CITIES WERE MEASURED AND REFUSED AND THE FLOOR WAS NOT MOVED.** Bay City's own
+nine-ward layer scores 97.608%, and WHERE the disagreement sits is what decides it: 58 of
+6,000 points disagree across TWELVE distinct ward pairs, not on one edge. A mis-drawn
+outline disagrees on the perimeter; a dozen interior pairs is two different plans. Pontiac
+publishes a 2020 PRECINCT layer (21 features) rather than districts, at 45.969% against a
+fabric that now records 14.
+
+### The correction: five places said the city's page answered 403, and none of them was right
+
+The change that first shipped these wards recorded — in its commit message, the builder's
+docstring, the `mi/index.html` entry comment, the worksheet's geometry note and a `WATCH.md`
+row — that "the city's own commission page answers HTTP 403 to this client", and the wards
+shipped **nameless** on the strength of it, with gap `battle-creek-commission-roster` to
+explain the absence.
+
+The page id had been **guessed**. `battlecreekmi.gov/165/City-Commission` answers 403 and is
+not this city's commission page; `www.battlecreekmi.gov/380/City-Commission` answers **200
+with 160 KB**. A 403 from a path you invented is a fact about your guess, not about the
+city — and two things should have made it suspicious rather than conclusive: the site's
+robots.txt permits general crawling, and the home page answers 200.
+
+**THIS IS THE DETROIT PORTAL ERROR A SECOND TIME IN ONE INSTANCE.** There, `data.detroitmi.gov`
+was called challenged while answering HTTP 200, on a verdict reached by grepping a page for
+the word "challenge" instead of reading the status code; the Internet Archive rung, in
+weekly use elsewhere in the fleet, was never tried at all. Both times a route was declared
+shut without being walked. The rule earned there — **a route not walked is not a route
+measured** — now has a sharper sibling: **a URL you constructed is not a source you
+probed.** Where a site's own navigation or sitemap gives the path, use it.
+
+### What the roster ships
+
+All **nine** seats. The city states its own arithmetic in prose on the same page — "made up
+of nine elected officials… Five ward commissioners… Three at-large commissioners… The
+Mayor, elected citywide" — so the PROSE and the PUBLISHED CARDS are two witnesses to one
+fact, and the scraper refuses to write unless they agree. A charter change fails the weekly
+run instead of quietly reshaping the card. Five ride the polygons; the other four ship in a
+`citywide` block, because a ward card naming one of nine would read as the whole of a
+reader's city representation.
+
+**THE PAGE RENDERS ITS WARDS 5, 2, 1, 3, 4**, interleaved with the at-large seats, so a flat
+read pairing each name with the nearest preceding ward label puts the **Ward 2**
+commissioner in **Ward 5**. That is the Franklin County grid trap, and the fix is the same:
+the page is h-card microformat and each commissioner is parsed from their own
+`<li class="h-card">` block, never from document order. The smoke test selects points in two
+wards and asserts each names its own commissioner **and not the other's** — a check one
+point cannot make, because a wrong-but-consistent pairing still names somebody.
+
+**NO PER-MEMBER E-MAIL EXISTS AND NONE IS INVENTED.** Every card's contact slot links the
+identical shared city form, with only the visible label differing ("Contact form" on eight,
+"Email" on one). One address for nine people belongs to the body, so it is hoisted beside
+City Hall and the switchboard exactly as Grand Rapids's switchboard is, and the card states
+the absence rather than leaving a reader to notice a missing row. If the city ever publishes
+distinct addresses the hrefs stop matching and each row carries its own — a source improving
+must not fail the build.
+
+**THE WARD LAYER'S OWN NAMES STILL DO NOT SHIP**, and after this change that can no longer
+be checked by reading the card: the `COMMISSIONER` column and the city's page agree on all
+five ward names today, so no text assertion can tell which source a name came from. The
+guarantee is structural instead — the build strips the column at the fetch, its shipped-shape
+check refuses any property but the ward number, and the smoke test asserts that on the
+shipped file. **The agreement corroborates the page; it does not rehabilitate the column**,
+which still carries no publication date, no office-holding claim, and nothing that would
+change it when a seat changes hands.
+
+Gap `battle-creek-commission-roster` is retired. `update-mi-battle-creek-commission-roster.yml`
+refreshes the roster weekly as a reviewed PR.
+
+### One bookkeeping miss found while writing this up
+
+The guidebook's Michigan `city-ward` inventory row read **"dispatched, 2 cities"** until this
+change — Warren, Flint and Battle Creek all joined the dispatch table without it being
+updated. Nothing caught that: `fleet_status.py` diffs the layer ROSTER against the coverage
+map, and no gate compares a prose count in an inventory column against the table it
+describes. The row is corrected here. Separately, **`mi/scripts/validate_sources.py` carries
+no manifest row for `mi-warren-wards.json` or `mi-flint-wards.json`** — so the monthly
+freshness check never looks at either city's service. Battle Creek's two rows are added in
+this change; Warren's and Flint's are left for a change of their own rather than widened
+into this one.
