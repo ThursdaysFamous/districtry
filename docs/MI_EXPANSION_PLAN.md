@@ -515,3 +515,115 @@ no manifest row for `mi-warren-wards.json` or `mi-flint-wards.json`** — so the
 freshness check never looks at either city's service. Battle Creek's two rows are added in
 this change; Warren's and Flint's are left for a change of their own rather than widened
 into this one.
+
+---
+
+## Phase 5 continued — Rochester Hills ships, and two cities are refused (2026-09-06)
+
+Rochester Hills joins `city-ward` as its sixth entry. No new layer: Michigan stays at 15.
+
+### The record said no service existed, and one does
+
+The 23-city sweep reported "no Michigan-plausible ward service" for Rochester Hills. That
+was a limit of the query rather than a fact about the publisher. The city runs its **own
+ArcGIS Online organisation** (565 public items) *and* **its own ArcGIS Server**, and
+publishes `Local Council or Board` on the latter — four districts, keyed on a clean
+`districtid`, with the publisher's own `yearrange` of "2021-2031" and an `activeflag` on
+every row.
+
+It was found by reading the city's home page for a GIS host and then enumerating the org
+behind it. That is the Vermilion finding for a third time in this instance, and it now has
+a compact form: **a catalogue that does not list it is not a publisher that lacks it.** The
+first two catalogue attempts here failed in instructive ways — a title search returned
+Jackson, *Mississippi* and Jackson County, *Missouri*, and a bbox search returned only
+global Esri layers, because a world-wide layer intersects every bounding box.
+
+Currency is **99.725%** against the state's own 2026 precinct WARD column (21 precincts,
+6/5/5/5): two genuine district disagreements in 4,000 points, the rest a 0.10% edge.
+
+### One gate was raised, for this city alone, and a stricter one added beside it
+
+The build refused at its last gate: the districts total 76,138 against the Census place's
+76,300, a **0.212%** shortfall past the fleet's 0.2% ceiling. That ceiling is a **proxy**
+for the question its own error message asks — "edge digitisation, not a hole" — and a proxy
+sized on larger cities misfires on a small one with a big edge block. Measured, the whole
+−162 is **exactly one block**, whose Census interior point sits **26 m inside the city
+line**, with **zero** blocks in a district but outside the city.
+
+So the ceiling is raised to 0.22% **for this city alone**, with the measured 0.212%
+recorded rather than smoothed — the Wayne and Clay posture, applied to a different ceiling.
+**And the proxy is not loosened without the real question being asked directly**:
+`MAX_EDGE_METRES` is new, strictly tightens the build, and refuses any disagreeing block
+more than 100 m from the city boundary, so the raise cannot hide the thing the ceiling was
+protecting against. It was negative-tested at 10 m and correctly refused.
+
+That is the same shape as `MIN_BLOCKS`, which this instance already records: a
+Grand-Rapids-sized constant once refused a perfectly correct Battle Creek fetch.
+
+### The roster does not ship, and the reason is the city's own robots.txt
+
+`www.rochesterhills.org/robots.txt` allows exactly five named bots and then states
+`User-agent: *` / `Disallow: /`. The city's council page is maintained and publishes all
+seven members with a phone and an e-mail each; this project does not read a site that has
+asked general crawlers not to. So the card names your district, links the city, and says
+plainly why it stops there (gap `rochester-hills-council-roster`).
+
+**THE GEOMETRY IS A DIFFERENT HOST.** `gis.rochesterhills.org` serves no robots.txt at all
+and its AGO item is shared public with an empty `licenseInfo`. That is the **Knox
+precedent**, already settled in this repo the other way round: knoxcountyil.gov refused
+every request while `gis.knoxcountyil.gov` served the county's data, and a publisher is not
+blocked because its website is. **The operator was asked before this shipped rather than
+after** — honouring a publisher's stated wishes is their call, not a builder's.
+
+**AND THE ROBOTS FILE WAS FIRST MISREAD, WHICH IS THE LESSON WORTH KEEPING.**
+`www.rochesterhills.org/robots.txt` answers with an "Object Moved" stub pointing at the
+city's CMS host. A sweep that scanned **the stub** for AI-agent names found none and
+recorded the site as open — and two pages were fetched before the real policy was read. **A
+redirect body is not a policy**, which is the same shape as the Battle Creek 403 that came
+from a URL that had been guessed rather than followed. All seven Michigan city sites were
+then re-checked following redirects: Rochester Hills is the only one that bars general
+crawlers, and Battle Creek's disallows only admin and search paths, so the claim in its own
+PR that it "permits general crawling" stands.
+
+### Two cities measured and refused, neither by moving a floor
+
+**MUSKEGON.** The city publishes no GIS of its own; muskegon-mi.gov links Muskegon
+**County**'s server, whose `City_of_Muskegon` folder holds a Wards layer (4, matching the
+state) and a precinct layer (9, ditto), shared public with no stated terms. It is **not** a
+currency problem and **not** Bay City's two-different-plans: on the points the two sources
+share they agree on the district **99.85%** of the time. It is a **coverage** problem — of
+5,000 points inside the Census place, **62 (1.24%) fall in no county ward polygon at all**,
+and every one of them *is* covered by a state precinct, while **4.03%** of the ward area
+lies outside the city. A reader standing in one of those holes would get no district. The
+currency gate reads 94.150% because it counts a point in one model but not the other as a
+disagreement, and the 0.99 floor was not moved.
+
+The state's own precinct fabric tiles Muskegon **exactly** (0.00% of in-place points lack a
+precinct) and its WARD column would dissolve to a clean four-ward map — but making the
+state fabric the **source** rather than the currency **check** is a standing posture change
+reserved for the operator, first raised for Wyoming. **Muskegon is the second concrete case
+where that route is the only route**, and it is recorded to sharpen that decision rather
+than to pre-empt it.
+
+Two traps recorded with it: the county layer's `Ward` column is **NULL on all four
+features** (the number is inside `Ward_Name`), and `Election_ID` reads like a district key
+with values 12, 33, 999 and 13. And the state precinct filter must match
+`Jurisdiction_Name` **exactly** — `LIKE '%Muskegon%'` also returns Muskegon Heights,
+Muskegon Township and North Muskegon, three separate at-large jurisdictions.
+
+**MIDLAND.** The state records it as districted (5 wards, 10 precincts at 2/2/2/2/2), and
+nothing publishes the lines. Midland County's org carries 163 feature services and exactly
+one names districts — a layer spanning the whole **county**, which is the county board's
+and which Michigan already ships statewide. **The trap is its parcel layers**: both
+`County Parcels` and `City Parcels` carry a `District` field, and City Parcels' extent is
+exactly the city's, which reads like a per-parcel ward assignment. It is not — its five
+distinct values are `District 2`, `District 4`, `District 5`, `District 6` and
+`District 7`, the county commissioner districts touching the city, where the city's own
+wards would be 1 to 5. **A `District` column on a city's parcels is not the city's ward.**
+
+### Still unmeasured
+
+Kentwood, Jackson and Holland. None shows a GIS host on its home page; Jackson publishes
+six per-ward pages (`/498/Ward-1` … `/512/Ward-6`), which is a roster source rather than a
+boundary one. All three sites permit general crawling. They are left for their own pass
+rather than half-measured here.

@@ -452,6 +452,12 @@
         "min_features": 5,
         "max_features": 5,
         "note": "Battle Creek's five commission wards, from the City of Battle Creek's own ArcGIS org, built by mi/scripts/build_mi_battle_creek_wards.py. The item states no terms and is shared public (the Detroit/Warren/Flint case). Currency measured against the state's own 2026 precinct WARD column (13 precincts, 2/2/3/3/3) at 99.450%; balance -4.09% to +4.18% on Census 2020, 52,706 against the Census place's 52,721 across 12 edge blocks. THE LAYER CARRIES A COMMISSIONER NAME PER WARD AND NONE OF THEM SHIP: four of five records were last edited in March 2023 and Michigan cities elect in odd Novembers, so a name field with no publication date is not a roster. The names on the card come from the city's own commission page instead — an earlier version of this note said that page answered 403, which was true only of a page id that had been guessed."
+      },
+      {
+        "file": "mi-rochester-hills-wards.json",
+        "min_features": 4,
+        "max_features": 4,
+        "note": "Rochester Hills's four city council districts, from the city's OWN ArcGIS Server (gis.rochesterhills.org), built by mi/scripts/build_mi_rochester_hills_wards.py. The AGO item is shared public with an empty licenseInfo (the Detroit/Warren/Flint/Battle Creek case). THE RECORD SAID NO SERVICE EXISTED: the 23-city sweep reported none, and the city runs both its own AGOL org and its own server — a catalogue that does not list it is not a publisher that lacks it. Currency measured against the state's own 2026 precinct WARD column (21 precincts, 6/5/5/5) at 99.725%; balance -2.72% to +3.36% on Census 2020, 76,138 against the Census place's 76,300. THAT -162 IS ONE BLOCK 26 m INSIDE THE CITY LINE, which is why the builder's population ceiling is 0.22% here against the fleet's 0.2% — raised for this city alone on a measurement, with a new and strictly tightening 100 m edge test added beside it so the raise cannot hide a hole. NO OFFICEHOLDER SHIPS: the city's council page is maintained and its robots.txt disallows general crawlers, so the card names the district and links the city."
       }
     ],
     "rosters": [
@@ -493,7 +499,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mi-shell-v10",
+    "cache_name": "districtry-mi-shell-v11",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
@@ -588,6 +594,11 @@
     "file": "history.html",
     "intro": "districtry Michigan answers for all 83 counties: the county commissioner districts Michigan's own Bureau of Elections compiles from every county's apportionment filing, plus the national tier every U.S. state can serve from national publishers. It was built dark across three changes in one day — the national tier, the commissioner flagship, then publication — rather than going live on arrival.",
     "entries": [
+      {
+        "date": "2026-09-06",
+        "title": "Rochester Hills, and a sign that said keep out",
+        "body": "Rochester Hills is the sixth Michigan city this app can place you in, and its arrival is the first where the city's map and the city's website had to be treated as two different things. The map came easily enough: the city runs its own mapping service and publishes its four council districts there, drawn for 2021 to 2031, and they agree almost exactly with the State of Michigan's own record of which precinct votes in which district — two organisations, working separately, drawing the same four lines. What the app will not tell you is who your council member is. The city publishes that, clearly and currently, on its own website, and that website carries a note asking automated visitors to stay out. A handful of large search engines are named as welcome; everything else is asked not to read the site. This app is everything else, so it does not read it. Your card names your district and sends you to the city for the person. Nothing about that was technically difficult, which is rather the point: the file that asks is a request, not a lock, and the only reason to respect it is that it was asked. The mapping service is a separate address and carries no such request, which is why the boundaries are here at all. Two other cities were looked at and are not here. Muskegon has no map of its own, and the one its county publishes leaves small parts of the city belonging to no ward at all — about one address in eighty would be told nothing, which is worse than being told the city is not covered yet. Midland has no ward map anywhere; the only thing resembling one turns out to be the county's own board districts wearing a city's clothes. Both are written down, with what was measured, so the next person to look starts where this one stopped."
+      },
       {
         "date": "2026-09-06",
         "title": "Three more cities, and a page nobody had actually looked at",

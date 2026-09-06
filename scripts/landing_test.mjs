@@ -398,7 +398,11 @@ try {
     const page = await ctx.newPage();
     await serveVendoredLeaflet(page);
     await stubTiles(page);
-    await page.goto(BASE + "/", { waitUntil: "load" });
+    // `domcontentloaded`, NOT `load` — see section 6 for the measurement. This
+    // check reads an iframe attribute and fetches the map separately; neither
+    // needs the page's subresources, and the landing page carries a
+    // third-party analytics tag that `load` would wait on.
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     const src = await page.getAttribute("iframe.coverage-frame", "src").catch(() => null);
     check("landing page embeds the coverage map", src === "coverage-map.html", String(src));
     const r = await page.request.get(BASE + "/coverage-map.html");
@@ -475,7 +479,22 @@ try {
       errs.push(t);
     });
     page.on("pageerror", (e) => errs.push(String(e)));
-    await page.goto(BASE + "/", { waitUntil: "load" });
+    // `domcontentloaded`, NOT `load`, AND THE DIFFERENCE IS MEASURED. The filter
+    // above says a failed request to gc.zgo.at must not fail this check — and
+    // `load` waits for that request to settle, so a run where the host HANGS
+    // rather than refusing dies at `page.goto: Timeout 30000ms exceeded` before
+    // the filter is ever consulted. The check asserted the opposite of what its
+    // own comment promised. Measured on 2026-09-06 by routing gc.zgo.at to a
+    // handler that never responds: `load` threw at 30,003 ms, this passed in
+    // 19 ms. Sandboxes where the host is simply unroutable fail FAST and never
+    // see it, which is why CI found it and a local run did not.
+    //
+    // Nothing is lost: `pageerror` and non-network console errors — the app JS
+    // failures this exists to catch — fire during parse and execution, and the
+    // 500 ms settle below still gives late ones time to arrive. The landing
+    // page is the only root page carrying that tag, so privacy.html and
+    // coverage-map.html deliberately keep `load`.
+    await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.waitForTimeout(500);
     check("landing page boots with no console errors", errs.length === 0, errs.slice(0, 2).join(" | "));
     await ctx.close();

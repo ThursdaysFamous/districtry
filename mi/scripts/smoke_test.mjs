@@ -727,6 +727,31 @@ try {
     //
     // Ward 2 is the point that matters: it is the seat the positional read
     // misplaces. Both points are verified interior to exactly one ward.
+    // ROCHESTER HILLS, the sixth entry — the one that ships GEOMETRY ONLY because
+    // the city's own robots.txt bars general crawlers from its website. Two
+    // points, because a six-entry OR is where a table starts shadowing its tail,
+    // and because the card must name a DISTRICT and no person: if a future edit
+    // wires the layer's own `repname` field in, the second check fails.
+    for (const rh of [
+      { d: "1", point: "42.67899,-83.19941" },
+      { d: "4", point: "42.67278,-83.13291" }
+    ]) {
+      const page = await booted(context, `${BASE}#point=${rh.point}&layers=city-ward`);
+      const card = await cardText(page, "city-ward");
+      const pill = await page.evaluate(() => {
+        const el = document.getElementById("card-city-ward");
+        const p = el && el.parentElement ? el.parentElement.querySelector(".card-id-pill") : null;
+        return p ? p.textContent.trim() : null;
+      });
+      const text = card.text || "";
+      check(`city-ward resolves a Rochester Hills point to district ${rh.d}`,
+        pill === `District ${rh.d}`, `pill=${JSON.stringify(pill)}`);
+      check(`Rochester Hills district ${rh.d} names nobody and says why`,
+        /asks automated visitors not to read it/.test(text) &&
+        !/Mannino|Blair|Carlock|Limberg|Morlan|Deel/.test(text), text.slice(0, 170));
+      await page.close();
+    }
+
     // THE LAYER'S OWN NAMES STILL DO NOT SHIP, and that can no longer be
     // checked by looking at the card: the ward layer's COMMISSIONER column and
     // the city's commission page happen to agree on all five names today, so a

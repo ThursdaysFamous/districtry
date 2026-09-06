@@ -9713,6 +9713,9 @@ function initMichiganExplorer() {
   var loadBattleCreekRoster = makeCached(function () {
     return fetchJSONWithRetry("data/app/mi-battle-creek-commission-members.json", {}, 2);
   });
+  var loadRochesterHillsWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-rochester-hills-wards.json", {}, 2);
+  });
 
   function detroitCoverage(point) {
     // The districts tile the city exactly (the builder asserts the population
@@ -10194,6 +10197,74 @@ function initMichiganExplorer() {
     }
   };
 
+  function rochesterHillsCoverage(point) {
+    return loadRochesterHillsWards().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
+
+  // ROCHESTER HILLS NAMES YOUR DISTRICT AND NOBODY IN IT, AND THE REASON IS THE
+  // CITY'S OWN robots.txt. Its council page is maintained and publishes every
+  // member with a phone and an e-mail — and www.rochesterhills.org/robots.txt
+  // (reached through a redirect to the city's CMS host) allows five named bots
+  // and then says `User-agent: *` / `Disallow: /`. This project does not read a
+  // site that has asked general crawlers not to, so no name ships and gap
+  // `rochester-hills-council-roster` records why.
+  //
+  // THE GEOMETRY IS A DIFFERENT HOST. gis.rochesterhills.org serves no
+  // robots.txt and its AGO item is shared public with no stated terms — the
+  // Knox precedent, where a county's website refused while its GIS host served
+  // the data. The city's own layer also carries a `repname` per district; it is
+  // not read, both because it is the Battle Creek refusal and because it is
+  // demonstrably behind the council page.
+  var rochesterHillsEntry = {
+    key: "rochester-hills",
+    label: "Rochester Hills",
+    coverage: rochesterHillsCoverage,
+    loadGeometry: loadRochesterHillsWards,
+    hoverName: function (feature) {
+      var v = findPropCI(feature.properties || {}, ["ward"]);
+      return (v == null || v === "") ? null : "District " + String(v);
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadRochesterHillsWards, point).then(function (feature) {
+        if (!feature) return null;
+        return { seq: seq, ward: findPropCI(feature.properties || {}, ["ward"]) };
+      });
+    },
+    cardIdentifier: function (result) {
+      return result.ward ? "District " + String(result.ward) : "Unknown district";
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderLinkRow({
+        title: result.ward ? "District " + String(result.ward)
+                           : "Rochester Hills City Council",
+        note: "Rochester Hills elects one council member from each of four "
+            + "districts, plus three members elected by the whole city. The city "
+            + "publishes who holds each seat on its own website, which asks "
+            + "automated visitors not to read it — so this app names your "
+            + "district and sends you to the city for the people in it.",
+        links: [{ label: "City Council members",
+                  url: "https://www.rochesterhills.org/government/city_council/council_members.php" }]
+      }));
+      wrap.appendChild(renderFieldStack([
+        { label: "District", value: result.ward ? String(result.ward) : "Unknown",
+          primary: true },
+        { label: "How this district is represented",
+          value: "Rochester Hills is governed by a seven-member City Council — one "
+               + "member from each of four districts and three elected at large — "
+               + "together with a separately elected Mayor. The district lines are "
+               + "the city's own, drawn for 2021-2031." }
+      ]));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Rochester Hills City Council",
+               url: "https://www.rochesterhills.org/government/city_council/index.php" };
+    }
+  };
+
   registerCountyLayer({
     id: "city-ward",
     group: "political",
@@ -10208,8 +10279,9 @@ function initMichiganExplorer() {
     // ORDERED BY POPULATION: §3.1 says to order the table so the cheapest
     // already-cached coverage test short-circuits the OR, and the city most
     // selections land in should be tried first. Detroit, then Warren, then
-    // Grand Rapids, then Flint, then Battle Creek.
-    entries: [detroitEntry, warrenEntry, grandRapidsEntry, flintEntry, battleCreekEntry]
+    // Grand Rapids, then Flint, then Rochester Hills, then Battle Creek.
+    entries: [detroitEntry, warrenEntry, grandRapidsEntry, flintEntry,
+              rochesterHillsEntry, battleCreekEntry]
   });
 
 
