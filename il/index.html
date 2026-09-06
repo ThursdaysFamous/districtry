@@ -11250,6 +11250,9 @@ function initChiExplorer() {
   var loadGallatinPrecincts = makeCached(function () {
     return fetchJSONWithRetry("data/app/gallatin-precincts.json", {}, 2);
   });
+  var loadPutnamPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/putnam-precincts.json", {}, 2);
+  });
   /* CUMBERLAND is precinct-only for a DIFFERENT reason than Calhoun, Morgan and
    * Gallatin, and the distinction is the point: those three elect their boards
    * countywide, so there is no district for a precinct to belong to. Cumberland
@@ -27766,6 +27769,49 @@ function initChiExplorer() {
           return {
             label: "Gallatin County Clerk — elections",
             url: "https://gallatinco.illinois.gov/elections/"
+          };
+        }
+      },
+      // Putnam — eight precincts that ARE the Census 2020 voting districts,
+      // one for one. ITS GAP RECORD WAS RIGHT AND OUT OF DATE: written 2 Aug
+      // 2026, it said the county publishes no map data and its Clerk publishes
+      // documents rather than data. Both still true, and neither is the
+      // question — the precinct NAMES arrive from the Clerk's own certified
+      // canvasses on il-putnam.pollresults.net, a route this project did not
+      // have until the vendor sweeps three weeks later. Two census names are
+      // renamed onto the county's own designation (it numbers Hennepin 1 and
+      // Senachwine 1 where the census leaves them bare — the Greene case).
+      // NO BOARD DISTRICT: Putnam elects its five commissioners countywide, so
+      // they ride the County card. NO POLLING PLACE: the Clerk publishes them
+      // as documents, which belong with a roster guard rather than in geometry.
+      {
+        key: "putnam",
+        coverage: countyOutlineCoverage("putnam"),
+        loadGeometry: loadPutnamPrecincts,
+        hoverName: function (feature) {
+          var v = findPropCI(feature.properties || {}, ["name"]);
+          return (v == null || String(v).trim() === "") ? null : String(v).trim();
+        },
+        query: function (point, seq) {
+          return loadPutnamPrecincts().then(function (geojson) {
+            var feature = findFeatureContaining(geojson, point);
+            if (!feature) return null;
+            return {
+              seq: seq,
+              name: findPropCI(feature.properties || {}, ["name"])
+            };
+          });
+        },
+        render: function () {
+          return renderFieldStack([{ label: "County", value: "Putnam County" }]);
+        },
+        cardIdentifier: function (result) {
+          return result.name ? "Precinct " + String(result.name) : "Unknown";
+        },
+        primaryLink: function () {
+          return {
+            label: "Putnam County Clerk — elections",
+            url: "https://www.putnamil.gov/government/county_clerk___recorder_office/elections.php"
           };
         }
       },
