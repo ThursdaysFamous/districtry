@@ -627,3 +627,50 @@ Kentwood, Jackson and Holland. None shows a GIS host on its home page; Jackson p
 six per-ward pages (`/498/Ward-1` … `/512/Ward-6`), which is a roster source rather than a
 boundary one. All three sites permit general crawling. They are left for their own pass
 rather than half-measured here.
+
+---
+
+## Phase 5 closed — the last three candidates measured (2026-09-06)
+
+Kentwood, Jackson and Holland were the three left unmeasured when Rochester Hills
+shipped. All three are now measured, none ships, and one of the three is a
+decision rather than an absence. **The ten districted candidates from the 23-city
+sweep are now fully resolved: five ship (Warren, Flint, Battle Creek, Rochester
+Hills, plus Wyoming's state route still reserved), five are recorded.**
+
+**KENTWOOD.** Three publisher routes walked, all empty. No city AGOL org exists.
+Kent County's does — `accesskent.maps.arcgis.com`, 43 public feature services —
+and not one names a ward, precinct, commission, voting or election layer. The
+city's site references no GIS host on its home page or its clerk's election page.
+A name trap recorded with it: `kentcounty.maps.arcgis.com` is Kent County
+**Council**, in England — the Jackson-Mississippi lesson in a second flavour.
+
+**HOLLAND.** No city AGOL org; no GIS host referenced on the site. Ottawa County
+runs a public ArcGIS Server whose root service list is empty and whose Hosted
+folder carries 73 services, none electoral. The one Holland-badged org that does
+exist is the **Board of Public Works**, whose "districts" are Public Works,
+Historic and UDO Zoning. **Holland straddles into Allegan County**, which was not
+probed and is the single route left open.
+
+**JACKSON — a decision, not an absence.** Its county's REST instance is
+`countygis`, **not** `arcgis`, so every guessed path 404s and the real root has to
+be read out of the landing page's own `landing.js`. That is the "a URL you
+constructed is not a source you probed" rule for the third time this week, and
+this time the cost was only a wrong guess rather than a wrong record.
+
+Behind it, the Voting folder carries the county board's districts (which Michigan
+already ships statewide), a precinct layer, and **no city ward layer**. But that
+precinct layer carries `MUNICIPALITY` **and** `WARD`, and they populate: City of
+Jackson, 10 precincts across wards 1–6 at **1/2/2/2/1/2** — exactly what the
+state's own 2026 fabric records. Two independent publishers agreeing on the
+composition.
+
+**That is why Jackson is not the same question as Wyoming or Muskegon.** There,
+the state fabric would be both the source and the check, which collapses the
+two-witness structure this project builds on. Here the COUNTY would be the source
+and the STATE remains a genuinely independent check. The route is sound; it is
+still a method this instance has not used for a city ward, so it is recorded and
+left to the operator rather than invented at the end of a pass.
+
+The city separately publishes six per-ward pages (`/498/Ward-1` … `/512/Ward-6`),
+which is a roster source and not a boundary one.
