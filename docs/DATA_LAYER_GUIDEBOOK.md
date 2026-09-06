@@ -787,21 +787,7 @@ detail into `blocker`.
       "blocker": "Re-checked 31 Jul 2026: the county's mapping server carries the 911 fire service areas the app already shows, and no park or library district boundaries of any kind. LIBRARIES SHIPPED 2026-09-05 and the library half of this record is closed; what remains above is what is still absent. The boundaries come from the statewide layer this record already named — the Illinois Broadband Office / Connected Nation IL_Boundary_Layers service, layer 11, 642 polygons for the whole state — pre-built per county by scripts/build_statewide_library_districts.py and clipped to the county. THE PROVENANCE CAVEAT IS NOT RESOLVED, IT IS DISCLOSED: copyrightText and the item description are both empty and the publisher is a broadband contractor, so every card built on it carries a Boundary row naming that publisher, and the card renders the source's own LibraryType so a reader is told whether they are in a taxing DISTRICT or inside a municipal library's town. WHY IT IS TRUSTED ENOUGH TO SHIP is measured, not asserted, and two of the three checks are gates in the builder rather than notes. Carroll is the witness: the layer returns exactly the seven library tax lines the County Clerk's own Tax Code by District Listing names, and the build REFUSES TO WRITE if that ever stops being true. It is right on the negatives, which is the check a wrong layer fails — Shannon village and Lake Carroll land in no library district, and the Clerk's tax codes independently agree. And Boone, which ships its libraries from its own tax roll and is therefore a control rather than a customer, agrees with it: the two publishers name the same three bodies and their polygons overlap at 60-85% IoU, with the contractor's `City` typing of Ida Public Library confirmed by the county itself, since Ida's 18 tax codes are identical to the City of Belvidere's.",
       "wanted": "Park district boundaries from the county's mapping system."
     },
-    {
-      "id": "livingston-precincts",
-      "concept": "Voting precincts",
-      "area": "Livingston County",
-      "counties": [
-        "livingston"
-      ],
-      "kind": "no-source",
-      "layer": "county-precinct",
-      "summary": "Livingston County's voting precincts aren't shown.",
-      "why": "The county runs no public mapping system and publishes no precinct boundaries in any form — its yearbook lists the precincts as text only.",
-      "blocker": "Checked 31 Jul 2026: the county runs no public mapping system. Its only mapping product is the assessment office's mail-order parcel program, at 10 to 20 cents per parcel paid by posted cheque; no county items appear in any public map catalogue; and the regional planning commission's 363 datasets include nothing for Livingston. The clerk's yearbook lists precincts and polling places as text only.",
-      "wanted": "Precinct boundaries from any county-published source. The yearbook's polling place list is ready to attach to them."
-    },
-    {
+        {
       "id": "livingston-special-districts",
       "concept": "Fire, park and library districts",
       "area": "Livingston County",
@@ -913,21 +899,7 @@ detail into `blocker`.
       "blocker": "The county's ward data has fields for official, address, phone, email and website on every row and fills none of them on any of the 31 — re-checked 31 Jul 2026 on data that is otherwise actively maintained, last edited in May 2026. What has changed is that the names are now available: Alton (7 alderpersons with ward, phone and email), Granite City (10 across 5 wards with email) and Edwardsville (7) publish ward-keyed lists on their own sites, and the regional 2026 Public Officials Directory covers all six cities. The six ward cities are Alton, Edwardsville, Granite City, Madison, Troy and Venice; Collinsville elects at-large. SHIPPED 2026-09-04, and the missing half was the SHAPES rather than the names. The seats had already been in `municipal-officials.json` \u2014 Madison's 28 municipalities from the East-West Gateway directory, five cities fully ward-keyed \u2014 while nothing dispatched the county's ward polygons, so 40 ward-keyed seats sat in the shipped file with no card able to reach them. THE RECORD SAID \"joining those lists to the shapes\" AND THE SHAPES WERE THE PART NOBODY HAD ADDED. `MadCo_Wards` on the county GIS's own org (31 polygons, public, empty licenceInfo) now rides a `madison-cities` entry, keyed by a MUNCIPAL attribute the county spells without its first I \u2014 so the loader asks for the county's spelling first and the correct one second rather than assuming either. Replaying the app's own join offline over all 31 shapes: 27 name at least one holder, Alton and Edwardsville one per ward, and Granite City, Troy and Venice BOTH of theirs, which is the case a first-holder-wins join would have halved. THE CITY OF MADISON'S FOUR WARDS NAME NOBODY AND THAT IS DELIBERATE: the directory lists its eight council members with no ward against any of them, so the card gives the ward and stops (the Quincy posture). Splitting eight names across four wards would be an invention the source does not support. The cards could not be rendered in a browser from this project's sandbox and that is environmental rather than a doubt about the change: the CHICAGO ward entry, on its own Socrata dataset, produces no card there either.",
       "wanted": "Which ward each of the City of Madison's eight council members represents \u2014 from the city, or filled into the county's own OFFICIAL column, which exists on all 31 ward rows and is empty on every one."
     },
-    {
-      "id": "marshall-precinct-geometry",
-      "concept": "Voting precincts",
-      "area": "Marshall County",
-      "counties": [
-        "marshall"
-      ],
-      "kind": "no-source",
-      "layer": "county-precinct",
-      "summary": "Marshall County's 14 voting precincts aren't drawn. Its board districts are.",
-      "why": "The county's only precinct map is a PDF, and two precincts cut through towns rather than following township lines, so census boundaries can't rebuild them.",
-      "blocker": "Checked 2 Aug 2026, when the county was added: Marshall runs no public mapping system, and the regional planning commission that maps Logan and Woodford carries nothing for it. Its precinct map is a PDF, and unlike its board districts the precincts do not follow whole township lines — two split municipalities, so census data cannot rebuild them. The board districts were added anyway because they ARE whole townships, which the census publishes as usable map data.  NOT YET ASKED: this records what the county's WEBSITE shows, which Ogle proved on 2026-08-03 is a different question from what the county will send on request — its precinct shapefile arrived by return e-mail from a gap that read exactly like this one. See \"The ask ledger\".",
-      "wanted": "Marshall County's precinct boundaries as map data, plus polling places if the county publishes them."
-    },
-    {
+        {
       "id": "mason-precinct-vintage",
       "concept": "Voting precincts",
       "area": "Mason County",
