@@ -383,3 +383,40 @@ Clarity carries the Macomb slot but publishes an **empty election list**.
 obsolete plan. **The catalogue tells you what a thing is called; only the content tells you
 what it is.**
 
+---
+
+## Phase 5 continued — 23 more cities settled in one query (2026-09-06)
+
+**The method's first test is now the cheapest thing in the pipeline, and it scales.** One
+query against the state's own 2026 precinct fabric, filtered to 23 jurisdictions at once,
+settles the only question that decides whether a city is a `city-ward` candidate at all:
+does the state record a WARD for its precincts?
+
+**TEN ARE DISTRICTED** and are candidates: Wyoming (3 wards), Rochester Hills (4),
+Pontiac (6), Kentwood (2), Battle Creek (5), Midland (5), Muskegon (4), Jackson (6),
+Bay City (9), Holland (6).
+
+**THIRTEEN CARRY `WARD='00'` ON EVERY PRECINCT** — the Sterling Heights and Dearborn shape:
+Livonia, Troy, Westland, Farmington Hills, Southfield, Kalamazoo, Novi, Dearborn Heights,
+Taylor, Royal Oak, Saginaw, Portage, East Lansing.
+
+**THOSE THIRTEEN GET NO PANEL GAP RECORD, AND THAT IS A STRUCTURAL ARGUMENT RATHER THAN
+A SHORTCUT.** A gap record answers "what won't show on my card, and why". An at-large
+council has no district for the card to name, so there is no absence in a district layer
+to explain — the same reason this project gives an at-large county board roster rows on
+its identity card and never a polygon. Sterling Heights and Dearborn carry records because
+each is a very large city where a reader might reasonably expect a ward and where the
+at-large reading is INFERRED from one publisher's column rather than confirmed; thirteen
+more near-identical entries would flood the panel without telling a reader anything the
+first two do not. The measurement lives here instead, where the next pass will look.
+
+**WYOMING, THE LARGEST DISTRICTED CANDIDATE, IS THE FIRST CITY IN THE FLEET WHOSE
+robots.txt NAMES CLAUDE AND SAYS NO** — `User-agent: ClaudeBot` / `Disallow: /` over the
+whole site, with `Content-Signal: ai-train=no`, and every precinct map under a `/Portals/`
+path disallowed to `*` as well. A browser user-agent would fetch those files; using one to
+step around a rule written at Claude by name is exactly what this project does not do. The
+state route is open — the state's own fabric would dissolve to 6/6/6 across three wards
+without touching the city at all — but making the state the SOURCE rather than the
+independent currency CHECK is a posture change, so it is recorded and left to the operator.
+See gap `wyoming-mi-ward-boundary`.
+
