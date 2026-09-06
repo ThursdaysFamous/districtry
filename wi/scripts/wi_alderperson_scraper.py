@@ -177,6 +177,16 @@ WAUKESHA_INDEX = "https://www.waukesha-wi.gov/about_the_common_council/index.php
 #   41-45. Nothing read here witnesses the correspondence, and a wrong offset
 #   moves every name one seat, so it is not guessed.
 #
+# ALL 22 ARE MEASURED AS OF 2026-09-06. Six ship one member per district (the
+# five above plus New Lisbon); FIFTEEN seat more than one, and Wisconsin Dells
+# is a probable sixteenth. The last three read — Black River Falls (two per
+# ward, 8 over 4; its labels are uppercase WARD N, which a case-sensitive
+# pattern misses), Neenah (three per district, 9 over 3) and Wautoma (UNEVEN at
+# one, three and two, 6 over 3) — are all multi-member. WAUTOMA SETTLES THE
+# DESIGN QUESTION: a two-slot schema would not carry it; these cities need a
+# genuine LIST per district. Wautoma also prints home addresses beside every
+# name, which are never read.
+#
 # The remaining twelve, with the page the sweep scored, so the next pass starts
 # from a measurement instead of repeating this one. THEIR SEAT VOCABULARY WAS
 # MEASURED 2026-09-05: seven number seats by WARD (the Viroqua shape, needing
