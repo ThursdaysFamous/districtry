@@ -24403,7 +24403,17 @@ function initChiExplorer() {
        * all. The route had been measured since 2026-09-05 and what was missing
        * was a decision, not a source: 65 county-scoped files a reader loads one
        * of, or one 2.35 MB statewide file every reader loads whole. The files
-       * are 3-80 KB each and only the county you clicked is fetched.
+       * are 1.1 KB (Hardin) to 80 KB (Winnebago), 1.08 MB for all 65.
+       *
+       * THAT IS A PRECACHE COMPARISON, NOT A PER-VISIT ONE, and an earlier
+       * draft of this comment got it wrong by saying "only the county you
+       * clicked is fetched". True of the OVERLAY, which draws and queries one
+       * county's file; FALSE of the service worker, whose PRECACHE_URLS is
+       * SHELL_URLS.concat(GEOMETRY_URLS) — an installing visitor background-
+       * fetches all 65 and the precache goes 13.09 MB to 14.22 MB. The county
+       * files still win, because 1.08 MB of them is less than the 2.35 MB the
+       * single statewide file would have added; the win is just smaller than
+       * that sentence implied.
        *
        * They carry no hand-verified probe points, and that is deliberate — 130
        * probes nobody actually checked would be guesses wearing a gate's
@@ -24412,7 +24422,9 @@ function initChiExplorer() {
        * layer's polygons against Census 2020 geography and, unlike a probe,
        * discriminates in both directions: municipal libraries match their own
        * municipality at a median IoU of 0.968 while library DISTRICTS match at
-       * 0.056, so the layer is not quietly redrawing municipalities.
+       * 0.063 (2026-09-06; 0.056 when first measured a day earlier — it moves
+       * with the publisher, so it is quoted with its date), so the layer is
+       * not quietly redrawing municipalities.
        * ------------------------------------------------------------------ */
       statewideLibraryEntry({ key: "alexander", county: "Alexander County" }),
       statewideLibraryEntry({ key: "bond", county: "Bond County" }),
@@ -24478,7 +24490,7 @@ function initChiExplorer() {
       statewideLibraryEntry({ key: "white", county: "White County" }),
       statewideLibraryEntry({ key: "whiteside", county: "Whiteside County" }),
       statewideLibraryEntry({ key: "williamson", county: "Williamson County" }),
-      statewideLibraryEntry({ key: "winnebago", county: "Winnebago County" }),
+      statewideLibraryEntry({ key: "winnebago", county: "Winnebago County" })
     ]
   });
 

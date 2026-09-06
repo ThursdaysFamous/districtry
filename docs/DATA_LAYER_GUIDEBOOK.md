@@ -7099,8 +7099,14 @@ the dispatch table in `il/index.html`, never off this paragraph.
 
 **THE CHOICE WAS MADE ON 2026-09-06: 65 COUNTY-SCOPED ENTRIES, NOT ONE STATEWIDE FILE.**
 The deciding number is the one a READER pays. A single statewide entry is 2.35 MB fetched by
-everyone who toggles the layer; 65 county files are 3-80 KB each and only the county you
-clicked is fetched. The code cost that argued for the statewide option turned out to be
+everyone who toggles the layer; 65 county files are 1.1 KB (Hardin) to 80 KB (Winnebago),
+1.08 MB for all of them. **THAT IS A PRECACHE COMPARISON AND AN EARLIER DRAFT OF THIS
+PARAGRAPH OVERSTATED IT**, saying "only the county you clicked is fetched": true of the
+OVERLAY, which draws and queries one county's file, and FALSE of the service worker, whose
+`PRECACHE_URLS` is `SHELL_URLS.concat(GEOMETRY_URLS)` — an installing visitor
+background-fetches all 65 and the precache goes 13.09 MB to 14.22 MB. The county files still
+win, because 1.08 MB of them is less than the 2.35 MB one statewide file would have added;
+the win is simply smaller than that sentence implied. The code cost that argued for the statewide option turned out to be
 mostly avoidable: the per-county shape is `<slug>-county-outline.json` +
 `<slug>-library-districts.json`, both named by CONTRACT, so `countyOutlineCoverage(slug)` and
 `countyLibraryLoader(slug)` replace ~280 lines of near-identical loader/coverage pairs and
@@ -7124,7 +7130,9 @@ against a publisher who has never heard of it: a City or Village library's bound
 municipality, and a Township library's IS the township — units the Census Bureau draws. The
 PLACE WITNESS scores 236 of the 642 polygons that way, and it DISCRIMINATES rather than only
 confirming: municipal libraries match their own municipality at a median IoU of **0.968**
-(township 0.997, min 0.978) while library DISTRICTS match at **0.056**. If the layer were
+(township 0.997, min 0.978) while library DISTRICTS match at **0.063** (2026-09-06; it
+read 0.056 a day earlier on a slightly different candidate set, so it is quoted with its
+date, like every other figure this project publishes about a live publisher). If the layer were
 quietly redrawing municipalities and labelling some of them "District", that second number
 would be high, so the type column is carrying real information. Both directions are gated.
 The 361 district polygons have no witness and the gate says so rather than pretending. A
