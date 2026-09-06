@@ -118,12 +118,25 @@ const BOOT_TIMEOUT = 45000;
 // dressed as a constant: it failed CI on four unrelated PRs on 2026-09-06,
 // every time with the same signature — Illinois measuring 18 of 39 instead of
 // 19, `ward` dropping out — and every time went green on a re-run of the
-// identical tree. REPRODUCED by shrinking the constant rather than guessed at:
-// at 6000 ms and 1500 ms Illinois reads 19, at 800 ms it reads 18, and the
-// layer that leaves does NOT appear in "holds a hook and never fires it". It
-// moves to `layers_unexercised` — it was never ASKED. `ward` is
-// municipality-keyed, so its coverage test has to resolve before its query is
-// dispatched at all, and the old wait could expire first.
+// identical tree.
+//
+// SETTLED AS "THE PROBE READ TOO EARLY", not "the layer stopped sending", and
+// settled on the code rather than by re-running until green: `loadWards` is a
+// makeCachedLoader, so its .atPoint is the generic Socrata point query, and
+// neither that helper nor queryFeatureAt nor the ward entry appears in the
+// diff of #769 (the f=json loader switch) or #785.
+//
+// REPRODUCED by shrinking the constant: at 6000 ms and 1500 ms Illinois reads
+// 19, at 800 ms it reads 18. `ward` dispatches through registerCountyLayer,
+// and THAT PATH ASKS COVERAGE TWICE — the layer-level OR decides whether the
+// query runs at all, and the dispatcher's own coverageMatches() runs AGAIN
+// inside query(), before any entry's query reaches queryFeatureAt. So one
+// root cause puts `ward` in either of two buckets depending on which round the
+// clock expires in, and both have been observed: CI reported "holds a hook and
+// never fires it" (asked, still resolving the INNER round), while here — the
+// ERSB tiling fetch never succeeding — it reads `layers_unexercised` (never
+// asked, still resolving the OUTER one). A wait watching only one of the two
+// would leave half the flake in place.
 //
 // SO "NO QUERY STILL RUNNING" IS THE WRONG CONDITION IN BOTH DIRECTIONS, and
 // both halves were measured rather than reasoned about. Too EARLY: while a
