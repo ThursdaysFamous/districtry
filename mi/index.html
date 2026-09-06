@@ -9707,6 +9707,9 @@ function initMichiganExplorer() {
   var loadFlintWards = makeCached(function () {
     return fetchJSONWithRetry("data/app/mi-flint-wards.json", {}, 2);
   });
+  var loadBattleCreekWards = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-battle-creek-wards.json", {}, 2);
+  });
 
   function detroitCoverage(point) {
     // The districts tile the city exactly (the builder asserts the population
@@ -10057,6 +10060,53 @@ function initMichiganExplorer() {
     }
   };
 
+  function battleCreekCoverage(point) {
+    return loadBattleCreekWards().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
+
+  // BATTLE CREEK'S OWN WARD LAYER CARRIES A COMMISSIONER NAME PER WARD, AND THIS
+  // APP SHIPS NONE OF THEM. Four of the five records were last edited in March
+  // 2023 and only ward 1 has been touched since; Michigan cities elect in odd
+  // Novembers, so those names predate at least one election. That is the same
+  // refusal Michigan's statewide county-commissioner layer earned — a name field
+  // is not a roster — and the city's own commission page answers 403 to this
+  // client, so nothing corroborates them. Gap `battle-creek-commission-roster`.
+  var battleCreekEntry = {
+    key: "battle-creek",
+    label: "Battle Creek",
+    coverage: battleCreekCoverage,
+    loadGeometry: loadBattleCreekWards,
+    hoverName: function (feature) {
+      var v = findPropCI(feature.properties || {}, ["ward"]);
+      return (v == null || v === "") ? null : "Ward " + String(v);
+    },
+    query: function (point, seq) {
+      return queryFeatureAt(loadBattleCreekWards, point).then(function (feature) {
+        if (!feature) return null;
+        return { seq: seq, ward: findPropCI(feature.properties || {}, ["ward"]) };
+      });
+    },
+    cardIdentifier: function (result) {
+      return result.ward ? "Ward " + String(result.ward) : "Unknown ward";
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      wrap.appendChild(renderLinkRow({
+        title: result.ward ? "Ward " + String(result.ward) : "Battle Creek City Commission",
+        note: "Battle Creek elects one commissioner from each of five wards. The "
+            + "city's published ward map carries a name for each, but most of "
+            + "those entries have not been updated since 2023, so this app names "
+            + "your ward and not your commissioner."
+      }));
+      return wrap;
+    },
+    primaryLink: function () {
+      return { label: "Battle Creek City Commission", url: "https://battlecreekmi.gov/" };
+    }
+  };
+
   registerCountyLayer({
     id: "city-ward",
     group: "political",
@@ -10071,8 +10121,8 @@ function initMichiganExplorer() {
     // ORDERED BY POPULATION: §3.1 says to order the table so the cheapest
     // already-cached coverage test short-circuits the OR, and the city most
     // selections land in should be tried first. Detroit, then Warren, then
-    // Grand Rapids, then Flint.
-    entries: [detroitEntry, warrenEntry, grandRapidsEntry, flintEntry]
+    // Grand Rapids, then Flint, then Battle Creek.
+    entries: [detroitEntry, warrenEntry, grandRapidsEntry, flintEntry, battleCreekEntry]
   });
 
 

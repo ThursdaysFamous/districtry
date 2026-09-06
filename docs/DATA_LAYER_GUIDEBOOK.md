@@ -2239,6 +2239,42 @@ detail into `blocker`.
       "why": "The city's website asks automated tools like this one not to read it, and this project honours that. Its ward and precinct maps are also in a part of the site closed to all crawlers.",
       "wanted": "The city's ward boundary published as a downloadable file or a public map service, outside the part of its site that is closed to automated readers.",
       "blocker": "MEASURED 2026-09-06. THE FIRST CITY IN THIS FLEET WHOSE robots.txt NAMES CLAUDE AND SAYS NO. www.wyomingmi.gov serves `User-agent: ClaudeBot` / `Disallow: /` — the whole site — alongside the same blanket disallow for GPTBot, CCBot, Google-Extended, Amazonbot, Bytespider, Applebot-Extended and meta-externalagent, and a `Content-Signal: search=yes,ai-train=no,use=reference` line. Separately, EVERY precinct map it publishes lives under /Portals/ (e.g. /Portals/0/Documents/Precincts/2022 Precinct Map_1.pdf), and `Disallow: /Portals/` applies to `User-agent: *` as well, so those documents are closed to every crawler and not only to this one. THIS PROJECT HONOURS THAT AND STOPS: a browser user-agent would fetch these files, and using one to step around a rule written at Claude by name is precisely the kind of access control this project does not route around. THE STATE ROUTE IS OPEN AND WAS NOT TAKEN UNILATERALLY. Michigan's own 2026 precinct fabric — a different publisher, already shipped by this instance — assigns Wyoming's 18 precincts 6/6/6 across wards 1-3, so a ward layer could be DISSOLVED from the state's data without touching the city's site at all. Every Michigan city so far has shipped the CITY's own polygons with the state's fabric as the independent CURRENCY CHECK; making the state the source removes that second witness, which is a posture change rather than a build, and is the operator's call. THE ARCGIS CATALOGUE IS ALSO EMPTY FOR THIS CITY, and the reason is a name collision worth recording: a search for ward layers in \"Wyoming\" returns the STATE of Wyoming almost exclusively (game-warden districts, WyomingGeoHub), and `title:\"City of Wyoming\"` returns cities in OHIO (39.2,-84.5) and MINNESOTA (45.3,-93.0) and none in Michigan — the Lansing/Kansas trap in a second form."
+    },
+    {
+      "id": "battle-creek-commission-roster",
+      "kind": "data-quality",
+      "concept": "City council district",
+      "area": "Battle Creek",
+      "layer": "city-ward",
+      "counties": [],
+      "summary": "In Battle Creek the City Council District card names your ward but not the commissioner who represents it.",
+      "why": "The city's ward map carries a name for each ward, but most of those entries have not changed since 2023 and the city elects in odd Novembers, so this app shows the ward rather than a name that may be two elections old.",
+      "wanted": "A current list of Battle Creek's five commissioners by ward on the city's own pages, or the same names refreshed on its published ward map.",
+      "blocker": "MEASURED 2026-09-06. THE GEOMETRY SHIPS AND THE NAME FIELD DOES NOT, which is the refusal Michigan's own statewide county-commissioner layer already earned in this instance: that layer carries a name per district too, and lists election winners rather than current officeholders. Here the evidence is on the records themselves. `Wards_BC` carries COMMISSIONER per ward — Jessica LaCosse (1), Jenasia Morris (2), Patrick O'Donnell (3), Christopher Simmons (4), Jim Lance (5) — and FOUR OF THE FIVE HAVE EDITDATE 2023-03-23, with only ward 1 touched since (2025-03-25). Michigan cities elect in odd Novembers, so a 2023 edit predates at least one city election and possibly two. A NAME FIELD IS NOT A ROSTER: it has no publication date, no office-holding claim, and no mechanism that would change it when a seat changes hands. The corroborating source is the city's own commission page, and battlecreekmi.gov/165/City-Commission answers HTTP 403 to this client (a refusal on that path specifically — the site's robots.txt permits general crawling, disallowing only admin and search paths, and the home page answers 200). Until a current city-published roster can be read, naming the ward and not the commissioner is the honesty floor."
+    },
+    {
+      "id": "bay-city-ward-boundary",
+      "kind": "data-quality",
+      "concept": "City council district",
+      "area": "Bay City",
+      "layer": "city-ward",
+      "counties": [],
+      "summary": "Bay City elects nine commissioners by ward, and this app does not show you which ward you live in.",
+      "why": "The city's published ward map and the state's current precinct map disagree about where several ward lines run, so showing either one would risk telling you the wrong ward.",
+      "wanted": "Bay City's current adopted ward boundary, republished so it agrees with the precincts the state records for the city.",
+      "blocker": "MEASURED 2026-09-06 AND REFUSED BY THE CURRENCY GATE. The city publishes `Wards` from its own GIS account (BayCityGIS_COBC, item snippet \"Shapefile of Bay City Wards\", licenceInfo empty, shared public, last modified 2023-12-12) with exactly 9 features keyed WARD 1-9, which matches the state's own count. It scores 97.608% against the state's 2026 precinct fabric — BELOW THIS PROJECT'S 0.99 FLOOR, and the floor was not moved. WHERE THE DISAGREEMENT SITS IS WHAT DECIDES IT: it is NOT concentrated on one edge. Sampling 6,000 points found 58 in a ward the two publishers name differently, spread across TWELVE distinct ward pairs, the largest being city-4-vs-state-3 (17 points) and city-8-vs-state-7 (10). A single mis-drawn city outline produces disagreement on the perimeter; disagreement between a dozen interior pairs is two different plans. Bay City is also the fleet's tidiest 1:1 case — the state records exactly one precinct per ward, nine and nine — which makes the mismatch harder to explain away as precinct aggregation. The city's layer is the likelier stale one at 2023 against a 2026 fabric, but this build does not assert which is right; it declines to ship either."
+    },
+    {
+      "id": "pontiac-ward-boundary",
+      "kind": "no-source",
+      "concept": "City council district",
+      "area": "Pontiac",
+      "layer": "city-ward",
+      "counties": [],
+      "summary": "Pontiac elects its council by district, and this app does not show you which district you live in.",
+      "why": "What the city publishes is a precinct map from 2020 rather than a district map, and it no longer matches the precincts the state records for the city.",
+      "wanted": "Pontiac's current council-district boundary as a downloadable file or a public map service.",
+      "blocker": "MEASURED 2026-09-06. The state's own 2026 precinct fabric assigns Pontiac's 14 precincts 3/3/2/2/2/2 across six districts, so the city IS districted. What the catalogue offers is not a district layer: `CouncilDistrictsPolling` (owner pontiac.ohm — OHM Advisors, the city's engineering consultant; licenceInfo empty) holds two layers, `Voting Locations` (12 points) and `Voting Precincts 2020` (21 polygons keyed WARD). The precinct layer scores 45.969% against the state's current fabric, which is what a 2020 precinct set looks like against a 2026 one — 21 precincts then, 14 now. A second candidate, `Council Districts` owned by an oakgov.com account (Oakland County GIS) and carrying a stated licence, could not be resolved back to its item on a second lookup and was not read. NO CURRENT DISTRICT POLYGON WAS FOUND from either the city or its county."
     }]
 }
 ```

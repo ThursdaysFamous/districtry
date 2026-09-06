@@ -716,6 +716,28 @@ try {
       await page.close();
     }
 
+    // BATTLE CREEK, the fifth entry — and the one whose source layer carries
+    // officeholder names this app deliberately refuses. The second check is the
+    // one that matters: the city's own ward file has a COMMISSIONER field, four
+    // of whose five records date from 2023, and none of those names may reach a
+    // card. A future edit that "helpfully" surfaces them fails here.
+    {
+      const page = await booted(context, `${BASE}#point=42.33185,-85.15855&layers=city-ward`);
+      const card = await cardText(page, "city-ward");
+      const pill = await page.evaluate(() => {
+        const el = document.getElementById("card-city-ward");
+        const p = el && el.parentElement ? el.parentElement.querySelector(".card-id-pill") : null;
+        return p ? p.textContent.trim() : null;
+      });
+      check("city-ward resolves a Battle Creek point to its own ward",
+        pill === "Ward 3", `pill=${JSON.stringify(pill)}`);
+      check("Battle Creek's card names no commissioner from the ward layer",
+        /not been updated since 2023/.test(card.text || "") &&
+        !/LaCosse|Morris|O.Donnell|Simmons|Lance/.test(card.text || ""),
+        (card.text || "").slice(0, 140));
+      await page.close();
+    }
+
     // THE SCENARIO THAT ACTUALLY CATCHES THE ORIGINAL BUG, and the two checks
     // above do not. The ward-agnostic literal only misfired on a ward the city
     // named SHORT, and Wards 2 and 3 are named in full — so under the broken
