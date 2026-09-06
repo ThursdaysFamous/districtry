@@ -54,7 +54,10 @@ import sys
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from validate_index import _first_office_address  # noqa: E402  (one copy of the rule)
+from validate_index import (  # noqa: E402  (one copy of each rule, not a second)
+    BOARD_OFFICE_LIVE_RENDER,
+    _first_office_address,
+)
 
 APP_DIR = os.path.join(REPO_ROOT, "il", "data", "app")
 SOURCE = os.path.join(REPO_ROOT, "il", "data", "source",
@@ -65,7 +68,13 @@ OUT_NAME = "il-county-board-offices.json"
 # Counties whose board card renders its office from live GIS rather than from a
 # shipped roster file, so no *-board-*.json carries the address. They are
 # ANSWERED and must never be given a fallback row.
-LIVE_RENDER = ("cook", "lake")
+# Cook and Lake fetch their board address at RENDER time, so no file scan can
+# see it. That list is validate_index.py's BOARD_OFFICE_LIVE_RENDER, which
+# also carries the REASON each county is on it, and this file already
+# imports _first_office_address from there for exactly this reason: one
+# copy of the rule. A second tuple here would be a second thing to keep in
+# step, in a builder whose own docstring argues against second copies.
+LIVE_RENDER = tuple(BOARD_OFFICE_LIVE_RENDER)
 
 MIN_OFFICES = 30          # 33 today; a collapse means the source changed shape
 

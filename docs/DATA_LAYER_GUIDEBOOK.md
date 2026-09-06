@@ -8220,6 +8220,19 @@ is deliberately contact-only enrichment (`build_winnebago_county_board_roster.py
 says so). Its `unchecked` verdict is a false negative, which also means the 29% is measured
 against a cross-check that is itself slightly too generous to ISBE.
 
+**RE-MEASURED 2026-09-06, and the number moved for a reason worth stating.** Every figure
+above is left at its 2026-08-20 vintage, as this file's convention requires. A fresh run of
+the same pair that day reports **agrees 52, differs 23, unchecked 27** — 23 of 75 comparable,
+**30.7%**, against the 16 of 56 (29%) above. **The document did not decay; the COMPARABLE SET
+GREW.** Nineteen more counties have shipped a board roster since August, so nineteen more
+counties can be checked at all, and the disagreement rate held roughly steady across them.
+The practical rule is therefore not "it is 29% wrong" but **quote this figure with its date
+and its denominator**, because both halves move: `CLAUDE.md` and the
+`il-county-board-offices.json` note carried it flat and undated until this was written, which
+is how a measured number turns into a slogan. The ADDRESS column, which is what
+`build_county_board_offices.py` actually reads, is unaffected — the same run reports 72
+corroborated offices, the same 72 as in August.
+
 **What it can never do, unchanged:** name a board MEMBER. `"County Board Member"` occurs zero
 times in the file and `"District"` zero times — it is an officers directory, not a roster.
 
