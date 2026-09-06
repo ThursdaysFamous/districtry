@@ -2238,6 +2238,30 @@ detail into `blocker`.
       "why": "Four separate signals all point to a council elected by the whole city, which would mean there is no district to show. None of them is the city or the county saying so outright, so nothing is claimed either way.",
       "wanted": "The city charter's own words on how the council is elected, or a certified county canvass showing the council contest and how many seats each voter fills.",
       "blocker": "MEASURED 2026-09-05, AND DELIBERATELY NOT CONCLUDED. Four signals agree and none is decisive: (1) the state's own 2026 precinct fabric assigns WARD='00' to all 40 Sterling Heights precincts, where Grand Rapids reads 01-03, Lansing 01-04 and Ann Arbor 01-05; (2) an ArcGIS catalogue query for ward/district/precinct services in the city returns ZERO; (3) the city's council page (/148/City-Council, reached from the site's own nav) titles only a Mayor and carries no ward or district language; (4) no ward service exists in any org reached. AN ABSENCE IN ONE PUBLISHER'S COLUMN IS A FACT ABOUT THAT PUBLISHER - the Knox error - so at-large is the working expectation and not a recorded fact. THE TWO WITNESS ROUTES WERE TRIED AND ARE NAMED. The charter: /1094/City-Charter answers HTTP 200 AND IS A VERTEXONE WATER-BILLING PORTAL, not the charter; library.municode.com/mi/sterling_heights serves a 6 KB JavaScript shell with no content; the Municode API path Clients/name 404s; the DocumentCenter index surfaces no charter document. The canvass: Macomb County's own results hosts do not resolve (electionresults.macombgov.org, www.mcclerk.org), and Clarity/Scytl DOES carry the county slot - results.enr.clarityelections.com/MI/Macomb/ answers 200 - but its elections.json returns an EMPTY ARRAY, so the vendor publishes no elections for Macomb and that route is measured shut rather than unexamined. IF THE COUNCIL IS AT LARGE THERE IS NO GAP TO CLOSE, only a record to correct: an at-large body gets roster rows on a city card and never a polygon."
+    },
+    {
+      "id": "warren-council-roster",
+      "kind": "no-source",
+      "concept": "City council district",
+      "area": "Warren",
+      "layer": "city-ward",
+      "counties": [],
+      "summary": "In Warren the City Council District card names your ward but not the council member who represents it.",
+      "why": "The city publishes its ward map and its council meeting documents, but no list of which member holds which ward, so this app names the ward and links the Council rather than inventing a name.",
+      "wanted": "A list of Warren's five council members by ward on the city's own council pages, with a phone number or e-mail for each.",
+      "blocker": "MEASURED 2026-09-05. THE BOUNDARY SHIPS AND THE ROSTER DOES NOT, which is the Detroit posture applied to a smaller city. www.cityofwarren.org answers 200 and its robots.txt disallows nothing (an empty `Disallow:` under `User-agent: *`), so this is not an access problem. The council page at /city-council/ is a WordPress page whose body is meeting agendas, minutes and transcripts as wp-content PDFs; the served HTML names no council member beside a ward, and no member or council-member sub-pages are linked from it. The city's ArcGIS ward layer carries LONGNAME/SHORTNAME/DISTRICT/COLOR/RegVoters and NO officeholder field, so unlike Michigan's county-commissioner layer there is not even a stale name here to reject. Warren elects one member per ward plus a mayor and three at-large seats; naming the ward without the member is the honesty floor."
+    },
+    {
+      "id": "dearborn-council-form",
+      "kind": "no-source",
+      "concept": "City council district",
+      "area": "Dearborn",
+      "layer": "city-ward",
+      "counties": [],
+      "summary": "Dearborn has no council district card here, because it is not settled that it elects its council by district at all.",
+      "why": "The state records no ward number for any Dearborn precinct, where it records them for every other Michigan city this app covers, which points to a council elected by the whole city rather than by ward.",
+      "wanted": "The city charter's own words on how the council is elected, or a certified county canvass showing the council contest and how many seats each voter fills.",
+      "blocker": "MEASURED 2026-09-05. THE SECOND CITY OF THIS SHAPE, after Sterling Heights, and measured the same way: the state's own 2026 precinct fabric assigns WARD='00' to all 42 Dearborn precincts, where Warren reads 01-05, Flint 01-09, Lansing 01-04, Ann Arbor 01-05 and Grand Rapids 01-03. An ArcGIS catalogue query for ward, council-district or precinct services naming Dearborn returns ZERO. AN ABSENCE IN ONE PUBLISHER'S COLUMN IS A FACT ABOUT THAT PUBLISHER (the Knox error), so at-large is the working expectation and not a recorded fact; the charter or a certified Wayne County canvass is what would settle it, and neither was read. IF THE COUNCIL IS AT LARGE THERE IS NO GAP TO CLOSE, only a record to correct — an at-large body gets roster rows on a city card and never a polygon."
     }]
 }
 ```

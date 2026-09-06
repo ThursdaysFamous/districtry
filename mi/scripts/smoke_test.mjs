@@ -675,6 +675,27 @@ try {
       await page.close();
     }
 
+    // WARREN, the third city on this dispatcher — one check, because the
+    // entry is deliberately thin: it names the ward and no member, since the
+    // city publishes no roster (gap `warren-council-roster`). What this proves
+    // is that a THIRD entry in the table still resolves to its own city rather
+    // than being shadowed by the two ahead of it in the OR.
+    {
+      const page = await booted(context, `${BASE}#point=42.50057,-83.00112&layers=city-ward`);
+      const card = await cardText(page, "city-ward");
+      const pill = await page.evaluate(() => {
+        const el = document.getElementById("card-city-ward");
+        const p = el && el.parentElement ? el.parentElement.querySelector(".card-id-pill") : null;
+        return p ? p.textContent.trim() : null;
+      });
+      check("city-ward resolves a Warren point to its own ward",
+        pill === "Ward 3", `pill=${JSON.stringify(pill)}`);
+      check("Warren's card names no member and says why",
+        /publishes its ward map but no list/.test(card.text || "") &&
+        !/City Commissioner/.test(card.text || ""), (card.text || "").slice(0, 130));
+      await page.close();
+    }
+
     // THE SCENARIO THAT ACTUALLY CATCHES THE ORIGINAL BUG, and the two checks
     // above do not. The ward-agnostic literal only misfired on a ward the city
     // named SHORT, and Wards 2 and 3 are named in full — so under the broken
