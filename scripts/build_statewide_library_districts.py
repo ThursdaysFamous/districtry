@@ -77,6 +77,7 @@ Usage:
 import argparse
 import json
 import os
+import re
 import sys
 
 import requests
@@ -130,6 +131,19 @@ SLIVER_REACH_M = 10.0
 # already carries for the same reason.
 MIN_AREA_RETAINED = 0.98
 MIN_AREA_LOST_M2 = 25000.0
+
+# Two library service areas overlapping by more than this MEAN WIDTH is real
+# shared ground rather than two boundaries digitised apart. Twice SIMPLIFY_M,
+# the same reasoning as SLIVER_REACH_M — see the overlap check in build_county
+# for the measurement that forced it.
+OVERLAP_WIDTH_M = 10.0
+
+# Polygons shipped at full precision because SIMPLIFY_M would have cost them
+# real ground (see build_county). One today. A ceiling rather than a list,
+# because the thing worth catching is the source changing shape wholesale —
+# a handful of thin county-line reaches is the expected steady state.
+UNSIMPLIFIED = []
+MAX_UNSIMPLIFIED = 12
 
 DEG = 1.0 / 111320.0
 M2_PER_DEG2 = (111320.0 ** 2) * 0.766   # ~40.5N; used only for the sliver floor
@@ -224,6 +238,60 @@ COUNTIES = [
                 (42.3792, -89.8226, "Lena Community District Library")]},
 ]
 
+# ---------------------------------------------------------------------------
+# THE OTHER 65 COUNTIES, AND WHY THEY CARRY NO PROBES.
+#
+# The six above were hand-verified: an exact feature count, and probe points a
+# person checked one at a time, at least one of them a NEGATIVE. That does not
+# scale to 65 counties — 130 probe points nobody actually verified would be
+# guesses wearing a gate's clothes, which is the one thing this project's rules
+# forbid outright.
+#
+# So these counties lean on a gate the six never had, which is STRONGER rather
+# than weaker and covers all 71 at once: the PLACE WITNESS below. It checks the
+# layer against Census 2020 geography — an independent publisher — on the 278
+# polygons whose boundary is a claim about a unit somebody else also draws, and
+# it discriminates in BOTH directions rather than only confirming. 236 of those
+# 278 are actually scored: the other 42 are named for a person rather than for
+# their unit (Carnegie, Dominy Memorial, Sallie Logan) and simply have no
+# witness, which is reported rather than counted either way.
+#
+# The labels come from build_county_status.ALL_COUNTIES rather than being typed
+# again here. A second hand-kept county-name table is exactly the drift this
+# repo keeps finding (the frontier list, the board-office list, the card-links
+# instance list), and there is no reason to create a third.
+WITNESS_COUNTIES = (
+    "alexander", "bond", "brown", "calhoun", "cass", "clark", "clay", "clinton",
+    "coles", "crawford", "cumberland", "dewitt", "douglas", "edgar", "edwards",
+    "franklin", "fulton", "gallatin", "greene", "hamilton", "hancock", "hardin",
+    "henry", "iroquois", "jackson", "jefferson", "jersey", "jo-daviess",
+    "johnson", "knox", "lasalle", "livingston", "logan", "marshall", "mason",
+    "massac", "mcdonough", "mclean", "menard", "mercer", "monroe", "montgomery",
+    "morgan", "moultrie", "ogle", "perry", "pike", "pulaski", "putnam",
+    "richland", "saline", "schuyler", "scott", "shelby", "tazewell", "union",
+    "vermilion", "wabash", "warren", "washington", "wayne", "white",
+    "whiteside", "williamson", "winnebago",
+)
+
+
+def _county_labels():
+    """slug -> "X County", from the one table that already owns the mapping."""
+    import build_county_status as bcs
+    return {bcs.slug_of(n): n + " County" for n, _ in bcs.ALL_COUNTIES}
+
+
+def _append_witness_counties():
+    labels = _county_labels()
+    have = {c["slug"] for c in COUNTIES}
+    for slug in WITNESS_COUNTIES:
+        if slug in have:
+            fail("%s is both hand-verified and in WITNESS_COUNTIES — one county, "
+                 "one entry" % slug)
+        if slug not in labels:
+            fail("WITNESS_COUNTIES names %r, which is not an Illinois county in "
+                 "build_county_status.ALL_COUNTIES" % slug)
+        COUNTIES.append({"slug": slug, "label": labels[slug]})
+
 
 def fail(msg):
     print("build-statewide-library-districts: FAIL — " + msg, file=sys.stderr)
@@ -283,6 +351,7 @@ def build_county(cfg, libs, tree, verbose=True):
     outline = county_outline(cfg["slug"])
     inland = outline.boundary.buffer(SLIVER_REACH_M * DEG)
     kept, dropped, excluded = [], [], []
+    unsimplified = []
     for idx in tree.query(outline):
         name, ltype, geom = libs[idx]
         if not geom.intersects(outline):
@@ -329,8 +398,16 @@ def build_county(cfg, libs, tree, verbose=True):
             simple = clip
         lost_m2 = (clip.area - simple.area) * M2_PER_DEG2
         if simple.area < MIN_AREA_RETAINED * clip.area and lost_m2 > MIN_AREA_LOST_M2:
-            fail("%s: simplifying %r lost %.1f%% of its area (%.0f m2)"
-                 % (cfg["slug"], name, 100.0 * (1 - simple.area / clip.area), lost_m2))
+            # THE ANSWER TO "THIS SHAPE CANNOT BE SIMPLIFIED SAFELY" IS TO NOT
+            # SIMPLIFY IT, not to loosen the rule that noticed. Simplification
+            # eats a long thin reach over a county line far harder than a
+            # compact district — this file already records 10 m destroying
+            # Pearl City's Carroll slice, and 5 m does the same to Putnam
+            # County PLD's Marshall slice (7.5%, 25,735 m2). Full precision on
+            # such a polygon costs a few KB; the alternative costs real ground.
+            unsimplified.append((cfg["slug"], name,
+                                 100.0 * (1 - simple.area / clip.area), lost_m2))
+            simple = clip
         kept.append((str(name).strip(), (str(ltype).strip() if ltype else None), simple))
 
     kept.sort(key=lambda k: k[0])
@@ -358,9 +435,30 @@ def build_county(cfg, libs, tree, verbose=True):
             print("  excluded %r — reaches %.1f m into the county over %.3f km2, "
                   "and no county tax code levies for it" % (n, reach_m, m2 / 1e6))
 
-    if len(kept) != cfg["expect"]:
-        fail("%s: %d libraries, expected %d (got: %s)"
-             % (cfg["slug"], len(kept), cfg["expect"], [k[0] for k in kept]))
+    if cfg.get("expect") is not None:
+        if len(kept) != cfg["expect"]:
+            fail("%s: %d libraries, expected %d (got: %s)"
+                 % (cfg["slug"], len(kept), cfg["expect"], [k[0] for k in kept]))
+    else:
+        # NO HAND-VERIFIED COUNT FOR THE WITNESS COUNTIES — so the SHIPPED FILE
+        # is the baseline, which is check_roster_retention.py's rule: a field is
+        # protected the moment it first ships, with nothing to configure. A
+        # county that gains a library is a publisher addition and passes; one
+        # that LOSES a library fails, because that is the shape of a source
+        # quietly changing under us. A first build has no baseline and only has
+        # to find at least one.
+        if not kept:
+            fail("%s: the statewide layer returned no library for this county, "
+                 "which contradicts the 2026-09-05 sweep that found every one "
+                 "of the 65 answered" % cfg["slug"])
+        prior = os.path.join(APP_DIR, "%s-library-districts.json" % cfg["slug"])
+        if os.path.exists(prior):
+            with open(prior, encoding="utf-8") as fh:
+                was = len(json.load(fh).get("features") or [])
+            if len(kept) < was:
+                fail("%s: %d libraries now, %d in the shipped file — the source "
+                     "lost one. Check the publisher before rebuilding."
+                     % (cfg["slug"], len(kept), was))
 
     # THE CLERK GATE. Only Carroll has a county-published list to check against,
     # and it is the reason this source is trusted at all — so it is enforced
@@ -372,15 +470,41 @@ def build_county(cfg, libs, tree, verbose=True):
                  "lines. missing %s; unexpected %s"
                  % (cfg["slug"], sorted(cfg["clerk_names"] - got), sorted(got - cfg["clerk_names"])))
 
-    # Separate service areas must not overlap each other inside one county.
+    # SEPARATE SERVICE AREAS MUST NOT OVERLAP: a library district is a taxing
+    # body you live inside, so two of them cannot both contain the same ground.
+    #
+    # RULED OUT BY SHAPE, NOT BY AREA — the rule this file already argues for
+    # at SLIVER_REACH_M, applied to the check that never got it. Measured across
+    # all 102 counties on 2026-09-06, the layer has 62 overlapping pairs and
+    # AREA does not separate them: the largest inside a county this builder
+    # writes is Livingston's Chatsworth/Piper City pair at 104,503 m2, which is
+    # a ribbon 6.7 m WIDE running along a shared boundary — two independently
+    # digitised lines, not shared ground — while DuPage's genuine 33.2 m-wide
+    # Addison/Bensenville overlap covers only 5,793 m2. An area gate fails the
+    # artifact and passes the real one, which is exactly backwards, and the
+    # 25,000 m2 threshold this check used to carry did precisely that.
+    #
+    # MEAN WIDTH IS 2 x AREA / PERIMETER. The floor is twice SIMPLIFY_M for the
+    # same reason SLIVER_REACH_M is: an overlap no wider than the distance
+    # simplification alone can move a line is not evidence of shared ground.
+    # Above it sit exactly two pairs statewide, and NEITHER is in a county this
+    # builder writes — Peoria (321.8 m, 580,701 m2) and DuPage (33.2 m) both
+    # ship their libraries from their own county publishers.
     for i, (na, _, ga) in enumerate(kept):
         for nb, _, gb in kept[i + 1:]:
             if not ga.intersects(gb):
                 continue
-            ov = clean(ga.intersection(gb)).area * M2_PER_DEG2
-            if ov > MIN_AREA_LOST_M2:
-                fail("%s: %r and %r overlap by %.0f m2 — two library service "
-                     "areas cannot both contain the same ground" % (cfg["slug"], na, nb, ov))
+            ov = clean(ga.intersection(gb))
+            if ov.is_empty or ov.length <= 0:
+                continue
+            m2 = ov.area * M2_PER_DEG2
+            width_m = 2.0 * m2 / (ov.length / DEG)
+            if width_m > OVERLAP_WIDTH_M:
+                fail("%s: %r and %r overlap over %.0f m2 at a mean width of "
+                     "%.1f m (ceiling %.0f m) — two library service areas "
+                     "cannot both contain the same ground, and this one is too "
+                     "wide to be two lines drawn apart"
+                     % (cfg["slug"], na, nb, m2, width_m, OVERLAP_WIDTH_M))
 
     feats = []
     for name, ltype, geom in kept:
@@ -395,7 +519,7 @@ def build_county(cfg, libs, tree, verbose=True):
         feats.append({"type": "Feature", "properties": props, "geometry": gm})
     fc = {"type": "FeatureCollection", "features": feats}
 
-    for lat, lng, want in cfg["probes"]:
+    for lat, lng, want in (cfg.get("probes") or ()):
         pt = Point(lng, lat)
         hits = [f["properties"]["library"] for f in feats
                 if shape(f["geometry"]).contains(pt)]
@@ -407,11 +531,229 @@ def build_county(cfg, libs, tree, verbose=True):
             fail("%s: probe %.4f,%.4f expected %r, got %r"
                  % (cfg["slug"], lat, lng, want, got))
 
+    if unsimplified:
+        UNSIMPLIFIED.extend(unsimplified)
+        if verbose:
+            for _, n, pct, m2 in unsimplified:
+                print("  full precision kept for %r — simplifying at %.0f m "
+                      "would have cost %.1f%% of it (%.0f m2)"
+                      % (n, SIMPLIFY_M, pct, m2))
     if verbose and dropped:
         print("  border slivers dropped (never reach %.0f m inside the county; "
               "each body is seated in a neighbouring county): %s"
               % (SLIVER_REACH_M, ", ".join("%s %.0f m2" % (n, m) for n, m in dropped)))
     return fc
+
+
+# ---------------------------------------------------------------------------
+# THE PLACE WITNESS.
+#
+# WHAT IT TESTS. The layer types every polygon with `LibraryType` — the real
+# Illinois governance vocabulary: District, City, Village, Town, Township and
+# two "(contracting)" variants. That column makes a CHECKABLE claim. A CITY or
+# VILLAGE library's boundary IS the municipality, and a TOWNSHIP library's IS
+# the township; both are units the Census Bureau draws independently, so those
+# 278 polygons can be checked against a publisher who has never heard of this
+# layer. A library DISTRICT is drawn by referendum and nobody else publishes
+# it — those 361 have no witness and this gate says so rather than pretending.
+#
+# WHY IT REPLACES PROBES FOR 65 COUNTIES. Two hand-picked points per county
+# test two points. This tests every polygon that CAN be tested, in every county
+# at once, against geometry from a different government — and it discriminates
+# in both directions, which is the property a confirming-only check lacks:
+# municipal libraries match their place at a median IoU of 0.968, while library
+# DISTRICTS match at a median of 0.056. If the layer were quietly redrawing
+# municipalities and labelling some of them "District", that second number
+# would be high. It is not, so the type column is carrying real information.
+#
+# THREE MEASURED READINGS, 2026-09-06, and the floors are set below them rather
+# than at them: township n=30 median 0.997 MIN 0.978; municipal n=206 median
+# 0.968, 98.1% at or above 0.70; district n=201 median 0.056.
+#
+# A NAME MATCH IS NOT A WITNESS UNLESS THE TWO SHAPES ACTUALLY TOUCH. Ten
+# library names collide with a same-named place elsewhere in Illinois —
+# Springfield's LINCOLN LIBRARY normalises to "lincoln" and finds the City of
+# Lincoln forty miles away in Logan County. Scoring that pair would report 0.000
+# and mean nothing. A pair with no overlap at all is therefore reported as a
+# spurious name match and never scored, and the COUNT of them is itself gated,
+# so a real collapse cannot hide by disqualifying itself.
+PLACES_URL = ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+              "tigerWMS_Census2020/MapServer/26/query")     # Incorporated Places
+COUSUB_URL = ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
+              "tigerWMS_Census2020/MapServer/20/query")     # County Subdivisions
+
+WITNESS_TOWNSHIP_FLOOR = 0.90       # measured min 0.978
+WITNESS_MUNICIPAL_FLOOR = 0.70      # 98.1% of 206 clear it
+WITNESS_MUNICIPAL_SHARE = 0.95      # ...and at least this share must
+WITNESS_MUNICIPAL_MEDIAN = 0.90     # measured 0.968
+WITNESS_DISTRICT_MEDIAN = 0.20      # measured 0.056 — the discriminator
+WITNESS_MIN_SCORED = 210            # 236 scored today; a floor, so a gate that
+                                    # stops finding pairs fails instead of
+                                    # passing vacuously on an empty set
+WITNESS_MAX_SPURIOUS = 20           # 10 today
+
+# A MUNICIPAL LIBRARY WHOSE OWN GEOMETRY CONTRADICTS ITS OWN TYPE. Declared
+# with the value measured, re-audited in both directions every run: a new one
+# fails, a recorded one that has moved fails, and an entry whose subject now
+# agrees fails so the exception cannot outlive its reason.
+WITNESS_ANOMALIES = {
+    # Typed Village — "my boundary is the village" — and drawn at 300.7 km2
+    # against the Village of Coulterville's 1.44 km2, 209x. The village sits
+    # ENTIRELY inside it, so a reader in Coulterville is answered correctly; it
+    # is the other 299 km2 that this cannot vouch for. Which half is wrong, the
+    # type or the polygon, is not decided here and is not guessed: gap record
+    # `coulterville-library-extent`. Its Randolph slice has shipped since
+    # 2026-09-05 and its siblings in that county are village-sized (Evansville
+    # 2.07 km2, Tilden 2.48) — this one is 53.98.
+    "Coulterville Public Library": 0.005,
+}
+WITNESS_ANOMALY_TOLERANCE = 0.02
+
+
+def _norm_unit(s):
+    """Strip the library vocabulary so a name can be compared to a place name."""
+    s = (s or "").lower()
+    s = re.sub(r"\b(public|community|memorial|free|district|library|libraries|"
+               r"the|of|township|twp|city|village|town)\b", " ", s)
+    return re.sub(r"[^a-z0-9]+", "", s)
+
+
+def _tiger_units(url):
+    """Every Illinois feature from a TIGERweb layer, paged, refusing truncation."""
+    out, offset = [], 0
+    while True:
+        page = requests.get(url, params={
+            "where": "STATE='17'", "outFields": "BASENAME", "outSR": 4326,
+            "f": "geojson", "geometryPrecision": 6,
+            "resultRecordCount": 1000, "resultOffset": offset,
+        }, timeout=300).json()
+        got = page.get("features") or []
+        out += got
+        if not (page.get("exceededTransferLimit") and got):
+            break
+        offset += len(got)
+    index = {}
+    for f in out:
+        if not f.get("geometry"):
+            continue
+        index.setdefault(_norm_unit(f["properties"]["BASENAME"]), []).append(
+            clean(shape(f["geometry"])))
+    return index
+
+
+def place_witness(libs):
+    """Check the layer against Census 2020 geography. Returns nothing; fails."""
+    places, cousubs = _tiger_units(PLACES_URL), _tiger_units(COUSUB_URL)
+    print("place witness: %d Census place name(s), %d county-subdivision name(s)"
+          % (len(places), len(cousubs)))
+    scores, spurious, unwitnessed = {}, [], 0
+    for name, ltype, geom in libs:
+        kind = (ltype or "").split(" ")[0]
+        if kind == "Township":
+            index = cousubs
+        elif kind in ("City", "Village", "Town"):
+            index = places
+        else:
+            unwitnessed += 1            # District, and the one untyped row
+            continue
+        cands = [c for c in index.get(_norm_unit(name), []) if c.intersects(geom)]
+        if not cands:
+            if index.get(_norm_unit(name)):
+                spurious.append(name)
+            else:
+                unwitnessed += 1
+            continue
+        best = 0.0
+        for c in cands:
+            union = geom.union(c).area
+            if union:
+                best = max(best, geom.intersection(c).area / union)
+        scores.setdefault("Township" if kind == "Township" else "municipal",
+                          []).append((best, name))
+
+    # Districts are scored too — NOT to confirm them, but to prove the type
+    # column means something. A district that matched its namesake municipality
+    # would be a municipality mislabelled.
+    district_scores = []
+    for name, ltype, geom in libs:
+        if not (ltype or "").startswith("District"):
+            continue
+        cands = [c for c in places.get(_norm_unit(name), []) if c.intersects(geom)]
+        for c in cands:
+            union = geom.union(c).area
+            if union:
+                district_scores.append(geom.intersection(c).area / union)
+                break
+
+    town = sorted(s for s, _ in scores.get("Township", []))
+    muni = sorted(s for s, _ in scores.get("municipal", []))
+    scored = len(town) + len(muni)
+    if scored < WITNESS_MIN_SCORED:
+        fail("place witness scored only %d polygon(s), expected at least %d — "
+             "the join stopped finding pairs, so the gate would pass vacuously"
+             % (scored, WITNESS_MIN_SCORED))
+    if len(spurious) > WITNESS_MAX_SPURIOUS:
+        fail("place witness found %d name(s) matching a census unit they do not "
+             "touch (at most %d expected): %s"
+             % (len(spurious), WITNESS_MAX_SPURIOUS, sorted(spurious)))
+
+    def median(v):
+        return v[len(v) // 2] if v else 0.0
+
+    print("  township  n=%d median %.3f min %.3f" % (len(town), median(town),
+                                                     town[0] if town else 0.0))
+    print("  municipal n=%d median %.3f  %.1f%% at/above %.2f"
+          % (len(muni), median(muni),
+             100.0 * sum(1 for s in muni if s >= WITNESS_MUNICIPAL_FLOOR) / max(1, len(muni)),
+             WITNESS_MUNICIPAL_FLOOR))
+    print("  district  n=%d median %.3f (LOW is correct — a district is not the "
+          "municipality it is named for)" % (len(district_scores), median(sorted(district_scores))))
+    print("  no witness: %d polygon(s); spurious name match: %d"
+          % (unwitnessed, len(spurious)))
+
+    declared = dict(WITNESS_ANOMALIES)
+    for score, name in scores.get("municipal", []) + scores.get("Township", []):
+        if name in declared:
+            want = declared.pop(name)
+            if abs(score - want) > WITNESS_ANOMALY_TOLERANCE:
+                fail("place witness: %r now scores %.3f against the %.3f it was "
+                     "declared at — re-measure before re-declaring it"
+                     % (name, score, want))
+            if score >= WITNESS_MUNICIPAL_FLOOR:
+                fail("place witness: %r now agrees with its census unit (%.3f) — "
+                     "retire its WITNESS_ANOMALIES entry rather than keeping an "
+                     "exception nothing needs" % (name, score))
+            print("  ANOMALY %r scores %.3f, declared and recorded as a gap"
+                  % (name, score))
+    if declared:
+        fail("place witness: WITNESS_ANOMALIES names %s, which the layer no "
+             "longer publishes as a municipal or township library — an "
+             "exception cannot outlive its subject" % sorted(declared))
+
+    for score, name in sorted(scores.get("Township", [])):
+        if score < WITNESS_TOWNSHIP_FLOOR:
+            fail("place witness: township library %r matches its census "
+                 "township at only %.3f (floor %.2f)"
+                 % (name, score, WITNESS_TOWNSHIP_FLOOR))
+    low = [(s, n) for s, n in scores.get("municipal", [])
+           if s < WITNESS_MUNICIPAL_FLOOR and n not in WITNESS_ANOMALIES]
+    share = 1.0 - len(low) / max(1, len(muni))
+    if share < WITNESS_MUNICIPAL_SHARE:
+        fail("place witness: only %.1f%% of %d municipal libraries match their "
+             "census place at %.2f or better (floor %.0f%%): %s"
+             % (100 * share, len(muni), WITNESS_MUNICIPAL_FLOOR,
+                100 * WITNESS_MUNICIPAL_SHARE,
+                ["%s %.3f" % (n, s) for s, n in sorted(low)]))
+    if median(muni) < WITNESS_MUNICIPAL_MEDIAN:
+        fail("place witness: municipal median fell to %.3f (floor %.2f)"
+             % (median(muni), WITNESS_MUNICIPAL_MEDIAN))
+    dm = median(sorted(district_scores))
+    if dm > WITNESS_DISTRICT_MEDIAN:
+        fail("place witness: library DISTRICTS now match their namesake "
+             "municipality at a median of %.3f (ceiling %.2f). Either the layer "
+             "has started redrawing municipalities as districts or LibraryType "
+             "has stopped meaning anything — both make this source unusable."
+             % (dm, WITNESS_DISTRICT_MEDIAN))
 
 
 def run(check):
@@ -437,6 +779,8 @@ def run(check):
         libs.append((f["properties"].get("Library"),
                      f["properties"].get("LibraryType"), g))
     assert_nesting_repaired(nesting_pairs, "statewide library layer", fail)
+    place_witness(libs)
+    _append_witness_counties()
     tree = STRtree([g for _, _, g in libs])
 
     stale = []
@@ -459,6 +803,16 @@ def run(check):
                 fh.write(payload)
             print("  wrote data/app/%s-library-districts.json (%d libraries, %.0f KB; %s)"
                   % (cfg["slug"], len(fc["features"]), len(payload) / 1024.0, ", ".join(types)))
+    if len(UNSIMPLIFIED) > MAX_UNSIMPLIFIED:
+        fail("%d polygon(s) had to ship at full precision because %.0f m "
+             "simplification would have cost them real ground, and at most %d "
+             "is the expected steady state — the source has changed shape: %s"
+             % (len(UNSIMPLIFIED), SIMPLIFY_M, MAX_UNSIMPLIFIED,
+                ["%s/%s %.1f%%" % (c, n, p) for c, n, p, _ in UNSIMPLIFIED]))
+    if UNSIMPLIFIED:
+        print("full precision kept for %d polygon(s) (ceiling %d): %s"
+              % (len(UNSIMPLIFIED), MAX_UNSIMPLIFIED,
+                 ", ".join("%s/%s" % (c, n) for c, n, _, _ in UNSIMPLIFIED)))
     if check:
         if stale:
             fail("shipped file(s) differ from a fresh build: " + ", ".join(stale))

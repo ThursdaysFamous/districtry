@@ -793,84 +793,20 @@ detail into `blocker`.
       "wanted": "Any Lee County list pairing a town with its mayor or president — a clerk's yearbook, a regional directory, or contacts added to the county's municipal data."
     },
     {
-      "id": "library-districts-unmapped-counties",
-      "concept": "Library districts",
-      "area": "65 served counties",
+      "id": "coulterville-library-extent",
+      "concept": "Library district extent",
+      "area": "Randolph County",
       "counties": [
-        "alexander",
-        "bond",
-        "brown",
-        "calhoun",
-        "cass",
-        "clark",
-        "clay",
-        "clinton",
-        "coles",
-        "crawford",
-        "cumberland",
-        "dewitt",
-        "douglas",
-        "edgar",
-        "edwards",
-        "franklin",
-        "fulton",
-        "gallatin",
-        "greene",
-        "hamilton",
-        "hancock",
-        "hardin",
-        "henry",
-        "iroquois",
-        "jackson",
-        "jefferson",
-        "jersey",
-        "jo-daviess",
-        "johnson",
-        "knox",
-        "lasalle",
-        "livingston",
-        "logan",
-        "marshall",
-        "mason",
-        "massac",
-        "mcdonough",
-        "mclean",
-        "menard",
-        "mercer",
-        "monroe",
-        "montgomery",
-        "morgan",
-        "moultrie",
-        "ogle",
-        "perry",
-        "pike",
-        "pulaski",
-        "putnam",
-        "richland",
-        "saline",
-        "schuyler",
-        "scott",
-        "shelby",
-        "tazewell",
-        "union",
-        "vermilion",
-        "wabash",
-        "warren",
-        "washington",
-        "wayne",
-        "white",
-        "whiteside",
-        "williamson",
-        "winnebago"
+        "randolph"
       ],
-      "kind": "no-source",
+      "kind": "data-quality",
       "layer": "library-district",
-      "summary": "Most Illinois counties show no library district at all — 65 of the 91 this site serves. Only six of them had a note on file saying so before today.",
-      "why": "The layer is built county by county from each county's own map data, and most counties publish none. Nothing was tracking how many that left unanswered.",
-      "blocker": "RECORDED 2026-09-05, and the absence is the finding rather than any one county's blocker. Measured while shipping the statewide library layer for six counties: of the 91 counties this instance serves, 16 had a library-district dispatch entry and 75 did not, and only SIX of those 75 carried a gap record — Boone (closed separately the same week), Carroll, Lee, Randolph, Sangamon, St. Clair and Stephenson. The other 69 were simply missing a card with nothing on file to notice, which is the exact shape of the 2026-08-21 audit that found Cass, Greene, Scott and Moultrie without precincts: no refusal, no missing publisher, nothing blocked — just an absence no record made visible. A GAP RECORD IS THE ONLY THING THAT MAKES AN ABSENCE VISIBLE, and 69 counties is what happens without one. THE ROUTE IS ALREADY MEASURED AND IS NOT A RESEARCH QUESTION. The Illinois Broadband Office / Connected Nation IL_Boundary_Layers layer 11 carries 642 library polygons for the WHOLE state, and every one of the 75 counties without an entry was tested against it on 2026-09-05: all 75 are answered by at least one polygon, with coverage running from 100% of the county (Jefferson) down to 0.7% (Johnson) — low coverage being the correct answer in a county whose libraries are municipal, since most of its ground genuinely sits in no library district. Six of those counties ship from it today. WHAT STOPS THE OTHER 69 IS SCOPE AND PAYLOAD, NOT PROVENANCE — the provenance question was decided for this source on 2026-09-05 and the answer was to ship it with the publisher named on every card. Extending it is either 68 more dispatch entries and 68 more pre-built files, or ONE statewide entry whose coverage is Illinois minus the counties whose own publisher answers, clipped to that complement so the entry stays disjoint from the sixteen county-published ones — which registerCountyLayer requires, since it dispatches on containment and two entries claiming one point is a silent wrong answer. The statewide file measures 2.35 MB simplified at 10 m and 2.72 MB at 5 m, against 307 KB for the six counties shipped today, so the single-entry route is a real payload decision rather than a free win. Neither has been chosen; this record exists so that choosing nothing is visible. THE LIVE COUNT IS 68 RATHER THAN 69 AND THE DIFFERENCE IS BOONE, which closed its own library gap the same week by shipping from its County Clerk's tax roll — a county's own publisher, which is why it is a control for this source rather than a customer of it. THOSE FIGURES ARE THE MEASUREMENT'S OWN AND ARE LEFT AT ITS VINTAGE; the tree has moved past them and restating them in place would destroy the dated fact rather than update it. As of 2026-09-05 the library-district layer carries 23 dispatch entries and 68 counties have none — 16 county-published plus this record's six, with Boone the 17th county whose own publisher answers. Read the current split off the dispatch table, never off this paragraph. The 75/16 split above is recorded as measured on 2026-09-05 rather than restated, because it is what the sweep found.",
-      "wanted": "Nothing from readers — one measured statewide source already answers for all 68. What is missing is the decision on how to ship it: 68 dispatch entries, or one statewide entry carrying a 2-3 MB file."
+      "summary": "One library boundary in Randolph County looks far too big for the kind of library it says it is, and we can't tell which half is wrong.",
+      "why": "The state's layer calls Coulterville Public Library a VILLAGE library — meaning its area is the village — then draws it 209 times larger than the village. Coulterville itself is inside it, so a reader there is answered correctly.",
+      "blocker": "FOUND BY A GATE, 2026-09-06, and it is the reason that gate exists. The statewide library layer types every polygon with LibraryType — District, City, Village, Township — and that column makes a CHECKABLE claim: a City or Village library's boundary IS the municipality. scripts/build_statewide_library_districts.py's PLACE WITNESS scores every such polygon against the Census 2020 place or county subdivision it is named for. 236 pairs score; the municipal median is 0.968 IoU and the township median 0.997 (min 0.978). COULTERVILLE IS THE ONE OUTLIER IN THE WHOLE STATE at 0.005. Measured: the layer draws it at 300.7 km2 against the Village of Coulterville's 1.44 km2, 209x, with the village sitting ENTIRELY inside it (100% of the place covered, 0.5% of the library). Its Randolph siblings are village-sized for comparison — Evansville 2.07 km2, Tilden 2.48 — while Coulterville's Randolph slice alone is 53.98. WHICH HALF IS WRONG IS NOT DECIDED HERE AND IS NOT GUESSED. Either the type is wrong and this is a district-sized service area — the layer has a 'Village (contracting)' type for exactly that, used twice statewide — or the polygon is. Nothing published settles it: Randolph County is not one of the two counties (Carroll, Macoupin) that publish a tax-code-to-district crosswalk, which is what settled the equivalent questions there. IT STILL SHIPS, with the publisher named on the card as every polygon from this source is. A reader inside Coulterville village gets the right answer either way; it is the surrounding ground this cannot vouch for, and an absent library would be a worse answer than a possibly-generous one for the one place that is certainly right. The anomaly is DECLARED in the builder's WITNESS_ANOMALIES with its measured 0.005 and re-audited both ways every run: a value that moves fails, and a Coulterville that starts agreeing with its village fails too, so the exception cannot outlive its reason. NOT YET ASKED — the Randolph County Clerk and the library itself are both routes and neither has been written to.",
+      "wanted": "Randolph County's tax roll, or the library's own service-area statement: does Coulterville levy across ~300 km2, or is the polygon wrong?"
     },
-    {
+        {
       "id": "lee-park-library-districts",
       "concept": "Park and library districts",
       "area": "Lee County",
@@ -7116,8 +7052,8 @@ publishers name the same three bodies, their polygons agree at 60-85% IoU, and t
 contractor's `City` typing of Ida Public Library is confirmed by the county itself, since
 Ida's 18 tax codes are byte-identical to the City of Belvidere's.
 
-**WHAT SHIPPING IT MEASURED IS BIGGER THAN WHAT IT SHIPPED, and it is now its own record
-(`library-districts-unmapped-counties`).** AS MEASURED ON THE DAY, and left at that
+**WHAT SHIPPING IT MEASURED IS BIGGER THAN WHAT IT SHIPPED, and it became its own record
+(`library-districts-unmapped-counties`, retired 2026-09-06 — see the close below).** AS MEASURED ON THE DAY, and left at that
 vintage: of the 91 counties this instance serves, 16 had a library-district entry and 75 did
 not — and only six of those 75 carried a gap record. The other 69 were missing a card with
 nothing on file to notice, the Cass/Greene/Scott shape again. All 75 were tested against
@@ -7133,15 +7069,61 @@ left the paragraph incoherent — 16 + 74 is 90, and "seventeen county-published
 the sixteen two sentences above. The sweep found what it found; the tree has moved past it.
 As of 2026-09-05 the layer carries **23 dispatch entries** and **68** counties have none,
 Boone being the seventeenth county whose own publisher answers. Read the current split off
-the dispatch table in `il/index.html`, never off this paragraph. That choice has not been
-made. What shipping would
-look like, so the decision can be a sentence: a `library-district` dispatch
-entry per gapped county reading this one service, cards naming the publisher
-explicitly ("boundary compiled by the Illinois Broadband Office / Connected
-Nation"), and the `District`/`City`/`Township` type rendered rather than hidden,
-since a municipal library is not a district a resident lives inside. The
-alternative it is measured against is unchanged: seven counties' library cards
-staying name-only, which is also a cost.
+the dispatch table in `il/index.html`, never off this paragraph.
+
+**THE CHOICE WAS MADE ON 2026-09-06: 65 COUNTY-SCOPED ENTRIES, NOT ONE STATEWIDE FILE.**
+The deciding number is the one a READER pays. A single statewide entry is 2.35 MB fetched by
+everyone who toggles the layer; 65 county files are 3-80 KB each and only the county you
+clicked is fetched. The code cost that argued for the statewide option turned out to be
+mostly avoidable: the per-county shape is `<slug>-county-outline.json` +
+`<slug>-library-districts.json`, both named by CONTRACT, so `countyOutlineCoverage(slug)` and
+`countyLibraryLoader(slug)` replace ~280 lines of near-identical loader/coverage pairs and
+each entry is one line. **What is deliberately NOT generated is the `key:` literal** — both
+`build_county_status.py` and `validate_index.py` read those keys with a regex over the
+dispatch body, so a key arriving from a loop variable would drop 65 counties out of the
+generated status table with every gate still green. That warning was already written above
+`statewideLibraryEntry` and it is the only reason these are factories for the two VALUES
+rather than a loop over the whole table.
+
+**ALL 91 SERVED COUNTIES NOW ANSWER, and the tier table went to 91/0/0.** Twelve counties
+moved from the card or judicial tier to the DISPATCH tier without the ring moving a vertex —
+they were already served and already anchored; what changed is that each now has a
+county-dispatched layer. `validate_index.py` found all twelve by refusing the entries until
+they were added to `DISPATCH_COUNTY_FIPS`.
+
+**THE 65 CARRY NO HAND-VERIFIED PROBES, AND THE GATE THAT REPLACED THEM IS STRONGER THAN THE
+ONE THEY WOULD HAVE HAD.** 130 probe points nobody actually checked would be guesses wearing
+a gate's clothes. The layer's `LibraryType` column instead makes a claim that CAN be checked
+against a publisher who has never heard of it: a City or Village library's boundary IS the
+municipality, and a Township library's IS the township — units the Census Bureau draws. The
+PLACE WITNESS scores 236 of the 642 polygons that way, and it DISCRIMINATES rather than only
+confirming: municipal libraries match their own municipality at a median IoU of **0.968**
+(township 0.997, min 0.978) while library DISTRICTS match at **0.056**. If the layer were
+quietly redrawing municipalities and labelling some of them "District", that second number
+would be high, so the type column is carrying real information. Both directions are gated.
+The 361 district polygons have no witness and the gate says so rather than pretending. A
+name that matches a same-named place it does not TOUCH is reported as a spurious match and
+never scored — Springfield's Lincoln Library normalises to "lincoln" and finds the City of
+Lincoln forty miles away — and the COUNT of those is itself capped, so a real collapse
+cannot hide by disqualifying itself.
+
+**IT FOUND TWO REAL DEFECTS ON ITS FIRST RUN, ONE OF THEM IN DATA ALREADY SHIPPING.**
+(1) **Coulterville Public Library** is typed `Village` and drawn at 300.7 km2 against the
+village's 1.44 km2 — the single outlier in the state at 0.005, and its Randolph slice has
+been live since 2026-09-05. Recorded as `coulterville-library-extent`; which half is wrong,
+the type or the polygon, is not guessed at. (2) The **overlap check was ruled by AREA and
+should have been ruled by SHAPE** — the rule this same builder already argues for at
+`SLIVER_REACH_M` and which the overlap check never got. Measured across all 102 counties the
+layer has 62 overlapping pairs, and area separates them backwards: Livingston's
+Chatsworth/Piper City pair failed the 25,000 m2 gate at 104,503 m2 while being a ribbon
+**6.7 m wide** — two lines digitised apart — and DuPage's genuinely shared 33.2 m-wide
+Addison/Bensenville overlap would have passed it at 5,793 m2. The gate is now mean width
+(2 x area / perimeter) with a 10 m ceiling, twice `SIMPLIFY_M` for the same reason
+`SLIVER_REACH_M` is twice it. Exactly two pairs statewide exceed it and neither is in a
+county this builder writes. A third, smaller finding: 5 m simplification would have eaten
+7.5% of Putnam County PLD's Marshall slice, so a polygon that cannot be simplified safely
+now ships at FULL PRECISION rather than the retention rule being loosened — one polygon
+today, against a ceiling of twelve.
 
 ### ISBE's precinct-level results archive — a statewide superset of the vendor route (found 2026-08-20)
 
