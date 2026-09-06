@@ -2392,8 +2392,11 @@ re-implemented). Nine layers lose rings at the source:
 
 **Not one reaches a shipped file.** An unnested inner shell makes a geometry INVALID, and
 both builders repair with shapely before using it: run through each builder's OWN
-`clean()`, the two fetches give identical hole counts, identical unions and a symmetric
-difference of **0.000000 km²** on all nine. `build_statewide_library_districts.py
+`clean()`, the two fetches give identical unions and a symmetric
+difference of **0.000000 km²** on all nine — which is the claim that holds, and the ring
+counts are not: they match only AFTER the repair and never before it (Macon's park tiling
+reads 62 holes as Esri JSON and 73 once cleaned, because `make_valid` also resolves
+overlaps the source ships), so this is stated as area rather than as hole counts. `build_statewide_library_districts.py
 --check` passes against the live layer, and rebuilding `macon-park-districts.json` through
 the corrected path produced a byte-identical file. The other 32 layer/query pairs are
 identical at the source in both formats, TIGERweb included — every legislative, county,
@@ -2485,7 +2488,7 @@ county loaders that build their own query string — which is where 40 of the 41
 layers actually live, so an engine-only change would have fixed almost none of them.
 `esriToGeoJSON` is DeKalb's own converter, generalised and moved into the engine; it was
 checked against Wisconsin's Python one on three of the worst layers and produces
-identical hole counts and identical area to six decimals. Booted after the change, the
+identical hole counts and identical area to six decimals — on the SAME payload, where the two converters are being compared to each other rather than the two fetches. Booted after the change, the
 app makes **217 ArcGIS requests and not one asks for `f=geojson`**. The corrected CARDS
 were not proven in a browser from this sandbox — its egress proxy dropped the county
 services under the load of the sweep itself — so that check is owed to CI or to a local

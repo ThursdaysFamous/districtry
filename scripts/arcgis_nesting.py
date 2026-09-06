@@ -11,12 +11,19 @@ rings between them.
 
 WHY ILLINOIS'S BUILDERS WERE CLEAN, AND WHY THAT NEEDED A GUARD RATHER THAN A
 PARAGRAPH. Nine of the layers the builders fetch lose rings at the source —
-the statewide library layer 446 -> 1,663, Macon's three tilings 0 -> 50/15/62,
+the statewide library layer 446 -> 1,663, Macon's three tilings 0 -> 62/50/15
+(park, fire, library — an earlier draft listed those three counts in a different
+order from the same measurement),
 Rock Island's two 0 -> 33/45, Woodford's parcel views 51 -> 57. Not one reaches
 a shipped file, because an unnested inner shell makes a geometry INVALID and
 both builders repair with shapely before using it: measured through each
-builder's own clean(), the two fetches give identical hole counts, identical
-unions and a symmetric difference of 0.000000 km2 on all nine.
+builder's own clean(), the two fetches give identical unions and a symmetric
+difference of 0.000000 km2 on all nine. SAY THAT AS AREA, NOT AS RING COUNTS:
+the counts match only AFTER the repair and never before it — Macon's park
+tiling reads 62 holes as Esri JSON and 73 once cleaned, because make_valid also
+resolves overlaps the source ships — so "identical hole counts" is true of the
+repaired geometries and false of the fetches, and area is the claim that holds
+either way.
 
 That is a real property and it was nowhere stated. Neither builder says
 make_valid is what re-nests the exporter's rings, and nothing would notice a
@@ -31,6 +38,26 @@ every build would double the traffic for a 25,824-parcel fabric to re-prove
 something whose signature is already in the bytes on hand.
 """
 
+import math
+
+
+# THE AREA FLOOR, AND WHY THERE IS ONE. A part that claims no ground cannot be
+# an unnested hole in the only sense this guard cares about — a reader standing
+# somewhere the publisher cut out. Measured across the shipped Illinois tree
+# 2026-09-06: 23 of 2,868 polygon parts have EXACTLY zero area, one of them
+# inside another part (SHERRARD FPD in rock-island-fire-districts.json, built
+# 2026-09-02), which would have failed the next Rock Island rebuild on a
+# geometry that is correct. "Exactly zero" is NOT a sufficient rule, which is
+# why this is a floor rather than a `> 0` test: the smallest NONZERO part in
+# the same tree is 0.0047 m², so a future degenerate sliver can miss zero and
+# still claim nothing. One square metre is smaller than the ground a person
+# occupies, and four orders of magnitude below the smallest hole the 2026-09-05
+# sweep found changing a card, so nothing this guard exists to catch can hide
+# under it. Expressed in squared degrees at 40°N, the latitude band Illinois
+# sits in; a part near the floor is REPORTED with its area rather than dropped
+# silently.
+_M2_PER_DEG2 = math.cos(math.radians(40.0)) * 111320.0 * 111320.0
+MIN_PART_AREA = 1.0 / _M2_PER_DEG2          # 1 m², in squared degrees
 
 
 def _parts(geom):
@@ -65,6 +92,8 @@ def nested_parts(geom):
         return 0
     n = 0
     for i, a in enumerate(ps):
+        if a.area < MIN_PART_AREA:
+            continue                      # claims no ground; see MIN_PART_AREA
         pt = a.representative_point()
         for j, b in enumerate(ps):
             if i != j and b.area > a.area and b.contains(pt):
