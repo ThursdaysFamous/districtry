@@ -1073,7 +1073,13 @@ def scrape_portage():
             raise SystemExit("portage lists two names for district %d" % n)
         members[key] = entry
     if len(members) != 9:
-        raise SystemExit("portage names %d of 9 districts" % len(members))
+        raise SystemExit(
+            "portage names %d of 9 districts [%s]"
+            % (len(members),
+               body_note(page, ("card-body", r'<div class="card-body">'),
+                         ("<strong>", r"<strong>"),
+                         ("District N Alderperson",
+                          r"District\s+\d{1,2}\s+Alderperson"))))
     return members, PORTAGE_INDEX
 
 
@@ -1135,9 +1141,28 @@ def _put(city, members, key, entry):
     members[key] = entry
 
 
-def _seats_or_die(city, members, seats):
+def body_note(page, *markers):
+    """"body N B; <marker> xM; ..." — what the fetch actually contained.
+
+    A COUNT GATE THAT ONLY SAYS "0 of 9" CANNOT BE DIAGNOSED. Portage failed
+    that way three times in five on 2026-09-05 and the log gave no way to tell
+    a page that had changed shape from a body that was not the page at all; a
+    day later it parsed 12 times out of 12 and the cause is still unknown. So
+    every count failure now reports what came back, and the next occurrence is
+    readable from the CI log alone instead of needing a live re-fetch that may
+    no longer reproduce it.
+    """
+    bits = ["body %d B" % len(page)]
+    for label, pat in markers:
+        bits.append("%s x%d" % (label, len(re.findall(pat, page))))
+    return "; ".join(bits)
+
+
+def _seats_or_die(city, members, seats, page=None, *markers):
     if len(members) != seats:
-        raise SystemExit("%s names %d of %d districts" % (city, len(members), seats))
+        note = (" [%s]" % body_note(page, *markers)) if page is not None else ""
+        raise SystemExit("%s names %d of %d districts%s"
+                         % (city, len(members), seats, note))
     return members
 
 
@@ -1176,7 +1201,9 @@ def scrape_new_lisbon():
         if ph:
             entry["phone"] = " ".join(ph.group(0).split())
         _put("new lisbon", members, ids.pop(), entry)
-    return _seats_or_die("new lisbon", members, 4), NEW_LISBON_INDEX
+    return _seats_or_die("new lisbon", members, 4, page,
+                         ("Ward .. Council Member",
+                          r"Ward\s+[\d,\s and]+?\s+Council Member")), NEW_LISBON_INDEX
 
 
 # ---------------------------------------------------------------- New Berlin
@@ -1189,7 +1216,8 @@ def scrape_new_berlin():
     for m in re.finditer(r"([A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]*\.?){1,3})"
                          r"[\s|]+District\s+(\d{1,2})\b", flat):
         _put("new berlin", members, "%02d" % int(m.group(2)), {"name": m.group(1).strip()})
-    return _seats_or_die("new berlin", members, 7), NEW_BERLIN_INDEX
+    return _seats_or_die("new berlin", members, 7, page,
+                         ("District N", r"District\s+\d{1,2}\b")), NEW_BERLIN_INDEX
 
 
 # -------------------------------------------------------------- Sturgeon Bay
@@ -1216,7 +1244,8 @@ def scrape_sturgeon_bay():
         if em:
             entry["email"] = em.group(0).strip()
         _put("sturgeon bay", members, "%02d" % int(m.group(1)), entry)
-    return _seats_or_die("sturgeon bay", members, 7), STURGEON_BAY_INDEX
+    return _seats_or_die("sturgeon bay", members, 7, page,
+                         ("District N", r"District\s+\d{1,2}\b")), STURGEON_BAY_INDEX
 
 
 # ------------------------------------------------------------------- Altoona
@@ -1233,7 +1262,9 @@ def scrape_altoona():
     for m in re.finditer(r"([A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]*\.?){1,3})"
                          r"[\s|]+Council Person\s+District\s+(\d{1,2})\b", flat):
         _put("altoona", members, "%02d" % int(m.group(2)), {"name": m.group(1).strip()})
-    return _seats_or_die("altoona", members, 6), ALTOONA_INDEX
+    return _seats_or_die("altoona", members, 6, page,
+                         ("Council Person District N",
+                          r"Council Person\s+District\s+\d{1,2}\b")), ALTOONA_INDEX
 
 
 # --------------------------------------------------------------- Eagle River
@@ -1266,7 +1297,9 @@ def scrape_eagle_river():
         if em:
             entry["email"] = em.group(0).strip()
         _put("eagle river", members, "%02d" % int(m.group(1)), entry)
-    return _seats_or_die("eagle river", members, 4), EAGLE_RIVER_INDEX
+    return _seats_or_die("eagle river", members, 4, page,
+                         ("Aldermanic District N",
+                          r"Aldermanic\s+District\s+\d{1,2}\b")), EAGLE_RIVER_INDEX
 
 
 # ---------------------------------------------------------------- Germantown
@@ -1279,7 +1312,8 @@ def scrape_germantown():
     for m in re.finditer(r"District\s+(\d{1,2})\b[\s|]+"
                          r"([A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]*\.?){1,3})", flat):
         _put("germantown", members, "%02d" % int(m.group(1)), {"name": m.group(2).strip()})
-    return _seats_or_die("germantown", members, 4), GERMANTOWN_INDEX
+    return _seats_or_die("germantown", members, 4, page,
+                         ("District N", r"District\s+\d{1,2}\b")), GERMANTOWN_INDEX
 
 
 # ------------------------------------------------------------------- Viroqua
