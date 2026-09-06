@@ -1,0 +1,203 @@
+{
+ "note": "County board office addresses from the Illinois State Board of Elections' County Officers Book. Each is published on the board chair's own row and corroborated against a second courthouse office on the same county's page, so it is a shared public building rather than anyone's home. A county that publishes its own board address is NOT in this file \u2014 its own publication is what ships.",
+ "offices": {
+  "cass": {
+   "address": "100 East Springfield Street, Virginia, IL 62691",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "clay": {
+   "address": "111 Chestnut Street, Louisville, IL 62858",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "dewitt": {
+   "address": "201 West Washington, Clinton, IL 61727",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "douglas": {
+   "address": "401 South Center Street, Tuscola, IL 61953",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "dupage": {
+   "address": "421 North County Farm Road, Wheaton, IL 60187",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "edgar": {
+   "address": "115 West Court Street, Room J, Paris, IL 61944",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "effingham": {
+   "address": "101 North 4th Street, Suite 301, Effingham, IL 62401",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "henry": {
+   "address": "307 West Center Street, Cambridge, IL 61238",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "iroquois": {
+   "address": "1001 East Grant, Room 101, Watseka, IL 60970",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "kane": {
+   "address": "719 South Batavia Avenue, Building A, Geneva, IL 60134",
+   "asOf": "2025-12-15",
+   "confirmedBy": "Treasurer",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "kankakee": {
+   "address": "189 East Court Street, Kankakee, IL 60901",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "lasalle": {
+   "address": "707 East Etna Road, Ottawa, IL 61350",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "lee": {
+   "address": "112 East Second Street, Dixon, IL 61021",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "livingston": {
+   "address": "112 West Madison Street, Pontiac, IL 61764",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "macon": {
+   "address": "141 South Main Street, Room 501, Decatur, IL 62523",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "madison": {
+   "address": "157 North Main Street, Suite 165, Edwardsville, IL 62025",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "mcdonough": {
+   "address": "1 Courthouse Square, Macomb, IL 61455",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "mclean": {
+   "address": "115 East Washington Street, Bloomington, IL 61701",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "menard": {
+   "address": "102 South 7th Street, Petersburg, IL 62675",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "ogle": {
+   "address": "105 South 5th Street, Suite 321, Oregon, IL 61061",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "peoria": {
+   "address": "324 Main St., Rm. 502, Peoria, IL 61602",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "rock-island": {
+   "address": "1504 3rd Avenue, Rock Island, IL 61201",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "sangamon": {
+   "address": "200 South Ninth Street, Room 201, Springfield, IL 62701",
+   "asOf": "2025-12-15",
+   "confirmedBy": "Circuit Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "st-clair": {
+   "address": "#10 Public Square, Belleville, IL 62220",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "stark": {
+   "address": "130 West Main Street, Toulon, IL 61483",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "stephenson": {
+   "address": "50 West Douglas, Suite 1001, Freeport, IL 61032",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "tazewell": {
+   "address": "11 South 4th Street, Suite 432, Pekin, IL 61554",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "warren": {
+   "address": "100 West Broadway, Monmouth, IL 61462",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "washington": {
+   "address": "101 East St. Louis Street, Nashville, IL 62263",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "whiteside": {
+   "address": "200 East Knox Street, Morrison, IL 61270",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "will": {
+   "address": "302 North Chicago Street, Joliet, IL 60432",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "winnebago": {
+   "address": "404 Elm Street, Room 553, Rockford, IL 61101",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
+  "woodford": {
+   "address": "115 North Main Street, Room 103, Eureka, IL 61530",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  }
+ }
+}

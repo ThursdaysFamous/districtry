@@ -154,6 +154,17 @@ jobs:
       - name: Backfilled board seats still stamped
         run: python3 scripts/backfill_board_seats.py --check
 
+      # Illinois's shared board-office fallback. 33 districted board cards name
+      # an office only because the state's County Officers Book does, and that
+      # document's OTHER column — the chair's name — is 29% wrong, so the file
+      # is licensed by measurement rather than by the publisher's standing: the
+      # builder re-runs the corroboration on every build and REFUSES to write
+      # if the state's address disagrees with any county that publishes its
+      # own. This is the drift gate for both halves — a stale file, or that
+      # agreement thinning out. Stdlib only.
+      - name: Shared board-office addresses still corroborated
+        run: python3 scripts/build_county_board_offices.py --check
+
       # Dark mode's map palette is DERIVED from the app's own layer colours, not
       # hand-picked (scripts/build_dark_map_palette.py carries the method and the
       # measurements). This is its drift gate: change a layer colour without
