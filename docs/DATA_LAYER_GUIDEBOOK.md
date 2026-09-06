@@ -2155,6 +2155,42 @@ detail into `blocker`.
       "blocker": "MEASURED 2026-09-06. THE CITY PUBLISHES NO GIS OF ITS OWN and muskegon-mi.gov links Muskegon COUNTY's server, whose City_of_Muskegon folder holds City_of_Muskegon_Commission_Districts — a Wards layer (4, matching the state's WARD column) and a precinct layer (9, ditto), item shared public with an empty licenseInfo. It is NOT a currency problem and NOT Bay City's two-different-plans: on points the two sources share, they agree on the district 99.85% of the time. IT IS A COVERAGE PROBLEM. Of 5,000 points sampled inside the Census place, 62 (1.24%) fall in NO county ward polygon at all — and every one of them IS covered by a state precinct, so the city is fully precincted and the ward layer has holes; separately 4.03% of the ward area lies OUTSIDE the city limits. A reader in one of those holes would get no district, which is why the builder's currency gate reads 94.150% (it counts a point in one model but not the other as a disagreement) and why the 0.99 floor was NOT moved. THE STATE'S OWN 2026 PRECINCT FABRIC TILES THE CITY EXACTLY (0.00% of in-place points lack a precinct) and its WARD column would dissolve to a clean four-ward map — but making the state fabric the SOURCE rather than the currency CHECK is a standing posture change reserved for the operator, first raised for Wyoming. Muskegon is the SECOND concrete case where that route is the only route, and it is recorded here to sharpen that decision rather than to pre-empt it. Two traps recorded with it: the county layer's `Ward` column is NULL on all four features (the number is inside `Ward_Name`), and `Election_ID` reads like a district key with values 12, 33, 999 and 13. And the state precinct filter must match `Jurisdiction_Name` EXACTLY — a LIKE '%Muskegon%' also returns Muskegon Heights, Muskegon Township and North Muskegon, three separate at-large jurisdictions."
     },
     {
+      "id": "kentwood-ward-boundary",
+      "kind": "no-source",
+      "concept": "City council district",
+      "area": "Kentwood",
+      "layer": "city-ward",
+      "counties": [],
+      "summary": "Kentwood is not among the Michigan cities whose council wards this app can draw.",
+      "why": "Neither the city nor its county publishes a ward boundary in any form this app could read.",
+      "wanted": "Kentwood's two ward boundaries as a service or a downloadable file.",
+      "blocker": "MEASURED 2026-09-06. The state's own 2026 precinct fabric records Kentwood as DISTRICTED (2 wards, 17 precincts at 10/7), so the city is a candidate. THREE PUBLISHER ROUTES WERE WALKED AND ALL THREE ARE EMPTY. The city has no ArcGIS Online organisation of its own (kentwood.maps.arcgis.com and cityofkentwood.maps.arcgis.com resolve to nothing). Kent County DOES have one — accesskent.maps.arcgis.com, org CzKZD1UCo3l2beRZ, 43 public feature services — and not one of them names a ward, precinct, commission, voting or election layer. www.kentwood.us answers 200, has no robots.txt at all, and references no GIS host anywhere on its home page or its clerk's election page, which links only the Secretary of State and the county clerk. A NAME TRAP RECORDED WITH IT: kentcounty.maps.arcgis.com is Kent County COUNCIL, in England. NOT YET ASKED."
+    },
+    {
+      "id": "holland-mi-ward-boundary",
+      "kind": "no-source",
+      "concept": "City council district",
+      "area": "Holland, Michigan",
+      "layer": "city-ward",
+      "counties": [],
+      "summary": "Holland is not among the Michigan cities whose council wards this app can draw.",
+      "why": "Neither the city nor its county publishes a ward boundary in any form this app could read.",
+      "wanted": "Holland's six ward boundaries as a service or a downloadable file.",
+      "blocker": "MEASURED 2026-09-06. The state's own 2026 precinct fabric records Holland as DISTRICTED (6 wards, 11 precincts at 2/1/2/2/2/2), so the city is a candidate. The city has no ArcGIS Online organisation of its own, and www.cityofholland.com answers 200 with a permissive robots.txt (admin and search paths only) and references no GIS host. Ottawa County runs a public ArcGIS Server at gis.miottawa.org whose services list is empty at the root and whose Hosted folder carries 73 services, NOT ONE of which names a ward, precinct, district, voting or election layer. What the county DOES publish through its own AGOL presence is the Holland Board of Public Works' org (QNHFBm4iXVHdb5Xv, 116 services) — Public Works, Historic and UDO Zoning districts, none of them electoral. Holland straddles into ALLEGAN County, which was not probed and is the one route left. NOT YET ASKED."
+    },
+    {
+      "id": "jackson-mi-ward-boundary",
+      "kind": "blocked",
+      "concept": "City council district",
+      "area": "Jackson, Michigan",
+      "layer": "city-ward",
+      "counties": [],
+      "summary": "Jackson is not yet among the Michigan cities whose council wards this app can draw.",
+      "why": "No one publishes the ward lines directly, but the county publishes precincts labelled by ward, from which they could be composed — a route this project has not yet decided to take for a city.",
+      "wanted": "Either the city's six ward boundaries published directly, or a decision on composing them from the county's own precinct layer.",
+      "blocker": "MEASURED 2026-09-06, AND THIS IS A DECISION RATHER THAN AN ABSENCE. No published ward polygon exists: the City of Jackson's site (200, robots permissive on everything but admin and search paths) references no GIS host, and Jackson County's server — gis.mijackson.org, whose REST instance is `countygis` and NOT `arcgis`, so every guessed path 404s and the real root has to be read out of its own landing.js — carries a Voting folder holding CountyDistrict2020Adopted (the county board's, which Michigan already ships statewide), VotingPrecincts, and no city ward layer. BUT ITS PRECINCT LAYER CARRIES BOTH `MUNICIPALITY` AND `WARD`, and they populate: City of Jackson, 10 precincts across wards 1-6 at 1/2/2/2/1/2 — which is EXACTLY what the state's own 2026 fabric records, two independent publishers agreeing on the composition. Dissolving the COUNTY's precincts would therefore keep this project's two-witness structure intact, because the STATE's fabric remains a genuinely independent check — which is what distinguishes it from the Wyoming and Muskegon question, where the state fabric would be both source and check. It is still a new route for a CITY ward, so it is recorded and left to the operator rather than invented. The city separately publishes six per-ward PAGES (/498/Ward-1 through /512/Ward-6), which is a roster source and not a boundary one. NOT AN ASK: nothing is missing that a county would send."
+    },
+    {
       "id": "midland-ward-boundary",
       "kind": "no-source",
       "concept": "City council district",
