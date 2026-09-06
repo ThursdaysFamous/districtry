@@ -67,12 +67,12 @@
 | LaSalle | 17099 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 4 — `lasalle-board-districts-stale` (no-source); `lasalle-municipal-wards` (no-source); `ogle-lasalle-special-districts` (no-source); `wenona-two-clerks-disagree` (data-quality) |
 | Lake | 17097 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 2 — `lake-municipal-names` (no-source); `park-city-wards` (no-source) |
 | Lee | 17103 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district` | 2 — `lee-municipal-officials` (no-source); `lee-park-library-districts` (no-source) |
-| Livingston | 17105 | dispatch | districted | `county-board`, `library-district` | 2 — `livingston-precincts` (no-source); `livingston-special-districts` (no-source) |
+| Livingston | 17105 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `livingston-special-districts` (no-source) |
 | Logan | 17107 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `logan-fire-districts` (no-source) |
 | Macon | 17115 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 2 — `macon-board-phone-area-code` (data-quality); `macon-district-name-formatting` (data-quality) |
 | Macoupin | 17117 | dispatch | no board layer — see gaps | `county-precinct`, `library-district` | 3 — `macoupin-county-board-districts` (no-source); `macoupin-special-districts` (no-source); `macoupin-ward-geometry` (no-source) |
 | Madison | 17119 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 1 — `madison-ward-officials` (no-source) |
-| Marshall | 17123 | dispatch | districted | `county-board`, `library-district` | 3 — `county-board-office-addresses` (no-source); `marshall-precinct-geometry` (no-source); `wenona-two-clerks-disagree` (data-quality) |
+| Marshall | 17123 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `county-board-office-addresses` (no-source); `wenona-two-clerks-disagree` (data-quality) |
 | Mason | 17125 | dispatch | districted | `county-board`, `library-district` | 2 — `county-board-office-addresses` (no-source); `mason-precinct-vintage` (data-quality) |
 | Massac | 17127 | dispatch | at-large — County card | `library-district` | 1 — `massac-precinct-geometry` (no-source) |
 | McDonough | 17109 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | none |
@@ -139,4 +139,4 @@ Counties outside the coverage ring that a research pass has already measured; ea
 
 ## Gap records not tagged to a county (1)
 
-City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 100 records in the Data gaps panel: `chicago-amenity-phones`.
+City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 98 records in the Data gaps panel: `chicago-amenity-phones`.

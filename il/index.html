@@ -11253,6 +11253,12 @@ function initChiExplorer() {
   var loadPutnamPrecincts = makeCached(function () {
     return fetchJSONWithRetry("data/app/putnam-precincts.json", {}, 2);
   });
+  var loadMarshallPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/marshall-precincts.json", {}, 2);
+  });
+  var loadLivingstonPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/livingston-precincts.json", {}, 2);
+  });
   /* CUMBERLAND is precinct-only for a DIFFERENT reason than Calhoun, Morgan and
    * Gallatin, and the distinction is the point: those three elect their boards
    * countywide, so there is no district for a precinct to belong to. Cumberland
@@ -27824,6 +27830,80 @@ function initChiExplorer() {
           return {
             label: "Putnam County Clerk — elections",
             url: "https://www.putnamil.gov/government/county_clerk___recorder_office/elections.php"
+          };
+        }
+      },
+      // Marshall — fourteen precincts that ARE the Census 2020 voting
+      // districts, one for one, with NO alias at all: the county's certified
+      // canvasses and the census fabric agree on every name. Found by auditing
+      // gap records by DATE — its own was last measured 3 Aug 2026, a fortnight
+      // before this project had the vendor route that names its precincts.
+      {
+        key: "marshall",
+        coverage: countyOutlineCoverage("marshall"),
+        loadGeometry: loadMarshallPrecincts,
+        hoverName: function (feature) {
+          var v = findPropCI(feature.properties || {}, ["name"]);
+          return (v == null || String(v).trim() === "") ? null : String(v).trim();
+        },
+        query: function (point, seq) {
+          return loadMarshallPrecincts().then(function (geojson) {
+            var feature = findFeatureContaining(geojson, point);
+            if (!feature) return null;
+            return {
+              seq: seq,
+              name: findPropCI(feature.properties || {}, ["name"])
+            };
+          });
+        },
+        render: function () {
+          return renderFieldStack([{ label: "County", value: "Marshall County" }]);
+        },
+        cardIdentifier: function (result) {
+          return result.name ? "Precinct " + String(result.name) : "Unknown";
+        },
+        primaryLink: function () {
+          return {
+            label: "Marshall County Clerk — election results",
+            url: "https://il-marshall.pollresults.net/"
+          };
+        }
+      },
+      // Livingston — forty-six precincts that ARE the Census 2020 voting
+      // districts, after ONE rename. Five names differ between the county's
+      // canvass and the census and they go OPPOSITE ways: the county attaches a
+      // numeral to Chatsworth (its designation wins, the Greene case), while
+      // the results feed abbreviates Indian Grove to "Indian Grv" (the census's
+      // own township spelling wins, the Scott case). Its record said the county
+      // publishes no mapping data — still true, and not the question.
+      {
+        key: "livingston",
+        coverage: countyOutlineCoverage("livingston"),
+        loadGeometry: loadLivingstonPrecincts,
+        hoverName: function (feature) {
+          var v = findPropCI(feature.properties || {}, ["name"]);
+          return (v == null || String(v).trim() === "") ? null : String(v).trim();
+        },
+        query: function (point, seq) {
+          return loadLivingstonPrecincts().then(function (geojson) {
+            var feature = findFeatureContaining(geojson, point);
+            if (!feature) return null;
+            return {
+              seq: seq,
+              name: findPropCI(feature.properties || {}, ["name"])
+            };
+          });
+        },
+        render: function () {
+          return renderFieldStack([{ label: "County", value: "Livingston County" }]);
+        },
+        cardIdentifier: function (result) {
+          return result.name ? "Precinct " + String(result.name) : "Unknown";
+        },
+        primaryLink: function () {
+          return {
+            label: "Livingston County Clerk — election results",
+            url: "https://il-livingston.pollresults.net/"
           };
         }
       },

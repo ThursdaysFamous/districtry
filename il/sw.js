@@ -43,7 +43,7 @@
 // refreshed per election.)
 /* ==== TEMPLATE:END sw-version-history ==== */
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-il-shell-v18";
+const CACHE_NAME = "districtry-il-shell-v19";
 
 const SHELL_URLS = [
   "./",
@@ -349,6 +349,8 @@ const GEOMETRY_URLS = [
   "./data/app/williamson-library-districts.json",
   "./data/app/winnebago-library-districts.json",
   "./data/app/putnam-precincts.json",
+  "./data/app/marshall-precincts.json",
+  "./data/app/livingston-precincts.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
