@@ -159,19 +159,38 @@ WAUKESHA_INDEX = "https://www.waukesha-wi.gov/about_the_common_council/index.php
 # UNDER-reports, which is the right direction for a triage and the reason the
 # 67 "no pairing found" is a floor rather than a verdict.
 #
-# THE TWENTY-TWO FULL MATCHES NOT BUILT HERE, with the page the sweep scored, so
-# the next pass starts from a measurement instead of repeating this one:
+# THE TWENTY-TWO FULL MATCHES the sweep found. FIVE WERE BUILT on 2026-09-05
+# evening (New Berlin, Sturgeon Bay, Altoona, Eagle River, Germantown — 28
+# seats) and FIVE MORE WERE MEASURED SHUT that same evening, which is the more
+# useful half:
 #
-#   New Berlin        C 7  https://www.newberlinwi.gov/
-#   Sturgeon Bay      C 7  https://www.sturgeonbaywi.org/government/city_council/index.php
-#   Altoona           C 6  https://www.altoonawi.gov/government/elected_officials.php
+#   ALGOMA, DODGEVILLE, OCONOMOWOC and HORICON each seat TWO alderpersons per
+#   district on staggered terms — Dodgeville's district 1 is Shaun Sersch
+#   (2025-2027) AND Roxanne Reynolds-Lair (2026-2028), and so on. The roster
+#   schema is members[district] -> ONE member, so naming either would conceal
+#   the other. Shut on the SCHEMA, not on the source: representing them needs
+#   a schema and a card that hold a list. THE SWEEP COULD NOT HAVE SEEN THIS —
+#   it scored district-to-name PAIRINGS, and a page that pairs each district
+#   twice scores as a full match.
+#
+#   WAUPACA's page numbers its districts 1-5 while LTSB keys its geometry
+#   41-45. Nothing read here witnesses the correspondence, and a wrong offset
+#   moves every name one seat, so it is not guessed.
+#
+# The remaining twelve, with the page the sweep scored, so the next pass starts
+# from a measurement instead of repeating this one. THEIR SEAT VOCABULARY WAS
+# MEASURED 2026-09-05: seven number seats by WARD (the Viroqua shape, needing
+# the live LTSB ward-is-district witness) — Cumberland, Hillsboro, Nekoosa,
+# New Lisbon, Westby, Greenwood, Montreal; Wautoma writes "Dist. N" and
+# Wisconsin Dells an ordinal "Nth District"; Black River Falls, Neenah and
+# New Holstein pair by neither, and want a read before a regex:
+#
 #   Waupaca           C 5  https://cityofwaupaca.org/government/mayor-city-council/
 #   Algoma            C 4  https://www.algomacity.org/government/city_council.php
+#   Horicon           C 3  https://www.horiconwi.gov/185/Elected-Officials
 #   Black River Falls C 4  https://blackriverfallswi.gov/common-council-committee-of-the-whole
 #   Cumberland        C 4  https://cityofcumberland.net/city-council
 #   Dodgeville        C 4  https://www.cityofdodgeville.com/council
-#   Eagle River       C 4  https://eagleriverwi.gov/city-government/elected-officials/
-#   Germantown        V 4  https://www.germantownwi.gov/299/Village-Board
 #   Hillsboro         C 4  https://www.hillsborowi.com/mayor-and-council
 #   Nekoosa           C 4  https://cityofnekoosa.org/city-council
 #   New Holstein      C 4  https://cityofnewholstein.org/elected-officials/
@@ -209,6 +228,27 @@ HOWARD_INDEX = ("https://www.villageofhoward.com/208"
                 "/Village-President-Board-of-Trustees")
 TOMAH_INDEX = "https://www.tomahwi.gov/citycouncil"
 EAU_CLAIRE_INDEX = "https://www.eauclairewi.gov/310/City-Council"
+
+# ---- the tranche of 2026-09-05 evening, from the 22 the sweep had measured ----
+# FIVE constants, for the five cities actually fetched. Algoma, Dodgeville,
+# Oconomowoc and Horicon were built and then withdrawn (two members per
+# district, see below), and their addresses go back to the queue comment
+# rather than staying here: validate_robots.py reads an upper-case module
+# attribute as a SCHEDULED FETCH and would report policies for requests this
+# module no longer makes.
+# Each address moves from the queue comment above into a constant HERE in the
+# same change that starts fetching it, never before: validate_robots.py reads
+# upper-case module attributes as scheduled fetches and would otherwise report
+# policies for requests nobody makes. robots.txt was read for ALL TWENTY-TWO
+# candidate hosts before any page fetch, not just the five kept — none
+# carries a Disallow reaching these paths.
+NEW_BERLIN_INDEX = "https://www.newberlinwi.gov/"
+STURGEON_BAY_INDEX = ("https://www.sturgeonbaywi.org/government/"
+                      "city_council/index.php")
+ALTOONA_INDEX = "https://www.altoonawi.gov/government/elected_officials.php"
+EAGLE_RIVER_INDEX = "https://eagleriverwi.gov/city-government/elected-officials/"
+GERMANTOWN_INDEX = "https://www.germantownwi.gov/299/Village-Board"
+
 APPLETON_INDEX = "https://www.appletonwi.gov/government/common_council.php"
 
 ORDINALS = {"first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5,
@@ -1026,6 +1066,173 @@ def scrape_portage():
     return members, PORTAGE_INDEX
 
 
+# ============================= the tranche of 2026-09-05 evening (five cities)
+# All five pair every district with a name, and NONE was parsed by a shared
+# routine: a generic "nearest name to District N" pass was written first and
+# would have shipped "City Council President" as Eagle River's district 3 and
+# "Edit Form" as Altoona's district 6. Per-city functions, as the fleet does.
+#
+# FIVE of the ten cities worked are DELIBERATELY NOT HERE:
+#   * ALGOMA, DODGEVILLE, OCONOMOWOC and HORICON each seat TWO alderpersons
+#     per district on staggered terms (Dodgeville's district 1 is Shaun Sersch
+#     2025-2027 AND Roxanne Reynolds-Lair 2026-2028; Horicon's is Forrest
+#     Frami AND Lisa Sullivan). The roster schema is members[district] -> one
+#     member, so shipping any of them would name one of each pair and conceal
+#     the other. Shut on the SCHEMA, not on the source. All four WERE built
+#     and then withdrawn once _put() refused the second name.
+#   * WAUPACA's page numbers its districts 1-5 while LTSB keys its geometry
+#     41-45. That correspondence is plausible and NOT witnessed by anything
+#     read here, and a wrong offset moves every name one seat, so it is not
+#     guessed. (The builder's stray-district gate would catch it, which is why
+#     the failure would be loud rather than silent — but a gate catching a
+#     guess is not the same as not guessing.)
+
+
+def _clean(fragment):
+    """Tag-stripped, entity-decoded, whitespace-collapsed text."""
+    return " ".join(re.sub(r"<[^>]+>", " ", H.unescape(fragment)).split())
+
+
+def _contact(fragment):
+    """{email, phone} from one member's own markup fragment — never a page's."""
+    out = {}
+    em = re.search(r'href="mailto:([^"?]+)"', fragment)
+    if em:
+        out["email"] = em.group(1).strip()
+    ph = re.search(r"\(?\d{3}\)?[ .-]\d{3}-\d{4}", _clean(fragment))
+    if ph:
+        out["phone"] = ph.group(0).strip()
+    return out
+
+
+def _put(city, members, key, entry):
+    """Record one member, and REFUSE a second name for the same district.
+
+    THIS IS THE GUARD THAT MATTERS HERE, and it exists because its absence
+    shipped a plausible half-truth: a `setdefault` took the first name and
+    dropped the second in silence, so Dodgeville read as four alderpersons
+    when the page names eight. The schema is members[district] -> ONE member,
+    so a city that seats two per district cannot be represented at all, and
+    naming one of each pair would conceal the other rather than merely be
+    incomplete. Fail loudly instead.
+    """
+    if key in members and members[key]["name"] != entry["name"]:
+        raise SystemExit("%s names two people for district %s (%s and %s) — the "
+                         "roster schema holds one member per district, so this "
+                         "city cannot ship without concealing a seat"
+                         % (city, key, members[key]["name"], entry["name"]))
+    members[key] = entry
+
+
+def _seats_or_die(city, members, seats):
+    if len(members) != seats:
+        raise SystemExit("%s names %d of %d districts" % (city, len(members), seats))
+    return members
+
+
+# ---------------------------------------------------------------- New Berlin
+def scrape_new_berlin():
+    """Cards whose NAME PRECEDES the "District N" label."""
+    page = fetch(NEW_BERLIN_INDEX)
+    flat = re.sub(r"<[^>]+>", "|", H.unescape(page))
+    flat = re.sub(r"\|+", "|", flat)
+    members = {}
+    for m in re.finditer(r"([A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]*\.?){1,3})"
+                         r"[\s|]+District\s+(\d{1,2})\b", flat):
+        _put("new berlin", members, "%02d" % int(m.group(2)), {"name": m.group(1).strip()})
+    return _seats_or_die("new berlin", members, 7), NEW_BERLIN_INDEX
+
+
+# -------------------------------------------------------------- Sturgeon Bay
+def scrape_sturgeon_bay():
+    """"District N | <name> | <home address> | <phone> | sbdistrictN@...".
+
+    The page also carries an AT-LARGE mayor, who has no district and so is
+    never matched. THE CELL AFTER THE NAME IS A HOME ADDRESS and is stepped
+    over by shape — the phone and the per-seat district mailbox after it are
+    the city's own official contact for the seat and do ship.
+    """
+    page = fetch(STURGEON_BAY_INDEX)
+    flat = re.sub(r"\|+", "|", re.sub(r"<[^>]+>", "|", H.unescape(page)))
+    members = {}
+    for m in re.finditer(r"District\s+(\d{1,2})\b[\s|]+"
+                         r"([A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]*\.?){1,3})"
+                         r"([^|]*(?:\|[^|]*){0,3})", flat):
+        entry = {"name": m.group(2).strip()}
+        tail = m.group(3)
+        ph = re.search(r"\(?\d{3}\)?[ .-]\d{3}-\d{4}", tail)
+        if ph:
+            entry["phone"] = ph.group(0).strip()
+        em = re.search(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", tail)
+        if em:
+            entry["email"] = em.group(0).strip()
+        _put("sturgeon bay", members, "%02d" % int(m.group(1)), entry)
+    return _seats_or_die("sturgeon bay", members, 7), STURGEON_BAY_INDEX
+
+
+# ------------------------------------------------------------------- Altoona
+def scrape_altoona():
+    """"<Name> | Council Person District N (Ward a, b) | Term expires | phone".
+
+    The name PRECEDES the label. A name-follows read gets "Edit Form" for
+    district 6 — the page's trailing contact widget, which sits exactly where
+    the seventh member would be if there were one.
+    """
+    page = fetch(ALTOONA_INDEX)
+    flat = re.sub(r"\|+", "|", re.sub(r"<[^>]+>", "|", H.unescape(page)))
+    members = {}
+    for m in re.finditer(r"([A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]*\.?){1,3})"
+                         r"[\s|]+Council Person\s+District\s+(\d{1,2})\b", flat):
+        _put("altoona", members, "%02d" % int(m.group(2)), {"name": m.group(1).strip()})
+    return _seats_or_die("altoona", members, 6), ALTOONA_INDEX
+
+
+# --------------------------------------------------------------- Eagle River
+def scrape_eagle_river():
+    """"Aldermanic District N, Wards a & b" then an OPTIONAL office title and
+    then the name.
+
+    DISTRICT 3'S TITLE IS THE TRAP: its block reads "... District 3, Wards 3 &
+    4 | City Council President | Kim Schaffer", so the first capitalised run
+    after the label is an office, not a person. Titles are skipped by name.
+    """
+    page = fetch(EAGLE_RIVER_INDEX)
+    flat = re.sub(r"\|+", "|", re.sub(r"<[^>]+>", "|", H.unescape(page)))
+    titles = ("City Council President", "Council President", "Mayor",
+              "City Council Vice President")
+    members = {}
+    for m in re.finditer(r"Aldermanic\s+District\s+(\d{1,2})\b[^|]*((?:\|[^|]*){1,16})",
+                         flat):
+        cells = [c.strip() for c in m.group(2).split("|") if c.strip()]
+        cells = [c for c in cells if c not in titles]
+        if not cells:
+            raise SystemExit("eagle river: district %s has only a title"
+                             % m.group(1))
+        entry = {"name": cells[0]}
+        tail = m.group(2)
+        ph = re.search(r"\(?\d{3}\)?[ .-]?\d{3}-\d{4}", tail)
+        if ph:
+            entry["phone"] = " ".join(ph.group(0).split())
+        em = re.search(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", tail)
+        if em:
+            entry["email"] = em.group(0).strip()
+        _put("eagle river", members, "%02d" % int(m.group(1)), entry)
+    return _seats_or_die("eagle river", members, 4), EAGLE_RIVER_INDEX
+
+
+# ---------------------------------------------------------------- Germantown
+def scrape_germantown():
+    """A VILLAGE: its four are TRUSTEES, and the card renders them as such.
+    "District N" then the trustee's name."""
+    page = fetch(GERMANTOWN_INDEX)
+    flat = re.sub(r"\|+", "|", re.sub(r"<[^>]+>", "|", H.unescape(page)))
+    members = {}
+    for m in re.finditer(r"District\s+(\d{1,2})\b[\s|]+"
+                         r"([A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]*\.?){1,3})", flat):
+        _put("germantown", members, "%02d" % int(m.group(1)), {"name": m.group(2).strip()})
+    return _seats_or_die("germantown", members, 4), GERMANTOWN_INDEX
+
+
 # ------------------------------------------------------------------- Viroqua
 def scrape_viroqua():
     """A five-column table: WARD N | NAME | Term Expires | mailto | tel.
@@ -1294,7 +1501,13 @@ def main():
             ("35950", "Howard", 8, scrape_howard),
             ("80075", "Tomah", 8, scrape_tomah),
             ("22300", "Eau Claire", 5, scrape_eau_claire),
-            ("02375", "Appleton", 15, scrape_appleton)):
+            ("02375", "Appleton", 15, scrape_appleton),
+            # the tranche of 2026-09-05 evening
+            ("56375", "New Berlin", 7, scrape_new_berlin),
+            ("77875", "Sturgeon Bay", 7, scrape_sturgeon_bay),
+            ("01550", "Altoona", 6, scrape_altoona),
+            ("21625", "Eagle River", 4, scrape_eagle_river),
+            ("28875", "Germantown", 4, scrape_germantown)):
         result, reason = attempt(name, fn)
         if result is None:
             failures[code] = {"municipality": name, "reason": reason}

@@ -1,4 +1,29 @@
 {
+ "01550": {
+  "members": {
+   "01": {
+    "name": "Dale Stuber"
+   },
+   "02": {
+    "name": "Timothy Lima"
+   },
+   "03": {
+    "name": "Bruce Thielen"
+   },
+   "04": {
+    "name": "Matthew Biren"
+   },
+   "05": {
+    "name": "Susie Zillmer"
+   },
+   "06": {
+    "name": "Susan Rowe"
+   }
+  },
+  "municipality": "Altoona",
+  "seats": 6,
+  "sourceUrl": "https://www.altoonawi.gov/government/elected_officials.php"
+ },
  "02375": {
   "members": {
    "01": {
@@ -81,6 +106,33 @@
   "seats": 15,
   "sourceUrl": "https://www.appletonwi.gov/government/common_council.php"
  },
+ "21625": {
+  "members": {
+   "01": {
+    "email": "COERWard1@eagleriverwi.gov",
+    "name": "Vic Washelesky",
+    "phone": "(715) 525-1555"
+   },
+   "02": {
+    "email": "COERWard2@eagleriverwi.gov",
+    "name": "Dan Grosskopf",
+    "phone": "715-891-0526"
+   },
+   "03": {
+    "email": "COERWard3-4@eagleriverwi.gov",
+    "name": "Kim Schaffer",
+    "phone": "715-479-2599"
+   },
+   "04": {
+    "email": "COERWard5@eagleriverwi.gov",
+    "name": "Dan Dumas",
+    "phone": "262-951-6519"
+   }
+  },
+  "municipality": "Eagle River",
+  "seats": 4,
+  "sourceUrl": "https://eagleriverwi.gov/city-government/elected-officials/"
+ },
  "22300": {
   "members": {
    "01": {
@@ -107,6 +159,25 @@
   "municipality": "Eau Claire",
   "seats": 5,
   "sourceUrl": "https://www.eauclairewi.gov/310/City-Council"
+ },
+ "28875": {
+  "members": {
+   "01": {
+    "name": "Terri Kaminski"
+   },
+   "02": {
+    "name": "Meg Cutts"
+   },
+   "03": {
+    "name": "Robert Warren"
+   },
+   "04": {
+    "name": "Jan Miller"
+   }
+  },
+  "municipality": "Germantown",
+  "seats": 4,
+  "sourceUrl": "https://www.germantownwi.gov/299/Village-Board"
  },
  "31000": {
   "members": {
@@ -586,6 +657,34 @@
   "seats": 15,
   "sourceUrl": "https://webapi.legistar.com/v1/milwaukee/officerecords?$filter=OfficeRecordBodyId%20eq%201&$top=1000"
  },
+ "56375": {
+  "members": {
+   "01": {
+    "name": "John Hopkins"
+   },
+   "02": {
+    "name": "Meg Gardner"
+   },
+   "03": {
+    "name": "Dave Maxey"
+   },
+   "04": {
+    "name": "Kenneth A. Harenda II"
+   },
+   "05": {
+    "name": "Joseph Stribl"
+   },
+   "06": {
+    "name": "Dennis Horbinski"
+   },
+   "07": {
+    "name": "Charlotte Kroupa"
+   }
+  },
+  "municipality": "New Berlin",
+  "seats": 7,
+  "sourceUrl": "https://www.newberlinwi.gov/"
+ },
  "64100": {
   "members": {
    "01": {
@@ -813,6 +912,48 @@
   "municipality": "Stevens Point",
   "seats": 11,
   "sourceUrl": "https://stevenspoint.com/Directory.aspx?DID=23"
+ },
+ "77875": {
+  "members": {
+   "01": {
+    "email": "sbdistrict1@sturgeonbaywi.gov",
+    "name": "Helen L. Bacon",
+    "phone": "920-493-7200"
+   },
+   "02": {
+    "email": "sbdistrict2@sturgeonbaywi.gov",
+    "name": "Matthew Huston",
+    "phone": "920-333-2442"
+   },
+   "03": {
+    "email": "sbdistrict3@sturgeonbaywi.gov",
+    "name": "Dan Williams",
+    "phone": "920-559-3551"
+   },
+   "04": {
+    "email": "sbdistrict4@sturgeonbaywi.gov",
+    "name": "J. Spencer Gustafson",
+    "phone": "920-256-1437"
+   },
+   "05": {
+    "email": "sbdistrict5@sturgeonbaywi.gov",
+    "name": "Gary Nault",
+    "phone": "920-743-1100"
+   },
+   "06": {
+    "email": "sbdistrict6@sturgeonbaywi.gov",
+    "name": "Seth Wiederanders",
+    "phone": "920-493-2048"
+   },
+   "07": {
+    "email": "sbdistrict7@sturgeonbaywi.gov",
+    "name": "Nicole Matson",
+    "phone": "920-241-6819"
+   }
+  },
+  "municipality": "Sturgeon Bay",
+  "seats": 7,
+  "sourceUrl": "https://www.sturgeonbaywi.org/government/city_council/index.php"
  },
  "78650": {
   "members": {
