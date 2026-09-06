@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ship library-district boundaries for six Illinois counties that publish none.
+Ship library-district boundaries for the 72 Illinois counties that publish none.
 
 WHOSE BOUNDARY THIS IS, AND WHY THAT SENTENCE COMES FIRST. The source is the
 Illinois Broadband Office / Connected Nation `IL_Boundary_Layers` service,
@@ -484,7 +484,17 @@ def build_county(cfg, libs, tree, verbose=True):
     # artifact and passes the real one, which is exactly backwards, and the
     # 25,000 m2 threshold this check used to carry did precisely that.
     #
-    # MEAN WIDTH IS 2 x AREA / PERIMETER. The floor is twice SIMPLIFY_M for the
+    # MEAN WIDTH IS 2 x AREA / PERIMETER, WHICH IS A RIBBON'S WIDTH. That is
+    # the right formula for what this gate is built to dismiss — a long thin
+    # patch between two lines drawn apart — and it UNDER-REPORTS a compact one:
+    # for a disc, 2A/P is the radius, so a blob-shaped overlap reads at about
+    # half its true width and needs to be twice as wide to trip the ceiling.
+    # Nothing here is affected — both statewide exceedances are long ribbons,
+    # and neither is in a county this builder writes — but the next chunky
+    # overlap will be under-reported, so this is recorded rather than left for
+    # someone to rediscover from a gate that quietly passed.
+    #
+    # The floor is twice SIMPLIFY_M for the
     # same reason SLIVER_REACH_M is: an overlap no wider than the distance
     # simplification alone can move a line is not evidence of shared ground.
     # Above it sit exactly two pairs statewide, and NEITHER is in a county this
@@ -562,13 +572,15 @@ def build_county(cfg, libs, tree, verbose=True):
 # at once, against geometry from a different government — and it discriminates
 # in both directions, which is the property a confirming-only check lacks:
 # municipal libraries match their place at a median IoU of 0.968, while library
-# DISTRICTS match at a median of 0.056. If the layer were quietly redrawing
+# DISTRICTS match at a median of 0.063. If the layer were quietly redrawing
 # municipalities and labelling some of them "District", that second number
 # would be high. It is not, so the type column is carrying real information.
 #
 # THREE MEASURED READINGS, 2026-09-06, and the floors are set below them rather
 # than at them: township n=30 median 0.997 MIN 0.978; municipal n=206 median
-# 0.968, 98.1% at or above 0.70; district n=201 median 0.056.
+# 0.968, 98.1% at or above 0.70; district n=209 median 0.063. Each is quoted
+# WITH ITS DATE because each moves with the publisher: the district figure read
+# 0.056 on 2026-09-05, a day earlier, on a slightly different candidate set.
 #
 # A NAME MATCH IS NOT A WITNESS UNLESS THE TWO SHAPES ACTUALLY TOUCH. Ten
 # library names collide with a same-named place elsewhere in Illinois —
@@ -586,7 +598,7 @@ WITNESS_TOWNSHIP_FLOOR = 0.90       # measured min 0.978
 WITNESS_MUNICIPAL_FLOOR = 0.70      # 98.1% of 206 clear it
 WITNESS_MUNICIPAL_SHARE = 0.95      # ...and at least this share must
 WITNESS_MUNICIPAL_MEDIAN = 0.90     # measured 0.968
-WITNESS_DISTRICT_MEDIAN = 0.20      # measured 0.056 — the discriminator
+WITNESS_DISTRICT_MEDIAN = 0.20      # measured 0.063 (2026-09-06) — the discriminator
 WITNESS_MIN_SCORED = 210            # 236 scored today; a floor, so a gate that
                                     # stops finding pairs fails instead of
                                     # passing vacuously on an empty set

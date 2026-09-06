@@ -852,10 +852,10 @@ detail into `blocker`.
       ],
       "kind": "data-quality",
       "layer": "fire-district",
-      "summary": "Macon County's fire, park and library districts show with the spaces missing from their names — MtZion, MarrowBone — because that is how the county publishes them.",
-      "why": "Putting the spaces back automatically would invent names: the same rule that fixes MtZion turns MarrowBone into “Marrow Bone”, which is nothing's name.",
-      "blocker": "Found 4 Aug 2026, when the three tilings were added. The county's own labels have had their spaces stripped: MtZion, BlueMound, CerroGordo, HickoryPoint, SouthWheatland, FriendsCreek, MarrowBone, IlliopNian, HopeWelty. Putting the spaces back automatically is the obvious fix and it is wrong: splitting on the capital letters turns MarrowBone into \"Marrow Bone\" and IlliopNian into \"Illiop Nian\", and neither is the name of anything. So the names ship exactly as the county writes them, which looks worse and claims less. This is the posture Boone's fire districts already set, where numbers shipped rather than names nobody could source.",
-      "wanted": "The districts' names as the county actually spells them, or the same map layers republished with the spaces intact."
+      "summary": "Macon County's fire and park districts show with the spaces missing from their names — CerroGordo, FriendsCreek — because that is how the county publishes them.",
+      "why": "Putting the spaces back automatically would invent names: the same rule that fixes MtZion turns MarrowBone into “Marrow Bone”, which is nothing's name. The library third is fixed — a second publisher spells those out.",
+      "blocker": "Found 4 Aug 2026, when the three tilings were added. The county's own labels have had their spaces stripped: MtZion, BlueMound, CerroGordo, HickoryPoint, SouthWheatland, FriendsCreek, MarrowBone, IlliopNian, HopeWelty. Putting the spaces back automatically is the obvious fix and it is wrong: splitting on the capital letters turns MarrowBone into \"Marrow Bone\" and IlliopNian into \"Illiop Nian\", and neither is the name of anything. So the names ship exactly as the county writes them, which looks worse and claims less. This is the posture Boone's fire districts already set, where numbers shipped rather than names nobody could source.  LIBRARIES FIXED 2026-09-06, AND THE RECORD'S OWN WORRY TURNED OUT TO BE THE PROOF THAT NO RULE COULD WORK. The two names it cites as unrecoverable are really MARROWBONE — one word, small b — and ILLIOPOLIS/NIANTIC, a contraction of two town names. “Marrow Bone” and “Illiop Nian” are both wrong, and so is every other mechanical repair; what was needed was a PUBLISHER, and one exists. The Illinois Broadband Office / Connected Nation statewide library layer — already shipped and gated for 71 counties — names the same bodies in full, and scripts/build_parcel_fabric_districts.py's `witness_names` carries seven pairings, each DECLARED with the IoU at which the county's own polygon and the publisher's agree and each RE-PROVEN on every build: BlueMound/Blue Mound Memorial 0.990, HopeWelty/Hope Welty 0.990, IlliopNian/Illiopolis-Niantic 0.978, MarrowBone/Marrowbone 0.984, SouthMacon/South Macon 0.907, MtPulaski/Mount Pulaski 0.721, MtZion/Mount Zion 0.685. A pairing that stops agreeing fails, a declared name the publisher drops fails, and a NEWLY space-stripped label in that source fails rather than shipping beside the checked ones. BARCLAY, HARRISTOWN AND MAROA ARE DELIBERATELY NOT RENAMED: their labels carry no defect, and Harristown is the one body the publisher does not carry at all — its best match is Barclay's polygon at 0.243, which the floor rejects, so nothing would have been carried over even if it had been declared. THE GATE CAUGHT A FAULT IN ITS OWN COMPARISON before it caught anything in the data: the first version compared Macon's county-clipped polygon against the publisher's FULL extent, and Hope Welty is only 43% inside Macon, so it measured 0.428 and refused the rename. Clipping the published body to the county outline first — the same clip build_statewide_library_districts.py makes — is what makes the two comparable. FIRE AND PARK KEEP THE COUNTY'S SPELLING and are what remains above: 8 fire labels and 2 park, and the statewide service carries NO fire or park layer (measured 2026-09-06 by listing it — congressional, county, electric utility, federal lands, opportunity zones, school, library, house, senate and village/township, and nothing else), so there is no second publisher to ask.",
+      "wanted": "The fire and park districts' names as the county actually spells them, or the same map layers republished with the spaces intact."
     },
     {
       "id": "macoupin-county-board-districts",
@@ -7099,8 +7099,14 @@ the dispatch table in `il/index.html`, never off this paragraph.
 
 **THE CHOICE WAS MADE ON 2026-09-06: 65 COUNTY-SCOPED ENTRIES, NOT ONE STATEWIDE FILE.**
 The deciding number is the one a READER pays. A single statewide entry is 2.35 MB fetched by
-everyone who toggles the layer; 65 county files are 3-80 KB each and only the county you
-clicked is fetched. The code cost that argued for the statewide option turned out to be
+everyone who toggles the layer; 65 county files are 1.1 KB (Hardin) to 80 KB (Winnebago),
+1.08 MB for all of them. **THAT IS A PRECACHE COMPARISON AND AN EARLIER DRAFT OF THIS
+PARAGRAPH OVERSTATED IT**, saying "only the county you clicked is fetched": true of the
+OVERLAY, which draws and queries one county's file, and FALSE of the service worker, whose
+`PRECACHE_URLS` is `SHELL_URLS.concat(GEOMETRY_URLS)` — an installing visitor
+background-fetches all 65 and the precache goes 13.09 MB to 14.22 MB. The county files still
+win, because 1.08 MB of them is less than the 2.35 MB one statewide file would have added;
+the win is simply smaller than that sentence implied. The code cost that argued for the statewide option turned out to be
 mostly avoidable: the per-county shape is `<slug>-county-outline.json` +
 `<slug>-library-districts.json`, both named by CONTRACT, so `countyOutlineCoverage(slug)` and
 `countyLibraryLoader(slug)` replace ~280 lines of near-identical loader/coverage pairs and
@@ -7124,7 +7130,9 @@ against a publisher who has never heard of it: a City or Village library's bound
 municipality, and a Township library's IS the township — units the Census Bureau draws. The
 PLACE WITNESS scores 236 of the 642 polygons that way, and it DISCRIMINATES rather than only
 confirming: municipal libraries match their own municipality at a median IoU of **0.968**
-(township 0.997, min 0.978) while library DISTRICTS match at **0.056**. If the layer were
+(township 0.997, min 0.978) while library DISTRICTS match at **0.063** (2026-09-06; it
+read 0.056 a day earlier on a slightly different candidate set, so it is quoted with its
+date, like every other figure this project publishes about a live publisher). If the layer were
 quietly redrawing municipalities and labelling some of them "District", that second number
 would be high, so the type column is carrying real information. Both directions are gated.
 The 361 district polygons have no witness and the gate says so rather than pretending. A
