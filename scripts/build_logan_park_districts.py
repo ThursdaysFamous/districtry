@@ -1,0 +1,278 @@
+#!/usr/bin/env python3
+"""Build Logan County's seven park districts from the Tri-County Regional
+Planning Commission's public ArcGIS service.
+
+WHERE THIS CAME FROM
+--------------------
+Logan County publishes no park district boundary itself. TCRPC does, and the
+service was found by an unauthenticated arcgis.com catalog search with nothing
+read from the county at all. Its Logan_County_Districts_and_Zoning service has
+53 layers; seven of them, ids 26-32, are single-feature polygons carrying only
+FID/District/Shape__Area and named Atlanta, Armington, Chestnut Beason, Emden,
+Lincoln, Mt. Pulaski and San Jose.
+
+THE SERVICE DOES NOT SAY WHAT THEY ARE. Every parentLayerId is -1 because the
+group headers were flattened out on publish (ids 2, 7, 8, 11, 17, 25, 33, 38,
+41 and 48 are the gaps where their names used to be), there is no MapServer
+sibling, and the item carries an empty description, one empty tag, empty
+licenseInfo and empty accessInformation.
+
+The first reading of these layers here was WRONG and is worth stating, because
+it is the failure this builder is designed against. All seven names are also
+Logan fire-agency names, and Illinois fire protection districts are named for
+their towns, so they were read as fire districts. Three checks ruled out other
+readings (they are not the K-12 school districts, not the dispatch fire zones
+dissolved, not the library districts in the same service) but no check could
+supply the subject, and a name pattern is not a subject.
+
+What supplies it is TCRPC's own Logan County Public Web Map. The group headers
+the FeatureServer lost survive in that web map's item data, and the heading over
+exactly these seven ids reads "Park Districts". The same map names 49-56 Zoning,
+9 Cemetery Districts and 18-23 Library Districts.
+
+So THE WEB MAP GROUPING IS A GATE HERE, not a footnote. If TCRPC republishes and
+those ids stop sitting under a park heading, this build fails rather than
+shipping polygons whose subject is once again unknown.
+
+LICENCE
+-------
+Measured, not assumed, because two Illinois counties are blocked on exactly this
+question. The Logan service item is public with an empty licenceInfo, and
+TCRPC's Open Data portal item carries the operative text: a no-warranty and
+no-liability disclaimer that states the Information "is provided as a public
+service" and names its attribution (TCRPC; IDOT; USDOT; US Census Bureau; USGS).
+It contains no redistribution clause, no fee and no signing requirement, which
+is the opposite of the clause that stopped Whiteside and Winnebago. Three TCRPC
+GIS pages were enumerated by LINK rather than by prose -- the rule Whiteside
+taught -- and carry no licence agreement, fee schedule or data request form.
+
+WHAT SHIPS
+----------
+The district name exactly as the service's own District column spells it. The
+card labels the row "Park District", so "Atlanta" renders as "Park District:
+Atlanta"; the formal name is presumably "Atlanta Park District" but the source
+does not say so and this does not add words to it. Note the service spells one
+district "Chestnut Beason" where the web map's layer title reads
+"Chestnut - Beason"; the data's own field wins.
+
+No trustee, address or telephone number is published for any of the seven. That
+absence is recorded as its own gap rather than papered over.
+
+Usage (rare operator step; network access to the TCRPC service required):
+    pip install -c scripts/requirements.txt shapely requests
+    python3 scripts/build_logan_park_districts.py
+    python3 scripts/build_logan_park_districts.py --check   # drift gate
+"""
+
+import argparse
+import json
+import os
+import re
+import sys
+
+import requests
+from shapely import make_valid
+from shapely.geometry import mapping, shape
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OUT = os.path.join(ROOT, "il", "data", "app", "logan-park-districts.json")
+COUNTY_OUTLINE = os.path.join(ROOT, "il", "data", "app", "logan-county-outline.json")
+
+SERVICE = ("https://services.arcgis.com/pPTAs43AFhhk0pXQ/arcgis/rest/services/"
+           "Logan_County_Districts_and_Zoning/FeatureServer")
+WEB_MAP_ITEM = "0f24e714999949c9a55dffd6a32eac3d"      # "Logan County Public Web Map"
+SERVICE_NAME = "Logan_County_Districts_and_Zoning"
+ITEM_DATA = "https://www.arcgis.com/sharing/rest/content/items/%s/data?f=json"
+
+# layer id -> the District value the service publishes for it. Both halves are
+# pinned: a changed id set or a changed name fails the build.
+EXPECTED = {
+    26: "Atlanta",
+    27: "Armington",
+    28: "Chestnut Beason",
+    29: "Emden",
+    30: "Lincoln",
+    31: "Mt. Pulaski",
+    32: "San Jose",
+}
+# The web map heading that has to sit above those ids. Matched case-insensitively
+# on the words, so "Park Districts" and "Park District" both pass and anything
+# else -- including no heading at all -- fails.
+GROUP_WORD = "park"
+
+COORD_PRECISION = 6      # ~0.1 m
+MIN_INSIDE_FRACTION = 0.60   # San Jose, the least contained, measured 0.647
+MAX_OVERLAP_SHARE = 1e-4     # 0.01%; measured worst is 0.0002% (see below)
+
+SOURCE_LABEL = "Tri-County Regional Planning Commission"
+SOURCE_URL = ("https://www.arcgis.com/home/item.html?id="
+              "ef8ec7bd1d4e465f94b1e9a08a899f25")
+
+
+def fail(msg):
+    sys.exit("build-logan-park-districts: FAIL — " + msg)
+
+
+def get_json(url, what):
+    try:
+        r = requests.get(url, timeout=60)
+        r.raise_for_status()
+        return r.json()
+    except Exception as exc:                      # noqa: BLE001 - report and stop
+        fail("could not fetch %s (%s): %s" % (what, url, exc))
+
+
+def read_group_headings():
+    """Return {layer id on OUR service: the group heading directly above it}.
+
+    Keyed on the layer's URL, never on the web map's `id` field. Two reasons,
+    the second learned by this build failing on its own first run: the `id`
+    field is an internal string like "19d4ec7abdc-layer-24", and the numeric
+    sublayer ids that DO appear in the map are not unique across it -- the
+    Property > Additional Information MapServer also has layers 26, 27 and 32,
+    so an id-keyed lookup reads a heading belonging to a different service and
+    is wrong without looking wrong.
+    """
+    data = get_json(ITEM_DATA % WEB_MAP_ITEM, "the Logan County Public Web Map")
+    headings = {}
+
+    def walk(node, heading):
+        if isinstance(node, list):
+            for child in node:
+                walk(child, heading)
+            return
+        if not isinstance(node, dict):
+            return
+        title = node.get("title")
+        children = node.get("layers")
+        if children:
+            walk(children, title or heading)
+            return
+        url = node.get("url") or ""
+        if SERVICE_NAME in url:
+            m = re.search(r"/(\d+)$", url.rstrip("/"))
+            if m and heading:
+                headings[int(m.group(1))] = heading
+
+    walk(data.get("operationalLayers") or [], None)
+    if not headings:
+        fail("read no %s layer groupings from the web map — its structure has "
+             "moved, and without a heading these polygons have no published "
+             "subject" % SERVICE_NAME)
+    return headings
+
+
+def load_county():
+    with open(COUNTY_OUTLINE, encoding="utf-8") as fh:
+        raw = json.load(fh)
+    geom = raw["features"][0]["geometry"] if raw.get("type") == "FeatureCollection" else raw
+    return make_valid(shape(geom))
+
+
+def round_geom(geom):
+    def walk(c):
+        if isinstance(c[0], (int, float)):
+            return [round(c[0], COORD_PRECISION), round(c[1], COORD_PRECISION)]
+        return [walk(x) for x in c]
+    m = mapping(geom)
+    return {"type": m["type"], "coordinates": walk(m["coordinates"])}
+
+
+def build():
+    headings = read_group_headings()
+    county = load_county()
+    features = []
+
+    for lid, expected_name in sorted(EXPECTED.items()):
+        heading = headings.get(lid)
+        if not heading or GROUP_WORD not in heading.lower():
+            fail("layer %d sits under %r in the web map, not a park heading. That "
+                 "grouping is the only thing that says these polygons are park "
+                 "districts, so nothing is written." % (lid, heading))
+
+        url = ("%s/%d/query?where=1%%3D1&outFields=District&outSR=4326&f=geojson"
+               % (SERVICE, lid))
+        payload = get_json(url, "layer %d" % lid)
+        rows = payload.get("features") or []
+        if len(rows) != 1:
+            fail("layer %d returned %d features, expected exactly 1" % (lid, len(rows)))
+
+        name = (rows[0].get("properties") or {}).get("District")
+        name = (name or "").strip()
+        if name != expected_name:
+            fail("layer %d is named %r, expected %r — the service has been "
+                 "republished and the pinned names need re-verifying"
+                 % (lid, name, expected_name))
+
+        geom = make_valid(shape(rows[0]["geometry"]))
+        if geom.is_empty or geom.area <= 0:
+            fail("%s has empty geometry" % name)
+
+        inside = geom.intersection(county).area / geom.area
+        if inside < MIN_INSIDE_FRACTION:
+            fail("%s is only %.1f%% inside Logan County (floor %.0f%%) — either the "
+                 "wrong county's data or a changed boundary"
+                 % (name, 100 * inside, 100 * MIN_INSIDE_FRACTION))
+
+        features.append({
+            "type": "Feature",
+            "properties": {"district": name},
+            "geometry": round_geom(geom),
+        })
+
+    if len(features) != len(EXPECTED):
+        fail("built %d districts, expected %d" % (len(features), len(EXPECTED)))
+
+    # Park districts are separate taxing bodies and do not overlap. The test is
+    # a FRACTION of the smaller district, not an absolute area, because five
+    # adjacent pairs share a boundary and every one of them carries a
+    # digitisation sliver: measured 2026-09-08, the largest is Atlanta against
+    # Armington at 35.5 m², which is 0.0002% of the smaller of the two, and the
+    # other four are 13.1 m² or less. A real double-claim is percent-scale (the
+    # Cook fire tiling double-claims 57 acres), so the ceiling below fails on
+    # anything fifty times worse than today's noise and cannot trip on vertex
+    # wobble when TCRPC re-digitises.
+    for i in range(len(features)):
+        for j in range(i + 1, len(features)):
+            a, b = shape(features[i]["geometry"]), shape(features[j]["geometry"])
+            overlap = a.intersection(b).area
+            share = overlap / min(a.area, b.area)
+            if share > MAX_OVERLAP_SHARE:
+                fail("%s and %s overlap over %.4f%% of the smaller district "
+                     "(ceiling %.4f%%) — that is a double-claim, not a sliver"
+                     % (features[i]["properties"]["district"],
+                        features[j]["properties"]["district"],
+                        100 * share, 100 * MAX_OVERLAP_SHARE))
+
+    return {"type": "FeatureCollection", "features": features}
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--check", action="store_true",
+                    help="rebuild and compare against the shipped file; write nothing")
+    args = ap.parse_args()
+
+    collection = build()
+    rendered = json.dumps(collection, indent=1, sort_keys=True) + "\n"
+
+    if args.check:
+        if not os.path.exists(OUT):
+            fail("%s is missing — run without --check" % OUT)
+        with open(OUT, encoding="utf-8") as fh:
+            if fh.read() != rendered:
+                fail("%s does not match a fresh build of the TCRPC service" % OUT)
+        print("build-logan-park-districts: OK — %d districts match the shipped file"
+              % len(collection["features"]))
+        return
+
+    with open(OUT, "w", encoding="utf-8") as fh:
+        fh.write(rendered)
+    print("build-logan-park-districts: wrote %s — %d districts (%s), source: %s"
+          % (OUT, len(collection["features"]),
+             ", ".join(f["properties"]["district"] for f in collection["features"]),
+             SOURCE_LABEL))
+
+
+if __name__ == "__main__":
+    main()
