@@ -9112,6 +9112,18 @@ function initWisconsinExplorer() {
       // went on saying the card prints it. A field the app stops rendering is
       // invisible to every gate in this repo: the data was still there, still
       // correct, and still counted.
+      //
+      // AND THE OTHER 1,408 SEATS NOW CARRY A DATE TOO, which is the half this
+      // row was missing. Nine counties are carried from a document and said so;
+      // every other county said nothing, so its freshness was stated only by
+      // the ABSENCE of this row — legible to a reader who has seen a carried
+      // county's card and to nobody else. Lafayette made the gap plain: its
+      // page started answering live, its rows correctly lost `asOf`, and
+      // sixteen supervisors were left with no indication that anyone had read
+      // the county that week. `readOn` is the day the source was read and the
+      // builder derives it per rung, so the three branches below are the three
+      // things that can be true rather than one sentence covering for all of
+      // them.
       if (member && member.asOf) {
         wrap.appendChild(renderFieldStack([{
           label: "As of",
@@ -9125,6 +9137,20 @@ function initWisconsinExplorer() {
             : "The county's website refuses automated readers, so this name " +
               "is a dated capture rather than the weekly re-read the other " +
               "named counties get.")
+        }]));
+      } else if (member && member.readOn) {
+        wrap.appendChild(renderFieldStack([{
+          label: "As of",
+          // A READ THROUGH AN ARCHIVE IS DATED BY THE CAPTURE, NOT BY THE
+          // FETCH. Fond du Lac's host denies this client, so its page is read
+          // from the Internet Archive whenever the block is up; the day that
+          // matters to a reader is the day the copy was taken, and saying
+          // "read today" would be true of our request and false of the names.
+          value: member.readVia
+            ? "Read from " + String(member.readVia) + "'s capture of " +
+              String(member.readOn) + ". That is the day the copy was taken, " +
+              "not the day it was fetched."
+            : "Read on " + String(member.readOn) + ", and re-read every week."
         }]));
       }
       // AT-LARGE SUPERVISORS REPRESENT THE WHOLE COUNTY, so they belong on
