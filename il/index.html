@@ -12408,6 +12408,91 @@ function initChiExplorer() {
     return loadPeoriaLayer("Library_Districts", "District_Name,WebSite", "library districts");
   });
 
+  /* The people behind those three boundaries. Peoria's layers carry a district
+   * NAME and a WEBSITE and no officer, and the county publishes no list of the
+   * trustees — but the DISTRICTS THEMSELVES file one every year, because every
+   * Illinois unit of local government files an Annual Financial Report with
+   * the Comptroller and its Contact Information section names role-holders
+   * with the title the unit itself filed.
+   * scripts/peoria_district_officials_scraper.py reads those filings and keys
+   * them by the same District_Name the polygons carry.
+   * Stamped onto the features at load (the Boone shape) so the query stays a
+   * plain containment test and a ROSTER failure costs the people block, never
+   * the district. */
+  var loadPeoriaDistrictOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/peoria-district-officials.json", {}, 2);
+  });
+  function withPeoriaOfficials(loadGeometry) {
+    return makeCached(function () {
+      return Promise.all([
+        loadGeometry(),
+        loadPeoriaDistrictOfficials().catch(function () { return null; })
+      ]).then(function (results) {
+        var geojson = results[0], roster = results[1];
+        var byName = (roster && roster.districts) || {};
+        (geojson.features || []).forEach(function (f) {
+          var name = findPropCI(f.properties || {}, ["district_name"]);
+          var hit = name != null ? byName[String(name)] : null;
+          if (hit) f.properties.dxOfficials = hit;
+        });
+        return geojson;
+      });
+    });
+  }
+
+  /* The officeholder block under a Peoria fire, park or library district.
+   * Fleet card order — the people, then the office, then the contact.
+   *
+   * EVERY BLOCK NAMES THE FISCAL YEAR IT WAS FILED FOR, and that is the whole
+   * honesty of this source: an AFR is a snapshot filed once a year, and the
+   * Comptroller's own page says a different year may name a different person.
+   * So the card states what the district filed and when, rather than claiming
+   * these are the officers today.
+   *
+   * A district that files only appointed officers gets an Administration block
+   * and no board heading. Alpha Park Library files a Director and a Manager,
+   * Pleasure Driveway Park a Director and a Superintendent; that is the
+   * district's own answer about who it publishes, and an empty "Board" heading
+   * over it would imply a body the filing does not name. */
+  function peoriaDistrictPeople(result) {
+    var info = result && result.officials;
+    if (!info) return null;
+    var frag = document.createDocumentFragment();
+    var board = (info.board || []).filter(function (m) { return m && m.name; });
+    var heads = (info.heads || []).filter(function (m) { return m && m.name; });
+    function person(m) {
+      var out = { name: String(m.name) };
+      if (m.role) out.badge = String(m.role);
+      return out;
+    }
+    var filed = info.filedFor
+      ? "As filed with the Illinois Comptroller for fiscal year " +
+        String(info.filedFor)
+      : null;
+    if (board.length) {
+      frag.appendChild(renderSectionLabel("Board"));
+      frag.appendChild(renderPersonRows(board.map(person)));
+    }
+    if (heads.length) {
+      frag.appendChild(renderSectionLabel("Administration"));
+      frag.appendChild(renderPersonRows(heads.map(person)));
+    }
+    if ((board.length || heads.length) && filed) {
+      frag.appendChild(renderBodyIntro({ note: filed }));
+    }
+    var office = info.office || {};
+    if (office.address || office.phone || office.email) {
+      frag.appendChild(renderLinkRow({
+        title: "Office",
+        note: [office.address, office.city].filter(Boolean)
+          .map(function (part) { return String(part); }).join(", ") || null,
+        phone: office.phone ? String(office.phone) : null,
+        email: office.email ? String(office.email) : null
+      }));
+    }
+    return frag;
+  }
+
   /* TAZEWELL COUNTY (the 30th dispatched county, added 2026-08-02).
    *
    * Its GIS runs the Esri "election geography" template — the same one
@@ -23490,13 +23575,15 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "peoria",
         coverage: peoriaCountyCoverage,
-        loader: loadPeoriaFireDistricts,
+        loader: withPeoriaOfficials(loadPeoriaFireDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["district_name"], primary: true },
           { name: "website", keys: ["website"], hidden: true },
-          { label: "County", value: "Peoria County" }
+          { label: "County", value: "Peoria County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
         ],
+        people: peoriaDistrictPeople,
         primaryLink: function (result) {
           var site = result && result.website ? safeHttpUrl(result.website) : null;
           return site ? { label: (result.name || "Fire district") + " (official)", url: site } : null;
@@ -23878,12 +23965,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "peoria",
         coverage: peoriaCountyCoverage,
-        loader: loadPeoriaParkDistricts,
+        loader: withPeoriaOfficials(loadPeoriaParkDistricts),
         fields: [
           { name: "name", label: "Park District", keys: ["district_name"], primary: true },
           { name: "website", keys: ["website"], hidden: true },
-          { label: "County", value: "Peoria County" }
+          { label: "County", value: "Peoria County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
         ],
+        people: peoriaDistrictPeople,
         primaryLink: function (result) {
           var site = result && result.website ? safeHttpUrl(result.website) : null;
           return site ? { label: (result.name || "Park district") + " (official)", url: site } : null;
@@ -24370,13 +24459,15 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "peoria",
         coverage: peoriaCountyCoverage,
-        loader: loadPeoriaLibraryDistricts,
+        loader: withPeoriaOfficials(loadPeoriaLibraryDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Library District", keys: ["district_name"], primary: true },
           { name: "website", keys: ["website"], hidden: true },
-          { label: "County", value: "Peoria County" }
+          { label: "County", value: "Peoria County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
         ],
+        people: peoriaDistrictPeople,
         primaryLink: function (result) {
           var site = result && result.website ? safeHttpUrl(result.website) : null;
           return site ? { label: (result.name || "Library district") + " (official)", url: site } : null;
