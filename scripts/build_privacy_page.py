@@ -543,6 +543,37 @@ def render_storage_paragraphs(apps):
     return "\n      ".join(out)
 
 
+def render_apps_lede(apps):
+    """The sentence introducing the per-app table, DERIVED from the same
+    measurements the table's cells are.
+
+    It used to be a hardcoded "one has a theme toggle, one runs Google
+    Analytics and one runs no analytics at all", sitting directly above a
+    paragraph boasting that every cell below is read out of the app it
+    describes. By 2026-09-08 both of its countable claims were false: TWO apps
+    run Google Analytics (Illinois and New York, into one property), and NO app
+    runs no analytics at all, because every surface carries the shared
+    GoatCounter. A privacy page that understates how many surfaces report to
+    Google is a worse defect than a stale traffic figure, and it went wrong the
+    ordinary way -- a literal next to a measurement, and only the measurement
+    moved.
+    """
+    ga = [a for a in apps if a["ga"]]
+    none = [a for a in apps if not a["goatcounter"] and not a["ga"]]
+    bits = []
+    if ga:
+        bits.append("%s %s Google Analytics"
+                    % (esc(joined(a["name"] for a in ga)),
+                       "run" if len(ga) > 1 else "runs"))
+    if none:
+        bits.append("%s %s no analytics at all"
+                    % (esc(joined(a["name"] for a in none)),
+                       "run" if len(none) > 1 else "runs"))
+    else:
+        bits.append("every one of them carries the same counter")
+    return "; ".join(bits) + "."
+
+
 def render_analytics_section(apps):
     gc = [a for a in apps if a["goatcounter"]]
     ga = [a for a in apps if a["ga"]]
@@ -883,10 +914,9 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
   <section>
     <h2>Which app you are on</h2>
     <p>districtry is one project serving several apps from one address, and they do not all
-      behave identically — one has a theme toggle, one runs Google Analytics and one runs no
-      analytics at all. Rather than flatten that into a vague sentence, here is each app's own
-      row. <strong>Every cell is read out of the page that app actually serves</strong>, by the
-      script that builds this one.</p>
+      behave identically — %(appslede)s Rather than flatten that into a vague sentence, here is
+      each app's own row. <strong>Every cell is read out of the page that app actually
+      serves</strong>, by the script that builds this one.</p>
     <div class="table-wrap">
       <table>
         <thead>
@@ -1062,6 +1092,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
         # surfaces reach each host, and the front door reaches one now.
         "recipients": render_recipient_rows(apps),
         "storage": render_storage_paragraphs(apps),
+        "appslede": render_apps_lede(apps),
         "analytics": render_analytics_section(apps),
         "footerlinks": render_footer_links(apps),
         "permalink": code("#point=41.88250,-87.62850"),
