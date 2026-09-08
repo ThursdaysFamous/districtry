@@ -336,6 +336,16 @@ jobs:
         continue-on-error: true
         run: python3 scripts/macoupin_municipal_officials_scraper.py --out /tmp/macoupin_municipal_officials.json
 
+      # Kankakee is the first RUNG-3 county: nothing the county publishes names
+      # a municipal officer, so its five heads come from the KATS MPO's Policy
+      # Committee minutes. The step reads one nav page, the year indexes it
+      # links, and one PDF per meeting since the last municipal turnover —
+      # about a dozen requests.
+      - name: Read the KATS Policy Committee minutes for Kankakee's municipal heads
+        id: scrape_kankakee
+        continue-on-error: true
+        run: python3 scripts/kankakee_municipal_officials_scraper.py --out /tmp/kankakee_municipal_officials.json
+
       # Freeport is the ONLY municipality in Stephenson County that its county
       # page omits — and it is the county seat, holding more than half the
       # county's municipal population. The city publishes its own governing body
@@ -410,7 +420,9 @@ jobs:
           steps.scrape_dewitt.outcome == 'failure' ||
           steps.scrape_mason.outcome == 'failure' ||
           steps.scrape_boone.outcome == 'failure' ||
-          steps.scrape_ewg.outcome == 'failure' || steps.scrape_rock_island.outcome == 'failure'
+          steps.scrape_ewg.outcome == 'failure' || steps.scrape_rock_island.outcome == 'failure' ||
+          steps.scrape_macoupin.outcome == 'failure' ||
+          steps.scrape_kankakee.outcome == 'failure'
         env:
           GH_TOKEN: ${{ github.token }}
           COOK_OUTCOME: ${{ steps.scrape_cook.outcome }}
@@ -449,6 +461,8 @@ jobs:
           DEWITT_OUTCOME: ${{ steps.scrape_dewitt.outcome }}
           MASON_OUTCOME: ${{ steps.scrape_mason.outcome }}
           BOONE_OUTCOME: ${{ steps.scrape_boone.outcome }}
+          MACOUPIN_OUTCOME: ${{ steps.scrape_macoupin.outcome }}
+          KANKAKEE_OUTCOME: ${{ steps.scrape_kankakee.outcome }}
         run: |
           raise_issue() {
             title="Municipal officials: $1 County source unavailable"
@@ -498,6 +512,11 @@ jobs:
           # raise_issue line, so a Mason-only failure ran this step and raised
           # nothing — a guard that fires into silence. Added with Boone's.
           if [ "$MASON_OUTCOME" = "failure" ]; then raise_issue "Mason"; fi
+          # Macoupin had a scrape step and an `add` line and NONE of the three
+          # tracking parts, so a Macoupin-only failure never reached this step
+          # and filed nothing — the same defect the Mason note above records.
+          if [ "$MACOUPIN_OUTCOME" = "failure" ]; then raise_issue "Macoupin"; fi
+          if [ "$KANKAKEE_OUTCOME" = "failure" ]; then raise_issue "Kankakee"; fi
 
       # Build on what came back. Cook and Will are required — they are the only
       # two full-governing-body sources, so building without either would ship
@@ -555,6 +574,7 @@ jobs:
           add "${{ steps.scrape_mason.outcome }}"        mason       county /tmp/mason_municipal_officials.json
           add "${{ steps.scrape_macoupin.outcome }}"    macoupin    county /tmp/macoupin_municipal_officials.json
           add "${{ steps.scrape_boone.outcome }}"       boone       county /tmp/boone_municipal_officials.json
+          add "${{ steps.scrape_kankakee.outcome }}"    kankakee    county /tmp/kankakee_municipal_officials.json
           add "${{ steps.scrape_will_cities.outcome }}" will-cities enrich /tmp/will_city_councils.json
           add "${{ steps.scrape_skokie.outcome }}"      skokie      enrich /tmp/skokie_trustee_districts.json
           add "${{ steps.scrape_joliet.outcome }}"      joliet      enrich /tmp/joliet_council_contact.json
