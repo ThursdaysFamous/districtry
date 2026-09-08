@@ -55,6 +55,7 @@
    "checked": true
   },
   "contactChecked": 5,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 5
  },
  "55003": {
@@ -112,6 +113,7 @@
    "title": "Coroner"
   },
   "contactChecked": 4,
+  "contactReadOn": "2026-08-31",
   "contactAsOf": "2026-08-31",
   "contactAsOfWhy": "The county asks automated readers not to crawl its site, so these office contacts are a dated capture rather than the weekly re-read the other counties' rows get."
  },
@@ -255,6 +257,7 @@
    "checked": true
   },
   "contactChecked": 7,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 7
  },
  "55011": {
@@ -313,6 +316,7 @@
    "checked": true
   },
   "contactChecked": 5,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 5
  },
  "55013": {
@@ -365,6 +369,7 @@
    "checked": true
   },
   "contactChecked": 6,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 6
  },
  "55015": {
@@ -421,6 +426,7 @@
    "checked": true
   },
   "contactChecked": 7,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 7
  },
  "55017": {
@@ -478,6 +484,7 @@
    "checked": true
   },
   "contactChecked": 7,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 7
  },
  "55019": {
@@ -527,6 +534,7 @@
    "checked": true
   },
   "contactChecked": 4,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 4
  },
  "55021": {
@@ -575,6 +583,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 2,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 2
  },
  "55023": {
@@ -663,6 +672,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 4,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 4
  },
  "55027": {
@@ -793,6 +803,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 5
  },
  "55033": {
@@ -844,6 +855,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 2,
+  "contactReadOn": "2026-08-31",
   "contactAsOf": "2026-08-31",
   "contactAsOfWhy": "The county asks automated readers not to crawl its site, so these office contacts are a dated capture rather than the weekly re-read the other counties' rows get."
  },
@@ -904,6 +916,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 5
  },
  "55037": {
@@ -963,6 +976,7 @@
    "checked": true
   },
   "contactChecked": 5,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 5
  },
  "55039": {
@@ -1104,6 +1118,7 @@
    "title": "Coroner"
   },
   "contactChecked": 6,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 6
  },
  "55045": {
@@ -1157,6 +1172,7 @@
    "checked": true
   },
   "contactChecked": 6,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 6
  },
  "55047": {
@@ -1217,6 +1233,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 5
  },
  "55049": {
@@ -1314,6 +1331,7 @@
    "checked": true
   },
   "contactChecked": 7,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 7
  },
  "55053": {
@@ -1411,6 +1429,7 @@
    "checked": true
   },
   "contactChecked": 6,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 6
  },
  "55057": {
@@ -1460,6 +1479,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 3,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 3
  },
  "55059": {
@@ -1515,6 +1535,7 @@
    "checked": true
   },
   "contactChecked": 7,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 7
  },
  "55061": {
@@ -1607,7 +1628,6 @@
    "name": "Jack Sauer",
    "source": "county-board-page",
    "sourceUrl": "https://www.lafayettecountywi.org/bos",
-   "asOf": "the county's own page, captured 2026-08-29",
    "seats": 16
   },
   "executive": {
@@ -1700,6 +1720,7 @@
    "checked": true
   },
   "contactChecked": 6,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 6
  },
  "55069": {
@@ -1792,6 +1813,7 @@
    "checked": true
   },
   "contactChecked": 4,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 4
  },
  "55073": {
@@ -1889,6 +1911,7 @@
    "checked": true
   },
   "contactChecked": 6,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 6
  },
  "55077": {
@@ -1948,6 +1971,7 @@
    "checked": true
   },
   "contactChecked": 5,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 5
  },
  "55078": {
@@ -2120,6 +2144,7 @@
    "checked": true
   },
   "contactChecked": 6,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 6
  },
  "55085": {
@@ -2173,6 +2198,7 @@
   },
   "coroner": null,
   "contactChecked": 4,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 4
  },
  "55087": {
@@ -2267,6 +2293,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 6,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 6
  },
  "55091": {
@@ -2320,6 +2347,7 @@
    "checked": true
   },
   "contactChecked": 3,
+  "contactReadOn": "2026-08-31",
   "contactAsOf": "2026-08-31",
   "contactAsOfWhy": "The county asks automated readers not to crawl its site, so these office contacts are a dated capture rather than the weekly re-read the other counties' rows get."
  },
@@ -2418,6 +2446,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
+  "contactReadOn": "2026-08-31",
   "contactAsOf": "2026-08-31",
   "contactAsOfWhy": "The county asks automated readers not to crawl its site, so these office contacts are a dated capture rather than the weekly re-read the other counties' rows get."
  },
@@ -2474,6 +2503,7 @@
    "checked": true
   },
   "contactChecked": 7,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 7
  },
  "55099": {
@@ -2525,6 +2555,7 @@
    "checked": true
   },
   "contactChecked": 5,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 5
  },
  "55101": {
@@ -2737,6 +2768,7 @@
    "checked": true
   },
   "contactChecked": 7,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 7
  },
  "55111": {
@@ -2794,6 +2826,7 @@
    "checked": true
   },
   "contactChecked": 7,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 7
  },
  "55113": {
@@ -2844,6 +2877,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 5
  },
  "55115": {
@@ -2941,6 +2975,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 5
  },
  "55119": {
@@ -3037,6 +3072,7 @@
    "checked": true
   },
   "contactChecked": 5,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 5
  },
  "55123": {
@@ -3094,6 +3130,7 @@
    "checked": true
   },
   "contactChecked": 4,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 4
  },
  "55125": {
@@ -3187,6 +3224,7 @@
    "checked": true
   },
   "contactChecked": 7,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 7
  },
  "55129": {
@@ -3243,6 +3281,7 @@
    "title": "Coroner"
   },
   "contactChecked": 4,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 4
  },
  "55131": {
@@ -3282,6 +3321,7 @@
    "name": "Barry Braatz",
    "party": "Republican",
    "url": "https://www.washcowisco.gov/departments/district_attorney",
+   "phone": "262-335-4311",
    "checked": true
   },
   "sheriff": {
@@ -3299,6 +3339,7 @@
    "checked": true
   },
   "contactChecked": 7,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 7
  },
  "55133": {
@@ -3356,6 +3397,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 5
  },
  "55135": {
@@ -3414,6 +3456,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 5
  },
  "55137": {
@@ -3470,6 +3513,7 @@
    "checked": true
   },
   "contactChecked": 6,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 6
  },
  "55139": {
@@ -3523,6 +3567,7 @@
    "checked": true
   },
   "contactChecked": 6,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 6
  },
  "55141": {
@@ -3580,6 +3625,7 @@
    "checked": true
   },
   "contactChecked": 5,
+  "contactReadOn": "2026-09-08",
   "contactCheckedWeekly": 5
  }
 }
