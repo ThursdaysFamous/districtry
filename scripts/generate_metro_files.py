@@ -61,6 +61,7 @@ touched. Dependencies: stdlib + jsonschema (pinned in scripts/requirements.txt).
 
 import argparse
 import difflib
+import functools
 import json
 import os
 import re
@@ -399,11 +400,35 @@ def render_metro_facts(w):
     return "\n".join(L)
 
 
-def render_metro_header(w):
+def render_metro_header(w, repo_front=False):
+    """The README's title and one-line pitch.
+
+    This reads the BRAND, not metro_name. All six READMEs still said
+    "<Metro> District Explorer" — the product name the fleet retired at the
+    rebrand — because the rebrand reached every surface a reader LOADS and
+    missed the one a reader LANDS ON from GitHub. metro_name is not the fix
+    either: Illinois's is still "Chicago", a true record of where the app
+    started, which is the same trap build_history_page.py documents for its
+    own title.
+
+    Illinois's README target is the REPOSITORY's own front page rather than an
+    instance folder's (INSTANCES gives it docs: "."), and that page introduces
+    six instances two paragraphs down — so it takes the product name, where an
+    instance README names its own instance. A fork carrying no brand block
+    still sees the byte-identical file it always had.
+    """
+    b = w.get("brand")
+    if not b:
+        return "\n".join([
+            "# %s District Explorer" % w["metro_name"],
+            "",
+            "**Click any point in %s — or search an address — and see every civic district that contains it, and who represents you there.**" % w["metro_name"],
+        ])
+    name = (b.get("product_name") or b["app_name"]) if repo_front else b["app_name"]
     return "\n".join([
-        "# %s District Explorer" % w["metro_name"],
+        "# %s" % name,
         "",
-        "**Click any point in %s — or search an address — and see every civic district that contains it, and who represents you there.**" % w["metro_name"],
+        "**%s**" % b["tagline"],
     ])
 
 
@@ -755,7 +780,8 @@ def targets_for(w, inst):
         (_p(scr, "validate_index.py"), "validator-config", render_validator_config),
         (_p(scr, "smoke_test.mjs"), "smoke-config", render_smoke_config),
         (_p(docs, "CLAUDE.md"), "metro-facts", render_metro_facts),
-        (_p(docs, "README.md"), "metro-header", render_metro_header),
+        (_p(docs, "README.md"), "metro-header",
+         functools.partial(render_metro_header, repo_front=(docs == "."))),
     ]
     if "verified_date" in w:
         targets.append((_p(app, "index.html"), "verified-date", render_verified_date))
