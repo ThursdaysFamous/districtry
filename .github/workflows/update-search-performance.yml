@@ -20,13 +20,12 @@ on:
   schedule:
     - cron: "30 13 * * *" # daily, after Search Console's own ~2-day lag settles
   workflow_dispatch: {}
-  # TEMPORARY, scoped to the branch this arrives on. A workflow that has never
-  # run is the exact failure validate_workflow_deps.py was written after -- five
-  # roster refreshes that were dead from the day they shipped and took a manual
-  # dispatch of six never-run workflows to find. This one proves itself before
-  # it is merged; remove this trigger once it has.
-  push:
-    branches: ["claude/gsc-ga-api-probe"]
+  # A branch-scoped `push:` trigger stood here so this workflow could prove
+  # itself BEFORE merging -- the failure validate_workflow_deps.py exists
+  # because of, five roster refreshes dead from the day they shipped. It ran,
+  # it committed real data, and the trigger was removed on merge as its own
+  # comment asked. Do not re-add one: a branch trigger that outlives its branch
+  # is a line nobody can test and nobody deletes.
 
 permissions:
   contents: write
