@@ -1,7 +1,7 @@
 <!-- ==== GENERATED:BEGIN metro-header ==== -->
-# Michigan District Explorer
+# districtry Michigan
 
-**Click any point in Michigan — or search an address — and see every civic district that contains it, and who represents you there.**
+**Every civic district that covers your point in Michigan, and who represents you there.**
 <!-- ==== GENERATED:END metro-header ==== -->
 
 A single-file, dependency-light web app: one `index.html`, Leaflet for the map, no build step, no framework, no server-side code. One instance of the [districtry](https://districtry.com/) fleet, serving at **[districtry.com/mi/](https://districtry.com/mi/)** — a folder of the consolidated repo, following the Wisconsin/Iowa shape rather than a fork.

@@ -1,12 +1,12 @@
 <!-- ==== GENERATED:BEGIN metro-header ==== -->
-# Chicago District Explorer
+# districtry
 
-**Click any point in Chicago — or search an address — and see every civic district that contains it, and who represents you there.**
+**Click the map for every district you're in, and who represents you.**
 <!-- ==== GENERATED:END metro-header ==== -->
 
 Pick a point on the map. The app looks it up against every civic-district boundary you've toggled on — ward, county board, congressional, police, school, and dozens more — and builds a "civic profile" for that exact spot, naming the district and, wherever a verifiable source exists, the person who represents it. No login, no build step, no server: it's a single HTML file with an inline script, deployed as a static site.
 
-![Chicago District Explorer showing a downtown point with the U.S. House, IL State House, IL State Senate and Cook County Board of Review layers on, each card naming the officeholder](docs/screenshot.png)
+![districtry Illinois showing a point in downtown Chicago with the U.S. House, IL State House, IL State Senate and Cook County Board of Review layers on, each card naming the officeholder](docs/screenshot.png)
 
 ## The fleet
 

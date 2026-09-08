@@ -48,6 +48,17 @@ answers on a later run loses the flag in the scraper, so the field disappears
 here by itself — which is exactly what Fond du Lac did on the first run after
 its own archive route shipped.
 
+AND EVERY ROW NOW CARRIES `readOn`, BECAUSE THE ABSENCE OF `asOf` WAS DOING THAT
+JOB AND CANNOT. Until 2026-09-08 a live-read county published no date anywhere:
+its freshness was stated only by the absence of the carried-from-a-document
+marker, which is legible to a reader who has seen a carried county's card and to
+nobody else. The asymmetry became plain when Lafayette's page answered live and
+its rows LOST their date, leaving sixteen supervisors with no indication that
+anyone had read the county that week. `readOn` is the day the source these names
+came from was read, and it means that in all three cases — see read_on_for(),
+which refuses a rung it has no date rule for rather than letting a new one
+inherit the run's own day.
+
 CONTACT RIDES ONLY WHERE ITS COUNTY PUBLISHED IT, which is why these rows are
 not uniform and should not be made uniform. Most counties publish a name and a
 district and nothing else; some publish a county mailbox, an office phone or a
@@ -64,6 +75,7 @@ Usage:
 
 import json
 import os
+import re
 import sys
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -93,6 +105,59 @@ MIN_SEATS = 1517       # 1590 today — every supervisory seat Wisconsin files;
                        # the tolerance is the two largest boards
                        # (Dane 37 + Outagamie 36) going dark in one run, which is
                        # what a floor is for — it is never lowered to fit a result
+
+
+def read_on_for(entry):
+    """The day the source these names came from was read, per county.
+
+    ONE MEANING IN ALL THREE CASES, which is the whole point of the field: the
+    day somebody read the surface these names are on. That is the run's own day
+    for a county read live, the capture's day for a county carried from a dated
+    document, and the CAPTURE's day — never the run's — for a county read
+    through a public archive, where the fetch happened today and the page did
+    not.
+
+    AN UNKNOWN RUNG RAISES RATHER THAN INHERITING TODAY. The scraper's ladder
+    grows a rung every few counties, and the failure this guards against is a
+    new one quietly taking the live branch: a county whose names are months old
+    would then ship a date saying they were read this morning, which is worse
+    than the silence this field replaces. A rung that wants a date has to say
+    which day it earned.
+
+    A COUNTY THAT FAILED THIS RUN CANNOT REACH HERE. The scraper drops it into
+    `failures` and it never enters `counties`; main() then refuses the build by
+    name unless somebody passes --allow-drop. So there is no path by which a
+    stale row inherits a fresh date — but the guard is the drop check above,
+    not this function, and moving it would put two half-guards where one whole
+    one is.
+    """
+    if entry.get("carried_from_document"):
+        # The same value the `asOf` sentence is built from, so the machine-
+        # readable date and the prose can never disagree.
+        return entry["read_on"], None
+    read_from = entry.get("read_from") or ""
+    if read_from == "live":
+        stamp = entry.get("scraped_at")
+        if not stamp:
+            raise RuntimeError(
+                "%s was read live and the scraper recorded no `scraped_at`, so "
+                "there is no day to publish — re-run the scraper rather than "
+                "dating this row from the clock the builder happens to run on"
+                % entry.get("county", "?"))
+        return stamp[:10], None
+    if read_from.startswith("archive:"):
+        # Wayback's own stamp, YYYYMMDDhhmmss. The county's page was served
+        # from a capture taken that day; today is when we fetched the capture,
+        # which is not the same claim and is not what ships.
+        stamp = read_from.split(":", 1)[1]
+        if not re.fullmatch(r"\d{8,}", stamp):
+            raise RuntimeError("%s: unreadable archive stamp %r"
+                               % (entry.get("county", "?"), stamp))
+        return "%s-%s-%s" % (stamp[:4], stamp[4:6], stamp[6:8]), "the Internet Archive"
+    raise RuntimeError(
+        "%s was read by a rung this builder has no date rule for (%r). Add one "
+        "to read_on_for() saying which day that rung earns; do not let it fall "
+        "through to the live branch." % (entry.get("county", "?"), read_from))
 
 
 def shipped_counties():
@@ -144,10 +209,23 @@ def main():
                 "%s: the roster covers districts %s and the map draws %s — one of the "
                 "two publishers has changed; re-read both before shipping"
                 % (entry["county"], sorted(got), sorted(want)))
+        # A POSITIVE DATE ON EVERY ROW, not the absence of one. Until now the
+        # only date in this file was `asOf`, which nine counties carry, so a
+        # live-read county said nothing at all about when anybody read it and
+        # its freshness was legible only to a reader who had seen a CARRIED
+        # county's card and inferred the contrast. Absence is a poor way to
+        # state a fact about 1,408 seats.
+        read_on, read_via = read_on_for(entry)
         for d, member in entry["districts"].items():
             key = "%s%02d" % (fips, int(d))
             row = {"county": entry["county"], "district": int(d),
-                   "sourceUrl": entry["source_url"]}
+                   "readOn": read_on, "sourceUrl": entry["source_url"]}
+            # Set only where the read went somewhere other than the county's
+            # own live page — today that is the Internet Archive, and the card
+            # names it rather than letting an archived capture read as a page
+            # the county served this morning.
+            if read_via:
+                row["readVia"] = read_via
             # Present only for a county the scraper marked as carried from a
             # document rather than read this run. `sourceUrl` is still the
             # page the names came from, so the pair is the whole provenance a
@@ -242,12 +320,19 @@ def main():
         if entry.get("at_large"):
             roster["%s-at-large" % fips] = {
                 "county": entry["county"],
+                # The same read date as this county's district rows: the two
+                # come off one page in one read, and a row that carried no
+                # date while every row beside it did would read as a different
+                # kind of fact rather than as the same one.
+                "readOn": read_on,
                 "sourceUrl": entry["source_url"],
                 "atLarge": [
                     dict([("name", m["name"])] + ([("role", m["role"])] if m.get("role") else []))
                     for m in entry["at_large"]
                 ],
             }
+            if read_via:
+                roster["%s-at-large" % fips]["readVia"] = read_via
 
     if total < MIN_SEATS:
         raise RuntimeError("%d seats resolved, floor is %d" % (total, MIN_SEATS))
@@ -273,6 +358,18 @@ def main():
                   % (entry["county"], read_from.split(":", 1)[1][:8]), file=sys.stderr)
 
     payload = json.dumps(roster, indent=1, sort_keys=True) + "\n"
+    # THE FRESHNESS OF THE WHOLE FILE, IN ONE LINE THE WEEKLY PR'S REVIEWER CAN
+    # READ. A healthy run prints one date carrying most of the counties and the
+    # carried ones' own older days beside it. A rung that starts answering from
+    # somewhere else shows up here as a date or a route nobody expected, which
+    # is the point: read_on_for() refuses an UNKNOWN rung, and this catches a
+    # known rung whose answer moved.
+    per_day = {}
+    for row in roster.values():
+        per_day.setdefault((row["readOn"], row.get("readVia") or ""), set()).add(row["county"])
+    print("  read on: %s" % ", ".join(
+        "%s%s (%d)" % (day, " via %s" % via if via else "", len(cs))
+        for (day, via), cs in sorted(per_day.items())), file=sys.stderr)
     dated = sorted({r["county"] for r in roster.values() if r.get("asOf")})
     print("county-board-members: %d counties, %d seats (%d named, %d vacant%s)%s"
           % (len(counties), total, total - vacant - withheld, vacant,

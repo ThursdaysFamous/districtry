@@ -622,6 +622,27 @@ def name_parts(name):
 # deeds, and Washington's own district attorney — which IS taken below, having
 # been read: `262-335-4311` sits at +435 under the page's own "Contact Me /
 # Contact Us / District Attorney / (View Map) / Phone:" heading.
+#
+# DO NOT REPLACE THIS TABLE WITH "BOUND A SINGLE-OFFICE PAGE BY THE PAGE".
+# The idea is that Washington's sheriff page carries one officer, so the
+# cross-attribution the 350 protects against cannot happen there and the window
+# could run to the end of the document instead. It is a reasonable thing to
+# think and the page refutes it. Measured 2026-09-08 on
+# www.washcowisco.gov/elected_officials/sheriff_s_office: 14,767 characters,
+# TWELVE phone numbers, and TWO accepted hits on the surname. A department page
+# is not one office's worth of text — it lists the department's divisions and
+# their numbers — so an unbounded window would take whichever number happens to
+# come first, and that it is the right one here is a property of this page's
+# layout rather than of single-office pages. The bound stays a measured span
+# per office, read in context before it is widened.
+#
+# THE SPANS BELOW HAVE NEVER RUN. They were committed 2026-09-04 18:54; the last
+# run of update-wi-county-board-roster.yml used a head from 14:54 the same day,
+# four hours earlier, so it executed the pre-fix code. That is why the shipped
+# file still carries the sheriff's phone (correct, from before) and no district
+# attorney phone: the next run is the first to exercise this table, and it
+# should ADD `262-335-4311` rather than propose deleting anything. Both were
+# re-read live on 2026-09-08 and both are found at 450 and missed at 350.
 WINDOW_SPAN = {
     ("Washington", "sheriff"): 450,          # 262-335-4378 at +392
     ("Washington", "districtAttorney"): 450,  # 262-335-4311 at +435
