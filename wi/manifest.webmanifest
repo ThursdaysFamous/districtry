@@ -1,7 +1,7 @@
 {
   "name": "districtry Wisconsin",
   "short_name": "districtry",
-  "description": "Enter an address or ZIP — or tap the map — to find your district: county, city, village or town, school district, Wisconsin Senate and Assembly districts, U.S. House district, and who represents you. Free, no login.",
+  "description": "Tap the map or search a Wisconsin address: county, city or town, school district, state and U.S. House — and who represents you. Free, no login.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

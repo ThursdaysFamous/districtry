@@ -1,7 +1,7 @@
 {
   "name": "districtry New York City",
   "short_name": "districtry",
-  "description": "Enter an address or ZIP — or tap the map — to find your district: City Council district, community board, NYPD precinct, school district, state and congressional districts, and who represents you. Free, no login.",
+  "description": "Tap the map or search a New York City address: Council district, community board, NYPD precinct, school, state — and who represents you. Free, no login.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
