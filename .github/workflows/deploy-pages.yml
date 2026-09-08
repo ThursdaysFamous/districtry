@@ -192,6 +192,13 @@ jobs:
             ia/data/state ia/data/source ia/scripts
             mi/data/state mi/data/source mi/scripts
             fonts/barlow-fontface.css
+            # Search Console counts the traffic report reads when it rebuilds
+            # elsewhere; nothing on this site fetches them. Written as a full
+            # path ON PURPOSE: an rsync --exclude with no slash matches a
+            # BASENAME at any depth, so a bare "data" here would silently
+            # unpublish il/data/app, wi/data/app and every other instance's
+            # runtime files while every guard below still passed.
+            data/search-performance.json
             node_modules package.json package-lock.json
             engine metros.json metro-worksheet.json point-transmission.json
             schema CLAUDE.md

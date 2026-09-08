@@ -11,15 +11,13 @@ name: Verify Google API access
 # creating or rotating the key, or when a Google-sourced job starts failing
 # auth, to tell "the credential is wrong" apart from "the query is wrong".
 #
-# The `push:` trigger below is TEMPORARY and scoped to the branch this arrives
-# on: a workflow_dispatch is only dispatchable once the file is on the default
-# branch, which is a chicken-and-egg problem for verifying the secret BEFORE
-# merging. Remove that trigger when this merges; dispatch is its lasting form.
+# Verified both halves on 2026-09-08 via a temporary branch push trigger, since
+# workflow_dispatch only works once a file is on the default branch — a
+# chicken-and-egg problem for testing a secret BEFORE merging. That trigger is
+# gone; dispatch is this workflow's lasting form.
 
 on:
   workflow_dispatch: {}
-  push:
-    branches: ["claude/gsc-ga-api-probe"]
 
 permissions:
   contents: read

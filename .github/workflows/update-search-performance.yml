@@ -1,0 +1,64 @@
+name: Update search performance
+
+# Daily fetch of Search Console performance into data/search-performance.json,
+# which the traffic report reads when it rebuilds.
+#
+# WHY A WORKFLOW AND NOT PART OF THE REPORT BUILD. The report is assembled
+# outside this repo, from a session with no access to GOOGLE_SA_KEY: an Actions
+# secret is write-only and exists only inside a job. The fetch therefore runs
+# here and commits its result, and the JSON is the handoff between the place
+# holding the credential and the place drawing the chart.
+#
+# IT COMMITS TO main RATHER THAN OPENING A PR, which is the opposite of the
+# roster workflows, and deliberately. Their rule exists because officeholder
+# data is data about real people and gets a human read before it ships. This is
+# aggregate counts about this project's own search results — nobody's name is
+# in it, Google withholds rare queries before we ever see them, and a daily PR
+# for a numbers refresh would be noise that trains the eye to skim.
+
+on:
+  schedule:
+    - cron: "30 13 * * *" # daily, after Search Console's own ~2-day lag settles
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: search-performance
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: pip install -c scripts/requirements.txt requests google-auth
+
+      - name: Fetch Search Console performance
+        env:
+          GOOGLE_SA_KEY: ${{ secrets.GOOGLE_SA_KEY }}
+        run: python3 scripts/gsc_fetch.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- data/search-performance.json; then
+            echo "no change"
+            exit 0
+          fi
+          # Re-cut from main's current tip rather than this run's shallow
+          # checkout: these runs are short, but the roster workflows learned
+          # that a branch which also differs from main in .github/ reads to
+          # GitHub as a workflow edit and is refused for a token without
+          # `workflow` scope.
+          git fetch --depth=1 origin main
+          git checkout -B main FETCH_HEAD
+          python3 scripts/gsc_fetch.py
+          git add data/search-performance.json
+          git commit -m "Update Search Console performance data"
+          git push origin main
