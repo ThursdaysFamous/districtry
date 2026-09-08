@@ -1114,6 +1114,20 @@ detail into `blocker`.
       "wanted": "A trustee list or contact details keyed to each district. The boundaries and the districts' own links are already here."
     },
     {
+      "id": "logan-park-district-boards",
+      "concept": "Park districts",
+      "area": "Logan County",
+      "counties": [
+        "logan"
+      ],
+      "kind": "no-source",
+      "layer": "park-district",
+      "summary": "Logan County's seven park district cards give the district's name and nothing else — no trustee, address, phone or website.",
+      "why": "The boundaries come from a regional planning commission rather than from the county, and that dataset carries only a name. Neither the commission nor the county publishes who runs these districts.",
+      "blocker": "OPENED 2026-09-08 alongside the boundaries. The seven districts ship from the Tri-County Regional Planning Commission's Logan_County_Districts_and_Zoning service, layers 26-32, whose only attributes are FID, District and Shape__Area. There is no officer, address, telephone number or link on any of the seven, and the service's item carries an empty description, one empty tag and an empty accessInformation, so nothing there names a person either. Trustees of Illinois park districts are elected at the consolidated election in April of odd years or appointed, separately from any county office, so a county roster would not carry them even if the county kept one. THE ROUTE IS EACH DISTRICT'S OWN PAGE, one at a time, which is how Boone's five were built (scripts/boone_district_officials_scraper.py); Lincoln is a city park district and likely publishes a board, while several of the other six serve villages under a thousand people and may publish nothing. NOT YET ASKED.",
+      "wanted": "Trustees, an address or a phone for any of Logan's seven park districts — from the district itself or from a county or regional list. The boundaries are already here."
+    },
+    {
       "id": "perry-county-website-blocked",
       "concept": "County commissioners",
       "area": "Perry County",

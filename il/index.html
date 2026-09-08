@@ -12085,6 +12085,9 @@ function initChiExplorer() {
   var loadStarkPark = makeCached(function () {
     return fetchJSONWithRetry("data/app/stark-park-districts.json", {}, 2);
   });
+  var loadLoganPark = makeCached(function () {
+    return fetchJSONWithRetry("data/app/logan-park-districts.json", {}, 2);
+  });
   var IROQUOIS_GIS = "https://services6.arcgis.com/6FZQl5a5SiSFMv8P/arcgis/rest/services/";
   function loadIroquoisLayer(service, layerIndex, outFields, label) {
     var url = IROQUOIS_GIS + service + "/FeatureServer/" + layerIndex +
@@ -23902,6 +23905,19 @@ function initChiExplorer() {
         fields: [
           { name: "name", label: "Park District", keys: ["name"], primary: true },
           { label: "County", value: "Stark County" }
+        ]
+      }),
+      // Logan's seven come from the Tri-County Regional Planning Commission,
+      // not the county: the service does not say what they are, and TCRPC's own
+      // web map groups exactly these seven layer ids under "Park Districts".
+      // scripts/build_logan_park_districts.py gates on that grouping.
+      polygonCountyEntry({
+        key: "logan",
+        coverage: loganCountyCoverage,
+        loader: loadLoganPark,
+        fields: [
+          { name: "name", label: "Park District", keys: ["district"], primary: true },
+          { label: "County", value: "Logan County" }
         ]
       }),
       polygonCountyEntry({

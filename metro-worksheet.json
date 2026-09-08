@@ -2023,6 +2023,12 @@
         "note": "Stark's 6 library districts from the clerk-confirmed My Maps. Two of the six (Kewanee, Williamsfield) are seated in a NEIGHBOURING county and reach across the line, which is why the county drew them — a Stark resident's library is not always a Stark library."
       },
       {
+        "file": "logan-park-districts.json",
+        "min_features": 7,
+        "max_features": 7,
+        "note": "Logan's 7 park districts, published by the Tri-County Regional Planning Commission rather than by the county. The service that carries them says only FID/District/Shape__Area and names no subject at all — its group headers were flattened out on publish — so what makes them park districts is TCRPC's own web map, whose heading over exactly these seven layer ids reads \"Park Districts\". scripts/build_logan_park_districts.py gates on that heading and refuses to write without it. NAME ONLY: no trustee, address or telephone number is published for any of the seven."
+      },
+      {
         "file": "stark-park-districts.json",
         "min_features": 2,
         "max_features": 2,
@@ -3122,7 +3128,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-il-shell-v19",
+    "cache_name": "districtry-il-shell-v20",
     "shell_urls": [
       "./",
       "./sources.html",
