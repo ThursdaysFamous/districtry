@@ -91,6 +91,12 @@ IMPORT_NAME = {
     "pillow": "PIL",
     "python-dateutil": "dateutil",
     "pyyaml": "yaml",
+    # google-auth ships INTO the shared `google` namespace package, so both
+    # `google.auth` and `google.oauth2` resolve to a top-level `google` that no
+    # distribution is named after. Without this the gate reads a correct pip
+    # line as a missing dependency, which is how it first greeted
+    # verify_google_api_access.py.
+    "google-auth": "google",
 }
 
 # Modules the runner always has, or that are vendored/optional by design.
