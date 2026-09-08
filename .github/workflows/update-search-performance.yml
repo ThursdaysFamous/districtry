@@ -20,6 +20,13 @@ on:
   schedule:
     - cron: "30 13 * * *" # daily, after Search Console's own ~2-day lag settles
   workflow_dispatch: {}
+  # TEMPORARY, scoped to the branch this arrives on. A workflow that has never
+  # run is the exact failure validate_workflow_deps.py was written after -- five
+  # roster refreshes that were dead from the day they shipped and took a manual
+  # dispatch of six never-run workflows to find. This one proves itself before
+  # it is merged; remove this trigger once it has.
+  push:
+    branches: ["claude/gsc-ga-api-probe"]
 
 permissions:
   contents: write
@@ -51,14 +58,9 @@ jobs:
             echo "no change"
             exit 0
           fi
-          # Re-cut from main's current tip rather than this run's shallow
-          # checkout: these runs are short, but the roster workflows learned
-          # that a branch which also differs from main in .github/ reads to
-          # GitHub as a workflow edit and is refused for a token without
-          # `workflow` scope.
-          git fetch --depth=1 origin main
-          git checkout -B main FETCH_HEAD
-          python3 scripts/gsc_fetch.py
+          # Commit to the ref this actually ran on. Scheduled runs are on
+          # main; a pre-merge branch run leaves its data on the branch rather
+          # than pushing to main behind review.
           git add data/search-performance.json
           git commit -m "Update Search Console performance data"
-          git push origin main
+          git push origin "HEAD:${GITHUB_REF_NAME}"
