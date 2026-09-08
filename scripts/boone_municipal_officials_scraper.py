@@ -196,6 +196,7 @@ import sys
 import urllib.parse
 
 import requests
+from arcgis_error import raise_for_arcgis_error
 from scraper_common import UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
 
 try:
@@ -866,7 +867,12 @@ def cross_check_wards(municipalities, warnings):
                             params={"where": "1=1", "outFields": "*",
                                     "returnGeometry": "false", "f": "json"})
         resp.raise_for_status()
-        features = resp.json().get("features") or []
+        # An ArcGIS error arrives as HTTP 200 with an `error` member, so without
+        # this the warning below would say the service "answered with no
+        # features" — blaming the county's data for what is often our own
+        # request rate. Raising here puts the service's own words in the note.
+        features = raise_for_arcgis_error(
+            resp.json(), "Boone's county ward service").get("features") or []
         if not features:
             raise RuntimeError("the ward service answered with no features")
     except Exception as exc:  # noqa: BLE001

@@ -57,6 +57,8 @@ try:
 except ImportError:  # pragma: no cover - requests is pinned in requirements.txt
     requests = None
 
+from arcgis_error import ArcGISServiceError, raise_for_arcgis_error
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INDEX_HTML = os.path.join(REPO_ROOT, "il", "index.html")
 APP_DATA_DIR = os.path.join(REPO_ROOT, "il", "data", "app")
@@ -1261,13 +1263,22 @@ def check_endpoints(findings, offline):
     if offline:
         return
     for e in ENDPOINTS:
-        ok, res = http_get(e["url"], want_json=False)
-        if ok:
-            findings.add(OK, e["layer"], "endpoint reachable")
-        else:
+        # Every entry above asks for f=json, and ArcGIS reports its failures IN
+        # THE BODY: HTTP 200 with an `error` member. On the status code alone a
+        # rate-limited or retired layer reads as healthy, which is the one thing
+        # this check exists to catch — so parse the answer and look at it.
+        ok, res = http_get(e["url"], want_json=True)
+        if not ok:
             findings.add(WARN, e["layer"],
                          "endpoint not reachable (%s): %s — the service may have been "
                          "renamed or retired" % (res, e["url"]))
+            continue
+        try:
+            raise_for_arcgis_error(res, e["layer"])
+        except ArcGISServiceError as exc:
+            findings.add(WARN, e["layer"], "%s — %s" % (exc, e["url"]))
+            continue
+        findings.add(OK, e["layer"], "endpoint reachable")
 
 
 # ==== TEMPLATE:BEGIN sources-ward-manifest ====

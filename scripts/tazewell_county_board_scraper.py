@@ -51,6 +51,8 @@ import re
 import sys
 
 import requests
+
+from arcgis_error import raise_for_arcgis_error
 from scraper_common import UA_ROSTER_COMPACT  # noqa: E402  (shared machinery — do not fork)
 
 INDEX_URL = "https://tazewell-il.gov/boardreps/"
@@ -158,8 +160,12 @@ def fetch_gis_districts(session):
         "returnGeometry": "false", "outFields": "districtid,repname1",
     })
     r.raise_for_status()
+    # An ArcGIS error arrives as HTTP 200 with an `error` member, so without
+    # this the WARN path below never fires: the layer would look empty and the
+    # run would report success having filled no district at all.
+    payload = raise_for_arcgis_error(r.json(), "Tazewell's GIS board layer")
     out, seen = {}, set()
-    for feat in r.json().get("features", []):
+    for feat in payload.get("features", []):
         a = feat.get("attributes", {})
         # the GIS annotates one name with its role — "Mike Harris (Vice-Chair)"
         name = re.sub(r"\s*\([^)]*\)\s*$", "", clean(a.get("repname1")))
