@@ -54,13 +54,21 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- data/search-performance.json; then
+          # STAGE FIRST, THEN DIFF THE INDEX. `git diff --quiet -- <path>`
+          # compares the WORKING TREE against HEAD and does not see an
+          # UNTRACKED file, so on the first run -- the one where this file does
+          # not exist yet -- it reported "no change" and committed nothing.
+          # A green run that produced no data, forever, which is exactly the
+          # shape of failure this workflow was run pre-merge to catch. The
+          # roster workflows use the bare form safely only because their data
+          # files were already tracked when they shipped.
+          git add data/search-performance.json
+          if git diff --cached --quiet -- data/search-performance.json; then
             echo "no change"
             exit 0
           fi
           # Commit to the ref this actually ran on. Scheduled runs are on
           # main; a pre-merge branch run leaves its data on the branch rather
           # than pushing to main behind review.
-          git add data/search-performance.json
           git commit -m "Update Search Console performance data"
           git push origin "HEAD:${GITHUB_REF_NAME}"
