@@ -23898,6 +23898,15 @@ function initChiExplorer() {
       // District" claims a fire department. The builder never carries it
       // forward and nothing here reads it — the same posture as Freeport's
       // stale officer column and Peoria's stale REPNAME.
+      polygonCountyEntry({
+        key: "stark",
+        coverage: starkCountyCoverage,
+        loader: loadStarkPark,
+        fields: [
+          { name: "name", label: "Park District", keys: ["name"], primary: true },
+          { label: "County", value: "Stark County" }
+        ]
+      }),
       // Logan's seven come from the Tri-County Regional Planning Commission,
       // not the county: the service does not say what they are, and TCRPC's own
       // web map groups exactly these seven layer ids under "Park Districts".
@@ -23909,15 +23918,6 @@ function initChiExplorer() {
         fields: [
           { name: "name", label: "Park District", keys: ["district"], primary: true },
           { label: "County", value: "Logan County" }
-        ]
-      }),
-      polygonCountyEntry({
-        key: "stark",
-        coverage: starkCountyCoverage,
-        loader: loadStarkPark,
-        fields: [
-          { name: "name", label: "Park District", keys: ["name"], primary: true },
-          { label: "County", value: "Stark County" }
         ]
       }),
       polygonCountyEntry({

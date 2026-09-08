@@ -34,17 +34,40 @@ So THE WEB MAP GROUPING IS A GATE HERE, not a footnote. If TCRPC republishes and
 those ids stop sitting under a park heading, this build fails rather than
 shipping polygons whose subject is once again unknown.
 
-LICENCE
--------
+LICENCE, AND WHERE TO RE-READ IT
+--------------------------------
 Measured, not assumed, because two Illinois counties are blocked on exactly this
-question. The Logan service item is public with an empty licenceInfo, and
-TCRPC's Open Data portal item carries the operative text: a no-warranty and
-no-liability disclaimer that states the Information "is provided as a public
-service" and names its attribution (TCRPC; IDOT; USDOT; US Census Bureau; USGS).
-It contains no redistribution clause, no fee and no signing requirement, which
-is the opposite of the clause that stopped Whiteside and Winnebago. Three TCRPC
-GIS pages were enumerated by LINK rather than by prose -- the rule Whiteside
-taught -- and carry no licence agreement, fee schedule or data request form.
+question. It is also CITED to the right item, which the first version of this
+file got wrong: it pointed a later auditor at the Feature Service item
+(ef8ec7bd, SOURCE_URL below), whose licenseInfo AND accessInformation are both
+EMPTY -- so the item named carried no terms at all -- while quoting an
+attribution line ("TCRPC; IDOT; USDOT; US Census Bureau; USGS") that belongs to
+a THIRD item, TCRPC Open Data (d245c708). Neither is the operative one.
+
+THE OPERATIVE ITEM IS TCRPC's "Logan County Public Map Viewer", 9c2f6ed1
+(TERMS_URL below). Its accessInformation reads "Logan County; Tri-County
+Regional Planning Commission" and its licenseInfo is 1,879 characters of
+no-warranty and no-liability disclaimer stating that the Information "is
+provided as a public service". It carries no redistribution clause, no fee and
+no signing requirement, which is the opposite of the clause that stopped
+Whiteside and Winnebago. Three TCRPC GIS pages were also enumerated by LINK
+rather than by prose -- the rule Whiteside taught -- and carry no licence
+agreement, fee schedule or data request form.
+
+The permissive reading was right and is unchanged. Pointing at the wrong item
+was not a harmless slip: of 100 items published by these two TCRPC accounts, 78
+carry an empty licenseInfo, three read "License Agreement" and one reads
+"Internal Use Only", so an auditor sent to the wrong item can land on a
+restrictive one.
+
+A SECOND WITNESS IS NOT AVAILABLE TO THIS PROJECT, which is worth stating rather
+than leaving to look like nobody considered it. Certified county election
+results would be the independent confirmation this grouping wants. Logan
+County's own site disallows this project BY NAME -- www.logancountyil.gov/
+robots.txt lists `anthropic-ai` and `Claude-Web`, each with `Disallow: /` -- and
+robots.txt is an instruction here, not an obstacle, so the site was not read and
+nothing on it is claimed either way. The web map grouping therefore stands
+alone, which is exactly why the builder gates on it every run.
 
 WHAT SHIPS
 ----------
@@ -105,8 +128,13 @@ MIN_INSIDE_FRACTION = 0.60   # San Jose, the least contained, measured 0.647
 MAX_OVERLAP_SHARE = 1e-4     # 0.01%; measured worst is 0.0002% (see below)
 
 SOURCE_LABEL = "Tri-County Regional Planning Commission"
+# The data. This item carries NO terms — licenseInfo and accessInformation are
+# both empty — so it is the source and never the licence citation.
 SOURCE_URL = ("https://www.arcgis.com/home/item.html?id="
               "ef8ec7bd1d4e465f94b1e9a08a899f25")
+# The terms. TCRPC's "Logan County Public Map Viewer"; see the LICENCE section.
+TERMS_URL = ("https://www.arcgis.com/home/item.html?id="
+             "9c2f6ed1fcd94a61a4cb565c758a785e")
 
 
 def fail(msg):
