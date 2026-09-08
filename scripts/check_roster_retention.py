@@ -209,8 +209,63 @@ MAX_GROUPS_FOR_PER_GROUP = 200
 # more than one person's details changing.
 MIN_GROUP_RECORDS = 3
 
+# ---------------------------------------------------------------------------
+# Files whose TOP-LEVEL KEY IS FINER THAN THEIR SOURCE.
+#
+# The threshold above assumes one top-level key is one source. That holds for
+# every file in the fleet but one: wi/data/app/county-board-members.json is
+# keyed by SEAT — `<5-digit county GEOID><2-digit district>` — so its 1,591
+# keys are 72 counties, and 72 sources landed on the wrong side of a
+# 200-source threshold. Lafayette's sixteen rows losing a field read as 16 of
+# 1,591 pooled, which is the Brown County shape this whole check was written
+# for, one level up.
+#
+# WHY A NAMED WIDTH RATHER THAN A DERIVED ONE. Nothing in the key says where
+# the county ends and the seat begins, and every neighbouring width partitions
+# the file too — into groups that are not counties. Measured on the shipped
+# file, 2026-09-08:
+#
+#     width 3 ->    2 groups,   2 of them mixing more than one county
+#     width 4 ->   15 groups,  14 of them mixing more than one county
+#     width 5 ->   72 groups,   0                             <- counties
+#     width 6 ->  201 groups,   0   (past the 200 threshold: no per-group pass)
+#     width 7 -> 1591 groups,   0   (one per key: collapses nothing)
+#
+# A guessed width groups confidently and wrongly, and the two that would MERGE
+# counties are the dangerous ones — they read as a working fold. So the width
+# is stated, and audit_source_prefixes() re-measures all four properties every
+# run against the shipped tree: 2..200 groups, a real collapse, and no group
+# holding more than one of the identity values named beside the width.
+#
+# MENOMINEE IS THE TRAP, AND IT IS A TRAP FOR THE OTHER READING OF THIS KEY.
+# That county's joint board seats seven, five by ward and two elected
+# countywide, so the file carries `5507801`..`5507805` AND `55078-at-large` —
+# six keys for a five-district board. Grouped by the first five characters they
+# are one county, which is exactly right HERE, because all six rows come off
+# one page in one read and break together. Anyone who reaches for the same
+# `key[:5]` to COUNT DISTRICTS gets six for a board that has five. The grouping
+# is about which source can fail alone; it is not a district index.
+#
+# WHY ONLY ONE ENTRY. Measured across all six instances on 2026-09-08: nine
+# data/app files pool past the 200-source threshold, and this is the only one
+# whose keys are finer than its source. Six are polling-place files keyed by
+# place — one county's single publication, not one source per place — and
+# il/municipal-officials.json (629) and ia/ia-city-contact.json (939) are
+# already one key per source and simply have more than 200, which is the case
+# the threshold was written for. The report names the pooled files on every
+# run, so a new one of this shape is visible rather than waiting to be noticed.
+# ---------------------------------------------------------------------------
+# <file> -> (prefix width, the record field that NAMES the source, why)
+SOURCE_KEY_PREFIX = {
+    "county-board-members.json": (
+        5, "county",
+        "keyed by seat, `<5-digit county GEOID><2-digit district>` plus "
+        "Menominee's `55078-at-large`; the source is the county's own board "
+        "page, which all of a county's rows are read from in one fetch"),
+}
 
-def groups_of(payload):
+
+def groups_of(payload, name=None):
     """{group label -> sub-payload} for a file keyed by county/district, else {}.
 
     THIS IS THE FIX FOR THE CASE THAT PROMPTED THE WHOLE CHECK. Pooled across a
@@ -219,14 +274,156 @@ def groups_of(payload):
     the first version of this script passed it. Ten counties share that file and
     each is a separate source that can break on its own, so each is measured on
     its own.
+
+    `name` is the file's path; a file in SOURCE_KEY_PREFIX has its keys folded
+    to that width first, because there its top-level key is a seat and its
+    source is a county.
     """
     if not isinstance(payload, dict):
+        return {}
+    width = SOURCE_KEY_PREFIX.get(os.path.basename(name or ""), (None,))[0]
+    if width:
+        folded = {}
+        for key, value in payload.items():
+            if isinstance(value, (dict, list)) and records_in(value):
+                folded.setdefault(key[:width], {})[key] = value
+        # Out of band is not silently ignored — audit_source_prefixes() fails
+        # the run for it. Returning {} here only decides what this one
+        # comparison does while that failure is being printed.
+        if folded and len(folded) <= MAX_GROUPS_FOR_PER_GROUP:
+            return folded
         return {}
     groups = {key: value for key, value in payload.items()
               if isinstance(value, (dict, list)) and records_in(value)}
     if not groups or len(groups) > MAX_GROUPS_FOR_PER_GROUP:
         return {}
     return groups
+
+
+def group_name(sub):
+    """What a group calls itself, or None — for a label a reader can act on.
+
+    These files are keyed by FIPS, so `55065` alone sends nobody anywhere. The
+    name sits on the record for a one-key group and one level down for a folded
+    one, and both shapes are read here so the caller does not have to know which
+    it has.
+    """
+    if not isinstance(sub, dict):
+        return None
+    if isinstance(sub.get("county"), str):
+        return sub["county"]
+    for value in sub.values():
+        if isinstance(value, dict) and isinstance(value.get("county"), str):
+            return value["county"]
+    return None
+
+
+def audit_source_prefixes():
+    """Findings for SOURCE_KEY_PREFIX itself: (severity, key, message).
+
+    Same property as audit_accepted(): the table is checked against the SHIPPED
+    TREE on every run, so an entry cannot quietly stop meaning anything. Three
+    ways it can rot, all of them silent without this:
+
+      * the file leaves the fleet, and the entry goes on naming it;
+      * the file is re-keyed one key per source, so the fold collapses nothing
+        and the entry is doing no work while looking as though it is;
+      * the file grows past the threshold even folded, so the fold no longer
+        buys per-group measurement and groups_of() falls back to whole-file —
+        which is the exact silence this entry exists to end.
+
+    Reported per instance, because a sibling can ship a file of the same name.
+    """
+    out = []
+    for base in sorted(SOURCE_KEY_PREFIX):
+        width, identity, why = SOURCE_KEY_PREFIX[base]
+        seen = 0
+        for rel_dir, data_dir in app_data_dirs():
+            full = os.path.join(data_dir, base)
+            if not os.path.isfile(full):
+                continue
+            seen += 1
+            label = "%s/%s" % (rel_dir, base)
+            try:
+                with open(full, encoding="utf-8") as f:
+                    payload = json.load(f)
+            except (ValueError, OSError) as e:
+                out.append(("FAIL", label, "does not read as JSON (%s)." % e))
+                continue
+            keys = [k for k, v in payload.items()
+                    if isinstance(v, (dict, list)) and records_in(v)] \
+                if isinstance(payload, dict) else []
+            folded = sorted({k[:width] for k in keys})
+            if not keys:
+                out.append(("FAIL", label, "has no record-carrying top-level keys, "
+                                           "so folding them to %d characters "
+                                           "groups nothing." % width))
+            elif len(folded) == len(keys):
+                out.append(("FAIL", label, "folds %d keys to %d groups at width %d "
+                                           "— it collapses nothing, so the file is "
+                                           "already one key per source and this "
+                                           "entry does no work. Delete it."
+                            % (len(keys), len(folded), width)))
+            elif len(folded) < 2:
+                out.append(("FAIL", label, "folds %d keys to a single group at "
+                                           "width %d, which separates no sources "
+                                           "at all — that is the whole-file view "
+                                           "under another name." % (len(keys), width)))
+            elif len(folded) > MAX_GROUPS_FOR_PER_GROUP:
+                out.append(("FAIL", label, "folds %d keys to %d groups at width %d, "
+                                           "past the %d-source threshold, so the "
+                                           "fold no longer buys per-group "
+                                           "measurement and the file is back to "
+                                           "being checked whole."
+                            % (len(keys), len(folded), width,
+                               MAX_GROUPS_FOR_PER_GROUP)))
+            else:
+                # THE BRANCH THE OTHER THREE CANNOT SEE. A width that is too
+                # NARROW merges distinct sources and still lands inside the
+                # band: width 4 gives 15 groups, 14 of which hold more than one
+                # county, and every arithmetic check above passes it. A merged
+                # group is worse than no grouping — it pools two publishers and
+                # calls the result a source — so the fold has to prove it split
+                # the file along the same line the records name themselves by.
+                merged = []
+                for pref in folded:
+                    sub = {k: v for k, v in payload.items() if k[:width] == pref}
+                    seen_ids = {rec.get(identity) for rec in records_in(sub)
+                                if isinstance(rec.get(identity), str)}
+                    if len(seen_ids) > 1:
+                        merged.append("%s = %s" % (pref, ", ".join(sorted(seen_ids))))
+                named = sum(1 for pref in folded
+                            if any(isinstance(rec.get(identity), str)
+                                   for rec in records_in(
+                                       {k: v for k, v in payload.items()
+                                        if k[:width] == pref})))
+                if merged:
+                    out.append(("FAIL", label,
+                                "folds %d keys to %d groups at width %d, but %d "
+                                "of those groups hold more than one `%s` — the "
+                                "width is too narrow and is pooling separate "
+                                "sources: %s"
+                                % (len(keys), len(folded), width, len(merged),
+                                   identity, "; ".join(merged[:4]))))
+                elif not named:
+                    out.append(("FAIL", label,
+                                "folds %d keys to %d groups at width %d, but no "
+                                "record carries `%s`, so nothing can check that "
+                                "the fold splits the file along its own sources."
+                                % (len(keys), len(folded), width, identity)))
+                else:
+                    sizes = collections.Counter(k[:width] for k in keys)
+                    out.append(("OK-folded", label,
+                                "%d keys -> %d sources at width %d (%d..%d rows "
+                                "each), each holding exactly one `%s`: %s"
+                                % (len(keys), len(folded), width,
+                                   min(sizes.values()), max(sizes.values()),
+                                   identity, why)))
+        if not seen:
+            out.append(("FAIL", base, "is not shipped by any instance. The entry "
+                                      "has outlived its file — delete it. "
+                                      "Recorded: %s" % why))
+    return out
 
 
 def audit_accepted():
@@ -263,7 +460,7 @@ def audit_accepted():
                         % (label, e)))
             continue
         counts, _ = coverage(payload)
-        groups = groups_of(payload)
+        groups = groups_of(payload, label)
         back = None
         if len(rest) == 1:
             name = rest[0]
@@ -377,7 +574,7 @@ def compare(name, old, new):
     # Per-source pass: one broken county inside a shared file is invisible in
     # the totals above, which is exactly how the first draft of this script
     # waved Brown through.
-    old_groups, new_groups = groups_of(old), groups_of(new)
+    old_groups, new_groups = groups_of(old, name), groups_of(new, name)
     for label, old_sub in sorted(old_groups.items()):
         new_sub = new_groups.get(label)
         if new_sub is None:
@@ -401,7 +598,7 @@ def compare(name, old, new):
             accepted = ACCEPTED_DROPS.get("%s:%s" % (name, label))
             # These files are keyed by FIPS, so the label alone is a number
             # nobody can act on. Where the group names itself, say the name.
-            named = old_sub.get("county") if isinstance(old_sub, dict) else None
+            named = group_name(old_sub)
             label = "%s (%s)" % (label, named) if named else label
             msg = ("%s VANISHED from this file — it had %d record(s) at the base "
                    "and has none now, while the rest of the file is unchanged. A "
@@ -420,10 +617,18 @@ def compare(name, old, new):
                 continue
             accepted = ACCEPTED_DROPS.get("%s:%s:%s" % (name, label, field)) \
                 or ACCEPTED_DROPS.get("%s:%s" % (name, field))
+            # The EXCEPTION KEY is the raw label and the MESSAGE is the named
+            # one: `55065` is what an ACCEPTED_DROPS entry has to be written
+            # against and is not something a reader can act on, so the county
+            # names itself in the sentence and nowhere else. Getting these the
+            # same way round would either send a reader to a number or make the
+            # exception key move when a publisher renames a county.
+            named = group_name(old_sub)
+            shown = "%s (%s)" % (label, named) if named else label
             msg = ("`%s` VANISHED for %s — was on %d of that group's %d records, "
                    "now on none, while the rest of the file is unchanged. That is "
                    "one source changing how it publishes, which the file-wide "
-                   "totals hide." % (field, label, was, sub_old_recs))
+                   "totals hide." % (field, shown, was, sub_old_recs))
             out.append(("OK-accepted" if accepted else "FAIL",
                         msg + (" ACCEPTED: %s" % accepted if accepted else "")))
     return out, old_recs, new_recs
@@ -437,7 +642,7 @@ def main():
     ap.add_argument("--report", metavar="PATH", help="also write a markdown report")
     args = ap.parse_args()
 
-    findings, checked, skipped = [], 0, []
+    findings, checked, skipped, pooled = [], 0, [], []
     scanned_dirs = app_data_dirs()
     for rel_dir, data_dir in scanned_dirs:
       for path in sorted(os.listdir(data_dir)):
@@ -449,8 +654,22 @@ def main():
                 new = json.load(f)
         except (ValueError, OSError):
             continue
-        if not records_in(new):
+        recs = records_in(new)
+        if not recs:
             continue                      # geometry-only file: nothing to retain
+        # WHICH FILES ARE STILL MEASURED WHOLE, collected in the scan that has
+        # already loaded this file rather than in a second pass over data/app
+        # (which cost 3.6s of a 7.3s run when it was written that way). The
+        # threshold's interesting question is not whether 200 is right but
+        # which files sit above it: one whose keys are FINER than its source
+        # belongs in SOURCE_KEY_PREFIX, and nothing surfaces that until
+        # somebody reads a list. This is that list, printed every run.
+        sources = len([k for k, v in new.items()
+                       if isinstance(v, (dict, list)) and records_in(v)]) \
+            if isinstance(new, dict) else 0
+        if (path not in SOURCE_KEY_PREFIX
+                and sources > MAX_GROUPS_FOR_PER_GROUP):
+            pooled.append(("%s/%s" % (rel_dir, path), len(recs), sources))
         old = git_show(args.base, path, rel_dir)
         if old is None:
             skipped.append(path)          # new file, or absent at the base ref
@@ -482,9 +701,14 @@ def main():
     # The exception list is audited against the SHIPPED tree, so an entry keeps
     # printing (and can start failing) long after the diff that recorded it.
     findings += [(sev, key, msg) for sev, key, msg in audit_accepted()]
+    # Same reason, one level up: SOURCE_KEY_PREFIX decides HOW a file is
+    # grouped, and an entry that has stopped grouping anything is a per-source
+    # check silently back to being a per-file one.
+    findings += [(sev, key, msg) for sev, key, msg in audit_source_prefixes()]
 
     fails = [f for f in findings if f[0] == "FAIL"]
     accepted = [f for f in findings if f[0] == "OK-accepted"]
+    folded = [f for f in findings if f[0] == "OK-folded"]
 
     lines = ["# Roster field retention", "",
              "Compared %d roster files against `%s`." % (checked, args.base)]
@@ -502,6 +726,21 @@ def main():
                   "stopped watching — read them now and then, and retire any "
                   "whose reason has passed.", ""]
         lines += ["- **%s** — %s" % (p, m) for _, p, m in accepted] + [""]
+    if folded:
+        lines += ["## Keys folded to their source (%d)" % len(folded), "",
+                  "Files whose top-level key is finer than the source that can "
+                  "break alone, folded per `SOURCE_KEY_PREFIX` and re-measured "
+                  "against the shipped tree on every run.", ""]
+        lines += ["- **%s** — %s" % (p, m) for _, p, m in folded] + [""]
+    if pooled:
+        lines += ["## Measured whole (%d)" % len(pooled), "",
+                  "More than %d sources in one file, so a per-source pass would "
+                  "fire on ordinary churn. Listed every run because a file whose "
+                  "keys are FINER than its source belongs in `SOURCE_KEY_PREFIX` "
+                  "and is invisible here until somebody reads this list."
+                  % MAX_GROUPS_FOR_PER_GROUP, ""]
+        lines += ["- `%s` — %d records across %d top-level keys" % row
+                  for row in pooled] + [""]
     if not fails and not accepted:
         lines += ["Every field still appears on about as many records as before.", ""]
     elif not fails:
@@ -519,8 +758,9 @@ def main():
               "or carry a stale exception" % len(fails), file=sys.stderr)
         sys.exit(1)
     print("check-roster-retention: OK — %d roster files, no field lost its records "
-          "(%d accepted drop(s), each re-checked against the shipped tree)"
-          % (checked, len(accepted)))
+          "(%d accepted drop(s) and %d folded key(s), each re-checked against the "
+          "shipped tree; %d file(s) measured whole)"
+          % (checked, len(accepted), len(folded), len(pooled)))
 
 
 if __name__ == "__main__":
