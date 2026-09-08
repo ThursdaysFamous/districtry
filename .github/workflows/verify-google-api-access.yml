@@ -36,7 +36,11 @@ jobs:
       - name: Probe Search Console and GA4
         env:
           GOOGLE_SA_KEY: ${{ secrets.GOOGLE_SA_KEY }}
-          # Optional. Numeric GA4 property id; absent, the GA4 half reports
-          # that it was not configured rather than failing the job.
-          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID || vars.GA4_PROPERTY_ID }}
+          # The NUMERIC GA4 property id. Committed rather than kept in a
+          # secret because it is not one: it identifies a property and grants
+          # nothing without the service-account credential above, and this
+          # project already ships the matching G-YPJ570LWJB measurement id in
+          # every app's HTML. A secret or variable still overrides it, so a
+          # fork can point this at its own property without editing the file.
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID || vars.GA4_PROPERTY_ID || '545911134' }}
         run: python3 scripts/verify_google_api_access.py
