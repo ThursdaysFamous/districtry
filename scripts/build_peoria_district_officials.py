@@ -22,12 +22,16 @@ one year and the Comptroller's own page says a different year may name a
 different person, so a record without one cannot be rendered honestly and the
 build refuses rather than shipping a name with no date attached.
 
-A DISTRICT WITH NO BOARD OFFICER STILL SHIPS. Alpha Park Library and Pleasure
-Driveway Park file only appointed officers -- a Director and a Manager, a
-Director and a Superintendent -- and that is the district's own answer about
-who it publishes, not a parse failure. The card names them under
-Administration and says nothing about a board, which is what the filing
-supports.
+A DISTRICT WITH NO BOARD OFFICER STILL SHIPS, and THREE of the eighteen are in
+that state: Alpha Park Library files a Director and a Manager, Pleasure
+Driveway Park a Director and a Superintendent, and Hanna City Park District a
+C.E.O. and a Treas./Admin. That is each district's own answer about who it
+publishes, not a parse failure. The card names them under Administration and
+says nothing about a board, which is what the filing supports.
+
+The count is stated here because the treatment is a deliberate choice, and a
+reader auditing which districts got it should not have to re-derive the list.
+The #818 review found this passage naming two of the three.
 """
 
 import argparse
