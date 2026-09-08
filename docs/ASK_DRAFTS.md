@@ -1478,3 +1478,136 @@ the same clause.
 
 **Nothing currently shipped depends on this.** Whiteside's other layers are from
 unaffected sources; the three district files are not in the tree.
+
+---
+
+## Ask 20 — six Wisconsin county clerks: the city wards your filing leaves without a district
+
+> **NOT YET ASKED — DRAFTED 2026-09-08.** Six separate notes, one per county clerk. Four
+> ask the same question about a different city; two ask a different question. They are not
+> a batch: each note names one county's own filing, and one that named the wrong city or
+> the wrong ward would be worse than not writing.
+
+**What this is about.** Wisconsin's aldermanic districts are drawn as groups of wards, and
+the ward file the Legislative Technology Services Bureau publishes is the only statewide
+source for which ward is in which district. Counties file it. Where a county files a ward
+with no district code, nothing published says which district that ward votes in, so the
+map cannot draw that city's districts without either leaving a hole or guessing.
+
+Six municipalities are excluded for this reason (gap `aldermanic-incomplete-filings`).
+Three others left the list on 2026-09-06 when their own cities turned out to publish the
+composition — Kaukauna in a district map, Berlin on its council page, Edgerton in its own
+GIS — so the remaining six have been checked against their cities' sites, their cities' and
+counties' GIS, and the state's polling-place file first. This is what is left.
+
+### Why the county clerk and not the city clerk
+
+The city clerk holds the answer more directly. This project does not write to them, and the
+reason is on the record rather than a preference: the Elections Commission's municipal
+clerk file carries no e-mail address for any of Wisconsin's 1,848 municipal clerks — 0
+records contain `@`, the PDF's own `/Subject` metadata reads
+`WI Municipal Clerks PDF - no emails:`, and the Commission said the omission was "at their
+request". That is a withholding by the people named. `build_wi_municipal_clerks.py` already
+refuses to source those addresses elsewhere in order to display them, and the same refusal
+applies with more force to using one to send mail.
+
+County clerks are a different case: they publish their own addresses through their own
+association directory, and they are also the office that files the ward data. Every address
+below is from `wisconsinvcountyclerks.org` by way of `wi-county-clerks.json`, and all six
+domains resolve with a live MX (checked 2026-09-08).
+
+### Recipients, and which ward each note is about
+
+| County | Clerk | Address | City | Wards filed with no district |
+|---|---|---|---|---|
+| Brown | Patrick W. Moynihan, Jr. | `patrick.moynihan@browncountywi.gov` | Village of Bellevue | 1–11 of 12 |
+| Calumet | Beth Leary | `beth.leary@calumetcounty.gov` | City of Brillion | 5, 6 of 6 |
+| Lafayette | Carla Jacobson | `carla.jacobson@lafayettecountywi.org` | City of Cuba City | 5 of 5 |
+| Pepin | Audrey Bauer | `countyclerk@co.pepin.wi.us` | City of Durand | 3 of 3 |
+| Outagamie | Kelly Gerrits | `Kelly.Gerrits@outagamie.org` | City of New London | 10, 11, 12 of 12 |
+| Ozaukee | Kellie Kretlow | `kkretlow@ozaukeecounty.gov` | City of Port Washington | 9 of 9 |
+
+**Two of these are not the county the city sits in, and that is deliberate.** Cuba City is
+usually listed under Grant County and its clerk is in Grant, but ward 5 — the only uncoded
+one — is on the LAFAYETTE side, so Lafayette files it and Lafayette is asked. New London
+spans Waupaca and Outagamie; all three of its uncoded wards are Outagamie's. Outagamie is
+also the county that files every one of Appleton's 50 wards without a district code, which
+is not raised in the note but is worth knowing before a reply comes back.
+
+### Two questions, not one
+
+**Four cities are one filing detail short.** Cuba City, Durand, New London and Port
+Washington each have a working district plan in the file with one or three wards left out:
+Cuba City's wards 1–4 carry districts 01–04 and ward 5 carries none; Durand's 1–2 carry
+01–02 and ward 3 carries none; Port Washington's 1–8 carry 01–07 and ward 9 carries none;
+New London's 1–9 carry four districts and 10–12 carry none. The wards left out are not
+empty: Cuba City's ward 5 holds 248 people and Durand's ward 3 holds 624, more than either
+of Durand's two coded wards. So this cannot be handled by leaving a small hole.
+
+**Two cities raise a prior question: whether there are districts at all.** Bellevue is a
+village whose board page names no districts, and 11 of its 12 wards carry no code while
+ward 12 carries `03`. Brillion's council page lists a Mayor and At-Large Representatives
+and uses the words "alder", "district" and "ward" nowhere, while the county files districts
+01–04 on its wards 1–4. In both cases the county's filing and the municipality's own page
+disagree about the form of the body. This project does not choose between two publishers,
+so neither city is drawn.
+
+### The note, for the four one-ward cases. This is Port Washington's; the others change the city, the clerk, the ward numbers and the district numbers.
+
+> Subject: One question about Port Washington's ward-to-district filing
+>
+> Dear Clerk Kretlow,
+>
+> I build districtry.com, a free, non-commercial site that shows people which civic
+> districts they live in — wards and aldermanic districts, county board districts, school,
+> fire and library districts, and so on. It carries no advertising and sells nothing.
+>
+> I have one small question about Ozaukee County's ward filing in the state's municipal
+> ward layer.
+>
+> For the City of Port Washington, wards 1 through 8 carry aldermanic district codes
+> (districts 01 through 07, with ward 8 in district 04). Ward 9 carries no district code.
+> Because the site builds each city's aldermanic districts by grouping the wards the state
+> file assigns to them, one ward without a code means Port Washington's districts cannot be
+> drawn at all — so the city currently shows no aldermanic districts, rather than showing
+> eight of nine.
+>
+> Which aldermanic district does ward 9 vote in?
+>
+> If ward 9 is new since the districts were last drawn, or if the answer is that it has not
+> been assigned yet, that is a useful answer too and I will record it as such rather than
+> guessing.
+>
+> Thank you for your time.
+
+### The note, for Bellevue and Brillion.
+
+> Subject: One question about how the Village of Bellevue elects its board
+>
+> Dear Clerk Moynihan,
+>
+> I build districtry.com, a free, non-commercial site that shows people which civic
+> districts they live in. It carries no advertising and sells nothing.
+>
+> I have one question about Brown County's ward filing in the state's municipal ward layer,
+> and it is a question about the Village of Bellevue's form of government rather than about
+> a mistake.
+>
+> Of Bellevue's twelve wards, eleven carry no trustee-district code and ward 12 carries
+> district 03. The Village's own website lists a Village Board without naming districts. I
+> can read those two together in more than one way, and I would rather ask than assume.
+>
+> Does the Village of Bellevue elect its trustees by district, or at large?
+>
+> If at large, the single code on ward 12 is presumably left over from something, and I will
+> record Bellevue as an at-large village and stop treating its filing as incomplete. If by
+> district, I would be grateful to know which wards make up each district.
+>
+> Thank you for your time.
+
+**What a reply changes.** For the four one-ward cases, a district number ships that city's
+aldermanic districts. For Bellevue and Brillion, either answer settles the record: at large
+means the gap entry is wrong to call them incomplete filings and they should be recorded as
+having no districts to draw, and by district means the composition can be built. A clean
+"we don't know" or no reply at all leaves each city where it is, recorded as measured
+rather than unexamined.
