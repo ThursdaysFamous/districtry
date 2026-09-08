@@ -34,6 +34,8 @@ import re
 import sys
 
 import requests
+
+from arcgis_error import raise_for_arcgis_error
 from scraper_common import UA_ROSTER_COMPACT  # noqa: E402  (shared machinery — do not fork)
 
 ROSTER_LAYER = ("https://services.arcgis.com/iPiPjILCMYxPZWTc/arcgis/rest/"
@@ -91,8 +93,12 @@ def fetch_roster_layer(session):
         "outFields": "DISTRICTID,REPNAME1,PARTY1,DISTRICTURL1",
     })
     r.raise_for_status()
+    # HTTP 200 with an `error` member would otherwise read as an empty roster
+    # and trip the "zero rows parsed (service change?)" guard below, which
+    # names the wrong cause for what is often a rate limit that clears.
+    payload = raise_for_arcgis_error(r.json(), "Peoria's roster layer")
     rows = []
-    for feat in r.json().get("features", []):
+    for feat in payload.get("features", []):
         a = feat.get("attributes", {})
         district = clean(str(a.get("DISTRICTID") or ""))
         name = clean(a.get("REPNAME1"))

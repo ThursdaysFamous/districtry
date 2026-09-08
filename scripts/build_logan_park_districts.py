@@ -136,6 +136,7 @@ import sys
 import time
 
 import requests
+from arcgis_error import ArcGISServiceError, raise_for_arcgis_error
 from shapely import make_valid
 from shapely.geometry import mapping, shape
 
@@ -191,13 +192,14 @@ def fail(msg):
 def get_json(url, what, _tries=4):
     """Fetch and parse, treating an ArcGIS error OBJECT as the failure it is.
 
-    ArcGIS returns its errors with HTTP 200 and an `error` member in the body,
-    so raise_for_status sees nothing and the caller reads an error payload as
-    data. That is not hypothetical here: this build once reported "layer 26
-    returned 0 features, expected exactly 1" when the real answer was a 429
-    rate limit -- a message that blames the county's data for our own request
-    rate. The limit is per minute and clears, so a 429 backs off and retries;
-    anything else stops with the service's own words.
+    The detection lives in arcgis_error.raise_for_arcgis_error, which every
+    ArcGIS caller here shares: ArcGIS returns its errors with HTTP 200 and an
+    `error` member in the body, so raise_for_status sees nothing and the caller
+    reads an error payload as data. That is not hypothetical here: this build
+    once reported "layer 26 returned 0 features, expected exactly 1" when the
+    real answer was a 429 rate limit -- a message that blames the county's data
+    for our own request rate. The limit is per minute and clears, so a 429 backs
+    off and retries; anything else stops with the service's own words.
     """
     last = None
     for attempt in range(_tries):
@@ -207,16 +209,15 @@ def get_json(url, what, _tries=4):
             payload = r.json()
         except Exception as exc:                  # noqa: BLE001 - report and stop
             fail("could not fetch %s (%s): %s" % (what, url, exc))
-        err = payload.get("error") if isinstance(payload, dict) else None
-        if not err:
-            return payload
-        code = err.get("code")
-        last = "%s %s %s" % (code, err.get("message", ""),
-                             "; ".join(err.get("details") or []))
-        if code == 429 and attempt < _tries - 1:
-            time.sleep(20 * (attempt + 1))
-            continue
-        break
+        try:
+            return raise_for_arcgis_error(payload, what)
+        except ArcGISServiceError as exc:
+            last = "%s %s %s" % (exc.code, exc.arcgis_message,
+                                 "; ".join(str(d) for d in exc.details))
+            if exc.is_rate_limit and attempt < _tries - 1:
+                time.sleep(20 * (attempt + 1))
+                continue
+            break
     fail("the service refused %s: %s" % (what, last))
 
 
