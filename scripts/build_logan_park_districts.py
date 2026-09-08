@@ -60,9 +60,32 @@ carry an empty licenseInfo, three read "License Agreement" and one reads
 "Internal Use Only", so an auditor sent to the wrong item can land on a
 restrictive one.
 
-A SECOND WITNESS IS AVAILABLE AND IS NOT YET READ, which is an open route rather
-than a closed one. Certified county election results would be the independent
-confirmation this grouping wants, and Logan County publishes them.
+A SECOND WITNESS EXISTS, HAS NOW BEEN READ, AND CONFIRMS THE SET. Logan County's
+own Clerk lists SEVEN park documents in its County Clerk category, one per
+district: Lincoln Park, Mount Pulaski Park, Atlanta Memorial Park, Emden Park,
+San Jose Park, Armington Park and Chestnut/Beason Park. That is the same seven
+this file ships, from the county rather than from TCRPC, so the grouping #796
+read wrong is corroborated by a second publisher. It witnesses the SET and the
+NAMES; it says nothing about the geometry, which still rests on TCRPC alone.
+
+Only the listing was read. The documents themselves sit under /images/, which
+the site's `User-agent: *` group disallows, so they were not fetched. The
+listing page is /index.php, which is allowed.
+
+IT IS RECORDED, NOT GATED, and the reason is worth stating: the listing is a
+Joomla category page whose markup can be rearranged by a site edit that changes
+nothing about the districts, so gating on it would buy fragility for a
+corroboration. The build still gates on the web map grouping alone.
+
+THE ELECTION-RESULTS ROUTE IS SHUT AND WAS MEASURED, not assumed. The county's
+own page links il-logan.pollresults.net, which is a live-results shell carrying
+no election at present -- zero occurrences of "Park" or "Commissioner" in
+232 KB. Its sibling il-logan.accessliberty.com answers 200 and echoes the
+county's name, which on that host proves nothing: a fabricated subdomain
+(il-notacounty-xyzzy) answers 200 at 18,045 bytes and names itself too, Logan's
+page is 18,023 bytes of the same shell, and a county the vendor really carries
+(il-clark) serves a different page at 10,253 bytes. The vendor's own nav lists
+fifteen Illinois counties and Logan is not among them.
 
 AN EARLIER VERSION OF THIS PARAGRAPH SAID THE SITE WAS CLOSED TO US, AND THAT
 WAS A MISREADING OF ITS robots.txt. www.logancountyil.gov does list
@@ -110,6 +133,7 @@ import json
 import os
 import re
 import sys
+import time
 
 import requests
 from shapely import make_valid
@@ -164,13 +188,36 @@ def fail(msg):
     sys.exit("build-logan-park-districts: FAIL — " + msg)
 
 
-def get_json(url, what):
-    try:
-        r = requests.get(url, timeout=60, headers=HEADERS)
-        r.raise_for_status()
-        return r.json()
-    except Exception as exc:                      # noqa: BLE001 - report and stop
-        fail("could not fetch %s (%s): %s" % (what, url, exc))
+def get_json(url, what, _tries=4):
+    """Fetch and parse, treating an ArcGIS error OBJECT as the failure it is.
+
+    ArcGIS returns its errors with HTTP 200 and an `error` member in the body,
+    so raise_for_status sees nothing and the caller reads an error payload as
+    data. That is not hypothetical here: this build once reported "layer 26
+    returned 0 features, expected exactly 1" when the real answer was a 429
+    rate limit -- a message that blames the county's data for our own request
+    rate. The limit is per minute and clears, so a 429 backs off and retries;
+    anything else stops with the service's own words.
+    """
+    last = None
+    for attempt in range(_tries):
+        try:
+            r = requests.get(url, timeout=60, headers=HEADERS)
+            r.raise_for_status()
+            payload = r.json()
+        except Exception as exc:                  # noqa: BLE001 - report and stop
+            fail("could not fetch %s (%s): %s" % (what, url, exc))
+        err = payload.get("error") if isinstance(payload, dict) else None
+        if not err:
+            return payload
+        code = err.get("code")
+        last = "%s %s %s" % (code, err.get("message", ""),
+                             "; ".join(err.get("details") or []))
+        if code == 429 and attempt < _tries - 1:
+            time.sleep(20 * (attempt + 1))
+            continue
+        break
+    fail("the service refused %s: %s" % (what, last))
 
 
 def read_group_headings():
