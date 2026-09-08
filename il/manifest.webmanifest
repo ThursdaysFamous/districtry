@@ -1,7 +1,7 @@
 {
   "name": "districtry Illinois",
   "short_name": "districtry",
-  "description": "Enter an address or ZIP — or tap the map — to find your district: ward, police district, elected school board, county board, congressional and Illinois legislative districts, and who represents you. Free, no login.",
+  "description": "Tap the map or search an Illinois address: ward, police district, school board, county, state and U.S. House — and who represents you. Free, no login.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

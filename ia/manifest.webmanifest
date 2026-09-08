@@ -1,7 +1,7 @@
 {
   "name": "districtry Iowa",
   "short_name": "districtry",
-  "description": "Click a point in Iowa — or search an address — and see your U.S. House, Iowa Senate, Iowa House and county, and who represents you.",
+  "description": "Tap the map or search an Iowa address: county, Iowa Senate, Iowa House and U.S. House districts — and who represents you. Free, no login.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

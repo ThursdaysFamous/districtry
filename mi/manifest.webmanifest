@@ -1,7 +1,7 @@
 {
   "name": "districtry Michigan",
   "short_name": "districtry",
-  "description": "Click a point in Michigan — or search an address — and see your U.S. House, Michigan Senate, Michigan House and county, and who represents you.",
+  "description": "Tap the map or search a Michigan address: county, Michigan Senate and House, U.S. House district — and who represents you. Free, no login.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
