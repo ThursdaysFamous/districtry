@@ -67,9 +67,16 @@ confirmation this grouping wants, and Logan County publishes them.
 AN EARLIER VERSION OF THIS PARAGRAPH SAID THE SITE WAS CLOSED TO US, AND THAT
 WAS A MISREADING OF ITS robots.txt. www.logancountyil.gov does list
 `anthropic-ai` and `Claude-Web` with `Disallow: /`, but those are ANTHROPIC's
-own crawler tokens; this project's client is `districtry/1.0`, which matches the
-site's `User-agent: *` group -- narrow Joomla paths only (/administrator/,
-/cache/, /templates/ and the like), with the content allowed. A robots group
+own crawler tokens and nothing in this repository sends either. This file sends
+`districtry/1.0 (+https://districtry.com/)` (HEADERS, below), so the group that
+binds it is the site's `User-agent: *` -- narrow Joomla paths only
+(/administrator/, /cache/, /templates/ and the like), with the content allowed.
+The repository has no single client string: other scripts send tokens such as
+`districtry-link-check/1.0` and `DistrictExplorer-roster-bot/1.0`, and until
+this change THIS builder sent the requests default. None of them is an
+Anthropic crawler token, so the reading holds for all of them; the token is
+pinned here so a later reader can check the claim against the robots group
+instead of taking it on trust. A robots group
 binds the agent whose token it names, and reading someone else's product token
 as though it covered this scraper withholds data the site is in fact serving.
 The operator settled this on 2026-09-08: the Anthropic tokens govern live
@@ -134,6 +141,11 @@ EXPECTED = {
 # else -- including no heading at all -- fails.
 GROUP_WORD = "park"
 
+# Identify the client. The robots reasoning in the LICENCE section is about
+# WHICH group binds this fetcher, so the token has to be one this file really
+# sends rather than one a docstring asserts.
+HEADERS = {"User-Agent": "districtry/1.0 (+https://districtry.com/)"}
+
 COORD_PRECISION = 6      # ~0.1 m
 MIN_INSIDE_FRACTION = 0.60   # San Jose, the least contained, measured 0.647
 MAX_OVERLAP_SHARE = 1e-4     # 0.01%; measured worst is 0.0002% (see below)
@@ -154,7 +166,7 @@ def fail(msg):
 
 def get_json(url, what):
     try:
-        r = requests.get(url, timeout=60)
+        r = requests.get(url, timeout=60, headers=HEADERS)
         r.raise_for_status()
         return r.json()
     except Exception as exc:                      # noqa: BLE001 - report and stop
