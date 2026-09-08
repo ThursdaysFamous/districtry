@@ -60,14 +60,25 @@ carry an empty licenseInfo, three read "License Agreement" and one reads
 "Internal Use Only", so an auditor sent to the wrong item can land on a
 restrictive one.
 
-A SECOND WITNESS IS NOT AVAILABLE TO THIS PROJECT, which is worth stating rather
-than leaving to look like nobody considered it. Certified county election
-results would be the independent confirmation this grouping wants. Logan
-County's own site disallows this project BY NAME -- www.logancountyil.gov/
-robots.txt lists `anthropic-ai` and `Claude-Web`, each with `Disallow: /` -- and
-robots.txt is an instruction here, not an obstacle, so the site was not read and
-nothing on it is claimed either way. The web map grouping therefore stands
-alone, which is exactly why the builder gates on it every run.
+A SECOND WITNESS IS AVAILABLE AND IS NOT YET READ, which is an open route rather
+than a closed one. Certified county election results would be the independent
+confirmation this grouping wants, and Logan County publishes them.
+
+AN EARLIER VERSION OF THIS PARAGRAPH SAID THE SITE WAS CLOSED TO US, AND THAT
+WAS A MISREADING OF ITS robots.txt. www.logancountyil.gov does list
+`anthropic-ai` and `Claude-Web` with `Disallow: /`, but those are ANTHROPIC's
+own crawler tokens; this project's client is `districtry/1.0`, which matches the
+site's `User-agent: *` group -- narrow Joomla paths only (/administrator/,
+/cache/, /templates/ and the like), with the content allowed. A robots group
+binds the agent whose token it names, and reading someone else's product token
+as though it covered this scraper withholds data the site is in fact serving.
+The operator settled this on 2026-09-08: the Anthropic tokens govern live
+lookups and training collection, not the retrieval script districtry runs. Where
+a `*` group DOES disallow -- Rochester Hills and Durand both do -- it binds this
+project exactly as before, and those stay shut.
+
+Until that route is read, the web map grouping stands alone, which is exactly
+why the builder gates on it every run.
 
 WHAT SHIPS
 ----------
