@@ -1,0 +1,388 @@
+{
+  "districts": {
+    "AKRON-PRINCEVLLE FPD (Dist # 070)": {
+      "board": [
+        {
+          "name": "Greg Down",
+          "role": "President"
+        },
+        {
+          "name": "Ryan Williams",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "072/010/06",
+      "filedFor": "2025",
+      "kind": "fire",
+      "office": {
+        "address": "240 E Main St",
+        "city": "Princeville IL 61559",
+        "email": "Gdown@apfd.com",
+        "phone": "(309) 385-4913"
+      }
+    },
+    "ALPHA PARK LBRY DIST (Dist # 062)": {
+      "comptrollerCode": "072/010/10",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Amy Harris",
+          "role": "Director"
+        },
+        {
+          "name": "Aliesha Sullivan",
+          "role": "Manager"
+        }
+      ],
+      "kind": "library",
+      "office": {
+        "address": "3527 S Airport Rd",
+        "city": "Bartonville IL 61607",
+        "email": "aharris@alphapark.org",
+        "phone": "(309) 697-3822"
+      }
+    },
+    "BRIMFIELD FPD (Dist # 084)": {
+      "board": [
+        {
+          "name": "Ralph Peters",
+          "role": "President"
+        },
+        {
+          "name": "Jerry Weaver",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "072/020/06",
+      "filedFor": "2025",
+      "kind": "fire",
+      "office": {
+        "address": "9100 Princeville Jubilee",
+        "city": "Brimfield IL 61517",
+        "email": "jerry@jweaverinc.com",
+        "phone": "(309) 696-7521"
+      }
+    },
+    "BRIMFLD PUB LIBRARY (Dist # 166)": {
+      "board": [
+        {
+          "name": "Holly More",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "072/050/10",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Charles Barton III",
+          "role": "Treas./Admin."
+        }
+      ],
+      "kind": "library",
+      "office": {
+        "address": "111 S. Galena Ave, PO Box 207",
+        "city": "Brimfield IL 61517",
+        "email": "khahn@brimfieldlibrary.org",
+        "phone": "(309) 446-9575"
+      }
+    },
+    "CHILLICOTHE COMM FPD (Dist # 115)": {
+      "board": [
+        {
+          "name": "Kevin Peterson",
+          "role": "President"
+        },
+        {
+          "name": "John Sprinkle",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "072/115/06",
+      "filedFor": "2025",
+      "kind": "fire",
+      "office": {
+        "address": "217 W Chestnut St.",
+        "city": "Chillicothe IL 61523",
+        "email": "jsprinkle@chillifd.com",
+        "phone": "(309) 274-3567"
+      }
+    },
+    "CHILLICOTHE PARK (Dist # 102)": {
+      "board": [
+        {
+          "name": "Steve Maurer",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "072/010/12",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Jodi Maybanks",
+          "role": "Accountant"
+        }
+      ],
+      "kind": "park",
+      "office": {
+        "address": "100 Park Boulevard",
+        "city": "Chillicothe IL 61523",
+        "email": "yatesk@chillicotheparkdistrict.org",
+        "phone": "(309) 274-3409"
+      }
+    },
+    "CHILLICOTHE PUB LIBR (Dist # 900)": {
+      "board": [
+        {
+          "name": "Debbie Cody",
+          "role": "President"
+        },
+        {
+          "name": "Tom Razo",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "072/040/10",
+      "filedFor": "2025",
+      "kind": "library",
+      "office": {
+        "address": "430 N Bradley Ave",
+        "city": "Chillicothe IL 61523",
+        "email": "ajackson@chillicothepubliclibrary.org",
+        "phone": "(309) 274-3000"
+      }
+    },
+    "DUNLAP FPD (Dist # 148)": {
+      "board": [
+        {
+          "name": "Ann Joyce",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "072/030/06",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Jim Winters",
+          "role": "Treas./Admin."
+        }
+      ],
+      "kind": "fire",
+      "office": {
+        "address": "PO Box 69",
+        "city": "Dunlap IL 61525",
+        "email": "ajoyce94@hotmail.com",
+        "phone": "(309) 243-5923"
+      }
+    },
+    "DUNLAP LBRY DIST (Dist # 150)": {
+      "board": [
+        {
+          "name": "James Emanuels",
+          "role": "President"
+        },
+        {
+          "name": "Ron Holohan",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "072/020/10",
+      "filedFor": "2025",
+      "kind": "library",
+      "office": {
+        "address": "302 S First St",
+        "city": "Dunlap IL 61525",
+        "email": "director@dunlaplibrary.org",
+        "phone": "(309) 243-5716"
+      }
+    },
+    "ELMWOOD FPD (Dist # 165)": {
+      "board": [
+        {
+          "name": "DAVID WAGNER",
+          "role": "President"
+        },
+        {
+          "name": "JAY MCKINTY",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "072/040/06",
+      "filedFor": "2025",
+      "kind": "fire",
+      "office": {
+        "address": "3603 N WILEY RD",
+        "city": "ELMWOOD IL 61529",
+        "email": "DWAGNER@AGLANDFS.COM",
+        "phone": "(309) 231-3774"
+      }
+    },
+    "HANNA CITY PARK DISTRICT (Dist # 461)": {
+      "comptrollerCode": "072/035/12",
+      "filedFor": "2024",
+      "heads": [
+        {
+          "name": "Trace Evans",
+          "role": "C.E.O."
+        },
+        {
+          "name": "Kathryn Zaborac Handing",
+          "role": "Treas./Admin."
+        }
+      ],
+      "kind": "park",
+      "office": {
+        "address": "511 N Main Street",
+        "city": "Hanna City IL 61536",
+        "email": "kzaborachcpd@gmail.com",
+        "phone": "(309) 565-7102"
+      }
+    },
+    "HOLLIS TWP PKD (Dist # 206)": {
+      "board": [
+        {
+          "name": "Justin Roberts",
+          "role": "President"
+        },
+        {
+          "name": "Anita Zeine",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "072/020/12",
+      "filedFor": "2025",
+      "kind": "park",
+      "office": {
+        "address": "9424 S. Mapleton Rd",
+        "city": "Mapleton IL 61547",
+        "email": "jrobertson@hollispark.org",
+        "phone": "(309) 697-2944"
+      }
+    },
+    "L M EVANS LBRY DIST (Dist # 915)": {
+      "board": [
+        {
+          "name": "Gayle Johnson-Brackett",
+          "role": "President"
+        },
+        {
+          "name": "Diane Smith",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "072/025/10",
+      "filedFor": "2025",
+      "kind": "library",
+      "office": {
+        "address": "207 N Walnut St/PO Box 349",
+        "city": "Princeville IL 61559",
+        "email": "bethd@lmelibrary.org",
+        "phone": "(309) 385-4540"
+      }
+    },
+    "LIMESTONE FPD (Dist # 256)": {
+      "board": [
+        {
+          "name": "Keith Steele",
+          "role": "President"
+        },
+        {
+          "name": "Barry Campen",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "072/050/06",
+      "filedFor": "2025",
+      "kind": "fire",
+      "office": {
+        "address": "7800 W Plank Rd",
+        "city": "Peoria IL 61604",
+        "email": "barry.campen@limestonefire.net",
+        "phone": "(309) 697-4312"
+      }
+    },
+    "LOGAN-TRIVOLI FPD (Dist # 272)": {
+      "board": [
+        {
+          "name": "Wendy Conner",
+          "role": "President"
+        },
+        {
+          "name": "Stuart Tiezzi",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "072/060/06",
+      "filedFor": "2025",
+      "kind": "fire",
+      "office": {
+        "address": "212 N. Main St., P.O. Box 110",
+        "city": "Hanna City IL 61536",
+        "email": "Logantrivolifire@gmail.com",
+        "phone": "(309) 565-7552"
+      }
+    },
+    "PLEASURE DRIVEWY PKD (Dist # 310)": {
+      "comptrollerCode": "072/030/12",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Emily Cahill",
+          "role": "Director"
+        },
+        {
+          "name": "Karrie Ross",
+          "role": "Superintendent"
+        }
+      ],
+      "kind": "park",
+      "office": {
+        "address": "1125 W. Lake Ave",
+        "city": "Peoria IL 61614",
+        "email": "ldu@peoriaparks.org",
+        "phone": "(309) 681-2809"
+      }
+    },
+    "TIMBER-HOLLIS FPD (Dist # 386)": {
+      "board": [
+        {
+          "name": "Donlad Rudd",
+          "role": "President"
+        },
+        {
+          "name": "Gary Williams",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "072/090/06",
+      "filedFor": "2025",
+      "kind": "fire",
+      "office": {
+        "address": "P.O. Box 143",
+        "city": "Glasford IL 61533",
+        "email": "dbsbz1@yahoo.com",
+        "phone": "(309) 339-7055"
+      }
+    },
+    "WEST PEORIA FPD (Dist # 508)": {
+      "board": [
+        {
+          "name": "Mark Stecher",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "072/110/06",
+      "filedFor": "2025",
+      "kind": "fire",
+      "office": {
+        "address": "406 N Waverly",
+        "city": "West Peoria IL 61604",
+        "email": "mstecher@scbas.com",
+        "phone": "(309) 279-6300"
+      }
+    }
+  },
+  "generated": "2026-09-08T21:00:22Z",
+  "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
+  "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
+  "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
+}

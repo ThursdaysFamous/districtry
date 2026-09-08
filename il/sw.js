@@ -439,6 +439,7 @@ const ROSTER_URLS = [
   "./data/app/clay-county-board-members.json",
   "./data/app/st-clair-precinct-polling.json",
   "./data/app/boone-district-officials.json",
+  "./data/app/peoria-district-officials.json",
   "./data/app/il-county-board-offices.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
