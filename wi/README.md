@@ -1,7 +1,7 @@
 <!-- ==== GENERATED:BEGIN metro-header ==== -->
-# Wisconsin District Explorer
+# districtry Wisconsin
 
-**Click any point in Wisconsin — or search an address — and see every civic district that contains it, and who represents you there.**
+**Click the map for every district you're in, and who represents you.**
 <!-- ==== GENERATED:END metro-header ==== -->
 
 A single-file, dependency-light web app: one `index.html`, Leaflet for the map, no build step, no framework, no server-side code. One instance of the [districtry](https://districtry.com/) fleet, serving at **[districtry.com/wi/](https://districtry.com/wi/)** — the first state to expand **in place** as a folder of the consolidated repo rather than as a fork.
