@@ -1,0 +1,42 @@
+name: Verify Google API access
+
+# MANUAL diagnostic: proves the GOOGLE_SA_KEY secret can actually read Search
+# Console (and GA4, when GA4_PROPERTY_ID is set), and reports what it can see.
+#
+# It lives here rather than in a developer sandbox because a GitHub Actions
+# secret is write-only — it cannot be read back through the API and does not
+# exist locally, so the only place to test one is a job that has it mounted.
+#
+# It writes nothing, opens no PR and touches no data file. Run it after
+# creating or rotating the key, or when a Google-sourced job starts failing
+# auth, to tell "the credential is wrong" apart from "the query is wrong".
+#
+# The `push:` trigger below is TEMPORARY and scoped to the branch this arrives
+# on: a workflow_dispatch is only dispatchable once the file is on the default
+# branch, which is a chicken-and-egg problem for verifying the secret BEFORE
+# merging. Remove that trigger when this merges; dispatch is its lasting form.
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: ["claude/gsc-ga-api-probe"]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: pip install -c scripts/requirements.txt requests google-auth
+      - name: Probe Search Console and GA4
+        env:
+          GOOGLE_SA_KEY: ${{ secrets.GOOGLE_SA_KEY }}
+          # Optional. Numeric GA4 property id; absent, the GA4 half reports
+          # that it was not configured rather than failing the job.
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID || vars.GA4_PROPERTY_ID }}
+        run: python3 scripts/verify_google_api_access.py

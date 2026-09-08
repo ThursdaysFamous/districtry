@@ -116,3 +116,10 @@ pymupdf==1.28.2
 # vs. referenced strings and cell-type coercion — the same reasoning that put
 # pyogrio and pymupdf on this list rather than a bespoke parser.
 openpyxl==3.1.5
+
+# Service-account auth for the Google APIs the traffic reporting reads:
+# Search Console's Search Analytics API and the GA4 Data API. Only the OAuth
+# half is needed — both endpoints are plain JSON over HTTPS and are called with
+# requests, so the heavyweight google-api-python-client stack is not installed.
+# Used by scripts/verify_google_api_access.py (.github/workflows/verify-google-api-access.yml).
+google-auth==2.41.1
