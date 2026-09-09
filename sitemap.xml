@@ -60,6 +60,12 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://districtry.com/traffic.html</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/il/faq.html</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
