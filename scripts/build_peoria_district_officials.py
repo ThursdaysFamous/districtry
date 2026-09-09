@@ -7,9 +7,13 @@ does the refusing: a run that lost coverage leaves the shipped file alone
 rather than replacing it with a thinner one.
 
 WHAT THE FLOORS GUARD, and why each is under its measured value. On
-2026-09-08 the scraper read 18 of Peoria's 25 fire, park and library
-districts, with 26 board officers, 9 appointed officers and an office address
-on every one. The seven it does not read are explained rather than missing --
+2026-09-09 the scraper read 18 of Peoria's 25 fire, park and library
+districts, with 28 board officers, 9 appointed officers and an office address
+on every one. (26 board officers until slots A and D began to be read for a
+board-titled person the unit had not already named -- see
+comptroller_afr.BOARD_ONLY_SLOTS. That added Brimfield Public Library's George
+Stenger, Secretary, and Timber-Hollis FPD's Shelly Bergland, V-President, and
+moved nobody between the two lists.) The seven it does not read are explained rather than missing --
 Farmington and Williamsfield file under their home counties because a
 cross-county district files once, Peoria Public Library and Peoria Heights are
 municipal libraries filing inside their city and village, and Richwoods
@@ -43,7 +47,7 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app",
                         "peoria-district-officials.json")
 
-# Measured 2026-09-08: 18 districts / 26 board / 9 appointed / 18 with an
+# Measured 2026-09-09: 18 districts / 28 board / 9 appointed / 18 with an
 # office. Each floor sits under its measured value; see the module docstring.
 MIN_DISTRICTS = 15
 MIN_BOARD = 20

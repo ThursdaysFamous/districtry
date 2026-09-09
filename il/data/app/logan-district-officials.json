@@ -132,6 +132,10 @@
         {
           "name": "Leah Williams",
           "role": "Treasurer"
+        },
+        {
+          "name": "Alex Hamilton",
+          "role": "Trustee"
         }
       ],
       "comptrollerCode": "060/020/12",
@@ -146,7 +150,7 @@
       }
     }
   },
-  "generated": "2026-09-09T00:05:57Z",
+  "generated": "2026-09-09T16:40:43Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
