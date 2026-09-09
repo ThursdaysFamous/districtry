@@ -862,6 +862,7 @@ footer .foot-links { margin-top: 12px; }
          <a href="sponsorship.html">sponsorship policy</a> says so in detail.</p>
       <p class="foot-links"><a href="privacy.html">Privacy</a> ·
          <a href="sponsorship.html">Sponsorship</a> ·
+         <a href="traffic.html">Traffic</a> ·
          <a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a> ·
          <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">Source on GitHub</a></p>
     </footer>
