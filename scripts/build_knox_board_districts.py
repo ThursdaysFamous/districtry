@@ -55,6 +55,32 @@ three features keyed DISTRICT 1/2/3). They are taken as published. District 4 is
 then the union of its townships MINUS that city area, because the city sits
 inside Galesburg Township and its neighbours.
 
+CORROBORATED 2026-09-08 BY THE COUNTY'S OWN PRECINCT LAYER, which is worth
+recording because until then this build rested on a map read plus arithmetic
+over certified returns, with no county-authored geometry behind it. GIS
+Coordinator Taiwo Agbaje sent Precincts_20200717.zip by e-mail in reply to a
+request that named districtry -- a 2020-vintage ESRI precinct layer in NAD83 /
+Illinois West (ftUS) carrying a District column. Overlaid on what this builder
+writes, the two agree at IoU 0.9921, 0.9881, 0.9936 and 0.9999 for districts 1,
+3, 4 and 5. District 2 differs by 4.12 km2 and that difference is explained
+rather than unexplained: 95% of it is the city of Galesburg's corporate limits
+reaching into Galesburg Township and Henderson-2, ground the 2020 precinct
+layer still assigns to county precincts.
+
+THE FILE IS RETAINED OFFLINE AND NOTHING DERIVED FROM IT SHIPS. It is the 2020
+fabric -- its 31 county precincts match ISBE's certified precinct-level results
+for the November 2020 general one for one by name -- and three precincts have
+since gone (Henderson 2 to 1, Indian Point 2 to 1, and Knox Seven into
+neighbours nothing names). See the knox-precinct-geometry gap record.
+
+THE TWO HARDCODED TABLES BELOW ARE NOW INDEPENDENTLY CONFIRMED, and were not
+when they were written. PRECINCTS_PER_TOWNSHIP and CERTIFIED_PRECINCT_COUNTS
+were transcribed by hand from the county's map and its returns, and nothing in
+this repo re-checked them. ISBE's certified returns for the June 2022 primary
+and the 2026 general primary both carry six Knox Township precincts and four
+Cedar precincts, which is what these tables assert. A hand-entered constant
+that no gate re-measures is worth naming as such even when it turns out right.
+
 Usage:
     python3 scripts/build_knox_board_districts.py           # write the data file
     python3 scripts/build_knox_board_districts.py --check   # re-verify, write nothing
