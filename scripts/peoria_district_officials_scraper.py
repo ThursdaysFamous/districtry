@@ -61,19 +61,16 @@ layer carries only inside an overlap row.
 
 import argparse
 import datetime
-import html
 import json
 import re
 import sys
 import time
 
 import requests
-from scraper_common import UA_ROSTER_COMPACT  # noqa: E402  (shared machinery — do not fork)
+from comptroller_afr import (  # noqa: E402  (shared machinery — do not fork)
+    PACE, SEARCH_FORM, TIMEOUT, WAREHOUSE, contact_block, enumerate_county,
+    new_session)
 
-WAREHOUSE = ("https://illinoiscomptroller.gov/constituent-services/"
-             "local-government/local-government-warehouse/")
-SEARCH_FORM = WAREHOUSE + "searchform/?SearchType=AFRSearch"
-RESULTS = WAREHOUSE + "processsearchresults/"
 
 PEORIA_GIS = "https://services.arcgis.com/iPiPjILCMYxPZWTc/arcgis/rest/services/"
 LAYERS = [("fire", "Fire_Protection_Districts", ("Fire Protection District",)),
@@ -81,19 +78,6 @@ LAYERS = [("fire", "Fire_Protection_Districts", ("Fire Protection District",)),
           ("library", "Library_Districts",
            ("Public Library District", "Library District"))]
 
-HEADERS = {"User-Agent": UA_ROSTER_COMPACT}
-TIMEOUT = 45
-PACE = 1.0                       # a state government site, one request a second
-
-# An ELECTED board office. A district's trustees elect these from among
-# themselves, so a person filed under one of them holds a board seat.
-BOARD_TITLES = {"president", "vice president", "vice-president", "secretary",
-                "treasurer", "trustee", "chairman", "chair", "chairperson",
-                "commissioner", "board president", "board chairman"}
-# An APPOINTED post. Shipped, and never as a board seat.
-HEAD_TITLES = {"fire chief", "chief", "director", "executive director",
-               "administrator", "village administrator", "city administrator",
-               "librarian", "head librarian", "superintendent", "manager"}
 
 # The county's own abbreviations, expanded so a unit name can be matched. The
 # SEARCH matches a unit's NAME FIELD ONLY -- "Dunlap Fire Protection District"
@@ -114,25 +98,11 @@ TYPE_WORDS = re.compile(
     r"\b(Fire Protection District|Public Library District|Library District|"
     r"Park District|Public Library|Fire District|District|Library|Township)\b", re.I)
 
-SLOTS = 4                        # A Contact Person, B CEO, C CFO, D Purchasing Agent
-# Only B and C are read: the form captions them "Your name will be listed with
-# this responsibility on our website", which is the unit publishing an officer.
-PUBLISHED_SLOTS = (1, 2)
-CONTACT_SLOT = 0                 # the unit's own office address and telephone
-
-RESULT_RE = re.compile(
-    r'href="[^"]*[Cc]ode=([0-9/]+)"[^>]*>\s*([^<]{3,140}?)\s*</a>', re.S)
 
 
 def fail(msg):
     sys.exit("peoria-district-officials: FATAL — " + msg)
 
-
-def text_of(markup):
-    body = re.sub(r"<(script|style|nav|footer|header)[^>]*>.*?</\1>", " ",
-                  markup, flags=re.S)
-    lines = html.unescape(re.sub(r"<[^>]+>", "\n", body)).split("\n")
-    return [l.strip() for l in lines if l.strip()]
 
 
 def gis_districts(session):
@@ -166,139 +136,6 @@ def query_for(gis_name):
     return " ".join(TYPE_WORDS.sub(" ", n).split()).title()
 
 
-def enumerate_county(session, county):
-    """[(code, label)] for every unit the Warehouse files under this county.
-
-    ONE search on the county name returns the whole county -- 96 typed units
-    for Peoria -- because the search matches the county as well as the unit
-    name. Looking units up one at a time would be 25 requests for the same
-    answer.
-    """
-    r = session.post(RESULTS, timeout=TIMEOUT,
-                     data={"displayMode": "GetLandingPage",
-                           "SearchType": "AFRSearch", "GovUnit": county})
-    r.raise_for_status()
-    hits = [(c, html.unescape(re.sub(r"\s+", " ", t)).strip())
-            for c, t in RESULT_RE.findall(r.text)]
-    return [(c, t) for c, t in hits if ("in %s County" % county) in t]
-
-
-def latest_fiscal_year(session, code):
-    """The fiscal year this unit last filed for, off its landing page.
-
-    THE YEAR IS ASKED FOR, NEVER ASSUMED. An empty CFY returns a page with no
-    contact block at all -- which the first draft of this file sent, so every
-    unit parsed as unfiled and the whole run failed -- and a hardcoded year
-    would silently skip a unit that is one year behind. Hanna City Park
-    District's latest is FY2024 where the other seven sampled are FY2025.
-    """
-    r = session.get(WAREHOUSE + "landingpage",
-                    params={"code": code, "searchtype": "AFRSearch"},
-                    timeout=TIMEOUT)
-    r.raise_for_status()
-    lines = text_of(r.text)
-    for i, line in enumerate(lines):
-        if line == "For Fiscal Year" and i + 1 < len(lines):
-            year = lines[i + 1].strip()
-            return year if re.fullmatch(r"20\d\d", year) else None
-    return None
-
-
-def contact_rows(markup):
-    """The contact table's rows as lists of cell text, or []."""
-    for table in re.findall(r"<table[^>]*>.*?</table>", markup, re.S):
-        if "Chief Executive Officer" not in table:
-            continue
-        rows = []
-        for row in re.findall(r"<tr[^>]*>(.*?)</tr>", table, re.S):
-            cells = re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", row, re.S)
-            rows.append([re.sub(r"\s+", " ",
-                                html.unescape(re.sub(r"<[^>]+>", " ", c))).strip()
-                         for c in cells])
-        return rows
-    return []
-
-
-def contact_block(session, code, unit_label, warnings):
-    """The unit's office and its two published officers, or None.
-
-    PARSED FROM THE TABLE, NEVER FROM FLATTENED TEXT. The first draft read the
-    page as a list of lines and sliced it four at a time, which mispaired every
-    unit: THE NAME ROW CARRIES EIGHT CELLS (a forename and a surname for each
-    of the four slots) WHERE EVERY OTHER ROW CARRIES FOUR, so a positional read
-    took `Ann | Joyce | Ann | Joyce` as four forenames and `Jim | Winters | Jim
-    | Withers` as their surnames and shipped a trustee called "Ann Jim". It
-    published 24 board officers, none of them trustworthy. The rows are keyed
-    by their own shape and their own labels here, and a table that does not
-    match is SKIPPED with a warning rather than guessed at.
-    """
-    year = latest_fiscal_year(session, code)
-    if not year:
-        warnings.append("%s: no fiscal year on its landing page — it files no "
-                        "contact block this run" % unit_label)
-        return None
-    time.sleep(PACE)
-    r = session.post(RESULTS, timeout=TIMEOUT,
-                     data={"DisplayMode": "GetAFR", "Code": code,
-                           "CFY": year, "AFRDesiredData": "Contact Information"})
-    r.raise_for_status()
-    rows = contact_rows(r.text)
-    names = next((x for x in rows if len(x) == 2 * SLOTS
-                  and any(c for c in x)), None)
-    if names is None:
-        warnings.append("%s: no %d-cell name row in the contact table — the "
-                        "form's layout changed" % (unit_label, 2 * SLOTS))
-        return None
-    after = rows[rows.index(names) + 1:]
-    quad = [x for x in after if len(x) == SLOTS]
-    if len(quad) < 6:
-        warnings.append("%s: contact table has %d four-cell row(s), expected at "
-                        "least 6" % (unit_label, len(quad)))
-        return None
-    titles = quad[0]
-    # The three rows between the titles and the labelled ones, in the form's
-    # own order. Labelled rows identify themselves and are found by label.
-    unlabelled = [x for x in quad[1:] if not any(
-        c.startswith(("Phone:", "Fax:", "E-mail:")) for c in x)]
-    street = unlabelled[0][0] if unlabelled else ""
-    city = unlabelled[1][0] if len(unlabelled) > 1 else ""
-    region = unlabelled[2][0] if len(unlabelled) > 2 else ""
-
-    def labelled(prefix, slot):
-        for x in quad:
-            if x[slot].startswith(prefix):
-                return x[slot][len(prefix):].split("Ext")[0].strip()
-        return ""
-
-    officers = []
-    for slot in PUBLISHED_SLOTS:
-        name = " ".join(x for x in (names[2 * slot], names[2 * slot + 1]) if x).strip()
-        title = (titles[slot] or "").strip()
-        if not name or not title:
-            continue
-        key = title.lower().rstrip(".").strip()
-        # West Peoria FPD files Mark Stecher, President, as BOTH its CEO and
-        # its CFO — one person holding two responsibilities, not two trustees.
-        # Deduped on the pair as filed, never by matching names loosely: the
-        # same unit can file one person under two spellings and this must not
-        # be the code that decides two spellings are one person.
-        if any(q["name"] == name and q["role"] == title for _b, q in officers):
-            continue
-        if key in BOARD_TITLES:
-            officers.append(("board", {"name": name, "role": title}))
-        else:
-            if key not in HEAD_TITLES:
-                warnings.append("%s: filed title %r for %s is neither a board "
-                                "office nor a recognised appointed post — "
-                                "shipped as appointed, never as a board seat"
-                                % (unit_label, title, name))
-            officers.append(("heads", {"name": name, "role": title}))
-    return {"filedFor": year,
-            "street": street,
-            "city": " ".join(x for x in (city, region) if x).strip(),
-            "phone": labelled("Phone:", CONTACT_SLOT),
-            "email": labelled("E-mail:", CONTACT_SLOT),
-            "officers": officers}
 
 
 def main():
@@ -308,8 +145,7 @@ def main():
     args = ap.parse_args()
 
     warnings, unmatched = [], []
-    s = requests.Session(); s.headers.update(HEADERS)
-    s.get(SEARCH_FORM, timeout=TIMEOUT)        # ColdFusion session cookie
+    s = new_session()                          # holds the ColdFusion cookie
 
     layers = gis_districts(s)
     units = enumerate_county(s, args.county)
