@@ -191,8 +191,11 @@ draw it. Three things have: two county-published LAYERS that compose each
 other though neither is labelled with the other (Richland — overlay them);
 the county's own polygons as drawn, found by enumerating its org (Douglas);
 and a VECTOR PDF whose districts are filled path objects — read the objects,
-never the pixels (Jackson). A genuine raster scan is still shut, and a
-clerk's written sentence can draw one line (Clay's corporate-limits split).
+never the pixels (Jackson). "Vector" is not the test: count the CLOSED, FILLED
+paths carrying identity, because a file can be all vector and still be
+stroke-only line work with none, which is as shut as a scan. A genuine raster
+scan is still shut, and a clerk's written sentence can draw one line (Clay's
+corporate-limits split).
 
 **The population ceiling.** `BALANCE_DEV_MAX = 0.30` in each county builder
 (`scripts/build_clinton_boundaries.py` is the reference; the shared
