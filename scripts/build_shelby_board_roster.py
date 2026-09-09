@@ -66,6 +66,48 @@ TERM_RE = re.compile(r"^(\d{4}–\d{4}|\d{4}|through \d{4})$")
 VACANT_NAMES = ("currently vacant",)
 MAX_DIRECTORY_DRIFT = 2  # tolerated per-direction directory/card row drift mid-edit
 
+# THE COUNTY CORRECTED AN E-MAIL TYPO ON ONE OF ITS TWO PAGES AND NOT THE OTHER,
+# which broke the e-mail join below and refused the 2026-09-09 run. Measured that
+# day, both pages fetched live:
+#
+#   coboard.aspx  (21,196 bytes)  distric1-2@shelbycounty-il.gov   x2, no 'h'
+#   contacts.aspx (15,430 bytes)  district1-2@shelbycounty-il.gov  x1, corrected
+#
+# The two occurrences on coboard.aspx are one authored value the template repeats
+# as href and link text, so this is a single typo rather than two.
+#
+# THIS IS NOT THIS PROJECT CORRECTING A CHARACTER IN SOMEBODY'S CONTACT DETAIL,
+# and the difference from the DOUGLAS precedent is the whole reason it is allowed
+# here. Douglas's yearbook printed District 1's address on `douglascountuil.gov`,
+# a typo in the DOMAIN; nothing else published a corrected form, a DNS check
+# proved that domain dead, and build_douglas_boundaries DROPPED the address
+# rather than ship a bouncing one or edit a character. Three things differ here:
+# the domain is identical and correct on both pages, a SECOND county surface
+# publishes the corrected local part, and the pages' own convention corroborates
+# it -- all TWENTY of the other seat addresses are spelled `district<N>-<M>@`,
+# so the stale spelling is the sole outlier against the county's own pattern.
+#
+# WHICH SURFACE OWNS AN E-MAIL ADDRESS is what settles it, the Greene/Scott
+# question asked of a contact detail instead of a place name. contacts.aspx IS
+# the county's e-mail directory; coboard.aspx is the board page that also happens
+# to print addresses. The directory wins, exactly as Merritt's spelling did.
+#
+# NEITHER SPELLING'S DELIVERABILITY IS TESTED and nothing here claims it. A
+# domain's MX says nothing about a local part, and probing a mailbox is not
+# something this project does to a county. What is claimed is only which form the
+# county publishes where.
+#
+# NOT DATED, AND THAT IS A MEASUREMENT LIMIT RATHER THAN AN ABSENT FACT: when the
+# county made the correction cannot be established from here, because this
+# environment's egress proxy blocks web.archive.org outright
+# (`x-block-reason: hostname_blocked`), which is not the Archive refusing.
+#
+# audit_email_corrections() FAILS when an entry stops being needed, so this
+# cannot outlive the typo it exists for -- the ACCEPTED_DROPS discipline.
+BOARD_EMAIL_CORRECTIONS = {
+    "distric1-2@shelbycounty-il.gov": "district1-2@shelbycounty-il.gov",
+}
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_OUT_DIR = os.path.join(REPO_ROOT, "il", "data", "app")
 
@@ -169,6 +211,48 @@ def compare_composition(published, shipped):
     return None
 
 
+def apply_email_corrections(records):
+    """Rewrite a stale board-page e-mail to the directory's spelling.
+
+    Applied to the CARD records only, and PRINTED every run: this is a
+    substitution in a real person's contact detail, so it is never silent.
+    Returns the set of keys actually seen, for audit_email_corrections().
+    """
+    seen = set()
+    for rec in records:
+        for m in rec.get("members") or []:
+            fixed = []
+            for email in m.get("emails") or []:
+                better = BOARD_EMAIL_CORRECTIONS.get(email)
+                if better:
+                    seen.add(email)
+                    print("shelby-board-roster: coboard.aspx spells %s's address "
+                          "%s; shipping %s, which contacts.aspx publishes and "
+                          "which matches the county's own pattern on every "
+                          "other seat" % (m.get("name") or "?", email, better))
+                    fixed.append(better)
+                else:
+                    fixed.append(email)
+            if fixed:
+                m["emails"] = fixed
+    return seen
+
+
+def audit_email_corrections(seen):
+    """FAIL on an entry that is no longer needed.
+
+    The county fixing coboard.aspx is the good outcome, and it must not leave a
+    substitution sitting in this file forever rewriting an address nobody
+    publishes any more. Same shape as ACCEPTED_DROPS and EXPECTED_UNREACHABLE:
+    an exception that cannot rot quietly.
+    """
+    orphans = sorted(set(BOARD_EMAIL_CORRECTIONS) - seen)
+    if orphans:
+        fail("BOARD_EMAIL_CORRECTIONS still maps %s, which coboard.aspx no "
+             "longer carries — the county has fixed its own page, so remove "
+             "the entry" % ", ".join(orphans))
+
+
 def main():
     if len(sys.argv) < 2:
         fail("usage: build_shelby_board_roster.py <raw-scraper-output.json> [output_dir]")
@@ -178,6 +262,7 @@ def main():
     records = raw.get("records") or []
     contacts = raw.get("contacts") or []
     updated = raw.get("updated")
+    audit_email_corrections(apply_email_corrections(records))
 
     if sorted(r["district"] for r in records) != sorted(COMPOSITION, key=str):
         fail("parsed districts %s, expected exactly %s"
