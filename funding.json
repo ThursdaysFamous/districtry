@@ -56,7 +56,7 @@
         "status": "active",
         "name": "Keep the rosters current",
         "description": "The recurring cost of the project is not building layers, it is keeping people's names right. Elected officials resign, get appointed and are replaced between elections, and county websites are redesigned without notice. This plan funds the weekly scraper runs, the repairs when a publisher changes, and the human review every roster change goes through before it ships.",
-        "amount": 24000,
+        "amount": 25000,
         "currency": "USD",
         "frequency": "yearly",
         "channels": ["github-sponsors"]
@@ -66,7 +66,7 @@
         "status": "active",
         "name": "Extend coverage to the places that have no lookup at all",
         "description": "Eleven Illinois counties remain unserved, each with a recorded reason for why. Beyond them, most US states have no free, complete district lookup that reaches local offices. This plan funds new county and state coverage, including the counties whose boundaries exist only as a scanned map, behind a paid GIS licence, or in a clerk's filing cabinet.",
-        "amount": 40000,
+        "amount": 50000,
         "currency": "USD",
         "frequency": "yearly",
         "channels": ["github-sponsors"]
