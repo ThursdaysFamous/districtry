@@ -12422,16 +12422,22 @@ function initChiExplorer() {
   var loadPeoriaDistrictOfficials = makeCached(function () {
     return fetchJSONWithRetry("data/app/peoria-district-officials.json", {}, 2);
   });
-  function withPeoriaOfficials(loadGeometry) {
+  var loadLoganDistrictOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/logan-district-officials.json", {}, 2);
+  });
+  /* One stamper for both counties: the payloads are the same shape because
+   * they come from the same filings, so only the roster file and the property
+   * holding the district's name differ. */
+  function withAfrOfficials(loadGeometry, loadRoster, nameKeys) {
     return makeCached(function () {
       return Promise.all([
         loadGeometry(),
-        loadPeoriaDistrictOfficials().catch(function () { return null; })
+        loadRoster().catch(function () { return null; })
       ]).then(function (results) {
         var geojson = results[0], roster = results[1];
         var byName = (roster && roster.districts) || {};
         (geojson.features || []).forEach(function (f) {
-          var name = findPropCI(f.properties || {}, ["district_name"]);
+          var name = findPropCI(f.properties || {}, nameKeys);
           var hit = name != null ? byName[String(name)] : null;
           if (hit) f.properties.dxOfficials = hit;
         });
@@ -12439,9 +12445,19 @@ function initChiExplorer() {
       });
     });
   }
+  function withPeoriaOfficials(loadGeometry) {
+    return withAfrOfficials(loadGeometry, loadPeoriaDistrictOfficials,
+                            ["district_name"]);
+  }
+  function withLoganOfficials(loadGeometry) {
+    return withAfrOfficials(loadGeometry, loadLoganDistrictOfficials,
+                            ["district"]);
+  }
 
-  /* The officeholder block under a Peoria fire, park or library district.
-   * Fleet card order — the people, then the office, then the contact.
+  /* The officeholder block under a district whose officers come from its own
+   * Annual Financial Report — Peoria's fire, park and library districts and
+   * Logan's park districts. Fleet card order — the people, then the office,
+   * then the contact.
    *
    * EVERY BLOCK NAMES THE FISCAL YEAR IT WAS FILED FOR, and that is the whole
    * honesty of this source: an AFR is a snapshot filed once a year, and the
@@ -12450,12 +12466,18 @@ function initChiExplorer() {
    * these are the officers today.
    *
    * A district that files only appointed officers gets an Administration block
-   * and no board heading. THREE of the eighteen do: Alpha Park Library files a
-   * Director and a Manager, Pleasure Driveway Park a Director and a
-   * Superintendent, and Hanna City Park District a C.E.O. and a Treas./Admin.
-   * That is each district's own answer about who it publishes, and an empty
-   * "Board" heading over it would imply a body the filing does not name. */
-  function peoriaDistrictPeople(result) {
+   * and no board heading. FOUR do: Peoria's Alpha Park Library files a
+   * Director and a Manager, its Pleasure Driveway Park a Director and a
+   * Superintendent, its Hanna City Park District a C.E.O. and a Treas./Admin.,
+   * and Logan's Lincoln Park District a Director and a Manager. That is each
+   * district's own answer about who it publishes, and an empty "Board" heading
+   * over it would imply a body the filing does not name.
+   *
+   * A DISTRICT THAT FILES UNDER ANOTHER COUNTY SAYS SO, because a reader
+   * checking the filing needs to know where to look: a cross-county district
+   * files once, under its home county, so Logan's Armington Community files in
+   * Tazewell and its San Jose in Mason. */
+  function afrDistrictPeople(result) {
     var info = result && result.officials;
     if (!info) return null;
     var frag = document.createDocumentFragment();
@@ -12468,7 +12490,11 @@ function initChiExplorer() {
     }
     var filed = info.filedFor
       ? "As filed with the Illinois Comptroller for fiscal year " +
-        String(info.filedFor)
+        String(info.filedFor) +
+        // A cross-county district files once, under its home county, so the
+        // note names that county — a reader checking the filing would
+        // otherwise search the wrong one and find nothing.
+        (info.filesIn ? ", under " + String(info.filesIn) + " County" : "")
       : null;
     if (board.length) {
       frag.appendChild(renderSectionLabel("Board"));
@@ -23584,7 +23610,7 @@ function initChiExplorer() {
           { label: "County", value: "Peoria County" },
           { name: "officials", keys: ["dxofficials"], hidden: true }
         ],
-        people: peoriaDistrictPeople,
+        people: afrDistrictPeople,
         primaryLink: function (result) {
           var site = result && result.website ? safeHttpUrl(result.website) : null;
           return site ? { label: (result.name || "Fire district") + " (official)", url: site } : null;
@@ -23973,7 +23999,7 @@ function initChiExplorer() {
           { label: "County", value: "Peoria County" },
           { name: "officials", keys: ["dxofficials"], hidden: true }
         ],
-        people: peoriaDistrictPeople,
+        people: afrDistrictPeople,
         primaryLink: function (result) {
           var site = result && result.website ? safeHttpUrl(result.website) : null;
           return site ? { label: (result.name || "Park district") + " (official)", url: site } : null;
@@ -24001,14 +24027,22 @@ function initChiExplorer() {
       // not the county: the service does not say what they are, and TCRPC's own
       // web map groups exactly these seven layer ids under "Park Districts".
       // scripts/build_logan_park_districts.py gates on that grouping.
+      //
+      // The commission's dataset carries a NAME and nothing else, so the people
+      // come from each district's own Annual Financial Report filing with the
+      // Illinois Comptroller — the same source Peoria's three entries use.
+      // scripts/logan_district_officials_scraper.py joins all seven on an
+      // explicit table of unit codes, two of which file under another county.
       polygonCountyEntry({
         key: "logan",
         coverage: loganCountyCoverage,
-        loader: loadLoganPark,
+        loader: withLoganOfficials(loadLoganPark),
         fields: [
           { name: "name", label: "Park District", keys: ["district"], primary: true },
-          { label: "County", value: "Logan County" }
-        ]
+          { label: "County", value: "Logan County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       polygonCountyEntry({
         key: "macon",
@@ -24468,7 +24502,7 @@ function initChiExplorer() {
           { label: "County", value: "Peoria County" },
           { name: "officials", keys: ["dxofficials"], hidden: true }
         ],
-        people: peoriaDistrictPeople,
+        people: afrDistrictPeople,
         primaryLink: function (result) {
           var site = result && result.website ? safeHttpUrl(result.website) : null;
           return site ? { label: (result.name || "Library district") + " (official)", url: site } : null;
