@@ -7,9 +7,12 @@ This half does the refusing: a run that lost coverage leaves the shipped file
 alone rather than replacing it with a thinner one.
 
 WHAT THE FLOORS GUARD, and why each is under its measured value. On
-2026-09-08 all SEVEN of Logan's park districts filed, all seven for FY2025,
-with 11 board officers, 2 appointed officers and a street address, city,
-telephone and e-mail on every one. The floors sit under those values because
+2026-09-09 all SEVEN of Logan's park districts filed, all seven for FY2025,
+with 12 board officers, 2 appointed officers and a street address, city,
+telephone and e-mail on every one. (11 board officers until slots A and D began
+to be read for a board-titled person the unit had not already named -- see
+comptroller_afr.BOARD_ONLY_SLOTS; that added San Jose Park District's Alex
+Hamilton, Trustee, and moved nobody between lists.) The floors sit under those values because
 a district that stops filing is a real event and must not freeze the other
 six; they are not set AT seven, which would make one district's late filing
 indistinguishable from the source breaking.
@@ -42,7 +45,7 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app",
                         "logan-district-officials.json")
 
-# Measured 2026-09-08: 7 districts / 11 board / 2 appointed / 7 with an office
+# Measured 2026-09-09: 7 districts / 12 board / 2 appointed / 7 with an office
 # / 7 with a telephone. Each floor sits under its measured value; see above.
 MIN_DISTRICTS = 5
 MIN_BOARD = 8

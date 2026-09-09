@@ -68,6 +68,10 @@
         {
           "name": "Holly More",
           "role": "President"
+        },
+        {
+          "name": "George Stenger",
+          "role": "Secretary"
         }
       ],
       "comptrollerCode": "072/050/10",
@@ -351,6 +355,10 @@
         {
           "name": "Gary Williams",
           "role": "Treasurer"
+        },
+        {
+          "name": "Shelly Bergland",
+          "role": "V-President"
         }
       ],
       "comptrollerCode": "072/090/06",
@@ -381,7 +389,7 @@
       }
     }
   },
-  "generated": "2026-09-08T21:00:22Z",
+  "generated": "2026-09-09T16:40:15Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"

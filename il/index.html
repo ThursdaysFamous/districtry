@@ -12494,7 +12494,23 @@ function initChiExplorer() {
         // A cross-county district files once, under its home county, so the
         // note names that county — a reader checking the filing would
         // otherwise search the wrong one and find nothing.
-        (info.filesIn ? ", under " + String(info.filesIn) + " County" : "")
+        (info.filesIn ? ", under " + String(info.filesIn) + " County" : "") +
+        // THE FISCAL YEAR IS A CLAIM ABOUT CURRENCY AND SAYS NOTHING ABOUT
+        // COMPLETENESS, which is the other half a reader needs. The form has
+        // four role slots, so a district with seven trustees can only ever
+        // file some of them, and a "Board" heading over two names would
+        // otherwise read as the whole board.
+        //
+        // IT NAMES THE FORM'S LIMIT RATHER THAN THE BOARD'S SIZE, because an
+        // AFR carries no seat count: "four names" is a fact about the filing
+        // and checkable, where "2 of 7" would be invented. Only where a board
+        // block was actually drawn — a district that files only appointed
+        // officers asserts no board at all, and telling that reader the board
+        // may be incomplete would imply one the filing does not name.
+        (board.length
+          ? " — the form has room for four names, so this may not be the "
+            + "whole board."
+          : "")
       : null;
     if (board.length) {
       frag.appendChild(renderSectionLabel("Board"));

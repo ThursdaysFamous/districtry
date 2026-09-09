@@ -103,9 +103,45 @@ TITLE_ALIASES = {
 }
 
 SLOTS = 4                        # A Contact Person, B CEO, C CFO, D Purchasing Agent
-# Only B and C are read: the form captions them "Your name will be listed with
-# this responsibility on our website", which is the unit publishing an officer.
+# B and C are the unit's PUBLISHED officers: the form captions them "Your name
+# will be listed with this responsibility on our website".
 PUBLISHED_SLOTS = (1, 2)
+# A and D are the filing's administrative contacts, and are read ONLY for a
+# BOARD-TITLED person the unit has not already named in B or C. Measured across
+# all 25 shipped districts on 2026-09-09, that admits exactly three trustees who
+# were previously invisible -- Brimfield Public Library's George Stenger
+# (Secretary, slot D), Timber-Hollis FPD's Shelly Bergland (V-President, slot A)
+# and San Jose Park District's Alex Hamilton (Trustee, slot D) -- and admits
+# nobody else.
+#
+# WHY BOARD-TITLED ONLY, AND WHY THAT ONE TEST IS THE WHOLE GUARD. Slots A and D
+# are exactly where this source's duplicate traps live: of 27 repeated names
+# across the 25 districts, EVERY ONE is non-board-titled, so the title test
+# excludes all of them without a single name comparison. The three shapes,
+# measured rather than assumed:
+#   * the same name in two slots (23 cases -- West Peoria files Mark Stecher in
+#     all four), already caught by the pair dedupe below;
+#   * CASE-ONLY, which the pair dedupe did NOT catch until this change: Hanna
+#     City Park District files "Trace Evans" in B and "trace evans" in D, both
+#     C.E.O.;
+#   * THE SAME PERSON UNDER DIFFERENT TITLES: Chillicothe Park files Kevin Yates
+#     as Director in A and Purchasing Agent in D.
+# Dunlap FPD's "Jim Winters"/"Jim Withers" pair is a fourth shape and needs no
+# name matching either: both are filed Treas./Admin., which is not a board title.
+#
+# AN ADDRESS TEST WAS PROPOSED AND MEASURED WRONG, which is why it is not here.
+# San Jose's Hamilton does file a different street from B and C -- but Brimfield's
+# Stenger and Timber-Hollis's Bergland file the SAME street as theirs, so keying
+# on a differing address would ship one real trustee and drop the other two.
+#
+# THE SLOT IS AN ADMINISTRATIVE ROLE AND THE TITLE IS AN OFFICE, and reading the
+# title is the point. A unit filing "our Purchasing Agent is Alex Hamilton,
+# Trustee" is stating that Hamilton is a trustee; the caption that governs B and
+# C is about what the Comptroller publishes on its own site, not about who holds
+# office. NON-board titles in A and D are still not read: they are appointed
+# staff filed as filing contacts, they carry every duplicate shape above, and
+# they buy nothing a card should assert.
+BOARD_ONLY_SLOTS = (0, 3)
 CONTACT_SLOT = 0                 # the unit's own office address and telephone
 
 RESULT_RE = re.compile(
@@ -249,18 +285,35 @@ def contact_block(session, code, unit_label, warnings):
                 return x[slot][len(prefix):].split("Ext")[0].strip()
         return ""
 
-    officers = []
-    for slot in PUBLISHED_SLOTS:
+    def slot_person(slot):
         name = " ".join(x for x in (names[2 * slot], names[2 * slot + 1]) if x).strip()
         title = (titles[slot] or "").strip()
         if not name or not title:
-            continue
+            return None, None, None
         key = title.lower().strip()
         # An abbreviation of a board office is classified as that office and
         # still SHIPS as filed. Unknown spellings fall through unchanged and
         # are warned about below.
         key = TITLE_ALIASES.get(key, TITLE_ALIASES.get(key.rstrip("."), key))
-        key = key.rstrip(".").strip()
+        return name, title, key.rstrip(".").strip()
+
+    officers = []
+
+    def already_named(name):
+        """Has this unit already named this person, ignoring case?
+
+        CASE-FOLDED AND NOTHING CLEVERER. Hanna City Park District files "Trace
+        Evans" in slot B and "trace evans" in slot D, which an exact match reads
+        as two people. This is NOT a judgement that two similar names are one
+        person -- Dunlap FPD's "Jim Winters" and "Jim Withers" stay two records
+        here, and are kept out of the board list by their title instead.
+        """
+        return any(q["name"].casefold() == name.casefold() for _b, q in officers)
+
+    for slot in PUBLISHED_SLOTS:
+        name, title, key = slot_person(slot)
+        if not name:
+            continue
         # West Peoria FPD files Mark Stecher, President, as BOTH its CEO and
         # its CFO — one person holding two responsibilities, not two trustees.
         # Deduped on the pair as filed, never by matching names loosely: the
@@ -277,6 +330,17 @@ def contact_block(session, code, unit_label, warnings):
                                 "shipped as appointed, never as a board seat"
                                 % (unit_label, title, name))
             officers.append(("heads", {"name": name, "role": title}))
+
+    # The second pass, over the filing's administrative slots. A board-titled
+    # person the unit has not already named is a trustee it would otherwise have
+    # left invisible; everything else in these slots is skipped. See
+    # BOARD_ONLY_SLOTS for what this admits and what it deliberately does not.
+    for slot in BOARD_ONLY_SLOTS:
+        name, title, key = slot_person(slot)
+        if not name or key not in BOARD_TITLES or already_named(name):
+            continue
+        officers.append(("board", {"name": name, "role": title}))
+
     return {"filedFor": year,
             "street": street,
             "city": " ".join(x for x in (city, region) if x).strip(),
