@@ -708,7 +708,7 @@ Jennifer Harper, Piatt County Clerk — `countyclerk@piatt.gov`
 | Ford | Kelsie Vaughn, `clerk@fordcounty.illinois.gov` | 3 Aug | 16 Aug | 2nd follow-up |
 | Christian | Jodie Badman, `elections@christiancountyil.com` | 5 Aug (+ the Taylorville 9 question 21 Aug) | 16 Aug | 2nd follow-up |
 | Piatt | Jennifer Harper, `countyclerk@piatt.gov` | 3 Aug | 16 Aug | 2nd follow-up — **NARROWED 2026-09-04**, see below |
-| Knox | Scott G. Erickson, `serickson@knoxcountyil.gov` | 5 Aug | 16 and 24 Aug | already two — record UNRESPONSIVE if this one is silent |
+| Knox | Scott G. Erickson, `serickson@knoxcountyil.gov` | 5 Aug | 16 and 24 Aug | **OVERTAKEN 2026-09-08 — do not send**, see below |
 
 Each follow-up restates the ONE question and offers a no. The Ford one, as the shape:
 
@@ -734,11 +734,25 @@ Each follow-up restates the ONE question and offers a no. The Ford one, as the s
 > <YOUR NAME>
 > <YOUR E-MAIL> · https://districtry.com/il/
 
-**Knox is the one to watch.** It has had two follow-ups already, so a third silence is the
-point at which `knox-precinct-geometry` records the ROUTE as unresponsive — a claim about
-this ask, never about the county. Note also that Knox's own board-members page turned out
-to be readable after all (2026-09-03), so the county is less dark than its record implied;
-the precinct question is the part still genuinely open.
+**Knox was the one to watch, and on 2026-09-08 it answered — from an office this file had
+never written to.** GIS Coordinator Taiwo Agbaje sent a county-authored precinct shapefile
+in reply to a separate GIS thread. So Knox's row above is **overtaken, not owed**: the
+third note to Clerk Erickson should NOT be sent, because the office that actually holds
+precinct data has now identified itself and is corresponding. Knox cannot be recorded
+UNRESPONSIVE either — that is a claim about an ask, and this county replied.
+
+The remaining question moved with it, and is narrower than anything asked so far: the file
+Agbaje sent is the JULY 2020 fabric, and the one fact `knox-precinct-geometry` turns on —
+what became of Knox Township's seventh precinct — is still unpublished. That goes to
+**Agbaje on his own thread as Ask 21**, not to the Clerk. Note also that Knox's own
+board-members page turned out to be readable after all (2026-09-03), so the county is less
+dark than its record implied.
+
+**The lesson is the one this file keeps re-learning at a different address.** Three notes
+to a county clerk went unanswered while a different desk in the same county was willing to
+send a shapefile. A clerk's silence is a fact about the clerk. Before recording any county
+UNRESPONSIVE, check whether its GIS, assessor or election-authority desk is a separate
+publisher — it usually is, and it is often the one that answers.
 
 **The two ledgers disagreed about the 24 August note, and the operator settled it.**
 This row puts 24 Aug in the follow-up column, i.e. a note that WENT, while the
@@ -1611,3 +1625,107 @@ means the gap entry is wrong to call them incomplete filings and they should be 
 having no districts to draw, and by district means the composition can be built. A clean
 "we don't know" or no reply at all leaves each city where it is, recorded as measured
 rather than unexamined.
+
+---
+
+## Ask 21 — Knox County GIS: which precinct absorbed Knox Seven?
+
+> **NOT YET ASKED — DRAFTED 2026-09-09.** A reply on the existing thread with Taiwo
+> Agbaje, GIS Coordinator, who sent `Precincts_20200717.zip` on 2026-09-08. **This is not
+> the queued Ask 12 note**, which goes to Clerk Erickson and is now overtaken: different
+> office, different thread, and this one replies to somebody who has just written to us.
+
+**What this is about.** The file that arrived is a county-authored precinct layer carrying
+a `District` column — the thing Knox's certified canvasses withhold, since they count each
+district's precincts and never name one. It has already earned its keep: overlaid on the
+board districts this project drew from the county's own 2022 district map, it confirms
+districts 1, 3, 4 and 5 to within 0.6-1.2% of area, and the one difference in district 2 is
+explained to 95% by the city of Galesburg's corporate limits reaching into Galesburg
+Township and Henderson-2.
+
+**It is the 2020 fabric, and that is measured rather than read off the filename.** Every
+member of the archive is stamped 2020-07-17, and its 31 county precincts match the Illinois
+State Board of Elections' certified precinct-level results for the November 2020 general
+one for one, by name, with nothing left over on either side.
+
+**Three precincts went away between then and the June 2022 primary**, and ISBE's certified
+returns name two of the three changes outright:
+
+- HENDERSON FIRST and HENDERSON SECOND are replaced by a single HENDERSON
+- INDIAN POINT FIRST and INDIAN POINT SECOND are replaced by a single INDIAN POINT
+- KNOX SEVEN disappears, and **no new precinct name appears in its place** — the other six
+  Knox Township precincts keep their names, and all six are still reporting in the
+  certified 2026 general primary.
+
+That third one is the whole gap. The two merges are visible because each produced a
+precinct named after its township; Knox Seven was absorbed into neighbours that kept their
+old names, so nothing published records where its territory went. All three changes sit
+inside a single board district, so the board map is unaffected — this is only about drawing
+the precincts.
+
+### The draft
+
+> Subject: Knox County precincts — which precinct took in Knox Seven?
+>
+> Dear Mr Agbaje,
+>
+> Thank you for sending the voting precincts shapefile. It has already been useful:
+> overlaid on the board district boundaries we drew from the county's own 2022 district
+> map, it confirms districts 1, 3, 4 and 5 almost exactly, and the one difference in
+> district 2 turns out to be the city of Galesburg's corporate limits extending into
+> Galesburg Township.
+>
+> One question left, and I think it is a short one.
+>
+> The file is stamped July 2020, and its 31 county precincts match the State Board of
+> Elections' certified results for the November 2020 general exactly. Comparing those
+> against the certified results for the June 2022 primary, three precincts went away. Two
+> of them are clear from the returns themselves: Henderson First and Henderson Second
+> became a single Henderson precinct, and Indian Point First and Indian Point Second became
+> a single Indian Point.
+>
+> The third is not. Knox Seven stops appearing after 2020, and no new precinct name takes
+> its place — Knox First through Knox Six are still reporting today. So Knox Seven's
+> territory went into one or more of the existing six, and nothing published says which.
+>
+> Is there a precinct layer from after the 2021-22 redistricting? That would answer it and
+> I would be grateful for it.
+>
+> If there isn't one, then this would do just as well: which of the six Knox Township
+> precincts took in Knox Seven's territory — or was the whole township redrawn rather than
+> one precinct being folded into another?
+>
+> And if the answer is that there's no newer file and the change isn't recorded anywhere
+> you can point me to, that is genuinely useful too. I will record that the precinct map
+> can't be drawn rather than guess at it, and I won't ask again.
+>
+> districtry is a free, non-commercial civic map. Knox County's five board districts and
+> its board members are already on it, credited to the county.
+>
+> With thanks,
+> <YOUR NAME>
+> <YOUR E-MAIL> · https://districtry.com/il/
+
+### What each answer means
+
+- **A newer layer** — Knox's precincts ship and `knox-precinct-geometry` retires.
+- **"Precinct N took it in"** — the six are drawable from the 2020 geometry by dissolving
+  Knox Seven into the named neighbour, with the county's own statement as the source.
+- **"The township was redrawn"** — the 2020 geometry cannot be adapted and the gap stays
+  open, but for a stated reason rather than an unanswered question.
+- **"No newer file and it isn't written down"** — measured, permanent shut. The note says
+  this is a useful answer so that declining is easy.
+- **No reply** — this thread's first follow-up would be its own, on the usual cadence. The
+  Clerk's thread is separate and is not revived by it.
+
+### Two things deliberately left out
+
+**The seal.** Knox has a separate open question about use of the county seal (asked of the
+Clerk, 21 Jul 2026). Folding a licensing question into a note that otherwise has a one-line
+answer would make it harder to reply to, and it is a different office. If the operator
+prefers to raise both at once, that is a judgement about the threads rather than the data.
+
+**The `COPLLEY` spelling.** The layer's `Precinct` field reads COPLLEY where its own
+`Township` field on the same row, and ISBE's certified returns, both read COPLEY. It is a
+typo in one column of one export, it costs this project nothing, and it is not worth a line
+of this note.
