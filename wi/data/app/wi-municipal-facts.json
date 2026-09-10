@@ -1,0 +1,4322 @@
+{
+ "5500100": {
+  "counties": [
+   "Clark",
+   "Marathon"
+  ],
+  "incorporated": 1965,
+  "kind": "city"
+ },
+ "5500275": {
+  "counties": [
+   "Adams"
+  ],
+  "incorporated": 1926,
+  "kind": "city"
+ },
+ "5500450": {
+  "counties": [
+   "Sheboygan"
+  ],
+  "incorporated": 1918,
+  "kind": "village"
+ },
+ "5500750": {
+  "counties": [
+   "Green"
+  ],
+  "incorporated": 1918,
+  "kind": "village"
+ },
+ "5501000": {
+  "counties": [
+   "Kewaunee"
+  ],
+  "incorporated": 1879,
+  "kind": "city"
+ },
+ "5501150": {
+  "counties": [
+   "Brown"
+  ],
+  "incorporated": 1986,
+  "kind": "village"
+ },
+ "5501225": {
+  "counties": [
+   "Buffalo"
+  ],
+  "incorporated": 1885,
+  "kind": "city"
+ },
+ "5501300": {
+  "counties": [
+   "Jackson"
+  ],
+  "incorporated": 1902,
+  "kind": "village"
+ },
+ "5501325": {
+  "counties": [
+   "Barron"
+  ],
+  "incorporated": 1945,
+  "kind": "village"
+ },
+ "5501400": {
+  "counties": [
+   "Portage"
+  ],
+  "incorporated": 1905,
+  "kind": "village"
+ },
+ "5501550": {
+  "counties": [
+   "Eau Claire"
+  ],
+  "incorporated": 1887,
+  "kind": "city"
+ },
+ "5501725": {
+  "counties": [
+   "Polk"
+  ],
+  "incorporated": 1919,
+  "kind": "city"
+ },
+ "5501750": {
+  "counties": [
+   "Portage"
+  ],
+  "incorporated": 1899,
+  "kind": "village"
+ },
+ "5501800": {
+  "counties": [
+   "Portage"
+  ],
+  "incorporated": 1912,
+  "kind": "village"
+ },
+ "5502075": {
+  "counties": [
+   "Shawano"
+  ],
+  "incorporated": 1899,
+  "kind": "village"
+ },
+ "5502250": {
+  "counties": [
+   "Langlade"
+  ],
+  "incorporated": 1885,
+  "kind": "city"
+ },
+ "5502375": {
+  "counties": [
+   "Calumet",
+   "Outagamie",
+   "Winnebago"
+  ],
+  "incorporated": 1857,
+  "kind": "city"
+ },
+ "5502500": {
+  "counties": [
+   "Trempealeau"
+  ],
+  "incorporated": 1925,
+  "kind": "city"
+ },
+ "5502550": {
+  "counties": [
+   "Iowa"
+  ],
+  "incorporated": 1923,
+  "kind": "village"
+ },
+ "5502650": {
+  "counties": [
+   "Lafayette"
+  ],
+  "incorporated": 1903,
+  "kind": "village"
+ },
+ "5502800": {
+  "counties": [
+   "Columbia"
+  ],
+  "incorporated": 1945,
+  "kind": "village"
+ },
+ "5503025": {
+  "counties": [
+   "Wood"
+  ],
+  "incorporated": 1978,
+  "kind": "village"
+ },
+ "5503225": {
+  "counties": [
+   "Ashland",
+   "Bayfield"
+  ],
+  "incorporated": 1887,
+  "kind": "city"
+ },
+ "5503425": {
+  "counties": [
+   "Brown"
+  ],
+  "incorporated": 1977,
+  "kind": "village"
+ },
+ "5503550": {
+  "counties": [
+   "Marathon"
+  ],
+  "incorporated": 1901,
+  "kind": "village"
+ },
+ "5503775": {
+  "counties": [
+   "Wood"
+  ],
+  "incorporated": 1881,
+  "kind": "village"
+ },
+ "5503825": {
+  "counties": [
+   "Eau Claire"
+  ],
+  "incorporated": 1885,
+  "kind": "city"
+ },
+ "5504025": {
+  "counties": [
+   "Iowa"
+  ],
+  "incorporated": 1870,
+  "kind": "village"
+ },
+ "5504250": {
+  "counties": [
+   "Grant"
+  ],
+  "incorporated": 1919,
+  "kind": "village"
+ },
+ "5504400": {
+  "counties": [
+   "St. Croix"
+  ],
+  "incorporated": 1875,
+  "kind": "village"
+ },
+ "5504475": {
+  "counties": [
+   "Polk"
+  ],
+  "incorporated": 1905,
+  "kind": "village"
+ },
+ "5504550": {
+  "counties": [
+   "La Crosse"
+  ],
+  "incorporated": 1899,
+  "kind": "village"
+ },
+ "5504625": {
+  "counties": [
+   "Sauk"
+  ],
+  "incorporated": 1882,
+  "kind": "city"
+ },
+ "5504775": {
+  "counties": [
+   "Iowa"
+  ],
+  "incorporated": 1906,
+  "kind": "village"
+ },
+ "5504875": {
+  "counties": [
+   "Barron"
+  ],
+  "incorporated": 1887,
+  "kind": "city"
+ },
+ "5505325": {
+  "counties": [
+   "Pierce"
+  ],
+  "incorporated": 1909,
+  "kind": "village"
+ },
+ "5505350": {
+  "counties": [
+   "Bayfield"
+  ],
+  "incorporated": 1913,
+  "kind": "city"
+ },
+ "5505450": {
+  "counties": [
+   "Milwaukee",
+   "Ozaukee"
+  ],
+  "incorporated": 1953,
+  "kind": "village"
+ },
+ "5505575": {
+  "counties": [
+   "Outagamie"
+  ],
+  "incorporated": 1902,
+  "kind": "village"
+ },
+ "5505900": {
+  "counties": [
+   "Dodge"
+  ],
+  "incorporated": 1856,
+  "kind": "city"
+ },
+ "5506150": {
+  "counties": [
+   "Ozaukee"
+  ],
+  "incorporated": 1922,
+  "kind": "village"
+ },
+ "5506225": {
+  "counties": [
+   "Crawford"
+  ],
+  "incorporated": 1901,
+  "kind": "village"
+ },
+ "5506300": {
+  "counties": [
+   "Dane",
+   "Green"
+  ],
+  "incorporated": 1892,
+  "kind": "village"
+ },
+ "5506350": {
+  "counties": [
+   "Brown"
+  ],
+  "incorporated": 2003,
+  "kind": "village"
+ },
+ "5506425": {
+  "counties": [
+   "Lafayette"
+  ],
+  "incorporated": 1894,
+  "kind": "village"
+ },
+ "5506500": {
+  "counties": [
+   "Rock"
+  ],
+  "incorporated": 1857,
+  "kind": "city"
+ },
+ "5506825": {
+  "counties": [
+   "Lafayette"
+  ],
+  "incorporated": 1892,
+  "kind": "village"
+ },
+ "5506925": {
+  "counties": [
+   "Green Lake",
+   "Waushara"
+  ],
+  "incorporated": 1857,
+  "kind": "city"
+ },
+ "5507200": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1928,
+  "kind": "village"
+ },
+ "5507250": {
+  "counties": [
+   "Waupaca"
+  ],
+  "incorporated": 1925,
+  "kind": "village"
+ },
+ "5507550": {
+  "counties": [
+   "Washburn"
+  ],
+  "incorporated": 1921,
+  "kind": "village"
+ },
+ "5507600": {
+  "counties": [
+   "Marathon",
+   "Shawano"
+  ],
+  "incorporated": 1895,
+  "kind": "village"
+ },
+ "5507650": {
+  "counties": [
+   "Wood"
+  ],
+  "incorporated": 1910,
+  "kind": "village"
+ },
+ "5507725": {
+  "counties": [
+   "Outagamie"
+  ],
+  "incorporated": 1904,
+  "kind": "village"
+ },
+ "5507800": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1901,
+  "kind": "village"
+ },
+ "5507900": {
+  "counties": [
+   "Jackson"
+  ],
+  "incorporated": 1883,
+  "kind": "city"
+ },
+ "5508075": {
+  "counties": [
+   "Trempealeau"
+  ],
+  "incorporated": 1949,
+  "kind": "city"
+ },
+ "5508125": {
+  "counties": [
+   "Iowa",
+   "Lafayette"
+  ],
+  "incorporated": 1890,
+  "kind": "village"
+ },
+ "5508225": {
+  "counties": [
+   "Chippewa"
+  ],
+  "incorporated": 1920,
+  "kind": "city"
+ },
+ "5508265": {
+  "counties": [
+   "Walworth"
+  ],
+  "incorporated": 2011,
+  "kind": "village"
+ },
+ "5508375": {
+  "counties": [
+   "Grant"
+  ],
+  "incorporated": 1880,
+  "kind": "village"
+ },
+ "5508475": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1912,
+  "kind": "village"
+ },
+ "5508525": {
+  "counties": [
+   "Grant"
+  ],
+  "incorporated": 1916,
+  "kind": "village"
+ },
+ "5508600": {
+  "counties": [
+   "Richland"
+  ],
+  "incorporated": 1939,
+  "kind": "village"
+ },
+ "5508725": {
+  "counties": [
+   "Shawano"
+  ],
+  "incorporated": 1916,
+  "kind": "village"
+ },
+ "5508850": {
+  "counties": [
+   "Grant"
+  ],
+  "incorporated": 1873,
+  "kind": "city"
+ },
+ "5509025": {
+  "counties": [
+   "Shawano"
+  ],
+  "incorporated": 1923,
+  "kind": "village"
+ },
+ "5509050": {
+  "counties": [
+   "Dunn"
+  ],
+  "incorporated": 1922,
+  "kind": "village"
+ },
+ "5509075": {
+  "counties": [
+   "Chippewa"
+  ],
+  "incorporated": 1891,
+  "kind": "village"
+ },
+ "5509300": {
+  "counties": [
+   "Fond du Lac"
+  ],
+  "incorporated": 1881,
+  "kind": "village"
+ },
+ "5509725": {
+  "counties": [
+   "Calumet"
+  ],
+  "incorporated": 1944,
+  "kind": "city"
+ },
+ "5509800": {
+  "counties": [
+   "Kenosha"
+  ],
+  "incorporated": 2009,
+  "kind": "village"
+ },
+ "5509925": {
+  "counties": [
+   "Green",
+   "Rock"
+  ],
+  "incorporated": 1891,
+  "kind": "city"
+ },
+ "5510025": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1954,
+  "kind": "city"
+ },
+ "5510075": {
+  "counties": [
+   "Dane",
+   "Green"
+  ],
+  "incorporated": 1905,
+  "kind": "village"
+ },
+ "5510375": {
+  "counties": [
+   "Milwaukee"
+  ],
+  "incorporated": 1955,
+  "kind": "village"
+ },
+ "5510450": {
+  "counties": [
+   "Dodge"
+  ],
+  "incorporated": 1952,
+  "kind": "village"
+ },
+ "5510475": {
+  "counties": [
+   "Green"
+  ],
+  "incorporated": 1890,
+  "kind": "village"
+ },
+ "5510500": {
+  "counties": [
+   "Rusk"
+  ],
+  "incorporated": 1901,
+  "kind": "village"
+ },
+ "5511062": {
+  "counties": [
+   "Buffalo"
+  ],
+  "incorporated": 1859,
+  "kind": "city"
+ },
+ "5511200": {
+  "counties": [
+   "Racine",
+   "Walworth"
+  ],
+  "incorporated": 1900,
+  "kind": "city"
+ },
+ "5511475": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1913,
+  "kind": "village"
+ },
+ "5511525": {
+  "counties": [
+   "Ashland"
+  ],
+  "incorporated": 1903,
+  "kind": "village"
+ },
+ "5511750": {
+  "counties": [
+   "Chippewa"
+  ],
+  "incorporated": 1895,
+  "kind": "village"
+ },
+ "5511950": {
+  "counties": [
+   "Racine"
+  ],
+  "incorporated": 2005,
+  "kind": "village"
+ },
+ "5512200": {
+  "counties": [
+   "Columbia"
+  ],
+  "incorporated": 1866,
+  "kind": "village"
+ },
+ "5512225": {
+  "counties": [
+   "Dane",
+   "Jefferson"
+  ],
+  "incorporated": 1891,
+  "kind": "village"
+ },
+ "5512250": {
+  "counties": [
+   "Barron"
+  ],
+  "incorporated": 1894,
+  "kind": "village"
+ },
+ "5512325": {
+  "counties": [
+   "Fond du Lac"
+  ],
+  "incorporated": 1902,
+  "kind": "village"
+ },
+ "5512350": {
+  "counties": [
+   "Juneau"
+  ],
+  "incorporated": 1893,
+  "kind": "village"
+ },
+ "5512825": {
+  "counties": [
+   "Sheboygan"
+  ],
+  "incorporated": 1914,
+  "kind": "village"
+ },
+ "5512850": {
+  "counties": [
+   "Kewaunee"
+  ],
+  "incorporated": 1920,
+  "kind": "village"
+ },
+ "5512950": {
+  "counties": [
+   "Monroe"
+  ],
+  "incorporated": 1901,
+  "kind": "village"
+ },
+ "5513050": {
+  "counties": [
+   "Grant"
+  ],
+  "incorporated": 1882,
+  "kind": "village"
+ },
+ "5513175": {
+  "counties": [
+   "Price"
+  ],
+  "incorporated": 1922,
+  "kind": "village"
+ },
+ "5513300": {
+  "counties": [
+   "Richland",
+   "Sauk"
+  ],
+  "incorporated": 1902,
+  "kind": "village"
+ },
+ "5513325": {
+  "counties": [
+   "Shawano"
+  ],
+  "incorporated": 1905,
+  "kind": "village"
+ },
+ "5513375": {
+  "counties": [
+   "Ozaukee"
+  ],
+  "incorporated": 1885,
+  "kind": "city"
+ },
+ "5513475": {
+  "counties": [
+   "Sheboygan"
+  ],
+  "incorporated": 1899,
+  "kind": "village"
+ },
+ "5513850": {
+  "counties": [
+   "Polk"
+  ],
+  "incorporated": 1904,
+  "kind": "village"
+ },
+ "5514150": {
+  "counties": [
+   "Vernon"
+  ],
+  "incorporated": 1922,
+  "kind": "village"
+ },
+ "5514225": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1928,
+  "kind": "village"
+ },
+ "5514325": {
+  "counties": [
+   "Barron"
+  ],
+  "incorporated": 1891,
+  "kind": "city"
+ },
+ "5514475": {
+  "counties": [
+   "Calumet"
+  ],
+  "incorporated": 1877,
+  "kind": "city"
+ },
+ "5514575": {
+  "counties": [
+   "Chippewa"
+  ],
+  "incorporated": 1869,
+  "kind": "city"
+ },
+ "5515100": {
+  "counties": [
+   "Polk"
+  ],
+  "incorporated": 1909,
+  "kind": "village"
+ },
+ "5515250": {
+  "counties": [
+   "Polk"
+  ],
+  "incorporated": 1894,
+  "kind": "village"
+ },
+ "5515400": {
+  "counties": [
+   "Manitowoc"
+  ],
+  "incorporated": 1958,
+  "kind": "village"
+ },
+ "5515625": {
+  "counties": [
+   "Rock"
+  ],
+  "incorporated": 1882,
+  "kind": "village"
+ },
+ "5515725": {
+  "counties": [
+   "Waupaca"
+  ],
+  "incorporated": 1887,
+  "kind": "city"
+ },
+ "5515900": {
+  "counties": [
+   "Dodge"
+  ],
+  "incorporated": 1924,
+  "kind": "village"
+ },
+ "5515975": {
+  "counties": [
+   "Iowa"
+  ],
+  "incorporated": 1902,
+  "kind": "village"
+ },
+ "5516025": {
+  "counties": [
+   "Buffalo"
+  ],
+  "incorporated": 1910,
+  "kind": "village"
+ },
+ "5516150": {
+  "counties": [
+   "Clark",
+   "Marathon"
+  ],
+  "incorporated": 1891,
+  "kind": "city"
+ },
+ "5516250": {
+  "counties": [
+   "Marinette"
+  ],
+  "incorporated": 1903,
+  "kind": "village"
+ },
+ "5516275": {
+  "counties": [
+   "Dunn"
+  ],
+  "incorporated": 1904,
+  "kind": "village"
+ },
+ "5516375": {
+  "counties": [
+   "Waushara"
+  ],
+  "incorporated": 1939,
+  "kind": "village"
+ },
+ "5516450": {
+  "counties": [
+   "Columbia",
+   "Dodge"
+  ],
+  "incorporated": 1874,
+  "kind": "city"
+ },
+ "5516500": {
+  "counties": [
+   "Outagamie"
+  ],
+  "incorporated": 1920,
+  "kind": "village"
+ },
+ "5516775": {
+  "counties": [
+   "Rusk"
+  ],
+  "incorporated": 1915,
+  "kind": "village"
+ },
+ "5516900": {
+  "counties": [
+   "Vernon"
+  ],
+  "incorporated": 1907,
+  "kind": "village"
+ },
+ "5517100": {
+  "counties": [
+   "Chippewa"
+  ],
+  "incorporated": 1956,
+  "kind": "city"
+ },
+ "5517175": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1924,
+  "kind": "village"
+ },
+ "5517225": {
+  "counties": [
+   "Sawyer"
+  ],
+  "incorporated": 1922,
+  "kind": "village"
+ },
+ "5517425": {
+  "counties": [
+   "Forest"
+  ],
+  "incorporated": 1898,
+  "kind": "city"
+ },
+ "5517725": {
+  "counties": [
+   "Marinette"
+  ],
+  "incorporated": 1974,
+  "kind": "village"
+ },
+ "5517775": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1920,
+  "kind": "village"
+ },
+ "5517950": {
+  "counties": [
+   "Grant",
+   "Lafayette"
+  ],
+  "incorporated": 1925,
+  "kind": "city"
+ },
+ "5517975": {
+  "counties": [
+   "Milwaukee"
+  ],
+  "incorporated": 1906,
+  "kind": "city"
+ },
+ "5518025": {
+  "counties": [
+   "Barron"
+  ],
+  "incorporated": 1885,
+  "kind": "city"
+ },
+ "5518125": {
+  "counties": [
+   "Clark"
+  ],
+  "incorporated": 1917,
+  "kind": "village"
+ },
+ "5518575": {
+  "counties": [
+   "Barron"
+  ],
+  "incorporated": 1903,
+  "kind": "village"
+ },
+ "5518700": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1899,
+  "kind": "village"
+ },
+ "5518825": {
+  "counties": [
+   "Walworth"
+  ],
+  "incorporated": 1951,
+  "kind": "village"
+ },
+ "5518875": {
+  "counties": [
+   "Lafayette"
+  ],
+  "incorporated": 1877,
+  "kind": "city"
+ },
+ "5519250": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1891,
+  "kind": "village"
+ },
+ "5519325": {
+  "counties": [
+   "St. Croix"
+  ],
+  "incorporated": 1913,
+  "kind": "village"
+ },
+ "5519350": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1891,
+  "kind": "village"
+ },
+ "5519400": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1959,
+  "kind": "city"
+ },
+ "5519450": {
+  "counties": [
+   "Walworth"
+  ],
+  "incorporated": 1897,
+  "kind": "city"
+ },
+ "5519700": {
+  "counties": [
+   "Brown"
+  ],
+  "incorporated": 1915,
+  "kind": "village"
+ },
+ "5519775": {
+  "counties": [
+   "Brown"
+  ],
+  "incorporated": 1883,
+  "kind": "city"
+ },
+ "5519850": {
+  "counties": [
+   "Crawford",
+   "Vernon"
+  ],
+  "incorporated": 1886,
+  "kind": "village"
+ },
+ "5520175": {
+  "counties": [
+   "Grant"
+  ],
+  "incorporated": 1947,
+  "kind": "village"
+ },
+ "5520350": {
+  "counties": [
+   "Iowa"
+  ],
+  "incorporated": 1889,
+  "kind": "city"
+ },
+ "5520450": {
+  "counties": [
+   "Clark",
+   "Marathon"
+  ],
+  "incorporated": 1901,
+  "kind": "village"
+ },
+ "5520550": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1917,
+  "kind": "village"
+ },
+ "5520675": {
+  "counties": [
+   "Dunn"
+  ],
+  "incorporated": 1909,
+  "kind": "village"
+ },
+ "5520775": {
+  "counties": [
+   "Columbia"
+  ],
+  "incorporated": 1907,
+  "kind": "village"
+ },
+ "5520850": {
+  "counties": [
+   "Polk"
+  ],
+  "incorporated": 1919,
+  "kind": "village"
+ },
+ "5521225": {
+  "counties": [
+   "Pepin"
+  ],
+  "incorporated": 1887,
+  "kind": "city"
+ },
+ "5521425": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1899,
+  "kind": "village"
+ },
+ "5521625": {
+  "counties": [
+   "Vilas"
+  ],
+  "incorporated": 1937,
+  "kind": "city"
+ },
+ "5521900": {
+  "counties": [
+   "Crawford"
+  ],
+  "incorporated": 1909,
+  "kind": "village"
+ },
+ "5522100": {
+  "counties": [
+   "Walworth"
+  ],
+  "incorporated": 1900,
+  "kind": "village"
+ },
+ "5522300": {
+  "counties": [
+   "Chippewa",
+   "Eau Claire"
+  ],
+  "incorporated": 1872,
+  "kind": "city"
+ },
+ "5522475": {
+  "counties": [
+   "Fond du Lac"
+  ],
+  "incorporated": 1912,
+  "kind": "village"
+ },
+ "5522550": {
+  "counties": [
+   "Marathon"
+  ],
+  "incorporated": 1898,
+  "kind": "village"
+ },
+ "5522575": {
+  "counties": [
+   "Dane",
+   "Rock"
+  ],
+  "incorporated": 1883,
+  "kind": "city"
+ },
+ "5522850": {
+  "counties": [
+   "Door"
+  ],
+  "incorporated": 1964,
+  "kind": "village"
+ },
+ "5522975": {
+  "counties": [
+   "Shawano"
+  ],
+  "incorporated": 1905,
+  "kind": "village"
+ },
+ "5523075": {
+  "counties": [
+   "Marathon"
+  ],
+  "incorporated": 1917,
+  "kind": "village"
+ },
+ "5523175": {
+  "counties": [
+   "Trempealeau"
+  ],
+  "incorporated": 1902,
+  "kind": "village"
+ },
+ "5523275": {
+  "counties": [
+   "Sheboygan"
+  ],
+  "incorporated": 1894,
+  "kind": "village"
+ },
+ "5523300": {
+  "counties": [
+   "Walworth"
+  ],
+  "incorporated": 1897,
+  "kind": "city"
+ },
+ "5523325": {
+  "counties": [
+   "Dunn"
+  ],
+  "incorporated": 1909,
+  "kind": "village"
+ },
+ "5523525": {
+  "counties": [
+   "Pierce"
+  ],
+  "incorporated": 1887,
+  "kind": "village"
+ },
+ "5523575": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1955,
+  "kind": "village"
+ },
+ "5523700": {
+  "counties": [
+   "Pierce"
+  ],
+  "incorporated": 1905,
+  "kind": "village"
+ },
+ "5523725": {
+  "counties": [
+   "Racine"
+  ],
+  "incorporated": 1960,
+  "kind": "village"
+ },
+ "5523800": {
+  "counties": [
+   "Juneau"
+  ],
+  "incorporated": 1885,
+  "kind": "city"
+ },
+ "5523850": {
+  "counties": [
+   "Waupaca"
+  ],
+  "incorporated": 1895,
+  "kind": "village"
+ },
+ "5524075": {
+  "counties": [
+   "Marquette"
+  ],
+  "incorporated": 1946,
+  "kind": "village"
+ },
+ "5524150": {
+  "counties": [
+   "Door"
+  ],
+  "incorporated": 1919,
+  "kind": "village"
+ },
+ "5524400": {
+  "counties": [
+   "Trempealeau"
+  ],
+  "incorporated": 1948,
+  "kind": "village"
+ },
+ "5524550": {
+  "counties": [
+   "Rock"
+  ],
+  "incorporated": 1896,
+  "kind": "city"
+ },
+ "5524700": {
+  "counties": [
+   "Sawyer"
+  ],
+  "incorporated": 1920,
+  "kind": "village"
+ },
+ "5524825": {
+  "counties": [
+   "Eau Claire"
+  ],
+  "incorporated": 1880,
+  "kind": "village"
+ },
+ "5525075": {
+  "counties": [
+   "Fond du Lac"
+  ],
+  "incorporated": 1921,
+  "kind": "village"
+ },
+ "5525125": {
+  "counties": [
+   "Eau Claire"
+  ],
+  "incorporated": 1906,
+  "kind": "village"
+ },
+ "5525150": {
+  "counties": [
+   "Columbia"
+  ],
+  "incorporated": 1903,
+  "kind": "village"
+ },
+ "5525600": {
+  "counties": [
+   "Grant"
+  ],
+  "incorporated": 1919,
+  "kind": "city"
+ },
+ "5525650": {
+  "counties": [
+   "Marathon"
+  ],
+  "incorporated": 1904,
+  "kind": "village"
+ },
+ "5525725": {
+  "counties": [
+   "Crawford"
+  ],
+  "incorporated": 1912,
+  "kind": "village"
+ },
+ "5525950": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1983,
+  "kind": "city"
+ },
+ "5526275": {
+  "counties": [
+   "Fond du Lac"
+  ],
+  "incorporated": 1852,
+  "kind": "city"
+ },
+ "5526350": {
+  "counties": [
+   "Walworth"
+  ],
+  "incorporated": 1924,
+  "kind": "village"
+ },
+ "5526400": {
+  "counties": [
+   "Rock"
+  ],
+  "incorporated": 1918,
+  "kind": "village"
+ },
+ "5526625": {
+  "counties": [
+   "Door"
+  ],
+  "incorporated": 1960,
+  "kind": "village"
+ },
+ "5526675": {
+  "counties": [
+   "Jefferson"
+  ],
+  "incorporated": 1878,
+  "kind": "city"
+ },
+ "5526850": {
+  "counties": [
+   "Buffalo"
+  ],
+  "incorporated": 1889,
+  "kind": "city"
+ },
+ "5526982": {
+  "counties": [
+   "Winnebago",
+   "Outagamie"
+  ],
+  "incorporated": 2016,
+  "kind": "village"
+ },
+ "5527000": {
+  "counties": [
+   "Dodge"
+  ],
+  "incorporated": 1938,
+  "kind": "city"
+ },
+ "5527075": {
+  "counties": [
+   "Milwaukee"
+  ],
+  "incorporated": 1926,
+  "kind": "village"
+ },
+ "5527125": {
+  "counties": [
+   "Manitowoc"
+  ],
+  "incorporated": 1960,
+  "kind": "village"
+ },
+ "5527300": {
+  "counties": [
+   "Milwaukee"
+  ],
+  "incorporated": 1956,
+  "kind": "city"
+ },
+ "5527500": {
+  "counties": [
+   "Polk"
+  ],
+  "incorporated": 1903,
+  "kind": "village"
+ },
+ "5527550": {
+  "counties": [
+   "Ozaukee"
+  ],
+  "incorporated": 1922,
+  "kind": "village"
+ },
+ "5527800": {
+  "counties": [
+   "Waupaca"
+  ],
+  "incorporated": 1882,
+  "kind": "village"
+ },
+ "5527950": {
+  "counties": [
+   "Adams"
+  ],
+  "incorporated": 1907,
+  "kind": "village"
+ },
+ "5528000": {
+  "counties": [
+   "Columbia"
+  ],
+  "incorporated": 1946,
+  "kind": "village"
+ },
+ "5528200": {
+  "counties": [
+   "Trempealeau"
+  ],
+  "incorporated": 1942,
+  "kind": "city"
+ },
+ "5528450": {
+  "counties": [
+   "Crawford"
+  ],
+  "incorporated": 1900,
+  "kind": "village"
+ },
+ "5528625": {
+  "counties": [
+   "Vernon"
+  ],
+  "incorporated": 1935,
+  "kind": "village"
+ },
+ "5528675": {
+  "counties": [
+   "Kenosha",
+   "Walworth"
+  ],
+  "incorporated": 1901,
+  "kind": "village"
+ },
+ "5528875": {
+  "counties": [
+   "Washington"
+  ],
+  "incorporated": 1927,
+  "kind": "village"
+ },
+ "5529050": {
+  "counties": [
+   "Oconto"
+  ],
+  "incorporated": 1944,
+  "kind": "city"
+ },
+ "5529175": {
+  "counties": [
+   "Taylor"
+  ],
+  "incorporated": 1914,
+  "kind": "village"
+ },
+ "5529350": {
+  "counties": [
+   "Sheboygan"
+  ],
+  "incorporated": 1913,
+  "kind": "village"
+ },
+ "5529400": {
+  "counties": [
+   "Milwaukee"
+  ],
+  "incorporated": 1950,
+  "kind": "city"
+ },
+ "5529475": {
+  "counties": [
+   "Rusk"
+  ],
+  "incorporated": 1915,
+  "kind": "village"
+ },
+ "5529625": {
+  "counties": [
+   "St. Croix"
+  ],
+  "incorporated": 1895,
+  "kind": "city"
+ },
+ "5530000": {
+  "counties": [
+   "Ozaukee"
+  ],
+  "incorporated": 1896,
+  "kind": "village"
+ },
+ "5530425": {
+  "counties": [
+   "Clark"
+  ],
+  "incorporated": 1916,
+  "kind": "village"
+ },
+ "5530450": {
+  "counties": [
+   "Burnett"
+  ],
+  "incorporated": 1887,
+  "kind": "village"
+ },
+ "5530575": {
+  "counties": [
+   "Lafayette"
+  ],
+  "incorporated": 1891,
+  "kind": "village"
+ },
+ "5531000": {
+  "counties": [
+   "Brown"
+  ],
+  "incorporated": 1854,
+  "kind": "city"
+ },
+ "5531125": {
+  "counties": [
+   "Milwaukee"
+  ],
+  "incorporated": 1939,
+  "kind": "village"
+ },
+ "5531175": {
+  "counties": [
+   "Milwaukee"
+  ],
+  "incorporated": 1957,
+  "kind": "city"
+ },
+ "5531300": {
+  "counties": [
+   "Green Lake"
+  ],
+  "incorporated": 1962,
+  "kind": "city"
+ },
+ "5531525": {
+  "counties": [
+   "Outagamie"
+  ],
+  "incorporated": 2021,
+  "kind": "village"
+ },
+ "5531575": {
+  "counties": [
+   "Clark"
+  ],
+  "incorporated": 1891,
+  "kind": "city"
+ },
+ "5531675": {
+  "counties": [
+   "Shawano"
+  ],
+  "incorporated": 1908,
+  "kind": "village"
+ },
+ "5532075": {
+  "counties": [
+   "Milwaukee"
+  ],
+  "incorporated": 1952,
+  "kind": "village"
+ },
+ "5532325": {
+  "counties": [
+   "St. Croix"
+  ],
+  "incorporated": 1880,
+  "kind": "village"
+ },
+ "5532450": {
+  "counties": [
+   "Waushara"
+  ],
+  "incorporated": 1902,
+  "kind": "village"
+ },
+ "5532790": {
+  "counties": [
+   "Calumet",
+   "Outagamie"
+  ],
+  "incorporated": 2013,
+  "kind": "village"
+ },
+ "5533000": {
+  "counties": [
+   "Dodge",
+   "Washington"
+  ],
+  "incorporated": 1883,
+  "kind": "city"
+ },
+ "5533100": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1891,
+  "kind": "village"
+ },
+ "5533175": {
+  "counties": [
+   "Marathon"
+  ],
+  "incorporated": 1912,
+  "kind": "village"
+ },
+ "5533225": {
+  "counties": [
+   "Barron"
+  ],
+  "incorporated": 1918,
+  "kind": "village"
+ },
+ "5533275": {
+  "counties": [
+   "Rusk"
+  ],
+  "incorporated": 1922,
+  "kind": "village"
+ },
+ "5533450": {
+  "counties": [
+   "Sawyer"
+  ],
+  "incorporated": 1915,
+  "kind": "city"
+ },
+ "5533500": {
+  "counties": [
+   "Grant",
+   "Lafayette"
+  ],
+  "incorporated": 1867,
+  "kind": "village"
+ },
+ "5534250": {
+  "counties": [
+   "Wood"
+  ],
+  "incorporated": 1973,
+  "kind": "village"
+ },
+ "5534450": {
+  "counties": [
+   "Iowa"
+  ],
+  "incorporated": 1873,
+  "kind": "village"
+ },
+ "5534575": {
+  "counties": [
+   "Calumet"
+  ],
+  "incorporated": 1898,
+  "kind": "village"
+ },
+ "5534825": {
+  "counties": [
+   "Vernon"
+  ],
+  "incorporated": 1885,
+  "kind": "city"
+ },
+ "5535075": {
+  "counties": [
+   "Jackson"
+  ],
+  "incorporated": 1920,
+  "kind": "village"
+ },
+ "5535150": {
+  "counties": [
+   "Brown"
+  ],
+  "incorporated": 2003,
+  "kind": "village"
+ },
+ "5535400": {
+  "counties": [
+   "Iowa"
+  ],
+  "incorporated": 1910,
+  "kind": "village"
+ },
+ "5535450": {
+  "counties": [
+   "La Crosse"
+  ],
+  "incorporated": 1946,
+  "kind": "village"
+ },
+ "5535750": {
+  "counties": [
+   "Dodge"
+  ],
+  "incorporated": 1897,
+  "kind": "city"
+ },
+ "5535850": {
+  "counties": [
+   "Outagamie"
+  ],
+  "incorporated": 1894,
+  "kind": "village"
+ },
+ "5535950": {
+  "counties": [
+   "Brown",
+   "Outagamie"
+  ],
+  "incorporated": 1959,
+  "kind": "village"
+ },
+ "5536025": {
+  "counties": [
+   "Sheboygan"
+  ],
+  "incorporated": 1967,
+  "kind": "village"
+ },
+ "5536250": {
+  "counties": [
+   "St. Croix"
+  ],
+  "incorporated": 1857,
+  "kind": "city"
+ },
+ "5536525": {
+  "counties": [
+   "Iron"
+  ],
+  "incorporated": 1918,
+  "kind": "city"
+ },
+ "5536625": {
+  "counties": [
+   "Dodge"
+  ],
+  "incorporated": 1870,
+  "kind": "village"
+ },
+ "5536675": {
+  "counties": [
+   "Juneau"
+  ],
+  "incorporated": 1914,
+  "kind": "village"
+ },
+ "5536800": {
+  "counties": [
+   "Trempealeau"
+  ],
+  "incorporated": 1942,
+  "kind": "city"
+ },
+ "5536925": {
+  "counties": [
+   "Rusk"
+  ],
+  "incorporated": 1907,
+  "kind": "village"
+ },
+ "5537025": {
+  "counties": [
+   "Waupaca"
+  ],
+  "incorporated": 1892,
+  "kind": "village"
+ },
+ "5537150": {
+  "counties": [
+   "Dodge"
+  ],
+  "incorporated": 1913,
+  "kind": "village"
+ },
+ "5537225": {
+  "counties": [
+   "Sauk"
+  ],
+  "incorporated": 1914,
+  "kind": "village"
+ },
+ "5537675": {
+  "counties": [
+   "Washington"
+  ],
+  "incorporated": 1912,
+  "kind": "village"
+ },
+ "5537825": {
+  "counties": [
+   "Rock"
+  ],
+  "incorporated": 1853,
+  "kind": "city"
+ },
+ "5537900": {
+  "counties": [
+   "Jefferson"
+  ],
+  "incorporated": 1878,
+  "kind": "city"
+ },
+ "5538350": {
+  "counties": [
+   "Jefferson"
+  ],
+  "incorporated": 1903,
+  "kind": "village"
+ },
+ "5538650": {
+  "counties": [
+   "Portage"
+  ],
+  "incorporated": 1911,
+  "kind": "village"
+ },
+ "5538675": {
+  "counties": [
+   "Dodge"
+  ],
+  "incorporated": 1887,
+  "kind": "city"
+ },
+ "5538800": {
+  "counties": [
+   "Calumet",
+   "Outagamie"
+  ],
+  "incorporated": 1885,
+  "kind": "city"
+ },
+ "5538900": {
+  "counties": [
+   "Dodge"
+  ],
+  "incorporated": 1958,
+  "kind": "village"
+ },
+ "5539000": {
+  "counties": [
+   "Manitowoc"
+  ],
+  "incorporated": 1971,
+  "kind": "village"
+ },
+ "5539150": {
+  "counties": [
+   "Monroe"
+  ],
+  "incorporated": 1894,
+  "kind": "village"
+ },
+ "5539175": {
+  "counties": [
+   "Price"
+  ],
+  "incorporated": 1903,
+  "kind": "village"
+ },
+ "5539225": {
+  "counties": [
+   "Kenosha"
+  ],
+  "incorporated": 1850,
+  "kind": "city"
+ },
+ "5539300": {
+  "counties": [
+   "Fond du Lac",
+   "Washington"
+  ],
+  "incorporated": 1895,
+  "kind": "village"
+ },
+ "5539350": {
+  "counties": [
+   "Kewaunee"
+  ],
+  "incorporated": 1883,
+  "kind": "city"
+ },
+ "5539525": {
+  "counties": [
+   "Calumet",
+   "Manitowoc"
+  ],
+  "incorporated": 1920,
+  "kind": "city"
+ },
+ "5539650": {
+  "counties": [
+   "Outagamie"
+  ],
+  "incorporated": 1910,
+  "kind": "village"
+ },
+ "5539750": {
+  "counties": [
+   "Green Lake"
+  ],
+  "incorporated": 1923,
+  "kind": "village"
+ },
+ "5539975": {
+  "counties": [
+   "Dunn"
+  ],
+  "incorporated": 1905,
+  "kind": "village"
+ },
+ "5540275": {
+  "counties": [
+   "Sheboygan"
+  ],
+  "incorporated": 1912,
+  "kind": "village"
+ },
+ "5540550": {
+  "counties": [
+   "Marathon"
+  ],
+  "incorporated": 2002,
+  "kind": "village"
+ },
+ "5540750": {
+  "counties": [
+   "Jefferson",
+   "Waukesha"
+  ],
+  "incorporated": 1931,
+  "kind": "village"
+ },
+ "5540775": {
+  "counties": [
+   "La Crosse"
+  ],
+  "incorporated": 1856,
+  "kind": "city"
+ },
+ "5540850": {
+  "counties": [
+   "Rusk"
+  ],
+  "incorporated": 1905,
+  "kind": "city"
+ },
+ "5540875": {
+  "counties": [
+   "Vernon"
+  ],
+  "incorporated": 1899,
+  "kind": "village"
+ },
+ "5541300": {
+  "counties": [
+   "Sauk"
+  ],
+  "incorporated": 1954,
+  "kind": "village"
+ },
+ "5541450": {
+  "counties": [
+   "Walworth"
+  ],
+  "incorporated": 1883,
+  "kind": "city"
+ },
+ "5541525": {
+  "counties": [
+   "Chippewa"
+  ],
+  "countiesAlso": [
+   "Eau Claire"
+  ],
+  "countiesAlsoWhy": "the Blue Book files this village under Chippewa alone, and the Wisconsin Elections Commission files it as Multiple Counties. Measured against the Census place boundary this app draws, 0.70% of the village — 0.265 km2 in four pieces — lies in Eau Claire County, so the Commission is right and this row is one county short.",
+  "incorporated": 2003,
+  "kind": "village"
+ },
+ "5541675": {
+  "counties": [
+   "Jefferson"
+  ],
+  "incorporated": 1905,
+  "kind": "city"
+ },
+ "5541725": {
+  "counties": [
+   "Douglas"
+  ],
+  "incorporated": 1907,
+  "kind": "village"
+ },
+ "5542250": {
+  "counties": [
+   "Grant"
+  ],
+  "incorporated": 1878,
+  "kind": "city"
+ },
+ "5542450": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1930,
+  "kind": "village"
+ },
+ "5542825": {
+  "counties": [
+   "Sauk"
+  ],
+  "incorporated": 1883,
+  "kind": "village"
+ },
+ "5543325": {
+  "counties": [
+   "Oconto"
+  ],
+  "incorporated": 1921,
+  "kind": "village"
+ },
+ "5544225": {
+  "counties": [
+   "Sauk"
+  ],
+  "incorporated": 1910,
+  "kind": "village"
+ },
+ "5544625": {
+  "counties": [
+   "Iowa"
+  ],
+  "incorporated": 1900,
+  "kind": "village"
+ },
+ "5544847": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 2023,
+  "kind": "village"
+ },
+ "5544950": {
+  "counties": [
+   "Outagamie"
+  ],
+  "incorporated": 1899,
+  "kind": "village"
+ },
+ "5545325": {
+  "counties": [
+   "Grant",
+   "Iowa"
+  ],
+  "incorporated": 1914,
+  "kind": "village"
+ },
+ "5545350": {
+  "counties": [
+   "Columbia"
+  ],
+  "incorporated": 1941,
+  "kind": "city"
+ },
+ "5545400": {
+  "counties": [
+   "Sauk"
+  ],
+  "incorporated": 1917,
+  "kind": "village"
+ },
+ "5545425": {
+  "counties": [
+   "Waushara"
+  ],
+  "incorporated": 1910,
+  "kind": "village"
+ },
+ "5545475": {
+  "counties": [
+   "Dodge"
+  ],
+  "incorporated": 1899,
+  "kind": "village"
+ },
+ "5545575": {
+  "counties": [
+   "Richland"
+  ],
+  "incorporated": 1886,
+  "kind": "village"
+ },
+ "5545950": {
+  "counties": [
+   "Dodge"
+  ],
+  "incorporated": 1894,
+  "kind": "village"
+ },
+ "5546075": {
+  "counties": [
+   "Clark"
+  ],
+  "incorporated": 1948,
+  "kind": "city"
+ },
+ "5546150": {
+  "counties": [
+   "Taylor"
+  ],
+  "incorporated": 1915,
+  "kind": "village"
+ },
+ "5546200": {
+  "counties": [
+   "Polk"
+  ],
+  "incorporated": 1905,
+  "kind": "village"
+ },
+ "5546400": {
+  "counties": [
+   "Kewaunee"
+  ],
+  "incorporated": 1908,
+  "kind": "village"
+ },
+ "5546600": {
+  "counties": [
+   "Juneau"
+  ],
+  "incorporated": 1903,
+  "kind": "village"
+ },
+ "5546675": {
+  "counties": [
+   "Crawford"
+  ],
+  "incorporated": 1899,
+  "kind": "village"
+ },
+ "5546850": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1920,
+  "kind": "village"
+ },
+ "5548000": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1856,
+  "kind": "city"
+ },
+ "5548175": {
+  "counties": [
+   "Pierce"
+  ],
+  "incorporated": 1887,
+  "kind": "village"
+ },
+ "5548225": {
+  "counties": [
+   "Marathon"
+  ],
+  "incorporated": 2015,
+  "kind": "village"
+ },
+ "5548350": {
+  "counties": [
+   "Waupaca"
+  ],
+  "incorporated": 1954,
+  "kind": "city"
+ },
+ "5548500": {
+  "counties": [
+   "Manitowoc"
+  ],
+  "incorporated": 1870,
+  "kind": "city"
+ },
+ "5548750": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1930,
+  "kind": "village"
+ },
+ "5549100": {
+  "counties": [
+   "Marathon"
+  ],
+  "incorporated": 1884,
+  "kind": "village"
+ },
+ "5549250": {
+  "counties": [
+   "Manitowoc"
+  ],
+  "incorporated": 1963,
+  "kind": "village"
+ },
+ "5549300": {
+  "counties": [
+   "Marinette"
+  ],
+  "incorporated": 1887,
+  "kind": "city"
+ },
+ "5549400": {
+  "counties": [
+   "Shawano",
+   "Waupaca"
+  ],
+  "incorporated": 1898,
+  "kind": "city"
+ },
+ "5549450": {
+  "counties": [
+   "Green Lake"
+  ],
+  "incorporated": 1959,
+  "kind": "city"
+ },
+ "5549500": {
+  "counties": [
+   "Green Lake"
+  ],
+  "incorporated": 1958,
+  "kind": "village"
+ },
+ "5549575": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1905,
+  "kind": "village"
+ },
+ "5549675": {
+  "counties": [
+   "Marathon",
+   "Wood"
+  ],
+  "incorporated": 1883,
+  "kind": "city"
+ },
+ "5549900": {
+  "counties": [
+   "Bayfield"
+  ],
+  "incorporated": 1925,
+  "kind": "village"
+ },
+ "5550000": {
+  "counties": [
+   "Shawano"
+  ],
+  "incorporated": 1901,
+  "kind": "village"
+ },
+ "5550025": {
+  "counties": [
+   "Juneau"
+  ],
+  "incorporated": 1883,
+  "kind": "city"
+ },
+ "5550200": {
+  "counties": [
+   "Dodge"
+  ],
+  "incorporated": 1885,
+  "kind": "city"
+ },
+ "5550225": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1885,
+  "kind": "village"
+ },
+ "5550425": {
+  "counties": [
+   "Taylor"
+  ],
+  "incorporated": 1889,
+  "kind": "city"
+ },
+ "5550700": {
+  "counties": [
+   "Ashland"
+  ],
+  "incorporated": 1907,
+  "kind": "city"
+ },
+ "5550750": {
+  "counties": [
+   "Jackson"
+  ],
+  "incorporated": 1914,
+  "kind": "village"
+ },
+ "5550800": {
+  "counties": [
+   "Monroe"
+  ],
+  "incorporated": 1922,
+  "kind": "village"
+ },
+ "5550825": {
+  "counties": [
+   "Calumet",
+   "Winnebago"
+  ],
+  "incorporated": 1874,
+  "kind": "city"
+ },
+ "5551000": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1892,
+  "kind": "village"
+ },
+ "5551025": {
+  "counties": [
+   "Dunn"
+  ],
+  "incorporated": 1882,
+  "kind": "city"
+ },
+ "5551150": {
+  "counties": [
+   "Ozaukee"
+  ],
+  "incorporated": 1957,
+  "kind": "city"
+ },
+ "5551250": {
+  "counties": [
+   "Lincoln"
+  ],
+  "incorporated": 1883,
+  "kind": "city"
+ },
+ "5551300": {
+  "counties": [
+   "Jackson"
+  ],
+  "incorporated": 1881,
+  "kind": "village"
+ },
+ "5551325": {
+  "counties": [
+   "Sauk"
+  ],
+  "incorporated": 1899,
+  "kind": "village"
+ },
+ "5551375": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1922,
+  "kind": "village"
+ },
+ "5551575": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1963,
+  "kind": "city"
+ },
+ "5551875": {
+  "counties": [
+   "Portage",
+   "Wood"
+  ],
+  "incorporated": 1933,
+  "kind": "village"
+ },
+ "5552075": {
+  "counties": [
+   "Polk"
+  ],
+  "incorporated": 1910,
+  "kind": "village"
+ },
+ "5552200": {
+  "counties": [
+   "Rock"
+  ],
+  "incorporated": 1969,
+  "kind": "city"
+ },
+ "5553000": {
+  "counties": [
+   "Milwaukee",
+   "Washington",
+   "Waukesha"
+  ],
+  "incorporated": 1846,
+  "kind": "city"
+ },
+ "5553100": {
+  "counties": [
+   "Iowa"
+  ],
+  "incorporated": 1857,
+  "kind": "city"
+ },
+ "5553250": {
+  "counties": [
+   "Washburn"
+  ],
+  "incorporated": 1915,
+  "kind": "village"
+ },
+ "5553325": {
+  "counties": [
+   "Manitowoc"
+  ],
+  "incorporated": 1950,
+  "kind": "village"
+ },
+ "5553600": {
+  "counties": [
+   "Buffalo"
+  ],
+  "incorporated": 1889,
+  "kind": "city"
+ },
+ "5553675": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1969,
+  "kind": "city"
+ },
+ "5553750": {
+  "counties": [
+   "Green"
+  ],
+  "incorporated": 1882,
+  "kind": "city"
+ },
+ "5553875": {
+  "counties": [
+   "Marquette"
+  ],
+  "incorporated": 1938,
+  "kind": "city"
+ },
+ "5553950": {
+  "counties": [
+   "Grant",
+   "Iowa"
+  ],
+  "incorporated": 1893,
+  "kind": "village"
+ },
+ "5554000": {
+  "counties": [
+   "Green"
+  ],
+  "incorporated": 1891,
+  "kind": "village"
+ },
+ "5554075": {
+  "counties": [
+   "Iron"
+  ],
+  "incorporated": 1924,
+  "kind": "city"
+ },
+ "5554500": {
+  "counties": [
+   "Marathon"
+  ],
+  "incorporated": 1931,
+  "kind": "city"
+ },
+ "5554650": {
+  "counties": [
+   "Fond du Lac"
+  ],
+  "incorporated": 1962,
+  "kind": "village"
+ },
+ "5554675": {
+  "counties": [
+   "Grant"
+  ],
+  "incorporated": 1919,
+  "kind": "village"
+ },
+ "5554725": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1899,
+  "kind": "village"
+ },
+ "5554875": {
+  "counties": [
+   "Racine"
+  ],
+  "incorporated": 2003,
+  "kind": "village"
+ },
+ "5554900": {
+  "counties": [
+   "Crawford"
+  ],
+  "incorporated": 1936,
+  "kind": "village"
+ },
+ "5555050": {
+  "counties": [
+   "Walworth",
+   "Waukesha"
+  ],
+  "incorporated": 1905,
+  "kind": "village"
+ },
+ "5555200": {
+  "counties": [
+   "Grant",
+   "Iowa"
+  ],
+  "incorporated": 1894,
+  "kind": "village"
+ },
+ "5555275": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1964,
+  "kind": "city"
+ },
+ "5555550": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1957,
+  "kind": "village"
+ },
+ "5555700": {
+  "counties": [
+   "Juneau"
+  ],
+  "incorporated": 1870,
+  "kind": "village"
+ },
+ "5555750": {
+  "counties": [
+   "Winnebago"
+  ],
+  "incorporated": 1873,
+  "kind": "city"
+ },
+ "5555800": {
+  "counties": [
+   "Clark"
+  ],
+  "incorporated": 1882,
+  "kind": "city"
+ },
+ "5555875": {
+  "counties": [
+   "Wood"
+  ],
+  "incorporated": 1926,
+  "kind": "city"
+ },
+ "5555950": {
+  "counties": [
+   "Buffalo"
+  ],
+  "incorporated": 1978,
+  "kind": "village"
+ },
+ "5556000": {
+  "counties": [
+   "Portage"
+  ],
+  "incorporated": 1913,
+  "kind": "village"
+ },
+ "5556075": {
+  "counties": [
+   "Dodge"
+  ],
+  "incorporated": 1902,
+  "kind": "village"
+ },
+ "5556125": {
+  "counties": [
+   "Marquette"
+  ],
+  "incorporated": 1906,
+  "kind": "village"
+ },
+ "5556350": {
+  "counties": [
+   "Barron",
+   "Chippewa"
+  ],
+  "incorporated": 1902,
+  "kind": "village"
+ },
+ "5556375": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1959,
+  "kind": "city"
+ },
+ "5556450": {
+  "counties": [
+   "Ozaukee",
+   "Washington"
+  ],
+  "incorporated": 1973,
+  "kind": "village"
+ },
+ "5556700": {
+  "counties": [
+   "Green"
+  ],
+  "incorporated": 1901,
+  "kind": "village"
+ },
+ "5556800": {
+  "counties": [
+   "Calumet"
+  ],
+  "incorporated": 1926,
+  "kind": "city"
+ },
+ "5556900": {
+  "counties": [
+   "Juneau"
+  ],
+  "incorporated": 1889,
+  "kind": "city"
+ },
+ "5556925": {
+  "counties": [
+   "Outagamie",
+   "Waupaca"
+  ],
+  "incorporated": 1877,
+  "kind": "city"
+ },
+ "5557100": {
+  "counties": [
+   "St. Croix"
+  ],
+  "incorporated": 1885,
+  "kind": "city"
+ },
+ "5557325": {
+  "counties": [
+   "Marinette"
+  ],
+  "incorporated": 1992,
+  "kind": "city"
+ },
+ "5557375": {
+  "counties": [
+   "Outagamie"
+  ],
+  "incorporated": 1967,
+  "kind": "village"
+ },
+ "5557700": {
+  "counties": [
+   "Racine"
+  ],
+  "incorporated": 1951,
+  "kind": "village"
+ },
+ "5558000": {
+  "counties": [
+   "Fond du Lac"
+  ],
+  "incorporated": 1903,
+  "kind": "village"
+ },
+ "5558025": {
+  "counties": [
+   "Sauk"
+  ],
+  "incorporated": 1893,
+  "kind": "village"
+ },
+ "5558050": {
+  "counties": [
+   "St. Croix"
+  ],
+  "incorporated": 1912,
+  "kind": "village"
+ },
+ "5558400": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1919,
+  "kind": "village"
+ },
+ "5558575": {
+  "counties": [
+   "Monroe"
+  ],
+  "incorporated": 1894,
+  "kind": "village"
+ },
+ "5558800": {
+  "counties": [
+   "Milwaukee"
+  ],
+  "incorporated": 1955,
+  "kind": "city"
+ },
+ "5558850": {
+  "counties": [
+   "Monroe"
+  ],
+  "incorporated": 1988,
+  "kind": "village"
+ },
+ "5558900": {
+  "counties": [
+   "Fond du Lac"
+  ],
+  "incorporated": 1903,
+  "kind": "village"
+ },
+ "5559250": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1875,
+  "kind": "city"
+ },
+ "5559300": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1959,
+  "kind": "village"
+ },
+ "5559350": {
+  "counties": [
+   "Oconto"
+  ],
+  "incorporated": 1869,
+  "kind": "city"
+ },
+ "5559400": {
+  "counties": [
+   "Oconto"
+  ],
+  "incorporated": 1919,
+  "kind": "city"
+ },
+ "5559475": {
+  "counties": [
+   "Waupaca"
+  ],
+  "incorporated": 1912,
+  "kind": "village"
+ },
+ "5559800": {
+  "counties": [
+   "Douglas"
+  ],
+  "incorporated": 1917,
+  "kind": "village"
+ },
+ "5559875": {
+  "counties": [
+   "Winnebago"
+  ],
+  "incorporated": 1944,
+  "kind": "city"
+ },
+ "5559925": {
+  "counties": [
+   "La Crosse"
+  ],
+  "incorporated": 1887,
+  "kind": "city"
+ },
+ "5560075": {
+  "counties": [
+   "Vernon",
+   "Monroe"
+  ],
+  "incorporated": 1890,
+  "kind": "village"
+ },
+ "5560100": {
+  "counties": [
+   "Sheboygan"
+  ],
+  "incorporated": 1909,
+  "kind": "village"
+ },
+ "5560200": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1883,
+  "kind": "village"
+ },
+ "5560250": {
+  "counties": [
+   "Rock"
+  ],
+  "incorporated": 1900,
+  "kind": "village"
+ },
+ "5560450": {
+  "counties": [
+   "Polk"
+  ],
+  "incorporated": 1886,
+  "kind": "village"
+ },
+ "5560500": {
+  "counties": [
+   "Winnebago"
+  ],
+  "incorporated": 1853,
+  "kind": "city"
+ },
+ "5560575": {
+  "counties": [
+   "Trempealeau"
+  ],
+  "incorporated": 1941,
+  "kind": "city"
+ },
+ "5560825": {
+  "counties": [
+   "Clark"
+  ],
+  "incorporated": 1925,
+  "kind": "city"
+ },
+ "5560875": {
+  "counties": [
+   "Marquette"
+  ],
+  "incorporated": 1912,
+  "kind": "village"
+ },
+ "5560975": {
+  "counties": [
+   "Kenosha"
+  ],
+  "incorporated": 1960,
+  "kind": "village"
+ },
+ "5561025": {
+  "counties": [
+   "Jefferson"
+  ],
+  "incorporated": 1866,
+  "kind": "village"
+ },
+ "5561100": {
+  "counties": [
+   "Columbia"
+  ],
+  "incorporated": 1894,
+  "kind": "village"
+ },
+ "5561200": {
+  "counties": [
+   "Price"
+  ],
+  "incorporated": 1912,
+  "kind": "city"
+ },
+ "5561325": {
+  "counties": [
+   "Portage"
+  ],
+  "incorporated": 1938,
+  "kind": "village"
+ },
+ "5561425": {
+  "counties": [
+   "Grant"
+  ],
+  "incorporated": 1921,
+  "kind": "village"
+ },
+ "5561925": {
+  "counties": [
+   "Pepin"
+  ],
+  "incorporated": 1860,
+  "kind": "village"
+ },
+ "5562175": {
+  "counties": [
+   "Marinette"
+  ],
+  "incorporated": 1903,
+  "kind": "city"
+ },
+ "5562240": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1999,
+  "kind": "city"
+ },
+ "5562250": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1876,
+  "kind": "village"
+ },
+ "5562450": {
+  "counties": [
+   "Price"
+  ],
+  "incorporated": 1891,
+  "kind": "city"
+ },
+ "5562675": {
+  "counties": [
+   "Trempealeau"
+  ],
+  "incorporated": 1956,
+  "kind": "village"
+ },
+ "5563100": {
+  "counties": [
+   "Wood"
+  ],
+  "incorporated": 1887,
+  "kind": "city"
+ },
+ "5563125": {
+  "counties": [
+   "Sauk"
+  ],
+  "incorporated": 1912,
+  "kind": "village"
+ },
+ "5563150": {
+  "counties": [
+   "Waushara"
+  ],
+  "incorporated": 1882,
+  "kind": "village"
+ },
+ "5563250": {
+  "counties": [
+   "Grant"
+  ],
+  "incorporated": 1876,
+  "kind": "city"
+ },
+ "5563300": {
+  "counties": [
+   "Kenosha"
+  ],
+  "incorporated": 1989,
+  "kind": "village"
+ },
+ "5563525": {
+  "counties": [
+   "Portage"
+  ],
+  "incorporated": 1971,
+  "kind": "village"
+ },
+ "5563600": {
+  "counties": [
+   "Pierce"
+  ],
+  "incorporated": 1909,
+  "kind": "village"
+ },
+ "5563700": {
+  "counties": [
+   "Sheboygan"
+  ],
+  "incorporated": 1877,
+  "kind": "city"
+ },
+ "5563975": {
+  "counties": [
+   "Douglas"
+  ],
+  "incorporated": 1917,
+  "kind": "village"
+ },
+ "5564100": {
+  "counties": [
+   "Columbia"
+  ],
+  "incorporated": 1854,
+  "kind": "city"
+ },
+ "5564175": {
+  "counties": [
+   "Wood"
+  ],
+  "incorporated": 1902,
+  "kind": "village"
+ },
+ "5564450": {
+  "counties": [
+   "Ozaukee"
+  ],
+  "incorporated": 1882,
+  "kind": "city"
+ },
+ "5564625": {
+  "counties": [
+   "Grant"
+  ],
+  "incorporated": 1887,
+  "kind": "village"
+ },
+ "5564675": {
+  "counties": [
+   "Calumet"
+  ],
+  "incorporated": 1980,
+  "kind": "village"
+ },
+ "5564750": {
+  "counties": [
+   "Marinette"
+  ],
+  "incorporated": 1914,
+  "kind": "village"
+ },
+ "5564900": {
+  "counties": [
+   "Columbia"
+  ],
+  "incorporated": 1892,
+  "kind": "village"
+ },
+ "5565050": {
+  "counties": [
+   "Crawford"
+  ],
+  "incorporated": 1872,
+  "kind": "city"
+ },
+ "5565100": {
+  "counties": [
+   "Sauk"
+  ],
+  "incorporated": 1885,
+  "kind": "village"
+ },
+ "5565150": {
+  "counties": [
+   "Barron"
+  ],
+  "incorporated": 1901,
+  "kind": "village"
+ },
+ "5565325": {
+  "counties": [
+   "Price"
+  ],
+  "incorporated": 1899,
+  "kind": "village"
+ },
+ "5565375": {
+  "counties": [
+   "Pierce"
+  ],
+  "incorporated": 1857,
+  "kind": "city"
+ },
+ "5565600": {
+  "counties": [
+   "Green Lake"
+  ],
+  "incorporated": 1920,
+  "kind": "city"
+ },
+ "5565675": {
+  "counties": [
+   "Brown",
+   "Oconto",
+   "Shawano"
+  ],
+  "incorporated": 1910,
+  "kind": "village"
+ },
+ "5566000": {
+  "counties": [
+   "Racine"
+  ],
+  "incorporated": 1848,
+  "kind": "city"
+ },
+ "5566050": {
+  "counties": [
+   "Sawyer"
+  ],
+  "incorporated": 1953,
+  "kind": "village"
+ },
+ "5566150": {
+  "counties": [
+   "Columbia",
+   "Dodge"
+  ],
+  "incorporated": 1870,
+  "kind": "village"
+ },
+ "5566200": {
+  "counties": [
+   "Sheboygan"
+  ],
+  "incorporated": 1907,
+  "kind": "village"
+ },
+ "5566350": {
+  "counties": [
+   "Racine"
+  ],
+  "incorporated": 2019,
+  "kind": "village"
+ },
+ "5566450": {
+  "counties": [
+   "Vernon"
+  ],
+  "incorporated": 1898,
+  "kind": "village"
+ },
+ "5566625": {
+  "counties": [
+   "Waushara"
+  ],
+  "incorporated": 1904,
+  "kind": "village"
+ },
+ "5566800": {
+  "counties": [
+   "Sauk"
+  ],
+  "incorporated": 1887,
+  "kind": "city"
+ },
+ "5566875": {
+  "counties": [
+   "Manitowoc"
+  ],
+  "incorporated": 1892,
+  "kind": "village"
+ },
+ "5566900": {
+  "counties": [
+   "Dodge"
+  ],
+  "incorporated": 1899,
+  "kind": "village"
+ },
+ "5567100": {
+  "counties": [
+   "Iowa"
+  ],
+  "incorporated": 1902,
+  "kind": "village"
+ },
+ "5567200": {
+  "counties": [
+   "Oneida"
+  ],
+  "incorporated": 1894,
+  "kind": "city"
+ },
+ "5567275": {
+  "counties": [
+   "Taylor"
+  ],
+  "incorporated": 1902,
+  "kind": "village"
+ },
+ "5567320": {
+  "counties": [
+   "Marathon"
+  ],
+  "incorporated": 2023,
+  "kind": "village"
+ },
+ "5567350": {
+  "counties": [
+   "Barron"
+  ],
+  "incorporated": 1887,
+  "kind": "city"
+ },
+ "5567475": {
+  "counties": [
+   "Washington"
+  ],
+  "incorporated": 2008,
+  "kind": "village"
+ },
+ "5567625": {
+  "counties": [
+   "Richland"
+  ],
+  "incorporated": 1887,
+  "kind": "city"
+ },
+ "5567800": {
+  "counties": [
+   "Dunn"
+  ],
+  "incorporated": 1921,
+  "kind": "village"
+ },
+ "5567875": {
+  "counties": [
+   "Iowa"
+  ],
+  "incorporated": 1902,
+  "kind": "village"
+ },
+ "5568100": {
+  "counties": [
+   "Columbia"
+  ],
+  "incorporated": 1887,
+  "kind": "village"
+ },
+ "5568175": {
+  "counties": [
+   "Fond du Lac"
+  ],
+  "incorporated": 1858,
+  "kind": "city"
+ },
+ "5568275": {
+  "counties": [
+   "Pierce",
+   "St. Croix"
+  ],
+  "incorporated": 1875,
+  "kind": "city"
+ },
+ "5568325": {
+  "counties": [
+   "Milwaukee"
+  ],
+  "incorporated": 1930,
+  "kind": "village"
+ },
+ "5568475": {
+  "counties": [
+   "St. Croix"
+  ],
+  "incorporated": 1945,
+  "kind": "village"
+ },
+ "5568550": {
+  "counties": [
+   "Racine"
+  ],
+  "incorporated": 1912,
+  "kind": "village"
+ },
+ "5568725": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1914,
+  "kind": "village"
+ },
+ "5568900": {
+  "counties": [
+   "La Crosse",
+   "Monroe"
+  ],
+  "incorporated": 1919,
+  "kind": "village"
+ },
+ "5568975": {
+  "counties": [
+   "Sauk"
+  ],
+  "incorporated": 1894,
+  "kind": "village"
+ },
+ "5569525": {
+  "counties": [
+   "Fond du Lac"
+  ],
+  "incorporated": 1915,
+  "kind": "village"
+ },
+ "5569575": {
+  "counties": [
+   "Portage"
+  ],
+  "incorporated": 1907,
+  "kind": "village"
+ },
+ "5569725": {
+  "counties": [
+   "Marathon"
+  ],
+  "incorporated": 1917,
+  "kind": "village"
+ },
+ "5570000": {
+  "counties": [
+   "Wood"
+  ],
+  "incorporated": 1960,
+  "kind": "village"
+ },
+ "5570500": {
+  "counties": [
+   "Fond du Lac"
+  ],
+  "incorporated": 1909,
+  "kind": "village"
+ },
+ "5570550": {
+  "counties": [
+   "Polk"
+  ],
+  "incorporated": 1958,
+  "kind": "city"
+ },
+ "5570650": {
+  "counties": [
+   "Milwaukee"
+  ],
+  "incorporated": 1951,
+  "kind": "city"
+ },
+ "5571025": {
+  "counties": [
+   "Manitowoc"
+  ],
+  "incorporated": 1956,
+  "kind": "village"
+ },
+ "5571163": {
+  "counties": [
+   "Kenosha"
+  ],
+  "incorporated": 2017,
+  "kind": "village"
+ },
+ "5571650": {
+  "counties": [
+   "Sauk"
+  ],
+  "incorporated": 1854,
+  "kind": "village"
+ },
+ "5571700": {
+  "counties": [
+   "Ozaukee"
+  ],
+  "incorporated": 1915,
+  "kind": "village"
+ },
+ "5571975": {
+  "counties": [
+   "Waupaca"
+  ],
+  "incorporated": 1894,
+  "kind": "village"
+ },
+ "5572150": {
+  "counties": [
+   "Marathon"
+  ],
+  "incorporated": 1951,
+  "kind": "city"
+ },
+ "5572725": {
+  "counties": [
+   "Outagamie"
+  ],
+  "incorporated": 1879,
+  "kind": "city"
+ },
+ "5572875": {
+  "counties": [
+   "Walworth"
+  ],
+  "incorporated": 1892,
+  "kind": "village"
+ },
+ "5572925": {
+  "counties": [
+   "Shawano"
+  ],
+  "incorporated": 1874,
+  "kind": "city"
+ },
+ "5572975": {
+  "counties": [
+   "Sheboygan"
+  ],
+  "incorporated": 1853,
+  "kind": "city"
+ },
+ "5573025": {
+  "counties": [
+   "Sheboygan"
+  ],
+  "incorporated": 1913,
+  "kind": "city"
+ },
+ "5573175": {
+  "counties": [
+   "Rusk"
+  ],
+  "incorporated": 1917,
+  "kind": "village"
+ },
+ "5573200": {
+  "counties": [
+   "Washburn"
+  ],
+  "incorporated": 1961,
+  "kind": "city"
+ },
+ "5573525": {
+  "counties": [
+   "Calumet"
+  ],
+  "incorporated": 1968,
+  "kind": "village"
+ },
+ "5573625": {
+  "counties": [
+   "Outagamie"
+  ],
+  "incorporated": 1903,
+  "kind": "village"
+ },
+ "5573725": {
+  "counties": [
+   "Milwaukee"
+  ],
+  "incorporated": 1900,
+  "kind": "village"
+ },
+ "5573750": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1927,
+  "kind": "village"
+ },
+ "5573825": {
+  "counties": [
+   "Lafayette"
+  ],
+  "incorporated": 1889,
+  "kind": "city"
+ },
+ "5574175": {
+  "counties": [
+   "Burnett"
+  ],
+  "incorporated": 1948,
+  "kind": "village"
+ },
+ "5574225": {
+  "counties": [
+   "Door"
+  ],
+  "incorporated": 1912,
+  "kind": "village"
+ },
+ "5574400": {
+  "counties": [
+   "Washington"
+  ],
+  "incorporated": 1869,
+  "kind": "village"
+ },
+ "5574550": {
+  "counties": [
+   "Crawford"
+  ],
+  "incorporated": 1888,
+  "kind": "village"
+ },
+ "5574575": {
+  "counties": [
+   "Douglas"
+  ],
+  "incorporated": 1920,
+  "kind": "village"
+ },
+ "5574625": {
+  "counties": [
+   "Kenosha"
+  ],
+  "incorporated": 2015,
+  "kind": "village"
+ },
+ "5574675": {
+  "counties": [
+   "St. Croix"
+  ],
+  "incorporated": 1915,
+  "kind": "village"
+ },
+ "5575125": {
+  "counties": [
+   "Milwaukee"
+  ],
+  "incorporated": 1897,
+  "kind": "city"
+ },
+ "5575275": {
+  "counties": [
+   "Lafayette"
+  ],
+  "incorporated": 1911,
+  "kind": "village"
+ },
+ "5575325": {
+  "counties": [
+   "Monroe"
+  ],
+  "incorporated": 1883,
+  "kind": "city"
+ },
+ "5575400": {
+  "counties": [
+   "Marathon"
+  ],
+  "incorporated": 1902,
+  "kind": "village"
+ },
+ "5575625": {
+  "counties": [
+   "Washburn"
+  ],
+  "incorporated": 1909,
+  "kind": "city"
+ },
+ "5576025": {
+  "counties": [
+   "Sauk"
+  ],
+  "incorporated": 1869,
+  "kind": "village"
+ },
+ "5576300": {
+  "counties": [
+   "Pierce",
+   "St. Croix"
+  ],
+  "incorporated": 1895,
+  "kind": "village"
+ },
+ "5576625": {
+  "counties": [
+   "Chippewa",
+   "Clark"
+  ],
+  "incorporated": 1898,
+  "kind": "city"
+ },
+ "5576825": {
+  "counties": [
+   "St. Croix"
+  ],
+  "incorporated": 1900,
+  "kind": "village"
+ },
+ "5577100": {
+  "counties": [
+   "Taylor"
+  ],
+  "incorporated": 1949,
+  "kind": "village"
+ },
+ "5577175": {
+  "counties": [
+   "Crawford"
+  ],
+  "incorporated": 1900,
+  "kind": "village"
+ },
+ "5577200": {
+  "counties": [
+   "Portage"
+  ],
+  "incorporated": 1858,
+  "kind": "city"
+ },
+ "5577400": {
+  "counties": [
+   "Calumet"
+  ],
+  "incorporated": 1908,
+  "kind": "village"
+ },
+ "5577475": {
+  "counties": [
+   "Pepin"
+  ],
+  "incorporated": 1903,
+  "kind": "village"
+ },
+ "5577550": {
+  "counties": [
+   "Vernon"
+  ],
+  "incorporated": 1911,
+  "kind": "village"
+ },
+ "5577675": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1882,
+  "kind": "city"
+ },
+ "5577750": {
+  "counties": [
+   "Marathon"
+  ],
+  "incorporated": 1910,
+  "kind": "village"
+ },
+ "5577825": {
+  "counties": [
+   "Trempealeau"
+  ],
+  "incorporated": 1948,
+  "kind": "village"
+ },
+ "5577875": {
+  "counties": [
+   "Door"
+  ],
+  "incorporated": 1883,
+  "kind": "city"
+ },
+ "5577925": {
+  "counties": [
+   "Racine"
+  ],
+  "incorporated": 1907,
+  "kind": "village"
+ },
+ "5577975": {
+  "counties": [
+   "Brown"
+  ],
+  "incorporated": 2003,
+  "kind": "village"
+ },
+ "5578175": {
+  "counties": [
+   "Jefferson"
+  ],
+  "incorporated": 1915,
+  "kind": "village"
+ },
+ "5578375": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 2010,
+  "kind": "village"
+ },
+ "5578600": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1958,
+  "kind": "city"
+ },
+ "5578650": {
+  "counties": [
+   "Douglas"
+  ],
+  "incorporated": 1858,
+  "kind": "city"
+ },
+ "5578660": {
+  "counties": [
+   "Douglas"
+  ],
+  "incorporated": 1949,
+  "kind": "village"
+ },
+ "5578725": {
+  "counties": [
+   "Oconto"
+  ],
+  "incorporated": 1914,
+  "kind": "village"
+ },
+ "5578750": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1924,
+  "kind": "village"
+ },
+ "5579150": {
+  "counties": [
+   "Jackson"
+  ],
+  "incorporated": 1919,
+  "kind": "village"
+ },
+ "5579250": {
+  "counties": [
+   "Grant"
+  ],
+  "incorporated": 1940,
+  "kind": "village"
+ },
+ "5579375": {
+  "counties": [
+   "Dodge"
+  ],
+  "incorporated": 1898,
+  "kind": "village"
+ },
+ "5579475": {
+  "counties": [
+   "Ozaukee"
+  ],
+  "incorporated": 1910,
+  "kind": "village"
+ },
+ "5579625": {
+  "counties": [
+   "Clark"
+  ],
+  "incorporated": 1948,
+  "kind": "city"
+ },
+ "5579825": {
+  "counties": [
+   "Shawano"
+  ],
+  "incorporated": 1896,
+  "kind": "village"
+ },
+ "5580075": {
+  "counties": [
+   "Monroe"
+  ],
+  "incorporated": 1883,
+  "kind": "city"
+ },
+ "5580125": {
+  "counties": [
+   "Lincoln"
+  ],
+  "incorporated": 1891,
+  "kind": "city"
+ },
+ "5580225": {
+  "counties": [
+   "Rusk"
+  ],
+  "incorporated": 1911,
+  "kind": "village"
+ },
+ "5580475": {
+  "counties": [
+   "Trempealeau"
+  ],
+  "incorporated": 1867,
+  "kind": "village"
+ },
+ "5581075": {
+  "counties": [
+   "Barron",
+   "Polk"
+  ],
+  "incorporated": 1898,
+  "kind": "village"
+ },
+ "5581250": {
+  "counties": [
+   "Kenosha"
+  ],
+  "incorporated": 1937,
+  "kind": "village"
+ },
+ "5581325": {
+  "counties": [
+   "Manitowoc"
+  ],
+  "incorporated": 1878,
+  "kind": "city"
+ },
+ "5581725": {
+  "counties": [
+   "Juneau"
+  ],
+  "incorporated": 1913,
+  "kind": "village"
+ },
+ "5581775": {
+  "counties": [
+   "Racine"
+  ],
+  "incorporated": 1893,
+  "kind": "village"
+ },
+ "5581850": {
+  "counties": [
+   "Clark",
+   "Marathon"
+  ],
+  "incorporated": 1903,
+  "kind": "village"
+ },
+ "5582200": {
+  "counties": [
+   "Manitowoc"
+  ],
+  "incorporated": 1919,
+  "kind": "village"
+ },
+ "5582575": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 2020,
+  "kind": "village"
+ },
+ "5582600": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1977,
+  "kind": "city"
+ },
+ "5582650": {
+  "counties": [
+   "Wood"
+  ],
+  "incorporated": 1948,
+  "kind": "village"
+ },
+ "5582900": {
+  "counties": [
+   "Richland",
+   "Vernon"
+  ],
+  "incorporated": 1899,
+  "kind": "village"
+ },
+ "5582925": {
+  "counties": [
+   "Vernon"
+  ],
+  "incorporated": 1885,
+  "kind": "city"
+ },
+ "5583100": {
+  "counties": [
+   "Sheboygan"
+  ],
+  "incorporated": 1922,
+  "kind": "village"
+ },
+ "5583175": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1922,
+  "kind": "village"
+ },
+ "5583250": {
+  "counties": [
+   "Walworth"
+  ],
+  "incorporated": 1901,
+  "kind": "village"
+ },
+ "5583450": {
+  "counties": [
+   "Monroe"
+  ],
+  "incorporated": 1973,
+  "kind": "village"
+ },
+ "5583525": {
+  "counties": [
+   "Bayfield"
+  ],
+  "incorporated": 1904,
+  "kind": "city"
+ },
+ "5583825": {
+  "counties": [
+   "Racine"
+  ],
+  "incorporated": 1906,
+  "kind": "village"
+ },
+ "5583925": {
+  "counties": [
+   "Jefferson"
+  ],
+  "incorporated": 1962,
+  "kind": "city"
+ },
+ "5583975": {
+  "counties": [
+   "Dodge",
+   "Jefferson"
+  ],
+  "incorporated": 1853,
+  "kind": "city"
+ },
+ "5584250": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 1895,
+  "kind": "city"
+ },
+ "5584275": {
+  "counties": [
+   "Waukesha"
+  ],
+  "incorporated": 2020,
+  "kind": "village"
+ },
+ "5584350": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 1893,
+  "kind": "village"
+ },
+ "5584375": {
+  "counties": [
+   "Waupaca"
+  ],
+  "incorporated": 1875,
+  "kind": "city"
+ },
+ "5584425": {
+  "counties": [
+   "Dodge",
+   "Fond du Lac"
+  ],
+  "incorporated": 1878,
+  "kind": "city"
+ },
+ "5584475": {
+  "counties": [
+   "Marathon"
+  ],
+  "incorporated": 1872,
+  "kind": "city"
+ },
+ "5584525": {
+  "counties": [
+   "Marinette"
+  ],
+  "incorporated": 1924,
+  "kind": "village"
+ },
+ "5584625": {
+  "counties": [
+   "Waushara"
+  ],
+  "incorporated": 1901,
+  "kind": "city"
+ },
+ "5584675": {
+  "counties": [
+   "Milwaukee"
+  ],
+  "incorporated": 1897,
+  "kind": "city"
+ },
+ "5584725": {
+  "counties": [
+   "Crawford"
+  ],
+  "incorporated": 1890,
+  "kind": "village"
+ },
+ "5585025": {
+  "counties": [
+   "Burnett"
+  ],
+  "incorporated": 1916,
+  "kind": "village"
+ },
+ "5585300": {
+  "counties": [
+   "Milwaukee"
+  ],
+  "incorporated": 1906,
+  "kind": "city"
+ },
+ "5585325": {
+  "counties": [
+   "Sauk"
+  ],
+  "incorporated": 1956,
+  "kind": "village"
+ },
+ "5585350": {
+  "counties": [
+   "Washington"
+  ],
+  "incorporated": 1885,
+  "kind": "city"
+ },
+ "5585475": {
+  "counties": [
+   "Vernon"
+  ],
+  "incorporated": 1920,
+  "kind": "city"
+ },
+ "5585575": {
+  "counties": [
+   "Marquette"
+  ],
+  "incorporated": 1902,
+  "kind": "village"
+ },
+ "5585875": {
+  "counties": [
+   "Milwaukee"
+  ],
+  "incorporated": 1906,
+  "kind": "village"
+ },
+ "5586025": {
+  "counties": [
+   "Marathon"
+  ],
+  "incorporated": 1996,
+  "kind": "village"
+ },
+ "5586275": {
+  "counties": [
+   "La Crosse"
+  ],
+  "incorporated": 1893,
+  "kind": "village"
+ },
+ "5586400": {
+  "counties": [
+   "Waupaca"
+  ],
+  "incorporated": 1939,
+  "kind": "city"
+ },
+ "5586450": {
+  "counties": [
+   "Rusk"
+  ],
+  "incorporated": 1906,
+  "kind": "village"
+ },
+ "5586575": {
+  "counties": [
+   "Dunn"
+  ],
+  "incorporated": 1922,
+  "kind": "village"
+ },
+ "5586700": {
+  "counties": [
+   "Milwaukee"
+  ],
+  "incorporated": 1892,
+  "kind": "village"
+ },
+ "5586725": {
+  "counties": [
+   "Trempealeau"
+  ],
+  "incorporated": 1941,
+  "kind": "city"
+ },
+ "5586750": {
+  "counties": [
+   "Langlade"
+  ],
+  "incorporated": 1926,
+  "kind": "village"
+ },
+ "5586775": {
+  "counties": [
+   "Manitowoc"
+  ],
+  "incorporated": 1958,
+  "kind": "village"
+ },
+ "5586925": {
+  "counties": [
+   "Jefferson",
+   "Walworth"
+  ],
+  "incorporated": 1885,
+  "kind": "city"
+ },
+ "5586975": {
+  "counties": [
+   "Portage"
+  ],
+  "incorporated": 1947,
+  "kind": "village"
+ },
+ "5587075": {
+  "counties": [
+   "Waushara"
+  ],
+  "incorporated": 1904,
+  "kind": "village"
+ },
+ "5587200": {
+  "counties": [
+   "Walworth"
+  ],
+  "incorporated": 1919,
+  "kind": "village"
+ },
+ "5587475": {
+  "counties": [
+   "St. Croix"
+  ],
+  "incorporated": 1911,
+  "kind": "village"
+ },
+ "5587525": {
+  "counties": [
+   "Monroe"
+  ],
+  "incorporated": 1890,
+  "kind": "village"
+ },
+ "5587700": {
+  "counties": [
+   "Racine"
+  ],
+  "incorporated": 1954,
+  "kind": "village"
+ },
+ "5587725": {
+  "counties": [
+   "Dane"
+  ],
+  "incorporated": 2015,
+  "kind": "village"
+ },
+ "5587900": {
+  "counties": [
+   "Winnebago"
+  ],
+  "incorporated": 1887,
+  "kind": "village"
+ },
+ "5587975": {
+  "counties": [
+   "Sawyer"
+  ],
+  "incorporated": 1973,
+  "kind": "village"
+ },
+ "5588150": {
+  "counties": [
+   "Adams",
+   "Columbia",
+   "Juneau",
+   "Sauk"
+  ],
+  "incorporated": 1925,
+  "kind": "city"
+ },
+ "5588200": {
+  "counties": [
+   "Wood"
+  ],
+  "incorporated": 1869,
+  "kind": "city"
+ },
+ "5588275": {
+  "counties": [
+   "Clark"
+  ],
+  "incorporated": 1901,
+  "kind": "village"
+ },
+ "5588325": {
+  "counties": [
+   "Shawano"
+  ],
+  "incorporated": 1893,
+  "kind": "village"
+ },
+ "5588500": {
+  "counties": [
+   "Juneau"
+  ],
+  "incorporated": 1878,
+  "kind": "village"
+ },
+ "5588825": {
+  "counties": [
+   "Grant"
+  ],
+  "incorporated": 1917,
+  "kind": "village"
+ },
+ "5589025": {
+  "counties": [
+   "St. Croix"
+  ],
+  "incorporated": 1911,
+  "kind": "village"
+ },
+ "5589150": {
+  "counties": [
+   "Brown",
+   "Outagamie"
+  ],
+  "incorporated": 1901,
+  "kind": "village"
+ },
+ "5589275": {
+  "counties": [
+   "Monroe"
+  ],
+  "incorporated": 1923,
+  "kind": "village"
+ },
+ "5589300": {
+  "counties": [
+   "Columbia"
+  ],
+  "incorporated": 1909,
+  "kind": "village"
+ },
+ "5589550": {
+  "counties": [
+   "Racine"
+  ],
+  "incorporated": 2018,
+  "kind": "village"
+ },
+ "5589625": {
+  "counties": [
+   "Richland"
+  ],
+  "incorporated": 1935,
+  "kind": "village"
+ },
+ "_meta": {
+  "asOf": "Wisconsin Blue Book 2025–26 (January 1, 2024)",
+  "source": "Wisconsin Legislative Reference Bureau",
+  "sourceUrl": "https://docs.legis.wisconsin.gov/misc/lrb/blue_book/2025_2026/190_population_and_political_divisions.pdf"
+ }
+}

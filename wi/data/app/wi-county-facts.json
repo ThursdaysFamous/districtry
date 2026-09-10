@@ -1,0 +1,295 @@
+{
+ "55001": {
+  "county": "Adams",
+  "seat": "Friendship"
+ },
+ "55003": {
+  "county": "Ashland",
+  "seat": "Ashland"
+ },
+ "55005": {
+  "county": "Barron",
+  "seat": "Barron"
+ },
+ "55007": {
+  "county": "Bayfield",
+  "seat": "Washburn"
+ },
+ "55009": {
+  "county": "Brown",
+  "seat": "Green Bay"
+ },
+ "55011": {
+  "county": "Buffalo",
+  "seat": "Alma"
+ },
+ "55013": {
+  "county": "Burnett",
+  "seat": "Meenon"
+ },
+ "55015": {
+  "county": "Calumet",
+  "seat": "Chilton"
+ },
+ "55017": {
+  "county": "Chippewa",
+  "seat": "Chippewa Falls"
+ },
+ "55019": {
+  "county": "Clark",
+  "seat": "Neillsville"
+ },
+ "55021": {
+  "county": "Columbia",
+  "seat": "Portage"
+ },
+ "55023": {
+  "county": "Crawford",
+  "seat": "Prairie du Chien"
+ },
+ "55025": {
+  "county": "Dane",
+  "seat": "Madison"
+ },
+ "55027": {
+  "county": "Dodge",
+  "seat": "Juneau"
+ },
+ "55029": {
+  "county": "Door",
+  "seat": "Sturgeon Bay"
+ },
+ "55031": {
+  "county": "Douglas",
+  "seat": "Superior"
+ },
+ "55033": {
+  "county": "Dunn",
+  "seat": "Menomonie"
+ },
+ "55035": {
+  "county": "Eau Claire",
+  "seat": "Eau Claire"
+ },
+ "55037": {
+  "county": "Florence",
+  "seat": "Florence"
+ },
+ "55039": {
+  "county": "Fond du Lac",
+  "seat": "Fond du Lac"
+ },
+ "55041": {
+  "county": "Forest",
+  "seat": "Crandon"
+ },
+ "55043": {
+  "county": "Grant",
+  "seat": "Lancaster"
+ },
+ "55045": {
+  "county": "Green",
+  "seat": "Monroe"
+ },
+ "55047": {
+  "county": "Green Lake",
+  "seat": "Green Lake"
+ },
+ "55049": {
+  "county": "Iowa",
+  "seat": "Dodgeville"
+ },
+ "55051": {
+  "county": "Iron",
+  "seat": "Hurley"
+ },
+ "55053": {
+  "county": "Jackson",
+  "seat": "Black River Falls"
+ },
+ "55055": {
+  "county": "Jefferson",
+  "seat": "Jefferson"
+ },
+ "55057": {
+  "county": "Juneau",
+  "seat": "Mauston"
+ },
+ "55059": {
+  "county": "Kenosha",
+  "seat": "Kenosha"
+ },
+ "55061": {
+  "county": "Kewaunee",
+  "seat": "Kewaunee"
+ },
+ "55063": {
+  "county": "La Crosse",
+  "seat": "La Crosse"
+ },
+ "55065": {
+  "county": "Lafayette",
+  "seat": "Darlington"
+ },
+ "55067": {
+  "county": "Langlade",
+  "seat": "Antigo"
+ },
+ "55069": {
+  "county": "Lincoln",
+  "seat": "Merrill"
+ },
+ "55071": {
+  "county": "Manitowoc",
+  "seat": "Manitowoc"
+ },
+ "55073": {
+  "county": "Marathon",
+  "seat": "Wausau"
+ },
+ "55075": {
+  "county": "Marinette",
+  "seat": "Marinette"
+ },
+ "55077": {
+  "county": "Marquette",
+  "seat": "Montello"
+ },
+ "55078": {
+  "county": "Menominee",
+  "seat": "Keshena"
+ },
+ "55079": {
+  "county": "Milwaukee",
+  "seat": "Milwaukee"
+ },
+ "55081": {
+  "county": "Monroe",
+  "seat": "Sparta"
+ },
+ "55083": {
+  "county": "Oconto",
+  "seat": "Oconto"
+ },
+ "55085": {
+  "county": "Oneida",
+  "seat": "Rhinelander"
+ },
+ "55087": {
+  "county": "Outagamie",
+  "seat": "Appleton"
+ },
+ "55089": {
+  "county": "Ozaukee",
+  "seat": "Port Washington"
+ },
+ "55091": {
+  "county": "Pepin",
+  "seat": "Durand"
+ },
+ "55093": {
+  "county": "Pierce",
+  "seat": "Ellsworth"
+ },
+ "55095": {
+  "county": "Polk",
+  "seat": "Balsam Lake"
+ },
+ "55097": {
+  "county": "Portage",
+  "seat": "Stevens Point"
+ },
+ "55099": {
+  "county": "Price",
+  "seat": "Phillips"
+ },
+ "55101": {
+  "county": "Racine",
+  "seat": "Racine"
+ },
+ "55103": {
+  "county": "Richland",
+  "seat": "Richland Center"
+ },
+ "55105": {
+  "county": "Rock",
+  "seat": "Janesville"
+ },
+ "55107": {
+  "county": "Rusk",
+  "seat": "Ladysmith"
+ },
+ "55109": {
+  "county": "St. Croix",
+  "seat": "Hudson"
+ },
+ "55111": {
+  "county": "Sauk",
+  "seat": "Baraboo"
+ },
+ "55113": {
+  "county": "Sawyer",
+  "seat": "Hayward"
+ },
+ "55115": {
+  "county": "Shawano",
+  "seat": "Shawano"
+ },
+ "55117": {
+  "county": "Sheboygan",
+  "seat": "Sheboygan"
+ },
+ "55119": {
+  "county": "Taylor",
+  "seat": "Medford"
+ },
+ "55121": {
+  "county": "Trempealeau",
+  "seat": "Whitehall"
+ },
+ "55123": {
+  "county": "Vernon",
+  "seat": "Viroqua"
+ },
+ "55125": {
+  "county": "Vilas",
+  "seat": "Eagle River"
+ },
+ "55127": {
+  "county": "Walworth",
+  "seat": "Elkhorn"
+ },
+ "55129": {
+  "county": "Washburn",
+  "seat": "Shell Lake"
+ },
+ "55131": {
+  "county": "Washington",
+  "seat": "West Bend"
+ },
+ "55133": {
+  "county": "Waukesha",
+  "seat": "Waukesha"
+ },
+ "55135": {
+  "county": "Waupaca",
+  "seat": "Waupaca"
+ },
+ "55137": {
+  "county": "Waushara",
+  "seat": "Wautoma"
+ },
+ "55139": {
+  "county": "Winnebago",
+  "seat": "Oshkosh"
+ },
+ "55141": {
+  "county": "Wood",
+  "seat": "Wisconsin Rapids"
+ },
+ "_meta": {
+  "asOf": "Wisconsin Blue Book 2025–26 (January 1, 2024)",
+  "source": "Wisconsin Legislative Reference Bureau",
+  "sourceUrl": "https://docs.legis.wisconsin.gov/misc/lrb/blue_book/2025_2026/190_population_and_political_divisions.pdf"
+ }
+}
