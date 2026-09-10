@@ -12425,6 +12425,9 @@ function initChiExplorer() {
   var loadLoganDistrictOfficials = makeCached(function () {
     return fetchJSONWithRetry("data/app/logan-district-officials.json", {}, 2);
   });
+  var loadWoodfordDistrictOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/woodford-district-officials.json", {}, 2);
+  });
   /* One stamper for both counties: the payloads are the same shape because
    * they come from the same filings, so only the roster file and the property
    * holding the district's name differ. */
@@ -12451,6 +12454,10 @@ function initChiExplorer() {
   }
   function withLoganOfficials(loadGeometry) {
     return withAfrOfficials(loadGeometry, loadLoganDistrictOfficials,
+                            ["district"]);
+  }
+  function withWoodfordOfficials(loadGeometry) {
+    return withAfrOfficials(loadGeometry, loadWoodfordDistrictOfficials,
                             ["district"]);
   }
 
@@ -12526,7 +12533,13 @@ function initChiExplorer() {
     var office = info.office || {};
     if (office.address || office.phone || office.email) {
       frag.appendChild(renderLinkRow({
-        title: "Office",
+        // "Office" NAMES A PLACE, so a district whose filing witnesses no
+        // address of its own gets "Contact" instead. Before 2026-09-10 every
+        // district carried an address, because slot A's was read as the
+        // district's; now San Jose Park District's row holds a role mailbox
+        // and nothing else, and heading that "Office" would name a place the
+        // filing does not give.
+        title: office.address ? "Office" : "Contact",
         note: [office.address, office.city].filter(Boolean)
           .map(function (part) { return String(part); }).join(", ") || null,
         phone: office.phone ? String(office.phone) : null,
@@ -23764,12 +23777,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "woodford",
         coverage: woodfordCountyCoverage,
-        loader: loadWoodfordFireDistricts,
+        loader: withWoodfordOfficials(loadWoodfordFireDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["district"], primary: true },
-          { label: "County", value: "Woodford County" }
-        ]
+          { label: "County", value: "Woodford County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Grundy — 13 districts dissolved from the county's parcel fabric. MVK
       // RESCUE SQUAD is deliberately absent though the Clerk codes it FDMV,
@@ -24095,12 +24110,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "woodford",
         coverage: woodfordCountyCoverage,
-        loader: loadWoodfordParkDistricts,
+        loader: withWoodfordOfficials(loadWoodfordParkDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Park District", keys: ["district"], primary: true },
-          { label: "County", value: "Woodford County" }
-        ]
+          { label: "County", value: "Woodford County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       })
     ]
   });
@@ -24404,13 +24421,15 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "woodford",
         coverage: woodfordCountyCoverage,
-        loader: loadWoodfordLibraryDistricts,
+        loader: withWoodfordOfficials(loadWoodfordLibraryDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Library District", keys: ["district"], primary: true },
           { name: "note", label: "Governance", keys: ["note"] },
-          { label: "County", value: "Woodford County" }
-        ]
+          { label: "County", value: "Woodford County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Grundy — 6 library districts. Only 69.8% of the county is in one, so
       // the empty state is the true answer over the rest.

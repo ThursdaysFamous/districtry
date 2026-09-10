@@ -441,6 +441,7 @@ const ROSTER_URLS = [
   "./data/app/boone-district-officials.json",
   "./data/app/peoria-district-officials.json",
   "./data/app/logan-district-officials.json",
+  "./data/app/woodford-district-officials.json",
   "./data/app/il-county-board-offices.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */

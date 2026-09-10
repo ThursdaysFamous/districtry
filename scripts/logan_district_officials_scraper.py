@@ -13,7 +13,15 @@ local government files an Annual Financial Report with the Comptroller, and
 its Contact Information section names role-holders with the title the unit
 filed. comptroller_afr.py carries that route and its rules; this file carries
 only what is specific to Logan. Measured 2026-09-08: all seven districts file,
-all seven for FY2025, every one with a street, city, telephone and e-mail.
+all seven for FY2025, and every one names at least one officer.
+
+WHAT THE FILING GIVES AS A CONTACT IS THE FILER'S, NOT THE DISTRICT'S, and this
+docstring said "every one with a street, city, telephone and e-mail" until
+2026-09-10 because of it. Four of the seven were one trustee's home address,
+mobile and personal e-mail -- Atlanta Memorial's card carried a rural grid
+address and a hotmail account. comptroller_afr.py now ships only a value the
+filing witnesses as the unit's, which for Logan is three addresses, one
+telephone and three role mailboxes.
 
 THE JOIN IS AN EXPLICIT TABLE OF UNIT CODES, NOT A NAME MATCH, and Logan is
 why the distinction is not pedantry: the Warehouse search is a SUBSTRING match

@@ -338,12 +338,14 @@
     "phone": "(608) 742-9619"
    },
    {
+    "branch": "2",
+    "name": "W. Andrew Voigt",
+    "phone": "(608) 742-9653"
+   },
+   {
     "branch": "3",
     "name": "Roger Klopp",
     "phone": "(608) 742-9633"
-   },
-   {
-    "name": "W. Andrew Voigt"
    }
   ],
   "sourceUrl": "https://www.co.columbia.wi.us/columbiacounty/clerkofcourts/clerkofcourtshome/tabid/2064/default.aspx"
@@ -394,6 +396,11 @@
     "branch": "2",
     "name": "Payal Khandhar",
     "phone": "(608) 266-4234"
+   },
+   {
+    "branch": "3",
+    "name": "Dianne Schlipper",
+    "phone": "(608) 266-4235"
    },
    {
     "branch": "4",
@@ -465,9 +472,6 @@
     "branch": "17",
     "name": "David Conway",
     "phone": "(608) 266-4937"
-   },
-   {
-    "name": "Dianne Schlipper"
    }
   ],
   "sourceUrl": "https://courts.countyofdane.com/"
@@ -493,6 +497,11 @@
     "phone": "(920) 386-4014"
    },
    {
+    "branch": "2",
+    "name": "Martin J. De Vries",
+    "phone": "(920) 386-3551"
+   },
+   {
     "branch": "3",
     "name": "Chad Wozniak",
     "phone": "(920) 386-3805"
@@ -500,9 +509,6 @@
    {
     "name": "Kristine A. Snow",
     "phone": "(920) 386-4050"
-   },
-   {
-    "name": "Martin J. De Vries"
    }
   ],
   "sourceUrl": "https://www.co.dodge.wi.gov/courts-clerk"
@@ -1024,6 +1030,11 @@
   ],
   "judges": [
    {
+    "branch": "1",
+    "name": "Joe Veenstra",
+    "phone": "(608) 785-5840"
+   },
+   {
     "branch": "2",
     "name": "Elliott Levine",
     "phone": "(608) 785-9587"
@@ -1043,9 +1054,6 @@
     "branch": "5",
     "name": "Gloria L. Doyle",
     "phone": "(608) 785-5880"
-   },
-   {
-    "name": "Joe Veenstra"
    }
   ],
   "sourceUrl": "https://www.lacrossecounty.org/Court/"
@@ -1397,6 +1405,11 @@
     "phone": "(414) 257-7220"
    },
    {
+    "branch": "15",
+    "name": "Jonathan D. Watts",
+    "phone": "(414) 278-4484"
+   },
+   {
     "branch": "16",
     "name": "Brittany C. Grayson",
     "phone": "(414) 257-7753"
@@ -1488,6 +1501,11 @@
     "role": "Chief Judge"
    },
    {
+    "branch": "34",
+    "name": "Jay R. Pucek",
+    "phone": "(414) 278-4525"
+   },
+   {
     "branch": "35",
     "name": "Frederick C. Rosa",
     "phone": "(414) 278-4560"
@@ -1496,6 +1514,11 @@
     "branch": "36",
     "name": "Laura Crivello",
     "phone": "(414) 278-4478"
+   },
+   {
+    "branch": "37",
+    "name": "T. Christopher Dee",
+    "phone": "(414) 278-4551"
    },
    {
     "branch": "38",
@@ -1528,6 +1551,11 @@
     "phone": "(414) 278-4480"
    },
    {
+    "branch": "44",
+    "name": "Gwen Connolly",
+    "phone": "(414) 278-4488"
+   },
+   {
     "branch": "45",
     "name": "Jean Marie Kies",
     "phone": "(414) 278-4554"
@@ -1538,22 +1566,10 @@
     "phone": "(414) 278-4490"
    },
    {
-    "name": "Gwen Connolly"
-   },
-   {
-    "name": "T. Christopher Dee"
-   },
-   {
     "name": "Malinda Kyle Eskra"
    },
    {
-    "name": "Jay R. Pucek"
-   },
-   {
     "name": "Milton L. Childs Sr."
-   },
-   {
-    "name": "Jonathan D. Watts"
    },
    {
     "name": "Kristy Yang"
@@ -1857,52 +1873,52 @@
    {
     "branch": "1",
     "name": "Wynne Laufenberg",
-    "phone": "(262) 636-3875",
+    "phone": "(262) 636-3159",
     "role": "Chief Judge"
    },
    {
     "branch": "2",
     "name": "Eugene A. Gasiorkiewicz",
-    "phone": "(262) 636-3131"
+    "phone": "(262) 636-3134"
    },
    {
     "branch": "3",
     "name": "Jessica Lynott",
-    "phone": "(262) 636-3957"
+    "phone": "(262) 636-3842"
    },
    {
     "branch": "5",
     "name": "Kristin M. Cafferty",
-    "phone": "(262) 636-3313"
+    "phone": "(262) 636-3131"
    },
    {
     "branch": "6",
     "name": "David W. Paulson",
-    "phone": "(262) 636-3134"
+    "phone": "(262) 636-3151"
    },
    {
     "branch": "7",
     "name": "Jamie McClendon",
-    "phone": "(262) 636-3159"
+    "phone": "(262) 636-3146"
    },
    {
     "branch": "8",
     "name": "Faye M. Flancher",
-    "phone": "(262) 636-3842"
+    "phone": "(262) 636-3867"
    },
    {
     "branch": "9",
     "name": "Robert S. Repischak",
-    "phone": "(262) 636-3146"
+    "phone": "(262) 636-3957"
    },
    {
     "branch": "10",
     "name": "Timothy D. Boyle",
-    "phone": "(262) 636-3867"
+    "phone": "(262) 636-3875"
    },
    {
     "name": "Scott P. Craig",
-    "phone": "(262) 636-3151"
+    "phone": "(262) 636-3313"
    }
   ],
   "sourceUrl": "https://www.racinecounty.gov/departments/clerk-of-circuit-court-5279"
@@ -2140,7 +2156,9 @@
     "phone": "(715) 386-4611"
    },
    {
-    "name": "R. Michael Waterman"
+    "branch": "4",
+    "name": "R. Michael Waterman",
+    "phone": "(715) 377-5825"
    }
   ],
   "sourceUrl": "https://www.sccwi.gov/292/Clerk-of-Courts"
@@ -2260,17 +2278,17 @@
    {
     "branch": "2",
     "name": "Daniel S. Johnson",
-    "phone": "(262) 741-7052"
+    "phone": "(262) 741-7024"
    },
    {
     "branch": "3",
     "name": "Kristine E. Drettwan",
-    "phone": "(262) 741-7005"
+    "phone": "(262) 741-7054"
    },
    {
     "branch": "4",
     "name": "Samuel T. Berg",
-    "phone": "(262) 741-7023"
+    "phone": "(262) 741-7052"
    },
    {
     "name": "Estee Scholz"
@@ -2376,6 +2394,11 @@
     "phone": "(262) 548-7809"
    },
    {
+    "branch": "6",
+    "name": "Zach Wittchow",
+    "phone": "(262) 548-7548"
+   },
+   {
     "branch": "7",
     "name": "Cody J. Horlacher",
     "phone": "(262) 548-7541"
@@ -2407,9 +2430,6 @@
    },
    {
     "name": "Ralph M. Ramirez"
-   },
-   {
-    "name": "Zach Wittchow"
    }
   ],
   "sourceUrl": "https://www.waukeshacounty.gov/coc"

@@ -45,12 +45,21 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app",
                         "logan-district-officials.json")
 
-# Measured 2026-09-09: 7 districts / 12 board / 2 appointed / 7 with an office
-# / 7 with a telephone. Each floor sits under its measured value; see above.
+# Measured 2026-09-10: 7 districts / 12 board / 2 appointed / 4 with an office
+# / 1 with a telephone. Each floor sits under its measured value; see above.
+#
+# THE OFFICE AND TELEPHONE FLOORS DROPPED FROM 5 ON 2026-09-10, and not because
+# the source lost anything. comptroller_afr.py used to read slot A's address and
+# telephone as the district's, and they are the FILER's -- so all seven Logan
+# districts carried a contact and four of them were one trustee's home, mobile
+# and personal e-mail. Only what the filing witnesses as the unit's now ships,
+# which for a county of seven rural park districts is three addresses and
+# Lincoln's telephone. A low floor here is the honest one: it is what the
+# districts themselves file.
 MIN_DISTRICTS = 5
 MIN_BOARD = 8
-MIN_WITH_OFFICE = 5
-MIN_WITH_PHONE = 5
+MIN_WITH_OFFICE = 3
+MIN_WITH_PHONE = 1
 # Logan dispatches only its park districts today. A kind appearing that this
 # builder does not expect means the scraper's table grew without the app's
 # dispatch entries growing with it.

@@ -10,10 +10,16 @@ that "nobody publishes a list of the trustees who run these districts".
 SOMEBODY DOES: THE DISTRICTS THEMSELVES. Every Illinois unit of local
 government files an Annual Financial Report with the Comptroller under the
 Fiscal Responsibility Report Card Act, and the AFR's Contact Information
-section publishes the unit's office address, telephone, fax and e-mail
-together with named role-holders. The Comptroller is the COLLECTOR; the unit
-is the author, which is what makes this the district's own statement rather
-than a third party's assertion about it.
+section names up to four role-holders and, beside each, the address, telephone
+and e-mail THAT PERSON filed. The Comptroller is the COLLECTOR; the unit is
+the author, which is what makes this the district's own statement rather than
+a third party's assertion about it.
+
+THE FORM CARRIES NO UNIT ADDRESS, and this docstring claimed one until
+2026-09-10. Three Peoria districts were shipping a trustee's own address and
+telephone as the district's office as a result; comptroller_afr.py's CONTACT
+WITNESSES section carries the measurement and the two tests a contact value
+now has to pass.
 
 ONLY TWO OF THE FOUR ROLE SLOTS ARE READ, and the form itself says why. Slots
 B and C are captioned "Your name will be listed with this responsibility on
