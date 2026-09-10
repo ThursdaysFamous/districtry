@@ -27,12 +27,14 @@
     "withheldWhy": "the municipality's own page does not name Pavlic — the layer's name predates the April 2026 election"
   },
   "5527075": {
+    "email": "csymchych@villageoffoxpoint.com",
     "municipality": "Fox Point",
+    "name": "Christine Symchych",
     "office": "Village of Fox Point President",
+    "phone": "414-403-7729",
     "source": "Milwaukee County GIS & Land Information",
     "sourceUrl": "https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/Milwaukee_County_Municipal_Executives/FeatureServer/42",
-    "withheld": true,
-    "withheldWhy": "the municipality's own page could not be read from here, so no name is witnessed"
+    "witnessUrl": "https://www.villageoffoxpoint.com/Directory.aspx?EID=24"
   },
   "5527300": {
     "email": "jnelson@franklinwi.gov",
