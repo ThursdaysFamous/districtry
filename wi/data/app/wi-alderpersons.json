@@ -356,6 +356,11 @@
  },
  "48000": {
   "members": {
+   "01": {
+    "email": "district1@cityofmadison.com",
+    "name": "Devine O. Nzegwu",
+    "url": "https://www.cityofmadison.com/council/district1"
+   },
    "02": {
     "email": "district2@cityofmadison.com",
     "name": "Will Ochowicz",
@@ -455,9 +460,7 @@
   "municipality": "Madison",
   "seats": 20,
   "sourceUrl": "https://www.cityofmadison.com/council/council-members",
-  "vacantDistricts": [
-   1
-  ]
+  "vacantDistricts": []
  },
  "48500": {
   "members": {
