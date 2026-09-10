@@ -3,11 +3,16 @@
 
 WHY THIS IS SHARED. Every Illinois unit of local government files an AFR with
 the Comptroller under the Fiscal Responsibility Report Card Act, and the
-report's Contact Information section publishes the unit's office address,
-telephone, fax and e-mail together with named role-holders and THE TITLE THE
-UNIT ITSELF FILED. The Comptroller is the COLLECTOR; the unit is the author,
-which is what makes a row here the district's own statement about itself
-rather than a third party's assertion about it.
+report's Contact Information section names up to four role-holders with THE
+TITLE THE UNIT ITSELF FILED, and beside each one the address, telephone, fax
+and e-mail THAT PERSON gave. The Comptroller is the COLLECTOR; the unit is the
+author, which is what makes a row here the district's own statement about
+itself rather than a third party's assertion about it.
+
+WHAT IT DOES NOT CARRY IS A UNIT ADDRESS, and this file said otherwise until
+2026-09-10 and shipped 24 people's private details as public bodies' contacts
+because of it. See CONTACT WITNESSES below for the measurement and for the
+witnesses a contact value now has to pass.
 
 That is a route to any county's special districts, not one county's trick.
 Peoria was first (peoria_district_officials_scraper.py) and Logan second
@@ -142,10 +147,105 @@ PUBLISHED_SLOTS = (1, 2)
 # staff filed as filing contacts, they carry every duplicate shape above, and
 # they buy nothing a card should assert.
 BOARD_ONLY_SLOTS = (0, 3)
-CONTACT_SLOT = 0                 # the unit's own office address and telephone
+
+# CONTACT WITNESSES
+#
+# THE FORM HAS NO UNIT-ADDRESS FIELD, and reading one out of it was a bug. Each
+# of the four slots carries the address, telephone and e-mail of THE PERSON in
+# that slot, and until 2026-09-10 this file returned slot A's as "the district's
+# office". Measured across all 50 filings the fleet reads, that shipped one
+# person's private details as a public body's contact in 24 of them: Atlanta
+# Memorial Park District's card carried a rural grid address, a mobile number
+# and a hotmail account, all its President's, while the only other filer gave a
+# different rural address; Elmwood FPD's carried its President's employer's
+# e-mail while its Treasurer filed his own at faa.gov; and West Peoria FPD's
+# carried its President's address at another company while slot D of the SAME
+# filing carried his address on the district's own domain.
+#
+# So a value ships only where the filing itself shows it is not one person's.
+# Two witnesses exist and each is computed from the filing, never judged:
+#
+#   * A STREET OR TELEPHONE TWO DIFFERENTLY-SURNAMED FILERS GAVE. Two unrelated
+#     officers do not share a home or a mobile, so a value both filed is the
+#     unit's. Slots are scanned in the form's own order and the first witnessed
+#     value is taken; measured, that admits 27 of 50 addresses and 21 of 50
+#     telephones, and every admitted address is a station, a library, a park
+#     office or a PO box.
+#   * AN E-MAIL THAT NAMES THE UNIT AND WHAT KIND OF BODY IT IS, in its domain
+#     or its local part -- `hudsonfire.org`, `chestnutbeasonpark@gmail.com`. A
+#     mailbox saying whose and what it is cannot be one person's private
+#     account; `pigjock76@hotmail.com` says neither. That admits 20 of 50,
+#     and it is the test that reaches a value in a slot the old code never
+#     looked at: West Peoria FPD's address on its own domain sits in slot D.
+#
+# THE TWO-FILER TEST IS NOT USED FOR E-MAIL, because it is wrong in both
+# directions there: it withholds `director@dunlaplibrary.org` (filed once) and
+# admits `april.wagner3953@hotmail.com` (a filer copied one personal account
+# into two people's slots). Withholding a real contact is a cost; publishing a
+# private one is a rule this project does not break.
+#
+# ITS KNOWN HOLE IS STATED RATHER THAN PATCHED. Two witnesses means two distinct
+# SURNAMES, so a unit filing one person under two spellings of a surname would
+# satisfy it -- Eureka Library District files Cindy O'Neill and Cindy O'Neil, and
+# Dunlap FPD Jim Winters and Jim Withers. Measured across the 50 filings, no
+# address or telephone is admitted on such a pair alone; both those units carry
+# two further, plainly distinct witnesses. Nothing here decides that two similar
+# names are one person.
+
+# A token of the unit's own name has to be long enough not to match by accident
+# and specific enough to mean the unit: "El Paso" contributes `paso`, and a type
+# word contributes nothing, because every fire district's domain may carry
+# `fire` without being that district's.
+UNIT_TOKEN_MIN = 4
+UNIT_TOKEN_STOP = {"district", "districts", "park", "parks", "fire", "library",
+                   "libraries", "public", "protection", "township", "community",
+                   "county", "illinois", "memorial", "rural"}
+
+# A word naming WHAT KIND OF BODY the mailbox belongs to. An e-mail has to carry
+# one of these as well as a word of the unit's own name, and El Paso is why: its
+# fire district files a contact at `elpasoil.org`, which is the CITY OF EL PASO's
+# own website ("El Paso, IL - Official Website"), so the town's name alone does
+# not distinguish the district from the municipality it is named after. A
+# mailbox that says which kind of body it serves does -- `hudsonfire.org`,
+# `metamoraparks.org`, `elpasodistrictlibrary.org`, `chestnutbeasonpark@`.
+#
+# THE LIST IS THE KINDS THIS ROUTE SERVES, which the builders state as
+# EXPECT_KINDS: fire, park and library. A run that starts carrying another kind
+# of unit needs a word here, and the builders' EXPECT_KINDS check is what
+# surfaces that rather than an e-mail quietly going missing.
+UNIT_KIND_WORDS = {"fire", "fd", "fpd", "park", "parks", "library", "libraries",
+                   "lib", "district", "districts"}
 
 RESULT_RE = re.compile(
     r'href="[^"]*[Cc]ode=([0-9/]+)"[^>]*>\s*([^<]{3,140}?)\s*</a>', re.S)
+
+
+def _flat(value):
+    """A value reduced to its comparable core: lowercase alphanumerics."""
+    return re.sub(r"[^a-z0-9]+", " ", (value or "").lower()).strip()
+
+
+def _surname(name):
+    """The last word of a filed name, for counting distinct filers.
+
+    Nothing here matches names loosely -- see the hole stated above.
+    """
+    parts = _flat(name).split()
+    return parts[-1] if parts else ""
+
+
+def unit_tokens(unit_label):
+    """The unit's own name words, for testing whether a domain is the unit's.
+
+    Callers hand this file a label in one of two shapes -- the Warehouse's own
+    "Benson - a Fire Protection District in Woodford County" and Logan's
+    "Atlanta Memorial (Logan County)" -- so both the type clause and a trailing
+    parenthesis are cut before tokenising.
+    """
+    name = unit_label.split(" - ")[0]
+    name = re.sub(r"\s*\([^)]*\)\s*$", "", name)
+    return {t for t in re.split(r"[^a-z0-9]+", name.lower())
+            if len(t) >= UNIT_TOKEN_MIN and t not in UNIT_TOKEN_STOP}
 
 
 def new_session():
@@ -275,15 +375,88 @@ def contact_block(session, code, unit_label, warnings):
     # own order. Labelled rows identify themselves and are found by label.
     unlabelled = [x for x in quad[1:] if not any(
         c.startswith(("Phone:", "Fax:", "E-mail:")) for c in x)]
-    street = unlabelled[0][0] if unlabelled else ""
-    city = unlabelled[1][0] if len(unlabelled) > 1 else ""
-    region = unlabelled[2][0] if len(unlabelled) > 2 else ""
 
     def labelled(prefix, slot):
         for x in quad:
             if x[slot].startswith(prefix):
                 return x[slot][len(prefix):].split("Ext")[0].strip()
         return ""
+
+    def cell(rows, index, slot):
+        return rows[index][slot].strip() if len(rows) > index else ""
+
+    # EVERY SLOT IS READ, because each carries its own filer's details and the
+    # one the unit can be shown to own is not always slot A.
+    filers = [{"name": " ".join(x for x in (names[2 * i], names[2 * i + 1]) if x).strip(),
+               "street": cell(unlabelled, 0, i),
+               "city": cell(unlabelled, 1, i),
+               "region": cell(unlabelled, 2, i),
+               "phone": labelled("Phone:", i),
+               "email": labelled("E-mail:", i)}
+              for i in range(SLOTS)]
+
+    def witnessed(field):
+        """The first slot whose `field` two differently-surnamed filers gave."""
+        for filer in filers:
+            value = _flat(filer[field])
+            if not value:
+                continue
+            who = {_surname(other["name"]) for other in filers
+                   if _flat(other[field]) == value}
+            who.discard("")
+            if len(who) >= 2:
+                return filer
+        return None
+
+    def unit_email():
+        """The first e-mail the unit's own name appears in, domain first.
+
+        TWO PASSES, AND THE SECOND IS WHY THE FIRST IS NOT ENOUGH. A domain
+        named for the unit is the unit's infrastructure and settles the question
+        by itself. But a district with no domain of its own often keeps a role
+        mailbox at a provider anyone can use, and three of Logan's seven park
+        districts do, two of them naming themselves outright --
+        `chestnutbeasonpark@gmail.com` and `sanjoseilparkdistrict@gmail.com` --
+        so a domain-only test drops a body's own published address. The local part
+        is read only where it carries a word of the unit's name AND not a word
+        of the filer's own name, which is what keeps `pigjock76@hotmail.com`
+        out and would keep out a hypothetical `carlock@gmail.com` filed by
+        somebody surnamed Carlock.
+
+        Mt. Pulaski's `mpparkdist@` stays withheld either way: it abbreviates
+        the unit to initials, and this file matches the unit's words, never
+        guesses at its initials.
+        """
+        tokens = unit_tokens(unit_label)
+        if not tokens:
+            return ""
+
+        def names_the_unit(part):
+            """Does this piece of an address name this unit AND its kind?"""
+            found = [t for t in tokens if t in part]
+            if not found:
+                return False
+            # A kind word that sits INSIDE the matched name is the name talking,
+            # not the mailbox: a district called Liberty would otherwise satisfy
+            # `lib` out of its own name.
+            return any(kind in part and not any(kind in t for t in found)
+                       for kind in UNIT_KIND_WORDS)
+
+        addressed = [f for f in filers if "@" in f["email"]]
+        for filer in addressed:
+            domain = re.sub(r"[^a-z0-9]", "", filer["email"].rsplit("@", 1)[1].lower())
+            if names_the_unit(domain):
+                return filer["email"]
+        for filer in addressed:
+            local = re.sub(r"[^a-z0-9]", "",
+                           filer["email"].rsplit("@", 1)[0].lower())
+            own = [w for w in _flat(filer["name"]).split() if len(w) >= 3]
+            if names_the_unit(local) and not any(w in local for w in own):
+                return filer["email"]
+        return ""
+
+    address = witnessed("street")
+    telephone = witnessed("phone")
 
     def slot_person(slot):
         name = " ".join(x for x in (names[2 * slot], names[2 * slot + 1]) if x).strip()
@@ -342,8 +515,12 @@ def contact_block(session, code, unit_label, warnings):
         officers.append(("board", {"name": name, "role": title}))
 
     return {"filedFor": year,
-            "street": street,
-            "city": " ".join(x for x in (city, region) if x).strip(),
-            "phone": labelled("Phone:", CONTACT_SLOT),
-            "email": labelled("E-mail:", CONTACT_SLOT),
+            "street": address["street"] if address else "",
+            # The locality and the state/ZIP come from THE SAME SLOT as the
+            # street: pairing a witnessed street with another filer's town
+            # would compose an address no filer gave.
+            "city": " ".join(x for x in (address["city"], address["region"])
+                             if x).strip() if address else "",
+            "phone": telephone["phone"] if telephone else "",
+            "email": unit_email(),
             "officers": officers}
