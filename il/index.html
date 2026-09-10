@@ -12428,6 +12428,9 @@ function initChiExplorer() {
   var loadWoodfordDistrictOfficials = makeCached(function () {
     return fetchJSONWithRetry("data/app/woodford-district-officials.json", {}, 2);
   });
+  var loadGrundyDistrictOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/grundy-district-officials.json", {}, 2);
+  });
   /* One stamper for both counties: the payloads are the same shape because
    * they come from the same filings, so only the roster file and the property
    * holding the district's name differ. */
@@ -12458,6 +12461,10 @@ function initChiExplorer() {
   }
   function withWoodfordOfficials(loadGeometry) {
     return withAfrOfficials(loadGeometry, loadWoodfordDistrictOfficials,
+                            ["district"]);
+  }
+  function withGrundyOfficials(loadGeometry) {
+    return withAfrOfficials(loadGeometry, loadGrundyDistrictOfficials,
                             ["district"]);
   }
 
@@ -23798,12 +23805,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "grundy",
         coverage: grundyCountyCoverage,
-        loader: loadGrundyFireDistricts,
+        loader: withGrundyOfficials(loadGrundyFireDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["district"], primary: true },
-          { label: "County", value: "Grundy County" }
-        ]
+          { label: "County", value: "Grundy County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Hamilton — three named districts from the county's own layer (a
       // fourth, unnamed ~0.4 km² sliver is excluded in the loader); most of
@@ -24100,12 +24109,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "grundy",
         coverage: grundyCountyCoverage,
-        loader: loadGrundyParkDistricts,
+        loader: withGrundyOfficials(loadGrundyParkDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Park District", keys: ["district"], primary: true },
-          { label: "County", value: "Grundy County" }
-        ]
+          { label: "County", value: "Grundy County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       polygonCountyEntry({
         key: "woodford",
@@ -24436,12 +24447,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "grundy",
         coverage: grundyCountyCoverage,
-        loader: loadGrundyLibraryDistricts,
+        loader: withGrundyOfficials(loadGrundyLibraryDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Library District", keys: ["district"], primary: true },
-          { label: "County", value: "Grundy County" }
-        ]
+          { label: "County", value: "Grundy County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Adams — 7 library districts on a 10-polygon tiling. One polygon is named
       // "None": that is the county recording an area no library district serves,

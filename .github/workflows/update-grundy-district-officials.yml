@@ -1,0 +1,121 @@
+name: Update Grundy fire, park and library district officials
+
+# Weekly refresh of il/data/app/grundy-district-officials.json — the board,
+# the appointed officers and the office of Grundy County's 20 filing fire,
+# park and library districts, joined onto the district polygons by name in
+# il/index.html.
+#
+# THE PUBLISHER IS THE DISTRICT, NOT THE COUNTY. The boundaries are dissolved
+# from Grundy's own parcel fabric and carry a district name and a tax code
+# and nothing else — no trustee, no address, no telephone — which is what the
+# grundy-special-district-boards gap recorded. Every Illinois unit of local
+# government files an Annual Financial Report with the Comptroller under the
+# Fiscal Responsibility Report Card Act, and the AFR's Contact Information
+# section names role-holders with the title the unit itself filed. The
+# Comptroller is the collector; the district is the author.
+#
+# SCHEDULED CLEAR OF THE OTHER THREE AFR JOBS, which read the same state site:
+# Peoria runs Sunday 21:00, Logan Sunday 22:00 and Woodford Monday 22:00. All
+# four pace themselves at one request a second and none should be competing
+# with another for it. Friday 22:00 also sits clear of Grundy's own county-board
+# roster (Wednesday 17:00) and of the municipal-officials job (Wednesday 14:00),
+# which reads the same county from a different publisher.
+#
+# WHY THE JOB IS SLOW ON PURPOSE. It reads two pages per district — the landing
+# page for the fiscal year that district last filed for, then the contact block
+# for that year. An empty fiscal year returns a page with no contact block at
+# all, and a hardcoded one silently skips a district that is a year behind, so
+# the year is asked for rather than assumed. Four further requests verify the
+# join table against the Warehouse's own labels, one per county: ten of the
+# 21 districts file under LaSalle, Will or Livingston, because a cross-county
+# district files once, under its home county.
+#
+# A DISTRICT THAT STOPS FILING IS A REAL EVENT, not a parse failure, and the
+# builder's floors sit under the measured 20 rather than at it so one district
+# going quiet cannot freeze the other 19. The 21st, Mazon Fire Protection
+# District, HAS a unit and files no readable report this year; it is verified on
+# every run like the rest and ships the run its filing appears.
+#
+# The boundary half is three committed files rebuilt by
+# scripts/build_parcel_fabric_districts.py and is not touched here.
+
+on:
+  schedule:
+    - cron: "0 22 * * 5" # Friday 22:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI (a PR opened with the default GITHUB_TOKEN fires no workflows).
+      # Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install scraper dependencies
+        run: pip install -c scripts/requirements.txt requests
+
+      - name: Read each district's own AFR contact filing
+        run: |
+          python3 scripts/grundy_district_officials_scraper.py \
+            --out /tmp/grundy_district_officials_raw.json
+
+      - name: Rebuild roster data file
+        run: |
+          python3 scripts/build_grundy_district_officials.py \
+            /tmp/grundy_district_officials_raw.json
+
+      # Gate the regenerated data before it can reach a PR.
+      - name: Validate app + data files
+        run: |
+          python3 scripts/build_grundy_district_officials.py \
+            /tmp/grundy_district_officials_raw.json --check
+          python3 scripts/validate_index.py il/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- il/data/app/; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          # Fixed branch (not per-run): an unmerged roster PR is refreshed in
+          # place by the force-push below instead of spawning a duplicate PR.
+          branch="bot/grundy-district-officials-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut the branch from main's CURRENT tip, not from the checkout this
+          # run started with — a workflow-scope refusal otherwise when main
+          # moves mid-run.
+          git fetch --depth=1 origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add il/data/app/grundy-district-officials.json
+          git commit -m "Update Grundy fire, park and library district officials"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Grundy fire, park and library district officials" \
+              --body "Automated weekly refresh of the officers, office and contact details of Grundy County's 25 filing fire, park and library districts, generated by \`scripts/grundy_district_officials_scraper.py\` + \`scripts/build_grundy_district_officials.py\`. Each district's own Annual Financial Report filing with the Illinois Comptroller is the source, and every record names the fiscal year it was filed for. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi
