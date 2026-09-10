@@ -1,0 +1,508 @@
+{
+  "districts": {
+    "Benson Fire District": {
+      "board": [
+        {
+          "name": "Donald Rients",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "102/010/06",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Paul Murphy",
+          "role": "Treas./Admin."
+        }
+      ],
+      "kind": "fire",
+      "office": {}
+    },
+    "Carlock Fire District": {
+      "board": [
+        {
+          "name": "Randy Miller",
+          "role": "President"
+        },
+        {
+          "name": "Nolan Schenk",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "064/040/06",
+      "filedFor": "2025",
+      "filesIn": "McLean",
+      "heads": [
+        {
+          "name": "Paul Lemek",
+          "role": "Chief"
+        }
+      ],
+      "kind": "fire",
+      "office": {
+        "address": "200 N. Lincoln St.",
+        "city": "Carlock IL 61725",
+        "email": "carlockfire110@gmail.com"
+      }
+    },
+    "Carlock Library District": {
+      "board": [
+        {
+          "name": "Beth Wagner",
+          "role": "President"
+        },
+        {
+          "name": "David Garrison",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "064/065/10",
+      "filedFor": "2025",
+      "filesIn": "McLean",
+      "kind": "library",
+      "office": {
+        "address": "202 E Washington St",
+        "city": "Carlock IL 61725",
+        "email": "carlocklib@yahoo.com",
+        "phone": "(309) 376-5651"
+      }
+    },
+    "Central Fire District": {
+      "board": [
+        {
+          "name": "CHRIS MEYERS",
+          "role": "Secretary"
+        }
+      ],
+      "comptrollerCode": "090/040/06",
+      "filedFor": "2025",
+      "filesIn": "Tazewell",
+      "heads": [
+        {
+          "name": "PAUL ANGLIN",
+          "role": "C.E.O."
+        },
+        {
+          "name": "JOHN THARP",
+          "role": "C.F.O."
+        }
+      ],
+      "kind": "fire",
+      "office": {}
+    },
+    "Congerville Fire District": {
+      "board": [
+        {
+          "name": "Jared Schieber",
+          "role": "Trustee"
+        },
+        {
+          "name": "Craig Steffen",
+          "role": "Trustee"
+        }
+      ],
+      "comptrollerCode": "102/020/06",
+      "filedFor": "2026",
+      "kind": "fire",
+      "office": {}
+    },
+    "Dana Fire District": {
+      "comptrollerCode": "050/020/06",
+      "filedFor": "2025",
+      "filesIn": "LaSalle",
+      "heads": [
+        {
+          "name": "Karl Moore",
+          "role": "C.E.O."
+        },
+        {
+          "name": "Michael Snyder",
+          "role": "C.F.O."
+        }
+      ],
+      "kind": "fire",
+      "office": {}
+    },
+    "Deer Creek Fire District": {
+      "board": [
+        {
+          "name": "DOUG STEWART",
+          "role": "President"
+        },
+        {
+          "name": "TRACI KRAEMER",
+          "role": "Treasurer"
+        },
+        {
+          "name": "GORDON ROBERTSON",
+          "role": "Secretary"
+        }
+      ],
+      "comptrollerCode": "090/070/06",
+      "filedFor": "2025",
+      "filesIn": "Tazewell",
+      "kind": "fire",
+      "office": {}
+    },
+    "Deer Creek Library District": {
+      "board": [
+        {
+          "name": "Shea Kamp",
+          "role": "President"
+        },
+        {
+          "name": "Linda Brown",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "090/010/10",
+      "filedFor": "2025",
+      "filesIn": "Tazewell",
+      "kind": "library",
+      "office": {}
+    },
+    "El Paso District Library": {
+      "comptrollerCode": "102/015/10",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Carla Skare",
+          "role": "Librarian"
+        },
+        {
+          "name": "David Fever",
+          "role": "Bookkeeper"
+        }
+      ],
+      "kind": "library",
+      "office": {
+        "email": "director@elpasodistrictlibrary.org"
+      }
+    },
+    "El Paso Fire District": {
+      "board": [
+        {
+          "name": "Tim Ruestman",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "102/030/06",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Judy Hinshaw",
+          "role": "Accountant"
+        }
+      ],
+      "kind": "fire",
+      "office": {
+        "address": "PO Box 56",
+        "city": "El Paso IL 61738"
+      }
+    },
+    "Eureka Library District": {
+      "board": [
+        {
+          "name": "Don Whitman",
+          "role": "President"
+        },
+        {
+          "name": "Lisa Reinmann",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "102/005/10",
+      "filedFor": "2025",
+      "kind": "library",
+      "office": {
+        "address": "202 S Main",
+        "city": "Eureka IL 61530",
+        "phone": "(309) 467-2922"
+      }
+    },
+    "Eureka-Goodfield Fire District": {
+      "board": [
+        {
+          "name": "Nick Agnew",
+          "role": "President"
+        },
+        {
+          "name": "Samuel Hendricks",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "102/040/06",
+      "filedFor": "2025",
+      "kind": "fire",
+      "office": {
+        "address": "211 N Main St PO Box 2",
+        "city": "Eureka IL 61530",
+        "phone": "(309) 467-6181"
+      }
+    },
+    "Germantown Fire District": {
+      "board": [
+        {
+          "name": "Bruce Mathes",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "102/050/06",
+      "filedFor": "2025",
+      "kind": "fire",
+      "office": {
+        "email": "bmathes@germantownhillsfd.com"
+      }
+    },
+    "Grant Memorial Park District": {
+      "board": [
+        {
+          "name": "Sarah Strauch",
+          "role": "President"
+        },
+        {
+          "name": "Gretchen Strauch",
+          "role": "Sec./Treas."
+        }
+      ],
+      "comptrollerCode": "102/010/12",
+      "filedFor": "2025",
+      "kind": "park",
+      "office": {}
+    },
+    "Gridley Fire Protection District": {
+      "board": [
+        {
+          "name": "Donna Lou Baner",
+          "role": "President"
+        },
+        {
+          "name": "Bill Roth",
+          "role": "V-President"
+        },
+        {
+          "name": "Tiffney Palmer",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "064/100/06",
+      "filedFor": "2025",
+      "filesIn": "McLean",
+      "kind": "fire",
+      "office": {}
+    },
+    "Hudson Fire District": {
+      "board": [
+        {
+          "name": "Mike Burton",
+          "role": "President"
+        },
+        {
+          "name": "Kim Baird",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "064/110/06",
+      "filedFor": "2025",
+      "filesIn": "McLean",
+      "kind": "fire",
+      "office": {
+        "email": "kbaird@hudsonfire.org"
+      }
+    },
+    "IL Prairie Library District": {
+      "board": [
+        {
+          "name": "Jack Weddle",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "102/010/10",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Dawn Smith",
+          "role": "Mgr./Director"
+        }
+      ],
+      "kind": "library",
+      "office": {
+        "address": "PO Box 770",
+        "city": "Metamora IL 61548",
+        "phone": "(309) 367-4591"
+      }
+    },
+    "Metamora Park District": {
+      "board": [
+        {
+          "name": "Renee Udell",
+          "role": "President"
+        },
+        {
+          "name": "Rebecca Eisele",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "102/015/12",
+      "filedFor": "2025",
+      "kind": "park",
+      "office": {
+        "address": "PO BOX 633",
+        "city": "METAMORA IL 61548",
+        "email": "treasurer@metamoraparks.org",
+        "phone": "(309) 367-2932"
+      }
+    },
+    "Metamora Rural Fire District": {
+      "board": [
+        {
+          "name": "Jeff Bernitt",
+          "role": "Secretary"
+        }
+      ],
+      "comptrollerCode": "102/060/06",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Jim Springer",
+          "role": "C.E.O."
+        },
+        {
+          "name": "BILL Alread",
+          "role": "Treas./Admin."
+        }
+      ],
+      "kind": "fire",
+      "office": {}
+    },
+    "Minonk Fire District": {
+      "board": [
+        {
+          "name": "Gary Wolf",
+          "role": "President"
+        },
+        {
+          "name": "Paul Vallow",
+          "role": "Sec./Treas."
+        }
+      ],
+      "comptrollerCode": "102/063/06",
+      "filedFor": "2025",
+      "kind": "fire",
+      "office": {}
+    },
+    "Roanoke Fire District": {
+      "board": [
+        {
+          "name": "Michael Adams",
+          "role": "President"
+        },
+        {
+          "name": "Jayne Frerichs",
+          "role": "Treasurer"
+        },
+        {
+          "name": "April Wagner",
+          "role": "Trustee"
+        }
+      ],
+      "comptrollerCode": "102/065/06",
+      "filedFor": "2025",
+      "kind": "fire",
+      "office": {}
+    },
+    "Roanoke Park District": {
+      "board": [
+        {
+          "name": "Melinda Knepp",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "102/020/12",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Jason Knepp",
+          "role": "Administrator"
+        }
+      ],
+      "kind": "park",
+      "office": {
+        "email": "roanokeparkdistrict@gmail.com"
+      }
+    },
+    "Secor Fire District": {
+      "board": [
+        {
+          "name": "Greg Slayton",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "102/070/06",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Bob Seggerman",
+          "role": "C.E.O."
+        }
+      ],
+      "kind": "fire",
+      "office": {
+        "address": "PO Box 17",
+        "city": "Secor IL 61771-0017"
+      }
+    },
+    "Spring Bay Fire District": {
+      "board": [
+        {
+          "name": "Rober Reason",
+          "role": "President"
+        },
+        {
+          "name": "Ron Craig",
+          "role": "Secretary"
+        }
+      ],
+      "comptrollerCode": "102/080/06",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "John Schaer",
+          "role": "Accountant"
+        }
+      ],
+      "kind": "fire",
+      "office": {
+        "address": "310 Missouri St",
+        "city": "East Peoria IL 61611",
+        "phone": "(309) 822-8770"
+      }
+    },
+    "Washburn Fire District": {
+      "board": [
+        {
+          "name": "Ladd Harms",
+          "role": "President"
+        },
+        {
+          "name": "Mike Storms",
+          "role": "Secretary"
+        }
+      ],
+      "comptrollerCode": "102/090/06",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Lisa Kull",
+          "role": "Treas./Admin."
+        }
+      ],
+      "kind": "fire",
+      "office": {}
+    }
+  },
+  "generated": "2026-09-10T17:08:46Z",
+  "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
+  "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
+  "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
+}
