@@ -84,8 +84,13 @@ MAX_DIRECTORY_DRIFT = 2  # tolerated per-direction directory/card row drift mid-
 # rather than ship a bouncing one or edit a character. Three things differ here:
 # the domain is identical and correct on both pages, a SECOND county surface
 # publishes the corrected local part, and the pages' own convention corroborates
-# it -- all TWENTY of the other seat addresses are spelled `district<N>-<M>@`,
-# so the stale spelling is the sole outlier against the county's own pattern.
+# it. CORRECTED 2026-09-09, having been overstated when first written: this
+# said all TWENTY of the other seat addresses read `district<N>-<M>@`, and
+# NINETEEN do. The twentieth is District 2's first seat, `district2@`, with no
+# `-1` at all — published IDENTICALLY on both pages, so nothing disagrees, no
+# join breaks and it is out of scope here. What holds either way is the part
+# the argument rests on: every one of them spells `district` in full, and
+# `distric1-2@` is the only address on either page that does not.
 #
 # WHICH SURFACE OWNS AN E-MAIL ADDRESS is what settles it, the Greene/Scott
 # question asked of a contact detail instead of a place name. contacts.aspx IS
