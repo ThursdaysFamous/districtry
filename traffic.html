@@ -406,7 +406,7 @@
     <h2>By instance</h2>
     <p class="sub">Page visits split by path prefix &mdash; which app in the fleet people actually opened.</p>
     <div class="bars" data-bars="instances"></div>
-    <p class="note"><strong><span data-stat="barCount">Six</span> bars: <span data-stat="appCount">five</span> apps and the fleet landing page.</strong> Iowa joined the fleet manifest at 01:24&nbsp;UTC on 28&nbsp;August, so it is listed on the landing page now &mdash; for most of this window it was live and in the sitemap but unlisted, which is how it drew a visit from a page that did not offer it. Read the ranking as age, not quality: until <strong>August 24</strong> the non-Illinois tags pointed at GoatCounter sites that did not exist and every one of their visits was dropped, unrecoverable. Illinois has seven weeks of history; the rest have days. <span class="muted-note">These six sum to <span data-stat="instSum">958</span> of <span data-stat="pageviews">958</span> page visits: each instance is counted from its own path query rather than from one shared top-ten list, which used to drop an instance's sub-pages once that list filled.</span></p>
+    <p class="note"><strong><span data-stat="barCount">Six</span> bars: <span data-stat="appCount">five</span> apps and the fleet landing page.</strong> Iowa joined the fleet manifest at 01:24&nbsp;UTC on 28&nbsp;August, so it is listed on the landing page now &mdash; for most of this window it was live and in the sitemap but unlisted, which is how it drew a visit from a page that did not offer it. Read the ranking as age, not quality: until <strong>August 24</strong> the non-Illinois tags pointed at GoatCounter sites that did not exist and every one of their visits was dropped, unrecoverable. Illinois has the whole window of history; the rest begin at the cutover. <span class="muted-note">These <span data-stat="barCountLower">six</span> sum to <span data-stat="instSum">958</span> of <span data-stat="pageviews">958</span> page visits: each instance is counted from its own path query rather than from one shared top-ten list, which used to drop an instance's sub-pages once that list filled.</span></p>
   </section>
 
   <section class="card" id="searchCard" hidden>
@@ -493,7 +493,7 @@
   <footer>
     Source: GoatCounter (districtry.goatcounter.com), read-only dashboard export on <span data-stat="exportDate">August 30, 2026</span>.
     Every app on the domain &mdash; <span data-stat="appList">Illinois, Wisconsin, New York, San Francisco and Iowa</span> &mdash; reports to this one site; instances are told apart by path.
-    This report refreshes daily through September 10 (the fleet's two-month mark), then weekly.
+    This report refreshed daily through September 10, the fleet's two-month mark; it now refreshes weekly.
     Tracking is cookieless and identity-free; language collection is disabled by site settings.
     "Feature interactions" are the app's custom events (point selects, address searches, geolocation, layer toggles).
     <span class="standing"><a href="/privacy.html">Privacy</a> &middot; <a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a></span>
@@ -504,7 +504,7 @@
 (function () {
   "use strict";
 
-  /* ---- data (GoatCounter, districtry.goatcounter.com, 2026-07-10 → 2026-09-08) ---- */
+  /* ---- data (GoatCounter, districtry.goatcounter.com, 2026-07-10 → 2026-09-09) ---- */
   var daily = [
     ["Jul 10", 22, 20],
     ["Jul 11", 28, 46],
@@ -566,50 +566,51 @@
     ["Sep 5", 36, 46],
     ["Sep 6", 40, 27],
     ["Sep 7", 34, 20],
-    ["Sep 8", 36, 22]
+    ["Sep 8", 36, 22],
+    ["Sep 9", 34, 41]
   ];
 
   var searchData = {"clicks":120,"impressions":5200,"queries":699,"top":[{"q":"find my district","clicks":2,"impressions":303,"position":7.4},{"q":"what district am i in","clicks":11,"impressions":229,"position":7.6},{"q":"my district","clicks":0,"impressions":122,"position":11.5},{"q":"find my district chicago","clicks":0,"impressions":117,"position":8.0},{"q":"district","clicks":0,"impressions":66,"position":10.1},{"q":"what school district am i in","clicks":0,"impressions":49,"position":8.5},{"q":"what is my district","clicks":0,"impressions":34,"position":8.6},{"q":"find my precinct","clicks":0,"impressions":31,"position":8.5},{"q":"chicago district map","clicks":0,"impressions":29,"position":16.0},{"q":"what district am i in chicago","clicks":0,"impressions":28,"position":13.1},{"q":"what chicago district am i in","clicks":0,"impressions":26,"position":9.8},{"q":"which chicago school board district am i in?","clicks":0,"impressions":22,"position":3.0}],"properties":2,"first":"2026-07-12","last":"2026-09-06"};   /* replaced by the builder when GSC data exists */
 
   var barData = {
     instances: [
-      ["Illinois", 866], ["Fleet landing", 218], ["Wisconsin", 60],
-      ["New York", 30], ["Iowa", 10], ["San Francisco", 5],
+      ["Illinois", 883], ["Fleet landing", 221], ["Wisconsin", 61],
+      ["New York", 42], ["Iowa", 11], ["San Francisco", 5],
       ["Michigan", 1]
     ],
     layers: [
-      ["Ward", 160], ["School board", 95], ["Congress", 86],
-      ["IL House", 78], ["IL Senate", 64], ["County board", 46],
+      ["Ward", 161], ["School board", 98], ["Congress", 87],
+      ["IL House", 79], ["IL Senate", 65], ["County board", 46],
       ["Ward precinct", 42], ["Police district", 41], ["Police council", 40],
       ["School district", 31]
     ],
     refs: [
-      ["Direct / unknown", 1423], ["Google", 307], ["LinkedIn", 124],
-      ["Bluesky", 114], ["DuckDuckGo", 95], ["Bing", 87]
+      ["Direct / unknown", 1433], ["Google", 323], ["LinkedIn", 124],
+      ["Bluesky", 114], ["DuckDuckGo", 104], ["Bing", 91]
     ],
     systems: [
-      ["iOS", 1017], ["Android", 803], ["Windows", 677], ["macOS", 389], ["Linux", 53],
+      ["iOS", 1035], ["Android", 808], ["Windows", 703], ["macOS", 396], ["Linux", 55],
       ["Chrome OS", 4]
     ],
     browsers: [
-      ["Chrome", 1688], ["Safari", 1117], ["Firefox", 121],
+      ["Chrome", 1721], ["Safari", 1135], ["Firefox", 128],
       ["Edge", 14], ["(unknown)", 2]
     ],
     actions: [
-      ["Point selects", 323], ["Address searches", 216], ["Geolocations", 68]
+      ["Point selects", 336], ["Address searches", 223], ["Geolocations", 72]
     ],
     geo: [
-      ["United States", 2866], ["Canada", 25], ["Denmark", 11],
+      ["United States", 2924], ["Canada", 25], ["Denmark", 11],
       ["France", 7], ["Germany", 5], ["United Kingdom", 5]
     ],
     campaigns: [
       ["2026-08", 68], ["districtry-launch", 52]
     ],
     /* geolocate-success events; the meter is geoSuccess / Geolocations */
-    geoSuccess: 47,
+    geoSuccess: 49,
     /* the two Illinois SEO pages the narrative tracks, so the sentence
        cannot claim a figure the path widget has moved past */
-    seo: { police: 22, school: 54 }
+    seo: { police: 22, school: 62 }
   };
 
   /* The two facts no arithmetic on this page can recover, so they are typed
@@ -627,7 +628,7 @@
 
      EVERYTHING ELSE is computed below from `daily` and `barData`, so a
      refresh cannot leave a sentence disagreeing with a chart beside it. */
-  var META = { exportDate: "September 9, 2026", year: 2026, total: 2943 };
+  var META = { exportDate: "September 10, 2026", year: 2026, total: 3001 };
 
   var fmt = function (n) { return n.toLocaleString("en-US"); };
 
@@ -729,6 +730,7 @@
         : names.slice(0, -1).join(", ") + " and " + names[names.length - 1];
     })(),
     barCount: words(barData.instances.length, true),
+    barCountLower: words(barData.instances.length),
     appCount: words(barData.instances.length - 1),
     otherCount: words(barData.instances.length - 2),
     mobilePct: pct(mobile, total),
