@@ -47,11 +47,18 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app",
                         "peoria-district-officials.json")
 
-# Measured 2026-09-09: 18 districts / 28 board / 9 appointed / 18 with an
+# Measured 2026-09-10: 18 districts / 28 board / 9 appointed / 16 with an
 # office. Each floor sits under its measured value; see the module docstring.
+#
+# THE OFFICE FIGURE FELL FROM 18 ON 2026-09-10 for the reason recorded in
+# comptroller_afr.py: slot A's address and telephone are the FILER's, not the
+# unit's, so three districts that used to carry one -- Brimfield FPD, Elmwood
+# FPD and West Peoria FPD -- were carrying a trustee's own. Only what the
+# filing witnesses as the unit's ships now, and West Peoria keeps an e-mail
+# because slot D of its own filing carries its district domain.
 MIN_DISTRICTS = 15
 MIN_BOARD = 20
-MIN_WITH_OFFICE = 15
+MIN_WITH_OFFICE = 14
 # Every district the scraper reads carries all three kinds today. A KIND that
 # disappears entirely is a source change, not turnover.
 EXPECT_KINDS = {"fire", "park", "library"}

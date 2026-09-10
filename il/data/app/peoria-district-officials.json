@@ -17,7 +17,6 @@
       "office": {
         "address": "240 E Main St",
         "city": "Princeville IL 61559",
-        "email": "Gdown@apfd.com",
         "phone": "(309) 385-4913"
       }
     },
@@ -56,12 +55,7 @@
       "comptrollerCode": "072/020/06",
       "filedFor": "2025",
       "kind": "fire",
-      "office": {
-        "address": "9100 Princeville Jubilee",
-        "city": "Brimfield IL 61517",
-        "email": "jerry@jweaverinc.com",
-        "phone": "(309) 696-7521"
-      }
+      "office": {}
     },
     "BRIMFLD PUB LIBRARY (Dist # 166)": {
       "board": [
@@ -107,7 +101,6 @@
       "office": {
         "address": "217 W Chestnut St.",
         "city": "Chillicothe IL 61523",
-        "email": "jsprinkle@chillifd.com",
         "phone": "(309) 274-3567"
       }
     },
@@ -152,7 +145,7 @@
         "address": "430 N Bradley Ave",
         "city": "Chillicothe IL 61523",
         "email": "ajackson@chillicothepubliclibrary.org",
-        "phone": "(309) 274-3000"
+        "phone": "(309) 274-2719"
       }
     },
     "DUNLAP FPD (Dist # 148)": {
@@ -174,7 +167,7 @@
       "office": {
         "address": "PO Box 69",
         "city": "Dunlap IL 61525",
-        "email": "ajoyce94@hotmail.com",
+        "email": "dunlapfire@gmail.com",
         "phone": "(309) 243-5923"
       }
     },
@@ -213,12 +206,7 @@
       "comptrollerCode": "072/040/06",
       "filedFor": "2025",
       "kind": "fire",
-      "office": {
-        "address": "3603 N WILEY RD",
-        "city": "ELMWOOD IL 61529",
-        "email": "DWAGNER@AGLANDFS.COM",
-        "phone": "(309) 231-3774"
-      }
+      "office": {}
     },
     "HANNA CITY PARK DISTRICT (Dist # 461)": {
       "comptrollerCode": "072/035/12",
@@ -237,7 +225,6 @@
       "office": {
         "address": "511 N Main Street",
         "city": "Hanna City IL 61536",
-        "email": "kzaborachcpd@gmail.com",
         "phone": "(309) 565-7102"
       }
     },
@@ -279,7 +266,6 @@
       "office": {
         "address": "207 N Walnut St/PO Box 349",
         "city": "Princeville IL 61559",
-        "email": "bethd@lmelibrary.org",
         "phone": "(309) 385-4540"
       }
     },
@@ -341,9 +327,7 @@
       "kind": "park",
       "office": {
         "address": "1125 W. Lake Ave",
-        "city": "Peoria IL 61614",
-        "email": "ldu@peoriaparks.org",
-        "phone": "(309) 681-2809"
+        "city": "Peoria IL 61614"
       }
     },
     "TIMBER-HOLLIS FPD (Dist # 386)": {
@@ -367,7 +351,6 @@
       "office": {
         "address": "P.O. Box 143",
         "city": "Glasford IL 61533",
-        "email": "dbsbz1@yahoo.com",
         "phone": "(309) 339-7055"
       }
     },
@@ -382,14 +365,11 @@
       "filedFor": "2025",
       "kind": "fire",
       "office": {
-        "address": "406 N Waverly",
-        "city": "West Peoria IL 61604",
-        "email": "mstecher@scbas.com",
-        "phone": "(309) 279-6300"
+        "email": "mstecher@westpeoriafire.com"
       }
     }
   },
-  "generated": "2026-09-09T16:40:15Z",
+  "generated": "2026-09-10T00:31:30Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
