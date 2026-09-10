@@ -82,6 +82,45 @@ EXPECT_COUNTIES = 72
 # January 1, 2024 snapshot, so the source is dated rather than short.
 KNOWN_ABSENT = {"5531375": "Village of Greenleaf"}
 
+# ONE BLUE BOOK ROW IS INCOMPLETE, AND IT IS MEASURED RATHER THAN PREFERRED.
+#
+# The Elections Commission files 58 of the 608 municipalities as "Multiple
+# Counties". This source names more than one county for 57 of them. The 58th is
+# the VILLAGE OF LAKE HALLIE, which the Blue Book files under Chippewa alone —
+# so two state publishers disagree about one village, and the earlier version of
+# this comparison did not notice because the 58 "Multiple Counties" rows carry
+# no county NAME and were therefore excluded from a name-against-name check. The
+# subset that was compared was exactly the subset where this disagreement cannot
+# appear.
+#
+# A THIRD WITNESS SETTLES IT, and neither publisher is it: the Census place
+# boundary this app already draws, intersected against the shipped county
+# fabric. Lake Hallie's TIGER polygon is 99.30% inside Chippewa and 0.70% inside
+# Eau Claire — 0.265 km2, four separate pieces, filling 41.5% of their own
+# 1.88 x 0.34 km bounding box. THAT IS NOT A DIGITISATION SLIVER: a sliver hugs
+# the shared line and fills a few percent of a long thin box. 26.5 hectares of
+# the village lie in Eau Claire County.
+#
+# So the Commission is right that the village is multi-county and the Blue
+# Book's row is short one name. The BLUE BOOK'S OWN VALUE STILL SHIPS in
+# `counties`, because that field is what this source says and rewriting it would
+# put a fact in the reader's hands that its cited source does not carry. The
+# measurement rides beside it in `countiesAlso`, with its own reason, and the
+# card states both. Never silently switch the value to the other publisher's.
+MEASURED_COUNTY_EXTENSIONS = {
+    "5541525": {
+        "municipality": "Village of Lake Hallie",
+        "also": ["Eau Claire"],
+        "why": ("the Blue Book files this village under Chippewa alone, and the "
+                "Wisconsin Elections Commission files it as Multiple Counties. "
+                "Measured against the Census place boundary this app draws, "
+                "0.70% of the village — 0.265 km2 in four pieces — lies in Eau "
+                "Claire County, so the Commission is right and this row is one "
+                "county short."),
+        "measured": "2026-09-10",
+    },
+}
+
 
 def norm(name):
     """Fold for the name join. The two surfaces differ only in punctuation
@@ -128,11 +167,25 @@ def main():
                 if county not in fabric_names:
                     raise SystemExit("%s of %s names a county the shipped fabric "
                                      "does not have: %r" % (kind, r["name"], county))
-            municipal[geoid] = {
+            row = {
                 "kind": kind,
                 "incorporated": r["year"],
                 "counties": r["counties"],
             }
+            ext = MEASURED_COUNTY_EXTENSIONS.get(geoid)
+            if ext:
+                # A measured extension is only meaningful while the source still
+                # omits it. If a later edition adds the county, this entry has
+                # done its job and must be removed rather than left asserting a
+                # disagreement that no longer exists.
+                if set(ext["also"]) & set(r["counties"]):
+                    raise SystemExit(
+                        "%s now names %s itself — MEASURED_COUNTY_EXTENSIONS[%s] "
+                        "is stale and should be deleted, not carried."
+                        % (ext["municipality"], ext["also"], geoid))
+                row["countiesAlso"] = ext["also"]
+                row["countiesAlsoWhy"] = ext["why"]
+            municipal[geoid] = row
 
     if unmatched:
         raise SystemExit("%d Blue Book municipalities matched nothing in the app's "
@@ -180,6 +233,12 @@ def main():
 
     multi = sum(1 for v in municipal.values() if len(v["counties"]) > 1)
     print("  %d city, %d village; %d name more than one county" % (cities, len(municipal) - cities, multi))
+    for geoid, ext in sorted(MEASURED_COUNTY_EXTENSIONS.items()):
+        if geoid not in municipal:
+            raise SystemExit("MEASURED_COUNTY_EXTENSIONS names %s (%s), which "
+                             "this build does not carry" % (geoid, ext["municipality"]))
+        print("  measured extension: %s also lies in %s (%s)"
+              % (ext["municipality"], ", ".join(ext["also"]), ext["measured"]))
     for geoid, why in sorted(KNOWN_ABSENT.items()):
         print("  not in this edition: %s (%s) — incorporated after the %s snapshot"
               % (why, geoid, raw["snapshot"]))

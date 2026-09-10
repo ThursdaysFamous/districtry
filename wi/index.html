@@ -8646,10 +8646,22 @@ function initWisconsinExplorer() {
   //
   // THE COUNTY HERE IS BETTER THAN THE ONE THE CLERK FILE CARRIES, which is
   // the reason it renders. The Elections Commission writes "Multiple Counties"
-  // for a municipality that straddles a line — 58 of the 608 — where this
-  // source names every one of them. Measured against the Commission's field it
-  // agrees on 538 and contradicts none: the only differences are its own
-  // "Fond Du Lac" against the Blue Book's "Fond du Lac".
+  // for a municipality that straddles a line where this source names every one
+  // of them.
+  //
+  // THE COMPARISON, STATED AS WHAT WAS ACTUALLY MEASURED. Of the 607
+  // municipalities this file carries, the Commission names a real county for
+  // 549 and "Multiple Counties" for 58. Against those 549: 538 agree exactly
+  // and 11 differ only in the Commission's own "Fond Du Lac" against the Blue
+  // Book's "Fond du Lac", which is the shipped county fabric's spelling too.
+  //
+  // THE OTHER 58 CARRY NO COUNTY NAME, so a name-against-name check cannot
+  // reach them — and that is exactly where a disagreement of this kind can
+  // live. Checked by COUNT instead: this source names more than one county for
+  // 57 of the 58, and ONE, the Village of Lake Hallie, it files under Chippewa
+  // alone. That one is resolved by a third witness rather than by preferring a
+  // publisher — see MEASURED_COUNTY_EXTENSIONS in
+  // wi/scripts/build_wi_municipal_facts.py — and the card says so.
   var loadWiMunicipalFacts = makeCached(function () {
     return fetchJSONWithRetry("data/app/wi-municipal-facts.json", {}, 2);
   });
@@ -9687,13 +9699,27 @@ function initWisconsinExplorer() {
           });
         }
         var inCounties = result.facts.counties || [];
+        var also = result.facts.countiesAlso || [];
         if (inCounties.length) {
           idRows.push({
-            label: inCounties.length > 1 ? "Counties" : "County",
+            label: (inCounties.length + also.length) > 1 ? "Counties" : "County",
             value: inCounties.map(function (c) { return String(c); }).join(", ") +
               (inCounties.length > 1
                 ? " — this municipality lies in " + inCounties.length + " counties."
                 : "")
+          });
+        }
+        // A MEASURED EXTENSION IS ITS OWN ROW, never folded into the list above.
+        // The list is what the cited source says; this is what measuring the
+        // boundary found it missing, and a reader is owed the difference rather
+        // than a silently corrected value.
+        if (also.length) {
+          idRows.push({
+            label: "Also in",
+            value: also.map(function (c) { return String(c); }).join(", ") +
+              (result.facts.countiesAlsoWhy
+                ? " — " + String(result.facts.countiesAlsoWhy)
+                : ".")
           });
         }
         if (idRows.length) {

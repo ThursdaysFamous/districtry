@@ -2001,6 +2001,10 @@
   "counties": [
    "Chippewa"
   ],
+  "countiesAlso": [
+   "Eau Claire"
+  ],
+  "countiesAlsoWhy": "the Blue Book files this village under Chippewa alone, and the Wisconsin Elections Commission files it as Multiple Counties. Measured against the Census place boundary this app draws, 0.70% of the village — 0.265 km2 in four pieces — lies in Eau Claire County, so the Commission is right and this row is one county short.",
   "incorporated": 2003,
   "kind": "village"
  },
