@@ -355,18 +355,53 @@ A directory that does not list someone has not said they left.
 
 ## Ask 7 — Wisconsin Legislative Reference Bureau: the Blue Book's reuse terms
 
-> **SENT 2026-09-03.** Sent by the operator from his own mailbox to
-> **lrb-reference-services@legis.wisconsin.gov**, the Bureau's published reference desk.
+> **SENT 2026-09-03. ANSWERED 2026-09-10. CLOSED.** Sent by the operator from his own
+> mailbox to **lrb-reference-services@legis.wisconsin.gov**, the Bureau's published
+> reference desk.
 >
-> **Follow up 2026-09-24**, and again **2026-10-08**, before recording the route
-> unresponsive — which would be a claim about this ask, never about the terms. Silence is
-> not permission any more than it is a refusal.
+> **THE REPLY, IN FULL**, from **Madeline Kasper, Managing Legislative Analyst**,
+> Wisconsin Legislative Reference Bureau:
 >
-> **WHAT IT GATES IS NARROW.** Only the two builds already shipping off the Blue Book
-> (`wi-county-officers.json`, `wi-county-clerks.json`) and whether section 190's
-> county-seat and incorporation-year tables can be added. Nothing else in Wisconsin waits
-> on it, and the existing use continues meanwhile — the ask exists because no reasoning
-> for it was ever recorded, not because a problem was found.
+> > Hello Adam,
+> >
+> > These uses seem acceptable to us. Thanks for checking in.
+> >
+> > Madeline
+>
+> **QUOTE IT; DO NOT PARAPHRASE IT AS "APPROVED" OR "LICENSED".** It is an informal
+> permission from a named officer of the Bureau — the Jo Daviess shape — so the record
+> carries her words, her name, her title and the date, and a reader judges. "Seem
+> acceptable to us" is what she wrote.
+>
+> **THE SCOPE IS THIS ASK'S, NOT THE REPLY'S.** One plural answers what was put to her,
+> so what "these uses" covers is read off the outgoing message below:
+>
+> 1. **The use already shipping**, now confirmed rather than assumed —
+>    `wi-county-officers.json` exactly as it ships: county officials from the 2025-26
+>    volume's county-officer tables, refreshed weekly, the April 2025 snapshot date
+>    attributed, linking back to the Bureau. The front matter's reservation of rights is
+>    what this answers.
+> 2. **The section 190 extension**, which was closed the day before and is open now:
+>    incorporation year, county and county seat for cities and villages, under the same
+>    attribution.
+>
+> **THREE LIMITS RIDE WITH IT**, because the permission rests on what the ask
+> represented. No part of the volume is republished and the PDF is not redistributed —
+> this does not authorise shipping it, mirroring it, or publishing bulk tables. Only the
+> specific facts named. A different Blue Book table is outside this answer and needs its
+> own ask rather than a citation of this one.
+>
+> **NO CREDIT FORMAT WAS IMPOSED**, and that is an answered question rather than an
+> unanswered one: the ask asked directly whether either use "requires a specific form of
+> credit, a license, or is not permitted", and she named none. She also did not route the
+> inquiry to the Bureau's legal staff, which the ask had offered.
+>
+> **THE 2026-09-24 AND 2026-10-08 FOLLOW-UPS ARE RETIRED.** They were scheduled for a
+> question that now has an answer. Nobody writes to Kasper about this again.
+>
+> **THE EXTENSION IS UNBLOCKED, NOT DECIDED.** Permission to use those facts is not a
+> decision to ship them; whether a Wisconsin card should carry municipal incorporation
+> facts goes through the normal new-row route with its own review.
 
 **This ask is about a source already in production, which is why it is worth sending.**
 `wi-county-officers.json` — 72 counties x 7 offices — and `wi-county-clerks.json` are
