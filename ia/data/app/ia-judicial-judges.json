@@ -203,10 +203,6 @@
     "role": "District Court Judge: District 2A"
    },
    {
-    "name": "John J. Haney",
-    "role": "District Court Judge: District 2B"
-   },
-   {
     "name": "Derek Johnson",
     "role": "District Court Judge: District 2B"
    },
@@ -296,10 +292,6 @@
    },
    {
     "name": "James C. Ellefson",
-    "role": "Senior Judge: District 2B"
-   },
-   {
-    "name": "James A. McGlynn",
     "role": "Senior Judge: District 2B"
    },
    {
@@ -462,6 +454,10 @@
    {
     "name": "Jeffrey A. Neary",
     "role": "District Court Judge: District 3B"
+   },
+   {
+    "name": "Adam Miller",
+    "role": "District Court Judge: 3A"
    },
    {
     "name": "Carl J. Petersen",
