@@ -95,6 +95,40 @@ So:
 
 If you are redistributing this project's data in bulk, drop that one file.
 
+### 4. The *Wisconsin Blue Book* — used by permission, on terms the Bureau stated
+
+`wi/data/app/wi-county-officers.json` (72 counties × 7 offices) and
+`wi/data/app/wi-county-clerks.json` are built weekly from the *Wisconsin Blue
+Book* 2025-26's own county-officer tables
+(`docs.legis.wisconsin.gov/misc/lrb/blue_book/2025_2026/210_officials_and_employees.pdf`).
+The volume's front matter reads **"(c)2025 Joint Committee on Legislative
+Organization, Wisconsin Legislature. All rights reserved."**, and the
+Legislature sells the book through its Document Sales Unit — so under this
+project's own rule that string had to be established rather than inferred. It
+had been shipping unestablished, which is why it was asked.
+
+**It was asked on 2026-09-03 and answered on 2026-09-10** by **Madeline Kasper,
+Managing Legislative Analyst, Wisconsin Legislative Reference Bureau**, in full:
+
+> These uses seem acceptable to us. Thanks for checking in.
+
+That is an **informal permission from a named officer**, recorded in her words
+rather than as "approved" or "licensed" — the same posture this file already
+takes with Jo Daviess. "These uses" answers what was put to her, so the scope is
+the ask's: the county-officer tables as they ship, refreshed weekly with the
+April 2025 snapshot date attributed and the Bureau linked; and an extension to
+section `190`'s incorporation year, county and county seat for cities and
+villages, under the same attribution.
+
+**What it does not authorise**, because the permission rests on what the ask
+represented as fact: no part of the volume is republished and the PDF is not
+redistributed; only the specific facts named are taken; and a different Blue
+Book table is outside this answer and needs its own ask rather than a citation
+of this one. She imposed **no credit format** — the ask asked directly whether
+one applied and she named none — and did not route the question to the Bureau's
+legal staff, which the ask had offered. If the Bureau later withdraws or narrows
+this, that is a real outcome and this file will say so.
+
 ### Two related things this file does not cover
 
 * **Map tiles.** The coverage map draws CARTO basemap tiles built from
