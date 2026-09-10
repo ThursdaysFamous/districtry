@@ -15,12 +15,7 @@
       "filedFor": "2025",
       "filesIn": "Tazewell",
       "kind": "park",
-      "office": {
-        "address": "32023 Armington Rd",
-        "city": "Armington IL 61721",
-        "email": "vdemkey@yahoo.com",
-        "phone": "(309) 824-5712"
-      }
+      "office": {}
     },
     "Atlanta": {
       "board": [
@@ -36,12 +31,7 @@
       "comptrollerCode": "054/010/12",
       "filedFor": "2025",
       "kind": "park",
-      "office": {
-        "address": "2487 2100th Ave",
-        "city": "Atlanta IL 61723",
-        "email": "pigjock76@hotmail.com",
-        "phone": "(217) 304-6511"
-      }
+      "office": {}
     },
     "Chestnut Beason": {
       "board": [
@@ -60,8 +50,7 @@
       "office": {
         "address": "2216 1275th St.",
         "city": "Beason IL 62512",
-        "email": "chestnutbeasonpark@gmail.com",
-        "phone": "(217) 828-2883"
+        "email": "chestnutbeasonpark@gmail.com"
       }
     },
     "Emden": {
@@ -78,12 +67,7 @@
       "comptrollerCode": "054/017/12",
       "filedFor": "2025",
       "kind": "park",
-      "office": {
-        "address": "101 Mason St",
-        "city": "Emden IL 62635",
-        "email": "elias.klokkenga@gmail.com",
-        "phone": "(217) 671-7074"
-      }
+      "office": {}
     },
     "Lincoln": {
       "comptrollerCode": "054/020/12",
@@ -118,9 +102,7 @@
       "kind": "park",
       "office": {
         "address": "PO Box 101",
-        "city": "Mount Pulaski IL 62548",
-        "email": "mpparkdist@yahoo.com",
-        "phone": "(217) 737-0091"
+        "city": "Mount Pulaski IL 62548"
       }
     },
     "San Jose": {
@@ -143,14 +125,11 @@
       "filesIn": "Mason",
       "kind": "park",
       "office": {
-        "address": "701 s. 1st st.",
-        "city": "San Jose IL 62682",
-        "email": "sanjoseilparkdistrict@gmail.com",
-        "phone": "(309) 241-4687"
+        "email": "sanjoseilparkdistrict@gmail.com"
       }
     }
   },
-  "generated": "2026-09-09T16:40:43Z",
+  "generated": "2026-09-10T00:30:38Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
