@@ -12431,6 +12431,9 @@ function initChiExplorer() {
   var loadGrundyDistrictOfficials = makeCached(function () {
     return fetchJSONWithRetry("data/app/grundy-district-officials.json", {}, 2);
   });
+  var loadKankakeeDistrictOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/kankakee-district-officials.json", {}, 2);
+  });
   /* One stamper for both counties: the payloads are the same shape because
    * they come from the same filings, so only the roster file and the property
    * holding the district's name differ. */
@@ -12466,6 +12469,12 @@ function initChiExplorer() {
   function withGrundyOfficials(loadGeometry) {
     return withAfrOfficials(loadGeometry, loadGrundyDistrictOfficials,
                             ["district"]);
+  }
+  /* Kankakee's boundaries come from the county's own live service rather than a
+   * committed file, so the join key is its `unit_name` column. */
+  function withKankakeeOfficials(loadGeometry) {
+    return withAfrOfficials(loadGeometry, loadKankakeeDistrictOfficials,
+                            ["unit_name"]);
   }
 
   /* The officeholder block under a district whose officers come from its own
@@ -23510,19 +23519,23 @@ function initChiExplorer() {
           { label: "County", value: "Kendall County" }
         ]
       }),
-      // Kankakee's fire tiling (17). Identity-only: the county's taxing-district
-      // layers declare telephone/website/email on every row and populate none of
-      // them (measured 0/17), so `unit_name` is all there is — the same shape as
-      // Cook's and DuPage's fire tilings.
+      // Kankakee's fire tiling (17 features, 16 districts — MANTENO FIRE ST1 and
+      // ST2 are two stations of one). The county's taxing-district layers declare
+      // telephone/website/email on every row and populate none of them (measured
+      // 0/17), so the BOUNDARY is still identity-only; the officers come from each
+      // district's own Annual Financial Report filing, as Peoria's, Logan's,
+      // Woodford's and Grundy's do.
       polygonCountyEntry({
         key: "kankakee",
         coverage: kankakeeCountyCoverage,
-        loader: loadKankakeeFire,
+        loader: withKankakeeOfficials(loadKankakeeFire),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["unit_name"], primary: true },
-          { label: "County", value: "Kankakee County" }
-        ]
+          { label: "County", value: "Kankakee County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Madison's fire tiling (42) — the FIRST CONTACT-BEARING fire entry in the
       // fleet. Every other county's is identity-only because the source is; this
@@ -23957,15 +23970,18 @@ function initChiExplorer() {
           { label: "County", value: "Kendall County" }
         ]
       }),
-      // Kankakee's park tiling (4) — identity-only, same measured reason as fire.
+      // Kankakee's park tiling (4) — boundary identity-only for the same measured
+      // reason as fire; officers from each district's own AFR filing.
       polygonCountyEntry({
         key: "kankakee",
         coverage: kankakeeCountyCoverage,
-        loader: loadKankakeeParks,
+        loader: withKankakeeOfficials(loadKankakeeParks),
         fields: [
           { name: "name", label: "Park District", keys: ["unit_name"], primary: true },
-          { label: "County", value: "Kankakee County" }
-        ]
+          { label: "County", value: "Kankakee County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Madison's park tiling (6) — identity-only; the AGOL layer carries the
       // district name and nothing else. A partial tiling, correctly: most of the
@@ -24471,15 +24487,20 @@ function initChiExplorer() {
           { label: "County", value: "Adams County" }
         ]
       }),
-      // Kankakee's library tiling (8) — identity-only, same measured reason as fire.
+      // Kankakee's library tiling (8) — boundary identity-only for the same
+      // measured reason as fire; officers from each district's own AFR filing,
+      // except SUN RIVER TERRACE, a municipal library that files inside its
+      // village and has no unit of its own.
       polygonCountyEntry({
         key: "kankakee",
         coverage: kankakeeCountyCoverage,
-        loader: loadKankakeeLibraries,
+        loader: withKankakeeOfficials(loadKankakeeLibraries),
         fields: [
           { name: "name", label: "Library District", keys: ["unit_name"], primary: true },
-          { label: "County", value: "Kankakee County" }
-        ]
+          { label: "County", value: "Kankakee County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Madison's library tiling (18) — identity-only, same shape as its parks.
       polygonCountyEntry({
