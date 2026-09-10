@@ -12526,7 +12526,13 @@ function initChiExplorer() {
     var office = info.office || {};
     if (office.address || office.phone || office.email) {
       frag.appendChild(renderLinkRow({
-        title: "Office",
+        // "Office" NAMES A PLACE, so a district whose filing witnesses no
+        // address of its own gets "Contact" instead. Before 2026-09-10 every
+        // district carried an address, because slot A's was read as the
+        // district's; now San Jose Park District's row holds a role mailbox
+        // and nothing else, and heading that "Office" would name a place the
+        // filing does not give.
+        title: office.address ? "Office" : "Contact",
         note: [office.address, office.city].filter(Boolean)
           .map(function (part) { return String(part); }).join(", ") || null,
         phone: office.phone ? String(office.phone) : null,
