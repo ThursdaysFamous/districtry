@@ -88,10 +88,39 @@ MAX_FALLBACK_JOINS = 20
 # because the weekly refresh would put the dead path straight back. Each entry
 # names the replacement page the COUNTY publishes, and `--audit-overrides`
 # prints any whose upstream has caught up so the entry can be dropped.
+# A VALUE OF None MEANS "wicourts' link is dead and no replacement could be
+# VERIFIED from here" — the card then ships NO link rather than a broken one,
+# the same posture scripts/undeliverable.py takes with an address that cannot
+# receive mail. A reader who clicks a dead link gets no error they can act on,
+# and a card that links nothing at least does not send them somewhere wrong.
+# Never guess a replacement: every URL below was fetched and read.
 CLERK_URL_OVERRIDES = {
     # wicourts links /departments/departments-a-d/clerk-of-courts (soft 404);
     # the county's Courts page links this one. Checked 2026-08-29.
     "dodge": "https://www.co.dodge.wi.gov/courts-clerk",
+    # THE COUNTY CHANGED DOMAIN. wicourts still links www.co.chippewa.wi.us,
+    # which 301s to www.chippewacountywi.gov WITHOUT KEEPING THE PATH, so the
+    # redirect lands on that site's own 404 and every status check passes. The
+    # live page is on the county's Government index. Checked 2026-09-10.
+    "chippewa": "https://www.chippewacountywi.gov/187/Clerk-of-Courts",
+    # wicourts links /departments/clerk_of_courts/index.php, a hard 404. The
+    # county's own homepage links this one. Checked 2026-09-10.
+    "jefferson": "https://www.jeffersoncountywi.gov/courts___legal_services/clerk_of_courts/index.php",
+    # NO VERIFIED REPLACEMENT — vernoncounty.org does not resolve, and it is
+    # the county's DNS rather than this network: both Google and Cloudflare
+    # public resolvers answer SERVFAIL for the apex AND www. SERVFAIL is a
+    # broken delegation, not NXDOMAIN, so the domain still exists and may come
+    # back; when it does, this entry is dropped rather than replaced.
+    # Checked 2026-09-10.
+    "vernon": None,
+    # NO VERIFIED REPLACEMENT, AND DELIBERATELY NOT CHASED. co.ashland.wi.us
+    # resolves NOERROR with no A record at all — the name exists and hosts no
+    # site. The county's real site, ashlandcountywi.gov, does resolve, but it
+    # publishes `User-agent: * / Disallow: /`, which this project honours: the
+    # county board roster it already carries was read once and is carried as a
+    # dated document for exactly that reason. So no path there is fetched to
+    # verify, and none is guessed. Checked 2026-09-10.
+    "ashland": None,
 }
 
 
@@ -222,7 +251,11 @@ def main():
             "courthouses": courthouses[:4],
         }
         if key in CLERK_URL_OVERRIDES:
-            entry["sourceUrl"] = CLERK_URL_OVERRIDES[key]
+            override = CLERK_URL_OVERRIDES[key]
+            if override:
+                entry["sourceUrl"] = override
+            # else: known dead with no verified replacement — no link ships,
+            # and the elif below must not restore wicourts' own dead one.
         elif c.get("clerkUrl"):
             entry["sourceUrl"] = c["clerkUrl"]
         out[key] = entry
@@ -249,7 +282,14 @@ def main():
         print("  joined on %-10s %s = %s (%s)" % (why, bench_name, contact_name, ckey))
     for key, url in sorted(CLERK_URL_OVERRIDES.items()):
         upstream = circuits.get(key, {}).get("clerkUrl")
-        if upstream == url:
+        if url is None:
+            # A withheld link is the entry most likely to rot quietly: nothing
+            # about it changes when the county's site comes back, so it says on
+            # every run that this circuit ships no link and why to re-test.
+            print("  override %s -> NO LINK (wicourts links %s, measured dead; "
+                  "re-test that host and drop this entry when it answers)"
+                  % (key, upstream))
+        elif upstream == url:
             print("  override %s is now redundant — wicourts links %s; drop it"
                   % (key, url))
         else:
