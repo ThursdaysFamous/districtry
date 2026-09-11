@@ -26,7 +26,7 @@
 | Adams | 17001 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district` | 3 — `adams-county-board-roster` (no-source); `fire-park-district-officers` (no-source); `quincy-ward-officeholders` (no-source) |
 | Alexander | 17003 | dispatch | at-large — County card | `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Bond | 17005 | dispatch | no board layer — see gaps | `library-district` | 2 — `bond-county-board-districts` (no-source); `statewide-library-officials` (no-source) |
-| Boone | 17007 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 3 — `boone-fire-belvidere-city` (data-quality); `boone-fire-names` (data-quality); `fire-park-district-officers` (no-source) |
+| Boone | 17007 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 2 — `boone-fire-belvidere-city` (data-quality); `boone-fire-names` (data-quality) |
 | Brown | 17009 | dispatch | at-large — County card | `library-district` | 1 — `brown-precinct-geometry` (no-source) |
 | Calhoun | 17013 | dispatch | at-large — County card | `county-precinct`, `library-district` | none |
 | Carroll | 17015 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 3 — `carroll-special-districts` (no-source); `carroll-ward-geometry` (no-source); `statewide-library-officials` (no-source) |
@@ -39,7 +39,7 @@
 | Crawford | 17033 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | none |
 | Cumberland | 17035 | dispatch | no board layer — see gaps | `county-precinct`, `library-district` | 2 — `cumberland-county-board` (no-source); `statewide-library-officials` (no-source) |
 | De Witt | 17039 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `dewitt-township-officials` (data-quality); `statewide-library-officials` (no-source) |
-| DeKalb | 17037 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 2 — `blocked-crawlers` (blocked); `fire-park-district-officers` (no-source) |
+| DeKalb | 17037 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 1 — `blocked-crawlers` (blocked) |
 | Douglas | 17041 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | DuPage | 17043 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 4 — `aurora-council-contact` (blocked); `dupage-municipal-phones` (data-quality); `dupage-ward-cities` (no-source); `fire-park-district-officers` (no-source) |
 | Edgar | 17045 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |

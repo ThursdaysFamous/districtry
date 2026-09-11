@@ -23559,12 +23559,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "dupage",
         coverage: dupageCountyCoverage,
-        loader: loadDupageFire,
+        loader: withIlDistrictOfficials("dupage", "fire", ["fire"])(loadDupageFire),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["fire"], primary: true },
-          { label: "County", value: "DuPage County" }
-        ]
+          { label: "County", value: "DuPage County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Lake carries each district's own office contact on the GIS feature —
       // bespoke entry so those rows render as real links (see lakeOrgContactRows)
@@ -23614,11 +23616,13 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "mchenry",
         coverage: mchenryCountyCoverage,
-        loader: loadMchenryFire,
+        loader: withIlDistrictOfficials("mchenry", "fire", ["firedist"])(loadMchenryFire),
         fields: [
           { name: "name", label: "Fire District", keys: ["firedist"], primary: true },
-          { label: "County", value: "McHenry County" }
-        ]
+          { label: "County", value: "McHenry County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Kendall: the parcel-derived tax-code tiling, name-only (the loader
       // excludes the municipal Joliet row — see the KENDALL COUNTY block)
@@ -23686,12 +23690,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "dekalb",
         coverage: dekalbCountyCoverage,
-        loader: loadDekalbFire,
+        loader: withIlDistrictOfficials("dekalb", "fire", ["fire_district"])(loadDekalbFire),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["fire_district"], primary: true },
-          { label: "County", value: "DeKalb County" }
-        ]
+          { label: "County", value: "DeKalb County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Lee's 22 districts come from its NG911 service-area layer, so the name
       // field is DsplayName (the upstream spelling) — the only identity column
@@ -23702,11 +23708,13 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "lee",
         coverage: leeCountyCoverage,
-        loader: loadLeeFireDistricts,
+        loader: withIlDistrictOfficials("lee", "fire", ["dsplayname"])(loadLeeFireDistricts),
         fields: [
           { name: "name", label: "Fire District", keys: ["dsplayname"], primary: true },
-          { label: "County", value: "Lee County" }
-        ]
+          { label: "County", value: "Lee County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Rock Island's 17, pre-built from the county's tax-agency tiling (the
       // Cook shape) with parcel-fabric road voids closed — see the loaders.
@@ -23740,17 +23748,19 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "adams",
         coverage: adamsCountyCoverage,
-        loader: loadAdamsFireDistricts,
+        loader: withIlDistrictOfficials("adams", "fire", ["dsplayname"])(loadAdamsFireDistricts),
         fields: [
           { name: "name", label: "Fire District", keys: ["dsplayname"], primary: true },
           { label: "Note", value: "Adams County publishes this as its 911 response tiling, so it names the department that answers here rather than a fire protection district's taxing boundary." },
-          { label: "County", value: "Adams County" }
-        ]
+          { label: "County", value: "Adams County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       polygonCountyEntry({
         key: "iroquois",
         coverage: iroquoisCountyCoverage,
-        loader: loadIroquoisFireDistricts,
+        loader: withIlDistrictOfficials("iroquois", "fire", ["name"])(loadIroquoisFireDistricts),
         fields: [
           { name: "name", label: "Fire District", keys: ["name"], primary: true },
           { name: "discrepancy", label: "County's note", keys: ["discrepancy"],
@@ -23758,8 +23768,10 @@ function initChiExplorer() {
               var d = r && r.discrepancy;
               return !!d && String(d).trim() && String(d).trim().toLowerCase() !== "none";
             } },
-          { label: "County", value: "Iroquois County" }
-        ]
+          { label: "County", value: "Iroquois County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Peoria's 13 — the first fire tiling in the fleet whose source carries
       // a per-district WEBSITE, so the card can link the district that answers
@@ -23785,14 +23797,16 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "sangamon",
         coverage: sangamonCountyCoverage,
-        loader: loadSangamonFire,
+        loader: withIlDistrictOfficials("sangamon", "fire", ["district"])(loadSangamonFire),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["district"], primary: true },
           { label: "Note", value: "Springfield's corporate area is served by the city's own Fire Department rather than a fire protection district.",
             when: function (r) { return r.name === "SPRINGFIELD CORP"; } },
-          { label: "County", value: "Sangamon County" }
-        ]
+          { label: "County", value: "Sangamon County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // St. Clair's 44 named departments (2026-08-02), from the county's CAD
       // folder. The source declares disttype/agency columns and populates
@@ -23802,12 +23816,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "st-clair",
         coverage: stClairCountyCoverage,
-        loader: loadStClairFire,
+        loader: withIlDistrictOfficials("st-clair", "fire", ["name"])(loadStClairFire),
         fields: [
           { name: "name", label: "Fire District", keys: ["name"], primary: true },
           { label: "Note", value: "The county publishes this tiling without stating whether it maps taxing districts or dispatch-response coverage areas." },
-          { label: "County", value: "St. Clair County" }
-        ]
+          { label: "County", value: "St. Clair County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Stephenson's 15 named fire services (2026-08-02) — the fleet's second
       // GEOREFERENCED boundary: the county publishes no fire boundary as
@@ -23848,7 +23864,7 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "boone",
         coverage: booneCountyCoverage,
-        loader: loadBooneFire,
+        loader: withIlDistrictOfficials("boone", "fire", ["district"])(loadBooneFire),
         pill: true,
         excluded: {
           where: inBelvidereCity,
@@ -23862,8 +23878,10 @@ function initChiExplorer() {
         fields: [
           { name: "district", label: "Fire District", keys: ["district"], primary: true },
           { label: "Note", value: "Boone County identifies its fire protection districts by number rather than by name — the numbering its tax extensions are run on. The county publishes no name for them." },
-          { label: "County", value: "Boone County" }
-        ]
+          { label: "County", value: "Boone County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Stark — 6 departments from the County Clerk's own Google My Maps
       // (clerk-confirmed 3 Aug 2026; see loadStarkFire). Uniquely in this
@@ -23902,12 +23920,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "effingham",
         coverage: effinghamCountyCoverage,
-        loader: loadEffinghamFire,
+        loader: withIlDistrictOfficials("effingham", "fire", ["zonedesc"])(loadEffinghamFire),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["zonedesc"], primary: true },
-          { label: "County", value: "Effingham County" }
-        ]
+          { label: "County", value: "Effingham County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Woodford — 17 districts dissolved from the county's parcel fabric.
       // The VILLAGE OF METAMORA is a hole on purpose: every one of the 1,701
@@ -23956,11 +23976,13 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "hamilton",
         coverage: hamiltonCountyCoverage,
-        loader: loadHamiltonFire,
+        loader: withIlDistrictOfficials("hamilton", "fire", ["name"])(loadHamiltonFire),
         fields: [
           { name: "name", label: "Fire District", keys: ["name"], primary: true },
-          { label: "County", value: "Hamilton County" }
-        ]
+          { label: "County", value: "Hamilton County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Monroe — 26 shapes the county labels only by abbreviation + zone
       // ("MVFD 2"). The county's GIS/Mapping department confirmed the eight
@@ -23971,13 +23993,15 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "monroe",
         coverage: monroeCountyCoverage,
-        loader: loadMonroeFire,
+        loader: withIlDistrictOfficials("monroe", "fire", ["dxfirename"])(loadMonroeFire),
         fields: [
           // findPropCI candidates are LOWERCASE (it lowercases the feature's
           // own keys before comparing) — this matches the loader's dxFireName
           { name: "name", label: "Fire District", keys: ["dxfirename"], primary: true },
-          { label: "County", value: "Monroe County" }
-        ]
+          { label: "County", value: "Monroe County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       })
     ]
   });
@@ -24004,12 +24028,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "cook",
         coverage: cookCountyCoverage,
-        loader: loadCookParkDistricts,
+        loader: withIlDistrictOfficials("cook", "park", ["agency_description"])(loadCookParkDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Park District", keys: ["agency_description"], primary: true },
-          { label: "County", value: "Cook County" }
-        ]
+          { label: "County", value: "Cook County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       polygonCountyEntry({
         key: "will",
@@ -24028,12 +24054,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "dupage",
         coverage: dupageCountyCoverage,
-        loader: loadDupageParks,
+        loader: withIlDistrictOfficials("dupage", "park", ["park"])(loadDupageParks),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Park District", keys: ["park"], primary: true },
-          { label: "County", value: "DuPage County" }
-        ]
+          { label: "County", value: "DuPage County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Lake carries each district's own office contact on the GIS feature —
       // bespoke entry so those rows render as real links (see lakeOrgContactRows)
@@ -24114,12 +24142,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "madison",
         coverage: madisonCountyCoverage,
-        loader: loadMadisonParkDistricts,
+        loader: withIlDistrictOfficials("madison", "park", ["park"])(loadMadisonParkDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Park District", keys: ["park"], primary: true },
-          { label: "County", value: "Madison County" }
-        ]
+          { label: "County", value: "Madison County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // DeKalb's park tiling (6) — identity-only, from the same clerk tax-district
       // family as its fire entry. A thin, honest tiling: most of the county is in
@@ -24127,12 +24157,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "dekalb",
         coverage: dekalbCountyCoverage,
-        loader: loadDekalbParkDistricts,
+        loader: withIlDistrictOfficials("dekalb", "park", ["district"])(loadDekalbParkDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Park District", keys: ["district"], primary: true },
-          { label: "County", value: "DeKalb County" }
-        ]
+          { label: "County", value: "DeKalb County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Rock Island levies exactly ONE park district (Cordova, in the county's
       // north-east corner). A one-feature tiling is honest rather than thin:
@@ -24244,11 +24276,13 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "effingham",
         coverage: effinghamCountyCoverage,
-        loader: loadEffinghamPark,
+        loader: withIlDistrictOfficials("effingham", "park", ["name"])(loadEffinghamPark),
         fields: [
           { name: "name", label: "Park District", keys: ["name"], primary: true },
-          { label: "County", value: "Effingham County" }
-        ]
+          { label: "County", value: "Effingham County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Woodford — 3 districts dissolved from the county's parcel fabric. Only
       // 4,113 of its 25,824 parcels are in one, so most of the county sits in

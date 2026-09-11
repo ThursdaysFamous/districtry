@@ -7,10 +7,17 @@ Comptroller. This half does the refusing: a run that lost coverage leaves the
 shipped file alone rather than replacing it with a thinner one.
 
 THE CARD COUNT IS RE-MEASURED HERE, NOT TAKEN FROM THE SCRAPER'S ARITHMETIC.
-The payload is keyed by county, then layer, then the name the boundary file
-writes, so a record that no polygon can reach is invisible to the scraper's own
-totals. Every key is checked back against the shipped boundary files and a key
-that stamps nothing fails the build.
+The payload is keyed by county, then layer, then the name the card reads, so a
+record no polygon can reach is invisible to the scraper's own totals. Every key
+is checked back against the card names, and a key that stamps nothing fails the
+build.
+
+THOSE NAMES COME FROM THE SCRAPER'S OWN INTERMEDIATE, not from a fresh read.
+Ten of the twenty-seven layers ship as GeoJSON in this repo and seventeen are
+fetched from a county's ArcGIS service at scrape time, and this half has to run
+offline: its --check runs in CI, where nineteen county services would be
+nineteen ways for an unrelated outage to fail the build. So the scraper records
+the names it read and the builder measures against those.
 
 A FIRE CARD AND A PARK CARD IN ONE COUNTY CAN SHARE A NAME. Macon's layers both
 draw a `BlueMound` and both draw a `Niantic` — four separate bodies filing four
@@ -37,26 +44,28 @@ import json
 import os
 import sys
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from il_special_district_officials_scraper import shipped_cards  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app",
                         "il-special-district-officials.json")
 
-# Measured 2026-09-11: 105 of the 119 cards stamped, 146 board officers, 69
-# appointed, 76 cards with an office block, 66 of those with a street address,
-# 57 with a telephone, 33 with an e-mail. Each floor sits under its measured
-# value.
-MIN_CARDS = 90
-MIN_BOARD = 120
-MIN_HEADS = 55
-MIN_WITH_OFFICE = 62
-MIN_WITH_PHONE = 45
+# Measured 2026-09-11: 440 of the 517 cards stamped across 27 county/layer
+# pairs, 536 board officers, 362 appointed, 342 cards with an office block, 310
+# of those with a street address, 253 with a telephone, 149 with an e-mail, and
+# 95 carrying `filesIn` because their district files under another county. Each
+# floor sits under its measured value, because a district filing late is a real
+# event and must not freeze the other 439.
+MIN_CARDS = 380
+MIN_BOARD = 450
+MIN_HEADS = 300
+MIN_WITH_OFFICE = 290
+MIN_WITH_PHONE = 210
 # Every county the scraper's table covers, and both layers. A county or a layer
 # disappearing entirely is a source change rather than turnover.
 EXPECT_COUNTIES = {"cook", "kendall", "macon", "rock-island", "stark",
-                   "stephenson"}
+                   "stephenson", "dupage", "mchenry", "dekalb", "lee", "adams",
+                   "iroquois", "sangamon", "st-clair", "boone", "effingham",
+                   "hamilton", "monroe", "madison"}
 EXPECT_LAYERS = {"fire", "park"}
 
 
@@ -77,7 +86,13 @@ def main():
     if not isinstance(counties, dict):
         fail("the scraper's output has no counties object")
 
-    cards = shipped_cards()
+    cards = {}
+    for key, names in (payload.get("cards") or {}).items():
+        county, _, layer = key.partition("/")
+        cards[(county, layer)] = names
+    if not cards:
+        fail("the scraper's output records no card names — it is from before "
+             "this builder measured against them")
     records = []                                # (county, layer, name, entry)
     orphans, undated = [], []
     for county, layers in sorted(counties.items()):
