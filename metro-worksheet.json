@@ -989,6 +989,48 @@
         "note": "Grundy's 2 park districts (Channahon and Godley), pre-built by scripts/build_parcel_fabric_districts.py from the same parcel fabric. Bounds are an EQUALITY: only 1,779 of the county's 27,661 parcels are in a park district, so the empty state covers most of the county and is the true answer there."
       },
       {
+        "file": "edwards-precincts.json",
+        "min_features": 12,
+        "max_features": 12,
+        "note": "Edwards County's twelve voting precincts. The county's own Clerk wrote on 6 Aug 2026 that \"our voting district boundaries currently exist on paper\", which closed the route to a county FILE and never touched this one: the census fabric carries all twelve names character for character, with no alias at all. The geometry is the Census 2020 voting-district fabric, which sums to the county's exact 2020 population; the names are the county's own, taken from its certified returns and identical in the 2024 General and the 2026 General Primary (ISBE elections 66 and 69). Bounds are an EQUALITY because that is the county's whole precinct list. No polling place ships and no roster (scripts/build_vtd_precincts.py). Edwards elects its three commissioners county-wide, so no board district is carried."
+      },
+      {
+        "file": "mason-precincts.json",
+        "min_features": 21,
+        "max_features": 21,
+        "note": "Mason County's twenty-one voting precincts, and the file whose absence started the audit: the gap record mason-precinct-vintage stated as a fact about the shipped app that these 21 shapes were already held, and none of them was. The census writes a vestigial trailing 1 on ALLENS GROVE 1 and KILBOURNE 1 where the county writes neither, so both are recorded as renames. The geometry is the Census 2020 voting-district fabric, which sums to the county's exact 2020 population; the names are the county's own, taken from its certified returns and identical in the 2024 General and the 2026 General Primary (ISBE elections 66 and 69). Bounds are an EQUALITY because that is the county's whole precinct list. No polling place ships and no roster (scripts/build_vtd_precincts.py). Mason's two board districts are unions of whole townships and ship as their own layer, so no board district is carried here."
+      },
+      {
+        "file": "massac-precincts.json",
+        "min_features": 17,
+        "max_features": 17,
+        "note": "Massac County's seventeen voting precincts. The county's canvass appends its own precinct number after a hyphen (ADKINS-17) where the census appends it after a space (ADKINS 17), so thirteen names are recorded as renames; the county's spelling ships, apostrophe included (George's Creek). SUB-PRECINCT REPORTING UNITS ARE NOT PRECINCTS — LOGAN-12B in 2026 and five such rows in 2024 are parts of the precinct they name, and counting them reads the county as 18 precincts in one election and 22 in the other. The geometry is the Census 2020 voting-district fabric, which sums to the county's exact 2020 population; the names are the county's own, taken from its certified returns and identical in the 2024 General and the 2026 General Primary (ISBE elections 66 and 69). Bounds are an EQUALITY because that is the county's whole precinct list. No polling place ships and no roster (scripts/build_vtd_precincts.py). Massac elects its three commissioners county-wide, so no board district is carried."
+      },
+      {
+        "file": "pike-precincts.json",
+        "min_features": 31,
+        "max_features": 31,
+        "note": "Pike County's thirty-one voting precincts. Its gap record named this route and did not follow it — \"the precincts themselves are certainly defined ... but only as names\" — and names are the whole input needed. One rename: the census writes CINCINNATI 1 where the county writes CINCINNATI. The geometry is the Census 2020 voting-district fabric, which sums to the county's exact 2020 population; the names are the county's own, taken from its certified returns and identical in the 2024 General and the 2026 General Primary (ISBE elections 66 and 69). Bounds are an EQUALITY because that is the county's whole precinct list. No polling place ships and no roster (scripts/build_vtd_precincts.py). Pike elects its nine commissioners county-wide, so no board district is carried."
+      },
+      {
+        "file": "saline-precincts.json",
+        "min_features": 28,
+        "max_features": 28,
+        "note": "Saline County's twenty-eight voting precincts. Six renames, and the only ones in this tranche whose base names differ: the county writes EAST ELDORADO #1 to #6 where the census writes ELDORADO 1 to 6. East Eldorado is the county's ONLY Eldorado township (Census 2020 county subdivisions list thirteen townships for Saline), those six are the only unmatched names on either side, and the census's ordinal is demonstrably the county's own within-township number everywhere else in the county (CARRIER MILLS 1-2, HARRISBURG 1-10). The geometry is the Census 2020 voting-district fabric, which sums to the county's exact 2020 population; the names are the county's own, taken from its certified returns and identical in the 2024 General and the 2026 General Primary (ISBE elections 66 and 69). Bounds are an EQUALITY because that is the county's whole precinct list. No polling place ships and no roster (scripts/build_vtd_precincts.py). Saline elects its thirteen board members county-wide, so no board district is carried."
+      },
+      {
+        "file": "union-precincts.json",
+        "min_features": 20,
+        "max_features": 20,
+        "note": "Union County's twenty voting precincts. No gap record ever said they were missing, which is how a served county goes unbuilt — the same shape as the four found by the 2026-08-21 audit. One rename: the census writes UNION 1 where the county writes UNION. The geometry is the Census 2020 voting-district fabric, which sums to the county's exact 2020 population; the names are the county's own, taken from its certified returns and identical in the 2024 General and the 2026 General Primary (ISBE elections 66 and 69). Bounds are an EQUALITY because that is the county's whole precinct list. No polling place ships and no roster (scripts/build_vtd_precincts.py). Union elects its five commissioners county-wide, so no board district is carried."
+      },
+      {
+        "file": "wabash-precincts.json",
+        "min_features": 16,
+        "max_features": 16,
+        "note": "Wabash County's sixteen voting precincts. The county has no website at all, and its record left this half UNMEASURED because none of the Clerk's replies addressed it; the census fabric answers without the county publishing anything. Seven renames, all the census appending the county's own precinct number (BELLMONT 14 for BELLMONT); the county's Mt. Carmel keeps its full stop. The geometry is the Census 2020 voting-district fabric, which sums to the county's exact 2020 population; the names are the county's own, taken from its certified returns and identical in the 2024 General and the 2026 General Primary (ISBE elections 66 and 69). Bounds are an EQUALITY because that is the county's whole precinct list. No polling place ships and no roster (scripts/build_vtd_precincts.py). Wabash elects its three commissioners county-wide, so no board district is carried."
+      },
+      {
         "file": "woodford-fire-districts.json",
         "min_features": 17,
         "max_features": 17,
@@ -1265,7 +1307,7 @@
         "file": "edwards-county-outline.json",
         "min_features": 1,
         "max_features": 1,
-        "note": "Edwards County outline — gap-location geometry only, not a dispatched county. Added by the pass-13 detached-counties research sweep (2026-08-04) so its gap entry attaches to ground.",
+        "note": "Edwards County coverage outline — it gates the county's county-precinct dispatch entry (added 2026-09-11) and is what puts the county inside the coverage ring. Edwards elects its three commissioners at large, so its MEMBERS ride the County card and there is no board geometry. The outline stays dynamic_reference: the entry resolves it by slug through countyOutlineCoverage rather than naming a loader. Added by the pass-13 detached-counties research sweep (2026-08-04) as gap-location geometry.",
         "dynamic_reference": true
       },
       {
@@ -1653,7 +1695,7 @@
         "file": "massac-county-outline.json",
         "min_features": 1,
         "max_features": 1,
-        "note": "Massac County outline — the SERVED area's fourth island (2026-08-21). Massac joins through the County card alone: its board is a three-member commission elected countywide, so there is no district geometry and no dispatch entry, and this outline stays dynamic_reference. Shipped as gap-location geometry by the pass-13 sweep (2026-08-04) and promoted here.",
+        "note": "Massac County outline — the SERVED area's fourth island (2026-08-21). Massac's board is a three-member commission elected countywide, so its MEMBERS ride the County card and there is no board geometry; it gained a county-precinct dispatch entry on 2026-09-11, which this outline gates. The outline stays dynamic_reference: that entry resolves it by slug through countyOutlineCoverage rather than naming a loader. Shipped as gap-location geometry by the pass-13 sweep (2026-08-04) and promoted here.",
         "dynamic_reference": true
       },
       {
@@ -1848,7 +1890,7 @@
         "file": "pike-county-outline.json",
         "min_features": 1,
         "max_features": 1,
-        "note": "Pike County outline — the county IS served, but through the COUNTY card's board section rather than a dispatch entry: it elects its board at large, so there is no district geometry to dispatch on and index.html names no loader for this file. It is fetched by slug for the gaps panel, and it is what puts the county inside the coverage ring.",
+        "note": "Pike County outline — it gates the county's county-precinct dispatch entry (added 2026-09-11) and is what puts the county inside the coverage ring. Pike elects its nine commissioners at large, so its MEMBERS ride the County card and there is no board geometry. The outline stays dynamic_reference: the entry resolves it by slug through countyOutlineCoverage rather than naming a loader, and the gaps panel fetches it the same way.",
         "dynamic_reference": true
       },
       {
@@ -1917,7 +1959,7 @@
         "file": "saline-county-outline.json",
         "min_features": 1,
         "max_features": 1,
-        "note": "Saline County outline — the 74th served county (2026-08-21). Saline joins through the County card alone: thirteen members elected countywide, so there is no district geometry and no dispatch entry, and this outline stays dynamic_reference. A mainland join, bordering the already-served Hamilton and White.",
+        "note": "Saline County outline — the 74th served county (2026-08-21). Saline's thirteen members are elected countywide and ride the County card, so there is no board geometry; it gained a county-precinct dispatch entry on 2026-09-11, which this outline gates. The outline stays dynamic_reference: that entry resolves it by slug through countyOutlineCoverage rather than naming a loader. A mainland join, bordering the already-served Hamilton and White.",
         "dynamic_reference": true
       },
       {
@@ -2080,7 +2122,7 @@
         "file": "union-county-outline.json",
         "min_features": 1,
         "max_features": 1,
-        "note": "Union County outline — gap-location geometry only, not a dispatched county. Added by the pass-13 detached-counties research sweep (2026-08-04) so its gap entry attaches to ground.",
+        "note": "Union County coverage outline — it gates the county's county-precinct dispatch entry (added 2026-09-11) and is what puts the county inside the coverage ring. Union elects its five commissioners at large, so its MEMBERS ride the County card and there is no board geometry. The outline stays dynamic_reference: the entry resolves it by slug through countyOutlineCoverage rather than naming a loader. Added by the pass-13 detached-counties research sweep (2026-08-04) as gap-location geometry.",
         "dynamic_reference": true
       },
       {
@@ -2093,7 +2135,7 @@
         "file": "wabash-county-outline.json",
         "min_features": 1,
         "max_features": 1,
-        "note": "Wabash County outline — gap-location geometry only, not a dispatched county. Added by the pass-13 detached-counties research sweep (2026-08-04) so its gap entry attaches to ground.",
+        "note": "Wabash County coverage outline — it gates the county's county-precinct dispatch entry (added 2026-09-11) and is what puts the county inside the coverage ring. Wabash elects its three commissioners at large, so its MEMBERS ride the County card and there is no board geometry. The outline stays dynamic_reference: the entry resolves it by slug through countyOutlineCoverage rather than naming a loader. Added by the pass-13 detached-counties research sweep (2026-08-04) as gap-location geometry.",
         "dynamic_reference": true
       },
       {
@@ -3168,7 +3210,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-il-shell-v20",
+    "cache_name": "districtry-il-shell-v21",
     "shell_urls": [
       "./",
       "./sources.html",

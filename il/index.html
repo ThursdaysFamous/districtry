@@ -11479,6 +11479,54 @@ function initChiExplorer() {
     return loadArcGISGeoJSON(MORGAN_PRECINCT_SERVICE);
   });
 
+  /* SEVEN COUNTIES WHOSE CENSUS 2020 FABRIC IS STILL THEIR OWN (2026-09-11).
+   * Each was already served and drew no precincts, and six of the seven had a
+   * gap record giving the same reason: the county publishes no precinct map.
+   * That is the wrong question. This route needs the county's precinct NAMES,
+   * and ISBE publishes every county's certified precinct-level returns as CSV
+   * for all 102 counties — the 2024 General and the 2026 General Primary name
+   * the same precincts in all seven, and the Census 2020 voting districts carry
+   * those names and sum to each county's exact 2020 population.
+   *
+   * MASON IS WHY THE AUDIT RAN. Its gap record stated, as a fact about the
+   * shipped app, that "Mason County's 21 precincts are drawn from 2020 census
+   * boundaries" and that the census carries "exactly the set of 21 shapes the
+   * app already holds". The app held none of them.
+   *
+   * WASHINGTON WAS BUILT AND DROPPED, which is the check worth keeping: its
+   * certified returns report DuBois, Johannisburg, Lively Grove and Venedy at
+   * TWO ids each while the census splits DuBois and Hoyleton, so the two
+   * publishers agree on DuBois alone and the fabric cannot be placed. Every
+   * county here is reconciled against the RAW canvass names rather than the
+   * reporting-id-stripped ones, because a base name at two ids is a question
+   * and never a duplicate to collapse.
+   *
+   * Six of the seven elect their boards county-wide, so no board district is
+   * carried; Mason's two township-built districts already ship as their own
+   * layer. No polling place ships and no roster. See
+   * scripts/build_vtd_precincts.py. */
+  var loadEdwardsPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/edwards-precincts.json", {}, 2);
+  });
+  var loadMasonPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mason-precincts.json", {}, 2);
+  });
+  var loadMassacPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/massac-precincts.json", {}, 2);
+  });
+  var loadPikePrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/pike-precincts.json", {}, 2);
+  });
+  var loadSalinePrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/saline-precincts.json", {}, 2);
+  });
+  var loadUnionPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/union-precincts.json", {}, 2);
+  });
+  var loadWabashPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/wabash-precincts.json", {}, 2);
+  });
+
   /* Edgar (the 56th dispatched county, added 2026-08-18) — the same canvass
    * route as Crawford and Mercer, and the first county it reached whose
    * composition rests on a FULL SET of certified documents rather than one
@@ -24973,6 +25021,34 @@ function initChiExplorer() {
    * any county's dataset, so each card links its county clerk's
    * registration/polling-place lookup — which also names the card's
    * county. ---------- */
+  // The certified returns the seven 2026-09-11 counties take their precinct
+  // NAMES from. None of the seven publishes a precinct map of its own, so this
+  // is the document a reader can check the card against.
+  var ISBE_PRECINCT_RESULTS =
+    "https://www.elections.il.gov/ElectionOperations/ElectionVoteTotals.aspx";
+  // Those seven make the same card — the precinct name in the header pill, the
+  // county under it — so they share one factory rather than seven copies of it.
+  // The slug is written once: the coverage outline and the precinct file are
+  // named after it by contract, and the loader is passed in so validate_index's
+  // reference check still sees every data file by name.
+  function vtdPrecinctEntry(opts) {
+    return polygonCountyEntry({
+      key: opts.key,
+      coverage: opts.coverage || countyOutlineCoverage(opts.key),
+      loader: opts.loader,
+      pill: true,
+      fields: [
+        { name: "name", label: "Precinct", keys: ["name"], primary: true },
+        { label: "County", value: opts.county }
+      ],
+      primaryLink: function () {
+        return {
+          label: "Illinois State Board of Elections — certified precinct results",
+          url: ISBE_PRECINCT_RESULTS
+        };
+      }
+    });
+  }
   registerCountyLayer({
     id: "county-precinct",
     group: "geography",
@@ -28807,6 +28883,42 @@ function initChiExplorer() {
           };
         }
       },
+      vtdPrecinctEntry({
+        key: "edwards",
+        county: "Edwards County",
+        loader: loadEdwardsPrecincts
+      }),
+      vtdPrecinctEntry({
+        key: "mason",
+        county: "Mason County",
+        coverage: masonCountyCoverage,
+        loader: loadMasonPrecincts
+      }),
+      vtdPrecinctEntry({
+        key: "massac",
+        county: "Massac County",
+        loader: loadMassacPrecincts
+      }),
+      vtdPrecinctEntry({
+        key: "pike",
+        county: "Pike County",
+        loader: loadPikePrecincts
+      }),
+      vtdPrecinctEntry({
+        key: "saline",
+        county: "Saline County",
+        loader: loadSalinePrecincts
+      }),
+      vtdPrecinctEntry({
+        key: "union",
+        county: "Union County",
+        loader: loadUnionPrecincts
+      }),
+      vtdPrecinctEntry({
+        key: "wabash",
+        county: "Wabash County",
+        loader: loadWabashPrecincts
+      }),
     ],
     // Precinct sits at the bottom of the County > Township > Precinct nest:
     // turning it on brings Township on (which itself brings County on), and
