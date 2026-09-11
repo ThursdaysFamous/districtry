@@ -2,44 +2,41 @@
 """Write il/data/app/il-library-district-officials.json from the scraper's output.
 
 The pair to il_library_district_officials_scraper.py, which reads each
-DISTRICT-governed library's own Annual Financial Report filing from the Illinois
+district-governed library's own Annual Financial Report filing from the Illinois
 Comptroller. This half does the refusing: a run that lost coverage leaves the
 shipped file alone rather than replacing it with a thinner one.
 
-THIS FILE IS KEYED BY LIBRARY AND STAMPS MANY CARDS PER KEY, which is what makes
-its floors read differently from the per-county AFR builders'. The statewide
-boundary layer clips each library's service area to the county, so one library's
-filing reaches a card in every county it touches: 197 libraries stamp 339 cards.
-BOTH counts are floored because they move independently — a library that stops
-filing costs a key and all of its cards at once, while a library RENAMED in the
-boundary layer costs its cards and no key at all, leaving a record in this file
-that no card can reach. So the card count is not taken from the scraper's
-arithmetic: it is re-measured here against the shipped boundary files, and a key
-that stamps nothing fails the build.
+This file is keyed by library and stamps many cards per key, which is why its
+floors read differently from the per-county AFR builders'. The statewide boundary
+layer clips each library's service area to the county, so one library's filing
+reaches a card in every county it touches: 197 libraries stamp 339 cards. Both
+counts are floored because they move independently. A library that stops filing
+costs a key and all of its cards at once. A library renamed in the boundary layer
+costs its cards and no key at all, leaving a record here that no card can reach.
+So the card count is not taken from the scraper's arithmetic; it is re-measured
+against the shipped boundary files, and a key that stamps nothing fails the build.
 
-WHAT THE FLOORS GUARD, and why each is under its measured value. On 2026-09-11
-197 of the layer's 216 District-governed names resolved, stamping 339 of its 371
-District cards, with 294 board officers, 96 appointed officers, 175 offices and
-145 telephones. The floors sit under those values because a library filing late
-is a real event and must not freeze the other 196; they are not set AT the
-measured figures, which would make one late filing indistinguishable from the
-source breaking.
+Measured 2026-09-11: 197 of the layer's 216 district-governed names resolved,
+stamping 339 of its 371 district cards, with 294 board officers, 96 appointed
+officers, 175 offices and 145 telephones. The floors sit under those values
+because a library filing late is a real event and must not freeze the other 196.
+Setting them at the measured figures would make one late filing
+indistinguishable from the source breaking.
 
-THE APPOINTED OFFICERS ARE FLOORED SEPARATELY, and that is not symmetry for its
-own sake: 25 of the 197 file no board officer at all and their cards name a
-Director or a Treasurer/Administrator and nobody else. A parse regression that
-dropped appointed officers alone would leave the board count untouched and empty
-those 25 cards, so the count that carries them is guarded on its own.
+The appointed officers are floored separately. 25 of the 197 file no board
+officer at all, and their cards name a Director or a Treasurer/Administrator and
+nobody else. A parse regression that dropped appointed officers alone would leave
+the board count untouched and empty those 25 cards.
 
-THE FISCAL YEAR IS REQUIRED ON EVERY LIBRARY. An AFR is a snapshot filed for one
-year and the Comptroller's own page says a different year may name a different
-person, so a record without one cannot be rendered honestly and the build
-refuses rather than shipping a name with no date attached.
+The fiscal year is required on every library. An AFR is a snapshot filed for one
+year, and the Comptroller's own page says a different year may name a different
+person, so a record without one cannot be rendered honestly and the build refuses
+rather than shipping a name with no date attached.
 
-EVERY RECORD CARRIES `filesIn`, and unlike the per-county builders that is not a
-footnote here: a card in one county routinely carries a library that files in
-another — Fossil Ridge files in Will, Cordova in Rock Island — so the county a
-reader would search the Warehouse for is part of the answer rather than an aside.
+Every record carries `filesIn`, and here that is not a footnote: a card in one
+county routinely carries a library that files in another — Fossil Ridge files in
+Will, Cordova in Rock Island — so the county a reader would search the Warehouse
+for is part of the answer.
 """
 
 import argparse

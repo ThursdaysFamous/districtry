@@ -1,18 +1,17 @@
 name: Update statewide library district officials
 
 # Weekly refresh of il/data/app/il-library-district-officials.json — the board,
-# the appointed officers and the office of the 197 DISTRICT-governed public
+# the appointed officers and the office of the 197 district-governed public
 # libraries that file, joined onto the statewide library layer's polygons by
 # library name in il/index.html.
 #
-# THIS IS ONE JOB FOR 72 COUNTIES, and that is the shape of the source rather
-# than a saving. The statewide layer clips each library's service area to the
-# county, so a district spanning counties draws a card in every county it
-# touches while filing ONE Annual Financial Report, under its home county.
-# Matching each card against its own county's units resolves 124 of the 371
-# District cards; indexed statewide instead, 197 filings stamp 339 of them.
+# One job covers 72 counties. The statewide layer clips each library's service
+# area to the county, so a district spanning counties draws a card in every
+# county it touches while filing one Annual Financial Report, under its home
+# county. Matching each card against its own county's units resolves 124 of the
+# 371 district cards; indexed statewide instead, 197 filings stamp 339 of them.
 #
-# THE PUBLISHER IS THE LIBRARY, NOT THE BOUNDARY'S AUTHOR. The layer comes from
+# The publisher is the library, not the boundary's author. The layer comes from
 # the Illinois Broadband Office and carries a library's name, how it is governed
 # and no contact of any kind, which is what the statewide-library-officials gap
 # recorded: 550 cards naming a library and nobody. Every Illinois unit of local
@@ -21,39 +20,39 @@ name: Update statewide library district officials
 # the title the unit itself filed. The Comptroller is the collector; the library
 # is the author.
 #
-# ONLY THE DISTRICT CLASS IS IN SCOPE. A municipal library files inside its city's
-# or village's own report and has no unit to look up; a township library files as
-# or within a township, and A TOWNSHIP LIBRARY'S BOARD IS NOT THE TOWNSHIP'S
-# BOARD, so reading a township's filing would name the wrong body. The scraper
+# Only the district class is in scope. A municipal library is covered by its
+# city's or village's report and has no unit to look up; a township library files
+# as or within a township, and a township library's board is not the township's
+# board, so reading a township's filing would name the wrong body. The scraper
 # counts both classes out by reason on every run rather than leaving them
 # unmatched.
 #
-# SCHEDULED CLEAR OF THE OTHER FIVE AFR JOBS, which read the same state site:
+# Scheduled clear of the other five AFR jobs, which read the same state site:
 # Peoria runs Sunday 21:00, Logan Sunday 22:00, Woodford Monday 22:00, Grundy
 # Friday 22:00 and Kankakee Saturday 22:00. All six pace themselves at one
 # request a second and none should be competing with another for it. This is the
-# longest of the six by an order of magnitude — see below — so it takes the one
-# hour no other job in the fleet occupies, nine hours ahead of Peoria's.
+# longest of the six by an order of magnitude, so it takes the one hour no other
+# job in the fleet occupies, nine hours ahead of Peoria's.
 #
-# WHY THE JOB IS SLOW ON PURPOSE. It indexes all 102 Illinois counties, not the
-# 72 the layer draws: 180 of the 339 stamped cards carry a library filing in
-# another county, and sixteen of those filing counties are outside the 72 —
-# seven of them counties the app does not serve at all. Indexing fewer loses
-# exactly those. The list held 101 on its first run, missing St. Clair, and
-# reported 17 of that county's 19 cards as libraries filed under no name
-# anywhere in Illinois; unit_index now compares the list's length to 102. Then two pages per library — the landing page for the
-# fiscal year that library last filed for, then the contact block for that year.
-# An empty fiscal year returns a page with no contact block at all, and a
-# hardcoded one silently skips a library that is a year behind, so the year is
-# asked for rather than assumed. Roughly 480 paced requests, and a partial index
-# is the one failure the scraper must never ship: a county missing from it
-# unresolves every library filed there, which reads on the card exactly like a
-# library that files nothing. So each county is retried and the RUN is abandoned
-# rather than completed short.
+# The job is slow on purpose. It indexes all 102 Illinois counties, not the 72
+# the layer draws: 180 of the 339 stamped cards carry a library filing in another
+# county, and sixteen of those filing counties are outside the 72, seven of them
+# counties the app does not serve at all. Indexing fewer loses exactly those. The
+# list held 101 on its first run, missing St. Clair, and reported 17 of that
+# county's 19 cards as libraries filed under no name anywhere in Illinois;
+# unit_index now compares the list's length to 102. Then two pages per library:
+# the landing page for the fiscal year that library last filed for, then the
+# contact block for that year. An empty fiscal year returns a page with no
+# contact block at all, and a hardcoded one silently skips a library that is a
+# year behind, so the year is asked for rather than assumed. Roughly 480 paced
+# requests. A partial index is the failure this scraper must never ship: a county
+# missing from it unresolves every library filed there, which reads on the card
+# exactly like a library that files nothing, so each county is retried and the run
+# is abandoned rather than completed short.
 #
-# A LIBRARY THAT STOPS FILING IS A REAL EVENT, not a parse failure, and the
+# A library that stops filing is a real event, not a parse failure, and the
 # builder's floors sit under the measured 197 rather than at it so one late
-# filing cannot freeze the other 196. The builder also re-measures the CARD count
+# filing cannot freeze the other 196. The builder also re-measures the card count
 # against the shipped boundary files rather than trusting the scraper's
 # arithmetic, because a library renamed in the boundary layer costs its cards and
 # no key at all.

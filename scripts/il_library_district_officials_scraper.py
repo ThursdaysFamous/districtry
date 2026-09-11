@@ -1,102 +1,98 @@
 #!/usr/bin/env python3
-"""Officers for the statewide library layer's DISTRICT-governed cards, from AFRs.
+"""Officers for the statewide library layer's district-governed cards, from AFRs.
 
-WHY THIS EXISTS. il/index.html draws 550 library cards across 72 counties
-through `statewideLibraryEntry`, off a statewide broadband-office boundary layer
-that carries a library's name, how it is governed, and no contact of any kind.
-Every one of those cards named the library and nothing else — no trustee, no
-address, no telephone — which is the `statewide-library-officials` gap. Nothing
-was blocking it; no record said it was missing until 2026-09-10.
+il/index.html draws 550 library cards across 72 counties through
+`statewideLibraryEntry`, off a statewide broadband-office boundary layer that
+carries a library's name, how it is governed, and no contact of any kind. Every
+one of those cards named the library and nothing else — no trustee, no address,
+no telephone. That is the `statewide-library-officials` gap. Nothing was
+blocking it; no record said it was missing until 2026-09-10.
 
-THE LIBRARIES PUBLISH IT THEMSELVES. Every Illinois unit of local government
+The libraries publish it themselves. Every Illinois unit of local government
 files an Annual Financial Report with the Comptroller, whose Contact
 Information section names role-holders with the title the unit filed.
-comptroller_afr.py carries that route and its rules — including which contact
-values a filing witnesses as the UNIT's rather than one filer's; this file
+comptroller_afr.py carries that route and its rules, including which contact
+values a filing witnesses as the unit's rather than one filer's. This file
 carries only what is specific to the library layer.
 
-ONLY THE DISTRICT CLASS IS IN SCOPE, and the other two are excluded by reason
-rather than left unmatched. Of the 550 cards, 371 are DISTRICT-governed (365
+Only the district class is in scope, and the other two are excluded by reason
+rather than left unmatched. Of the 550 cards, 371 are district-governed (365
 `District` + 6 `District (contracting)`) and file their own AFR. 140 are
-MUNICIPAL (114 City, 24 Village, 1 Village (contracting), 1 Town): a municipal
-library files inside its city's or village's own report and has no unit to look
-up, the shape Minonk City Library takes in Woodford and Sun River Terrace in
-Kankakee. 39 are TOWNSHIP: those file as or within a township, and A TOWNSHIP
-LIBRARY'S BOARD IS NOT THE TOWNSHIP'S BOARD, so reading a township's filing here
+municipal (114 City, 24 Village, 1 Village (contracting), 1 Town): a municipal
+library is covered by its city's or village's report and has no unit to look up,
+the shape Minonk City Library takes in Woodford and Sun River Terrace in
+Kankakee. 39 are township: those file as or within a township, and a township
+library's board is not the township's board, so reading a township's filing here
 would name the wrong body.
 
-THE JOIN IS STATEWIDE BY NAME AND CANNOT BE PER-COUNTY. The boundary layer
-CLIPS EACH LIBRARY'S SERVICE AREA TO THE COUNTY, so a district spanning counties
-draws a card in every county it touches while filing ONCE, under its home
-county. Matching each card against its own county's units resolves only 124 of
-371 (measured 2026-09-10). Indexed statewide instead, the 371 cards carry 216
-DISTINCT names against 378 unit labels, and one filing stamps every county's card
-for the same library — which is why this is one scraper rather than 72 county
-tables. 180 of the 339 stamped cards carry a library filing in ANOTHER county,
-and sixteen of those filing counties are not among the 72 the layer draws —
+The join is statewide by name and cannot be per-county. The boundary layer clips
+each library's service area to the county, so a district spanning counties draws
+a card in every county it touches while filing once, under its home county.
+Matching each card against its own county's units resolves only 124 of 371
+(measured 2026-09-10). Indexed statewide instead, the 371 cards carry 216
+distinct names against 378 unit labels, and one filing stamps every county's card
+for the same library. That is why this is one scraper rather than 72 county
+tables. 180 of the 339 stamped cards carry a library filing in another county,
+and sixteen of those filing counties are not among the 72 the layer draws,
 including seven the app does not serve at all (Bureau, Christian, Fayette, Ford,
-Henderson, Lawrence, Piatt), which is why the index is all 102 counties and not
-the 72.
+Henderson, Lawrence, Piatt). So the index is all 102 counties and not the 72.
 
-THE MATCH IS THREE MECHANICAL STEPS AND NOTHING ELSE, because the two
-publishers abbreviate differently and neither is wrong. Measured 2026-09-11, and
-the run prints this split every time rather than leaving it to this file:
+The match is three mechanical steps and nothing else, because the two publishers
+abbreviate differently and neither is wrong. Measured 2026-09-11, and the run
+prints this split every time rather than leaving it to this file:
 
-  1. EXACT on the Warehouse's own label. NONE — and the reason is structural
-     rather than a fact about names: the index is keyed on the label the
-     Warehouse prints before " - a ", which carries no governance words, so
+  1. Exact on the Warehouse's own label. None. The index is keyed on the label
+     the Warehouse prints before " - a ", which carries no governance words, so
      "Alpha Park" never equals the card's "Alpha Park Public Library District".
      An earlier version of this docstring claimed 171 here; it was never
      measured. The step is kept because it is the strictest test available and
      costs one dict lookup, and because the boundary layer's names come from a
      third party that could start publishing bare labels.
-  2. MECHANICAL NORMALISATION — case, `&` and `/` to "and", punctuation
-     dropped, `Mt.`/`St.`/`Co.` expanded, trailing governance words stripped
-     ITERATIVELY (the first draft stripped once, which is why "Illinois Prairie
-     District Public Library" missed "Illinois Prairie"), and a space-blind
-     retry so "LaHarpe" reaches "La Harpe". 192 names, no ambiguity.
-  3. A SINGLE TRAILING QUALIFIER — Area, Community, Regional, Township(s) —
-     dropped from the CARD's name only, and ONLY when the result is unique
-     statewide AND the unit's county is one the card appears in. 7 more names,
-     each one printed with the unit it reached.
+  2. Mechanical normalisation: case, `&` and `/` to "and", punctuation dropped,
+     `Mt.`/`St.`/`Co.` expanded, trailing governance words stripped iteratively
+     (the first draft stripped once, which is why "Illinois Prairie District
+     Public Library" missed "Illinois Prairie"), and a space-blind retry so
+     "LaHarpe" reaches "La Harpe". 192 names, no ambiguity.
+  3. A single trailing qualifier — Area, Community, Regional, Township(s) —
+     dropped from the card's name only, and only when the result is unique
+     statewide and the unit's county is one the card appears in. 7 more names,
+     each printed with the unit it reached.
 
-NOTHING SEMANTIC IS ALLOWED, and step 3's county gate is what keeps it honest:
-it REJECTED two matches that read as obviously right — Centralia Regional
-against Marion's "Centralia" unit, and Milan-Blackhawk Area against Rock
-Island's "Milan-Blackhawk" — because those units' home counties draw no
-statewide card, so nothing here witnesses that the two names are one body. Both
-stay in the residue. A gate that refuses two probably-correct matches is the
-right failure direction for officeholder data; "Gilman-Danforth" is not
+Nothing semantic is allowed. Step 3's county gate refused two matches that read
+as obviously right: Centralia Regional against Marion's "Centralia" unit, and
+Milan-Blackhawk Area against Rock Island's "Milan-Blackhawk". Those units' home
+counties draw no statewide card, so nothing here witnesses that the two names are
+one body, and both stay in the residue. Refusing two probably-correct matches is
+the right failure direction for officeholder data: "Gilman-Danforth" is not
 "Gilman Area" and "Central" is not "Centralia", and no fuzzy matcher can be
 trusted to know the difference.
 
-WHAT REMAINS IS NAMED, NEVER GUESSED, and the residue is three different things
-rather than one. Of the 216 names, 199 resolve to a unit and 197 of those file a
-readable contact block; the other 17 do not resolve. So 19 names go unshipped:
-15 whose name matches no unit anywhere in Illinois, 2 the county gate refused
-(below), and 2 that resolve to a unit whose landing page carries no fiscal year
-and therefore has no report to read — Auburn (083/040/10) and Carrier
-Mills-Stonefort (082/005/10), the Mazon Fire shape, which ship the run a filing
-appears. All three classes print every run with the counties their cards appear
-in, so a later change can settle each against the library's own publication
-rather than against a string distance.
+The residue is three different things. Of the 216 names, 199 resolve to a unit
+and 197 of those file a readable contact block; the other 17 do not resolve. So
+19 names go unshipped: 15 whose name matches no unit anywhere in Illinois, 2 the
+county gate refused, and 2 that resolve to a unit whose landing page carries no
+fiscal year and therefore has no report to read — Auburn (083/040/10) and Carrier
+Mills-Stonefort (082/005/10), which ship the run a filing appears, as Mazon Fire
+does in Grundy. All three classes print every run with the counties their cards
+appear in, so a later change can settle each against the library's own
+publication rather than against a string distance.
 
-THE COUNTY LIST IS THE ONE HAND-KEPT THING HERE AND IT WAS WRONG ON THE FIRST
-RUN. COUNTIES held 101 of Illinois's 102, missing ST. CLAIR — the county with
-more library cards than any other in the layer — and the run reported 17 of its
-19 as libraries filed under no name anywhere in Illinois: a false statement about
-seventeen real library boards, produced by a typed list rather than by anything
-the source did. Neither the unit floor (371 still cleared 300) nor the per-county
-retry could catch it, because nothing compared the list's length to 102. That
-comparison is now a guard in unit_index.
+The county list is the one hand-kept thing here and it was wrong on the first
+run. COUNTIES held 101 of Illinois's 102, missing St. Clair, the county with more
+library cards than any other in the layer, and the run reported 17 of its 19 as
+libraries filed under no name anywhere in Illinois. That is a false statement
+about seventeen real library boards, produced by a typed list rather than by
+anything the source did. The unit floor did not catch it (371 still cleared 300)
+and the per-county retry covers a refusal rather than an omission. unit_index now
+compares the list's length to 102.
 
-ONE LABEL IS AMBIGUOUS STATEWIDE — "Washington" is a Public Library District in
-Tazewell County and another in Washington County — and the same county gate
-settles it, which is the whole reason that gate applies to disambiguation as
-well as to step 3. AN AMBIGUOUS NAME IS NOT AN ABSENT ONE: where two units share
-a name and neither sits in a county the card appears in, the residue says so and
-names both, because the fall-through message this replaced would have reported a
-filed library as filed nowhere in Illinois.
+One label is ambiguous statewide: "Washington" is a Public Library District in
+Tazewell County and another in Washington County. The same county gate settles
+it, which is why that gate applies to disambiguation as well as to step 3. An
+ambiguous name is not an absent one — where two units share a name and neither
+sits in a county the card appears in, the residue says so and names both. The
+fall-through message this replaced would have reported a filed library as filed
+nowhere in Illinois.
 """
 
 import argparse
@@ -270,13 +266,11 @@ def shipped_cards(slugs):
 
 def unit_index(session):
     """-> {normalised label: [(code, text, county)]} for every library district."""
-    # ILLINOIS HAS 102 COUNTIES AND THE FIRST VERSION OF THIS TUPLE HELD 101. It
-    # was missing ST. CLAIR, which is the county with the most library cards in
-    # the whole layer, and the run reported 17 of its 19 as libraries filed under
-    # no name anywhere in Illinois. That is the exact failure the per-county
-    # retry below exists to prevent, arriving through a typed list instead of a
-    # blip, and the unit floor did not catch it because 371 units still cleared
-    # 300. A count nothing compares against 102 is a hand-kept list.
+    # Illinois has 102 counties and the first version of this tuple held 101. It
+    # was missing St. Clair, the county with the most library cards in the layer,
+    # and the run reported 17 of its 19 as libraries filed under no name anywhere
+    # in Illinois. The per-county retry below covers a refusal, not an omission,
+    # and the unit floor did not catch it because 371 units still cleared 300.
     if len(COUNTIES) != 102:
         fail("COUNTIES lists %d of Illinois's 102 counties — a county missing "
              "from the index unresolves every library filed there, which reads "
@@ -350,11 +344,10 @@ def resolve(name, card_slugs, exact, normed):
             return None, ("dropping %r reaches %s, whose county is not one this "
                           "card appears in" % (qualifier, hit[1]))
         break
-    # A NAME THAT IS IN THE INDEX AND AMBIGUOUS IS NOT A NAME THAT IS ABSENT,
-    # and a run that prints the second about the first is stating something
-    # false. `unique` returns nothing both when the name is missing and when two
-    # units share it and none sits in a county this card appears in, so the two
-    # are told apart here rather than in the message.
+    # `unique` returns nothing both when the name is missing and when two units
+    # share it and none sits in a county this card appears in. Reporting the
+    # second as the first would state something false, so they are told apart
+    # here rather than in the message.
     shared = (exact.get(name.lower()) or normed.get(key)
               or normed.get(key.replace(" ", "")) or [])
     if shared:
@@ -368,14 +361,14 @@ def resolve(name, card_slugs, exact, normed):
 def match_breakdown(resolved):
     """How each name was matched, printed every run.
 
-    THE DOCSTRING ABOVE CLAIMS A SPLIT BETWEEN THE THREE STEPS AND NOTHING
-    MEASURED IT. Its first version said 171 exact, and the run it was written
-    from reports none at all: the index is keyed on the Warehouse's own label,
-    which carries no governance suffix, so `Alpha Park` never equals
-    `Alpha Park Public Library District` and almost every name arrives through
-    step 2. The counts move as either publisher re-words a name, and step 3 is
-    the one that drops a word from the card's name, so a shift toward it is
-    worth seeing on the run rather than in a re-read of this file.
+    The docstring above used to claim a split between the three steps and
+    nothing measured it: its first version said 171 exact, where the run reports
+    none at all. The index is keyed on the Warehouse's own label, which carries
+    no governance suffix, so `Alpha Park` never equals `Alpha Park Public Library
+    District` and almost every name arrives through step 2. The counts move as
+    either publisher re-words a name, and step 3 is the one that drops a word
+    from the card's name, so a shift toward it belongs on the run rather than in
+    a re-read of this file.
     """
     counts = collections.Counter(how for _, how in resolved.values())
     return ", ".join("%s %d" % (how, n) for how, n in sorted(counts.items()))

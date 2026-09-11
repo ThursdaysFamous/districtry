@@ -14590,12 +14590,12 @@ function initChiExplorer() {
     return polygonCountyEntry({
       key: opts.key,
       coverage: opts.coverage || countyOutlineCoverage(opts.key),
-      // THE STAMP GOES ON THE RESOLVED LOADER, not on the default one, so the
-      // seven counties that pass their own `loader` are covered by the same one
-      // line as the other sixty-five. Officers are stamped for every county at
-      // once because the roster is statewide; the DISTRICT-governed libraries
-      // are the ones that file, and a municipal or township library's card
-      // simply finds no entry and renders as it did before.
+      // The stamp goes on the resolved loader rather than the default one, so
+      // the seven counties that pass their own `loader` are covered by the same
+      // line as the other sixty-five. The roster is statewide, so one line
+      // stamps every county. District-governed libraries are the ones that
+      // file; a municipal or township library's card finds no entry and renders
+      // as it did before.
       loader: withLibraryOfficials(opts.loader || countyLibraryLoader(opts.key)),
       snapFeet: PARCEL_FABRIC_SNAP_FT,
       fields: [
