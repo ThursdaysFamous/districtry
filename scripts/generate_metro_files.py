@@ -62,6 +62,7 @@ touched. Dependencies: stdlib + jsonschema (pinned in scripts/requirements.txt).
 import argparse
 import difflib
 import functools
+import datetime
 import json
 import os
 import re
@@ -94,6 +95,23 @@ def js_num(n):
 
 def js_str(s):
     return json.dumps(s, ensure_ascii=False)
+
+
+def iso_date(human):
+    """"August 3, 2026" -> "2026-08-03".
+
+    schema.org's dateModified wants ISO 8601; the worksheet carries the date in
+    the form the footer prints to a reader. Deriving one from the other keeps
+    ONE key rather than adding a second that can disagree with the first — the
+    failure this file exists to prevent. A date it cannot parse fails the build
+    rather than emitting an invalid one, because a malformed dateModified is a
+    field Google ignores silently.
+    """
+    try:
+        return datetime.datetime.strptime(human, "%B %d, %Y").strftime("%Y-%m-%d")
+    except ValueError:
+        fail('verified_date %r is not "Month D, YYYY", so no ISO dateModified '
+             "can be derived from it" % human)
 
 
 def bbox_js(b, order):
@@ -665,6 +683,98 @@ GROUP_HEADINGS = [
 MATRIX_COLUMNS = ["Layer", "What it answers", "Boundary source", "Who it names", "Where it applies"]
 
 
+def render_jsonld_graph(w):
+    """index.html's whole ld+json graph, from the worksheet.
+
+    IT WAS HAND-WRITTEN SIX TIMES, and that is the shape of Michigan's go-live
+    bug: mi/sources.html shipped IOWA's entire identity block — canonical,
+    og:url, title and the whole graph — because the page was cloned and only
+    its GENERATED regions were ever regenerated. page_consistency_test.mjs
+    gates that now for all 32 sitemap pages, so this is not re-fixing it; the
+    reason to generate THIS graph is that nothing could add a field to it
+    without adding it six times by hand, which is why it carried no
+    dateModified while every page claimed a freshness the graph never stated.
+
+    THE CONSTANTS ARE LITERALS HERE, not worksheet keys. Nine fields were
+    identical across all six instances on 2026-09-11 — the publisher, the free
+    Offer, the browser requirements, operatingSystem, inLanguage, sameAs,
+    applicationCategory, isAccessibleForFree. Six hand-written copies were six
+    chances for one to drift; one literal is none.
+
+    EVERYTHING DERIVABLE IS DERIVED: @id, url, image, isPartOf and publisher
+    from the instance tag, name from brand.app_name. What remains in the
+    worksheet is the four values that are genuinely this instance's own prose.
+
+    dateModified comes from verified_date — the same key the footer and
+    sources.html already print, so the date a reader sees and the date a
+    crawler reads cannot disagree.
+    """
+    b = w["brand"]
+    g = b.get("jsonld")
+    if not g:
+        return ""
+    tag = b["instance_tag"]
+    base = "https://districtry.com/%s/" % tag
+    name = b["app_name"]
+
+    area = g["area_served"]
+    if area.get("city"):
+        area_node = ('{ "@type": "City", "name": %s, "containedInPlace": '
+                     '{ "@type": "State", "name": %s } }'
+                     % (js_str(area["city"]), js_str(area["state"])))
+    else:
+        area_node = '{ "@type": "State", "name": %s }' % js_str(area["state"])
+
+    L = []
+    a = L.append
+    # The element, not just its body. GENERATED markers are HTML comments and
+    # an HTML comment INSIDE a ld+json script makes the JSON unparseable —
+    # silently, because a crawler drops the graph without reporting anything.
+    a('<script type="application/ld+json">')
+    a('{')
+    a('  "@context": "https://schema.org",')
+    a('  "@graph": [')
+    a('    {')
+    a('      "@type": "WebSite",')
+    a('      "@id": "%s#website",' % base)
+    a('      "url": "%s",' % base)
+    a('      "name": %s,' % js_str(name))
+    a('      "description": %s,' % js_str(g["site_description"]))
+    a('      "inLanguage": "en-US",')
+    a('      "publisher": { "@id": "%s#publisher" }' % base)
+    a('    },')
+    a('    {')
+    a('      "@type": "Organization",')
+    a('      "@id": "%s#publisher",' % base)
+    a('      "name": "Overberg",')
+    a('      "url": "https://overberg.co"')
+    a('    },')
+    a('    {')
+    a('      "@type": "WebApplication",')
+    a('      "name": %s,' % js_str(name))
+    a('      "url": "%s",' % base)
+    a('      "description": %s,' % js_str(g["app_description"]))
+    a('      "applicationCategory": "Reference",')
+    a('      "operatingSystem": "Any (modern web browser)",')
+    a('      "browserRequirements": "Requires JavaScript",')
+    a('      "isAccessibleForFree": true,')
+    a('      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },')
+    a('      "inLanguage": "en-US",')
+    a('      "image": "%sog-image.png",' % base)
+    a('      "areaServed": %s,' % area_node)
+    a('      "keywords": %s,' % js_str(g["keywords"]))
+    a('      "isPartOf": { "@id": "%s#website" },' % base)
+    # The one field this whole change exists to make possible. ISO 8601, from
+    # the same key the footer prints in prose.
+    a('      "dateModified": %s,' % js_str(iso_date(w["verified_date"])))
+    a('      "sameAs": "https://github.com/ThursdaysFamous/districtry"')
+    a('    }')
+    a('  ]')
+    a('}')
+    a('</script>')
+    return "\n".join(L)
+
+
 def render_guide_links(w):
     """The app footer's links to this instance's own explainer pages.
 
@@ -832,6 +942,7 @@ def targets_for(w, inst):
     if "verified_date" in w:
         targets.append((_p(app, "index.html"), "verified-date", render_verified_date))
         targets.append((_p(app, "index.html"), "guide-links", render_guide_links))
+        targets.append((_p(app, "index.html"), "jsonld-graph", render_jsonld_graph))
     if "perf_profile" in w:
         # Worksheet-relative to the instance's own scripts dir.
         targets.append((_p(scr, os.path.basename(w["perf_profile"]["file"])),
