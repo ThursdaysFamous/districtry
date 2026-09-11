@@ -644,6 +644,7 @@ def _jsonld(title, desc):
         "name": title,
         "description": desc,
         "inLanguage": "en-US",
+        "author": { "@type": "Person", "name": "Adam Overberg", "url": "https://overberg.co" },
         "isPartOf": {"@id": SITE + "#website"},
         "breadcrumb": {
             "@type": "BreadcrumbList",
@@ -1067,6 +1068,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
       %(footerlinks)s
       <a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
       <a href="%(repo)s" target="_blank" rel="noopener">View source on GitHub</a>
+        <p class="footer-byline">Written and maintained by <a href="https://overberg.co" rel="author" target="_blank" rel="noopener">Adam Overberg</a>. Corrections are welcome — every one gets a reply.</p>
     </div>
   </div>
 </footer>

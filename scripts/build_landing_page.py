@@ -418,12 +418,24 @@ def _landing_jsonld(metros, title, desc):
                 "inLanguage": "en-US",
                 "sameAs": [REPO],
                 "publisher": {"@id": CANONICAL + "#publisher"},
+                "author": {"@id": CANONICAL + "#author"},
             },
             {
                 "@type": "Organization",
                 "@id": CANONICAL + "#publisher",
                 "name": "Overberg",
                 "url": "https://overberg.co",
+            },
+            # The footer has said "Built and run by Adam Overberg" since this
+            # page shipped and the graph never carried it. Civic data about who
+            # holds public office sits under the quality guidelines' highest
+            # bar, and a named author with a URL is the cheapest part of it.
+            {
+                "@type": "Person",
+                "@id": CANONICAL + "#author",
+                "name": "Adam Overberg",
+                "url": "https://overberg.co",
+                "worksFor": {"@id": CANONICAL + "#publisher"},
             },
             {
                 "@type": "ItemList",
