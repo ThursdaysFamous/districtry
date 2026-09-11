@@ -42,20 +42,20 @@
       "name": "districtry Wisconsin",
       "description": "Find every civic district that covers a point or address in Wisconsin, and who represents you there.",
       "inLanguage": "en-US",
-      "publisher": { "@id": "https://districtry.com/wi/#publisher" }
+      "publisher": { "@id": "https://districtry.com/#publisher" }
     },
     {
       "@type": "Organization",
-      "@id": "https://districtry.com/wi/#publisher",
+      "@id": "https://districtry.com/#publisher",
       "name": "Overberg",
       "url": "https://overberg.co"
     },
     {
       "@type": "Person",
-      "@id": "https://districtry.com/wi/#author",
+      "@id": "https://districtry.com/#author",
       "name": "Adam Overberg",
       "url": "https://overberg.co",
-      "worksFor": { "@id": "https://districtry.com/wi/#publisher" }
+      "worksFor": { "@id": "https://districtry.com/#publisher" }
     },
     {
       "@type": "WebApplication",
@@ -71,7 +71,7 @@
       "image": "https://districtry.com/wi/og-image.png",
       "areaServed": { "@type": "State", "name": "Wisconsin" },
       "keywords": "Wisconsin district map, what district am I in, Wisconsin Assembly district, Wisconsin Senate district, school district lookup, civic districts, who represents me Wisconsin",
-      "author": { "@id": "https://districtry.com/wi/#author" },
+      "author": { "@id": "https://districtry.com/#author" },
       "isPartOf": { "@id": "https://districtry.com/wi/#website" },
       "dateModified": "2026-09-11",
       "sameAs": "https://github.com/ThursdaysFamous/districtry"
@@ -976,6 +976,21 @@ svg.leaflet-image-layer.leaflet-interactive path {
     --accent-warm-deep: #8f2659;
     /* ==== GENERATED:END brand-palette ==== */
   /* ==== ENGINE:BEGIN styles-core ==== */
+/* .title rather than h1.title, and the tagline rather than the wordmark is the
+   h1 on an app hub. Measured 2026-09-11: the six <tag>/index.html pages put the
+   wordmark and the metro switcher inside their heading element, so that heading
+   resolved to the brand plus a navigation control instead of what the page is
+   about. Every SUB-page already had this right with the same class — "Common
+   questions", "What police district am I in?" — which is why the selector goes
+   element-agnostic rather than the sub-pages changing: a sub-page keeps its
+   heading element on .title with the descriptor beside it, while a hub demotes
+   that wrapper to a div and promotes the tagline to the heading. Both match the
+   same rules.
+
+   NO LITERAL TAG NAMES IN THIS COMMENT, deliberately. The first draft spelled
+   the markup out, which put a convincing fake opening tag into every shipped
+   index.html; a regex reading the document for its first heading matched the
+   comment and reported a 104,166-character one. CSS comments ship. */
 
     --ink: #14181C;
     --slate: #55626C;
@@ -1055,7 +1070,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     max-width: 1800px;
     margin: 0 auto;
   }
-  h1.title {
+  .title {
     margin: 0;
   }
   /* Emblem + wordmark live in one non-wrapping row so they can never split
@@ -1080,7 +1095,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
     line-height: 0.95;
     text-transform: uppercase;
   }
-  h1.title small {
+  .title small, .title .title-tagline {
+    margin: 0;
     display: block;
     font-family: var(--font-body);
     font-weight: 500;
@@ -1096,7 +1112,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     header.masthead { padding: 12px 16px 14px; }
     .masthead-star { width: 24px; height: 24px; }
     .title-text { font-size: 22px; }
-    h1.title small { font-size: 12px; margin-top: 3px; }
+    .title small, .title .title-tagline { font-size: 12px; margin-top: 3px; }
   }
 
   main.layout {
@@ -2613,7 +2629,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .dst-metro-menu a:hover,
   .dst-metro-menu a:focus-visible { background: var(--dst-brand-tint-soft); color: var(--accent-deep); }
   .dst-metro-menu-emoji { font-size: 15px; line-height: 1; }
-  h1.title small { color: var(--slate); }
+  .title small, .title .title-tagline { color: var(--slate); }
   .masthead-actions .footer-link-btn {
     color: var(--accent-deep);
     background: rgba(109, 63, 209, 0.08);
@@ -3188,7 +3204,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
        dstPlaceDoors) — they cannot fit on one row at 375px, and wrapped they
        cost 65px of permanently visible header. The theme toggle stays, lifted
        out of flow into the wordmark row so it costs no height at all. */
-    h1.title small { display: none; }
+    .title small, .title .title-tagline { display: none; }
     header.masthead { position: relative; }
     .masthead-actions {
       position: absolute;
@@ -3534,7 +3550,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 <header class="masthead">
   <div class="masthead-inner">
-    <h1 class="title">
+    <div class="title">
       <span class="title-row">
         <svg class="masthead-star" viewBox="0 0 100 100" aria-hidden="true">
           <path fill="var(--accent-warm)" id="star-path-header"></path>
@@ -3543,9 +3559,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
 <!-- ==== GENERATED:BEGIN masthead-brand ==== -->
         <span class="title-text"><a class="dst-wordmark-link" href="../">districtry</a> <span class="dst-metro-switch"><button type="button" class="title-metro dst-metro-btn" aria-expanded="false" aria-haspopup="true" aria-label="districtry Wisconsin — switch explorer">/ wi<span class="dst-metro-caret" aria-hidden="true">&#9662;</span></button><span class="dst-metro-menu" role="menu"></span></span></span>
       </span>
-      <small>Click the map for every district you're in, and who represents you.</small>
+      <h1 class="title-tagline">Click the map for every district you're in, and who represents you.</h1>
 <!-- ==== GENERATED:END masthead-brand ==== -->
-    </h1>
+    </div>
     <div class="map-toolbar">
 <!-- ==== ENGINE:BEGIN body-map-toolbar ==== -->
     <div class="search-shell">
