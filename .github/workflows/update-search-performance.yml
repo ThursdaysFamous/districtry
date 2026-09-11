@@ -38,7 +38,21 @@ jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
+      # CHECK OUT AS BOT_PR_TOKEN SO THE PUSH AT THE END OF THIS JOB IS
+      # ALLOWED. A plain checkout authenticates as `github-actions[bot]`, and
+      # the "Protect main branch" ruleset requires a pull request on the
+      # default branch. That bot is not a bypass actor and cannot be made one
+      # -- the Apps tab on this repo does not offer GitHub Actions -- so every
+      # run on main died at the push with GH013 while the fetch itself worked:
+      # run 34532138566 committed 736be53 locally, 745 insertions, and was
+      # rejected. Two scheduled runs and one dispatch, no successful run on
+      # main ever. BOT_PR_TOKEN acts as a repository admin, which the ruleset's
+      # bypass list already covers. The `|| github.token` fallback matches the
+      # 107 other workflows here: an absent or expired secret degrades to the
+      # behaviour above rather than to some new one.
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
