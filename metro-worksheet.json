@@ -323,6 +323,7 @@
     },
     {
       "id": "county-board",
+      "guide": { "href": "county-board.html", "text": "Who is my county commissioner?" },
       "label": "County Board District",
       "group": "political",
       "area_rank": 13,
@@ -475,6 +476,7 @@
     },
     {
       "id": "school-board",
+      "guide": { "href": "school-board.html", "text": "What school board district am I in?" },
       "label": "Elected School Board District",
       "group": "political",
       "area_rank": 19,
@@ -580,6 +582,7 @@
     },
     {
       "id": "police-district",
+      "guide": { "href": "police-district.html", "text": "What police district am I in?" },
       "label": "Police District",
       "group": "safety",
       "area_rank": 24,

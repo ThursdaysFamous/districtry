@@ -740,6 +740,19 @@ table.matrix tbody th[scope="row"] {
   background: rgba(244,247,249,0.6);
 }
 .layer-name { display: block; }
+/* The link from a layer to its own explainer page. Measured 2026-09-11, no
+   instance hub or sources page linked any of the six explainers and they were
+   reachable only through faq.html — so the rows that already enumerate every
+   layer now carry the link too. Block, because it sits under the layer id in a
+   header cell that is already two stacked lines. */
+.layer-guide {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.layer-guide:hover { text-decoration: underline; }
 table.matrix code {
   font-family: var(--font-mono);
   font-size: 11.5px;
@@ -974,7 +987,7 @@ table.matrix code {
                 <td data-label="Where it applies">The counties that divide their circuit into subcircuits.</td>
               </tr>
               <tr id="layer-county-board">
-                <th scope="row"><span class="layer-name">County Board District</span><code>county-board</code></th>
+                <th scope="row"><span class="layer-name">County Board District</span><code>county-board</code><a class="layer-guide" href="county-board.html">Who is my county commissioner?</a></th>
                 <td data-label="What it answers">The county board district covering the point, and the commissioner or board member elected from it.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
@@ -999,7 +1012,7 @@ table.matrix code {
                 <td data-label="Where it applies">Cook County.</td>
               </tr>
               <tr id="layer-school-board">
-                <th scope="row"><span class="layer-name">Elected School Board District</span><code>school-board</code></th>
+                <th scope="row"><span class="layer-name">Elected School Board District</span><code>school-board</code><a class="layer-guide" href="school-board.html">What school board district am I in?</a></th>
                 <td data-label="What it answers">Which of Chicago's 20 elected school board districts covers the point, and who represents it.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
@@ -1085,7 +1098,7 @@ table.matrix code {
                 <td data-label="Where it applies">DuPage County.</td>
               </tr>
               <tr id="layer-police-district">
-                <th scope="row"><span class="layer-name">Police District</span><code>police-district</code></th>
+                <th scope="row"><span class="layer-name">Police District</span><code>police-district</code><a class="layer-guide" href="police-district.html">What police district am I in?</a></th>
                 <td data-label="What it answers">The Chicago police district covering the point, and its station.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
