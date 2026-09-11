@@ -18235,15 +18235,25 @@ function initChiExplorer() {
       var rows = [{ label: "Board office", value: String(rec.address) }];
       var asOf = rec.asOf ? String(rec.asOf) : null;
       var by = rec.confirmedBy ? String(rec.confirmedBy) : null;
-      rows.push({ label: "Address source", value:
-        "Illinois State Board of Elections, County Officers Book"
-        + (asOf ? " (updated " + asOf + ")" : "")
-        // "County Clerk" under a phrase that already says "the county's"
-        // reads as "the county's county clerk" — strip the redundant word,
-        // which leaves "clerk", "circuit clerk", "state's attorney" and the
-        // two offices that never carried it (treasurer, sheriff).
-        + (by ? " \u00b7 same building as the county's "
-              + by.toLowerCase().replace(/^county\s+/, "") : "") });
+      // TWO PUBLISHERS NOW, AND EACH ROW NAMES ITS OWN. Most addresses come
+      // from the state's directory; fifteen counties appear in neither it nor
+      // their own roster and come from the county's own Annual Financial
+      // Report, which is a different document with a different date, so one
+      // fixed credit line would be wrong on a third of the rows.
+      rows.push(rec.source === "afr"
+        ? { label: "Address source", value:
+            "The county's own Annual Financial Report, filed with the Illinois "
+            + "Comptroller"
+            + (rec.filedFor ? " for fiscal year " + String(rec.filedFor) : "") }
+        : { label: "Address source", value:
+            "Illinois State Board of Elections, County Officers Book"
+            + (asOf ? " (updated " + asOf + ")" : "")
+            // "County Clerk" under a phrase that already says "the county's"
+            // reads as "the county's county clerk" — strip the redundant word,
+            // which leaves "clerk", "circuit clerk", "state's attorney" and the
+            // two offices that never carried it (treasurer, sheriff).
+            + (by ? " \u00b7 same building as the county's "
+                  + by.toLowerCase().replace(/^county\s+/, "") : "") });
       wrap.appendChild(renderFieldStack(rows));
     }).catch(function () { /* one missing file never breaks a card */ });
     return wrap;

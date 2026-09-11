@@ -1,0 +1,453 @@
+{
+  "counties": {
+    "adams": {
+      "address": "507 Vermont Street, Quincy, IL 62301",
+      "city": "Quincy",
+      "comptrollerCode": "001/000/00",
+      "filedFor": "2025",
+      "street": "507 Vermont Street",
+      "zip": "62301"
+    },
+    "boone": {
+      "address": "1212 Logan Avenue, Belvidere, IL 61008",
+      "city": "Belvidere",
+      "comptrollerCode": "004/000/00",
+      "filedFor": "2025",
+      "street": "1212 Logan Avenue",
+      "zip": "61008"
+    },
+    "carroll": {
+      "address": "301 N Main, Mt Carroll, IL 61053",
+      "city": "Mt Carroll",
+      "comptrollerCode": "008/000/00",
+      "filedFor": "2025",
+      "street": "301 N Main",
+      "zip": "61053"
+    },
+    "cass": {
+      "address": "100 E Springfield, Virginia, IL 62691",
+      "city": "Virginia",
+      "comptrollerCode": "009/000/00",
+      "filedFor": "2025",
+      "phone": "(217) 452-7217",
+      "street": "100 E Springfield",
+      "zip": "62691"
+    },
+    "clark": {
+      "address": "501 Archer Avenue, Marshall, IL 62441",
+      "city": "Marshall",
+      "comptrollerCode": "012/000/00",
+      "filedFor": "2025",
+      "phone": "(217) 826-8311",
+      "street": "501 Archer Avenue",
+      "zip": "62441"
+    },
+    "clay": {
+      "address": "County Courthouse, Louisville, IL 62858",
+      "city": "Louisville",
+      "comptrollerCode": "013/000/00",
+      "filedFor": "2025",
+      "phone": "(618) 665-3626",
+      "street": "County Courthouse",
+      "zip": "62858"
+    },
+    "clinton": {
+      "address": "PO Box 308, Carlyle, IL 62231",
+      "city": "Carlyle",
+      "comptrollerCode": "014/000/00",
+      "filedFor": "2024",
+      "phone": "(618) 594-2464",
+      "street": "PO Box 308",
+      "zip": "62231"
+    },
+    "crawford": {
+      "address": "100 Douglas PO Box 616, Robinson, IL 62454",
+      "city": "Robinson",
+      "comptrollerCode": "017/000/00",
+      "filedFor": "2025",
+      "phone": "(618) 546-1212",
+      "street": "100 Douglas PO Box 616",
+      "zip": "62454"
+    },
+    "dekalb": {
+      "address": "200 N Main Street, Sycamore, IL 60178",
+      "city": "Sycamore",
+      "comptrollerCode": "019/000/00",
+      "filedFor": "2025",
+      "street": "200 N Main Street",
+      "zip": "60178"
+    },
+    "dewitt": {
+      "address": "201 W Washington St, Clinton, IL 61727",
+      "city": "Clinton",
+      "comptrollerCode": "020/000/00",
+      "filedFor": "2025",
+      "street": "201 W Washington St",
+      "zip": "61727"
+    },
+    "douglas": {
+      "address": "PO Box 467, Tuscola, IL 61953",
+      "city": "Tuscola",
+      "comptrollerCode": "021/000/00",
+      "filedFor": "2025",
+      "street": "PO Box 467",
+      "zip": "61953"
+    },
+    "dupage": {
+      "address": "421 N County Farm Rd, Wheaton, IL 60187",
+      "city": "Wheaton",
+      "comptrollerCode": "022/000/00",
+      "filedFor": "2025",
+      "street": "421 N County Farm Rd",
+      "zip": "60187"
+    },
+    "edgar": {
+      "address": "Courthouse Annex - 111 N Central Avenue, Paris, IL 61944",
+      "city": "Paris",
+      "comptrollerCode": "023/000/00",
+      "filedFor": "2025",
+      "phone": "(217) 466-7446",
+      "street": "Courthouse Annex - 111 N Central Avenue",
+      "zip": "61944"
+    },
+    "franklin": {
+      "address": "PO Box 967, Benton, IL 62812",
+      "city": "Benton",
+      "comptrollerCode": "028/000/00",
+      "filedFor": "2024",
+      "street": "PO Box 967",
+      "zip": "62812"
+    },
+    "fulton": {
+      "address": "100 N Main St, Lewistown, IL 61542",
+      "city": "Lewistown",
+      "comptrollerCode": "029/000/00",
+      "filedFor": "2025",
+      "phone": "(309) 547-3041",
+      "street": "100 N Main St",
+      "zip": "61542"
+    },
+    "grundy": {
+      "address": "1320 Union St., Morris, IL 60450",
+      "city": "Morris",
+      "comptrollerCode": "032/000/00",
+      "filedFor": "2025",
+      "street": "1320 Union St.",
+      "zip": "60450"
+    },
+    "hancock": {
+      "address": "500 Main, Carthage, IL 62321",
+      "city": "Carthage",
+      "comptrollerCode": "034/000/00",
+      "filedFor": "2025",
+      "street": "500 Main",
+      "zip": "62321"
+    },
+    "henry": {
+      "address": "307 W Center Street, Cambridge, IL 61238",
+      "city": "Cambridge",
+      "comptrollerCode": "037/000/00",
+      "filedFor": "2025",
+      "street": "307 W Center Street",
+      "zip": "61238"
+    },
+    "iroquois": {
+      "address": "1001 E. Grant Street, Watseka, IL 60970",
+      "city": "Watseka",
+      "comptrollerCode": "038/000/00",
+      "filedFor": "2024",
+      "street": "1001 E. Grant Street",
+      "zip": "60970"
+    },
+    "jackson": {
+      "address": "1001 Walnut Street, Murphysboro, IL 62966",
+      "city": "Murphysboro",
+      "comptrollerCode": "039/000/00",
+      "filedFor": "2024",
+      "phone": "(618) 687-7240",
+      "street": "1001 Walnut Street",
+      "zip": "62966"
+    },
+    "jefferson": {
+      "address": "100 S TENTH STREET, MT VERNON, IL 62864",
+      "city": "MT VERNON",
+      "comptrollerCode": "041/000/00",
+      "filedFor": "2025",
+      "phone": "(618) 244-8000",
+      "street": "100 S TENTH STREET",
+      "zip": "62864"
+    },
+    "jo-daviess": {
+      "address": "330 N Bench Street, Galena, IL 61036",
+      "city": "Galena",
+      "comptrollerCode": "043/000/00",
+      "filedFor": "2025",
+      "phone": "(815) 777-6657",
+      "street": "330 N Bench Street",
+      "zip": "61036"
+    },
+    "kane": {
+      "address": "719 S Batavia Ave, Geneva, IL 60134",
+      "city": "Geneva",
+      "comptrollerCode": "045/000/00",
+      "filedFor": "2025",
+      "street": "719 S Batavia Ave",
+      "zip": "60134"
+    },
+    "kankakee": {
+      "address": "189 E Court St, Kankakee, IL 60901",
+      "city": "Kankakee",
+      "comptrollerCode": "046/000/00",
+      "filedFor": "2025",
+      "street": "189 E Court St",
+      "zip": "60901"
+    },
+    "kendall": {
+      "address": "504 S. Main St., Yorkville, IL 60560",
+      "city": "Yorkville",
+      "comptrollerCode": "047/000/00",
+      "filedFor": "2025",
+      "street": "504 S. Main St.",
+      "zip": "60560"
+    },
+    "knox": {
+      "address": "200 S Cherry St, Galesburg, IL 61401",
+      "city": "Galesburg",
+      "comptrollerCode": "048/000/00",
+      "filedFor": "2025",
+      "phone": "(309) 345-3863",
+      "street": "200 S Cherry St",
+      "zip": "61401"
+    },
+    "lake": {
+      "address": "18 N County St. 9th floor, Waukegan, IL 60085",
+      "city": "Waukegan",
+      "comptrollerCode": "049/000/00",
+      "filedFor": "2025",
+      "phone": "(847) 377-2233",
+      "street": "18 N County St. 9th floor",
+      "zip": "60085"
+    },
+    "lasalle": {
+      "address": "707 Etna Rd, Ottawa, IL 61350",
+      "city": "Ottawa",
+      "comptrollerCode": "050/000/00",
+      "filedFor": "2025",
+      "street": "707 Etna Rd",
+      "zip": "61350"
+    },
+    "lee": {
+      "address": "112 E Second St, Dixon, IL 61021",
+      "city": "Dixon",
+      "comptrollerCode": "052/000/00",
+      "filedFor": "2025",
+      "street": "112 E Second St",
+      "zip": "61021"
+    },
+    "livingston": {
+      "address": "112 W Madison, Pontiac, IL 61764",
+      "city": "Pontiac",
+      "comptrollerCode": "053/000/00",
+      "filedFor": "2025",
+      "street": "112 W Madison",
+      "zip": "61764"
+    },
+    "logan": {
+      "address": "601 Broadway, Lincoln, IL 62656",
+      "city": "Lincoln",
+      "comptrollerCode": "054/000/00",
+      "filedFor": "2025",
+      "street": "601 Broadway",
+      "zip": "62656"
+    },
+    "marshall": {
+      "address": "122 N. Prairie, P.O. Box 328, Lacon, IL 61540",
+      "city": "Lacon",
+      "comptrollerCode": "059/000/00",
+      "filedFor": "2025",
+      "street": "122 N. Prairie, P.O. Box 328",
+      "zip": "61540"
+    },
+    "mason": {
+      "address": "125 N Plum, Havana, IL 62644",
+      "city": "Havana",
+      "comptrollerCode": "060/000/00",
+      "filedFor": "2025",
+      "phone": "(309) 543-3359",
+      "street": "125 N Plum",
+      "zip": "62644"
+    },
+    "mchenry": {
+      "address": "2200 N Seminary Ave, Woodstock, IL 60098",
+      "city": "Woodstock",
+      "comptrollerCode": "063/000/00",
+      "filedFor": "2025",
+      "street": "2200 N Seminary Ave",
+      "zip": "60098"
+    },
+    "mercer": {
+      "address": "100 SE 3rd Street, Aledo, IL 61231",
+      "city": "Aledo",
+      "comptrollerCode": "066/000/00",
+      "filedFor": "2025",
+      "street": "100 SE 3rd Street",
+      "zip": "61231"
+    },
+    "montgomery": {
+      "address": "1 Court House Square, Rm 101, Hillsboro, IL 62049",
+      "city": "Hillsboro",
+      "comptrollerCode": "068/000/00",
+      "filedFor": "2025",
+      "phone": "(217) 532-9521",
+      "street": "1 Court House Square, Rm 101",
+      "zip": "62049"
+    },
+    "ogle": {
+      "address": "105 S 5th Street, Oregon, IL 61061",
+      "city": "Oregon",
+      "comptrollerCode": "071/000/00",
+      "filedFor": "2025",
+      "street": "105 S 5th Street",
+      "zip": "61061"
+    },
+    "peoria": {
+      "address": "324 Main St Rm 502, Peoria, IL 61602",
+      "city": "Peoria",
+      "comptrollerCode": "072/000/00",
+      "filedFor": "2025",
+      "street": "324 Main St Rm 502",
+      "zip": "61602"
+    },
+    "richland": {
+      "address": "103 W Main Street, Rm 13, Olney, IL 62450",
+      "city": "Olney",
+      "comptrollerCode": "080/000/00",
+      "filedFor": "2025",
+      "phone": "(618) 392-8341",
+      "street": "103 W Main Street, Rm 13",
+      "zip": "62450"
+    },
+    "rock-island": {
+      "address": "1504 3rd Avenue, Rock Island, IL 61201",
+      "city": "Rock Island",
+      "comptrollerCode": "081/000/00",
+      "filedFor": "2025",
+      "street": "1504 3rd Avenue",
+      "zip": "61201"
+    },
+    "sangamon": {
+      "address": "200 South 9th Street, Springfield, IL 62701",
+      "city": "Springfield",
+      "comptrollerCode": "083/000/00",
+      "filedFor": "2025",
+      "phone": "(217) 753-6630",
+      "street": "200 South 9th Street",
+      "zip": "62701"
+    },
+    "shelby": {
+      "address": "301 E. Main St, Shelbyville, IL 62565",
+      "city": "Shelbyville",
+      "comptrollerCode": "086/000/00",
+      "filedFor": "2024",
+      "street": "301 E. Main St",
+      "zip": "62565"
+    },
+    "st-clair": {
+      "address": "10 Public Square, Belleville, IL 62220",
+      "city": "Belleville",
+      "comptrollerCode": "088/000/00",
+      "filedFor": "2025",
+      "phone": "(618) 825-2269",
+      "street": "10 Public Square",
+      "zip": "62220"
+    },
+    "stephenson": {
+      "address": "50 W Douglas St, Suite 500, Freeport, IL 61032",
+      "city": "Freeport",
+      "comptrollerCode": "089/000/00",
+      "filedFor": "2024",
+      "phone": "(815) 235-8264",
+      "street": "50 W Douglas St, Suite 500",
+      "zip": "61032"
+    },
+    "tazewell": {
+      "address": "11 S. 4th Street, Pekin, IL 61554",
+      "city": "Pekin",
+      "comptrollerCode": "090/000/00",
+      "filedFor": "2025",
+      "street": "11 S. 4th Street",
+      "zip": "61554"
+    },
+    "vermilion": {
+      "address": "201 N. Vermilion St., Danville, IL 61832",
+      "city": "Danville",
+      "comptrollerCode": "092/000/00",
+      "filedFor": "2025",
+      "phone": "(217) 554-6000",
+      "street": "201 N. Vermilion St.",
+      "zip": "61832"
+    },
+    "warren": {
+      "address": "100 W Broadway, Monmouth, IL 61462",
+      "city": "Monmouth",
+      "comptrollerCode": "094/000/00",
+      "filedFor": "2025",
+      "street": "100 W Broadway",
+      "zip": "61462"
+    },
+    "washington": {
+      "address": "County Courthouse, 101 E St. Louis St., Nashville, IL 62263",
+      "city": "Nashville",
+      "comptrollerCode": "095/000/00",
+      "filedFor": "2025",
+      "street": "County Courthouse, 101 E St. Louis St.",
+      "zip": "62263"
+    },
+    "wayne": {
+      "address": "301 E. Main, PO Box 187, Fairfield, IL 62837",
+      "city": "Fairfield",
+      "comptrollerCode": "096/000/00",
+      "filedFor": "2025",
+      "phone": "(618) 842-5182",
+      "street": "301 E. Main, PO Box 187",
+      "zip": "62837"
+    },
+    "white": {
+      "address": "301 E. Main St., Carmi, IL 62821",
+      "city": "Carmi",
+      "comptrollerCode": "097/000/00",
+      "filedFor": "2025",
+      "phone": "(618) 382-8122",
+      "street": "301 E. Main St.",
+      "zip": "62821"
+    },
+    "whiteside": {
+      "address": "200 E Knox St, Morrison, IL 61270",
+      "city": "Morrison",
+      "comptrollerCode": "098/000/00",
+      "filedFor": "2025",
+      "street": "200 E Knox St",
+      "zip": "61270"
+    },
+    "will": {
+      "address": "302 N Chicago Street, Joliet, IL 60432",
+      "city": "Joliet",
+      "comptrollerCode": "099/000/00",
+      "filedFor": "2025",
+      "street": "302 N Chicago Street",
+      "zip": "60432"
+    },
+    "woodford": {
+      "address": "115 N Main Street, Rm 202, Eureka, IL 61503",
+      "city": "Eureka",
+      "comptrollerCode": "102/000/00",
+      "filedFor": "2025",
+      "street": "115 N Main Street, Rm 202",
+      "zip": "61503"
+    }
+  },
+  "generated": "2026-09-11T05:49:09Z",
+  "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
+  "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
+  "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
+}
