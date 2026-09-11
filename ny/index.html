@@ -3748,7 +3748,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
       endorsement of this site. Built and run by
       <a href="https://overberg.co" target="_blank" rel="noopener">Adam Overberg</a>.</p>
       <div class="footer-meta" id="footer-meta">
-        <span>Data last verified: <strong id="verified-date"></strong></span>
+        <span>Data last verified:
+          <!-- ==== GENERATED:BEGIN verified-date ==== -->
+          <strong id="verified-date">July 18, 2026</strong>
+          <!-- ==== GENERATED:END verified-date ==== -->
+        </span>
       </div>
       <div class="dpf-links">
         <a href="./sources.html">Every layer, and where its data comes from →</a>
@@ -10731,10 +10735,6 @@ function initNycExplorer() {
   // upgrade and the wash share one borough-boundaries fetch.
   drawOutOfScopeMask(loadBoroughBoundaries);
 
-  var verifiedEl = document.getElementById("verified-date");
-  /* ==== GENERATED:BEGIN verified-date ==== */
-  verifiedEl.textContent = "July 18, 2026";
-  /* ==== GENERATED:END verified-date ==== */
 
   /* ==== ENGINE:BEGIN metro-links ==== */
   (function renderMetroLinks() {

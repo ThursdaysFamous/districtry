@@ -3663,7 +3663,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
       endorsement of this site. Built and run by
       <a href="https://overberg.co" target="_blank" rel="noopener">Adam Overberg</a>.</p>
       <div class="footer-meta" id="footer-meta">
-        <span>Data last verified: <strong id="verified-date"></strong></span>
+        <span>Data last verified:
+          <!-- ==== GENERATED:BEGIN verified-date ==== -->
+          <strong id="verified-date">August 27, 2026</strong>
+          <!-- ==== GENERATED:END verified-date ==== -->
+        </span>
       </div>
       <div class="dpf-links">
         <a href="./sources.html">Every layer, and where its data comes from →</a>
@@ -11304,13 +11308,6 @@ function initIowaExplorer() {
   // region file would be added (the WI #523 precedent).
   whenIdle(function () { drawOutOfScopeMask(loadMetroOutline); });
 
-  var verifiedEl = document.getElementById("verified-date");
-  // sources.html prints the same date at the top of the layer matrix. Two
-  // hand-kept copies of one fact is how they drift, so the date now lives in
-  // metro-worksheet.json and both surfaces are generated from it.
-  /* ==== GENERATED:BEGIN verified-date ==== */
-  verifiedEl.textContent = "August 27, 2026";
-  /* ==== GENERATED:END verified-date ==== */
 
   // sources.html sends readers back here with "#gaps" to open the Data gaps
   // panel directly, so the cross-link lands on the panel instead of on a page

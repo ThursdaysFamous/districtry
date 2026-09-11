@@ -4,11 +4,20 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Moved — Which Chicago school board district am I in?</title>
-<!-- REDIRECT SHELL. This path was an indexed page on chidistricts.com before the app moved
-     under /il/ (R2.3) and the domain moved to districtry.com (R5). Squarespace forwards the
-     old host to this one WITH the path intact, so the forward arrives here — at a path that
-     no longer holds a page — and 404s. That is search equity landing on nothing: GSC records
-     this URL with real impressions.
+<!-- REDIRECT SHELL. This path was an indexed page on chidistricts.com, and then on
+     districtry.com's own root, before the app moved under /il/ (R2.3) and the domain moved
+     to districtry.com (R5). A request arriving here is at a path that no longer holds a
+     page, and 404s. That is search equity landing on nothing: GSC records this URL with
+     real impressions.
+
+     WHAT REACHES THIS FILE CHANGED ON 2026-09-11 and the old reason is recorded because it
+     is the one a reader will assume. The Squarespace forward off chidistricts.com used to
+     arrive here with the path intact; it now rewrites to /il/<path> itself, so
+     chidistricts.com/sources.html goes straight to districtry.com/il/sources.html in one
+     hop and never touches this file. What still lands here is a request to
+     districtry.com/<path> directly — old links, bookmarks and index entries from the weeks
+     this origin served the app at its own root. Measured, not assumed: every legacy path
+     forwards in one hop over HTTPS to its /il/ equivalent.
 
      GitHub Pages cannot issue a 301, so this is the strongest available substitute: an
      instant meta refresh (Google treats it as a redirect), a canonical naming the real page
