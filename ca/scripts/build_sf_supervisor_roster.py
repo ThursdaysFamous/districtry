@@ -26,7 +26,34 @@ import os
 import sys
 import urllib.request
 
-SOURCE_URL = "https://data.sfgov.org/resource/hcgx-vtsb.json?$select=sup_dist_num,sup_name&$limit=50"
+# DataSF MOVED TO data.sf.gov, AND THE OLD HOST REFUSES EXACTLY THIS QUERY.
+# This scraper failed with HTTP 403 on every run from 2026-09-09; measured
+# 2026-09-11, data.sfgov.org is now a 301 redirector to data.sf.gov, but
+# something in front of it answers 403 to any query containing `$select=`
+# while passing every other shape:
+#
+#     (no query) / $limit / $where / $order / $q / $group / $$app_token -> 301
+#     $select=sup_dist_num                                              -> 403
+#
+# So the app's own nine SOCRATA_HOST call sites still work through the
+# redirect and a reader sees nothing wrong -- this is the only DataSF caller
+# in the fleet that uses $select, which is why it alone broke. (NYC's
+# nypd_precinct_scraper.py uses $select too, against data.cityofnewyork.us --
+# a different portal, unaffected.) The rest of the ca/ instance still names
+# the old host (index.html, sources.html, the worksheet, validate_sources.py)
+# and is left alone here: a 301 is not a defect, and moving twenty references
+# is its own change.
+#
+# IT IS NOT A USER-AGENT REFUSAL, which is the obvious reading of a bare 403.
+# Measured the same day: on the OLD host a Chrome string and two districtry
+# tokens all get the same 403, and on the NEW host bare Python-urllib and a
+# districtry token both get 200 with all 11 districts. The token below is
+# courtesy -- identifying this client to a public service -- and not the fix.
+# robots.txt (data.sfgov.org redirects to data.sf.gov's) has one
+# `User-agent: *` group with Crawl-delay: 1, disallowing only /browse, /page
+# and /catalog query patterns; /resource/ is allowed and this runs weekly.
+SOURCE_URL = "https://data.sf.gov/resource/hcgx-vtsb.json?$select=sup_dist_num,sup_name&$limit=50"
+UA = "districtry/1.0 (+https://districtry.com/ca/)"
 
 # SF has 11 supervisor districts. Refuse to overwrite with a short result.
 EXPECTED_DISTRICTS = 11
@@ -39,7 +66,8 @@ def load_rows(path):
     if path:
         with open(path) as f:
             return json.load(f)
-    with urllib.request.urlopen(SOURCE_URL, timeout=60) as resp:
+    req = urllib.request.Request(SOURCE_URL, headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=60) as resp:
         return json.load(resp)
 
 
