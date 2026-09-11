@@ -15,13 +15,15 @@ scrape time, because that is where il/index.html reads them at render time --
 the shape kankakee_district_officials_scraper.py takes for k3gis.net, applied
 to every county that publishes that way. See BOUNDARIES.
 
-LAKE COUNTY IS DELIBERATELY ABSENT AND ITS 45 CARDS ARE NOT A MISSING SOURCE.
-Its fire and park entries are bespoke rather than polygonCountyEntry: they
-render through orgEntryCard, which Kane's entries share, because Lake's GIS
-carries each district's own office address, telephone, e-mail and website on
-the feature. Adding a board there means changing that shared helper, which is
-an app-shape change and belongs in its own review. All 45 names resolve to a
-unit; the work is on the rendering side, not the data side.
+LAKE COUNTY'S TWO ENTRIES RENDER DIFFERENTLY FROM EVERY OTHER ONE HERE, and
+that is why it arrived a change later than the rest. Its fire and park entries
+are bespoke rather than polygonCountyEntry: they render through orgEntryCard,
+which Kane's three entries also use, because Lake's GIS carries each district's
+own office address, telephone, e-mail and website on the feature. That helper
+now takes an optional people node, placed after the link row and before the
+office block, which is the order it already took when a county's own data named
+an officer. Lake's library entry passes none and is unchanged, as are Kane's
+three.
 
 THE KEY IS COUNTY AND LAYER, NOT COUNTY ALONE, and Macon is why. Its fire layer
 and its park layer both draw a district called `BlueMound`, and both draw one
@@ -131,6 +133,7 @@ MONROE_GIS = "https://services.arcgis.com/AZVIEb4WFZST2UYx/arcgis/rest/services/
 SANGAMON_GIS = "https://services.arcgis.com/XqG0RpqsNfIBGGb2/arcgis/rest/services/"
 STCLAIR_GIS = "https://arcgispublicmap.co.st-clair.il.us/server/rest/services/"
 LEE_GIS = "https://gis.leecountyil.gov/leecogis/rest/services/"
+LAKE_GIS = "https://services3.arcgis.com/HESxeTbDliKKvec2/arcgis/rest/services/"
 BOONE_GIS = "https://maps.boonecountyil.org/arcgis/rest/services/"
 
 # (county slug, layer) -> how to read that layer's card names.
@@ -190,6 +193,10 @@ BOUNDARIES = {
                          "where": "1=1", "field": "FIRE_DIST", "expand": "monroe"},
     ("madison", "park"): {"service": MADISON_GIS + "MadCo_ParkDistricts/FeatureServer/40",
                           "where": "1=1", "field": "PARK"},
+    ("lake", "fire"): {"service": LAKE_GIS + "LakeCounty_TaxDistricts/FeatureServer/4",
+                       "where": "ORG_NAME IS NOT NULL", "field": "ORG_NAME"},
+    ("lake", "park"): {"service": LAKE_GIS + "LakeCounty_TaxDistricts/FeatureServer/11",
+                       "where": "ORG_NAME IS NOT NULL", "field": "ORG_NAME"},
 }
 
 # The county slug the card belongs to -> the Warehouse's spelling, used to
@@ -201,6 +208,7 @@ SLUG_COUNTY = {
     "adams": "Adams", "iroquois": "Iroquois", "sangamon": "Sangamon",
     "st-clair": "St. Clair", "boone": "Boone", "effingham": "Effingham",
     "hamilton": "Hamilton", "monroe": "Monroe", "madison": "Madison",
+    "lake": "Lake",
 }
 
 # THE WAREHOUSE'S SPELLING OF A COUNTY IS NOT ALWAYS THE COUNTY'S OWN, and
@@ -533,6 +541,9 @@ OVERRIDES = {
     ("sangamon", "fire", "LAKE SPFLD FPD"): "083/090/06",
     ("lee", "fire", "BUREAU CO/OHIO FIRE"): "006/110/06",
     ("lee", "fire", "BUREAU CO/WALNUT FIRE"): "006/165/06",
+    # "First" is the "#1" the Warehouse writes.
+    ("lake", "fire", "First Fire Protection District of Antioch"): "049/010/06",
+    ("lake", "fire", "Lincolnshire-Riverwoods Fire Protection District"): "049/130/06",
     # A qualifier each publisher writes differently.
     ("dupage", "fire", "South Elgin"): "045/170/06",
     ("dupage", "fire", "Fox River"): "045/160/06",

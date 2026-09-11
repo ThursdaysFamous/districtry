@@ -5568,6 +5568,896 @@
         }
       }
     },
+    "lake": {
+      "fire": {
+        "Arden Shore North Fire Protection District": {
+          "board": [
+            {
+              "name": "Bill Nordeen",
+              "role": "President"
+            },
+            {
+              "name": "Margaret Marek",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "049/015/06",
+          "filedFor": "2025",
+          "office": {}
+        },
+        "Arden Shore South Fire Protection District": {
+          "board": [
+            {
+              "name": "Jon Tomek",
+              "role": "President"
+            },
+            {
+              "name": "Walter Sloan",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "049/016/06",
+          "filedFor": "2025",
+          "office": {}
+        },
+        "Barrington Countryside Fire Protection District": {
+          "board": [
+            {
+              "name": "Keith Hanson",
+              "role": "President"
+            },
+            {
+              "name": "Tom Long",
+              "role": "V-President"
+            },
+            {
+              "name": "Matthew Hower",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "016/010/06",
+          "filedFor": "2025",
+          "filesIn": "Cook",
+          "office": {
+            "address": "22222 N. Pepper RD",
+            "city": "Lake Barrington IL 60010",
+            "phone": "(224) 848-4800"
+          }
+        },
+        "Beach Park Fire Protection District": {
+          "board": [
+            {
+              "name": "Ted Sittig",
+              "role": "President"
+            },
+            {
+              "name": "Ken Lynch",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "049/020/06",
+          "filedFor": "2026",
+          "office": {
+            "address": "3233 N. Lewis Ave.",
+            "city": "Beach Park IL 60087",
+            "email": "tsittig@beachparkfd.org",
+            "phone": "(847) 662-2642"
+          }
+        },
+        "Cary Fire Protection District": {
+          "board": [
+            {
+              "name": "Lance Neuses",
+              "role": "Treasurer"
+            },
+            {
+              "name": "Mark Guerra",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "063/030/06",
+          "filedFor": "2025",
+          "filesIn": "McHenry",
+          "office": {
+            "address": "400 Cary Algonquin",
+            "city": "Cary IL 60013",
+            "email": "mguerra@caryfire.com",
+            "phone": "(847) 639-2121"
+          }
+        },
+        "Countryside Fire Protection District": {
+          "comptrollerCode": "049/030/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Charles Smith",
+              "role": "Fire Chief"
+            },
+            {
+              "name": "Lisa Clausen",
+              "role": "Accountant"
+            }
+          ],
+          "office": {
+            "address": "600 N. Deerpath Drive",
+            "city": "Vernon Hills IL 60061",
+            "email": "csmith@countrysidefire.com",
+            "phone": "(847) 367-5511"
+          }
+        },
+        "Deerfield-Bannockburn Fire Protection District": {
+          "board": [
+            {
+              "name": "Philip Bettiker",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "049/040/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Ray Larson",
+              "role": "Fire Chief"
+            }
+          ],
+          "office": {
+            "address": "500 waukegan rd",
+            "city": "Deerfield IL 60015",
+            "phone": "(847) 945-4066"
+          }
+        },
+        "First Fire Protection District of Antioch": {
+          "board": [
+            {
+              "name": "Tom Dvorak",
+              "role": "President"
+            },
+            {
+              "name": "Chris Ebert",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "049/010/06",
+          "filedFor": "2026",
+          "office": {
+            "address": "835 Holbeck Dr",
+            "city": "Antioch IL 60002",
+            "email": "Ikazian@antiochfire.org",
+            "phone": "(847) 395-5511"
+          }
+        },
+        "Fox Lake Fire Protection District": {
+          "board": [
+            {
+              "name": "Lynn Soderlund",
+              "role": "President"
+            },
+            {
+              "name": "Linda Walleck",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "049/050/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "PO Box 237",
+            "city": "Ingleside IL 60041",
+            "phone": "(847) 587-3312"
+          }
+        },
+        "Fox River Grove Fire Protection District": {
+          "board": [
+            {
+              "name": "Michael Kunz",
+              "role": "President"
+            },
+            {
+              "name": "William Yocius",
+              "role": "Treasurer"
+            },
+            {
+              "name": "Patrick Hughes",
+              "role": "Secretary"
+            }
+          ],
+          "comptrollerCode": "063/040/06",
+          "filedFor": "2025",
+          "filesIn": "McHenry",
+          "office": {
+            "address": "411 Algonquin Road",
+            "city": "Fox River Grove IL 60021",
+            "phone": "(847) 639-9232"
+          }
+        },
+        "Grayslake Fire Protection District": {
+          "board": [
+            {
+              "name": "Ellen Dimock",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "049/053/06",
+          "filedFor": "2026",
+          "heads": [
+            {
+              "name": "Dan Pierre",
+              "role": "Chief"
+            }
+          ],
+          "office": {
+            "address": "160 Hawley St",
+            "city": "Grayslake IL 60030",
+            "email": "edimock@grayslakefire.com",
+            "phone": "(847) 223-8960"
+          }
+        },
+        "Greater Round Lake Fire Protection District": {
+          "board": [
+            {
+              "name": "George Steinberg",
+              "role": "President"
+            },
+            {
+              "name": "Nitai Pandya",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "049/055/06",
+          "filedFor": "2026",
+          "office": {
+            "address": "409 W. Nippersink Road",
+            "city": "Round Lake IL 60073",
+            "phone": "(847) 546-6001"
+          }
+        },
+        "Lake Villa Township Fire Protection District": {
+          "board": [
+            {
+              "name": "James Stout",
+              "role": "President"
+            },
+            {
+              "name": "Howard Schnitzer",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "049/060/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "910 E Grand Ave",
+            "city": "Lake Villa IL 60046",
+            "email": "dslazes@lakevillafpd.com",
+            "phone": "(847) 356-2992"
+          }
+        },
+        "Lake Zurich Rural Fire Protection District": {
+          "board": [
+            {
+              "name": "Julie Novak",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "049/070/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Mindy Dupee",
+              "role": "Treas./Admin."
+            }
+          ],
+          "office": {
+            "address": "P.O. Box 346",
+            "city": "Lake Zurich IL 60047",
+            "phone": "(847) 358-0800"
+          }
+        },
+        "Libertyville Fire Protection District": {
+          "board": [
+            {
+              "name": "Lee Haak",
+              "role": "President"
+            },
+            {
+              "name": "Craig Dowden",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "049/080/06",
+          "filedFor": "2025",
+          "office": {}
+        },
+        "Lincolnshire-Riverwoods Fire Protection District": {
+          "comptrollerCode": "049/130/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Tom Krueger",
+              "role": "Fire Chief"
+            },
+            {
+              "name": "James Howard",
+              "role": "Accountant"
+            }
+          ],
+          "office": {
+            "address": "115 Schelter Road",
+            "city": "Lincolnshire IL 60069",
+            "phone": "(847) 634-2512"
+          }
+        },
+        "Long Grove Fire Protection District": {
+          "comptrollerCode": "049/090/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Paul Segalla",
+              "role": "Fire Chief"
+            },
+            {
+              "name": "James Howard",
+              "role": "Accountant"
+            }
+          ],
+          "office": {
+            "address": "1165 Old McHenry Road",
+            "city": "Long Grove IL 60047",
+            "phone": "(847) 634-3143"
+          }
+        },
+        "Newport Township Fire Protection District": {
+          "board": [
+            {
+              "name": "Kevin Zupec",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "049/100/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Mark Kirschhoffer",
+              "role": "Fire Chief"
+            }
+          ],
+          "office": {
+            "address": "39010 N. Caroline Ave.",
+            "city": "Wadsworth IL 60083",
+            "email": "chief@newportfire.org",
+            "phone": "(847) 336-1080"
+          }
+        },
+        "Rockland Fire Protection District": {
+          "board": [
+            {
+              "name": "Marcin Malinowski",
+              "role": "President"
+            },
+            {
+              "name": "Karl Snoblin",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "049/110/06",
+          "filedFor": "2025",
+          "office": {}
+        },
+        "Warren-Waukegan Fire Protection District": {
+          "board": [
+            {
+              "name": "Martin Klauber",
+              "role": "President"
+            },
+            {
+              "name": "Brian Wattleworth",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "049/140/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "4580 Old Grand Ave",
+            "city": "Gurnee IL 60031",
+            "phone": "(847) 599-6600"
+          }
+        },
+        "Wauconda Fire Protection District": {
+          "comptrollerCode": "049/150/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Curt Hanselman",
+              "role": "Fire Chief"
+            },
+            {
+              "name": "Chas Buschick",
+              "role": "Asst. Fire Chief"
+            }
+          ],
+          "office": {
+            "address": "109 W Liberty Street",
+            "city": "Wauconda IL 60084",
+            "email": "buschickchas@waucondafire.org",
+            "phone": "(847) 526-2821"
+          }
+        },
+        "Winthrop Harbor Fire Protection District": {
+          "board": [
+            {
+              "name": "Lorna Leben",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "049/160/06",
+          "filedFor": "2024",
+          "heads": [
+            {
+              "name": "Gerald Dietz",
+              "role": "Attorney"
+            }
+          ],
+          "office": {
+            "phone": "(224) 338-8345"
+          }
+        }
+      },
+      "park": {
+        "Arlington Heights Park District": {
+          "comptrollerCode": "016/020/12",
+          "filedFor": "2025",
+          "filesIn": "Cook",
+          "heads": [
+            {
+              "name": "Carrie Fullerton",
+              "role": "Director"
+            },
+            {
+              "name": "Jason Myers",
+              "role": "Fin. Officer"
+            }
+          ],
+          "office": {
+            "address": "410 N. Arlington Heights Rd",
+            "city": "Arlington Heights IL 60004",
+            "phone": "(847) 577-3000"
+          }
+        },
+        "Barrington Hills Park District": {
+          "board": [
+            {
+              "name": "Jessica Underwood",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "016/025/12",
+          "filedFor": "2025",
+          "filesIn": "Cook",
+          "heads": [
+            {
+              "name": "Steve Allen",
+              "role": "Treas./Admin."
+            }
+          ],
+          "office": {
+            "address": "364 Bateman Road",
+            "city": "Barrington Hills IL 60010",
+            "email": "kim@bhillsparkd.org",
+            "phone": "(847) 783-6772"
+          }
+        },
+        "Barrington Park District": {
+          "comptrollerCode": "049/010/12",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "TERESA JENNINGS",
+              "role": "Director"
+            },
+            {
+              "name": "LEE HOWARD",
+              "role": "Accountant"
+            }
+          ],
+          "office": {
+            "address": "235 LIONS DR",
+            "city": "BARRINGTON IL 60010",
+            "email": "tjennings@barringtonparkdistrict.org",
+            "phone": "(847) 381-0687"
+          }
+        },
+        "Buffalo Grove Park District": {
+          "comptrollerCode": "016/100/12",
+          "filedFor": "2025",
+          "filesIn": "Cook",
+          "heads": [
+            {
+              "name": "Erika Strojinc",
+              "role": "Director"
+            },
+            {
+              "name": "Dan Stanzcak",
+              "role": "Manager"
+            }
+          ],
+          "office": {
+            "address": "530 Bernard Dr.",
+            "city": "Buffalo Grove IL 60089",
+            "phone": "(847) 850-2100"
+          }
+        },
+        "Deerfield Park District": {
+          "comptrollerCode": "049/020/12",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Laura McCarty",
+              "role": "Director"
+            },
+            {
+              "name": "Jeff Harvey",
+              "role": "Fin. Officer"
+            }
+          ],
+          "office": {
+            "address": "836 Jelwett Park Dr",
+            "city": "Deerfield IL 60015",
+            "email": "jeff@deerfieldparks.org",
+            "phone": "(847) 945-0650"
+          }
+        },
+        "Foss Park District": {
+          "comptrollerCode": "049/030/12",
+          "filedFor": "2024",
+          "heads": [
+            {
+              "name": "Kari Cowart",
+              "role": "Director"
+            },
+            {
+              "name": "Brad Skof",
+              "role": "Fin. Officer/Treas."
+            }
+          ],
+          "office": {
+            "address": "1730 Lewis Ave",
+            "city": "North Chicago IL 60064",
+            "email": "bskof@fosspark-district.org",
+            "phone": "(847) 689-7480"
+          }
+        },
+        "Grandwood Park Park District": {
+          "board": [
+            {
+              "name": "David Nichols",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "049/040/12",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Michelle Rieber",
+              "role": "Treas./Admin."
+            }
+          ],
+          "office": {
+            "address": "36630 N Hutchins Rd",
+            "city": "Gurnee IL 60031",
+            "email": "accounting@grandwoodpark.net",
+            "phone": "(847) 356-0008"
+          }
+        },
+        "Grayslake Community Park District": {
+          "comptrollerCode": "049/050/12",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Kristin Splitt",
+              "role": "Director"
+            },
+            {
+              "name": "Janet VanZant",
+              "role": "Fin. Officer"
+            }
+          ],
+          "office": {
+            "address": "240 Commerce Drive",
+            "city": "Grayslake IL 60030",
+            "phone": "(847) 223-7529"
+          }
+        },
+        "Gurnee Park District": {
+          "comptrollerCode": "049/060/12",
+          "filedFor": "2026",
+          "heads": [
+            {
+              "name": "Mike Szpylman",
+              "role": "Director"
+            },
+            {
+              "name": "Sumitra Potharazu",
+              "role": "Superintendent"
+            }
+          ],
+          "office": {
+            "address": "4374 Old Grand Ave",
+            "city": "Gurnee IL 60031",
+            "email": "spotharazu@gurneeparkdistrict.com"
+          }
+        },
+        "Lake Barrington Countryside Park District": {
+          "board": [
+            {
+              "name": "Theresa Tevsh",
+              "role": "Commissioner"
+            },
+            {
+              "name": "Kira Panno",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "049/125/12",
+          "filedFor": "2025",
+          "office": {
+            "address": "23860 Old Barrington Road",
+            "city": "Lake Barrington IL 60010",
+            "email": "lakebarringtoncparkdistrict@gmail.com"
+          }
+        },
+        "Lake Bluff Park District": {
+          "comptrollerCode": "049/080/12",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "John Bealer",
+              "role": "Director"
+            },
+            {
+              "name": "Wes Levy",
+              "role": "Accountant"
+            }
+          ],
+          "office": {
+            "phone": "(847) 234-4150"
+          }
+        },
+        "Lindenhurst Park District": {
+          "comptrollerCode": "049/085/12",
+          "filedFor": "2026",
+          "heads": [
+            {
+              "name": "David Mohr",
+              "role": "Director"
+            },
+            {
+              "name": "Jake Kohler",
+              "role": "Fin. Officer"
+            }
+          ],
+          "office": {
+            "address": "2200 E Grass Lake Rd",
+            "city": "Lindenhurst IL 60046",
+            "email": "dmohr@lindenhurstparks.org",
+            "phone": "(847) 356-6011"
+          }
+        },
+        "Long Grove Park District": {
+          "board": [
+            {
+              "name": "James Southwell",
+              "role": "President"
+            },
+            {
+              "name": "Angie Underwood",
+              "role": "Treasurer"
+            },
+            {
+              "name": "Janet Healy",
+              "role": "V-President"
+            }
+          ],
+          "comptrollerCode": "049/087/12",
+          "filedFor": "2025",
+          "office": {}
+        },
+        "Mundelein Parks and Recreation District": {
+          "comptrollerCode": "049/090/12",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Ron Salski",
+              "role": "Director"
+            },
+            {
+              "name": "Debra McInerney",
+              "role": "Director"
+            }
+          ],
+          "office": {
+            "address": "1401 North Midlothian Rd",
+            "city": "Mundelein IL 60060",
+            "email": "rsalski@mundeleinparks.org",
+            "phone": "(847) 566-0650"
+          }
+        },
+        "Northbrook Park District": {
+          "comptrollerCode": "016/500/12",
+          "filedFor": "2025",
+          "filesIn": "Cook",
+          "heads": [
+            {
+              "name": "Chris Leiner",
+              "role": "Mgr./Director"
+            },
+            {
+              "name": "Michael Tokar",
+              "role": "Director"
+            }
+          ],
+          "office": {
+            "address": "545 Academy Drive",
+            "city": "Northbrook IL 60062",
+            "phone": "(847) 897-6110"
+          }
+        },
+        "Park District of Highland Park": {
+          "board": [
+            {
+              "name": "Mari-Lynn Peters",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "049/070/12",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Brian Romes",
+              "role": "Director"
+            }
+          ],
+          "office": {
+            "address": "636 Ridge Road",
+            "city": "Highland Park IL 60035"
+          }
+        },
+        "Round Lake Area Park District": {
+          "comptrollerCode": "049/095/12",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Katie Gamroth",
+              "role": "C.E.O."
+            },
+            {
+              "name": "Jennifer Baker",
+              "role": "Manager"
+            }
+          ],
+          "office": {
+            "address": "814 Hart Road",
+            "city": "Round Lake IL 60073",
+            "phone": "(847) 546-8558"
+          }
+        },
+        "Vernon Hills Park District": {
+          "comptrollerCode": "049/097/12",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Matthew LaPorte",
+              "role": "Executive"
+            },
+            {
+              "name": "Jessica Mitchell",
+              "role": "Superintendent"
+            }
+          ],
+          "office": {
+            "address": "635 N. Aspen Drive",
+            "city": "Vernon Hills IL 60061"
+          }
+        },
+        "Wauconda Park District": {
+          "comptrollerCode": "049/100/12",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Tim Staton",
+              "role": "Director"
+            },
+            {
+              "name": "Kelly Brainerd",
+              "role": "Accountant"
+            }
+          ],
+          "office": {
+            "address": "600 N Main St",
+            "city": "Wauconda IL 60084",
+            "email": "tstaton@waucondaparks.com",
+            "phone": "(847) 526-3610"
+          }
+        },
+        "Waukegan Park District": {
+          "comptrollerCode": "049/110/12",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Jay Lerner",
+              "role": "Director"
+            },
+            {
+              "name": "Jon Beckmann",
+              "role": "Fin. Officer"
+            }
+          ],
+          "office": {
+            "address": "1324 Golf Road",
+            "city": "Waukegan IL 60087",
+            "email": "jbeckmann@waukeganparks.org"
+          }
+        },
+        "Wheeling Park District": {
+          "comptrollerCode": "016/820/12",
+          "filedFor": "2025",
+          "filesIn": "Cook",
+          "heads": [
+            {
+              "name": "Jan Buchs",
+              "role": "Director"
+            },
+            {
+              "name": "Matt Wehby",
+              "role": "Dep. Director"
+            }
+          ],
+          "office": {
+            "address": "100 Community Blvd",
+            "city": "Wheeling IL 60090",
+            "email": "agonzalez@wheelingparkdistrict.com",
+            "phone": "(847) 465-3333"
+          }
+        },
+        "Wildwood Park District": {
+          "board": [
+            {
+              "name": "Becky Jante",
+              "role": "President"
+            },
+            {
+              "name": "Dan Corrigan",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "049/115/12",
+          "filedFor": "2026",
+          "office": {
+            "address": "33325 N. Sears Blvd",
+            "city": "Wildwood IL 60030",
+            "email": "accounting@wildwoodparkdistrict.com",
+            "phone": "(847) 223-7275"
+          }
+        },
+        "Zion Park District": {
+          "comptrollerCode": "049/120/12",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Eric Bradley",
+              "role": "Director"
+            },
+            {
+              "name": "Esme Taylor",
+              "role": "Manager"
+            }
+          ],
+          "office": {
+            "address": "2400 Dowie Memorial Drive",
+            "city": "Zion IL 60099",
+            "email": "ebradley@zionparkdistrict.org",
+            "phone": "(847) 756-5500"
+          }
+        }
+      }
+    },
     "lee": {
       "fire": {
         "ASHTON FIRE": {
@@ -8414,7 +9304,7 @@
       }
     }
   },
-  "generated": "2026-09-11T08:46:03Z",
+  "generated": "2026-09-11T10:59:00Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
