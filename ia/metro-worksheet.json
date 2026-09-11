@@ -367,7 +367,7 @@
   "palette": { "accent": "#6d3fd1", "accent_deep": "#5730ab", "accent_warm": "#b0316e", "accent_warm_deep": "#8f2659", "label": "districtry palette — brand violet is CHROME ONLY, never map data; shared with the fleet, not state-themed by convention" },
   "domains": { "canonical": "https://districtry.com/ia/" },
   "exports_name": "IowaExplorer",
-  "verified_date": "August 27, 2026",
+  "verified_date": "September 11, 2026",
   "sources_page": {
     "file": "ia/sources.html",
     "credits": [

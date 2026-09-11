@@ -750,6 +750,19 @@ def render_jsonld_graph(w):
     a('      "url": "https://overberg.co"')
     a('    },')
     a('    {')
+    # THE PERSON IS A NODE, not a string. This is civic data about who holds
+    # public office, which Google's quality guidelines hold to their highest
+    # bar, and the graph ran WebSite -> Organization and stopped — no author
+    # anywhere on the site, measured across all 33 content pages on
+    # 2026-09-11. A named author with a URL is the cheapest part of that bar
+    # and the site had none of it.
+    a('      "@type": "Person",')
+    a('      "@id": "%s#author",' % base)
+    a('      "name": "Adam Overberg",')
+    a('      "url": "https://overberg.co",')
+    a('      "worksFor": { "@id": "%s#publisher" }' % base)
+    a('    },')
+    a('    {')
     a('      "@type": "WebApplication",')
     a('      "name": %s,' % js_str(name))
     a('      "url": "%s",' % base)
@@ -763,6 +776,7 @@ def render_jsonld_graph(w):
     a('      "image": "%sog-image.png",' % base)
     a('      "areaServed": %s,' % area_node)
     a('      "keywords": %s,' % js_str(g["keywords"]))
+    a('      "author": { "@id": "%s#author" },' % base)
     a('      "isPartOf": { "@id": "%s#website" },' % base)
     # The one field this whole change exists to make possible. ISO 8601, from
     # the same key the footer prints in prose.
