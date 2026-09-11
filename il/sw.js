@@ -444,6 +444,7 @@ const ROSTER_URLS = [
   "./data/app/woodford-district-officials.json",
   "./data/app/grundy-district-officials.json",
   "./data/app/kankakee-district-officials.json",
+  "./data/app/il-library-district-officials.json",
   "./data/app/il-county-board-offices.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
