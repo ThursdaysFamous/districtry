@@ -123,6 +123,20 @@ detail into `blocker`.
       "wanted": "The fourteen members elected in November 2022, by district — from the county's own certified canvass for that election, or from any member list a program is allowed to read."
     },
     {
+      "id": "alexander-precinct-geometry",
+      "concept": "Voting precincts",
+      "area": "Alexander County",
+      "counties": [
+        "alexander"
+      ],
+      "kind": "no-source",
+      "layer": "county-precinct",
+      "summary": "Alexander County's voting precincts aren't drawn. Its three commissioners are named on the County card.",
+      "why": "The county's last general election reported eleven precincts and its last primary reported ten, so how many it runs today isn't settled — and drawing the eleventh would show a precinct that may have been retired.",
+      "blocker": "MEASURED 2026-09-11, in the sweep that shipped seven counties' precincts from the Census 2020 voting districts. Alexander is the sweep's one near miss. Its certified 2024 General names all ELEVEN precincts — Cache, Cairo 1 to 5, McClure, Olive Branch, Sandusky, Tamms, Thebes — and the census fabric carries those eleven names character for character, summing to the county's exact 2020 population of 5,240. That is a clean pass of the Jasper test on one election. The certified 2026 General Primary names TEN, with no Sandusky row at all and the other ten unchanged. Two explanations fit and the returns choose neither: the county may have folded Sandusky into a neighbour after the 2024 general, or Sandusky may simply have cast nothing the county's export carried. Shipping eleven would draw a precinct that may no longer exist, and shipping ten would delete one the county certified two years ago, so nothing ships. HOW IT WAS MEASURED: scripts/isbe_precinct_fabric.py reads ISBE's precinct-level results archive, which publishes every Illinois county's certified returns as CSV. Its --jasper mode compares a county's own precinct names against the Census 2020 voting districts, and this county was asked on both the 2024 General (election 66) and the 2026 General Primary (election 69) — the same pair that shipped Mason, Pike, Union, Edwards, Wabash, Massac and Saline on 2026-09-11. NOTE FOR WHOEVER ASKS: this county had no gap record of any kind before this one, which is the absence the 2026-08-23 audit exists to surface — Alexander joined the ring on 2026-08-23, after that audit ran, so nothing had ever cross-referenced it.",
+      "wanted": "One line from the County Clerk: does Sandusky precinct still exist, or was it folded into another? Current precinct boundaries in any form would answer it too."
+    },
+    {
       "id": "aurora-council-contact",
       "concept": "Municipal council contact",
       "area": "Aurora (Kane, DuPage, Kendall and Will counties)",
@@ -168,6 +182,20 @@ detail into `blocker`.
       "why": "The county publishes no district map, and its election results show four precincts split between two districts, so no published boundary would draw the lines.",
       "blocker": "Researched 8 Aug 2026, closing an absence that had NO record at all: Bond is served as a judicial-circuit secondary, its board did not surface, and nothing said why. FORM SETTLED — DISTRICTED: bondcountyil.gov/bond-county-board/ lists Board Districts 1-5 with one member each and a county e-mail apiece (Chris Timmerman 1, Bernard Myers 2, Jacob Rayl 3, Wesley L. Pourchot 4, Jeff Rehkemper 5) — re-verified unchanged 2026-08-20, 5 of 5. GEOMETRY IS ABSENT, measured not assumed: the county's ArcGIS Online org (bondcountygis.maps.arcgis.com, service root services.arcgis.com/VbP0KHITyLTMBTy3) was re-enumerated 2026-08-20 and still carries exactly 24 feature services — parcels in five vintages, townships, zoning, municipal boundaries, floodplain, cemeteries, K12 school boundaries, FPD_Boundaries — with NO board-district layer and NO precinct layer, and its public viewer's nine layers carry nothing electoral. A DECOY TO NAME BEFORE IT COSTS SOMEONE THE BUILD, re-verified the same day: searching ArcGIS Online for \"Bond districts\" returns a service owned by Tamara.Freihat_DuPage and actually named \"Bonds\" — municipal BOND (debt-financing) districts in DuPage County. THE CANVASS ROUTE WAS THEN RUN IN FULL ON 2026-08-20, AND BOND FAILS IT TWICE OVER, either failure fatal alone. Both vendor hosts answer (il-bond.pollresults.net, il-bond.accessliberty.com), the archive runs 2006 to Apr 2025, and every district is witnessed twice — all five contests in the 2022 General canvass, districts 2 and 4 again in 2024, and 1, 3 and 5 in the final 2026 primary feed. A THIRD DOWNLOAD-HANDLER ID PAIR, worth recording beside Clark's 58/188 and Edgar's 59/189: Bond's is pageid=52&mid=220, so the per-county keying is a rule rather than a coincidence, and each of the six PDFs fetched was verified to start %PDF and read \"Statement of Votes Cast … BOND COUNTY\" rather than being the vendor's login page. (1) BOND SPLITS PRECINCTS. Four of twenty appear in two districts' contests apiece — BURGESS 2 across districts 1 and 3, CENTRAL 6 across 4 and 5, OLD RIPLEY across 3 and 4, SHOAL CREEK 2 across 2 and 3 — and this is not a parse artifact: in all four cases the two portions sum to the county's own whole-precinct registration exactly (474, 466, 655, 175), the five district totals sum to the county's 10,725, and the 2024 canvass and 2026 feed reproduce the same cuts. Three are slivers (9 of 474, 10 of 655, 34 of 175) and Central 6 is a real 262/204 cut. check_partition refuses in exactly these words, and the consequence is bigger than this route: a district here is not a union of whole precincts, so publishing precinct geometry later would STILL not draw these lines. This is the Bureau/Piatt/Douglas shape. (2) BOND FAILS THE JASPER TEST INDEPENDENTLY: 25 census VTDs against the county's 20 current precincts — LaGrange 1+2 consolidated to LaGrange, Tamalco 1+2 to Tamalco, Shoal Creek 3 and 4 absorbed, CENTRAL 5 retired outright — proven from the county's own documents, since the 2020 canvass lists the census 25 and every canvass from the June 2022 primary onward lists the current 20, as does the Clerk's own polling-locations PDF. THE TRAP INSIDE THAT TEST, worth naming: the population half PASSES (VTD POP100 sums to 16,725, the county's exact Census 2020 count), so a builder checking only the sum would have sailed straight past a fabric that had moved. NO WRITTEN COMPOSITION IS PUBLISHED EITHER: the site's own search returns zero results for redistricting and for precinct, and all 26 minutes and 15 agendas from the 2021 redistricting year are image scans with a zero-length text layer, so machine search of them is impossible by construction. NOT YET ASKED.",
       "wanted": "The county's 2021 board redistricting map or ordinance — or any description of how those four split precincts divide."
+    },
+    {
+      "id": "bond-precinct-geometry",
+      "concept": "Voting precincts",
+      "area": "Bond County",
+      "counties": [
+        "bond"
+      ],
+      "kind": "no-source",
+      "layer": "county-precinct",
+      "summary": "Bond County's voting precincts aren't drawn.",
+      "why": "The county consolidated its precincts after the 2020 census, and three of the old ones can't be matched to whichever precinct took them in.",
+      "blocker": "MEASURED 2026-09-11, in the sweep that shipped seven counties' precincts. Bond runs 20 precincts today against 25 Census 2020 voting districts, and the shortfall is five. Two of the merges are nameable — LAGRANGE 1 and 2 into Lagrange, TAMALCO 1 and 2 into Tamalco — and three are not: CENTRAL 5, SHOAL CREEK 3 and SHOAL CREEK 4 have no county counterpart, and nothing published says which of the county's current precincts absorbed them. A dissolve would have to guess three boundaries, so none is drawn. HOW IT WAS MEASURED: scripts/isbe_precinct_fabric.py reads ISBE's precinct-level results archive, which publishes every Illinois county's certified returns as CSV. Its --jasper mode compares a county's own precinct names against the Census 2020 voting districts, and this county was asked on both the 2024 General (election 66) and the 2026 General Primary (election 69) — the same pair that shipped Mason, Pike, Union, Edwards, Wabash, Massac and Saline on 2026-09-11. The county's SPLIT PRECINCTS are a second, independent obstacle and are already recorded under bond-county-board-districts: its own returns show four precincts divided between two board districts. This record had no predecessor — Bond had no precinct gap record at all before 2026-09-11.",
+      "wanted": "Which of Bond County's current precincts took in the old Central 5 and Shoal Creek 3 and 4 — or the county's precinct boundaries as map data."
     },
     {
       "id": "boone-fire-belvidere-city",
@@ -223,7 +251,7 @@ detail into `blocker`.
       "layer": "county-precinct",
       "summary": "Brown County's 14 voting precincts aren't drawn on the map.",
       "why": "The county publishes no precinct map, and the census boundaries that would stand in for one can't tell which of two recently renamed precincts is which.",
-      "blocker": "Checked 2 Aug 2026 when the county was added: Brown publishes no precinct boundaries, no county items appear in any public map catalogue, and its election summaries are scanned images — the record concluded that even the precinct NAMES could not be lifted automatically. THAT PREMISE IS FALSE AS OF 2026-08-20, and the correction matters more than the original finding. The county's own site (browncoil.org — browncountyil.org remains a SiteGround-captcha decoy, re-verified) is WordPress and serves its Election Information page through the REST API as plain text, polling place by polling place. And the Illinois State Board of Elections publishes precinct-level results as CSV for every election authority in the state, carrying a PrecinctName column — Brown's 14 current precincts read straight out of it. The scans are still scans (zero extractable characters across 42 pages) and the county still publishes no precinct map, but the NAMES were never the obstacle they were recorded as. THE CENSUS FABRIC FITS: 14 Census 2020 voting districts against 14 current precincts, and the VTD populations sum to 6,244, the county's own Census 2020 count, exactly. Twelve of the fourteen match by name once the county's own spelling drift is allowed for — it prints BUCKHORN TWP in 2020, BUCKHORN TOWNSHIP in 2022, plain BUCKHORN in 2024 and BUCKHORN TOWNSHIP again in 2026 with no boundary changing, and the November 2024 list matches the census names 14 of 14 with no aliasing at all. THE WHOLE REMAINING QUESTION IS TWO PRECINCTS. Between November 2024 and April 2025 the county renamed precincts 0005 and 0012 from MISSOURI and RIPLEY to MISSOURI-RIPLEY TOWNSHIP 1 and MISSOURI-RIPLEY TOWNSHIP 2, and by name alone either could be either. The evidence leans hard toward a rename rather than a redraw: the two precinct NUMBERS were preserved, and 5 and 12 are the alphabetical slots Missouri and Ripley already held; registration moved +2 and 0 across the change while sibling precincts moved by as much as 23; the two kept separate polling places, the second inside Ripley village; Missouri and Ripley are still separate townships today, and each census VTD is exactly its township at an intersection-over-union of 1.000000. But the county's own grammar reads the other way — VERSAILLES TOWNSHIP 1/2 really is one township split in two — so \"Missouri-Ripley 1 and 2\" parses just as naturally as one combined area divided afresh, and this project does not ship a boundary on the better-looking reading of an ambiguity.",
+      "blocker": "Checked 2 Aug 2026 when the county was added: Brown publishes no precinct boundaries, no county items appear in any public map catalogue, and its election summaries are scanned images — the record concluded that even the precinct NAMES could not be lifted automatically. THAT PREMISE IS FALSE AS OF 2026-08-20, and the correction matters more than the original finding. The county's own site (browncoil.org — browncountyil.org remains a SiteGround-captcha decoy, re-verified) is WordPress and serves its Election Information page through the REST API as plain text, polling place by polling place. And the Illinois State Board of Elections publishes precinct-level results as CSV for every election authority in the state, carrying a PrecinctName column — Brown's 14 current precincts read straight out of it. The scans are still scans (zero extractable characters across 42 pages) and the county still publishes no precinct map, but the NAMES were never the obstacle they were recorded as. THE CENSUS FABRIC FITS: 14 Census 2020 voting districts against 14 current precincts, and the VTD populations sum to 6,244, the county's own Census 2020 count, exactly. Twelve of the fourteen match by name once the county's own spelling drift is allowed for — it prints BUCKHORN TWP in 2020, BUCKHORN TOWNSHIP in 2022, plain BUCKHORN in 2024 and BUCKHORN TOWNSHIP again in 2026 with no boundary changing, and the November 2024 list matches the census names 14 of 14 with no aliasing at all. THE WHOLE REMAINING QUESTION IS TWO PRECINCTS. Between November 2024 and April 2025 the county renamed precincts 0005 and 0012 from MISSOURI and RIPLEY to MISSOURI-RIPLEY TOWNSHIP 1 and MISSOURI-RIPLEY TOWNSHIP 2, and by name alone either could be either. The evidence leans hard toward a rename rather than a redraw: the two precinct NUMBERS were preserved, and 5 and 12 are the alphabetical slots Missouri and Ripley already held; registration moved +2 and 0 across the change while sibling precincts moved by as much as 23; the two kept separate polling places, the second inside Ripley village; Missouri and Ripley are still separate townships today, and each census VTD is exactly its township at an intersection-over-union of 1.000000. But the county's own grammar reads the other way — VERSAILLES TOWNSHIP 1/2 really is one township split in two — so \"Missouri-Ripley 1 and 2\" parses just as naturally as one combined area divided afresh, and this project does not ship a boundary on the better-looking reading of an ambiguity. DATED 2026-09-11 by the ISBE archive, which narrows the ask without answering it. The county's certified 2024 General still names MISSOURI and RIPLEY separately; its certified 2026 General Primary names MISSOURI-RIPLEY 1 and 2, with the other twelve precincts unchanged and the count 14 in both. So two precincts became two precincts between November 2024 and March 2026: the union of the pair is stable and the line inside it is what nobody publishes. That is the one fact the Clerk is being asked for, and it is now a question about a known 16-month window rather than an open one.",
       "wanted": "One answer from the County Clerk: when Missouri and Ripley precincts became Missouri-Ripley 1 and 2, was that a rename, or were the lines redrawn?"
     },
     {
@@ -435,20 +463,6 @@ detail into `blocker`.
       "why": "The only dataset covering the three was last updated in 2021 and may predate the redraw after the 2020 census, so its lines could be the old ones.",
       "blocker": "The 31 Jul 2026 sweep found current city-published ward data with officeholder details for Elmhurst, Wheaton, West Chicago, Lombard and Glendale Heights — West Chicago was added on 2 Aug 2026, and the other four need re-finding — plus Darien with recent-ish boundaries but stale details. Wood Dale, Oakbrook Terrace and Warrenville appear only in the county's municipal ward dataset, whose details read “Updated 04/29/2021” and whose boundaries have not been checked against the post-2020 redraws. Showing it could draw pre-redistricting lines. RE-MEASURED 2026-08-20 AND TWO OF THE THREE NOW HAVE A CITY-PUBLISHED, POST-REDRAW SOURCE. WARRENVILLE publishes a 'Ward Boundaries Map' on its OWN ArcGIS org (warrenville.maps.arcgis.com, webmap cd142fb55239400b8ca2c207417ad771) backed by services5.arcgis.com/TkBKgQn8d3sPkMZo/Wards_DEC22 — four layers, Ward_1 through Ward_4, last edited 2025-04-17 and named for a December 2022 redraw, so it post-dates the 2020 census. BUT IT IS NOT A BOUNDARY LAYER AND MUST NOT BE PULLED AS ONE: its fields are PARCEL fields (PIN, BILLNAME, BILLSTNUM, BILLSTNAME, BILLCITY, BILLZIP, PROPNAME), so each 'ward' is a set of parcels grouped by ward — 1,771 / 1,246 / 1,376 / 1,036, and ALL 5,429 of them carry a populated BILLNAME, which is the property owner's billing name, alongside their mailing address. A builder reaching for 'Warrenville wards' would ingest five thousand owners' names and addresses. A ward boundary can be DISSOLVED from it — the Rock Island / Boone tax-parcel pattern — provided every attribute is dropped, and with the caveat that a parcel dissolve covers only parcelled land, so rights-of-way and water fall outside and the edge is approximate. OAKBROOK TERRACE publishes ward_map_2025_opt.pdf from its own Ward Map page — one page, 2.1 MB, a REAL TEXT LAYER (7,954 characters) and 923 VECTOR PATHS alongside 25 embedded images. That is the White County route and it is worth attempting; the thing a builder must establish first is that the WARD LINES are among those vector paths rather than inside the rasters, because a map whose linework turns out to be raster is what sank Jasper's. WOOD DALE IS THE ONE STILL DARK: wooddale.com answers 403 with a 408-byte body, so nothing city-published could be read at all. It remains the only one of the three for which the county's 2021 dataset is the sole source.",
       "wanted": "Ward boundaries published by each city, or each city's adopted redistricting ordinance so the older county lines can be checked against it."
-    },
-    {
-      "id": "edwards-county-precincts",
-      "concept": "Voting precincts",
-      "area": "Edwards County",
-      "counties": [
-        "edwards"
-      ],
-      "kind": "no-source",
-      "layer": "county-precinct",
-      "summary": "Edwards County's voting precincts aren't shown.",
-      "why": "The County Clerk says the county's precinct boundaries exist on paper only, so there is no map file anywhere to publish.",
-      "blocker": "Stated 6 Aug 2026 by County Clerk & Recorder Melanie Knight, unprompted, in the same reply that settled the board's form: 'Our voting district boundaries currently exist on paper.' No hedging and no qualification, from the office that draws them. That is a closed route rather than an unmeasured one, and it is recorded so nobody re-probes for a file the county has said does not exist. There is also nowhere else to look: Edwards has no county website (confirmed by the same Clerk on the same day), no self-hosted ArcGIS under ten hostname patterns, and nothing county-keyed in the ArcGIS Online catalogue.",
-      "wanted": "The county's precincts digitised — or a paper precinct map clear enough to line up against real streets."
     },
     {
       "id": "effingham-municipal-officials",
@@ -912,9 +926,9 @@ detail into `blocker`.
       ],
       "kind": "data-quality",
       "layer": "county-precinct",
-      "summary": "Mason County's 21 precincts are drawn from 2020 census boundaries. The county's current polling list names the same 21, so the names and the count check out — whether a line has moved doesn't.",
-      "why": "The county publishes no precinct map of its own, and a polling list can't show whether a boundary moved without a name changing.",
-      "blocker": "PARTLY ANSWERED 4 Aug 2026. The County Clerk's published directory lists the county's polling places precinct by precinct, and it names twenty-one: Allens Grove, Bath, Crane Creek, Forest City, Havana 1 to 6, Kilbourne, Lynchburg, Manito 1 and 2, Mason City 1 to 3, Pennsylvania, Quiver, Salt Creek and Sherman. That is exactly the set of 21 shapes the app already holds from the 2020 Census, so nothing has been added, removed or renamed. What it does not establish is whether the county moved a boundary without changing a name, which a polling list cannot show. The shapes ship, as they did before, and the card does not claim a vintage the county has not confirmed.",
+      "summary": "Mason County's 21 precincts are drawn from 2020 census boundaries, under the county's own names. Its polling list and its last two election returns name the same 21, so the names and the count check out — whether a line has moved doesn't.",
+      "why": "The county publishes no precinct map of its own, and neither a polling list nor an election return can show a boundary moving without a name changing.",
+      "blocker": "PARTLY ANSWERED 4 Aug 2026. The County Clerk's published directory lists the county's polling places precinct by precinct, and it names twenty-one: Allens Grove, Bath, Crane Creek, Forest City, Havana 1 to 6, Kilbourne, Lynchburg, Manito 1 and 2, Mason City 1 to 3, Pennsylvania, Quiver, Salt Creek and Sherman. That is exactly the set of 21 shapes the app already holds from the 2020 Census, so nothing has been added, removed or renamed. What it does not establish is whether the county moved a boundary without changing a name, which a polling list cannot show. The shapes ship, as they did before, and the card does not claim a vintage the county has not confirmed. CORRECTED AND LARGELY CLOSED 2026-09-11. This record's central sentence was false about the shipped app for as long as it stood: it said the twenty-one census shapes were \"exactly the set of 21 shapes the app already holds\", and the app held none of them — mason-precincts.json had never existed and no county-precinct dispatch entry had ever named the county. The precincts ship now, built by scripts/build_vtd_precincts.py, and the county's own certified returns are a second witness to what the Clerk's polling directory already showed: ISBE's precinct-level archive carries the same twenty-one names in the 2024 General and the 2026 General Primary, so nothing has been added, removed or renamed across two elections. The census writes a vestigial trailing 1 on ALLENS GROVE 1 and KILBOURNE 1 where the county writes neither; both are recorded as renames and the county's spelling ships. WHAT REMAINS OPEN IS THIS RECORD'S ORIGINAL QUESTION AND ONLY THAT: a name list cannot show a boundary moving without a name changing, and no source this project can read answers it. The card claims no vintage the county has not confirmed.",
       "wanted": "A yes or no from the Clerk on whether any precinct boundary has moved since 2020 — and if one has, the precinct map."
     },
     {
@@ -930,20 +944,6 @@ detail into `blocker`.
       "why": "The county publishes no district map, and Centralia and Salem are each split across three districts, so the census boundaries that would stand in can't be placed.",
       "blocker": "MEASURED 2026-08-20, in the sweep of the platinum results vendor that shipped Franklin and Clinton, and this county is the sweep's honest no. Marion is carried at platinumelectionresults.com (county 18), and its per-precinct pages settle the board's form and composition completely: the 2024 General and the 2026 General Primary each carry a numbered 'FOR COUNTY BOARD DISTRICT n' contest in all 37 of the county's precincts, partitioning them 10/7/7/7/6 with every precinct claimed exactly once. Nothing is missing on the elections side. THE FABRIC IS WHERE IT FAILS. Census 2020 carries 48 Marion voting districts against the 37 precincts the county runs today, and eleven of them have no same-named county precinct. Four merges are nameable (ALMA, KINMUNDY, ODIN and PATOKA each merged a numbered pair). The other seven are not, and six of those seven are fatal: CENTRALIA 2, 8, 10, 16 and 18 and SALEM 3 belong to base names that the board plan SPLITS — Centralia's precincts sit in districts 3, 4 and 5, Salem's in 1, 2 and 3 — so no name can say which district those census units belong to, and guessing would move a district line through a city. This is the exact test Clinton passes on the same afternoon: Clinton's one unnameable merge (Brookside) sits entirely inside a single district, so it cannot move a line, and Clinton shipped.",
       "wanted": "The county's board districts as map data — or which census precincts make up each of the current Centralia and Salem precincts."
-    },
-    {
-      "id": "massac-precinct-geometry",
-      "concept": "Voting precincts",
-      "area": "Massac County",
-      "counties": [
-        "massac"
-      ],
-      "kind": "no-source",
-      "layer": "county-precinct",
-      "summary": "Massac County's three commissioners are named on the County card, but its 17 voting precincts aren't drawn.",
-      "why": "The county publishes no map data of any kind — no precinct boundaries, no polling place map, no mapping system at all.",
-      "blocker": "Successor to massac-county-board, RETIRED 2026-08-21 when Massac shipped as the fleet's FOURTH ISLAND and its thirteenth at-large county. WHAT THE RETIRED RECORD GOT WRONG IS THE PART WORTH KEEPING. It said the county's site \"surfaced only clerk and assessment pages, no board\" — the site has a Commissioners page and always did, and what reached it was not a better crawl but a different question: probe the domain sitting in data/app/il-county-clerks.json (massaccountyil.gov) instead of permuting the county's NAME. That is the identical correction Cumberland forced on 2026-08-20, applied to the whole frontier at once, and it is why four other records were corrected in the same change. THE BOARD QUESTION IS CLOSED: the Clerk's own \"March 17, 2026 Primary Election Results\" cumulative report carries \"FOR COUNTY COMMISSIONER - REPUBLICAN PARTY - (Vote for one)\" over \"Precincts Counted 17 / Total 17 / 100.00%\" against all 11,265 registered voters, with no district string anywhere on the ballot; the countywide County Clerk and Regional Superintendent contests on the same pages report the identical 17-of-17 and 11,265, which is the control that makes the commissioner contest countywide in the same sense they are. A districted board reports only its own district's precincts — neighbouring Jackson's canvass shows 9 of its 56 for District 1. So Massac is a commission county electing three commissioners at large; there is no board geometry to seek and none should be invented. THAT REPORT IS MARKED \"Unofficial Results\" and is the only results document the county publishes; it is relied on for the FORM alone, which certification does not change — a canvass corrects counts, never the shape of the ballot — and the roster comes from the county's own commissioners page rather than from any return, per the Scott reasoning. WHAT IS NOT SETTLED is this record's subject. The 17 precincts are named nowhere as geometry: the county publishes no GIS, no precinct list and no polling-place map, and the pass-13 finding that no self-hosted ArcGIS answers under ten hostname patterns and that the ArcGIS Online catalogue names nothing county-keyed still stands, re-checked 2026-08-21. NO COMMISSIONER CONTACT DETAIL SHIPS EITHER, and that is the county's doing, not an omission here: its homepage prints a phone number for eight departments and none for the commissioners, and the commissioners' page carries no address, phone or e-mail. The courthouse address on the County Clerk's record is the CLERK's office and is not asserted as theirs.",
-      "wanted": "The 17 precinct boundaries in any form, even a scanned paper map — or the Clerk's word that they exist on paper only."
     },
     {
       "id": "mchenry-park-district",
@@ -1146,20 +1146,6 @@ detail into `blocker`.
       "wanted": "A county-published list of Perry's sitting commissioners — or the county's site answering automated clients, which would supply it."
     },
     {
-      "id": "pike-precinct-geometry",
-      "concept": "Voting precincts",
-      "area": "Pike County",
-      "counties": [
-        "pike"
-      ],
-      "kind": "no-source",
-      "layer": "county-precinct",
-      "summary": "Pike County's 31 voting precincts aren't drawn. Its nine commissioners, elected county-wide, do show on the County card.",
-      "why": "The county runs no mapping system of its own and publishes its precincts as names only, inside election results.",
-      "blocker": "Checked 2 Aug 2026 when the county was added: Pike publishes no precinct boundaries anywhere, and nothing for the county appears in any public map catalogue. Its election results are handled by an outside vendor whose site publishes turnout and totals, not boundaries. The precincts themselves are certainly defined — the county's own 2024 results report counts all 31 — but only as names.  NOT YET ASKED: this records what the county's WEBSITE shows, which Ogle proved on 2026-08-03 is a different question from what the county will send on request — its precinct shapefile arrived by return e-mail from a gap that read exactly like this one. See \"The ask ledger\".",
-      "wanted": "Pike County's precinct boundaries as map data, plus polling places if the county publishes them."
-    },
-    {
       "id": "plano-ward-officials",
       "concept": "City council district",
       "area": "Plano",
@@ -1256,20 +1242,6 @@ detail into `blocker`.
       "why": "Rockford runs its own election board, so the county's precinct map stops at the city line, and the city's precincts are published as lists rather than boundaries.",
       "blocker": "Rockford runs its own Board of Election Commissioners, so the county's 94-precinct map stops at the city line. That was measured rather than documented: of 131 test points that returned nothing, 130 fall inside Rockford. The clerk publishes a list of city precinct committeepeople, so the precincts clearly exist — no boundaries for them do. Re-checked 31 Jul 2026 and unchanged: the election board's 2026 polling list shows 89 city precincts across 14 wards, still with no boundaries behind them.",
       "wanted": "Precinct boundaries from the Rockford Board of Election Commissioners, or a city precinct layer on the county's mapping system."
-    },
-    {
-      "id": "saline-precinct-geometry",
-      "concept": "Voting precincts",
-      "area": "Saline County",
-      "counties": [
-        "saline"
-      ],
-      "kind": "no-source",
-      "layer": "county-precinct",
-      "summary": "Saline County's 13 board members are named on the County card — they're elected county-wide — but its 28 voting precincts aren't drawn.",
-      "why": "The county publishes a polling place list and no precinct boundary of any kind.",
-      "blocker": "Successor to saline-county-board, RETIRED 2026-08-21 when Saline shipped as the 74th county and the fifteenth at-large one. THE BOARD QUESTION IS CLOSED, on three sources that agree. (1) The county's own certified canvass: its \"2026 Primary Results\" report, run 26 Mar 2026 and headed Official Results, carries \"FOR MEMBERS OF THE COUNTY BOARD - REPUBLICAN PARTY - (Vote for not more than seven)\" over \"Precincts Counted 28 / Total 28 / 100.00%\" against all 15,441 registered voters, with no district string anywhere on the contest; the Appellate Court contest on the same page reports the identical 28-of-28 and 15,441, which is the control that makes it countywide in the same sense. Both party ballots print the contest the same way, and seven seats of thirteen is the stagger. (2) The county's own board page names exactly thirteen members with no district labels. (3) ISBE's county-board structure table gives Saline as 13 members, At-Large, one district. THAT THIRD SOURCE WAS NOT TAKEN ON TRUST, and the check is worth keeping: its embedded metadata is from 2007 and it carries no revision date, so before it was used here it was verified against four counties whose current pages this project can read — Clay (14 single-member districts A-N), Hancock (5 districts of 3), Lawrence (7 single-member) and Adams (21 across 7 multi-member) — and it matches all four exactly. It is cited for STRUCTURE, never for currency, and no name was read from it. WHAT IS NOT SETTLED is this record's subject. The county's 28 precincts are named nowhere as geometry: the Clerk's elections page publishes a polling list, early-voting schedule and results PDFs, and no boundary of any kind. The pass-13 finding that no self-hosted ArcGIS answers under ten hostname patterns and that the ArcGIS Online catalogue names nothing county-keyed still stands. ONE ROUTE IS RECORDED AS UNTRIED rather than closed: ISBE's precinct-level results archive covers all 102 counties and would supply Saline's 28 precinct NAMES, which is the input a census-fabric dissolve needs — but names alone are not boundaries, and whether the Census 2020 voting-district fabric still matches those 28 has not been measured. HOW THE COUNTY WAS REACHED, because it generalises: this record used to say no county website answered under the five domain patterns probed. That was false. salinecounty.illinois.gov answers 200 and is the Clerk's own e-mail domain, sitting in data/app/il-county-clerks.json all along — the Cumberland correction, and the reason four other frontier records were corrected in the same sweep. The earlier note that the probe rejected salinecounty.org as Saline County ARKANSAS stands and was never the obstacle.",
-      "wanted": "The 28 precinct boundaries in any form, even a scanned paper map — or the Clerk's word that they exist on paper only."
     },
     {
       "id": "sangamon-park-library-districts",
@@ -1493,20 +1465,6 @@ detail into `blocker`.
       "wanted": "A current precinct map as data from Vermilion County GIS, asked 24 Aug 2026, or from either election authority — the Clerk for the 38 outside Danville, the Election Commission for the 22 inside it."
     },
     {
-      "id": "wabash-precinct-geometry",
-      "concept": "Voting precincts",
-      "area": "Wabash County",
-      "counties": [
-        "wabash"
-      ],
-      "kind": "no-source",
-      "layer": "county-precinct",
-      "summary": "Wabash County's three commissioners are named on the County card — they're elected county-wide — but its voting precincts aren't drawn.",
-      "why": "The county has no website to publish anything on, and the Clerk hasn't yet said whether precinct boundaries exist as a file or only on paper.",
-      "blocker": "Successor to wabash-county-board, RETIRED 2026-08-17: Clerk Will's e-mail of 16 Aug 2026 carried the three commissioners' names — Timothy R. Hocking, Robert G. Dean, Scott C. West — answering that record's wanted line six hours after the follow-up, and Wabash shipped on the County card the next day as the second DOCUMENT_ROSTERS county (her e-mail lists a HOME address per commissioner and no county contact; per the Edwards rule none of that ships, so each row is a name alone; the chairman question was asked separately and ANSWERED 2026-08-17, the Clerk naming Tim Hocking as current chairman, which is the only source for the Chairman tag on the card because the county publishes no page to check it against). What the retired record established still stands and moves here. The BOARD question is CLOSED: commission form, three commissioners at large, one elected each General Election for a six-year term — the election authority in writing, 5 Aug 2026; there are no districts to draw and none should ever be invented. WABASH COUNTY HAS NO WEBSITE: wabashcounty.illinois.gov resolves (A record 157.185.73.189, a southern-Illinois ISP), carries mail (Rackspace MX — why the Clerk's e-mail arrives), and serves nothing — port 80 answers HTTP 503 on every attempt, 443 resets, www is NXDOMAIN; measured 5 Aug 2026, re-checked 9 Aug, the JOHNSON COUNTY pattern. What is NOT settled is this record's subject: the same 5 Aug e-mail that asked the board question also asked whether voting precinct boundaries exist as map data, and none of the Clerk's replies has addressed that half. So whether Wabash's precincts exist as a file, on paper, or only in a vendor's system is UNMEASURED — unlike Edwards, whose Clerk stated \"on paper\" outright. THE DECOY THE RETIRED RECORD NAMED STILL APPLIES to any future search from this record: in.gov/counties/wabash is Wabash County INDIANA, across the river; Illinois's seats at Mount Carmel, and anything built here must come from Clerk Will or a Mount Carmel source.",
-      "wanted": "The precinct boundaries in any form, even a scanned paper map — or the Clerk's word that they exist on paper only."
-    },
-    {
       "id": "washington-precinct-geometry",
       "concept": "Voting precincts",
       "area": "Washington County",
@@ -1516,9 +1474,9 @@ detail into `blocker`.
       "kind": "no-source",
       "layer": "county-precinct",
       "summary": "Washington County's voting precincts aren't drawn. Its board districts are.",
-      "why": "The county runs no mapping system, and publishes its precinct and polling place maps as pictures only.",
-      "blocker": "Checked 2 Aug 2026, when the county was added: Washington has no online map account, no maps page and no viewer linked anywhere on its site, so there are no precinct boundaries to read. Its polling place list is an image-only PDF, and the state's copy of its district breakdown is a three-page picture with no readable text. The board districts were added anyway because they are made of whole townships, which the census publishes as usable map data — precincts have no such shortcut.  THE VENDOR ROUTE IS NOW MEASURED SHUT TOO, 2026-09-06, which the 2 Aug measurement could not have tested because the route did not exist yet. Sibling Putnam shipped its precincts the same day from its Clerk's certified canvasses on il-putnam.pollresults.net; il-washington.pollresults.net answers HTTP 200 and is NOT Washington's. THE CONTROL IS A FABRICATED COUNTY NAME: Putnam returns 139,297 bytes with a unique md5, while il-washington, il-zzzfakecounty and il-notarealcounty all return the SAME 7,720-byte body (md5 327b411ac93a) — the vendor's generic shell. results.gbsvote.com/washington 404s. The third host, il-washington.accessliberty.com, answers 200 and is worse than useless as a test: it ECHOES whatever subdomain it is given into the page, so \"the page names the county\" is true of a fabricated one too and proves nothing. So all three known election-results vendors are ruled out by CONTENT rather than by a status code, and the county's own publication remains the only route.",
-      "wanted": "Washington County's precinct boundaries as map data, plus polling places if the county publishes them."
+      "why": "The county runs no mapping system, and its own returns and the census disagree about which of its precincts are one and which are two, so census boundaries can't stand in for the map it doesn't publish.",
+      "blocker": "Checked 2 Aug 2026, when the county was added: Washington has no online map account, no maps page and no viewer linked anywhere on its site, so there are no precinct boundaries to read. Its polling place list is an image-only PDF, and the state's copy of its district breakdown is a three-page picture with no readable text. The board districts were added anyway because they are made of whole townships, which the census publishes as usable map data — precincts have no such shortcut.  THE VENDOR ROUTE IS NOW MEASURED SHUT TOO, 2026-09-06, which the 2 Aug measurement could not have tested because the route did not exist yet. Sibling Putnam shipped its precincts the same day from its Clerk's certified canvasses on il-putnam.pollresults.net; il-washington.pollresults.net answers HTTP 200 and is NOT Washington's. THE CONTROL IS A FABRICATED COUNTY NAME: Putnam returns 139,297 bytes with a unique md5, while il-washington, il-zzzfakecounty and il-notarealcounty all return the SAME 7,720-byte body (md5 327b411ac93a) — the vendor's generic shell. results.gbsvote.com/washington 404s. The third host, il-washington.accessliberty.com, answers 200 and is worse than useless as a test: it ECHOES whatever subdomain it is given into the page, so \"the page names the county\" is true of a fabricated one too and proves nothing. So all three known election-results vendors are ruled out by CONTENT rather than by a status code, and the county's own publication remains the only route. MEASURED AGAIN 2026-09-11, and the census route is now shut for a stated reason rather than unexamined. Six sibling counties shipped precincts that day from the Census 2020 voting districts under their own names, and Washington was built alongside them and then dropped. Read through the reporting-id strip that scripts/isbe_precinct_fabric.py applies, the county reconciles perfectly: nineteen county names against twenty-one census voting districts, with DUBOIS 1 + DUBOIS 2 and HOYLETON 1 + HOYLETON 2 as two nameable merges. THE RAW CANVASS SAYS OTHERWISE. In both the 2024 General and the 2026 General Primary the county reports DuBois, Johannisburg, Lively Grove and Venedy at TWO ids each (DuBOIS-005 and DuBOIS-006 in 2026) and Hoyleton at ONE — so the four names the county reports twice and the two the census splits agree on DuBois alone. Under one reading the county runs twenty-three precincts and four of them have no census counterpart; under the other it runs nineteen and the census's Hoyleton split has no county counterpart. Nothing in the returns chooses between them, and guessing would draw a precinct line the county has not published. The 2 Aug 2026 measurements below are unchanged and still stand.",
+      "wanted": "Washington County's precinct boundaries as map data — or a line from the Clerk saying which precincts are split in two and which are single, which is the one fact that blocks the census route."
     },
     {
       "id": "wenona-two-clerks-disagree",
@@ -1576,6 +1534,20 @@ detail into `blocker`.
       "why": "Four precincts point at buildings the county's polling place list doesn't carry. The Clerk named them, and the card says where that came from.",
       "blocker": "CLOSED for the reader, still open at the source, 3 Aug 2026. The county's own join is 56 of 60 — re-measured live, and the previous entry was WRONG about which precinct: Coloma 9 resolves fine (facility 4, Rock River Christian Center), the Clerk confirmed that venue the same day, and the layer already agreed with her, so an override written for it was reverted rather than ship dead code for data that is already correct. The four that do not resolve are Sterling 9, 14 and 18 (all facility 22) and Prophetstown 1 (facility 26), neither id being among the 29 voting locations the county publishes. Asked which buildings those are, County Clerk Karen Stralow named them, and on a follow-up supplied their street addresses: facility 22 is Self Help Enterprises, 2300 W. LeFevre Rd., Sterling 61081; facility 26 is Winning Wheels, 701 E. 3rd St., Prophetstown 61277. Those two records ship in data/app/whiteside-precinct-polling.json and are consulted ONLY where the county's own layer has no match, so the day the county publishes them the file stops being read with no code change. All 60 precincts now show a polling place AND an address, and the four say on the card that the location came from the Clerk rather than from the published list. She has said she is forwarding both to the county's GIS department.",
       "wanted": "The two missing voting locations added to the county's own published list, which would retire the two records carried here by hand."
+    },
+    {
+      "id": "williamson-precinct-geometry",
+      "concept": "Voting precincts",
+      "area": "Williamson County",
+      "counties": [
+        "williamson"
+      ],
+      "kind": "no-source",
+      "layer": "county-precinct",
+      "summary": "Williamson County's voting precincts aren't drawn. Its three commissioners are named on the County card.",
+      "why": "The county consolidated its precincts after the 2020 census, and nine of the old ones can't be matched to whichever precinct took them in.",
+      "blocker": "MEASURED 2026-09-11, in the sweep that shipped seven counties' precincts. Williamson runs 56 precincts today against 65 Census 2020 voting districts. Two merges are nameable — CRAB ORCHARD 1 and 2 into Crab Orchard, STONEFORT 1 and 2 into Stonefort — and nine census units have no county counterpart at all: BLAIRSVILLE 6 and 7, HERRIN 14, 15 and 16, EAST MARION 10, WEST MARION 11 and LAKE CREEK 4. The county also runs a CARTERVILLE 8 the census never drew. That is a real consolidation rather than a spelling, and no name can say where the nine went. HOW IT WAS MEASURED: scripts/isbe_precinct_fabric.py reads ISBE's precinct-level results archive, which publishes every Illinois county's certified returns as CSV. Its --jasper mode compares a county's own precinct names against the Census 2020 voting districts, and this county was asked on both the 2024 General (election 66) and the 2026 General Primary (election 69) — the same pair that shipped Mason, Pike, Union, Edwards, Wabash, Massac and Saline on 2026-09-11. The county's own site sits behind an sgcaptcha gate answering HTTP 202, which is an access control and is not worked around — its commissioners come from certified returns instead, as captcha-county-commissioner-contact records. This record had no predecessor: Williamson joined the ring on 2026-08-22, after the 2026-08-23 audit's inputs were drawn up, so nothing had ever cross-referenced it.",
+      "wanted": "Which of Williamson County's current precincts took in each of the nine old units it no longer runs — or the county's precinct boundaries as map data."
     },
     {
       "id": "whiteside-special-districts",
@@ -6544,6 +6516,120 @@ against the sent mail, and would have caught this. That is a real change to the 
 recorded as a candidate rather than made in passing.
 
 
+### 2026-09-11: seven counties gain precincts, and six gap records had measured the wrong thing
+
+Re-running the 2026-08-23 audit above — the counties in `DISPATCH_COUNTY_FIPS`, the `key:` entries
+under `registerCountyLayer({id: "county-precinct"})`, and the `layer: "county-precinct"` records in
+the gaps block — found **seventeen** served counties with no precinct entry, up from eleven. This
+time the interesting half was not the unexplained absences. It was the explained ones.
+
+**Six records gave the same reason and it is the wrong question.** Each asked whether the COUNTY
+publishes a precinct map file, and concluded from "no" that the precincts cannot be drawn. Pike
+"runs no mapping system of its own and publishes its precincts as names only". Saline "publishes a
+polling place list and no precinct boundary of any kind". Massac "publishes no map data of any kind
+— no precinct boundaries, no polling place map, no mapping system at all". Edwards's Clerk wrote,
+unprompted, "our voting district boundaries currently exist on paper". Wabash's Clerk was asked and
+never answered that half, so it stood as unmeasured.
+
+A map file is not what this route needs. Ten counties already ship precincts built from Census 2020
+voting districts under their own names — Johnson, Perry, Gallatin, Cumberland, Pulaski, Hardin,
+Cass, Greene, Scott and Moultrie — and not one of them publishes a map either. What the route needs
+is the county's precinct NAMES, and Pike's own record said so in the sentence that closed it: "The
+precincts themselves are certainly defined — the county's own 2024 results report counts all 31 —
+but only as names."
+
+**The names are published for all 102 counties, and this repo already reads them.** ISBE's
+precinct-level results archive was built into `scripts/isbe_precinct_fabric.py` on 2026-09-03 as a
+re-precincting tripwire, and its `--jasper` mode already answers exactly this question: is a
+county's current fabric still the Census 2020 fabric? Nothing had asked it about the counties that
+ship no precincts. Asked on the 2024 General (election 66) and the 2026 General Primary (election
+69), it gave two independent certified witnesses per county.
+
+| county | precincts | the difference between the two publishers |
+|---|---|---|
+| Mason | 21 | census writes a vestigial trailing 1 on `ALLENS GROVE 1` and `KILBOURNE 1` |
+| Pike | 31 | same, on `CINCINNATI 1` |
+| Union | 20 | same, on `UNION 1` |
+| Edwards | 12 | none — all twelve names match character for character |
+| Wabash | 16 | census appends the county's own precinct number (`BELLMONT 14` for `BELLMONT`) |
+| Massac | 17 | same, and the county writes the number after a hyphen (`ADKINS-17`) |
+| Saline | 28 | county writes `EAST ELDORADO #1` to `#6`, census writes `ELDORADO 1` to `6` |
+
+Every one passes the population identity exactly, and every one's certified returns name the same
+precincts in 2024 as in 2026. They ship from one table-driven builder,
+`scripts/build_vtd_precincts.py`, under the county's own spelling.
+
+**Saline's six are the only renames here whose base names differ, so they are the only ones that
+need an argument beyond the name.** East Eldorado is the county's only Eldorado township (Census
+2020 county subdivisions list thirteen townships for Saline), those six are the only unmatched names
+on either side, and the census's ordinal is demonstrably the county's own within-township number
+everywhere else in the county — `CARRIER MILLS 1-2` against the county's `#1` and `#2`,
+`HARRISBURG 1-10` against `#1` to `#10`.
+
+**Washington was built alongside them and then dropped, and that is the check worth keeping.** Read
+through the reporting-id strip the tripwire applies, it reconciles perfectly: nineteen county names
+against twenty-one census voting districts, with `DUBOIS 1 + DUBOIS 2` and `HOYLETON 1 + HOYLETON 2`
+as two nameable merges. The raw canvass says otherwise. In both elections the county reports DuBois,
+Johannisburg, Lively Grove and Venedy at two ids each (`DuBOIS-005` and `DuBOIS-006` in 2026) and
+Hoyleton at one — so the four names the county reports twice and the two the census splits agree on
+DuBois alone. Under one reading the county runs 23 precincts and four have no census counterpart;
+under the other it runs 19 and the census's Hoyleton split has none. Nothing in the returns chooses.
+**Reconcile against the raw canvass names, never the stripped ones: a base name at two ids is a
+question, not a duplicate to collapse.**
+
+**Massac is the counter-example that keeps that rule usable.** It reports `LOGAN-12` and `LOGAN-12B`
+in 2026, and five such pairs in 2024. Those are sub-precinct reporting units — the Richland shape —
+and the county's own Clerk heads every countywide contest "Precincts Counted 17 / Total 17". A
+trailing `-<digits>B` is part of a precinct; a second `-<digits>` id on the same name is a second
+reporting unit and has to be explained before anything is drawn.
+
+**Four of the seventeen had no gap record at all**, which is the absence the 2026-08-23 audit was
+built to surface and which recurs every time the ring grows: Union, Alexander, Bond and Williamson
+all joined after that audit ran. Union ships here. The other three are measured shut, and each now
+has a gap record of its own — without one a reader in Bond County sees no precinct card and no
+explanation, which is the same silence the audit was written against:
+
+* **Alexander** — the 2024 General names all eleven precincts and matches the census exactly. The
+  2026 General Primary names ten, with no Sandusky row at all. Whether Sandusky was consolidated or
+  simply cast no ballots that the county exported is not answerable from the returns, and shipping
+  it would draw a precinct the county may have retired. One line from the Clerk settles it.
+* **Bond** — 20 county precincts against 25 census units. `LAGRANGE 1-2` and `TAMALCO 1-2` merge
+  nameably, but `CENTRAL 5`, `SHOAL CREEK 3` and `SHOAL CREEK 4` have no county counterpart and
+  nothing says which precinct absorbed them.
+* **Williamson** — 56 against 65. `CRAB ORCHARD 1-2` and `STONEFORT 1-2` merge nameably; nine more
+  census units do not (`BLAIRSVILLE 6` and `7`, `HERRIN 14`, `15` and `16`, `EAST MARION 10`,
+  `WEST MARION 11`, `LAKE CREEK 4`), and the county runs a `CARTERVILLE 8` the census never drew.
+
+The five that already carried a record stay shut, and each now has an election-dated measurement
+behind it rather than an inference: **Brown** (the census's `MISSOURI` and `RIPLEY` are the county's
+`MISSOURI-RIPLEY 1` and `2` as of 2026 and were still separate in 2024 — two precincts became two
+precincts, so the union is stable and the line inside it is not), **Clinton** (`BROOKSIDE 4` and `5`
+unnameable), **Jersey** (`JERSEY 9` and `10` unnameable), **Knox** (28 clerk precincts against 52
+census units, half the county run by Galesburg's own commission) and **Vermilion** (38 against 84).
+
+**What the five retired records carried that is still true, kept here because retiring a record
+deletes its measurements.** Edwards has no county website at all, no self-hosted ArcGIS under ten
+hostname patterns and nothing county-keyed in the ArcGIS Online catalogue, all confirmed with the
+Clerk on 6 Aug 2026; the same is true of Massac, re-checked 2026-08-21. **Massac's commissioners
+still carry no contact detail of any kind, and that is the county's doing rather than an omission
+here**: its homepage prints a phone number for eight departments and none for the commissioners, and
+the commissioners' page carries no address, phone or e-mail — the courthouse address on the County
+Clerk's record is the Clerk's office and is not asserted as theirs. Pike's precinct boundaries had
+never been asked for, which its record flagged as the Ogle lesson (a county's website and a county's
+reply are different questions); that ask is now moot for the geometry and would still be the only
+route to a polling-place list. Saline's and Massac's board forms are closed on certified canvasses
+and nothing here reopens them.
+
+**Clay is buildable by this route and is deliberately not built.** Its two certified elections name
+the same eighteen precincts and the census carries all eighteen after eleven renames — roman
+ordinals, plus a vestigial trailing I on `CLAY CITY I`, `LARKINSBURG I` and `PIXLEY I`. What stopped
+it is that Clay ships board-only by a recorded decision, taken because the county's board page and
+its certified returns were read as disagreeing on the precinct count: the board page names Clay City
+under both District A and District B. That is a disagreement about districts. The Clerk stated in
+writing that A is the village limits and B the unincorporated remainder, so one precinct sits in two
+districts and the count is eighteen on both surfaces. Reversing the decision is a separate change
+with its own argument, and the raw-canvass duplicate check described above has not been run for it.
+
 ## Backlog — researched candidates, deliberately not (yet) built
 
 Every entry cites where it's recorded and the blocker.
@@ -7452,6 +7538,18 @@ The wider lesson is the one this project keeps relearning: a derived id that loo
 of a name is the reliable way to manufacture a change that never happened, and the only
 defence is to check a new signal against something already known — here, the shipped layers,
 which said 12/33 and should have said more.
+
+**USE 1 SHIPPED 2026-09-11, and it drew seven counties.** `--jasper <election>` asks the
+other question the archive can answer — is a county's current fabric still the Census 2020
+fabric? — and nothing had asked it about the counties that ship no precincts at all. Asked
+on elections 66 and 69, it gave two certified witnesses each for Mason, Pike, Union,
+Edwards, Wabash, Massac and Saline, all of which now ship
+(`scripts/build_vtd_precincts.py`), and a measured no for Alexander, Bond, Brown, Clinton,
+Jersey, Knox, Vermilion, Washington and Williamson. The section dated 2026-09-11 above has
+the detail, including the one trap this use adds that the tripwire's own comparison does
+not have: reconcile against the RAW `PrecinctName` values, because the reporting-id strip
+that makes an election-to-election diff honest will also collapse two genuine reporting
+units into one name, which is what kept Washington from shipping.
 
 
 ### ISBE's county-board STRUCTURE table — every county's board shape, at an unknown date (found 2026-08-21)
