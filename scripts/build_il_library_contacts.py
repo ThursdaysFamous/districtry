@@ -19,7 +19,7 @@ with no street, which is not a place a reader can go.
 Measured 2026-09-11: 368 of the layer's 373 card names match a directory row —
 348 on the full name, 16 on the agency prefix that precedes a building's own name,
 4 on a normalisation — and 365 of those ship something the filings do not: 244 an
-address, 223 a telephone, 335 a website and 286 an administrator. Five cards have
+address, 223 a telephone, 331 a website and 286 an administrator. Five cards have
 no directory row: Chatsworth Area Library District,
 Dahlgren Public Library, Grand Prairie of the West Public Library District, Mount
 Hope-Funk's Grove Townships Public Library District and Olmsted Public Library.
@@ -35,6 +35,14 @@ validate_card_links.py reads the key to decide who owns an address: `url` means
 "somebody else's, exactly as they published it" and is capped at WARN, and any
 other key means this repo chose the string and a dead link is a FAIL. A
 library's own site is the library's.
+
+A WEBSITE WHOSE HOST DOES NOT RESOLVE NEVER REACHES HERE. The scraper drops it
+and prints the drop, because the card labels the link "Library website" and a
+host that does not exist makes that label a false statement — the same rule
+Douglas County's roster follows on a mistyped e-mail domain. Four of 335 went
+that way on 2026-09-11, leaving 331; one was a plain typo in the directory.
+MIN_WITH_URL is what stops a broken resolver emptying the field: a run that lost
+most of them falls under the floor and this refuses to write.
 
 NO E-MAIL SHIPS EITHER. 633 of the 641 directory rows carry one, mixing
 institutional mailboxes with named individuals' work addresses, and a directory
@@ -59,7 +67,7 @@ import sys
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app", "il-library-contacts.json")
 
-# Measured 2026-09-11: 365 libraries / 244 addresses / 223 telephones / 335
+# Measured 2026-09-11: 365 libraries / 244 addresses / 223 telephones / 331
 # websites / 286 administrators. Every floor sits about 14% under its measured
 # value, which is the same margin the first three were set with: a library
 # renamed in either publisher is a real event and must not freeze the other 364.

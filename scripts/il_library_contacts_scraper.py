@@ -20,14 +20,15 @@ EACH LIBRARY'S OWN PAGE IN THE DIRECTORY answers a website and one named
 administrator, and the listing table shows neither. The name cell links that
 page; detail() reads it. Measured 2026-09-11 over the 373 names the layer draws:
 335 publish a website and 364 name an administrator with a title, with no fetch
-error anywhere in the sweep. 286 of those administrators ship, because the
-filing wins wherever it named one of its own. Five names have no page at all
-(Chatsworth Area Library District, Dahlgren Public Library, Grand Prairie of the
-West Public Library District, Mount Hope-Funk's Grove Townships Public Library
-District, Olmsted Public Library) and two more have a page that names no
-administrator (Greenfield Public Library, Leepertown Township Public Library).
-That takes the cards naming nobody from 211 to 7, and 491 of the 550 gain a link
-to the library's own site where none had one before.
+error anywhere in the sweep. 331 websites and 286 administrators SHIP — four
+websites name a host that does not resolve and are dropped (see below), and an
+administrator is withheld wherever the filing named one of its own. Five names
+have no page at all (Chatsworth Area Library District, Dahlgren Public Library,
+Grand Prairie of the West Public Library District, Mount Hope-Funk's Grove
+Townships Public Library District, Olmsted Public Library) and two more have a
+page that names no administrator (Greenfield Public Library, Leepertown Township
+Public Library). That takes the cards naming nobody from 211 to 7, and 487 of
+the 550 gain a link to the library's own site where none had one before.
 
 IT STILL NAMES NO TRUSTEE, and that is an access control rather than a hole in
 the source. The page carries two further people surfaces and both are shut: the
@@ -114,6 +115,10 @@ import time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from il_library_district_officials_scraper import (  # noqa: E402
     normalise, shipped_cards, statewide_library_counties)
+# One copy of the resolution rule, retries and all — see its docstring for why
+# it is called once per HOST and retried: a single flaky lookup once reported
+# two live sites as having no DNS record.
+from validate_card_links import host_of, resolves  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DATA = os.path.join(REPO_ROOT, "il", "data", "app")
@@ -524,6 +529,44 @@ def main():
         if any(entry.get(f) for f in ("address", "phone", "url", "admin")):
             contacts[card] = entry
 
+    # A WEBSITE WHOSE HOST DOES NOT RESOLVE IS NOT A WEBSITE. The card labels this
+    # link "Library website", so a host a reader's browser cannot reach makes
+    # that label a false statement — the same reason Douglas County's roster
+    # drops an e-mail on a mistyped domain rather than shipping a dead address
+    # or silently correcting a character in somebody's contact detail.
+    #
+    # THE TEST IS "DOES NOT RESOLVE" AND NOT "DOES NOT EXIST", which are not the
+    # same finding. Measured 2026-09-11, four of 335, each confirmed against a
+    # second independent resolver (Google's DoH) rather than on this host's
+    # answer alone: Assumption, Lebanon and West Frankfort answer NXDOMAIN, the
+    # authoritative "no such name" — Lebanon's is a plain typo in the directory,
+    # lebanonpubliclibrayr.org for lebanonpubliclibrary.org. Macomb answers
+    # SERVFAIL, which is its own delegation failing rather than the name being
+    # absent: lib.il.us itself resolves and macomb.lib.il.us does not. Both are
+    # dropped, because a reader's browser fails on either one identically. A
+    # SERVFAIL can be repaired, and this job runs weekly, so the link comes back
+    # on its own if it ever is.
+    #
+    # A BROKEN RESOLVER MUST NOT EMPTY THE FIELD, and the guard is already in
+    # place: build_il_library_contacts.py floors websites at MIN_WITH_URL, so a
+    # run that lost most of them refuses to write rather than shipping a thin
+    # payload.
+    checked, unresolved = {}, []
+    for card in sorted(contacts):
+        url = contacts[card].get("url")
+        if not url:
+            continue
+        host = host_of(url)
+        if host not in checked:
+            checked[host] = resolves(host)
+        ok, why = checked[host]
+        if not ok:
+            unresolved.append((card, url, why))
+            contacts[card].pop("url")
+            if not any(contacts[card].get(f)
+                       for f in ("address", "phone", "admin")):
+                contacts.pop(card)
+
     payload = {
         "source": SOURCE,
         "sourceUrl": DIRECTORY,
@@ -535,6 +578,9 @@ def main():
         json.dump(payload, fh, indent=2, ensure_ascii=False, sort_keys=True)
         fh.write("\n")
 
+    for card, url, why in sorted(unresolved):
+        print("  WEBSITE DROPPED, HOST DOES NOT RESOLVE: %s — %s (%s)"
+              % (card, url, why), file=sys.stderr)
     for name in sorted(unlinked):
         print("  NO DIRECTORY PAGE LINKED: %s — no website or administrator read"
               % name, file=sys.stderr)

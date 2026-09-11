@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-11T13:18:48Z",
+  "generated": "2026-09-11T13:52:08Z",
   "libraries": {
     "A. Herr Smith & E.E. Smith Loda Township Library": {
       "address": "105 East Adams Street",
@@ -86,8 +86,7 @@
       "admin": {
         "name": "Anna Adermann",
         "role": "Library Staff"
-      },
-      "url": "http://www.assumptionpubliclibrary.com/"
+      }
     },
     "Astoria Public Library District": {
       "address": "220 West Broadway Avenue",
@@ -1404,8 +1403,7 @@
         "role": "Director"
       },
       "city": "Lebanon",
-      "phone": "(618) 537-4504",
-      "url": "http://www.lebanonpubliclibrayr.org"
+      "phone": "(618) 537-4504"
     },
     "Leepertown Township Public Library": {
       "address": "201 East Nebraska Street Post Office Box 80",
@@ -1499,8 +1497,7 @@
         "role": "Library Staff"
       },
       "city": "Macomb",
-      "phone": "(309) 833-2714",
-      "url": "http://www.macomb.lib.il.us"
+      "phone": "(309) 833-2714"
     },
     "Madison Public Library": {
       "address": "1700 Fifth Street",
@@ -2798,8 +2795,7 @@
         "role": "Director"
       },
       "city": "West Frankfort",
-      "phone": "(618) 932-3313",
-      "url": "http://www.westfrankfortlibrary.org"
+      "phone": "(618) 932-3313"
     },
     "West Salem Public Library": {
       "address": "112 West South Street",
