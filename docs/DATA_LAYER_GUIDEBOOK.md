@@ -1326,19 +1326,16 @@ detail into `blocker`.
     {
       "id": "statewide-library-officials",
       "concept": "Library district officers",
-      "area": "72 Illinois counties on the statewide library layer",
+      "area": "68 Illinois counties on the statewide library layer",
       "counties": [
         "alexander",
         "bond",
-        "brown",
-        "calhoun",
         "carroll",
         "cass",
         "clark",
         "clay",
         "clinton",
         "coles",
-        "crawford",
         "cumberland",
         "dewitt",
         "douglas",
@@ -1362,7 +1359,6 @@ detail into `blocker`.
         "lasalle",
         "lee",
         "livingston",
-        "logan",
         "macoupin",
         "marshall",
         "mason",
@@ -1403,10 +1399,10 @@ detail into `blocker`.
       ],
       "kind": "no-source",
       "layer": "library-district",
-      "summary": "550 library cards across 72 counties name the library and nothing else — no trustee, no address, no telephone, no website.",
-      "why": "These boundaries come from a statewide broadband-office layer that carries a library's name and how it is governed and no contact of any kind, and no county publishes a list of its libraries' trustees.",
-      "wanted": "Trustees, an office address or a telephone for any of these libraries — from the library itself, its county, or the state library.",
-      "blocker": "OPENED 2026-09-10, AND THE REASON IT WAS NOT OPENED SOONER IS THE POINT: nothing was blocking it and no record said it was missing. The statewide library layer reached 65 more counties on 2026-09-06 and now draws 550 cards across 72 counties through statewideLibraryEntry in il/index.html; every one renders the library's name, its governance type, its county and the boundary credit, and NOT ONE names a person, an address, a telephone or a website. That is the Cass/Greene/Scott/Moultrie shape — an absence with no refusal behind it, invisible because nothing on file pointed at it — and it is now the largest card-order gap in this instance by card count. MEASURED BY GOVERNANCE, because the answer differs by type and a single figure would hide that. 371 cards are DISTRICT-governed (365 District + 6 'District (contracting)'), which is the class that files its own Annual Financial Report with the Illinois Comptroller — the route that named Peoria's, Logan's, Woodford's, Grundy's and Kankakee's special districts. 140 are MUNICIPAL (114 City, 24 Village, 1 Village (contracting), 1 Town), which file inside their municipality's own report and have no unit of their own — the Minonk and Sun River Terrace shape. 39 are TOWNSHIP, which file as or within a township, so a township library's board is not the township's board and the two must not be conflated. THE AFR ROUTE IS VIABLE FOR THE DISTRICT CLASS AND ITS JOIN CANNOT BE PER-COUNTY, which is the measurement that matters most here and was got wrong first. Matching each District card's name against the Warehouse's library units in ITS OWN county resolves only 124 of 371. The other 247 are not missing: the statewide layer CLIPS EACH LIBRARY'S SERVICE AREA TO THE COUNTY, so a district spanning counties draws a card in every county it touches while filing ONCE under its home county. The 371 cards carry only 216 DISTINCT library names, 103 of those names appear in more than one county (accounting for 258 cards), and 193 of the 247 unmatched carry such a name. So the work is 216 unit lookups joined STATEWIDE by name, one filing stamping every county's card for the same library — not 72 per-county code tables. The 54 unmatched cards whose name appears in one county only are the residue that needs individual explanation and is not guessed at here. TWENTY-SEVEN WAREHOUSE LIBRARY UNITS IN THESE COUNTIES HAVE NO CARD AT ALL, which is the reverse absence and belongs to the boundary layer rather than to this record — the shape Limestone Township Public Library District takes in Kankakee and Albany Public Library District in Whiteside. NOTHING WAS BUILT IN THE CHANGE THAT OPENED THIS. The route was measured rather than assumed, and the measurement is filed here rather than in a backlog, because a measurement filed in a backlog and nowhere else is a measurement the next pass repeats."
+      "summary": "211 of the statewide layer's 550 library cards still name the library and nothing else — every municipal and township library, and 32 District cards whose library reaches no readable filing.",
+      "why": "A municipal or township library files no report of its own; it files inside its city's, village's or township's, whose officers are not the library's board. Nineteen District names reach no filing to read.",
+      "wanted": "Trustees, an office address or a telephone for a municipal or township library, or for one of the nineteen District libraries this record names.",
+      "blocker": "OPENED 2026-09-10, AND THE REASON IT WAS NOT OPENED SOONER IS THE POINT: nothing was blocking it and no record said it was missing. The statewide library layer reached 65 more counties on 2026-09-06 and draws 550 cards across 72 counties through statewideLibraryEntry in il/index.html; every one rendered the library's name, its governance type, its county and the boundary credit, and NOT ONE named a person, an address, a telephone or a website. That is the Cass/Greene/Scott/Moultrie shape — an absence with no refusal behind it, invisible because nothing on file pointed at it. NARROWED 2026-09-11 FROM 550 CARDS TO 211, and the route that closed the other 339 was the one this record had already measured and not built: each DISTRICT-governed library's own Annual Financial Report with the Illinois Comptroller, indexed statewide rather than per county (il_library_district_officials_scraper.py). 197 of the layer's 216 District names resolve to a filing, stamping 339 cards with 294 board officers, 96 appointed, 175 offices and 145 telephones. Four counties — Brown, Calhoun, Crawford and Logan — now name somebody on every library card they draw and have left this record; 68 keep a residue. WHAT REMAINS IS THREE DIFFERENT ANSWERS AND MUST NOT BE READ AS ONE. (1) 140 cards are MUNICIPAL (114 City, 24 Village, 1 Village (contracting), 1 Town): a municipal library files inside its city's or village's report, so the AFR route reaches the MUNICIPALITY's officers and never the library's — the Minonk and Sun River Terrace shape — and the route for these is each library's or municipality's own page. (2) 39 are TOWNSHIP, which file as or within a township, and A TOWNSHIP LIBRARY'S BOARD IS NOT THE TOWNSHIP'S BOARD, so the two must never be conflated. (3) 32 are DISTRICT-governed cards across NINETEEN library names that the filings do not answer, and those nineteen split again: FIFTEEN match no unit of that name anywhere in Illinois (C.E. Brehm Memorial, Central, Charles B. Phillips, Forman Valley, Gilman-Danforth, Grand Prairie of the West, Lacon, Lebanon Public Library, Macomb, Marissa Area, Morrison & Mary Wiley, Mount Carroll District Library, Moweaqua, Potomac, Victoria); TWO resolve to a unit whose Warehouse landing page carries no fiscal year and therefore has no report to read, which is the Mazon Fire shape and ships the run a filing appears (Auburn 083/040/10 in Sangamon, Carrier Mills-Stonefort 082/005/10 in Saline and Williamson); and TWO were REFUSED BY THE SCRAPER'S COUNTY GATE on matches that read as obviously right — Centralia Regional against Marion County's 'Centralia' unit, Milan-Blackhawk Area against Rock Island's 'Milan-Blackhawk' — because those units' home counties draw no card here, so nothing witnesses that the two names are one body. That refusal is the right failure direction for officeholder data and both stay recorded rather than matched. THE FIRST RUN OF THAT SCRAPER PUBLISHED A FALSE STATEMENT ABOUT SEVENTEEN REAL LIBRARY BOARDS, and it is recorded here rather than quietly fixed: its county tuple held 101 of Illinois's 102, missing ST. CLAIR — the county with more library cards than any other in the layer — so 17 of its 19 cards were reported as libraries filed under no name anywhere in Illinois. Neither the unit floor (371 units still cleared 300) nor the per-county retry could catch it, because nothing compared the list's length to 102; that comparison is now a guard in unit_index, and a name that is in the index but ambiguous is now reported as ambiguous instead of as absent. TWENTY-SEVEN WAREHOUSE LIBRARY UNITS IN THESE COUNTIES HAVE NO CARD AT ALL, which is the reverse absence and belongs to the boundary layer rather than to this record — the shape Limestone Township Public Library District takes in Kankakee and Albany Public Library District in Whiteside."
     },
     {
     "id": "stephenson-freeport-precincts",

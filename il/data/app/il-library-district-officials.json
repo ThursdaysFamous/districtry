@@ -1,0 +1,3944 @@
+{
+  "generated": "2026-09-11T01:19:53Z",
+  "libraries": {
+    "Alpha Park Public Library District": {
+      "comptrollerCode": "072/010/10",
+      "filedFor": "2025",
+      "filesIn": "Peoria",
+      "heads": [
+        {
+          "name": "Amy Harris",
+          "role": "Director"
+        },
+        {
+          "name": "Aliesha Sullivan",
+          "role": "Manager"
+        }
+      ],
+      "office": {
+        "address": "3527 S Airport Rd",
+        "city": "Bartonville IL 61607",
+        "email": "aharris@alphapark.org",
+        "phone": "(309) 697-3822"
+      }
+    },
+    "Anne West Lindsey District Library": {
+      "comptrollerCode": "100/015/10",
+      "filedFor": "2025",
+      "filesIn": "Williamson",
+      "heads": [
+        {
+          "name": "Mary Stoner",
+          "role": "Director"
+        },
+        {
+          "name": "Jennifer Sigler",
+          "role": "Bookkeeper"
+        }
+      ],
+      "office": {
+        "address": "600 N Division St",
+        "city": "Carterville IL 62918",
+        "phone": "(618) 985-3298"
+      }
+    },
+    "Arcola Public Library District": {
+      "board": [
+        {
+          "name": "Thomas Saunders",
+          "role": "President"
+        },
+        {
+          "name": "Emily Coombe",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "021/010/10",
+      "filedFor": "2025",
+      "filesIn": "Douglas",
+      "office": {
+        "address": "407 E Main Street",
+        "city": "Arcola IL 61910",
+        "phone": "(217) 268-4477"
+      }
+    },
+    "Argenta-Oreana Public Library District": {
+      "board": [
+        {
+          "name": "John White",
+          "role": "President"
+        },
+        {
+          "name": "Matt Honnold",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "055/030/10",
+      "filedFor": "2025",
+      "filesIn": "Macon",
+      "office": {
+        "address": "P.O. Box 278",
+        "city": "Oreana IL 62554",
+        "phone": "(217) 468-2340"
+      }
+    },
+    "Arthur Public Library District": {
+      "board": [
+        {
+          "name": "Cathy Allen",
+          "role": "President"
+        },
+        {
+          "name": "Adam Fritz",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "070/005/10",
+      "filedFor": "2025",
+      "filesIn": "Moultrie",
+      "office": {}
+    },
+    "Ashley Public Library District": {
+      "board": [
+        {
+          "name": "Len Piasecki",
+          "role": "President"
+        },
+        {
+          "name": "Mary Dreas",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "095/005/10",
+      "filedFor": "2026",
+      "filesIn": "Washington",
+      "office": {
+        "email": "maindesk@ashleypubliclibrary.org"
+      }
+    },
+    "Assumption Public Library District": {
+      "board": [
+        {
+          "name": "Jordan Stoune",
+          "role": "President"
+        },
+        {
+          "name": "Brianne Risley",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "011/010/10",
+      "filedFor": "2025",
+      "filesIn": "Christian",
+      "office": {
+        "address": "205 N. Oak St.",
+        "city": "Assumption IL 62510-1100",
+        "phone": "(217) 226-3915"
+      }
+    },
+    "Astoria Public Library District": {
+      "board": [
+        {
+          "name": "Debra Park",
+          "role": "President"
+        },
+        {
+          "name": "Tiffanie Applegate",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "029/003/10",
+      "filedFor": "2025",
+      "filesIn": "Fulton",
+      "office": {
+        "phone": "(309) 329-2423"
+      }
+    },
+    "Atkinson Public Library District": {
+      "board": [
+        {
+          "name": "Sherri Mapes",
+          "role": "President"
+        },
+        {
+          "name": "Devonne DeBrock",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "037/003/10",
+      "filedFor": "2025",
+      "filesIn": "Henry",
+      "office": {
+        "address": "109 S State St",
+        "city": "Atkinson IL 61235",
+        "phone": "(309) 936-7606"
+      }
+    },
+    "Atlanta Public Library District": {
+      "board": [
+        {
+          "name": "Christopher White",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "054/001/10",
+      "filedFor": "2025",
+      "filesIn": "Logan",
+      "heads": [
+        {
+          "name": "Susan Chinowth",
+          "role": "Treas./Admin."
+        }
+      ],
+      "office": {
+        "address": "PO Box 68",
+        "city": "Atlanta IL 61723",
+        "phone": "(217) 648-2112"
+      }
+    },
+    "Atwood-Hammond Public Library District": {
+      "board": [
+        {
+          "name": "Bev Obert",
+          "role": "Trustee"
+        }
+      ],
+      "comptrollerCode": "074/010/10",
+      "filedFor": "2025",
+      "filesIn": "Piatt",
+      "heads": [
+        {
+          "name": "Robert Edwards",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "phone": "(217) 578-2727"
+      }
+    },
+    "Ayer Public Library District": {
+      "board": [
+        {
+          "name": "Tracie Butler",
+          "role": "President"
+        },
+        {
+          "name": "Whitney Borton",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "090/005/10",
+      "filedFor": "2025",
+      "filesIn": "Tazewell",
+      "office": {
+        "address": "208 Locust St.",
+        "city": "Delavan IL 61734",
+        "email": "ayerpubliclibrary@yahoo.com",
+        "phone": "(309) 244-8236"
+      }
+    },
+    "Barclay Public Library District": {
+      "board": [
+        {
+          "name": "Jean Munson",
+          "role": "President"
+        },
+        {
+          "name": "Katherine Brodbeck",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "055/010/10",
+      "filedFor": "2025",
+      "filesIn": "Macon",
+      "office": {
+        "address": "220 S. Main St.",
+        "city": "Warrensburg IL 62573",
+        "email": "director@barclay.lib.il.us",
+        "phone": "(217) 672-3621"
+      }
+    },
+    "Benton Public Library District": {
+      "board": [
+        {
+          "name": "Deborah Clark",
+          "role": "President"
+        },
+        {
+          "name": "Kathy Storey",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "028/010/10",
+      "filedFor": "2025",
+      "filesIn": "Franklin",
+      "office": {
+        "address": "502 S Main St",
+        "city": "Benton IL 62812",
+        "phone": "(618) 438-7511"
+      }
+    },
+    "Bertolet Memorial Library District": {
+      "comptrollerCode": "071/005/10",
+      "filedFor": "2025",
+      "filesIn": "Ogle",
+      "heads": [
+        {
+          "name": "Linda Schreiber",
+          "role": "Director"
+        }
+      ],
+      "office": {}
+    },
+    "Blandinsville-Hire Library District": {
+      "board": [
+        {
+          "name": "Kristina Thrapp",
+          "role": "President"
+        },
+        {
+          "name": "Amanda Kreps",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "062/010/10",
+      "filedFor": "2025",
+      "filesIn": "Mcdonough",
+      "office": {
+        "phone": "(309) 652-3166"
+      }
+    },
+    "Bradford Public Library District": {
+      "board": [
+        {
+          "name": "Barbara Fehr",
+          "role": "Trustee"
+        }
+      ],
+      "comptrollerCode": "087/010/10",
+      "filedFor": "2025",
+      "filesIn": "Stark",
+      "heads": [
+        {
+          "name": "Sarah Boehm",
+          "role": "Director"
+        }
+      ],
+      "office": {}
+    },
+    "Brighton Memorial Library District": {
+      "board": [
+        {
+          "name": "Carolyn Kelly",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "056/020/10",
+      "filedFor": "2025",
+      "filesIn": "Macoupin",
+      "heads": [
+        {
+          "name": "Sheila Wilkie",
+          "role": "Treas./Admin."
+        }
+      ],
+      "office": {
+        "address": "110 N. Main St.",
+        "city": "Brighton IL 62012",
+        "email": "admin@brightonpubliclibrary.org",
+        "phone": "(618) 372-8450"
+      }
+    },
+    "Brown County Public Library District": {
+      "board": [
+        {
+          "name": "Jeremy Flynn",
+          "role": "President"
+        },
+        {
+          "name": "Linda Wade",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "005/005/10",
+      "filedFor": "2025",
+      "filesIn": "Brown",
+      "office": {
+        "address": "106 SW Cross St",
+        "city": "Mt. Sterling IL 62353",
+        "phone": "(217) 773-2013"
+      }
+    },
+    "Bunker Hill Public Library District": {
+      "board": [
+        {
+          "name": "Wade Dauksch",
+          "role": "President"
+        },
+        {
+          "name": "Monica Morrison",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "056/015/10",
+      "filedFor": "2025",
+      "filesIn": "Macoupin",
+      "office": {
+        "address": "220 East Warren Street",
+        "city": "Bunker Hill IL 62014",
+        "email": "library@bunkerhilllibrary.org",
+        "phone": "(618) 585-4736"
+      }
+    },
+    "Bushnell Public Library District": {
+      "board": [
+        {
+          "name": "Donna Williams",
+          "role": "President"
+        },
+        {
+          "name": "Kelly Young",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Pam Vancil",
+          "role": "V-President"
+        }
+      ],
+      "comptrollerCode": "062/020/10",
+      "filedFor": "2025",
+      "filesIn": "Mcdonough",
+      "office": {
+        "address": "455 N Dean",
+        "city": "Bushnell IL 61422",
+        "email": "bushnellpubliclibrary@gmail.com",
+        "phone": "(309) 772-2060"
+      }
+    },
+    "Byron Public Library District": {
+      "board": [
+        {
+          "name": "Jill Grennan",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "071/010/10",
+      "filedFor": "2025",
+      "filesIn": "Ogle",
+      "heads": [
+        {
+          "name": "Jason Shirley",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "100 S Washington St.",
+        "city": "Byron IL 61010",
+        "email": "jillg@byronlibrary.org",
+        "phone": "(815) 234-5107"
+      }
+    },
+    "Cahokia Public Library District": {
+      "board": [
+        {
+          "name": "Kristine Morice",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Joseph Morice",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "088/025/10",
+      "filedFor": "2025",
+      "filesIn": "St. Clair",
+      "office": {
+        "email": "director@cahokialibrary.org"
+      }
+    },
+    "Camargo Township District Library": {
+      "board": [
+        {
+          "name": "Amy Rose",
+          "role": "President"
+        },
+        {
+          "name": "Sandra Landeck",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "021/020/10",
+      "filedFor": "2025",
+      "filesIn": "Douglas",
+      "office": {
+        "email": "camargotownshipdistlib@yahoo.com",
+        "phone": "(217) 832-5211"
+      }
+    },
+    "Cambridge Public Library District": {
+      "board": [
+        {
+          "name": "Gary Richter",
+          "role": "President"
+        },
+        {
+          "name": "John Roehrs",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "037/005/10",
+      "filedFor": "2025",
+      "filesIn": "Henry",
+      "office": {}
+    },
+    "Camp Point Public Library District": {
+      "board": [
+        {
+          "name": "Bobbi Mock",
+          "role": "President"
+        },
+        {
+          "name": "Pat Sharow",
+          "role": "Sec./Treas."
+        }
+      ],
+      "comptrollerCode": "001/010/10",
+      "filedFor": "2025",
+      "filesIn": "Adams",
+      "office": {
+        "address": "206 E. State St. P.O. Box 377",
+        "city": "Camp Point IL 62320",
+        "phone": "(217) 593-7021"
+      }
+    },
+    "Carlock Public Library District": {
+      "board": [
+        {
+          "name": "Beth Wagner",
+          "role": "President"
+        },
+        {
+          "name": "David Garrison",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "064/065/10",
+      "filedFor": "2025",
+      "filesIn": "Mclean",
+      "office": {
+        "address": "202 E Washington St",
+        "city": "Carlock IL 61725",
+        "email": "carlocklib@yahoo.com",
+        "phone": "(309) 376-5651"
+      }
+    },
+    "Carthage Public Library District": {
+      "board": [
+        {
+          "name": "John C Dittmer",
+          "role": "President"
+        },
+        {
+          "name": "Andy Bastert",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "034/003/10",
+      "filedFor": "2025",
+      "filesIn": "Hancock",
+      "office": {
+        "address": "500 Wabash",
+        "city": "Carthage IL 62321",
+        "email": "carthagelibrarydirector@gmail.com",
+        "phone": "(217) 357-3232"
+      }
+    },
+    "Caseyville Public Library District": {
+      "board": [
+        {
+          "name": "Christina Bell",
+          "role": "President"
+        },
+        {
+          "name": "Jennifer Mauk",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "088/030/10",
+      "filedFor": "2025",
+      "filesIn": "St. Clair",
+      "office": {
+        "email": "jkeck@caseyvillelibrary.org"
+      }
+    },
+    "Catlin Public Library District": {
+      "board": [
+        {
+          "name": "Cathy Brogan",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "092/008/10",
+      "filedFor": "2025",
+      "filesIn": "Vermilion",
+      "heads": [
+        {
+          "name": "Cathy Brogan",
+          "role": "Treas./Admin."
+        }
+      ],
+      "office": {
+        "address": "101 Mapleleaf Dr",
+        "city": "Catlin IL 61817",
+        "email": "catlinlibrary03@yahoo.com",
+        "phone": "(217) 427-2550"
+      }
+    },
+    "Central Citizens' Library District": {
+      "board": [
+        {
+          "name": "Robert Lemanager",
+          "role": "President"
+        },
+        {
+          "name": "Scott Senffner",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "038/025/10",
+      "filedFor": "2026",
+      "filesIn": "Iroquois",
+      "office": {}
+    },
+    "Chadwick Public Library District": {
+      "board": [
+        {
+          "name": "Aimee Marruffo",
+          "role": "President"
+        },
+        {
+          "name": "Laurie Allspaugh",
+          "role": "V-President"
+        },
+        {
+          "name": "Wendy Houzenga",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "008/010/10",
+      "filedFor": "2025",
+      "filesIn": "Carroll",
+      "office": {
+        "address": "243 Miller Rd",
+        "city": "Morrison IL 61270"
+      }
+    },
+    "Chatham Area Public Library District": {
+      "board": [
+        {
+          "name": "Michael Roubitchek",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "083/010/10",
+      "filedFor": "2025",
+      "filesIn": "Sangamon",
+      "heads": [
+        {
+          "name": "Amy Byers",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "600 E. Spruce Street",
+        "city": "Chatham IL 62629",
+        "email": "director@chathamlib.org",
+        "phone": "(217) 483-2713"
+      }
+    },
+    "Chatsworth Area Library District": {
+      "board": [
+        {
+          "name": "Janet Millis",
+          "role": "President"
+        },
+        {
+          "name": "Lisa Aberle",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "053/080/10",
+      "filedFor": "2025",
+      "filesIn": "Livingston",
+      "office": {
+        "email": "director.chatsworthlibrary@gmail.com"
+      }
+    },
+    "Chenoa Public Library District": {
+      "board": [
+        {
+          "name": "Dan Groce",
+          "role": "President"
+        },
+        {
+          "name": "Dawn Neubauer",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "064/005/10",
+      "filedFor": "2026",
+      "filesIn": "Mclean",
+      "office": {}
+    },
+    "Cherry Valley Public Library District": {
+      "comptrollerCode": "101/005/10",
+      "filedFor": "2025",
+      "filesIn": "Winnebago",
+      "heads": [
+        {
+          "name": "Sue Stevens",
+          "role": "Director"
+        },
+        {
+          "name": "Rebecca Mundell",
+          "role": "Manager"
+        }
+      ],
+      "office": {
+        "address": "755 E State St",
+        "city": "Cherry Valley IL 61016",
+        "email": "sues@cherryvalleylib.org",
+        "phone": "(815) 332-5161"
+      }
+    },
+    "Chillicothe Public Library District": {
+      "board": [
+        {
+          "name": "Debbie Cody",
+          "role": "President"
+        },
+        {
+          "name": "Tom Razo",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "072/040/10",
+      "filedFor": "2025",
+      "filesIn": "Peoria",
+      "office": {
+        "address": "430 N Bradley Ave",
+        "city": "Chillicothe IL 61523",
+        "email": "ajackson@chillicothepubliclibrary.org",
+        "phone": "(309) 274-2719"
+      }
+    },
+    "Cissna Park Community Library District": {
+      "board": [
+        {
+          "name": "Heidi Breymeyer",
+          "role": "Sec./Treas."
+        }
+      ],
+      "comptrollerCode": "038/015/10",
+      "filedFor": "2025",
+      "filesIn": "Iroquois",
+      "heads": [
+        {
+          "name": "Donna Jean",
+          "role": "Librarian"
+        }
+      ],
+      "office": {
+        "address": "511 N Second St",
+        "city": "Cissna Park IL 60924",
+        "phone": "(815) 457-2452"
+      }
+    },
+    "Clayton Public Library District": {
+      "board": [
+        {
+          "name": "Janet Rigg",
+          "role": "President"
+        },
+        {
+          "name": "Brenda Graff",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "001/015/10",
+      "filedFor": "2025",
+      "filesIn": "Adams",
+      "office": {
+        "email": "claytonlibrary19@gmail.com"
+      }
+    },
+    "Clover Public Library District": {
+      "comptrollerCode": "037/006/10",
+      "filedFor": "2025",
+      "filesIn": "Henry",
+      "heads": [
+        {
+          "name": "Pamela Eiker",
+          "role": "Treas./Admin."
+        }
+      ],
+      "office": {}
+    },
+    "Colchester District Library": {
+      "board": [
+        {
+          "name": "Wanda Utter",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "062/030/10",
+      "filedFor": "2025",
+      "filesIn": "Mcdonough",
+      "heads": [
+        {
+          "name": "Steve Altenbern",
+          "role": "Accountant"
+        }
+      ],
+      "office": {
+        "address": "203 Macomb St.",
+        "city": "Colchester IL 62326",
+        "email": "colchesterlibrary@yahoo.com",
+        "phone": "(309) 776-4861"
+      }
+    },
+    "Colona District Public Library": {
+      "board": [
+        {
+          "name": "Steven Hughes",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "037/020/10",
+      "filedFor": "2025",
+      "filesIn": "Henry",
+      "heads": [
+        {
+          "name": "April Hoste",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "911 First Street",
+        "city": "Colona IL 61241",
+        "email": "director@colonalibrary.com",
+        "phone": "(309) 792-0548"
+      }
+    },
+    "Cordova District Library": {
+      "board": [
+        {
+          "name": "Merredith Peterson",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "081/002/10",
+      "filedFor": "2025",
+      "filesIn": "Rock Island",
+      "heads": [
+        {
+          "name": "Karen Lonergan",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "402 Main Ave",
+        "city": "Cordova IL 61242",
+        "email": "klonergan@cordovalibrary.com",
+        "phone": "(309) 654-2330"
+      }
+    },
+    "Crab Orchard Public Library District": {
+      "board": [
+        {
+          "name": "Bonnie Kucharski",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "100/010/10",
+      "filedFor": "2025",
+      "filesIn": "Williamson",
+      "heads": [
+        {
+          "name": "Samantha Ralston",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "20012 Crab Orchard Rd",
+        "city": "Marion IL 62959",
+        "email": "director.craborchardlibrary@gmail.com",
+        "phone": "(618) 982-2141"
+      }
+    },
+    "Creston-Dement Public Library District": {
+      "board": [
+        {
+          "name": "DOUG KROUPA",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "071/040/10",
+      "filedFor": "2025",
+      "filesIn": "Ogle",
+      "heads": [
+        {
+          "name": "KRISTI SCHERER",
+          "role": "C.E.O."
+        },
+        {
+          "name": "MOLLY JOHNSON",
+          "role": "C.F.O."
+        }
+      ],
+      "office": {
+        "address": "107 S MAIN STREET PO BOX 193",
+        "city": "CRESTON IL 60113",
+        "email": "TREASURER.CRESTONLIB@GMAIL.COM",
+        "phone": "(815) 384-3111"
+      }
+    },
+    "Creve Coeur Public Library District": {
+      "board": [
+        {
+          "name": "Carrie Bryant",
+          "role": "President"
+        },
+        {
+          "name": "Joanna Fleckenstein",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "090/006/10",
+      "filedFor": "2025",
+      "filesIn": "Tazewell",
+      "office": {
+        "address": "311 North Highland",
+        "city": "Creve Coeur IL 61610",
+        "phone": "(309) 699-7921"
+      }
+    },
+    "Daugherty Public Library District": {
+      "board": [
+        {
+          "name": "KIM KUNI",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "088/015/10",
+      "filedFor": "2025",
+      "filesIn": "St. Clair",
+      "heads": [
+        {
+          "name": "CAROL BROCKMEYER",
+          "role": "Director"
+        },
+        {
+          "name": "IDUS CLEVELAND",
+          "role": "Fin. Officer"
+        }
+      ],
+      "office": {
+        "address": "220 SOUTH 5TH STREET",
+        "city": "DUPO IL 62239",
+        "phone": "(618) 286-4444"
+      }
+    },
+    "Deer Creek District Library": {
+      "board": [
+        {
+          "name": "Shea Kamp",
+          "role": "President"
+        },
+        {
+          "name": "Linda Brown",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "090/010/10",
+      "filedFor": "2025",
+      "filesIn": "Tazewell",
+      "office": {}
+    },
+    "Dodge Memorial Public Library District": {
+      "board": [
+        {
+          "name": "Elizabeth McCoy",
+          "role": "President"
+        },
+        {
+          "name": "Gerrie McCoy",
+          "role": "Sec./Treas."
+        }
+      ],
+      "comptrollerCode": "002/010/10",
+      "filedFor": "2025",
+      "filesIn": "Alexander",
+      "office": {
+        "email": "klschultz57@dodgelibrary1987.com"
+      }
+    },
+    "Dongola Public Library District": {
+      "board": [
+        {
+          "name": "Leslie Treat",
+          "role": "President"
+        },
+        {
+          "name": "Carol Reeves",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "091/005/10",
+      "filedFor": "2025",
+      "filesIn": "Union",
+      "office": {
+        "address": "P.O. Box 113",
+        "city": "Dongola IL 62926",
+        "phone": "(618) 827-3622"
+      }
+    },
+    "Doyle Public Library District": {
+      "board": [
+        {
+          "name": "Melanie Lawrence",
+          "role": "President"
+        },
+        {
+          "name": "Amanda Calderini",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "068/020/10",
+      "filedFor": "2025",
+      "filesIn": "Montgomery",
+      "office": {
+        "address": "109 OBANNON ST",
+        "city": "RAYMOND Il 62560",
+        "email": "dplboard@doylepubliclibrary.org",
+        "phone": "(217) 229-4471"
+      }
+    },
+    "Earlville Public Library District": {
+      "comptrollerCode": "050/040/10",
+      "filedFor": "2025",
+      "filesIn": "Lasalle",
+      "heads": [
+        {
+          "name": "Paige Frechmann",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "email": "earlvillelibrary@yahoo.com"
+      }
+    },
+    "East Dubuque District Library": {
+      "board": [
+        {
+          "name": "Stephanie Lange",
+          "role": "President"
+        },
+        {
+          "name": "Richard Leute",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "043/010/10",
+      "filedFor": "2025",
+      "filesIn": "Jo Daviess",
+      "office": {
+        "address": "122 Wisconsin Ave",
+        "city": "East Dubuque IL 61025",
+        "phone": "(815) 747-3052"
+      }
+    },
+    "Edwards River Public Library District": {
+      "board": [
+        {
+          "name": "Marge Seiver",
+          "role": "President"
+        },
+        {
+          "name": "Ann Meminger",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "066/010/10",
+      "filedFor": "2025",
+      "filesIn": "Mercer",
+      "office": {
+        "address": "412 E Main",
+        "city": "Aledo IL 61231",
+        "email": "edwardsriverlibrary@gmail.com",
+        "phone": "(309) 582-2032"
+      }
+    },
+    "El Paso District Library": {
+      "comptrollerCode": "102/015/10",
+      "filedFor": "2025",
+      "filesIn": "Woodford",
+      "heads": [
+        {
+          "name": "Carla Skare",
+          "role": "Librarian"
+        },
+        {
+          "name": "David Fever",
+          "role": "Bookkeeper"
+        }
+      ],
+      "office": {
+        "email": "director@elpasodistrictlibrary.org"
+      }
+    },
+    "Eldorado Memorial Public Library District": {
+      "board": [
+        {
+          "name": "Jeff Campbell",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "082/010/10",
+      "filedFor": "2025",
+      "filesIn": "Saline",
+      "heads": [
+        {
+          "name": "Keith Robinson",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "1001 Grant St",
+        "city": "Eldorado IL 62930",
+        "email": "director@eldoradomemoriallibrary.com",
+        "phone": "(618) 273-7922"
+      }
+    },
+    "Elkhart Public Library District": {
+      "board": [
+        {
+          "name": "Phil Shelton",
+          "role": "President"
+        },
+        {
+          "name": "Mark Moughan",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "054/005/10",
+      "filedFor": "2025",
+      "filesIn": "Logan",
+      "office": {
+        "address": "121 Bohan St., PO Box 170",
+        "city": "Elkhart IL 62634",
+        "email": "elkhartlibrary@mchsi.com"
+      }
+    },
+    "Elwood Library District": {
+      "board": [
+        {
+          "name": "Jennie Sollars",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "092/017/10",
+      "filedFor": "2025",
+      "filesIn": "Vermilion",
+      "heads": [
+        {
+          "name": "Loretta Fagg",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "104 N State St",
+        "city": "Ridgefarm IL 61870",
+        "phone": "(217) 247-2820"
+      }
+    },
+    "Erie Public Library District": {
+      "board": [
+        {
+          "name": "Curtis Huizenga",
+          "role": "President"
+        },
+        {
+          "name": "Helene Schulze",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "098/010/10",
+      "filedFor": "2025",
+      "filesIn": "Whiteside",
+      "office": {
+        "address": "PO Box 436",
+        "city": "Erie IL 61250",
+        "phone": "(309) 659-2707"
+      }
+    },
+    "Evans Public Library District": {
+      "board": [
+        {
+          "name": "JOANNA HELM",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "026/005/10",
+      "filedFor": "2025",
+      "filesIn": "Fayette",
+      "heads": [
+        {
+          "name": "KIM SHANKS",
+          "role": "Treas./Admin."
+        }
+      ],
+      "office": {
+        "address": "825 W RANDOLPH",
+        "city": "VANDALIA IL 62471",
+        "phone": "(618) 283-2824"
+      }
+    },
+    "Farmersville-Waggoner Public Library District": {
+      "board": [
+        {
+          "name": "Jessica Sidwell",
+          "role": "President"
+        },
+        {
+          "name": "Cassandra Rovey",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "068/001/10",
+      "filedFor": "2026",
+      "filesIn": "Montgomery",
+      "office": {
+        "address": "210 S. Cleveland St.",
+        "city": "P.O. Box 12 IL 62533",
+        "phone": "(217) 227-3711"
+      }
+    },
+    "Farmington Area Library District": {
+      "board": [
+        {
+          "name": "Maggie Connell",
+          "role": "President"
+        },
+        {
+          "name": "Kristi Gronewold",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "029/015/10",
+      "filedFor": "2025",
+      "filesIn": "Fulton",
+      "office": {
+        "address": "411 N Lightfoot Road",
+        "city": "Farmington IL 61531",
+        "phone": "(309) 245-2175"
+      }
+    },
+    "Flagg-Rochelle Public Library District": {
+      "board": [
+        {
+          "name": "Teresa Haggestad",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "071/015/10",
+      "filedFor": "2025",
+      "filesIn": "Ogle",
+      "heads": [
+        {
+          "name": "Juan Martinez, Jr.",
+          "role": "Dep. Director"
+        }
+      ],
+      "office": {
+        "address": "619 Fourth Ave",
+        "city": "Rochelle IL 61068",
+        "email": "sarahf@flaggrochellepubliclibrary.org",
+        "phone": "(815) 562-3431"
+      }
+    },
+    "Flanagan Public Library District": {
+      "board": [
+        {
+          "name": "Kimberly Wargo",
+          "role": "President"
+        },
+        {
+          "name": "Richard Harnish",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Martin Kudla",
+          "role": "Secretary"
+        }
+      ],
+      "comptrollerCode": "053/075/10",
+      "filedFor": "2025",
+      "filesIn": "Livingston",
+      "office": {
+        "address": "PO Box 494",
+        "city": "Flanagan IL 61740",
+        "phone": "(815) 796-2212"
+      }
+    },
+    "Fondulac Public Library District": {
+      "board": [
+        {
+          "name": "Mary Jo Carbiener",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "090/020/10",
+      "filedFor": "2025",
+      "filesIn": "Tazewell",
+      "heads": [
+        {
+          "name": "Genna Buhr",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "400 Richland Street",
+        "city": "East Peoria IL 61611",
+        "email": "genna@fondulaclibrary.org",
+        "phone": "(309) 699-3917"
+      }
+    },
+    "Forrest Public Library District": {
+      "board": [
+        {
+          "name": "PEG AUSTMAN",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "053/010/10",
+      "filedFor": "2025",
+      "filesIn": "Livingston",
+      "heads": [
+        {
+          "name": "MARSHA LANZ",
+          "role": "Treas./Admin."
+        }
+      ],
+      "office": {
+        "address": "301 W JAMES",
+        "city": "FORREST IL 61741",
+        "email": "laura@forrestlibrary.com",
+        "phone": "(815) 657-8805"
+      }
+    },
+    "Four Star Public Library District": {
+      "comptrollerCode": "001/030/10",
+      "filedFor": "2025",
+      "filesIn": "Adams",
+      "heads": [
+        {
+          "name": "VALERIE SIMMONS",
+          "role": "Director"
+        }
+      ],
+      "office": {}
+    },
+    "Freeburg Area Library District": {
+      "board": [
+        {
+          "name": "Tracey Drennen-Alexander",
+          "role": "President"
+        },
+        {
+          "name": "Dora Becker",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "088/020/10",
+      "filedFor": "2025",
+      "filesIn": "St. Clair",
+      "office": {}
+    },
+    "Galatia Public Library District": {
+      "board": [
+        {
+          "name": "Therese Sisney",
+          "role": "President"
+        },
+        {
+          "name": "Steve Plastarr",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "082/020/10",
+      "filedFor": "2025",
+      "filesIn": "Saline",
+      "office": {
+        "address": "P.O. Box 279",
+        "city": "Galatia IL 62935",
+        "phone": "(618) 262-9200"
+      }
+    },
+    "Galena Public Library District": {
+      "board": [
+        {
+          "name": "Maria Rector",
+          "role": "President"
+        },
+        {
+          "name": "Debbie Larys",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "043/005/10",
+      "filedFor": "2025",
+      "filesIn": "Jo Daviess",
+      "office": {
+        "address": "601 S Bench St",
+        "city": "Galena IL 61036",
+        "email": "rector@galenalibrary.org",
+        "phone": "(815) 777-0200"
+      }
+    },
+    "Galva Public Library District": {
+      "comptrollerCode": "037/007/10",
+      "filedFor": "2025",
+      "filesIn": "Henry",
+      "heads": [
+        {
+          "name": "Lauren Heck",
+          "role": "Librarian"
+        }
+      ],
+      "office": {
+        "email": "galvalibrary@gmail.com"
+      }
+    },
+    "Geneseo Public Library District": {
+      "board": [
+        {
+          "name": "Jim Luikart",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "037/008/10",
+      "filedFor": "2025",
+      "filesIn": "Henry",
+      "heads": [
+        {
+          "name": "Claire K Crawford",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "805 N Chicago",
+        "city": "Geneseo IL 61254",
+        "email": "ccrawford@geneseo.lib.il.us",
+        "phone": "(309) 944-6452"
+      }
+    },
+    "Germantown Public Library District": {
+      "board": [
+        {
+          "name": "Fran Holtmann",
+          "role": "President"
+        },
+        {
+          "name": "Brenda Theising",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "014/010/10",
+      "filedFor": "2025",
+      "filesIn": "Clinton",
+      "office": {
+        "address": "403 Munster St",
+        "city": "Germantown IL 62245",
+        "phone": "(618) 523-4771"
+      }
+    },
+    "Golden Prairie Public Library District": {
+      "comptrollerCode": "064/040/10",
+      "filedFor": "2025",
+      "filesIn": "Mclean",
+      "heads": [
+        {
+          "name": "Jeanne Hamilton",
+          "role": "Director"
+        },
+        {
+          "name": "Kathy Jeakins",
+          "role": "Asst. Treasurer"
+        }
+      ],
+      "office": {
+        "address": "205 E Olive Street",
+        "city": "Bloomington IL 61701",
+        "phone": "(309) 557-8903"
+      }
+    },
+    "Goose Creek District Library": {
+      "board": [
+        {
+          "name": "Robin Lampert-Mitchell",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "074/060/10",
+      "filedFor": "2025",
+      "filesIn": "Piatt",
+      "heads": [
+        {
+          "name": "Mia Adams",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "220 N. Hwy",
+        "city": "De Land IL 61839",
+        "email": "goosecreeklibrary@gmail.com",
+        "phone": "(217) 664-3572"
+      }
+    },
+    "Graves-Hume Public Library District": {
+      "board": [
+        {
+          "name": "Martha Schmitt",
+          "role": "President"
+        },
+        {
+          "name": "Adriana Calamaco",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "050/005/10",
+      "filedFor": "2025",
+      "filesIn": "Lasalle",
+      "office": {
+        "address": "1401 W. Main Street",
+        "city": "Mendota IL 61342",
+        "phone": "(815) 538-5142"
+      }
+    },
+    "Greater West Central Public Library District": {
+      "board": [
+        {
+          "name": "Kristina Farwell",
+          "role": "President"
+        },
+        {
+          "name": "Karen Janssen",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "034/010/10",
+      "filedFor": "2025",
+      "filesIn": "Hancock",
+      "office": {
+        "phone": "(217) 392-2211"
+      }
+    },
+    "Gridley Public Library District": {
+      "comptrollerCode": "064/025/10",
+      "filedFor": "2025",
+      "filesIn": "Mclean",
+      "heads": [
+        {
+          "name": "Sheryl Solomonson",
+          "role": "Librarian"
+        }
+      ],
+      "office": {
+        "email": "gridleylibraryil@gmail.com"
+      }
+    },
+    "H.A. Peine District Library": {
+      "board": [
+        {
+          "name": "Gail Peine",
+          "role": "President"
+        },
+        {
+          "name": "Karen Graber",
+          "role": "V-President"
+        }
+      ],
+      "comptrollerCode": "090/055/10",
+      "filedFor": "2025",
+      "filesIn": "Tazewell",
+      "office": {
+        "address": "202 N Main Ave PO Box 19",
+        "city": "Minier IL 61759",
+        "phone": "(309) 392-3220"
+      }
+    },
+    "Harrisburg Public Library District": {
+      "comptrollerCode": "082/015/10",
+      "filedFor": "2025",
+      "filesIn": "Saline",
+      "heads": [
+        {
+          "name": "Emily Bergman",
+          "role": "Librarian"
+        },
+        {
+          "name": "Sarah Wofford",
+          "role": "Treas./Admin."
+        }
+      ],
+      "office": {
+        "address": "2 W. Walnut St.",
+        "city": "Harrisburg IL 62946",
+        "email": "ebergman@harrisburglibrary.org",
+        "phone": "(618) 253-7455"
+      }
+    },
+    "Havana Public Library District": {
+      "board": [
+        {
+          "name": "Mark McGrew",
+          "role": "President"
+        },
+        {
+          "name": "Mary Layton",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "060/020/10",
+      "filedFor": "2025",
+      "filesIn": "Mason",
+      "office": {
+        "address": "201 W Adams St",
+        "city": "Havana IL 62644",
+        "email": "director@havana.lib.il.us",
+        "phone": "(309) 543-4701"
+      }
+    },
+    "Hayner Public Library District": {
+      "comptrollerCode": "057/010/10",
+      "filedFor": "2025",
+      "filesIn": "Madison",
+      "heads": [
+        {
+          "name": "Mary Cordes",
+          "role": "Director"
+        },
+        {
+          "name": "Sue Hardin",
+          "role": "C.F.O."
+        }
+      ],
+      "office": {
+        "address": "401 State St",
+        "city": "Alton IL 62002",
+        "email": "mary.cordes@haynerlibrary.org",
+        "phone": "(618) 433-2857"
+      }
+    },
+    "Henderson County Public Library District": {
+      "board": [
+        {
+          "name": "Diana Russell",
+          "role": "President"
+        },
+        {
+          "name": "Jennifer Painter",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "036/010/10",
+      "filedFor": "2025",
+      "filesIn": "Henderson",
+      "office": {}
+    },
+    "Heyworth Public Library District": {
+      "board": [
+        {
+          "name": "Kira Stevens",
+          "role": "President"
+        },
+        {
+          "name": "Amy Roehrig",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "064/030/10",
+      "filedFor": "2025",
+      "filesIn": "Mclean",
+      "office": {
+        "email": "director@heyworthlibrary.com"
+      }
+    },
+    "Hillsboro Area Public Library District": {
+      "board": [
+        {
+          "name": "Jim White",
+          "role": "President"
+        },
+        {
+          "name": "Carol Naylor",
+          "role": "Trustee"
+        }
+      ],
+      "comptrollerCode": "068/030/10",
+      "filedFor": "2026",
+      "filesIn": "Montgomery",
+      "office": {
+        "address": "420 S Main",
+        "city": "Hillsboro IL 62049",
+        "email": "jwhite@hillsborolibrary.com",
+        "phone": "(217) 532-3055"
+      }
+    },
+    "Hoopeston Public Library District": {
+      "board": [
+        {
+          "name": "Tom Theesfield",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "092/011/10",
+      "filedFor": "2025",
+      "filesIn": "Vermilion",
+      "heads": [
+        {
+          "name": "Tricia Freeland",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "110 N Fourth St",
+        "city": "Hoopeston IL 60942",
+        "phone": "(217) 283-6711"
+      }
+    },
+    "Hooppole Library District": {
+      "board": [
+        {
+          "name": "Ronelle Roselieb",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "037/010/10",
+      "filedFor": "2025",
+      "filesIn": "Henry",
+      "heads": [
+        {
+          "name": "Rachel Smith",
+          "role": "Treas./Admin."
+        }
+      ],
+      "office": {}
+    },
+    "Hudson Area Public Library District": {
+      "board": [
+        {
+          "name": "Nancy Rinda",
+          "role": "President"
+        },
+        {
+          "name": "Dianne Feasley",
+          "role": "Trustee"
+        }
+      ],
+      "comptrollerCode": "064/050/10",
+      "filedFor": "2025",
+      "filesIn": "Mclean",
+      "office": {
+        "address": "104 Pearl St",
+        "city": "Hudson IL 61748",
+        "email": "hudsonarealibrary@yahoo.com",
+        "phone": "(309) 726-1103"
+      }
+    },
+    "Illinois Prairie District Public Library": {
+      "board": [
+        {
+          "name": "Jack Weddle",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "102/010/10",
+      "filedFor": "2025",
+      "filesIn": "Woodford",
+      "heads": [
+        {
+          "name": "Dawn Smith",
+          "role": "Mgr./Director"
+        }
+      ],
+      "office": {
+        "address": "PO Box 770",
+        "city": "Metamora IL 61548",
+        "phone": "(309) 367-4591"
+      }
+    },
+    "Illiopolis/Niantic Public Library District": {
+      "board": [
+        {
+          "name": "Sue Borowwczyk",
+          "role": "President"
+        },
+        {
+          "name": "TRISHA HILDEBRANDT",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "083/015/10",
+      "filedFor": "2025",
+      "filesIn": "Sangamon",
+      "office": {
+        "address": "401 6th street po box 327",
+        "city": "ILLIOPOLIS IL 62539",
+        "phone": "(217) 486-5561"
+      }
+    },
+    "John Mosser Public Library District": {
+      "board": [
+        {
+          "name": "Darrin Dalton",
+          "role": "President"
+        },
+        {
+          "name": "TERRI DICKERSON",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "048/005/10",
+      "filedFor": "2025",
+      "filesIn": "Knox",
+      "office": {
+        "address": "106 W MEEK",
+        "city": "ABINGDON IL 61410",
+        "phone": "(309) 462-3129"
+      }
+    },
+    "Julia Hull District Library": {
+      "board": [
+        {
+          "name": "Jason Miller",
+          "role": "President"
+        },
+        {
+          "name": "Jeff Mickey",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "071/030/10",
+      "filedFor": "2025",
+      "filesIn": "Ogle",
+      "office": {
+        "address": "100 Library Ln",
+        "city": "Stillman Valley IL 61084-8999",
+        "phone": "(815) 645-8611"
+      }
+    },
+    "Kewanee Public Library District": {
+      "board": [
+        {
+          "name": "John Sayers",
+          "role": "President"
+        },
+        {
+          "name": "Lea Eastman",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "037/015/10",
+      "filedFor": "2025",
+      "filesIn": "Henry",
+      "office": {
+        "address": "102 S. Tremont Street",
+        "city": "Kewanee IL 61443",
+        "email": "andersond@kewaneelibrary.org",
+        "phone": "(309) 852-4505"
+      }
+    },
+    "LaHarpe Carnegie Public Library District": {
+      "board": [
+        {
+          "name": "Brenda Sparrow",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "034/008/10",
+      "filedFor": "2025",
+      "filesIn": "Hancock",
+      "heads": [
+        {
+          "name": "Brenda Coulter",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "209 East Main Street",
+        "city": "LaHarpe IL 61450",
+        "email": "laharpelibrary@gmail.com",
+        "phone": "(217) 659-7729"
+      }
+    },
+    "LaMoille-Clarion Public Library District": {
+      "board": [
+        {
+          "name": "Sarah Stuepfert",
+          "role": "President"
+        },
+        {
+          "name": "William Schwabenland",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "006/005/10",
+      "filedFor": "2025",
+      "filesIn": "Bureau",
+      "office": {}
+    },
+    "Lawrence Public Library District": {
+      "board": [
+        {
+          "name": "JOHN WHITE",
+          "role": "President"
+        },
+        {
+          "name": "JOAN Brian",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "051/030/10",
+      "filedFor": "2025",
+      "filesIn": "Lawrence",
+      "office": {
+        "address": "814 12TH STREET",
+        "city": "LAWRENCEVILLE IL 62439",
+        "email": "lawrencepubliclibrary@yahoo.com",
+        "phone": "(618) 943-3016"
+      }
+    },
+    "Lena Community District Library": {
+      "board": [
+        {
+          "name": "Charlene Foley",
+          "role": "President"
+        },
+        {
+          "name": "Kathleen Benters",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "089/010/10",
+      "filedFor": "2025",
+      "filesIn": "Stephenson",
+      "office": {
+        "address": "300 W Mason St",
+        "city": "Lena IL 61048",
+        "phone": "(815) 369-3180"
+      }
+    },
+    "Lewistown Carnegie Public Library District": {
+      "board": [
+        {
+          "name": "Patty Wiegers",
+          "role": "President"
+        },
+        {
+          "name": "Nancy Havera",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "029/005/10",
+      "filedFor": "2025",
+      "filesIn": "Fulton",
+      "office": {
+        "address": "1126 N Main St",
+        "city": "Lewistown IL 61542",
+        "phone": "(309) 547-2860"
+      }
+    },
+    "Lexington Public Library District": {
+      "board": [
+        {
+          "name": "Lucy Loper",
+          "role": "President"
+        },
+        {
+          "name": "Terri Schreiber",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "064/010/10",
+      "filedFor": "2025",
+      "filesIn": "Mclean",
+      "office": {}
+    },
+    "Lillie M. Evans Library District": {
+      "board": [
+        {
+          "name": "Gayle Johnson-Brackett",
+          "role": "President"
+        },
+        {
+          "name": "Diane Smith",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "072/025/10",
+      "filedFor": "2025",
+      "filesIn": "Peoria",
+      "office": {
+        "address": "207 N Walnut St/PO Box 349",
+        "city": "Princeville IL 61559",
+        "phone": "(309) 385-4540"
+      }
+    },
+    "Lincoln Public Library District": {
+      "board": [
+        {
+          "name": "Roger Michalsen",
+          "role": "President"
+        },
+        {
+          "name": "Susan Rohrer",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "054/020/10",
+      "filedFor": "2025",
+      "filesIn": "Logan",
+      "office": {
+        "address": "725 Pekin St.",
+        "city": "Lincoln IL 62656",
+        "phone": "(217) 732-8878"
+      }
+    },
+    "Litchfield Public Library District": {
+      "board": [
+        {
+          "name": "Mary Schneider",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "068/025/10",
+      "filedFor": "2026",
+      "filesIn": "Montgomery",
+      "heads": [
+        {
+          "name": "Carol Sneed",
+          "role": "Treas./Admin."
+        }
+      ],
+      "office": {
+        "address": "1205 State St Litchfield, IL 62056",
+        "city": "Litchfield IL 62056",
+        "email": "litchfieldlibraryil@gmail.com",
+        "phone": "(217) 324-3866"
+      }
+    },
+    "Lostant Community Library": {
+      "board": [
+        {
+          "name": "Gwen Vincent",
+          "role": "President"
+        },
+        {
+          "name": "Carol Stoens",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "050/010/10",
+      "filedFor": "2025",
+      "filesIn": "Lasalle",
+      "office": {
+        "email": "Lostantlibrary@yahoo.com"
+      }
+    },
+    "Lovington Public Library District": {
+      "board": [
+        {
+          "name": "Cara Rennert",
+          "role": "President"
+        },
+        {
+          "name": "Rachel Kinney",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "070/040/10",
+      "filedFor": "2025",
+      "filesIn": "Moultrie",
+      "office": {
+        "address": "110 W State PO Box 199",
+        "city": "Lovington IL 61937",
+        "phone": "(217) 873-4468"
+      }
+    },
+    "M-C River Valley Public Library District": {
+      "board": [
+        {
+          "name": "Linda Stinson",
+          "role": "President"
+        },
+        {
+          "name": "Carol Clark",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "069/010/10",
+      "filedFor": "2025",
+      "filesIn": "Morgan",
+      "office": {
+        "address": "P.O. Box 259",
+        "city": "Meredosia IL 62665",
+        "phone": "(217) 584-1571"
+      }
+    },
+    "Mackinaw District Public Library": {
+      "board": [
+        {
+          "name": "John Embry",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "090/030/10",
+      "filedFor": "2025",
+      "filesIn": "Tazewell",
+      "heads": [
+        {
+          "name": "Kiana Nafziger",
+          "role": "Librarian"
+        }
+      ],
+      "office": {
+        "address": "117 S Main PO Box 560",
+        "city": "Mackinaw IL 61755",
+        "phone": "(309) 359-8022"
+      }
+    },
+    "Maquon Public Library District": {
+      "board": [
+        {
+          "name": "Tracey Loveland",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "048/010/10",
+      "filedFor": "2025",
+      "filesIn": "Knox",
+      "heads": [
+        {
+          "name": "Leslie Taylor",
+          "role": "Treas./Admin."
+        }
+      ],
+      "office": {
+        "address": "210 Main Street",
+        "city": "Maquon IL 61458",
+        "phone": "(309) 875-3573"
+      }
+    },
+    "Maroa Public Library District": {
+      "board": [
+        {
+          "name": "Tony Norton",
+          "role": "President"
+        },
+        {
+          "name": "Mason Ricketts",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "055/040/10",
+      "filedFor": "2025",
+      "filesIn": "Macon",
+      "office": {
+        "address": "305 E Garfield",
+        "city": "Maroa IL 61756",
+        "email": "maroalibrary@gmail.com",
+        "phone": "(217) 794-5111"
+      }
+    },
+    "Marrowbone Public Library District": {
+      "board": [
+        {
+          "name": "Timothy Moon",
+          "role": "Trustee"
+        },
+        {
+          "name": "Bettina Emel",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "070/010/10",
+      "filedFor": "2025",
+      "filesIn": "Moultrie",
+      "office": {
+        "address": "216 W Main",
+        "city": "Bethany IL 61914",
+        "phone": "(217) 665-3014"
+      }
+    },
+    "Marshall Area Public Library District": {
+      "board": [
+        {
+          "name": "Jeff Buress",
+          "role": "President"
+        },
+        {
+          "name": "Elaine Miller",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "012/050/10",
+      "filedFor": "2025",
+      "filesIn": "Clark",
+      "office": {}
+    },
+    "Martinsville Public Library District": {
+      "board": [
+        {
+          "name": "Stacy Callahan",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Christina Smith",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "012/010/10",
+      "filedFor": "2025",
+      "filesIn": "Clark",
+      "heads": [
+        {
+          "name": "Amanda Gard",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "120 E Cumberland St.",
+        "city": "Martinsville IL 62442",
+        "phone": "(217) 382-4113"
+      }
+    },
+    "Mason City Public Library District": {
+      "board": [
+        {
+          "name": "Elizabeth Edison",
+          "role": "President"
+        },
+        {
+          "name": "Kay Zimmerman",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "060/010/10",
+      "filedFor": "2025",
+      "filesIn": "Mason",
+      "office": {
+        "email": "dianey@masoncitylibrary.org",
+        "phone": "(217) 482-3799"
+      }
+    },
+    "Milford District Library": {
+      "board": [
+        {
+          "name": "Sue Crist",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "038/010/10",
+      "filedFor": "2025",
+      "filesIn": "Iroquois",
+      "heads": [
+        {
+          "name": "Rebecca Carlson",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "2 S Grant Avenue",
+        "city": "Milford IL 60953",
+        "email": "info@milfordlib.org",
+        "phone": "(815) 889-4722"
+      }
+    },
+    "Milledgeville Public Library": {
+      "board": [
+        {
+          "name": "Liz Patterson",
+          "role": "President"
+        },
+        {
+          "name": "Jacob Ryder",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "008/025/10",
+      "filedFor": "2025",
+      "filesIn": "Carroll",
+      "office": {
+        "email": "milledgevillelibrary@gmail.com"
+      }
+    },
+    "Millstadt Library": {
+      "board": [
+        {
+          "name": "Patti French",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "088/035/10",
+      "filedFor": "2025",
+      "filesIn": "St. Clair",
+      "heads": [
+        {
+          "name": "Heather Erwin",
+          "role": "C.E.O."
+        }
+      ],
+      "office": {
+        "address": "115 W Laurel Street",
+        "city": "Millstadt IL 62260",
+        "email": "n.lauko.millstadtlib@gmail.com",
+        "phone": "(618) 476-1887"
+      }
+    },
+    "Mineral-Gold Public Library District": {
+      "board": [
+        {
+          "name": "CHARLOTTE RAKESTRAW",
+          "role": "President"
+        },
+        {
+          "name": "NANCY SALZMANN",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "006/010/10",
+      "filedFor": "2025",
+      "filesIn": "Bureau",
+      "office": {}
+    },
+    "Mississippi Valley Library District": {
+      "board": [
+        {
+          "name": "Ian Ashcraft",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "057/004/10",
+      "filedFor": "2025",
+      "filesIn": "Madison",
+      "heads": [
+        {
+          "name": "Kyla Waltermire",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "408 West Main St",
+        "city": "Collinsville IL 62234",
+        "phone": "(618) 344-1112"
+      }
+    },
+    "Moore Memorial Library District": {
+      "board": [
+        {
+          "name": "Tonya Hanrahan",
+          "role": "President"
+        },
+        {
+          "name": "Theresa Brooks",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "081/015/10",
+      "filedFor": "2025",
+      "filesIn": "Rock Island",
+      "office": {
+        "address": "P.O BOX 325",
+        "city": "Hillsdale IL 61257",
+        "phone": "(309) 658-2666"
+      }
+    },
+    "Morris Area Public Library District": {
+      "comptrollerCode": "032/020/10",
+      "filedFor": "2025",
+      "filesIn": "Grundy",
+      "heads": [
+        {
+          "name": "Karen Barowsky",
+          "role": "Acting Director"
+        },
+        {
+          "name": "Tanya Berndt",
+          "role": "Treas./Admin."
+        }
+      ],
+      "office": {
+        "address": "604 Liberty St",
+        "city": "Morris IL 60450",
+        "email": "tberndt@morrislibrary.com",
+        "phone": "(815) 942-6880"
+      }
+    },
+    "Morton Public Library District": {
+      "board": [
+        {
+          "name": "Laura Turner",
+          "role": "President"
+        },
+        {
+          "name": "Kim Gryl",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "090/035/10",
+      "filedFor": "2025",
+      "filesIn": "Tazewell",
+      "office": {
+        "address": "315 W Pershing",
+        "city": "Morton IL 61550",
+        "email": "alissaw@mortonlibrary.org",
+        "phone": "(309) 263-2200"
+      }
+    },
+    "Mount Hope-Funk's Grove Townships Public Library District": {
+      "board": [
+        {
+          "name": "Scott Sheldon",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "064/060/10",
+      "filedFor": "2025",
+      "filesIn": "Mclean",
+      "heads": [
+        {
+          "name": "Cheryl Cordell",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "phone": "(309) 874-2291"
+      }
+    },
+    "Mount Pulaski Public Library District": {
+      "board": [
+        {
+          "name": "Michelle Fuller",
+          "role": "President"
+        },
+        {
+          "name": "Michelle Hagenbuch",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "054/010/10",
+      "filedFor": "2025",
+      "filesIn": "Logan",
+      "office": {
+        "address": "320 N Washington St",
+        "city": "Mt. Pulaski IL 62548",
+        "email": "mtpulaskipubliclibrary@gmai.com",
+        "phone": "(217) 792-5119"
+      }
+    },
+    "Mount Zion District Library": {
+      "board": [
+        {
+          "name": "Sheri Jesse",
+          "role": "President"
+        },
+        {
+          "name": "Michele Stine",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "055/050/10",
+      "filedFor": "2024",
+      "filesIn": "Macon",
+      "office": {
+        "address": "115 West Main",
+        "city": "Mt. Zion IL 62549",
+        "email": "director@mtzion.lib.il.us",
+        "phone": "(217) 864-3622"
+      }
+    },
+    "Moyer District Library": {
+      "board": [
+        {
+          "name": "Joy Zimmerman",
+          "role": "President"
+        },
+        {
+          "name": "Erin Nuss",
+          "role": "Secretary"
+        }
+      ],
+      "comptrollerCode": "027/020/10",
+      "filedFor": "2025",
+      "filesIn": "Ford",
+      "heads": [
+        {
+          "name": "Jessica Titus",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "email": "moyerlibrary@yahoo.com"
+      }
+    },
+    "Neoga Public Library District": {
+      "comptrollerCode": "018/010/10",
+      "filedFor": "2025",
+      "filesIn": "Cumberland",
+      "heads": [
+        {
+          "name": "Christine Baker",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "email": "neogalibrary@hotmail.com"
+      }
+    },
+    "New Athens District Library": {
+      "board": [
+        {
+          "name": "Laura Wildermuth",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "088/005/10",
+      "filedFor": "2025",
+      "filesIn": "St. Clair",
+      "heads": [
+        {
+          "name": "Erica Pyle",
+          "role": "Librarian"
+        }
+      ],
+      "office": {
+        "address": "201 N Van Buren",
+        "city": "New Athens IL 62264",
+        "email": "ericapyle@newathenslibrary.org",
+        "phone": "(618) 475-3255"
+      }
+    },
+    "New Windsor Public Library District": {
+      "board": [
+        {
+          "name": "Katie Spivey",
+          "role": "President"
+        },
+        {
+          "name": "Jackie Winter",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "066/015/10",
+      "filedFor": "2025",
+      "filesIn": "Mercer",
+      "office": {
+        "phone": "(309) 667-2515"
+      }
+    },
+    "Newman Regional Library District": {
+      "board": [
+        {
+          "name": "Kim McGee",
+          "role": "President"
+        },
+        {
+          "name": "Ben Watson",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "021/025/10",
+      "filedFor": "2025",
+      "filesIn": "Douglas",
+      "office": {
+        "address": "207 S. Coffin St., Ste. D",
+        "city": "Newman IL 61942",
+        "email": "librarian@newmanlibrary.org",
+        "phone": "(217) 837-2412"
+      }
+    },
+    "Norris City Memorial Public Library District": {
+      "board": [
+        {
+          "name": "Joe Skaggs",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "097/010/10",
+      "filedFor": "2025",
+      "filesIn": "White",
+      "heads": [
+        {
+          "name": "Nicole Inboden",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "603 S Division St",
+        "city": "Norris City IL 62869"
+      }
+    },
+    "North Pike Library District": {
+      "board": [
+        {
+          "name": "Denise Conkright",
+          "role": "President"
+        },
+        {
+          "name": "Chance Vose",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "075/005/10",
+      "filedFor": "2025",
+      "filesIn": "Pike",
+      "office": {
+        "address": "119 South Corey",
+        "city": "Griggsville IL 62340"
+      }
+    },
+    "North Suburban Public Library District": {
+      "comptrollerCode": "101/010/10",
+      "filedFor": "2025",
+      "filesIn": "Winnebago",
+      "heads": [
+        {
+          "name": "Jon Mark Bolthouse",
+          "role": "Director"
+        },
+        {
+          "name": "Brian McMahon",
+          "role": "Manager"
+        }
+      ],
+      "office": {
+        "address": "6340 N. 2nd St.",
+        "city": "Loves Park IL 61111",
+        "phone": "(815) 633-4247"
+      }
+    },
+    "Oakwood Public Library District": {
+      "board": [
+        {
+          "name": "Ruey Sandusky",
+          "role": "President"
+        },
+        {
+          "name": "Christine Grupe",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "092/009/10",
+      "filedFor": "2025",
+      "filesIn": "Vermilion",
+      "office": {
+        "address": "PO Box 99",
+        "city": "Oakwood IL 61858",
+        "email": "oakwoodpubliclibrary@gmail.com",
+        "phone": "(217) 354-4777"
+      }
+    },
+    "Odell Public Library District": {
+      "comptrollerCode": "053/060/10",
+      "filedFor": "2025",
+      "filesIn": "Livingston",
+      "heads": [
+        {
+          "name": "Cathy Grafton",
+          "role": "Director"
+        },
+        {
+          "name": "Paula Cleary",
+          "role": "Acting Agent"
+        }
+      ],
+      "office": {}
+    },
+    "Oglesby Public Library District": {
+      "board": [
+        {
+          "name": "Joshua Engel",
+          "role": "President"
+        },
+        {
+          "name": "Janet Pearson",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "050/015/10",
+      "filedFor": "2025",
+      "filesIn": "Lasalle",
+      "office": {
+        "address": "111 S Woodland Ave",
+        "city": "Oglesby IL 61348",
+        "email": "director@oglesbylibrary.org",
+        "phone": "(815) 883-3619"
+      }
+    },
+    "Ohio Public Library District": {
+      "board": [
+        {
+          "name": "Romaine Albrecht",
+          "role": "President"
+        },
+        {
+          "name": "Angie McDonald",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Pamela Gonigam",
+          "role": "Secretary"
+        }
+      ],
+      "comptrollerCode": "006/015/10",
+      "filedFor": "2025",
+      "filesIn": "Bureau",
+      "office": {
+        "address": "112 North Main St., PO Box 187",
+        "city": "Ohio IL 61349",
+        "email": "ohiolibrarybc@yahoo.com"
+      }
+    },
+    "Onarga Community Public Library District": {
+      "board": [
+        {
+          "name": "Robert Zirkle",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "038/030/10",
+      "filedFor": "2025",
+      "filesIn": "Iroquois",
+      "office": {
+        "email": "onargalibrary@sbcglobal.net"
+      }
+    },
+    "Oregon Public Library District": {
+      "board": [
+        {
+          "name": "Richard Bunton",
+          "role": "President"
+        },
+        {
+          "name": "Pam Steele",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "071/020/10",
+      "filedFor": "2025",
+      "filesIn": "Ogle",
+      "office": {
+        "address": "300 Jefferson Street",
+        "city": "Oregon IL 61061",
+        "email": "director@oregonpubliclibrary.com",
+        "phone": "(815) 732-2724"
+      }
+    },
+    "Palestine Public Library District": {
+      "board": [
+        {
+          "name": "Kristie Elder",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Susan Lockhart",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "017/010/10",
+      "filedFor": "2025",
+      "filesIn": "Crawford",
+      "heads": [
+        {
+          "name": "Kristen McCormack",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "email": "palestinelibrary@outlook.com",
+        "phone": "(618) 586-5317"
+      }
+    },
+    "Paw Paw Public Library District": {
+      "board": [
+        {
+          "name": "Maylin Reed",
+          "role": "President"
+        },
+        {
+          "name": "Kimberly Tipsord",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "052/010/10",
+      "filedFor": "2025",
+      "filesIn": "Lee",
+      "office": {
+        "address": "362 Chicago Rd",
+        "city": "Paw Paw IL 61353",
+        "phone": "(815) 627-9396"
+      }
+    },
+    "Pearl City Public Library District": {
+      "board": [
+        {
+          "name": "Richard Miche",
+          "role": "President"
+        },
+        {
+          "name": "Marvin Edler",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "089/060/10",
+      "filedFor": "2025",
+      "filesIn": "Stephenson",
+      "office": {
+        "email": "pearlcitypubliclibrary@yahoo.com",
+        "phone": "(815) 443-2832"
+      }
+    },
+    "Pecatonica Public Library District": {
+      "board": [
+        {
+          "name": "Karen Munson",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "101/020/10",
+      "filedFor": "2025",
+      "filesIn": "Winnebago",
+      "heads": [
+        {
+          "name": "Penny Bryant",
+          "role": "Direc./Sec."
+        }
+      ],
+      "office": {
+        "email": "director@pecatonicalibrary.com"
+      }
+    },
+    "Pembroke Public Library District": {
+      "board": [
+        {
+          "name": "Carol Burton",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "046/035/10",
+      "filedFor": "2025",
+      "filesIn": "Kankakee",
+      "office": {
+        "address": "13130 East Central",
+        "city": "Pembroke Township IL 60958",
+        "email": "pembroke574library@yahoo.com",
+        "phone": "(815) 944-8609"
+      }
+    },
+    "Peru Public Library": {
+      "comptrollerCode": "050/045/10",
+      "filedFor": "2025",
+      "filesIn": "Lasalle",
+      "heads": [
+        {
+          "name": "Melissa Keegan",
+          "role": "Director"
+        },
+        {
+          "name": "Emily Schaub",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "1409 11th Street",
+        "city": "Peru IL 61354",
+        "email": "mkeegan@perulibrary.org",
+        "phone": "(815) 223-0229"
+      }
+    },
+    "Piper City Public Library District": {
+      "board": [
+        {
+          "name": "Rhonda McCoy",
+          "role": "President"
+        },
+        {
+          "name": "Anne Johnson",
+          "role": "Sec./Treas."
+        }
+      ],
+      "comptrollerCode": "027/035/10",
+      "filedFor": "2025",
+      "filesIn": "Ford",
+      "office": {
+        "email": "pipercitylibrary@gmail.com"
+      }
+    },
+    "Polo Public Library District": {
+      "board": [
+        {
+          "name": "Beth Sundman",
+          "role": "President"
+        },
+        {
+          "name": "Kelsi Jones",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "071/035/10",
+      "filedFor": "2025",
+      "filesIn": "Ogle",
+      "office": {
+        "email": "mariem@pololibrary.org"
+      }
+    },
+    "Prairie Creek Public Library District": {
+      "board": [
+        {
+          "name": "Victoria Ferguson",
+          "role": "President"
+        },
+        {
+          "name": "Emily Moore",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "053/070/10",
+      "filedFor": "2025",
+      "filesIn": "Livingston",
+      "office": {
+        "address": "501 Carriage House Lane",
+        "city": "Dwight IL 60420",
+        "phone": "(815) 584-3061"
+      }
+    },
+    "Prairie Skies Public Library District": {
+      "board": [
+        {
+          "name": "Robert Butcher",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "009/010/10",
+      "filedFor": "2025",
+      "filesIn": "Cass",
+      "heads": [
+        {
+          "name": "Kevin Kesselring",
+          "role": "Treas./Admin."
+        }
+      ],
+      "office": {
+        "address": "125 W Editor St",
+        "city": "Ashland IL 62612",
+        "phone": "(217) 476-3417"
+      }
+    },
+    "Putnam County Public Library District": {
+      "board": [
+        {
+          "name": "Bob Steele",
+          "role": "President"
+        },
+        {
+          "name": "Joan Augustine",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "078/005/10",
+      "filedFor": "2025",
+      "filesIn": "Putnam",
+      "office": {
+        "address": "214 N 4th St Box 199",
+        "city": "Hennepin IL 61327",
+        "email": "jkalman@putnamcountylibrary.org",
+        "phone": "(815) 339-2038"
+      }
+    },
+    "Reddick Public Library District": {
+      "board": [
+        {
+          "name": "Neil Reinhardt",
+          "role": "President"
+        },
+        {
+          "name": "Scott Anderson",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "050/035/10",
+      "filedFor": "2025",
+      "filesIn": "Lasalle",
+      "office": {
+        "address": "1010 Canal Street",
+        "city": "Ottawa IL 61350",
+        "email": "lyoungstrum@reddicklibrary.org",
+        "phone": "(815) 434-0542"
+      }
+    },
+    "Rick Warren Memorial Public Library District": {
+      "board": [
+        {
+          "name": "Mary Ann Horstmann",
+          "role": "President"
+        },
+        {
+          "name": "Brenda Yates",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "039/010/10",
+      "filedFor": "2025",
+      "filesIn": "Jackson",
+      "office": {
+        "email": "johnnie.halstead@rickwarren.lib.il.us"
+      }
+    },
+    "River Valley District Library": {
+      "board": [
+        {
+          "name": "Jan Schadt",
+          "role": "President"
+        },
+        {
+          "name": "Jordan Stalsberg",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "081/005/10",
+      "filedFor": "2025",
+      "filesIn": "Rock Island",
+      "office": {
+        "address": "214 S Main Street",
+        "city": "Port Byron IL 61275",
+        "email": "director@rivervalleylibrary.org",
+        "phone": "(309) 523-3440"
+      }
+    },
+    "Robert R. Jones Public Library District": {
+      "comptrollerCode": "081/010/10",
+      "filedFor": "2025",
+      "filesIn": "Rock Island",
+      "heads": [
+        {
+          "name": "Victoria Blackmer",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "email": "vblackmer@robertrjoneslibrary.org"
+      }
+    },
+    "Robert W. Rowe Public Library District": {
+      "board": [
+        {
+          "name": "Mary Beth O'Hara",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "050/016/10",
+      "filedFor": "2025",
+      "filesIn": "Lasalle",
+      "heads": [
+        {
+          "name": "Beth Wood",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "120 E Si Johnson Ave, PO Box 358",
+        "city": "Sheridan IL 60551",
+        "phone": "(815) 496-2031"
+      }
+    },
+    "Robinson Public Library District": {
+      "comptrollerCode": "017/020/10",
+      "filedFor": "2025",
+      "filesIn": "Crawford",
+      "heads": [
+        {
+          "name": "Douglas Roberts",
+          "role": "Director"
+        },
+        {
+          "name": "Janice Shick",
+          "role": "Accountant"
+        }
+      ],
+      "office": {
+        "address": "606 N Jefferson St",
+        "city": "Robinson IL 62454",
+        "phone": "(618) 544-2917"
+      }
+    },
+    "Rochester Public Library District": {
+      "board": [
+        {
+          "name": "Sarah Deen",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "083/020/10",
+      "filedFor": "2025",
+      "filesIn": "Sangamon",
+      "office": {
+        "address": "1 Community Dr",
+        "city": "Rochester IL 62563",
+        "email": "President@rochesterlibrary.org",
+        "phone": "(217) 498-8454"
+      }
+    },
+    "Rock Falls Public Library District": {
+      "board": [
+        {
+          "name": "Jason Smith",
+          "role": "President"
+        },
+        {
+          "name": "Karla Portner",
+          "role": "Sec./Treas."
+        }
+      ],
+      "comptrollerCode": "098/015/10",
+      "filedFor": "2025",
+      "filesIn": "Whiteside",
+      "office": {
+        "address": "1007 7th Ave",
+        "city": "Rock Falls IL 61071",
+        "phone": "(815) 626-3958"
+      }
+    },
+    "Rock River Library District": {
+      "board": [
+        {
+          "name": "Pat Held",
+          "role": "President"
+        },
+        {
+          "name": "Stacy Bawden",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "081/020/10",
+      "filedFor": "2025",
+      "filesIn": "Rock Island",
+      "office": {}
+    },
+    "Royalton Public Library District": {
+      "board": [
+        {
+          "name": "Cathy Lyons",
+          "role": "Acting President"
+        }
+      ],
+      "comptrollerCode": "028/015/10",
+      "filedFor": "2025",
+      "filesIn": "Franklin",
+      "heads": [
+        {
+          "name": "Melissa Peebels",
+          "role": "C.F.O."
+        }
+      ],
+      "office": {
+        "email": "royaltonlibrary2@gmail.com"
+      }
+    },
+    "Saint Elmo Public Library District": {
+      "board": [
+        {
+          "name": "TONY KOBERLEIN",
+          "role": "President"
+        },
+        {
+          "name": "CONNIE KAMNICK",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "026/010/10",
+      "filedFor": "2025",
+      "filesIn": "Fayette",
+      "office": {}
+    },
+    "Salem Township Public Library District": {
+      "board": [
+        {
+          "name": "Bryan Reynolds",
+          "role": "President"
+        },
+        {
+          "name": "Susan Hostetler",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "048/020/10",
+      "filedFor": "2025",
+      "filesIn": "Knox",
+      "office": {
+        "phone": "(309) 358-1678"
+      }
+    },
+    "Savanna Public Library District": {
+      "comptrollerCode": "008/020/10",
+      "filedFor": "2025",
+      "filesIn": "Carroll",
+      "heads": [
+        {
+          "name": "Mary Meyers",
+          "role": "Director"
+        }
+      ],
+      "office": {}
+    },
+    "Schmaling Memorial Public Library District": {
+      "board": [
+        {
+          "name": "Amber Turner",
+          "role": "President"
+        },
+        {
+          "name": "Aley Hamling",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "098/020/10",
+      "filedFor": "2025",
+      "filesIn": "Whiteside",
+      "office": {
+        "address": "501 10th Ave",
+        "city": "Fulton IL 61252",
+        "email": "schmalinglibrary@gmail.com",
+        "phone": "(815) 589-2045"
+      }
+    },
+    "Seneca Public Library District": {
+      "board": [
+        {
+          "name": "Margi Weber",
+          "role": "President"
+        },
+        {
+          "name": "Richard Applebee",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "050/020/10",
+      "filedFor": "2025",
+      "filesIn": "Lasalle",
+      "heads": [
+        {
+          "name": "Yana Serdyuk",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "210 N Main St",
+        "city": "Seneca IL 61360",
+        "email": "yana@senecalibrary.net",
+        "phone": "(815) 357-6566"
+      }
+    },
+    "Sheldon Public Library District": {
+      "board": [
+        {
+          "name": "SCOTT ZUMWALT",
+          "role": "President"
+        },
+        {
+          "name": "SUZANNE LIGHT",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "038/020/10",
+      "filedFor": "2025",
+      "filesIn": "Iroquois",
+      "office": {
+        "address": "125 N FIFTH STREET",
+        "city": "SHELDON IL 60966",
+        "phone": "(815) 429-3521"
+      }
+    },
+    "Sherman Public Library District": {
+      "board": [
+        {
+          "name": "Brian Manci",
+          "role": "President"
+        },
+        {
+          "name": "John Barrett",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "083/025/10",
+      "filedFor": "2025",
+      "filesIn": "Sangamon",
+      "office": {
+        "address": "2100 E. Andrew Road",
+        "city": "Sherman IL 62684",
+        "email": "shermanlibrary@casscomm.com",
+        "phone": "(217) 496-2496"
+      }
+    },
+    "Sherrard Public Library District": {
+      "board": [
+        {
+          "name": "Allen Holdsworth",
+          "role": "President"
+        },
+        {
+          "name": "Jackie Docherty",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "066/025/10",
+      "filedFor": "2025",
+      "filesIn": "Mercer",
+      "office": {
+        "address": "501 3rd Street",
+        "city": "Sherrard IL 61281",
+        "email": "director@sherrardlibrary.org",
+        "phone": "(309) 593-2178"
+      }
+    },
+    "Sidell District Library": {
+      "board": [
+        {
+          "name": "Julie Norman",
+          "role": "Secretary"
+        }
+      ],
+      "comptrollerCode": "092/010/10",
+      "filedFor": "2025",
+      "filesIn": "Vermilion",
+      "heads": [
+        {
+          "name": "Mary Ray",
+          "role": "Librarian"
+        }
+      ],
+      "office": {
+        "address": "101 Market Street",
+        "city": "Sidell IL 61876",
+        "phone": "(217) 288-9031"
+      }
+    },
+    "Smithton Public Library District": {
+      "board": [
+        {
+          "name": "Ann Hart",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "088/010/10",
+      "filedFor": "2025",
+      "filesIn": "St. Clair",
+      "heads": [
+        {
+          "name": "Jenna Dauer",
+          "role": "Librarian"
+        }
+      ],
+      "office": {
+        "address": "109 S Main",
+        "city": "Smithton IL 62285",
+        "phone": "(618) 233-8057"
+      }
+    },
+    "Somonauk Public Library District": {
+      "board": [
+        {
+          "name": "Roberta Mickelson",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "050/025/10",
+      "filedFor": "2025",
+      "filesIn": "Lasalle",
+      "heads": [
+        {
+          "name": "Julie Harte",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "700 E LaSalle St",
+        "city": "Somonauk IL 60552",
+        "email": "jharte@somonauklibrary.org",
+        "phone": "(815) 498-2440"
+      }
+    },
+    "South County Public Library District": {
+      "board": [
+        {
+          "name": "Linda Eberlin",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "007/010/10",
+      "filedFor": "2025",
+      "filesIn": "Calhoun",
+      "heads": [
+        {
+          "name": "Deborah Pohlman",
+          "role": "Treas./Admin."
+        }
+      ],
+      "office": {
+        "address": "PO Box 93",
+        "city": "Brussels IL 62013"
+      }
+    },
+    "Spoon River Library District": {
+      "board": [
+        {
+          "name": "Alice Kuzniar",
+          "role": "President"
+        },
+        {
+          "name": "Jessica Jansen",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "029/010/10",
+      "filedFor": "2025",
+      "filesIn": "Fulton",
+      "office": {
+        "email": "spoonriverlibrary@gmail.com",
+        "phone": "(309) 785-5496"
+      }
+    },
+    "Steeleville Area Public Library District": {
+      "board": [
+        {
+          "name": "Cheryn Sutton",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "079/020/10",
+      "filedFor": "2025",
+      "filesIn": "Randolph",
+      "heads": [
+        {
+          "name": "Michael Minton",
+          "role": "C.F.O."
+        }
+      ],
+      "office": {}
+    },
+    "Stinson Memorial Public Library District": {
+      "comptrollerCode": "091/010/10",
+      "filedFor": "2025",
+      "filesIn": "Union",
+      "heads": [
+        {
+          "name": "Saran Watkins",
+          "role": "Administrator"
+        },
+        {
+          "name": "John Hughey",
+          "role": "Administrator"
+        }
+      ],
+      "office": {
+        "address": "409 S. Main St.",
+        "city": "Anna IL 62906",
+        "email": "swatkins@stinsonlibrary.org",
+        "phone": "(618) 833-2521"
+      }
+    },
+    "Talcott Free Library District": {
+      "board": [
+        {
+          "name": "Gary Kovanda",
+          "role": "President"
+        },
+        {
+          "name": "Mary Katherine Lindt",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "101/030/10",
+      "filedFor": "2025",
+      "filesIn": "Winnebago",
+      "office": {
+        "address": "101 E. Main Street",
+        "city": "Rockton IL 61072",
+        "email": "megang@talcottfreelibrary.com",
+        "phone": "(815) 624-7511"
+      }
+    },
+    "Toluca Public Library District": {
+      "board": [
+        {
+          "name": "Kim Junker",
+          "role": "President"
+        },
+        {
+          "name": "Monica Schumacher",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "059/010/10",
+      "filedFor": "2025",
+      "filesIn": "Marshall",
+      "office": {
+        "address": "PO Box 326",
+        "city": "Toluca IL 61369",
+        "phone": "(815) 452-2211"
+      }
+    },
+    "Toulon Public Library District": {
+      "board": [
+        {
+          "name": "Cheryl Hurst",
+          "role": "President"
+        },
+        {
+          "name": "Janet Curry",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "087/050/10",
+      "filedFor": "2025",
+      "filesIn": "Stark",
+      "office": {
+        "address": "617 E. Jefferson Street",
+        "city": "Toulon IL 61483",
+        "phone": "(309) 286-5791"
+      }
+    },
+    "Towanda District Library": {
+      "board": [
+        {
+          "name": "Audra Wyant",
+          "role": "President"
+        },
+        {
+          "name": "Mark Schwamberger",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "064/020/10",
+      "filedFor": "2025",
+      "filesIn": "Mclean",
+      "office": {
+        "address": "301 S Taylor Street",
+        "city": "Towanda IL 61776",
+        "email": "mark.schwamberger@towandalibrary.org",
+        "phone": "(309) 728-2176"
+      }
+    },
+    "Tremont District Library": {
+      "board": [
+        {
+          "name": "Christy Doering",
+          "role": "President"
+        },
+        {
+          "name": "William Uhler",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "090/050/10",
+      "filedFor": "2025",
+      "filesIn": "Tazewell",
+      "office": {
+        "address": "215 S Sampson PO Box 123",
+        "city": "Tremont IL 61568",
+        "email": "tremontlibrary.director@gmail.com",
+        "phone": "(309) 925-5432"
+      }
+    },
+    "Tri-City Public Library District": {
+      "board": [
+        {
+          "name": "Leanne Haage",
+          "role": "President"
+        },
+        {
+          "name": "Deanna Marvin",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "083/035/10",
+      "filedFor": "2025",
+      "filesIn": "Sangamon",
+      "office": {
+        "address": "600 S Main St",
+        "city": "Buffalo IL 62515",
+        "email": "lhaage@tricity.lib.il.us",
+        "phone": "(217) 364-8181"
+      }
+    },
+    "Tri-Township Public Library District": {
+      "board": [
+        {
+          "name": "Michele Erschen",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "057/020/10",
+      "filedFor": "2025",
+      "filesIn": "Madison",
+      "heads": [
+        {
+          "name": "Elizabeth Fischer",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "209 S Main",
+        "city": "Troy IL 62294",
+        "phone": "(618) 667-2133"
+      }
+    },
+    "Utica Public Library District": {
+      "board": [
+        {
+          "name": "Tony Bubb",
+          "role": "President"
+        },
+        {
+          "name": "Kevin Heitz",
+          "role": "Trustee"
+        }
+      ],
+      "comptrollerCode": "050/030/10",
+      "filedFor": "2025",
+      "filesIn": "Lasalle",
+      "office": {
+        "address": "224 Mill Street",
+        "city": "Utica IL 61373",
+        "phone": "(815) 667-4509"
+      }
+    },
+    "Valley District Library": {
+      "board": [
+        {
+          "name": "Kimberle Duffield",
+          "role": "President"
+        },
+        {
+          "name": "Mark McConkey",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "029/020/10",
+      "filedFor": "2026",
+      "filesIn": "Fulton",
+      "office": {
+        "phone": "(309) 778-2240"
+      }
+    },
+    "Valmeyer Public Library District": {
+      "board": [
+        {
+          "name": "Christopher Harness",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "067/010/10",
+      "filedFor": "2025",
+      "filesIn": "Monroe",
+      "heads": [
+        {
+          "name": "Lori Brutton",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "300 South Cedar Bluff Drive",
+        "city": "Valmeyer IL 62295",
+        "phone": "(618) 935-2626"
+      }
+    },
+    "Vespasian Warner Public Library District": {
+      "board": [
+        {
+          "name": "Laura Hale",
+          "role": "President"
+        },
+        {
+          "name": "Matthew Love",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "020/010/10",
+      "filedFor": "2025",
+      "filesIn": "Dewitt",
+      "office": {
+        "address": "310 N. Quincy St.",
+        "city": "Clinton IL 61727",
+        "phone": "(217) 935-5174"
+      }
+    },
+    "Viola Public Library District": {
+      "board": [
+        {
+          "name": "Kathy Carter",
+          "role": "President"
+        },
+        {
+          "name": "Mindi Schultz",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "066/030/10",
+      "filedFor": "2025",
+      "filesIn": "Mercer",
+      "office": {
+        "address": "1701 17th St.",
+        "city": "Viola IL 61486",
+        "phone": "(309) 596-2620"
+      }
+    },
+    "Walnut Public Library District": {
+      "board": [
+        {
+          "name": "Brenda Helms",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "006/030/10",
+      "filedFor": "2025",
+      "filesIn": "Bureau",
+      "heads": [
+        {
+          "name": "Jaclyn G. Trujillo",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "email": "director@walnutpubliclibrary.org"
+      }
+    },
+    "Warren County Public Library District": {
+      "comptrollerCode": "094/010/10",
+      "filedFor": "2025",
+      "filesIn": "Warren",
+      "heads": [
+        {
+          "name": "Larissa Good",
+          "role": "Director"
+        },
+        {
+          "name": "Emma Chapin",
+          "role": "Bookkeeper"
+        }
+      ],
+      "office": {
+        "address": "62 Public Square",
+        "city": "Monmouth IL 61462",
+        "phone": "(309) 734-3166"
+      }
+    },
+    "Washington District Library": {
+      "board": [
+        {
+          "name": "Pam Tomka",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "090/060/10",
+      "filedFor": "2025",
+      "filesIn": "Tazewell",
+      "heads": [
+        {
+          "name": "LEXIE WALSH",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "308 N WILMOR RD",
+        "city": "WASHINGTON IL 61571",
+        "phone": "(309) 444-2241"
+      }
+    },
+    "Weldon Public Library District": {
+      "board": [
+        {
+          "name": "JERED SHOFNER",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "020/030/10",
+      "filedFor": "2025",
+      "filesIn": "Dewitt",
+      "heads": [
+        {
+          "name": "CHRISTI BAKER",
+          "role": "Fin. Officer"
+        }
+      ],
+      "office": {
+        "address": "PO BOX 248",
+        "city": "WELDON IL 61882",
+        "phone": "(217) 736-2215"
+      }
+    },
+    "West Sangamon Public Library District": {
+      "board": [
+        {
+          "name": "Brian Bandy",
+          "role": "President"
+        },
+        {
+          "name": "Casey Binkley",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "083/030/10",
+      "filedFor": "2025",
+      "filesIn": "Sangamon",
+      "office": {
+        "phone": "(217) 488-7733"
+      }
+    },
+    "West Union District Library": {
+      "board": [
+        {
+          "name": "Keith Vahling",
+          "role": "President"
+        },
+        {
+          "name": "Kayte Macke",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "012/020/10",
+      "filedFor": "2025",
+      "filesIn": "Clark",
+      "office": {
+        "address": "P.O. Box 138",
+        "city": "West Union IL 62477",
+        "phone": "(217) 279-3556"
+      }
+    },
+    "Western District Library": {
+      "board": [
+        {
+          "name": "Janice Gustafson",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "037/030/10",
+      "filedFor": "2025",
+      "filesIn": "Henry",
+      "office": {
+        "address": "PO Box 70; 1111 4th St",
+        "city": "Orion IL 61273",
+        "phone": "(309) 526-8375"
+      }
+    },
+    "Westville Public Library District": {
+      "comptrollerCode": "092/012/10",
+      "filedFor": "2025",
+      "filesIn": "Vermilion",
+      "heads": [
+        {
+          "name": "Nick Sager",
+          "role": "Director"
+        }
+      ],
+      "office": {}
+    },
+    "Williamsfield Public Library District": {
+      "board": [
+        {
+          "name": "Eric Bell",
+          "role": "President"
+        },
+        {
+          "name": "Jamie Trotter",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "048/060/10",
+      "filedFor": "2025",
+      "filesIn": "Knox",
+      "office": {
+        "address": "407 Norman",
+        "city": "Williamsfield IL 61489",
+        "phone": "(309) 639-2630"
+      }
+    },
+    "Windsor Storm Memorial Public Library District": {
+      "board": [
+        {
+          "name": "Glenda Miller",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "086/005/10",
+      "filedFor": "2025",
+      "filesIn": "Shelby",
+      "heads": [
+        {
+          "name": "Stacey Stremming",
+          "role": "Director"
+        }
+      ],
+      "office": {
+        "address": "102 S Maple",
+        "city": "WINDSOR IL 61957",
+        "phone": "(217) 459-2498"
+      }
+    },
+    "Winnebago Public Library District": {
+      "board": [
+        {
+          "name": "Gary Brown",
+          "role": "President"
+        },
+        {
+          "name": "Victor Ferrar",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "101/040/10",
+      "filedFor": "2025",
+      "filesIn": "Winnebago",
+      "office": {
+        "address": "210 N Elida St",
+        "city": "Winnebago IL 61088",
+        "email": "gbrown@winnebagopubliclibrary.org",
+        "phone": "(815) 335-7050"
+      }
+    },
+    "Wyoming Public Library District": {
+      "comptrollerCode": "087/100/10",
+      "filedFor": "2025",
+      "filesIn": "Stark",
+      "heads": [
+        {
+          "name": "Mary Meaker",
+          "role": "Director"
+        },
+        {
+          "name": "Jane Scholl",
+          "role": "Librarian"
+        }
+      ],
+      "office": {
+        "address": "119 N Seventh St",
+        "city": "Wyoming IL 61491",
+        "email": "jscholl@wyomingpubliclibrary.com"
+      }
+    }
+  },
+  "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
+  "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
+  "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
+}

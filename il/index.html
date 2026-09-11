@@ -12434,17 +12434,25 @@ function initChiExplorer() {
   var loadKankakeeDistrictOfficials = makeCached(function () {
     return fetchJSONWithRetry("data/app/kankakee-district-officials.json", {}, 2);
   });
+  /* ONE file for all 72 counties, and that is the shape of the source rather
+   * than a saving: the statewide layer clips a library's service area to the
+   * county, so one library draws a card in several counties while filing ONE
+   * Annual Financial Report. Keyed by library name for that reason, where the
+   * per-county files are keyed by district name within a county. */
+  var loadIlLibraryOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/il-library-district-officials.json", {}, 2);
+  });
   /* One stamper for both counties: the payloads are the same shape because
    * they come from the same filings, so only the roster file and the property
    * holding the district's name differ. */
-  function withAfrOfficials(loadGeometry, loadRoster, nameKeys) {
+  function withAfrOfficials(loadGeometry, loadRoster, nameKeys, rosterKey) {
     return makeCached(function () {
       return Promise.all([
         loadGeometry(),
         loadRoster().catch(function () { return null; })
       ]).then(function (results) {
         var geojson = results[0], roster = results[1];
-        var byName = (roster && roster.districts) || {};
+        var byName = (roster && roster[rosterKey || "districts"]) || {};
         (geojson.features || []).forEach(function (f) {
           var name = findPropCI(f.properties || {}, nameKeys);
           var hit = name != null ? byName[String(name)] : null;
@@ -12475,6 +12483,14 @@ function initChiExplorer() {
   function withKankakeeOfficials(loadGeometry) {
     return withAfrOfficials(loadGeometry, loadKankakeeDistrictOfficials,
                             ["unit_name"]);
+  }
+  /* The statewide library layer, all 72 counties through one roster. Its join
+   * key is the boundary layer's own `library` column, and its collection is
+   * `libraries` rather than `districts` — a library, not a district within a
+   * county, is what one filing answers for here. */
+  function withLibraryOfficials(loadGeometry) {
+    return withAfrOfficials(loadGeometry, loadIlLibraryOfficials,
+                            ["library"], "libraries");
   }
 
   /* The officeholder block under a district whose officers come from its own
@@ -14574,15 +14590,23 @@ function initChiExplorer() {
     return polygonCountyEntry({
       key: opts.key,
       coverage: opts.coverage || countyOutlineCoverage(opts.key),
-      loader: opts.loader || countyLibraryLoader(opts.key),
+      // THE STAMP GOES ON THE RESOLVED LOADER, not on the default one, so the
+      // seven counties that pass their own `loader` are covered by the same one
+      // line as the other sixty-five. Officers are stamped for every county at
+      // once because the roster is statewide; the DISTRICT-governed libraries
+      // are the ones that file, and a municipal or township library's card
+      // simply finds no entry and renders as it did before.
+      loader: withLibraryOfficials(opts.loader || countyLibraryLoader(opts.key)),
       snapFeet: PARCEL_FABRIC_SNAP_FT,
       fields: [
         { name: "name", label: "Library", keys: ["library"], primary: true },
         { name: "type", label: "Governance", keys: ["type"],
           format: function (v) { return LIBRARY_GOVERNANCE[v] || v; } },
         { label: "County", value: opts.county },
-        { label: "Boundary", value: STATEWIDE_LIBRARY_CREDIT }
-      ]
+        { label: "Boundary", value: STATEWIDE_LIBRARY_CREDIT },
+        { name: "officials", keys: ["dxofficials"], hidden: true }
+      ],
+      people: afrDistrictPeople
     });
   }
   var GRUNDY_GIS = "https://maps.grundyco.org/arcgis/rest/services/";

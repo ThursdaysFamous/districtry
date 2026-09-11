@@ -27,8 +27,8 @@
 | Alexander | 17003 | dispatch | at-large — County card | `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Bond | 17005 | dispatch | no board layer — see gaps | `library-district` | 2 — `bond-county-board-districts` (no-source); `statewide-library-officials` (no-source) |
 | Boone | 17007 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 3 — `boone-fire-belvidere-city` (data-quality); `boone-fire-names` (data-quality); `county-board-office-addresses` (no-source) |
-| Brown | 17009 | dispatch | at-large — County card | `library-district` | 2 — `brown-precinct-geometry` (no-source); `statewide-library-officials` (no-source) |
-| Calhoun | 17013 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
+| Brown | 17009 | dispatch | at-large — County card | `library-district` | 1 — `brown-precinct-geometry` (no-source) |
+| Calhoun | 17013 | dispatch | at-large — County card | `county-precinct`, `library-district` | none |
 | Carroll | 17015 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 4 — `carroll-special-districts` (no-source); `carroll-ward-geometry` (no-source); `county-board-office-addresses` (no-source); `statewide-library-officials` (no-source) |
 | Cass | 17017 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `pass9-ward-seats-without-maps` (no-source); `statewide-library-officials` (no-source) |
 | Clark | 17023 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 3 — `clark-board-contact` (data-quality); `clark-precinct-polling` (data-quality); `statewide-library-officials` (no-source) |
@@ -36,7 +36,7 @@
 | Clinton | 17027 | dispatch | districted | `county-board`, `library-district` | 3 — `clinton-precinct-geometry` (no-source); `county-board-office-addresses` (no-source); `statewide-library-officials` (no-source) |
 | Coles | 17029 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Cook | 17031 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | none |
-| Crawford | 17033 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `county-board-office-addresses` (no-source); `statewide-library-officials` (no-source) |
+| Crawford | 17033 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `county-board-office-addresses` (no-source) |
 | Cumberland | 17035 | dispatch | no board layer — see gaps | `county-precinct`, `library-district` | 2 — `cumberland-county-board` (no-source); `statewide-library-officials` (no-source) |
 | De Witt | 17039 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `dewitt-township-officials` (data-quality); `statewide-library-officials` (no-source) |
 | DeKalb | 17037 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 2 — `blocked-crawlers` (blocked); `county-board-office-addresses` (no-source) |
@@ -68,7 +68,7 @@
 | Lake | 17097 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 2 — `lake-municipal-names` (no-source); `park-city-wards` (no-source) |
 | Lee | 17103 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district` | 3 — `lee-municipal-officials` (no-source); `lee-park-library-districts` (no-source); `statewide-library-officials` (no-source) |
 | Livingston | 17105 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `livingston-special-districts` (no-source); `statewide-library-officials` (no-source) |
-| Logan | 17107 | dispatch | districted | `county-board`, `county-precinct`, `library-district`, `park-district` | 3 — `logan-fire-districts` (no-source); `logan-park-district-boards` (no-source); `statewide-library-officials` (no-source) |
+| Logan | 17107 | dispatch | districted | `county-board`, `county-precinct`, `library-district`, `park-district` | 2 — `logan-fire-districts` (no-source); `logan-park-district-boards` (no-source) |
 | Macon | 17115 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 2 — `macon-board-phone-area-code` (data-quality); `macon-district-name-formatting` (data-quality) |
 | Macoupin | 17117 | dispatch | no board layer — see gaps | `county-precinct`, `library-district` | 4 — `macoupin-county-board-districts` (no-source); `macoupin-special-districts` (no-source); `macoupin-ward-geometry` (no-source); `statewide-library-officials` (no-source) |
 | Madison | 17119 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 1 — `madison-ward-officials` (no-source) |
