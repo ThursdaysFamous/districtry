@@ -1,0 +1,2017 @@
+{
+  "counties": {
+    "cook": {
+      "fire": {
+        "BARRINGTON COUNTRYSIDE FIRE PROT DIST": {
+          "board": [
+            {
+              "name": "Keith Hanson",
+              "role": "President"
+            },
+            {
+              "name": "Tom Long",
+              "role": "V-President"
+            },
+            {
+              "name": "Matthew Hower",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "016/010/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "22222 N. Pepper RD",
+            "city": "Lake Barrington IL 60010",
+            "phone": "(224) 848-4800"
+          }
+        },
+        "BARTLETT FIRE PROTECTION DISTRICT": {
+          "board": [
+            {
+              "name": "Antonio Passaro",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "022/020/06",
+          "filedFor": "2025",
+          "filesIn": "DuPage",
+          "heads": [
+            {
+              "name": "William Gabrenya",
+              "role": "Fire Chief"
+            }
+          ],
+          "office": {
+            "address": "234 N Oak Ave",
+            "city": "Bartlett IL 60103",
+            "email": "wgabrenya@bartlettfire.com",
+            "phone": "(630) 837-3701"
+          }
+        },
+        "BENSENVILLE FIRE PROTECTION DISTRICT #2": {
+          "comptrollerCode": "022/255/06",
+          "filedFor": "2025",
+          "filesIn": "DuPage",
+          "heads": [
+            {
+              "name": "Douglas Halverson",
+              "role": "Chief"
+            }
+          ],
+          "office": {
+            "email": "admin@bensenvillefpd.org"
+          }
+        },
+        "CENTRAL STICKNEY FIRE PROTECTION DIST": {
+          "board": [
+            {
+              "name": "BRUCE ZELASKO",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "016/020/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "BRIAN MCMAHON",
+              "role": "Chief"
+            }
+          ],
+          "office": {
+            "address": "4951 S LOTUS AVENUE",
+            "city": "CHICAGO IL 60638",
+            "email": "CHIEF@CENTRALSTICKNEYFPD.ORG",
+            "phone": "(708) 493-1268"
+          }
+        },
+        "EAST DUNDEE & COUNTRYSIDE FIRE PROT DIST": {
+          "board": [
+            {
+              "name": "Doug Hoyt",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "045/050/06",
+          "filedFor": "2025",
+          "filesIn": "Kane",
+          "heads": [
+            {
+              "name": "Mark Guth",
+              "role": "Accountant"
+            }
+          ],
+          "office": {
+            "address": "401 Dundee Ave",
+            "city": "East Dundee IL 60118",
+            "phone": "(847) 426-7521"
+          }
+        },
+        "FOREST RIVER FIRE PROTECTION DISTRICT": {
+          "board": [
+            {
+              "name": "John Truncale",
+              "role": "President"
+            },
+            {
+              "name": "Meredith Wisniewski",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "016/050/06",
+          "filedFor": "2025",
+          "office": {
+            "email": "forest.river.fpd@gmail.com"
+          }
+        },
+        "FOREST VIEW FIRE PROTECTION DIST": {
+          "board": [
+            {
+              "name": "Lynn Cirrincione",
+              "role": "President"
+            },
+            {
+              "name": "Lynn Heffley",
+              "role": "Treasurer"
+            },
+            {
+              "name": "Cynthia Pullen",
+              "role": "Secretary"
+            }
+          ],
+          "comptrollerCode": "016/055/06",
+          "filedFor": "2025",
+          "office": {}
+        },
+        "GARDEN HOME FIRE PROTECTION DISTRICT": {
+          "board": [
+            {
+              "name": "Christopher Doeseckle",
+              "role": "President"
+            },
+            {
+              "name": "Heidi Holtz",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "016/065/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "3800 West 119 Street",
+            "city": "Alsip IL 60803-7843",
+            "phone": "(708) 489-9045"
+          }
+        },
+        "GLENBROOK FIRE DISTRICT": {
+          "board": [
+            {
+              "name": "DANIEL BARRETT",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "016/060/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "TIM RUECKERT",
+              "role": "Treas./Admin."
+            }
+          ],
+          "office": {
+            "email": "GLENBROOKFD@YAHOO.COM",
+            "phone": "(847) 934-3200"
+          }
+        },
+        "HOFFMAN ESTATES FIRE PROTECTION DIST 1": {
+          "board": [
+            {
+              "name": "Susan Atchison",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "016/070/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Rachel Musiala",
+              "role": "Director"
+            }
+          ],
+          "office": {
+            "address": "1900 Hassel Road",
+            "city": "Hoffman Estates IL 60169"
+          }
+        },
+        "HOMETOWN FIRE PROTECTION DISTRICT": {
+          "board": [
+            {
+              "name": "Garrett Flavin",
+              "role": "Trustee"
+            }
+          ],
+          "comptrollerCode": "016/090/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Daniel Duffy",
+              "role": "Fire Chief"
+            }
+          ],
+          "office": {
+            "address": "4301 Southwest Highway",
+            "city": "Hometown IL 60456",
+            "phone": "(773) 504-1130"
+          }
+        },
+        "LEMONT FIRE PROTECTION DISTRICT": {
+          "board": [
+            {
+              "name": "Raymond Negrete",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "016/100/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Daniel Tasso",
+              "role": "Fire Chief"
+            }
+          ],
+          "office": {
+            "address": "15900 New Avenue",
+            "city": "Lemont IL 60439",
+            "email": "dtasso@lemontfire.com"
+          }
+        },
+        "LEYDEN FIRE PROTECTION DISTRICT": {
+          "board": [
+            {
+              "name": "Randall Olinski",
+              "role": "President"
+            },
+            {
+              "name": "Joseph Klinger",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "016/110/06",
+          "filedFor": "2024",
+          "office": {
+            "address": "2600 N Mannheim",
+            "city": "Franklin Park IL 60131",
+            "email": "dkaderabek@leydenfire.com",
+            "phone": "(847) 455-0180"
+          }
+        },
+        "LONG GROVE RURAL FIRE PROTECTION DIST": {
+          "comptrollerCode": "049/090/06",
+          "filedFor": "2025",
+          "filesIn": "Lake",
+          "heads": [
+            {
+              "name": "Paul Segalla",
+              "role": "Fire Chief"
+            },
+            {
+              "name": "James Howard",
+              "role": "Accountant"
+            }
+          ],
+          "office": {
+            "address": "1165 Old McHenry Road",
+            "city": "Long Grove IL 60047",
+            "phone": "(847) 634-3143"
+          }
+        },
+        "MILLER WOODS FIRE PROTECTION DISTRICT": {
+          "board": [
+            {
+              "name": "james baine",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "016/120/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "james sipple",
+              "role": "C.F.O."
+            }
+          ],
+          "office": {
+            "address": "po box 233",
+            "city": "steger IL 60475"
+          }
+        },
+        "MOKENA FIRE PROTECTION DISTRICT": {
+          "board": [
+            {
+              "name": "Kenneth Blank",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "099/090/06",
+          "filedFor": "2025",
+          "filesIn": "Will",
+          "heads": [
+            {
+              "name": "Joseph Cirelli",
+              "role": "Chief"
+            }
+          ],
+          "office": {
+            "address": "19853 S. Wolf Road",
+            "city": "Mokena IL 60448",
+            "email": "kblank@mokenafire.org",
+            "phone": "(708) 479-5371"
+          }
+        },
+        "NORTH LAKE FIRE PROTECTION DISTRICT": {
+          "board": [
+            {
+              "name": "James Pauletto",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "016/160/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Paul Feldmann",
+              "role": "Fire Chief"
+            }
+          ],
+          "office": {
+            "address": "118 E. Parkview Drive",
+            "city": "Northlake IL 60164",
+            "email": "northlakefire@comcast.net",
+            "phone": "(708) 562-3182"
+          }
+        },
+        "NORTH MAINE FIRE PROTECTION DISTRICT": {
+          "board": [
+            {
+              "name": "Dagmar Rutzen",
+              "role": "Treasurer"
+            },
+            {
+              "name": "Barry Juister",
+              "role": "Trustee"
+            }
+          ],
+          "comptrollerCode": "016/170/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Bob Greiner",
+              "role": "Fire Chief"
+            }
+          ],
+          "office": {
+            "address": "9301 Potter Rd",
+            "city": "Des Plaines IL 60016",
+            "phone": "(847) 297-5020"
+          }
+        },
+        "NORTH PALOS FIRE PROTECTION DISTRICT": {
+          "comptrollerCode": "016/180/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Steve Norvilas",
+              "role": "Fire Chief"
+            },
+            {
+              "name": "James Howard",
+              "role": "Accountant"
+            }
+          ],
+          "office": {
+            "address": "10629 S Roberts Rd",
+            "city": "Palos Hills IL 60465",
+            "email": "snorvilas@northpalosfire.org",
+            "phone": "(708) 974-4474"
+          }
+        },
+        "NORTHBROOK RURAL FIRE PROTECTION DIST": {
+          "board": [
+            {
+              "name": "Brian Reynen",
+              "role": "President"
+            },
+            {
+              "name": "Ric Warchol",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "016/150/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "740 Dundee Rd",
+            "city": "Northbrook IL 60062",
+            "phone": "(847) 272-2141"
+          }
+        },
+        "NORTHWEST HOMER FIRE PROTECTION DISTRICT": {
+          "comptrollerCode": "099/110/06",
+          "filedFor": "2025",
+          "filesIn": "Will",
+          "heads": [
+            {
+              "name": "Todd Fonfara",
+              "role": "Fire Chief"
+            },
+            {
+              "name": "James Howard",
+              "role": "Accountant"
+            }
+          ],
+          "office": {
+            "address": "16152 W 143rd St.",
+            "city": "Lockport IL 60491",
+            "phone": "(815) 838-0180"
+          }
+        },
+        "NORWOOD PARK FIRE PROTECTION DISTRICT": {
+          "board": [
+            {
+              "name": "Joanne Rybak",
+              "role": "Trustee"
+            },
+            {
+              "name": "Gina Santoro-Cotton",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "016/190/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "7447 W Lawrence Ave",
+            "city": "Harwood Heights IL 60706",
+            "email": "j.peistrup@norwoodparkfire.org",
+            "phone": "(708) 867-5428"
+          }
+        },
+        "OLYMPIA GARDENS FIRE PROTECTION DISTRICT": {
+          "board": [
+            {
+              "name": "WILLIAM TUCKER",
+              "role": "President"
+            },
+            {
+              "name": "Elena Leal",
+              "role": "Sec./Treas."
+            }
+          ],
+          "comptrollerCode": "016/210/06",
+          "filedFor": "2025",
+          "office": {}
+        },
+        "ORLAND FIRE PROTECTION DISTRICT": {
+          "board": [
+            {
+              "name": "Beth Damas Kaspar",
+              "role": "President"
+            },
+            {
+              "name": "Bridget Tolan",
+              "role": "Treasurer"
+            },
+            {
+              "name": "DJ Jeffers",
+              "role": "Secretary"
+            }
+          ],
+          "comptrollerCode": "016/230/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "9790 West 151st St",
+            "city": "Orland Park IL 60462",
+            "email": "financedirector@orlandfire.org",
+            "phone": "(708) 349-0074"
+          }
+        },
+        "PALOS FIRE PROTECTION DISTRICT": {
+          "comptrollerCode": "016/250/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Christopher Courtney",
+              "role": "Fire Chief"
+            },
+            {
+              "name": "James Howard",
+              "role": "Accountant"
+            }
+          ],
+          "office": {
+            "address": "8815 W 123rd St.",
+            "city": "Palos Park IL 60464",
+            "email": "paloschief@palosfire.org",
+            "phone": "(708) 449-0369"
+          }
+        },
+        "PALOS HEIGHTS FIRE PROTECTION DISTRICT": {
+          "board": [
+            {
+              "name": "Sheila Corrigan",
+              "role": "President"
+            },
+            {
+              "name": "Timothy Moriatry",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "016/260/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "12300 S. Harlem Ave.",
+            "city": "Palos Heights IL 60463",
+            "phone": "(708) 448-4272"
+          }
+        },
+        "PLEASANT VIEW FIRE PROTECTION DISTRICT": {
+          "comptrollerCode": "016/280/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Tim Donatucci",
+              "role": "Fire Chief"
+            },
+            {
+              "name": "Kathy Kirk",
+              "role": "Fin. Officer"
+            }
+          ],
+          "office": {
+            "address": "1970 Plainfield Rd",
+            "city": "La Grange Highlands IL 60525",
+            "phone": "(708) 352-9229"
+          }
+        },
+        "PROSPECT HEIGHTS FIRE PROTECTION DISTRICT": {
+          "comptrollerCode": "016/290/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Drew Smith",
+              "role": "Fire Chief"
+            },
+            {
+              "name": "Kelly Cossman",
+              "role": "Asst. Chief"
+            }
+          ],
+          "office": {
+            "address": "10 E Camp McDonald Rd",
+            "city": "Prospect Heights IL 60070",
+            "phone": "(847) 253-8060"
+          }
+        },
+        "ROBERTS PARK FIRE PROTECTION DISTRICT": {
+          "board": [
+            {
+              "name": "Brian Bernardoni",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "016/310/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Christopher Spoo",
+              "role": "Chief"
+            }
+          ],
+          "office": {
+            "address": "8611 S. Roberts Road",
+            "city": "Justice IL 60458",
+            "email": "scollaros@robertsparkfire.gov",
+            "phone": "(708) 598-6752"
+          }
+        },
+        "ROSELLE FIRE PROTECTION DISTRICT": {
+          "board": [
+            {
+              "name": "Andy Lauk",
+              "role": "President"
+            },
+            {
+              "name": "Jeff Goolish",
+              "role": "Trustee"
+            }
+          ],
+          "comptrollerCode": "022/185/06",
+          "filedFor": "2025",
+          "filesIn": "DuPage",
+          "office": {
+            "address": "100 E. Maple",
+            "city": "Roselle IL 60172"
+          }
+        },
+        "SUNNYCREST FIRE PROTECTION DISTRICT": {
+          "board": [
+            {
+              "name": "William Vitale",
+              "role": "President"
+            },
+            {
+              "name": "Charles Burke",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "016/340/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "2828 Flossmoor Road",
+            "city": "Flossmoor IL 60422"
+          }
+        },
+        "TRI-STATE FIRE PROTECTION DISTRICT": {
+          "comptrollerCode": "022/200/06",
+          "filedFor": "2025",
+          "filesIn": "DuPage",
+          "heads": [
+            {
+              "name": "Patrick Brenn",
+              "role": "Fire Chief"
+            },
+            {
+              "name": "Craig Jansen",
+              "role": "Asst. Fire Chief"
+            }
+          ],
+          "office": {
+            "address": "236 Sunrise Ave",
+            "city": "Willowbrook IL 60527",
+            "email": "pbrenn@tristatefd.com",
+            "phone": "(630) 323-6445"
+          }
+        },
+        "YORKFIELD FIRE PROTECTION DISTRICT": {
+          "board": [
+            {
+              "name": "James Flynn",
+              "role": "President"
+            },
+            {
+              "name": "John Fennell",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "016/360/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "P.O Box 1305",
+            "city": "Elmhurst IL 60126-5354"
+          }
+        }
+      }
+    },
+    "kendall": {
+      "fire": {
+        "BRISTOL-KENDALL FPD": {
+          "comptrollerCode": "047/010/06",
+          "filedFor": "2026",
+          "heads": [
+            {
+              "name": "Jeremy Messersmith",
+              "role": "Fire Chief"
+            }
+          ],
+          "office": {
+            "address": "103 E Beaver St",
+            "city": "Yorkville IL 60560",
+            "phone": "(630) 553-6186"
+          }
+        },
+        "LITTLE ROCK-FOX FPD": {
+          "board": [
+            {
+              "name": "Donald Brummel",
+              "role": "President"
+            },
+            {
+              "name": "Paul Eichelburger",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "047/030/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "5 East North St",
+            "city": "Plano IL 60545",
+            "phone": "(630) 552-3311"
+          }
+        },
+        "MINOOKA FPD": {
+          "board": [
+            {
+              "name": "Daniel Roberts",
+              "role": "President"
+            },
+            {
+              "name": "Angela Robinson",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "032/030/06",
+          "filedFor": "2025",
+          "filesIn": "Grundy",
+          "office": {
+            "address": "7901 E Minooka Rd",
+            "city": "Minooka IL 60447",
+            "email": "robinsona@minookafire.com",
+            "phone": "(815) 467-5637"
+          }
+        },
+        "MONTGOMERY FPD": {
+          "comptrollerCode": "045/120/06",
+          "filedFor": "2025",
+          "filesIn": "Kane",
+          "heads": [
+            {
+              "name": "Tom Meyers",
+              "role": "Fire Chief"
+            },
+            {
+              "name": "Kristi Farnum",
+              "role": "Asst. Treasurer"
+            }
+          ],
+          "office": {
+            "address": "198 S Railroad St",
+            "city": "Montgomery IL 60538",
+            "email": "kfarnum@montgomeryfire.org",
+            "phone": "(630) 897-0622"
+          }
+        },
+        "NEWARK FPD": {
+          "board": [
+            {
+              "name": "David Thompson",
+              "role": "President"
+            },
+            {
+              "name": "Clint Vaughn",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "047/040/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "101 E Main St",
+            "city": "Newark IL 60541",
+            "phone": "(815) 695-5147"
+          }
+        },
+        "OSWEGO FPD": {
+          "board": [
+            {
+              "name": "Rodger Long",
+              "role": "President"
+            },
+            {
+              "name": "Kenneth Holmstrom",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "047/050/06",
+          "filedFor": "2026",
+          "office": {
+            "address": "3511 Wooley Rd",
+            "city": "Oswego IL 60543",
+            "email": "wknack@oswegofire.com",
+            "phone": "(630) 554-2110"
+          }
+        },
+        "PLAINFIELD FPD": {
+          "comptrollerCode": "099/120/06",
+          "filedFor": "2025",
+          "filesIn": "Will",
+          "heads": [
+            {
+              "name": "Vito Bonomo",
+              "role": "Fire Chief"
+            },
+            {
+              "name": "James Howard",
+              "role": "Fin. Officer"
+            }
+          ],
+          "office": {
+            "address": "23748 W. 135th Street",
+            "city": "Plainfield IL 60544",
+            "email": "Vbonomo@plainfieldfpd.com",
+            "phone": "(815) 436-5335"
+          }
+        },
+        "SANDWICH FPD": {
+          "board": [
+            {
+              "name": "JEFF BEVERAGE",
+              "role": "Trustee"
+            },
+            {
+              "name": "MATT WEISMILLER",
+              "role": "Trustee"
+            }
+          ],
+          "comptrollerCode": "019/070/06",
+          "filedFor": "2025",
+          "filesIn": "DeKalb",
+          "office": {
+            "address": "310 E RAILROAD ST",
+            "city": "SANDWICH IL 60548",
+            "email": "dhagerty@sandwichfd.org",
+            "phone": "(815) 786-9241"
+          }
+        },
+        "TROY FPD": {
+          "board": [
+            {
+              "name": "George Muentnich",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "099/140/06",
+          "filedFor": "2026",
+          "filesIn": "Will",
+          "office": {
+            "address": "700 Cottage",
+            "city": "Shorewood IL 60404-9375",
+            "email": "rhughes@troyfpd.com",
+            "phone": "(815) 725-2149"
+          }
+        }
+      },
+      "park": {
+        "FOX VALLEY PARK": {
+          "comptrollerCode": "045/050/12",
+          "filedFor": "2025",
+          "filesIn": "Kane",
+          "heads": [
+            {
+              "name": "Jennifer Paprocki",
+              "role": "Director"
+            },
+            {
+              "name": "John Goll",
+              "role": "Fin. Officer"
+            }
+          ],
+          "office": {
+            "address": "101 W Illinois Ave",
+            "city": "Aurora IL 60506-5989",
+            "phone": "(630) 897-0516"
+          }
+        },
+        "JOLIET PARK": {
+          "comptrollerCode": "099/040/12",
+          "filedFor": "2025",
+          "filesIn": "Will",
+          "heads": [
+            {
+              "name": "Brad Staab",
+              "role": "Director"
+            },
+            {
+              "name": "Glenn Kelley",
+              "role": "Fin. Officer/Treas."
+            }
+          ],
+          "office": {
+            "address": "3000 W. Jefferson St.",
+            "city": "Joliet IL 60435",
+            "email": "bstaab@jolietpark.org",
+            "phone": "(815) 741-7275"
+          }
+        },
+        "OSWEGOLAND PARK DIST": {
+          "comptrollerCode": "047/010/12",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Chad Feldotto",
+              "role": "Director"
+            },
+            {
+              "name": "Tina Ward",
+              "role": "Fin. Officer"
+            }
+          ],
+          "office": {
+            "address": "3220 Grove Road",
+            "city": "Oswego IL 60543"
+          }
+        },
+        "PLAINFIELD PARK DIST": {
+          "board": [
+            {
+              "name": "Maureen Nugent",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "099/085/12",
+          "filedFor": "2025",
+          "filesIn": "Will",
+          "heads": [
+            {
+              "name": "Carlo Capalbo",
+              "role": "Director"
+            }
+          ],
+          "office": {
+            "address": "23729 W Ottawa St",
+            "city": "Plainfield IL 60544",
+            "phone": "(815) 436-8812"
+          }
+        },
+        "SANDWICH PARK DIST": {
+          "board": [
+            {
+              "name": "Dan Hoyt",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "019/060/12",
+          "filedFor": "2026",
+          "filesIn": "DeKalb",
+          "heads": [
+            {
+              "name": "Bill Novicki",
+              "role": "Director"
+            },
+            {
+              "name": "Tes Isham",
+              "role": "Accountant"
+            }
+          ],
+          "office": {
+            "address": "1001 N Latham St.",
+            "city": "Sandwich IL 60548",
+            "phone": "(815) 786-8044"
+          }
+        }
+      }
+    },
+    "macon": {
+      "fire": {
+        "Bethany": {
+          "board": [
+            {
+              "name": "JACKIE MCLAIN",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "070/020/06",
+          "filedFor": "2024",
+          "filesIn": "Moultrie",
+          "heads": [
+            {
+              "name": "TRACY ELLIS",
+              "role": "Treas./Admin."
+            }
+          ],
+          "office": {
+            "address": "530 E MAIN",
+            "city": "BETHANY IL 61914",
+            "phone": "(217) 665-3726"
+          }
+        },
+        "BlueMound": {
+          "board": [
+            {
+              "name": "Joseph Gorden",
+              "role": "President"
+            },
+            {
+              "name": "Jeffrey Brown",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "055/020/06",
+          "filedFor": "2024",
+          "office": {}
+        },
+        "CerroGordo": {
+          "board": [
+            {
+              "name": "Tyler Morganthaler",
+              "role": "President"
+            },
+            {
+              "name": "Gary Shaffer",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "074/020/06",
+          "filedFor": "2025",
+          "filesIn": "Piatt",
+          "office": {
+            "address": "PO Box 365",
+            "city": "Cerro Gordo IL 61818",
+            "phone": "(217) 763-6404"
+          }
+        },
+        "Ciso": {
+          "board": [
+            {
+              "name": "Greg Briggs",
+              "role": "President"
+            },
+            {
+              "name": "Troy Cary",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "074/030/06",
+          "filedFor": "2025",
+          "filesIn": "Piatt",
+          "office": {}
+        },
+        "Dora": {
+          "board": [
+            {
+              "name": "Mike Holthaus",
+              "role": "President"
+            },
+            {
+              "name": "Bill Richardson",
+              "role": "Trustee"
+            }
+          ],
+          "comptrollerCode": "070/030/06",
+          "filedFor": "2025",
+          "filesIn": "Moultrie",
+          "heads": [
+            {
+              "name": "Bob Weltig",
+              "role": "Fin. Officer"
+            }
+          ],
+          "office": {}
+        },
+        "Harristown": {
+          "board": [
+            {
+              "name": "Craig Jones",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "055/030/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Mark Nixon",
+              "role": "Chief"
+            }
+          ],
+          "office": {
+            "address": "4417 W MAIN STREET",
+            "city": "HARRISTOWN IL 62522",
+            "email": "mdnixon@harristownfpd.org",
+            "phone": "(217) 423-2912"
+          }
+        },
+        "HickoryPoint": {
+          "board": [
+            {
+              "name": "Ricky Goforth",
+              "role": "President"
+            },
+            {
+              "name": "Tim McQuality",
+              "role": "Trustee"
+            }
+          ],
+          "comptrollerCode": "055/040/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "450 W. Smith Street",
+            "city": "Forsyth IL 62535",
+            "phone": "(217) 877-1398"
+          }
+        },
+        "Kenny": {
+          "board": [
+            {
+              "name": "Spencer Thomas",
+              "role": "President"
+            },
+            {
+              "name": "Rebecca Perry",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "020/015/06",
+          "filedFor": "2025",
+          "filesIn": "Dewitt",
+          "office": {
+            "address": "PO Box 196",
+            "city": "Kenney IL 61749",
+            "email": "kfpd@kenneyfire.org"
+          }
+        },
+        "Latham": {
+          "board": [
+            {
+              "name": "Dan Hawk",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "054/050/06",
+          "filedFor": "2025",
+          "filesIn": "Logan",
+          "heads": [
+            {
+              "name": "Dan Wickline",
+              "role": "Treas./Admin."
+            }
+          ],
+          "office": {
+            "email": "Latham.Fire.dist@Gmail.com"
+          }
+        },
+        "Maroa": {
+          "board": [
+            {
+              "name": "Jason Brelsfoard",
+              "role": "Treasurer"
+            },
+            {
+              "name": "James Wade",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "055/060/06",
+          "filedFor": "2025",
+          "office": {}
+        },
+        "MtPulaski": {
+          "board": [
+            {
+              "name": "Steve Mason",
+              "role": "Trustee"
+            },
+            {
+              "name": "Kevin Coers",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "054/080/06",
+          "filedFor": "2025",
+          "filesIn": "Logan",
+          "office": {
+            "address": "612 E Dekalb St",
+            "city": "Mt Pulaski IL 62548",
+            "phone": "(217) 792-5222"
+          }
+        },
+        "Niantic": {
+          "board": [
+            {
+              "name": "JAMES MATICH",
+              "role": "President"
+            },
+            {
+              "name": "WESLEY HENNE",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "055/080/06",
+          "filedFor": "2025",
+          "office": {}
+        },
+        "SouthMacon": {
+          "board": [
+            {
+              "name": "Scott Wise",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "055/090/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Todd Collins",
+              "role": "Accountant"
+            }
+          ],
+          "office": {
+            "phone": "(217) 836-6908"
+          }
+        },
+        "SouthWheatland": {
+          "comptrollerCode": "055/100/06",
+          "filedFor": "2024",
+          "heads": [
+            {
+              "name": "Sid Duffer",
+              "role": "Accountant"
+            },
+            {
+              "name": "Sid Duffer",
+              "role": "Treas./Admin."
+            }
+          ],
+          "office": {}
+        }
+      },
+      "park": {
+        "Decatur": {
+          "comptrollerCode": "055/010/12",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Clay Gerhard",
+              "role": "Director"
+            },
+            {
+              "name": "Laura Cooper",
+              "role": "C.F.O."
+            }
+          ],
+          "office": {
+            "address": "620 Riverside Ave",
+            "city": "Decatur IL 62521",
+            "phone": "(217) 422-5911"
+          }
+        },
+        "FriendsCreek": {
+          "board": [
+            {
+              "name": "Greg Briggs",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "055/040/12",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Greg Briggs",
+              "role": "Treas./Admin."
+            }
+          ],
+          "office": {}
+        },
+        "Illini": {
+          "comptrollerCode": "055/020/12",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Nancy Brohar",
+              "role": "Accountant"
+            },
+            {
+              "name": "kamisha fromm",
+              "role": "C.F.O."
+            }
+          ],
+          "office": {}
+        },
+        "Niantic": {
+          "board": [
+            {
+              "name": "Alysia Matich",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "055/030/12",
+          "filedFor": "2024",
+          "heads": [
+            {
+              "name": "Amy Webb",
+              "role": "Treas./Admin."
+            }
+          ],
+          "office": {
+            "email": "nianticparkdistrict@gmail.com"
+          }
+        },
+        "Whitmore": {
+          "board": [
+            {
+              "name": "Kent Howell",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "055/035/12",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Doug Conway",
+              "role": "C.E.O."
+            }
+          ],
+          "office": {}
+        }
+      }
+    },
+    "rock-island": {
+      "fire": {
+        "ANDALUSIA FPD": {
+          "board": [
+            {
+              "name": "Jim Bohnsack",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "081/010/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Ron Vroman",
+              "role": "Treas./Admin."
+            }
+          ],
+          "office": {}
+        },
+        "BLACKHAWK FPD": {
+          "comptrollerCode": "081/030/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Ron Heinzman",
+              "role": "Executive"
+            },
+            {
+              "name": "Danielle DeWaele",
+              "role": "Fin. Officer"
+            }
+          ],
+          "office": {
+            "address": "102 3rd St W",
+            "city": "Milan IL 61264"
+          }
+        },
+        "BOWLESBURG FPD": {
+          "board": [
+            {
+              "name": "LAURA SULLIVAN",
+              "role": "President"
+            },
+            {
+              "name": "GREGORY HART",
+              "role": "Trustee"
+            },
+            {
+              "name": "Carol Near",
+              "role": "Sec./Treas."
+            }
+          ],
+          "comptrollerCode": "081/040/06",
+          "filedFor": "2024",
+          "office": {}
+        },
+        "BUFFALO PRAIRIE FPD": {
+          "board": [
+            {
+              "name": "WADE HOFER",
+              "role": "President"
+            },
+            {
+              "name": "STANLEY BORUFF",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "081/050/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "25921 190TH AVE W",
+            "city": "ILLINOIS CITY IL 61259",
+            "phone": "(309) 537-3323"
+          }
+        },
+        "CAMBELLS ISLAND FPD": {
+          "comptrollerCode": "081/060/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Randy David",
+              "role": "C.E.O."
+            },
+            {
+              "name": "Tracey Hannan",
+              "role": "C.F.O."
+            }
+          ],
+          "office": {}
+        },
+        "COAL VALLEY FPD": {
+          "board": [
+            {
+              "name": "Gerry Stahr",
+              "role": "President"
+            },
+            {
+              "name": "Mark Gast",
+              "role": "Sec./Treas."
+            }
+          ],
+          "comptrollerCode": "081/070/06",
+          "filedFor": "2024",
+          "office": {
+            "address": "103 W 18th Ave",
+            "city": "Coal Valley IL 61240",
+            "phone": "(309) 799-5534"
+          }
+        },
+        "CORDOVA FPD": {
+          "board": [
+            {
+              "name": "Connie Stratton",
+              "role": "President"
+            },
+            {
+              "name": "Kate McCorkle",
+              "role": "Secretary"
+            }
+          ],
+          "comptrollerCode": "081/080/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "906 Main Ave, PO Box 331",
+            "city": "Cordova IL 61242",
+            "email": "cordovafire@yahoo.com",
+            "phone": "(309) 654-2371"
+          }
+        },
+        "COYNE CTR FPD/EMS": {
+          "board": [
+            {
+              "name": "Thomas Smith",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "081/090/06",
+          "filedFor": "2024",
+          "heads": [
+            {
+              "name": "Brent Bowlyou",
+              "role": "Treas./Admin."
+            }
+          ],
+          "office": {
+            "address": "1624 Coyne Center Rd",
+            "city": "Coyne Center IL 61264",
+            "phone": "(309) 787-2459"
+          }
+        },
+        "EAST MOLINE RURAL FPD": {
+          "board": [
+            {
+              "name": "Annette Roby",
+              "role": "President"
+            },
+            {
+              "name": "Tim Wolfe",
+              "role": "Sec./Treas."
+            }
+          ],
+          "comptrollerCode": "081/100/06",
+          "filedFor": "2025",
+          "office": {}
+        },
+        "FOUR-WAY FPD": {
+          "comptrollerCode": "081/110/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "Roy McDonnell",
+              "role": "C.E.O."
+            },
+            {
+              "name": "Roy McDonnell",
+              "role": "C.F.O."
+            }
+          ],
+          "office": {}
+        },
+        "HILLSDALE FPD": {
+          "board": [
+            {
+              "name": "Richard Mitton",
+              "role": "President"
+            },
+            {
+              "name": "Sarah Carls",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "081/120/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "412 Main St PO Box 207",
+            "city": "Hillsdale IL 61257"
+          }
+        },
+        "ORION FPD": {
+          "board": [
+            {
+              "name": "Debra Dahl",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "037/080/06",
+          "filedFor": "2025",
+          "filesIn": "Henry",
+          "heads": [
+            {
+              "name": "Randy DeBaillie",
+              "role": "Supervisor"
+            }
+          ],
+          "office": {}
+        },
+        "RAPIDS CITY FPD": {
+          "board": [
+            {
+              "name": "Randy Garrison",
+              "role": "President"
+            },
+            {
+              "name": "Denise Caldwell",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "081/130/06",
+          "filedFor": "2025",
+          "office": {}
+        },
+        "REYNOLDS FPD": {
+          "board": [
+            {
+              "name": "Joe DeMarlie",
+              "role": "President"
+            },
+            {
+              "name": "Ann Jahn",
+              "role": "Sec./Treas."
+            }
+          ],
+          "comptrollerCode": "081/140/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "Box 201",
+            "city": "Reynolds IL 61279"
+          }
+        },
+        "SHERRARD FPD": {
+          "board": [
+            {
+              "name": "Larry Rhodenbaugh",
+              "role": "Chairperson"
+            },
+            {
+              "name": "Chris Whan",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "066/070/06",
+          "filedFor": "2025",
+          "filesIn": "Mercer",
+          "office": {}
+        },
+        "SOUTH MOLINE FPD": {
+          "board": [
+            {
+              "name": "Gerald Scott Jorgensen",
+              "role": "President"
+            },
+            {
+              "name": "Keela Gustman",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "081/150/06",
+          "filedFor": "2025",
+          "office": {}
+        }
+      },
+      "park": {
+        "CORDOVA PARK": {
+          "board": [
+            {
+              "name": "Eric Case",
+              "role": "V-President"
+            },
+            {
+              "name": "Theresa Vesely",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "081/005/12",
+          "filedFor": "2026",
+          "office": {}
+        }
+      }
+    },
+    "stark": {
+      "fire": {
+        "Bradford Fire Department": {
+          "board": [
+            {
+              "name": "Jason Cresto",
+              "role": "President"
+            },
+            {
+              "name": "Les Fehr",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "087/010/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "239 W Main St",
+            "city": "Bradford IL 61421",
+            "email": "bradfordfiretrustees@gmail.com",
+            "phone": "(309) 897-8100"
+          }
+        },
+        "Kewanee Rural Fire Department": {
+          "comptrollerCode": "037/070/06",
+          "filedFor": "2024",
+          "filesIn": "Henry",
+          "heads": [
+            {
+              "name": "Ellis Ericson",
+              "role": "Fire Chief"
+            },
+            {
+              "name": "Karin Cook",
+              "role": "Bookkeeper"
+            }
+          ],
+          "office": {
+            "address": "120 W 8th St",
+            "city": "Kewanee IL 61443",
+            "phone": "(309) 856-5291"
+          }
+        },
+        "LaFayette Fire Department": {
+          "board": [
+            {
+              "name": "Ross Walker",
+              "role": "President"
+            },
+            {
+              "name": "Robert Winans",
+              "role": "Sec./Treas."
+            }
+          ],
+          "comptrollerCode": "087/020/06",
+          "filedFor": "2025",
+          "office": {}
+        },
+        "Neponset Fire Department": {
+          "board": [
+            {
+              "name": "Thomas Blake",
+              "role": "President"
+            },
+            {
+              "name": "Dave Mueller",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "006/100/06",
+          "filedFor": "2025",
+          "filesIn": "Bureau",
+          "office": {
+            "address": "105 S Harlan Street",
+            "city": "Neponset IL 61345"
+          }
+        },
+        "Toulon Fire Department": {
+          "board": [
+            {
+              "name": "William Foglesong",
+              "role": "Trustee"
+            },
+            {
+              "name": "Chris Henderson",
+              "role": "Trustee"
+            }
+          ],
+          "comptrollerCode": "087/030/06",
+          "filedFor": "2025",
+          "office": {
+            "email": "firetoulon@gmail.com"
+          }
+        },
+        "Wyoming/Speer Fire Department": {
+          "board": [
+            {
+              "name": "Ross Elsasser",
+              "role": "President"
+            },
+            {
+              "name": "Kevin Scholl",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "087/040/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "P.O. Box 302",
+            "city": "Wyoming IL 61491"
+          }
+        }
+      },
+      "park": {
+        "Bradford Park District": {
+          "board": [
+            {
+              "name": "Dale Hoffert",
+              "role": "President"
+            },
+            {
+              "name": "Thomas Ryan",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "087/020/12",
+          "filedFor": "2025",
+          "office": {}
+        },
+        "LaFayette Park District": {
+          "board": [
+            {
+              "name": "Justin Knowles",
+              "role": "President"
+            },
+            {
+              "name": "Keith Knowles",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "087/010/12",
+          "filedFor": "2025",
+          "office": {}
+        }
+      }
+    },
+    "stephenson": {
+      "fire": {
+        "Cedarville Fire": {
+          "comptrollerCode": "089/010/06",
+          "filedFor": "2025",
+          "heads": [
+            {
+              "name": "darrell heck",
+              "role": "C.E.O."
+            },
+            {
+              "name": "jeremy bonnett",
+              "role": "Director"
+            }
+          ],
+          "office": {}
+        },
+        "Dakota Fire-Ambulance": {
+          "board": [
+            {
+              "name": "David Parish",
+              "role": "Chairperson"
+            },
+            {
+              "name": "George Suess",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "089/020/06",
+          "filedFor": "2025",
+          "office": {
+            "email": "daveparish@dakotafire.org",
+            "phone": "(815) 821-5920"
+          }
+        },
+        "Davis Fire-Ambulance": {
+          "board": [
+            {
+              "name": "Doug Heilemeir",
+              "role": "President"
+            },
+            {
+              "name": "Randall Lawson",
+              "role": "Sec./Treas."
+            }
+          ],
+          "comptrollerCode": "089/030/06",
+          "filedFor": "2025",
+          "office": {}
+        },
+        "Forreston Fire-Ambulance": {
+          "board": [
+            {
+              "name": "Richard Runte",
+              "role": "President"
+            },
+            {
+              "name": "Lee Black",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "071/020/06",
+          "filedFor": "2025",
+          "filesIn": "Ogle",
+          "office": {
+            "address": "PO Box 212",
+            "city": "Forreston IL 61030"
+          }
+        },
+        "Freeport Rural Fire-Ambulance": {
+          "board": [
+            {
+              "name": "David Libby",
+              "role": "President"
+            },
+            {
+              "name": "Richard Hauser",
+              "role": "Treasurer"
+            },
+            {
+              "name": "Bart Knutson",
+              "role": "Secretary"
+            }
+          ],
+          "comptrollerCode": "089/040/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "P.O. Box 57",
+            "city": "Freeport IL 61032",
+            "email": "freeportrfpd@gmail.com",
+            "phone": "(815) 650-3544"
+          }
+        },
+        "German Valley Fire-Ambulance": {
+          "board": [
+            {
+              "name": "Duane Boomgarden",
+              "role": "President"
+            },
+            {
+              "name": "Alison Zettle",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "089/050/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "600 Church Street",
+            "city": "German Valley IL 61039",
+            "phone": "(815) 362-2245"
+          }
+        },
+        "Lena Fire": {
+          "board": [
+            {
+              "name": "Jason Kempel",
+              "role": "President"
+            },
+            {
+              "name": "James Noller",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "089/060/06",
+          "filedFor": "2025",
+          "office": {}
+        },
+        "Orangeville Fire": {
+          "board": [
+            {
+              "name": "Mike Barth",
+              "role": "President"
+            },
+            {
+              "name": "Cheyanne Doyle",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "089/070/06",
+          "filedFor": "2026",
+          "office": {}
+        },
+        "Pearl City Fire": {
+          "board": [
+            {
+              "name": "Larry Johnson",
+              "role": "Treasurer"
+            },
+            {
+              "name": "Brent Schneider",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "089/080/06",
+          "filedFor": "2025",
+          "office": {
+            "address": "300 Station Street",
+            "city": "Pearl City IL 61062",
+            "phone": "(815) 985-5066"
+          }
+        },
+        "Pecatonica Fire-Ambulance": {
+          "board": [
+            {
+              "name": "Mark Highland",
+              "role": "President"
+            },
+            {
+              "name": "Gary Larrow",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "101/080/06",
+          "filedFor": "2025",
+          "filesIn": "Winnebago",
+          "office": {
+            "address": "1221 Main St",
+            "city": "Pecatonica IL 61063",
+            "email": "gary.larrow@pecatonicafire.com",
+            "phone": "(815) 239-2513"
+          }
+        },
+        "Rock City Fire-Ambulance": {
+          "board": [
+            {
+              "name": "Todd Webber",
+              "role": "Chairperson"
+            },
+            {
+              "name": "George Suess",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "089/090/06",
+          "filedFor": "2025",
+          "office": {
+            "phone": "(815) 821-5920"
+          }
+        },
+        "Shannon Fire-Ambulance": {
+          "board": [
+            {
+              "name": "Tom Kempel",
+              "role": "President"
+            },
+            {
+              "name": "Adam Miller",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "008/050/06",
+          "filedFor": "2025",
+          "filesIn": "Carroll",
+          "office": {
+            "address": "14 S. Hickory St",
+            "city": "Shannon IL 61078",
+            "email": "jklinefelter@shannonfire.org",
+            "phone": "(815) 864-2142"
+          }
+        },
+        "Warren Fire-Ambulance": {
+          "board": [
+            {
+              "name": "John Williston",
+              "role": "President"
+            }
+          ],
+          "comptrollerCode": "043/085/06",
+          "filedFor": "2025",
+          "filesIn": "Jo Daviess",
+          "heads": [
+            {
+              "name": "Mark Wulfekuhle",
+              "role": "Treas./Admin."
+            }
+          ],
+          "office": {}
+        },
+        "Winslow Fire": {
+          "board": [
+            {
+              "name": "Tony Reidel",
+              "role": "President"
+            },
+            {
+              "name": "Brock Kent",
+              "role": "Sec./Treas."
+            }
+          ],
+          "comptrollerCode": "089/100/06",
+          "filedFor": "2025",
+          "office": {
+            "phone": "(815) 291-4246"
+          }
+        }
+      }
+    }
+  },
+  "generated": "2026-09-11T06:57:36Z",
+  "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
+  "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
+  "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
+}
