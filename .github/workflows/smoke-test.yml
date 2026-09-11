@@ -386,6 +386,17 @@ jobs:
       - name: Layer counts in prose match the worksheets
         run: python3 scripts/validate_doc_counts.py
 
+      # Every authored page's <title> and meta description against what Google
+      # shows. generate_metro_files.py already gates the six worksheet-driven
+      # index.html pages and has held since 2026-09-09 — not one of them is
+      # over. It cannot see the other forty pages, and on 2026-09-11 nine
+      # titles and twenty-three descriptions were: a 252-character description
+      # on traffic.html, and an 85-character double-question title on
+      # ny/community-board.html that spent its whole tail on the brand. Surface
+      # DISCOVERED, not listed. Stdlib only.
+      - name: Titles and descriptions fit a search result
+        run: python3 scripts/validate_serp_lengths.py
+
       # The Jasper test decides whether a county's precinct fabric is still the
       # Census 2020 fabric, and its five reconciliation causes are the
       # difference between reading a county as re-precincted and reading it as

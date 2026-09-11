@@ -197,9 +197,12 @@ def build_instance(inst, w):
     fontface = read(FONTFACE, "the self-hosted font CSS").rstrip("\n")
 
     title = "History — %s" % app_name
-    desc = ("How the %s deployment grew, what it checks on a schedule, and the "
-            "corrections its own machinery has caught — dated, measured, and "
-            "regenerated with every change." % place)
+    # 155 characters at the longest place name (Wisconsin), measured — see
+    # scripts/validate_serp_lengths.py. Trimmed from the FRONT so the tail,
+    # which is what distinguishes this page from every other changelog,
+    # survives truncation.
+    desc = ("How the %s deployment grew and what it checks on a schedule — "
+            "dated, measured, and regenerated with every change." % place)
 
     return """<!DOCTYPE html>
 <html lang="en">
