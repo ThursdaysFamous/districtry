@@ -24,7 +24,7 @@ Targets (region name -> file):
 
 Opt-in targets, emitted only when the worksheet carries the key that turns them
 on (a fork without the key sees a byte-identical file and an untouched gate):
-    verified-date     -> index.html   (the one line the footer's date is set from;
+    verified-date     -> index.html   (the footer's date, rendered INTO the element;
                                        key: verified_date)
     perf-config       -> the performance harness's anchor point + offline layer
                                        list, which must mirror smoke-config
@@ -454,7 +454,20 @@ def render_perf_config(w):
 
 
 def render_verified_date(w):
-    return '  verifiedEl.textContent = %s;' % js_str(w["verified_date"])
+    """The footer's date, SERVER-RENDERED into the element rather than assigned
+    to it at boot.
+
+    It used to be one line of JavaScript writing into an empty
+    <strong id="verified-date">, which meant the raw HTML of all six instances
+    carried no date at all — measured 2026-09-11, every one of them shipped the
+    element empty. A crawler that does not execute JavaScript therefore saw a
+    page making no freshness claim, on a tool whose entire value is who holds a
+    seat NOW. sources.html had been server-rendering the same worksheet key
+    since it shipped, so the pattern was already here; index.html was the
+    surface that never got it.
+    """
+    return ('          <strong id="verified-date">%s</strong>'
+            % html_esc(w["verified_date"]))
 
 
 # ------------------------------------------------------------- brand-as-data
