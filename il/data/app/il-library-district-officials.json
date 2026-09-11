@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-11T01:19:53Z",
+  "generated": "2026-09-11T14:39:15Z",
   "libraries": {
     "Alpha Park Public Library District": {
       "comptrollerCode": "072/010/10",
@@ -2117,6 +2117,26 @@
         "address": "117 S Main PO Box 560",
         "city": "Mackinaw IL 61755",
         "phone": "(309) 359-8022"
+      }
+    },
+    "Macomb Public Library District": {
+      "board": [
+        {
+          "name": "GEORGE WANAMAKER",
+          "role": "Chairperson"
+        },
+        {
+          "name": "STACY DORSETT",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "062/040/10",
+      "filedFor": "2025",
+      "filesIn": "Mcdonough",
+      "office": {
+        "address": "235 S LAFAYETTE",
+        "city": "MACOMB IL 61455",
+        "phone": "(309) 833-2714"
       }
     },
     "Maquon Public Library District": {

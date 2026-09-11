@@ -135,8 +135,18 @@ COUNTIES = (
 UNIT_TYPE = " - a Public Library District in "
 
 # Trailing governance words, stripped iteratively from both sides of the match.
+# A BARE TRAILING "public" IS HERE BECAUSE THE WAREHOUSE'S LABELS CARRY ONE.
+# Its label is the unit's name with the governance words already removed, so
+# "Macomb Public Library District" files as "Macomb Public" — the card strips
+# the whole phrase and reaches "macomb" while the unit stopped at
+# "macomb public", and the two never met. That put a real library board in the
+# residue as "filed nowhere in Illinois" (measured 2026-09-11; the other
+# fourteen names in that class genuinely file nothing, by two searches each).
+# Stripping one more word makes a key shorter and so likelier to collide, which
+# is why the run's own ambiguity report is the check: no two of the 373 card
+# names collide on it, and a unit collision is reported rather than matched.
 TAIL = ("public library district", "library district", "district library",
-        "public library", "district", "library")
+        "public library", "district", "library", "public")
 # Abbreviations the Warehouse uses and the boundary layer spells out.
 ABBREV = ((r"\bmt\b", "mount"), (r"\bst\b", "saint"), (r"\bco\b", "county"),
           (r"\bpub\b", "public"), (r"\bdist\b", "district"), (r"\bmem\b", "memorial"))
