@@ -356,9 +356,19 @@ h1 {
    floor for 15px text. Dark ink on the same violet is 6.76:1, and on the
    --brand-700 hover (#c4b0ff) 9.64:1. This is the one place on the page where
    a token pair reverses its foreground, so it is stated rather than inherited. */
+/* THE PADDING AND LINE-HEIGHT ARE THE TAP TARGET, and the desktop layout hides
+   it. .search-row is align-items:stretch, so in a ROW the button inherits the
+   input's 46px and looks fine; at the mobile breakpoint the row becomes a
+   COLUMN, stretch governs width instead, and the height collapsed to the
+   content box -- 15px of line plus 2px of border, measured at 308x17 against
+   the input's 308x46 directly above it. That is under the 24px WCAG 2.2 AA
+   floor, on the page's only conversion action, on the 62% of visits that are
+   mobile. Sized here to match the input exactly rather than merely to clear
+   the floor: same 12px block padding, same 1.3 line-height, so both boxes
+   compute to 46px and the pair cannot drift apart again. */
 .search-button {
-  flex: 0 0 auto; padding: 0 22px;
-  font: var(--font-heading-weight) 15px/1 var(--font-heading); color: #fff;
+  flex: 0 0 auto; padding: 12px 22px;
+  font: var(--font-heading-weight) 15px/1.3 var(--font-heading); color: #fff;
   background: var(--brand-600); border: 1px solid var(--brand-600);
   border-radius: var(--radius-btn); cursor: pointer; white-space: nowrap;
 }

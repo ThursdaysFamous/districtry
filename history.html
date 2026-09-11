@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Moved — History</title>
+<!-- REDIRECT SHELL. This path was an indexed page on chidistricts.com before the app moved
+     under /il/ (R2.3) and the domain moved to districtry.com (R5). Squarespace forwards the
+     old host to this one WITH the path intact, so the forward arrives here — at a path that
+     no longer holds a page — and 404s. That is search equity landing on nothing: GSC records
+     this URL with real impressions.
+
+     GitHub Pages cannot issue a 301, so this is the strongest available substitute: an
+     instant meta refresh (Google treats it as a redirect), a canonical naming the real page
+     so the signal consolidates there, and a JS replace so the browser leaves no history
+     entry. Deliberately NOT noindex — that would block the consolidation this exists to do.
+
+     Put a real 301 in front of the origin (a CDN/proxy layer) and these can be deleted. -->
+<meta http-equiv="refresh" content="0; url=/il/history.html" />
+<link rel="canonical" href="https://districtry.com/il/history.html" />
+<script>location.replace("/il/history.html" + location.search + location.hash);</script>
+<style>
+  body { margin: 0; padding: 48px 20px; background: #f4f7f9; color: #14181c;
+         font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  main { max-width: 34rem; margin: 0 auto; }
+  a { color: #5730ab; font-weight: 600; }
+</style>
+</head>
+<body>
+<main>
+  <h1>This page moved</h1>
+  <p>The project history now lives at
+    <a href="/il/history.html">districtry.com/il/history.html</a>.</p>
+  <p>You should be redirected automatically. If not, follow the link above.</p>
+</main>
+</body>
+</html>
