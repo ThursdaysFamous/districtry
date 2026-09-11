@@ -20,7 +20,7 @@ nineteen ways for an unrelated outage to fail the build. So the scraper records
 the names it read and the builder measures against those.
 
 A FIRE CARD AND A PARK CARD IN ONE COUNTY CAN SHARE A NAME. Macon's layers both
-draw a `BlueMound` and both draw a `Niantic` — four separate bodies filing four
+draw a `Blue Mound` and both draw a `Niantic` — four separate bodies filing four
 separate reports — so the layer is part of the key and the build fails if the
 two levels ever collapse.
 

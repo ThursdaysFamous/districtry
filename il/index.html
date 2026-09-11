@@ -12523,8 +12523,8 @@ function initChiExplorer() {
    * scraper reads them: Cook (fire), Kendall, Macon, Rock Island and Stark
    * (fire and park), and Stephenson (fire). Keyed by county, then by LAYER,
    * then by the name the boundary file writes — Macon's fire and park layers
-   * both draw a BlueMound and both draw a Niantic, and they are four different
-   * bodies. scripts/il_special_district_officials_scraper.py. */
+   * both draw a Blue Mound and both draw a Niantic, and they are four
+   * different bodies. scripts/il_special_district_officials_scraper.py. */
   var loadIlSpecialDistrictOfficials = makeCached(function () {
     return fetchJSONWithRetry("data/app/il-special-district-officials.json", {}, 2);
   });
@@ -13021,9 +13021,12 @@ function initChiExplorer() {
    * say "Join_Dissolved" but the dissolve was run on a parcel join and kept
    * every road void — the 2026-08-16 fabric survey measured 1318/960/556
    * EMPTY road-band voids at full precision, the fleet's worst. Voids
-   * closed at 75 ft; district names ship EXACTLY as the county writes them
-   * (MtZion, HopeWelty — the macon-district-name-formatting posture);
-   * upstream edit dates are pinned in the builder. */
+   * closed at 75 ft. The county's labels have their spaces stripped
+   * (MtZion, HopeWelty) and all three layers now ship the name a second
+   * publisher gives the same body — the statewide library layer for the
+   * libraries, each district's own filing with the Illinois Comptroller for
+   * fire and park — with every pairing re-proven on each build and a letter
+   * never changed. Upstream edit dates are pinned in the builder. */
   var loadMaconFire = makeCached(function () {
     return fetchJSONWithRetry("data/app/macon-fire-districts.json", {}, 2);
   });
