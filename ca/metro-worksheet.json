@@ -234,6 +234,7 @@
     },
     {
       "id": "supervisor-district",
+      "guide": { "href": "supervisor-district.html", "text": "What supervisor district am I in?" },
       "label": "Supervisor District",
       "group": "political",
       "area_rank": 6,

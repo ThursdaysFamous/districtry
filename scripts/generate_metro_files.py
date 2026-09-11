@@ -665,6 +665,29 @@ GROUP_HEADINGS = [
 MATRIX_COLUMNS = ["Layer", "What it answers", "Boundary source", "Who it names", "Where it applies"]
 
 
+def render_guide_links(w):
+    """The app footer's links to this instance's own explainer pages.
+
+    THE SAME worksheet key that links the sources.html matrix row. Measured
+    2026-09-11: not one instance hub linked any of the six explainer pages, and
+    not one sources page did either — they were reachable only through
+    faq.html, so a reader on the map had no route to the page written to answer
+    the question they were asking. Two surfaces, one key, because a hand-kept
+    list in six index.html files is a list that goes stale the next time an
+    explainer ships.
+
+    Emits nothing when no layer declares a guide, so an instance that has no
+    explainer pages sees a byte-identical footer.
+    """
+    guides = [l["guide"] for l in sorted(w["layers"], key=lambda x: x["area_rank"])
+              if l.get("guide")]
+    if not guides:
+        return ""
+    return "\n".join(
+        '        <a href="%s">%s</a>' % (html_esc(g["href"]), html_esc(g["text"]))
+        for g in guides)
+
+
 def render_layer_matrix(w):
     """Every registered layer, grouped, with the provenance of each.
 
@@ -717,8 +740,18 @@ def render_layer_matrix(w):
                 fail('layer %r has no source block — a fork that sets sources_page '
                      'must give every layer one (see the schema)' % l["id"])
             a('              <tr id="layer-%s">' % l["id"])
-            a('                <th scope="row"><span class="layer-name">%s</span>'
-              '<code>%s</code></th>' % (html_esc(l["label"]), html_esc(l["id"])))
+            th = ('<span class="layer-name">%s</span><code>%s</code>'
+                  % (html_esc(l["label"]), html_esc(l["id"])))
+            # A layer that has its own explainer page links to it from the row
+            # that already describes the layer. This is the only place on the
+            # site where every layer is enumerated, so it is where a link per
+            # concept costs nothing to keep current: the href and the anchor
+            # text come from the worksheet, beside the layer they describe.
+            guide = l.get("guide")
+            if guide:
+                th += ('<a class="layer-guide" href="%s">%s</a>'
+                       % (html_esc(guide["href"]), html_esc(guide["text"])))
+            a('                <th scope="row">%s</th>' % th)
             a('                <td data-label="%s">%s</td>'
               % (MATRIX_COLUMNS[1], html_esc(src["answers"])))
             a('                <td data-label="%s">' % MATRIX_COLUMNS[2])
@@ -798,6 +831,7 @@ def targets_for(w, inst):
     ]
     if "verified_date" in w:
         targets.append((_p(app, "index.html"), "verified-date", render_verified_date))
+        targets.append((_p(app, "index.html"), "guide-links", render_guide_links))
     if "perf_profile" in w:
         # Worksheet-relative to the instance's own scripts dir.
         targets.append((_p(scr, os.path.basename(w["perf_profile"]["file"])),

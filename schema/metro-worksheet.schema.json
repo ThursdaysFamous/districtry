@@ -209,6 +209,18 @@
                 "description": "Where the layer answers at all, in plain words — the reader-facing form of the layer's coverage() test."
               }
             }
+          },
+          "guide": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["href", "text"],
+            "description": "Optional. A per-concept explainer page in this instance that answers the layer's own question in prose — /il/police-district.html and its five siblings. Declaring it here links the layer's sources.html row AND the app footer from ONE key, so a new explainer is linked on both surfaces by adding this block rather than by remembering two files. Measured 2026-09-11: no instance hub or sources page linked any of the six, and they were reachable only through faq.html.",
+            "properties": {
+              "href": { "type": "string", "pattern": "^[a-z0-9-]+\\.html$",
+                        "description": "Filename relative to the instance folder, e.g. police-district.html." },
+              "text": { "type": "string", "minLength": 8, "maxLength": 60,
+                        "description": "Anchor text, written to match the question the target page answers — that is what the link is worth to a reader and to a crawler, where a row of \"Guide\" links describes nothing." }
+            }
           }
         }
       }

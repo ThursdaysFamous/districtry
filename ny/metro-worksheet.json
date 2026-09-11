@@ -310,6 +310,7 @@
     },
     {
       "id": "council",
+      "guide": { "href": "council-district.html", "text": "What Council district am I in?" },
       "label": "City Council District",
       "group": "political",
       "area_rank": 11,
@@ -328,6 +329,7 @@
     },
     {
       "id": "community-district",
+      "guide": { "href": "community-board.html", "text": "What community board am I in?" },
       "label": "Community District / Board",
       "group": "political",
       "area_rank": 12,
