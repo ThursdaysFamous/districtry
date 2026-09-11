@@ -73,6 +73,7 @@ import math
 import os
 import re
 import sys
+import time
 
 import requests
 from shapely import make_valid
@@ -81,6 +82,9 @@ from shapely.ops import transform, unary_union
 from shapely.strtree import STRtree
 from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
 from arcgis_nesting import assert_nesting_repaired  # noqa: E402
+from comptroller_afr import (  # noqa: E402  (shared machinery — do not fork)
+    PACE as AFR_PACE, enumerate_county as afr_enumerate_county,
+    new_session as afr_session)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DIR = os.path.join(REPO_ROOT, "il", "data", "app")
@@ -960,7 +964,35 @@ SOURCES = [
      "name_prop": "library", "expect": 9, "probes": []},
     {"slug": "macon-fire", "out": "macon-fire-districts.json",
      "layer": MACON + "Fire/FeatureServer/0", "name_prop": "Fire",
-     "expect": 17, "edit_pin": 1770744832443, "probes": []},
+     "expect": 17, "edit_pin": 1770744832443,
+     # The county's own labels have their spaces stripped. Each is paired with
+     # the name the DISTRICT ITSELF filed with the Illinois Comptroller, and
+     # with that filing's unit code; witness_names_afr re-proves every pairing
+     # on every build and will not change a letter. Six of the eight are seated
+     # in Macon, Cerro Gordo files in Piatt and Mt. Pulaski in Logan — the
+     # county's layer draws their Macon territory and the name is still the
+     # district's own. The sweep covers all FIVE counties this layer draws a
+     # unit from, Moultrie and DeWitt included, because the uniqueness check is
+     # only as wide as the sweep: a fire district in a county nobody enumerated
+     # cannot be found to share another's letters. Measured 2026-09-11 — 39
+     # fire units across the five, and each of the eight names unique among
+     # them.
+     "witness_names": {
+         "kind": "afr",
+         "counties": ("Macon", "Piatt", "Logan", "Moultrie", "Dewitt"),
+         "unit_type": " - a Fire Protection District in ",
+         "pairs": {
+             "BlueMound":      ("Blue Mound", "055/020/06"),
+             "CerroGordo":     ("Cerro Gordo", "074/020/06"),
+             "HickoryPoint":   ("Hickory Point", "055/040/06"),
+             "LongCreek":      ("Long Creek", "055/050/06"),
+             "MtPulaski":      ("Mt. Pulaski", "054/080/06"),
+             "MtZion":         ("Mt. Zion", "055/070/06"),
+             "SouthMacon":     ("South Macon", "055/090/06"),
+             "SouthWheatland": ("South Wheatland", "055/100/06"),
+         },
+     },
+     "probes": []},
     {"slug": "macon-library", "out": "macon-library-districts.json",
      "layer": MACON + "LibraryJoin_Dissolved/FeatureServer/0",
      "name_prop": "Library", "expect": 10, "edit_pin": 1770745259078,
@@ -988,7 +1020,23 @@ SOURCES = [
      "probes": []},
     {"slug": "macon-park", "out": "macon-park-districts.json",
      "layer": MACON + "ParkJoin_Dissolve/FeatureServer/0", "name_prop": "Park",
-     "expect": 6, "edit_pin": 1770754910514, "probes": []},
+     "expect": 6, "edit_pin": 1770754910514,
+     # Both stripped labels name a district that files its own report; the
+     # Blue Mound park district is a different unit from the Blue Mound fire
+     # district and from the Blue Mound Memorial library district, which is why
+     # the unit TYPE is part of the pairing rather than the name alone. Macon
+     # alone is swept here because Macon is the only county this layer draws a
+     # park unit from — the same rule the fire spec above follows, which there
+     # means five counties.
+     "witness_names": {
+         "kind": "afr", "counties": ("Macon",),
+         "unit_type": " - a Park District in ",
+         "pairs": {
+             "BlueMound":    ("Blue Mound", "055/025/12"),
+             "FriendsCreek": ("Friends Creek", "055/040/12"),
+         },
+     },
+     "probes": []},
     # KENDALL'S FIRE FILE DOES NOT REBUILD BYTE-IDENTICALLY, and it did not
     # before this branch either — the drift is seam wobble under a count+name
     # pin that passes, so nothing here detects it. Recorded rather than fixed:
@@ -1026,18 +1074,120 @@ SOURCES = [
 # names the same bodies in full, and this project already ships and gates that
 # layer for 71 counties (scripts/build_statewide_library_districts.py).
 #
-# ONLY LIBRARIES. That layer carries no fire or park districts — measured
-# 2026-09-06 by listing the service, which publishes congressional, county,
-# electric-utility, federal-lands, opportunity-zone, school, library, house,
-# senate and village/township layers and nothing else. So Macon's 8 fire and 2
-# park labels keep the county's spelling and stay on the gap record.
+# THAT PUBLISHER CARRIES ONLY LIBRARIES — measured 2026-09-06 by listing the
+# service, which publishes congressional, county, electric-utility,
+# federal-lands, opportunity-zone, school, library, house, senate and
+# village/township layers and nothing else. Macon's 8 fire and 2 park labels
+# were left on the gap record for that reason, and the reason was too narrow:
+# it ruled out a second POLYGON publisher and was read as ruling out a second
+# publisher. A name does not need a polygon to be witnessed.
+# witness_names_afr, further down, is the route that repairs them, and it
+# reads no geometry at all.
 #
-# EVERY PAIRING IS DECLARED WITH ITS MEASURED IoU AND RE-PROVEN ON EVERY BUILD,
-# in both directions — the shape ACCEPTED_DROPS, EXPECTED_UNREACHABLE and
+# EVERY LIBRARY PAIRING IS DECLARED WITH ITS MEASURED IoU AND RE-PROVEN ON EVERY
+# BUILD, in both directions — the shape ACCEPTED_DROPS, EXPECTED_UNREACHABLE and
 # WITNESS_ANOMALIES already have here. A pairing whose geometry stops agreeing
 # fails; a declared name the layer no longer publishes fails; and a
 # space-stripped label that is NOT declared fails, so a new one cannot ship
 # quietly on the strength of the ones that were checked.
+def letters_of(name):
+    """A name reduced to its letters and digits, separators dropped."""
+    return re.sub(r"[^a-z0-9]", "", (name or "").lower())
+
+
+# THE SECOND PUBLISHER FOR A FIRE OR PARK DISTRICT IS THE DISTRICT ITSELF.
+#
+# The library path below compares two POLYGON publishers and requires them to
+# agree on the ground. No statewide fire or park polygon layer exists in
+# Illinois — measured, and recorded on macon-district-name-formatting — so that
+# comparison cannot be made for those two layers. What does exist is each
+# district's own Annual Financial Report: every Illinois unit of local
+# government files one under the Fiscal Responsibility Report Card Act, and the
+# Comptroller publishes the unit's name AS THE UNIT FILED IT.
+#
+# THIS PROJECT ALREADY TRUSTS THAT PAIRING FOR SOMETHING STRONGER. The officers
+# on these very cards come from these very filings — scripts/
+# il_special_district_officials_scraper.py matches a card to a unit and ships
+# the board it names. If the pairing is good enough to say who runs the
+# district, it is good enough to say what the district is called.
+#
+# WHAT MAKES IT SAFE IS THE LETTER TEST, and it is stricter than the library
+# path's. A rename here may only insert or change SEPARATORS: the filed name
+# must reduce to the county's own label letter for letter. So MtZion -> "Mt.
+# Zion" and SouthWheatland -> "South Wheatland" pass, and Ciso -> "Cisco" —
+# a real defect in the same county's layer, and a different one — is REFUSED,
+# because repairing a misspelling is not repairing a separator and must not
+# ride along on this route.
+#
+# Six more guards, each failing rather than guessing. Four are per pairing: the
+# label must still be published by the county, the unit code must still be
+# filed, the filing must still carry the declared name and type, and that name
+# must be unique among every unit of its type in the counties swept — so two
+# districts whose names share their letters can never be silently chosen
+# between. Two are about the sweep itself, because a search that returns
+# nothing would otherwise fail every pairing for the wrong reason: a county
+# that yields no units at all, and a sweep in which no unit of the declared
+# type is filed anywhere.
+def witness_names_afr(cfg, spec, county_geom_by_name):
+    """Rename space-stripped labels from each unit's own filing with the state.
+
+    Returns {county label -> filed name}. Fails rather than guessing.
+    """
+    session = afr_session()
+    filed, by_letters = {}, {}
+    for county in spec["counties"]:
+        # One search per county, paced like every other caller of this module:
+        # PACE is what the shared machinery asks of a state government site.
+        time.sleep(AFR_PACE)
+        units = afr_enumerate_county(session, county)
+        if not units:
+            fail("%s: the Warehouse returned no %s County units at all — the "
+                 "search changed shape, and every pairing below would fail for "
+                 "the wrong reason" % (cfg["slug"], county))
+        for code, label in units:
+            if spec["unit_type"] in label and code not in filed:
+                filed[code] = label
+    if not filed:
+        fail("%s: not one unit matching %r is filed in %s — this is the unit "
+             "type changing wording, not ten districts dissolving at once"
+             % (cfg["slug"], spec["unit_type"], "/".join(spec["counties"])))
+    # Split on the unit type, not on " - ": every label in `filed` contains the
+    # type by construction, and a district whose own name carries a dash would
+    # key on a truncated name under the looser separator.
+    for code, label in filed.items():
+        by_letters.setdefault(letters_of(label.split(spec["unit_type"])[0]),
+                              []).append((code, label))
+
+    renames = {}
+    for label, (name, code) in sorted(spec["pairs"].items()):
+        if label not in county_geom_by_name:
+            fail("%s: witness_names declares %r, which this source no longer "
+                 "publishes — retire the entry rather than leaving it to rot"
+                 % (cfg["slug"], label))
+        if code not in filed:
+            fail("%s: no unit %s of this type is filed in %s, so %r has no "
+                 "source for its spelling"
+                 % (cfg["slug"], code, "/".join(spec["counties"]), label))
+        want = "%s%s" % (name, spec["unit_type"])
+        if not filed[code].startswith(want):
+            fail("%s: unit %s now files as %r, not %r — re-measure before "
+                 "re-declaring it" % (cfg["slug"], code, filed[code], want))
+        if letters_of(name) != letters_of(label):
+            fail("%s: %r and %r are not the same letters, so this is not a "
+                 "separator repair — this route never changes a letter"
+                 % (cfg["slug"], label, name))
+        same = by_letters.get(letters_of(name), [])
+        if len(same) != 1:
+            fail("%s: %d units of this type share the letters of %r (%s) — "
+                 "nothing here says which one the county drew"
+                 % (cfg["slug"], len(same), name,
+                    "; ".join("%s %s" % (c, l) for c, l in sorted(same))))
+        renames[label] = name
+        print("  name from the unit's own filing: %-16s -> %-18s (%s)"
+              % (label, name, code))
+    return renames
+
+
 def witness_names(cfg, county_geom_by_name):
     """Rename a source's space-stripped labels from a second publisher.
 
@@ -1053,6 +1203,8 @@ def witness_names(cfg, county_geom_by_name):
              "in witness_names — a name is never repaired by rule here, so each "
              "one needs a publisher that spells it out"
              % (cfg["slug"], undeclared))
+    if spec.get("kind") == "afr":
+        return witness_names_afr(cfg, spec, county_geom_by_name)
 
     outline_path = os.path.join(APP_DIR, "%s-county-outline.json" % spec["county"])
     with open(outline_path, encoding="utf-8") as fh:
