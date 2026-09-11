@@ -32,7 +32,7 @@
 | Carroll | 17015 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 4 — `carroll-special-districts` (no-source); `carroll-ward-geometry` (no-source); `library-governance-type` (data-quality); `statewide-library-officials` (no-source) |
 | Cass | 17017 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `pass9-ward-seats-without-maps` (no-source); `statewide-library-officials` (no-source) |
 | Clark | 17023 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 3 — `clark-board-contact` (data-quality); `clark-precinct-polling` (data-quality); `statewide-library-officials` (no-source) |
-| Clay | 17025 | dispatch | districted | `county-board`, `library-district` | 1 — `statewide-library-officials` (no-source) |
+| Clay | 17025 | dispatch | districted | `county-board`, `library-district` | 2 — `clay-precinct-geometry` (no-source); `statewide-library-officials` (no-source) |
 | Clinton | 17027 | dispatch | districted | `county-board`, `library-district` | 3 — `clinton-precinct-geometry` (no-source); `county-board-office-addresses` (no-source); `statewide-library-officials` (no-source) |
 | Coles | 17029 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Cook | 17031 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | none |
@@ -139,4 +139,4 @@ Counties outside the coverage ring that a research pass has already measured; ea
 
 ## Gap records not tagged to a county (1)
 
-City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 100 records in the Data gaps panel: `chicago-amenity-phones`.
+City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 101 records in the Data gaps panel: `chicago-amenity-phones`.

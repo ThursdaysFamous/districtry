@@ -1764,3 +1764,94 @@ prefers to raise both at once, that is a judgement about the threads rather than
 `Township` field on the same row, and ISBE's certified returns, both read COPLEY. It is a
 typo in one column of one export, it costs this project nothing, and it is not worth a line
 of this note.
+
+---
+
+## Ask 22 — Clay County Clerk: one Clay City precinct, or two?
+
+> **NOT YET ASKED — DRAFTED 2026-09-11.** A reply on the existing thread with County
+> Clerk Amy Britton, who has answered this project twice — 2026-08-24 on where the Clay
+> City district line falls, and 2026-08-26 confirming the board plan is current. This is
+> the same office and the same thread; it is not a new approach to a county that has not
+> heard from us.
+
+**What this is about, and why it is one sentence long.** Clay's fourteen board districts
+ship. Its eighteen voting precincts do not, and exactly one fact is in the way.
+
+The county's two surfaces disagree on how many precincts it runs. Its County Board page
+states the board's composition letter by letter and names **Clay City I** in District A and
+**Clay City II** in District B. Its own certified returns — in the State Board of Elections'
+statewide precinct-level archive — report **one** precinct named Clay City, at one reporting
+id, in the November 2024 general and again in the March 2026 primary. Census 2020 likewise
+drew one Clay City voting district, of 1,166 people.
+
+Clerk Britton's 2026-08-24 reply settled where the **district** line falls: District A is
+"within the Village limits of Clay City", District B "the unincorporated area of Clay
+City/Stanford". That is what the board build needed and it is what shipped. It does not say
+whether the county runs one polling precinct there or two, and that is the remaining
+question.
+
+**Everything else about the county's precincts is already measured.** The census fabric
+carries all eighteen of the county's precinct names after eleven renames (roman ordinals,
+plus a vestigial trailing I on Clay City I, Larkinsburg I and Pixley I) and sums to the
+county's exact 2020 population of 13,288. The raw-canvass check that kept Washington County
+from shipping the same week was run here and Clay passes it: eighteen names in both
+elections, none reported at two ids.
+
+### The draft
+
+> Subject: Clay County precincts — one Clay City precinct, or two?
+>
+> Dear Ms Britton,
+>
+> Thank you again for the two answers in August. Both were used exactly as you gave them:
+> Clay County's fourteen board districts are on the map, with the Clay City line drawn at
+> the village's corporate limits as you described, and the plan credited to the county.
+>
+> One short question left, and it is the only thing standing between the county's voting
+> precincts and the map.
+>
+> The county's board page names Clay City I in District A and Clay City II in District B.
+> The county's certified election results, as the State Board of Elections publishes them,
+> report a single Clay City precinct — in November 2024 and again in March 2026.
+>
+> So: does the county run one Clay City voting precinct that the district line divides, or
+> two separate precincts?
+>
+> If it is one, the precincts can be drawn today and I will not need to trouble you again.
+> If it is two, I would be grateful for anything that shows where they divide — a precinct
+> map, a list of streets, or your own description would all work.
+>
+> And if the honest answer is that it is not written down anywhere you can point me to,
+> that is genuinely useful too. I will record that the precincts cannot be drawn rather
+> than guess at them.
+>
+> districtry is a free, non-commercial civic map. Clay County's fourteen board districts
+> and all fourteen members are already on it, credited to the county.
+>
+> With thanks,
+> <YOUR NAME>
+> <YOUR E-MAIL> · https://districtry.com/il/
+
+### What each answer means
+
+- **"One precinct"** — the eighteen precincts ship from the census fabric that same day and
+  `clay-precinct-geometry` retires. Nothing else is needed; the names, the count and the
+  population identity are already checked.
+- **"Two precincts"**, with a line — they ship as nineteen, with the Clay City split drawn
+  where she describes it, the same way District A and B already are.
+- **"Two precincts"**, without a line — the gap stays open and narrows to that one boundary,
+  which is a better record than the count question.
+- **"It isn't written down"** — measured, permanent shut, and the note says so plainly so
+  that declining is easy.
+- **No reply** — one follow-up on the usual cadence, then unresponsive. The board districts
+  are unaffected either way: they ship on her existing answers and nothing here revisits
+  them.
+
+### One thing deliberately left out
+
+**The population deviation.** Clay carries the fleet's largest accepted deviation —
+District J at +39.8% and District L at +33.3% against the ideal — and she has already been
+asked about it and answered ("These are the current maps"). Re-raising a question she has
+answered, inside a note that otherwise has a one-line answer, would make it harder to reply
+to and would read as doubting the first answer. It is recorded, not re-asked.

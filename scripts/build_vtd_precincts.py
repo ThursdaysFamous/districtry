@@ -80,19 +80,28 @@ the rule Calhoun's build set. NO BOARD DISTRICT ships: six of these seven
 counties elect their boards county-wide, and the one that does not (Mason)
 already ships its board districts as their own layer. NO ROSTER ships.
 
-CLAY IS THE NEXT COUNTY THIS ROUTE REACHES AND IS DELIBERATELY NOT HERE. Its
-2024 General and 2026 General Primary name the same eighteen precincts, and the
-census fabric carries all eighteen after eleven renames (roman ordinals, plus a
-vestigial trailing I on CLAY CITY I, LARKINSBURG I and PIXLEY I). What stopped
-it is that Clay ships BOARD-ONLY by a recorded decision, taken because the
-county's board page and its certified returns were read as disagreeing on the
-precinct COUNT — the board page names Clay City under both District A and
-District B. That is a disagreement about DISTRICTS: the Clerk stated in writing
-that A is the village limits and B the unincorporated remainder, so one precinct
-sits in two districts and the count is eighteen on both surfaces. Reversing that
-decision is a separate change with its own argument, and the one measurement
-this table would still need is the raw-canvass duplicate check described above,
-which has not been run for Clay.
+CLAY IS THE NEXT COUNTY THIS ROUTE REACHES AND IS NOT HERE, and this paragraph
+said the wrong thing about why until 2026-09-11. It claimed the county's board
+page "names Clay City under both District A and District B", making the
+disagreement one about DISTRICTS with "the count eighteen on both surfaces".
+IT IS NOT. The board page names CLAY CITY I in District A and CLAY CITY II in
+District B — two differently-named slots, not one precinct listed under two
+districts — so this is not the Jackson, Douglas or Shelby shape, where a
+canvass repeats one precinct's own name under each district it lies in. Clay's
+recorded board-only decision was better founded than that paragraph allowed,
+and it stands.
+
+What the route CAN say about Clay is this. The raw-canvass duplicate check
+above was run on 2026-09-11 and Clay passes it: eighteen base names in the 2024
+General and eighteen in the 2026 General Primary, no name at two reporting ids
+and no sub-precinct unit, with only a PRESIDENTIAL ONLY BALLOT class to drop.
+The census fabric carries all eighteen after eleven renames (roman ordinals,
+plus a vestigial trailing I on CLAY CITY I, LARKINSBURG I and PIXLEY I). So the
+ONLY thing between Clay and a precinct layer is whether the county runs one
+Clay City precinct or two — its certified returns report one at one id in both
+elections, its board page names two — and that is a question for the Clerk
+rather than an inference to make here. It is drafted as an ask and recorded in
+the clay-precinct-geometry gap.
 
 WHAT THE POPULATION IDENTITY DOES NOT PROVE, said plainly: that the voting
 districts sum to the county's own Census 2020 count shows the fabric tiled the
