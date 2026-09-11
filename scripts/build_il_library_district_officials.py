@@ -17,11 +17,19 @@ So the card count is not taken from the scraper's arithmetic; it is re-measured
 against the shipped boundary files, and a key that stamps nothing fails the build.
 
 Measured 2026-09-11: 197 of the layer's 216 district-governed names resolved,
-stamping 339 of its 371 district cards, with 294 board officers, 96 appointed
-officers, 175 offices and 145 telephones. The floors sit under those values
-because a library filing late is a real event and must not freeze the other 196.
-Setting them at the measured figures would make one late filing
-indistinguishable from the source breaking.
+stamping 339 of its 371 district cards, with 294 board officers and 96 appointed
+officers. The floors sit under those values because a library filing late is a
+real event and must not freeze the other 196. Setting them at the measured
+figures would make one late filing indistinguishable from the source breaking.
+
+SAY WHICH DENOMINATOR A CONTACT FIGURE COUNTS. There are four and they differ by
+a lot. Of the 197 filings: 175 carry an office block with at least one value in
+it, and that is what MIN_WITH_OFFICE counts; 138 carry an address field; 15 of
+those 138 are a post-office box with no street, so 123 carry a street address and
+74 do not; 145 carry a telephone, which is what MIN_WITH_PHONE counts; 96 an
+e-mail. Writing "175 offices" beside "138 addresses" reads as though 175 cards
+name a place, and it cost a wrong figure in the statewide-library-officials gap
+record.
 
 The appointed officers are floored separately. 25 of the 197 file no board
 officer at all, and their cards name a Director or a Treasurer/Administrator and
@@ -53,7 +61,8 @@ OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app",
                         "il-library-district-officials.json")
 
 # Measured 2026-09-11: 197 libraries / 339 cards / 294 board / 96 appointed /
-# 175 with an office / 145 with a telephone. Each floor sits under its value.
+# 175 with an office BLOCK (123 of those name a street) / 145 with a telephone.
+# Each floor sits under its value.
 MIN_LIBRARIES = 170
 MIN_CARDS = 295
 MIN_BOARD = 250
