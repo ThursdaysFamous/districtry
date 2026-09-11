@@ -9644,6 +9644,14 @@ function initChiExplorer() {
         phone: contact.phone, email: contact.email, links: links
       }));
     }
+    // A board from the district's own Annual Financial Report, where one is
+    // stamped on the feature. It sits here rather than after the office block
+    // because the fleet card order is identity, then people, then location,
+    // then contact — which is the order this card already takes when the
+    // county's own data names an officer (`contact.officer` above).
+    if (contact.peopleNode) {
+      wrap.appendChild(contact.peopleNode);
+    }
     if (contact.addrLines && contact.addrLines.length) {
       wrap.appendChild(renderOfficeGroup({ offices: [{ label: "Office", lines: contact.addrLines }] }));
     }
@@ -9652,14 +9660,23 @@ function initChiExplorer() {
     }
     return wrap;
   }
-  // Lake's GIS carries each district's own office contact on the feature
+  // Lake's GIS carries each district's own office contact on the feature. Its
+  // fire and park districts additionally carry a board from their own AFR
+  // filing (`officials`, stamped by withIlDistrictOfficials); its libraries do
+  // not, and pass nothing, so their cards are unchanged.
   function lakeOrgCard(title, county, result) {
     function val(v) { return v == null ? "" : String(v).trim(); }
+    var addrLines = [val(result.addr),
+      [val(result.city), val(result.zip)].filter(Boolean).join(" ")].filter(Boolean);
     return orgEntryCard(title, county, {
-      addrLines: [val(result.addr), [val(result.city), val(result.zip)].filter(Boolean).join(" ")].filter(Boolean),
+      addrLines: addrLines,
       phone: val(result.phone) || null,
       email: val(result.email) || null,
       url: safeHttpUrl(val(result.url)),
+      // The filing's own office is dropped wherever the county publishes one:
+      // the two are the same building, and the county's is the district's own
+      // publication rather than a value witnessed out of one filer's details.
+      peopleNode: afrDistrictPeople(result, { omitOffice: addrLines.length > 0 }),
       note: result.snappedFt != null ? rowSnapNoteText(result.snappedFt) : null
     });
   }
@@ -12506,6 +12523,11 @@ function initChiExplorer() {
   /* The six counties in il-special-district-officials.json. One roster file
    * holds all of them, so the county and the LAYER pick the map to join on
    * before the name does. */
+  /* Lake's two bespoke entries name their loader in TWO places — loadGeometry
+   * for the overlay and again inside query — so the wrapper is applied once
+   * here rather than at each site: calling it twice would build two caches and
+   * fetch the county's boundary twice. */
+  var loadLakeFireOfficials, loadLakeParksOfficials;
   function withIlDistrictOfficials(county, layer, nameKeys) {
     return function (loadGeometry) {
       return withAfrOfficials(loadGeometry, function () {
@@ -12516,6 +12538,8 @@ function initChiExplorer() {
       }, nameKeys);
     };
   }
+  loadLakeFireOfficials = withIlDistrictOfficials("lake", "fire", ["org_name"])(loadLakeFire);
+  loadLakeParksOfficials = withIlDistrictOfficials("lake", "park", ["org_name"])(loadLakeParks);
   /* The statewide library layer, all 72 counties through one roster. Its join
    * key is the boundary layer's own `library` column, and its collection is
    * `libraries` rather than `districts` — a library, not a district within a
@@ -12588,7 +12612,7 @@ function initChiExplorer() {
    * checking the filing needs to know where to look: a cross-county district
    * files once, under its home county, so Logan's Armington Community files in
    * Tazewell and its San Jose in Mason. */
-  function afrDistrictPeople(result) {
+  function afrDistrictPeople(result, opts) {
     var info = result && result.officials;
     if (!info) return null;
     var frag = document.createDocumentFragment();
@@ -12634,7 +12658,11 @@ function initChiExplorer() {
     if ((board.length || heads.length) && filed) {
       frag.appendChild(renderBodyIntro({ note: filed }));
     }
-    var office = info.office || {};
+    // A caller whose own source already publishes the district's office says
+    // so and the filing's copy is dropped: Lake's GIS carries each district's
+    // own address, telephone, e-mail and website, so rendering the filing's
+    // too put the same office on the card twice.
+    var office = (opts && opts.omitOffice) ? {} : (info.office || {});
     if (office.address || office.phone || office.email) {
       frag.appendChild(renderLinkRow({
         // "Office" NAMES A PLACE, so a district whose filing witnesses no
@@ -23573,13 +23601,13 @@ function initChiExplorer() {
       {
         key: "lake",
         coverage: lakeCountyCoverage,
-        loadGeometry: loadLakeFire,
+        loadGeometry: loadLakeFireOfficials,
         hoverName: function (feature) {
           var v = findPropCI(feature.properties || {}, ["org_name"]);
           return (v == null || String(v).trim() === "") ? null : String(v);
         },
         query: function (point, seq) {
-          return loadLakeFire().then(function (geojson) {
+          return loadLakeFireOfficials().then(function (geojson) {
             var hit = findFeatureContainingOrNear(geojson, point, PARCEL_FABRIC_SNAP_FT);
             if (!hit) return null;
             var props = hit.feature.properties || {};
@@ -23592,6 +23620,7 @@ function initChiExplorer() {
               phone: findPropCI(props, ["phone"]),
               email: findPropCI(props, ["email"]),
               url: findPropCI(props, ["url"]),
+              officials: findPropCI(props, ["dxofficials"]),
               snappedFt: hit.snappedFt
             };
           });
@@ -24068,13 +24097,13 @@ function initChiExplorer() {
       {
         key: "lake",
         coverage: lakeCountyCoverage,
-        loadGeometry: loadLakeParks,
+        loadGeometry: loadLakeParksOfficials,
         hoverName: function (feature) {
           var v = findPropCI(feature.properties || {}, ["org_name"]);
           return (v == null || String(v).trim() === "") ? null : String(v);
         },
         query: function (point, seq) {
-          return loadLakeParks().then(function (geojson) {
+          return loadLakeParksOfficials().then(function (geojson) {
             var hit = findFeatureContainingOrNear(geojson, point, PARCEL_FABRIC_SNAP_FT);
             if (!hit) return null;
             var props = hit.feature.properties || {};
@@ -24087,6 +24116,7 @@ function initChiExplorer() {
               phone: findPropCI(props, ["phone"]),
               email: findPropCI(props, ["email"]),
               url: findPropCI(props, ["url"]),
+              officials: findPropCI(props, ["dxofficials"]),
               snappedFt: hit.snappedFt
             };
           });

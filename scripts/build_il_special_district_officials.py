@@ -49,23 +49,23 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app",
                         "il-special-district-officials.json")
 
-# Measured 2026-09-11: 440 of the 517 cards stamped across 27 county/layer
-# pairs, 536 board officers, 362 appointed, 342 cards with an office block, 310
-# of those with a street address, 253 with a telephone, 149 with an e-mail, and
-# 95 carrying `filesIn` because their district files under another county. Each
-# floor sits under its measured value, because a district filing late is a real
-# event and must not freeze the other 439.
-MIN_CARDS = 380
-MIN_BOARD = 450
-MIN_HEADS = 300
-MIN_WITH_OFFICE = 290
-MIN_WITH_PHONE = 210
+# Measured 2026-09-11: 485 of the 562 cards stamped across 29 county/layer
+# pairs, 579 board officers, 412 appointed, 382 cards with an office block, 348
+# of those with a street address, 288 with a telephone, 171 with an e-mail, and
+# 103 carrying `filesIn` because their district files under another county.
+# Each floor sits under its measured value, because a district filing late is a
+# real event and must not freeze the other 484.
+MIN_CARDS = 420
+MIN_BOARD = 490
+MIN_HEADS = 340
+MIN_WITH_OFFICE = 325
+MIN_WITH_PHONE = 240
 # Every county the scraper's table covers, and both layers. A county or a layer
 # disappearing entirely is a source change rather than turnover.
 EXPECT_COUNTIES = {"cook", "kendall", "macon", "rock-island", "stark",
                    "stephenson", "dupage", "mchenry", "dekalb", "lee", "adams",
                    "iroquois", "sangamon", "st-clair", "boone", "effingham",
-                   "hamilton", "monroe", "madison"}
+                   "hamilton", "monroe", "madison", "lake"}
 EXPECT_LAYERS = {"fire", "park"}
 
 

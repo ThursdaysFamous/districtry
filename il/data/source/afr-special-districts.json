@@ -1,6 +1,6 @@
 {
   "note": "The unit each fire and park district card joins to, and the cards that join to none. Rebuilt by il_special_district_officials_scraper.py --propose; every row is re-verified against the Warehouse on every scrape.",
-  "generated": "2026-09-11T08:19:14Z",
+  "generated": "2026-09-11T10:30:43Z",
   "districts": [
     {
       "county": "adams",
@@ -3000,6 +3000,456 @@
       "label": "Sandwich",
       "type": "Park District",
       "warehouseCounty": "Dekalb",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Arden Shore North Fire Protection District",
+      "code": "049/015/06",
+      "label": "Arden Shore North",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Arden Shore South Fire Protection District",
+      "code": "049/016/06",
+      "label": "Arden Shore South",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Barrington Countryside Fire Protection District",
+      "code": "016/010/06",
+      "label": "Barrington Countryside",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Beach Park Fire Protection District",
+      "code": "049/020/06",
+      "label": "Beach Park",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Cary Fire Protection District",
+      "code": "063/030/06",
+      "label": "Cary",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Mchenry",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Countryside Fire Protection District",
+      "code": "049/030/06",
+      "label": "Countryside",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Deerfield-Bannockburn Fire Protection District",
+      "code": "049/040/06",
+      "label": "Deerfield-Bannockburn",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "First Fire Protection District of Antioch",
+      "code": "049/010/06",
+      "label": "Antioch #1",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "override"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Fox Lake Fire Protection District",
+      "code": "049/050/06",
+      "label": "Fox Lake",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Fox River Grove Fire Protection District",
+      "code": "063/040/06",
+      "label": "Fox River Grove",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Mchenry",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Grayslake Fire Protection District",
+      "code": "049/053/06",
+      "label": "Grayslake",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Greater Round Lake Fire Protection District",
+      "code": "049/055/06",
+      "label": "Greater Round Lake",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Lake Villa Township Fire Protection District",
+      "code": "049/060/06",
+      "label": "Lake Villa",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "card qualifier dropped"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Lake Zurich Rural Fire Protection District",
+      "code": "049/070/06",
+      "label": "Lake Zurich Rural",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Libertyville Fire Protection District",
+      "code": "049/080/06",
+      "label": "Libertyville",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Lincolnshire-Riverwoods Fire Protection District",
+      "code": "049/130/06",
+      "label": "Lincolnshire-Riverwoods(Vernon)",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "override"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Long Grove Fire Protection District",
+      "code": "049/090/06",
+      "label": "Long Grove Rural",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Newport Township Fire Protection District",
+      "code": "049/100/06",
+      "label": "Newport",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "card qualifier dropped"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Rockland Fire Protection District",
+      "code": "049/110/06",
+      "label": "Rockland",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Warren-Waukegan Fire Protection District",
+      "code": "049/140/06",
+      "label": "Warren-Waukegan",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Wauconda Fire Protection District",
+      "code": "049/150/06",
+      "label": "Wauconda",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "fire",
+      "card": "Winthrop Harbor Fire Protection District",
+      "code": "049/160/06",
+      "label": "Winthrop Harbor",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Arlington Heights Park District",
+      "code": "016/020/12",
+      "label": "Arlington Heights",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Barrington Hills Park District",
+      "code": "016/025/12",
+      "label": "Barrington Hills",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Barrington Park District",
+      "code": "049/010/12",
+      "label": "Barrington",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Buffalo Grove Park District",
+      "code": "016/100/12",
+      "label": "Buffalo Grove",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Deerfield Park District",
+      "code": "049/020/12",
+      "label": "Deerfield",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Foss Park District",
+      "code": "049/030/12",
+      "label": "Foss",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Grandwood Park Park District",
+      "code": "049/040/12",
+      "label": "Grandwood",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Grayslake Community Park District",
+      "code": "049/050/12",
+      "label": "Grayslake",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
+      "rule": "card qualifier dropped"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Gurnee Park District",
+      "code": "049/060/12",
+      "label": "Gurnee",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Lake Barrington Countryside Park District",
+      "code": "049/125/12",
+      "label": "Lake Barrington Countryside",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Lake Bluff Park District",
+      "code": "049/080/12",
+      "label": "Lake Bluff",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Lindenhurst Park District",
+      "code": "049/085/12",
+      "label": "Lindenhurst",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Long Grove Park District",
+      "code": "049/087/12",
+      "label": "Long Grove",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Mundelein Parks and Recreation District",
+      "code": "049/090/12",
+      "label": "Mundelein",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Northbrook Park District",
+      "code": "016/500/12",
+      "label": "Northbrook",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Park District of Highland Park",
+      "code": "049/070/12",
+      "label": "Highland Park",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
+      "rule": "leading governance dropped"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Round Lake Area Park District",
+      "code": "049/095/12",
+      "label": "Round Lake Area",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Vernon Hills Park District",
+      "code": "049/097/12",
+      "label": "Vernon Hills",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Wauconda Park District",
+      "code": "049/100/12",
+      "label": "Wauconda",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Waukegan Park District",
+      "code": "049/110/12",
+      "label": "Waukegan",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Wheeling Park District",
+      "code": "016/820/12",
+      "label": "Wheeling",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Wildwood Park District",
+      "code": "049/115/12",
+      "label": "Wildwood",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "lake",
+      "layer": "park",
+      "card": "Zion Park District",
+      "code": "049/120/12",
+      "label": "Zion",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
       "rule": "normalised"
     },
     {
