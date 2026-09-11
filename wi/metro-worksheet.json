@@ -2377,7 +2377,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-wi-shell-v38",
+    "cache_name": "districtry-wi-shell-v39",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
@@ -2478,7 +2478,7 @@
     "canonical": "https://districtry.com/wi/"
   },
   "exports_name": "WisconsinExplorer",
-  "verified_date": "August 25, 2026",
+  "verified_date": "September 11, 2026",
   "sources_page": {
     "file": "wi/sources.html",
     "credits": [
