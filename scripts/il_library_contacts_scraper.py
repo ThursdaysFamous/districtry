@@ -1,24 +1,41 @@
 #!/usr/bin/env python3
-"""Office address and telephone for the statewide library layer's cards, from L2.
+"""Office, website and administrator for the statewide library layer's cards, from L2.
 
 il/index.html draws 550 library cards across 72 counties. 339 of them name a
-board from the library's own Annual Financial Report
-(il_library_district_officials_scraper.py). The other 211 name nobody and
+person from the library's own Annual Financial Report
+(il_library_district_officials_scraper.py). The other 211 named nobody and
 nothing, because only a district-governed library files an AFR: a municipal
 library is covered by its city's or village's report, and a township library
 files as or within a township, whose board is not the library's board. That is
-the statewide-library-officials gap, narrowed on 2026-09-11 and still open on the
-people half.
+the statewide-library-officials gap.
 
-This half answers the location and contact rows, for those 211 and for the 339
-whose filings leave one out. The three Illinois library systems — Chicago Public
-Library, RAILS and Illinois Heartland — run a shared public directory known as
-L2, and every public library in the state has a row in it.
+The three Illinois library systems — Chicago Public Library, RAILS and Illinois
+Heartland — run a shared public directory known as L2, and every public library
+in the state has a row in it. This scraper reads it in two passes.
 
-It does not answer the officers and does not try to. Each row links a staff list
-at /directory-staff/<id>, which returns HTTP 403 with "Sign in for Full Access to
-Events, Libraries, and People". That is an access control and is not worked
-around.
+THE LISTING TABLE answers the office address and the telephone, for those 211
+and for the filings that leave one out.
+
+EACH LIBRARY'S OWN PAGE IN THE DIRECTORY answers a website and one named
+administrator, and the listing table shows neither. The name cell links that
+page; detail() reads it. Measured 2026-09-11 over the 373 names the layer draws:
+335 publish a website and 364 name an administrator with a title, with no fetch
+error anywhere in the sweep. 331 websites and 286 administrators SHIP — four
+websites name a host that does not resolve and are dropped (see below), and an
+administrator is withheld wherever the filing named one of its own. Five names
+have no page at all (Chatsworth Area Library District, Dahlgren Public Library,
+Grand Prairie of the West Public Library District, Mount Hope-Funk's Grove
+Townships Public Library District, Olmsted Public Library) and two more have a
+page that names no administrator (Greenfield Public Library, Leepertown Township
+Public Library). That takes the cards naming nobody from 211 to 7, and 487 of
+the 550 gain a link to the library's own site where none had one before.
+
+IT STILL NAMES NO TRUSTEE, and that is an access control rather than a hole in
+the source. The page carries two further people surfaces and both are shut: the
+Staff List at /directory-staff/<id> answers HTTP 403 with "Sign in for Full
+Access to Events, Libraries, and People", and each Annual Certification at
+/print/pdf/webform_submission/<id> answers 403 the same way. Neither is worked
+around. So the gap stays open on the trustees.
 
 WHICH PATH, AND WHY IT IS WORTH STATING. The rows come from the rendered page at
 /directory?type=124&page=N, one HTML table per page, 41 pages of 20. A Drupal
@@ -98,6 +115,10 @@ import time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from il_library_district_officials_scraper import (  # noqa: E402
     normalise, shipped_cards, statewide_library_counties)
+# One copy of the resolution rule, retries and all — see its docstring for why
+# it is called once per HOST and retried: a single flaky lookup once reported
+# two live sites as having no DNS record.
+from validate_card_links import host_of, resolves  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DATA = os.path.join(REPO_ROOT, "il", "data", "app")
@@ -129,6 +150,10 @@ def fail(msg):
 def clean(text):
     return re.sub(r"\s+", " ", html.unescape(text).replace(PRIMARY, "")
                   .replace("\xa0", " ")).strip()
+
+
+def strip_tags(markup):
+    return re.sub(r"<[^>]+>", " ", markup)
 
 
 def place_key(name):
@@ -180,7 +205,13 @@ def cells(row_html):
 
 
 def listing(sess):
-    """-> [(name, contact cell, address cell)] for every (Primary Building) row."""
+    """-> [(name, contact cell, address cell, detail path)] per (Primary Building) row.
+
+    A ZERO-ROW PAGE IS NOT THE END OF THE LISTING. The table is alphabetical and
+    Chicago Public Library's branches fill several consecutive pages with no
+    primary building on them, so the loop stops when the TABLE is empty rather
+    than when this page yielded nothing.
+    """
     rows, page = [], 0
     while page < MAX_PAGES:
         time.sleep(PACE)
@@ -193,7 +224,14 @@ def listing(sess):
             if len(cell) >= 3 and cell[0]:
                 got += 1
                 if PRIMARY in cell[0]:
-                    rows.append((clean(cell[0]), cell[1], cell[2]))
+                    # The name cell links the library's own page in the
+                    # directory, which is where the website and the
+                    # administrator are. Taken from the raw cell because
+                    # cells() has already dropped the markup.
+                    raw = re.search(r"<td[^>]*>(.*?)</td>", block, re.S)
+                    href = re.search(r'href="(/[^"]+)"', raw.group(1)) if raw else None
+                    rows.append((clean(cell[0]), cell[1], cell[2],
+                                 html.unescape(href.group(1)).strip() if href else None))
         if not got:
             break
         page += 1
@@ -201,9 +239,57 @@ def listing(sess):
         fail("the listing did not end within %d pages" % MAX_PAGES)
     if not rows:
         fail("no %s row on any page — the table changed shape" % PRIMARY)
-    print("read %d page(s), %d administrative-entity row(s)" % (page, len(rows)),
-          file=sys.stderr)
+    linked = sum(1 for row in rows if row[3])
+    print("read %d page(s), %d administrative-entity row(s), %d linking a page"
+          % (page, len(rows), linked), file=sys.stderr)
     return rows
+
+
+WEBSITE_RE = re.compile(
+    r'field--name-field-website.*?field__item[^>]*>\s*<a href="([^"]+)"', re.S)
+ADMIN_BLOCK_RE = re.compile(r"<h2>Primary Administrator</h2>(.*?)(?:<hr>|</aside>)", re.S)
+ADMIN_FIELD_RE = re.compile(
+    r'field__label">([^<]+)</div>\s*<div class="field__item">(.*?)</div>', re.S)
+
+
+def detail(sess, path):
+    """-> {website, admin} off one library's own page in the directory.
+
+    Two public fields, both plainly labelled: the Contact Us block's Website,
+    and a Primary Administrator giving one Name and one Title. Everything else
+    on the page is delivery codes and catalogue software.
+
+    NEITHER OF THE PAGE'S TWO OTHER PEOPLE SOURCES IS READ, because both are
+    behind a sign-in and an access control is never worked around. The Staff
+    List at /directory-staff/<id> answers 403 with "Sign in for Full Access to
+    Events, Libraries, and People", and so does each Annual Certification at
+    /print/pdf/webform_submission/<id>. So this route names the library's
+    administrator and never a trustee.
+    """
+    time.sleep(PACE)
+    r = sess.get("https://librarylearning.org" + path, timeout=60)
+    if r.status_code != 200:
+        return {"error": str(r.status_code)}
+    out = {}
+    site = WEBSITE_RE.search(r.text)
+    if site:
+        url = html.unescape(site.group(1)).strip()
+        if url.startswith(("http://", "https://")):
+            out["website"] = url
+    block = ADMIN_BLOCK_RE.search(r.text)
+    if block:
+        # STRIP THE MARKUP BEFORE cleaning. The Name cell wraps the person in a
+        # link to their directory profile, and clean() unescapes entities
+        # without removing tags — so the first run of this shipped 286 names
+        # reading '<a href="/user/67198">Toya Wilson</a>' on the card, which a
+        # browser render caught and no gate could.
+        fields = {clean(strip_tags(k)): clean(strip_tags(v))
+                  for k, v in ADMIN_FIELD_RE.findall(block.group(1))}
+        if fields.get("Name"):
+            out["admin"] = {"name": fields["Name"]}
+            if fields.get("Title"):
+                out["admin"]["role"] = fields["Title"]
+    return out
 
 
 STREET_TYPE = re.compile(
@@ -385,17 +471,23 @@ def main():
             unmatched.append(card)
 
     contacts, differences, unsplit, derived = {}, [], [], []
+    unlinked, detail_errors = [], []
     for card, row in sorted(chosen.items()):
-        name, contact_cell, address_cell = row
+        name, contact_cell, address_cell, path = row
         street, city, from_census = split_address(address_cell, names)
+        entry = {}
+        # AN ADDRESS THIS CANNOT SPLIT COSTS THE ADDRESS AND NOTHING ELSE. The
+        # website and the administrator come off a different page and have no
+        # bearing on it, so an unsplittable address cell no longer skips the
+        # whole library the way it did when the address was all there was.
         if not city:
             unsplit.append((name, address_cell))
-            continue
-        if not from_census:
-            derived.append((name, city, address_cell))
-        entry = {"city": city}
-        if street:
-            entry["address"] = street
+        else:
+            if not from_census:
+                derived.append((name, city, address_cell))
+            entry["city"] = city
+            if street:
+                entry["address"] = street
         phone = PHONE.search(contact_cell)
         if phone:
             entry["phone"] = "(%s) %s-%s" % phone.groups()
@@ -411,8 +503,69 @@ def main():
                                         entry.pop(field)))
         if not entry.get("address"):
             entry.pop("city", None)     # a city means nothing without a street
-        if entry.get("address") or entry.get("phone"):
+        # The library's own page in the directory. One request per matched
+        # library, which is why it is fetched here rather than for all 641
+        # rows: a row that no card claims is never opened.
+        if not path:
+            unlinked.append(name)
+        else:
+            page = detail(sess, path)
+            if page.get("error"):
+                detail_errors.append((name, path, page["error"]))
+            if page.get("website"):
+                # `url` and not `website`, because validate_card_links.py reads
+                # the KEY to decide who owns an address: `url` means "somebody
+                # else's, exactly as they published it" and is capped at WARN,
+                # and any other key means this repo chose the string and a dead
+                # link is a FAIL. A library's own site is the library's.
+                entry["url"] = page["website"]
+            # THE FILING WINS WHERE IT ANSWERS, the same rule the address and
+            # the telephone already follow: an Annual Financial Report is the
+            # unit's own return, where a directory row is a third party's
+            # record of it. So an administrator ships only where the filing
+            # names no administration at all.
+            if page.get("admin") and not (afr.get(card) or {}).get("heads"):
+                entry["admin"] = page["admin"]
+        if any(entry.get(f) for f in ("address", "phone", "url", "admin")):
             contacts[card] = entry
+
+    # A WEBSITE WHOSE HOST DOES NOT RESOLVE IS NOT A WEBSITE. The card labels this
+    # link "Library website", so a host a reader's browser cannot reach makes
+    # that label a false statement — the same reason Douglas County's roster
+    # drops an e-mail on a mistyped domain rather than shipping a dead address
+    # or silently correcting a character in somebody's contact detail.
+    #
+    # THE TEST IS "DOES NOT RESOLVE" AND NOT "DOES NOT EXIST", which are not the
+    # same finding. Measured 2026-09-11, four of 335, each confirmed against a
+    # second independent resolver (Google's DoH) rather than on this host's
+    # answer alone: Assumption, Lebanon and West Frankfort answer NXDOMAIN, the
+    # authoritative "no such name" — Lebanon's is a plain typo in the directory,
+    # lebanonpubliclibrayr.org for lebanonpubliclibrary.org. Macomb answers
+    # SERVFAIL, which is its own delegation failing rather than the name being
+    # absent: lib.il.us itself resolves and macomb.lib.il.us does not. Both are
+    # dropped, because a reader's browser fails on either one identically. A
+    # SERVFAIL can be repaired, and this job runs weekly, so the link comes back
+    # on its own if it ever is.
+    #
+    # A BROKEN RESOLVER MUST NOT EMPTY THE FIELD, and the guard is already in
+    # place: build_il_library_contacts.py floors websites at MIN_WITH_URL, so a
+    # run that lost most of them refuses to write rather than shipping a thin
+    # payload.
+    checked, unresolved = {}, []
+    for card in sorted(contacts):
+        url = contacts[card].get("url")
+        if not url:
+            continue
+        host = host_of(url)
+        if host not in checked:
+            checked[host] = resolves(host)
+        ok, why = checked[host]
+        if not ok:
+            unresolved.append((card, url, why))
+            contacts[card].pop("url")
+            if not any(contacts[card].get(f)
+                       for f in ("address", "phone", "admin")):
+                contacts.pop(card)
 
     payload = {
         "source": SOURCE,
@@ -425,6 +578,15 @@ def main():
         json.dump(payload, fh, indent=2, ensure_ascii=False, sort_keys=True)
         fh.write("\n")
 
+    for card, url, why in sorted(unresolved):
+        print("  WEBSITE DROPPED, HOST DOES NOT RESOLVE: %s — %s (%s)"
+              % (card, url, why), file=sys.stderr)
+    for name in sorted(unlinked):
+        print("  NO DIRECTORY PAGE LINKED: %s — no website or administrator read"
+              % name, file=sys.stderr)
+    for name, path, code in sorted(detail_errors):
+        print("  DIRECTORY PAGE ANSWERED %s: %s (%s)" % (code, name, path),
+              file=sys.stderr)
     for card, row in sorted(prefixed):
         print("  AGENCY PREFIX: the card %r takes the row %r" % (card, row),
               file=sys.stderr)
@@ -449,11 +611,15 @@ def main():
               % (len(unmatched), ", ".join(sorted(unmatched))), file=sys.stderr)
     addr = sum(1 for v in contacts.values() if v.get("address"))
     ph = sum(1 for v in contacts.values() if v.get("phone"))
+    site = sum(1 for v in contacts.values() if v.get("url"))
+    adm = sum(1 for v in contacts.values() if v.get("admin"))
     print("matched %d of %d card name(s) — %d on the full name, %d on the agency "
           "prefix, %d on a normalisation. %d ship something the filings do not "
-          "already give: %d an address, %d a telephone -> %s"
+          "already give: %d an address, %d a telephone, %d a website, %d an "
+          "administrator -> %s"
           % (len(chosen), len(kinds), len(chosen) - len(prefixed) - len(loose),
-             len(prefixed), len(loose), len(contacts), addr, ph, args.out),
+             len(prefixed), len(loose), len(contacts), addr, ph, site, adm,
+             args.out),
           file=sys.stderr)
 
 

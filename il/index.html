@@ -12563,6 +12563,13 @@ function initChiExplorer() {
           // officials object naming no board and no fiscal year, which is what
           // the sources support: an address and a telephone and nobody.
           var info = props.dxOfficials = props.dxOfficials || {};
+          // The library's own site and its administrator are not office
+          // fields, and the directory is their only publisher — an Annual
+          // Financial Report carries no website at all, and the scraper
+          // withholds an administrator wherever the filing named one. So both
+          // are stamped whole rather than merged field by field.
+          if (extra.url) info.website = extra.url;
+          if (extra.admin && extra.admin.name) info.directoryHead = extra.admin;
           var office = info.office = info.office || {};
           var added = [];
           if (extra.address) {
@@ -12658,6 +12665,23 @@ function initChiExplorer() {
     if ((board.length || heads.length) && filed) {
       frag.appendChild(renderBodyIntro({ note: filed }));
     }
+    // A second publisher's person, so it sits AFTER the filing's note rather
+    // than above it: one note per block, each describing the block it follows.
+    // Only the library layer sets this, and only where the filing named no
+    // administration of its own, so the two can never appear together.
+    var listed = info.directoryHead;
+    if (!heads.length && listed && listed.name) {
+      frag.appendChild(renderSectionLabel("Administration"));
+      frag.appendChild(renderPersonRows([person(listed)]));
+      frag.appendChild(renderBodyIntro({
+        // The "no trustees" half only where the card shows none. On a card
+        // that already names a board from a filing it reads as a claim about
+        // THIS library rather than about the directory, and the two sit two
+        // lines apart.
+        note: "The administrator comes from the Illinois library systems' "
+          + "shared directory" + (board.length ? "." : ", which names no trustees.")
+      }));
+    }
     // A caller whose own source already publishes the district's office says
     // so and the filing's copy is dropped: Lake's GIS carries each district's
     // own address, telephone, e-mail and website, so rendering the filing's
@@ -12683,7 +12707,12 @@ function initChiExplorer() {
         frag.appendChild(renderBodyIntro({ note: String(info.contactNote) }));
       }
     }
-    return frag;
+    // NOTHING APPENDED MEANS NO BLOCK, not an empty one. The caller treats any
+    // node as a reason to wrap the card in card-flush, and `website` is carried
+    // on this same object for primaryLink without drawing a row — so a library
+    // whose only extra is its own site would otherwise re-wrap the card to show
+    // nothing.
+    return frag.childNodes.length ? frag : null;
   }
 
   /* TAZEWELL COUNTY (the 30th dispatched county, added 2026-08-02).
@@ -14711,7 +14740,15 @@ function initChiExplorer() {
         { label: "Boundary", value: STATEWIDE_LIBRARY_CREDIT },
         { name: "officials", keys: ["dxofficials"], hidden: true }
       ],
-      people: afrDistrictPeople
+      people: afrDistrictPeople,
+      // Every one of these 550 cards used to end with the boundary credit and
+      // nothing to click. The library's own site comes from the same directory
+      // as the address and the telephone; the filings carry no website.
+      primaryLink: function (result) {
+        var info = result && result.officials;
+        return (info && info.website)
+          ? { label: "Library website", url: String(info.website) } : null;
+      }
     });
   }
   var GRUNDY_GIS = "https://maps.grundyco.org/arcgis/rest/services/";

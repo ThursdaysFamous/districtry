@@ -2,9 +2,10 @@
 """Write il/data/app/il-library-contacts.json from the scraper's output.
 
 The pair to il_library_contacts_scraper.py, which reads each Illinois public
-library's office address and telephone from L2, the shared directory the three
-library systems run. This half does the refusing: a run that lost coverage leaves
-the shipped file alone rather than replacing it with a thinner one.
+library's office address, telephone, website and administrator from L2, the
+shared directory the three library systems run. This half does the refusing: a
+run that lost coverage leaves the shipped file alone rather than replacing it
+with a thinner one.
 
 WHAT THIS FILE HOLDS IS ONLY WHAT SHOULD SHIP. The scraper emits a field only
 where the library's own Annual Financial Report does not answer it, so the card's
@@ -17,14 +18,31 @@ with no street, which is not a place a reader can go.
 
 Measured 2026-09-11: 368 of the layer's 373 card names match a directory row —
 348 on the full name, 16 on the agency prefix that precedes a building's own name,
-4 on a normalisation — and 250 of those ship something, 244 an address and 223 a
-telephone. Five cards have no directory row: Chatsworth Area Library District,
+4 on a normalisation — and 365 of those ship something the filings do not: 244 an
+address, 223 a telephone, 331 a website and 286 an administrator. Five cards have
+no directory row: Chatsworth Area Library District,
 Dahlgren Public Library, Grand Prairie of the West Public Library District, Mount
 Hope-Funk's Grove Townships Public Library District and Olmsted Public Library.
 
-NO OFFICER SHIPS FROM THIS SOURCE. The directory's staff lists are behind a
-sign-in, so this file answers the location and contact rows and the
-statewide-library-officials gap stays open on the people half.
+ONE OFFICER SHIPS AND IT IS NOT A TRUSTEE. Each library's own page in the
+directory names a Primary Administrator, and that is the only person on it. The
+Staff List and the Annual Certification both answer 403 behind a sign-in, which
+is an access control and is not worked around, so the
+statewide-library-officials gap stays open on the trustees.
+
+THE WEBSITE'S KEY IS `url` FOR A REASON THAT IS NOT COSMETIC.
+validate_card_links.py reads the key to decide who owns an address: `url` means
+"somebody else's, exactly as they published it" and is capped at WARN, and any
+other key means this repo chose the string and a dead link is a FAIL. A
+library's own site is the library's.
+
+A WEBSITE WHOSE HOST DOES NOT RESOLVE NEVER REACHES HERE. The scraper drops it
+and prints the drop, because the card labels the link "Library website" and a
+host that does not exist makes that label a false statement — the same rule
+Douglas County's roster follows on a mistyped e-mail domain. Four of 335 went
+that way on 2026-09-11, leaving 331; one was a plain typo in the directory.
+MIN_WITH_URL is what stops a broken resolver emptying the field: a run that lost
+most of them falls under the floor and this refuses to write.
 
 NO E-MAIL SHIPS EITHER. 633 of the 641 directory rows carry one, mixing
 institutional mailboxes with named individuals' work addresses, and a directory
@@ -49,10 +67,21 @@ import sys
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app", "il-library-contacts.json")
 
-# Measured 2026-09-11: 250 libraries / 244 addresses / 223 telephones.
-MIN_LIBRARIES = 215
+# Measured 2026-09-11: 365 libraries / 244 addresses / 223 telephones / 331
+# websites / 286 administrators. Every floor sits about 14% under its measured
+# value, which is the same margin the first three were set with: a library
+# renamed in either publisher is a real event and must not freeze the other 364.
+#
+# THE FIVE DENOMINATORS ARE NOT THE SAME and the two new ones are the widest.
+# An address or a telephone ships only where the filing leaves one out, so 244
+# and 223 count a residue. A website and an administrator come off the library's
+# own page in the directory, which the filings do not carry at all, so every
+# matched library can have one.
+MIN_LIBRARIES = 315
 MIN_WITH_ADDRESS = 210
 MIN_WITH_PHONE = 190
+MIN_WITH_URL = 290
+MIN_WITH_ADMIN = 245
 
 
 def fail(msg):
@@ -74,23 +103,51 @@ def main():
 
     with_address = sum(1 for v in libraries.values() if v.get("address"))
     with_phone = sum(1 for v in libraries.values() if v.get("phone"))
+    with_url = sum(1 for v in libraries.values() if v.get("url"))
+    with_admin = sum(1 for v in libraries.values() if v.get("admin"))
     halves = sorted(k for k, v in libraries.items()
                     if bool(v.get("address")) != bool(v.get("city")))
     empty = sorted(k for k, v in libraries.items()
-                   if not v.get("address") and not v.get("phone"))
+                   if not any(v.get(f) for f in ("address", "phone", "url", "admin")))
+    # An administrator is a PERSON on a card, so a row that names none is a
+    # parse that went wrong rather than a library with no administrator.
+    nameless = sorted(k for k, v in libraries.items()
+                      if v.get("admin") and not (v["admin"].get("name") or "").strip())
+    # MARKUP IN A SHIPPED STRING IS A PARSE THAT WENT WRONG, always. The first
+    # run of the administrator pass shipped 286 names reading
+    # '<a href="/user/67198">Toya Wilson</a>', because the directory wraps each
+    # person in a link to their profile and clean() unescapes entities without
+    # removing tags. The card renders through textContent, so it was not an
+    # injection — it printed the markup at the reader. A browser render caught
+    # it and no gate did, which is what this one is for.
+    markup = sorted(k for k, v in libraries.items()
+                    if any("<" in str(x) or ">" in str(x)
+                           for x in (list(v.values()) + list((v.get("admin") or {}).values()))
+                           if isinstance(x, str)))
+    offsite = sorted(k for k, v in libraries.items()
+                     if v.get("url") and not str(v["url"]).startswith(("http://", "https://")))
 
     problems = []
     for count, floor, what in ((len(libraries), MIN_LIBRARIES, "librar(ies)"),
                                (with_address, MIN_WITH_ADDRESS, "with an address"),
-                               (with_phone, MIN_WITH_PHONE, "with a telephone")):
+                               (with_phone, MIN_WITH_PHONE, "with a telephone"),
+                               (with_url, MIN_WITH_URL, "with a website"),
+                               (with_admin, MIN_WITH_ADMIN, "with an administrator")):
         if count < floor:
             problems.append("%d %s < floor %d" % (count, what, floor))
     if halves:
         problems.append("a street without a city, or a city without a street, on: %s"
                         % ", ".join(halves[:8]))
     if empty:
-        problems.append("neither an address nor a telephone on: %s"
+        problems.append("no address, telephone, website or administrator on: %s"
                         % ", ".join(empty[:8]))
+    if nameless:
+        problems.append("an administrator with no name on: %s" % ", ".join(nameless[:8]))
+    if markup:
+        problems.append("markup left in a shipped string on: %s" % ", ".join(markup[:8]))
+    if offsite:
+        problems.append("a website that is not an http(s) address on: %s"
+                        % ", ".join(offsite[:8]))
     if problems:
         for problem in problems:
             print("  %s" % problem, file=sys.stderr)
@@ -115,15 +172,18 @@ def main():
         if a != b:
             fail("%s does not match a fresh read of the directory" % OUT_PATH)
         print("build-il-library-contacts: OK — shipped file matches (%d librar(ies), "
-              "%d with an address, %d with a telephone)"
-              % (len(libraries), with_address, with_phone))
+              "%d with an address, %d with a telephone, %d with a website, "
+              "%d with an administrator)"
+              % (len(libraries), with_address, with_phone, with_url, with_admin))
         return
 
     with open(OUT_PATH, "w", encoding="utf-8") as fh:
         fh.write(text)
     print("build-il-library-contacts: wrote %s — %d librar(ies), %d with an "
-          "address, %d with a telephone"
-          % (OUT_PATH, len(libraries), with_address, with_phone))
+          "address, %d with a telephone, %d with a website, %d with an "
+          "administrator"
+          % (OUT_PATH, len(libraries), with_address, with_phone, with_url,
+             with_admin))
 
 
 if __name__ == "__main__":
