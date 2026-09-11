@@ -12434,6 +12434,15 @@ function initChiExplorer() {
   var loadKankakeeDistrictOfficials = makeCached(function () {
     return fetchJSONWithRetry("data/app/kankakee-district-officials.json", {}, 2);
   });
+  /* Six more counties' fire and park districts, in ONE file because one
+   * scraper reads them: Cook (fire), Kendall, Macon, Rock Island and Stark
+   * (fire and park), and Stephenson (fire). Keyed by county, then by LAYER,
+   * then by the name the boundary file writes — Macon's fire and park layers
+   * both draw a BlueMound and both draw a Niantic, and they are four different
+   * bodies. scripts/il_special_district_officials_scraper.py. */
+  var loadIlSpecialDistrictOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/il-special-district-officials.json", {}, 2);
+  });
   /* ONE file for all 72 counties, and that is the shape of the source rather
    * than a saving: the statewide layer clips a library's service area to the
    * county, so one library draws a card in several counties while filing ONE
@@ -12493,6 +12502,19 @@ function initChiExplorer() {
   function withKankakeeOfficials(loadGeometry) {
     return withAfrOfficials(loadGeometry, loadKankakeeDistrictOfficials,
                             ["unit_name"]);
+  }
+  /* The six counties in il-special-district-officials.json. One roster file
+   * holds all of them, so the county and the LAYER pick the map to join on
+   * before the name does. */
+  function withIlDistrictOfficials(county, layer, nameKeys) {
+    return function (loadGeometry) {
+      return withAfrOfficials(loadGeometry, function () {
+        return loadIlSpecialDistrictOfficials().then(function (data) {
+          var byCounty = (data && data.counties) || {};
+          return { districts: (byCounty[county] || {})[layer] || {} };
+        });
+      }, nameKeys);
+    };
   }
   /* The statewide library layer, all 72 counties through one roster. Its join
    * key is the boundary layer's own `library` column, and its collection is
@@ -23510,12 +23532,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "cook",
         coverage: cookCountyCoverage,
-        loader: loadCookFireDistricts,
+        loader: withIlDistrictOfficials("cook", "fire", ["agency_description"])(loadCookFireDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["agency_description"], primary: true },
-          { label: "County", value: "Cook County" }
-        ]
+          { label: "County", value: "Cook County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       polygonCountyEntry({
         key: "will",
@@ -23601,12 +23625,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "kendall",
         coverage: kendallCountyCoverage,
-        loader: loadKendallFire,
+        loader: withIlDistrictOfficials("kendall", "fire", ["fire"])(loadKendallFire),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["fire"], primary: true },
-          { label: "County", value: "Kendall County" }
-        ]
+          { label: "County", value: "Kendall County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Kankakee's fire tiling (17 features, 16 districts — MANTENO FIRE ST1 and
       // ST2 are two stations of one). The county's taxing-district layers declare
@@ -23687,12 +23713,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "rock-island",
         coverage: rockIslandCountyCoverage,
-        loader: loadRockIslandFireDistricts,
+        loader: withIlDistrictOfficials("rock-island", "fire", ["firepd"])(loadRockIslandFireDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["firepd"], primary: true },
-          { label: "County", value: "Rock Island County" }
-        ]
+          { label: "County", value: "Rock Island County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Sangamon's 29 FPDs + the city (2026-08-02). Identity-only — the FPD
       // trustees are partly elected (four clerk PDFs) and partly
@@ -23792,12 +23820,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "stephenson",
         coverage: stephensonCountyCoverage,
-        loader: loadStephensonFire,
+        loader: withIlDistrictOfficials("stephenson", "fire", ["district"])(loadStephensonFire),
         fields: [
           { name: "name", label: "Fire District", keys: ["district"], primary: true },
           { label: "Note", value: "Boundary georeferenced from the county's 2014-published fire district map — the newest the county publishes. Lines are approximate and predate any later changes." },
-          { label: "County", value: "Stephenson County" }
-        ]
+          { label: "County", value: "Stephenson County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Boone — 5 districts the county identifies by NUMBER, not by name (see
       // loadBooneFire). The pill reads "Fire District 3" and a note says why,
@@ -23845,22 +23875,26 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "stark",
         coverage: starkCountyCoverage,
-        loader: loadStarkFire,
+        loader: withIlDistrictOfficials("stark", "fire", ["name"])(loadStarkFire),
         fields: [
           { name: "name", label: "Fire District", keys: ["name"], primary: true },
           { name: "ambulance", label: "Ambulance", keys: ["ambulance"] },
-          { label: "County", value: "Stark County" }
-        ]
+          { label: "County", value: "Stark County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       polygonCountyEntry({
         key: "macon",
         coverage: maconCountyCoverage,
-        loader: loadMaconFire,
+        loader: withIlDistrictOfficials("macon", "fire", ["fire"])(loadMaconFire),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["fire"], primary: true },
-          { label: "County", value: "Macon County" }
-        ]
+          { label: "County", value: "Macon County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Effingham — the org's dissolved 18-zone tiling, names matching the
       // county's own fire-protection-district list; the 'None' zone is
@@ -24052,12 +24086,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "kendall",
         coverage: kendallCountyCoverage,
-        loader: loadKendallParks,
+        loader: withIlDistrictOfficials("kendall", "park", ["park"])(loadKendallParks),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Park District", keys: ["park"], primary: true },
-          { label: "County", value: "Kendall County" }
-        ]
+          { label: "County", value: "Kendall County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Kankakee's park tiling (4) — boundary identity-only for the same measured
       // reason as fire; officers from each district's own AFR filing.
@@ -24105,12 +24141,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "rock-island",
         coverage: rockIslandCountyCoverage,
-        loader: loadRockIslandParkDistricts,
+        loader: withIlDistrictOfficials("rock-island", "park", ["park_distr"])(loadRockIslandParkDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Park District", keys: ["park_distr"], primary: true },
-          { label: "County", value: "Rock Island County" }
-        ]
+          { label: "County", value: "Rock Island County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Boone's 2, dissolved from the county's own parcel fabric because Boone
       // publishes no park boundary at all — see loadBooneParkDistricts. Belvidere
@@ -24162,11 +24200,13 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "stark",
         coverage: starkCountyCoverage,
-        loader: loadStarkPark,
+        loader: withIlDistrictOfficials("stark", "park", ["name"])(loadStarkPark),
         fields: [
           { name: "name", label: "Park District", keys: ["name"], primary: true },
-          { label: "County", value: "Stark County" }
-        ]
+          { label: "County", value: "Stark County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Logan's seven come from the Tri-County Regional Planning Commission,
       // not the county: the service does not say what they are, and TCRPC's own
@@ -24192,12 +24232,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "macon",
         coverage: maconCountyCoverage,
-        loader: loadMaconPark,
+        loader: withIlDistrictOfficials("macon", "park", ["park"])(loadMaconPark),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Park District", keys: ["park"], primary: true },
-          { label: "County", value: "Macon County" }
-        ]
+          { label: "County", value: "Macon County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       polygonCountyEntry({
         key: "effingham",

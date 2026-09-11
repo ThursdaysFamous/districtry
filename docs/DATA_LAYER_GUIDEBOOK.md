@@ -1404,6 +1404,37 @@ detail into `blocker`.
     "wanted": "Freeport Township's 16 precincts as map data, from whoever holds a digital copy of them."
     },
     {
+      "id": "fire-park-district-officers",
+      "concept": "Fire and park district officers",
+      "area": "Fire and park districts in nineteen Illinois counties",
+      "counties": [
+        "adams",
+        "boone",
+        "dekalb",
+        "dupage",
+        "effingham",
+        "hamilton",
+        "iroquois",
+        "kendall",
+        "lake",
+        "lee",
+        "macon",
+        "madison",
+        "mchenry",
+        "monroe",
+        "rock-island",
+        "sangamon",
+        "st-clair",
+        "stephenson"
+      ],
+      "kind": "no-source",
+      "layer": "fire-district",
+      "summary": "Most fire and park district cards still name nobody. Six counties' cards now name the board each district last filed with the state; in thirteen counties the fire card names no one, and in six the park card names no one.",
+      "why": "Each district names its own officers in an annual report to the state. Matching one to the district on the map needs a stored list of district names, and most counties' maps are fetched from the county as the page loads instead.",
+      "wanted": "The board of any fire or park district the app draws and cannot name — from the district itself, or from a county directory that lists them. Three Cook districts appear on no state filing at all under the names the county uses.",
+      "blocker": "Opened 2026-09-11. Nothing was blocking it and no record said it was missing, the shape Cass, Greene, Scott and Moultrie's precincts took on 2026-08-21: an absence with no refusal behind it.\n\nTHE STATE OF THE TWO LAYERS BEFORE THIS CHANGE. il/index.html draws fire protection districts in 26 counties and park districts in 18. Five counties named their officers from each district's own Annual Financial Report with the Illinois Comptroller — Peoria, Logan, Woodford, Grundy and Kankakee — and Boone's two park districts came from the county's own directory. Of the rest, Will's county data carries five trustee columns on fire and four commissioner columns on park, Kane's carries a fire chief on fire and a board president on park, and Madison's carries a fire chief. Every other fire or park card gave the district's name, the county, and nobody.\n\nWHAT SHIPPED, AND WHY IT STOPS WHERE IT DOES. il_special_district_officials_scraper.py and build_il_special_district_officials.py read the same AFR route for the six counties whose fire or park boundaries ship as GeoJSON in this repo and had no officers: Cook (fire), Kendall, Macon, Rock Island and Stark (fire and park), and Stephenson (fire). 119 cards. The join is on the name the boundary file writes, which is the string il/index.html will look up at render time, so those names have to be readable here; the counties this does not reach fetch their boundaries from a live county service at render time, and reaching them means reading each service the way kankakee_district_officials_scraper.py reads k3gis.net, one county at a time. That is the next step and not a blocker. Cook's park layer is in that group: its fire districts are a committed file and its park districts come from the county's own service at layer 23.\n\nMeasured 2026-09-11: 105 of the 119 cards carry a filing, naming 146 board officers and 69 appointed, with 76 cards carrying an office block, 66 of those a street address, 57 a telephone and 33 an e-mail. Stark is the one county of the six with nothing left over — all eight of its cards name a board.\n\nTHE 14 CARDS THAT STILL NAME NOBODY ARE FOUR DIFFERENT ANSWERS. Ten have a unit, verified against the Warehouse on every run, whose landing page carries no fiscal year, so there is no report to read: Country Club Hills, Elk Grove Rural and Hanover Park in Cook, Lisbon-Seward in Kendall, Long Creek, Mt. Zion, Warrensburg and Blue Mound Park in Macon, and Carbon Cliff/Barstow in Rock Island. Each ships the run a filing appears, as Mazon Fire does in Grundy. The tenth is Holbrook in Cook, which differs: it has a fiscal year and its contact table returns no eight-cell name row, so the parser declines to guess rather than pairing forenames with the wrong surnames. Three name no fire protection district anywhere in Illinois under the name Cook's layer uses — North Arlington, Palatine Rural and South Maine — and each has a polygon in the county's own layer. The fourteenth is Freeport, below.\n\nTHE MECHANICAL PASS GOT ONE OF ITS MATCHES WRONG AND A COLLISION TEST CAUGHT IT, not a reading of the names. A normalised name match resolved 106 of the 119 cards. Stephenson's layer draws both Freeport Fire-Ambulance and Freeport Rural Fire-Ambulance and the Warehouse files one Freeport fire unit, so both cards claimed it. The City of Freeport runs its own department, which files inside the city's report, so the FIRE PROTECTION DISTRICT unit is the rural one and the plain-named card has no district to name at all. Two cards in one county claiming one unit now fails the run. A unit serving two cards in DIFFERENT counties is legitimate and common — a cross-county district files once, under its home county, and 30 of the 105 records carry `filesIn` for that reason.\n\nTHE LAYER IS PART OF THE KEY AND MACON IS WHY. Its fire layer and its park layer both draw a district called BlueMound and both draw one called Niantic; they are four separate bodies filing four separate reports. A payload keyed by county and name alone would have put the park board on the fire card for two of them.\n\nTHE TABLE IS EXPLICIT AND THE MATCHER ONLY PROPOSED IT, following Logan, Woodford, Grundy and Kankakee. Every row carries the unit code and the Warehouse's own label, type and county, re-verified on each run in 23 county searches, so a renumbered or reassigned code fails the run instead of shipping another district's officers.\n\nFOUR SPELLINGS THE TWO PUBLISHERS DISAGREE ON, recorded and corrected in neither direction: the county writes Ciso where the Warehouse and the village write Cisco, Kenny where both write Kenney, CAMBELLS ISLAND where the Warehouse writes Campbells Island, and GARDEN HOME where it writes Garden Homes. The card keeps the county's spelling, because the county drew the polygon.\n\nWHAT REMAINS, BY COUNTY. Fire cards naming nobody: DuPage, Lake, McHenry, DeKalb, Lee, Adams, Iroquois, Sangamon, St. Clair, Boone, Effingham, Hamilton and Monroe. Park cards naming nobody: Cook, DuPage, Lake, Madison, DeKalb and Effingham. Lake's fire and park cards do carry the district's own office address, telephone, e-mail and website from the county's GIS feature, so those name a place and no person. Boone's fire districts are identified by NUMBER rather than by name, so a name join cannot reach them at all until the county publishes names.\n\nCOOK IS NOT IN THE `counties` LIST ABOVE and that is a limitation of the field rather than of the finding: the list has to name counties that ship a data/app outline file, and Cook's coverage test is the Board of Review tiling rather than an outline. The gap still appears in the panel's everywhere list, which is how every Cook-wide gap is carried here."
+    },
+    {
       "id": "stephenson-park-library-districts",
       "concept": "Park and library districts",
       "area": "Stephenson County",

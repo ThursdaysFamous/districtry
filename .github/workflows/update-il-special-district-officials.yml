@@ -1,0 +1,124 @@
+name: Update fire and park district officials
+
+# Weekly refresh of il/data/app/il-special-district-officials.json — the board,
+# the appointed officers and the office of the fire and park districts in six
+# Illinois counties, joined onto each county's own polygons by district name in
+# il/index.html.
+#
+# Why these six. The app draws fire protection districts in 26 counties and park
+# districts in 18. Peoria, Logan, Woodford, Grundy and Kankakee already name
+# their officers through their own AFR jobs, and Boone's park districts come
+# from the county's directory. Everywhere else the card gave a name, a county
+# and nobody. This job covers the six whose fire or park boundaries ship as
+# GeoJSON in this repo — Cook (fire), Kendall, Macon, Rock Island and Stark
+# (fire and park), and Stephenson (fire), 119 cards — because the scraper joins
+# on the names in those files and fails when the two lists diverge. The rest
+# fetch their boundaries from a live county service at render time; reaching
+# them means reading each service the way the Kankakee job does.
+#
+# The publisher is the district, not the county. Every Illinois unit of local
+# government files an Annual Financial Report with the Comptroller under the
+# Fiscal Responsibility Report Card Act, and its Contact Information section
+# names role-holders with the title the unit itself filed. The Comptroller is
+# the collector; the district is the author.
+#
+# Scheduled clear of the other six AFR jobs, which read the same state site:
+# the statewide library job runs Sunday 12:00, Peoria Sunday 21:00, Logan
+# Sunday 22:00, Woodford Monday 22:00, Grundy Friday 22:00 and Kankakee
+# Saturday 22:00. All pace themselves at one request a second.
+#
+# Roughly 270 paced requests: 23 county searches to verify every unit code in
+# the scraper's table still names the district it claims, then two pages per
+# unit — the landing page for the fiscal year it last filed for, then the
+# contact block for that year. An empty fiscal year returns a page with no
+# contact block, and a hardcoded year silently skips a district that is a year
+# behind, so the year is asked for rather than assumed.
+#
+# A district that stops filing is a real event, not a parse failure, and the
+# builder's floors sit under the measured values rather than at them so one
+# late filing cannot freeze the rest. The builder also re-measures every key
+# back against the shipped boundary files, because a district renamed in a
+# boundary file would leave a record here that no polygon can reach.
+
+on:
+  schedule:
+    # Monday 12:00 UTC — an hour ahead of the 13:00 roster wave, a day after
+    # the statewide library job takes the same band on Sunday.
+    - cron: "0 12 * * 1"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI (a PR opened with the default GITHUB_TOKEN fires no workflows).
+      # Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install scraper dependencies
+        run: pip install -c scripts/requirements.txt requests
+
+      - name: Read each district's own AFR contact filing
+        run: |
+          python3 scripts/il_special_district_officials_scraper.py \
+            --out /tmp/il_special_district_officials_raw.json
+
+      - name: Rebuild roster data file
+        run: |
+          python3 scripts/build_il_special_district_officials.py \
+            /tmp/il_special_district_officials_raw.json
+
+      # Gate the regenerated data before it can reach a PR.
+      - name: Validate app + data files
+        run: |
+          python3 scripts/build_il_special_district_officials.py \
+            /tmp/il_special_district_officials_raw.json --check
+          python3 scripts/validate_index.py il/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- il/data/app/; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          # Fixed branch (not per-run): an unmerged roster PR is refreshed in
+          # place by the force-push below instead of spawning a duplicate PR.
+          branch="bot/il-special-district-officials-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut the branch from main's CURRENT tip, not from the checkout this
+          # run started with — a workflow-scope refusal otherwise when main
+          # moves mid-run.
+          git fetch --depth=1 origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add il/data/app/il-special-district-officials.json
+          git commit -m "Update fire and park district officials"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update fire and park district officials" \
+              --body "Automated weekly refresh of the officers, office and contact details of the fire and park districts in Cook, Kendall, Macon, Rock Island, Stark and Stephenson counties, generated by \`scripts/il_special_district_officials_scraper.py\` + \`scripts/build_il_special_district_officials.py\`. Each district's own Annual Financial Report filing with the Illinois Comptroller is the source, and every record names the fiscal year it was filed for and the county it files in. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

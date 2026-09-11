@@ -1,0 +1,172 @@
+#!/usr/bin/env python3
+"""Write il/data/app/il-special-district-officials.json from the scraper's output.
+
+The pair to il_special_district_officials_scraper.py, which reads each fire and
+park district's own Annual Financial Report filing from the Illinois
+Comptroller. This half does the refusing: a run that lost coverage leaves the
+shipped file alone rather than replacing it with a thinner one.
+
+THE CARD COUNT IS RE-MEASURED HERE, NOT TAKEN FROM THE SCRAPER'S ARITHMETIC.
+The payload is keyed by county, then layer, then the name the boundary file
+writes, so a record that no polygon can reach is invisible to the scraper's own
+totals. Every key is checked back against the shipped boundary files and a key
+that stamps nothing fails the build.
+
+A FIRE CARD AND A PARK CARD IN ONE COUNTY CAN SHARE A NAME. Macon's layers both
+draw a `BlueMound` and both draw a `Niantic` — four separate bodies filing four
+separate reports — so the layer is part of the key and the build fails if the
+two levels ever collapse.
+
+Measured 2026-09-11 (the figures the floors sit under, each floor deliberately
+below its measured value so one district filing late does not freeze the rest).
+
+The fiscal year is required on every district. An AFR is a snapshot filed for
+one year, and the Comptroller's own page says a different year may name a
+different person, so a record without one cannot be rendered honestly and the
+build refuses rather than shipping a name with no date attached.
+
+A DISTRICT WITH NO BOARD OFFICER STILL SHIPS. Some file only a chief or a
+director, which is that district's own answer about who it publishes, not a
+parse failure. The card names them under Administration and says nothing about
+a board. The appointed officers are floored separately, because a regression
+that dropped them alone would leave the board count untouched.
+"""
+
+import argparse
+import json
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from il_special_district_officials_scraper import shipped_cards  # noqa: E402
+
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app",
+                        "il-special-district-officials.json")
+
+# Measured 2026-09-11: 105 of the 119 cards stamped, 146 board officers, 69
+# appointed, 76 cards with an office block, 66 of those with a street address,
+# 57 with a telephone, 33 with an e-mail. Each floor sits under its measured
+# value.
+MIN_CARDS = 90
+MIN_BOARD = 120
+MIN_HEADS = 55
+MIN_WITH_OFFICE = 62
+MIN_WITH_PHONE = 45
+# Every county the scraper's table covers, and both layers. A county or a layer
+# disappearing entirely is a source change rather than turnover.
+EXPECT_COUNTIES = {"cook", "kendall", "macon", "rock-island", "stark",
+                   "stephenson"}
+EXPECT_LAYERS = {"fire", "park"}
+
+
+def fail(msg):
+    sys.exit("build-il-special-district-officials: FAIL — " + msg)
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("scraped", help="il_special_district_officials_scraper.py --out")
+    ap.add_argument("--check", action="store_true",
+                    help="compare against the shipped file instead of writing")
+    args = ap.parse_args()
+
+    with open(args.scraped, encoding="utf-8") as fh:
+        payload = json.load(fh)
+    counties = payload.get("counties") or {}
+    if not isinstance(counties, dict):
+        fail("the scraper's output has no counties object")
+
+    cards = shipped_cards()
+    records = []                                # (county, layer, name, entry)
+    orphans, undated = [], []
+    for county, layers in sorted(counties.items()):
+        for layer, byname in sorted(layers.items()):
+            drawn = set(cards.get((county, layer)) or [])
+            for name, entry in sorted(byname.items()):
+                if name not in drawn:
+                    orphans.append("%s/%s/%s" % (county, layer, name))
+                if not entry.get("filedFor"):
+                    undated.append("%s/%s/%s" % (county, layer, name))
+                records.append((county, layer, name, entry))
+
+    board = sum(len(e.get("board") or []) for _c, _l, _n, e in records)
+    heads = sum(len(e.get("heads") or []) for _c, _l, _n, e in records)
+    with_office = sum(1 for _c, _l, _n, e in records if (e.get("office") or {}))
+    with_phone = sum(1 for _c, _l, _n, e in records
+                     if (e.get("office") or {}).get("phone"))
+    nobody = ["%s/%s/%s" % (c, l, n) for c, l, n, e in records
+              if not (e.get("board") or e.get("heads"))]
+    seen_counties = set(counties)
+    seen_layers = {layer for layers in counties.values() for layer in layers}
+
+    problems = []
+    if len(records) < MIN_CARDS:
+        problems.append("%d card(s) < floor %d" % (len(records), MIN_CARDS))
+    if board < MIN_BOARD:
+        problems.append("%d board officer(s) < floor %d" % (board, MIN_BOARD))
+    if heads < MIN_HEADS:
+        problems.append("%d appointed officer(s) < floor %d" % (heads, MIN_HEADS))
+    if with_office < MIN_WITH_OFFICE:
+        problems.append("%d card(s) with an office < floor %d"
+                        % (with_office, MIN_WITH_OFFICE))
+    if with_phone < MIN_WITH_PHONE:
+        problems.append("%d card(s) with a telephone < floor %d"
+                        % (with_phone, MIN_WITH_PHONE))
+    missing = EXPECT_COUNTIES - seen_counties
+    if missing:
+        problems.append("no district in: %s" % ", ".join(sorted(missing)))
+    unexpected = seen_counties - EXPECT_COUNTIES
+    if unexpected:
+        problems.append("unexpected county: %s" % ", ".join(sorted(unexpected)))
+    if seen_layers - EXPECT_LAYERS:
+        problems.append("unexpected layer: %s"
+                        % ", ".join(sorted(seen_layers - EXPECT_LAYERS)))
+    if EXPECT_LAYERS - seen_layers:
+        problems.append("no district on layer: %s"
+                        % ", ".join(sorted(EXPECT_LAYERS - seen_layers)))
+    if orphans:
+        problems.append("no polygon carries this name: %s" % ", ".join(orphans))
+    if undated:
+        problems.append("no fiscal year on: %s" % ", ".join(undated))
+    if nobody:
+        problems.append("names no officer of any kind: %s" % ", ".join(nobody))
+    if problems:
+        for p in problems:
+            print("  %s" % p, file=sys.stderr)
+        fail("refusing to write a payload that lost coverage")
+
+    out = {
+        "source": payload.get("source"),
+        "sourceUrl": payload.get("sourceUrl"),
+        "officialsPage": payload.get("officialsPage"),
+        "generated": payload.get("generated"),
+        "counties": counties,
+    }
+    text = json.dumps(out, indent=2, ensure_ascii=False, sort_keys=True) + "\n"
+
+    if args.check:
+        if not os.path.exists(OUT_PATH):
+            fail("%s is missing" % OUT_PATH)
+        with open(OUT_PATH, encoding="utf-8") as fh:
+            shipped = json.load(fh)
+        # `generated` moves every run and says nothing about the data.
+        a = {k: v for k, v in shipped.items() if k != "generated"}
+        b = {k: v for k, v in out.items() if k != "generated"}
+        if a != b:
+            fail("%s does not match a fresh read of the filings" % OUT_PATH)
+        print("build-il-special-district-officials: OK — shipped file matches "
+              "(%d card(s), %d board officer(s))" % (len(records), board))
+        return
+
+    with open(OUT_PATH, "w", encoding="utf-8") as fh:
+        fh.write(text)
+    total = sum(len(names) for names in cards.values())
+    print("build-il-special-district-officials: wrote %s — %d of %d card(s), "
+          "%d board officer(s), %d appointed, %d with an office, %d with a "
+          "telephone" % (OUT_PATH, len(records), total, board, heads,
+                         with_office, with_phone))
+
+
+if __name__ == "__main__":
+    main()
