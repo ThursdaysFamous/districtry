@@ -32,8 +32,8 @@
     "favicon_data_uri": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2096%2096%22%3E%3Cpolygon%20points%3D%2216%2C20%2060%2C8%2090%2C34%2084%2C74%2046%2C90%2012%2C64%22%20fill%3D%22%236d3fd1%22%3E%3C%2Fpolygon%3E%3Ccircle%20cx%3D%2242%22%20cy%3D%2258%22%20r%3D%2215%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%2210%22%3E%3C%2Fcircle%3E%3Cline%20x1%3D%2257%22%20y1%3D%2220%22%20x2%3D%2257%22%20y2%3D%2277.5%22%20stroke%3D%22%23fff%22%20stroke-width%3D%2210%22%3E%3C%2Fline%3E%3C%2Fsvg%3E",
     "apple_touch_icon": "icons/apple-touch-icon.png",
     "head": {
-      "title": "What district am I in? Find your Wisconsin district — districtry Wisconsin",
-      "description": "Enter an address or ZIP — or tap the map — to find your district: county, city, village or town, school district, Wisconsin Senate and Assembly districts, U.S. House district, and who represents you. Free, no login.",
+      "title": "What district am I in? — districtry Wisconsin",
+      "description": "Tap the map or search a Wisconsin address: county, city or town, school district, state and U.S. House — and who represents you. Free, no login.",
       "og_title": "What district am I in? — districtry Wisconsin",
       "og_description": "Click the map or search any Wisconsin address to see every civic district that covers it, and who represents you.",
       "og_image_alt": "districtry Wisconsin — a map of Wisconsin with the question: which districts cover this point, and who represents you?",
@@ -191,7 +191,7 @@
       "area_rank": 7,
       "rank_note": "Counties, pre-built from TIGERweb at bootstrap; the fork's offline anchor layer",
       "source": {
-        "answers": "Which county contains the point, the county clerk who holds its records and — outside Milwaukee — runs its elections, with the clerk's office, hours and contact.",
+        "answers": "Which county contains the point, the county clerk who holds its records and — outside Milwaukee — runs its elections, with the clerk's office, hours and contact. The card also names the COUNTY SEAT, from the same Blue Book's counties table and the same permission. A seat is named as a place, not as a municipality: three of Wisconsin's 72 are towns or unincorporated communities rather than cities or villages.",
         "boundary": [
           {
             "label": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app",
@@ -375,7 +375,7 @@
       "area_rank": 17,
       "rank_note": "Incorporated places (TIGERweb Places, live) — 608 in Wisconsin, 190 cities + 418 villages and not one of the state's 1,242 towns; a point in a town gets the layer's own words for unincorporated",
       "source": {
-        "answers": "The incorporated city or village containing the point — or, when there is none, that the point sits on unincorporated town land, which is an answer rather than a miss. NOT every municipality: Wis. Stat. 5.02(11) makes a town a municipality too, and TIGER's Places layer carries none of Wisconsin's 1,242 towns, which is why this layer is labelled City or Village and County Subdivision is the one that answers everywhere.",
+        "answers": "The incorporated city or village containing the point — or, when there is none, that the point sits on unincorporated town land, which is an answer rather than a miss. NOT every municipality: Wis. Stat. 5.02(11) makes a town a municipality too, and TIGER's Places layer carries none of Wisconsin's 1,242 towns, which is why this layer is labelled City or Village and County Subdivision is the one that answers everywhere. The card also names the year the municipality was incorporated and the county or counties it lies in, from the Wisconsin Blue Book 2025–26's own tables of cities and villages, used by written permission from the Legislative Reference Bureau. 57 municipalities lie in more than one county and all of them are named. One village, Greenleaf, incorporated after that table's January 1, 2024 snapshot and the card says so rather than showing nothing.",
         "boundary": [
           {
             "label": "U.S. Census TIGERweb — Places, layer 4",
@@ -1703,11 +1703,6 @@
         "note": "The nine Milwaukee Board of School Directors (at-large president + districts 1-8, keyed to the geometry's DISTRICT values) with roles, term expirations and the Board office's contact, under {members, office, sourceUrl}. Built by wi/scripts/build_mps_school_board_roster.py from the district's own directors page with the committee-list witness; refreshed weekly by update-mps-school-board-roster.yml."
       },
       {
-        "file": "rusd-school-board-members.json",
-        "min_keys": 3,
-        "note": "The nine Racine Unified Board of Education members, keyed to the geometry's district values, with role, phone, e-mail and term expiration under {members, office, sourceUrl} — plus the one seat RUSD's own notice of vacancy declares empty, shipped as a row rather than dropped. Built by wi/scripts/build_rusd_school_board_roster.py from the district's own board page; refreshed weekly by update-rusd-school-board-roster.yml."
-      },
-      {
         "file": "oconto-polling-places.json",
         "min_keys": 62,
         "note": "Oconto County ward → polling place pairing for the 2026 General Election — wi/scripts/build_wi_polling_places.py, from the workbook the Wisconsin Elections Commission sent 2026-08-27 (wi/data/source/wec/). PROVISIONAL until the Commission publishes its November edition; 69 of the county's LTSB wards are paired, and the card names the election, the provisional status and MyVote as the confirmation route.",
@@ -1778,6 +1773,11 @@
         "min_keys": 164,
         "note": "Rock County ward → polling place pairing for the 2026 General Election — wi/scripts/build_wi_polling_places.py, from the workbook the Wisconsin Elections Commission sent 2026-08-27 (wi/data/source/wec/). PROVISIONAL until the Commission publishes its November edition; 183 of the county's LTSB wards are paired, and the card names the election, the provisional status and MyVote as the confirmation route.",
         "dynamic_reference": true
+      },
+      {
+        "file": "rusd-school-board-members.json",
+        "min_keys": 3,
+        "note": "The nine Racine Unified Board of Education members, keyed to the geometry's district values, with role, phone, e-mail and term expiration under {members, office, sourceUrl} — plus the one seat RUSD's own notice of vacancy declares empty, shipped as a row rather than dropped. Built by wi/scripts/build_rusd_school_board_roster.py from the district's own board page; refreshed weekly by update-rusd-school-board-roster.yml."
       },
       {
         "file": "rusk-polling-places.json",
@@ -2322,6 +2322,11 @@
         "note": "All 72 county clerks — name, party-or-appointed per the Blue Book's own legend, office, hours, phone, fax, e-mail — keyed by county GEOID. Built by wi/scripts/build_wi_county_clerk_roster.py from the two cross-gating open publishers; refreshed weekly by update-wi-county-clerk-roster.yml. Milwaukee's entry carries the statutory election-commission note."
       },
       {
+        "file": "wi-county-facts.json",
+        "min_keys": 72,
+        "note": "Each of the 72 counties' SEAT, keyed by county GEOID — the same Blue Book section 190 scrape and the same permission. It is county-keyed because it is a column of the counties table and therefore the county's own fact: matched onto the city/village fabric instead it degrades to 67, because three seats are not incorporated municipalities at all (Meenon, Florence, Keshena) and two are ambiguous — Douglas and Waukesha each have a City AND a Village of the seat's name, and the column prints a name with no class. The year each county was created sits beside the seat in that table and is NOT taken. An OPERATOR build, biennial."
+      },
+      {
         "file": "wi-county-officers.json",
         "min_keys": 72,
         "note": "72 counties x 7 offices from the Blue Book's county-officer tables (build_wi_county_officer_roster.py; layout-aware x-position parse, chair-seats witness, Menominee pin, shared-DA footnote). Dated April 2025 on every card; refreshed weekly with the clerk scrape."
@@ -2340,6 +2345,11 @@
         "file": "wi-municipal-executives.json",
         "min_keys": 19,
         "note": "Milwaukee County's 19 municipal executives (mayors and village presidents) keyed by place GEOID, from the county GIS & Land Information layer — the only source in Wisconsin that names them as data. The layer's own dataLastEditDate is 2024-07-30 and these offices are elected every April of even years, so a NAME ships only where the municipality's OWN page witnessed it (wi_municipal_executive_scraper.py + build_wi_municipal_executives.py); 9 witnessed and 10 withheld with the reason at first build. Refreshed weekly."
+      },
+      {
+        "file": "wi-municipal-facts.json",
+        "min_keys": 600,
+        "note": "Incorporation year and county (or counties) for 607 of Wisconsin's 608 cities and villages, keyed by place GEOID — from the Wisconsin Blue Book 2025–26 section 190, used by written permission from the Legislative Reference Bureau (LICENSE-DATA.md §4). wi/scripts/wi_bluebook_municipal_scraper.py + build_wi_municipal_facts.py. The parse is gated on the source's OWN class headings, which count the cities for it (1 + 16 + 34 + 139 = 190). 57 municipalities name MORE THAN ONE county and the card names them all, where the Elections Commission's own field says only \"Multiple Counties\" for 58 of them. The one municipality absent is the VILLAGE OF GREENLEAF, which incorporated after the table's January 1, 2024 snapshot; its card says that rather than rendering a blank. Population, area, rank and equalized value sit in the same tables and are NOT taken — the permission covers three facts. An OPERATOR build on the Blue Book's own biennial cadence, not a weekly one."
       },
       {
         "file": "wi-senate-members.json",
@@ -2504,18 +2514,84 @@
     ]
   },
   "metro_explorers": [
-    { "id": "chicago", "label": "Illinois", "url": "https://districtry.com/il/", "emoji": "🌭", "explorer_name": "districtry Illinois",
-      "bbox": { "minLng": -91.52, "minLat": 36.96, "maxLng": -87.01, "maxLat": 42.51 } },
-    { "id": "nyc", "label": "New York City", "url": "https://districtry.com/ny/", "emoji": "🗽", "explorer_name": "districtry New York City",
-      "bbox": { "minLng": -74.3, "minLat": 40.45, "maxLng": -73.6, "maxLat": 41.0 } },
-    { "id": "sf", "label": "San Francisco", "url": "https://districtry.com/ca/", "emoji": "🌉", "explorer_name": "districtry San Francisco",
-      "bbox": { "minLng": -122.6, "minLat": 37.6, "maxLng": -122.3, "maxLat": 37.95 } },
-    { "id": "wisconsin", "label": "Wisconsin", "url": "https://districtry.com/wi/", "emoji": "🧀", "explorer_name": "districtry Wisconsin",
-      "bbox": { "minLng": -92.89, "minLat": 42.49, "maxLng": -86.25, "maxLat": 47.31 } },
-    { "id": "iowa", "label": "Iowa", "url": "https://districtry.com/ia/", "emoji": "🌽", "explorer_name": "districtry Iowa",
-      "bbox": { "minLng": -96.64, "minLat": 40.37, "maxLng": -90.14, "maxLat": 43.5 } },
-    { "id": "michigan", "label": "Michigan", "url": "https://districtry.com/mi/", "emoji": "🚗", "explorer_name": "districtry Michigan",
-      "bbox": { "minLng": -87.6, "minLat": 41.7, "maxLng": -82.11, "maxLat": 48.01 } }
+    {
+      "id": "chicago",
+      "label": "Illinois",
+      "url": "https://districtry.com/il/",
+      "emoji": "🌭",
+      "explorer_name": "districtry Illinois",
+      "bbox": {
+        "minLng": -91.52,
+        "minLat": 36.96,
+        "maxLng": -87.01,
+        "maxLat": 42.51
+      }
+    },
+    {
+      "id": "nyc",
+      "label": "New York City",
+      "url": "https://districtry.com/ny/",
+      "emoji": "🗽",
+      "explorer_name": "districtry New York City",
+      "bbox": {
+        "minLng": -74.3,
+        "minLat": 40.45,
+        "maxLng": -73.6,
+        "maxLat": 41.0
+      }
+    },
+    {
+      "id": "sf",
+      "label": "San Francisco",
+      "url": "https://districtry.com/ca/",
+      "emoji": "🌉",
+      "explorer_name": "districtry San Francisco",
+      "bbox": {
+        "minLng": -122.6,
+        "minLat": 37.6,
+        "maxLng": -122.3,
+        "maxLat": 37.95
+      }
+    },
+    {
+      "id": "wisconsin",
+      "label": "Wisconsin",
+      "url": "https://districtry.com/wi/",
+      "emoji": "🧀",
+      "explorer_name": "districtry Wisconsin",
+      "bbox": {
+        "minLng": -92.89,
+        "minLat": 42.49,
+        "maxLng": -86.25,
+        "maxLat": 47.31
+      }
+    },
+    {
+      "id": "iowa",
+      "label": "Iowa",
+      "url": "https://districtry.com/ia/",
+      "emoji": "🌽",
+      "explorer_name": "districtry Iowa",
+      "bbox": {
+        "minLng": -96.64,
+        "minLat": 40.37,
+        "maxLng": -90.14,
+        "maxLat": 43.5
+      }
+    },
+    {
+      "id": "michigan",
+      "label": "Michigan",
+      "url": "https://districtry.com/mi/",
+      "emoji": "🚗",
+      "explorer_name": "districtry Michigan",
+      "bbox": {
+        "minLng": -87.6,
+        "minLat": 41.7,
+        "maxLng": -82.11,
+        "maxLat": 48.01
+      }
+    }
   ],
   "history_page": {
     "file": "history.html",

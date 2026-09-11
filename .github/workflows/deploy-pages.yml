@@ -136,6 +136,30 @@ jobs:
             return 1
           }
           retry 3 60 npm install "playwright@${PLAYWRIGHT_VERSION}"
+          # DROP APT SOURCES THIS JOB DOES NOT USE, BEFORE install-deps TOUCHES
+          # APT. On 2026-09-09 dl.google.com served a main/binary-amd64
+          # Packages.gz whose SHA256 (bc1428ab...) did not match the one its own
+          # Release file advertised (233e56de...), and `apt-get update` treats a
+          # Hash Sum mismatch on ANY configured repo as fatal. That failed four
+          # consecutive deploys across four unrelated merges, and the same step
+          # in smoke-test.yml would have failed every PR the moment one ran.
+          # The runner image carries the Google Chrome repo; NOTHING in these
+          # workflows installs from it — install-deps takes Chromium's shared
+          # libraries from Ubuntu's own archive, which fetched fine throughout,
+          # and the browser build itself comes from Playwright's CDN or the
+          # cache above. So a third party's publishing race stopped this site
+          # deploying, over a repository it has no use for.
+          #
+          # This removes a repo rather than weakening a check: no
+          # --allow-insecure-repositories, no --allow-unauthenticated, and
+          # every remaining source is still verified normally. Both apt formats
+          # are matched because Ubuntu is migrating .list to deb822 .sources,
+          # and a hardcoded filename would silently stop matching. Matching on
+          # CONTENT rather than filename for the same reason. It is a no-op on
+          # an image that ships no such repo.
+          sudo find /etc/apt/sources.list.d -maxdepth 1 -type f \
+               \( -name '*.list' -o -name '*.sources' \) \
+               -exec grep -q 'dl\.google\.com' {} \; -print -delete 2>/dev/null || true
           retry 1 420 npx playwright install-deps chromium
           if [ "${{ steps.pw-cache.outputs.cache-hit }}" != "true" ]; then
             retry 2 300 npx playwright install chromium
@@ -192,6 +216,13 @@ jobs:
             ia/data/state ia/data/source ia/scripts
             mi/data/state mi/data/source mi/scripts
             fonts/barlow-fontface.css
+            # Search Console counts the traffic report reads when it rebuilds
+            # elsewhere; nothing on this site fetches them. Written as a full
+            # path ON PURPOSE: an rsync --exclude with no slash matches a
+            # BASENAME at any depth, so a bare "data" here would silently
+            # unpublish il/data/app, wi/data/app and every other instance's
+            # runtime files while every guard below still passed.
+            data/search-performance.json
             node_modules package.json package-lock.json
             engine metros.json metro-worksheet.json point-transmission.json
             schema CLAUDE.md

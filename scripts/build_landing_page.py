@@ -128,6 +128,14 @@ OUT = os.path.join(REPO_ROOT, "index.html")
 # regenerate, never a rewrite of the page.
 CANONICAL = "https://districtry.com/"
 
+# The one external profile that carries the name "districtry" and that this
+# project can point at as itself. It goes in the WebSite node's sameAs (below)
+# because a coined name has nothing for a search engine to attach it to: the
+# root asserted the string and linked it to no identifier anywhere. Only URLs
+# that genuinely name this project belong here — the publisher's own GitHub
+# account is a different entity and is deliberately not listed.
+REPO = "https://github.com/ThursdaysFamous/districtry"
+
 # The rename notice. Data, not markup, so retiring it is deleting a constant
 # rather than editing a page — set NOTICE to None when it has served its time.
 # It is deliberately plain about what happened and what it means for a reader
@@ -408,6 +416,7 @@ def _landing_jsonld(metros, title, desc):
                 "name": "districtry",
                 "description": desc,
                 "inLanguage": "en-US",
+                "sameAs": [REPO],
                 "publisher": {"@id": CANONICAL + "#publisher"},
             },
             {
@@ -853,6 +862,7 @@ footer .foot-links { margin-top: 12px; }
          <a href="sponsorship.html">sponsorship policy</a> says so in detail.</p>
       <p class="foot-links"><a href="privacy.html">Privacy</a> ·
          <a href="sponsorship.html">Sponsorship</a> ·
+         <a href="traffic.html">Traffic</a> ·
          <a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a> ·
          <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">Source on GitHub</a></p>
     </footer>

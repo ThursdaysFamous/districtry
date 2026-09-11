@@ -1,0 +1,429 @@
+{
+  "districts": {
+    "ALLEN FIRE": {
+      "board": [
+        {
+          "name": "Jayne Corsini",
+          "role": "President"
+        },
+        {
+          "name": "Forrest Smith",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "050/010/06",
+      "filedFor": "2026",
+      "filesIn": "LaSalle",
+      "kind": "fire",
+      "office": {
+        "address": "102 S. Lincoln St",
+        "city": "Ransom IL 60470",
+        "email": "allentwpfiredept@gmail.com"
+      }
+    },
+    "BRACEVILLE FIRE": {
+      "board": [
+        {
+          "name": "Patty Bartels",
+          "role": "Acting President"
+        },
+        {
+          "name": "RANDY BERRY",
+          "role": "Sec./Treas."
+        }
+      ],
+      "comptrollerCode": "032/005/06",
+      "filedFor": "2025",
+      "kind": "fire",
+      "office": {}
+    },
+    "BRAIDWOOD FIRE": {
+      "board": [
+        {
+          "name": "Mike Dillon",
+          "role": "President"
+        },
+        {
+          "name": "William D Ritze",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "099/160/06",
+      "filedFor": "2025",
+      "filesIn": "Will",
+      "kind": "fire",
+      "office": {
+        "address": "275 W Main Street",
+        "city": "Braidwood IL 60408",
+        "email": "britze@braidwoodfire.org",
+        "phone": "(815) 458-2000"
+      }
+    },
+    "CHANNAHON PARK DISTRICT": {
+      "board": [
+        {
+          "name": "Ronald Lehman",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Christopher Caldwell",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "099/015/12",
+      "filedFor": "2025",
+      "filesIn": "Will",
+      "heads": [
+        {
+          "name": "Michael Leonard",
+          "role": "Direc./Sec."
+        }
+      ],
+      "kind": "park",
+      "office": {
+        "address": "24856 W Eames",
+        "city": "Channahon IL 60410",
+        "email": "finance@channahonpark.org",
+        "phone": "(815) 467-7275"
+      }
+    },
+    "COAL CITY FIRE": {
+      "board": [
+        {
+          "name": "Randy Alderson",
+          "role": "President"
+        },
+        {
+          "name": "Dean Marketti",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "032/010/06",
+      "filedFor": "2026",
+      "kind": "fire",
+      "office": {
+        "address": "35 S Dewitt Pl",
+        "city": "Coal City IL 60416",
+        "phone": "(815) 634-4700"
+      }
+    },
+    "COAL CITY LIBRARY": {
+      "comptrollerCode": "032/010/10",
+      "filedFor": "2026",
+      "heads": [
+        {
+          "name": "Leah Bill",
+          "role": "Director"
+        }
+      ],
+      "kind": "library",
+      "office": {
+        "address": "85 N Garfield St",
+        "city": "Coal City IL 60416",
+        "phone": "(815) 634-4552"
+      }
+    },
+    "DWIGHT FIRE": {
+      "board": [
+        {
+          "name": "BRIAN PERSCHNICK",
+          "role": "President"
+        },
+        {
+          "name": "ERIC STEWART",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "053/030/06",
+      "filedFor": "2025",
+      "filesIn": "Livingston",
+      "kind": "fire",
+      "office": {}
+    },
+    "FOSSIL RIDGE LIBRARY": {
+      "board": [
+        {
+          "name": "Sandra Bauter",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "099/005/10",
+      "filedFor": "2025",
+      "filesIn": "Will",
+      "heads": [
+        {
+          "name": "Tammy Smith",
+          "role": "Fin. Officer"
+        }
+      ],
+      "kind": "library",
+      "office": {
+        "address": "386 Kennedy Road",
+        "city": "Braidwood IL 60408"
+      }
+    },
+    "GARDNER FIRE": {
+      "board": [
+        {
+          "name": "Donald Pfeifer Jr",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "032/020/06",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Becky Pasternak",
+          "role": "Administrator"
+        }
+      ],
+      "kind": "fire",
+      "office": {
+        "address": "PO BOX 181",
+        "city": "Gardner IL 60424",
+        "email": "admin@gardnerfpd.com",
+        "phone": "(815) 237-8806"
+      }
+    },
+    "GODLEY PARK DISTRICT": {
+      "comptrollerCode": "032/010/12",
+      "filedFor": "2026",
+      "heads": [
+        {
+          "name": "Ken Sorensen",
+          "role": "Director"
+        }
+      ],
+      "kind": "park",
+      "office": {
+        "email": "ken@godleypark.com"
+      }
+    },
+    "MINOOKA FIRE": {
+      "board": [
+        {
+          "name": "Daniel Roberts",
+          "role": "President"
+        },
+        {
+          "name": "Angela Robinson",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "032/030/06",
+      "filedFor": "2025",
+      "kind": "fire",
+      "office": {
+        "address": "7901 E Minooka Rd",
+        "city": "Minooka IL 60447",
+        "email": "robinsona@minookafire.com",
+        "phone": "(815) 467-5637"
+      }
+    },
+    "MORRIS AREA LIBRARY": {
+      "comptrollerCode": "032/020/10",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Karen Barowsky",
+          "role": "Acting Director"
+        },
+        {
+          "name": "Tanya Berndt",
+          "role": "Treas./Admin."
+        }
+      ],
+      "kind": "library",
+      "office": {
+        "address": "604 Liberty St",
+        "city": "Morris IL 60450",
+        "email": "tberndt@morrislibrary.com",
+        "phone": "(815) 942-6880"
+      }
+    },
+    "MORRIS FIRE & AMBUL": {
+      "board": [
+        {
+          "name": "Kathy Lambros",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "032/040/06",
+      "filedFor": "2026",
+      "heads": [
+        {
+          "name": "Tracy Steffes",
+          "role": "Chief"
+        }
+      ],
+      "kind": "fire",
+      "office": {
+        "address": "2301 Ashton Rd",
+        "city": "Morris IL 60450",
+        "email": "klambros@morrisfd.org",
+        "phone": "(815) 942-2830"
+      }
+    },
+    "PRAIRIE CREEK LIBRARY": {
+      "board": [
+        {
+          "name": "Victoria Ferguson",
+          "role": "President"
+        },
+        {
+          "name": "Emily Moore",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "053/070/10",
+      "filedFor": "2025",
+      "filesIn": "Livingston",
+      "kind": "library",
+      "office": {
+        "address": "501 Carriage House Lane",
+        "city": "Dwight IL 60420",
+        "phone": "(815) 584-3061"
+      }
+    },
+    "REDDICK FIRE": {
+      "board": [
+        {
+          "name": "SUE BERGAN",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "053/085/06",
+      "filedFor": "2025",
+      "filesIn": "Livingston",
+      "heads": [
+        {
+          "name": "ROBERT LOWERY",
+          "role": "C.E.O."
+        }
+      ],
+      "kind": "fire",
+      "office": {
+        "address": "210 E MAIN ST",
+        "city": "REDDICK IL 60921",
+        "phone": "(815) 365-4911"
+      }
+    },
+    "S WILMINGTON FIRE": {
+      "board": [
+        {
+          "name": "Michael Residori",
+          "role": "Trustee"
+        },
+        {
+          "name": "David Doglio",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "032/050/06",
+      "filedFor": "2026",
+      "kind": "fire",
+      "office": {
+        "address": "370 Oak St",
+        "city": "South Wilmington IL 60474",
+        "phone": "(815) 237-2805"
+      }
+    },
+    "SENECA FIRE PROT & AMBUL": {
+      "board": [
+        {
+          "name": "Gerald Johnson",
+          "role": "President"
+        },
+        {
+          "name": "Gerald Johnson",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Jacob Chapman",
+          "role": "Secretary"
+        }
+      ],
+      "comptrollerCode": "050/120/06",
+      "filedFor": "2026",
+      "filesIn": "LaSalle",
+      "kind": "fire",
+      "office": {
+        "email": "rhowe@senecafire.org"
+      }
+    },
+    "SENECA LIBRARY": {
+      "board": [
+        {
+          "name": "Margi Weber",
+          "role": "President"
+        },
+        {
+          "name": "Richard Applebee",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "050/020/10",
+      "filedFor": "2025",
+      "filesIn": "LaSalle",
+      "heads": [
+        {
+          "name": "Yana Serdyuk",
+          "role": "Director"
+        }
+      ],
+      "kind": "library",
+      "office": {
+        "address": "210 N Main St",
+        "city": "Seneca IL 61360",
+        "email": "yana@senecalibrary.net",
+        "phone": "(815) 357-6566"
+      }
+    },
+    "THREE RIVERS LIBRARY": {
+      "board": [
+        {
+          "name": "Dan Hoppe",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "099/060/10",
+      "filedFor": "2025",
+      "filesIn": "Will",
+      "heads": [
+        {
+          "name": "Lauren Offerman",
+          "role": "Mgr./Director"
+        }
+      ],
+      "kind": "library",
+      "office": {
+        "address": "25207 W Channahon Drive",
+        "city": "Channahon IL 60410",
+        "phone": "(815) 467-6200"
+      }
+    },
+    "VERONA-KINSMAN FIRE": {
+      "board": [
+        {
+          "name": "Brent Baker",
+          "role": "President"
+        },
+        {
+          "name": "Bryna Coop",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "032/060/06",
+      "filedFor": "2024",
+      "kind": "fire",
+      "office": {
+        "address": "PO Box 132",
+        "city": "Verona IL 60479"
+      }
+    }
+  },
+  "generated": "2026-09-10T21:32:53Z",
+  "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
+  "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
+  "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
+}

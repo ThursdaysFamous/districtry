@@ -1,12 +1,12 @@
 <!-- ==== GENERATED:BEGIN metro-header ==== -->
-# San Francisco District Explorer
+# districtry San Francisco
 
-**Click any point in San Francisco — or search an address — and see every civic district that contains it, and who represents you there.**
+**Click the map for every district you're in, and who represents you.**
 <!-- ==== GENERATED:END metro-header ==== -->
 
 A single-file, dependency-light web app: one `index.html`, Leaflet for the map, no build step, no framework, no server-side code. Deployed as a static site to [sf.chidistricts.com](https://sf.chidistricts.com/) — any static host or server works.
 
-![San Francisco District Explorer showing a selected point at City Hall with the Supervisor District and legislative layers on](docs/screenshot.png)
+![districtry San Francisco showing a selected point at City Hall with the Supervisor District, U.S. House, California Senate and California Assembly layers on, each card naming the officeholder](docs/screenshot.png)
 
 This is one of several sibling metro forks of the same engine (Chicago is the reference implementation; New York City is another sibling). The metro-agnostic engine inside `index.html` stays byte-identical across forks; everything city-specific lives in `metro-worksheet.json` and the `METRO:BEGIN config` block.
 

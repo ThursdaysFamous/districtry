@@ -1,0 +1,44 @@
+name: Verify Google API access
+
+# MANUAL diagnostic: proves the GOOGLE_SA_KEY secret can actually read Search
+# Console (and GA4, when GA4_PROPERTY_ID is set), and reports what it can see.
+#
+# It lives here rather than in a developer sandbox because a GitHub Actions
+# secret is write-only — it cannot be read back through the API and does not
+# exist locally, so the only place to test one is a job that has it mounted.
+#
+# It writes nothing, opens no PR and touches no data file. Run it after
+# creating or rotating the key, or when a Google-sourced job starts failing
+# auth, to tell "the credential is wrong" apart from "the query is wrong".
+#
+# Verified both halves on 2026-09-08 via a temporary branch push trigger, since
+# workflow_dispatch only works once a file is on the default branch — a
+# chicken-and-egg problem for testing a secret BEFORE merging. That trigger is
+# gone; dispatch is this workflow's lasting form.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: pip install -c scripts/requirements.txt requests google-auth
+      - name: Probe Search Console and GA4
+        env:
+          GOOGLE_SA_KEY: ${{ secrets.GOOGLE_SA_KEY }}
+          # The NUMERIC GA4 property id. Committed rather than kept in a
+          # secret because it is not one: it identifies a property and grants
+          # nothing without the service-account credential above, and this
+          # project already ships the matching G-YPJ570LWJB measurement id in
+          # every app's HTML. A secret or variable still overrides it, so a
+          # fork can point this at its own property without editing the file.
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID || vars.GA4_PROPERTY_ID || '545911134' }}
+        run: python3 scripts/verify_google_api_access.py

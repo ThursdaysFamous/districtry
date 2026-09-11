@@ -33,6 +33,8 @@ import re
 import sys
 import urllib.parse
 import urllib.request
+
+from arcgis_error import raise_for_arcgis_error
 from scraper_common import UA_CHROME_WIN_124  # noqa: E402  (shared machinery — do not fork)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -202,7 +204,11 @@ def get_json(url, params):
     full = url + "?" + urllib.parse.urlencode(params)
     req = urllib.request.Request(full, headers={"User-Agent": USER_AGENT})
     with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
-        return json.load(resp)
+        # ArcGIS reports failures with HTTP 200 and an `error` member, which
+        # would read here as a layer with no features and trip the "source
+        # changed" guards below — naming the wrong cause for what is often a
+        # rate limit that clears on its own.
+        return raise_for_arcgis_error(json.load(resp), url)
 
 
 def norm(name):

@@ -1,7 +1,7 @@
 {
   "name": "districtry San Francisco",
   "short_name": "districtry",
-  "description": "Enter an address or ZIP — or tap the map — to find your district: supervisor district, police district, neighborhood, California Assembly and Senate districts, U.S. House district, and who represents you. Free, no login.",
+  "description": "Tap the map or search a San Francisco address: supervisor and police districts, neighborhood, state and federal — and who represents you. Free, no login.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

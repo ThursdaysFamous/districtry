@@ -29,10 +29,21 @@ FOUR MEASURED TRAPS, ALL ENCODED (research pass 2026-08-25):
   2. Florence and Forest appear as two SLASH-LESS rows sharing one judge
      (they are one circuit under 753.06(8)(b)); both rows must name the same
      bench or the run fails.
-  3. Judge names arrive in two shapes: the dominant "Lastname, Hon. First M."
-     and the occasional "Judge First M. Lastname" — both are normalized to
-     display order, and any row that matches neither fails the run rather
-     than shipping a garbled name.
+  3. Judge names arrive in THREE shapes: the dominant "Lastname, Hon. First
+     M.", the occasional "Judge First M. Lastname", and the comma-inverted
+     "Lastname, First M." with no honorific at all. All are normalized to
+     display order, and a row matching none fails the run rather than
+     shipping a garbled name.
+
+     THAT LAST SENTENCE WAS UNTRUE FROM THE DAY THE THIRD SHAPE WAS ADDED,
+     and this docstring said "two shapes" while the code carried three.
+     wicourts writes ONE of its 263 rows without the period after `Hon` —
+     Waukesha's "Maas, Hon David W." — so it missed the first branch, missed
+     the second, and was caught by the third, whose `first` class accepts a
+     title as readily as a given name. It shipped as "Hon David W. Maas" and
+     rendered that way on the card, and the run passed. Fixed 2026-09-09 in
+     two places: the first branch accepts the missing period, and the third
+     refuses a `first` that begins with a title instead of flipping it.
   4. "(Chief Judge)" rides some names in the judges table. It is rendered
      exactly as wicourts prints it (a chief judge of the judicial
      administrative district) — a badge, never a guessed office.
@@ -83,6 +94,15 @@ def strip_tags(html):
     return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html)).strip()
 
 
+# Words that are a TITLE rather than a given name. Only `hon` has been seen on
+# this page; the rest are here because the guard below is worth nothing if it
+# only knows the one title that already went wrong.
+TITLES = frozenset((
+    "hon", "honorable", "judge", "justice", "chief", "commissioner", "comm",
+    "magistrate", "dr", "mr", "mrs", "ms", "mx", "prof",
+))
+
+
 def normalize_judge(raw):
     """'Lastname, Hon. First M.(Chief Judge)' / 'Kussel, Jr., Hon. William F.'
     / 'Judge First M. Lastname' -> (display name, role or None)."""
@@ -92,7 +112,13 @@ def normalize_judge(raw):
     if m:
         role = m.group(1).strip()
         raw = raw[: m.start()].strip()
-    m = re.match(r"^(?P<last>[^,]+(?:,\s*(?:Jr|Sr|II|III|IV)\.?)?)\s*,\s*Hon\.\s*(?P<first>.+)$", raw)
+    # `Hon\.?` — THE PERIOD IS OPTIONAL BECAUSE ONE ROW OF 263 OMITS IT.
+    # wicourts writes `Lastname, Hon. First M.` everywhere but Waukesha's
+    # `Maas, Hon David W.` (measured 2026-09-09 on the live page: 262 with the
+    # period, that one without). Requiring it sent that row past this branch
+    # and past the next, into the comma-inverted branch below, which read the
+    # honorific as a given name and shipped "Hon David W. Maas" to a reader.
+    m = re.match(r"^(?P<last>[^,]+(?:,\s*(?:Jr|Sr|II|III|IV)\.?)?)\s*,\s*Hon\.?\s+(?P<first>.+)$", raw)
     if m:
         last = m.group("last").strip()
         first = m.group("first").strip()
@@ -108,10 +134,27 @@ def normalize_judge(raw):
     # Third measured shape (Waukesha's "Nehls, Anthony C."): comma-inverted
     # with no honorific at all. The column holds only judges, so the flip is
     # unambiguous; anything else still fails loudly.
+    #
+    # AND THIS IS THE BRANCH THAT BROKE THE FAIL-CLOSED PROMISE ABOVE. Its
+    # `first` class is `[A-Za-z.'\- ]+`, which matches a TITLE as readily as a
+    # given name, so `Maas, Hon David W.` — shape 1 with the period missing —
+    # landed here and produced "Hon David W. Maas". Shape 1 now accepts that
+    # row, so nothing reaches here carrying `Hon`; this guard is for the title
+    # nobody has seen yet. A `first` beginning with a title is NOT a given name
+    # and fails the run, which is what the docstring has always claimed.
     m = re.match(r"^(?P<last>[A-Z][A-Za-z.'\- ]+?)(?:,\s*(?P<suf>(?:Jr|Sr|II|III|IV)\.?))?,\s*(?P<first>[A-Z][A-Za-z.'\- ]+)$", raw)
     if m:
+        first = m.group("first").strip()
+        lead = first.split()[0].rstrip(".").lower() if first.split() else ""
+        if lead in TITLES:
+            raise SystemExit(
+                "judge name %r puts the title %r where a given name belongs. "
+                "That is shape 1 with something wrong in its honorific, not a "
+                "comma-inverted name — read the row on wicourts and teach the "
+                "first branch its shape rather than letting this one flip it."
+                % (raw, first.split()[0]))
         suffix = (" " + m.group("suf")) if m.group("suf") else ""
-        return ("%s %s%s" % (m.group("first").strip(), m.group("last").strip(), suffix), role)
+        return ("%s %s%s" % (first, m.group("last").strip(), suffix), role)
     raise SystemExit("judge name matched no recorded shape: %r" % raw)
 
 

@@ -5,12 +5,14 @@ out of the County Clerk's Year Book.
 
 WHY THIS EXISTS. il/data/app/boone-{park,library}-districts.json ship the five
 districts' BOUNDARIES, dissolved from the county's own parcel fabric
-(scripts/build_parcel_fabric_districts.py). The cards name the district and
-stop — no trustee, no office address, no telephone — which is the largest
-card-order gap this county has, recorded as `boone-park-library-contact`. The
-same Clerk who publishes the tax-code roster that drew those lines publishes
-the people and the office on the same pages the district NAMES were taken
-from, so nothing here needs a new publisher; it needs a parser.
+(scripts/build_parcel_fabric_districts.py). Before this scraper the cards
+named the district and stopped — no trustee, no office address, no telephone —
+which was the largest card-order gap this county had, recorded as
+`boone-park-library-contact` and retired on 2026-09-05 in the same change that
+shipped this file. The same Clerk who publishes the tax-code roster that drew
+those lines publishes the people and the office on the same pages the district
+NAMES were taken from, so nothing here needs a new publisher; it needs a
+parser.
 
 THE JOIN KEY IS ALREADY EXACT. build_parcel_fabric_districts.py ships each
 district under this booklet's own heading verbatim — BELVIDERE PARK DISTRICT,
@@ -71,10 +73,10 @@ name, which a leading-title stripper would eat.
 THE YEARBOOK OWNS THE OFFICE. IT DOES NOT OWN EVERY BOARD, AND THE GAP RECORD
 THAT ASKED FOR THIS ASSUMED IT DID.
 
-`boone-park-library-contact` says the trustees are "all of it already printed
-in the Clerk's own yearbook". Measured against the bodies' own publications,
-that holds for exactly one of the five, and the correction is the reason this
-scraper reads more than one source:
+`boone-park-library-contact`, the retired record above, said the trustees were
+"all of it already printed in the Clerk's own yearbook". Measured against the
+bodies' own publications, that holds for exactly one of the five, and the
+correction is the reason this scraper reads more than one source:
 
   BELVIDERE PARK DISTRICT   the district publishes FIVE commissioners and its
                             own seat count in words — "our community-elected,
@@ -675,11 +677,19 @@ def _get(url, warnings, what, retries=2):
     card about a library that publishes one — see the Cherry Valley note in
     OWN_BOARDS. A gateway error is transient by definition and is retried; a 404
     or a refusal is the site's answer and is taken at once.
+
+    THE WARNING COUNTS THE ATTEMPTS MADE, NOT THE ATTEMPTS ALLOWED. It printed
+    `retries + 1` until 2026-09-10, so a refusal taken at once read as three
+    failures — which is how a momentary 403 from Belvidere Park's site was
+    first taken for a page redesign. A number that is the same whatever
+    happened tells a reader nothing about what happened.
     """
     import requests
     import time
     last = None
+    made = 0
     for attempt in range(retries + 1):
+        made += 1
         try:
             resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT,
                                 allow_redirects=True)
@@ -698,7 +708,7 @@ def _get(url, warnings, what, retries=2):
     warnings.append("%s: could not read %s after %d attempt(s) (%s) — that "
                     "board ships with no members rather than falling back to a "
                     "source known to be out of date"
-                    % (what, url, retries + 1, last))
+                    % (what, url, made, last))
     return None
 
 

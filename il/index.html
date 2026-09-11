@@ -28,8 +28,8 @@
 
 <!-- ==== TEMPLATE:BEGIN head-meta ==== -->
 <!-- ==== GENERATED:BEGIN head-brand ==== -->
-<title>What district am I in? Find your district — districtry Illinois</title>
-<meta name="description" content="Enter an address or ZIP — or tap the map — to find your district: ward, police district, elected school board, county board, congressional and Illinois legislative districts, and who represents you. Free, no login." />
+<title>What district am I in? — districtry Illinois</title>
+<meta name="description" content="Tap the map or search an Illinois address: ward, police district, school board, county, state and U.S. House — and who represents you. Free, no login." />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://districtry.com/il/" />
 
@@ -12085,6 +12085,9 @@ function initChiExplorer() {
   var loadStarkPark = makeCached(function () {
     return fetchJSONWithRetry("data/app/stark-park-districts.json", {}, 2);
   });
+  var loadLoganPark = makeCached(function () {
+    return fetchJSONWithRetry("data/app/logan-park-districts.json", {}, 2);
+  });
   var IROQUOIS_GIS = "https://services6.arcgis.com/6FZQl5a5SiSFMv8P/arcgis/rest/services/";
   function loadIroquoisLayer(service, layerIndex, outFields, label) {
     var url = IROQUOIS_GIS + service + "/FeatureServer/" + layerIndex +
@@ -12404,6 +12407,163 @@ function initChiExplorer() {
   var loadPeoriaLibraryDistricts = makeCached(function () {
     return loadPeoriaLayer("Library_Districts", "District_Name,WebSite", "library districts");
   });
+
+  /* The people behind those three boundaries. Peoria's layers carry a district
+   * NAME and a WEBSITE and no officer, and the county publishes no list of the
+   * trustees — but the DISTRICTS THEMSELVES file one every year, because every
+   * Illinois unit of local government files an Annual Financial Report with
+   * the Comptroller and its Contact Information section names role-holders
+   * with the title the unit itself filed.
+   * scripts/peoria_district_officials_scraper.py reads those filings and keys
+   * them by the same District_Name the polygons carry.
+   * Stamped onto the features at load (the Boone shape) so the query stays a
+   * plain containment test and a ROSTER failure costs the people block, never
+   * the district. */
+  var loadPeoriaDistrictOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/peoria-district-officials.json", {}, 2);
+  });
+  var loadLoganDistrictOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/logan-district-officials.json", {}, 2);
+  });
+  var loadWoodfordDistrictOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/woodford-district-officials.json", {}, 2);
+  });
+  var loadGrundyDistrictOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/grundy-district-officials.json", {}, 2);
+  });
+  var loadKankakeeDistrictOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/kankakee-district-officials.json", {}, 2);
+  });
+  /* One stamper for both counties: the payloads are the same shape because
+   * they come from the same filings, so only the roster file and the property
+   * holding the district's name differ. */
+  function withAfrOfficials(loadGeometry, loadRoster, nameKeys) {
+    return makeCached(function () {
+      return Promise.all([
+        loadGeometry(),
+        loadRoster().catch(function () { return null; })
+      ]).then(function (results) {
+        var geojson = results[0], roster = results[1];
+        var byName = (roster && roster.districts) || {};
+        (geojson.features || []).forEach(function (f) {
+          var name = findPropCI(f.properties || {}, nameKeys);
+          var hit = name != null ? byName[String(name)] : null;
+          if (hit) f.properties.dxOfficials = hit;
+        });
+        return geojson;
+      });
+    });
+  }
+  function withPeoriaOfficials(loadGeometry) {
+    return withAfrOfficials(loadGeometry, loadPeoriaDistrictOfficials,
+                            ["district_name"]);
+  }
+  function withLoganOfficials(loadGeometry) {
+    return withAfrOfficials(loadGeometry, loadLoganDistrictOfficials,
+                            ["district"]);
+  }
+  function withWoodfordOfficials(loadGeometry) {
+    return withAfrOfficials(loadGeometry, loadWoodfordDistrictOfficials,
+                            ["district"]);
+  }
+  function withGrundyOfficials(loadGeometry) {
+    return withAfrOfficials(loadGeometry, loadGrundyDistrictOfficials,
+                            ["district"]);
+  }
+  /* Kankakee's boundaries come from the county's own live service rather than a
+   * committed file, so the join key is its `unit_name` column. */
+  function withKankakeeOfficials(loadGeometry) {
+    return withAfrOfficials(loadGeometry, loadKankakeeDistrictOfficials,
+                            ["unit_name"]);
+  }
+
+  /* The officeholder block under a district whose officers come from its own
+   * Annual Financial Report — Peoria's fire, park and library districts and
+   * Logan's park districts. Fleet card order — the people, then the office,
+   * then the contact.
+   *
+   * EVERY BLOCK NAMES THE FISCAL YEAR IT WAS FILED FOR, and that is the whole
+   * honesty of this source: an AFR is a snapshot filed once a year, and the
+   * Comptroller's own page says a different year may name a different person.
+   * So the card states what the district filed and when, rather than claiming
+   * these are the officers today.
+   *
+   * A district that files only appointed officers gets an Administration block
+   * and no board heading. FOUR do: Peoria's Alpha Park Library files a
+   * Director and a Manager, its Pleasure Driveway Park a Director and a
+   * Superintendent, its Hanna City Park District a C.E.O. and a Treas./Admin.,
+   * and Logan's Lincoln Park District a Director and a Manager. That is each
+   * district's own answer about who it publishes, and an empty "Board" heading
+   * over it would imply a body the filing does not name.
+   *
+   * A DISTRICT THAT FILES UNDER ANOTHER COUNTY SAYS SO, because a reader
+   * checking the filing needs to know where to look: a cross-county district
+   * files once, under its home county, so Logan's Armington Community files in
+   * Tazewell and its San Jose in Mason. */
+  function afrDistrictPeople(result) {
+    var info = result && result.officials;
+    if (!info) return null;
+    var frag = document.createDocumentFragment();
+    var board = (info.board || []).filter(function (m) { return m && m.name; });
+    var heads = (info.heads || []).filter(function (m) { return m && m.name; });
+    function person(m) {
+      var out = { name: String(m.name) };
+      if (m.role) out.badge = String(m.role);
+      return out;
+    }
+    var filed = info.filedFor
+      ? "As filed with the Illinois Comptroller for fiscal year " +
+        String(info.filedFor) +
+        // A cross-county district files once, under its home county, so the
+        // note names that county — a reader checking the filing would
+        // otherwise search the wrong one and find nothing.
+        (info.filesIn ? ", under " + String(info.filesIn) + " County" : "") +
+        // THE FISCAL YEAR IS A CLAIM ABOUT CURRENCY AND SAYS NOTHING ABOUT
+        // COMPLETENESS, which is the other half a reader needs. The form has
+        // four role slots, so a district with seven trustees can only ever
+        // file some of them, and a "Board" heading over two names would
+        // otherwise read as the whole board.
+        //
+        // IT NAMES THE FORM'S LIMIT RATHER THAN THE BOARD'S SIZE, because an
+        // AFR carries no seat count: "four names" is a fact about the filing
+        // and checkable, where "2 of 7" would be invented. Only where a board
+        // block was actually drawn — a district that files only appointed
+        // officers asserts no board at all, and telling that reader the board
+        // may be incomplete would imply one the filing does not name.
+        (board.length
+          ? " — the form has room for four names, so this may not be the "
+            + "whole board."
+          : "")
+      : null;
+    if (board.length) {
+      frag.appendChild(renderSectionLabel("Board"));
+      frag.appendChild(renderPersonRows(board.map(person)));
+    }
+    if (heads.length) {
+      frag.appendChild(renderSectionLabel("Administration"));
+      frag.appendChild(renderPersonRows(heads.map(person)));
+    }
+    if ((board.length || heads.length) && filed) {
+      frag.appendChild(renderBodyIntro({ note: filed }));
+    }
+    var office = info.office || {};
+    if (office.address || office.phone || office.email) {
+      frag.appendChild(renderLinkRow({
+        // "Office" NAMES A PLACE, so a district whose filing witnesses no
+        // address of its own gets "Contact" instead. Before 2026-09-10 every
+        // district carried an address, because slot A's was read as the
+        // district's; now San Jose Park District's row holds a role mailbox
+        // and nothing else, and heading that "Office" would name a place the
+        // filing does not give.
+        title: office.address ? "Office" : "Contact",
+        note: [office.address, office.city].filter(Boolean)
+          .map(function (part) { return String(part); }).join(", ") || null,
+        phone: office.phone ? String(office.phone) : null,
+        email: office.email ? String(office.email) : null
+      }));
+    }
+    return frag;
+  }
 
   /* TAZEWELL COUNTY (the 30th dispatched county, added 2026-08-02).
    *
@@ -23359,19 +23519,23 @@ function initChiExplorer() {
           { label: "County", value: "Kendall County" }
         ]
       }),
-      // Kankakee's fire tiling (17). Identity-only: the county's taxing-district
-      // layers declare telephone/website/email on every row and populate none of
-      // them (measured 0/17), so `unit_name` is all there is — the same shape as
-      // Cook's and DuPage's fire tilings.
+      // Kankakee's fire tiling (17 features, 16 districts — MANTENO FIRE ST1 and
+      // ST2 are two stations of one). The county's taxing-district layers declare
+      // telephone/website/email on every row and populate none of them (measured
+      // 0/17), so the BOUNDARY is still identity-only; the officers come from each
+      // district's own Annual Financial Report filing, as Peoria's, Logan's,
+      // Woodford's and Grundy's do.
       polygonCountyEntry({
         key: "kankakee",
         coverage: kankakeeCountyCoverage,
-        loader: loadKankakeeFire,
+        loader: withKankakeeOfficials(loadKankakeeFire),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["unit_name"], primary: true },
-          { label: "County", value: "Kankakee County" }
-        ]
+          { label: "County", value: "Kankakee County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Madison's fire tiling (42) — the FIRST CONTACT-BEARING fire entry in the
       // fleet. Every other county's is identity-only because the source is; this
@@ -23487,13 +23651,15 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "peoria",
         coverage: peoriaCountyCoverage,
-        loader: loadPeoriaFireDistricts,
+        loader: withPeoriaOfficials(loadPeoriaFireDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["district_name"], primary: true },
           { name: "website", keys: ["website"], hidden: true },
-          { label: "County", value: "Peoria County" }
+          { label: "County", value: "Peoria County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
         ],
+        people: afrDistrictPeople,
         primaryLink: function (result) {
           var site = result && result.website ? safeHttpUrl(result.website) : null;
           return site ? { label: (result.name || "Fire district") + " (official)", url: site } : null;
@@ -23631,12 +23797,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "woodford",
         coverage: woodfordCountyCoverage,
-        loader: loadWoodfordFireDistricts,
+        loader: withWoodfordOfficials(loadWoodfordFireDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["district"], primary: true },
-          { label: "County", value: "Woodford County" }
-        ]
+          { label: "County", value: "Woodford County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Grundy — 13 districts dissolved from the county's parcel fabric. MVK
       // RESCUE SQUAD is deliberately absent though the Clerk codes it FDMV,
@@ -23650,12 +23818,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "grundy",
         coverage: grundyCountyCoverage,
-        loader: loadGrundyFireDistricts,
+        loader: withGrundyOfficials(loadGrundyFireDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["district"], primary: true },
-          { label: "County", value: "Grundy County" }
-        ]
+          { label: "County", value: "Grundy County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Hamilton — three named districts from the county's own layer (a
       // fourth, unnamed ~0.4 km² sliver is excluded in the loader); most of
@@ -23800,15 +23970,18 @@ function initChiExplorer() {
           { label: "County", value: "Kendall County" }
         ]
       }),
-      // Kankakee's park tiling (4) — identity-only, same measured reason as fire.
+      // Kankakee's park tiling (4) — boundary identity-only for the same measured
+      // reason as fire; officers from each district's own AFR filing.
       polygonCountyEntry({
         key: "kankakee",
         coverage: kankakeeCountyCoverage,
-        loader: loadKankakeeParks,
+        loader: withKankakeeOfficials(loadKankakeeParks),
         fields: [
           { name: "name", label: "Park District", keys: ["unit_name"], primary: true },
-          { label: "County", value: "Kankakee County" }
-        ]
+          { label: "County", value: "Kankakee County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Madison's park tiling (6) — identity-only; the AGOL layer carries the
       // district name and nothing else. A partial tiling, correctly: most of the
@@ -23875,12 +24048,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "peoria",
         coverage: peoriaCountyCoverage,
-        loader: loadPeoriaParkDistricts,
+        loader: withPeoriaOfficials(loadPeoriaParkDistricts),
         fields: [
           { name: "name", label: "Park District", keys: ["district_name"], primary: true },
           { name: "website", keys: ["website"], hidden: true },
-          { label: "County", value: "Peoria County" }
+          { label: "County", value: "Peoria County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
         ],
+        people: afrDistrictPeople,
         primaryLink: function (result) {
           var site = result && result.website ? safeHttpUrl(result.website) : null;
           return site ? { label: (result.name || "Park district") + " (official)", url: site } : null;
@@ -23903,6 +24078,27 @@ function initChiExplorer() {
           { name: "name", label: "Park District", keys: ["name"], primary: true },
           { label: "County", value: "Stark County" }
         ]
+      }),
+      // Logan's seven come from the Tri-County Regional Planning Commission,
+      // not the county: the service does not say what they are, and TCRPC's own
+      // web map groups exactly these seven layer ids under "Park Districts".
+      // scripts/build_logan_park_districts.py gates on that grouping.
+      //
+      // The commission's dataset carries a NAME and nothing else, so the people
+      // come from each district's own Annual Financial Report filing with the
+      // Illinois Comptroller — the same source Peoria's three entries use.
+      // scripts/logan_district_officials_scraper.py joins all seven on an
+      // explicit table of unit codes, two of which file under another county.
+      polygonCountyEntry({
+        key: "logan",
+        coverage: loganCountyCoverage,
+        loader: withLoganOfficials(loadLoganPark),
+        fields: [
+          { name: "name", label: "Park District", keys: ["district"], primary: true },
+          { label: "County", value: "Logan County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       polygonCountyEntry({
         key: "macon",
@@ -23929,22 +24125,26 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "grundy",
         coverage: grundyCountyCoverage,
-        loader: loadGrundyParkDistricts,
+        loader: withGrundyOfficials(loadGrundyParkDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Park District", keys: ["district"], primary: true },
-          { label: "County", value: "Grundy County" }
-        ]
+          { label: "County", value: "Grundy County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       polygonCountyEntry({
         key: "woodford",
         coverage: woodfordCountyCoverage,
-        loader: loadWoodfordParkDistricts,
+        loader: withWoodfordOfficials(loadWoodfordParkDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Park District", keys: ["district"], primary: true },
-          { label: "County", value: "Woodford County" }
-        ]
+          { label: "County", value: "Woodford County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       })
     ]
   });
@@ -24248,25 +24448,29 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "woodford",
         coverage: woodfordCountyCoverage,
-        loader: loadWoodfordLibraryDistricts,
+        loader: withWoodfordOfficials(loadWoodfordLibraryDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Library District", keys: ["district"], primary: true },
           { name: "note", label: "Governance", keys: ["note"] },
-          { label: "County", value: "Woodford County" }
-        ]
+          { label: "County", value: "Woodford County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Grundy — 6 library districts. Only 69.8% of the county is in one, so
       // the empty state is the true answer over the rest.
       polygonCountyEntry({
         key: "grundy",
         coverage: grundyCountyCoverage,
-        loader: loadGrundyLibraryDistricts,
+        loader: withGrundyOfficials(loadGrundyLibraryDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Library District", keys: ["district"], primary: true },
-          { label: "County", value: "Grundy County" }
-        ]
+          { label: "County", value: "Grundy County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Adams — 7 library districts on a 10-polygon tiling. One polygon is named
       // "None": that is the county recording an area no library district serves,
@@ -24283,15 +24487,20 @@ function initChiExplorer() {
           { label: "County", value: "Adams County" }
         ]
       }),
-      // Kankakee's library tiling (8) — identity-only, same measured reason as fire.
+      // Kankakee's library tiling (8) — boundary identity-only for the same
+      // measured reason as fire; officers from each district's own AFR filing,
+      // except SUN RIVER TERRACE, a municipal library that files inside its
+      // village and has no unit of its own.
       polygonCountyEntry({
         key: "kankakee",
         coverage: kankakeeCountyCoverage,
-        loader: loadKankakeeLibraries,
+        loader: withKankakeeOfficials(loadKankakeeLibraries),
         fields: [
           { name: "name", label: "Library District", keys: ["unit_name"], primary: true },
-          { label: "County", value: "Kankakee County" }
-        ]
+          { label: "County", value: "Kankakee County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Madison's library tiling (18) — identity-only, same shape as its parks.
       polygonCountyEntry({
@@ -24354,13 +24563,15 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "peoria",
         coverage: peoriaCountyCoverage,
-        loader: loadPeoriaLibraryDistricts,
+        loader: withPeoriaOfficials(loadPeoriaLibraryDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Library District", keys: ["district_name"], primary: true },
           { name: "website", keys: ["website"], hidden: true },
-          { label: "County", value: "Peoria County" }
+          { label: "County", value: "Peoria County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
         ],
+        people: afrDistrictPeople,
         primaryLink: function (result) {
           var site = result && result.website ? safeHttpUrl(result.website) : null;
           return site ? { label: (result.name || "Library district") + " (official)", url: site } : null;

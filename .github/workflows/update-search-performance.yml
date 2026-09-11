@@ -1,0 +1,87 @@
+name: Update search performance
+
+# Daily fetch of Search Console performance into data/search-performance.json,
+# which the traffic report reads when it rebuilds.
+#
+# WHY A WORKFLOW AND NOT PART OF THE REPORT BUILD. The report is assembled
+# outside this repo, from a session with no access to GOOGLE_SA_KEY: an Actions
+# secret is write-only and exists only inside a job. The fetch therefore runs
+# here and commits its result, and the JSON is the handoff between the place
+# holding the credential and the place drawing the chart.
+#
+# IT COMMITS TO main RATHER THAN OPENING A PR, which is the opposite of the
+# roster workflows, and deliberately. Their rule exists because officeholder
+# data is data about real people and gets a human read before it ships. This is
+# aggregate counts about this project's own search results — nobody's name is
+# in it, Google withholds rare queries before we ever see them, and a daily PR
+# for a numbers refresh would be noise that trains the eye to skim.
+
+on:
+  schedule:
+    - cron: "30 13 * * *" # daily, after Search Console's own ~2-day lag settles
+  workflow_dispatch: {}
+  # A branch-scoped `push:` trigger stood here so this workflow could prove
+  # itself BEFORE merging -- the failure validate_workflow_deps.py exists
+  # because of, five roster refreshes dead from the day they shipped. It ran,
+  # it committed real data, and the trigger was removed on merge as its own
+  # comment asked. Do not re-add one: a branch trigger that outlives its branch
+  # is a line nobody can test and nobody deletes.
+
+permissions:
+  contents: write
+
+concurrency:
+  group: search-performance
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      # CHECK OUT AS BOT_PR_TOKEN SO THE PUSH AT THE END OF THIS JOB IS
+      # ALLOWED. A plain checkout authenticates as `github-actions[bot]`, and
+      # the "Protect main branch" ruleset requires a pull request on the
+      # default branch. That bot is not a bypass actor and cannot be made one
+      # -- the Apps tab on this repo does not offer GitHub Actions -- so every
+      # run on main died at the push with GH013 while the fetch itself worked:
+      # run 34532138566 committed 736be53 locally, 745 insertions, and was
+      # rejected. Two scheduled runs and one dispatch, no successful run on
+      # main ever. BOT_PR_TOKEN acts as a repository admin, which the ruleset's
+      # bypass list already covers. The `|| github.token` fallback matches the
+      # 107 other workflows here: an absent or expired secret degrades to the
+      # behaviour above rather than to some new one.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: pip install -c scripts/requirements.txt requests google-auth
+
+      - name: Fetch Search Console performance
+        env:
+          GOOGLE_SA_KEY: ${{ secrets.GOOGLE_SA_KEY }}
+        run: python3 scripts/gsc_fetch.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # STAGE FIRST, THEN DIFF THE INDEX. `git diff --quiet -- <path>`
+          # compares the WORKING TREE against HEAD and does not see an
+          # UNTRACKED file, so on the first run -- the one where this file does
+          # not exist yet -- it reported "no change" and committed nothing.
+          # A green run that produced no data, forever, which is exactly the
+          # shape of failure this workflow was run pre-merge to catch. The
+          # roster workflows use the bare form safely only because their data
+          # files were already tracked when they shipped.
+          git add data/search-performance.json
+          if git diff --cached --quiet -- data/search-performance.json; then
+            echo "no change"
+            exit 0
+          fi
+          # Commit to the ref this actually ran on. Scheduled runs are on
+          # main; a pre-merge branch run leaves its data on the branch rather
+          # than pushing to main behind review.
+          git commit -m "Update Search Console performance data"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

@@ -1,0 +1,136 @@
+{
+  "districts": {
+    "Armington": {
+      "board": [
+        {
+          "name": "Brad Robbins",
+          "role": "President"
+        },
+        {
+          "name": "Vicky McDaniel",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "090/005/12",
+      "filedFor": "2025",
+      "filesIn": "Tazewell",
+      "kind": "park",
+      "office": {}
+    },
+    "Atlanta": {
+      "board": [
+        {
+          "name": "Amy Naughton",
+          "role": "President"
+        },
+        {
+          "name": "Doug Thompson",
+          "role": "V-President"
+        }
+      ],
+      "comptrollerCode": "054/010/12",
+      "filedFor": "2025",
+      "kind": "park",
+      "office": {}
+    },
+    "Chestnut Beason": {
+      "board": [
+        {
+          "name": "Chase Lowery",
+          "role": "President"
+        },
+        {
+          "name": "Lindsey Guy",
+          "role": "Sec./Treas."
+        }
+      ],
+      "comptrollerCode": "054/015/12",
+      "filedFor": "2025",
+      "kind": "park",
+      "office": {
+        "address": "2216 1275th St.",
+        "city": "Beason IL 62512",
+        "email": "chestnutbeasonpark@gmail.com"
+      }
+    },
+    "Emden": {
+      "board": [
+        {
+          "name": "Craig Lessen",
+          "role": "President"
+        },
+        {
+          "name": "Elias Klokkenga",
+          "role": "Trustee"
+        }
+      ],
+      "comptrollerCode": "054/017/12",
+      "filedFor": "2025",
+      "kind": "park",
+      "office": {}
+    },
+    "Lincoln": {
+      "comptrollerCode": "054/020/12",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Becky Strait",
+          "role": "Director"
+        },
+        {
+          "name": "Angela Coombs",
+          "role": "Manager"
+        }
+      ],
+      "kind": "park",
+      "office": {
+        "address": "1400 Primm Road",
+        "city": "Lincoln IL 62656",
+        "email": "acoombs@lincolnparkdistrict.com",
+        "phone": "(217) 732-8770"
+      }
+    },
+    "Mt. Pulaski": {
+      "board": [
+        {
+          "name": "Jodi Deibert",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "054/030/12",
+      "filedFor": "2025",
+      "kind": "park",
+      "office": {
+        "address": "PO Box 101",
+        "city": "Mount Pulaski IL 62548"
+      }
+    },
+    "San Jose": {
+      "board": [
+        {
+          "name": "Philip Delgadillo",
+          "role": "Acting President"
+        },
+        {
+          "name": "Leah Williams",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Alex Hamilton",
+          "role": "Trustee"
+        }
+      ],
+      "comptrollerCode": "060/020/12",
+      "filedFor": "2025",
+      "filesIn": "Mason",
+      "kind": "park",
+      "office": {
+        "email": "sanjoseilparkdistrict@gmail.com"
+      }
+    }
+  },
+  "generated": "2026-09-10T00:30:38Z",
+  "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
+  "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
+  "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
+}

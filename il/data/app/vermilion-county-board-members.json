@@ -63,16 +63,16 @@
         "since": "2024"
       },
       {
-        "email": "jeakle@vercounty.org",
-        "name": "Joseph Eakle",
-        "party": "Republican",
-        "since": "2015"
-      },
-      {
         "email": "bhoag@vercounty.org",
         "name": "Britny Hoag",
         "party": "Republican",
         "since": "2022"
+      },
+      {
+        "email": "tprunkard@vercounty.org",
+        "name": "Timothy Prunkard",
+        "party": "Republican",
+        "since": "2026"
       }
     ],
     "officeAddress": "201 North Vermilion Street, 2nd Floor, Danville, IL 61832",

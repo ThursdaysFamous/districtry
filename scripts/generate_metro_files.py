@@ -61,6 +61,7 @@ touched. Dependencies: stdlib + jsonschema (pinned in scripts/requirements.txt).
 
 import argparse
 import difflib
+import functools
 import json
 import os
 import re
@@ -399,11 +400,35 @@ def render_metro_facts(w):
     return "\n".join(L)
 
 
-def render_metro_header(w):
+def render_metro_header(w, repo_front=False):
+    """The README's title and one-line pitch.
+
+    This reads the BRAND, not metro_name. All six READMEs still said
+    "<Metro> District Explorer" — the product name the fleet retired at the
+    rebrand — because the rebrand reached every surface a reader LOADS and
+    missed the one a reader LANDS ON from GitHub. metro_name is not the fix
+    either: Illinois's is still "Chicago", a true record of where the app
+    started, which is the same trap build_history_page.py documents for its
+    own title.
+
+    Illinois's README target is the REPOSITORY's own front page rather than an
+    instance folder's (INSTANCES gives it docs: "."), and that page introduces
+    six instances two paragraphs down — so it takes the product name, where an
+    instance README names its own instance. A fork carrying no brand block
+    still sees the byte-identical file it always had.
+    """
+    b = w.get("brand")
+    if not b:
+        return "\n".join([
+            "# %s District Explorer" % w["metro_name"],
+            "",
+            "**Click any point in %s — or search an address — and see every civic district that contains it, and who represents you there.**" % w["metro_name"],
+        ])
+    name = (b.get("product_name") or b["app_name"]) if repo_front else b["app_name"]
     return "\n".join([
-        "# %s District Explorer" % w["metro_name"],
+        "# %s" % name,
         "",
-        "**Click any point in %s — or search an address — and see every civic district that contains it, and who represents you there.**" % w["metro_name"],
+        "**%s**" % b["tagline"],
     ])
 
 
@@ -503,8 +528,8 @@ def render_head_theme(w):
     # install had no branded icon at all while Android's was merely stale. The
     # companion title tag matters for the same reason: absent it, iOS labels
     # the shortcut from <title>, and <title> is the question-led SEO string
-    # ("What district am I in? Find your district — districtry Illinois"),
-    # which truncates to a fragment of a question under the icon.
+    # ("What district am I in? Illinois — districtry"), which truncates to a
+    # fragment of a question under the icon.
     if b.get("apple_touch_icon"):
         L += [
             "",
@@ -755,7 +780,8 @@ def targets_for(w, inst):
         (_p(scr, "validate_index.py"), "validator-config", render_validator_config),
         (_p(scr, "smoke_test.mjs"), "smoke-config", render_smoke_config),
         (_p(docs, "CLAUDE.md"), "metro-facts", render_metro_facts),
-        (_p(docs, "README.md"), "metro-header", render_metro_header),
+        (_p(docs, "README.md"), "metro-header",
+         functools.partial(render_metro_header, repo_front=(docs == "."))),
     ]
     if "verified_date" in w:
         targets.append((_p(app, "index.html"), "verified-date", render_verified_date))
@@ -890,6 +916,57 @@ def split_regions(text, path):
     return lines, regions
 
 
+# The two head strings Google renders in a search result. Everything else in
+# brand.head is a social-card string with its own, much looser, platform limit.
+#
+# These are budgets in CHARACTERS and Google truncates by PIXEL WIDTH (~600px
+# of title, ~920px of snippet on desktop), so they are a proxy rather than the
+# real rule — deliberately set a little under where truncation actually starts,
+# because a wide string (capitals, em dashes) reaches the pixel limit sooner
+# than a narrow one. Fitting is what matters: an overrun does not merely look
+# untidy, it cuts the tail, and every one of the four descriptions that
+# overran on 2026-09-08 cut the same words — "and who represents you. Free, no
+# login." — which is the whole differentiator, dropped from the snippet on
+# every result the app has ever shown.
+SERP_LIMITS = {"title": 60, "description": 155}
+
+
+def check_serp_lengths(ws_path, worksheet):
+    """Hold brand.head.title and .description to what a search result shows.
+
+    These strings are GENERATED into every instance's <title> and meta
+    description, which is exactly why nothing had ever measured them: the
+    generated-region gate proves the HTML matches the worksheet and asks
+    nothing at all about what the worksheet says. Four of six titles and four
+    of six descriptions were over the limit when this check was written.
+    """
+    head = worksheet.get("brand", {}).get("head")
+    if not head:
+        return
+    for key, limit in sorted(SERP_LIMITS.items()):
+        value = head.get(key)
+        if value is None:
+            continue
+        if len(value) > limit:
+            fail("%s: brand.head.%s is %d characters and Google shows about "
+                 "%d — the last %d would be cut from the search result. "
+                 "Shorten it; do not raise the limit. The tail is where the "
+                 "differentiator lives.\n    %r"
+                 % (ws_path, key, len(value), limit, len(value) - limit, value))
+
+    # The result Google shows is often the only place a reader meets the app's
+    # name, so the title must carry it whole. SF's smoke test has asserted this
+    # in a browser since the rebrand and the other five instances asserted
+    # nothing — this is that check, moved to where it covers every instance and
+    # costs no browser.
+    title = head.get("title")
+    app_name = worksheet.get("brand", {}).get("app_name")
+    if title and app_name and app_name not in title:
+        fail("%s: brand.head.title does not carry brand.app_name %r, so a "
+             "search result never names the app in full.\n    %r"
+             % (ws_path, app_name, title))
+
+
 def load_worksheet(ws_path, schema):
     """Read, schema-validate and sanity-check one instance's worksheet."""
     try:
@@ -902,6 +979,8 @@ def load_worksheet(ws_path, schema):
     except jsonschema.ValidationError as e:
         fail("%s does not validate against the schema: %s (at %s)"
              % (ws_path, e.message, "/".join(str(p) for p in e.absolute_path) or "<root>"))
+
+    check_serp_lengths(ws_path, worksheet)
 
     ranks = sorted(l["area_rank"] for l in worksheet["layers"])
     if ranks != list(range(1, len(ranks) + 1)):

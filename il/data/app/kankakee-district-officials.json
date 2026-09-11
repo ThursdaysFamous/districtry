@@ -1,0 +1,484 @@
+{
+  "districts": {
+    "AROMA FIRE": {
+      "board": [
+        {
+          "name": "Verle Mann",
+          "role": "President"
+        },
+        {
+          "name": "Gene Hammac",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "046/010/06",
+      "filedFor": "2025",
+      "kind": "fire",
+      "office": {
+        "address": "307 S Bridge Street PO Box 437",
+        "city": "Aroma Park IL 60910",
+        "phone": "(815) 939-2714"
+      }
+    },
+    "BOURBONNAIS FIRE": {
+      "board": [
+        {
+          "name": "Randy Myers",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "046/020/06",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "William Hemm",
+          "role": "Treas./Admin."
+        }
+      ],
+      "kind": "fire",
+      "office": {
+        "address": "1080 Armour Rd",
+        "city": "Bourbonnais IL 60914",
+        "email": "blacy@bourbonnaisfire.org",
+        "phone": "(815) 935-9670"
+      }
+    },
+    "BOURBONNAIS LIBRARY": {
+      "board": [
+        {
+          "name": "Dave Stejkowski",
+          "role": "President"
+        },
+        {
+          "name": "Ellen Stringer",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "046/020/10",
+      "filedFor": "2025",
+      "kind": "library",
+      "office": {
+        "address": "250 W John Casey Rd",
+        "city": "Bourbonnais IL 60914",
+        "email": "kmccully@bourbonnaislibrary.org",
+        "phone": "(815) 933-1727"
+      }
+    },
+    "BOURBONNAIS TWP. PARK": {
+      "board": [
+        {
+          "name": "Robert Romo",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "046/005/12",
+      "filedFor": "2024",
+      "heads": [
+        {
+          "name": "Michael O'Shea",
+          "role": "Director"
+        }
+      ],
+      "kind": "park",
+      "office": {
+        "address": "459 N Kennedy Dr",
+        "city": "Bourbonnais IL 60914",
+        "phone": "(815) 933-9905"
+      }
+    },
+    "BRADLEY LIBRARY": {
+      "board": [
+        {
+          "name": "Karen Bayer",
+          "role": "President"
+        },
+        {
+          "name": "Nick Allen",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "046/005/10",
+      "filedFor": "2025",
+      "kind": "library",
+      "office": {
+        "address": "296 N Fulton Ave",
+        "city": "Bradley IL 60915",
+        "email": "jdepatis@bradleylibrary.org",
+        "phone": "(815) 932-6245"
+      }
+    },
+    "CABERY FIRE": {
+      "board": [
+        {
+          "name": "David Sargeant",
+          "role": "Trustee"
+        },
+        {
+          "name": "Patrick Koerner",
+          "role": "Sec./Treas."
+        }
+      ],
+      "comptrollerCode": "046/030/06",
+      "filedFor": "2025",
+      "kind": "fire",
+      "office": {
+        "address": "c/o Johnson & Taylor PO Box 497",
+        "city": "Pontiac IL 61764",
+        "phone": "(815) 844-7151"
+      }
+    },
+    "CENTRAL CITIZENS LIBRARY": {
+      "board": [
+        {
+          "name": "Robert Lemanager",
+          "role": "President"
+        },
+        {
+          "name": "Scott Senffner",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "038/025/10",
+      "filedFor": "2026",
+      "filesIn": "Iroquois",
+      "kind": "library",
+      "office": {}
+    },
+    "EDWARD CHIPMAN PUBLIC LIB": {
+      "comptrollerCode": "046/030/10",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Keri Perkins",
+          "role": "Director"
+        },
+        {
+          "name": "Scott Kistler",
+          "role": "Treas./Admin."
+        }
+      ],
+      "kind": "library",
+      "office": {}
+    },
+    "ESSEX FIRE": {
+      "board": [
+        {
+          "name": "Martin Kirchner",
+          "role": "President"
+        },
+        {
+          "name": "Patrick O'Brien",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "046/040/06",
+      "filedFor": "2026",
+      "kind": "fire",
+      "office": {
+        "address": "PO Box 94",
+        "city": "Essex IL 60935",
+        "email": "essexfire@yahoo.com",
+        "phone": "(815) 228-2591"
+      }
+    },
+    "FOSSIL RIDGE LIBRARY": {
+      "board": [
+        {
+          "name": "Sandra Bauter",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "099/005/10",
+      "filedFor": "2025",
+      "filesIn": "Will",
+      "heads": [
+        {
+          "name": "Tammy Smith",
+          "role": "Fin. Officer"
+        }
+      ],
+      "kind": "library",
+      "office": {
+        "address": "386 Kennedy Road",
+        "city": "Braidwood IL 60408"
+      }
+    },
+    "GRANT PARK FIRE": {
+      "board": [
+        {
+          "name": "Gene Rademacher",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "046/050/06",
+      "filedFor": "2024",
+      "kind": "fire",
+      "office": {}
+    },
+    "KANKAKEE PARK": {
+      "comptrollerCode": "046/010/12",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Ross Bruni",
+          "role": "Director"
+        },
+        {
+          "name": "Melissa Woodard",
+          "role": "Superintendent"
+        }
+      ],
+      "kind": "park",
+      "office": {
+        "address": "893 West Station Street",
+        "city": "Kankakee IL 60901",
+        "phone": "(815) 939-1311"
+      }
+    },
+    "KANKAKEE TWP FIRE": {
+      "board": [
+        {
+          "name": "Dave Wulff",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "046/070/06",
+      "filedFor": "2024",
+      "kind": "fire",
+      "office": {}
+    },
+    "LIMESTONE PARK": {
+      "board": [
+        {
+          "name": "Rosanne Gianotti",
+          "role": "President"
+        },
+        {
+          "name": "Mary Prairie",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "046/020/12",
+      "filedFor": "2025",
+      "kind": "park",
+      "office": {
+        "phone": "(309) 335-3411"
+      }
+    },
+    "MANTENO FIRE  ST1": {
+      "comptrollerCode": "046/090/06",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Richard Petersen",
+          "role": "Chief"
+        },
+        {
+          "name": "Linda Herz",
+          "role": "Administrator"
+        }
+      ],
+      "kind": "fire",
+      "office": {
+        "address": "13 S. Walnut",
+        "city": "Manteno IL 60950",
+        "email": "rpetersen@mantenofire.com",
+        "phone": "(815) 468-7100"
+      }
+    },
+    "MANTENO FIRE  ST2": {
+      "comptrollerCode": "046/090/06",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Richard Petersen",
+          "role": "Chief"
+        },
+        {
+          "name": "Linda Herz",
+          "role": "Administrator"
+        }
+      ],
+      "kind": "fire",
+      "office": {
+        "address": "13 S. Walnut",
+        "city": "Manteno IL 60950",
+        "email": "rpetersen@mantenofire.com",
+        "phone": "(815) 468-7100"
+      }
+    },
+    "MANTENO LIBRARY": {
+      "comptrollerCode": "046/010/10",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Jamie Lockwood",
+          "role": "Director"
+        }
+      ],
+      "kind": "library",
+      "office": {
+        "email": "jlockwood@mantenolibrary.net"
+      }
+    },
+    "MOMENCE PARK": {
+      "board": [
+        {
+          "name": "Natalie Ojeda",
+          "role": "President"
+        },
+        {
+          "name": "Joe Meyer",
+          "role": "Secretary"
+        }
+      ],
+      "comptrollerCode": "046/030/12",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "Samuel Jordan",
+          "role": "Director"
+        }
+      ],
+      "kind": "park",
+      "office": {
+        "address": "PO Box 665",
+        "city": "Momence IL 60954",
+        "email": "momenceparkdist@sbcglobal.net",
+        "phone": "(815) 472-2670"
+      }
+    },
+    "OTTO FIRE": {
+      "board": [
+        {
+          "name": "WILLIAM SURPRENANT",
+          "role": "President"
+        },
+        {
+          "name": "JOE ABRASSART",
+          "role": "Trustee"
+        }
+      ],
+      "comptrollerCode": "046/110/06",
+      "filedFor": "2026",
+      "kind": "fire",
+      "office": {
+        "address": "634 W 5000 S RD",
+        "city": "CHEBANSE IL 60922",
+        "phone": "(815) 937-4507"
+      }
+    },
+    "PEMBROKE FIRE": {
+      "board": [
+        {
+          "name": "CHARLENE ASHLEY",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "046/120/06",
+      "filedFor": "2025",
+      "heads": [
+        {
+          "name": "GLENDA GRIFFIN",
+          "role": "Asst. Treasurer"
+        }
+      ],
+      "kind": "fire",
+      "office": {}
+    },
+    "PEMBROKE PUBLIC LIBRARY": {
+      "board": [
+        {
+          "name": "Carol Burton",
+          "role": "President"
+        }
+      ],
+      "comptrollerCode": "046/035/10",
+      "filedFor": "2025",
+      "kind": "library",
+      "office": {
+        "address": "13130 East Central",
+        "city": "Pembroke Township IL 60958",
+        "email": "pembroke574library@yahoo.com",
+        "phone": "(815) 944-8609"
+      }
+    },
+    "PILOT FIRE": {
+      "board": [
+        {
+          "name": "Susan Mosier",
+          "role": "Trustee"
+        }
+      ],
+      "comptrollerCode": "046/130/06",
+      "filedFor": "2025",
+      "kind": "fire",
+      "office": {}
+    },
+    "REDDICK FIRE": {
+      "board": [
+        {
+          "name": "SUE BERGAN",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "053/085/06",
+      "filedFor": "2025",
+      "filesIn": "Livingston",
+      "heads": [
+        {
+          "name": "ROBERT LOWERY",
+          "role": "C.E.O."
+        }
+      ],
+      "kind": "fire",
+      "office": {
+        "address": "210 E MAIN ST",
+        "city": "REDDICK IL 60921",
+        "phone": "(815) 365-4911"
+      }
+    },
+    "SALINA FIRE": {
+      "board": [
+        {
+          "name": "Larry Kirchner",
+          "role": "President"
+        },
+        {
+          "name": "Melanie Bauer",
+          "role": "Treasurer"
+        }
+      ],
+      "comptrollerCode": "046/150/06",
+      "filedFor": "2025",
+      "kind": "fire",
+      "office": {
+        "email": "melanie.bauer@salinatwpfire.org"
+      }
+    },
+    "ST. ANNE FIRE": {
+      "board": [
+        {
+          "name": "RALPH MERCIER",
+          "role": "President"
+        },
+        {
+          "name": "SUSAN BONVALLET",
+          "role": "Treasurer"
+        },
+        {
+          "name": "DENNIS BONVALLET",
+          "role": "Trustee"
+        }
+      ],
+      "comptrollerCode": "046/140/06",
+      "filedFor": "2025",
+      "kind": "fire",
+      "office": {}
+    }
+  },
+  "generated": "2026-09-10T22:30:37Z",
+  "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
+  "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
+  "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
+}

@@ -43,7 +43,7 @@
 // refreshed per election.)
 /* ==== TEMPLATE:END sw-version-history ==== */
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-il-shell-v19";
+const CACHE_NAME = "districtry-il-shell-v20";
 
 const SHELL_URLS = [
   "./",
@@ -247,6 +247,7 @@ const GEOMETRY_URLS = [
   "./data/app/stark-county-outline.json",
   "./data/app/stark-fire-districts.json",
   "./data/app/stark-library-districts.json",
+  "./data/app/logan-park-districts.json",
   "./data/app/stark-park-districts.json",
   "./data/app/stark-precincts.json",
   "./data/app/stephenson-county-board-districts.json",
@@ -438,6 +439,11 @@ const ROSTER_URLS = [
   "./data/app/clay-county-board-members.json",
   "./data/app/st-clair-precinct-polling.json",
   "./data/app/boone-district-officials.json",
+  "./data/app/peoria-district-officials.json",
+  "./data/app/logan-district-officials.json",
+  "./data/app/woodford-district-officials.json",
+  "./data/app/grundy-district-officials.json",
+  "./data/app/kankakee-district-officials.json",
   "./data/app/il-county-board-offices.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */

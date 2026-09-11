@@ -1,0 +1,126 @@
+name: Update Kankakee fire, park and library district officials
+
+# Weekly refresh of il/data/app/kankakee-district-officials.json — the board,
+# the appointed officers and the office of Kankakee County's 25 filing fire,
+# park and library districts, joined onto the district polygons by name in
+# il/index.html.
+#
+# THE PUBLISHER IS THE DISTRICT, NOT THE COUNTY. Kankakee's boundaries come from
+# its own taxing-district service (k3gis.net), whose layers declare a full
+# contact schema — telephone, website, email — and populate NONE of it, measured
+# 0 of 17 fire, 0 of 4 park, 0 of 8 library. That is what the
+# kankakee-special-districts gap recorded. Every Illinois unit of local
+# government files an Annual Financial Report with the Comptroller under the
+# Fiscal Responsibility Report Card Act, and the AFR's Contact Information
+# section names role-holders with the title the unit itself filed. The
+# Comptroller is the collector; the district is the author.
+#
+# SCHEDULED CLEAR OF THE OTHER FOUR AFR JOBS, which read the same state site:
+# Peoria runs Sunday 21:00, Logan Sunday 22:00, Woodford Monday 22:00 and Grundy
+# Friday 22:00. All five pace themselves at one request a second and none should
+# be competing with another for it. Saturday 22:00 also sits clear of the
+# municipal-officials job (Wednesday 14:00), which reads this county from a
+# different publisher.
+#
+# THIS JOB READS THE COUNTY'S LIVE SERVICE TOO, and that is deliberate. Woodford's
+# and Grundy's boundaries are committed files, so their scrapers read the join
+# key off disk; Kankakee's are fetched at render time, so the key has to come
+# from the same service the app will read. A name in the service and not in the
+# scraper's table, or the reverse, fails the run rather than silently dropping a
+# district.
+#
+# WHY THE JOB IS SLOW ON PURPOSE. It reads two pages per unit — the landing page
+# for the fiscal year that district last filed for, then the contact block for
+# that year. An empty fiscal year returns a page with no contact block at all,
+# and a hardcoded one silently skips a district that is a year behind, so the
+# year is asked for rather than assumed. Four further requests verify the join
+# table against the Warehouse's own labels, one per county: three of the 27 units
+# file under Livingston, Will or Iroquois, because a cross-county district files
+# once, under its home county.
+#
+# A DISTRICT THAT STOPS FILING IS A REAL EVENT, not a parse failure, and the
+# builder's floors sit under the measured 25 rather than at it so one district
+# going quiet cannot freeze the other 24. Greater Momence and Limestone Twp fire
+# districts HAVE units and file no readable report this year; they are verified
+# on every run like the rest and ship the run their filings appear.
+
+on:
+  schedule:
+    - cron: "0 22 * * 6" # Saturday 22:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI (a PR opened with the default GITHUB_TOKEN fires no workflows).
+      # Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install scraper dependencies
+        run: pip install -c scripts/requirements.txt requests
+
+      - name: Read each district's own AFR contact filing
+        run: |
+          python3 scripts/kankakee_district_officials_scraper.py \
+            --out /tmp/kankakee_district_officials_raw.json
+
+      - name: Rebuild roster data file
+        run: |
+          python3 scripts/build_kankakee_district_officials.py \
+            /tmp/kankakee_district_officials_raw.json
+
+      # Gate the regenerated data before it can reach a PR.
+      - name: Validate app + data files
+        run: |
+          python3 scripts/build_kankakee_district_officials.py \
+            /tmp/kankakee_district_officials_raw.json --check
+          python3 scripts/validate_index.py il/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- il/data/app/; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          # Fixed branch (not per-run): an unmerged roster PR is refreshed in
+          # place by the force-push below instead of spawning a duplicate PR.
+          branch="bot/kankakee-district-officials-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut the branch from main's CURRENT tip, not from the checkout this
+          # run started with — a workflow-scope refusal otherwise when main
+          # moves mid-run.
+          git fetch --depth=1 origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add il/data/app/kankakee-district-officials.json
+          git commit -m "Update Kankakee fire, park and library district officials"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Kankakee fire, park and library district officials" \
+              --body "Automated weekly refresh of the officers, office and contact details of Kankakee County's 25 filing fire, park and library districts, generated by \`scripts/kankakee_district_officials_scraper.py\` + \`scripts/build_kankakee_district_officials.py\`. Each district's own Annual Financial Report filing with the Illinois Comptroller is the source, and every record names the fiscal year it was filed for. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

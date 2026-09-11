@@ -2383,9 +2383,17 @@ Two corollaries the same day earned:
   now a gate in the builder rather than a comment.
 - **Read the OBJECTS, never the pixels.** A vector PDF's districts are filled PATH objects
   whose exact fill colours pair one-for-one with the legend; that is readable. A raster scan
-  is not, and colour-sampling a raster is forbidden. And **nothing traced ships**: where a
-  map was used to resolve split precincts, the map only ever chose between two options that
-  certified returns had already named, and the geometry came from census blocks.
+  is not, and colour-sampling a raster is forbidden. **"Vector" is not the test, and saying
+  it that way is too loose.** What Jackson needed was CLOSED, FILLED path objects each
+  carrying its own identity — a fill colour paired to a legend, an enclosed numeral, a
+  label. A drawing can be entirely vector and still be stroke-only line work with no closed
+  subpaths and no coloured fills, which has no district object in it at all and is as shut
+  as a scan; a city map measured in 2026 was exactly that. So the first read of a candidate
+  PDF is a COUNT of closed filled paths, not a check that the file is vector. And **nothing
+  traced ships**: where a map was used to resolve split precincts, the map only ever chose
+  between two options that certified returns had already named, and the geometry came from
+  census blocks — assembling unattributed open segments into polygons and naming them from
+  nearby labels is tracing.
 - **The whole-unit test before any dissolve** ("the Jasper test"): the composing units must
   match the county's own current names one-for-one AND their populations must sum to the
   county's exact total. A county whose census voting districts no longer match its current

@@ -101,6 +101,12 @@ COUNTY_FIPS = {
     # browser capture on 2026-08-20 — the one step the sandbox could not take —
     # and needs no browser now that it is known.
     "Macoupin": "117",
+    # Kankakee is the first RUNG-3 county: no county source names a municipal
+    # officer at all, so its heads come from the regional council — the KATS
+    # MPO's Policy Committee minutes. It ships FIVE of its 21 municipalities
+    # by construction, because only the five MPO members sit on that
+    # committee. See kankakee_municipal_officials_scraper.py.
+    "Kankakee": "091",
 }
 
 # Office classification. HEAD is the single head of government; BOARD is the
@@ -173,6 +179,13 @@ COUNTY_FLOORS = {
     # member/head floors are 0 BY DESIGN — the municipality count is the real
     # guard. See lake_municipal_officials_scraper.py.
     "Lake": {"municipalities": 48, "members": 0, "heads": 0},            # 55 / 0 / 0
+    # Kankakee reads an ATTENDANCE roll, so its floors are one under the
+    # measured five rather than equal to it: a town whose head misses every
+    # meeting for a year leaves the source without anything being wrong, and
+    # freezing the county over that would be a worse answer than four names.
+    # `members` equals `heads` because the Policy Committee seats one chief
+    # elected officer per municipality and never a trustee or a clerk.
+    "Kankakee": {"municipalities": 4, "members": 4, "heads": 4},          # 5 / 5 / 5
     # The northern frontier (2026-07 live values in parentheses). Ogle and
     # Stephenson are full-governing-body sources; Carroll is mayor-level, so its
     # `members` counts the head plus the clerk only.
@@ -373,6 +386,10 @@ PRESERVABLE = {
     "washington": {"kind": "county", "county": "Washington"},
     "dewitt": {"kind": "county", "county": "De Witt"},
     "macoupin": {"kind": "county", "county": "Macoupin"},
+    # Kankakee's source is a third party's minute book, not the county's own
+    # site, so a KATS outage must carry its five heads forward rather than
+    # blank them.
+    "kankakee": {"kind": "county", "county": "Kankakee"},
     # City payloads name the municipalities they cover, because the payload
     # that would have named them is precisely what is missing. Each list is
     # guarded by its scraper's own floor, so a drift here fails there first.
@@ -436,6 +453,11 @@ COUNTY_PRECEDENCE = ["Cook", "Will", "DeKalb", "LaSalle", "Winnebago", "Ogle",
                      "Cass", "Peoria", "Tazewell", "DuPage", "Kane", "Kendall", "McHenry",
                      "Carroll", "Whiteside", "Marshall", "Washington", "De Witt",
                      "Macoupin",
+                     # Kankakee names five heads and no board, from a regional
+                     # council rather than the county, so any county that
+                     # publishes a governing body outranks it; only Lake, which
+                     # publishes no names at all, ranks below.
+                     "Kankakee",
                      "Lake"]
 
 # ONE municipality at a time, where evidence settles a cross-county tie that

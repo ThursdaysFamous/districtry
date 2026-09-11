@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!-- ==== GENERATED:BEGIN head-brand ==== -->
-<title>What district am I in? Find your Wisconsin district — districtry Wisconsin</title>
-<meta name="description" content="Enter an address or ZIP — or tap the map — to find your district: county, city, village or town, school district, Wisconsin Senate and Assembly districts, U.S. House district, and who represents you. Free, no login." />
+<title>What district am I in? — districtry Wisconsin</title>
+<meta name="description" content="Tap the map or search a Wisconsin address: county, city or town, school district, state and U.S. House — and who represents you. Free, no login." />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://districtry.com/wi/" />
 
@@ -8637,6 +8637,43 @@ function initWisconsinExplorer() {
   var loadWiMunicipalClerks = makeCached(function () {
     return fetchJSONWithRetry("data/app/wi-municipal-clerks.json", {}, 2);
   });
+  // Three facts from the Wisconsin Blue Book 2025-26 section 190, used by
+  // written permission from the Legislative Reference Bureau (LICENSE-DATA.md
+  // section 4). The permission is narrow and so is this: the year a city or
+  // village was incorporated, the county or counties it lies in, and — county-
+  // keyed, in the sibling file — each county's seat. The same tables carry
+  // population, area and equalized value; none of that is taken.
+  //
+  // THE COUNTY HERE IS BETTER THAN THE ONE THE CLERK FILE CARRIES, which is
+  // the reason it renders. The Elections Commission writes "Multiple Counties"
+  // for a municipality that straddles a line where this source names every one
+  // of them.
+  //
+  // THE COMPARISON, STATED AS WHAT WAS ACTUALLY MEASURED. Of the 607
+  // municipalities this file carries, the Commission names a real county for
+  // 549 and "Multiple Counties" for 58. Against those 549: 538 agree exactly
+  // and 11 differ only in the Commission's own "Fond Du Lac" against the Blue
+  // Book's "Fond du Lac", which is the shipped county fabric's spelling too.
+  //
+  // THE OTHER 58 CARRY NO COUNTY NAME, so a name-against-name check cannot
+  // reach them — and that is exactly where a disagreement of this kind can
+  // live. Checked by COUNT instead: this source names more than one county for
+  // 57 of the 58, and ONE, the Village of Lake Hallie, it files under Chippewa
+  // alone. That one is resolved by a third witness rather than by preferring a
+  // publisher — see MEASURED_COUNTY_EXTENSIONS in
+  // wi/scripts/build_wi_municipal_facts.py — and the card says so.
+  var loadWiMunicipalFacts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/wi-municipal-facts.json", {}, 2);
+  });
+  // The county seat, keyed by COUNTY GEOID, because that is whose fact it is —
+  // a column of the Blue Book's counties table. It is deliberately NOT matched
+  // onto the city/village fabric: three of the 72 seats are not incorporated
+  // municipalities at all (Meenon, Florence, Keshena) and two are ambiguous,
+  // Douglas and Waukesha each having a City AND a Village of the seat's name.
+  // County-keyed it is 72 of 72 with nothing to guess.
+  var loadWiCountyFacts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/wi-county-facts.json", {}, 2);
+  });
   // THE TOWN half of the same directory, ONE FILE PER COUNTY: 1,239 towns is
   // ~582 KB in one file and ~4 KB per county, and this is a network-first
   // roster fetched on a click. The county comes out of the subdivision GEOID
@@ -8672,7 +8709,8 @@ function initWisconsinExplorer() {
       return Promise.all([
         queryFeatureAt(loadStateCounties, point),
         loadWiCountyClerks().catch(function () { return null; }),
-        loadWiCountyOfficers().catch(function () { return null; })
+        loadWiCountyOfficers().catch(function () { return null; }),
+        loadWiCountyFacts().catch(function () { return null; })
       ]).then(function (parts) {
         var feature = parts[0];
         if (!feature) return null;
@@ -8680,13 +8718,16 @@ function initWisconsinExplorer() {
         var geoid = findPropCI(props, ["geoid"]);
         var clerk = (parts[1] && geoid != null) ? parts[1][String(geoid)] : null;
         var officers = (parts[2] && geoid != null) ? parts[2][String(geoid)] : null;
+        var facts = (parts[3] && geoid != null) ? parts[3][String(geoid)] : null;
         return {
           seq: seq,
           name: findPropCI(props, ["name"]),
           geoid: geoid,
           clerk: clerk || null,
           officers: officers || null,
-          officersEdition: officers ? officers.asOf : null
+          officersEdition: officers ? officers.asOf : null,
+          seat: (facts && facts.seat) ? facts.seat : null,
+          seatEdition: (parts[3] && parts[3]._meta) ? parts[3]._meta.asOf : null
         };
       });
     },
@@ -8697,6 +8738,19 @@ function initWisconsinExplorer() {
         title: result.name != null ? String(result.name) : "Unknown county",
         note: result.geoid != null ? "FIPS " + String(result.geoid) : null
       }));
+      // The county seat — identity, so it sits with the name. It is the
+      // county's own fact (a column of the Blue Book's counties table), which
+      // is why it is keyed here and never matched onto a city or village: not
+      // every seat IS one. Three of Wisconsin's are towns or unincorporated
+      // communities, so a seat is named as a PLACE and nothing here claims it
+      // is an incorporated municipality.
+      if (result.seat) {
+        var seatRows = [{ label: "County seat", value: String(result.seat) }];
+        if (result.seatEdition) {
+          seatRows.push({ label: "As of", value: String(result.seatEdition) + "." });
+        }
+        wrap.appendChild(renderFieldStack(seatRows));
+      }
       var clerk = result.clerk;
       if (clerk && clerk.name) {
         var person = { name: String(clerk.name), badge: "County Clerk" };
@@ -9112,6 +9166,18 @@ function initWisconsinExplorer() {
       // went on saying the card prints it. A field the app stops rendering is
       // invisible to every gate in this repo: the data was still there, still
       // correct, and still counted.
+      //
+      // AND THE OTHER 1,408 SEATS NOW CARRY A DATE TOO, which is the half this
+      // row was missing. Nine counties are carried from a document and said so;
+      // every other county said nothing, so its freshness was stated only by
+      // the ABSENCE of this row — legible to a reader who has seen a carried
+      // county's card and to nobody else. Lafayette made the gap plain: its
+      // page started answering live, its rows correctly lost `asOf`, and
+      // sixteen supervisors were left with no indication that anyone had read
+      // the county that week. `readOn` is the day the source was read and the
+      // builder derives it per rung, so the three branches below are the three
+      // things that can be true rather than one sentence covering for all of
+      // them.
       if (member && member.asOf) {
         wrap.appendChild(renderFieldStack([{
           label: "As of",
@@ -9125,6 +9191,20 @@ function initWisconsinExplorer() {
             : "The county's website refuses automated readers, so this name " +
               "is a dated capture rather than the weekly re-read the other " +
               "named counties get.")
+        }]));
+      } else if (member && member.readOn) {
+        wrap.appendChild(renderFieldStack([{
+          label: "As of",
+          // A READ THROUGH AN ARCHIVE IS DATED BY THE CAPTURE, NOT BY THE
+          // FETCH. Fond du Lac's host denies this client, so its page is read
+          // from the Internet Archive whenever the block is up; the day that
+          // matters to a reader is the day the copy was taken, and saying
+          // "read today" would be true of our request and false of the names.
+          value: member.readVia
+            ? "Read from " + String(member.readVia) + "'s capture of " +
+              String(member.readOn) + ". That is the day the copy was taken, " +
+              "not the day it was fetched."
+            : "Read on " + String(member.readOn) + ", and re-read every week."
         }]));
       }
       // AT-LARGE SUPERVISORS REPRESENT THE WHOLE COUNTY, so they belong on
@@ -9577,7 +9657,8 @@ function initWisconsinExplorer() {
       return Promise.all([
         queryFeatureAt(loadPlaces, point),
         loadWiMunicipalExecutives().catch(function () { return null; }),
-        loadWiMunicipalClerks().catch(function () { return null; })
+        loadWiMunicipalClerks().catch(function () { return null; }),
+        loadWiMunicipalFacts().catch(function () { return null; })
       ]).then(function (parts) {
         var feature = parts[0];
         if (!feature) return null; // unincorporated — the engine renders this layer's own emptyNote
@@ -9586,12 +9667,16 @@ function initWisconsinExplorer() {
         var key = geoid != null ? String(geoid) : null;
         var exec = (parts[1] && key) ? parts[1][key] : null;
         var clerk = (parts[2] && key) ? parts[2][key] : null;
+        var facts = (parts[3] && key) ? parts[3][key] : null;
         return {
           seq: seq,
           name: findPropCI(props, ["name"]),
           geoid: geoid,
           executive: exec || null,
-          clerk: clerk || null
+          clerk: clerk || null,
+          facts: facts || null,
+          factsEdition: (parts[3] && parts[3]._meta) ? parts[3]._meta.asOf : null,
+          factsLoaded: !!parts[3]
         };
       });
     },
@@ -9602,6 +9687,59 @@ function initWisconsinExplorer() {
         title: result.name != null ? String(result.name) : "Unknown place",
         note: result.geoid != null ? "FIPS " + String(result.geoid) : null
       }));
+      // IDENTITY, so it sits with the name rather than below the officers.
+      // A municipality straddling a county line names every county it is in,
+      // which is the whole reason this field is worth carrying.
+      if (result.facts) {
+        var idRows = [];
+        if (result.facts.incorporated) {
+          idRows.push({
+            label: result.facts.kind === "city" ? "City since" : "Village since",
+            value: String(result.facts.incorporated)
+          });
+        }
+        var inCounties = result.facts.counties || [];
+        var also = result.facts.countiesAlso || [];
+        if (inCounties.length) {
+          idRows.push({
+            label: (inCounties.length + also.length) > 1 ? "Counties" : "County",
+            value: inCounties.map(function (c) { return String(c); }).join(", ") +
+              (inCounties.length > 1
+                ? " — this municipality lies in " + inCounties.length + " counties."
+                : "")
+          });
+        }
+        // A MEASURED EXTENSION IS ITS OWN ROW, never folded into the list above.
+        // The list is what the cited source says; this is what measuring the
+        // boundary found it missing, and a reader is owed the difference rather
+        // than a silently corrected value.
+        if (also.length) {
+          idRows.push({
+            label: "Also in",
+            value: also.map(function (c) { return String(c); }).join(", ") +
+              (result.facts.countiesAlsoWhy
+                ? " — " + String(result.facts.countiesAlsoWhy)
+                : ".")
+          });
+        }
+        if (idRows.length) {
+          if (result.factsEdition) {
+            idRows.push({ label: "As of", value: String(result.factsEdition) + "." });
+          }
+          wrap.appendChild(renderFieldStack(idRows));
+        }
+      } else if (result.factsLoaded) {
+        // NOT A FAILED LOOKUP, AND THE CARD MUST NOT READ LIKE ONE. The Blue
+        // Book's table is dated January 1, 2024, and one village the app ships
+        // — Greenleaf, in Brown County — incorporated after it. The source is
+        // correctly dated rather than short, and saying so is the answer.
+        wrap.appendChild(renderFieldStack([{
+          label: "Incorporated",
+          value: "Not stated — the Wisconsin Blue Book's table of cities and " +
+            "villages is dated January 1, 2024 and this municipality is not in " +
+            "it, which happens when it incorporated after that date."
+        }]));
+      }
       var ex = result.executive;
       if (ex) {
         if (ex.name && !ex.withheld) {
