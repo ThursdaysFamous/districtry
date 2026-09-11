@@ -12442,6 +12442,16 @@ function initChiExplorer() {
   var loadIlLibraryOfficials = makeCached(function () {
     return fetchJSONWithRetry("data/app/il-library-district-officials.json", {}, 2);
   });
+  /* The office address and telephone of 250 Illinois public libraries, from the
+   * shared directory the three library systems run (L2). It carries only what
+   * the Comptroller filings do not: 173 of the 250 are municipal or township
+   * libraries that file no report of their own, and the rest are filings with no
+   * address, no telephone, or a post-office box where a street should be. So the
+   * stamper applies this file OVER the filing's office with no further judgment.
+   * No officer and no e-mail come from here — scripts/build_il_library_contacts.py. */
+  var loadIlLibraryContacts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/il-library-contacts.json", {}, 2);
+  });
   /* One stamper for both counties: the payloads are the same shape because
    * they come from the same filings, so only the roster file and the property
    * holding the district's name differ. */
@@ -12489,8 +12499,48 @@ function initChiExplorer() {
    * `libraries` rather than `districts` — a library, not a district within a
    * county, is what one filing answers for here. */
   function withLibraryOfficials(loadGeometry) {
-    return withAfrOfficials(loadGeometry, loadIlLibraryOfficials,
-                            ["library"], "libraries");
+    var stamped = withAfrOfficials(loadGeometry, loadIlLibraryOfficials,
+                                   ["library"], "libraries");
+    return makeCached(function () {
+      return Promise.all([
+        stamped(),
+        loadIlLibraryContacts().catch(function () { return null; })
+      ]).then(function (results) {
+        var geojson = results[0];
+        var byName = (results[1] && results[1].libraries) || {};
+        (geojson.features || []).forEach(function (f) {
+          var props = f.properties || {};
+          var extra = byName[String(props.library)];
+          if (!extra) return;
+          // The contact file holds only fields the filing does not answer, so
+          // each one it carries wins. A library with no filing at all gets an
+          // officials object naming no board and no fiscal year, which is what
+          // the sources support: an address and a telephone and nobody.
+          var info = props.dxOfficials = props.dxOfficials || {};
+          var office = info.office = info.office || {};
+          var added = [];
+          if (extra.address) {
+            office.address = extra.address;
+            office.city = extra.city || office.city;
+            added.push("address");
+          }
+          if (extra.phone) {
+            office.phone = extra.phone;
+            added.push("telephone");
+          }
+          if (added.length) {
+            // NAME THE PUBLISHER OF WHAT IT GAVE, not of the whole row: a card
+            // can carry a telephone from the filing and an address from the
+            // directory, and one note claiming both for either would be wrong.
+            info.contactNote = (added.length === 2
+              ? "Address and telephone from"
+              : "The " + added[0] + " comes from")
+              + " the Illinois library systems' shared directory.";
+          }
+        });
+        return geojson;
+      });
+    });
   }
 
   /* The officeholder block under a district whose officers come from its own
@@ -12577,6 +12627,11 @@ function initChiExplorer() {
         phone: office.phone ? String(office.phone) : null,
         email: office.email ? String(office.email) : null
       }));
+      // Only the library layer sets this, and only for a value a second
+      // publisher supplied. Every other entry's card is unchanged.
+      if (info.contactNote) {
+        frag.appendChild(renderBodyIntro({ note: String(info.contactNote) }));
+      }
     }
     return frag;
   }
