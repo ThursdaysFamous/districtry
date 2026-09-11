@@ -675,8 +675,8 @@ def build():
              "`python3 scripts/build_fonts.py landing > fonts/barlow-fontface.css`")
 
     title = "Privacy — districtry"
-    desc = ("What districtry stores, what leaves your browser and to whom, and what it "
-            "deliberately never collects — for every app on the site. No accounts, no "
+    desc = ("What districtry stores, what leaves your browser and to whom, and "
+            "what it never collects — every app on the site. No accounts, no "
             "profiles, nothing sold.")
 
     return """<!DOCTYPE html>
