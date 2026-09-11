@@ -48,7 +48,7 @@
  "19033": {
   "chair": "Casey Callanan",
   "county": "Cerro Gordo",
-  "meetingDate": "2026-08-31",
+  "meetingDate": "2026-09-08",
   "route": "minutes",
   "sourceUrl": "https://cerrogordo.gov/supervisors/meetings_minutes/"
  },
@@ -67,14 +67,14 @@
  "19045": {
   "chair": "Dan Srp",
   "county": "Clinton",
-  "meetingDate": "2026-08-17",
+  "meetingDate": "2026-08-24",
   "route": "minutes",
   "sourceUrl": "https://www.clintoncounty-ia.gov/board_of_supervisors/meetings_minutes"
  },
  "19049": {
   "chair": "Julia Helm",
   "county": "Dallas",
-  "meetingDate": "2026-08-26",
+  "meetingDate": "2026-09-01",
   "route": "minutes",
   "sourceUrl": "https://www.dallascountyiowa.gov/AgendaCenter"
  },
@@ -87,7 +87,7 @@
  "19057": {
   "chair": "Shane McCampbell",
   "county": "Des Moines",
-  "meetingDate": "2026-08-25",
+  "meetingDate": "2026-09-01",
   "route": "minutes",
   "sourceUrl": "https://www.desmoinescounty.iowa.gov/board_of_supervisors/meetings_minutes/"
  },
@@ -183,6 +183,30 @@
   "county": "Muscatine",
   "route": "page",
   "sourceUrl": "https://www.muscatinecountyiowa.gov/supervisors/"
+ },
+ "19141": {
+  "chair": "Nancy McDowell",
+  "county": "O'Brien",
+  "route": "page",
+  "sourceUrl": "https://obriencounty.iowa.gov/board-of-supervisors/"
+ },
+ "19143": {
+  "chair": "Jerry Helmers",
+  "county": "Osceola",
+  "route": "page",
+  "sourceUrl": "https://osceolacountyia.gov/supervisors/"
+ },
+ "19147": {
+  "chair": "Linus Solberg",
+  "county": "Palo Alto",
+  "route": "page",
+  "sourceUrl": "https://paloaltocounty.iowa.gov/board-of-supervisors/supervisorscontact-info/"
+ },
+ "19149": {
+  "chair": "Don Kass",
+  "county": "Plymouth",
+  "route": "page",
+  "sourceUrl": "https://www.plymouthcountyiowa.gov/board-of-supervisors/"
  },
  "19157": {
   "chair": "Jason Roudabush",
