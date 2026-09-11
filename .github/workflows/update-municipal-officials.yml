@@ -368,6 +368,17 @@ jobs:
         continue-on-error: true
         run: python3 scripts/galesburg_council_scraper.py --out /tmp/galesburg_council.json
 
+      # Plano, added 2026-09-11. Kendall County's Clerk publishes a yearbook and
+      # this job already reads it, but that document stops at the mayor and
+      # clerk for every municipality — so Plano's four drawn wards named nobody.
+      # The city's own page carries all eight council members, two per ward,
+      # each as a mailto anchor followed by ", Ward N", which is the
+      # plano-ward-officials gap answered from the city rather than the county.
+      - name: Scrape Plano's own council page
+        id: scrape_plano
+        continue-on-error: true
+        run: python3 scripts/plano_council_scraper.py --out /tmp/plano_council.json
+
       # The bounded per-city exception (docs/EXPANSION_GUIDE.md §3.4): the
       # Will ward cities' own sites carry per-seat contact the Clerk's directory
       # doesn't, and supply Lockport and Wilmington, which that directory omits
@@ -580,6 +591,7 @@ jobs:
           add "${{ steps.scrape_joliet.outcome }}"      joliet      enrich /tmp/joliet_council_contact.json
           add "${{ steps.scrape_freeport.outcome }}"    freeport    enrich /tmp/freeport_council.json
           add "${{ steps.scrape_galesburg.outcome }}"   galesburg   enrich /tmp/galesburg_council.json
+          add "${{ steps.scrape_plano.outcome }}"       plano       enrich /tmp/plano_council.json
 
           # The shipped roster is the preserve source, so read it BEFORE the
           # builder overwrites it in place.
