@@ -124,10 +124,21 @@ ENRICHED = ("recorder", "sheriff", "countyAttorney")
 # sheriff 99, county attorney 99, supervisor boards 92 of 99.
 MIN_PER_OFFICE = {"treasurer": 95, "recorder": 95, "sheriff": 95, "countyAttorney": 95}
 MIN_BOARDS = 88
-MIN_EMAILS = 320        # measured 2026-08-29: 97 recorder + 97 attorney + 87
-                        # sheriff + 65 treasurer = 346. The floor sits above
-                        # 346 minus the treasurer block, so that source going
-                        # dark fails here rather than shipping silently.
+# MIN_EMAILS measured 2026-08-29: 97 recorder + 97 attorney + 87 sheriff + 65
+# treasurer = 346, and the floor sits above 346 minus the treasurer block.
+#
+# WHAT IT CATCHES CHANGED when the carry-forward went in on 2026-09-11, and
+# saying so matters more than the number. It used to mean "the treasurer
+# source going dark fails here rather than shipping silently". It no longer
+# means that: if iowatreasurers.org and the county sites all went dark
+# tomorrow, every address already in the shipped file would still be carried
+# forward under its unchanged officeholder and this floor would not fire --
+# which is correct, because those addresses would still be right. What it
+# catches now is the ACCUMULATOR breaking: a prior that fails to load, a
+# large number of offices changing hands at once, or the merge dropping
+# addresses it should have kept. That is the failure this floor actually
+# caught on 2026-09-04 and 2026-09-11, and it caught it twice.
+MIN_EMAILS = 320
 MIN_PHONES = 380
 # A divergence is one office in one county where ISAC and the office's own
 # directory name different people. 6 measured; the ceiling catches a source
@@ -341,6 +352,27 @@ def main():
         officer_emails = {}
         print("  no officer e-mail cache -- treasurer/sheriff addresses will be "
               "absent (run ia_county_officer_email_scraper.py)", file=sys.stderr)
+    # ---- THE SHIPPED FILE IS AN INPUT AS WELL AS THE OUTPUT, and it has to be.
+    # The e-mail scraper is INCREMENTAL against this very file: it skips any
+    # county that already carries an address, so its cache holds only the
+    # addresses found THIS run. Measured 2026-09-11 on the failing CI run --
+    # it probed 35 treasurer counties (99 records minus the 64 already
+    # carrying one) and 11 sheriff (98 minus 87), and accepted 3 and 0. The
+    # builder used to rebuild from the caches alone, so the 61 treasurer
+    # addresses that exist only here were dropped every week: 97 recorder +
+    # 97 attorney + 83 sheriff + 3 treasurer = 280 against a floor of 320,
+    # which is exactly what CI reported on 2026-09-04 and 2026-09-11. The
+    # treasurer has NO statewide directory at all, so for that office this
+    # file is the only accumulator there is.
+    #
+    # A missing prior is not an error: a first build, or a checkout without
+    # the data file, simply carries nothing forward.
+    try:
+        prior = load(OUT, "previously shipped roster")
+    except RuntimeError:
+        prior = {}
+        print("  no previously shipped roster -- nothing to carry forward",
+              file=sys.stderr)
     board_dir = load(BOARD_DIRECTORY, "county board directory")
     # ia-county-board-directory.json is keyed by 3-digit county FIPS.
     seats_by_geoid = {"19" + k.zfill(3): v.get("seats")
@@ -357,7 +389,7 @@ def main():
     directory = {}
     filled = {k: 0 for k, _ in OFFICES}
     boards = withheld = divergences = mislabels = resolved = switchboards = 0
-    scraped_emails = unwitnessed = 0
+    scraped_emails = unwitnessed = carried_emails = dropped_emails = 0
     pins_used = set()
     withheld_detail = []
 
@@ -456,6 +488,35 @@ def main():
                     print("  %-13s %-15s %s was witnessed against a name this "
                           "build does not ship (%r) -- dropped"
                           % (county, key, addr, best["name"]), file=sys.stderr)
+
+            # ---- and an address this file already carries, WHEN THE SAME
+            # PERSON STILL HOLDS THE OFFICE. That condition is the whole of the
+            # safety here, and it covers both kinds of address the probe above
+            # accepts: a personal one is still that person's, and an office
+            # mailbox is still the office's. When the officeholder changes the
+            # address is dropped rather than re-pointed at a stranger -- and
+            # dropping it is also what makes the next run re-probe that county,
+            # since the scraper's skip list is this file.
+            #
+            # WHAT THIS DOES NOT DO is re-verify an address while its holder
+            # stays put. The name is re-read from ISAC every week; the address
+            # is not. A domain that dies is still caught, by scripts/
+            # undeliverable.py, which globs every instance's data/app -- but a
+            # mailbox that stops working inside a live domain would not be.
+            # Rotating re-verification is the fix for that and is deliberately
+            # not built here.
+            if "email" not in best:
+                was = (prior.get(geoid) or {}).get(key) or {}
+                if was.get("email") and was.get("name"):
+                    if same_person(was["name"], best["name"]):
+                        best["email"] = was["email"]
+                        carried_emails += 1
+                    else:
+                        dropped_emails += 1
+                        print("  %-13s %-15s %s dropped -- this file had it under "
+                              "%r and the office is now %r"
+                              % (county, key, was["email"], was["name"],
+                                 best["name"]), file=sys.stderr)
             entry[key] = best
             filled[key] += 1
 
@@ -566,6 +627,9 @@ def main():
     print("  e-mails added from the counties' own sites / the treasurers' state "
           "site: %d (+%d dropped as witnessed against a name not shipped)"
           % (scraped_emails, unwitnessed), file=sys.stderr)
+    print("  e-mails carried forward from the shipped file, same officeholder: "
+          "%d (+%d dropped, the office changed hands)"
+          % (carried_emails, dropped_emails), file=sys.stderr)
     print("ia-county-officers: %d counties | %s | boards %d, withheld %d | "
           "%d e-mails, %d phones | %d office(s) withheld for divergence, "
           "%d ISAC mislabel(s) corrected, %d pinned divergence(s)"
