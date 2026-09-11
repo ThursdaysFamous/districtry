@@ -1,0 +1,4962 @@
+{
+  "note": "The unit each fire and park district card joins to, and the cards that join to none. Rebuilt by il_special_district_officials_scraper.py --propose; every row is re-verified against the Warehouse on every scrape.",
+  "generated": "2026-09-11T08:19:14Z",
+  "districts": [
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Barry Fire",
+      "code": "075/010/06",
+      "label": "Barry",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Pike",
+      "rule": "normalised"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Baylis Fire",
+      "code": "075/015/06",
+      "label": "Baylis",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Pike",
+      "rule": "normalised"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Bowen Fire",
+      "code": "034/020/06",
+      "label": "Bowen",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Hancock",
+      "rule": "normalised"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Camp Point Fire",
+      "code": "001/010/06",
+      "label": "Camp Point",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Adams",
+      "rule": "normalised"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Central Adams Fire",
+      "code": "001/020/06",
+      "label": "Central Adams",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Adams",
+      "rule": "normalised"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Clayton Fire",
+      "code": "001/030/06",
+      "label": "Clayton",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Adams",
+      "rule": "normalised"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Golden Fire",
+      "code": "001/040/06",
+      "label": "Golden",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Adams",
+      "rule": "normalised"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Liberty Fire",
+      "code": "001/050/06",
+      "label": "Liberty",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Adams",
+      "rule": "normalised"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Lima Fire",
+      "code": "001/060/06",
+      "label": "Lima-Tioga",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Adams",
+      "rule": "override"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Loraine Fire",
+      "code": "001/070/06",
+      "label": "Loraine",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Adams",
+      "rule": "normalised"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Mendon Fire",
+      "code": "001/080/06",
+      "label": "Mendon",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Adams",
+      "rule": "normalised"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Payson Fire",
+      "code": "001/090/06",
+      "label": "Payson-Fall Creek",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Adams",
+      "rule": "override"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Tri-Township Fire",
+      "code": "001/100/06",
+      "label": "Tri-Township",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Adams",
+      "rule": "normalised"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Ursa Fire",
+      "code": "001/110/06",
+      "label": "Ursa",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Adams",
+      "rule": "normalised"
+    },
+    {
+      "county": "boone",
+      "layer": "fire",
+      "card": "1",
+      "code": "004/010/06",
+      "label": "Boone County #1",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Boone",
+      "rule": "override"
+    },
+    {
+      "county": "boone",
+      "layer": "fire",
+      "card": "2",
+      "code": "004/020/06",
+      "label": "Boone County #2",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Boone",
+      "rule": "override"
+    },
+    {
+      "county": "boone",
+      "layer": "fire",
+      "card": "3",
+      "code": "004/030/06",
+      "label": "North Boone #3",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Boone",
+      "rule": "override"
+    },
+    {
+      "county": "boone",
+      "layer": "fire",
+      "card": "4",
+      "code": "004/040/06",
+      "label": "Boone #4",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Boone",
+      "rule": "override"
+    },
+    {
+      "county": "boone",
+      "layer": "fire",
+      "card": "5",
+      "code": "004/050/06",
+      "label": "North Boone #5",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Boone",
+      "rule": "override"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "BARRINGTON COUNTRYSIDE FIRE PROT DIST",
+      "code": "016/010/06",
+      "label": "Barrington Countryside",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "BARTLETT FIRE PROTECTION DISTRICT",
+      "code": "022/020/06",
+      "label": "Bartlett",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "BENSENVILLE FIRE PROTECTION DISTRICT #2",
+      "code": "022/255/06",
+      "label": "Bensenville #2",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "override"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "CENTRAL STICKNEY FIRE PROTECTION DIST",
+      "code": "016/020/06",
+      "label": "Central Stickney",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "COUNTRY CLUB HILLS FIRE PROTECTION DIST",
+      "code": "016/030/06",
+      "label": "Country Club Hills",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "EAST DUNDEE & COUNTRYSIDE FIRE PROT DIST",
+      "code": "045/050/06",
+      "label": "East Dundee & Countryside",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Kane",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "ELK GROVE RURAL FIRE PROTECTION DISTRICT",
+      "code": "016/040/06",
+      "label": "Elk Grove",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "card qualifier dropped"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "FOREST RIVER FIRE PROTECTION DISTRICT",
+      "code": "016/050/06",
+      "label": "Forest River",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "FOREST VIEW FIRE PROTECTION DIST",
+      "code": "016/055/06",
+      "label": "Forest View",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "GARDEN HOME FIRE PROTECTION DISTRICT",
+      "code": "016/065/06",
+      "label": "Garden Homes",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "override"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "GLENBROOK FIRE DISTRICT",
+      "code": "016/060/06",
+      "label": "Glenbrook",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "HANOVER PARK FIRE PROTECTION DISTRICT",
+      "code": "016/220/06",
+      "label": "Hanover Park",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "HOFFMAN ESTATES FIRE PROTECTION DIST 1",
+      "code": "016/070/06",
+      "label": "Hoffman Estates #1",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "override"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "HOLBROOK FIRE PROTECTION DISTRICT",
+      "code": "016/080/06",
+      "label": "Holbrook",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "HOMETOWN FIRE PROTECTION DISTRICT",
+      "code": "016/090/06",
+      "label": "Hometown",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "LEMONT FIRE PROTECTION DISTRICT",
+      "code": "016/100/06",
+      "label": "Lemont",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "LEYDEN FIRE PROTECTION DISTRICT",
+      "code": "016/110/06",
+      "label": "Leyden",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "LONG GROVE RURAL FIRE PROTECTION DIST",
+      "code": "049/090/06",
+      "label": "Long Grove Rural",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "MILLER WOODS FIRE PROTECTION DISTRICT",
+      "code": "016/120/06",
+      "label": "Miller Woods",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "MOKENA FIRE PROTECTION DISTRICT",
+      "code": "099/090/06",
+      "label": "Mokena",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Will",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "NORTH LAKE FIRE PROTECTION DISTRICT",
+      "code": "016/160/06",
+      "label": "Northlake",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "NORTH MAINE FIRE PROTECTION DISTRICT",
+      "code": "016/170/06",
+      "label": "North Maine",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "NORTH PALOS FIRE PROTECTION DISTRICT",
+      "code": "016/180/06",
+      "label": "North Palos",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "NORTHBROOK RURAL FIRE PROTECTION DIST",
+      "code": "016/150/06",
+      "label": "Northbrook",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "card qualifier dropped"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "NORTHWEST HOMER FIRE PROTECTION DISTRICT",
+      "code": "099/110/06",
+      "label": "Northwest Homer",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Will",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "NORWOOD PARK FIRE PROTECTION DISTRICT",
+      "code": "016/190/06",
+      "label": "Norwood Park",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "OLYMPIA GARDENS FIRE PROTECTION DISTRICT",
+      "code": "016/210/06",
+      "label": "Olympia Gardens",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "ORLAND FIRE PROTECTION DISTRICT",
+      "code": "016/230/06",
+      "label": "Orland",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "PALOS FIRE PROTECTION DISTRICT",
+      "code": "016/250/06",
+      "label": "Palos",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "PALOS HEIGHTS FIRE PROTECTION DISTRICT",
+      "code": "016/260/06",
+      "label": "Palos Heights",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "PLEASANT VIEW FIRE PROTECTION DISTRICT",
+      "code": "016/280/06",
+      "label": "Pleasantview",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "county tie-break"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "PROSPECT HEIGHTS FIRE PROTECTION DISTRICT",
+      "code": "016/290/06",
+      "label": "Prospect Heights",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "ROBERTS PARK FIRE PROTECTION DISTRICT",
+      "code": "016/310/06",
+      "label": "Roberts Park",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "ROSELLE FIRE PROTECTION DISTRICT",
+      "code": "022/185/06",
+      "label": "Roselle #1",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "unit number dropped"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "SUNNYCREST FIRE PROTECTION DISTRICT",
+      "code": "016/340/06",
+      "label": "Sunnycrest",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "TRI-STATE FIRE PROTECTION DISTRICT",
+      "code": "022/200/06",
+      "label": "Tri-State",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "YORKFIELD FIRE PROTECTION DISTRICT",
+      "code": "016/360/06",
+      "label": "Yorkfield",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "ALSIP PARK DISTRICT",
+      "code": "016/010/12",
+      "label": "Alsip",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "ARLINGTON HEIGHTS PARK DISTRICT",
+      "code": "016/020/12",
+      "label": "Arlington Heights",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "BARRINGTON HILLS PARK DISTRICT",
+      "code": "016/025/12",
+      "label": "Barrington Hills",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "BARRINGTON PARK DISTRICT",
+      "code": "049/010/12",
+      "label": "Barrington",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "BARTLETT PARK DISTRICT",
+      "code": "016/030/12",
+      "label": "Bartlett",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "BEDFORD PARK PARK DISTRICT",
+      "code": "016/040/12",
+      "label": "Bedford",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "BENSENVILLE PARK DISTRICT",
+      "code": "022/020/12",
+      "label": "Bensenville",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "BERKELEY PARK DISTRICT",
+      "code": "016/050/12",
+      "label": "Berkeley",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "BERWYN PARK DISTRICT",
+      "code": "016/060/12",
+      "label": "Berwyn",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "BLUE ISLAND PARK DISTRICT",
+      "code": "016/070/12",
+      "label": "Blue Island",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "BRIDGEVIEW PARK DISTRICT",
+      "code": "016/080/12",
+      "label": "Bridgeview",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "BROADVIEW PARK DISTRICT",
+      "code": "016/090/12",
+      "label": "Broadview",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "BUFFALO GROVE PARK DISTRICT",
+      "code": "016/100/12",
+      "label": "Buffalo Grove",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "BURBANK PARK DISTRICT",
+      "code": "016/730/12",
+      "label": "Burbank",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "BURR RIDGE PARK DISTRICT",
+      "code": "022/035/12",
+      "label": "Burr Ridge",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "CALUMET MEMORIAL PARK DIST",
+      "code": "016/110/12",
+      "label": "Calumet Memorial",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "CENTRAL STICKNEY PARK DISTRICT",
+      "code": "016/130/12",
+      "label": "Central Stickney",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "CHICAGO HEIGHTS PARK DISTRICT",
+      "code": "016/150/12",
+      "label": "Chicago Heights",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "CHICAGO PARK DISTRICT",
+      "code": "016/140/12",
+      "label": "Chicago",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "CHICAGO RIDGE PARK DISTRICT",
+      "code": "016/155/12",
+      "label": "Chicago Ridge",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "CLYDE PARK DISTRICT",
+      "code": "016/160/12",
+      "label": "Clyde",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "COMMUNITY PARK DIST OF LAGRANGE PARK",
+      "code": "016/170/12",
+      "label": "La Grange Park",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "override"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "COUNTRY CLUB HILLS PARK DISTRICT",
+      "code": "016/180/12",
+      "label": "Country Club Hills",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "DEERFIELD PARK DISTRICT",
+      "code": "049/020/12",
+      "label": "Deerfield",
+      "type": "Park District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "DES PLAINES PARK DISTRICT",
+      "code": "016/190/12",
+      "label": "Des Plaines",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "DIXMOOR PARK DISTRICT",
+      "code": "016/195/12",
+      "label": "Dixmoor",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "DOLTON PARK DISTRICT",
+      "code": "016/200/12",
+      "label": "Dolton",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "DUNDEE TOWNSHIP PARK DISTRICT",
+      "code": "045/040/12",
+      "label": "Dundee",
+      "type": "Park District",
+      "warehouseCounty": "Kane",
+      "rule": "card qualifier dropped"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "ELK GROVE PARK DISTRICT",
+      "code": "016/210/12",
+      "label": "Elk Grove",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "ELMHURST PARK DISTRICT",
+      "code": "022/080/12",
+      "label": "Elmhurst",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "FOREST PARK PARK DISTRICT",
+      "code": "016/230/12",
+      "label": "Forest Park",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "FOREST VIEW PARK DISTRICT",
+      "code": "016/240/12",
+      "label": "Forest View",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "FRANKFORT PARK DISTRICT",
+      "code": "099/030/12",
+      "label": "Frankfort",
+      "type": "Park District",
+      "warehouseCounty": "Will",
+      "rule": "override"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "FRANKFORT SQUARE PARK DISTRICT",
+      "code": "099/035/12",
+      "label": "Frankfort Square",
+      "type": "Park District",
+      "warehouseCounty": "Will",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "GLENCOE PARK DISTRICT",
+      "code": "016/260/12",
+      "label": "Glencoe",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "GLENVIEW PARK DISTRICT",
+      "code": "016/270/12",
+      "label": "Glenview",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "GOLF MAINE PARK DISTRICT",
+      "code": "016/280/12",
+      "label": "Golf Maine",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "HANOVER PARK PARK DISTRICT",
+      "code": "016/290/12",
+      "label": "Hanover Park",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "HARVEY PARK DISTRICT",
+      "code": "016/300/12",
+      "label": "Harvey",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "HAZELCREST PARK DISTRICT",
+      "code": "016/320/12",
+      "label": "Hazel Crest",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "HICKORY HILLS PARK DISTRICT",
+      "code": "016/330/12",
+      "label": "Hickory Hills",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "HODGKINS PARK DISTRICT",
+      "code": "016/335/12",
+      "label": "Hodgkins",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "HOFFMAN ESTATES PARK DISTRICT",
+      "code": "016/340/12",
+      "label": "Hoffman Estates",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "HOMEWOOD FLOSSMOOR PARK DISTRICT",
+      "code": "016/350/12",
+      "label": "Homewood-Flossmoor",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "INVERNESS PARK DISTRICT",
+      "code": "016/360/12",
+      "label": "Inverness",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "JUSTICE PARK DISTRICT",
+      "code": "016/375/12",
+      "label": "Justice",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "KENILWORTH PARK DISTRICT",
+      "code": "016/380/12",
+      "label": "Kenilworth",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "LA GRANGE PARK DISTRICT",
+      "code": "016/390/12",
+      "label": "La Grange",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "override"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "LAN OAK PARK DISTRICT",
+      "code": "016/400/12",
+      "label": "Lan Oak",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "LEMONT PARK DISTRICT",
+      "code": "016/405/12",
+      "label": "Lemont",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "LIGHTHOUSE PARK DISTRICT OF EVANSTON",
+      "code": "016/220/12",
+      "label": "Evanston Lighthouse",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "override"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "MARKHAM PARK DISTRICT",
+      "code": "016/410/12",
+      "label": "Markham",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "MAYWOOD PARK DISTRICT",
+      "code": "016/810/12",
+      "label": "Maywood",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "MC COOK PARK DISTRICT",
+      "code": "016/430/12",
+      "label": "Mc Cook",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "MEMORIAL PARK DISTRICT",
+      "code": "016/440/12",
+      "label": "Memorial",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "county tie-break"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "MIDLOTHIAN PARK DISTRICT",
+      "code": "016/450/12",
+      "label": "Midlothian",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "MOKENA COMMUNITY PARK DISTRICT",
+      "code": "099/060/12",
+      "label": "Mokena",
+      "type": "Park District",
+      "warehouseCounty": "Will",
+      "rule": "card qualifier dropped"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "MORTON GROVE PARK DISTRICT",
+      "code": "016/460/12",
+      "label": "Morton Grove",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "MT PROSPECT PARK DISTRICT",
+      "code": "016/470/12",
+      "label": "Mt. Prospect",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "NILES PARK DISTRICT",
+      "code": "016/480/12",
+      "label": "Niles",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "NORRIDGE PARK DISTRICT",
+      "code": "016/490/12",
+      "label": "Norridge",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "NORTH BERWYN PARK DIST",
+      "code": "016/495/12",
+      "label": "North Berwyn",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "NORTHBROOK PARK DISTRICT",
+      "code": "016/500/12",
+      "label": "Northbrook",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "NORTHFIELD PARK DISTRICT",
+      "code": "016/510/12",
+      "label": "Northfield",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "OAK BROOK PARK DISTRICT",
+      "code": "022/170/12",
+      "label": "Oak Brook",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "OAK FOREST PARK DISTRICT",
+      "code": "016/520/12",
+      "label": "Oak Forest",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "OAK LAWN PARK DISTRICT",
+      "code": "016/530/12",
+      "label": "Oak Lawn",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "OAK PARK PARK DISTRICT",
+      "code": "016/540/12",
+      "label": "Oak Park",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "OLYMPIA FIELDS PARK DISTRICT",
+      "code": "016/550/12",
+      "label": "Olympia Fields",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "PALATINE PARK DISTRICT",
+      "code": "016/560/12",
+      "label": "Palatine",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "PARK DISTRICT OF FRANKLIN PARK",
+      "code": "016/250/12",
+      "label": "Franklin Park",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "leading governance dropped"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "PARK RIDGE PARK DISTRICT",
+      "code": "016/580/12",
+      "label": "Park Ridge",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "PHOENIX PARK DISTRICT",
+      "code": "016/590/12",
+      "label": "Phoenix",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "PLEASANTDALE PARK DISTRICT",
+      "code": "016/600/12",
+      "label": "Pleasant Dale",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "POSEN PARK DISTRICT",
+      "code": "016/610/12",
+      "label": "Posen",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "PROSPECT HEIGHTS PARK DISTRICT",
+      "code": "016/620/12",
+      "label": "Prospect Heights",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "RIDGEVILLE PARK DISTRICT",
+      "code": "016/640/12",
+      "label": "Ridgeville",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "RIVER FOREST PARK DISTRICT",
+      "code": "016/660/12",
+      "label": "River Forest",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "RIVER TRAILS PARK DISTRICT",
+      "code": "016/670/12",
+      "label": "River Trails",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "ROBBINS PARK DISTRICT",
+      "code": "016/855/12",
+      "label": "Robbins",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "ROLLING MEADOWS PARK DISTRICT",
+      "code": "016/680/12",
+      "label": "Rolling Meadows",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "ROSEMONT PARK DISTRICT",
+      "code": "016/690/12",
+      "label": "Rosemont",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "SALT CREEK RURAL PARK DISTRICT",
+      "code": "016/700/12",
+      "label": "Salt Creek Rural",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "SCHAUMBURG PARK DISTRICT",
+      "code": "016/710/12",
+      "label": "Schaumburg",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "SKOKIE PARK DISTRICT",
+      "code": "016/720/12",
+      "label": "Skokie",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "SOUTH BARRINGTON PARK DISTRICT",
+      "code": "016/725/12",
+      "label": "South Barrington",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "STREAMWOOD PARK DISTRICT",
+      "code": "016/740/12",
+      "label": "Streamwood",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "SUMMIT PARK DISTRICT",
+      "code": "016/750/12",
+      "label": "Summit",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "TINLEY PARK PARK DISTRICT",
+      "code": "016/760/12",
+      "label": "Tinley Park",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "VETERANS PARK DISTRICT",
+      "code": "016/770/12",
+      "label": "Veterans",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "WESTCHESTER PARK DISTRICT",
+      "code": "016/780/12",
+      "label": "Westchester",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "WESTERN SPRINGS PARK DISTRICT",
+      "code": "016/800/12",
+      "label": "Western Springs",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "WHEELING PARK DISTRICT",
+      "code": "016/820/12",
+      "label": "Wheeling",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "WILMETTE PARK DISTRICT",
+      "code": "016/830/12",
+      "label": "Wilmette",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "WINNETKA PARK DISTRICT",
+      "code": "016/840/12",
+      "label": "Winnetka",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "WORTH PARK DISTRICT",
+      "code": "016/850/12",
+      "label": "Worth",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "dekalb",
+      "layer": "fire",
+      "card": "Burlington Fire",
+      "code": "045/030/06",
+      "label": "Burlington Community",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Kane",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "dekalb",
+      "layer": "fire",
+      "card": "Cortland Fire",
+      "code": "019/010/06",
+      "label": "Cortland",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dekalb",
+      "rule": "normalised"
+    },
+    {
+      "county": "dekalb",
+      "layer": "fire",
+      "card": "DeKalb Fire",
+      "code": "019/020/06",
+      "label": "Dekalb Community",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dekalb",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "dekalb",
+      "layer": "fire",
+      "card": "Earlville Fire",
+      "code": "050/040/06",
+      "label": "Earlville",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lasalle",
+      "rule": "normalised"
+    },
+    {
+      "county": "dekalb",
+      "layer": "fire",
+      "card": "Genoa / Kingston Fire",
+      "code": "019/030/06",
+      "label": "Genoa-Kingston",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dekalb",
+      "rule": "normalised"
+    },
+    {
+      "county": "dekalb",
+      "layer": "fire",
+      "card": "Hampshire Fire",
+      "code": "045/070/06",
+      "label": "Hampshire",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Kane",
+      "rule": "normalised"
+    },
+    {
+      "county": "dekalb",
+      "layer": "fire",
+      "card": "Hinckley Fire",
+      "code": "019/040/06",
+      "label": "Hinckley",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dekalb",
+      "rule": "normalised"
+    },
+    {
+      "county": "dekalb",
+      "layer": "fire",
+      "card": "Kirkland Fire",
+      "code": "019/050/06",
+      "label": "Kirkland",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dekalb",
+      "rule": "normalised"
+    },
+    {
+      "county": "dekalb",
+      "layer": "fire",
+      "card": "Lee Fire",
+      "code": "052/060/06",
+      "label": "Lee",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lee",
+      "rule": "normalised"
+    },
+    {
+      "county": "dekalb",
+      "layer": "fire",
+      "card": "Leland Fire",
+      "code": "050/050/06",
+      "label": "Leland",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lasalle",
+      "rule": "normalised"
+    },
+    {
+      "county": "dekalb",
+      "layer": "fire",
+      "card": "Malta Fire",
+      "code": "019/060/06",
+      "label": "Malta",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dekalb",
+      "rule": "normalised"
+    },
+    {
+      "county": "dekalb",
+      "layer": "fire",
+      "card": "Maple Park / Countryside Fire",
+      "code": "045/090/06",
+      "label": "Maple Park-Countryside",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Kane",
+      "rule": "normalised"
+    },
+    {
+      "county": "dekalb",
+      "layer": "fire",
+      "card": "Paw Paw Fire",
+      "code": "052/070/06",
+      "label": "Paw Paw",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lee",
+      "rule": "normalised"
+    },
+    {
+      "county": "dekalb",
+      "layer": "fire",
+      "card": "Sandwich Fire",
+      "code": "019/070/06",
+      "label": "Sandwich Community",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dekalb",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "dekalb",
+      "layer": "fire",
+      "card": "Shabbona Fire",
+      "code": "019/080/06",
+      "label": "Shabbona",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dekalb",
+      "rule": "normalised"
+    },
+    {
+      "county": "dekalb",
+      "layer": "fire",
+      "card": "Somonauk Fire",
+      "code": "019/090/06",
+      "label": "Somonauk Community",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dekalb",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "dekalb",
+      "layer": "fire",
+      "card": "Sycamore Fire",
+      "code": "019/100/06",
+      "label": "Sycamore",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dekalb",
+      "rule": "normalised"
+    },
+    {
+      "county": "dekalb",
+      "layer": "fire",
+      "card": "Waterman Fire",
+      "code": "019/110/06",
+      "label": "Waterman Community",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dekalb",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "dekalb",
+      "layer": "park",
+      "card": "DeKalb Park",
+      "code": "019/010/12",
+      "label": "Dekalb",
+      "type": "Park District",
+      "warehouseCounty": "Dekalb",
+      "rule": "normalised"
+    },
+    {
+      "county": "dekalb",
+      "layer": "park",
+      "card": "Franklin Township Park",
+      "code": "019/020/12",
+      "label": "Franklin Township",
+      "type": "Park District",
+      "warehouseCounty": "Dekalb",
+      "rule": "normalised"
+    },
+    {
+      "county": "dekalb",
+      "layer": "park",
+      "card": "Genoa Township Park",
+      "code": "019/030/12",
+      "label": "Genoa Twp",
+      "type": "Park District",
+      "warehouseCounty": "Dekalb",
+      "rule": "normalised"
+    },
+    {
+      "county": "dekalb",
+      "layer": "park",
+      "card": "Kingston Township Park",
+      "code": "019/040/12",
+      "label": "Kingston",
+      "type": "Park District",
+      "warehouseCounty": "Dekalb",
+      "rule": "card qualifier dropped"
+    },
+    {
+      "county": "dekalb",
+      "layer": "park",
+      "card": "Sandwich Park",
+      "code": "019/060/12",
+      "label": "Sandwich",
+      "type": "Park District",
+      "warehouseCounty": "Dekalb",
+      "rule": "normalised"
+    },
+    {
+      "county": "dekalb",
+      "layer": "park",
+      "card": "Sycamore Park",
+      "code": "019/050/12",
+      "label": "Sycamore",
+      "type": "Park District",
+      "warehouseCounty": "Dekalb",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Addison",
+      "code": "022/010/06",
+      "label": "Addison #1",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "unit number dropped"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Bartlett",
+      "code": "022/020/06",
+      "label": "Bartlett",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Bensenville 1",
+      "code": "022/040/06",
+      "label": "Bensenville #1",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Bensenville 2",
+      "code": "022/255/06",
+      "label": "Bensenville #2",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Bloomingdale",
+      "code": "022/070/06",
+      "label": "Bloomingdale #1",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "unit number dropped"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Carol Stream",
+      "code": "022/090/06",
+      "label": "Carol Stream",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Darien-Woodridge",
+      "code": "022/105/06",
+      "label": "Darien-Woodridge",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Fox River",
+      "code": "045/160/06",
+      "label": "Fox River and Countryside",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Kane",
+      "rule": "override"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Glenbard",
+      "code": "022/130/06",
+      "label": "Glenbard",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Glenside",
+      "code": "022/135/06",
+      "label": "Glenside",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Golfview Hills",
+      "code": "022/140/06",
+      "label": "Golfview Hills",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Itasca",
+      "code": "022/150/06",
+      "label": "Itasca #1",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "unit number dropped"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Lemont",
+      "code": "016/100/06",
+      "label": "Lemont",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Lisle-Woodridge",
+      "code": "022/160/06",
+      "label": "Lisle-Woodridge",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Marywood",
+      "code": "045/100/06",
+      "label": "Marywood",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Kane",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Naperville",
+      "code": "022/170/06",
+      "label": "Naperville",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Oakbrook Terrace",
+      "code": "022/080/06",
+      "label": "Oakbrook Terrace",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Pleasantview",
+      "code": "016/280/06",
+      "label": "Pleasantview",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "override"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Roselle",
+      "code": "022/185/06",
+      "label": "Roselle #1",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "unit number dropped"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "South Elgin",
+      "code": "045/170/06",
+      "label": "South Elgin & Countryside",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Kane",
+      "rule": "override"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "South Westmont",
+      "code": "022/190/06",
+      "label": "South Westmont",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Tri-State",
+      "code": "022/200/06",
+      "label": "Tri-State",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Warrenville",
+      "code": "022/210/06",
+      "label": "Warrenville",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "West Chicago",
+      "code": "022/220/06",
+      "label": "West Chicago",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Winfield",
+      "code": "022/230/06",
+      "label": "Winfield",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Wood Dale",
+      "code": "022/240/06",
+      "label": "Wood Dale",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "York Center",
+      "code": "022/250/06",
+      "label": "York Center",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Yorkfield",
+      "code": "016/360/06",
+      "label": "Yorkfield",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Addison",
+      "code": "022/010/12",
+      "label": "Addison",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Bartlett",
+      "code": "016/030/12",
+      "label": "Bartlett",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Bensenville",
+      "code": "022/020/12",
+      "label": "Bensenville",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Bloomingdale",
+      "code": "022/030/12",
+      "label": "Bloomingdale",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Brookeridge",
+      "code": "022/025/12",
+      "label": "Brookeridge",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Burr Ridge",
+      "code": "022/035/12",
+      "label": "Burr Ridge",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Butterfield",
+      "code": "022/040/12",
+      "label": "Butterfield",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Carol Stream",
+      "code": "022/050/12",
+      "label": "Carol Stream",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Chicago",
+      "code": "016/140/12",
+      "label": "Chicago",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Clarendon Hills",
+      "code": "022/060/12",
+      "label": "Clarendon Hills",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Darien",
+      "code": "022/065/12",
+      "label": "Darien",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Downers Grove",
+      "code": "022/070/12",
+      "label": "Downers Grove",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Elmhurst",
+      "code": "022/080/12",
+      "label": "Elmhurst",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Fox Valley",
+      "code": "045/050/12",
+      "label": "Fox Valley",
+      "type": "Park District",
+      "warehouseCounty": "Kane",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Glen Ellyn",
+      "code": "022/090/12",
+      "label": "Glen Ellyn",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Golfview Hills",
+      "code": "022/110/12",
+      "label": "Golfview Hills",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Hanover Park",
+      "code": "016/290/12",
+      "label": "Hanover Park",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Itasca",
+      "code": "022/120/12",
+      "label": "Itasca",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Lemont",
+      "code": "016/405/12",
+      "label": "Lemont",
+      "type": "Park District",
+      "warehouseCounty": "Cook",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Lisle",
+      "code": "022/130/12",
+      "label": "Lisle",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Lombard",
+      "code": "022/140/12",
+      "label": "Lombard",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Medinah",
+      "code": "022/150/12",
+      "label": "Medinah",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Naperville",
+      "code": "022/160/12",
+      "label": "Naperville",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Oak Brook",
+      "code": "022/170/12",
+      "label": "Oak Brook",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Oakbrook Terrace",
+      "code": "022/180/12",
+      "label": "Oakbrook Terrace",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Roselle",
+      "code": "022/190/12",
+      "label": "Roselle",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "St Charles",
+      "code": "045/080/12",
+      "label": "St. Charles",
+      "type": "Park District",
+      "warehouseCounty": "Kane",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Tri-State",
+      "code": "022/200/12",
+      "label": "Tri-State Park",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Wards Creek",
+      "code": "022/205/12",
+      "label": "Wards Creek",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Warrenville",
+      "code": "022/195/12",
+      "label": "Warrenville",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "West Chicago",
+      "code": "022/210/12",
+      "label": "West Chicago",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Westmont",
+      "code": "022/220/12",
+      "label": "Westmont",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Wheaton",
+      "code": "022/230/12",
+      "label": "Wheaton",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Winfield",
+      "code": "022/235/12",
+      "label": "Winfield",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Wood Dale",
+      "code": "022/240/12",
+      "label": "Wood Dale",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "Woodridge",
+      "code": "022/250/12",
+      "label": "Woodridge",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "York Center",
+      "code": "022/260/12",
+      "label": "York Center",
+      "type": "Park District",
+      "warehouseCounty": "Dupage",
+      "rule": "normalised"
+    },
+    {
+      "county": "effingham",
+      "layer": "fire",
+      "card": "Altamont",
+      "code": "025/010/06",
+      "label": "Altamont",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Effingham",
+      "rule": "normalised"
+    },
+    {
+      "county": "effingham",
+      "layer": "fire",
+      "card": "Dieterich",
+      "code": "025/020/06",
+      "label": "Dieterich",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Effingham",
+      "rule": "normalised"
+    },
+    {
+      "county": "effingham",
+      "layer": "fire",
+      "card": "Edgewood",
+      "code": "025/030/06",
+      "label": "Edgewood Bi-County",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Effingham",
+      "rule": "override"
+    },
+    {
+      "county": "effingham",
+      "layer": "fire",
+      "card": "Farina",
+      "code": "026/020/06",
+      "label": "Farina",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Fayette",
+      "rule": "normalised"
+    },
+    {
+      "county": "effingham",
+      "layer": "fire",
+      "card": "North Clay",
+      "code": "013/020/06",
+      "label": "North Clay",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Clay",
+      "rule": "normalised"
+    },
+    {
+      "county": "effingham",
+      "layer": "fire",
+      "card": "Shumway",
+      "code": "025/035/06",
+      "label": "Shumway",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Effingham",
+      "rule": "normalised"
+    },
+    {
+      "county": "effingham",
+      "layer": "fire",
+      "card": "Sigel",
+      "code": "086/030/06",
+      "label": "Sigel",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Shelby",
+      "rule": "normalised"
+    },
+    {
+      "county": "effingham",
+      "layer": "fire",
+      "card": "St Elmo",
+      "code": "026/030/06",
+      "label": "St. Elmo",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Fayette",
+      "rule": "normalised"
+    },
+    {
+      "county": "effingham",
+      "layer": "fire",
+      "card": "St Peter",
+      "code": "026/040/06",
+      "label": "St. Peter",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Fayette",
+      "rule": "normalised"
+    },
+    {
+      "county": "effingham",
+      "layer": "fire",
+      "card": "Stewardson",
+      "code": "086/050/06",
+      "label": "Stewardson",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Shelby",
+      "rule": "normalised"
+    },
+    {
+      "county": "effingham",
+      "layer": "fire",
+      "card": "Teutopolis",
+      "code": "025/040/06",
+      "label": "Teutopolis",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Effingham",
+      "rule": "normalised"
+    },
+    {
+      "county": "effingham",
+      "layer": "fire",
+      "card": "Tri-County",
+      "code": "025/050/06",
+      "label": "Tri-County",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Effingham",
+      "rule": "county tie-break"
+    },
+    {
+      "county": "effingham",
+      "layer": "fire",
+      "card": "Watson",
+      "code": "025/060/06",
+      "label": "Watson",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Effingham",
+      "rule": "normalised"
+    },
+    {
+      "county": "effingham",
+      "layer": "park",
+      "card": "Dieterich",
+      "code": "025/030/12",
+      "label": "Dieterich",
+      "type": "Park District",
+      "warehouseCounty": "Effingham",
+      "rule": "normalised"
+    },
+    {
+      "county": "effingham",
+      "layer": "park",
+      "card": "Effingham",
+      "code": "025/010/12",
+      "label": "Effingham",
+      "type": "Park District",
+      "warehouseCounty": "Effingham",
+      "rule": "normalised"
+    },
+    {
+      "county": "effingham",
+      "layer": "park",
+      "card": "Mason",
+      "code": "025/025/12",
+      "label": "Mason Township",
+      "type": "Park District",
+      "warehouseCounty": "Effingham",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "effingham",
+      "layer": "park",
+      "card": "Teutopolis",
+      "code": "025/020/12",
+      "label": "Teutopolis",
+      "type": "Park District",
+      "warehouseCounty": "Effingham",
+      "rule": "normalised"
+    },
+    {
+      "county": "hamilton",
+      "layer": "fire",
+      "card": "DAHLGREN FIRE DISTRICT",
+      "code": "033/010/06",
+      "label": "Dahlgren",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Hamilton",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Ashkum",
+      "code": "038/010/06",
+      "label": "Ashkum Twp",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Beaver",
+      "code": "038/020/06",
+      "label": "Beaver",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Beaverville",
+      "code": "038/030/06",
+      "label": "Beaverville",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Buckley",
+      "code": "038/040/06",
+      "label": "Buckley",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Cabery",
+      "code": "046/030/06",
+      "label": "Cabery Area",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Kankakee",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Chebanse",
+      "code": "038/050/06",
+      "label": "Chebanse",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Cissna Park",
+      "code": "038/060/06",
+      "label": "Cissna Park",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Concord",
+      "code": "038/070/06",
+      "label": "Concord",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Crescent-Iroquois",
+      "code": "038/080/06",
+      "label": "Crescent-Iroquois",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Cullom",
+      "code": "053/020/06",
+      "label": "Cullom",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Livingston",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Danforth",
+      "code": "038/090/06",
+      "label": "Danforth Twp",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Gilman",
+      "code": "038/110/06",
+      "label": "Gilman",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Iroquois-Ford",
+      "code": "038/100/06",
+      "label": "Iroquois-Ford",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Kempton",
+      "code": "027/010/06",
+      "label": "Kempton",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Ford",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Loda",
+      "code": "038/120/06",
+      "label": "Loda",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Martinton",
+      "code": "038/130/06",
+      "label": "Martinton",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Milford",
+      "code": "038/140/06",
+      "label": "Milford",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Onarga",
+      "code": "038/150/06",
+      "label": "Onarga",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Otto",
+      "code": "046/110/06",
+      "label": "Otto",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Kankakee",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Papineu",
+      "code": "038/160/06",
+      "label": "Papineau",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "override"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Pilot",
+      "code": "046/130/06",
+      "label": "Pilot Twp",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Kankakee",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Rankin",
+      "code": "092/060/06",
+      "label": "Rankin",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Vermilion",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Sheldon",
+      "code": "038/170/06",
+      "label": "Sheldon",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Stockland",
+      "code": "038/180/06",
+      "label": "Stockland",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Wellington-Greer",
+      "code": "038/190/06",
+      "label": "Wellington-Greer",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "normalised"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Woodland",
+      "code": "038/200/06",
+      "label": "Woodland",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Iroquois",
+      "rule": "normalised"
+    },
+    {
+      "county": "kendall",
+      "layer": "fire",
+      "card": "BRISTOL-KENDALL FPD",
+      "code": "047/010/06",
+      "label": "Bristol-Kendall",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Kendall",
+      "rule": "normalised"
+    },
+    {
+      "county": "kendall",
+      "layer": "fire",
+      "card": "LISBON-SEWARD FPD",
+      "code": "047/020/06",
+      "label": "Lisbon-Seward",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Kendall",
+      "rule": "normalised"
+    },
+    {
+      "county": "kendall",
+      "layer": "fire",
+      "card": "LITTLE ROCK-FOX FPD",
+      "code": "047/030/06",
+      "label": "Little Rock-Fox",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Kendall",
+      "rule": "normalised"
+    },
+    {
+      "county": "kendall",
+      "layer": "fire",
+      "card": "MINOOKA FPD",
+      "code": "032/030/06",
+      "label": "Minooka",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Grundy",
+      "rule": "normalised"
+    },
+    {
+      "county": "kendall",
+      "layer": "fire",
+      "card": "MONTGOMERY FPD",
+      "code": "045/120/06",
+      "label": "Montgomery-Countryside",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Kane",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "kendall",
+      "layer": "fire",
+      "card": "NEWARK FPD",
+      "code": "047/040/06",
+      "label": "Newark",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Kendall",
+      "rule": "normalised"
+    },
+    {
+      "county": "kendall",
+      "layer": "fire",
+      "card": "OSWEGO FPD",
+      "code": "047/050/06",
+      "label": "Oswego",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Kendall",
+      "rule": "normalised"
+    },
+    {
+      "county": "kendall",
+      "layer": "fire",
+      "card": "PLAINFIELD FPD",
+      "code": "099/120/06",
+      "label": "Plainfield",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Will",
+      "rule": "normalised"
+    },
+    {
+      "county": "kendall",
+      "layer": "fire",
+      "card": "SANDWICH FPD",
+      "code": "019/070/06",
+      "label": "Sandwich Community",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dekalb",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "kendall",
+      "layer": "fire",
+      "card": "TROY FPD",
+      "code": "099/140/06",
+      "label": "Troy",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Will",
+      "rule": "override"
+    },
+    {
+      "county": "kendall",
+      "layer": "park",
+      "card": "FOX VALLEY PARK",
+      "code": "045/050/12",
+      "label": "Fox Valley",
+      "type": "Park District",
+      "warehouseCounty": "Kane",
+      "rule": "normalised"
+    },
+    {
+      "county": "kendall",
+      "layer": "park",
+      "card": "JOLIET PARK",
+      "code": "099/040/12",
+      "label": "Joliet",
+      "type": "Park District",
+      "warehouseCounty": "Will",
+      "rule": "normalised"
+    },
+    {
+      "county": "kendall",
+      "layer": "park",
+      "card": "OSWEGOLAND PARK DIST",
+      "code": "047/010/12",
+      "label": "Oswegoland",
+      "type": "Park District",
+      "warehouseCounty": "Kendall",
+      "rule": "normalised"
+    },
+    {
+      "county": "kendall",
+      "layer": "park",
+      "card": "PLAINFIELD PARK DIST",
+      "code": "099/085/12",
+      "label": "Plainfield",
+      "type": "Park District",
+      "warehouseCounty": "Will",
+      "rule": "normalised"
+    },
+    {
+      "county": "kendall",
+      "layer": "park",
+      "card": "SANDWICH PARK DIST",
+      "code": "019/060/12",
+      "label": "Sandwich",
+      "type": "Park District",
+      "warehouseCounty": "Dekalb",
+      "rule": "normalised"
+    },
+    {
+      "county": "lee",
+      "layer": "fire",
+      "card": "AMBOY FIRE",
+      "code": "052/010/06",
+      "label": "Amboy",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lee",
+      "rule": "normalised"
+    },
+    {
+      "county": "lee",
+      "layer": "fire",
+      "card": "ASHTON FIRE",
+      "code": "052/020/06",
+      "label": "Ashton",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lee",
+      "rule": "normalised"
+    },
+    {
+      "county": "lee",
+      "layer": "fire",
+      "card": "BUREAU CO/OHIO FIRE",
+      "code": "006/110/06",
+      "label": "Ohio",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Bureau",
+      "rule": "override"
+    },
+    {
+      "county": "lee",
+      "layer": "fire",
+      "card": "BUREAU CO/WALNUT FIRE",
+      "code": "006/165/06",
+      "label": "Walnut",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Bureau",
+      "rule": "override"
+    },
+    {
+      "county": "lee",
+      "layer": "fire",
+      "card": "COMPTON FIRE",
+      "code": "052/030/06",
+      "label": "Compton",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lee",
+      "rule": "normalised"
+    },
+    {
+      "county": "lee",
+      "layer": "fire",
+      "card": "DIXON RURAL FIRE",
+      "code": "052/040/06",
+      "label": "Dixon Community",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lee",
+      "rule": "override"
+    },
+    {
+      "county": "lee",
+      "layer": "fire",
+      "card": "EARLVILLE FIRE",
+      "code": "050/040/06",
+      "label": "Earlville",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lasalle",
+      "rule": "normalised"
+    },
+    {
+      "county": "lee",
+      "layer": "fire",
+      "card": "FRANKLIN GROVE FIRE",
+      "code": "052/050/06",
+      "label": "Franklin Grove",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lee",
+      "rule": "normalised"
+    },
+    {
+      "county": "lee",
+      "layer": "fire",
+      "card": "PAW PAW FIRE",
+      "code": "052/070/06",
+      "label": "Paw Paw",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lee",
+      "rule": "normalised"
+    },
+    {
+      "county": "lee",
+      "layer": "fire",
+      "card": "POLO FIRE",
+      "code": "071/080/06",
+      "label": "Polo",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Ogle",
+      "rule": "normalised"
+    },
+    {
+      "county": "lee",
+      "layer": "fire",
+      "card": "ROCK FALLS FIRE",
+      "code": "098/050/06",
+      "label": "Rock Falls Rural",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Whiteside",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "lee",
+      "layer": "fire",
+      "card": "STERLING FIRE",
+      "code": "098/060/06",
+      "label": "Sterling",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Whiteside",
+      "rule": "normalised"
+    },
+    {
+      "county": "lee",
+      "layer": "fire",
+      "card": "SUBLETTE FIRE",
+      "code": "052/080/06",
+      "label": "Sublette",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lee",
+      "rule": "normalised"
+    },
+    {
+      "county": "lee",
+      "layer": "fire",
+      "card": "WEST BROOKLYN FIRE",
+      "code": "052/090/06",
+      "label": "West Brooklyn",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lee",
+      "rule": "normalised"
+    },
+    {
+      "county": "macon",
+      "layer": "fire",
+      "card": "Bethany",
+      "code": "070/020/06",
+      "label": "Bethany",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Moultrie",
+      "rule": "normalised"
+    },
+    {
+      "county": "macon",
+      "layer": "fire",
+      "card": "BlueMound",
+      "code": "055/020/06",
+      "label": "Blue Mound",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Macon",
+      "rule": "normalised"
+    },
+    {
+      "county": "macon",
+      "layer": "fire",
+      "card": "CerroGordo",
+      "code": "074/020/06",
+      "label": "Cerro Gordo",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Piatt",
+      "rule": "normalised"
+    },
+    {
+      "county": "macon",
+      "layer": "fire",
+      "card": "Ciso",
+      "code": "074/030/06",
+      "label": "Cisco",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Piatt",
+      "rule": "override"
+    },
+    {
+      "county": "macon",
+      "layer": "fire",
+      "card": "Dora",
+      "code": "070/030/06",
+      "label": "Dora Twp",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Moultrie",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "macon",
+      "layer": "fire",
+      "card": "Harristown",
+      "code": "055/030/06",
+      "label": "Harristown",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Macon",
+      "rule": "normalised"
+    },
+    {
+      "county": "macon",
+      "layer": "fire",
+      "card": "HickoryPoint",
+      "code": "055/040/06",
+      "label": "Hickory Point",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Macon",
+      "rule": "normalised"
+    },
+    {
+      "county": "macon",
+      "layer": "fire",
+      "card": "Kenny",
+      "code": "020/015/06",
+      "label": "Kenney",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Dewitt",
+      "rule": "override"
+    },
+    {
+      "county": "macon",
+      "layer": "fire",
+      "card": "Latham",
+      "code": "054/050/06",
+      "label": "Latham",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Logan",
+      "rule": "normalised"
+    },
+    {
+      "county": "macon",
+      "layer": "fire",
+      "card": "LongCreek",
+      "code": "055/050/06",
+      "label": "Long Creek",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Macon",
+      "rule": "normalised"
+    },
+    {
+      "county": "macon",
+      "layer": "fire",
+      "card": "Maroa",
+      "code": "055/060/06",
+      "label": "Maroa Countryside",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Macon",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "macon",
+      "layer": "fire",
+      "card": "MtPulaski",
+      "code": "054/080/06",
+      "label": "Mt. Pulaski",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Logan",
+      "rule": "normalised"
+    },
+    {
+      "county": "macon",
+      "layer": "fire",
+      "card": "MtZion",
+      "code": "055/070/06",
+      "label": "Mt. Zion",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Macon",
+      "rule": "normalised"
+    },
+    {
+      "county": "macon",
+      "layer": "fire",
+      "card": "Niantic",
+      "code": "055/080/06",
+      "label": "Niantic",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Macon",
+      "rule": "normalised"
+    },
+    {
+      "county": "macon",
+      "layer": "fire",
+      "card": "SouthMacon",
+      "code": "055/090/06",
+      "label": "South Macon",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Macon",
+      "rule": "normalised"
+    },
+    {
+      "county": "macon",
+      "layer": "fire",
+      "card": "SouthWheatland",
+      "code": "055/100/06",
+      "label": "South Wheatland",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Macon",
+      "rule": "normalised"
+    },
+    {
+      "county": "macon",
+      "layer": "fire",
+      "card": "Warrensburg",
+      "code": "055/110/06",
+      "label": "Warrensburg",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Macon",
+      "rule": "normalised"
+    },
+    {
+      "county": "macon",
+      "layer": "park",
+      "card": "BlueMound",
+      "code": "055/025/12",
+      "label": "Blue Mound",
+      "type": "Park District",
+      "warehouseCounty": "Macon",
+      "rule": "normalised"
+    },
+    {
+      "county": "macon",
+      "layer": "park",
+      "card": "Decatur",
+      "code": "055/010/12",
+      "label": "Decatur",
+      "type": "Park District",
+      "warehouseCounty": "Macon",
+      "rule": "normalised"
+    },
+    {
+      "county": "macon",
+      "layer": "park",
+      "card": "FriendsCreek",
+      "code": "055/040/12",
+      "label": "Friends Creek",
+      "type": "Park District",
+      "warehouseCounty": "Macon",
+      "rule": "normalised"
+    },
+    {
+      "county": "macon",
+      "layer": "park",
+      "card": "Illini",
+      "code": "055/020/12",
+      "label": "Illini",
+      "type": "Park District",
+      "warehouseCounty": "Macon",
+      "rule": "normalised"
+    },
+    {
+      "county": "macon",
+      "layer": "park",
+      "card": "Niantic",
+      "code": "055/030/12",
+      "label": "Niantic",
+      "type": "Park District",
+      "warehouseCounty": "Macon",
+      "rule": "normalised"
+    },
+    {
+      "county": "macon",
+      "layer": "park",
+      "card": "Whitmore",
+      "code": "055/035/12",
+      "label": "Whitmore",
+      "type": "Park District",
+      "warehouseCounty": "Macon",
+      "rule": "normalised"
+    },
+    {
+      "county": "madison",
+      "layer": "park",
+      "card": "Collinsville Area Recreation District",
+      "code": "057/005/12",
+      "label": "Collinsville",
+      "type": "Park District",
+      "warehouseCounty": "Madison",
+      "rule": "card qualifier dropped"
+    },
+    {
+      "county": "madison",
+      "layer": "park",
+      "card": "Granite City Park District",
+      "code": "057/010/12",
+      "label": "Granite City",
+      "type": "Park District",
+      "warehouseCounty": "Madison",
+      "rule": "normalised"
+    },
+    {
+      "county": "madison",
+      "layer": "park",
+      "card": "Roxana Park Dist.",
+      "code": "057/020/12",
+      "label": "Roxana Community",
+      "type": "Park District",
+      "warehouseCounty": "Madison",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "madison",
+      "layer": "park",
+      "card": "St. Jacob Park District",
+      "code": "057/025/12",
+      "label": "St. Jacob",
+      "type": "Park District",
+      "warehouseCounty": "Madison",
+      "rule": "normalised"
+    },
+    {
+      "county": "madison",
+      "layer": "park",
+      "card": "Tri-Township Park District",
+      "code": "057/030/12",
+      "label": "Tri-Township",
+      "type": "Park District",
+      "warehouseCounty": "Madison",
+      "rule": "normalised"
+    },
+    {
+      "county": "madison",
+      "layer": "park",
+      "card": "Venice Park District",
+      "code": "057/040/12",
+      "label": "Venice",
+      "type": "Park District",
+      "warehouseCounty": "Madison",
+      "rule": "normalised"
+    },
+    {
+      "county": "mchenry",
+      "layer": "fire",
+      "card": "ALG LITH FIRE DIST",
+      "code": "063/010/06",
+      "label": "Algonquin-Lake In The Hills",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Mchenry",
+      "rule": "override"
+    },
+    {
+      "county": "mchenry",
+      "layer": "fire",
+      "card": "BARRINGTON CTRY FIRE",
+      "code": "016/010/06",
+      "label": "Barrington Countryside",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Cook",
+      "rule": "override"
+    },
+    {
+      "county": "mchenry",
+      "layer": "fire",
+      "card": "CARY FIRE DIST",
+      "code": "063/030/06",
+      "label": "Cary",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Mchenry",
+      "rule": "normalised"
+    },
+    {
+      "county": "mchenry",
+      "layer": "fire",
+      "card": "CRYSTAL LAKE RURAL FIRE",
+      "code": "063/035/06",
+      "label": "Crystal Lake",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Mchenry",
+      "rule": "card qualifier dropped"
+    },
+    {
+      "county": "mchenry",
+      "layer": "fire",
+      "card": "FOX LAKE FIRE DIST",
+      "code": "049/050/06",
+      "label": "Fox Lake",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "mchenry",
+      "layer": "fire",
+      "card": "FOX RIVER GRV FIRE",
+      "code": "063/040/06",
+      "label": "Fox River Grove",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Mchenry",
+      "rule": "normalised"
+    },
+    {
+      "county": "mchenry",
+      "layer": "fire",
+      "card": "HARVARD FIRE DIST",
+      "code": "063/050/06",
+      "label": "Harvard",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Mchenry",
+      "rule": "normalised"
+    },
+    {
+      "county": "mchenry",
+      "layer": "fire",
+      "card": "HEB ALD GRW FIRE",
+      "code": "063/060/06",
+      "label": "Hebron-Alden-Greenwood",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Mchenry",
+      "rule": "override"
+    },
+    {
+      "county": "mchenry",
+      "layer": "fire",
+      "card": "HUNTLEY FIRE DIST",
+      "code": "063/070/06",
+      "label": "Huntley",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Mchenry",
+      "rule": "normalised"
+    },
+    {
+      "county": "mchenry",
+      "layer": "fire",
+      "card": "MARENGO FIRE DIST",
+      "code": "063/080/06",
+      "label": "Marengo",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Mchenry",
+      "rule": "normalised"
+    },
+    {
+      "county": "mchenry",
+      "layer": "fire",
+      "card": "MCHENRY FIRE DIST",
+      "code": "063/090/06",
+      "label": "Mc Henry",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Mchenry",
+      "rule": "normalised"
+    },
+    {
+      "county": "mchenry",
+      "layer": "fire",
+      "card": "NUNDA RURAL FIRE",
+      "code": "063/100/06",
+      "label": "Nunda Rural",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Mchenry",
+      "rule": "normalised"
+    },
+    {
+      "county": "mchenry",
+      "layer": "fire",
+      "card": "RICHMOND FIRE DIST",
+      "code": "063/110/06",
+      "label": "Richmond",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Mchenry",
+      "rule": "normalised"
+    },
+    {
+      "county": "mchenry",
+      "layer": "fire",
+      "card": "SPRING GROVE FIRE",
+      "code": "063/020/06",
+      "label": "Spring Grove",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Mchenry",
+      "rule": "normalised"
+    },
+    {
+      "county": "mchenry",
+      "layer": "fire",
+      "card": "UNION FIRE DIST",
+      "code": "063/120/06",
+      "label": "Union",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Mchenry",
+      "rule": "normalised"
+    },
+    {
+      "county": "mchenry",
+      "layer": "fire",
+      "card": "WAUCONDA FIRE DIST",
+      "code": "049/150/06",
+      "label": "Wauconda",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Lake",
+      "rule": "normalised"
+    },
+    {
+      "county": "mchenry",
+      "layer": "fire",
+      "card": "WONDER LAKE FIRE",
+      "code": "063/130/06",
+      "label": "Wonder Lake",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Mchenry",
+      "rule": "normalised"
+    },
+    {
+      "county": "mchenry",
+      "layer": "fire",
+      "card": "WOODSTOCK FIRE RESCUE",
+      "code": "063/140/06",
+      "label": "Woodstock Fire/Rescue",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Mchenry",
+      "rule": "normalised"
+    },
+    {
+      "county": "monroe",
+      "layer": "fire",
+      "card": "Columbia Volunteer Fire Department",
+      "code": "067/010/06",
+      "label": "Columbia",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Monroe",
+      "rule": "normalised"
+    },
+    {
+      "county": "monroe",
+      "layer": "fire",
+      "card": "Hecker Volunteer Fire Department",
+      "code": "067/020/06",
+      "label": "Hecker",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Monroe",
+      "rule": "normalised"
+    },
+    {
+      "county": "monroe",
+      "layer": "fire",
+      "card": "Maeystown Volunteer Fire Department",
+      "code": "067/030/06",
+      "label": "Maeystown",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Monroe",
+      "rule": "normalised"
+    },
+    {
+      "county": "monroe",
+      "layer": "fire",
+      "card": "New Athens Volunteer Fire Department",
+      "code": "088/170/06",
+      "label": "New Athens",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "monroe",
+      "layer": "fire",
+      "card": "Valmeyer Volunteer Fire Department",
+      "code": "067/040/06",
+      "label": "Valmeyer",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Monroe",
+      "rule": "normalised"
+    },
+    {
+      "county": "monroe",
+      "layer": "fire",
+      "card": "Waterloo Community Fire Protection District",
+      "code": "067/050/06",
+      "label": "Waterloo",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Monroe",
+      "rule": "card qualifier dropped"
+    },
+    {
+      "county": "rock-island",
+      "layer": "fire",
+      "card": "ANDALUSIA FPD",
+      "code": "081/010/06",
+      "label": "Andalusia",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Rock Island",
+      "rule": "normalised"
+    },
+    {
+      "county": "rock-island",
+      "layer": "fire",
+      "card": "BLACKHAWK FPD",
+      "code": "081/030/06",
+      "label": "Blackhawk",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Rock Island",
+      "rule": "county tie-break"
+    },
+    {
+      "county": "rock-island",
+      "layer": "fire",
+      "card": "BOWLESBURG FPD",
+      "code": "081/040/06",
+      "label": "Bowlesburg",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Rock Island",
+      "rule": "normalised"
+    },
+    {
+      "county": "rock-island",
+      "layer": "fire",
+      "card": "BUFFALO PRAIRIE FPD",
+      "code": "081/050/06",
+      "label": "Buffalo Prairie",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Rock Island",
+      "rule": "normalised"
+    },
+    {
+      "county": "rock-island",
+      "layer": "fire",
+      "card": "CAMBELLS ISLAND FPD",
+      "code": "081/060/06",
+      "label": "Campbells Island",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Rock Island",
+      "rule": "override"
+    },
+    {
+      "county": "rock-island",
+      "layer": "fire",
+      "card": "CARBON CLIFF/BARSTOW FPD",
+      "code": "081/020/06",
+      "label": "Carbon Cliff - Barstow",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Rock Island",
+      "rule": "normalised"
+    },
+    {
+      "county": "rock-island",
+      "layer": "fire",
+      "card": "COAL VALLEY FPD",
+      "code": "081/070/06",
+      "label": "Coal Valley",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Rock Island",
+      "rule": "normalised"
+    },
+    {
+      "county": "rock-island",
+      "layer": "fire",
+      "card": "CORDOVA FPD",
+      "code": "081/080/06",
+      "label": "Cordova",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Rock Island",
+      "rule": "normalised"
+    },
+    {
+      "county": "rock-island",
+      "layer": "fire",
+      "card": "COYNE CTR FPD/EMS",
+      "code": "081/090/06",
+      "label": "Coyne Center and E.M.S.",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Rock Island",
+      "rule": "normalised"
+    },
+    {
+      "county": "rock-island",
+      "layer": "fire",
+      "card": "EAST MOLINE RURAL FPD",
+      "code": "081/100/06",
+      "label": "East Moline Rural",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Rock Island",
+      "rule": "normalised"
+    },
+    {
+      "county": "rock-island",
+      "layer": "fire",
+      "card": "FOUR-WAY FPD",
+      "code": "081/110/06",
+      "label": "Four-Way",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Rock Island",
+      "rule": "normalised"
+    },
+    {
+      "county": "rock-island",
+      "layer": "fire",
+      "card": "HILLSDALE FPD",
+      "code": "081/120/06",
+      "label": "Hillsdale",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Rock Island",
+      "rule": "normalised"
+    },
+    {
+      "county": "rock-island",
+      "layer": "fire",
+      "card": "ORION FPD",
+      "code": "037/080/06",
+      "label": "Orion",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Henry",
+      "rule": "normalised"
+    },
+    {
+      "county": "rock-island",
+      "layer": "fire",
+      "card": "RAPIDS CITY FPD",
+      "code": "081/130/06",
+      "label": "Rapids City",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Rock Island",
+      "rule": "normalised"
+    },
+    {
+      "county": "rock-island",
+      "layer": "fire",
+      "card": "REYNOLDS FPD",
+      "code": "081/140/06",
+      "label": "Reynolds",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Rock Island",
+      "rule": "normalised"
+    },
+    {
+      "county": "rock-island",
+      "layer": "fire",
+      "card": "SHERRARD FPD",
+      "code": "066/070/06",
+      "label": "Sherrard",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Mercer",
+      "rule": "normalised"
+    },
+    {
+      "county": "rock-island",
+      "layer": "fire",
+      "card": "SOUTH MOLINE FPD",
+      "code": "081/150/06",
+      "label": "South Moline",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Rock Island",
+      "rule": "normalised"
+    },
+    {
+      "county": "rock-island",
+      "layer": "park",
+      "card": "CORDOVA PARK",
+      "code": "081/005/12",
+      "label": "Cordova Township",
+      "type": "Park District",
+      "warehouseCounty": "Rock Island",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "ATHENS FPD",
+      "code": "065/010/06",
+      "label": "Athens-Fancy Prairie",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Menard",
+      "rule": "override"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "AUBURN FPD",
+      "code": "083/010/06",
+      "label": "Auburn",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "BUFFALO FPD",
+      "code": "083/020/06",
+      "label": "Buffalo",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "CHATHAM FPD",
+      "code": "083/040/06",
+      "label": "Chatham",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "CURRAN FPD",
+      "code": "083/030/06",
+      "label": "Curran",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "DAWSON FPD",
+      "code": "083/245/06",
+      "label": "Dawson",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "DIVERNON FPD",
+      "code": "083/050/06",
+      "label": "Divernon",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "EAST SIDE FPD",
+      "code": "083/060/06",
+      "label": "East Side",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "county tie-break"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "ELKHART FPD",
+      "code": "054/020/06",
+      "label": "Elkhart",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Logan",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "ILLIOPOLIS FPD",
+      "code": "083/070/06",
+      "label": "Illiopolis",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "ISLAND GROVE FPD",
+      "code": "083/080/06",
+      "label": "Island Grove",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "LAKE SPFLD FPD",
+      "code": "083/090/06",
+      "label": "Lake Springfield",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "override"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "LOAMI  FPD",
+      "code": "083/100/06",
+      "label": "Loami",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "MECHANICSBURG FPD",
+      "code": "083/110/06",
+      "label": "Mechanicsburg",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "NEW BERLIN FPD",
+      "code": "083/120/06",
+      "label": "New Berlin",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "NORTH SIDE FPD",
+      "code": "083/130/06",
+      "label": "North Side",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "PAWNEE FPD",
+      "code": "083/140/06",
+      "label": "Pawnee",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "PLEASANT PLAINS FPD",
+      "code": "083/150/06",
+      "label": "Pleasant Plains",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "RIVERTON FPD",
+      "code": "083/155/06",
+      "label": "Riverton Area",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "ROCHESTER FPD",
+      "code": "083/160/06",
+      "label": "Rochester",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "SHERMAN FPD",
+      "code": "083/170/06",
+      "label": "Sherman",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "SOUTH LAWN FPD",
+      "code": "083/180/06",
+      "label": "Southlawn",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "SOUTH OAK KNOLLS FPD",
+      "code": "083/190/06",
+      "label": "South Oak Knolls",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "SOUTH SIDE FPD",
+      "code": "083/200/06",
+      "label": "Southside",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "VIRDEN FPD",
+      "code": "056/030/06",
+      "label": "Virden",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Macoupin",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "WESTERN FPD",
+      "code": "083/215/06",
+      "label": "Western",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "WILLIAMSVILLE FPD",
+      "code": "083/220/06",
+      "label": "Williamsville",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "normalised"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "WOODSIDE FPD",
+      "code": "083/240/06",
+      "label": "Woodside #1",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Sangamon",
+      "rule": "unit number dropped"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Brooklyn Fire Dept.",
+      "code": "088/005/06",
+      "label": "Brooklyn",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Cahokia Fire Dept.",
+      "code": "088/010/06",
+      "label": "Cahokia",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Camp Jackson Fire Dept.",
+      "code": "088/020/06",
+      "label": "Camp Jackson",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Church Road Fire Dept.",
+      "code": "088/030/06",
+      "label": "Church Road",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Collinsville Fire Dept.",
+      "code": "057/020/06",
+      "label": "Collinsville",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Madison",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Columbia Fire Dept.",
+      "code": "067/010/06",
+      "label": "Columbia",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Monroe",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Dupo Fire Dept.",
+      "code": "088/040/06",
+      "label": "Dupo",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "East Side Fire Dept.",
+      "code": "088/050/06",
+      "label": "East Side",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "county tie-break"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Freeburg Fire Dept.",
+      "code": "088/080/06",
+      "label": "Freeburg",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "French Village Fire Dept.",
+      "code": "088/100/06",
+      "label": "French Village",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Golden Garden Fire Dept.",
+      "code": "088/110/06",
+      "label": "Golden Garden",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Hecker Fire Dept.",
+      "code": "067/020/06",
+      "label": "Hecker",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Monroe",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Hollywood Heights Fire Dept.",
+      "code": "088/120/06",
+      "label": "Hollywood Heights",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Marissa Fire Dept.",
+      "code": "088/130/06",
+      "label": "Marissa",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Mascoutah Fire Dept.",
+      "code": "088/140/06",
+      "label": "Mascoutah Rural",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "unit qualifier dropped"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Midway Fire Dept.",
+      "code": "088/150/06",
+      "label": "Midway",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Millstadt Fire Dept.",
+      "code": "088/160/06",
+      "label": "Millstadt",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "New Athens Fire Dept.",
+      "code": "088/170/06",
+      "label": "New Athens",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "New Baden Fire Dept.",
+      "code": "088/235/06",
+      "label": "New Baden",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Northwest Fire Dept.",
+      "code": "101/070/06",
+      "label": "Northwest",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Winnebago",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Prairie DuPont Fire Dept.",
+      "code": "088/190/06",
+      "label": "Prairie Du Pont",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Signal Hill Fire Dept.",
+      "code": "088/200/06",
+      "label": "Signal Hill",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Smithton Fire Dept.",
+      "code": "088/205/06",
+      "label": "Smithton",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "St Libory Fire Dept.",
+      "code": "088/230/06",
+      "label": "St. Libory",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Sugar Creek Fire Dept.",
+      "code": "014/015/06",
+      "label": "Sugar Creek",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Clinton",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Tilden Fire Dept.",
+      "code": "079/020/06",
+      "label": "Tilden",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Randolph",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Villa Hills Fire Dept.",
+      "code": "088/220/06",
+      "label": "Villa Hills",
+      "type": "Fire Protection District",
+      "warehouseCounty": "St. Clair",
+      "rule": "normalised"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Waterloo Fire Dept.",
+      "code": "067/050/06",
+      "label": "Waterloo",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Monroe",
+      "rule": "normalised"
+    },
+    {
+      "county": "stark",
+      "layer": "fire",
+      "card": "Bradford Fire Department",
+      "code": "087/010/06",
+      "label": "Bradford",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Stark",
+      "rule": "normalised"
+    },
+    {
+      "county": "stark",
+      "layer": "fire",
+      "card": "Kewanee Rural Fire Department",
+      "code": "037/070/06",
+      "label": "Kewanee",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Henry",
+      "rule": "card qualifier dropped"
+    },
+    {
+      "county": "stark",
+      "layer": "fire",
+      "card": "LaFayette Fire Department",
+      "code": "087/020/06",
+      "label": "Lafayette",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Stark",
+      "rule": "normalised"
+    },
+    {
+      "county": "stark",
+      "layer": "fire",
+      "card": "Neponset Fire Department",
+      "code": "006/100/06",
+      "label": "Neponset",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Bureau",
+      "rule": "normalised"
+    },
+    {
+      "county": "stark",
+      "layer": "fire",
+      "card": "Toulon Fire Department",
+      "code": "087/030/06",
+      "label": "Toulon",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Stark",
+      "rule": "normalised"
+    },
+    {
+      "county": "stark",
+      "layer": "fire",
+      "card": "Wyoming/Speer Fire Department",
+      "code": "087/040/06",
+      "label": "Wyoming",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Stark",
+      "rule": "override"
+    },
+    {
+      "county": "stark",
+      "layer": "park",
+      "card": "Bradford Park District",
+      "code": "087/020/12",
+      "label": "Bradford",
+      "type": "Park District",
+      "warehouseCounty": "Stark",
+      "rule": "normalised"
+    },
+    {
+      "county": "stark",
+      "layer": "park",
+      "card": "LaFayette Park District",
+      "code": "087/010/12",
+      "label": "Lafayette",
+      "type": "Park District",
+      "warehouseCounty": "Stark",
+      "rule": "normalised"
+    },
+    {
+      "county": "stephenson",
+      "layer": "fire",
+      "card": "Cedarville Fire",
+      "code": "089/010/06",
+      "label": "Cedarville",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Stephenson",
+      "rule": "normalised"
+    },
+    {
+      "county": "stephenson",
+      "layer": "fire",
+      "card": "Dakota Fire-Ambulance",
+      "code": "089/020/06",
+      "label": "Dakota",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Stephenson",
+      "rule": "normalised"
+    },
+    {
+      "county": "stephenson",
+      "layer": "fire",
+      "card": "Davis Fire-Ambulance",
+      "code": "089/030/06",
+      "label": "Davis",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Stephenson",
+      "rule": "normalised"
+    },
+    {
+      "county": "stephenson",
+      "layer": "fire",
+      "card": "Forreston Fire-Ambulance",
+      "code": "071/020/06",
+      "label": "Forreston",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Ogle",
+      "rule": "normalised"
+    },
+    {
+      "county": "stephenson",
+      "layer": "fire",
+      "card": "Freeport Rural Fire-Ambulance",
+      "code": "089/040/06",
+      "label": "Freeport",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Stephenson",
+      "rule": "card qualifier dropped"
+    },
+    {
+      "county": "stephenson",
+      "layer": "fire",
+      "card": "German Valley Fire-Ambulance",
+      "code": "089/050/06",
+      "label": "German Valley",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Stephenson",
+      "rule": "normalised"
+    },
+    {
+      "county": "stephenson",
+      "layer": "fire",
+      "card": "Lena Fire",
+      "code": "089/060/06",
+      "label": "Lena",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Stephenson",
+      "rule": "normalised"
+    },
+    {
+      "county": "stephenson",
+      "layer": "fire",
+      "card": "Orangeville Fire",
+      "code": "089/070/06",
+      "label": "Orangeville",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Stephenson",
+      "rule": "normalised"
+    },
+    {
+      "county": "stephenson",
+      "layer": "fire",
+      "card": "Pearl City Fire",
+      "code": "089/080/06",
+      "label": "Pearl City",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Stephenson",
+      "rule": "normalised"
+    },
+    {
+      "county": "stephenson",
+      "layer": "fire",
+      "card": "Pecatonica Fire-Ambulance",
+      "code": "101/080/06",
+      "label": "Pecatonica",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Winnebago",
+      "rule": "normalised"
+    },
+    {
+      "county": "stephenson",
+      "layer": "fire",
+      "card": "Rock City Fire-Ambulance",
+      "code": "089/090/06",
+      "label": "Rock City",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Stephenson",
+      "rule": "normalised"
+    },
+    {
+      "county": "stephenson",
+      "layer": "fire",
+      "card": "Shannon Fire-Ambulance",
+      "code": "008/050/06",
+      "label": "Shannon",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Carroll",
+      "rule": "normalised"
+    },
+    {
+      "county": "stephenson",
+      "layer": "fire",
+      "card": "Warren Fire-Ambulance",
+      "code": "043/085/06",
+      "label": "Warren Area",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Jo Daviess",
+      "rule": "override"
+    },
+    {
+      "county": "stephenson",
+      "layer": "fire",
+      "card": "Winslow Fire",
+      "code": "089/100/06",
+      "label": "Winslow",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Stephenson",
+      "rule": "normalised"
+    }
+  ],
+  "notFiled": [
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Quincy 246",
+      "reason": "a response-zone code inside the City of Quincy, which runs its own department and files inside the city's report"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Quincy 254",
+      "reason": "a response-zone code inside the City of Quincy, which runs its own department and files inside the city's report"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Quincy 352",
+      "reason": "a response-zone code inside the City of Quincy, which runs its own department and files inside the city's report"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Quincy 362",
+      "reason": "a response-zone code inside the City of Quincy, which runs its own department and files inside the city's report"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Quincy 426",
+      "reason": "a response-zone code inside the City of Quincy, which runs its own department and files inside the city's report"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Quincy 462",
+      "reason": "a response-zone code inside the City of Quincy, which runs its own department and files inside the city's report"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Quincy 524",
+      "reason": "a response-zone code inside the City of Quincy, which runs its own department and files inside the city's report"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Quincy 532",
+      "reason": "a response-zone code inside the City of Quincy, which runs its own department and files inside the city's report"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Quincy 624",
+      "reason": "a response-zone code inside the City of Quincy, which runs its own department and files inside the city's report"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Quincy 632",
+      "reason": "a response-zone code inside the City of Quincy, which runs its own department and files inside the city's report"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Quincy 642",
+      "reason": "a response-zone code inside the City of Quincy, which runs its own department and files inside the city's report"
+    },
+    {
+      "county": "adams",
+      "layer": "fire",
+      "card": "Quincy Fire",
+      "reason": "the City of Quincy's own department, which files inside that municipality's report and has no district unit"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "NORTH ARLINGTON FIRE PROTECTION DISTRICT",
+      "reason": "no unit of this name is filed anywhere in Illinois"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "PALATINE RURAL FIRE PROTECTION DISTRICT",
+      "reason": "no unit of this name is filed anywhere in Illinois"
+    },
+    {
+      "county": "cook",
+      "layer": "fire",
+      "card": "SOUTH MAINE FIRE PROTECTION DISTRICT",
+      "reason": "no unit of this name is filed anywhere in Illinois"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "CRAWFORD PARK DISTRICT",
+      "reason": "no unit of this name is filed anywhere in Illinois"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "FORD HEIGHTS PARK DISTRICT",
+      "reason": "the Village of Ford Heights; no park district of this name is filed anywhere in Illinois"
+    },
+    {
+      "county": "cook",
+      "layer": "park",
+      "card": "RIVERDALE PARK DISTRICT",
+      "reason": "ambiguous: Riverdale (Cook); Riverdale (Cook)"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Batavia Twp",
+      "reason": "the nearest unit is Batavia-Countryside in Kane County, and the two publishers qualify the name differently enough that nothing witnesses they are one body"
+    },
+    {
+      "county": "dupage",
+      "layer": "fire",
+      "card": "Westmont",
+      "reason": "the county draws one Westmont polygon where the Warehouse files two districts, North Westmont and South Westmont, so nothing here says which of them this card is"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "53 Trails Estates",
+      "reason": "no unit of this name is filed anywhere in Illinois"
+    },
+    {
+      "county": "dupage",
+      "layer": "park",
+      "card": "G E Countryside",
+      "reason": "no unit of this name is filed anywhere in Illinois"
+    },
+    {
+      "county": "effingham",
+      "layer": "fire",
+      "card": "Eff North",
+      "reason": "half of the county's response tiling for Effingham, which runs its own department and files inside the municipality's report"
+    },
+    {
+      "county": "effingham",
+      "layer": "fire",
+      "card": "Eff South",
+      "reason": "half of the county's response tiling for Effingham, which runs its own department and files inside the municipality's report"
+    },
+    {
+      "county": "effingham",
+      "layer": "fire",
+      "card": "Mont North",
+      "reason": "half of the county's response tiling for Montrose, which runs its own department and files inside the municipality's report"
+    },
+    {
+      "county": "effingham",
+      "layer": "fire",
+      "card": "Mont South",
+      "reason": "half of the county's response tiling for Montrose, which runs its own department and files inside the municipality's report"
+    },
+    {
+      "county": "hamilton",
+      "layer": "fire",
+      "card": "MCLEANSBORO CITY FIRE DISTRICT",
+      "reason": "the City of McLeansboro's own department, which files inside that municipality's report and has no district unit"
+    },
+    {
+      "county": "hamilton",
+      "layer": "fire",
+      "card": "WAYNE CITY FIRE DISTRICT",
+      "reason": "the Village of Wayne City's own department; Wayne City is in Wayne County and no fire protection district of that name is filed anywhere in Illinois"
+    },
+    {
+      "county": "iroquois",
+      "layer": "fire",
+      "card": "Watseka",
+      "reason": "the City of Watseka's own department, which files inside that municipality's report and has no district unit"
+    },
+    {
+      "county": "lee",
+      "layer": "fire",
+      "card": "DEKALB CO/LEE FIRE",
+      "reason": "no unit of this name is filed anywhere in Illinois"
+    },
+    {
+      "county": "lee",
+      "layer": "fire",
+      "card": "DIXON CITY FIRE",
+      "reason": "the City of Dixon's own department, which files inside that municipality's report and has no district unit"
+    },
+    {
+      "county": "lee",
+      "layer": "fire",
+      "card": "ROCHELLE/OGLE-LEE FIRE",
+      "reason": "the City of Rochelle's own department; Rochelle is in Ogle County and no fire protection district of that name is filed anywhere in Illinois"
+    },
+    {
+      "county": "mchenry",
+      "layer": "fire",
+      "card": "LAKEWOOD FIRE DISTRICT",
+      "reason": "the Village of Lakewood; no fire protection district of this name is filed anywhere in Illinois"
+    },
+    {
+      "county": "monroe",
+      "layer": "fire",
+      "card": "Prairie du Rocher Community Fire Department",
+      "reason": "the Village of Prairie du Rocher's own department; it is in Randolph County and files no fire protection district"
+    },
+    {
+      "county": "monroe",
+      "layer": "fire",
+      "card": "Red Bud Fire Department",
+      "reason": "the City of Red Bud's own department; Red Bud is in Randolph County and files no fire protection district"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "SPRINGFIELD CORP",
+      "reason": "the City of Springfield's own department, which files inside that municipality's report and has no district unit"
+    },
+    {
+      "county": "sangamon",
+      "layer": "fire",
+      "card": "WAVERLY FPD",
+      "reason": "the City of Waverly's own department; Waverly is in Morgan County and no fire protection district of that name is filed anywhere in Illinois"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Alorton Fire Dept.",
+      "reason": "the Village of Alorton's own department, which files inside that municipality's report and has no district unit"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Belleville Fire Dept.",
+      "reason": "the City of Belleville's own department, which files inside that municipality's report and has no district unit"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Caseyville Fire Dept.",
+      "reason": "the Village of Caseyville's own department, which files inside that municipality's report and has no district unit"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "East St Louis Fire Dept.",
+      "reason": "the City of East St. Louis's own department, which files inside that municipality's report and has no district unit"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Fairmont City Fire Dept.",
+      "reason": "the Village of Fairmont City's own department, which files inside that municipality's report and has no district unit"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Fairview Heights Fire Dept.",
+      "reason": "the City of Fairview Heights's own department, which files inside that municipality's report and has no district unit"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Fayetteville Fire Dept.",
+      "reason": "the Village of Fayetteville's own department, which files inside that municipality's report and has no district unit"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Lebanon Fire Dept.",
+      "reason": "the City of Lebanon's own department, which files inside that municipality's report and has no district unit"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Lenzburg Fire Dept.",
+      "reason": "the Village of Lenzburg's own department, which files inside that municipality's report and has no district unit"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Madison Fire Dept.",
+      "reason": "the City of Madison's own department, which is in Madison County and reaches across the line, which files inside that municipality's report and has no district unit"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "O'Fallon Fire Dept.",
+      "reason": "the City of O'Fallon's own department, which files inside that municipality's report and has no district unit"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Sauget Fire Dept.",
+      "reason": "the Village of Sauget's own department, which files inside that municipality's report and has no district unit"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Scott AFB Fire Dept.",
+      "reason": "the fire department of Scott Air Force Base, a federal installation, which files no report with the state at all"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "State Park Fire Dept.",
+      "reason": "State Park Place is unincorporated, and neither a fire protection district nor a municipality of this name is filed in Illinois"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Swansea Fire Dept.",
+      "reason": "the Village of Swansea's own department, which files inside that municipality's report and has no district unit"
+    },
+    {
+      "county": "st-clair",
+      "layer": "fire",
+      "card": "Washington Park Fire Dept.",
+      "reason": "the Village of Washington Park's own department, which files inside that municipality's report and has no district unit"
+    },
+    {
+      "county": "stephenson",
+      "layer": "fire",
+      "card": "Freeport Fire-Ambulance",
+      "reason": "the City of Freeport's own department, which files inside the city's report; the county's Freeport Rural card carries the fire protection district"
+    }
+  ]
+}
