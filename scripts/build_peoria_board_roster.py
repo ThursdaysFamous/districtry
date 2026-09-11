@@ -12,7 +12,11 @@ The Chairperson and Vice-Chairperson are marked on the member who holds each
 role. Both also hold a district seat (Peoria elects them from among the 18),
 so the role rides that member's district row rather than becoming a separate
 countywide entry — and it is written only where the county's own index page
-states it.
+states it. Because that page is the only source of both roles, this builder
+also floors how many of the 18 it named (MIN_ON_INDEX): the roles going quiet
+because the county stopped marking them is fine, and the roles going quiet
+because the parser stopped reading the page is not, and index coverage is what
+tells the two apart.
 
 index.html's consolidated county-board layer fetches this file lazily on
 first click (same-origin) and joins it to the live county GIS boundary
@@ -39,6 +43,28 @@ MIN_EMAILS = 16
 MIN_PARTIES = 16
 ALLOWED_ROLES = ("Chairperson", "Vice-Chairperson")
 
+# HOW MANY OF THE 18 THE INDEX PAGE MUST NAME, and why this floor exists at all.
+# The index is the THIRD county surface this pipeline reads and the ONLY one
+# that marks the two roles, so a parser that stops reading it loses them without
+# losing a member — which is exactly what happened on 2026-09-11, when three
+# members moved from one heading shape to another and the run shipped a roster
+# with both roles gone. The scraper had already detected it and printed the
+# three names on stderr, where nothing read them.
+#
+# A ROLE FLOOR WOULD BE THE WRONG GUARD HERE, and deliberately is not added: the
+# role block below says the cards carry no role rather than guessing one if the
+# county stops marking them, and that posture is right. What must not happen is
+# the roles going quiet because THIS CODE stopped reading the page. Index
+# coverage is the measurement that tells those two apart.
+#
+# 17 tolerates exactly one miss — a member dropped from the index before the GIS
+# layer catches up, or a name the two surfaces spell further apart than
+# same_person absorbs — and refuses on two, because a markup change takes out a
+# whole group rather than one person. The trade is deliberate: a refusal stalls
+# the weekly refresh visibly and the shipped file keeps its last good contents,
+# where a silent narrowing ships a thinner roster nobody notices.
+MIN_ON_INDEX = 17
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_OUT_DIR = os.path.join(REPO_ROOT, "il", "data", "app")
 
@@ -50,8 +76,30 @@ def main():
     if len(sys.argv) < 2:
         fail("usage: build_peoria_board_roster.py <raw-scraper-output.json> [output_dir]")
     with open(sys.argv[1], encoding="utf-8") as f:
-        records = json.load(f)["records"]
+        payload = json.load(f)
+    records = payload["records"]
     out_dir = sys.argv[2] if len(sys.argv) > 2 else DEFAULT_OUT_DIR
+
+    # The scraper's cross-check against the County Board Members index. An
+    # absent block means the file predates the check rather than that the check
+    # passed, so it refuses rather than skipping quietly.
+    index = payload.get("index")
+    if index is None:
+        fail("the scraper output carries no `index` cross-check block — it is "
+             "from before that check existed. Re-run "
+             "scripts/peoria_county_board_scraper.py and build from its output")
+    if not index.get("read"):
+        # A page that could not be FETCHED is a network outage the roster should
+        # survive; no role ships this run and the floor cannot be applied.
+        print("peoria-board-roster: WARN — the index page was unreadable on the "
+              "scrape, so no role ships and the index floor is not applied")
+    elif index.get("matched", 0) < MIN_ON_INDEX:
+        fail("the County Board Members index named only %d of the %d roster "
+             "members (expected at least %d) — missing: %s. That page is where "
+             "both roles come from, so this is a page or parser change to look "
+             "at before shipping"
+             % (index.get("matched", 0), index.get("rosterCount", 0),
+                MIN_ON_INDEX, ", ".join(index.get("missing") or []) or "not named"))
 
     roster = {}
     for rec in records:
@@ -104,8 +152,11 @@ def main():
         f.write("\n")
     roles = sorted(m["role"] for m in members if m.get("role"))
     print("peoria-board-roster: %d districts, %d members (%d phones, %d e-mails, "
-          "%d parties, roles: %s) -> %s"
+          "%d parties, %s, roles: %s) -> %s"
           % (len(roster), len(members), phones, emails, parties,
+             ("%d of %d named on the county's index"
+              % (index.get("matched", 0), index.get("rosterCount", 0)))
+             if index.get("read") else "the county's index was unreadable",
              ", ".join(roles) or "none", out_path))
 
 

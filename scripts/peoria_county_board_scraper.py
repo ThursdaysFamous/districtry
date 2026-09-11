@@ -15,7 +15,10 @@ So the district assignment and the name come from the county's GIS, the
 contact from the county's own member page, and the pair is cross-checked
 against the County Board Members index page (a THIRD county surface): a name
 the index does not carry is reported, because two county surfaces disagreeing
-is exactly the drift this pipeline exists to catch.
+is exactly the drift this pipeline exists to catch. That cross-check is carried
+in the output as an `index` block and floored by the builder — before
+2026-09-11 it was a line on stderr, which is how a run that lost three of the
+eighteen members from the index shipped anyway.
 
 Peoria elects a Chairperson and a Vice-Chairperson from among the 18 — both
 hold their own district seat as well — and the index page is the only surface
@@ -116,13 +119,42 @@ def fetch_roster_layer(session):
     return rows
 
 
+# THE INDEX'S MEMBER HEADINGS ARE NOT ONE SHAPE, and reading them as one lost
+# both of the board's roles. Measured 2026-09-11 on a 110,624-byte fetch:
+# FIFTEEN of the eighteen members sit under `h3.subhead2` (21 such blocks, six
+# of them empty) and THREE — Dillon, Williams and Coates — under `h2.subhead1`,
+# with BOTH role words inside that h2 group. This function matched the h3 shape
+# alone, so it returned fifteen members and no roles at all, and the week's
+# roster shipped with the Chairperson and Vice-Chairperson gone.
+#
+# The three h2 entries carry WYSIWYG artifacts — inline `style="box-sizing:
+# inherit; …"` on their anchors, and an empty `<a class="subhead1 subhead2">`
+# sibling — which reads as someone editing those three entries in the CMS and
+# the heading level moving as a side effect. THAT CAN MOVE BACK, so both shapes
+# are accepted rather than one swapped for the other.
+#
+# Two details the pattern depends on. The class is matched as a WORD inside the
+# attribute rather than as the whole of it, because the same editing pass
+# produced `class="  subhead1"` with a doubled space on at least one fetch.
+# And the heading LEVEL is captured and back-referenced, so the anchor that
+# carries `class="subhead1 subhead2"` inside an h2 cannot itself be read as a
+# member heading.
+INDEX_HEADING_RE = re.compile(
+    r'(?is)<h([23])\b[^>]*class="[^"]*\bsubhead[12]\b[^"]*"[^>]*>(.*?)</h\1>')
+
+
 def fetch_index_roles(session):
     """Index page -> {name_key: role}, plus the set of names it lists. Roles
-    are only ever read from here; a member the index does not mark gets none."""
+    are only ever read from here; a member the index does not mark gets none.
+
+    A leadership heading puts the name and the role in DIFFERENT anchors either
+    side of a `<br>`, so the whole heading is flattened before matching —
+    strip_tags + clean turn `James C. Dillon,&nbsp;</a><br><a …>Chairperson<br>
+    District 5` into `James C. Dillon, Chairperson District 5`."""
     r = session.get(INDEX_URL, headers=UA, timeout=60)
     r.raise_for_status()
     roles, listed = {}, set()
-    for block in re.findall(r'(?is)<h3[^>]*class="subhead2"[^>]*>(.*?)</h3>', r.text):
+    for _level, block in INDEX_HEADING_RE.findall(r.text):
         text = clean(strip_tags(block))
         m = re.match(r"([A-Za-z][A-Za-z.'\-\s]+?),?\s*(?:Chairperson|Vice\s+Chairperson|District\s+\d+|$)", text)
         if not m:
@@ -152,20 +184,28 @@ def fetch_member_contact(session, url):
 def main():
     session = requests.Session()
     rows = fetch_roster_layer(session)
+    # `index_read` is NOT `bool(listed)`, and the difference is the whole point
+    # of the guard downstream: an index that was fetched and parsed to nothing
+    # is a parser break, while an index that could not be fetched is a network
+    # outage the roster should survive. Only the first is a refusal.
+    index_read = True
     try:
         roles, listed = fetch_index_roles(session)
     except requests.RequestException as exc:
         print("peoria-board-scraper: WARN — index page unreadable (%s); "
               "no roles will be tagged" % exc, file=sys.stderr)
         roles, listed = {}, set()
+        index_read = False
 
     records = []
+    missing = []
     for row in rows:
         key = name_key(row["name"])
         email = phone = None
         if row["url"]:
             email, phone = fetch_member_contact(session, row["url"])
-        if listed and not any(same_person(key, k) for k in listed):
+        if index_read and not any(same_person(key, k) for k in listed):
+            missing.append(row["name"])
             print("peoria-board-scraper: WARN — %s (district %s) is on the GIS "
                   "roster but not the County Board Members index"
                   % (row["name"], row["district"]), file=sys.stderr)
@@ -184,8 +224,19 @@ def main():
               file=sys.stderr)
         sys.exit(1)
 
-    out = json.dumps({"source": INDEX_URL, "records": records},
-                     indent=2, ensure_ascii=False)
+    # The cross-check ships as DATA rather than as a line on stderr. It printed
+    # the three missing names on 2026-09-11 and nothing read them; the builder
+    # floors `matched` so the next narrowing stops the run instead.
+    out = json.dumps({
+        "source": INDEX_URL,
+        "index": {
+            "read": index_read,
+            "rosterCount": len(rows),
+            "matched": (len(rows) - len(missing)) if index_read else 0,
+            "missing": missing,
+        },
+        "records": records,
+    }, indent=2, ensure_ascii=False)
     if len(sys.argv) > 1:
         with open(sys.argv[1], "w", encoding="utf-8") as f:
             f.write(out)
