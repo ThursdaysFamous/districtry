@@ -1,9 +1,9 @@
 // App-shell + app-data cache. Never serve live district/roster API responses
 // stale — a stale roster could name the wrong officeholder, and this app's
 // rule is that officeholder data is never guessed or served stale. Bump
-// CACHE_NAME whenever SHELL_URLS, GEOMETRY_URLS, or ROSTER_URLS change so a
-// removed entry can't live forever; the activate handler deletes every
-// other-named cache.
+// CACHE_NAME whenever SHELL_URLS, GEOMETRY_URLS, or ROSTER_URLS change, or
+// whenever a file under fonts/ changes, so a removed or superseded entry can't
+// live forever; the activate handler deletes every other-named cache.
 //
 // The config section below is this fork's METRO block (docs/ENGINE_SYNC.md):
 // a per-city cache name, the shell assets, and the fork's data/app/*.json
