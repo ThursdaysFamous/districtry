@@ -131,6 +131,13 @@ jobs:
       - name: Regenerate the history page
         run: python3 scripts/build_history_page.py
 
+      # The history page this job just rewrote is IN the sitemap, and the
+      # sitemap's lastmod is that file's own last commit -- so regenerate it in
+      # the same run, or the smoke gate's `build_sitemap.py --check` fails on
+      # this PR for a date nobody typed. Stdlib only.
+      - name: Regenerate the sitemap
+        run: python3 scripts/build_sitemap.py
+
       - name: Validate app + data files
         run: python3 wi/scripts/validate_index.py wi/index.html
 
