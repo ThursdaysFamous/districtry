@@ -29,7 +29,7 @@ DEFAULT_OUT = os.path.join(os.path.dirname(__file__), ".cache", "cec_raw.json")
 # Landing page listing the 32 district councils; the scraper follows each
 # council's "Current Members" link from here. Operator: confirm this resolves.
 INDEX_URL = "https://www.schools.nyc.gov/get-involved/families/education-councils/community-education-councils/cec"
-UA = "Mozilla/5.0 (compatible; NYCDistrictExplorer/1.0; +https://nyc.chidistricts.com)"
+UA = "Mozilla/5.0 (compatible; districtry-nyc/1.0; +https://districtry.com/ny/)"
 
 
 def scrape():

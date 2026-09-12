@@ -279,7 +279,7 @@ def fetch_tiger_county():
         "where": "STATE='17' AND COUNTY='%s'" % COUNTY_FIPS,
         "outFields": "NAME,GEOID", "returnGeometry": "true",
         "outSR": "4326", "f": "geojson"},
-        headers={"User-Agent": "DistrictExplorer-CHI jodaviess builder"},
+        headers={"User-Agent": "districtry jodaviess builder (+https://districtry.com/il/)"},
         timeout=180)
     resp.raise_for_status()
     feats = (resp.json() or {}).get("features") or []

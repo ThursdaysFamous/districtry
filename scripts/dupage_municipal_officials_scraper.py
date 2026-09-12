@@ -410,9 +410,20 @@ def robots_allows(url, report):
     published a policy this client can read, so nothing is fetched from it —
     the posture this project already took for Port Washington. A 404 is
     different and means what it says: no policy, so the default applies.
+
+    SINCE 2026-09-12 the reading is scripts/robots_policy.py's, the fleet's
+    one copy. Two things this function used to get wrong are different: a
+    5xx on robots.txt ALLOWED the crawl (RFC 9309 §2.3.1.4 says disallow, and
+    the Iowa gate always did), and urllib.robotparser kept only the first
+    `User-agent: *` group of a file and the first matching rule rather than
+    the longest. The 403 posture above is unchanged and is THIS scraper's
+    choice, passed as refused_is_refusal=True: the shared module's default is
+    the RFC's (allow), because API hosts like ArcGIS Online answer 403 to
+    /robots.txt while serving everyone, and a municipal website is the case
+    where a 403 there is a WAF refusing the client.
     """
     import urllib.parse
-    import urllib.robotparser
+    from robots_policy import classify
 
     policy_url = urllib.parse.urljoin(url, "/robots.txt")
     try:
@@ -420,17 +431,11 @@ def robots_allows(url, report):
     except Exception as exc:  # noqa: BLE001
         report.append("robots.txt unreadable (%s)" % type(exc).__name__)
         return False
-    if resp.status_code == 403:
-        report.append("robots.txt itself answers 403 — policy unread, nothing fetched")
-        return False
-    if resp.status_code >= 400:
-        return True
-    parser = urllib.robotparser.RobotFileParser()
-    parser.parse(resp.text.splitlines())
-    if not parser.can_fetch(HEADERS["User-Agent"], url):
-        report.append("robots.txt disallows this client")
-        return False
-    return True
+    verdict = classify(resp.status_code, resp.text, final_url=resp.url)
+    allowed, why = verdict.allows(HEADERS["User-Agent"], url, refused_is_refusal=True)
+    if not allowed:
+        report.append(why if verdict.status != "served" else "robots.txt disallows this client (%s)" % why)
+    return allowed
 
 
 def witness_phone(entry):

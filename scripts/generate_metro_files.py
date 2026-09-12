@@ -1043,7 +1043,7 @@ def sync_fleet(ws_path, src):
     Returns True if the worksheet changed."""
     if src.startswith("http://") or src.startswith("https://"):
         import urllib.request
-        req = urllib.request.Request(src, headers={"User-Agent": "district-explorer-fleet-sync"})
+        req = urllib.request.Request(src, headers={"User-Agent": "districtry-fleet-sync"})
         with urllib.request.urlopen(req, timeout=30) as resp:
             manifest = json.loads(resp.read().decode("utf-8"))
     else:

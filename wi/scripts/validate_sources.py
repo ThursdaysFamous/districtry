@@ -1180,7 +1180,7 @@ class Findings(object):
 
 
 VALIDATOR_UA = {
-    "User-Agent": "District Explorer source validator (+https://districtry.com/wi/)",
+    "User-Agent": "districtry source validator (+https://districtry.com/wi/)",
 }
 # A PROVENANCE ROW IS PROBED WITH THE CLIENT THAT ACTUALLY READS IT, or it is
 # not a witness for that reader. This validator names itself honestly by

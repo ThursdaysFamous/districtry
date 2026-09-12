@@ -193,7 +193,7 @@ def api_get(path, token):
     req = urllib.request.Request(API + path, headers={
         "Accept": "application/vnd.github+json",
         "Authorization": "Bearer " + token,
-        "User-Agent": "chidistricts-roster-health",
+        "User-Agent": "districtry-roster-health",
     })
     with urllib.request.urlopen(req, timeout=45) as resp:
         return json.load(resp)

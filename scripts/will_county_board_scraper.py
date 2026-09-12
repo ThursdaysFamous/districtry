@@ -51,7 +51,7 @@ from scraper_common import fetch as fetch_with_retry  # shared machinery — do 
 
 INDEX_URL = "https://www.willcountyboard.com/board-members.html"
 BASE = "https://www.willcountyboard.com/"
-HEADERS = {"User-Agent": "DistrictExplorer-roster-bot/1.0 (+https://chidistricts.com)"}
+HEADERS = {"User-Agent": "districtry-roster-bot/1.0 (+https://districtry.com/il/)"}
 TIMEOUT = 30
 FETCH_ATTEMPTS = 5
 # pages that look like member links but aren't

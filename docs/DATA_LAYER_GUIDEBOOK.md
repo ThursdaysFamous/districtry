@@ -2241,7 +2241,7 @@ detail into `blocker`.
       "summary": "Wyoming elects its council by ward, and this app does not show you which ward you live in.",
       "why": "The city asks automated tools not to read the part of its website where its ward and precinct maps are published, and this project honours that.",
       "wanted": "Wyoming's three ward boundaries as a downloadable file or a map service, from the city outside the closed part of its site, from its county, or from the regional GIS agency it uses.",
-      "blocker": "RE-MEASURED 2026-09-09, AND THIS RECORD'S OWN CORRECTION WAS WRONG. On 2026-09-09 a rewrite of this entry claimed the /Portals/ documents are NOT disallowed to `*`, moved the kind to `no-source`, and was held in review and reverted. The original finding stands and is now founded on a specific rule rather than on the file's shape. THE FILE HAS TWO `User-agent: *` GROUPS, FORTY-SEVEN LINES APART, and reading only the first is what produced the error. The first (L29-31) is the Cloudflare managed block: a Content-Signal line and `Allow: /`. The second (L76 onward) is the site's own DNN ruleset, 31 Disallow rules, whose L77 and L78 are the narrow /Portals/0/PDFFiller/ and /Portals/VDWWD_UserRepository/ paths - while EIGHTEEN LINES BELOW THEM, IN THE SAME GROUP, L95 is `Disallow: /Portals/`. Under RFC 9309 groups naming the same product token are combined, and matching is longest-prefix, so for /Portals/0/Documents/Precincts/... the 9-character `Disallow: /Portals/` beats the 1-character `Allow: /`. The precinct maps are disallowed to `*`, and this project's client is districtry/1.0, which follows `*`. THE RULE THIS SETTLES, BEYOND THIS CITY: a robots.txt is not read until it has been parsed into groups and every group naming you has been merged - check for a second group by default. Where two groups disagree, the restrictive reading is the answer, or an ask. Taking the permissive one is indistinguishable from the outside from routing around an access control. WHAT WAS FETCHED UNDER THE MISREADING, recorded rather than dropped. Two documents at the disallowed prefix: /Portals/0/2022 Precinct Map Landscape - Full.pdf on 2026-09-08, and /Portals/0/Documents/Precincts/2022 Precinct Map_1.pdf on 2026-09-09. They were parsed for drawing objects, the results are NOT RELIED ON ANYWHERE IN THIS RECORD, and the local copies were deleted. A SECOND ERROR is recorded with the first: the withdrawn text stated what all thirty per-precinct sheets contain, generalised from the one sheet actually fetched. SUPERSESSION IS SETTLED WITHOUT THE MAP. Michigan's 2026 precinct fabric - a different publisher, already shipped by this instance - gives Wyoming eighteen precincts, PRECINCT 001-018, with its own WARD column reading 01/02/03 six times each and every Precinct_Long_Name spelling out \"City of Wyoming, Ward N, Precinct M\". The city's map files are dated 2022 in their own filenames, which the linking page publishes at an allowed path, so anything read off them would need re-checking against the current fabric regardless. THE STATE ROUTE IS OPEN AND IS THE OPERATOR'S CALL. That fabric would dissolve to 6/6/6 across three wards without touching the city's site. Every Michigan city so far ships the CITY's own polygons with the state's fabric as the independent CURRENCY CHECK; making the state the source removes that second witness, which is a posture change rather than a build. NO GIS ROUTE EXISTS, and none of this came from the documents above. The city runs no ArcGIS Online organisation. Kent County's carries 43 public feature services, none of them electoral. The city's own site points at Grand Valley Metro Council's public GIS portal, whose organisation (X42k956XlfnIoN3d, 900 public items) carries Wyoming parcels, outfalls, zoning and water service and no ward or precinct layer - its only precinct items are Grandville's. TWO NAME COLLISIONS ARE RECORDED WITH IT. A catalogue search for ward layers in \"Wyoming\" returns the STATE of Wyoming almost exclusively (game-warden districts, WyomingGeoHub), and `title:\"City of Wyoming\"` returns cities in OHIO (39.2,-84.5) and MINNESOTA (45.3,-93.0) and none in Michigan - the Lansing/Kansas trap in a second form. And searching the metro council's acronym returns `gis_gvmc`, which is Greater Visakhapatnam Municipal Corporation in India: its `New_ward_Boundries_2020` layer sits at 83E 17.5N and answers Token Required. Both belong beside Knox County Ohio and Staunton VA on Macoupin's wards. ONE MORE THING IN THE BINDING GROUP, which does not change today's answer because the Disallow already settles it. L30 is `Content-Signal: search=yes,ai-train=no,use=reference`, and the file's own preamble states that restrictions expressed this way are express reservations of rights under Article 4 of EU Directive 2019/790. That is a machine-readable statement of terms sitting in the group that binds this client, and it is flagged for #806, the open PR on this project's robots policy, which is the operator's ruling to make. The ClaudeBot group disallowing the whole site is a separate matter: it names a different agent's crawler, not this one, and is also #806's subject."
+      "blocker": "RE-MEASURED 2026-09-09, AND THIS RECORD'S OWN CORRECTION WAS WRONG. On 2026-09-09 a rewrite of this entry claimed the /Portals/ documents are NOT disallowed to `*`, moved the kind to `no-source`, and was held in review and reverted. The original finding stands and is now founded on a specific rule rather than on the file's shape. THE FILE HAS TWO `User-agent: *` GROUPS, FORTY-SEVEN LINES APART, and reading only the first is what produced the error. The first (L29-31) is the Cloudflare managed block: a Content-Signal line and `Allow: /`. The second (L76 onward) is the site's own DNN ruleset, 31 Disallow rules, whose L77 and L78 are the narrow /Portals/0/PDFFiller/ and /Portals/VDWWD_UserRepository/ paths - while EIGHTEEN LINES BELOW THEM, IN THE SAME GROUP, L95 is `Disallow: /Portals/`. Under RFC 9309 groups naming the same product token are combined, and matching is longest-prefix, so for /Portals/0/Documents/Precincts/... the 9-character `Disallow: /Portals/` beats the 1-character `Allow: /`. The precinct maps are disallowed to `*`, and this project's client is districtry/1.0, which follows `*`. THE RULE THIS SETTLES, BEYOND THIS CITY: a robots.txt is not read until it has been parsed into groups and every group naming you has been merged - check for a second group by default. Where two groups disagree, the restrictive reading is the answer, or an ask. Taking the permissive one is indistinguishable from the outside from routing around an access control. WHAT WAS FETCHED UNDER THE MISREADING, recorded rather than dropped. Two documents at the disallowed prefix: /Portals/0/2022 Precinct Map Landscape - Full.pdf on 2026-09-08, and /Portals/0/Documents/Precincts/2022 Precinct Map_1.pdf on 2026-09-09. They were parsed for drawing objects, the results are NOT RELIED ON ANYWHERE IN THIS RECORD, and the local copies were deleted. A SECOND ERROR is recorded with the first: the withdrawn text stated what all thirty per-precinct sheets contain, generalised from the one sheet actually fetched. SUPERSESSION IS SETTLED WITHOUT THE MAP. Michigan's 2026 precinct fabric - a different publisher, already shipped by this instance - gives Wyoming eighteen precincts, PRECINCT 001-018, with its own WARD column reading 01/02/03 six times each and every Precinct_Long_Name spelling out \"City of Wyoming, Ward N, Precinct M\". The city's map files are dated 2022 in their own filenames, which the linking page publishes at an allowed path, so anything read off them would need re-checking against the current fabric regardless. THE STATE ROUTE IS OPEN AND IS THE OPERATOR'S CALL. That fabric would dissolve to 6/6/6 across three wards without touching the city's site. Every Michigan city so far ships the CITY's own polygons with the state's fabric as the independent CURRENCY CHECK; making the state the source removes that second witness, which is a posture change rather than a build. NO GIS ROUTE EXISTS, and none of this came from the documents above. The city runs no ArcGIS Online organisation. Kent County's carries 43 public feature services, none of them electoral. The city's own site points at Grand Valley Metro Council's public GIS portal, whose organisation (X42k956XlfnIoN3d, 900 public items) carries Wyoming parcels, outfalls, zoning and water service and no ward or precinct layer - its only precinct items are Grandville's. TWO NAME COLLISIONS ARE RECORDED WITH IT. A catalogue search for ward layers in \"Wyoming\" returns the STATE of Wyoming almost exclusively (game-warden districts, WyomingGeoHub), and `title:\"City of Wyoming\"` returns cities in OHIO (39.2,-84.5) and MINNESOTA (45.3,-93.0) and none in Michigan - the Lansing/Kansas trap in a second form. And searching the metro council's acronym returns `gis_gvmc`, which is Greater Visakhapatnam Municipal Corporation in India: its `New_ward_Boundries_2020` layer sits at 83E 17.5N and answers Token Required. Both belong beside Knox County Ohio and Staunton VA on Macoupin's wards. ONE MORE THING IN THE BINDING GROUP, which does not change today's answer because the Disallow already settles it. L30 is `Content-Signal: search=yes,ai-train=no,use=reference`, and the file's own preamble states that restrictions expressed this way are express reservations of rights under Article 4 of EU Directive 2019/790. That is a machine-readable statement of terms sitting in the group that binds this client. THE RULING EXISTS: the operator read the identical line on Sheboygan's file on 2026-09-05 and kept the fetch — nothing here trains, and naming an officeholder with a link back is the reference use the signal permits — and since 2026-09-12 that ruling is written in CLAUDE.md's honesty rules as the fleet's, with the one value it does not cover (`ai-input=no`, on no fleet host yet) named there. It changes nothing for this city: the Disallow settles it. The ClaudeBot group disallowing the whole site names a different agent's crawler, not this one."
     },
     {
       "id": "rochester-hills-council-roster",
@@ -2692,6 +2692,112 @@ already publishes nine times over as a per-district `officeAddress` — a second
 `validate_index.py` already owned, so the builder now imports that reader rather than keeping
 one. **A gate that only ever passes has not been tested; this one failed three times before
 it was right.**
+
+## Which hosts actually refuse the districtry user-agent (2026-09-12)
+
+**THE RULE HAD NO NUMBERS BEHIND IT.** CLAUDE.md's browser-user-agent section (settled
+2026-09-11) allows a scraper to send a browser string where a site refuses the districtry
+token by client fingerprint, on the condition that the calling file records which token was
+refused, what the site answered, and the date. 115 files here send one (measured 2026-09-12). Almost none carried
+that measurement, and `scripts/scraper_common.py`'s own docstring said the same thing from the
+other side: its UA constants "consolidate the DEFINITION, never the VALUE" because "several
+sites in this fleet block or challenge by client fingerprint" — naming none of them.
+
+**THE SWEEP.** `scripts/probe_user_agents.py` asks each host the same page four ways, cheapest
+first, stopping when one answers: `requests` + `UA_ROSTER_BOT`, stdlib + `UA_ROSTER_BOT`,
+`requests` + Chrome/126 + client hints, stdlib + Chrome/126 + client hints. Its subject is
+DISCOVERED from the tree — every host a script that sends a browser string reaches, 290 of
+them — and it writes `user-agent-measurements.json`, re-audited offline by `--check` in CI so
+an entry cannot outlive the file that fetched the host.
+
+**BOTH AXES, BECAUSE ONE IS NOT ENOUGH.** `scraper_common.py`'s 2026-09-03 table already
+showed the HTTP STACK is refused as often as the token — `requests` never succeeded against
+five Illinois sources with or without browser headers, because urllib3's TLS ClientHello
+differs from the ssl module's and these edges fingerprint it. A probe that varied only the
+name would credit a browser string with a fix the stack made.
+
+**WHAT IT FOUND, across 290 hosts:**
+
+| verdict | hosts | what it means |
+|---|---|---|
+| `token-ok` | 203 | the districtry token gets a full page on the plain `requests` stack |
+| `token-refused-and-stack` | 15 | refuses the token on both stacks, serves stdlib + Chrome |
+| `stack-not-token` | 6 | refuses `requests`, serves the SAME token on stdlib |
+| `token-refused` | 2 | refuses the token on `requests`, serves Chrome on `requests` |
+| `all-refused` / `challenged` | 16 | refuses or challenges all four; a captcha is never answered |
+| `answers-nothing` / `path-answers-nothing` | 23 | HTTP 200 too small to be a page, or a 404/405/500 on the probed path |
+| `robots-disallows-this-path` | 15 | the `*` group disallows the probe's own chosen path, so it was not fetched |
+| `crawl-delay-too-long` | 5 | Crawl-delay 15–60s; four rungs at that pace is not a polite probe |
+| `tls-chain` / `proxy-denied` | 5 | an incomplete chain (`probe_incomplete_tls_chains.py`'s subject) or this sandbox's egress |
+
+**SEVENTEEN HOSTS REFUSE THE TOKEN AND 203 DO NOT.** Per file: 17 files reach at least one
+host that genuinely refuses the token, **57 files send a browser string where every host
+they reach serves the token a full page, and 68 where no host they reach refuses it**. The largest single case is
+`wi/scripts/wi_county_board_scraper.py`, whose default header set is a Chrome/124 string
+across 55 `token-ok` counties while its `BROWSER_HEADER_COUNTIES` pin — the structurally
+correct shape — holds exactly one county. **One file was renamed on that finding, Logan's, after its clerk's page was read both ways the same day; nothing else was.** A UA moves per county with
+that county's weekly run as the witness, which is the rule `scraper_common.py` already stated;
+what changed is that the move now starts from a number.
+
+**TWO RECORDS IT DISPROVED.** `validate_card_links.py`'s `EXPECTED_UNREACHABLE` said
+`lakecountyil.gov`'s "county edge refuses datacenter clients" and that "the board-roles scraper
+carries it via the Internet Archive". Measured: the edge refuses one STACK, serves
+`/2336/Board-Members` to the stdlib client with the plain token (117,290 bytes), and
+`lake_county_board_roles_scraper.py --engine stdlib` parses all 19 districts live — the archive
+is the third rung down, not the working path. Both records now say so.
+
+**ONE COMPLIANCE FINDING, AND IT IS NOT IN THE SEVENTEEN.** Of the 15 `robots-disallows-this-path`
+hosts, the Wisconsin ones are URLs held in tables and not fetched — `wi/scripts/validate_robots.py`
+ran green the same day ("every scheduled fetch is permitted by its host's `*` group"), and the
+seven counties whose crawl that gate stopped in August still carry their rosters as read.
+Knox's and Carroll's revize CDNs disallow everything except documents and both scrapers fetch
+only `.pdf`. Iowa's `johnson-county.granicus.com` is gated per fetch by `ia/scripts/robots_gate.py`.
+The exception is **Logan**, and it was stopped the same day rather than recorded for later.
+`www.logancountyil.gov` publishes `Disallow: /images/` in its `*` group, and
+`scripts/logan_municipal_officials_scraper.py` had been reading
+`/images/Reference_and_Yearbook_2025-2026_updated.pdf` every Wednesday. It now reads the policy
+before either request and declines that one, which is Ashland's precedent exactly — stop the
+crawl, keep the reader, carry the roster as read. **No data is lost and that was measured, not
+assumed**: the carry-forward machinery already existed and already listed Logan
+(`PRESERVABLE["logan"]` in `scripts/build_municipal_officials_roster.py`), the 11 shipped
+municipalities tagged `Logan` are exactly the 11 sourced from the yearbook, they carry 65
+officials, and the builder FATALs if a preserved county carries forward zero. The clerk's own
+`/index.php` page is permitted and still read, so the county board roster is untouched.
+
+**THE MONTHLY LINK CHECK FETCHED THE SAME PATH, and stopping only the weekly one would have been
+half a fix.** The yearbook URL is the `sourceUrl` on all 11 municipality records, so
+`validate_card_links.py` probed it every month. Its `ROBOTS_DECLINED` table is keyed by HOST and
+skips the whole host, which is Rochester Hills's shape and not Logan's — using it here would have
+stopped probing the permitted clerk page too and described a site that asked us away when it had
+not. So a narrower `ROBOTS_DECLINED_PATHS` names the prefix, with the same inversion: the path is
+not probed, and the day the rule goes is the WARN. Witnessed both ways — the yearbook returns
+`declined` with `still=True`, the clerk page returns `ok`.
+
+**The robots reader is now ONE copy, at `scripts/robots_policy.py`** (this change first lifted the Wisconsin audit's `*`-only parser out as `scripts/robots_rules.py`; the same day #886 retired it into the RFC 9309 reader every other gate and scraper had moved to, since a `*`-only reader cannot see a group a site writes for this client's own token, and three other readers had still been separate). It happened because this change produced
+its third consumer and the third was a SCRAPER. It had lived in `wi/scripts/validate_robots.py`,
+whose `permitted()` docstring records that literal `startswith` matching cannot match a rule
+containing `*` or `$` at all — the reading that turned `cms5.revize.com`'s "documents yes,
+everything else no" into a flat refusal. A second copy of that record is how it drifts. The
+extraction was witnessed rather than assumed: that gate's `--offline` output is byte-identical
+before and after, and its live run still reports every scheduled Wisconsin fetch permitted.
+
+**TWO THINGS THE PROBE GOT WRONG FIRST, and the second is why the classifier looks the way it
+does.** It read robots.txt once, with rung 1's client; Marathon, McHenry and DeKalb refuse that
+client the FILE, so their policies filed as unreadable while rung 4 fetched a page — a crawl
+whose rules were never read. And it called any body containing `captcha` a challenge, which
+reported `board.danecounty.gov` as challenged after that host served a 7.7 MB page titled "Dane
+County District Supervisor List" to the districtry token; the match was a CSS rule hiding the
+reCAPTCHA badge on a contact form. Size-gating the keyword at 60 KB reproduced the same error
+fifteen more times one size down — `www.appletonwi.gov` at 58 KB, four Dane County offices
+between 23 and 39 KB, every one a real page. **A keyword in a full page is a widget.** The
+verdict now turns on how much VISIBLE TEXT came back, and a captcha keyword on a page that
+passes that test is an annotation that changes nothing.
+
+**THE VANTAGE IS PART OF THE MEASUREMENT.** This sweep ran from a Claude Code sandbox through
+the session's agent proxy, and a refusal measured there is a fact about that address. The
+scrapers run in GitHub Actions; the artifact records which vantage produced it and the probe
+reports the runner when it runs there. One host (`badgersheriffs.com`) is recorded
+`proxy-denied` for exactly that reason rather than as a refusal.
 
 ## How to read the tables
 

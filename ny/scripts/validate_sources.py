@@ -340,7 +340,7 @@ def http_get(url, want_json=True, params=None, socrata=False):
     """GET with a sane UA; returns (ok, payload_or_error). Never raises."""
     if requests is None:
         return False, "requests not installed"
-    headers = {"User-Agent": "DistrictExplorer-NYC source validator (+https://nyc.chidistricts.com)"}
+    headers = {"User-Agent": "districtry source validator (+https://districtry.com/ny/)"}
     if socrata and os.environ.get("SOCRATA_APP_TOKEN"):
         headers["X-App-Token"] = os.environ["SOCRATA_APP_TOKEN"]
     try:
