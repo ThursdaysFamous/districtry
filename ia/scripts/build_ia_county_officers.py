@@ -220,7 +220,15 @@ def load(path, what):
 
 
 # Honorifics and post-nominals the two sources disagree about publishing.
-_TITLES = {"mr", "mrs", "ms", "miss", "dr", "hon", "sheriff", "the"}
+# _SALUTATIONS is the subset display_name may STRIP; _TITLES is the wider set
+# name_tokens IGNORES when deciding whether two directories name one person.
+# The two differ on purpose, and only in one direction: `sheriff` and `the` are
+# safe to ignore while MATCHING ("Sheriff Jane Doe" is Jane Doe) and are not
+# salutations, so stripping them would edit what a publisher wrote rather than
+# drop a courtesy title. No shipped name begins with either today; keeping them
+# out of the strip means none silently loses a word if one ever does.
+_SALUTATIONS = {"mr", "mrs", "ms", "miss", "dr", "hon"}
+_TITLES = _SALUTATIONS | {"sheriff", "the"}
 _SUFFIXES = {"jr", "sr", "ii", "iii", "iv", "jd", "esq", "phd"}
 
 
@@ -247,9 +255,12 @@ def display_name(raw):
     for those counties and not for the rest. The card prints what this file
     holds, so `Mr. Mike Hadley` sat beside every plain name in the fleet.
 
-    `_TITLES` is the SAME set `name_tokens` already uses to decide whether two
-    directories name the same person, so what is displayed and what is matched
-    cannot drift apart.
+    `_SALUTATIONS` is the subset of the `_TITLES` set `name_tokens` already uses
+    to decide whether two directories name the same person, so display and
+    matching are defined in one place and cannot drift apart. It is a SUBSET
+    rather than the same set: `sheriff` and `the` are safe to ignore while
+    matching and are not courtesy titles, so stripping either would edit a
+    publisher's words. Every strip is printed in the weekly build log.
 
     ONLY A LEADING HONORIFIC IS TAKEN, and the two records that show why:
       * `Mr. Jim Irwin Jr.` -> `Jim Irwin Jr.` -- a suffix is part of a man's
@@ -260,7 +271,7 @@ def display_name(raw):
     """
     s = (raw or "").strip()
     first, sep, rest = s.partition(" ")
-    if sep and first.rstrip(".").lower() in _TITLES and rest.strip():
+    if sep and first.rstrip(".").lower() in _SALUTATIONS and rest.strip():
         return rest.strip()
     return s
 
@@ -382,6 +393,9 @@ DISPLAY_CASES = [
     ("Mr.", "Mr."),
     ("Mrs Hadley", "Hadley"),
     ("Drake Wilson", "Drake Wilson"),
+    # in _TITLES for matching, NOT in _SALUTATIONS, so never stripped for display
+    ("Sheriff Jane Doe", "Sheriff Jane Doe"),
+    ("The Honorable Ann Lee", "The Honorable Ann Lee"),
 ]
 
 

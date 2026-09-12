@@ -397,10 +397,15 @@ class HostPacer(object):
     pace the one that did. A host that states a delay gets a queue of its own;
     every other host keeps the pool's full parallelism.
 
-    MEASURED 2026-09-12, and the number is the point: of the 98 hosts this
-    scrape reads, ONE states a Crawl-delay binding `districtry` --
-    kossuthcounty.iowa.gov, 10 s. (41 serve no robots.txt at all, 52 serve one
-    that states no delay, and the rest challenge, refuse or did not answer.)
+    MEASURED 2026-09-12 FROM A CLAUDE CODE SANDBOX, and the number is the
+    point: of the 98 hosts this scrape reads, ONE states a Crawl-delay binding
+    `districtry` -- kossuthcounty.iowa.gov, 10 s. (41 serve no robots.txt at
+    all, 52 serve one that states no delay, and the rest challenge, refuse or
+    did not answer.) THE VANTAGE IS NAMED BECAUSE THE SPLIT MOVES WITH IT:
+    review's sandbox measured the same 98 hosts as 46 served / 43 absent /
+    7 challenge / 1 refused / 1 unreachable, which is the address-dependence
+    this instance already records for Clayton and Polk. The ONE Crawl-delay is
+    the same from both, and it is the only figure the pacer depends on.
     The other three Iowa weekly page scrapers reference 23 hosts between them
     and not one states a delay, which is why only this file grew a pacer. The
     mechanism is general, so a county that starts stating one is paced by the
