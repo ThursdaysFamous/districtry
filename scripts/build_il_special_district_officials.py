@@ -44,6 +44,10 @@ import json
 import os
 import sys
 
+import sys as _sys, os as _os
+_sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+from scraper_common import substantive_changes, emit_changes_output  # noqa: E402  (shared machinery — do not fork)
+
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app",
@@ -173,6 +177,22 @@ def main():
         print("build-il-special-district-officials: OK — shipped file matches "
               "(%d card(s), %d board officer(s))" % (len(records), board))
         return
+
+    # WHAT MOVED BESIDES THE STAMP. `generated` is rewritten every run, so
+    # this file differs from its base every week and the workflow opens a PR
+    # whether or not an officeholder changed. The stamp is right and stays;
+    # this line is what lets a reviewer tell an empty refresh from a real one
+    # without reading the diff. Depth is STATED — see scraper_common.
+    prior = {}
+    if os.path.exists(OUT_PATH):
+        with open(OUT_PATH, encoding="utf-8") as fh:
+            prior = json.load(fh)
+    moved_lines, moved_summary = substantive_changes(
+        prior, out, 'counties', 3)
+    for line in moved_lines:
+        print(line)
+    print("  %s" % moved_summary)
+    emit_changes_output(moved_summary)
 
     with open(OUT_PATH, "w", encoding="utf-8") as fh:
         fh.write(text)

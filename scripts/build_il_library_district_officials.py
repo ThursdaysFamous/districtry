@@ -53,6 +53,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from scraper_common import substantive_changes, emit_changes_output  # noqa: E402  (shared machinery — do not fork)
 from il_library_district_officials_scraper import (  # noqa: E402
     shipped_cards, statewide_library_counties)
 
@@ -149,6 +150,22 @@ def main():
               "(%d librar(ies) on %d card(s), %d board officer(s))"
               % (len(libraries), cards, board))
         return
+
+    # WHAT MOVED BESIDES THE STAMP. `generated` is rewritten every run, so
+    # this file differs from its base every week and the workflow opens a PR
+    # whether or not an officeholder changed. The stamp is right and stays;
+    # this line is what lets a reviewer tell an empty refresh from a real one
+    # without reading the diff. Depth is STATED — see scraper_common.
+    prior = {}
+    if os.path.exists(OUT_PATH):
+        with open(OUT_PATH, encoding="utf-8") as fh:
+            prior = json.load(fh)
+    moved_lines, moved_summary = substantive_changes(
+        prior, out, 'libraries', 1)
+    for line in moved_lines:
+        print(line)
+    print("  %s" % moved_summary)
+    emit_changes_output(moved_summary)
 
     with open(OUT_PATH, "w", encoding="utf-8") as fh:
         fh.write(text)

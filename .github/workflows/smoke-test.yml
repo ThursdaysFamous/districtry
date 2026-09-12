@@ -417,6 +417,16 @@ jobs:
       - name: Layer counts in prose match the worksheets
         run: python3 scripts/validate_doc_counts.py
 
+      # That gate's pattern C reads "N for <instance>", and the bare shape
+      # occurs five times in the tree with only ONE a layer count: the other
+      # four count dark-mode map colours (on a line that says "layers") and a
+      # press-tour DAY number. They are correct sentences, so a loosened
+      # pattern fails the build on them — and a green run says nothing about
+      # the guard, because the four are visible only when the pattern is
+      # wrong. Six literal lines, no files read, no network.
+      - name: The layer-count reader still ignores what only looks like a count
+        run: python3 scripts/validate_doc_counts.py --selftest
+
       # Every authored page's <title> and meta description against what Google
       # shows. generate_metro_files.py already gates the six worksheet-driven
       # index.html pages and has held since 2026-09-09 — not one of them is
@@ -552,6 +562,21 @@ jobs:
         run: |
           pip install -c scripts/requirements.txt requests shapely
           python3 scripts/build_parcel_fabric_districts.py --selftest
+
+      # Nine Illinois data files carry a top-level `generated` stamp, so each
+      # weekly workflow opens a bot PR whether or not an officeholder moved.
+      # The stamp is right and stays; what the nine builders now print beside it
+      # is a line saying whether anything ELSE moved, which is what a reviewer
+      # reads instead of the diff. That line is only worth trusting if it can be
+      # WRONG in the quiet direction — a helper that reported a change every week
+      # would pass every count guard in the repo and tell a reviewer nothing. So
+      # --selftest runs it against doctored input both ways: a week where only
+      # the stamp moves must say so, a changed field must name the record, an
+      # add and a remove must be counted separately, and a stated depth that is
+      # too deep must REFUSE rather than compare a record's fields as if each
+      # were a record. Stdlib only, no network, every case a literal.
+      - name: The what-moved line still says nothing when nothing moved
+        run: python3 scripts/scraper_common.py --selftest
 
       # A roster's count guard proves it still has twelve members; it proves
       # nothing about whether those twelve still carry an e-mail. On 2026-08-08

@@ -40,15 +40,26 @@ Chicago District Explorer: a single-file, dependency-light web app. Click a poin
 
 ## Running & testing
 
-This list undercounts what actually runs: CI (`.github/workflows/smoke-test.yml`) had grown to 31
+This list undercounts what actually runs: CI (`.github/workflows/smoke-test.yml`) carried 42
 static gates when this was last counted (2026-09-12), plus a Playwright smoke test per
 instance (`il`/`ca`/`ny`/`wi`/`ia`/`mi`), 2 root-page tests and the fleet
 point-transmission probe — one static-gate addition
 at a time, and nobody kept this section in step; the figure it carried before the 2026-09-04
-count was 19, stale by six, and that count lasted one day. It is dated rather than merely corrected because the next
-addition makes it wrong again and a bare number gives a reader no way to know. Treat the workflow
+count was 19, and the two counts after it (24, then 31) were each stale within the day. **The
+figure is now stated WITH ITS METHOD**, because three successive counts disagreed and no reader
+could tell which counting rule any of them used: a static gate is one NAMED step in the `smoke`
+job ahead of the `actions/setup-node` step, which is 42; counted instead as script invocations
+the whole battery is 66, the per-instance `validate_index.py` and smoke runs included. Both
+figures were re-measured on THIS tree after a rebase, because the first pair of them was taken
+against a base two merges old and the invocation count was already wrong by one — which is the
+same failure one level down from the one this sentence exists to fix. It is
+dated as well because the next addition makes it wrong again and a bare number gives a reader no
+way to know. Treat the workflow
 file as the source of truth for the full battery and its order; `.claude/skills/steward/SKILL.md`
-mirrors it as locally-runnable commands with per-gate rationale, for driving a PR to green. What
+mirrors it as locally-runnable commands with per-gate rationale, for driving a PR to green — and
+mirrors it EXACTLY as of 2026-09-12, 66 invocations for 66 (diffed both ways), after four gates
+were found missing from it (`build_sitemap.py`, `undeliverable.py`, the circuit-court join
+self-test, and this change's own). What
 follows is the short list worth knowing by name, not the whole battery.
 
 ```bash
