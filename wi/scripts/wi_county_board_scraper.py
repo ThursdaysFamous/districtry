@@ -984,22 +984,34 @@ DEFAULT_OUT = os.path.join(os.path.dirname(__file__), ".cache", "wi_county_board
 # is that a scraper starts with a token and reaches for a browser string only
 # where a site refuses the token (CLAUDE.md, "Browser user-agent strings"). So
 # every host this file fetches was asked for ITS OWN page, on THIS file's stack
-# (stdlib urllib) and header shape, with the token:
+# (stdlib urllib) and header shape, with the token.
+#
+# HOW THE HOSTS WERE COUNTED, so the number can be re-derived: every `http`
+# string constant in this module, parsed (not grepped), one URL per distinct
+# hostname — 78 hosts. Four were skipped by the probe's own filter, which
+# dropped literals containing `%` or ending in `=` because they are templates
+# rather than addresses: archive.org, cms5.revize.com, drive.google.com and
+# webapi.legistar.com. That leaves 74 asked:
 #
 #     67 of 74   HTTP 200, 6.9 KB to 7.7 MB of county page
-#      6 of 74   HTTP 403                      -> TOKEN_REFUSED_HOSTS below
+#      6 of 74   refused — five are pinned below, and the sixth,
+#                lacrossecounty.org, turned out to flap (see the next
+#                paragraph) and is not
 #      1 of 74   HTTP 202, 196 bytes           -> co.taylor.wi.us, whose every
 #                                                 path answers that meta-refresh
 #                                                 to every client; it rides
 #                                                 DOCUMENT_ROSTERS and is not
 #                                                 fetched, so it is not pinned
 #
-# ONE OF THE 67 HAS SINCE MOVED, and saying so is the difference between a
-# measurement and a claim: www.lafayettecountywi.org/bos served the token
-# 71,648 bytes that morning and answered 403 to BOTH clients two hours later.
-# Its record in the docstring above already calls it intermittent. It is not
-# pinned, because a pin says "this host wants the Chrome string" and this host
-# refuses that too.
+# TWO OF THE 67 FLAP, and saying so is the difference between a measurement and
+# a claim. www.lafayettecountywi.org/bos served the token 71,648 bytes one
+# morning and answered 403 to BOTH clients two hours later.
+# lacrossecounty.org, asked three times in a minute, answered the token 200 and
+# Chrome 403, then both 403, then both 200. The docstring above already calls
+# both counties intermittent and it is right. NEITHER IS PINNED: a pin says
+# "this host wants the Chrome string", and neither prefers it — they refuse and
+# serve both, at random. lacrossecounty.org was pinned in the first draft of
+# this change on a single 403, which is how a flap becomes a false record.
 #
 # THE HOST SWEEP ALONE WAS NOT ENOUGH, and the two hosts it missed are worth
 # naming. It walks the URL literals in THIS file, so it never asked
@@ -1049,23 +1061,36 @@ HONEST_UA = dict(UA, **{
 # run sends identical bytes every week — a ladder that retried on 403 would
 # make the request that actually worked invisible in the log.
 #
-# BOTH SPELLINGS OF SIX HOSTS ARE LISTED, and that is measured rather than
-# tidy. This file asks for `www.co.monroe.wi.us`; build_wi_county_board_
-# directory.py probes the same county as `co.monroe.wi.us` and asks this
-# function which client to use. A set keyed on the exact hostname answers
-# "token" for the bare form, which would make that probe a weaker client than
-# the crawl on the four counties it most needs to reach. Stripping `www.` in
-# the lookup would assume the two names share an edge; asking them instead
-# (2026-09-12, same minute) found they do — and found `fdlco.wi.gov` does not
-# behave like its sibling, which a fold would have hidden.
+# BOTH SPELLINGS OF SIX HOSTS ARE LISTED, and the reason is not the one first
+# written here. This file asks for `www.co.monroe.wi.us`; build_wi_county_
+# board_directory.py probes the same county as `co.monroe.wi.us` and asks this
+# function which client to use, so a set keyed on the exact hostname would make
+# that probe a weaker client than the crawl on the counties it most needs to
+# reach.
+#
+# THE TWO NAMES DO NOT SHARE AN EDGE, which the first version of this comment
+# claimed on the strength of both answering 403. They do not: measured
+# 2026-09-12, all six bare names resolve to ONE address (135.84.124.41) and
+# five of them answer `301 -> https://www.<host>/` to the token, while each www
+# name resolves to its own 23.195.81.x address. The 403 recorded against a bare
+# name was the WWW edge answering after urllib followed that redirect, not the
+# bare host refusing anything — and `fdlco.wi.gov` fails TLS at that same
+# redirector rather than being a host no client reaches. The pin is still
+# right, because following the 301 is what the probe does and the www edge at
+# the end of it does refuse the token; only the reason was wrong.
+#
+# `co.sauk.wi.us` IS NOT PINNED, though it shares 162.221.183.17 with its www
+# sibling. One address is not one answer: www.co.sauk.wi.us serves Chrome/124
+# 48,614 bytes, and the bare name answers Chrome/124 HTTP 403 and the token a
+# reset connection. Nothing this file sends reaches it, so a pin would claim a
+# preference the host does not have.
 TOKEN_REFUSED_HOSTS = {
-    "co.monroe.wi.us": "HTTP 403",
-    "co.rock.wi.us": "HTTP 403",
-    "fdlco.wi.gov": "TLS: UNEXPECTED_EOF_WHILE_READING — no client reaches it",
-    "lacrossecounty.org": "HTTP 403",
-    "marathoncounty.gov": "HTTP 403",
-    "racinecounty.gov": "HTTP 403; Chrome/124 gets 125,639 bytes",
-    "sheboygancounty.com": "HTTP 403",
+    "co.monroe.wi.us": "301 to www, which answers the token 403",
+    "co.rock.wi.us": "301 to www, which answers the token 403",
+    "fdlco.wi.gov": "TLS UNEXPECTED_EOF_WHILE_READING at the redirector",
+    "marathoncounty.gov": "301 to www, which answers the token 403",
+    "racinecounty.gov": "301 to www, which answers the token 403",
+    "sheboygancounty.com": "301 to www, which answers the token 403",
     "www.co.monroe.wi.us": "HTTP 403",
     "www.co.rock.wi.us": "HTTP 403",
     "www.fdlco.wi.gov": "HTTP 403",
