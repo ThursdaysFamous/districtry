@@ -33,10 +33,16 @@ UA_HINTS_CHROME_126 — and writes user-agent-measurements.json. Measured
 2026-09-12 across the 290 hosts a browser-string caller reaches: 203 serve
 UA_ROSTER_BOT a full page, 17 refuse it and answer the browser string, and 6
 refuse the `requests` STACK while serving the same token on the stdlib client,
-so on those a browser string is credited with a fix the stack made. 57 files
-send a browser string where every host they reach serves the token a full
-page, and 68 where no host they reach refuses it (the other 11 also reach a
-host that answered nothing or refuses the requests stack).
+so on those a browser string is credited with a fix the stack made. Per file
+(`probe_user_agents.py --inventory` prints this tally, re-derived from the tree
+and the artifact rather than remembered): 106 files send a browser string; 55
+of them reach only hosts that serve the token a full page, 34 more reach no
+host that refuses the token (one or more answered nothing or refused the
+`requests` stack), and 17 reach at least one host that refuses it. An earlier
+version of this paragraph said 57 and 68 of 115: the classifier then read a
+districtry token without a `/N` version, and a UA constant imported from a
+sibling module, as a browser string or as nothing, and the 68 was derived by a
+rule nobody wrote down.
 
 That does not license a fleet-wide rename, and the rule above is unchanged: a
 file's UA moves per county with that county's weekly run as the witness. What
