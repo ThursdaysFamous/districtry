@@ -318,6 +318,11 @@ header.masthead {
   justify-content: space-between;
   gap: 14px 28px;
 }
+/* `.masthead-inner` is a flex row (title | actions), so the heading and its
+   standfirst have to be ONE flex child -- measured 2026-09-12, moving the
+   standfirst out of the h1 without this wrapper shifted the actions row 35 px
+   and the whole main element 19 px down on every sub-page. */
+.title-block { min-width: 0; }
 .title { margin: 0; min-width: 0; }
 .title-row { display: flex; align-items: center; gap: 13px; }
 .masthead-star { display: none; }   /* the Chicago star, same story as the stripe */
@@ -331,7 +336,16 @@ header.masthead {
   text-transform: uppercase;
   color: var(--ink);
 }
-.title small, .title .title-tagline {
+/* The standfirst under the page name. `.title-sub` is a SIBLING of the h1, not
+   a child: every sub-page used to carry it as a <small> INSIDE the heading, so
+   the h1's text ran 100-150 characters -- the page's own question, then its own
+   title again, then a list of keywords. Measured 2026-09-12, all 23 sub-pages.
+   A heading is what the page is called; the qualifiers belong beside it. The
+   two older selectors stay because index.html's own masthead still uses
+   `.title-tagline` inside its h1, where the tagline IS the whole heading.
+   `margin` rather than `margin-top`: a <p> brings a bottom margin a <small>
+   never had, and the move has to be visually identical. */
+.title small, .title .title-tagline, .title-sub {
   display: block;
   font-family: var(--font-body);
   font-weight: 400;
@@ -339,7 +353,7 @@ header.masthead {
   text-transform: none;
   letter-spacing: 0;
   color: var(--slate);
-  margin-top: 7px;
+  margin: 7px 0 0;
 }
 .masthead-actions {
   display: flex;
@@ -407,7 +421,7 @@ header.masthead {
   header.masthead { padding: 15px 0 16px; }
   .districtry-mark { width: 27px; height: 27px; }
   .title-text { font-size: 23px; }
-  .title small, .title .title-tagline { font-size: 13px; margin-top: 4px; }
+  .title small, .title .title-tagline, .title-sub { font-size: 13px; margin: 4px 0 0; }
   .masthead-actions { justify-content: flex-start; margin-left: 0; width: 100%; gap: 6px; }
   .masthead-actions a { font-size: 12.5px; padding: 8px 13px; }
 }
@@ -628,13 +642,15 @@ footer.site-footer a { color: var(--accent-deep); }
 
 <header class="masthead">
   <div class="masthead-inner">
-    <h1 class="title">
-      <span class="title-row">
-        <svg class="districtry-mark" viewBox="0 0 96 96" aria-hidden="true"><g style="mix-blend-mode:multiply"><polygon points="51.5,63.2 12.4,55.7 11.5,18.6 42.7,5.0 72.7,35.3" fill="#6d3fd1" fill-opacity="0.55"></polygon></g><g style="mix-blend-mode:multiply"><polygon points="54.1,81.9 34.6,47.9 56.5,19.3 87.5,28.1 83.8,71.0" fill="#1d5fd6" fill-opacity="0.5"></polygon></g><g style="mix-blend-mode:multiply"><polygon points="13.7,64.5 27.6,31.2 62.7,37.6 70.3,66.9 33.9,89.0" fill="#b0316e" fill-opacity="0.45"></polygon></g><circle cx="42" cy="60" r="17" fill="none" stroke="#17161c" stroke-width="11"></circle><line x1="59" y1="16" x2="59" y2="82.5" stroke="#17161c" stroke-width="11"></line></svg>
-        <span class="title-text">Who is my alderman?</span>
-      </span>
-      <small>Chicago ward &amp; alderperson lookup — free, by address, ZIP, or a tap on the map.</small>
-    </h1>
+    <div class="title-block">
+      <h1 class="title">
+        <span class="title-row">
+          <svg class="districtry-mark" viewBox="0 0 96 96" aria-hidden="true"><g style="mix-blend-mode:multiply"><polygon points="51.5,63.2 12.4,55.7 11.5,18.6 42.7,5.0 72.7,35.3" fill="#6d3fd1" fill-opacity="0.55"></polygon></g><g style="mix-blend-mode:multiply"><polygon points="54.1,81.9 34.6,47.9 56.5,19.3 87.5,28.1 83.8,71.0" fill="#1d5fd6" fill-opacity="0.5"></polygon></g><g style="mix-blend-mode:multiply"><polygon points="13.7,64.5 27.6,31.2 62.7,37.6 70.3,66.9 33.9,89.0" fill="#b0316e" fill-opacity="0.45"></polygon></g><circle cx="42" cy="60" r="17" fill="none" stroke="#17161c" stroke-width="11"></circle><line x1="59" y1="16" x2="59" y2="82.5" stroke="#17161c" stroke-width="11"></line></svg>
+          <span class="title-text">Who is my alderman?</span>
+        </span>
+      </h1>
+      <p class="title-sub">Chicago ward &amp; alderperson lookup — free, by address, ZIP, or a tap on the map.</p>
+    </div>
     <div class="masthead-actions">
       <a href="./">← Back to the map</a>
     </div>
