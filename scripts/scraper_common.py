@@ -238,6 +238,18 @@ def fetch(url, headers, timeout=60, attempts=5, retry_after_cap=30.0, verify=Non
 #   "did anything move" stays right and only the NAME in the line gets shorter.
 #   That is why it is documented rather than guarded, and why the nine call
 #   sites state a depth that was measured against the shipped file.
+#
+# WHAT A DOCTORED-INPUT PROOF OF THIS CAN AND CANNOT BE, because the
+# distinction was blurred once already. Calling substantive_changes()
+# directly proves the HELPER; running a builder end to end proves the
+# helper AND its call site. Those are not interchangeable, and for some
+# builders only the first is available: an add-or-remove case cannot reach
+# this code through build_boone_district_officials.py at all, because that
+# builder's check() refuses any roster whose keys are not exactly the
+# `district` values of the two shipped geometry files — the doctored payload
+# dies at the geometry gate, which is that gate working. So a line reported
+# for such a builder is this function's output on that builder's real data,
+# never a record of a build that ran; say which when quoting one.
 
 def flatten_records(container, depth, *, path=()):
     """{'a.b.c': record} from a container nested exactly `depth` keys deep.
