@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 Measure which county and city hosts actually refuse this project's own
-user-agent, so that the files sending a browser string (115 measured 2026-09-12) can say whether they
-need one.
+user-agent, so that the files sending a browser string (106 on 2026-09-12; `--inventory`
+prints the count and the per-file tally) can say whether they need one.
 
 WHY THIS EXISTS
 ---------------
@@ -33,7 +33,7 @@ axes, cheapest cell first, stopping the moment something answers:
     1. requests + districtry token      <- what a scraper should send
     2. stdlib   + districtry token      <- same claim, different stack
     3. requests + Chrome/126 + hints
-    4. stdlib   + Chrome/126 + hints    <- what 115 files send today
+    4. stdlib   + Chrome/126 + hints    <- what the browser-string files send
 
 A host that answers cell 1 needs no browser string. One that answers cell 2
 needs a different STACK, not a different name. Only a host that answers 3 or 4
@@ -185,12 +185,30 @@ BROWSER_MARKERS = ("UA_CHROME_WIN_126_FULL", "UA_CHROME_WIN_126", "UA_CHROME_WIN
                    "fetch_stdlib")
 SELF_MARKERS = ("UA_ROSTER_BOT", "UA_ROSTER_COMPACT", "UA_CIVIC_BOT")
 SELF_INLINE_RE = re.compile(r"districtry|chidistricts|DistrictExplorer", re.I)
-SELF_TOKEN_RE = re.compile(r"\bdistrictry[\w.-]*/\d", re.I)
+# A SELF-IDENTIFYING TOKEN IS EITHER VERSIONED OR CONTACT-ADDRESSED. The first
+# shape was `districtry[-suffix]/N` anywhere in a literal; it missed every
+# token written as `districtry <role> (+https://districtry.com/<tag>/)` — the
+# form validate_sources.py sends in all six instances, the metro-outline
+# builder in four, and the two Illinois board builders that name themselves —
+# so validate_sources.py read as `browser` on 51 hosts (found by #910). The
+# second shape is anchored at the start of the literal and requires the `(+`
+# contact parenthesis, because `districtry` also opens prose ("districtry is
+# an independent, unofficial project"), robots fixtures and page titles.
+SELF_TOKEN_RE = re.compile(
+    r"\bdistrictry[\w.-]*/\d"
+    r"|^\s*districtry[\w.-]*\b[^\n]*\(\+https?://", re.I)
+# A UA CONSTANT IMPORTED FROM A SIBLING MODULE IS WHAT THE FILE SENDS. Fifteen
+# Illinois board builders do `from build_metro_outline import HEADERS`, Shelby's
+# reaches vtd_board_districts.get_json, and none of them carries a literal of
+# its own — so all read as `unknown` until the import is followed one level.
+# Only UA-shaped names are followed, and only into modules in this tree.
+IMPORTED_UA_NAME_RE = re.compile(
+    r"^(?:[A-Z0-9_]*HEADERS|UA|USER_AGENT|[A-Z0-9_]*_UA|UA_[A-Z0-9_]+)$")
 BROWSER_INLINE_RE = re.compile(
     r"Mozilla/5\.0 \((?:Windows NT|X11;|Macintosh;|iPhone|Android)")
 
 
-def ua_kind(text):
+def ua_kind(text, path=None):
     """'browser' | 'self' | 'both' | 'unknown' — what this FILE sends.
 
     READ AS CODE, NOT AS TEXT. A substring scan counts a constant NAMED in a
@@ -210,7 +228,7 @@ def ua_kind(text):
     names them.
     """
     kinds = set()
-    names, literals, parsed = _code_symbols(text)
+    names, literals, parsed = _code_symbols(text, path)
     if not parsed:
         names = set(re.findall(r"[A-Za-z_][A-Za-z0-9_]*", text))
         literals = [m.group(1) for m in
@@ -242,8 +260,14 @@ def ua_kind(text):
     return "unknown"
 
 
-def _code_symbols(text):
-    """(identifiers, non-docstring string constants, parsed?) for one module."""
+def _code_symbols(text, path=None):
+    """(identifiers, non-docstring string constants, parsed?) for one module.
+
+    With `path`, a UA-shaped name imported from a sibling module in this tree
+    contributes that module's string constants for the name — one level, no
+    further — so `from build_metro_outline import HEADERS` reads as what
+    build_metro_outline.py's HEADERS says.
+    """
     try:
         tree = ast.parse(text)
     except SyntaxError:
@@ -271,7 +295,47 @@ def _code_symbols(text):
         elif isinstance(node, ast.Constant) and isinstance(node.value, str):
             if id(node) not in docstrings:
                 literals.append(node.value)
+    if path:
+        literals += _imported_ua_literals(tree, path)
     return names, literals, True
+
+
+def _imported_ua_literals(tree, path):
+    """String constants assigned to UA-shaped names this module imports from
+    sibling modules — `from build_metro_outline import HEADERS` → the strings
+    inside build_metro_outline.py's `HEADERS = {...}`. Looks in the importing
+    file's own directory and the repo's `scripts/` (the two places every
+    instance script puts on sys.path); a module not found there contributes
+    nothing rather than guessing."""
+    out = []
+    dirs = [os.path.dirname(os.path.abspath(path)), os.path.join(ROOT, "scripts")]
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.ImportFrom) or not node.module or node.level:
+            continue
+        wanted = [a.name for a in node.names if IMPORTED_UA_NAME_RE.match(a.name)]
+        if not wanted:
+            continue
+        for d in dirs:
+            mod = os.path.join(d, node.module.replace(".", os.sep) + ".py")
+            if os.path.exists(mod):
+                break
+        else:
+            continue
+        try:
+            with open(mod, encoding="utf-8", errors="replace") as f:
+                sub = ast.parse(f.read())
+        except (OSError, SyntaxError):
+            continue
+        for stmt in sub.body:
+            if not isinstance(stmt, ast.Assign):
+                continue
+            targets = [t.id for t in stmt.targets if isinstance(t, ast.Name)]
+            if not set(targets) & set(wanted):
+                continue
+            for sub_node in ast.walk(stmt.value):
+                if isinstance(sub_node, ast.Constant) and isinstance(sub_node.value, str):
+                    out.append(sub_node.value)
+    return out
 
 
 def script_paths():
@@ -288,7 +352,7 @@ def build_inventory():
         rel = os.path.relpath(path, ROOT)
         with open(path, encoding="utf-8", errors="replace") as f:
             text = f.read()
-        kind = ua_kind(text)
+        kind = ua_kind(text, path)
         for m in URL_RE.finditer(text):
             url = m.group(0).rstrip(".,;:%")
             try:
@@ -861,7 +925,50 @@ def show_inventory(args):
     if args.verbose:
         for host in subject:
             print("  %-40s %s" % (host, choose_url(inventory[host])[:100]))
+    for line in file_summary(inventory):
+        print(line)
     return 0
+
+
+def file_summary(inventory):
+    """The per-FILE tally CLAUDE.md and the guidebook quote, derived rather
+    than remembered. A file sends a browser string if its kind is 'browser' or
+    'both'. Against the artifact's per-host verdicts, each such file is one of:
+    every host it reaches is `token-ok`; no host it reaches refuses the token
+    (all measured, none `token-refused*`, but at least one `stack-not-token`,
+    `answers-nothing` or another non-refusal); at least one host refuses the
+    token; or it reaches a host the artifact does not carry. The four are
+    disjoint and sum to the browser-string file count. Without an artifact the
+    first line still prints and the rest are skipped."""
+    files = {}
+    for host, entry in inventory.items():
+        for rel, kind in entry["callers"].items():
+            files.setdefault(rel, {"kind": kind, "hosts": set()})["hosts"].add(host)
+    browser = sorted(f for f, d in files.items() if d["kind"] in ("browser", "both"))
+    lines = ["files sending a browser string: %d (%d of them the token as well)"
+             % (len(browser), sum(1 for f in browser if files[f]["kind"] == "both"))]
+    if not os.path.exists(ARTIFACT):
+        return lines
+    verdicts = {h: r["verdict"] for h, r in json.load(open(ARTIFACT))["hosts"].items()}
+    refusing = {h for h, v in verdicts.items() if v.startswith("token-refused")}
+    token_ok = {h for h, v in verdicts.items() if v == "token-ok"}
+    buckets = {"every host serves the token a full page": 0,
+               "no host refuses the token (some answered nothing or refused the stack)": 0,
+               "at least one host refuses the token": 0,
+               "reaches a host the artifact does not carry": 0}
+    for f in browser:
+        hosts = files[f]["hosts"]
+        if hosts - set(verdicts):
+            buckets["reaches a host the artifact does not carry"] += 1
+        elif hosts & refusing:
+            buckets["at least one host refuses the token"] += 1
+        elif hosts <= token_ok:
+            buckets["every host serves the token a full page"] += 1
+        else:
+            buckets["no host refuses the token (some answered nothing or refused the stack)"] += 1
+    for label, n in buckets.items():
+        lines.append("  %-74s %4d" % (label, n))
+    return lines
 
 
 def main():
