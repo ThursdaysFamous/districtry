@@ -1667,6 +1667,7 @@
    "callers": {
     "scripts/build_municipal_ward_coverage.py": "browser",
     "scripts/build_parcel_fabric_districts.py": "unknown",
+    "scripts/il_special_district_officials_scraper.py": "self",
     "scripts/validate_sources.py": "browser"
    }
   },
@@ -1719,6 +1720,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 19537 bytes",
    "callers": {
+    "scripts/il_special_district_officials_scraper.py": "self",
     "scripts/validate_sources.py": "browser"
    }
   },
@@ -2178,7 +2180,8 @@
    "note": "requests+token HTTP 200, 9295 bytes",
    "callers": {
     "scripts/boone_municipal_officials_scraper.py": "browser",
-    "scripts/build_parcel_fabric_districts.py": "unknown"
+    "scripts/build_parcel_fabric_districts.py": "unknown",
+    "scripts/il_special_district_officials_scraper.py": "self"
    }
   },
   "maps.cityofevanston.org": {
@@ -2964,6 +2967,7 @@
     "scripts/build_logan_park_districts.py": "unknown",
     "scripts/build_parcel_fabric_districts.py": "unknown",
     "scripts/build_statewide_library_districts.py": "unknown",
+    "scripts/il_special_district_officials_scraper.py": "self",
     "scripts/peoria_county_board_scraper.py": "self",
     "scripts/peoria_district_officials_scraper.py": "unknown",
     "scripts/tazewell_county_board_scraper.py": "self",
@@ -3021,6 +3025,7 @@
     "scripts/build_knox_board_districts.py": "browser",
     "scripts/build_macon_board_district_labels.py": "unknown",
     "scripts/build_parcel_fabric_districts.py": "unknown",
+    "scripts/il_special_district_officials_scraper.py": "self",
     "scripts/validate_sources.py": "browser",
     "wi/scripts/build_madison_polling_places.py": "unknown",
     "wi/scripts/build_mke_polling_places.py": "unknown",
@@ -3118,6 +3123,7 @@
    },
    "callers": {
     "scripts/build_douglas_boundaries.py": "unknown",
+    "scripts/il_special_district_officials_scraper.py": "self",
     "scripts/lake_municipal_officials_scraper.py": "browser",
     "scripts/validate_sources.py": "browser",
     "wi/scripts/build_wi_ng911_service_areas.py": "unknown",
@@ -3168,6 +3174,7 @@
    },
    "callers": {
     "scripts/build_vermilion_boundaries.py": "unknown",
+    "scripts/il_special_district_officials_scraper.py": "self",
     "scripts/validate_sources.py": "browser",
     "ny/scripts/validate_sources.py": "unknown",
     "mi/scripts/build_mi_battle_creek_wards.py": "unknown",
@@ -3209,6 +3216,7 @@
     "note": "HTTP 200, 1117 bytes but 83 chars of text"
    },
    "callers": {
+    "scripts/il_special_district_officials_scraper.py": "self",
     "scripts/validate_sources.py": "browser",
     "wi/scripts/build_wi_aldermanic_districts.py": "unknown"
    }
@@ -3429,6 +3437,7 @@
     "scripts/build_washington_board_districts.py": "unknown",
     "scripts/build_white_boundaries.py": "unknown",
     "scripts/build_woodford_board_districts.py": "unknown",
+    "scripts/il_library_contacts_scraper.py": "unknown",
     "scripts/isbe_precinct_fabric.py": "browser",
     "scripts/validate_sources.py": "browser",
     "scripts/vtd_board_districts.py": "unknown",
@@ -4763,6 +4772,7 @@
    "callers": {
     "scripts/build_calhoun_precincts.py": "unknown",
     "scripts/build_stephenson_fire_districts.py": "unknown",
+    "scripts/build_vtd_precincts.py": "unknown",
     "scripts/il_county_clerk_scraper.py": "browser",
     "scripts/isbe_precinct_fabric.py": "browser",
     "scripts/validate_sources.py": "browser"
@@ -6727,5 +6737,6 @@
     "scripts/validate_sources.py": "browser"
    }
   }
- }
+ },
+ "callers_refreshed": "2026-09-12"
 }

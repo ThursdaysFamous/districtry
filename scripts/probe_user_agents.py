@@ -79,10 +79,12 @@ Usage:
     python3 scripts/probe_user_agents.py --probe                # measure, write artifact
     python3 scripts/probe_user_agents.py --probe --hosts a,b     # measure a subset
     python3 scripts/probe_user_agents.py --check                # offline re-audit
+    python3 scripts/probe_user_agents.py --refresh-callers        # who reaches each host
     python3 scripts/probe_user_agents.py --report out.md         # render the artifact
 """
 
 import argparse
+import ast
 import concurrent.futures
 import datetime
 import glob
@@ -236,18 +238,35 @@ BROWSER_INLINE_RE = re.compile(
 def ua_kind(text):
     """'browser' | 'self' | 'both' | 'unknown' — what this FILE sends.
 
+    READ AS CODE, NOT AS TEXT. A substring scan counts a constant NAMED in a
+    docstring as one the file sends, and it caught this sweep's own record
+    corrections within the hour: writing "the edge serves the page to the plain
+    UA_ROSTER_BOT token" into lake_county_board_roles_scraper.py's docstring
+    flipped that file from browser to both, and the host's caller entry changed
+    for a paragraph of prose. So the identifiers come from the parsed module —
+    imports and referenced names — and the inline literals from string constants
+    that are not docstrings. A file that does not parse falls back to the text
+    scan, because an unreadable file whose UA goes unclassified is worse than
+    one classified loosely.
+
     Per file, not per URL, and that is the measurement's one coarse edge: a file
     that pins a browser string for two counties and the token for the rest reads
-    as 'both', and the sweep cannot say which of its hosts got which. Twelve of
-    the fleet's files are in that state; the report names them.
+    as 'both', and the sweep cannot say which of its hosts got which. The report
+    names them.
     """
     kinds = set()
-    if any(m in text for m in SELF_MARKERS):
+    names, literals, parsed = _code_symbols(text)
+    if not parsed:
+        names = set(re.findall(r"[A-Za-z_][A-Za-z0-9_]*", text))
+        literals = [m.group(1) for m in
+                    re.finditer(r'["\']([^"\']*Mozilla/5\.0[^"\']*)["\']', text)]
+    if names & set(SELF_MARKERS):
         kinds.add("self")
-    if any(m in text for m in BROWSER_MARKERS):
+    if names & set(BROWSER_MARKERS):
         kinds.add("browser")
-    for m in re.finditer(r'["\']([^"\']*Mozilla/5\.0[^"\']*)["\']', text):
-        literal = m.group(1)
+    for literal in literals:
+        if "Mozilla/5.0" not in literal:
+            continue
         if SELF_INLINE_RE.search(literal):
             kinds.add("self")          # UA_ROSTER_COMPACT's shape: Mozilla, but ours
         elif BROWSER_INLINE_RE.search(literal):
@@ -259,6 +278,38 @@ def ua_kind(text):
     if kinds:
         return "both"
     return "unknown"
+
+
+def _code_symbols(text):
+    """(identifiers, non-docstring string constants, parsed?) for one module."""
+    try:
+        tree = ast.parse(text)
+    except SyntaxError:
+        return set(), [], False
+    docstrings = set()
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.Module, ast.ClassDef, ast.FunctionDef,
+                             ast.AsyncFunctionDef)):
+            body = getattr(node, "body", None)
+            if (body and isinstance(body[0], ast.Expr)
+                    and isinstance(body[0].value, ast.Constant)
+                    and isinstance(body[0].value.value, str)):
+                docstrings.add(id(body[0].value))
+    names, literals = set(), []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Name):
+            names.add(node.id)
+        elif isinstance(node, ast.Attribute):
+            names.add(node.attr)
+        elif isinstance(node, (ast.Import, ast.ImportFrom)):
+            for alias in node.names:
+                names.add(alias.name.split(".")[-1])
+                if alias.asname:
+                    names.add(alias.asname)
+        elif isinstance(node, ast.Constant) and isinstance(node.value, str):
+            if id(node) not in docstrings:
+                literals.append(node.value)
+    return names, literals, True
 
 
 def script_paths():
@@ -609,10 +660,13 @@ def check(args):
         gained = sorted(set(now) - set(then))
         lost = sorted(set(then) - set(now))
         if gained:
-            notes.append("%s gained caller(s) since the measurement: %s"
+            notes.append("%s gained caller(s) since the measurement: %s "
+                         "(a verdict is per host, so the measurement still "
+                         "applies; --refresh-callers records that)"
                          % (host, ", ".join(gained)))
         if lost:
-            notes.append("%s lost caller(s) since the measurement: %s"
+            notes.append("%s lost caller(s) since the measurement: %s "
+                         "(--refresh-callers records that)"
                          % (host, ", ".join(lost)))
     unmeasured = sorted(subject - set(recorded))
     if unmeasured:
@@ -631,6 +685,42 @@ def check(args):
     print("user-agent probe: OK — %d host(s) measured %s from %s; %d subject "
           "host(s) in the tree" % (len(recorded), payload["measured"],
                                    payload["vantage"].split(",")[0], len(subject)))
+    return 0
+
+
+def refresh_callers(args):
+    """Re-read each measured host's caller list from the tree, keeping verdicts.
+
+    A VERDICT IS PER HOST AND A CALLER LIST IS NOT. When a new script reaches a
+    host already measured, what the host answers has not changed — only the
+    record of who asks. --check reports that as a NOTE so nobody refreshes it
+    without looking; this is the looking, recorded with its own date, so ten
+    true notes do not become ten permanent lines in every CI run. It does NOT
+    touch `measured`, because the measurement is still the one that was taken,
+    and it cannot invent a host: one that has gained no measurement is still
+    reported unmeasured by --check.
+    """
+    payload = json.load(open(ARTIFACT))
+    inventory = build_inventory()
+    changed = []
+    for host, row in payload["hosts"].items():
+        if host not in inventory:
+            continue
+        now = inventory[host]["callers"]
+        if now != row.get("callers"):
+            gained = sorted(set(now) - set(row.get("callers", {})))
+            lost = sorted(set(row.get("callers", {})) - set(now))
+            changed.append((host, gained, lost))
+            row["callers"] = now
+    payload["callers_refreshed"] = datetime.date.today().isoformat()
+    with open(ARTIFACT, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=1, sort_keys=False)
+        f.write("\n")
+    for host, gained, lost in changed:
+        print("refreshed %-34s +%s %s" % (host, ", ".join(gained) or "-",
+                                          ("-" + ", ".join(lost)) if lost else ""))
+    print("probe: refreshed the caller list on %d host(s); verdicts and the "
+          "measurement date are unchanged" % len(changed))
     return 0
 
 
@@ -701,10 +791,14 @@ def main():
     ap.add_argument("--merge", action="store_true", default=True,
                     help="keep measurements for hosts this run did not probe")
     ap.add_argument("--no-merge", dest="merge", action="store_false")
+    ap.add_argument("--refresh-callers", action="store_true",
+                    help="re-read who reaches each measured host; keeps verdicts")
     ap.add_argument("--verbose", action="store_true")
     args = ap.parse_args()
     if args.report:
         return report(args)
+    if args.refresh_callers:
+        return refresh_callers(args)
     if args.check:
         return check(args)
     if args.probe:
