@@ -2181,7 +2181,6 @@
    "callers": {
     "scripts/boone_municipal_officials_scraper.py": "browser",
     "scripts/build_parcel_fabric_districts.py": "unknown",
-    "scripts/il_special_district_officials_scraper.py": "self",
     "scripts/validate_sources.py": "browser"
    }
   },

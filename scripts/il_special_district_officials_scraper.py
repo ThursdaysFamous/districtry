@@ -134,7 +134,6 @@ SANGAMON_GIS = "https://services.arcgis.com/XqG0RpqsNfIBGGb2/arcgis/rest/service
 STCLAIR_GIS = "https://arcgispublicmap.co.st-clair.il.us/server/rest/services/"
 LEE_GIS = "https://gis.leecountyil.gov/leecogis/rest/services/"
 LAKE_GIS = "https://services3.arcgis.com/HESxeTbDliKKvec2/arcgis/rest/services/"
-BOONE_GIS = "https://maps.boonecountyil.org/arcgis/rest/services/"
 
 # (county slug, layer) -> how to read that layer's card names.
 #   {"file": ..., "key": ...}                 a committed GeoJSON
@@ -176,8 +175,15 @@ BOUNDARIES = {
                            "where": "1=1", "field": "District"},
     ("st-clair", "fire"): {"service": STCLAIR_GIS + "CentralSquare/DATA/MapServer/8",
                            "where": "1=1", "field": "name"},
-    ("boone", "fire"): {"service": BOONE_GIS + "Fire_Districts/MapServer/0",
-                        "where": "1=1", "field": "district"},
+    # BOONE READS THE SHIPPED FILE, NOT THE COUNTY'S SERVICE. Its fire layer
+    # came off Fire_Districts/MapServer/0 until 2026-09-12, and the app stopped
+    # drawing that service on the same day: the county levies SIX fire
+    # protection districts and that layer carries five polygons, drawing Cherry
+    # Valley's Boone territory as district 2 and the City of Loves Park's strip
+    # as district 3 where the county's own tax roll gives neither a fire levy
+    # (#893). Left pointed at the service this run would key on five districts
+    # the app no longer draws, and the sixth card would never get a board.
+    ("boone", "fire"): {"file": "boone-fire-districts.json", "key": "district"},
     ("effingham", "fire"): {"service": EFFINGHAM_GIS + "Districts/FeatureServer/5",
                             "where": "ZoneDesc <> 'None'", "field": "ZoneDesc"},
     ("effingham", "park"): {"service": EFFINGHAM_GIS + "TaxDistricts_public/FeatureServer/7",
@@ -528,12 +534,17 @@ def build_unit_index(session):
 # reason for each is in the module docstring or beside it here.
 OVERRIDES = {
     # Boone publishes its five districts as bare numbers and the Warehouse
-    # labels carry the same five numbers, each exactly once.
+    # labels carry the same five numbers, each exactly once. Its SIXTH is a
+    # Winnebago-seated district reaching across the line, which the rules cannot
+    # match because it is the only Boone card naming a body rather than a
+    # number: the Warehouse files it under its home county, so the row's
+    # warehouseCounty is Winnebago and the card says so.
     ("boone", "fire", "1"): "004/010/06",
     ("boone", "fire", "2"): "004/020/06",
     ("boone", "fire", "3"): "004/030/06",
     ("boone", "fire", "4"): "004/040/06",
     ("boone", "fire", "5"): "004/050/06",
+    ("boone", "fire", "Cherry Valley Fire Protection District"): "101/020/06",
     # Abbreviations the county invented for its own map.
     ("mchenry", "fire", "ALG LITH FIRE DIST"): "063/010/06",
     ("mchenry", "fire", "HEB ALD GRW FIRE"): "063/060/06",
