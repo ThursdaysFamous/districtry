@@ -76,7 +76,7 @@ SERVICE = ("https://services1.arcgis.com/a3k0qIja5SolIRYR/arcgis/rest/services/"
            "ElectionGeography_public_e465746545b04d86ad93c78e731c292a/FeatureServer/")
 BOARD_LAYER = SERVICE + "2"        # Electoral Districts — the five unlabelled shapes
 PRECINCT_LAYER = SERVICE + "1"     # Voting Precincts — used for the membership check
-HEADERS = {"User-Agent": "chidistricts.com boundary builder (adam@overberg.co)"}
+HEADERS = {"User-Agent": "districtry boundary builder (+https://districtry.com/il/)"}
 REQUEST_TIMEOUT = 90
 
 SOURCE_NOTE = ("Macon County Clerk Josh Tanner, \"Macon County Board Districts "

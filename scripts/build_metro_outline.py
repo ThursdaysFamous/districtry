@@ -958,7 +958,7 @@ OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app", "metro-outline.json")
 STATE_OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app", "il-state-outline.json")
 WORKSHEET = os.path.join(REPO_ROOT, "metro-worksheet.json")
 
-HEADERS = {"User-Agent": "DistrictExplorer-CHI metro-outline builder"}
+HEADERS = {"User-Agent": "districtry metro-outline builder (+https://districtry.com/il/)"}
 REQUEST_TIMEOUT = 180
 
 # 25 m: the wash is a coverage hint, not a boundary claim, and at metro zoom

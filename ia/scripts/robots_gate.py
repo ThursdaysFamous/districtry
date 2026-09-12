@@ -19,9 +19,18 @@ fetches for 108 hosts a week, and it is the shape Cloudflare produces whenever
 it inserts its managed block above a site's own rules. The same parser also
 took the FIRST matching rule rather than the longest, and could never be
 bound by a group naming one of the fleet's `Mozilla/5.0 (compatible; ...)`
-tokens. None of the 108 hosts measured on 2026-09-12 carried a split `*`
-block, so no Iowa unit was mis-gated; the defect was latent here and live in
-the reading of wyomingmi.gov.
+tokens. Of the 108 hosts these four scrapers read, measured 2026-09-12,
+exactly ONE carries a split `*` block — www.casscountyia.gov, a WordPress file
+with a second `*` group disallowing one plugin JSON path — and on every path
+an Iowa scraper requests there both readers agree, so no Iowa unit was
+mis-gated; the old parser's group-dropping is measurable on that host's own
+second rule (it allowed the plugin path, the shared reader disallows it). The
+defect was latent here and live in the reading of wyomingmi.gov. The same
+probe found no host answering 200 with a blank body (so the empty-body fix
+below changes nothing today), 50 answering 404, 7 answering 202 (left alone),
+one refusing and one unreachable, and one binding Crawl-delay —
+kossuthcounty.iowa.gov, 10 seconds — that the six-worker board-chair scrape
+does not yet honour.
 
 Three readings the old module got wrong at the status level are also
 different now, and each is printed rather than silent:

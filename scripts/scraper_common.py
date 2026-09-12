@@ -45,11 +45,25 @@ UA_CHROME_X11_128 = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
                      "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36")
 UA_CHROME_X11_120 = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
                      "(KHTML, like Gecko) Chrome/120.0 Safari/537.36")
-# Self-identifying bot strings:
-UA_ROSTER_BOT = "chidistricts.com roster bot (civic data; contact via site)"
-UA_ROSTER_COMPACT = "Mozilla/5.0 (compatible; districtexplorer-roster/1.0)"
-UA_CIVIC_BOT = ("Mozilla/5.0 (compatible; chidistricts.com civic data bot; "
-                "+https://chidistricts.com/)")
+# Self-identifying bot strings. RENAMED 2026-09-12 from the retired brands
+# ("chidistricts.com roster bot (civic data; contact via site)",
+# "Mozilla/5.0 (compatible; districtexplorer-roster/1.0)" and
+# "Mozilla/5.0 (compatible; chidistricts.com civic data bot;
+# +https://chidistricts.com/)") — the one VALUE change this module has ever
+# made, and made under its own rule: measured first, per host. The 26
+# scheduled scrapers importing these reach 36 distinct page hosts once the
+# *.arcgis.com API hosts are set aside; on 2026-09-12 every one of the 36
+# answered the old bytes and the new bytes with the same HTTP status (200)
+# and the same body length (equal, not merely within tolerance), through
+# Cloudflare, Sucuri, LiteSpeed and IIS fronts alike, with no challenge
+# header on either. The measurement script and per-host rows are in the PR
+# that made the change (#886). Each county's weekly run remains the standing
+# witness; a refusal of the new token is a data event with a name, not a
+# reason to put the old one back.
+UA_ROSTER_BOT = "districtry.com roster bot (civic data; contact via site)"
+UA_ROSTER_COMPACT = "Mozilla/5.0 (compatible; districtry-roster/1.0)"
+UA_CIVIC_BOT = ("Mozilla/5.0 (compatible; districtry.com civic data bot; "
+                "+https://districtry.com/)")
 
 
 # --- The stdlib rung: a DIFFERENT HTTP STACK, plus the client hints a real

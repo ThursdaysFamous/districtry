@@ -150,7 +150,7 @@ except ImportError:  # pragma: no cover — reported as a WARN by the caller
 
 def api_get(path, raw=False):
     req = urllib.request.Request(API + path, headers={
-        "User-Agent": "district-explorer-fleet-status",
+        "User-Agent": "districtry-fleet-status",
         "Accept": "application/vnd.github.raw+json" if raw else "application/vnd.github+json",
     })
     token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
