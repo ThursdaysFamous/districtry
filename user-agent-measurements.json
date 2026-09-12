@@ -1666,7 +1666,7 @@
    "note": "requests+token HTTP 200, 15445 bytes",
    "callers": {
     "scripts/build_municipal_ward_coverage.py": "browser",
-    "scripts/build_parcel_fabric_districts.py": "unknown",
+    "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/il_special_district_officials_scraper.py": "self",
     "scripts/validate_sources.py": "browser"
    }
@@ -2180,7 +2180,7 @@
    "note": "requests+token HTTP 200, 9295 bytes",
    "callers": {
     "scripts/boone_municipal_officials_scraper.py": "browser",
-    "scripts/build_parcel_fabric_districts.py": "unknown",
+    "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/validate_sources.py": "browser"
    }
   },
@@ -2253,7 +2253,7 @@
     "note": "HTTP 200, 3380 bytes but 322 chars of text"
    },
    "callers": {
-    "scripts/build_parcel_fabric_districts.py": "unknown",
+    "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/validate_sources.py": "browser"
    }
   },
@@ -2291,7 +2291,7 @@
    "note": "requests+token HTTP 200, 4134 bytes",
    "callers": {
     "scripts/build_grundy_board_districts.py": "unknown",
-    "scripts/build_parcel_fabric_districts.py": "unknown",
+    "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/validate_sources.py": "browser"
    }
   },
@@ -2965,7 +2965,7 @@
    "callers": {
     "scripts/build_dewitt_board_districts.py": "unknown",
     "scripts/build_logan_park_districts.py": "self",
-    "scripts/build_parcel_fabric_districts.py": "unknown",
+    "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/build_statewide_library_districts.py": "unknown",
     "scripts/il_special_district_officials_scraper.py": "self",
     "scripts/peoria_county_board_scraper.py": "self",
@@ -3024,7 +3024,7 @@
    "callers": {
     "scripts/build_knox_board_districts.py": "browser",
     "scripts/build_macon_board_district_labels.py": "unknown",
-    "scripts/build_parcel_fabric_districts.py": "unknown",
+    "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/il_special_district_officials_scraper.py": "self",
     "scripts/validate_sources.py": "browser",
     "wi/scripts/build_madison_polling_places.py": "self",
@@ -3279,7 +3279,7 @@
     "note": "HTTP 200, 1117 bytes but 83 chars of text"
    },
    "callers": {
-    "scripts/build_parcel_fabric_districts.py": "unknown",
+    "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/validate_sources.py": "browser",
     "wi/scripts/build_wi_supervisory_districts.py": "self",
     "wi/scripts/validate_sources.py": "browser"
@@ -3837,7 +3837,7 @@
     "scripts/boone_county_board_scraper.py": "self",
     "scripts/boone_municipal_officials_scraper.py": "browser",
     "scripts/build_boone_board_roster.py": "unknown",
-    "scripts/build_parcel_fabric_districts.py": "unknown",
+    "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/validate_sources.py": "browser"
    }
   },
@@ -4964,7 +4964,7 @@
    "callers": {
     "scripts/build_grundy_board_districts.py": "unknown",
     "scripts/build_grundy_board_roster.py": "unknown",
-    "scripts/build_parcel_fabric_districts.py": "unknown",
+    "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/grundy_county_board_scraper.py": "self",
     "scripts/grundy_municipal_officials_scraper.py": "browser"
    }
@@ -6601,7 +6601,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 80188 bytes",
    "callers": {
-    "scripts/build_parcel_fabric_districts.py": "unknown",
+    "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/whiteside_municipal_officials_scraper.py": "browser"
    }
   },
