@@ -71,7 +71,10 @@ INSTANCES = {
 # pseudo-instance for the pages that sit at the repo root rather than inside an
 # instance folder.
 SUBPAGES = {
-    "root": ["privacy.html"],
+    # sponsorship.html was outside this list while carrying the same footer
+    # byline as the twenty pages in it — found on 2026-09-12 when the byline
+    # became one shared block and one page would have kept its own copy.
+    "root": ["privacy.html", "sponsorship.html", "traffic.html"],
     "il": ["il/faq.html", "il/sources.html", "il/police-district.html",
            "il/school-board.html", "il/county-board.html"],
     "ny": ["ny/faq.html", "ny/sources.html", "ny/council-district.html",
@@ -88,7 +91,8 @@ SUBPAGES = {
 # keying it by filename would put eight copies back where this file just removed
 # thirteen. Resolution stays deterministic — a shared name never also resolves
 # per-filename.
-SHARED_BLOCKS = {"styles-subpage", "tokens-brand"}
+SHARED_BLOCKS = {"styles-subpage", "tokens-brand", "footer-byline",
+                 "footer-independence"}
 
 ENGINE_RE = re.compile(
     r"^[ \t]*(?:/\*|<!--|#|//)?[ \t]*==== ENGINE:(BEGIN|END) "
