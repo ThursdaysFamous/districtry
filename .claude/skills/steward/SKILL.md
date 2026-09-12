@@ -80,6 +80,7 @@ python3 scripts/build_press_list.py --check                # PRESS_LIST.md vs pr
 python3 scripts/validate_doc_counts.py                    # "N layers" in prose vs the worksheets
 python3 scripts/validate_serp_lengths.py                  # every page's title and description fit a search result
 python3 scripts/robots_policy.py --selftest                # the one robots.txt reader against three saved files, and the per-host Crawl-delay pacer: one queue per delay-stating site, `www.` folded, others parallel
+python3 scripts/probe_user_agents.py --selftest           # read_robots() over stub responses: the robots-read path --probe depends on
 python3 scripts/probe_user_agents.py --check              # user-agent measurements vs the tree; retired brands; unmeasured browser-string files
 python3 scripts/isbe_precinct_fabric.py --selftest         # the five Jasper-test reconciliation causes
 python3 ia/scripts/ia_county_minutes_chair_scraper.py --selftest   # the four refusals that stand between a chair card and a wrong name

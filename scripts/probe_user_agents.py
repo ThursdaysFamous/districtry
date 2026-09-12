@@ -120,7 +120,14 @@ INSTANCES = ("il", "ny", "ca", "wi", "ia", "mi")
 # see a group a site writes for this client's own token, and this probe reads
 # each host's policy with the RUNG'S client, so the token that fetches is the
 # token the policy is asked about.
-from robots_policy import RobotsPolicy, classify, resolve_template  # noqa: E402
+# `classify` is imported under its own name because this module defines a
+# `classify(code, body, headers)` of its own for PAGE responses (line ~438),
+# and the bare import was shadowed by it: read_robots() called the page
+# classifier with two arguments and every --probe run raised TypeError from
+# 2026-09-12 (#886) until #917 found it. Nothing offline exercised the
+# robots-read path; --selftest now does.
+from robots_policy import RobotsPolicy, resolve_template  # noqa: E402
+from robots_policy import classify as robots_verdict  # noqa: E402
 
 # --- what each rung sends.
 TOKEN_HEADERS = {
@@ -481,7 +488,7 @@ def read_robots(getter, headers, scheme, host):
     except Exception as exc:  # noqa: BLE001
         return None, None, "unreadable (%s)" % type(exc).__name__
     text = body.decode("utf-8", "replace") if body else ""
-    verdict = classify(code, text)
+    verdict = robots_verdict(code, text)
     ua = headers["User-Agent"]
     if verdict.status == "served":
         policy = verdict.policy
@@ -971,8 +978,44 @@ def file_summary(inventory):
     return lines
 
 
+def selftest():
+    """Offline: drive read_robots() through every status it distinguishes with
+    a stub getter, so the robots-read path cannot silently break again."""
+    ua = {"User-Agent": "districtry/1.0 (+https://districtry.com/il/)"}
+    served = b"User-agent: *\nDisallow: /private/\nCrawl-delay: 7\n"
+    cases = [  # (getter result, expected (policy is not None, delay, note prefix))
+        ((200, served, {}, "u"), (True, 7.0, "read, 1 group(s)")),
+        ((200, b"", {}, "u"), (True, None, "read, 0 group(s)")),
+        ((404, b"", {}, "u"), (True, None, "none (HTTP 404)")),
+        ((403, b"", {}, "u"), (True, None, "refused to this client")),
+        ((202, b"<meta http-equiv=refresh>", {}, "u"), (False, None, "challenge (HTTP 202)")),
+        ((503, b"", {}, "u"), (False, None, "unreachable (HTTP 503)")),
+    ]
+    failures = []
+    for result, (has_policy, delay, prefix) in cases:
+        policy, got_delay, note = read_robots(lambda *a, **k: result, ua, "https", "h.example")
+        if (policy is not None) != has_policy or got_delay != delay or not note.startswith(prefix):
+            failures.append("HTTP %s: got (%s, %r, %r), want (%s, %r, %r...)" % (
+                result[0], policy is not None, got_delay, note, has_policy, delay, prefix))
+    def boom(*a, **k):
+        raise OSError("no route")
+    policy, got_delay, note = read_robots(boom, ua, "https", "h.example")
+    if policy is not None or got_delay is not None or not note.startswith("unreadable (OSError)"):
+        failures.append("exception: got (%s, %r, %r)" % (policy is not None, got_delay, note))
+    policy, _delay, _note = read_robots(lambda *a, **k: (200, served, {}, "u"), ua, "https", "h.example")
+    if policy.allows(ua["User-Agent"], "/private/x") or not policy.allows(ua["User-Agent"], "/public/x"):
+        failures.append("served policy did not apply its Disallow: /private/ rule")
+    if failures:
+        for line in failures:
+            print("probe --selftest: FAIL — %s" % line, file=sys.stderr)
+        return 1
+    print("probe --selftest: OK — read_robots() over 7 stub responses")
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.strip().splitlines()[0])
+    ap.add_argument("--selftest", action="store_true", help="offline: drive read_robots() with stub responses")
     ap.add_argument("--probe", action="store_true", help="measure and write the artifact")
     ap.add_argument("--check", action="store_true", help="offline re-audit, no requests")
     ap.add_argument("--inventory", action="store_true", help="list the surface only")
@@ -989,6 +1032,8 @@ def main():
                     help="re-read who reaches each measured host; keeps verdicts")
     ap.add_argument("--verbose", action="store_true")
     args = ap.parse_args()
+    if args.selftest:
+        return selftest()
     if args.report:
         return report(args)
     if args.refresh_callers:
