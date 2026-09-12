@@ -109,13 +109,27 @@ BASE_URL=http://localhost:8000/mi/ node mi/scripts/smoke_test.mjs
 BASE_URL=http://localhost:8000      node scripts/landing_test.mjs
 BASE_URL=http://localhost:8000      node scripts/page_consistency_test.mjs
 BASE_URL=http://localhost:8000      node scripts/probe_point_transmission.mjs --check
+BASE_URL=http://localhost:8000      node scripts/probe_contrast_pairs.mjs
 ```
 
 `scripts/landing_test.mjs` defaults to port 8131, so `BASE_URL` is mandatory
 for it, and it concatenates `BASE + "/"` without stripping — a trailing slash
 fails every bare-visit assertion with `http://localhost:8000//`;
-`scripts/page_consistency_test.mjs` strips one. Do not `pkill -f` the server
+`scripts/page_consistency_test.mjs` and `scripts/probe_contrast_pairs.mjs`
+strip one. Do not `pkill -f` the server
 by its command line from a shell whose own command line contains it.
+
+`scripts/probe_contrast_pairs.mjs` measures every text node on every sitemap
+page in both themes and asserts one thing: a pair below its WCAG floor is one
+`scripts/validate_contrast.py` already measures and already calls short. Red
+here is not "the palette got worse" — it is "a colour pair is painted that the
+static table has no row for", which is a real class, since that table is
+STATED and a pair with no row reads as covered. The message names the page,
+the selector and the two RGB values; write the row in `PAIRS`, run
+`python3 scripts/validate_contrast.py` to get its measured ratio, then either
+fix the colour or record it in `ACCEPTED_SHORTFALLS`. The join is on painted
+colours rather than token names, because that is the only vocabulary both
+sides share.
 
 `scripts/probe_point_transmission.mjs` is the one browser gate that is not a
 page test: it measures which layers send the reader's selected point to a
