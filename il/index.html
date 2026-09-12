@@ -18291,8 +18291,18 @@ function initChiExplorer() {
    * bare numbers is not readable, and naming them would mean this card
    * re-deriving an answer the Community Area layer already gives for the
    * point. -------- */
+  var loadChicagoSsaProviders = makeCached(function () {
+    return fetchJSONWithRetry("data/app/chicago-ssa-providers.json", {}, 2);
+  });
   var loadChicagoSsa = makeCached(function () {
-    return loadSocrataGeoJSON("cmr6-dn8c").then(function (geojson) {
+    return Promise.all([
+      loadSocrataGeoJSON("cmr6-dn8c"),
+      // the provider roster is ADVISORY: a failure here costs the card its
+      // provider rows and never the boundary answer, which is the per-layer
+      // isolation rule applied inside one layer
+      loadChicagoSsaProviders().catch(function () { return null; })
+    ]).then(function (results) {
+      var geojson = results[0], providers = results[1] || {};
       if (!hasUsableGeometry(geojson)) throw new Error("Chicago Special Service Areas returned no usable geometry");
       (geojson.features || []).forEach(function (f) {
         var props = f.properties || (f.properties = {});
@@ -18302,6 +18312,19 @@ function initChiExplorer() {
         if (wards) props.ssa_wards = String(wards).split(",")
           .map(function (w) { return w.trim(); })
           .filter(Boolean).join(", ");
+        // JOIN ON THE BARE NUMBER, never the full reference: the two
+        // publishers put the establishing year in different places, so the
+        // boundary file's SSA#17-2025 is the provider list's SSA#17 and its
+        // SSA#29 "West Town-2014" is the list's SSA#29-2014 "West Town".
+        // scripts/build_chicago_ssa_providers.py measures that the fold is
+        // one-to-one in both directions on every run.
+        var num = ref ? String(ref).replace(/[^0-9-]/g, "").split("-")[0] : "";
+        var prov = num && providers[num];
+        if (!prov) return;
+        props.ssa_provider = prov.provider;
+        props.ssa_provider_address = prov.address;
+        props.ssa_provider_phone = prov.phone;
+        props.ssa_provider_url = prov.url;
       });
       return geojson;
     });
@@ -18329,6 +18352,13 @@ function initChiExplorer() {
     fields: [
       { name: "name", label: "Special Service Area", keys: ["name"], primary: true },
       { name: "number", label: "SSA number", keys: ["ssa_number"] },
+      // Nobody is ELECTED to an SSA, so the people row is the organisation the
+      // city contracts with to run the corridor — the one a reader would call
+      // about it. 49 of the 58 have one; the other nine simply are not on the
+      // city's provider list and say nothing rather than guessing.
+      { name: "provider", label: "Service provider", keys: ["ssa_provider"] },
+      { name: "providerAddress", label: "Provider's office", keys: ["ssa_provider_address"] },
+      { name: "providerPhone", label: "Provider's phone", keys: ["ssa_provider_phone"] },
       // the city's own ward_2023 list, not a measurement of ours, and not the
       // reader's ward — the Ward layer answers that. See the loader note for
       // where the city's list and the ward geometry disagree (2 of 58).
@@ -18336,9 +18366,20 @@ function initChiExplorer() {
       // every feature reads "Active" today; the row exists so an inactive one
       // is legible the day the city publishes one rather than drawn as live
       { name: "status", label: "Status", keys: ["status"] },
-      { label: "City", value: "City of Chicago" }
+      // extracted for primaryLink only — `when` keeps it off the card, the
+      // same "hidden column" shape the county dispatcher uses
+      { name: "providerUrl", label: "", keys: ["ssa_provider_url"], when: function () { return false; } },
+      { label: "Program", value: "City of Chicago — Department of Planning and Development" }
     ],
-    primaryLink: function () {
+    // The provider's own site where the city lists one, because that is the
+    // page about THIS corridor; the city's program page otherwise, so a card
+    // with no provider still reaches the official body. The city stays named
+    // on the card either way by the fixed row above.
+    primaryLink: function (result) {
+      if (result && result.providerUrl) {
+        return { label: (result.provider ? String(result.provider) : "Service provider") + " (service provider)",
+                 url: String(result.providerUrl) };
+      }
       return {
         label: "Chicago SSA program (official)",
         url: "https://www.chicago.gov/city/en/depts/dcd/supp_info/special_service_areassaprogram.html"
