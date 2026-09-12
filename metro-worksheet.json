@@ -962,6 +962,12 @@
         "note": "Boone County coverage outline (scripts/build_county_outline.py) — gates the county's dispatch entries."
       },
       {
+        "file": "boone-fire-districts.json",
+        "min_features": 6,
+        "max_features": 6,
+        "note": "Boone's 6 fire protection districts, pre-built by scripts/build_parcel_fabric_districts.py from the parcels the county's own fabric assigns to the tax codes its Clerk's 2025 Taxcode Value within District Report puts in FD01-FD05 and FDCV, road voids closed at 75 ft by the same rules as its park and library siblings. It REPLACES the county's own Fire_Districts layer, which carries five polygons with a bare number and no name and gives two answers the county's own tax roll contradicts: it draws Cherry Valley Fire Protection District's 124 Boone parcels as district 2, and it draws the City of Loves Park's 576 as district 3 where three tax codes carry no fire-protection line at all. Bounds are an EQUALITY: the county levies exactly these six. Three of the Clerk's own reports agree on every line, and the parcels partition exactly — 15,303 in the six districts, 8,351 in the City of Belvidere, 576 in the Loves Park strip and 90 carrying no tax code, which is the whole 24,320-row roll."
+      },
+      {
         "file": "boone-library-districts.json",
         "min_features": 3,
         "max_features": 3,
@@ -3219,7 +3225,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-il-shell-v23",
+    "cache_name": "districtry-il-shell-v24",
     "shell_urls": [
       "./",
       "./sources.html",

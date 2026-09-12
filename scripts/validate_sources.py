@@ -127,6 +127,8 @@ SERVICE_KENDALL_TAX = ("https://maps.co.kendall.il.us/server/rest/services/"
                        "Hosted?f=json")
 SERVICE_GRUNDY_PARCELS = ("https://maps.grundyco.org/arcgis/rest/services/CountyWebsiteMaps/"
                           "CountyParcelsBaseLayer_ParcelFabric_SPIE/MapServer/0")
+SERVICE_BOONE_PARCELS = ("https://maps.boonecountyil.org/arcgis/rest/services/"
+                         "Boone_Sales_Locator/Devnet_Parcels/MapServer/0")
 SERVICE_WOODFORD = ("https://services1.arcgis.com/iOG1OLysrxLAswZi/arcgis/rest/"
                     "services/%s/FeatureServer/%d")
 SERVICE_WOODFORD_FIRE = SERVICE_WOODFORD % ("Fire_Protection_Districts", 2)
@@ -288,6 +290,36 @@ PROVENANCE = [
              "as the live layer answers. The Clerk refreshes tilings in "
              "place with no edit stamp, so the builder pins count+names and "
              "this monthly probe is the freshness watch."},
+    # Boone's three come off ONE 24,320-row parcel fabric carrying a bare
+    # tax_code, crossed with the County Clerk's own tax-code reports. The
+    # service publishes no edit stamp, so the builder pins the row count per
+    # concept and this probe is the freshness watch on the service itself.
+    # They were shipped before this file grew a PROVENANCE entry for them and
+    # went unwatched until the fire file joined them on 2026-09-12.
+    {"layer": "Boone County fire protection districts (pre-built from the "
+              "parcel fabric)",
+     "app_file": "boone-fire-districts.json",
+     "source_url": SERVICE_BOONE_PARCELS + "?f=json",
+     "note": "6 districts dissolved from the 15,303 parcels whose tax code "
+             "carries a fire-protection levy in the Clerk's 2025 Taxcode Value "
+             "within District Report. It REPLACED the county's own "
+             "Fire_Districts layer, which draws five polygons over every acre "
+             "of the county and so gives two answers the county's own tax roll "
+             "contradicts — Cherry Valley Fire Protection District's 124 Boone "
+             "parcels as district 2, and the City of Loves Park's 576 as "
+             "district 3 where three tax codes carry no fire levy at all."},
+    {"layer": "Boone County library districts (pre-built from the parcel "
+              "fabric)",
+     "app_file": "boone-library-districts.json",
+     "source_url": SERVICE_BOONE_PARCELS + "?f=json",
+     "note": "3 library districts from 9,122 parcels; two are seated in "
+             "Winnebago and only their Boone territory is drawn."},
+    {"layer": "Boone County park districts (pre-built from the parcel fabric)",
+     "app_file": "boone-park-districts.json",
+     "source_url": SERVICE_BOONE_PARCELS + "?f=json",
+     "note": "2 districts from 12,816 parcels — Belvidere Park and the Boone "
+             "slice of Rockford Park District; most of the county sits in no "
+             "park district."},
     # Grundy's three come off ONE 27,661-row parcel fabric whose single
     # `Districts` column lists every taxing body a parcel pays into. The service
     # publishes no edit stamp AND cannot page (supportsPagination false), so the

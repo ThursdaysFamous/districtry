@@ -14463,23 +14463,47 @@ function initChiExplorer() {
   var loadBooneBoardMembers = makeCached(function () {
     return fetchJSONWithRetry("data/app/boone-county-board-members.json", {}, 2);
   });
-  /* Boone's 5 fire districts, and the county identifies them BY NUMBER — there
-   * is no name column on the layer and no county list of names behind it.
+  /* Boone's SIX fire protection districts, pre-built by
+   * scripts/build_parcel_fabric_districts.py from the county's parcel fabric
+   * and the County Clerk's own tax-code reports — the same pair that draws
+   * Boone's park and library districts below.
    *
-   * This was a recorded gap rather than an oversight: a card reading "Fire
-   * District 1" looked like it told a reader nothing they could act on, so the
-   * boundaries sat unshipped waiting for names. Asking the County Clerk settled
-   * it in the opposite direction from the one expected. Amy Ohlsen replied on
-   * 2026-08-03 with names — and then volunteered that she had "just done a
-   * google search to get these names", and that "when we complete tax
-   * extensions, it is just 1-5". So the names she sent are not a county record
-   * and are deliberately NOT used; the numbers are, because they are what the
-   * county's own tax extensions run on. The layer ships numbered, saying so,
-   * which is the honest form of this data rather than a degraded one. */
+   * IT USED TO DRAW THE COUNTY'S OWN `Fire_Districts` LAYER, five polygons
+   * carrying a bare `district` number and tiling every acre of Boone, and that
+   * layer gives two answers its own county contradicts. The Clerk levies SIX
+   * fire protection districts: the sixth is Cherry Valley Fire Protection
+   * District, seated in Winnebago and reaching across the line onto 124 Boone
+   * parcels, which the county's layer draws as district 2. And 21 of the
+   * county's 68 tax codes pay into no fire protection district at all — the 18
+   * City of Belvidere codes (`boone-fire-belvidere-city`) plus three along the
+   * Winnebago line that are the City of Loves Park's, 576 parcels the layer
+   * answers as district 3.
+   *
+   * A parcel dissolve answers both, because the tax roll is what a fire
+   * protection district's territory IS: the district is the union of the
+   * parcels paying its levy, and ground paying no levy is drawn by nobody.
+   *
+   * THE DISTRICTS ARE NUMBERED, NOT NAMED, AND THAT IS THE COUNTY'S OWN FORM.
+   * The Clerk's yearbook heads them DISTRICT NO. 1 through 5; her tax reports
+   * put words beside those numbers that the Comptroller's warehouse contradicts
+   * for three of the five, so no word ships for them (`boone-fire-names`). The
+   * sixth ships named: the Clerk's report, the yearbook's own section heading
+   * and the district's own site at cvfpd.com all name it in full. */
   var loadBooneFire = makeCached(function () {
-    return loadCountyMapServerLayer(BOONE_GIS + "Fire_Districts", 0,
-      "district", "Boone County fire districts");
+    return fetchJSONWithRetry("data/app/boone-fire-districts.json", {}, 2);
   });
+  /* A bare "3" is meaningless on a hover and on a card pill alike, and a
+   * district the county names in full must not come out as "Fire District
+   * Cherry Valley Fire Protection District". One function, read by both
+   * surfaces, so they cannot drift apart. */
+  function booneFireLabel(value) {
+    var v = (value == null) ? "" : String(value);
+    if (v === "") return null;
+    return /^\d+$/.test(v) ? "Fire District " + v : v;
+  }
+  function booneFireIsNumbered(result) {
+    return /^\d+$/.test(String((result && result.district) || ""));
+  }
 
   /* Boone's park and library districts, pre-built by
    * scripts/build_parcel_fabric_districts.py. Boone publishes NO district
@@ -18909,6 +18933,11 @@ function initChiExplorer() {
         // there is no district here — two answers contradicting each other in
         // one card. The exclusion's own title carries the header instead.
         if (result.excluded) return null;
+        // opts.cardIdentifier is for an entry whose primary value is a number
+        // on some features and a name on others — Boone's fire districts, five
+        // the county numbers and one it names. Pass the SAME function to
+        // opts.hoverName and the two surfaces cannot drift apart.
+        if (opts.cardIdentifier) return opts.cardIdentifier(result);
         var v = result[primaryField.name];
         return (primaryField.label ? primaryField.label + " " : "") + (v ? String(v) : "Unknown");
       } : undefined,
@@ -24021,39 +24050,47 @@ function initChiExplorer() {
         ],
         people: afrDistrictPeople
       }),
-      // Boone — 5 districts the county identifies by NUMBER, not by name (see
-      // loadBooneFire). The pill reads "Fire District 3" and a note says why,
-      // rather than the card implying a name exists and is missing.
-      // BELVIDERE IS A HOLE IN THIS MAP AND THE MAP DOES NOT SAY SO. The
-      // county's Fire_Districts layer is five polygons tiling every acre of
-      // Boone, so a point at Belvidere City Hall returns district 2 — while the
-      // Clerk's own district-rates report gives 18 of its 55 tax codes NO
-      // fire-protection line at all, and those 18 are the City of Belvidere's.
-      // The city is served by a MUNICIPAL fire department, a department of the
-      // city rather than a district a resident lives inside, which the city
-      // publishes itself (belvidereil.gov's own Fire Department pages,
-      // re-confirmed 2026-09-04 along with the district-2 answer). A tiling
-      // that covers every acre implies every acre is in a district, and in
-      // Illinois a municipality with its own department is exactly where that
-      // is false. Recorded as `boone-fire-belvidere-city`; worth checking
-      // wherever a county fire tiling is shipped.
+      // Boone — 6 districts dissolved from the county's parcel fabric (see
+      // loadBooneFire). Five the county identifies by NUMBER, so the pill reads
+      // "Fire District 3"; the sixth is a Winnebago-seated district the county
+      // names in full, so its pill is its name. booneFireLabel is the one
+      // function both the pill and the hover read, so the two cannot disagree.
+      //
+      // BELVIDERE KEEPS ITS EXPLANATORY CARD. The parcel fabric now leaves the
+      // city as a genuine hole — its 18 tax codes carry no fire-protection line
+      // and its parcels are not in the build — so a reader there would get
+      // nothing at all, and "your city runs its own department" is the useful
+      // half of the answer. The Clerk's tax roll and the city's own Fire
+      // Department pages are both still the evidence; what changed is that the
+      // shipped boundary now agrees with them instead of being overridden.
+      // Recorded as `boone-fire-belvidere-city`.
+      //
+      // THE LOVES PARK STRIP GETS NO SUCH CARD YET and that is the one thing
+      // this entry still owes a reader: three tax codes on 576 parcels along
+      // the Winnebago line are the City of Loves Park's and pay into no fire
+      // protection district either, and nothing here says so. Recorded as
+      // `boone-fire-loves-park`.
       polygonCountyEntry({
         key: "boone",
         coverage: booneCountyCoverage,
         loader: withIlDistrictOfficials("boone", "fire", ["district"])(loadBooneFire),
+        snapFeet: PARCEL_FABRIC_SNAP_FT,
         pill: true,
         excluded: {
           where: inBelvidereCity,
           title: "No fire protection district",
-          note: "The City of Belvidere runs its own fire department, so addresses inside the city are not in a fire protection district. Boone County's fire map covers the city anyway; the County Clerk's tax rates do not."
+          note: "The City of Belvidere runs its own fire department, so addresses inside the city are not in a fire protection district. None of the city's tax codes carries a fire-protection levy."
         },
         hoverName: function (feature) {
-          var v = findPropCI(feature.properties || {}, ["district"]);
-          return (v == null || String(v) === "") ? null : "Fire District " + String(v);
+          return booneFireLabel(findPropCI(feature.properties || {}, ["district"]));
+        },
+        cardIdentifier: function (result) {
+          return booneFireLabel(result.district) || "Unknown";
         },
         fields: [
           { name: "district", label: "Fire District", keys: ["district"], primary: true },
-          { label: "Note", value: "Boone County identifies its fire protection districts by number rather than by name — the numbering its tax extensions are run on. The county publishes no name for them." },
+          { label: "Note", value: "Boone County numbers its own five fire protection districts rather than naming them — the numbering its tax extensions are run on. The words its tax reports put beside those numbers are not the names the districts file with the State, so no name is shown for them.", when: booneFireIsNumbered },
+          { label: "Note", value: "This district is seated in Winnebago County and its territory reaches across the line into Boone. Only its Boone territory is drawn here, and its board is not named here yet.", when: function (result) { return !booneFireIsNumbered(result); } },
           { label: "County", value: "Boone County" },
           { name: "officials", keys: ["dxofficials"], hidden: true }
         ],
