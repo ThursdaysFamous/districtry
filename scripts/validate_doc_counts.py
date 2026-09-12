@@ -63,6 +63,32 @@ TWO PATTERNS, because the claim is written two ways:
      somewhere else in the fleet is permanent, so the discriminator has to be
      structural.
 
+  C. A count written the other way round, "N for <instance>" with the noun
+     ahead of it — README.md's "every declared layer id is still registered
+     (39 for Illinois)". Neither A nor B sees it: A wants the word `layers`
+     beside the number, and B wants the NAME first. That sentence was stale
+     from the day the `ssa` layer landed and this gate read it as nothing.
+
+     THE BARE SHAPE CANNOT BE THE RULE, and that is measured rather than
+     cautious. `\d+ for <instance>` occurs five times in the scanned surface
+     and only ONE is a layer count. The other four are a different noun
+     entirely: docs/DEV_PROCESS_ASSESSMENT.md's "59 colours for Illinois, 37
+     for NYC, 23 for SF" counts dark-mode map COLOURS derived from layers (and
+     that line contains the word "layers", so a line-level guard would not
+     save it), and the press list's "Day 9 for NYC and San Francisco" is a
+     DAY. Matching the bare shape would fail the build on four correct
+     sentences.
+
+     The discriminator is that a layer count is THE FIRST NUMBER AFTER THE
+     WORD "layer" on its line. In the README the span between `layer` and
+     `39` holds no other number; in the colours line it holds `59`, whose own
+     noun is `colours`. An intervening number is allowed only when it is
+     itself an `N for <instance>` pair, so "(39 for Illinois, 27 for NYC)"
+     reports both while the colours list reports neither. The cost is stated
+     rather than hidden: a second instance's count in a span that also carries
+     a non-pair number is not read, and the first claim on the line failing is
+     what brings a human to it.
+
 WHAT IT DOES NOT SCAN. `docs/archive/` (preserved verbatim by convention — the
 whole point is that it is not maintained), scripts and tests (a "Thread-5
 layers" in a smoke test is a thread name, not a count), and the generated root
@@ -81,6 +107,7 @@ property ACCEPTED_DROPS, EXPECTED_UNREACHABLE and ACCEPTED_SHORTFALLS have.
 Usage:
     python3 scripts/validate_doc_counts.py
     python3 scripts/validate_doc_counts.py --report   # print every claim found
+    python3 scripts/validate_doc_counts.py --selftest # pattern C's guard, no files read
 """
 
 import argparse
@@ -146,6 +173,14 @@ PAIR_RE = re.compile(
     r"\b(" + "|".join(re.escape(n) for n in INSTANCE_NAMES) + r")\b"
     r"[\s:—–-]*\**\s*(\d{1,3})\s*\**\s*(?=$|[·,;)]|\band\b|layers?\b)"
 )
+# Pattern C: "N for <instance>", where the noun sits ahead of the number. The
+# guard is in _for_pair_claims, not here — see the docstring's pattern C.
+FOR_PAIR_RE = re.compile(
+    r"\b(\d{1,3})\s+for\s+\**("
+    + "|".join(re.escape(n) for n in INSTANCE_NAMES) + r")\b"
+)
+LAYER_WORD_RE = re.compile(r"\blayers?\b", re.IGNORECASE)
+ANY_NUMBER_RE = re.compile(r"\d+")
 
 
 def instances():
@@ -223,6 +258,45 @@ def claims(rel):
             continue
         for m in pairs:
             add(offset + m.start(), m.group(1), int(m.group(2)))
+
+    # C: "N for <instance>", counted only where N is the first number after the
+    # word "layer" on its line.
+    for pos, name, count in _for_pair_claims(text):
+        add(pos, name, count)
+    return out
+
+
+def _for_pair_claims(text):
+    """Every "N for <instance>" that is a LAYER count -> (pos, name, count).
+
+    A layer count is the first number after the word "layer" on its line. An
+    intervening number disqualifies it — that is what separates README.md's
+    "layer id is still registered (39 for Illinois)" from
+    DEV_PROCESS_ASSESSMENT.md's "59 colours for Illinois, 37 for NYC" — unless
+    the intervening number is itself an "N for <instance>" pair, so a list of
+    genuine per-instance layer counts still reports every entry.
+    """
+    out = []
+    for line_text, offset in _lines_with(text, "layer"):
+        layer_words = [m.end() for m in LAYER_WORD_RE.finditer(line_text)]
+        if not layer_words:
+            continue  # "layer" only as part of a longer word
+        pair_spans = [m.span(1) for m in FOR_PAIR_RE.finditer(line_text)]
+        for m in FOR_PAIR_RE.finditer(line_text):
+            before = [e for e in layer_words if e <= m.start(1)]
+            if not before:
+                continue  # the number precedes every "layer" word on the line
+            span = line_text[max(before):m.start(1)]
+            span_start = max(before)
+            intruder = False
+            for num in ANY_NUMBER_RE.finditer(span):
+                abs_start = span_start + num.start()
+                if not any(a <= abs_start < b for a, b in pair_spans):
+                    intruder = True
+                    break
+            if intruder:
+                continue
+            out.append((offset + m.start(), m.group(2), int(m.group(1))))
     return out
 
 
@@ -253,11 +327,72 @@ def _lines_with(text, needle):
         pos += len(line) + 1
 
 
+# --- self-test ----------------------------------------------------------------
+#
+# Pattern C's guard is the whole of pattern C: the bare `N for <instance>` shape
+# occurs five times in the scanned surface and only ONE is a layer count. The
+# other four are correct English sentences about something else, so a loosened
+# pattern fails the build on them — and nothing about a green run says the guard
+# still holds, because the four are only visible when the pattern is wrong.
+# These are the five real lines plus the list case the allowance exists for.
+# Stdlib only, no network, no files read.
+_C_CASES = [
+    ("README.md's real claim",
+     "the inline script passes `node --check`, every declared layer id is still "
+     "registered (40 for Illinois), no dataset is embedded inline",
+     [("Illinois", 40)]),
+    # docs/DEV_PROCESS_ASSESSMENT.md. Dark-mode map COLOURS derived from layers,
+    # not layer counts — and the line carries the word "layers", so a
+    # line-level guard does not save it. NYC ships 27, SF 16.
+    ("dark-mode colours, on a line that says 'layers'",
+     "each derives from its OWN layers: 59 colours for Illinois, 37 for NYC, "
+     "23 for SF. **(3) SF's smoke test",
+     []),
+    # docs/press-list.json and the PRESS_LIST.md it generates: a DAY number.
+    ("the press list's 'Day 9 for NYC'",
+     "Day 8 (the Tuesday after the holiday-shortened week) for Wisconsin and "
+     "Iowa; Day 9 for NYC and San Francisco. 6:30-8:00am",
+     []),
+    ("a genuine two-instance list — why an intervening PAIR is allowed",
+     "every declared layer id is still registered (40 for Illinois, 27 for NYC)",
+     [("Illinois", 40), ("NYC", 27)]),
+    ("no 'layer' word on the line",
+     "we shipped 12 for Illinois and 9 for Iowa that week",
+     []),
+    ("the number precedes the only 'layer' word",
+     "40 for Illinois is what the layer registry reports",
+     []),
+]
+
+
+def _selftest():
+    bad = 0
+    for label, line, expect in _C_CASES:
+        got = [(n, c) for _, n, c in _for_pair_claims(line + "\n")]
+        if got != expect:
+            bad += 1
+            print("  BAD %s\n      got %s, expected %s" % (label, got, expect),
+                  file=sys.stderr)
+    if bad:
+        print("validate-doc-counts selftest: FAIL — %d of %d pattern-C case(s) "
+              "wrong" % (bad, len(_C_CASES)), file=sys.stderr)
+        return 1
+    print("validate-doc-counts selftest: OK — pattern C reads the one real "
+          "'N for <instance>' layer count in the tree and none of the four "
+          "sentences that share its shape (%d cases)" % len(_C_CASES))
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--report", action="store_true",
                     help="print every layer-count claim found, not just failures")
+    ap.add_argument("--selftest", action="store_true",
+                    help="run pattern C against the shapes it must and must not read")
     args = ap.parse_args()
+
+    if args.selftest:
+        return _selftest()
 
     shipped = instances()
     if len(shipped) < 2:

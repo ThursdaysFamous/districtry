@@ -417,6 +417,16 @@ jobs:
       - name: Layer counts in prose match the worksheets
         run: python3 scripts/validate_doc_counts.py
 
+      # That gate's pattern C reads "N for <instance>", and the bare shape
+      # occurs five times in the tree with only ONE a layer count: the other
+      # four count dark-mode map colours (on a line that says "layers") and a
+      # press-tour DAY number. They are correct sentences, so a loosened
+      # pattern fails the build on them — and a green run says nothing about
+      # the guard, because the four are visible only when the pattern is
+      # wrong. Six literal lines, no files read, no network.
+      - name: The layer-count reader still ignores what only looks like a count
+        run: python3 scripts/validate_doc_counts.py --selftest
+
       # Every authored page's <title> and meta description against what Google
       # shows. generate_metro_files.py already gates the six worksheet-driven
       # index.html pages and has held since 2026-09-09 — not one of them is
