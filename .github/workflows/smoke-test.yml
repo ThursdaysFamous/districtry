@@ -536,11 +536,16 @@ jobs:
       - name: Iowa board-chair carry-forward rules still hold
         run: python3 ia/scripts/build_ia_county_chair.py --selftest
 
-      # display_name strips a leading honorific from an officer's name, and a
-      # name in that file is also the key ia-county-board-chairs.json joins on.
-      # The cases that matter are the ones it must NOT touch: a Jr./Sr. suffix
-      # and a trailing credential the county itself published.
-      - name: Iowa officer display names keep suffixes and credentials
+      # Two tables. display_name strips a leading honorific from an officer's
+      # name, and a name in that file is also the key
+      # ia-county-board-chairs.json joins on; the cases that matter are the
+      # ones it must NOT touch, a Jr./Sr. suffix and a trailing credential the
+      # county itself published. party_row_for takes the ISAC row whose NAME
+      # is the officer's, because ISAC lists assistants and deputies under the
+      # officer's own office label; its cases are the two that must yield no
+      # party — no row matches, and two rows both match, which is same_person's
+      # own stated limit showing.
+      - name: Iowa officer display names and the party name-join
         run: python3 ia/scripts/build_ia_county_officers.py --selftest
 
       # The parcel-fabric builder repairs invalid geometry before it writes, and
