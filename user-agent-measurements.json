@@ -5536,7 +5536,7 @@
     "scripts/build_logan_board_roster.py": "unknown",
     "scripts/build_logan_precinct_polling.py": "browser",
     "scripts/logan_county_board_scraper.py": "self",
-    "scripts/logan_municipal_officials_scraper.py": "browser"
+    "scripts/logan_municipal_officials_scraper.py": "self"
    }
   },
   "www.macoupinvotes.gov": {

@@ -1855,3 +1855,68 @@ District J at +39.8% and District L at +33.3% against the ideal — and she has 
 asked about it and answered ("These are the current maps"). Re-raising a question she has
 answered, inside a note that otherwise has a one-line answer, would make it harder to reply
 to and would read as doubting the first answer. It is recorded, not re-asked.
+
+## Ask 23 — Logan County Clerk: may an automated client read the yearbook?
+
+> **NOT YET ASKED — DRAFTED 2026-09-12.** A first approach to this office. It asks for
+> permission, not for data: the county already publishes the file and it already serves
+> normally to a browser. Nothing is blocked and nothing is being worked around.
+
+**What changed.** `scripts/logan_municipal_officials_scraper.py` read the County Clerk's
+*Reference and Yearbook* every Wednesday for its eleven municipalities' governing bodies —
+65 officials, with a phone on 51 and an e-mail on 41, which is the most complete municipal
+contact data any Illinois county in this project publishes. On 2026-09-12 a fleet-wide sweep
+(`scripts/probe_user_agents.py`) read the site's `robots.txt` and found, in the group that
+binds this project's clients:
+
+    User-agent: *
+    Disallow: /images/
+
+The yearbook lives at `/images/Reference_and_Yearbook_2025-2026_updated.pdf`. So the weekly
+fetch stopped the same day. The clerk's own `/index.php` article page is permitted and is
+still read; the county board roster, which comes from that page, is unaffected.
+
+**What ships now.** The eleven municipalities and all 65 officials still ship, carried
+forward from the last read rather than re-fetched, because `robots.txt` governs retrieval and
+not what already-public information may be shown. What is lost is the weekly re-verification:
+an official who leaves office will sit on the card until the file can be read again or the
+data arrives another way.
+
+**The ask, in one sentence.** Would the Clerk's office be willing either to say that an
+automated weekly read of that one PDF is acceptable, or to place the yearbook at a path the
+`*` group permits?
+
+Draft:
+
+> Subject: districtry.com — permission to read the Reference & Yearbook automatically
+>
+> Dear Logan County Clerk's office,
+>
+> I run districtry.com, a free public map that shows anyone which civic districts cover a
+> given address in Illinois and who represents them there. For Logan County it lists the
+> mayors, clerks, treasurers and trustees of all eleven municipalities, taken from your
+> office's Reference and Yearbook, with a link back to the yearbook on every card.
+>
+> Until this week a script re-read that PDF once a week so the names stayed current. I have
+> stopped it, because your site's robots.txt asks automated clients not to read anything
+> under /images/, which is where the yearbook is filed. The file itself serves perfectly
+> well — this is me following the request, not a problem with your website.
+>
+> Two ways forward, whichever suits you better, and a plain "no" is a fine answer:
+>
+> 1. If an automated read of that one PDF, once a week, is acceptable to you, a short note
+>    saying so is all I need.
+> 2. If the /images/ rule is there for a reason, could the yearbook be linked from a path
+>    outside it — or could your office e-mail me each new edition when it is published?
+>
+> Either way the officials already published stay on the map, with the yearbook's date
+> shown, so nobody is told a name is current when it has not been re-checked.
+>
+> Thank you for publishing the yearbook at all — it is the most complete municipal
+> directory any county in this project has found.
+
+**If there is no reply.** Follow up at about three weeks and again about two weeks after
+that, then record the office as unresponsive — which is a different claim from "the county
+refused", and neither is the same as "no source exists". The scraper re-reads the policy every
+week regardless, so a rule change or a moved file restores the weekly read with no edit and no
+correspondence.

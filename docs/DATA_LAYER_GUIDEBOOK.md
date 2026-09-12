@@ -2752,12 +2752,34 @@ ran green the same day ("every scheduled fetch is permitted by its host's `*` gr
 seven counties whose crawl that gate stopped in August still carry their rosters as read.
 Knox's and Carroll's revize CDNs disallow everything except documents and both scrapers fetch
 only `.pdf`. Iowa's `johnson-county.granicus.com` is gated per fetch by `ia/scripts/robots_gate.py`.
-The exception is **Logan**: `www.logancountyil.gov` publishes `Disallow: /images/` in its `*`
-group, and `scripts/logan_municipal_officials_scraper.py` reads
-`/images/Reference_and_Yearbook_2025-2026_updated.pdf` every Wednesday. The clerk's page it
-discovers that link from is permitted, so the board roster is unaffected. Stopping it follows
-Ashland's precedent — stop the crawl, keep the reader, carry the roster as read — and is its own
-change because it moves shipped roster data.
+The exception is **Logan**, and it was stopped the same day rather than recorded for later.
+`www.logancountyil.gov` publishes `Disallow: /images/` in its `*` group, and
+`scripts/logan_municipal_officials_scraper.py` had been reading
+`/images/Reference_and_Yearbook_2025-2026_updated.pdf` every Wednesday. It now reads the policy
+before either request and declines that one, which is Ashland's precedent exactly — stop the
+crawl, keep the reader, carry the roster as read. **No data is lost and that was measured, not
+assumed**: the carry-forward machinery already existed and already listed Logan
+(`PRESERVABLE["logan"]` in `scripts/build_municipal_officials_roster.py`), the 11 shipped
+municipalities tagged `Logan` are exactly the 11 sourced from the yearbook, they carry 65
+officials, and the builder FATALs if a preserved county carries forward zero. The clerk's own
+`/index.php` page is permitted and still read, so the county board roster is untouched.
+
+**THE MONTHLY LINK CHECK FETCHED THE SAME PATH, and stopping only the weekly one would have been
+half a fix.** The yearbook URL is the `sourceUrl` on all 11 municipality records, so
+`validate_card_links.py` probed it every month. Its `ROBOTS_DECLINED` table is keyed by HOST and
+skips the whole host, which is Rochester Hills's shape and not Logan's — using it here would have
+stopped probing the permitted clerk page too and described a site that asked us away when it had
+not. So a narrower `ROBOTS_DECLINED_PATHS` names the prefix, with the same inversion: the path is
+not probed, and the day the rule goes is the WARN. Witnessed both ways — the yearbook returns
+`declined` with `still=True`, the clerk page returns `ok`.
+
+**The robots parser is now ONE copy, at `scripts/robots_rules.py`**, because this change produced
+its third consumer and the third was a SCRAPER. It had lived in `wi/scripts/validate_robots.py`,
+whose `permitted()` docstring records that literal `startswith` matching cannot match a rule
+containing `*` or `$` at all — the reading that turned `cms5.revize.com`'s "documents yes,
+everything else no" into a flat refusal. A second copy of that record is how it drifts. The
+extraction was witnessed rather than assumed: that gate's `--offline` output is byte-identical
+before and after, and its live run still reports every scheduled Wisconsin fetch permitted.
 
 **TWO THINGS THE PROBE GOT WRONG FIRST, and the second is why the classifier looks the way it
 does.** It read robots.txt once, with rung 1's client; Marathon, McHenry and DeKalb refuse that

@@ -115,8 +115,13 @@ ALWAYS_AVAILABLE = {"setuptools", "pip", "pkg_resources"}
 # Keep this SHORT. A shared module is one whose whole point is that every
 # instance agrees with the others: `undeliverable` is the fleet's list of
 # addresses that cannot receive mail, and three copies of it would be three
-# different lists within a month.
-FLEET_SHARED = {"undeliverable"}
+# different lists within a month. `robots_rules` is the same test one subject
+# over — how this project reads a `*` group, and whether it permits a path —
+# and it earned the entry the day a scraper needed it (2026-09-12): three copies
+# of that parser would be three different readings of the same robots.txt, and
+# one of them already got cms5.revize.com's "documents yes, everything else no"
+# backwards. Both are stdlib-only, which is why neither needs a pip line.
+FLEET_SHARED = {"undeliverable", "robots_rules"}
 ROOT_SCRIPTS = os.path.join(REPO_ROOT, "scripts")
 
 PIP_RE = re.compile(r"pip3?\s+install\s+([^\n]*)")

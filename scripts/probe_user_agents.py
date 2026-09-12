@@ -110,36 +110,17 @@ ARTIFACT = os.path.join(ROOT, "user-agent-measurements.json")
 INSTANCES = ("il", "ny", "ca", "wi", "ia", "mi")
 
 
-# --- robots.txt.
+# --- robots.txt: ONE COPY, at scripts/robots_rules.py.
 #
-# THE ONE COPY OF THIS PARSER LIVES IN WISCONSIN'S GATE, and it is imported
-# rather than restated: wi/scripts/validate_robots.py's permitted() carries the
-# record of what a literal startswith() got wrong (it cannot match a rule
-# containing `*` or `$` at all, which turned cms5.revize.com's "documents yes,
-# everything else no" into a flat refusal and would have discarded a wildcard
-# Disallow that genuinely covered a fetch). A second copy here is how that
-# record drifts. A root script importing an instance file is backwards and the
-# fix is to move those three functions to scripts/robots_rules.py, which is not
-# done inside a measurement change because it edits a green CI gate.
-def _load_robots_rules():
-    path = os.path.join(ROOT, "wi", "scripts", "validate_robots.py")
-    spec = importlib.util.spec_from_file_location("_wi_validate_robots", path)
-    mod = importlib.util.module_from_spec(spec)
-    before = list(sys.path)
-    spec.loader.exec_module(mod)
-    # That module inserts its own directory at the front of sys.path. Leaving it
-    # there is how a bare `import validate_sources` elsewhere resolves to
-    # Wisconsin's — the bug that file's own comment records, one level up.
-    for entry in list(sys.path):
-        if entry not in before:
-            sys.path.remove(entry)
-    return mod
+# This module used to load wi/scripts/validate_robots.py by file path and undo
+# its sys.path insert, with a comment saying a root script importing an instance
+# file is backwards and the fix was to move those functions. The fix happened the
+# same day, for a reason neither consumer anticipated: a SCRAPER needed
+# permitted() too (logan_municipal_officials_scraper.py, whose yearbook sits
+# under a Disallow), and importing a probe from a scraper is worse than either.
+from robots_rules import permitted, resolve_template, star_disallows  # noqa: E402
 
-
-_ROBOTS = _load_robots_rules()
-star_group = _ROBOTS.star_disallows
-permitted = _ROBOTS.permitted
-resolve_template = _ROBOTS.resolve_template
+star_group = star_disallows
 
 
 def crawl_delay(text):
@@ -659,6 +640,18 @@ def check(args):
         then = row.get("callers", {})
         gained = sorted(set(now) - set(then))
         lost = sorted(set(then) - set(now))
+        # A CALLER CAN CHANGE WHAT IT SENDS WITHOUT THE LIST CHANGING, and the
+        # first version of this compared filenames only — so switching
+        # logan_municipal_officials_scraper.py from a pinned Chrome string to the
+        # districtry token, which is the whole point of the measurement, moved
+        # nothing here. A switch the other way is the one that matters: a new
+        # unjustified browser string on a host somebody already measured.
+        switched = sorted("%s (%s -> %s)" % (f, then[f], now[f])
+                          for f in set(now) & set(then) if then[f] != now[f])
+        if switched:
+            notes.append("%s: a caller changed what it sends: %s "
+                         "(--refresh-callers records that)"
+                         % (host, "; ".join(switched)))
         if gained:
             notes.append("%s gained caller(s) since the measurement: %s "
                          "(a verdict is per host, so the measurement still "
@@ -707,18 +700,30 @@ def refresh_callers(args):
         if host not in inventory:
             continue
         now = inventory[host]["callers"]
-        if now != row.get("callers"):
-            gained = sorted(set(now) - set(row.get("callers", {})))
-            lost = sorted(set(row.get("callers", {})) - set(now))
-            changed.append((host, gained, lost))
+        then = row.get("callers", {})
+        if now != then:
+            gained = sorted(set(now) - set(then))
+            lost = sorted(set(then) - set(now))
+            switched = sorted("%s %s->%s" % (f, then[f], now[f])
+                              for f in set(now) & set(then) if then[f] != now[f])
+            changed.append((host, gained, lost, switched))
             row["callers"] = now
     payload["callers_refreshed"] = datetime.date.today().isoformat()
     with open(ARTIFACT, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=1, sort_keys=False)
         f.write("\n")
-    for host, gained, lost in changed:
-        print("refreshed %-34s +%s %s" % (host, ", ".join(gained) or "-",
-                                          ("-" + ", ".join(lost)) if lost else ""))
+    for host, gained, lost, switched in changed:
+        # SAY WHICH OF THE THREE IT WAS. The first version printed "+-" for a
+        # host whose only change was a caller switching what it sends, which
+        # reads as "nothing" beside a line claiming a refresh.
+        parts = []
+        if gained:
+            parts.append("gained " + ", ".join(gained))
+        if lost:
+            parts.append("lost " + ", ".join(lost))
+        if switched:
+            parts.append("switched " + "; ".join(switched))
+        print("refreshed %-34s %s" % (host, "; ".join(parts)))
     print("probe: refreshed the caller list on %d host(s); verdicts and the "
           "measurement date are unchanged" % len(changed))
     return 0
