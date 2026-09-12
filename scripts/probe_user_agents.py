@@ -985,7 +985,7 @@ def selftest():
     served = b"User-agent: *\nDisallow: /private/\nCrawl-delay: 7\n"
     cases = [  # (getter result, expected (policy is not None, delay, note prefix))
         ((200, served, {}, "u"), (True, 7.0, "read, 1 group(s)")),
-        ((200, b"", {}, "u"), (True, None, "read, 0 group(s)")),
+        ((200, b"", {}, "u"), (True, None, "none (HTTP 200)")),   # an empty 200 is absent: allow-all
         ((404, b"", {}, "u"), (True, None, "none (HTTP 404)")),
         ((403, b"", {}, "u"), (True, None, "refused to this client")),
         ((202, b"<meta http-equiv=refresh>", {}, "u"), (False, None, "challenge (HTTP 202)")),
