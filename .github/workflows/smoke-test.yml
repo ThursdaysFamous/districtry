@@ -460,6 +460,26 @@ jobs:
           pip install -c ia/scripts/requirements.txt pdfplumber
           python3 ia/scripts/ia_county_minutes_chair_scraper.py --selftest
 
+      # The parcel-fabric builder repairs invalid geometry before it writes, and
+      # its repair had four branches nothing exercised. One of them was wrong
+      # for as long as it existed: `dropped` was `len(parts) - len(polys)`,
+      # which compares make_valid's TOP-LEVEL members against the flattened
+      # polygons and goes negative the moment a MultiPolygon comes back inside
+      # a GeometryCollection. rock-island-fire's BLACKHAWK FPD printed "dropped
+      # -25" on a real rebuild and nothing caught it, because nothing looked.
+      # The other three decide what gets WRITTEN rather than what gets printed —
+      # a repair with no polygonal ground at all, one past the area tolerance,
+      # and a zero-area input whose repair invents ground the tolerance cannot
+      # measure. --selftest runs all four against doctored geometries, and the
+      # reporting one against the shape that produced the -25. It reaches no
+      # network and no county service, which is why it can run here while the
+      # build itself cannot; requests and shapely are module-scope imports of
+      # the builder, so they are installed even though nothing is fetched.
+      - name: The parcel-fabric repair still refuses what it must
+        run: |
+          pip install -c scripts/requirements.txt requests shapely
+          python3 scripts/build_parcel_fabric_districts.py --selftest
+
       # A roster's count guard proves it still has twelve members; it proves
       # nothing about whether those twelve still carry an e-mail. On 2026-08-08
       # Cloudflare's e-mail obfuscation quietly emptied all seven of Brown
