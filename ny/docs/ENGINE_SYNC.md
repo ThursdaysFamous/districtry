@@ -329,10 +329,28 @@ carry a city key list.)
 sw.js: `sw-header`, `sw-handlers` — the config between them (cache name +
 URL lists) is the service worker's METRO section.
 
-(The four `styles-*` blocks fence the shared layout CSS on the neutral
-`--accent`/`--accent-deep`/`--accent-warm`/`--accent-warm-deep` custom
-properties; each fork's `:root` palette *values* stay fork code, as do the
-fork-only style islands between the fences — see backlog item 6's leftovers.)
+(Four of the eight `styles-*` blocks — `styles-core`, `styles-app`,
+`styles-footer` and `styles-hover-responsive` — fence the shared layout CSS
+on the neutral `--accent`/`--accent-deep`/`--accent-warm`/`--accent-warm-deep`
+custom properties, and the fork-only style islands between the fences are the
+leftovers. That is backlog item 6's own list, in its order, which is where
+this sentence's "four" came from. The palette VALUES are still per-instance
+and are no longer hand-written fork CSS: each instance's `:root` carries a
+`GENERATED:BEGIN brand-palette` region emitted from its worksheet's `palette`
+key, and `styles-districtry-skin`'s `:root` carries a comment saying it does
+not set them.
+
+The other four are not what this sentence counts, and each has its own
+reason: `styles-card-v2` (the card system, on its own `--card-*` palette),
+`styles-markers` (item 10's `.region-highlight` rule), `styles-sibling-result`
+(the sibling-metro result row) and `styles-districtry-skin` (the rebrand
+skin). "The four" is not "the ones that use the accent tokens" — measured
+2026-09-12, six of the eight do, `styles-districtry-skin` heaviest at 29
+references and `styles-card-v2` and `styles-markers` at none.
+
+The sentence gave no scope until 2026-09-12. There were already eight
+`styles-*` fences at the earliest commit this repo can read, so nothing here
+can date when the bare "four" stopped reading correctly.)
 
 (`metro-portal` — the sibling-metro portal easter egg — reads per-metro
 `bbox`/`emoji` fields on `METRO_EXPLORERS` entries; its card CSS is engine
