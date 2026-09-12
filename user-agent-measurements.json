@@ -6621,8 +6621,8 @@
    "note": "requests+token HTTP 200, 65283 bytes",
    "callers": {
     "wi/scripts/validate_sources.py": "browser",
-    "wi/scripts/wi_circuit_judges_scraper.py": "browser",
-    "wi/scripts/wi_coa_scraper.py": "browser"
+    "wi/scripts/wi_circuit_judges_scraper.py": "self",
+    "wi/scripts/wi_coa_scraper.py": "self"
    }
   },
   "www.willcountyclerk.gov": {

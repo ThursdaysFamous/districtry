@@ -68,6 +68,8 @@ Usage (rare operator step; network access to the county services required):
     python3 scripts/build_parcel_fabric_districts.py cook-fire  # one slug
 """
 
+import contextlib
+import io
 import json
 import math
 import os
@@ -77,7 +79,8 @@ import time
 
 import requests
 from shapely import make_valid
-from shapely.geometry import mapping, shape, Point
+from shapely.geometry import mapping, shape, MultiPolygon, Point, Polygon
+from shapely.validation import explain_validity
 from shapely.ops import transform, unary_union
 from shapely.strtree import STRtree
 from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
@@ -97,6 +100,7 @@ SIMPLIFY_FT = 10.0
 SLIVER_SQFT = 2000.0  # subtraction confetti — well under any annexed house lot
 FEET_PER_DEG_LAT = 364000.0  # the app's own constant (index.html snap block)
 MAX_RESIDUAL_VOIDS = 5       # sibling gaps left in the 15-150 ft band
+AREA_REPAIR_TOLERANCE = 0.01  # %; the worst repair measured 2026-09-12 was 0.00051
 PAGE_SIZE = 1000             # every county service here caps at 1,000 per query
 MAX_FETCH_ROWS = 200000      # a runaway pager stops rather than looping forever
 
@@ -827,6 +831,91 @@ for _code in ("01001 01005 01006 01011 01012 01013 01014").split():
     WHITESIDE_PARK_CODES[_code] = "PSTG - Sterling Park"
 for _code in ("02230 02235").split():
     WHITESIDE_PARK_CODES[_code] = "PWAL - Walnut Park"
+
+# ROUNDING TO 5 DECIMALS IS WHAT MAKES THESE GEOMETRIES INVALID, measured
+# 2026-09-12 rather than assumed: Boone's district 2 is VALID before `rnd` runs
+# and INVALID after. Five decimals is about 1.1 m at this latitude, so two
+# vertices closer than that collapse onto one — which turns a three-point ring
+# into two distinct points ("Too few points in geometry component") and can
+# bring two edges together ("Self-intersection").
+#
+# THIS BUILDER SHIPS 19 FILES, not the 22 in SOURCES: Whiteside's three are
+# `blocked` and are never written to il/data/app. 28 features in 10 of those 19
+# carry the defect today, across Boone, Cook, Grundy, Kendall, Macon, Rock
+# Island and Woodford. (il/data/app/whiteside-library-districts.json has one
+# too, and it is NOT this builder's — build_statewide_library_districts.py
+# writes that file, and this repair never reaches it.) The app never noticed,
+# because pointInGeometry is an even-odd ring test and does not care; a
+# consumer that does care would.
+#
+# THE OBVIOUS REPAIR SHIPS GEOMETRY THE APP CANNOT READ, which is why this is a
+# function and not one `make_valid` call at the write site. Run on those 28
+# features, shapely's make_valid returns a GeometryCollection for SIXTEEN of
+# them, and INSIDE those sixteen sit 4 Polygons and 12 MultiPolygons alongside
+# 9 LineStrings, 5 MultiLineStrings and 3 Points — the zero-area residue of the
+# collapsed rings. pointInGeometry handles Polygon and MultiPolygon and nothing
+# else, so writing make_valid's output straight out would hand the app a shape
+# it silently fails to test, which is worse than the invalidity it fixes.
+#
+# So the polygonal parts are kept and the rest dropped. Measured over all 28:
+# every repaired feature is valid, and the worst area change is 0.000510%.
+def polygonal_valid(geom, label):
+    """The rounded geometry, repaired to a valid Polygon/MultiPolygon.
+
+    Returns (geometry mapping, note) — the note is None when nothing was
+    wrong, and otherwise says what was repaired and what it cost. The REPORT
+    is informational; a repair that cannot produce polygonal ground, or leaves
+    the result invalid, or moves the area more than AREA_REPAIR_TOLERANCE,
+    FAILS the build, because each of those would ship something worse than
+    what came in.
+    """
+    g = shape(geom)
+    if g.is_valid:
+        return geom, None
+    why = explain_validity(g).split("[")[0].strip()
+    parts = list(getattr(make_valid(g), "geoms", [make_valid(g)]))
+    polys = []
+    for q in parts:
+        if isinstance(q, Polygon):
+            polys.append(q)
+        elif isinstance(q, MultiPolygon):
+            polys.extend(q.geoms)
+    if not polys:
+        fail("%s: repairing %r (%s) leaves no polygonal ground at all"
+             % (label, label, why))
+    fixed = polys[0] if len(polys) == 1 else MultiPolygon(polys)
+    if not fixed.is_valid:
+        # NOT REACHED BY ANY INPUT TRIED, here and in review: make_valid's
+        # polygonal parts have always come back valid. It stays because
+        # "could not construct a counter-example" is not "cannot happen".
+        fail("%s: %r is still invalid after repair (%s)"
+             % (label, label, explain_validity(fixed).split("[")[0].strip()))
+    # A ZERO-AREA INPUT IS REFUSED, NOT WAVED THROUGH. `moved` divides by the
+    # input's area, so a self-cancelling input — a bow-tie, whose signed area is
+    # 0 — would read as "+0.000000%" however much ground the repair invented.
+    # None of the features this builder actually produces can reach it; the
+    # point is that the tolerance would be BYPASSED there rather than met.
+    if not g.area:
+        if fixed.area:
+            fail("%s: %r has no area and its repair has %.1f — the tolerance "
+                 "cannot measure that, so it is refused rather than passed"
+                 % (label, label, fixed.area))
+        moved = 0.0
+    else:
+        moved = abs(fixed.area - g.area) / g.area * 100
+    if moved > AREA_REPAIR_TOLERANCE:
+        fail("%s: repairing %r moved %.4f%% of its area, past the %.4f%% "
+             "this is allowed to cost" % (label, label, moved, AREA_REPAIR_TOLERANCE))
+    # COUNT THE NON-POLYGONAL PARTS, don't subtract. `len(parts) - len(polys)`
+    # compares TOP-LEVEL members against FLATTENED polygons, so a collection
+    # holding one MultiPolygon of 26 printed "dropped -25". The kept/dropped
+    # decision was right and only this line was wrong, which is the worse kind
+    # of wrong: it is the line a human reads on every per-county rebuild.
+    dropped = sum(1 for q in parts if not isinstance(q, (Polygon, MultiPolygon)))
+    return mapping(fixed), ("%s — %s; kept %d polygonal part(s), dropped %d "
+                            "zero-area one(s), area %+.6f%%"
+                            % (label, why, len(polys), dropped, moved))
+
 
 def _in_clause(codes, col="tax_code"):
     # The column holding the code is per-county: Boone's is `tax_code`,
@@ -1931,7 +2020,7 @@ def build_source(cfg, forced=False):
     # newly stripped label would otherwise ride in beside the checked ones.
     renames = witness_names(cfg, {n: from_ft(final_ft[n]) for n in ordered})
 
-    features = []
+    features, repairs = [], []
     for n in ordered:
         g = from_ft(final_ft[n])
         geom = json.loads(json.dumps(mapping(g)))
@@ -1941,6 +2030,13 @@ def build_source(cfg, forced=False):
                 return round(c, 5)
             return [rnd(x) for x in c]
         geom["coordinates"] = rnd(geom["coordinates"])
+        # AFTER the rounding, because the rounding is what breaks it — see
+        # polygonal_valid. The repair is reported and never silent: a shipped
+        # boundary that changed shape, however slightly, is a thing a reader of
+        # this build log should be told about.
+        geom, repair = polygonal_valid(geom, "%s %s" % (cfg["slug"], n))
+        if repair:
+            repairs.append(repair)
         props = {out_prop: renames.get(n, n)}
         if split_re:
             props = {out_prop: codes[n][1], "code": codes[n][0]}
@@ -1951,6 +2047,18 @@ def build_source(cfg, forced=False):
                          "properties": props,
                          "geometry": geom})
     fc = {"type": "FeatureCollection", "features": features}
+    # A REPORT, NOT A GATE. Eleven of the twenty files this builder ships carry
+    # an invalid feature today and every one of them would have to be rebuilt to
+    # clear it — one county per change, each with its own cache bump, because a
+    # single commit rewriting eleven boundary files is not something a reviewer
+    # can read. So this prints what it repaired and lets the build finish; the
+    # only failures are inside polygonal_valid, where a repair that produced
+    # nothing polygonal or moved real ground would be worse than the defect.
+    if repairs:
+        print("  repaired %d invalid feature(s) — the 5-decimal rounding "
+              "collapses near-coincident vertices:" % len(repairs))
+        for line in repairs:
+            print("    %s" % line)
 
     for lat, lng, want in cfg["probes"]:
         p = Point(lng, lat)
@@ -1982,6 +2090,117 @@ def build_source(cfg, forced=False):
              len(payload) / 1024.0))
 
 
+# Doctored geometries for --selftest. Each is the smallest shape that reaches
+# one branch of polygonal_valid, and every one was MEASURED to reach it before
+# it was written down (shapely 2.1.2, the pin in scripts/requirements.txt).
+#
+# THREE_SQUARES_PLUS_SPIKE is the counter-example the review asked for. Three
+# disjoint squares strung together by zero-width corridors, with a zero-width
+# spike off the first: make_valid returns a GeometryCollection whose TOP-LEVEL
+# members are one MultiPolygon and one MultiLineString, so `len(parts)` is 2
+# while the flattened `len(polys)` is 3 and the old `len(parts) - len(polys)`
+# printed -1. That is the shipped defect in miniature — rock-island-fire's
+# BLACKHAWK FPD printed "dropped -25" on exactly this shape at county scale.
+THREE_SQUARES_PLUS_SPIKE = {"type": "Polygon", "coordinates": [[
+    [0, 0], [0, 2], [2, 2], [2, 0], [0, 0],
+    [3, 0], [3, 2], [5, 2], [5, 0], [3, 0],
+    [6, 0], [6, 2], [8, 2], [8, 0], [6, 0],
+    [0, 0],
+    [-1, 0], [0, 0]]]}
+# A ring of three collinear points: no polygonal ground anywhere in the repair.
+A_COLLINEAR = {"type": "Polygon", "coordinates": [[[0, 0], [1, 0], [2, 0], [0, 0]]]}
+# A figure-eight whose two lobes wind opposite ways: the shoelace area is
+# 10 - 1 = 9 while the repair's ground is 10 + 1 = 11, a 22.2222% move.
+FIGURE_EIGHT = {"type": "Polygon", "coordinates": [[
+    [0, 0], [0, 10], [1, 10], [1, 0],
+    [0, 0],
+    [1, 0], [1, -1], [2, -1], [2, 0], [1, 0],
+    [0, 0]]]}
+# A symmetric bow-tie: the lobes cancel to a signed area of exactly 0 while the
+# repair has 2. This is the input the tolerance cannot measure.
+BOW_TIE = {"type": "Polygon", "coordinates": [[[0, 0], [2, 2], [2, 0], [0, 2], [0, 0]]]}
+A_SQUARE = {"type": "Polygon", "coordinates": [[[0, 0], [0, 1], [1, 1], [1, 0], [0, 0]]]}
+
+
+def selftest():
+    """polygonal_valid against doctored inputs. No network, no service.
+
+    Three of these checks decide what gets WRITTEN; the fourth is the line a
+    human reads on every per-county rebuild, and it was wrong for as long as it
+    existed. `dropped` was `len(parts) - len(polys)`, which compares top-level
+    members against flattened polygons and goes negative the moment make_valid
+    hands back a MultiPolygon inside a GeometryCollection. It printed -25 on a
+    real county rebuild; nothing caught it, because nothing looked.
+    """
+    checks = []
+
+    def ok(label, got, want):
+        checks.append((label, got == want, got, want))
+
+    def refuses(label, geom, needle):
+        """Run polygonal_valid expecting fail(), and assert what it said.
+
+        A refusal that fires for the wrong reason is not a passing test, so
+        the check is on the message rather than on the SystemExit alone.
+        """
+        buf = io.StringIO()
+        try:
+            with contextlib.redirect_stderr(buf):
+                polygonal_valid(geom, "a-doctored-shape")
+        except SystemExit:
+            said = buf.getvalue().strip()
+            checks.append((label, needle in said, said, "...%s..." % needle))
+            return
+        checks.append((label, False, "it returned without refusing", needle))
+
+    # 1. THE COUNTER-EXAMPLE. Two assertions, because the second is only a test
+    # while the first holds: if a shapely upgrade ever flattens this collection,
+    # the two formulas agree here and this input stops being a counter-example —
+    # which is worth failing over, since the guard would then be untested rather
+    # than wrong.
+    g = shape(THREE_SQUARES_PLUS_SPIKE)
+    parts = list(getattr(make_valid(g), "geoms", [make_valid(g)]))
+    polys = [q for p in parts for q in
+             (p.geoms if isinstance(p, MultiPolygon) else [p])
+             if isinstance(q, Polygon)]
+    ok("the doctored collection still separates the two counts",
+       len(parts) - len(polys) != sum(
+           1 for q in parts if not isinstance(q, (Polygon, MultiPolygon))), True)
+    _, note = polygonal_valid(THREE_SQUARES_PLUS_SPIKE, "a-doctored-shape")
+    ok("a MultiPolygon inside a GeometryCollection reports its real drop count",
+       note, "a-doctored-shape — Ring Self-intersection; kept 3 polygonal "
+             "part(s), dropped 1 zero-area one(s), area +0.000000%")
+
+    # 2. The three refusals, each of which would otherwise ship something worse
+    # than it repaired.
+    refuses("a repair with no polygonal ground is refused",
+            A_COLLINEAR, "leaves no polygonal ground at all")
+    refuses("a repair past the area tolerance is refused",
+            FIGURE_EIGHT, "moved 22.2222% of its area, past the 0.0100%")
+    refuses("a zero-area input whose repair has area is refused",
+            BOW_TIE, "has no area and its repair has 2.0")
+
+    # 3. A valid geometry is handed straight back, unrepaired and unreported —
+    # the path every feature in a clean county takes.
+    ok("a valid polygon is returned untouched",
+       polygonal_valid(A_SQUARE, "a-doctored-shape"), (A_SQUARE, None))
+
+    bad = [c for c in checks if not c[1]]
+    for label, good, got, want in checks:
+        print("  %s %s" % ("ok " if good else "FAIL", label))
+        if not good:
+            print("       got  %r\n       want %r" % (got, want))
+    if bad:
+        print("build-parcel-fabric-districts --selftest: FAIL — %d of %d check(s)"
+              % (len(bad), len(checks)), file=sys.stderr)
+        return 1
+    print("build-parcel-fabric-districts --selftest: OK — %d check(s)" % len(checks))
+    return 0
+
+
+KNOWN_FLAGS = ("--force-blocked", "--selftest")
+
+
 def main():
     args = list(sys.argv[1:])
     # THE FLAG IS A FLAG, NOT A SLUG. It used to fall into `only` with the
@@ -1991,10 +2210,17 @@ def main():
     # it reads as: force every blocked source.
     forced = "--force-blocked" in args
     only = set(a for a in args if not a.startswith("--"))
-    unknown = sorted(a for a in args if a.startswith("--") and a != "--force-blocked")
+    unknown = sorted(a for a in args
+                     if a.startswith("--") and a not in KNOWN_FLAGS)
     if unknown:
         raise SystemExit("build-parcel-fabric-districts: unknown flag(s) %s"
                          % " ".join(unknown))
+    # --selftest reaches no network and no service, so it runs on the PR path
+    # while the build itself cannot. It exits rather than falling through: a
+    # run that also built would hide the self-test's own result behind twenty
+    # minutes of fetching.
+    if "--selftest" in args:
+        raise SystemExit(selftest())
     print("build-parcel-fabric-districts: closing %g ft, simplify %g ft"
           % (CLOSE_FT, SIMPLIFY_FT))
     for cfg in SOURCES:

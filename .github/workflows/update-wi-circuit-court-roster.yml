@@ -40,6 +40,28 @@ jobs:
           python-version: "3.x"
 
       # Stdlib only — wicourts.gov answers plain urllib with no challenge.
+      # THE SEVENTH DATA POINT FOR THE CONNECT TIMEOUT (issue #387). Four of
+      # the six runs of the two wicourts.gov workflows die inside sock.connect
+      # before any HTTP byte leaves the runner — on schedule and on dispatch,
+      # across four hours of the day, on both scrapers — so nothing in the
+      # request explains it and no longer timeout or extra in-process retry can
+      # help (2026-09-12's run spent 2 m 39 s proving that). This prints the
+      # runner's egress address and one plain connect probe, so the next
+      # failing run says WHICH address could not reach the host instead of
+      # leaving "intermittent" as the whole finding. Every call ends in
+      # `|| true`: a diagnostic must never be the thing that fails the job.
+      # api.ipify.org is an IP echo — it is sent nothing but the request, and
+      # the address it returns is the GitHub runner's, not a reader's.
+      - name: Probe this runner's route to wicourts.gov
+        run: |
+          echo -n "runner egress ip: "
+          curl -sS --max-time 20 https://api.ipify.org || true
+          echo
+          curl -sS -o /dev/null --max-time 20 \
+            -H 'User-Agent: districtry-wisconsin/1.0 (+https://districtry.com/wi/)' \
+            -w 'wicourts.gov http=%{http_code} host_ip=%{remote_ip} connect=%{time_connect}s total=%{time_total}s\n' \
+            https://www.wicourts.gov/ || true
+
       - name: Scrape the wicourts.gov bench and contact directory
         run: python3 wi/scripts/wi_circuit_judges_scraper.py
 

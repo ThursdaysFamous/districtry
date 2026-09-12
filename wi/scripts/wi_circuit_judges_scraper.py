@@ -61,9 +61,20 @@ import urllib.error
 import urllib.request
 
 DEFAULT_OUT = os.path.join(os.path.dirname(__file__), ".cache", "wi_circuit_judges_raw.json")
+# WHY A DISTRICTRY TOKEN AND NOT A CHROME STRING (2026-09-12). This file sent
+# `Mozilla/5.0 ... Chrome/124.0` until today, with nothing recorded about a
+# refusal that needed it. www.wicourts.gov is measured `token-ok` in
+# user-agent-measurements.json, and re-asked on this file's own stack the same
+# day every URL below answered HTTP 200 to this exact token in under a second.
+# robots.txt is a 404, so allow-all.
+#
+# THIS IS NOT THE FIX FOR THIS WORKFLOW'S FAILURES. Four of the six runs of the
+# two wicourts.gov workflows die in `sock.connect` with a TCP connect timeout,
+# on schedule and on dispatch, across four hours of the day and on both
+# scrapers — no HTTP byte leaves the runner, so the host never sees any header
+# this file sends. Issue #387 carries the run table.
 UA = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                  "(KHTML, like Gecko) Chrome/124.0 Safari/537.36",
+    "User-Agent": "districtry-wisconsin/1.0 (+https://districtry.com/wi/)",
     "Accept": "text/html,application/xhtml+xml,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.9",
 }

@@ -130,32 +130,27 @@ def robots_headers(host):
     Reading the policy with a WEAKER client than the crawl is the one
     asymmetry a compliance gate must not have. (The opposite — reaching for a
     stronger client than the crawl uses — would be defeating a control, and is
-    not what this does: the pins below are exactly the scraper's own, host for
-    host, and nothing is retried up the ladder.)
+    not what this does: the scraper's own chooser answers, host for host, and
+    nothing is retried up the ladder.)
+
+    IT IS ASKED RATHER THAN REPRODUCED, since 2026-09-12. This function used to
+    re-derive the answer from three of the scraper's constants, which is a copy
+    that can fall out of step with the thing it copies — and did: it read a
+    Chrome-navigation set for Monroe that the scraper had stopped sending on
+    2026-08-29 without anything noticing.
     """
     import wi_county_board_scraper as board
-    if host in getattr(board, "HONEST_UA_HOSTS", ()):
-        return board.HONEST_UA
-    if host in _browser_header_hosts():
-        return board.BROWSER
-    return board.UA
-
-
-def _browser_header_hosts():
-    """Hosts whose county is pinned to the scraper's Chrome-navigation set."""
-    import wi_county_board_scraper as board
-    pinned = getattr(board, "BROWSER_HEADER_COUNTIES", set())
-    return {urllib.parse.urlsplit(url).hostname
-            for fips, _n, _s, _d, url in board.COUNTIES if fips in pinned}
+    return board.headers_for(host)
 
 
 def read_body(response):
     """The response text, gunzipped when the pinned header set asked for gzip.
 
-    urllib does not decompress, and one of the three header sets sends
-    `Accept-Encoding: gzip` — so without this, a host on that pin returns a
-    robots.txt of binary noise that parses to zero rules and reports as
-    permitting everything.
+    urllib does not decompress. Neither header set asks for gzip today (both
+    send `identity`, and the third set that did was retired on 2026-09-12), so
+    this is for a host that compresses anyway and for the next set that asks —
+    without it, such a host returns a robots.txt of binary noise that parses to
+    zero rules and reports as permitting everything.
     """
     raw = response.read()
     if (response.headers.get("Content-Encoding") or "").lower() == "gzip":
