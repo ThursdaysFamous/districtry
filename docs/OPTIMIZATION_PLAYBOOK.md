@@ -667,3 +667,101 @@ asset generators (`render_seal_svg.mjs`, `convert_raster_seal.py`,
 assets; and `validate_workflow_deps.py` vs `check_roster_workflow_health.py`
 are complementary (static pre-merge import gate vs post-hoc run watchdog),
 not overlapping.
+
+## 9. Round 4 — the inline payload, measured and not moved (2026-09-12)
+
+An SEO audit's step 11 asked for the 1.34 MB inline script in `il/index.html`
+to be moved to a content-hashed, immutably-cached asset, with layers
+lazy-loaded on toggle, to clear a reported 5,640 ms TBT and 0.222 CLS. It was
+measured before it was built. **The move makes the app slower and was not
+made.** One thing in its neighbourhood was real and shipped: the fonts.
+
+### What the script is
+
+`il/index.html` is 1,516,768 bytes. One inline script at char 167,318 holds
+1,345,447 of them — 26,280 lines. It is code, not data (`validate_index.py`
+already forbids an inline dataset): 268,906 characters across 47 ENGINE
+blocks, and 1,076,549 characters of Illinois's own layer modules, of which
+`thread-1-geography` is 7,184 lines and `starter-modules` 11,067. Gzipped the
+document is 363,935 bytes and the script is 318,359 of them.
+
+It is in the **body**, not the head — it starts at char 167,318 and
+`</head>` is at char 146,562. The audit said head. A parser-blocking script in
+the body still costs, so the location was not the point, but the stated reason
+for the fix was wrong.
+
+### The experiment
+
+The script was split out to a deferred `perf-app.js` and both versions served
+over an emulated 1.6 Mbps / 150 ms link at 4× CPU throttle, four runs each,
+interleaved. Two distortions had to be removed first, and each one alone
+reversed the answer: `python3 -m http.server` does not gzip, so the inline
+document transferred at 1.5 MB against production's 364 KB; and the smoke
+test's vendored MapLibre was fulfilled raw, putting 1 MB through the throttled
+link and pushing DCL to 8.4 s in both arms, which swamped the difference under
+test. With both fixed:
+
+| | TBT | FCP | DOMContentLoaded | document |
+|---|---|---|---|---|
+| inline | 112–150 ms | 440–476 ms | ~2,910 ms | 366,154 B |
+| external, deferred | 154–235 ms | 432–588 ms | ~3,080–3,260 ms | 46,956 B |
+
+The document shrinks by 319 KB and `perf-app.js` adds it straight back as a
+second request, so the total is unchanged plus one round trip. DCL is 170 ms
+worse. FCP does not move.
+
+### The field numbers could not be reproduced and are not this script
+
+At 4× throttle with cross-origin blocked, `il/index.html` boots at **TBT
+125–187 ms and CLS 0.0030–0.0038** over six runs. Not 5,640 ms and not 0.222.
+What the local run cannot include is everything the field run does: cdnjs,
+CARTO tiles, GoatCounter, the live ArcGIS calls, and a real phone's CPU. So
+the field figures are not disputed — they are **unattributed**, and our own
+inline script is measured at about 130 ms of them. Lazy-loading the layer
+modules was not built, because there is no measurement saying what it would
+buy. A `min-height` for the result panel was not added either: the CLS it
+would target is not reproducible here, so there is nothing to verify a fix
+against.
+
+### What did ship: the fonts
+
+Each instance commits 18 woff2 faces and **none of the 108 in the fleet
+appeared in any service-worker list**. A page uses 8 of its 18, and they were
+re-downloaded on every visit forever.
+
+`sw.js` now serves anything under its own `fonts/` from cache. Measured on
+`/il/`, three visits in one browser profile, counting hits at the server
+rather than at `page.on("response")` — a worker answering from cache still
+delivers a response carrying the stored `content-length`, so counting at the
+page cannot tell a hit from a download, and the first version of this
+measurement reported no change for that reason:
+
+| visit | before | after |
+|---|---|---|
+| 1 (uncontrolled) | 313 hits, 4,890,830 B — 8 fonts, 164,112 B | same |
+| 2 (first controlled) | 11 hits, 538,545 B — 8 fonts, 164,112 B | same |
+| 3 (steady state) | 11 hits, 538,545 B — 8 fonts, 164,112 B | **3 hits, 375,427 B — 0 fonts** |
+
+164,112 bytes and 8 requests off every steady-state visit, 30% of the visit.
+Visit 1 cannot be helped: a newly registered worker does not control the page
+that registered it, so those font requests never reach its fetch handler.
+
+Two choices in it are worth the words. **A prefix, not a list** — a list would
+have to name which faces a page needs, and precaching all 18 would fetch about
+160 KB the visitor never uses; nothing is precached, so the first visit pays
+exactly what it pays today. And **`cacheOnlyElseNetwork`, not `cacheFirst`** —
+the existing `cacheFirst` revalidates on every hit, so it buys latency and
+never bytes. That is right for boundary geometry, where the background refresh
+is the safety net against a missed `CACHE_NAME` bump. It is waste for a
+committed binary. The first draft of the branch used `cacheFirst` and its
+comment claimed the bytes were saved; the server log showed all eight still
+crossing the wire. `check_cache_version.py` now treats every font under an
+instance's `fonts/` as cache-first, so a changed font cannot ship without a
+bump.
+
+**Still open, and measured as open:** `cacheFirst` revalidates the whole
+`GEOMETRY_URLS` set the same way. That is megabytes per visit for files that
+change about once a decade. The background refresh is a real safety net and
+`check_cache_version.py` is now the other one, so the trade is worth
+re-examining — but it was not changed here, because nothing has measured what
+the geometry set actually costs a returning visitor.
