@@ -1879,7 +1879,7 @@ to and would read as doubting the first answer. It is recorded, not re-asked.
 
 **What changed.** `scripts/logan_municipal_officials_scraper.py` read the County Clerk's
 *Reference and Yearbook* every Wednesday for its eleven municipalities' governing bodies —
-65 officials, with a phone on 51 and an e-mail on 41 — a phone on three of every four people it names, which no other county's source in this project matches on that measure (Sangamon's and Boone's outrank it on e-mail). On 2026-09-12 a fleet-wide sweep
+65 officials, with a phone on 51 and an e-mail on 41. On 2026-09-12 a fleet-wide sweep
 (`scripts/probe_user_agents.py`) read the site's `robots.txt` and found, in the group that
 binds this project's clients:
 
@@ -1926,8 +1926,8 @@ Draft:
 > Either way the officials already published stay on the map, marked as read from the
 > 2025-2026 edition, so nobody is told a name is current when it has not been re-checked.
 >
-> Thank you for publishing the yearbook at all — few counties publish a directory with a
-> phone number for three of every four people it names.
+> Thank you for publishing the yearbook at all — a directory with a phone number for most of
+> the people it names is not something every county publishes.
 
 **If there is no reply.** Follow up at about three weeks and again about two weeks after
 that, then record the office as unresponsive — which is a different claim from "the county
