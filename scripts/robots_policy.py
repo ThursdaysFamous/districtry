@@ -438,9 +438,11 @@ class HostPacer(object):
     THREE DELAY-STATING HOSTS SIT OUTSIDE THAT SURFACE, each for a stated
     reason: www.cityofdodgeville.com and www.cityofwestby.org appear only
     inside a COMMENT block in wi/scripts/wi_alderperson_scraper.py, which ast
-    drops by construction; and www.kossuthcounty.iowa.gov is CONSTRUCTED at
-    runtime by the chair scrape, which tries both spellings of every path
-    while the directory names only the bare one. An earlier draft of this
+    drops by construction; and www.kossuthcounty.iowa.gov is REACHED BY
+    REDIRECT rather than named -- the directory holds the bare spelling and
+    the server 301s. It was measured at all only because the pacer's
+    self-test fixtures used to sit in the chair scraper and named it as a
+    literal; those moved here with the test, so no surface names it now. An earlier draft of this
     docstring said "419 hosts, 27 delays", which paired one surface's
     denominator with another's numerator — the 27 came from a first pass that
     regexed raw file text and therefore caught the two commented-out URLs.
@@ -452,12 +454,28 @@ class HostPacer(object):
     TWO DECISIONS THAT LOOK LIKE DETAILS AND ARE NOT:
 
     A LEADING `www.` IS FOLDED AWAY, because the pacer's key has to be the
-    SERVER and a netloc is not one. The chair scrape tries every path against
-    both `kossuthcounty.iowa.gov` and `www.kossuthcounty.iowa.gov`; measured,
-    the bare name 301s to the www one and both return the same 243,691-byte
-    body from the same Cloudflare server. Keying on the netloc would give one
-    machine two queues and halve the delay it asked for, while looking
-    correct in the log.
+    SERVER and a netloc is not one. `kossuthcounty.iowa.gov` and
+    `www.kossuthcounty.iowa.gov` are one machine: measured, the bare name 301s
+    to the www one and both return the same 243,691-byte body from the same
+    Cloudflare server, and both robots.txt reads state 10 s. Keying on the
+    netloc would let one machine hold two queues and half the delay it asked
+    for, while reading correctly in the log.
+
+    WHAT THE CHAIR SCRAPE ACTUALLY DOES, corrected 2026-09-12 after review
+    read the code: it does NOT try both spellings. `pages_for()` builds every
+    URL with urljoin from the directory's own base -- the bare spelling, for
+    Kossuth -- and DROPS any candidate whose netloc differs from that base, so
+    a www link on the page is skipped as off-site. The www host is reached
+    only because `get()` passes allow_redirects=True and the server 301s,
+    INSIDE the held block, on a hold keyed to the bare name. So for this
+    caller the fold currently changes nothing, and the live run proves it by
+    printing one key: `Crawl-delay honoured: kossuthcounty.iowa.gov 10 s`.
+    THE FOLD IS A GUARD, NOT LOAD-BEARING TODAY: measured across the 98
+    directory hosts, 50 carry a `www.` and NOT ONE host appears in both
+    spellings, and validate_sources.py reaches www.iowacourts.gov and
+    www.issda.org under one spelling each. It earns its place the day two
+    routes name one server differently, which costs nothing to prevent and is
+    invisible once it happens.
 
     ROBOTS.TXT ITSELF IS NOT PACED. The delay is stated INSIDE robots.txt, so
     the first fetch of it cannot be governed by a number it has not read yet,
