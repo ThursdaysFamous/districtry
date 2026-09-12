@@ -76,7 +76,8 @@ SUBPAGES = {
     # became one shared block and one page would have kept its own copy.
     "root": ["privacy.html", "sponsorship.html", "traffic.html"],
     "il": ["il/faq.html", "il/sources.html", "il/police-district.html",
-           "il/school-board.html", "il/county-board.html", "il/ward.html"],
+           "il/school-board.html", "il/county-board.html", "il/ward.html",
+           "il/precinct.html"],
     "ny": ["ny/faq.html", "ny/sources.html", "ny/council-district.html",
            "ny/community-board.html"],
     "ca": ["ca/faq.html", "ca/sources.html", "ca/supervisor-district.html"],
