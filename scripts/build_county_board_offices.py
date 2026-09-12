@@ -62,6 +62,8 @@ from validate_index import (  # noqa: E402  (one copy of each rule, not a second
 APP_DIR = os.path.join(REPO_ROOT, "il", "data", "app")
 SOURCE = os.path.join(REPO_ROOT, "il", "data", "source",
                       "isbe-county-board-chairs.json")
+AFR_SOURCE = os.path.join(REPO_ROOT, "il", "data", "source",
+                          "afr-county-offices.json")
 INDEX = os.path.join(REPO_ROOT, "il", "index.html")
 OUT_NAME = "il-county-board-offices.json"
 
@@ -76,7 +78,8 @@ OUT_NAME = "il-county-board-offices.json"
 # step, in a builder whose own docstring argues against second copies.
 LIVE_RENDER = tuple(BOARD_OFFICE_LIVE_RENDER)
 
-MIN_OFFICES = 30          # 33 today; a collapse means the source changed shape
+MIN_OFFICES = 30          # 33 from ISBE today; a collapse means it changed shape
+MIN_AFR_OFFICES = 12      # 15 today, from the counties' own filings
 
 
 def fail(msg):
@@ -130,6 +133,11 @@ def own_address(key):
     return None
 
 
+WORD_ORDINAL = {"first": "1", "second": "2", "third": "3", "fourth": "4",
+                "fifth": "5", "sixth": "6", "seventh": "7", "eighth": "8",
+                "ninth": "9", "tenth": "10", "eleventh": "11", "twelfth": "12"}
+
+
 def place(addr):
     """(house number, street tokens, city) — the comparison key.
 
@@ -170,7 +178,16 @@ def place(addr):
             "blvd", "boulevard", "ln", "lane", "pl", "place", "sq", "square",
             "n", "s", "e", "w", "north", "south", "east", "west", "room",
             "suite", "ste", "floor", "fl", "po", "box"}
-    words = [w.lower() for w in re.findall(r"[A-Za-z]+", after)]
+    # AN ORDINAL IS THE SAME STREET WHICHEVER WAY IT IS WRITTEN. Jefferson
+    # County publishes "100 South 10th Street" and files "100 S TENTH STREET",
+    # and a letters-only read turned those into {"th"} against {"tenth"} — a
+    # DISAGREEMENT on the one comparison that is this gate's standing proof.
+    # Both forms fold to the digit.
+    words = []
+    for token in re.findall(r"[A-Za-z]+|\d+(?:st|nd|rd|th)\b", after, re.I):
+        token = token.lower()
+        ordinal = re.match(r"^(\d+)(?:st|nd|rd|th)$", token)
+        words.append(ordinal.group(1) if ordinal else WORD_ORDINAL.get(token, token))
     core = frozenset(w for w in words if w not in stop)
     return (num.group(1), core, re.sub(r"\s+", " ", city.group(1)).strip().lower())
 
@@ -224,7 +241,38 @@ def main():
              "published address (need at least 5) — the corroboration this "
              "file rests on has thinned out" % len(agree))
 
-    out = {}
+    # THE SECOND SOURCE, AND ITS OWN STANDING PROOF. Every Illinois unit of
+    # local government files an Annual Financial Report with the Comptroller, a
+    # county included, and its contact block witnesses a street where two
+    # differently-surnamed officers filed the same one. That reaches counties
+    # ISBE's book does not. It is held to exactly the test the ISBE column is:
+    # every county publishing its own board address that also files must name
+    # the same building, and a disagreement stops the build.
+    afr_agree, afr_bad, afr_incomparable = [], [], []
+    afr = {}
+    if os.path.exists(AFR_SOURCE):
+        afr = json.load(open(AFR_SOURCE, encoding="utf-8")).get("counties") or {}
+    for key in sorted(keys):
+        mine, filed = own_address(key), (afr.get(key) or {}).get("address")
+        if not (mine and filed):
+            continue
+        verdict = same_building(mine, filed)
+        if verdict is None:
+            afr_incomparable.append(key)
+        elif verdict:
+            afr_agree.append(key)
+        else:
+            afr_bad.append("%s (own %r vs filing %r)" % (key, mine, filed))
+    if afr_bad:
+        fail("a county's OWN published board address disagrees with its own "
+             "Annual Financial Report in %d case(s): %s. Nothing is written "
+             "until a human looks." % (len(afr_bad), "; ".join(afr_bad)))
+    if afr and len(afr_agree) < 5:
+        fail("only %d county(ies) could be compared against their own filing "
+             "(need at least 5) — the corroboration the filings rest on has "
+             "thinned out" % len(afr_agree))
+
+    out, from_afr, boxes = {}, [], []
     for key in sorted(keys):
         if key in LIVE_RENDER or own_address(key):
             continue                       # the county's own publication wins
@@ -236,22 +284,56 @@ def main():
             "address": office["address"],
             "confirmedBy": office.get("confirmedBy"),
             "asOf": rec.get("asOf"),
+            "source": "isbe",
             "sourceUrl": rec.get("sourceUrl"),
         }
+    isbe_count = len(out)
+    if isbe_count < MIN_OFFICES:
+        fail("only %d office address(es) resolved from the state's directory, "
+             "expected at least %d — the source changed shape or the dispatch "
+             "table moved" % (isbe_count, MIN_OFFICES))
 
-    if len(out) < MIN_OFFICES:
-        fail("only %d office address(es) resolved, expected at least %d — the "
-             "source changed shape or the dispatch table moved"
-             % (len(out), MIN_OFFICES))
+    for key in sorted(keys):
+        if key in out or key in LIVE_RENDER or own_address(key):
+            continue
+        rec = afr.get(key) or {}
+        address = rec.get("address")
+        if not address:
+            continue
+        # A POST-OFFICE BOX IS NOT A PLACE A READER CAN GO, and the card's row
+        # says "Board office". place() returns nothing for a box with no street,
+        # so those counties keep their gap rather than gaining a mailbox.
+        if not place(address):
+            boxes.append(key)
+            continue
+        out[key] = {
+            "address": address,
+            "filedFor": rec.get("filedFor"),
+            "source": "afr",
+            "sourceUrl": json.load(open(AFR_SOURCE, encoding="utf-8"))
+                .get("officialsPage"),
+        }
+        from_afr.append(key)
+    if afr and len(from_afr) < MIN_AFR_OFFICES:
+        fail("only %d office address(es) came from the counties' own filings, "
+             "expected at least %d" % (len(from_afr), MIN_AFR_OFFICES))
 
     payload = json.dumps({
-        "note": ("County board office addresses from the Illinois State Board "
-                 "of Elections' County Officers Book. Each is published on the "
-                 "board chair's own row and corroborated against a second "
-                 "courthouse office on the same county's page, so it is a "
-                 "shared public building rather than anyone's home. A county "
-                 "that publishes its own board address is NOT in this file — "
-                 "its own publication is what ships."),
+        "note": ("County board office addresses for districted counties whose "
+                 "own roster publishes none, from two sources, each named on "
+                 "the card. Most come from the Illinois State Board of "
+                 "Elections' County Officers Book, published on the board "
+                 "chair's own row and corroborated against a second courthouse "
+                 "office on the same county's page. The rest come from the "
+                 "county's own Annual Financial Report filing with the Illinois "
+                 "Comptroller, where a street ships only when two "
+                 "differently-surnamed officers filed the same one. Both are "
+                 "held to the same test: every county that publishes its own "
+                 "board address and also appears in the source must name the "
+                 "same building. So what ships is a shared public building "
+                 "rather than anyone's home, and a county that publishes its "
+                 "own board address is NOT in this file — its own publication "
+                 "is what ships."),
         "offices": out,
     }, indent=1, sort_keys=True) + "\n"
 
@@ -261,17 +343,24 @@ def main():
         if current != payload:
             fail("il/data/app/%s is stale — rerun "
                  "python3 scripts/build_county_board_offices.py" % OUT_NAME)
-        print("build-county-board-offices: OK — %d office(s) current; %d county"
-              "(ies) agree with their own published address, %d not comparable"
-              % (len(out), len(agree), len(incomparable)))
+        print("build-county-board-offices: OK — %d office(s) current (%d from "
+              "the state's directory, %d from the counties' own filings); "
+              "against their own published address %d agree on the directory "
+              "and %d on the filings, %d and %d not comparable"
+              % (len(out), isbe_count, len(from_afr), len(agree),
+                 len(afr_agree), len(incomparable), len(afr_incomparable)))
         return 0
 
     open(path, "w", encoding="utf-8").write(payload)
+    if boxes:
+        print("  POST-OFFICE BOX ONLY, so no office row: %s"
+              % ", ".join(sorted(boxes)), file=sys.stderr)
     print("build-county-board-offices: wrote il/data/app/%s — %d office(s) for "
-          "districted boards that publish none; %d county(ies) agree with their "
-          "own published address, %d not comparable"
-          % (OUT_NAME, len(out), len(agree), len(incomparable)))
-    return 0
+          "districted boards that publish none (%d from the state's directory, "
+          "%d from the counties' own filings); against their own published "
+          "address %d agree on the directory and %d on the filings"
+          % (OUT_NAME, len(out), isbe_count, len(from_afr), len(agree),
+             len(afr_agree)))
 
 
 if __name__ == "__main__":

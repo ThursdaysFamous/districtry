@@ -26,6 +26,10 @@ counties out as outside coverage. The app contradicted itself, and every gate
 in the repo was green — `validate_index.py` checks that each data file appears
 in exactly ONE of the two lists, which is a different question entirely.
 
+Fonts joined the cache-first side on 2026-09-12 and are matched differently —
+see `_cache_first`. The same rule applies to them: a changed font file reaches a
+returning visitor only on a bump.
+
 WHAT IT CHECKS. For each instance, the cache-first files that differ from the
 change's base (usually `origin/main`), and whether that instance's CACHE_NAME
 differs too. A changed cache-first file with an unchanged cache name fails, and
@@ -65,6 +69,10 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CACHE_NAME = re.compile(r'const\s+CACHE_NAME\s*=\s*"([^"]+)"')
 GEOMETRY = re.compile(r"const\s+GEOMETRY_URLS\s*=\s*\[(.*?)\];", re.S)
 SHELL = re.compile(r"const\s+SHELL_URLS\s*=\s*\[(.*?)\];", re.S)
+# The font branch is a PREFIX rule in the fetch handler, not a list, so there is
+# nothing to parse for names — its presence in the BASE's sw.js is what says a
+# returning visitor may be holding a cached font.
+FONT_BRANCH = re.compile(r'new URL\("fonts/", self\.registration\.scope\)')
 
 
 def _git(*args):
@@ -105,7 +113,17 @@ def _worksheet_for(tag):
 
 
 def _cache_first(sw_text, tag):
-    """The data/app files this service worker serves cache-first."""
+    """The files this service worker serves cache-first.
+
+    Two kinds, because the worker matches them two ways. GEOMETRY_URLS is a
+    literal list of data/app paths. The fonts are a PREFIX branch — the worker
+    serves anything under its own fonts/ cache-first without naming a file,
+    because a page downloads only the faces it renders glyphs for and listing
+    all eighteen would precache about 160 KB nobody uses. So for fonts the
+    comparand is every woff2/woff/ttf in the instance's fonts/ directory, and
+    only when the BASE's worker already carried that branch: before it did,
+    no returning visitor holds a cached font and no bump is owed.
+    """
     files = set()
     for pattern in (GEOMETRY, SHELL):
         block = pattern.search(sw_text or "")
@@ -115,6 +133,12 @@ def _cache_first(sw_text, tag):
             hit = re.search(r'"\./data/app/([^"]+)"', line)
             if hit:
                 files.add("%s/data/app/%s" % (tag, hit.group(1)))
+    if FONT_BRANCH.search(sw_text or ""):
+        fonts = os.path.join(REPO_ROOT, tag, "fonts")
+        if os.path.isdir(fonts):
+            for name in sorted(os.listdir(fonts)):
+                if name.endswith((".woff2", ".woff", ".ttf", ".otf")):
+                    files.add("%s/fonts/%s" % (tag, name))
     return files
 
 

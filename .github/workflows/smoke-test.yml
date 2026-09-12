@@ -386,6 +386,17 @@ jobs:
       - name: Layer counts in prose match the worksheets
         run: python3 scripts/validate_doc_counts.py
 
+      # Every authored page's <title> and meta description against what Google
+      # shows. generate_metro_files.py already gates the six worksheet-driven
+      # index.html pages and has held since 2026-09-09 — not one of them is
+      # over. It cannot see the other forty pages, and on 2026-09-11 nine
+      # titles and twenty-three descriptions were: a 252-character description
+      # on traffic.html, and an 85-character double-question title on
+      # ny/community-board.html that spent its whole tail on the brand. Surface
+      # DISCOVERED, not listed. Stdlib only.
+      - name: Titles and descriptions fit a search result
+        run: python3 scripts/validate_serp_lengths.py
+
       # 116 files here send a browser user-agent, and CLAUDE.md's rule for that
       # (settled 2026-09-11) is that the calling file records which token was
       # refused, what the site answered, and the date. Measured 2026-09-12,

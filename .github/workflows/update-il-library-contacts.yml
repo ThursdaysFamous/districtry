@@ -1,0 +1,118 @@
+name: Update statewide library contacts
+
+# Weekly refresh of il/data/app/il-library-contacts.json — the office address and
+# telephone of 250 Illinois public libraries, from L2, the directory Chicago
+# Public Library, RAILS and Illinois Heartland run together.
+#
+# This is the second publisher for the statewide library layer. The Comptroller
+# filings name the boards of the 197 libraries that file
+# (update-il-library-district-officials.yml, Sunday 12:00); this job answers where
+# the other 173 are, and fills the address or telephone that 77 filings leave out.
+# Only a district-governed library files an AFR, because a municipal library is
+# covered by its city's or village's report and a township library files as or
+# within a township, whose board is not the library's board.
+#
+# It answers no officer. Each directory row links a staff list that returns HTTP
+# 403 behind a sign-in. That is an access control and is not worked around, so the
+# statewide-library-officials gap stays open on the people half.
+#
+# IT READS THE RENDERED PAGE. A Drupal directory of this shape usually serves the
+# same rows from a REST endpoint, and librarylearning.org's robots.txt closes that
+# one — the `User-agent: *` group carries `Disallow: /restapi/*`. That group allows
+# /directory, names no vendor crawler and disallows only brandwatch.net wholesale,
+# so this scraper's districtry/1.0 token follows `*`.
+#
+# SCHEDULED AFTER THE OFFICIALS RUN, and that ordering is the point rather than
+# tidiness: this scraper reads il-library-district-officials.json to decide which
+# fields the filings already answer, so it should see Sunday's output rather than
+# last week's. Roughly 85 paced requests — two to TIGERweb for the Illinois place
+# list that splits the directory's undelimited address cell, then 41 pages of the
+# listing.
+#
+# A LIBRARY RENAMED IN EITHER PUBLISHER IS A REAL EVENT, not a parse failure, and
+# the builder's floors sit under the measured 250 so one rename cannot freeze the
+# rest. Where both publishers answer, the filing ships, because it is the unit's
+# own return; every disagreement prints on the run.
+
+on:
+  schedule:
+    # Monday 11:00 UTC — after Sunday 12:00's library-officials run, whose
+    # output this scraper reads, and clear of every other weekly job.
+    - cron: "0 11 * * 1"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI (a PR opened with the default GITHUB_TOKEN fires no workflows).
+      # Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install scraper dependencies
+        run: pip install -c scripts/requirements.txt requests
+
+      - name: Read the library systems' shared directory
+        run: |
+          python3 scripts/il_library_contacts_scraper.py \
+            --out /tmp/il_library_contacts_raw.json
+
+      - name: Rebuild roster data file
+        run: |
+          python3 scripts/build_il_library_contacts.py \
+            /tmp/il_library_contacts_raw.json
+
+      # Gate the regenerated data before it can reach a PR.
+      - name: Validate app + data files
+        run: |
+          python3 scripts/build_il_library_contacts.py \
+            /tmp/il_library_contacts_raw.json --check
+          python3 scripts/validate_index.py il/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- il/data/app/; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          # Fixed branch (not per-run): an unmerged roster PR is refreshed in
+          # place by the force-push below instead of spawning a duplicate PR.
+          branch="bot/il-library-contacts-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut the branch from main's CURRENT tip, not from the checkout this
+          # run started with — a workflow-scope refusal otherwise when main
+          # moves mid-run.
+          git fetch --depth=1 origin main
+          git checkout -B "$branch" FETCH_HEAD
+          git add il/data/app/il-library-contacts.json
+          git commit -m "Update statewide library contacts"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update statewide library contacts" \
+              --body "Automated weekly refresh of the officers, office and contact details of 250 Illinois public libraries, generated by \`scripts/il_library_contacts_scraper.py\` + \`scripts/build_il_library_contacts.py\`. L2 — the directory Chicago Public Library, RAILS and Illinois Heartland run together — is the source. It carries only what the Comptroller filings do not, and it names no officer: the directory's staff lists are behind a sign-in. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi

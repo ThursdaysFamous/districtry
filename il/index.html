@@ -55,6 +55,7 @@
 
 <!-- ==== TEMPLATE:BEGIN head-jsonld ==== -->
 <!-- Structured data: help search engines understand what this tool is -->
+<!-- ==== GENERATED:BEGIN jsonld-graph ==== -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -66,13 +67,21 @@
       "name": "districtry Illinois",
       "description": "Find every civic district that covers a point or address in Chicago, and who represents you there.",
       "inLanguage": "en-US",
-      "publisher": { "@id": "https://districtry.com/il/#publisher" }
+      "publisher": { "@id": "https://districtry.com/#publisher" }
     },
     {
       "@type": "Organization",
-      "@id": "https://districtry.com/il/#publisher",
+      "@id": "https://districtry.com/#publisher",
       "name": "Overberg",
       "url": "https://overberg.co"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://districtry.com/#author",
+      "name": "Adam Overberg",
+      "url": "https://overberg.co",
+      "email": "hello@overberg.co",
+      "worksFor": { "@id": "https://districtry.com/#publisher" }
     },
     {
       "@type": "WebApplication",
@@ -88,12 +97,15 @@
       "image": "https://districtry.com/il/og-image.png",
       "areaServed": { "@type": "City", "name": "Chicago", "containedInPlace": { "@type": "State", "name": "Illinois" } },
       "keywords": "Chicago ward map, what ward am I in, Chicago police district, Chicago community area, congressional district, Illinois legislative district, Cook County commissioner, elected school board district, CPS attendance zone, who represents me Chicago",
+      "author": { "@id": "https://districtry.com/#author" },
       "isPartOf": { "@id": "https://districtry.com/il/#website" },
+      "dateModified": "2026-09-11",
       "sameAs": "https://github.com/ThursdaysFamous/districtry"
     }
   ]
 }
 </script>
+<!-- ==== GENERATED:END jsonld-graph ==== -->
 <!-- The FAQPage structured data moved to faq.html WITH its questions. FAQ
      markup must describe content the page actually shows, so leaving it
      here once the section left would be a schema violation rather than a
@@ -1009,6 +1021,21 @@ svg.leaflet-image-layer.leaflet-interactive path {
   /* ==== GENERATED:END brand-palette ==== */
   /* ==== TEMPLATE:END palette ==== */
   /* ==== ENGINE:BEGIN styles-core ==== */
+/* .title rather than h1.title, and the tagline rather than the wordmark is the
+   h1 on an app hub. Measured 2026-09-11: the six <tag>/index.html pages put the
+   wordmark and the metro switcher inside their heading element, so that heading
+   resolved to the brand plus a navigation control instead of what the page is
+   about. Every SUB-page already had this right with the same class — "Common
+   questions", "What police district am I in?" — which is why the selector goes
+   element-agnostic rather than the sub-pages changing: a sub-page keeps its
+   heading element on .title with the descriptor beside it, while a hub demotes
+   that wrapper to a div and promotes the tagline to the heading. Both match the
+   same rules.
+
+   NO LITERAL TAG NAMES IN THIS COMMENT, deliberately. The first draft spelled
+   the markup out, which put a convincing fake opening tag into every shipped
+   index.html; a regex reading the document for its first heading matched the
+   comment and reported a 104,166-character one. CSS comments ship. */
 
     --ink: #14181C;
     --slate: #55626C;
@@ -1088,7 +1115,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     max-width: 1800px;
     margin: 0 auto;
   }
-  h1.title {
+  .title {
     margin: 0;
   }
   /* Emblem + wordmark live in one non-wrapping row so they can never split
@@ -1113,7 +1140,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
     line-height: 0.95;
     text-transform: uppercase;
   }
-  h1.title small {
+  .title small, .title .title-tagline {
+    margin: 0;
     display: block;
     font-family: var(--font-body);
     font-weight: 500;
@@ -1129,7 +1157,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     header.masthead { padding: 12px 16px 14px; }
     .masthead-star { width: 24px; height: 24px; }
     .title-text { font-size: 22px; }
-    h1.title small { font-size: 12px; margin-top: 3px; }
+    .title small, .title .title-tagline { font-size: 12px; margin-top: 3px; }
   }
 
   main.layout {
@@ -2712,7 +2740,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .dst-metro-menu a:hover,
   .dst-metro-menu a:focus-visible { background: var(--dst-brand-tint-soft); color: var(--accent-deep); }
   .dst-metro-menu-emoji { font-size: 15px; line-height: 1; }
-  h1.title small { color: var(--slate); }
+  .title small, .title .title-tagline { color: var(--slate); }
   .masthead-actions .footer-link-btn {
     color: var(--accent-deep);
     background: rgba(109, 63, 209, 0.08);
@@ -3287,7 +3315,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
        dstPlaceDoors) — they cannot fit on one row at 375px, and wrapped they
        cost 65px of permanently visible header. The theme toggle stays, lifted
        out of flow into the wordmark row so it costs no height at all. */
-    h1.title small { display: none; }
+    .title small, .title .title-tagline { display: none; }
     header.masthead { position: relative; }
     .masthead-actions {
       position: absolute;
@@ -3629,7 +3657,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 <header class="masthead">
   <div class="masthead-inner">
-    <h1 class="title">
+    <div class="title">
       <span class="title-row">
         <svg class="masthead-star" viewBox="0 0 100 100" aria-hidden="true">
           <path fill="var(--accent-warm)" id="star-path-header"></path>
@@ -3638,9 +3666,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <!-- ==== GENERATED:BEGIN masthead-brand ==== -->
         <span class="title-text"><a class="dst-wordmark-link" href="../">districtry</a> <span class="dst-metro-switch"><button type="button" class="title-metro dst-metro-btn" aria-expanded="false" aria-haspopup="true" aria-label="districtry Illinois — switch explorer">/ il<span class="dst-metro-caret" aria-hidden="true">&#9662;</span></button><span class="dst-metro-menu" role="menu"></span></span></span>
       </span>
-      <small>Click the map for every district you're in, and who represents you.</small>
+      <h1 class="title-tagline">Click the map for every district you're in, and who represents you.</h1>
         <!-- ==== GENERATED:END masthead-brand ==== -->
-    </h1>
+    </div>
     <div class="map-toolbar">
 <!-- ==== ENGINE:BEGIN body-map-toolbar ==== -->
     <div class="search-shell">
@@ -3770,17 +3798,41 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <p><strong>Not for legal or official use.</strong> Boundary and roster data come from public
       sources that disclaim legal precision — confirm with the relevant government office before
       relying on them for anything official.</p>
+      <!-- ==== ENGINE:BEGIN footer-independence ==== -->
+      <!-- ONE copy of the app footer's independence notice. It was six
+           byte-identical copies until 2026-09-12 — the test this repo already
+           applies to an engine block (if two copies could drift and a reader
+           would want them identical, it is shared) and nothing about it is
+           per-state.
+
+           It carries the contact address for the same reason the sub-page
+           byline does: this is the paragraph a reader reaches after being told
+           the site is not a government service, which is exactly when they
+           want to know who to write to. hello@ is the general address; the
+           specific routes (corrections@, press@, data@, sponsor@, and adam@ for
+           privacy) stay where sponsorship.html documents them. -->
       <p class="dpf-independence"><strong>Independent and unofficial.</strong> districtry is not a
       government service and is not affiliated with, endorsed by, or operated by any government
       agency. It asks for an address only to place a point on the map — there is no account, no
       sign-in, and it never asks for personal or financial information. Seals shown beside a
       district belong to that body and indicate whose district you are looking at, not any
       endorsement of this site. Built and run by
-      <a href="https://overberg.co" target="_blank" rel="noopener">Adam Overberg</a>.</p>
+      <a href="https://overberg.co" rel="author noopener" target="_blank">Adam Overberg</a>,
+      reachable at <a href="mailto:hello@overberg.co">hello@overberg.co</a>.</p>
+      <!-- ==== ENGINE:END footer-independence ==== -->
       <div class="footer-meta" id="footer-meta">
-        <span>Data last verified: <strong id="verified-date"></strong></span>
+        <span>Data last verified:
+          <!-- ==== GENERATED:BEGIN verified-date ==== -->
+          <strong id="verified-date">September 11, 2026</strong>
+          <!-- ==== GENERATED:END verified-date ==== -->
+        </span>
       </div>
       <div class="dpf-links">
+        <!-- ==== GENERATED:BEGIN guide-links ==== -->
+        <a href="county-board.html">Who is my county commissioner?</a>
+        <a href="school-board.html">What school board district am I in?</a>
+        <a href="police-district.html">What police district am I in?</a>
+        <!-- ==== GENERATED:END guide-links ==== -->
         <a href="./sources.html">Every layer, and where its data comes from →</a>
         <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">Geocoding © OpenStreetMap contributors</a>
         <a href="../privacy.html">Privacy</a>
@@ -9644,6 +9696,14 @@ function initChiExplorer() {
         phone: contact.phone, email: contact.email, links: links
       }));
     }
+    // A board from the district's own Annual Financial Report, where one is
+    // stamped on the feature. It sits here rather than after the office block
+    // because the fleet card order is identity, then people, then location,
+    // then contact — which is the order this card already takes when the
+    // county's own data names an officer (`contact.officer` above).
+    if (contact.peopleNode) {
+      wrap.appendChild(contact.peopleNode);
+    }
     if (contact.addrLines && contact.addrLines.length) {
       wrap.appendChild(renderOfficeGroup({ offices: [{ label: "Office", lines: contact.addrLines }] }));
     }
@@ -9652,14 +9712,23 @@ function initChiExplorer() {
     }
     return wrap;
   }
-  // Lake's GIS carries each district's own office contact on the feature
+  // Lake's GIS carries each district's own office contact on the feature. Its
+  // fire and park districts additionally carry a board from their own AFR
+  // filing (`officials`, stamped by withIlDistrictOfficials); its libraries do
+  // not, and pass nothing, so their cards are unchanged.
   function lakeOrgCard(title, county, result) {
     function val(v) { return v == null ? "" : String(v).trim(); }
+    var addrLines = [val(result.addr),
+      [val(result.city), val(result.zip)].filter(Boolean).join(" ")].filter(Boolean);
     return orgEntryCard(title, county, {
-      addrLines: [val(result.addr), [val(result.city), val(result.zip)].filter(Boolean).join(" ")].filter(Boolean),
+      addrLines: addrLines,
       phone: val(result.phone) || null,
       email: val(result.email) || null,
       url: safeHttpUrl(val(result.url)),
+      // The filing's own office is dropped wherever the county publishes one:
+      // the two are the same building, and the county's is the district's own
+      // publication rather than a value witnessed out of one filer's details.
+      peopleNode: afrDistrictPeople(result, { omitOffice: addrLines.length > 0 }),
       note: result.snappedFt != null ? rowSnapNoteText(result.snappedFt) : null
     });
   }
@@ -11458,6 +11527,54 @@ function initChiExplorer() {
     return loadArcGISGeoJSON(MORGAN_PRECINCT_SERVICE);
   });
 
+  /* SEVEN COUNTIES WHOSE CENSUS 2020 FABRIC IS STILL THEIR OWN (2026-09-11).
+   * Each was already served and drew no precincts, and six of the seven had a
+   * gap record giving the same reason: the county publishes no precinct map.
+   * That is the wrong question. This route needs the county's precinct NAMES,
+   * and ISBE publishes every county's certified precinct-level returns as CSV
+   * for all 102 counties — the 2024 General and the 2026 General Primary name
+   * the same precincts in all seven, and the Census 2020 voting districts carry
+   * those names and sum to each county's exact 2020 population.
+   *
+   * MASON IS WHY THE AUDIT RAN. Its gap record stated, as a fact about the
+   * shipped app, that "Mason County's 21 precincts are drawn from 2020 census
+   * boundaries" and that the census carries "exactly the set of 21 shapes the
+   * app already holds". The app held none of them.
+   *
+   * WASHINGTON WAS BUILT AND DROPPED, which is the check worth keeping: its
+   * certified returns report DuBois, Johannisburg, Lively Grove and Venedy at
+   * TWO ids each while the census splits DuBois and Hoyleton, so the two
+   * publishers agree on DuBois alone and the fabric cannot be placed. Every
+   * county here is reconciled against the RAW canvass names rather than the
+   * reporting-id-stripped ones, because a base name at two ids is a question
+   * and never a duplicate to collapse.
+   *
+   * Six of the seven elect their boards county-wide, so no board district is
+   * carried; Mason's two township-built districts already ship as their own
+   * layer. No polling place ships and no roster. See
+   * scripts/build_vtd_precincts.py. */
+  var loadEdwardsPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/edwards-precincts.json", {}, 2);
+  });
+  var loadMasonPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mason-precincts.json", {}, 2);
+  });
+  var loadMassacPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/massac-precincts.json", {}, 2);
+  });
+  var loadPikePrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/pike-precincts.json", {}, 2);
+  });
+  var loadSalinePrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/saline-precincts.json", {}, 2);
+  });
+  var loadUnionPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/union-precincts.json", {}, 2);
+  });
+  var loadWabashPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/wabash-precincts.json", {}, 2);
+  });
+
   /* Edgar (the 56th dispatched county, added 2026-08-18) — the same canvass
    * route as Crawford and Mercer, and the first county it reached whose
    * composition rests on a FULL SET of certified documents rather than one
@@ -12434,6 +12551,15 @@ function initChiExplorer() {
   var loadKankakeeDistrictOfficials = makeCached(function () {
     return fetchJSONWithRetry("data/app/kankakee-district-officials.json", {}, 2);
   });
+  /* Six more counties' fire and park districts, in ONE file because one
+   * scraper reads them: Cook (fire), Kendall, Macon, Rock Island and Stark
+   * (fire and park), and Stephenson (fire). Keyed by county, then by LAYER,
+   * then by the name the boundary file writes — Macon's fire and park layers
+   * both draw a Blue Mound and both draw a Niantic, and they are four
+   * different bodies. scripts/il_special_district_officials_scraper.py. */
+  var loadIlSpecialDistrictOfficials = makeCached(function () {
+    return fetchJSONWithRetry("data/app/il-special-district-officials.json", {}, 2);
+  });
   /* ONE file for all 72 counties, and that is the shape of the source rather
    * than a saving: the statewide layer clips a library's service area to the
    * county, so one library draws a card in several counties while filing ONE
@@ -12441,6 +12567,16 @@ function initChiExplorer() {
    * per-county files are keyed by district name within a county. */
   var loadIlLibraryOfficials = makeCached(function () {
     return fetchJSONWithRetry("data/app/il-library-district-officials.json", {}, 2);
+  });
+  /* The office address and telephone of 250 Illinois public libraries, from the
+   * shared directory the three library systems run (L2). It carries only what
+   * the Comptroller filings do not: 173 of the 250 are municipal or township
+   * libraries that file no report of their own, and the rest are filings with no
+   * address, no telephone, or a post-office box where a street should be. So the
+   * stamper applies this file OVER the filing's office with no further judgment.
+   * No officer and no e-mail come from here — scripts/build_il_library_contacts.py. */
+  var loadIlLibraryContacts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/il-library-contacts.json", {}, 2);
   });
   /* One stamper for both counties: the payloads are the same shape because
    * they come from the same filings, so only the roster file and the property
@@ -12484,13 +12620,80 @@ function initChiExplorer() {
     return withAfrOfficials(loadGeometry, loadKankakeeDistrictOfficials,
                             ["unit_name"]);
   }
+  /* The six counties in il-special-district-officials.json. One roster file
+   * holds all of them, so the county and the LAYER pick the map to join on
+   * before the name does. */
+  /* Lake's two bespoke entries name their loader in TWO places — loadGeometry
+   * for the overlay and again inside query — so the wrapper is applied once
+   * here rather than at each site: calling it twice would build two caches and
+   * fetch the county's boundary twice. */
+  var loadLakeFireOfficials, loadLakeParksOfficials;
+  function withIlDistrictOfficials(county, layer, nameKeys) {
+    return function (loadGeometry) {
+      return withAfrOfficials(loadGeometry, function () {
+        return loadIlSpecialDistrictOfficials().then(function (data) {
+          var byCounty = (data && data.counties) || {};
+          return { districts: (byCounty[county] || {})[layer] || {} };
+        });
+      }, nameKeys);
+    };
+  }
+  loadLakeFireOfficials = withIlDistrictOfficials("lake", "fire", ["org_name"])(loadLakeFire);
+  loadLakeParksOfficials = withIlDistrictOfficials("lake", "park", ["org_name"])(loadLakeParks);
   /* The statewide library layer, all 72 counties through one roster. Its join
    * key is the boundary layer's own `library` column, and its collection is
    * `libraries` rather than `districts` — a library, not a district within a
    * county, is what one filing answers for here. */
   function withLibraryOfficials(loadGeometry) {
-    return withAfrOfficials(loadGeometry, loadIlLibraryOfficials,
-                            ["library"], "libraries");
+    var stamped = withAfrOfficials(loadGeometry, loadIlLibraryOfficials,
+                                   ["library"], "libraries");
+    return makeCached(function () {
+      return Promise.all([
+        stamped(),
+        loadIlLibraryContacts().catch(function () { return null; })
+      ]).then(function (results) {
+        var geojson = results[0];
+        var byName = (results[1] && results[1].libraries) || {};
+        (geojson.features || []).forEach(function (f) {
+          var props = f.properties || {};
+          var extra = byName[String(props.library)];
+          if (!extra) return;
+          // The contact file holds only fields the filing does not answer, so
+          // each one it carries wins. A library with no filing at all gets an
+          // officials object naming no board and no fiscal year, which is what
+          // the sources support: an address and a telephone and nobody.
+          var info = props.dxOfficials = props.dxOfficials || {};
+          // The library's own site and its administrator are not office
+          // fields, and the directory is their only publisher — an Annual
+          // Financial Report carries no website at all, and the scraper
+          // withholds an administrator wherever the filing named one. So both
+          // are stamped whole rather than merged field by field.
+          if (extra.url) info.website = extra.url;
+          if (extra.admin && extra.admin.name) info.directoryHead = extra.admin;
+          var office = info.office = info.office || {};
+          var added = [];
+          if (extra.address) {
+            office.address = extra.address;
+            office.city = extra.city || office.city;
+            added.push("address");
+          }
+          if (extra.phone) {
+            office.phone = extra.phone;
+            added.push("telephone");
+          }
+          if (added.length) {
+            // NAME THE PUBLISHER OF WHAT IT GAVE, not of the whole row: a card
+            // can carry a telephone from the filing and an address from the
+            // directory, and one note claiming both for either would be wrong.
+            info.contactNote = (added.length === 2
+              ? "Address and telephone from"
+              : "The " + added[0] + " comes from")
+              + " the Illinois library systems' shared directory.";
+          }
+        });
+        return geojson;
+      });
+    });
   }
 
   /* The officeholder block under a district whose officers come from its own
@@ -12516,7 +12719,7 @@ function initChiExplorer() {
    * checking the filing needs to know where to look: a cross-county district
    * files once, under its home county, so Logan's Armington Community files in
    * Tazewell and its San Jose in Mason. */
-  function afrDistrictPeople(result) {
+  function afrDistrictPeople(result, opts) {
     var info = result && result.officials;
     if (!info) return null;
     var frag = document.createDocumentFragment();
@@ -12562,7 +12765,28 @@ function initChiExplorer() {
     if ((board.length || heads.length) && filed) {
       frag.appendChild(renderBodyIntro({ note: filed }));
     }
-    var office = info.office || {};
+    // A second publisher's person, so it sits AFTER the filing's note rather
+    // than above it: one note per block, each describing the block it follows.
+    // Only the library layer sets this, and only where the filing named no
+    // administration of its own, so the two can never appear together.
+    var listed = info.directoryHead;
+    if (!heads.length && listed && listed.name) {
+      frag.appendChild(renderSectionLabel("Administration"));
+      frag.appendChild(renderPersonRows([person(listed)]));
+      frag.appendChild(renderBodyIntro({
+        // The "no trustees" half only where the card shows none. On a card
+        // that already names a board from a filing it reads as a claim about
+        // THIS library rather than about the directory, and the two sit two
+        // lines apart.
+        note: "The administrator comes from the Illinois library systems' "
+          + "shared directory" + (board.length ? "." : ", which names no trustees.")
+      }));
+    }
+    // A caller whose own source already publishes the district's office says
+    // so and the filing's copy is dropped: Lake's GIS carries each district's
+    // own address, telephone, e-mail and website, so rendering the filing's
+    // too put the same office on the card twice.
+    var office = (opts && opts.omitOffice) ? {} : (info.office || {});
     if (office.address || office.phone || office.email) {
       frag.appendChild(renderLinkRow({
         // "Office" NAMES A PLACE, so a district whose filing witnesses no
@@ -12577,8 +12801,18 @@ function initChiExplorer() {
         phone: office.phone ? String(office.phone) : null,
         email: office.email ? String(office.email) : null
       }));
+      // Only the library layer sets this, and only for a value a second
+      // publisher supplied. Every other entry's card is unchanged.
+      if (info.contactNote) {
+        frag.appendChild(renderBodyIntro({ note: String(info.contactNote) }));
+      }
     }
-    return frag;
+    // NOTHING APPENDED MEANS NO BLOCK, not an empty one. The caller treats any
+    // node as a reason to wrap the card in card-flush, and `website` is carried
+    // on this same object for primaryLink without drawing a row — so a library
+    // whose only extra is its own site would otherwise re-wrap the card to show
+    // nothing.
+    return frag.childNodes.length ? frag : null;
   }
 
   /* TAZEWELL COUNTY (the 30th dispatched county, added 2026-08-02).
@@ -12819,9 +13053,12 @@ function initChiExplorer() {
    * say "Join_Dissolved" but the dissolve was run on a parcel join and kept
    * every road void — the 2026-08-16 fabric survey measured 1318/960/556
    * EMPTY road-band voids at full precision, the fleet's worst. Voids
-   * closed at 75 ft; district names ship EXACTLY as the county writes them
-   * (MtZion, HopeWelty — the macon-district-name-formatting posture);
-   * upstream edit dates are pinned in the builder. */
+   * closed at 75 ft. The county's labels have their spaces stripped
+   * (MtZion, HopeWelty) and all three layers now ship the name a second
+   * publisher gives the same body — the statewide library layer for the
+   * libraries, each district's own filing with the Illinois Comptroller for
+   * fire and park — with every pairing re-proven on each build and a letter
+   * never changed. Upstream edit dates are pinned in the builder. */
   var loadMaconFire = makeCached(function () {
     return fetchJSONWithRetry("data/app/macon-fire-districts.json", {}, 2);
   });
@@ -14606,7 +14843,15 @@ function initChiExplorer() {
         { label: "Boundary", value: STATEWIDE_LIBRARY_CREDIT },
         { name: "officials", keys: ["dxofficials"], hidden: true }
       ],
-      people: afrDistrictPeople
+      people: afrDistrictPeople,
+      // Every one of these 550 cards used to end with the boundary credit and
+      // nothing to click. The library's own site comes from the same directory
+      // as the address and the telephone; the filings carry no website.
+      primaryLink: function (result) {
+        var info = result && result.officials;
+        return (info && info.website)
+          ? { label: "Library website", url: String(info.website) } : null;
+      }
     });
   }
   var GRUNDY_GIS = "https://maps.grundyco.org/arcgis/rest/services/";
@@ -18180,15 +18425,25 @@ function initChiExplorer() {
       var rows = [{ label: "Board office", value: String(rec.address) }];
       var asOf = rec.asOf ? String(rec.asOf) : null;
       var by = rec.confirmedBy ? String(rec.confirmedBy) : null;
-      rows.push({ label: "Address source", value:
-        "Illinois State Board of Elections, County Officers Book"
-        + (asOf ? " (updated " + asOf + ")" : "")
-        // "County Clerk" under a phrase that already says "the county's"
-        // reads as "the county's county clerk" — strip the redundant word,
-        // which leaves "clerk", "circuit clerk", "state's attorney" and the
-        // two offices that never carried it (treasurer, sheriff).
-        + (by ? " \u00b7 same building as the county's "
-              + by.toLowerCase().replace(/^county\s+/, "") : "") });
+      // TWO PUBLISHERS NOW, AND EACH ROW NAMES ITS OWN. Most addresses come
+      // from the state's directory; fifteen counties appear in neither it nor
+      // their own roster and come from the county's own Annual Financial
+      // Report, which is a different document with a different date, so one
+      // fixed credit line would be wrong on a third of the rows.
+      rows.push(rec.source === "afr"
+        ? { label: "Address source", value:
+            "The county's own Annual Financial Report, filed with the Illinois "
+            + "Comptroller"
+            + (rec.filedFor ? " for fiscal year " + String(rec.filedFor) : "") }
+        : { label: "Address source", value:
+            "Illinois State Board of Elections, County Officers Book"
+            + (asOf ? " (updated " + asOf + ")" : "")
+            // "County Clerk" under a phrase that already says "the county's"
+            // reads as "the county's county clerk" — strip the redundant word,
+            // which leaves "clerk", "circuit clerk", "state's attorney" and the
+            // two offices that never carried it (treasurer, sheriff).
+            + (by ? " \u00b7 same building as the county's "
+                  + by.toLowerCase().replace(/^county\s+/, "") : "") });
       wrap.appendChild(renderFieldStack(rows));
     }).catch(function () { /* one missing file never breaks a card */ });
     return wrap;
@@ -23445,12 +23700,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "cook",
         coverage: cookCountyCoverage,
-        loader: loadCookFireDistricts,
+        loader: withIlDistrictOfficials("cook", "fire", ["agency_description"])(loadCookFireDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["agency_description"], primary: true },
-          { label: "County", value: "Cook County" }
-        ]
+          { label: "County", value: "Cook County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       polygonCountyEntry({
         key: "will",
@@ -23470,25 +23727,27 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "dupage",
         coverage: dupageCountyCoverage,
-        loader: loadDupageFire,
+        loader: withIlDistrictOfficials("dupage", "fire", ["fire"])(loadDupageFire),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["fire"], primary: true },
-          { label: "County", value: "DuPage County" }
-        ]
+          { label: "County", value: "DuPage County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Lake carries each district's own office contact on the GIS feature —
       // bespoke entry so those rows render as real links (see lakeOrgContactRows)
       {
         key: "lake",
         coverage: lakeCountyCoverage,
-        loadGeometry: loadLakeFire,
+        loadGeometry: loadLakeFireOfficials,
         hoverName: function (feature) {
           var v = findPropCI(feature.properties || {}, ["org_name"]);
           return (v == null || String(v).trim() === "") ? null : String(v);
         },
         query: function (point, seq) {
-          return loadLakeFire().then(function (geojson) {
+          return loadLakeFireOfficials().then(function (geojson) {
             var hit = findFeatureContainingOrNear(geojson, point, PARCEL_FABRIC_SNAP_FT);
             if (!hit) return null;
             var props = hit.feature.properties || {};
@@ -23501,6 +23760,7 @@ function initChiExplorer() {
               phone: findPropCI(props, ["phone"]),
               email: findPropCI(props, ["email"]),
               url: findPropCI(props, ["url"]),
+              officials: findPropCI(props, ["dxofficials"]),
               snappedFt: hit.snappedFt
             };
           });
@@ -23525,23 +23785,27 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "mchenry",
         coverage: mchenryCountyCoverage,
-        loader: loadMchenryFire,
+        loader: withIlDistrictOfficials("mchenry", "fire", ["firedist"])(loadMchenryFire),
         fields: [
           { name: "name", label: "Fire District", keys: ["firedist"], primary: true },
-          { label: "County", value: "McHenry County" }
-        ]
+          { label: "County", value: "McHenry County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Kendall: the parcel-derived tax-code tiling, name-only (the loader
       // excludes the municipal Joliet row — see the KENDALL COUNTY block)
       polygonCountyEntry({
         key: "kendall",
         coverage: kendallCountyCoverage,
-        loader: loadKendallFire,
+        loader: withIlDistrictOfficials("kendall", "fire", ["fire"])(loadKendallFire),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["fire"], primary: true },
-          { label: "County", value: "Kendall County" }
-        ]
+          { label: "County", value: "Kendall County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Kankakee's fire tiling (17 features, 16 districts — MANTENO FIRE ST1 and
       // ST2 are two stations of one). The county's taxing-district layers declare
@@ -23595,12 +23859,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "dekalb",
         coverage: dekalbCountyCoverage,
-        loader: loadDekalbFire,
+        loader: withIlDistrictOfficials("dekalb", "fire", ["fire_district"])(loadDekalbFire),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["fire_district"], primary: true },
-          { label: "County", value: "DeKalb County" }
-        ]
+          { label: "County", value: "DeKalb County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Lee's 22 districts come from its NG911 service-area layer, so the name
       // field is DsplayName (the upstream spelling) — the only identity column
@@ -23611,23 +23877,27 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "lee",
         coverage: leeCountyCoverage,
-        loader: loadLeeFireDistricts,
+        loader: withIlDistrictOfficials("lee", "fire", ["dsplayname"])(loadLeeFireDistricts),
         fields: [
           { name: "name", label: "Fire District", keys: ["dsplayname"], primary: true },
-          { label: "County", value: "Lee County" }
-        ]
+          { label: "County", value: "Lee County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Rock Island's 17, pre-built from the county's tax-agency tiling (the
       // Cook shape) with parcel-fabric road voids closed — see the loaders.
       polygonCountyEntry({
         key: "rock-island",
         coverage: rockIslandCountyCoverage,
-        loader: loadRockIslandFireDistricts,
+        loader: withIlDistrictOfficials("rock-island", "fire", ["firepd"])(loadRockIslandFireDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["firepd"], primary: true },
-          { label: "County", value: "Rock Island County" }
-        ]
+          { label: "County", value: "Rock Island County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Sangamon's 29 FPDs + the city (2026-08-02). Identity-only — the FPD
       // trustees are partly elected (four clerk PDFs) and partly
@@ -23647,17 +23917,19 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "adams",
         coverage: adamsCountyCoverage,
-        loader: loadAdamsFireDistricts,
+        loader: withIlDistrictOfficials("adams", "fire", ["dsplayname"])(loadAdamsFireDistricts),
         fields: [
           { name: "name", label: "Fire District", keys: ["dsplayname"], primary: true },
           { label: "Note", value: "Adams County publishes this as its 911 response tiling, so it names the department that answers here rather than a fire protection district's taxing boundary." },
-          { label: "County", value: "Adams County" }
-        ]
+          { label: "County", value: "Adams County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       polygonCountyEntry({
         key: "iroquois",
         coverage: iroquoisCountyCoverage,
-        loader: loadIroquoisFireDistricts,
+        loader: withIlDistrictOfficials("iroquois", "fire", ["name"])(loadIroquoisFireDistricts),
         fields: [
           { name: "name", label: "Fire District", keys: ["name"], primary: true },
           { name: "discrepancy", label: "County's note", keys: ["discrepancy"],
@@ -23665,8 +23937,10 @@ function initChiExplorer() {
               var d = r && r.discrepancy;
               return !!d && String(d).trim() && String(d).trim().toLowerCase() !== "none";
             } },
-          { label: "County", value: "Iroquois County" }
-        ]
+          { label: "County", value: "Iroquois County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Peoria's 13 — the first fire tiling in the fleet whose source carries
       // a per-district WEBSITE, so the card can link the district that answers
@@ -23692,14 +23966,16 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "sangamon",
         coverage: sangamonCountyCoverage,
-        loader: loadSangamonFire,
+        loader: withIlDistrictOfficials("sangamon", "fire", ["district"])(loadSangamonFire),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["district"], primary: true },
           { label: "Note", value: "Springfield's corporate area is served by the city's own Fire Department rather than a fire protection district.",
             when: function (r) { return r.name === "SPRINGFIELD CORP"; } },
-          { label: "County", value: "Sangamon County" }
-        ]
+          { label: "County", value: "Sangamon County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // St. Clair's 44 named departments (2026-08-02), from the county's CAD
       // folder. The source declares disttype/agency columns and populates
@@ -23709,12 +23985,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "st-clair",
         coverage: stClairCountyCoverage,
-        loader: loadStClairFire,
+        loader: withIlDistrictOfficials("st-clair", "fire", ["name"])(loadStClairFire),
         fields: [
           { name: "name", label: "Fire District", keys: ["name"], primary: true },
           { label: "Note", value: "The county publishes this tiling without stating whether it maps taxing districts or dispatch-response coverage areas." },
-          { label: "County", value: "St. Clair County" }
-        ]
+          { label: "County", value: "St. Clair County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Stephenson's 15 named fire services (2026-08-02) — the fleet's second
       // GEOREFERENCED boundary: the county publishes no fire boundary as
@@ -23727,12 +24005,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "stephenson",
         coverage: stephensonCountyCoverage,
-        loader: loadStephensonFire,
+        loader: withIlDistrictOfficials("stephenson", "fire", ["district"])(loadStephensonFire),
         fields: [
           { name: "name", label: "Fire District", keys: ["district"], primary: true },
           { label: "Note", value: "Boundary georeferenced from the county's 2014-published fire district map — the newest the county publishes. Lines are approximate and predate any later changes." },
-          { label: "County", value: "Stephenson County" }
-        ]
+          { label: "County", value: "Stephenson County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Boone — 5 districts the county identifies by NUMBER, not by name (see
       // loadBooneFire). The pill reads "Fire District 3" and a note says why,
@@ -23753,7 +24033,7 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "boone",
         coverage: booneCountyCoverage,
-        loader: loadBooneFire,
+        loader: withIlDistrictOfficials("boone", "fire", ["district"])(loadBooneFire),
         pill: true,
         excluded: {
           where: inBelvidereCity,
@@ -23767,8 +24047,10 @@ function initChiExplorer() {
         fields: [
           { name: "district", label: "Fire District", keys: ["district"], primary: true },
           { label: "Note", value: "Boone County identifies its fire protection districts by number rather than by name — the numbering its tax extensions are run on. The county publishes no name for them." },
-          { label: "County", value: "Boone County" }
-        ]
+          { label: "County", value: "Boone County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Stark — 6 departments from the County Clerk's own Google My Maps
       // (clerk-confirmed 3 Aug 2026; see loadStarkFire). Uniquely in this
@@ -23780,22 +24062,26 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "stark",
         coverage: starkCountyCoverage,
-        loader: loadStarkFire,
+        loader: withIlDistrictOfficials("stark", "fire", ["name"])(loadStarkFire),
         fields: [
           { name: "name", label: "Fire District", keys: ["name"], primary: true },
           { name: "ambulance", label: "Ambulance", keys: ["ambulance"] },
-          { label: "County", value: "Stark County" }
-        ]
+          { label: "County", value: "Stark County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       polygonCountyEntry({
         key: "macon",
         coverage: maconCountyCoverage,
-        loader: loadMaconFire,
+        loader: withIlDistrictOfficials("macon", "fire", ["fire"])(loadMaconFire),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["fire"], primary: true },
-          { label: "County", value: "Macon County" }
-        ]
+          { label: "County", value: "Macon County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Effingham — the org's dissolved 18-zone tiling, names matching the
       // county's own fire-protection-district list; the 'None' zone is
@@ -23803,12 +24089,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "effingham",
         coverage: effinghamCountyCoverage,
-        loader: loadEffinghamFire,
+        loader: withIlDistrictOfficials("effingham", "fire", ["zonedesc"])(loadEffinghamFire),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Fire District", keys: ["zonedesc"], primary: true },
-          { label: "County", value: "Effingham County" }
-        ]
+          { label: "County", value: "Effingham County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Woodford — 17 districts dissolved from the county's parcel fabric.
       // The VILLAGE OF METAMORA is a hole on purpose: every one of the 1,701
@@ -23857,11 +24145,13 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "hamilton",
         coverage: hamiltonCountyCoverage,
-        loader: loadHamiltonFire,
+        loader: withIlDistrictOfficials("hamilton", "fire", ["name"])(loadHamiltonFire),
         fields: [
           { name: "name", label: "Fire District", keys: ["name"], primary: true },
-          { label: "County", value: "Hamilton County" }
-        ]
+          { label: "County", value: "Hamilton County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Monroe — 26 shapes the county labels only by abbreviation + zone
       // ("MVFD 2"). The county's GIS/Mapping department confirmed the eight
@@ -23872,13 +24162,15 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "monroe",
         coverage: monroeCountyCoverage,
-        loader: loadMonroeFire,
+        loader: withIlDistrictOfficials("monroe", "fire", ["dxfirename"])(loadMonroeFire),
         fields: [
           // findPropCI candidates are LOWERCASE (it lowercases the feature's
           // own keys before comparing) — this matches the loader's dxFireName
           { name: "name", label: "Fire District", keys: ["dxfirename"], primary: true },
-          { label: "County", value: "Monroe County" }
-        ]
+          { label: "County", value: "Monroe County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       })
     ]
   });
@@ -23905,12 +24197,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "cook",
         coverage: cookCountyCoverage,
-        loader: loadCookParkDistricts,
+        loader: withIlDistrictOfficials("cook", "park", ["agency_description"])(loadCookParkDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Park District", keys: ["agency_description"], primary: true },
-          { label: "County", value: "Cook County" }
-        ]
+          { label: "County", value: "Cook County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       polygonCountyEntry({
         key: "will",
@@ -23929,25 +24223,27 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "dupage",
         coverage: dupageCountyCoverage,
-        loader: loadDupageParks,
+        loader: withIlDistrictOfficials("dupage", "park", ["park"])(loadDupageParks),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Park District", keys: ["park"], primary: true },
-          { label: "County", value: "DuPage County" }
-        ]
+          { label: "County", value: "DuPage County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Lake carries each district's own office contact on the GIS feature —
       // bespoke entry so those rows render as real links (see lakeOrgContactRows)
       {
         key: "lake",
         coverage: lakeCountyCoverage,
-        loadGeometry: loadLakeParks,
+        loadGeometry: loadLakeParksOfficials,
         hoverName: function (feature) {
           var v = findPropCI(feature.properties || {}, ["org_name"]);
           return (v == null || String(v).trim() === "") ? null : String(v);
         },
         query: function (point, seq) {
-          return loadLakeParks().then(function (geojson) {
+          return loadLakeParksOfficials().then(function (geojson) {
             var hit = findFeatureContainingOrNear(geojson, point, PARCEL_FABRIC_SNAP_FT);
             if (!hit) return null;
             var props = hit.feature.properties || {};
@@ -23960,6 +24256,7 @@ function initChiExplorer() {
               phone: findPropCI(props, ["phone"]),
               email: findPropCI(props, ["email"]),
               url: findPropCI(props, ["url"]),
+              officials: findPropCI(props, ["dxofficials"]),
               snappedFt: hit.snappedFt
             };
           });
@@ -23987,12 +24284,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "kendall",
         coverage: kendallCountyCoverage,
-        loader: loadKendallParks,
+        loader: withIlDistrictOfficials("kendall", "park", ["park"])(loadKendallParks),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Park District", keys: ["park"], primary: true },
-          { label: "County", value: "Kendall County" }
-        ]
+          { label: "County", value: "Kendall County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Kankakee's park tiling (4) — boundary identity-only for the same measured
       // reason as fire; officers from each district's own AFR filing.
@@ -24013,12 +24312,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "madison",
         coverage: madisonCountyCoverage,
-        loader: loadMadisonParkDistricts,
+        loader: withIlDistrictOfficials("madison", "park", ["park"])(loadMadisonParkDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Park District", keys: ["park"], primary: true },
-          { label: "County", value: "Madison County" }
-        ]
+          { label: "County", value: "Madison County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // DeKalb's park tiling (6) — identity-only, from the same clerk tax-district
       // family as its fire entry. A thin, honest tiling: most of the county is in
@@ -24026,12 +24327,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "dekalb",
         coverage: dekalbCountyCoverage,
-        loader: loadDekalbParkDistricts,
+        loader: withIlDistrictOfficials("dekalb", "park", ["district"])(loadDekalbParkDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Park District", keys: ["district"], primary: true },
-          { label: "County", value: "DeKalb County" }
-        ]
+          { label: "County", value: "DeKalb County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Rock Island levies exactly ONE park district (Cordova, in the county's
       // north-east corner). A one-feature tiling is honest rather than thin:
@@ -24040,12 +24343,14 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "rock-island",
         coverage: rockIslandCountyCoverage,
-        loader: loadRockIslandParkDistricts,
+        loader: withIlDistrictOfficials("rock-island", "park", ["park_distr"])(loadRockIslandParkDistricts),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Park District", keys: ["park_distr"], primary: true },
-          { label: "County", value: "Rock Island County" }
-        ]
+          { label: "County", value: "Rock Island County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Boone's 2, dissolved from the county's own parcel fabric because Boone
       // publishes no park boundary at all — see loadBooneParkDistricts. Belvidere
@@ -24097,11 +24402,13 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "stark",
         coverage: starkCountyCoverage,
-        loader: loadStarkPark,
+        loader: withIlDistrictOfficials("stark", "park", ["name"])(loadStarkPark),
         fields: [
           { name: "name", label: "Park District", keys: ["name"], primary: true },
-          { label: "County", value: "Stark County" }
-        ]
+          { label: "County", value: "Stark County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Logan's seven come from the Tri-County Regional Planning Commission,
       // not the county: the service does not say what they are, and TCRPC's own
@@ -24127,21 +24434,25 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "macon",
         coverage: maconCountyCoverage,
-        loader: loadMaconPark,
+        loader: withIlDistrictOfficials("macon", "park", ["park"])(loadMaconPark),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Park District", keys: ["park"], primary: true },
-          { label: "County", value: "Macon County" }
-        ]
+          { label: "County", value: "Macon County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       polygonCountyEntry({
         key: "effingham",
         coverage: effinghamCountyCoverage,
-        loader: loadEffinghamPark,
+        loader: withIlDistrictOfficials("effingham", "park", ["name"])(loadEffinghamPark),
         fields: [
           { name: "name", label: "Park District", keys: ["name"], primary: true },
-          { label: "County", value: "Effingham County" }
-        ]
+          { label: "County", value: "Effingham County" },
+          { name: "officials", keys: ["dxofficials"], hidden: true }
+        ],
+        people: afrDistrictPeople
       }),
       // Woodford — 3 districts dissolved from the county's parcel fabric. Only
       // 4,113 of its 25,824 parcels are in one, so most of the county sits in
@@ -24761,6 +25072,34 @@ function initChiExplorer() {
    * any county's dataset, so each card links its county clerk's
    * registration/polling-place lookup — which also names the card's
    * county. ---------- */
+  // The certified returns the seven 2026-09-11 counties take their precinct
+  // NAMES from. None of the seven publishes a precinct map of its own, so this
+  // is the document a reader can check the card against.
+  var ISBE_PRECINCT_RESULTS =
+    "https://www.elections.il.gov/ElectionOperations/ElectionVoteTotals.aspx";
+  // Those seven make the same card — the precinct name in the header pill, the
+  // county under it — so they share one factory rather than seven copies of it.
+  // The slug is written once: the coverage outline and the precinct file are
+  // named after it by contract, and the loader is passed in so validate_index's
+  // reference check still sees every data file by name.
+  function vtdPrecinctEntry(opts) {
+    return polygonCountyEntry({
+      key: opts.key,
+      coverage: opts.coverage || countyOutlineCoverage(opts.key),
+      loader: opts.loader,
+      pill: true,
+      fields: [
+        { name: "name", label: "Precinct", keys: ["name"], primary: true },
+        { label: "County", value: opts.county }
+      ],
+      primaryLink: function () {
+        return {
+          label: "Illinois State Board of Elections — certified precinct results",
+          url: ISBE_PRECINCT_RESULTS
+        };
+      }
+    });
+  }
   registerCountyLayer({
     id: "county-precinct",
     group: "geography",
@@ -28595,6 +28934,42 @@ function initChiExplorer() {
           };
         }
       },
+      vtdPrecinctEntry({
+        key: "edwards",
+        county: "Edwards County",
+        loader: loadEdwardsPrecincts
+      }),
+      vtdPrecinctEntry({
+        key: "mason",
+        county: "Mason County",
+        coverage: masonCountyCoverage,
+        loader: loadMasonPrecincts
+      }),
+      vtdPrecinctEntry({
+        key: "massac",
+        county: "Massac County",
+        loader: loadMassacPrecincts
+      }),
+      vtdPrecinctEntry({
+        key: "pike",
+        county: "Pike County",
+        loader: loadPikePrecincts
+      }),
+      vtdPrecinctEntry({
+        key: "saline",
+        county: "Saline County",
+        loader: loadSalinePrecincts
+      }),
+      vtdPrecinctEntry({
+        key: "union",
+        county: "Union County",
+        loader: loadUnionPrecincts
+      }),
+      vtdPrecinctEntry({
+        key: "wabash",
+        county: "Wabash County",
+        loader: loadWabashPrecincts
+      }),
     ],
     // Precinct sits at the bottom of the County > Township > Precinct nest:
     // turning it on brings Township on (which itself brings County on), and
@@ -29298,13 +29673,6 @@ function initChiExplorer() {
   /* ==== TEMPLATE:BEGIN tail-close ==== */
   whenIdle(function () { drawOutOfScopeMask(loadMetroOutline, loadStateOutline); });
 
-  var verifiedEl = document.getElementById("verified-date");
-  // sources.html prints the same date at the top of the layer matrix. Two
-  // hand-kept copies of one fact is how they drift, so the date now lives in
-  // metro-worksheet.json and both surfaces are generated from it.
-  /* ==== GENERATED:BEGIN verified-date ==== */
-  verifiedEl.textContent = "August 3, 2026";
-  /* ==== GENERATED:END verified-date ==== */
 
   // sources.html sends readers back here with "#gaps" to open the Data gaps
   // panel directly, so the cross-link lands on the panel instead of on a page

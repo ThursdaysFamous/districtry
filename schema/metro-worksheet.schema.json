@@ -209,6 +209,18 @@
                 "description": "Where the layer answers at all, in plain words — the reader-facing form of the layer's coverage() test."
               }
             }
+          },
+          "guide": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["href", "text"],
+            "description": "Optional. A per-concept explainer page in this instance that answers the layer's own question in prose — /il/police-district.html and its five siblings. Declaring it here links the layer's sources.html row AND the app footer from ONE key, so a new explainer is linked on both surfaces by adding this block rather than by remembering two files. Measured 2026-09-11: no instance hub or sources page linked any of the six, and they were reachable only through faq.html.",
+            "properties": {
+              "href": { "type": "string", "pattern": "^[a-z0-9-]+\\.html$",
+                        "description": "Filename relative to the instance folder, e.g. police-district.html." },
+              "text": { "type": "string", "minLength": 8, "maxLength": 60,
+                        "description": "Anchor text, written to match the question the target page answers — that is what the link is worth to a reader and to a crawler, where a row of \"Guide\" links describes nothing." }
+            }
           }
         }
       }
@@ -553,6 +565,27 @@
         "instance_tag": {
           "type": "string",
           "description": "The wordmark's instance suffix (e.g. \"il\"). Optional until a rebrand consumes it; emitted onto METRO_BRAND when present."
+        },
+        "jsonld": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["site_description", "app_description", "keywords", "area_served"],
+          "description": "Opts this instance into a GENERATED ld+json graph on index.html. The graph was hand-written six times and every field that is CONSTANT across the fleet (the publisher, the licence-free Offer, the browser requirements, inLanguage) was six chances to differ; measured 2026-09-11 all nine agreed, and they are literals in the generator now so they cannot stop agreeing. Everything derivable — @id, url, name, image, isPartOf, publisher — comes from the instance tag and brand.app_name. What is left is the four values below, which are genuinely this instance's own prose. dateModified is emitted from verified_date, which is why this block exists at all: the audit asked for it and nothing could carry it while the graph was hand-written.",
+          "properties": {
+            "site_description": { "type": "string", "description": "WebSite.description — what the SITE is, one sentence." },
+            "app_description": { "type": "string", "description": "WebApplication.description — what the APP does. Longer than the SERP description and not the same string; this one is not truncated at 155." },
+            "keywords": { "type": "string", "description": "WebApplication.keywords, comma-separated." },
+            "area_served": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["state"],
+              "description": "Where the app answers. A city instance names its city AND its state and renders as a City containedInPlace a State; a statewide instance names the state alone and renders as a State. The generator picks the @type, so an instance cannot declare a shape schema.org does not have.",
+              "properties": {
+                "city": { "type": "string" },
+                "state": { "type": "string" }
+              }
+            }
+          }
         },
         "tagline": {
           "type": "string",

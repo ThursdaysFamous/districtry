@@ -418,12 +418,26 @@ def _landing_jsonld(metros, title, desc):
                 "inLanguage": "en-US",
                 "sameAs": [REPO],
                 "publisher": {"@id": CANONICAL + "#publisher"},
+                "author": {"@id": CANONICAL + "#author"},
             },
             {
                 "@type": "Organization",
                 "@id": CANONICAL + "#publisher",
                 "name": "Overberg",
                 "url": "https://overberg.co",
+            },
+            # The footer has said "Built and run by Adam Overberg" since this
+            # page shipped and the graph never carried it. Civic data about who
+            # holds public office sits under the quality guidelines' highest
+            # bar, and a named author with a URL is the cheapest part of it.
+            {
+                "@type": "Person",
+                "@id": CANONICAL + "#author",
+                "name": "Adam Overberg",
+                "url": "https://overberg.co",
+                # A contactable author, not just a named one. The quality guidelines ask how a reader reaches whoever stands behind the page, and a name plus a URL answers half of it.
+                "email": "hello@overberg.co",
+                "worksFor": {"@id": CANONICAL + "#publisher"},
             },
             {
                 "@type": "ItemList",
@@ -675,9 +689,19 @@ h1 {
    floor for 15px text. Dark ink on the same violet is 6.76:1, and on the
    --brand-700 hover (#c4b0ff) 9.64:1. This is the one place on the page where
    a token pair reverses its foreground, so it is stated rather than inherited. */
+/* THE PADDING AND LINE-HEIGHT ARE THE TAP TARGET, and the desktop layout hides
+   it. .search-row is align-items:stretch, so in a ROW the button inherits the
+   input's 46px and looks fine; at the mobile breakpoint the row becomes a
+   COLUMN, stretch governs width instead, and the height collapsed to the
+   content box -- 15px of line plus 2px of border, measured at 308x17 against
+   the input's 308x46 directly above it. That is under the 24px WCAG 2.2 AA
+   floor, on the page's only conversion action, on the 62%% of visits that are
+   mobile. Sized here to match the input exactly rather than merely to clear
+   the floor: same 12px block padding, same 1.3 line-height, so both boxes
+   compute to 46px and the pair cannot drift apart again. */
 .search-button {
-  flex: 0 0 auto; padding: 0 22px;
-  font: var(--font-heading-weight) 15px/1 var(--font-heading); color: #fff;
+  flex: 0 0 auto; padding: 12px 22px;
+  font: var(--font-heading-weight) 15px/1.3 var(--font-heading); color: #fff;
   background: var(--brand-600); border: 1px solid var(--brand-600);
   border-radius: var(--radius-btn); cursor: pointer; white-space: nowrap;
 }
@@ -847,14 +871,15 @@ footer .foot-links { margin-top: 12px; }
          officeholder names come from the public sources each place names on its sources
          page; seals and logos shown beside a county belong to that county and indicate
          whose district you are looking at, not any endorsement of this site.</p>
-      <p>Built and run by <a href="https://overberg.co/" target="_blank" rel="noopener">Adam
+      <p>Built and run by <a href="https://overberg.co/" rel="author noopener" target="_blank">Adam
          Overberg</a>. The whole thing is open source — every line that produced this page
          is public, the code under
          <a href="https://github.com/ThursdaysFamous/districtry/blob/main/LICENSE"
             target="_blank" rel="noopener">Apache&nbsp;2.0</a> and the data under
          <a href="https://github.com/ThursdaysFamous/districtry/blob/main/LICENSE-DATA.md"
             target="_blank" rel="noopener">ODbL&nbsp;1.0</a>. Fork it for your own state.</p>
-      <p>Each place above names its own sources on its sources page.</p>
+      <p>Each place above names its own sources on its sources page. Corrections, questions and
+         anything that looks wrong: <a href="mailto:hello@overberg.co">hello@overberg.co</a>.</p>
       <p class="support"><b>This project is unfunded and run at personal cost.</b> If it is useful
          to you, <a href="https://github.com/sponsors/ThursdaysFamous" target="_blank" rel="noopener">sponsoring
          it on GitHub</a> keeps the rosters current — that is where the ongoing work is. Sponsorship

@@ -24,7 +24,7 @@ Targets (region name -> file):
 
 Opt-in targets, emitted only when the worksheet carries the key that turns them
 on (a fork without the key sees a byte-identical file and an untouched gate):
-    verified-date     -> index.html   (the one line the footer's date is set from;
+    verified-date     -> index.html   (the footer's date, rendered INTO the element;
                                        key: verified_date)
     perf-config       -> the performance harness's anchor point + offline layer
                                        list, which must mirror smoke-config
@@ -62,6 +62,7 @@ touched. Dependencies: stdlib + jsonschema (pinned in scripts/requirements.txt).
 import argparse
 import difflib
 import functools
+import datetime
 import json
 import os
 import re
@@ -94,6 +95,23 @@ def js_num(n):
 
 def js_str(s):
     return json.dumps(s, ensure_ascii=False)
+
+
+def iso_date(human):
+    """"August 3, 2026" -> "2026-08-03".
+
+    schema.org's dateModified wants ISO 8601; the worksheet carries the date in
+    the form the footer prints to a reader. Deriving one from the other keeps
+    ONE key rather than adding a second that can disagree with the first — the
+    failure this file exists to prevent. A date it cannot parse fails the build
+    rather than emitting an invalid one, because a malformed dateModified is a
+    field Google ignores silently.
+    """
+    try:
+        return datetime.datetime.strptime(human, "%B %d, %Y").strftime("%Y-%m-%d")
+    except ValueError:
+        fail('verified_date %r is not "Month D, YYYY", so no ISO dateModified '
+             "can be derived from it" % human)
 
 
 def bbox_js(b, order):
@@ -454,7 +472,20 @@ def render_perf_config(w):
 
 
 def render_verified_date(w):
-    return '  verifiedEl.textContent = %s;' % js_str(w["verified_date"])
+    """The footer's date, SERVER-RENDERED into the element rather than assigned
+    to it at boot.
+
+    It used to be one line of JavaScript writing into an empty
+    <strong id="verified-date">, which meant the raw HTML of all six instances
+    carried no date at all — measured 2026-09-11, every one of them shipped the
+    element empty. A crawler that does not execute JavaScript therefore saw a
+    page making no freshness claim, on a tool whose entire value is who holds a
+    seat NOW. sources.html had been server-rendering the same worksheet key
+    since it shipped, so the pattern was already here; index.html was the
+    surface that never got it.
+    """
+    return ('          <strong id="verified-date">%s</strong>'
+            % html_esc(w["verified_date"]))
 
 
 # ------------------------------------------------------------- brand-as-data
@@ -587,10 +618,16 @@ def render_masthead_brand(w):
         )
     else:
         wordmark = '        <span class="title-text">%s</span>' % e(b["app_name"])
+    # THE TAGLINE IS THE HEADING, not the wordmark. The hub's <h1> used to wrap
+    # the wordmark and the metro switcher, so the page's one heading resolved to
+    # the brand plus a navigation control — measured 90 characters of that on
+    # Illinois, with nothing in it about districts. Every sub-page already put
+    # the topic in the same class. Nothing moves on screen: the element that was
+    # a <small> is now the <h1>, styled by the same rules.
     return "\n".join([
         wordmark,
         "      </span>",
-        "      <small>%s</small>" % e(b["tagline"]),
+        '      <h1 class="title-tagline">%s</h1>' % e(b["tagline"]),
     ])
 
 
@@ -652,6 +689,146 @@ GROUP_HEADINGS = [
 MATRIX_COLUMNS = ["Layer", "What it answers", "Boundary source", "Who it names", "Where it applies"]
 
 
+def render_jsonld_graph(w):
+    """index.html's whole ld+json graph, from the worksheet.
+
+    IT WAS HAND-WRITTEN SIX TIMES, and that is the shape of Michigan's go-live
+    bug: mi/sources.html shipped IOWA's entire identity block — canonical,
+    og:url, title and the whole graph — because the page was cloned and only
+    its GENERATED regions were ever regenerated. page_consistency_test.mjs
+    gates that now for all 32 sitemap pages, so this is not re-fixing it; the
+    reason to generate THIS graph is that nothing could add a field to it
+    without adding it six times by hand, which is why it carried no
+    dateModified while every page claimed a freshness the graph never stated.
+
+    THE CONSTANTS ARE LITERALS HERE, not worksheet keys. Nine fields were
+    identical across all six instances on 2026-09-11 — the publisher, the free
+    Offer, the browser requirements, operatingSystem, inLanguage, sameAs,
+    applicationCategory, isAccessibleForFree. Six hand-written copies were six
+    chances for one to drift; one literal is none.
+
+    EVERYTHING DERIVABLE IS DERIVED: @id, url, image, isPartOf and publisher
+    from the instance tag, name from brand.app_name. What remains in the
+    worksheet is the four values that are genuinely this instance's own prose.
+
+    dateModified comes from verified_date — the same key the footer and
+    sources.html already print, so the date a reader sees and the date a
+    crawler reads cannot disagree.
+    """
+    b = w["brand"]
+    g = b.get("jsonld")
+    if not g:
+        return ""
+    tag = b["instance_tag"]
+    base = "https://districtry.com/%s/" % tag
+    SITE = "https://districtry.com/"
+    name = b["app_name"]
+
+    area = g["area_served"]
+    if area.get("city"):
+        area_node = ('{ "@type": "City", "name": %s, "containedInPlace": '
+                     '{ "@type": "State", "name": %s } }'
+                     % (js_str(area["city"]), js_str(area["state"])))
+    else:
+        area_node = '{ "@type": "State", "name": %s }' % js_str(area["state"])
+
+    L = []
+    a = L.append
+    # The element, not just its body. GENERATED markers are HTML comments and
+    # an HTML comment INSIDE a ld+json script makes the JSON unparseable —
+    # silently, because a crawler drops the graph without reporting anything.
+    a('<script type="application/ld+json">')
+    a('{')
+    a('  "@context": "https://schema.org",')
+    a('  "@graph": [')
+    a('    {')
+    a('      "@type": "WebSite",')
+    a('      "@id": "%s#website",' % base)
+    a('      "url": "%s",' % base)
+    a('      "name": %s,' % js_str(name))
+    a('      "description": %s,' % js_str(g["site_description"]))
+    a('      "inLanguage": "en-US",')
+    a('      "publisher": { "@id": "%s#publisher" }' % SITE)
+    a('    },')
+    a('    {')
+    # ONE PUBLISHER FOR THE SITE, not one per instance. Six instances each
+    # minting their own #publisher described one organisation as seven, so
+    # nothing tied districtry Illinois's publisher to districtry Iowa's. The
+    # node stays INLINE on every page — a crawler reading one page cannot
+    # resolve an @id defined in another document — but the identifier is the
+    # same everywhere, which is what makes them one entity. The root path is
+    # what page_consistency_test.mjs allows as pointing UP rather than
+    # sideways into a sibling.
+    a('      "@type": "Organization",')
+    a('      "@id": "%s#publisher",' % SITE)
+    a('      "name": "Overberg",')
+    a('      "url": "https://overberg.co"')
+    a('    },')
+    a('    {')
+    # THE PERSON IS A NODE, not a string. This is civic data about who holds
+    # public office, which Google's quality guidelines hold to their highest
+    # bar, and the graph ran WebSite -> Organization and stopped — no author
+    # anywhere on the site, measured across all 33 content pages on
+    # 2026-09-11. A named author with a URL is the cheapest part of that bar
+    # and the site had none of it.
+    a('      "@type": "Person",')
+    a('      "@id": "%s#author",' % SITE)
+    a('      "name": "Adam Overberg",')
+    a('      "url": "https://overberg.co",')
+    # A contactable author, not just a named one. The quality guidelines ask how a reader reaches whoever stands behind the page, and a name plus a URL answers half of it.
+    a('      "email": "hello@overberg.co",')
+    a('      "worksFor": { "@id": "%s#publisher" }' % SITE)
+    a('    },')
+    a('    {')
+    a('      "@type": "WebApplication",')
+    a('      "name": %s,' % js_str(name))
+    a('      "url": "%s",' % base)
+    a('      "description": %s,' % js_str(g["app_description"]))
+    a('      "applicationCategory": "Reference",')
+    a('      "operatingSystem": "Any (modern web browser)",')
+    a('      "browserRequirements": "Requires JavaScript",')
+    a('      "isAccessibleForFree": true,')
+    a('      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },')
+    a('      "inLanguage": "en-US",')
+    a('      "image": "%sog-image.png",' % base)
+    a('      "areaServed": %s,' % area_node)
+    a('      "keywords": %s,' % js_str(g["keywords"]))
+    a('      "author": { "@id": "%s#author" },' % SITE)
+    a('      "isPartOf": { "@id": "%s#website" },' % base)
+    # The one field this whole change exists to make possible. ISO 8601, from
+    # the same key the footer prints in prose.
+    a('      "dateModified": %s,' % js_str(iso_date(w["verified_date"])))
+    a('      "sameAs": "https://github.com/ThursdaysFamous/districtry"')
+    a('    }')
+    a('  ]')
+    a('}')
+    a('</script>')
+    return "\n".join(L)
+
+
+def render_guide_links(w):
+    """The app footer's links to this instance's own explainer pages.
+
+    THE SAME worksheet key that links the sources.html matrix row. Measured
+    2026-09-11: not one instance hub linked any of the six explainer pages, and
+    not one sources page did either — they were reachable only through
+    faq.html, so a reader on the map had no route to the page written to answer
+    the question they were asking. Two surfaces, one key, because a hand-kept
+    list in six index.html files is a list that goes stale the next time an
+    explainer ships.
+
+    Emits nothing when no layer declares a guide, so an instance that has no
+    explainer pages sees a byte-identical footer.
+    """
+    guides = [l["guide"] for l in sorted(w["layers"], key=lambda x: x["area_rank"])
+              if l.get("guide")]
+    if not guides:
+        return ""
+    return "\n".join(
+        '        <a href="%s">%s</a>' % (html_esc(g["href"]), html_esc(g["text"]))
+        for g in guides)
+
+
 def render_layer_matrix(w):
     """Every registered layer, grouped, with the provenance of each.
 
@@ -704,8 +881,18 @@ def render_layer_matrix(w):
                 fail('layer %r has no source block — a fork that sets sources_page '
                      'must give every layer one (see the schema)' % l["id"])
             a('              <tr id="layer-%s">' % l["id"])
-            a('                <th scope="row"><span class="layer-name">%s</span>'
-              '<code>%s</code></th>' % (html_esc(l["label"]), html_esc(l["id"])))
+            th = ('<span class="layer-name">%s</span><code>%s</code>'
+                  % (html_esc(l["label"]), html_esc(l["id"])))
+            # A layer that has its own explainer page links to it from the row
+            # that already describes the layer. This is the only place on the
+            # site where every layer is enumerated, so it is where a link per
+            # concept costs nothing to keep current: the href and the anchor
+            # text come from the worksheet, beside the layer they describe.
+            guide = l.get("guide")
+            if guide:
+                th += ('<a class="layer-guide" href="%s">%s</a>'
+                       % (html_esc(guide["href"]), html_esc(guide["text"])))
+            a('                <th scope="row">%s</th>' % th)
             a('                <td data-label="%s">%s</td>'
               % (MATRIX_COLUMNS[1], html_esc(src["answers"])))
             a('                <td data-label="%s">' % MATRIX_COLUMNS[2])
@@ -785,6 +972,8 @@ def targets_for(w, inst):
     ]
     if "verified_date" in w:
         targets.append((_p(app, "index.html"), "verified-date", render_verified_date))
+        targets.append((_p(app, "index.html"), "guide-links", render_guide_links))
+        targets.append((_p(app, "index.html"), "jsonld-graph", render_jsonld_graph))
     if "perf_profile" in w:
         # Worksheet-relative to the instance's own scripts dir.
         targets.append((_p(scr, os.path.basename(w["perf_profile"]["file"])),

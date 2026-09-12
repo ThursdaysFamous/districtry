@@ -24,7 +24,7 @@
 <!-- ==== TEMPLATE:END sources-analytics ==== -->
 
 <title>Sources &amp; data layers — districtry Wisconsin</title>
-<meta name="description" content="Every layer districtry Wisconsin answers with: what it tells you, the publisher its boundary comes from, where the names on its card come from, and the ground it covers." />
+<meta name="description" content="Every layer districtry Wisconsin answers with: what it tells you, its boundary publisher, where its card's names come from, and the ground it covers." />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://districtry.com/wi/sources.html" />
 
@@ -47,12 +47,13 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebPage",
+  "@type": "CollectionPage",
   "@id": "https://districtry.com/wi/sources.html",
   "url": "https://districtry.com/wi/sources.html",
   "name": "Sources & data layers — districtry Wisconsin",
   "description": "Every layer in districtry Wisconsin and where its data comes from: the boundary publisher, the officeholder roster, and the ground each layer actually answers on.",
   "inLanguage": "en-US",
+  "author": { "@type": "Person", "@id": "https://districtry.com/#author", "name": "Adam Overberg", "url": "https://overberg.co" },
   "isPartOf": { "@id": "https://districtry.com/wi/#website" },
   "breadcrumb": {
     "@type": "BreadcrumbList",
@@ -336,7 +337,7 @@ header.masthead {
   justify-content: space-between;
   gap: 14px 28px;
 }
-h1.title { margin: 0; min-width: 0; }
+.title { margin: 0; min-width: 0; }
 .title-row { display: flex; align-items: center; gap: 13px; }
 .masthead-star { display: none; }   /* the Chicago star, same story as the stripe */
 .districtry-mark { width: 34px; height: 34px; flex: 0 0 auto; }
@@ -349,7 +350,7 @@ h1.title { margin: 0; min-width: 0; }
   text-transform: uppercase;
   color: var(--ink);
 }
-h1.title small {
+.title small, .title .title-tagline {
   display: block;
   font-family: var(--font-body);
   font-weight: 400;
@@ -425,7 +426,7 @@ h1.title small {
   header.masthead { padding: 15px 0 16px; }
   .districtry-mark { width: 27px; height: 27px; }
   .title-text { font-size: 23px; }
-  h1.title small { font-size: 13px; margin-top: 4px; }
+  .title small, .title .title-tagline { font-size: 13px; margin-top: 4px; }
   .masthead-actions { justify-content: flex-start; margin-left: 0; width: 100%; gap: 6px; }
   .masthead-actions a { font-size: 12.5px; padding: 8px 13px; }
 }
@@ -740,6 +741,19 @@ table.matrix tbody th[scope="row"] {
   background: rgba(244,247,249,0.6);
 }
 .layer-name { display: block; }
+/* The link from a layer to its own explainer page. Measured 2026-09-11, no
+   instance hub or sources page linked any of the six explainers and they were
+   reachable only through faq.html — so the rows that already enumerate every
+   layer now carry the link too. Block, because it sits under the layer id in a
+   header cell that is already two stacked lines. */
+.layer-guide {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.layer-guide:hover { text-decoration: underline; }
 table.matrix code {
   font-family: var(--font-mono);
   font-size: 11.5px;
@@ -822,7 +836,7 @@ table.matrix code {
       with the relevant government office before relying on them for anything official.
     </div>
     <!-- ==== GENERATED:BEGIN sources-verified ==== -->
-        <p class="verified">Data last verified: <strong>August 25, 2026</strong></p>
+        <p class="verified">Data last verified: <strong>September 11, 2026</strong></p>
 <!-- ==== GENERATED:END sources-verified ==== -->
     <p class="lede">Where a source publishes nothing, the app says so rather than guessing — the
       <a href="./#gaps">missing-data panel</a> on the map is the standing list of what nobody publishes
@@ -1311,6 +1325,50 @@ table.matrix code {
       <a href="../privacy.html">Privacy</a>
       <a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
       <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">View source on GitHub</a>
+      <!-- ==== ENGINE:BEGIN footer-byline ==== -->
+      <!-- ONE copy of the author byline, for every page that is not the app.
+           It was twenty-four copies until 2026-09-12, and they had already
+           diverged: twenty wrote the dash as a literal — and the four generated
+           history pages wrote &mdash;, which is the same symptom this file's
+           neighbour styles-subpage.txt was created to stop.
+
+           The contact address is the reason it became one copy. The sentence
+           has invited corrections since the page shipped and gave the reader no
+           way to send one; putting an address in twenty-five literals is how
+           the next change to it misses four of them.
+
+           hello@ is the GENERAL address and the sentence is worded so it does
+           not read as a corrections channel. sponsorship.html publishes a
+           deliberate split -- sponsor@, data@, press@, corrections@, adam@ for
+           privacy -- and says in its own words that the addresses exist "so
+           that mail about money is not mixed in with mail about a wrong
+           district line". A byline on thirty-two pages saying corrections go to
+           hello@ would contradict the page that documents the routing, so it
+           names the general address and leaves the specific routes alone.
+
+           The pages that GENERATE their own footer (privacy.html and the four
+           history pages) read this same file from their builder instead of
+           carrying a fence, because a fence there would have to agree with
+           whatever the builder emits inside it, which means reading this file
+           anyway. One source, two mechanisms, stated here so the second is not
+           mistaken for a copy.
+
+           rel="author noopener", not rel="author" rel="noopener": the old
+           markup set the attribute twice, and a parser keeps the first and
+           drops the second, so target="_blank" was running without noopener on
+           every one of the twenty-five.
+
+           TWENTY-FIVE, not twenty-four. The first count searched for the
+           <p class="footer-byline"> wrapper and so missed traffic.html, which
+           carried the same sentence in a <span class="standing">. Counting
+           copies by their wrapper undercounts them; count by the sentence.
+           traffic.html now takes this block, with one CSS rule matching
+           .footer-byline to the .standing it replaced so nothing moved. -->
+      <p class="footer-byline">Written and maintained by
+      <a href="https://overberg.co" rel="author noopener" target="_blank">Adam Overberg</a>
+      — <a href="mailto:hello@overberg.co">hello@overberg.co</a>.
+      Corrections are welcome; every one gets a reply.</p>
+      <!-- ==== ENGINE:END footer-byline ==== -->
     </div>
   </div>
 </footer>

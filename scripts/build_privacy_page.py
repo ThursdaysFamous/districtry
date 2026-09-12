@@ -47,6 +47,27 @@ import sys
 import urllib.parse
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+def shared_footer_byline(indent=""):
+    """The author byline, read from its ONE source.
+
+    engine/shared/footer-byline.txt is shared with the nineteen authored pages
+    that carry it as an ENGINE fence spliced by compose_app.py. A GENERATED page
+    reads it here instead of carrying a fence, because a fence would have to
+    agree with whatever this builder emits inside it -- which means reading the
+    file anyway, with an ordering dependency between the two tools on top. One
+    source, two mechanisms; that file's own comment says the same thing from the
+    other side.
+
+    The block's leading HTML comment is for a reader of the engine tree and is
+    dropped here, so the published page carries the markup alone.
+    """
+    path = os.path.join(REPO_ROOT, "engine", "shared", "footer-byline.txt")
+    with open(path, encoding="utf-8") as fh:
+        text = fh.read()
+    markup = re.sub(r"(?s)^\s*<!--.*?-->\s*", "", text).strip()
+    return "\n".join(indent + ln.strip() for ln in markup.splitlines())
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 # The token file, the mark and the self-hosted font CSS are the LANDING page's
@@ -644,6 +665,7 @@ def _jsonld(title, desc):
         "name": title,
         "description": desc,
         "inLanguage": "en-US",
+        "author": { "@type": "Person", "@id": "https://districtry.com/#author", "name": "Adam Overberg", "url": "https://overberg.co", "email": "hello@overberg.co" },
         "isPartOf": {"@id": SITE + "#website"},
         "breadcrumb": {
             "@type": "BreadcrumbList",
@@ -675,8 +697,8 @@ def build():
              "`python3 scripts/build_fonts.py landing > fonts/barlow-fontface.css`")
 
     title = "Privacy — districtry"
-    desc = ("What districtry stores, what leaves your browser and to whom, and what it "
-            "deliberately never collects — for every app on the site. No accounts, no "
+    desc = ("What districtry stores, what leaves your browser and to whom, and "
+            "what it never collects — every app on the site. No accounts, no "
             "profiles, nothing sold.")
 
     return """<!DOCTYPE html>
@@ -1067,6 +1089,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
       %(footerlinks)s
       <a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
       <a href="%(repo)s" target="_blank" rel="noopener">View source on GitHub</a>
+%(byline)s
     </div>
   </div>
 </footer>
@@ -1074,6 +1097,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
 </body>
 </html>
 """ % {
+        "byline": shared_footer_byline("        "),
         "title": esc(title),
         "desc": esc(desc),
         "jsonld": _jsonld(title, desc),

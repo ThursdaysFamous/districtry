@@ -404,6 +404,11 @@ PRESERVABLE = {
                                "City of Wilmington"]},
     "skokie": {"kind": "enrich", "places": ["Village of Skokie"]},
     "joliet": {"kind": "enrich", "places": ["City of Joliet"]},
+    # Plano, added 2026-09-11 for the plano-ward-officials gap. Kendall's
+    # yearbook stops at the mayor and clerk for every municipality, so this is
+    # the only source that names Plano's council at all — and its four wards
+    # are already drawn, which is what made a card that named nobody visible.
+    "plano": {"kind": "enrich", "places": ["City of Plano"]},
 }
 
 # Tie-break for a municipality claimed by two counties, applied only AFTER
@@ -892,8 +897,34 @@ def merge_contact(existing, addition, warnings):
     while Cook GIS carries the four district polygons — so the seats existed on
     the map with nobody attached. The village publishes the assignment itself,
     which is the authority on its own districting.
+
+    A WHOLE BOARD IS THE SECOND EXCEPTION, and it is narrower than it sounds.
+    "The clerk is the roster of record" is a rule about DISAGREEMENT: where two
+    sources name a council, a name in one and not the other means one of them is
+    stale, and that is a human's call. Where the county published no council at
+    all there is nothing to disagree with, so a city's own board is adopted
+    whole rather than reported eight times as not-added. Plano is the case that
+    found this: Kendall's yearbook stops at the mayor and clerk for every
+    municipality, its four wards are drawn, and the card named nobody in them.
+
+    The HEAD and the OFFICERS are never adopted this way, only the board. Plano
+    is also why: the same city page that names the council says its mayor was
+    "Elected in 2021" while the county clerk has him last elected 2025, so the
+    page is maintained and still carries a stale adjacent field. The county's
+    head stays the county's.
+
+    Measured 2026-09-11 before this was written: all seven municipalities the
+    other five city payloads cover already carry a board, so this branch is
+    inert for every one of them. 143 of the roster's 629 municipalities carry
+    none, which is the size of the opening it makes for a future city payload.
     """
     hall = existing.get("office") or {}
+    addition_board = addition.get("board") or []
+    if addition_board and not existing.get("board"):
+        existing["board"] = [dict(m) for m in addition_board]
+        warnings.append("%s: the county directory publishes no council, so all "
+                        "%d seat(s) come from the municipality's own site"
+                        % (existing.get("name"), len(addition_board)))
     for person in people_of(addition):
         matches = [c for c in people_of(existing)
                    if same_person(c.get("name"), person.get("name"))]

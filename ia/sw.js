@@ -2,9 +2,9 @@
 // App-shell + app-data cache. Never serve live district/roster API responses
 // stale — a stale roster could name the wrong officeholder, and this app's
 // rule is that officeholder data is never guessed or served stale. Bump
-// CACHE_NAME whenever SHELL_URLS, GEOMETRY_URLS, or ROSTER_URLS change so a
-// removed entry can't live forever; the activate handler deletes every
-// other-named cache.
+// CACHE_NAME whenever SHELL_URLS, GEOMETRY_URLS, or ROSTER_URLS change, or
+// whenever a file under fonts/ changes, so a removed or superseded entry can't
+// live forever; the activate handler deletes every other-named cache.
 //
 // The config section below is this fork's METRO block (docs/ENGINE_SYNC.md):
 // a per-city cache name, the shell assets, and the fork's data/app/*.json
@@ -169,6 +169,31 @@ function cacheFirst(request) {
   });
 }
 
+// Cache-first with NO revalidation, for files whose bytes cannot change under a
+// fixed URL. cacheFirst() above fires its network fetch on every hit — it
+// serves the cached copy instantly and re-downloads in the background — so it
+// buys latency and never bytes. That is the right trade for boundary geometry,
+// where the background refresh is the safety net against a missed CACHE_NAME
+// bump. It is waste for a font: a committed binary that changes approximately
+// never, re-downloaded on every visit for the life of the app.
+//
+// Here the CACHE_NAME bump is the whole invalidation mechanism, and
+// check_cache_version.py fails the build when one of these files changes
+// without it. A miss still goes to the network.
+function cacheOnlyElseNetwork(request) {
+  return caches.match(request).then(
+    (cached) =>
+      cached ||
+      fetch(request).then((response) => {
+        if (response.ok) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
+        }
+        return response;
+      })
+  );
+}
+
 self.addEventListener("fetch", (event) => {
   const href = new URL(event.request.url).href;
 
@@ -195,6 +220,38 @@ self.addEventListener("fetch", (event) => {
   // Boundary geometry: ~static, so cache-first for instant toggles + offline.
   if (inList(href, GEOMETRY_URLS)) {
     event.respondWith(cacheFirst(event.request));
+    return;
+  }
+
+  // Self-hosted fonts: served from cache without revalidation, matched by
+  // prefix rather than listed.
+  //
+  // Measured 2026-09-12 on /il/ over an emulated 1.6 Mbps link: a second
+  // navigation re-fetched six woff2 files, 134,516 bytes, because no font
+  // appeared in any list above and nothing else here cached them. Every
+  // instance ships eighteen faces and none of the 108 in the fleet was cached
+  // by any worker.
+  //
+  // A PREFIX and not a list, because a list would have to name which faces a
+  // page happens to need. The browser downloads only the faces it renders
+  // glyphs for -- six of the eighteen on this page -- so precaching the list
+  // would fetch about 160 KB at install that the visitor never uses. Nothing
+  // is precached here: the first visit pays the network exactly as it does
+  // today, and the repeat visit pays nothing.
+  //
+  // cacheOnlyElseNetwork and not cacheFirst, for the reason given on that
+  // function: cacheFirst revalidates on every hit, so it would have served the
+  // font instantly and still spent the 134 KB. An earlier draft of this branch
+  // used it and the comment claimed the bytes were saved; the repeat-visit
+  // probe showed all six still crossing the wire.
+  //
+  // Scoped to this registration, so a sibling instance's fonts/ is left to its
+  // own worker -- CacheStorage is per-origin and this origin serves six apps.
+  //
+  // A changed font reaches a returning visitor only on a CACHE_NAME bump;
+  // check_cache_version.py enforces it for these files.
+  if (href.startsWith(new URL("fonts/", self.registration.scope).href)) {
+    event.respondWith(cacheOnlyElseNetwork(event.request));
     return;
   }
 

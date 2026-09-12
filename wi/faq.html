@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Common questions about Wisconsin districts — districtry Wisconsin</title>
-<meta name="description" content="Plain answers about Wisconsin districts: Assembly and Senate districts, school districts, counties, cities, villages and towns, U.S. House seats — and who represents you." />
+<title>Wisconsin district questions — districtry Wisconsin</title>
+<meta name="description" content="Wisconsin districts explained: Assembly and Senate, school districts, counties, cities, villages and towns, U.S. House seats — and who represents you." />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://districtry.com/wi/faq.html" />
 <meta name="theme-color" content="#6d3fd1">
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="districtry Wisconsin" />
-<meta property="og:title" content="Common questions about Wisconsin districts — districtry Wisconsin" />
-<meta property="og:description" content="Plain answers about Wisconsin districts: Assembly and Senate districts, school districts, counties, cities, villages and towns, U.S. House seats — and who represents you." />
+<meta property="og:title" content="Wisconsin district questions — districtry Wisconsin" />
+<meta property="og:description" content="Wisconsin districts explained: Assembly and Senate, school districts, counties, cities, villages and towns, U.S. House seats — and who represents you." />
 <meta property="og:url" content="https://districtry.com/wi/faq.html" />
 <meta property="og:image" content="https://districtry.com/wi/og-image.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:locale" content="en_US" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Common questions about Wisconsin districts — districtry Wisconsin" />
-<meta name="twitter:description" content="Plain answers about Wisconsin districts: Assembly and Senate districts, school districts, counties, cities, villages and towns, U.S. House seats — and who represents you." />
+<meta name="twitter:title" content="Wisconsin district questions — districtry Wisconsin" />
+<meta name="twitter:description" content="Wisconsin districts explained: Assembly and Senate, school districts, counties, cities, villages and towns, U.S. House seats — and who represents you." />
 <meta name="twitter:image" content="https://districtry.com/wi/og-image.png" />
 <script type="application/ld+json">
 {
@@ -27,9 +27,10 @@
   "@type": "WebPage",
   "@id": "https://districtry.com/wi/faq.html",
   "url": "https://districtry.com/wi/faq.html",
-  "name": "Common questions about Wisconsin districts — districtry Wisconsin",
-  "description": "Plain answers about Wisconsin districts: Assembly and Senate districts, school districts, counties, cities, villages and towns, U.S. House seats — and who represents you.",
+  "name": "Wisconsin district questions — districtry Wisconsin",
+  "description": "Wisconsin districts explained: Assembly and Senate, school districts, counties, cities, villages and towns, U.S. House seats — and who represents you.",
   "inLanguage": "en-US",
+  "author": { "@type": "Person", "@id": "https://districtry.com/#author", "name": "Adam Overberg", "url": "https://overberg.co" },
   "isPartOf": {
     "@id": "https://districtry.com/wi/#website"
   },
@@ -387,7 +388,7 @@ header.masthead {
   justify-content: space-between;
   gap: 14px 28px;
 }
-h1.title { margin: 0; min-width: 0; }
+.title { margin: 0; min-width: 0; }
 .title-row { display: flex; align-items: center; gap: 13px; }
 .masthead-star { display: none; }   /* the Chicago star, same story as the stripe */
 .districtry-mark { width: 34px; height: 34px; flex: 0 0 auto; }
@@ -400,7 +401,7 @@ h1.title { margin: 0; min-width: 0; }
   text-transform: uppercase;
   color: var(--ink);
 }
-h1.title small {
+.title small, .title .title-tagline {
   display: block;
   font-family: var(--font-body);
   font-weight: 400;
@@ -476,7 +477,7 @@ h1.title small {
   header.masthead { padding: 15px 0 16px; }
   .districtry-mark { width: 27px; height: 27px; }
   .title-text { font-size: 23px; }
-  h1.title small { font-size: 13px; margin-top: 4px; }
+  .title small, .title .title-tagline { font-size: 13px; margin-top: 4px; }
   .masthead-actions { justify-content: flex-start; margin-left: 0; width: 100%; gap: 6px; }
   .masthead-actions a { font-size: 12.5px; padding: 8px 13px; }
 }
@@ -761,6 +762,50 @@ footer.site-footer a { color: var(--accent-deep); }
       <a href="../privacy.html">Privacy</a>
       <a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
       <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">View source on GitHub</a>
+      <!-- ==== ENGINE:BEGIN footer-byline ==== -->
+      <!-- ONE copy of the author byline, for every page that is not the app.
+           It was twenty-four copies until 2026-09-12, and they had already
+           diverged: twenty wrote the dash as a literal — and the four generated
+           history pages wrote &mdash;, which is the same symptom this file's
+           neighbour styles-subpage.txt was created to stop.
+
+           The contact address is the reason it became one copy. The sentence
+           has invited corrections since the page shipped and gave the reader no
+           way to send one; putting an address in twenty-five literals is how
+           the next change to it misses four of them.
+
+           hello@ is the GENERAL address and the sentence is worded so it does
+           not read as a corrections channel. sponsorship.html publishes a
+           deliberate split -- sponsor@, data@, press@, corrections@, adam@ for
+           privacy -- and says in its own words that the addresses exist "so
+           that mail about money is not mixed in with mail about a wrong
+           district line". A byline on thirty-two pages saying corrections go to
+           hello@ would contradict the page that documents the routing, so it
+           names the general address and leaves the specific routes alone.
+
+           The pages that GENERATE their own footer (privacy.html and the four
+           history pages) read this same file from their builder instead of
+           carrying a fence, because a fence there would have to agree with
+           whatever the builder emits inside it, which means reading this file
+           anyway. One source, two mechanisms, stated here so the second is not
+           mistaken for a copy.
+
+           rel="author noopener", not rel="author" rel="noopener": the old
+           markup set the attribute twice, and a parser keeps the first and
+           drops the second, so target="_blank" was running without noopener on
+           every one of the twenty-five.
+
+           TWENTY-FIVE, not twenty-four. The first count searched for the
+           <p class="footer-byline"> wrapper and so missed traffic.html, which
+           carried the same sentence in a <span class="standing">. Counting
+           copies by their wrapper undercounts them; count by the sentence.
+           traffic.html now takes this block, with one CSS rule matching
+           .footer-byline to the .standing it replaced so nothing moved. -->
+      <p class="footer-byline">Written and maintained by
+      <a href="https://overberg.co" rel="author noopener" target="_blank">Adam Overberg</a>
+      — <a href="mailto:hello@overberg.co">hello@overberg.co</a>.
+      Corrections are welcome; every one gets a reply.</p>
+      <!-- ==== ENGINE:END footer-byline ==== -->
     </div>
   </div>
 </footer>

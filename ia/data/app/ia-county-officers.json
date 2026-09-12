@@ -616,6 +616,7 @@
    }
   ],
   "treasurer": {
+   "email": "lwagner@carrollcountyiowa.org",
    "name": "Lisa Wagner",
    "party": "Republican",
    "phone": "(712) 792-1200"
@@ -638,7 +639,6 @@
   },
   "sheriff": {
    "name": "John Westering",
-   "party": "Republican",
    "phone": "(712) 243-2206"
   },
   "supervisorPlan": "PLAN 3",
@@ -729,7 +729,6 @@
   "countyAttorney": {
    "email": "cdalen@cgcounty.org",
    "name": "Carlyle D. Dalen",
-   "party": "Democratic",
    "phone": "641-421-3101"
   },
   "recorder": {
@@ -773,7 +772,6 @@
   "countyAttorney": {
    "email": "rrkolpin@co.cherokee.ia.us",
    "name": "Ryan Kolpin",
-   "party": "Republican",
    "phone": "712-225-2835"
   },
   "recorder": {
@@ -1059,7 +1057,6 @@
   "countyAttorney": {
    "email": "colin.johnson@crawfordca.org",
    "name": "Colin Johnson",
-   "party": "Democratic",
    "phone": "712-263-5601"
   },
   "recorder": {
@@ -1111,7 +1108,6 @@
   "countyAttorney": {
    "email": "DCAttorney@dallascountyiowa.gov",
    "name": "Matt Schultz",
-   "party": "Republican",
    "phone": "515-993-5060"
   },
   "recorder": {
@@ -1575,7 +1571,6 @@
   "countyAttorney": {
    "email": "pjohnson@co.fremont.ia.us",
    "name": "Peter Johnson",
-   "party": "Democratic",
    "phone": "712-374-2751"
   },
   "recorder": {
@@ -2568,7 +2563,6 @@
   }
  },
  "19117": {
-  "boardPhone": "(641) 774-2018",
   "county": "Lucas",
   "countyAttorney": {
    "email": "ca@sheltonlawfirm.com",
@@ -2588,22 +2582,7 @@
    "party": "Republican",
    "phone": "(641) 774-5083"
   },
-  "supervisorPlan": "PLAN 1",
-  "supervisorSeats": 3,
-  "supervisors": [
-   {
-    "name": "Larry Davis",
-    "party": "Republican"
-   },
-   {
-    "name": "Cathy Reece",
-    "party": "Independent"
-   },
-   {
-    "name": "Cathy Reece",
-    "party": "Republican"
-   }
-  ],
+  "supervisorsWithheld": "the county directory lists 2, and Iowa Code 331.201 allows only 3 or 5",
   "treasurer": {
    "email": "gwinnh@lucasco.org",
    "name": "Hanna Gwinn",
@@ -3160,6 +3139,7 @@
    }
   ],
   "treasurer": {
+   "email": "mhattermann@obriencounty.iowa.gov",
    "name": "Missy Hattermann",
    "party": "Democratic",
    "phone": "(712) 957-3210"
@@ -3209,6 +3189,7 @@
    }
   ],
   "treasurer": {
+   "email": "bmarco@osceolacoia.org",
    "name": "Becky Marco",
    "party": "Republican",
    "phone": "(712) 754-3217"
@@ -3300,6 +3281,7 @@
    }
   ],
   "treasurer": {
+   "email": "rjamison@paloaltocounty.iowa.gov",
    "name": "Robin Jamison",
    "party": "Republican",
    "phone": "(712) 852-3844"
@@ -3458,7 +3440,6 @@
   }
  },
  "19155": {
-  "boardPhone": "(712) 328-5644",
   "county": "Pottawattamie",
   "countyAttorney": {
    "email": "matthew.wilber@pottcounty-ia.gov",
@@ -3477,30 +3458,9 @@
    "party": "Republican",
    "phone": "(712) 890-2200"
   },
-  "supervisorPlan": "PLAN 1",
-  "supervisorSeats": 5,
-  "supervisors": [
-   {
-    "name": "Keith Jones"
-   },
-   {
-    "name": "Jeff Jorgensen",
-    "party": "Republican"
-   },
-   {
-    "name": "Susan Miller",
-    "party": "Republican"
-   },
-   {
-    "name": "Brian Shea",
-    "party": "Republican"
-   },
-   {
-    "name": "Tim Wichman",
-    "party": "Republican"
-   }
-  ],
+  "supervisorsWithheld": "the county directory lists 6, and Iowa Code 331.201 allows only 3 or 5",
   "treasurer": {
+   "email": "lea.voss@pottcounty-ia.gov",
    "name": "Lea Voss",
    "party": "Republican",
    "phone": "(712) 328-5627"
@@ -4067,7 +4027,6 @@
   },
   "sheriff": {
    "name": "Jared Schneider",
-   "party": "Republican",
    "phone": "(319) 653-2107"
   },
   "supervisorPlan": "PLAN 3",
@@ -4150,7 +4109,6 @@
   "countyAttorney": {
    "email": "darren.driscoll@webstercountyia.gov",
    "name": "Darren Driscoll",
-   "party": "Democratic",
    "phone": "515-573-1452"
   },
   "recorder": {
