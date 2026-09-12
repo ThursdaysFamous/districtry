@@ -43,7 +43,7 @@
 // refreshed per election.)
 /* ==== TEMPLATE:END sw-version-history ==== */
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-il-shell-v23";
+const CACHE_NAME = "districtry-il-shell-v24";
 
 const SHELL_URLS = [
   "./",
@@ -73,6 +73,7 @@ const GEOMETRY_URLS = [
   "./data/app/belvidere-city-outline.json",
   "./data/app/bond-county-outline.json",
   "./data/app/boone-county-outline.json",
+  "./data/app/boone-fire-districts.json",
   "./data/app/boone-library-districts.json",
   "./data/app/boone-park-districts.json",
   "./data/app/grundy-fire-districts.json",

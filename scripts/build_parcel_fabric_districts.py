@@ -208,6 +208,79 @@ for _code in ("05009", "07005"):
 for _code in ("03004", "03007", "03011", "05008"):
     BOONE_LIBRARY_CODES[_code] = NORTH_SUBURBAN_LIBRARY
 
+# THE FIRE DISTRICTS COME OFF THE SAME TWO COUNTY DOCUMENTS, and they are here
+# because the county's own fire layer cannot carry a name. Boone publishes
+# `Fire_Districts` (and a second copy of it inside Fire/Boone_County_Fire_Map),
+# five polygons with a smallint `district` and NO name column, tiling every acre
+# of the county. Two things measured 2026-09-12 make naming those five polygons
+# impossible rather than merely awkward:
+#
+#   THE COUNTY LEVIES SIX FIRE PROTECTION DISTRICTS, NOT FIVE. FDCV - CHERRY
+#   VALLEY FIRE has a real Boone rate on tax codes 05009 and 07005 (124
+#   parcels), and the county's layer draws that ground as polygon 2 — a query
+#   at 42.24308,-88.93207 returns district 2. So polygon 2 is FD02's territory
+#   AND FDCV's, and a name attached to it is wrong for one of them. Cherry
+#   Valley is seated in Winnebago and reaches across the line, the same shape as
+#   the library above and as Stark's Kewanee and Williamsfield entries.
+#
+#   THE LAYER ALSO COVERS GROUND THAT PAYS INTO NO FIRE DISTRICT AT ALL. 21 of
+#   the county's 68 tax codes carry no fire-protection line: 18 are the City of
+#   Belvidere (already recorded as `boone-fire-belvidere-city`, which the app
+#   answers with an explanatory card) and THREE — 03007, 03011 and 05008, 576
+#   parcels — are the City of Loves Park's strip along the Winnebago line,
+#   which nothing had recorded. The county's layer answers district 3 there
+#   (42.33062,-88.93750).
+#
+# A parcel dissolve fixes both by construction, because the tax roll is what a
+# fire protection district's territory IS: the district is the union of the
+# parcels that pay its levy, and ground that pays no levy is drawn by nobody.
+#
+# THREE COUNTY REPORTS AGREE ON EVERY LINE, measured 2026-09-12 for tax year
+# 2025. The roster below is the Clerk's "Taxcode Value within District Report",
+# which groups tax codes under each district; her "District Value within Taxcode
+# Report" inverts it, listing each code's districts; her "District Rates by
+# Taxcode Report" does the same with rates. Each covers all 68 tax codes, each
+# puts 47 of them in a fire district, all three agree with the roster on every
+# one, and all three name the same 21 codes as carrying no fire district.
+#
+# COUNT THE BLOCKS BY THEIR `Totals for NNNNN` LINES, NOT BY THEIR HEADERS. Seven
+# of the rates report's blocks extract as `03008 -` with no trailing space, so a
+# header pattern expecting `NNNNN - ` silently skips them and the report reads as
+# 61 codes. This comment said 61 until the count was re-taken from the totals.
+#
+# The parcels partition exactly: 15,303 in the six districts + 8,351 in
+# Belvidere + 576 in Loves Park + 90 carrying no tax_code at all = 24,320, the
+# whole roll.
+#
+# THE DISTRICTS ARE NUMBERED AND NOT NAMED HERE, and that is a measurement
+# rather than an omission — see the `boone-fire-names` gap record. The county
+# numbers its own five on every surface it publishes (the Clerk's yearbook
+# heads them DISTRICT NO. 1 through 5), and the words the Clerk's tax reports
+# put beside those numbers disagree with the names the Comptroller's warehouse
+# registers for three of the five: CAPRON FPD against "Boone County #1", LEROY
+# FPD against "Boone #4", MANCHESTER FPD against "North Boone #5". District 1's
+# own filed e-mail address is at boonecountyfpd1.com, which sides against the
+# Clerk. So the number ships and no word does. The SIXTH is different and does
+# ship named: three sources agree on it in full — the Clerk's report
+# (CHERRY VALLEY FIRE), the yearbook's own section heading (CHERRY VALLEY FIRE
+# PROTECTION DISTRICT) and the district's own site at cvfpd.com.
+CHERRY_VALLEY_FIRE = "Cherry Valley Fire Protection District"
+
+BOONE_FIRE_CODES = {}
+for _code in ("02001 02003 04001 04002 04003 09002").split():
+    BOONE_FIRE_CODES[_code] = "1"
+for _code in ("05001 05002 05007 05010 05011 05110 06001 06002 06003 06011 06013 "
+              "07001 07003 07006 07007 07008 07101 08001").split():
+    BOONE_FIRE_CODES[_code] = "2"
+for _code in ("01001 01002 03001 03002 03003 03004 03005 03006 03008 03009 03010 "
+              "09001 09003 09004 09005 09006 09007").split():
+    BOONE_FIRE_CODES[_code] = "3"
+for _code in ("01003 02002 02004").split():
+    BOONE_FIRE_CODES[_code] = "4"
+BOONE_FIRE_CODES["01004"] = "5"
+for _code in ("05009", "07005"):
+    BOONE_FIRE_CODES[_code] = CHERRY_VALLEY_FIRE
+
 # --- Grundy -------------------------------------------------------------
 # The THIRD shape a parcel fabric comes in, after Woodford's one-column-per-
 # concept and Boone's bare tax code: Grundy publishes ONE `Districts` column
@@ -793,6 +866,26 @@ SOURCES = [
                 (42.34853, -88.93519, NORTH_SUBURBAN_LIBRARY),   # 03004
                 (42.39853, -88.74735, None),                    # Capron village (04003)
                 (42.32119, -88.83908, None)]},                  # 05007 — park only, no library
+    # Boone's six fire protection districts, out of the same parcel fabric and
+    # the same Clerk's report. The probes cover every district, and the two
+    # NEGATIVES are the whole reason this source exists: Belvidere City Hall and
+    # a Loves Park parcel must both come back with NO district, where the
+    # county's own five-polygon layer answers 2 and 3 there.
+    {"slug": "boone-fire", "out": "boone-fire-districts.json",
+     "layer": BOONE_PARCELS, "name_prop": "tax_code", "expect": 6,
+     "expect_rows": 15303,
+     "expect_empty_codes": ["05010", "05110", "09006"],
+     "out_prop": "district", "code_map": BOONE_FIRE_CODES,
+     "where": _in_clause(BOONE_FIRE_CODES),
+     "probes": [(42.39608, -88.74680, "1"),                   # 04003 — Capron village
+                (42.31031, -88.82441, "2"),                   # 05007
+                (42.34877, -88.93744, "3"),                   # 03004 — Argyle Rd, Caledonia
+                (42.47641, -88.76799, "4"),                   # 02004 — Coon Trail Rd, Capron
+                (42.41687, -88.92840, "5"),                   # 01004
+                (42.24340, -88.93679, CHERRY_VALLEY_FIRE),    # 05009 — US 20, Cherry Valley
+                (42.23600, -88.93714, CHERRY_VALLEY_FIRE),    # 07005 — the district's second code
+                (42.25670, -88.83936, None),                  # Belvidere City Hall (05005)
+                (42.33038, -88.92235, None)]},                # 03007 — the Loves Park strip
     # Woodford's three, and the SIMPLER half of Boone's shape: the county
     # publishes no district tiling either, but its parcels carry the district's
     # NAME rather than a bare tax code, so no Clerk crosswalk is needed and
