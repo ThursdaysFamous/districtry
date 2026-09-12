@@ -30,6 +30,50 @@ correct -- what is missing is permission, and this project does not route
 around an access control. THE FILE READS AS PERMISSIVE FOR THE FIRST TWO
 HUNDRED BYTES: the refusal is the last two lines.
 
+WHY THERE IS NO BROWSER AGENT HERE (measured 2026-09-12, from a Claude Code
+sandbox, robots.txt only -- no page on a refused host was requested)
+----------------------------------------------------------------------
+Until today this file carried a second client. It read robots.txt as
+`districtry/1.0` and then fetched with a Chrome/128 string whenever
+`kind == "granicus"`, on the recorded grounds that "Granicus refuses the bot
+agent on ViewPublisher". So THE POLICY IT READ WAS NOT THE POLICY FOR THE
+CLIENT IT SENT -- and under CLAUDE.md's rule a browser string is allowed only
+where the refusal it answers is measured and written down in the calling file.
+
+Re-measured, that justification cannot be tested and the branch was never
+reached:
+
+  * johnson-county.granicus.com/robots.txt, GET 2026-09-12 -> HTTP 200, 241
+    bytes, sha256 ac520e96. Four named crawlers (Googlebot, Slurp, msnbot,
+    search-one-scgov) are allowed everything but /JSON.php, then
+    `User-agent: * / Disallow: /`. NEITHER of this project's tokens is one of
+    those four, so the `*` group binds BOTH, and the RFC 9309 reading refuses
+    /ViewPublisher.php for the districtry token and the Chrome string ALIKE.
+    The browser string bought nothing.
+  * JOHNSON IS THE ONLY `granicus` ENTRY IN COUNTIES, and `read_county`
+    returns on `robots-disallowed` BEFORE it calls `discover`. So both
+    `BROWSER` call sites were unreachable: every county this file has ever
+    fetched was fetched with the token.
+  * The other five hosts were read the same way. cerrogordo.gov,
+    clintoncounty-ia.gov, desmoinescounty.iowa.gov and mahaskacountyia.gov
+    serve NO robots.txt (404, allow-all); dallascountyiowa.gov serves one
+    that allows the AgendaCenter path. All five answer the two tokens
+    IDENTICALLY -- no host this file reads distinguishes them.
+
+So the token is sent everywhere and the gate asks as the token. THE ORIGINAL
+CLAIM IS NOT DISPROVED, only untestable: whether Granicus would 403 the token
+on ViewPublisher can only be settled by requesting a path that host refuses,
+which this project does not do. If Johnson's robots.txt ever opens, the token
+goes first and a refusal will surface as a visible `unreachable` row carrying
+its own status and date -- which is the measurement CLAUDE.md asks for before
+a browser string may be sent, and which nothing here has.
+
+ONE MORE READING, because it is easy to get backwards: Johnson's
+`Crawl-delay: 10` sits in the Googlebot, Slurp and msnbot groups and NOT in
+the `*` group, so it does not bind this project. Measured the same day,
+robots_policy.crawl_delay returns 10.0 for Googlebot and None for both of
+ours.
+
 The other five:
 
   Polk           minutes only through a CivicClerk single-page portal. The
@@ -145,14 +189,13 @@ CACHE_DIR = os.path.join(HERE, ".cache")
 OUT_PATH = os.path.join(CACHE_DIR, "ia_county_minutes_chairs.json")
 OFFICERS = os.path.join(DATA, "ia-county-officers.json")
 
+# ONE CLIENT. The gate reads robots.txt as this agent and every fetch sends it,
+# so the policy read is the policy for the client that acts on it. Until
+# 2026-09-12 a second `BROWSER` constant sent Chrome/128 whenever
+# `kind == "granicus"` while the gate went on asking as `districtry` -- see
+# WHY THERE IS NO BROWSER AGENT HERE in the docstring for what that was worth.
 BOT = {"User-Agent": "districtry/1.0 (+https://districtry.com/ia/)",
        "Accept": "text/html,application/xhtml+xml,application/pdf,*/*"}
-# Granicus refuses the bot agent on ViewPublisher; nothing here defeats an
-# access control, this is the ordinary desktop agent its own portal serves.
-BROWSER = {"User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                          "AppleWebKit/537.36 (KHTML, like Gecko) "
-                          "Chrome/128.0.0.0 Safari/537.36"),
-           "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"}
 TIMEOUT = 90
 
 # The five counties this route answers for, PINNED with the shape of their
@@ -335,8 +378,7 @@ def granicus_rows(html, base):
 
 def discover(session, kind, index_url):
     """Return [(meeting_date, absolute_url), ...] newest first."""
-    headers = BROWSER if kind == "granicus" else BOT
-    r = session.get(index_url, headers=headers, timeout=TIMEOUT, allow_redirects=True)
+    r = session.get(index_url, headers=BOT, timeout=TIMEOUT, allow_redirects=True)
     r.raise_for_status()
     if kind == "granicus":
         rows, seen = [], set()
@@ -399,8 +441,7 @@ def read_county(session, gate, fips, county, kind, index_url, roster):
     seen = []
     for when, url in docs[:WITNESSES]:
         try:
-            d = session.get(url, headers=BROWSER if kind == "granicus" else BOT,
-                            timeout=TIMEOUT, allow_redirects=True)
+            d = session.get(url, headers=BOT, timeout=TIMEOUT, allow_redirects=True)
             d.raise_for_status()
             text = pdf_text(d.content) if d.content[:5] == b"%PDF-" else ""
         except Exception as exc:
