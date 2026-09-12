@@ -78,6 +78,7 @@ python3 ia/scripts/build_metro_outline.py --check
 python3 mi/scripts/build_metro_outline.py --check
 python3 scripts/build_press_list.py --check                # PRESS_LIST.md vs press-list.json
 python3 scripts/validate_doc_counts.py                    # "N layers" in prose vs the worksheets
+python3 scripts/validate_doc_counts.py --selftest         # pattern C reads the one real "N for <instance>" count and not the four sentences sharing its shape
 python3 scripts/validate_serp_lengths.py                  # every page's title and description fit a search result
 python3 scripts/robots_policy.py --selftest                # the one robots.txt reader against three saved files, and the per-host Crawl-delay pacer: one queue per delay-stating site, `www.` folded, others parallel
 python3 scripts/probe_user_agents.py --selftest           # read_robots() over stub responses: the robots-read path --probe depends on
