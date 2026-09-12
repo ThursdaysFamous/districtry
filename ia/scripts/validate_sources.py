@@ -32,6 +32,27 @@ What it checks (findings carry a severity — FAIL, WARN, or OK):
      data/app file is present.                             [WARN / FAIL if gone]
   4. Live service endpoints (Census TIGERweb): reachable.                  [WARN]
 
+Crawl-delay: this file probes TWO pages on www.iowacourts.gov, which states
+`Crawl-delay: 30` in a group that binds every token this project sends, and
+one PDF on www.issda.org, which states 10. Measured 2026-09-12, it honoured
+neither — the two iowacourts.gov probes went out back to back. They are now
+paced by scripts/robots_policy.py's HostPacer, the same object the six-worker
+board-chair scrape uses, and the hosts it held are printed to stderr at the
+end of the run so an honoured delay can be told from an ignored one. A single
+request to a host is never paced by anything, so issda.org's 10 seconds cost
+this run nothing; the pacer is there for the day a second issda.org URL is
+added.
+
+WHAT THIS FILE STILL DOES NOT DO, stated rather than left to be assumed: it
+reads robots.txt for the DELAY and does not act on the file's allow/disallow.
+That is deliberate for now and not an oversight. RFC 9309 makes an UNREACHABLE
+robots.txt disallow-all, and this script's whole question is "is this source
+still there" — a transient robots.txt outage would turn into a source-freshness
+finding about the wrong thing, so declining a probe needs its own decision
+about how that is reported (scripts/validate_card_links.py's ROBOTS_DECLINED is
+the shape). CLAUDE.md already records the fleet-level follow-up: several
+scrapers fetch without asking, and that is the next thing to fix.
+
 Exit status: 0 when nothing needs a human (OK or WARN only), 1 on any FAIL.
 Newer-edition detection is deliberately WARN, not FAIL — the current dataset
 still works and a person decides whether/when to migrate. The scheduled
@@ -56,11 +77,17 @@ try:
 except ImportError:  # pragma: no cover - requests is pinned in requirements.txt
     requests = None
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # sibling, not a package
+from robots_gate import RobotsGate, HostPacer  # noqa: E402
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INDEX_HTML = os.path.join(REPO_ROOT, "index.html")
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
 
 HTTP_TIMEOUT = 25
+# The gate must ask a host's robots.txt about the token the fetch actually
+# sends, so there is one literal and both read it.
+USER_AGENT = "districtry source validator (+https://districtry.com/ia/)"
 
 # The freshness gate's source manifest for the Iowa instance. Every layer this
 # instance adds gets its rows here in the same change (CLAUDE.md's
@@ -829,17 +856,34 @@ class Findings(object):
         return "ok"
 
 
+PACER = None
+
+
+def pacer():
+    """The run's one HostPacer, built on first use.
+
+    Lazy because --offline never fetches anything and should not open a
+    session or read anybody's robots.txt to say so.
+    """
+    global PACER
+    if PACER is None:
+        PACER = HostPacer(RobotsGate(requests.Session(), USER_AGENT,
+                                     timeout=HTTP_TIMEOUT))
+    return PACER
+
+
 def http_get(url, want_json=True, params=None):
     """GET with a sane UA; returns (ok, payload_or_error). Never raises."""
     if requests is None:
         return False, "requests not installed"
     try:
-        resp = requests.get(
-            url,
-            params=params,
-            timeout=HTTP_TIMEOUT,
-            headers={"User-Agent": "districtry source validator (+https://districtry.com/ia/)"},
-        )
+        with pacer().hold(url):
+            resp = requests.get(
+                url,
+                params=params,
+                timeout=HTTP_TIMEOUT,
+                headers={"User-Agent": USER_AGENT},
+            )
     except Exception as e:  # network/TLS/proxy errors are a finding, not a crash
         return False, "request failed: %s" % e
     if resp.status_code >= 400:
@@ -1079,6 +1123,12 @@ def main():
     check_socrata(findings, args.offline)
     check_provenance(findings, args.offline)
     check_endpoints(findings, args.offline)
+
+    # Which hosts asked to be slowed down, and by how much. On stderr, because
+    # stdout is the markdown report that becomes the monthly issue body.
+    if not args.offline and PACER is not None:
+        for line in PACER.report(prefix=""):
+            print(line, file=sys.stderr)
 
     report = render(findings)
     sys.stdout.write(report)
