@@ -460,6 +460,16 @@ jobs:
           pip install -c ia/scripts/requirements.txt pdfplumber
           python3 ia/scripts/ia_county_minutes_chair_scraper.py --selftest
 
+      # The chair builder may keep a name in the shipped file that this week's
+      # scrape did not re-read, which is the one place in this pipeline where
+      # data outlives its own verification. What makes that safe is a narrow
+      # rule -- carry only on `unreachable`, never on a refusal, never past
+      # sixty days, never across a January reorganisation, never for a name
+      # that has left the county's supervisor roster -- and a rule nothing
+      # exercises is a rule that loosens. Fourteen literal cases, no network.
+      - name: Iowa board-chair carry-forward rules still hold
+        run: python3 ia/scripts/build_ia_county_chair.py --selftest
+
       # A roster's count guard proves it still has twelve members; it proves
       # nothing about whether those twelve still carry an e-mail. On 2026-08-08
       # Cloudflare's e-mail obfuscation quietly emptied all seven of Brown
