@@ -936,6 +936,164 @@ try {
       `offsets requested: [${seen.join(", ")}]`);
     await context.close();
   }
+
+/* ---------- 12. batch address check --------------------------------------
+ * The panel runs the app's OWN layer machinery down a pasted list — the
+ * overlay loaders, mod.coverage(), findFeatureContaining(), hoverValue() —
+ * all of which the checks above already cover. What needs proving here is the
+ * part that is not the app's: that a list becomes rows, that each row says how
+ * precisely the geocoder resolved it and how far the point sits from the edge
+ * of the district it landed in, that the review flags fire, and that the CSV
+ * carries the same values the table shows.
+ *
+ * PHOTON IS STUBBED. A gate that needs a third party to be up, and to rank a
+ * given address the same way today as it did yesterday, fails on somebody
+ * else's schedule — the rule scripts/landing_test.mjs already follows for the
+ * front door's box. The stub matches a MARKER WORD rather than the whole
+ * query, so cleanPoiAddress() stays free to rewrite what it sends.
+ */
+{
+  const context = await browser.newContext({ serviceWorkers: "block", acceptDownloads: true });
+  const [LAT, LNG] = POINT.split(",").map(Number);
+  const [NLAT, NLNG] = NEGATIVE_POINT.split(",").map(Number);
+  // Marker word -> what Photon answers. HOUSE carries a housenumber (a rooftop
+  // match). STREET does not, which is the case worth having a column for: the
+  // geocoder found the street, and that is no answer at all to a question
+  // about which side of that street somebody lives on. MISS answers with no
+  // features at all. OUTSIDE is a clean rooftop match beyond the layer's
+  // coverage.
+  const FIXTURES = {
+    HOUSE: { lat: LAT, lng: LNG, props: { housenumber: "233", street: "S Wacker Dr", city: "Chicago" } },
+    STREET: { lat: LAT, lng: LNG, props: { street: "S Wacker Dr", city: "Chicago" } },
+    OUTSIDE: { lat: NLAT, lng: NLNG, props: { housenumber: "1", street: "Shore Dr", city: "Chicago" } },
+    MISS: null,
+  };
+  const stubPhoton = (p) => p.route("**photon.komoot.io**", (r) => {
+    const q = (new URL(r.request().url()).searchParams.get("q") || "").toUpperCase();
+    const key = Object.keys(FIXTURES).find((k) => q.includes(k));
+    const fx = key ? FIXTURES[key] : null;
+    return r.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        features: fx ? [{ type: "Feature", properties: fx.props,
+          geometry: { type: "Point", coordinates: [fx.lng, fx.lat] } }] : [],
+      }),
+    });
+  });
+
+  // Drive one run and return the rendered table as plain text rows. The wait
+  // is on the run having FINISHED (the button re-enabled) as well as on the
+  // row count, so a check can never read a half-built table.
+  async function runList(page, lines, thresholdFt) {
+    if (await page.isHidden("#batch-modal")) await page.click("#batch-btn");
+    await page.fill("#batch-input", lines.join("\n"));
+    if (thresholdFt !== undefined) await page.fill("#batch-threshold", String(thresholdFt));
+    await page.click("#batch-run");
+    await page.waitForFunction((n) => {
+      const rows = document.querySelectorAll("#batch-results tbody tr");
+      return rows.length === n && !document.getElementById("batch-run").disabled;
+    }, lines.length, { timeout: QUERY_TIMEOUT });
+    return page.evaluate(() => Array.from(document.querySelectorAll("#batch-results tbody tr"))
+      .map((tr) => Array.from(tr.children).map((td) => td.textContent)));
+  }
+
+  {
+    // school-board is one of the three no-API layers, so this check needs no
+    // government endpoint either. The portal abort is check 2b's, for the same
+    // reason: chicagoCoverage's fallback leg would otherwise stall the
+    // out-of-coverage verdict behind a slow rejection.
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=school-board`, async (p) => {
+      await p.route(`**${PORTAL_HOST}**`, (r) => r.abort());
+      await stubPhoton(p);
+    });
+
+    // The picker inherits what the reader already has switched on.
+    const picked = await page.evaluate(() => {
+      document.getElementById("batch-btn").click();
+      return Array.from(document.querySelectorAll("#batch-layers input"))
+        .filter((cb) => cb.checked).map((cb) => cb.parentNode.textContent.trim());
+    });
+    check("batch picker inherits the layers already switched on",
+      picked.length === 1 && /School Board/.test(picked[0]), picked.join(", ") || "(none)");
+
+    const rows = await runList(page, [
+      "233 HOUSE Dr, Chicago",
+      "1 STREET Ave, Chicago",
+      "9 MISS Rd, Chicago",
+      "1 OUTSIDE Dr, Chicago",
+    ]);
+    const cols = rows[0] ? rows[0].length : 0;
+    check("batch turns a pasted list into one row per address",
+      rows.length === 4 && cols === 7, `${rows.length} row(s) x ${cols} column(s)`);
+
+    // [#, Address, Matched, Match, <layer>, Edge (ft), Review]
+    const [house, street, miss, outside] = rows.map((r) => r || []);
+    check("batch classifies a rooftop match against the layer",
+      house[3] === "house" && house[4].includes(EXPECT_DISTRICT["school-board"]),
+      `match=${house[3]} district=${house[4]}`);
+    check("batch measures the distance to the district's own edge",
+      Number(house[5]) > 0, `${house[5]} ft`);
+    check("a deep-interior point is not flagged at the default threshold",
+      house[6] === "", house[6] || "(no flags)");
+    check("batch flags a street-level match as not an address",
+      street[3] === "street" && /matched the street/.test(street[6]), street[6]);
+    check("batch flags an address the geocoder could not find",
+      miss[3] === "none" && /no geocoder match/.test(miss[6]), miss[6]);
+    check("batch reports out-of-coverage rather than inventing a district",
+      /outside coverage/.test(outside[4]) && /outside .* coverage/.test(outside[6]),
+      `cell=${outside[4]} review=${outside[6]}`);
+
+    // The two-sided half of the edge measurement. The same point that went
+    // unflagged above must flag when the reader widens the review distance
+    // past its measured distance to the line — otherwise "not flagged" would
+    // only ever have proved that the threshold never fires.
+    const wide = await runList(page, ["233 HOUSE Dr, Chicago"], Math.ceil(Number(house[5])) + 10);
+    check("widening the review distance flags the same point",
+      /\d+ ft from a .* line/.test(wide[0][6]), wide[0][6]);
+
+    // Back to the four-row run, so the CSV is checked against a table that
+    // carries every case rather than the single row above.
+    const table = await runList(page, [
+      "233 HOUSE Dr, Chicago",
+      "1 STREET Ave, Chicago",
+      "9 MISS Rd, Chicago",
+      "1 OUTSIDE Dr, Chicago",
+    ], 150);
+    const [download] = await Promise.all([
+      page.waitForEvent("download"),
+      page.click("#batch-csv"),
+    ]);
+    const csv = readFileSync(await download.path(), "utf8");
+    const csvRows = csv.replace(/^﻿/, "").trim().split("\r\n");
+    const header = csvRows[0].split(",");
+    check("CSV header names the address, the match and every checked layer",
+      csvRows.length === 5 && header[1] === "address" && header[5] === "match" &&
+      /School Board/.test(header[6]) && header.slice(-1)[0] === "review",
+      `${csvRows.length - 1} data row(s): ${header.join("|")}`);
+    // The CSV is the deliverable people work from, so it has to carry the
+    // table's own values rather than a second derivation of them.
+    check("CSV carries the values the table shows",
+      csvRows[1].includes(table[0][4]) && csvRows[1].includes(String(Math.round(Number(table[0][5])))) &&
+      csvRows[3].includes("no geocoder match"),
+      csvRows[1]);
+    check("CSV quotes a field containing a comma",
+      /,"[^"]*,[^"]*"/.test(csvRows[1]) || !table[0][1].includes(","), "comma handling");
+
+    // A flagged row is the one somebody has to look at, so it has to lead back
+    // to the map.
+    await page.click("#batch-results tbody tr");
+    const selected = await page.evaluate((n) => {
+      const p = window[n].state.selectedPoint;
+      return { hidden: document.getElementById("batch-modal").hidden, lat: p && p.lat };
+    }, EXPORTS_NAME);
+    check("clicking a result row selects that point on the map",
+      selected.hidden === true && Math.abs(selected.lat - LAT) < 1e-6,
+      `modal closed=${selected.hidden} lat=${selected.lat}`);
+
+    await context.close();
+  }
+}
 } finally {
   await browser.close();
 }
