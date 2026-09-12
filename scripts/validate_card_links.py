@@ -930,7 +930,16 @@ def robots_still_disallows(host):
 
     Returns True (still shut), False (the rule has gone) or None (could not
     tell), and None is never reported as good news.
+
+    SINCE 2026-09-12 the file is read by scripts/robots_policy.py, the fleet's
+    one reading, asked whether the token this check sends may fetch "/". The
+    scan this replaced looked only for a literal `Disallow: /` under `*`, and
+    a run of agent lines in the order `*` then `Googlebot` reset its flag so
+    that group's `Disallow: /` was missed; a group naming districtry now binds
+    ahead of `*`, as RFC 9309 says it should.
     """
+    from robots_policy import RobotsPolicy
+
     for scheme in ("https", "http"):
         try:
             resp = requests.get("%s://%s/robots.txt" % (scheme, host), headers=HONEST_UA,
@@ -939,18 +948,7 @@ def robots_still_disallows(host):
             continue
         if resp.status_code >= 400:
             continue
-        star, disallowed = False, False
-        for raw in resp.text.splitlines():
-            line = raw.split("#", 1)[0].strip()
-            if not line or ":" not in line:
-                continue
-            field, value = (p.strip() for p in line.split(":", 1))
-            field = field.lower()
-            if field == "user-agent":
-                star = value == "*"
-            elif field == "disallow" and star and value == "/":
-                disallowed = True
-        return disallowed
+        return not RobotsPolicy(resp.text).allows(HONEST_UA["User-Agent"], "/")
     return None
 
 

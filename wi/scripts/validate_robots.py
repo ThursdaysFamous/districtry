@@ -56,14 +56,37 @@ a violation of a rule it is the compliance with.
 
 ROBOTS.TXT ITSELF IS ALWAYS FETCHED, by every agent, always — it is the file
 whose entire purpose is to be read before deciding. A host that 404s it has no
-policy and permits everything; a host that refuses to serve it is reported as
-unknown rather than assumed either way.
+policy and permits everything; a host whose file is unreachable (5xx, a
+network failure) or refused to this client (401, 403) is reported as unknown
+rather than assumed either way.
 
-THE `*` GROUP IS THE ONE THAT APPLIES, because this project's clients are none
-of the named agents. Where a file names ClaudeBot or GPTBot and disallows them,
-that is recorded in the scraper's own note and is not what this script reads:
-a crawler that claims to be none of those is governed by `*`, and reading a
-narrower group to get a friendlier answer would be picking the rule that suits.
+WHICH GROUP APPLIES is RFC 9309's answer, read by scripts/robots_policy.py
+since 2026-09-12 (the fleet's one parser; this script's own was retired into
+it, wildcard cases and all): every group whose token names the client that
+fetches the host, merged; if none does, every `*` group, merged. Where a file
+names ClaudeBot or GPTBot and disallows them, that is recorded in the
+scraper's own note and binds those crawlers, not this client. The old
+paragraph here said this script reads `*` and nothing narrower, "because
+reading a narrower group to get a friendlier answer would be picking the rule
+that suits" — but a group that names this client by its token is the rule the
+site wrote FOR it, not a friendlier one it picked, and a file with two `*`
+groups (the Cloudflare managed block above a site's own rules) is read as one
+group, which is the shape that was misread on wyomingmi.gov. A host stating
+a Crawl-delay in a binding group has it printed here; honouring it is the
+scraper's job and is hand-set per host (wi_county_clerk_scraper's
+CRAWL_DELAY_S), which this script does not yet check.
+
+A host that answers 401 or 403 to its OWN robots.txt stays UNKNOWN here, and
+that was re-measured rather than kept by habit: a 2026-09-12 draft made it a
+STOP, and the run reported 32 scheduled fetches disallowed — every one on
+services1/2/3/8/9.arcgis.com, carto.nationalmap.gov, data.openstates.org and
+the two Milwaukee hosts. The API hosts answer 403 to /robots.txt from their
+CDN while serving their layers to everyone; the Milwaukee hosts were a
+Cloudflare challenge this sandbox meets and the CI runner does not. Neither
+is a site refusing its data. RFC 9309 files a 403 with a 404 (allow) and
+scripts/robots_policy.py keeps that default while leaving the status visible,
+so a scraper reading a municipal WEBSITE — where a 403 there is a WAF refusing
+the client — can choose refusal explicitly, as the DuPage scraper does.
 
 Usage:
     python3 wi/scripts/validate_robots.py            # fetch and check
@@ -73,7 +96,6 @@ Usage:
 import glob
 import gzip
 import os
-import re
 import sys
 import time
 import urllib.error
@@ -82,6 +104,10 @@ import urllib.request
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
+_ROOT_SCRIPTS = os.path.join(os.path.dirname(os.path.dirname(SCRIPT_DIR)), "scripts")
+if _ROOT_SCRIPTS not in sys.path:
+    sys.path.insert(1, _ROOT_SCRIPTS)
+from robots_policy import RobotsPolicy  # noqa: E402  (shared machinery — do not fork)
 
 def robots_headers(host):
     """The header set THIS host's own pages are already crawled with.
@@ -397,32 +423,6 @@ def _strings(obj):
     return []
 
 
-def star_disallows(text):
-    """The `User-agent: *` group's Disallow lines, or None if it has no group.
-
-    Consecutive `User-agent:` lines share one group, which is why the agents
-    are collected and the Disallow lines applied to all of them — a file that
-    reads `User-agent: A` / `User-agent: *` / `Disallow: /` disallows `*`.
-    """
-    groups, current, pending = {}, [], True
-    for raw in text.splitlines():
-        line = raw.split("#", 1)[0].strip()
-        if not line or ":" not in line:
-            continue
-        key, value = (p.strip() for p in line.split(":", 1))
-        key = key.lower()
-        if key == "user-agent":
-            if not pending:
-                current, pending = [], True
-            current.append(value.lower())
-            groups.setdefault(value.lower(), [])
-        elif key in ("disallow", "allow") and current:
-            pending = False
-            for agent in current:
-                groups.setdefault(agent, []).append((key, value))
-    return groups.get("*")
-
-
 def resolve_template(url):
     """A `%s`-templated URL as the path shape actually requested.
 
@@ -444,54 +444,12 @@ def resolve_template(url):
     return url.replace("%s", "PLACEHOLDER").replace("%%", "%")
 
 
-def _rule_re(value):
-    """One robots.txt path pattern as a regex anchored at the path start.
-
-    `*` matches any run of characters and a TRAILING `$` anchors the end of the
-    path — RFC 9309 section 2.2.3, and what every major crawler implements.
-    Everything else is a literal, so the regex is built from escaped chunks
-    rather than by escaping the whole string and unescaping the metacharacters.
-    """
-    anchored = value.endswith("$")
-    body = value[:-1] if anchored else value
-    pattern = ".*".join(re.escape(part) for part in body.split("*"))
-    return re.compile("^" + pattern + ("$" if anchored else ""))
-
-
-def permitted(path, rules):
-    """robots.txt longest-match: the most specific rule wins, Allow ties win.
-
-    THE WILDCARDS ARE NOT DECORATION, and leaving them out got a real host
-    wrong in the direction that matters. This did literal `startswith`
-    matching, which cannot match a pattern containing `*` or `$` AT ALL — so
-    every wildcard rule silently evaluated as "does not apply". On
-    cms5.revize.com, whose `*` group reads
-
-        Allow: /*.pdf$   (and .DOC/.DOCX/.PPT/.PPTX)
-        Disallow: /
-
-    that turned an unmistakable policy — documents yes, everything else no —
-    into a flat refusal, because only the bare `Disallow: /` could match. The
-    same blindness runs the other way and is worse: a wildcard DISALLOW that
-    genuinely covers a path this repo fetches would have been ignored, and the
-    gate would have reported the crawl permitted. Clark's own file carries
-    `Disallow: *?lightbox=`, which this had been discarding; it happens not to
-    cover anything fetched here, which is luck rather than a check.
-
-    Specificity is the length of the rule as WRITTEN, which is what makes
-    `/*.pdf$` (7) beat `/` (1) rather than the other way round.
-    """
-    best_len, best_kind = -1, "allow"
-    for kind, value in rules:
-        if not value:
-            continue                    # `Disallow:` with no value permits all
-        if not _rule_re(value).match(path):
-            continue
-        if len(value) > best_len:
-            best_len, best_kind = len(value), kind
-        elif len(value) == best_len and kind == "allow":
-            best_kind = "allow"
-    return best_kind == "allow"
+# The parser and the longest-match evaluator that used to sit here were
+# retired into scripts/robots_policy.py on 2026-09-12, with the two cases they
+# had been written for asserted in its --selftest: cms5.revize.com's `Allow:
+# /*.pdf$` over `Disallow: /` (documents yes, everything else no — a
+# startswith matcher read it as a flat refusal), and Clark's `Disallow:
+# *?lightbox=`, which only a match against path AND query can see.
 
 
 def main():
@@ -516,14 +474,26 @@ def main():
 
     disallowed, unknown = [], []
     for host in sorted(by_host):
+        headers = robots_headers(host)
+        client = headers["User-Agent"]
         try:
-            req = urllib.request.Request("https://%s/robots.txt" % host,
-                                         headers=robots_headers(host))
+            req = urllib.request.Request("https://%s/robots.txt" % host, headers=headers)
             with urllib.request.urlopen(req, timeout=25) as r:
                 body = read_body(r)
         except urllib.error.HTTPError as e:
-            if e.code == 404:
-                print("  ok   %-34s no robots.txt (nothing disallowed)" % host)
+            if e.code in (401, 403):
+                # Not assumed either way. RFC 9309 says allow; this audit says
+                # "policy unknown" and does not fail on it, as it always has,
+                # because the hosts that do this are API hosts (every ArcGIS
+                # Online FeatureServer, carto.nationalmap.gov, data.openstates.org)
+                # serving their data to everyone, and — from a sandbox — sites
+                # behind a Cloudflare challenge the CI runner does not meet.
+                unknown.append((host, "HTTP %d" % e.code))
+                print("  ?    %-34s robots.txt refused to this client (HTTP %d) — "
+                      "policy unread, not assumed" % (host, e.code))
+                continue
+            if 400 <= e.code < 500:
+                print("  ok   %-34s no robots.txt (HTTP %d, nothing disallowed)" % (host, e.code))
                 continue
             unknown.append((host, "HTTP %d" % e.code))
             print("  ?    %-34s robots.txt unreadable (HTTP %d)" % (host, e.code))
@@ -532,19 +502,23 @@ def main():
             unknown.append((host, str(e)[:50]))
             print("  ?    %-34s robots.txt unreadable (%s)" % (host, str(e)[:44]))
             continue
-        rules = star_disallows(body)
-        if rules is None:
-            print("  ok   %-34s no `*` group (nothing disallowed to us)" % host)
+        policy = RobotsPolicy(body)
+        groups = policy.binding_groups(client)
+        if not groups:
+            print("  ok   %-34s no group binds this client (nothing disallowed to us)" % host)
             continue
-        bad = [(p, why) for p, why, _u in by_host[host] if not permitted(p, rules)]
+        bound_by = "`*`" if all(g.is_catch_all() for g in groups) else "a group naming this client"
+        bad = [(p, why) for p, why, _u in by_host[host] if not policy.allows(client, p)]
+        delay = policy.crawl_delay(client)
+        note = ("; Crawl-delay %g s stated" % delay) if delay else ""
         if bad:
             for path, why in bad:
                 disallowed.append((host, path, why))
-            print("  STOP %-34s `*` disallows %d of %d scheduled path(s)"
-                  % (host, len(bad), len(by_host[host])))
+            print("  STOP %-34s %s disallows %d of %d scheduled path(s)%s"
+                  % (host, bound_by, len(bad), len(by_host[host]), note))
         else:
-            print("  ok   %-34s `*` permits our %d path(s)"
-                  % (host, len(by_host[host])))
+            print("  ok   %-34s %s permits our %d path(s)%s"
+                  % (host, bound_by, len(by_host[host]), note))
         time.sleep(0.2)
 
     print(file=sys.stderr)
@@ -563,8 +537,8 @@ def main():
               "with a gap record, or to ask the county. Do not simply rename the "
               "user agent.", file=sys.stderr)
         return 1
-    print("robots: OK — every scheduled fetch is permitted by its host's `*` group",
-          file=sys.stderr)
+    print("robots: OK — every scheduled fetch is permitted by its host's robots.txt, "
+          "read for the client that fetches it", file=sys.stderr)
     return 0
 
 

@@ -34,9 +34,33 @@ are merged with `no` overriding `yes`). Neither changes the allow/disallow
 answer; what a caller does with them is policy, and the policy is written in
 CLAUDE.md's honesty rules, not here.
 
-WHAT A STATUS MEANS, per RFC 9309 §2.3.1, with one deliberate departure:
+WHAT A STATUS MEANS, per RFC 9309 §2.3.1, with one deliberate departure and
+one reading the caller chooses:
   200 with a body         the file is read
-  4xx                     no policy is published: allow all (§2.3.1.3)
+  200 empty, 404, other 4xx
+                          no policy is published: allow all (§2.3.1.3)
+  401, 403                status `refused`, and by default ALLOW, as the RFC
+                          says (it files these with 404). The fleet had two
+                          readings of this on 2026-09-12 — the Iowa gate
+                          allowed, scripts/dupage_municipal_officials_scraper.py
+                          fetched nothing ("a site that will not show its
+                          policy has not published one this client can read")
+                          — and the first draft of this module took DuPage's
+                          side for the whole fleet. Measured the same hour, that
+                          would have called EVERY ArcGIS Online FeatureServer
+                          disallowed: services1/2/3/8/9.arcgis.com answer 403
+                          to /robots.txt from Azure Front Door while serving
+                          their layers to every client, and carto.nationalmap.gov
+                          and data.openstates.org do the same. An API host with
+                          no readable robots.txt is not refusing its API. So the
+                          RFC reading is the default and the status stays
+                          VISIBLE: a caller reading a municipal WEBSITE, where a
+                          403 on robots.txt is a WAF refusing the client, passes
+                          refused_is_refusal=True and fetches nothing, which is
+                          what DuPage does. Whether that stricter reading should
+                          be every website scraper's is an open policy question;
+                          this module makes it a one-argument choice rather
+                          than four different accidents.
   202                     an HTTP 202 is never a document; it is what captcha
                           fronts return, so it is read as an access control
                           and the host is not fetched (the fleet's standing
@@ -219,12 +243,21 @@ class Verdict(object):
         self.final_url = final_url
         self.http_status = http_status
 
-    def allows(self, user_agent, url):
+    def allows(self, user_agent, url, refused_is_refusal=False):
+        """(allowed, why). `refused_is_refusal` is the caller's reading of a
+        401/403 on robots.txt itself — see the module docstring's table."""
         if self.status == "absent":
             return True, self.why
+        if self.status == "refused":
+            return (not refused_is_refusal), self.why
         if self.status in ("challenge", "unreachable"):
             return False, self.why
-        return self.policy.decide(user_agent, url)
+        # Served: the `why` keeps the "robots.txt served (N bytes)" prefix the
+        # Iowa callers have string-matched since 2026-09-06 to tell a refusal
+        # by rule ("robots-refused") from a policy that could not be read
+        # ("robots-unknown"), then names the rule that decided.
+        ok, rule = self.policy.decide(user_agent, url)
+        return ok, "%s: %s" % (self.why, rule)
 
     def crawl_delay(self, user_agent):
         return self.policy.crawl_delay(user_agent) if self.policy else None
@@ -246,6 +279,9 @@ def classify(http_status, body, final_url=None, error=None):
     if http_status == 202:
         return Verdict("challenge", "robots.txt answered HTTP 202 (an access control, not a document)",
                        final_url=final_url, http_status=202)
+    if http_status in (401, 403):
+        return Verdict("refused", "robots.txt refused to this client (HTTP %d) — no readable policy" % http_status,
+                       final_url=final_url, http_status=http_status)
     if 400 <= http_status < 500:
         return Verdict("absent", "no robots.txt (HTTP %d, allow all)" % http_status,
                        policy=RobotsPolicy(""), final_url=final_url, http_status=http_status)
@@ -384,6 +420,19 @@ def _selftest():
     check(p.allows(ua, "/docs/map.pdf?x=1"), "$ anchors the whole path+query: a query after .pdf escapes /*.pdf$")
     t = RobotsPolicy("User-agent: *\nAllow: /x\nDisallow: /x\n")
     check(t.allows(ua, "/x/y"), "tie between equal-length Allow and Disallow goes to Allow")
+    # Two shapes wi/scripts/validate_robots.py learned the hard way before its
+    # parser was retired into this one (2026-09-12). cms5.revize.com's `*`
+    # group is `Allow: /*.pdf$` (+ .DOC/.DOCX/.PPT/.PPTX) then `Disallow: /`:
+    # documents yes, everything else no — a startswith matcher read it as a
+    # flat refusal. And Clark County's carries `Disallow: *?lightbox=`, which
+    # only a match against path AND query can see.
+    rv = RobotsPolicy("User-agent: *\nAllow: /*.pdf$\nAllow: /*.docx$\nDisallow: /\n")
+    check(rv.allows(ua, "/revize/x/Agendas%20and%20Minutes/2026.pdf"), "revize: a .pdf is allowed by /*.pdf$")
+    check(not rv.allows(ua, "/revize/x/board.html"), "revize: everything else is disallowed")
+    check(not rv.allows(ua, "/revize/x/2026.pdf?t=123"), "revize: a cache-busted .pdf?t= is NOT reached by /*.pdf$")
+    cl = RobotsPolicy("User-agent: *\nDisallow: *?lightbox=\n")
+    check(not cl.allows(ua, "/gallery?lightbox=3"), "clark: *?lightbox= matches path+query")
+    check(cl.allows(ua, "/gallery"), "clark: the bare path is allowed")
     q = RobotsPolicy("User-agent: districtry\nAllow: /\nUser-agent: *\nDisallow: /\n")
     check(q.allows(ua, "/anything"), "a group naming districtry governs it; `*` does not apply")
     check(not q.allows("SomethingElse/1.0", "/anything"), "an unnamed client falls to `*`")
@@ -397,13 +446,21 @@ def _selftest():
 
     # classify(): the status table in the docstring.
     check(classify(404, "").status == "absent", "404 -> absent")
-    check(classify(403, "").status == "absent", "403 -> absent (RFC 9309 §2.3.1.3)")
+    check(classify(403, "").status == "refused", "403 -> status refused, visible to the caller")
+    check(classify(401, "").status == "refused", "401 -> refused")
+    check(classify(410, "").status == "absent", "410 -> absent (any other 4xx is no policy)")
+    check(classify(403, "").allows(ua, "https://h/")[0] is True,
+          "refused -> allowed by default (RFC 9309 §2.3.1.3; ArcGIS Online 403s its robots.txt)")
+    check(classify(403, "").allows(ua, "https://h/", refused_is_refusal=True)[0] is False,
+          "refused -> not fetched when the caller reads a website's 403 as a refusal")
     check(classify(202, "").status == "challenge", "202 -> challenge")
     check(classify(500, "").status == "unreachable", "500 -> unreachable")
     check(classify(None, None, error="timeout").status == "unreachable", "network error -> unreachable")
     check(classify(200, "   ").status == "absent", "200 with an empty body -> allow all")
     v = classify(200, "User-agent: *\nDisallow: /private\n")
-    check(v.allows(ua, "https://h/private/x") == (False, v.allows(ua, "https://h/private/x")[1]), "served -> decided by the policy")
+    ok, why = v.allows(ua, "https://h/private/x")
+    check(ok is False and why.startswith("robots.txt served (") and "/private" in why,
+          "served -> decided by the policy, why keeps the served prefix and names the rule (%s)" % why)
     check(v.allows(ua, "https://h/public")[0], "served -> allowed path allowed")
     check(classify(202, "").allows(ua, "https://h/")[0] is False, "challenge -> not fetched")
     check(classify(503, "").allows(ua, "https://h/")[0] is False, "unreachable -> not fetched")
@@ -418,7 +475,7 @@ def _selftest():
 def _count_checks():
     # The number of check() calls above; kept as a literal so the OK line
     # cannot claim a count the code does not make.
-    return 39
+    return 48
 
 
 if __name__ == "__main__":
