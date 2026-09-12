@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Engine-fence parity across the fleet.
 

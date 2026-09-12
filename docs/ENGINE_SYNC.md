@@ -256,14 +256,15 @@ rather than re-running the failed sibling run.
 > in the changelog. A changelog that promises a clean adoption and doesn't
 > deliver one costs every sibling a red CI run and a manual repair.
 
-## Current ENGINE block inventory (59 in index.html + 2 in sw.js)
+## Current ENGINE block inventory (61 in index.html + 2 in sw.js)
 
 index.html: `app-token`, `arcgis-loader`, `arcgis-paged-loader`,
 `basemap`, `body-map-toolbar`, `brand-names`, `cached-loaders`, `card-helpers`,
-`chamber-factory`, `coverage-gaps`,
+`chamber-factory`, `county-layer-dispatcher`, `coverage-gaps`,
 `cps-network-factory`, `districtry-behavior`, `districtry-theme`,
 `exports`, `extract-district-number`, `feedback`,
-`fetch-retry`, `find-prop-ci`, `gaps-html`, `gaps-modal-html`,
+`fetch-retry`, `find-prop-ci`, `footer-independence`, `gaps-html`,
+`gaps-modal-html`,
 `geocoder-search`, `geocoder-shell`, `geolocation`, `groups`, `haversine`,
 `hover-explorer`, `int-field`, `layer-registry`, `map-chrome-classes`,
 `map-pan-filter`, `metro-links`, `metro-links-html`, `metro-portal`,
@@ -281,8 +282,13 @@ missing `map-chrome-classes`, `map-pan-filter`, and `styles-markers`.
 Re-synced again 2026-08-26 while promoting `districtry-behavior`: the list
 had drifted a second time, missing `body-map-toolbar`, `districtry-theme`
 and `styles-districtry-skin` — the skin blocks that shipped with the
-redesign. The count line is a claim `check_engine_parity.py` can refute;
-re-run it whenever a fence is added.)
+redesign. Re-synced a third time 2026-09-12: the list said 59 against 61
+real fences, missing `footer-independence` (added 2026-09-11 by #885) and
+`county-layer-dispatcher` (added by #903). Neither PR updated this list,
+and no gate fails on it — `scripts/fleet_status.py` names the missing
+blocks, but it is WARN-only on a weekly issue, so a stale list stays
+stale until someone reads that issue. The count line is a claim
+`check_engine_parity.py` can refute; re-run it whenever a fence is added.)
 
 (`basemap` — promoted 2026-08-26, the day the basemap went vector: the
 CARTO-vector-with-raster-fallback boot, the WebGL2 probe and half-added-layer
