@@ -296,8 +296,10 @@ one — `body-map-toolbar`, `brand-names`, `districtry-theme` and
 `styles-districtry-skin` (#520, 2026-08-25), `districtry-behavior` (#532,
 2026-08-26), `basemap` (#539, 2026-08-26) and `footer-independence` (#885,
 2026-09-11). Eighteen days, and nothing failed, because
-`scripts/fleet_status.py` compares this section against the real fences
-for the root copy only. The count line is a claim
+`scripts/fleet_status.py` compared this section against the real fences
+for the root copy only; since 2026-09-12 it checks every instance that
+ships this file against that instance's own fences. The count line is a
+claim
 `python3 scripts/check_engine_parity.py ca/index.html` can refute; re-run
 it whenever a fence is added.)
 
@@ -570,3 +572,16 @@ directions, so reconciling means merging features, not overwriting:
    WARN). **The standing rule survives the automation:** a change here is done
    only when it has landed in all three repos. The gate now says so out loud
    instead of waiting for someone to notice.
+   **CORRECTED 2026-09-12.** Both of those checks have since changed, and the
+   paragraph above is left as the record of what was built on 2026-08-18.
+   Cross-fork identity went with the forks at R5: there is one repo and
+   nothing to fetch. And the inventory check is no longer CHI-only — it reads
+   every instance that ships this file (il, ca and ny today) against THAT
+   instance's own `index.html` and `sw.js`. The reason given for keeping it
+   CHI-only was wrong on its own terms: the files are on disk rather than over
+   the network, and the siblings did carry a different signal — both listed 53
+   blocks against their own 60 fences for eighteen days with nothing reporting
+   it. A sibling carrying a DIFFERENT fence set from il's is expected rather
+   than drift (ca and ny register no county-dispatched concept, so they carry
+   no `county-layer-dispatcher` fence), which is why nothing compares one
+   instance against another.

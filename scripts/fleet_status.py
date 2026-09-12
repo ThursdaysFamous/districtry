@@ -295,55 +295,46 @@ def parse_inventory(doc_text):
     return ((int(m.group(1)), int(m.group(2))), listed)
 
 
-def inventory_diff(repo_root):
-    """(report_line, warn_list) for CHI's ENGINE_SYNC inventory vs its real fences.
+def _inventory_one(repo_root, tag, label):
+    """(report_line, warn_list) for ONE instance's ENGINE_SYNC inventory against
+    ITS OWN index.html and sw.js fences — never against another instance's.
 
-    Reads docs/ENGINE_SYNC.md against il/index.html and il/sw.js, all three
-    paths hardcoded. (Before the fork consolidation this check also diffed
-    each fork's own copy of the doc against CHI's; that half is gone along
-    with the forks it compared, per the module docstring.)
-
-    It stays CHI-only, but the reason this docstring gave until 2026-09-12 was
-    wrong: "since R5 there is one copy of docs/ENGINE_SYNC.md ... every
-    instance would report the identical answer". There are THREE copies — this
-    one, ca/docs/ENGINE_SYNC.md and ny/docs/ENGINE_SYNC.md — and they did not
-    agree. Both siblings' headings said 53 where their own index.html held 60
-    fences, and had since 2026-08-25; nothing reported it, because this
-    function never reads them. Widening it is a real change — it would have to
-    take the doc and the fence files as arguments, and rule on whether a
-    sibling carrying a different fence set from CHI's is a WARN or expected —
-    so it is a follow-up rather than something to do in passing. ca and ny
-    were re-derived by hand in the change that corrected this text.
-
-    What it does catch is the failure it was built for: a release that adds
-    blocks and never updates the list, which is how the count sat at 50 while
-    the fences held 53.
+    `label` is appended to the report-line prefix. It is EMPTY for il, so the
+    line this report has carried since the check was written does not move; the
+    siblings name their own doc path, which is the file a reader would open.
+    Every WARN names the doc path whatever the tag.
     """
+    doc_path = local_path(repo_root, tag, "docs", ENGINE_SYNC_PATH)
+    doc_rel = os.path.relpath(doc_path, repo_root)
+    prefix = "- ENGINE_SYNC inventory%s:" % label
     try:
-        with open(os.path.join(repo_root, ENGINE_SYNC_PATH), encoding="utf-8") as f:
+        with open(doc_path, encoding="utf-8") as f:
             doc = f.read()
     except OSError:
-        return ("- ENGINE_SYNC inventory: **SYNC WARN** — %s unreadable" % ENGINE_SYNC_PATH,
-                ["engine-sync: %s is unreadable in CHI" % ENGINE_SYNC_PATH])
+        return ("%s **SYNC WARN** — %s unreadable" % (prefix, doc_rel),
+                ["engine-sync: %s is unreadable" % doc_rel])
     if extract_blocks is None:
-        return ("- ENGINE_SYNC inventory: parser import failed — unchecked",
+        return ("%s parser import failed — unchecked" % prefix,
                 ["engine-sync: could not import check_engine_parity.extract_blocks"])
 
     parsed = parse_inventory(doc)
     if parsed is None:
-        return ("- ENGINE_SYNC inventory: **SYNC WARN** — inventory section missing or unparseable",
+        return ("%s **SYNC WARN** — inventory section missing or unparseable" % prefix,
                 ["engine-sync: the ENGINE block inventory section in %s could not be parsed"
-                 % ENGINE_SYNC_PATH])
+                 % doc_rel])
     (said_idx, said_sw), listed = parsed
 
     actual = {}
     for fname in ("index.html", "sw.js"):
+        app_path = local_path(repo_root, tag, "app", fname)
         try:
-            with open(os.path.join(repo_root, "il", fname), encoding="utf-8") as f:
+            with open(app_path, encoding="utf-8") as f:
                 actual[fname] = sorted(extract_blocks(f.read(), fname))
         except (OSError, ValueError) as e:
-            return ("- ENGINE_SYNC inventory: **SYNC WARN** — cannot read fences from %s" % fname,
-                    ["engine-sync: cannot read ENGINE fences from %s (%s)" % (fname, e)])
+            return ("%s **SYNC WARN** — cannot read fences from %s"
+                    % (prefix, os.path.relpath(app_path, repo_root)),
+                    ["engine-sync: cannot read ENGINE fences from %s (%s)"
+                     % (os.path.relpath(app_path, repo_root), e)])
     idx, sw = actual["index.html"], actual["sw.js"]
 
     missing, phantom = [], []
@@ -353,8 +344,7 @@ def inventory_diff(repo_root):
         phantom += ["%s (%s)" % (b, fname) for b in have if b not in fenced]
     counts_ok = (said_idx == len(idx) and said_sw == len(sw))
     if counts_ok and not missing and not phantom:
-        return ("- ENGINE_SYNC inventory: in sync (%d in index.html + %d in sw.js)"
-                % (len(idx), len(sw)), [])
+        return ("%s in sync (%d in index.html + %d in sw.js)" % (prefix, len(idx), len(sw)), [])
 
     bits = []
     if not counts_ok:
@@ -364,10 +354,56 @@ def inventory_diff(repo_root):
     if phantom:
         bits.append("listed but not fenced: %s" % ", ".join(phantom))
     detail = "; ".join(bits)
-    return ("- ENGINE_SYNC inventory: **SYNC WARN** — %s" % detail,
-            ["engine-sync: %s's block inventory is stale (%s). Regenerate it from the "
-             "fences rather than editing the list by hand — hand-maintenance is how it "
-             "went stale before." % (ENGINE_SYNC_PATH, detail)])
+    return ("%s **SYNC WARN** — %s" % (prefix, detail),
+            ["engine-sync: %s's block inventory (%s) is stale (%s). Regenerate it from "
+             "the fences rather than editing the list by hand — hand-maintenance is how "
+             "it went stale before." % (tag, doc_rel, detail)])
+
+
+def inventory_diff(repo_root):
+    """(report_lines, warn_list) — every instance that ships a docs/ENGINE_SYNC.md,
+    each doc checked against ITS OWN fences.
+
+    Three instances carry the file today (il, ca, ny); wi, ia and mi do not, and
+    an instance without one is silently skipped rather than reported — there is
+    nothing to be stale.
+
+    WIDENED 2026-09-12, and the ruling it needed is that a sibling carrying a
+    DIFFERENT fence set from il's is expected, not drift: ca and ny register no
+    county-dispatched concept and so carry no county-layer-dispatcher fence.
+    The only thing worth a WARN is a doc that disagrees with its own instance,
+    so nothing here compares one instance against another.
+
+    It was il-only until that day, and the reason the docstring gave was wrong:
+    "since R5 there is one copy of docs/ENGINE_SYNC.md ... every instance would
+    report the identical answer". There are three copies and they did not agree
+    — both siblings' headings said 53 where their own index.html held 60 fences,
+    and had since 2026-08-25, with nothing reporting it because this function
+    never read them (#915 re-derived them by hand, #918 settled a stale sentence
+    in the same files). Before the fork consolidation this check also diffed each
+    fork's copy against CHI's; that half is gone with the forks it compared.
+
+    What it has always caught is the failure it was built for: a release that
+    adds blocks and never updates the list, which is how the count sat at 50
+    while the fences held 53. It stays WARN-only on the weekly issue.
+    """
+    if INSTANCES is None:
+        return (["- ENGINE_SYNC inventory: unchecked — the instance path table did "
+                 "not import"],
+                ["engine-sync: could not import generate_metro_files.INSTANCES, so no "
+                 "instance's ENGINE_SYNC inventory was checked"])
+    lines, warns = [], []
+    for tag in INSTANCES:
+        doc_path = local_path(repo_root, tag, "docs", ENGINE_SYNC_PATH)
+        if not os.path.exists(doc_path):
+            continue
+        label = "" if tag == "il" else ", %s" % os.path.relpath(doc_path, repo_root)
+        line, w = _inventory_one(repo_root, tag, label)
+        lines.append(line)
+        warns.extend(w)
+    if not lines:
+        return (["- ENGINE_SYNC inventory: no instance ships a %s" % ENGINE_SYNC_PATH], [])
+    return (lines, warns)
 
 
 def workflow_health(repo, wf_file):
@@ -470,8 +506,8 @@ def main():
                      "data-gaps drift unchecked in every instance.")
         lines.append("")
 
-    inv_line, inv_warns = inventory_diff(repo_root)
-    lines.append(inv_line)
+    inv_lines, inv_warns = inventory_diff(repo_root)
+    lines.extend(inv_lines)
     lines.append("")
     warns.extend(inv_warns)
 
