@@ -142,6 +142,7 @@ import zlib
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from scraper_common import UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from robots_rules import permitted, star_disallows  # noqa: E402
 
 try:
     import requests
@@ -352,6 +353,28 @@ ROBOTS_DECLINED = {
         "gis.rochesterhills.org, a different host that serves no robots.txt at all",
 }
 
+# A HOST CAN DECLINE ONE DIRECTORY RATHER THAN ITSELF, and the table above
+# cannot say so: it is keyed by host and skips the whole host, which for
+# www.logancountyil.gov would stop probing the clerk's own page — permitted, and
+# the source of the county board roster — while describing a site that asked us
+# away when it did not. So a narrower entry names the prefix.
+#
+# Each is (path prefix, reason). Same inversion as EXPECTED_UNREACHABLE: the
+# path is not probed, and the day the rule goes is the WARN, because that is the
+# state a human can act on.
+ROBOTS_DECLINED_PATHS = {
+    "www.logancountyil.gov": [
+        ("/images/",
+         "the `*` group disallows /images/, where the County Clerk's Reference & "
+         "Yearbook lives. Measured 2026-09-12 by scripts/probe_user_agents.py. The "
+         "file serves normally to a browser, so this is compliance and not an "
+         "outage; scripts/logan_municipal_officials_scraper.py reads the policy and "
+         "declines, and Logan's 11 municipalities carry forward through "
+         "PRESERVABLE['logan']. The clerk's own /index.php page is permitted and "
+         "still read"),
+    ],
+}
+
 
 EXPECTED_UNREACHABLE = {
     "chicagopolice.org":
@@ -363,9 +386,19 @@ EXPECTED_UNREACHABLE = {
     "kendallcountyil.gov":
         "Akamai \"Access Denied\" — same posture; the county blocks the Internet "
         "Archive's crawler too, hence a hand-verified roster (issue #234)",
+    # THIS ENTRY'S REASON WAS TOO STRONG BY ONE STACK, corrected 2026-09-12 from
+    # scripts/probe_user_agents.py's sweep. The edge refuses the `requests`
+    # client and serves the SAME page to the stdlib client — 117,290 bytes of
+    # /2336/Board-Members to the plain UA_ROSTER_BOT token, no browser string
+    # needed — and lake_county_board_roles_scraper.py --engine stdlib parses all
+    # 19 districts live. So the prediction here is right (this checker runs on
+    # the requests stack and will keep seeing 403) and the explanation was not:
+    # it is one stack that is refused, not "datacenter clients", and the archive
+    # rung is the third one down rather than where the data comes from.
     "lakecountyil.gov":
-        "Cloudflare managed challenge — the county edge refuses datacenter clients; "
-        "the board-roles scraper carries it via the Internet Archive",
+        "HTTP 403 to the `requests` stack on every path. Measured 2026-09-12: the "
+        "stdlib client gets the same page with the districtry token, which is the "
+        "rung the board-roles scraper actually serves from",
     "adamscountyil.gov":
         "Akamai \"Access Denied\" — same posture as McHenry and Kendall",
     # THE ONE HERE WHOSE PAGE THIS REPO STILL READS EVERY WEEK. Fond du Lac's
@@ -954,6 +987,33 @@ def robots_still_disallows(host):
     return None
 
 
+def robots_still_disallows_path(host, path):
+    """Does this host's `*` group still disallow this path?
+
+    The sibling above answers only the whole-site question (`Disallow: /`),
+    which is Rochester Hills's shape and not Logan's. This one runs the real
+    longest-match rules from scripts/robots_rules.py, so an Allow that outranks
+    a Disallow is honoured rather than ignored — the mistake that file's own
+    docstring records.
+
+    True (still disallowed), False (the rule has gone) or None (could not tell),
+    and None is never reported as good news.
+    """
+    for scheme in ("https", "http"):
+        try:
+            resp = requests.get("%s://%s/robots.txt" % (scheme, host), headers=HONEST_UA,
+                                timeout=HTTP_TIMEOUT, allow_redirects=True)
+        except Exception:  # noqa: BLE001
+            continue
+        if resp.status_code >= 400:
+            continue
+        rules = star_disallows(resp.text)
+        if rules is None:
+            return False           # no `*` group: nothing disallowed to this client
+        return not permitted(path, rules)
+    return None
+
+
 def probe(url, resolved=None):
     """Fetch one URL. Returns a dict; never raises.
 
@@ -968,6 +1028,13 @@ def probe(url, resolved=None):
     if declined:
         still = robots_still_disallows(host)
         return {"state": "declined", "detail": declined, "still": still}
+    path = urllib.parse.urlsplit(url).path or "/"
+    for candidate in (host, "www." + host,
+                      host[4:] if host.startswith("www.") else host):
+        for prefix, reason in ROBOTS_DECLINED_PATHS.get(candidate, ()):
+            if path.startswith(prefix):
+                return {"state": "declined", "detail": reason,
+                        "still": robots_still_disallows_path(candidate, path)}
     if resolved is None:
         resolved = resolves(host)
     ok_dns, why = resolved
@@ -1245,6 +1312,14 @@ def check_expected_list_still_earned(cites, rows):
                          "listed in ROBOTS_DECLINED but the app no longer cites any URL on "
                          "this host — delete the entry. Recorded request: %s" % reason,
                          AUTHORED))
+    for host, entries in sorted(ROBOTS_DECLINED_PATHS.items()):
+        bare = host[4:] if host.startswith("www.") else host
+        for prefix, reason in entries:
+            if host not in cited_hosts and bare not in cited_hosts:
+                rows.append((WARN, host,
+                             "listed in ROBOTS_DECLINED_PATHS (%s) but the app no longer "
+                             "cites any URL on this host — delete the entry. Recorded "
+                             "request: %s" % (prefix, reason), AUTHORED))
 
 
 # ---- reporting ---------------------------------------------------------------
