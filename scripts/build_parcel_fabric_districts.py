@@ -101,6 +101,28 @@ SLIVER_SQFT = 2000.0  # subtraction confetti — well under any annexed house lo
 FEET_PER_DEG_LAT = 364000.0  # the app's own constant (index.html snap block)
 MAX_RESIDUAL_VOIDS = 5       # sibling gaps left in the 15-150 ft band
 AREA_REPAIR_TOLERANCE = 0.01  # %; the worst repair measured 2026-09-12 was 0.00051
+
+# WHAT THE COUNTY SEES WHEN THIS BUILDER ASKS. Every fetch below used to go out
+# with no User-Agent at all, so seven county and ArcGIS Online services were
+# handed `python-requests/2.x` — a string that names a library rather than a
+# caller, and gives an administrator wondering who is pulling their parcel roll
+# nothing to look up. CLAUDE.md's rule is that a scraper starts with a
+# districtry token; this one never had one.
+#
+# MEASURED 2026-09-12 before the change, each host asked the same way twice —
+# once with the requests default and once with this token. All seven answered
+# 200 to BOTH, so nothing here is being worked around and no behaviour changes;
+# what changes is that the request now says who is making it:
+#
+#   gis.cookcountyil.gov    200 / 200      maps.grundyco.org      200 / 200
+#   maps.boonecountyil.org  200 / 200      services.arcgis.com    200 / 200
+#   maps.co.kendall.il.us   200 / 200      services1.arcgis.com   200 / 200
+#                                          services9.arcgis.com   200 / 200
+#
+# Not a browser string, so robots.txt is unaffected either way: no group names
+# it, `*` binds this builder exactly as before.
+UA = "districtry/1.0 (+https://districtry.com/il/)"
+HEADERS = {"User-Agent": UA}
 PAGE_SIZE = 1000             # every county service here caps at 1,000 per query
 MAX_FETCH_ROWS = 200000      # a runaway pager stops rather than looping forever
 
@@ -1428,7 +1450,7 @@ def witness_names(cfg, county_geom_by_name):
     payload = requests.get(spec["url"], params={
         "where": "1=1", "outFields": spec["field"], "outSR": 4326,
         "f": "geojson", "geometryPrecision": 6, "resultRecordCount": 2000,
-    }, timeout=300).json()
+    }, headers=HEADERS, timeout=300).json()
     published = {}
     for f in payload.get("features") or []:
         if not f.get("geometry"):
@@ -1555,7 +1577,8 @@ def residual_voids(final_ft):
 
 
 def build_source(cfg, forced=False):
-    meta = requests.get(cfg["layer"], params={"f": "json"}, timeout=90).json()
+    meta = requests.get(cfg["layer"], params={"f": "json"},
+                        headers=HEADERS, timeout=90).json()
     edit_ms = (meta.get("editingInfo") or {}).get("dataLastEditDate")
     pin = cfg.get("edit_pin")
     if pin is not None and edit_ms != pin:
@@ -1607,7 +1630,7 @@ def build_source(cfg, forced=False):
     # dialect this script has not met yet fails loudly instead of truncating.
     count_probe = requests.get(cfg["layer"] + "/query", params={
         "where": where, "returnCountOnly": "true", "f": "json",
-    }, timeout=120).json().get("count")
+    }, headers=HEADERS, timeout=120).json().get("count")
 
     # WHERE + PAGINATION, because Boone's upstream is not a district tiling.
     # Every other source here publishes one row per district (9 to 40 of them),
@@ -1642,7 +1665,7 @@ def build_source(cfg, forced=False):
             params["resultOffset"] = offset
             params["resultRecordCount"] = PAGE_SIZE
         page = requests.get(cfg["layer"] + "/query", params=params,
-                            timeout=600).json()
+                            headers=HEADERS, timeout=600).json()
         if page.get("error"):
             fail("%s: the service refused the query — %s"
                  % (cfg["slug"], str(page["error"])[:200]))
@@ -1714,7 +1737,7 @@ def build_source(cfg, forced=False):
             cfg["name_prop"], cfg["name_prop"], in_list)
         outside = requests.get(cfg["layer"] + "/query", params={
             "where": where, "returnCountOnly": "true", "f": "json",
-        }, timeout=120).json()
+        }, headers=HEADERS, timeout=120).json()
         if outside.get("error") or not isinstance(outside.get("count"), int):
             fail("%s: the crosswalk-universe count query did not answer (%s) — "
                  "it is the only thing standing between an unmapped parcel code "
@@ -1751,7 +1774,7 @@ def build_source(cfg, forced=False):
         # refuse; what they ARE is recorded in the gap record, not guessed at.
         nulls = requests.get(cfg["layer"] + "/query", params={
             "where": cfg["name_prop"] + " IS NULL", "returnCountOnly": "true", "f": "json",
-        }, timeout=120).json().get("count")
+        }, headers=HEADERS, timeout=120).json().get("count")
         print("  %s parcels carry no %s at all and are outside this build by "
               "construction" % (nulls, cfg["name_prop"]))
 
