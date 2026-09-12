@@ -138,11 +138,15 @@ jobs:
       # absent from ca, ny and wi by design, because those three register no
       # county-dispatched concept. --fleet states that shape instead of leaving
       # a reader to infer it from a fence count, and it FAILS on any block whose
-      # interior differs between instances. That failure is belt-and-braces
-      # behind the step above — proven 2026-09-12 by doctoring one line of mi's
-      # dispatcher fence, which both gates caught — and it costs one pass over
-      # 51 files. Instances are discovered from the TREE, never a table, and it
-      # refuses on fewer than two. Stdlib only.
+      # interior differs between instances, comparing EVERY occurrence of a
+      # block rather than one per instance: the first version of this step kept
+      # one slot per instance, so a shared block spliced into several sub-pages
+      # was only compared in the sorted-last one, and doctoring il/faq.html's
+      # footer-byline fence passed. That failure is belt-and-braces behind the
+      # step above, which caught every doctoring this one missed. Instances are
+      # discovered from the TREE, never a table, and it refuses on fewer than
+      # two. Every count it prints is measured at run time and none is written
+      # down here, because the fleet's file list moves. Stdlib only.
       - name: Every instance's fences agree, and partial blocks are named
         run: python3 scripts/check_engine_parity.py --fleet
 

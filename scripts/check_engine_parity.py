@@ -206,11 +206,13 @@ def run_fleet():
 
     Two different jobs, deliberately with two different severities.
 
-    DRIFT between instances is a hard FAIL. It is also belt-and-braces behind
-    `compose_app.py --check`, which proves each file carries exactly the bytes
-    in engine/ and therefore makes cross-instance drift impossible while it
-    passes. This catches the case where both are edited together, and costs one
-    pass over 51 files.
+    DRIFT is a hard FAIL, and it compares EVERY occurrence of a block group —
+    every file that carries it, not one per instance. That distinction is the
+    whole of the bug this function shipped with: see the comment on `groups`
+    below. It is also belt-and-braces behind `compose_app.py --check`, which
+    proves each file carries exactly the bytes in engine/ and therefore makes
+    this state impossible while it passes; this catches the case where both are
+    edited together.
 
     THE PRESENCE INVENTORY only ever REPORTS, because a block legitimately
     lives in some instances and not others: `county-layer-dispatcher` is in il,
@@ -219,6 +221,11 @@ def run_fleet():
     compose_app cannot: it splices by MARKER PRESENCE, so a file with no fence
     for a block is not wrong, it is simply not asked. An absence is stated here
     so a reader sees the shape rather than inferring it from a fence count.
+
+    Every count in the output is measured at run time and none is written down
+    anywhere, because the fleet's file list moves: the first version of this
+    function quoted "51 files" in its own docstring and in the workflow, and
+    il/precinct.html made that 52 four days later.
     """
     insts, surfaces = discover_surfaces()
     if len(insts) < 2:
@@ -227,7 +234,17 @@ def run_fleet():
               % (len(insts), ", ".join(insts) or "none"), file=sys.stderr)
         return 1
 
-    groups = {}          # key -> {surface: (body, path)}
+    # key -> [(surface, relative path, body)], EVERY occurrence.
+    #
+    # This was a dict keyed by surface, which silently dropped occurrences: a
+    # `shared:` block is spliced into several files per instance, so il's seven
+    # sub-pages overwrote each other and only the sorted-last one was compared.
+    # Measured on that version — doctoring the footer-byline fence in
+    # il/faq.html or il/county-board.html passed with exit 0 while the same
+    # edit to il/ward.html failed — so the gate's own claim to catch any drift
+    # was false for six of il's seven sub-pages and the equivalent elsewhere.
+    groups = {}
+    carrying = 0
     for surface, rel in surfaces:
         path = os.path.join(REPO_ROOT, rel)
         try:
@@ -235,26 +252,29 @@ def run_fleet():
         except (ValueError, OSError) as e:
             print("engine-parity: FAIL — %s" % e, file=sys.stderr)
             return 1
+        if found:
+            carrying += 1
         for name, body in found.items():
-            groups.setdefault(group_key(os.path.basename(rel), name), {})[surface] = (body, rel)
+            groups.setdefault(group_key(os.path.basename(rel), name), []).append(
+                (surface, rel, body))
 
-    drifted = []
-    for key in sorted(groups):
-        bodies = {s: b for s, (b, _) in groups[key].items()}
-        if len(set(bodies.values())) > 1:
-            drifted.append(key)
+    drifted = [key for key in sorted(groups)
+               if len({body for _s, _r, body in groups[key]}) > 1]
 
     partial = []
     for key in sorted(groups):
-        have = set(groups[key]) & set(insts)
+        have = {surface for surface, _r, _b in groups[key]} & set(insts)
         if not have:
             continue                      # root-only block; no instance claim to make
         absent = sorted(set(insts) - have)
         if absent:
             partial.append((key, sorted(have), absent))
 
-    print("engine-parity: %s — %d block group(s) across %d file(s), %d instance(s) (%s) + root"
-          % ("FAIL" if drifted else "OK", len(groups), len(surfaces), len(insts), ", ".join(insts)))
+    print("engine-parity: %s — %d block group(s) over %d occurrence(s) in %d of %d file(s) "
+          "scanned, %d instance(s) (%s) + root"
+          % ("FAIL" if drifted else "OK", len(groups),
+             sum(len(v) for v in groups.values()), carrying, len(surfaces),
+             len(insts), ", ".join(insts)))
 
     if partial:
         print("  blocks some instances carry and others do not (reported, never failed):")
@@ -265,15 +285,15 @@ def run_fleet():
         print("  every block group is carried by every instance that has its file")
 
     for key in drifted:
-        per = groups[key]
-        first = sorted(per)[0]
+        occ = sorted(groups[key], key=lambda t: t[1])
+        base_rel, base_body = occ[0][1], occ[0][2]
         print("  DRIFT %s" % key, file=sys.stderr)
-        for s in sorted(per):
-            body, rel = per[s]
-            print("    %-6s %s  %s" % (s, digest(body), rel), file=sys.stderr)
-        for s in sorted(per):
-            if per[s][0] != per[first][0]:
-                print(short_diff(key, per[first][0], per[s][0], first, s), file=sys.stderr)
+        for surface, rel, body in occ:
+            mark = " <-- differs" if body != base_body else ""
+            print("    %-6s %s  %s%s" % (surface, digest(body), rel, mark), file=sys.stderr)
+        for surface, rel, body in occ:
+            if body != base_body:
+                print(short_diff(key, base_body, body, base_rel, rel), file=sys.stderr)
                 break
     if drifted:
         print("engine-parity: FAIL — %d block group(s) differ between instances; edit the block "
