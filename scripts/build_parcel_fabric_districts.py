@@ -77,7 +77,8 @@ import time
 
 import requests
 from shapely import make_valid
-from shapely.geometry import mapping, shape, Point
+from shapely.geometry import mapping, shape, MultiPolygon, Point, Polygon
+from shapely.validation import explain_validity
 from shapely.ops import transform, unary_union
 from shapely.strtree import STRtree
 from scraper_common import make_fail  # noqa: E402  (shared machinery — do not fork)
@@ -97,6 +98,7 @@ SIMPLIFY_FT = 10.0
 SLIVER_SQFT = 2000.0  # subtraction confetti — well under any annexed house lot
 FEET_PER_DEG_LAT = 364000.0  # the app's own constant (index.html snap block)
 MAX_RESIDUAL_VOIDS = 5       # sibling gaps left in the 15-150 ft band
+AREA_REPAIR_TOLERANCE = 0.01  # %; the worst repair measured 2026-09-12 was 0.00051
 PAGE_SIZE = 1000             # every county service here caps at 1,000 per query
 MAX_FETCH_ROWS = 200000      # a runaway pager stops rather than looping forever
 
@@ -798,6 +800,66 @@ for _code in ("01001 01005 01006 01011 01012 01013 01014").split():
     WHITESIDE_PARK_CODES[_code] = "PSTG - Sterling Park"
 for _code in ("02230 02235").split():
     WHITESIDE_PARK_CODES[_code] = "PWAL - Walnut Park"
+
+# ROUNDING TO 5 DECIMALS IS WHAT MAKES THESE GEOMETRIES INVALID, measured
+# 2026-09-12 rather than assumed: Boone's district 2 is VALID before `rnd` runs
+# and INVALID after. Five decimals is about 1.1 m at this latitude, so two
+# vertices closer than that collapse onto one — which turns a three-point ring
+# into two distinct points ("Too few points in geometry component") and can
+# bring two edges together ("Self-intersection"). 29 features in 11 of the 20
+# shipped files carry it today, across Boone, Cook, Grundy, Kendall, Macon,
+# Rock Island, Whiteside and Woodford. The app never noticed, because
+# pointInGeometry is an even-odd ring test and does not care; a consumer that
+# does care would.
+#
+# THE OBVIOUS REPAIR SHIPS GEOMETRY THE APP CANNOT READ, which is why this is a
+# function and not one `make_valid` call at the write site. Run on those 29
+# features, shapely's make_valid returns a GeometryCollection for SEVENTEEN of
+# them — 103 Polygons and 13 MultiPolygons, but also 10 LineStrings, 5
+# MultiLineStrings and 3 Points, the zero-area residue of the collapsed rings.
+# pointInGeometry handles Polygon and MultiPolygon and nothing else, so writing
+# make_valid's output straight out would hand the app a shape it silently fails
+# to test, which is worse than the invalidity it fixes.
+#
+# So the polygonal parts are kept and the rest dropped. Measured over all 29:
+# every repaired feature is valid, and the worst area change is 0.000510%.
+def polygonal_valid(geom, label):
+    """The rounded geometry, repaired to a valid Polygon/MultiPolygon.
+
+    Returns (geometry mapping, note) — the note is None when nothing was
+    wrong, and otherwise says what was repaired and what it cost. The REPORT
+    is informational; a repair that cannot produce polygonal ground, or leaves
+    the result invalid, or moves the area more than AREA_REPAIR_TOLERANCE,
+    FAILS the build, because each of those would ship something worse than
+    what came in.
+    """
+    g = shape(geom)
+    if g.is_valid:
+        return geom, None
+    why = explain_validity(g).split("[")[0].strip()
+    parts = list(getattr(make_valid(g), "geoms", [make_valid(g)]))
+    polys = []
+    for q in parts:
+        if isinstance(q, Polygon):
+            polys.append(q)
+        elif isinstance(q, MultiPolygon):
+            polys.extend(q.geoms)
+    if not polys:
+        fail("%s: repairing %r (%s) leaves no polygonal ground at all"
+             % (label, label, why))
+    fixed = polys[0] if len(polys) == 1 else MultiPolygon(polys)
+    if not fixed.is_valid:
+        fail("%s: %r is still invalid after repair (%s)"
+             % (label, label, explain_validity(fixed).split("[")[0].strip()))
+    moved = abs(fixed.area - g.area) / g.area * 100 if g.area else 0.0
+    if moved > AREA_REPAIR_TOLERANCE:
+        fail("%s: repairing %r moved %.4f%% of its area, past the %.4f%% "
+             "this is allowed to cost" % (label, label, moved, AREA_REPAIR_TOLERANCE))
+    dropped = len(parts) - len(polys)
+    return mapping(fixed), ("%s — %s; kept %d polygonal part(s), dropped %d "
+                            "zero-area one(s), area %+.6f%%"
+                            % (label, why, len(polys), dropped, moved))
+
 
 def _in_clause(codes, col="tax_code"):
     # The column holding the code is per-county: Boone's is `tax_code`,
@@ -1899,7 +1961,7 @@ def build_source(cfg, forced=False):
     # newly stripped label would otherwise ride in beside the checked ones.
     renames = witness_names(cfg, {n: from_ft(final_ft[n]) for n in ordered})
 
-    features = []
+    features, repairs = [], []
     for n in ordered:
         g = from_ft(final_ft[n])
         geom = json.loads(json.dumps(mapping(g)))
@@ -1909,6 +1971,13 @@ def build_source(cfg, forced=False):
                 return round(c, 5)
             return [rnd(x) for x in c]
         geom["coordinates"] = rnd(geom["coordinates"])
+        # AFTER the rounding, because the rounding is what breaks it — see
+        # polygonal_valid. The repair is reported and never silent: a shipped
+        # boundary that changed shape, however slightly, is a thing a reader of
+        # this build log should be told about.
+        geom, repair = polygonal_valid(geom, "%s %s" % (cfg["slug"], n))
+        if repair:
+            repairs.append(repair)
         props = {out_prop: renames.get(n, n)}
         if split_re:
             props = {out_prop: codes[n][1], "code": codes[n][0]}
@@ -1919,6 +1988,18 @@ def build_source(cfg, forced=False):
                          "properties": props,
                          "geometry": geom})
     fc = {"type": "FeatureCollection", "features": features}
+    # A REPORT, NOT A GATE. Eleven of the twenty files this builder ships carry
+    # an invalid feature today and every one of them would have to be rebuilt to
+    # clear it — one county per change, each with its own cache bump, because a
+    # single commit rewriting eleven boundary files is not something a reviewer
+    # can read. So this prints what it repaired and lets the build finish; the
+    # only failures are inside polygonal_valid, where a repair that produced
+    # nothing polygonal or moved real ground would be worse than the defect.
+    if repairs:
+        print("  repaired %d invalid feature(s) — the 5-decimal rounding "
+              "collapses near-coincident vertices:" % len(repairs))
+        for line in repairs:
+            print("    %s" % line)
 
     for lat, lng, want in cfg["probes"]:
         p = Point(lng, lat)
