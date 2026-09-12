@@ -1769,11 +1769,26 @@ of this note.
 
 ## Ask 22 — Clay County Clerk: one Clay City precinct, or two?
 
-> **NOT YET ASKED — DRAFTED 2026-09-11.** A reply on the existing thread with County
-> Clerk Amy Britton, who has answered this project twice — 2026-08-24 on where the Clay
-> City district line falls, and 2026-08-26 confirming the board plan is current. This is
-> the same office and the same thread; it is not a new approach to a county that has not
-> heard from us.
+> **WITHDRAWN UNSENT 2026-09-12 — the county already publishes the answer.** Never
+> sent, and it must not be: the rule is that this project does not ask an office for
+> something already published. The County Clerk's own elections page carries "a list of
+> all current polling locations in Clay County" — eighteen rows, one of them Clay City —
+> and it can be read as a precinct list rather than a building list because it does not
+> group. Three of its buildings serve several precincts and every precinct still has its
+> own row: 202 N. Olive St. serves Harter 1, 3, 4 and 5; 435 Chestnut St. serves
+> Louisville 1 and 2; 4722 Cherrybark Ln. serves Harter 6 and 7. So a second Clay City at
+> 237 S. 2nd St. SE would have had a row of its own, and it has none. The list also
+> reproduces the county's own gap at Harter 2, which a list of buildings would not.
+> Clay's eighteen precincts shipped on 2026-09-12 and clay-precinct-geometry is retired.
+>
+> WITHDRAWN IS NOT UNANSWERED, and the distinction is the point: nobody declined and
+> nobody failed to reply. The page had been there the whole time and this project had
+> read the board page and the returns without reading the Clerk's own polling list.
+>
+> It was DRAFTED 2026-09-11 as a reply on the existing thread with County Clerk Amy
+> Britton, who has answered this project twice — 2026-08-24 on where the Clay City
+> district line falls, and 2026-08-26 confirming the board plan is current. The draft is
+> kept below as written, because a withdrawn ask is worth being able to read.
 
 **What this is about, and why it is one sentence long.** Clay's fourteen board districts
 ship. Its eighteen voting precincts do not, and exactly one fact is in the way.

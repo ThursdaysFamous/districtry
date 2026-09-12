@@ -1004,6 +1004,12 @@
         "note": "Mason County's twenty-one voting precincts, and the file whose absence started the audit: the gap record mason-precinct-vintage stated as a fact about the shipped app that these 21 shapes were already held, and none of them was. The census writes a vestigial trailing 1 on ALLENS GROVE 1 and KILBOURNE 1 where the county writes neither, so both are recorded as renames. The geometry is the Census 2020 voting-district fabric, which sums to the county's exact 2020 population; the names are the county's own, taken from its certified returns and identical in the 2024 General and the 2026 General Primary (ISBE elections 66 and 69). Bounds are an EQUALITY because that is the county's whole precinct list. No polling place ships and no roster (scripts/build_vtd_precincts.py). Mason's two board districts are unions of whole townships and ship as their own layer, so no board district is carried here."
       },
       {
+        "file": "clay-precincts.json",
+        "min_features": 18,
+        "max_features": 18,
+        "note": "Clay County's eighteen voting precincts. THE COUNT TOOK A THIRD PUBLISHER: the county's certified returns report ONE precinct named CLAY CITY at one reporting id in both the 2024 General and the 2026 General Primary (ISBE elections 66 and 69), while its County Board page names CLAY CITY I in District A and CLAY CITY II in District B — two differently-named slots, which is not the Jackson or Douglas shape where a canvass repeats one precinct's own name under each district it lies in. The County Clerk's own list of all current polling locations settled it at eighteen with one Clay City, and it can be read as a precinct list rather than a building list because it demonstrably does not group: 202 N. Olive St. serves Harter 1, 3, 4 and 5 and 435 Chestnut St. serves Louisville 1 and 2, each on its own row, so a second Clay City at 237 S. 2nd St. SE would have had one too. It also reproduces the county's own gap at HARTER 2, which a list of buildings would not. Eleven names are renames of the census's convention rather than of its content — eight roman ordinals (census HARTER III for the county's HARTER 3) and three vestigial trailing I's with no sibling anywhere (CLAY CITY I, LARKINSBURG I, PIXLEY I). The geometry is the Census 2020 voting-district fabric, which sums to the county's exact 2020 population of 13,288; the names are the county's own, from its canvass and not from the polling list, per the Cumberland rule. Bounds are an EQUALITY because that is the county's whole precinct list. No polling place ships and no roster (scripts/build_vtd_precincts.py). Clay's fourteen lettered board districts ship as their own layer, and CLAY CITY is split between districts A and B at the village limits, which is drawn there rather than here."
+      },
+      {
         "file": "massac-precincts.json",
         "min_features": 17,
         "max_features": 17,
@@ -3213,7 +3219,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-il-shell-v22",
+    "cache_name": "districtry-il-shell-v23",
     "shell_urls": [
       "./",
       "./sources.html",

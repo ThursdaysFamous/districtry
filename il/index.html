@@ -11533,10 +11533,17 @@ function initChiExplorer() {
    * reporting-id-stripped ones, because a base name at two ids is a question
    * and never a duplicate to collapse.
    *
-   * Six of the seven elect their boards county-wide, so no board district is
-   * carried; Mason's two township-built districts already ship as their own
-   * layer. No polling place ships and no roster. See
-   * scripts/build_vtd_precincts.py. */
+   * Six of the eight elect their boards county-wide, so no board district is
+   * carried; Mason's two township-built districts and Clay's fourteen lettered
+   * ones already ship as their own layers. Clay took a third publisher to
+   * reach: its returns name one CLAY CITY and its board page names CLAY CITY I
+   * and II, and the Clerk's own polling list broke the tie at eighteen — it
+   * gives each precinct its own row even where four share a building, so a
+   * second Clay City would have appeared and does not. No polling place ships
+   * and no roster. See scripts/build_vtd_precincts.py. */
+  var loadClayPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/clay-precincts.json", {}, 2);
+  });
   var loadEdwardsPrecincts = makeCached(function () {
     return fetchJSONWithRetry("data/app/edwards-precincts.json", {}, 2);
   });
@@ -28918,6 +28925,11 @@ function initChiExplorer() {
           };
         }
       },
+      vtdPrecinctEntry({
+        key: "clay",
+        county: "Clay County",
+        loader: loadClayPrecincts
+      }),
       vtdPrecinctEntry({
         key: "edwards",
         county: "Edwards County",

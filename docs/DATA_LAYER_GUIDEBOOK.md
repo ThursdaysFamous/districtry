@@ -366,20 +366,6 @@ detail into `blocker`.
       "wanted": "Clark County's current polling places paired with its 23 precinct names, in any typed form."
     },
     {
-      "id": "clay-precinct-geometry",
-      "concept": "Voting precincts",
-      "area": "Clay County",
-      "counties": [
-        "clay"
-      ],
-      "kind": "no-source",
-      "layer": "county-precinct",
-      "summary": "Clay County's voting precincts aren't drawn. Its 14 board districts are.",
-      "why": "The county's own two surfaces disagree on how many precincts it has — its board page names one more than its certified election returns do — and drawing either count would state more than is known.",
-      "blocker": "RECORDED 2026-09-11, closing an absence that had no record at all: Clay shipped its board districts on 2026-08-26 and its precincts were deliberately withheld, but nothing told a reader so. The decision itself is unchanged and is restated here with what has since been measured. THE DISAGREEMENT IS ABOUT THE COUNT AND NOTHING ELSE. claycounty.illinois.gov's County Board page states the board's composition letter by letter and names CLAY CITY I in District A and CLAY CITY II in District B; the county's certified returns, in ISBE's statewide precinct-level archive, report ONE precinct named CLAY CITY at one reporting id in the 2024 General and again in the 2026 General Primary. Census 2020 likewise drew one CLAY CITY I voting district (1,166 people). Clerk Amy Britton's reply of 2026-08-24 settled where the DISTRICT line falls — \"Clay City Dist A is located within the Village limits of Clay City\", \"Dist B is the unincorporated area of Clay City/Stanford\" — which is what the board build needed, and it does not say whether the county runs one polling precinct there or two. EVERYTHING ELSE IS SETTLED, which is why the ask is one sentence long. The census fabric carries all eighteen of the county's precinct names after eleven renames (roman ordinals, plus a vestigial trailing I on CLAY CITY I, LARKINSBURG I and PIXLEY I) and sums to the county's exact 2020 population of 13,288. The raw-canvass duplicate check that kept Washington from shipping on 2026-09-11 was run here the same day and Clay passes it: eighteen base names in both elections, no name reported at two ids, no sub-precinct unit, and only a PRESIDENTIAL ONLY BALLOT class to drop. WHY IT IS NOT SHIPPED ON THE RETURNS ALONE: a canvass reporting one Clay City is strong evidence of one precinct and is not the county saying so, and a card naming a precinct the county calls by two names would be this project inferring a fabric rather than reading one. The scripts/build_vtd_precincts.py docstring claimed on 2026-09-11 that the board page \"names Clay City under both District A and District B\", making this the Jackson and Douglas split-precinct shape where a canvass repeats one precinct's OWN name; that was wrong — the two slots carry different names — and it was corrected the same day. NOT YET ASKED — DRAFTED (Ask 22 in docs/ASK_DRAFTS.md), as a reply on the Clerk's own thread, since she has answered this project twice.",
-      "wanted": "One line from the County Clerk: does the county run one Clay City precinct or two? That is the only thing between the county's eighteen precincts and the map."
-    },
-    {
       "id": "clinton-precinct-geometry",
       "concept": "Voting precincts",
       "area": "Clinton County",
@@ -6568,6 +6554,7 @@ ship no precincts. Asked on the 2024 General (election 66) and the 2026 General 
 | Wabash | 16 | census appends the county's own precinct number (`BELLMONT 14` for `BELLMONT`) |
 | Massac | 17 | same, and the county writes the number after a hyphen (`ADKINS-17`) |
 | Saline | 28 | county writes `EAST ELDORADO #1` to `#6`, census writes `ELDORADO 1` to `6` |
+| Clay | 18 | census writes roman where the county writes arabic (`HARTER III` for `HARTER 3`), plus a vestigial trailing `I` on `CLAY CITY I`, `LARKINSBURG I` and `PIXLEY I` — eleven renames, the most of any county here, and all of them the census's convention rather than its content |
 
 Every one passes the population identity exactly, and every one's certified returns name the same
 precincts in 2024 as in 2026. They ship from one table-driven builder,
@@ -7559,7 +7546,14 @@ fabric? — and nothing had asked it about the counties that ship no precincts a
 on elections 66 and 69, it gave two certified witnesses each for Mason, Pike, Union,
 Edwards, Wabash, Massac and Saline, all of which now ship
 (`scripts/build_vtd_precincts.py`), and a measured no for Alexander, Bond, Brown, Clinton,
-Jersey, Knox, Vermilion, Washington and Williamson. The section dated 2026-09-11 above has
+Jersey, Knox, Vermilion, Washington and Williamson. **CLAY BECAME THE EIGHTH ON
+2026-09-12**, and it is the one the archive alone could never have drawn: its returns name
+ONE Clay City where its board page names Clay City I and II, so eighteen was not inferable
+from the canvass and nineteen was not inferable from the board page. The County Clerk's own
+list of current polling locations broke the tie at eighteen, and it is readable as a precinct
+list rather than a building list because it does not group — three of its buildings serve
+several precincts and each precinct still has its own row, so a second Clay City would have
+had one. It also reproduces the county's own gap at Harter 2. The section dated 2026-09-11 above has
 the detail, including the one trap this use adds that the tripwire's own comparison does
 not have: reconcile against the RAW `PrecinctName` values, because the reporting-id strip
 that makes an election-to-election diff honest will also collapse two genuine reporting
