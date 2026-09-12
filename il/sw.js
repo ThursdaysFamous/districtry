@@ -43,7 +43,7 @@
 // refreshed per election.)
 /* ==== TEMPLATE:END sw-version-history ==== */
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-il-shell-v22";
+const CACHE_NAME = "districtry-il-shell-v23";
 
 const SHELL_URLS = [
   "./",
@@ -80,6 +80,7 @@ const GEOMETRY_URLS = [
   "./data/app/grundy-park-districts.json",
   "./data/app/edwards-precincts.json",
   "./data/app/mason-precincts.json",
+  "./data/app/clay-precincts.json",
   "./data/app/massac-precincts.json",
   "./data/app/pike-precincts.json",
   "./data/app/saline-precincts.json",

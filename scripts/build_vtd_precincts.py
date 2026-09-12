@@ -2,9 +2,12 @@
 """Voting precincts for the counties whose Census 2020 fabric is still their own.
 
 WHY THIS EXISTS, AND WHAT IT CORRECTS. Seventeen of Illinois's ninety-one served
-counties ship no precinct layer, and seven of them are drawn here. Six of those
-seven carried a gap record, and all six gave the same reason — the county
-publishes no precinct map file — which is the wrong question. Pike's record says
+counties shipped no precinct layer when this file was written, and EIGHT of them
+are drawn here. Six of the first seven carried a gap record, and all six gave the
+same reason — the county publishes no precinct map file — which is the wrong
+question. (The eighth, Clay, is the exception and is described below: its record
+named a real obstacle rather than the wrong question, and it took a third
+publisher to clear.) Pike's record says
 so in the sentence that closed it: "The precincts themselves are certainly
 defined ... but only as names." Names are the whole input this route needs. Ten
 counties already ship precincts built exactly this way (Johnson, Perry,
@@ -24,7 +27,7 @@ return as CSV (scripts/isbe_precinct_fabric.py reads the same archive as a
 re-precincting tripwire). That file is the COUNTY'S canvass, published by the
 state, so it is a county source and not a state one. TWO WITNESSES PER COUNTY:
 the 2024 General (election 66) and the 2026 General Primary (election 69) name
-the same precincts in all seven counties here, so a name is never taken from a
+the same precincts in all eight counties here, so a name is never taken from a
 single ballot.
 
 SUB-PRECINCT REPORTING UNITS ARE NOT PRECINCTS. Massac reports ADKINS-17 and
@@ -76,32 +79,43 @@ Creek, East Eldorado #1), because that is the name on a reader's poll card. Wher
 the two publishers disagree it is the county's spelling that ships, which is why
 the census's vestigial trailing 1 and its appended precinct number both
 disappear. NO POLLING PLACE ships — that belongs with a roster guard and a date,
-the rule Calhoun's build set. NO BOARD DISTRICT ships: six of these seven
-counties elect their boards county-wide, and the one that does not (Mason)
-already ships its board districts as their own layer. NO ROSTER ships.
+the rule Calhoun's build set. NO BOARD DISTRICT ships: six of these eight
+counties elect their boards county-wide, and the two that do not (Mason and
+Clay) already ship their board districts as their own layer. NO ROSTER ships.
 
-CLAY IS THE NEXT COUNTY THIS ROUTE REACHES AND IS NOT HERE, and this paragraph
-said the wrong thing about why until 2026-09-11. It claimed the county's board
-page "names Clay City under both District A and District B", making the
-disagreement one about DISTRICTS with "the count eighteen on both surfaces".
-IT IS NOT. The board page names CLAY CITY I in District A and CLAY CITY II in
-District B — two differently-named slots, not one precinct listed under two
-districts — so this is not the Jackson, Douglas or Shelby shape, where a
-canvass repeats one precinct's own name under each district it lies in. Clay's
-recorded board-only decision was better founded than that paragraph allowed,
-and it stands.
+CLAY WAS THE EIGHTH AND IT TOOK A THIRD PUBLISHER, not a better reading of the
+two already in hand. Everything about it reconciled except a count: the
+county's certified returns report ONE precinct named CLAY CITY at one reporting
+id in both witness elections, and its County Board page names CLAY CITY I in
+District A and CLAY CITY II in District B. Two differently-named slots are not
+the Jackson, Douglas or Shelby shape, where a canvass repeats one precinct's
+OWN name under each district it lies in — so eighteen could not be inferred
+from the returns and nineteen could not be inferred from the board page, and
+the county was held back on 2026-08-26 and again on 2026-09-11 for exactly that
+reason.
 
-What the route CAN say about Clay is this. The raw-canvass duplicate check
-above was run on 2026-09-11 and Clay passes it: eighteen base names in the 2024
-General and eighteen in the 2026 General Primary, no name at two reporting ids
-and no sub-precinct unit, with only a PRESIDENTIAL ONLY BALLOT class to drop.
-The census fabric carries all eighteen after eleven renames (roman ordinals,
-plus a vestigial trailing I on CLAY CITY I, LARKINSBURG I and PIXLEY I). So the
-ONLY thing between Clay and a precinct layer is whether the county runs one
-Clay City precinct or two — its certified returns report one at one id in both
-elections, its board page names two — and that is a question for the Clerk
-rather than an inference to make here. It is drafted as an ask and recorded in
-the clay-precinct-geometry gap.
+THE CLERK'S OWN POLLING LIST SETTLED IT, and what makes it readable is its
+internal structure rather than its authority. claycounty.illinois.gov's
+elections page publishes "a list of all current polling locations in Clay
+County": eighteen rows, one of them Clay City. A polling notice normally CANNOT
+be read as a precinct list — Cumberland's groups seven precincts into three
+buildings as "NEOGA I & II" — but this one demonstrably does not group. Three
+of its buildings serve several precincts and every precinct still gets its own
+row: 202 N. Olive St. serves Harter 1, 3, 4 and 5; 435 Chestnut St. serves
+Louisville 1 and 2; 4722 Cherrybark Ln. serves Harter 6 and 7. Eight precincts
+share an address with a sibling and none is folded, so a second Clay City at
+237 S. 2nd St. SE would have its own row the way Louisville 2 does. It has
+none. The list also reproduces the county's own oddity of having NO HARTER 2,
+which a list of buildings would not.
+
+So three publishers say one Clay City — the returns, Census 2020's single CLAY
+CITY I voting district, and the Clerk's polling list — and the board page stops
+disagreeing once its two slots are read as what Clerk Britton called them on
+2026-08-24: "Clay City Dist A is located within the Village limits of Clay
+City", "Dist B is the unincorporated area". Those are BOARD DISTRICTS through
+one precinct, which is how build_clay_boundaries.py already drew them. The
+NAMES here come from the canvass and not from that list, per the Cumberland
+rule; the list settled the count and nothing else.
 
 WHAT THE POPULATION IDENTITY DOES NOT PROVE, said plainly: that the voting
 districts sum to the county's own Census 2020 count shows the fabric tiled the
@@ -115,7 +129,7 @@ says when — or when TIGERweb republishes the voting-district fabric. Output is
 deterministic, so --check is a byte compare.
 
 Usage:
-    python3 scripts/build_vtd_precincts.py                 # write all seven
+    python3 scripts/build_vtd_precincts.py                 # write all eight
     python3 scripts/build_vtd_precincts.py --county mason  # one county
     python3 scripts/build_vtd_precincts.py --check         # shipped == fresh
 """
@@ -252,6 +266,35 @@ COUNTIES = {
                     "WEST BROOKLYN": "WEST BROOKLYN 6"},
         "board": ("Massac County elects its three commissioners county-wide, so "
                   "there is no board district for a precinct to belong to."),
+    },
+    "clay": {
+        "fips": "025", "pop2020": 13288, "county": "Clay County",
+        "precincts": (
+            "BIBLE GROVE", "BLAIR", "CLAY CITY", "HARTER 1", "HARTER 3",
+            "HARTER 4", "HARTER 5", "HARTER 6", "HARTER 7", "HOOSIER",
+            "LARKINSBURG", "LOUISVILLE 1", "LOUISVILLE 2", "OSKALOOSA",
+            "PIXLEY", "SONGER", "STANFORD", "XENIA"),
+        # Eleven renames in two shapes, and both are the census's convention
+        # rather than a difference about which precincts exist. EIGHT ROMAN
+        # ORDINALS: the census writes HARTER III and LOUISVILLE II where the
+        # county's certified returns write HARTER 3 and LOUISVILLE 2. THREE
+        # VESTIGIAL TRAILING I's on names with no sibling: CLAY CITY I,
+        # LARKINSBURG I, PIXLEY I, where no II exists in the census, in either
+        # canvass, or on the Clerk's polling list. norm() keeps arabic and
+        # roman apart (HARTER1 vs HARTERI), so none of these can collide.
+        "aliases": {"CLAY CITY": "CLAY CITY I",
+                    "HARTER 1": "HARTER I", "HARTER 3": "HARTER III",
+                    "HARTER 4": "HARTER IV", "HARTER 5": "HARTER V",
+                    "HARTER 6": "HARTER VI", "HARTER 7": "HARTER VII",
+                    "LARKINSBURG": "LARKINSBURG I",
+                    "LOUISVILLE 1": "LOUISVILLE I",
+                    "LOUISVILLE 2": "LOUISVILLE II",
+                    "PIXLEY": "PIXLEY I"},
+        "board": ("Clay County's fourteen lettered board districts ship as "
+                  "their own layer, so no board district is carried here — and "
+                  "one of its precincts could not carry one anyway: CLAY CITY "
+                  "is split between districts A and B at the village limits, "
+                  "which is a board-layer fact and is drawn there."),
     },
 }
 
