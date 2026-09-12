@@ -13,8 +13,32 @@ the county sources in this repo, a PER-PERSON phone and e-mail for most
 officials. Lincoln (4 wards), Mt. Pulaski (3) and Atlanta (3) elect
 alderpersons by ward, two per ward.
 
-FETCH POSTURE: open. Plain `requests` with a browser UA gets both the
-clerk's Joomla page and the PDF.
+FETCH POSTURE: the HTTP status is open and ROBOTS.TXT IS NOT, and this
+paragraph said only the first half until 2026-09-12. Plain `requests` gets
+both the clerk's Joomla page and the PDF. But www.logancountyil.gov's
+`User-agent: *` group reads, among a dozen Joomla internals,
+
+    Disallow: /images/
+
+and the yearbook this scraper reads lives at
+/images/Reference_and_Yearbook_2025-2026_updated.pdf — measured live that
+day, both the rule and the link the clerk's page currently offers. The `*`
+group is the one that binds this project (CLAUDE.md, settled 2026-09-08);
+the file's GPTBot / CCBot / anthropic-ai / Claude-Web groups are another
+vendor's crawlers and bind nothing here, and reading them instead would
+have shut a host that in fact permits almost all of it. The clerk's page
+itself (/index.php?option=com_content...) is permitted, so the county
+board roster built from it is unaffected.
+
+SO THIS WEEKLY FETCH IS OF A PATH THE HOST ASKS US NOT TO FETCH, and it is
+still running as this is written. Stopping it is not a one-line change: the
+eleven municipalities' officials come from that PDF, and the precedent for
+this case is Ashland's (wi/scripts/wi_county_board_scraper.py) — stop the
+crawl, keep the reader, carry the roster as read on a date, say on the card
+that the county asked rather than that it refused. That is recorded as its
+own change rather than done here, because it moves shipped roster data and
+wants the retention gate's attention. The finding is written here, in the
+file that makes the request, so the next reader of this scraper sees it.
 
 URL DISCOVERY, not a hardcoded path. The yearbook lives under
 /images/Reference_and_Yearbook_*.pdf and the filename carries the edition;

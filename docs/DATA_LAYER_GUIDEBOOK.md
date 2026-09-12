@@ -2675,6 +2675,90 @@ already publishes nine times over as a per-district `officeAddress` — a second
 one. **A gate that only ever passes has not been tested; this one failed three times before
 it was right.**
 
+## Which hosts actually refuse the districtry user-agent (2026-09-12)
+
+**THE RULE HAD NO NUMBERS BEHIND IT.** CLAUDE.md's browser-user-agent section (settled
+2026-09-11) allows a scraper to send a browser string where a site refuses the districtry
+token by client fingerprint, on the condition that the calling file records which token was
+refused, what the site answered, and the date. 116 files here send one. Almost none carried
+that measurement, and `scripts/scraper_common.py`'s own docstring said the same thing from the
+other side: its UA constants "consolidate the DEFINITION, never the VALUE" because "several
+sites in this fleet block or challenge by client fingerprint" — naming none of them.
+
+**THE SWEEP.** `scripts/probe_user_agents.py` asks each host the same page four ways, cheapest
+first, stopping when one answers: `requests` + `UA_ROSTER_BOT`, stdlib + `UA_ROSTER_BOT`,
+`requests` + Chrome/126 + client hints, stdlib + Chrome/126 + client hints. Its subject is
+DISCOVERED from the tree — every host a script that sends a browser string reaches, 290 of
+them — and it writes `user-agent-measurements.json`, re-audited offline by `--check` in CI so
+an entry cannot outlive the file that fetched the host.
+
+**BOTH AXES, BECAUSE ONE IS NOT ENOUGH.** `scraper_common.py`'s 2026-09-03 table already
+showed the HTTP STACK is refused as often as the token — `requests` never succeeded against
+five Illinois sources with or without browser headers, because urllib3's TLS ClientHello
+differs from the ssl module's and these edges fingerprint it. A probe that varied only the
+name would credit a browser string with a fix the stack made.
+
+**WHAT IT FOUND, across 290 hosts:**
+
+| verdict | hosts | what it means |
+|---|---|---|
+| `token-ok` | 203 | the districtry token gets a full page on the plain `requests` stack |
+| `token-refused-and-stack` | 15 | refuses the token on both stacks, serves stdlib + Chrome |
+| `stack-not-token` | 6 | refuses `requests`, serves the SAME token on stdlib |
+| `token-refused` | 2 | refuses the token on `requests`, serves Chrome on `requests` |
+| `all-refused` / `challenged` | 16 | refuses or challenges all four; a captcha is never answered |
+| `answers-nothing` / `path-answers-nothing` | 23 | HTTP 200 too small to be a page, or a 404/405/500 on the probed path |
+| `robots-disallows-this-path` | 15 | the `*` group disallows the probe's own chosen path, so it was not fetched |
+| `crawl-delay-too-long` | 5 | Crawl-delay 15–60s; four rungs at that pace is not a polite probe |
+| `tls-chain` / `proxy-denied` | 5 | an incomplete chain (`probe_incomplete_tls_chains.py`'s subject) or this sandbox's egress |
+
+**SEVENTEEN HOSTS REFUSE THE TOKEN AND 203 DO NOT.** Per file: 17 files reach at least one
+host that genuinely refuses the token, and **68 files send a browser string where every host
+they reach serves the token a full page**. The largest single case is
+`wi/scripts/wi_county_board_scraper.py`, whose default header set is a Chrome/124 string
+across 55 `token-ok` counties while its `BROWSER_HEADER_COUNTIES` pin — the structurally
+correct shape — holds exactly one county. **Nothing was renamed.** A UA moves per county with
+that county's weekly run as the witness, which is the rule `scraper_common.py` already stated;
+what changed is that the move now starts from a number.
+
+**TWO RECORDS IT DISPROVED.** `validate_card_links.py`'s `EXPECTED_UNREACHABLE` said
+`lakecountyil.gov`'s "county edge refuses datacenter clients" and that "the board-roles scraper
+carries it via the Internet Archive". Measured: the edge refuses one STACK, serves
+`/2336/Board-Members` to the stdlib client with the plain token (117,290 bytes), and
+`lake_county_board_roles_scraper.py --engine stdlib` parses all 19 districts live — the archive
+is the third rung down, not the working path. Both records now say so.
+
+**ONE COMPLIANCE FINDING, AND IT IS NOT IN THE SEVENTEEN.** Of the 15 `robots-disallows-this-path`
+hosts, the Wisconsin ones are URLs held in tables and not fetched — `wi/scripts/validate_robots.py`
+ran green the same day ("every scheduled fetch is permitted by its host's `*` group"), and the
+seven counties whose crawl that gate stopped in August still carry their rosters as read.
+Knox's and Carroll's revize CDNs disallow everything except documents and both scrapers fetch
+only `.pdf`. Iowa's `johnson-county.granicus.com` is gated per fetch by `ia/scripts/robots_gate.py`.
+The exception is **Logan**: `www.logancountyil.gov` publishes `Disallow: /images/` in its `*`
+group, and `scripts/logan_municipal_officials_scraper.py` reads
+`/images/Reference_and_Yearbook_2025-2026_updated.pdf` every Wednesday. The clerk's page it
+discovers that link from is permitted, so the board roster is unaffected. Stopping it follows
+Ashland's precedent — stop the crawl, keep the reader, carry the roster as read — and is its own
+change because it moves shipped roster data.
+
+**TWO THINGS THE PROBE GOT WRONG FIRST, and the second is why the classifier looks the way it
+does.** It read robots.txt once, with rung 1's client; Marathon, McHenry and DeKalb refuse that
+client the FILE, so their policies filed as unreadable while rung 4 fetched a page — a crawl
+whose rules were never read. And it called any body containing `captcha` a challenge, which
+reported `board.danecounty.gov` as challenged after that host served a 7.7 MB page titled "Dane
+County District Supervisor List" to the districtry token; the match was a CSS rule hiding the
+reCAPTCHA badge on a contact form. Size-gating the keyword at 60 KB reproduced the same error
+fifteen more times one size down — `www.appletonwi.gov` at 58 KB, four Dane County offices
+between 23 and 39 KB, every one a real page. **A keyword in a full page is a widget.** The
+verdict now turns on how much VISIBLE TEXT came back, and a captcha keyword on a page that
+passes that test is an annotation that changes nothing.
+
+**THE VANTAGE IS PART OF THE MEASUREMENT.** This sweep ran from a Claude Code sandbox through
+the session's agent proxy, and a refusal measured there is a fact about that address. The
+scrapers run in GitHub Actions; the artifact records which vantage produced it and the probe
+reports the runner when it runs there. One host (`badgersheriffs.com`) is recorded
+`proxy-denied` for exactly that reason rather than as a refusal.
+
 ## How to read the tables
 
 Status key: **SHIPPED** `id` · **NO HONEST ANALOG** (recorded drop — the body doesn't

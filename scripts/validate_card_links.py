@@ -363,9 +363,19 @@ EXPECTED_UNREACHABLE = {
     "kendallcountyil.gov":
         "Akamai \"Access Denied\" — same posture; the county blocks the Internet "
         "Archive's crawler too, hence a hand-verified roster (issue #234)",
+    # THIS ENTRY'S REASON WAS TOO STRONG BY ONE STACK, corrected 2026-09-12 from
+    # scripts/probe_user_agents.py's sweep. The edge refuses the `requests`
+    # client and serves the SAME page to the stdlib client — 117,290 bytes of
+    # /2336/Board-Members to the plain UA_ROSTER_BOT token, no browser string
+    # needed — and lake_county_board_roles_scraper.py --engine stdlib parses all
+    # 19 districts live. So the prediction here is right (this checker runs on
+    # the requests stack and will keep seeing 403) and the explanation was not:
+    # it is one stack that is refused, not "datacenter clients", and the archive
+    # rung is the third one down rather than where the data comes from.
     "lakecountyil.gov":
-        "Cloudflare managed challenge — the county edge refuses datacenter clients; "
-        "the board-roles scraper carries it via the Internet Archive",
+        "HTTP 403 to the `requests` stack on every path. Measured 2026-09-12: the "
+        "stdlib client gets the same page with the districtry token, which is the "
+        "rung the board-roles scraper actually serves from",
     "adamscountyil.gov":
         "Akamai \"Access Denied\" — same posture as McHenry and Kendall",
     # THE ONE HERE WHOSE PAGE THIS REPO STILL READS EVERY WEEK. Fond du Lac's
