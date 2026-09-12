@@ -1934,3 +1934,44 @@ that, then record the office as unresponsive — which is a different claim from
 refused", and neither is the same as "no source exists". The scraper re-reads the policy every
 week regardless, so a rule change or a moved file restores the weekly read with no edit and no
 correspondence.
+
+---
+
+## Ask 24 — Waukesha Clerk of Circuit Court: not asked, because the county publishes it
+
+> **NOT ASKED — UNNECESSARY, 2026-09-12.** Nothing was drafted and nothing must be. The
+> question was going to be which of two spellings is current for Waukesha's Branch 5, and
+> the pre-send check found the county answering it on its own website — twice. Rule 4 of
+> this file's protocol is that a clean, citable NO is a good outcome; the better one is
+> discovering the office has already published the answer, which is what happened to Ask 22
+> a day earlier. **This project does not ask a public office for something it publishes.**
+
+**What the question was going to be.** The app's Circuit Court card for Waukesha names
+twelve judges and, before this change, gave eight of them a branch and a phone. Four carried
+neither — Domina, Melvin, Bugenhagen and Ramirez — and one of the four was a spelling problem
+rather than a missing source: the state bench table at
+`wicourts.gov/courts/circuit/judges.htm` writes `J. Arthur Melvin III` where
+the state contact page at `wicourts.gov/contact/Circuit_Courts.html` gives Branch 5 to
+`Jack A. Melvin`. Two differences at once — a generational suffix and a given name — so the
+builder withheld rather than assert that two differently-written names are one judge.
+
+**What the county publishes.** `waukeshacounty.gov/circuit-courts/court-officials/court-official-directory/`
+prints the full pairing, Branch 1 through Branch 12, each row reading
+`Branch N, Courtroom … Judge--Honorable …`. Branch 5 is **J. Arthur Melvin III**. The county's
+`court-reporter-directory/` prints it independently — a reporter, a judge and a branch per
+row — and agrees on all twelve. So the two spellings are one judge, on the county's own
+authority, and no clerk needs to be written to.
+
+**The check turned up something larger, and it is recorded rather than acted on.** Those two
+county directories list the same twelve judges as the state's CONTACT page — including
+**Jeremy Guza** (Branch 3) and **Michael Schindhelm** (Branch 11). The state's BENCH TABLE
+lists neither, and instead names **William Domina** and **Ralph M. Ramirez**. Three surfaces
+agree with each other and the fourth is the one this builder treats as authoritative for who
+sits, across all 69 circuits. Preferring a different surface for one county is a decision
+about the whole join rather than a Waukesha repair, so nothing here changes it. The
+measurement is in `wi/WATCH.md`; the decision is a person's.
+
+**If it ever is asked**, the recipient is the office rather than a named holder: the county's
+Clerk of Courts page publishes one address, `Monica.Paz@wicourts.gov`, and the Blue Book
+2025-26 (April 2025) names Monica Paz as Clerk of Circuit Court "appointed to fill a
+vacancy" — a dated source, corroborated by that live page but worth confirming on the day.

@@ -718,6 +718,7 @@
     },
     {
       "id": "county-precinct",
+      "guide": { "href": "precinct.html", "text": "What precinct am I in?" },
       "label": "Voting Precinct",
       "group": "geography",
       "area_rank": 31,
@@ -3226,7 +3227,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-il-shell-v25",
+    "cache_name": "districtry-il-shell-v26",
     "shell_urls": [
       "./",
       "./sources.html",

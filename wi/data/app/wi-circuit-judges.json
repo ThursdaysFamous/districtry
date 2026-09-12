@@ -895,12 +895,14 @@
     "phone": "(920) 674-7151"
    },
    {
+    "branch": "3",
+    "name": "Robert F. Dehring Jr.",
+    "phone": "(920) 674-7210"
+   },
+   {
     "branch": "4",
     "name": "Bennett J. Brantmeier",
     "phone": "(920) 674-7217"
-   },
-   {
-    "name": "Robert F. Dehring Jr."
    }
   ],
   "sourceUrl": "https://www.jeffersoncountywi.gov/courts___legal_services/clerk_of_courts/index.php"
@@ -1349,6 +1351,11 @@
     "phone": "(414) 278-4521"
    },
    {
+    "branch": "2",
+    "name": "Milton L. Childs Sr.",
+    "phone": "(414) 257-7122"
+   },
+   {
     "branch": "3",
     "name": "Katie B. Kegel",
     "phone": "(414) 278-4775"
@@ -1566,9 +1573,6 @@
    },
    {
     "name": "Malinda Kyle Eskra"
-   },
-   {
-    "name": "Milton L. Childs Sr."
    },
    {
     "name": "Kristy Yang"
@@ -2412,6 +2416,12 @@
     "phone": "(262) 548-7481"
    },
    {
+    "branch": "10",
+    "name": "Paul Bugenhagen Jr.",
+    "phone": "(262) 548-7454",
+    "role": "Chief Judge"
+   },
+   {
     "branch": "12",
     "name": "Jack Pitzo",
     "phone": "(262) 548-7503"
@@ -2421,10 +2431,6 @@
    },
    {
     "name": "J. Arthur Melvin III"
-   },
-   {
-    "name": "Paul Bugenhagen Jr.",
-    "role": "Chief Judge"
    },
    {
     "name": "Ralph M. Ramirez"
