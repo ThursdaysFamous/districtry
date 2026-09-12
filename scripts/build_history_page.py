@@ -225,6 +225,50 @@ def build_instance(inst, w):
     desc = ("How the %s deployment grew and what it checks on a schedule — "
             "dated, measured, and regenerated with every change." % place)
 
+    # The page's JSON-LD. Until 2026-09-12 the four history pages carried none —
+    # the only content pages on the site without a graph, and il/history.html
+    # is the page the September audit called the site's strongest credibility
+    # asset. Same shape as the sibling sub-pages (faq, sources, the topic
+    # pages): a WebPage with an INLINE author node, because a bare @id
+    # reference does not resolve for a crawler reading one document, and a
+    # breadcrumb up to the app.
+    #
+    # dateModified is the NEWEST changelog entry's date, not the build date.
+    # The tiles are re-measured on every regenerate, but the entries are the
+    # page's substance and the one date the page itself prints; a build
+    # timestamp would claim the prose changed every time a roster did.
+    # datePublished is the oldest entry, for the same reason.
+    graph = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": canonical,
+        "url": canonical,
+        "name": title,
+        "description": desc,
+        "inLanguage": "en-US",
+        "datePublished": cfg["entries"][-1]["date"],
+        "dateModified": cfg["entries"][0]["date"],
+        "author": {
+            "@type": "Person",
+            "@id": "https://districtry.com/#author",
+            "name": "Adam Overberg",
+            "url": "https://overberg.co",
+            "email": "hello@overberg.co",
+        },
+        "isPartOf": {"@id": app_url + "#website"},
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": app_name,
+                 "item": app_url},
+                {"@type": "ListItem", "position": 2, "name": "History"},
+            ],
+        },
+    }
+    # Inside a <script>, "</" must not appear literally; nothing here is
+    # scraped text, but the guard costs nothing and the rule is not optional.
+    jsonld = json.dumps(graph, indent=2, ensure_ascii=False).replace("</", "<\\/")
+
     return """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -331,6 +375,9 @@ code { font: 400 12.5px/1.4 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 .foot { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 14px; color: var(--muted); }
 .foot a { margin-right: 14px; }
 </style>
+<script type="application/ld+json">
+%(jsonld)s
+</script>
 </head>
 <body>
 <main>
@@ -369,6 +416,7 @@ at the diff.</p>
 </html>
 """ % {
         "byline": shared_footer_byline(),
+        "jsonld": jsonld,
         "title": esc(title), "desc": esc(desc), "canonical": esc(canonical),
         "app_name": esc(app_name), "og_image": esc(app_url + "og-image.png"),
         "favicon": favicon_uri, "inst": inst,
