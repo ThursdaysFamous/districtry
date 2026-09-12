@@ -16,13 +16,27 @@ THE CASE EXAMPLE THIS DOCSTRING USED TO GIVE WAS NEVER REAL. It cited
 differently and therefore ships name-only. fold() lowercases, so both spellings
 produce the identical key and Richland's judge has always joined and has always
 carried her phone; she lacks only a BRANCH, because her county runs one court
-and the page prints no "Br" for it. 24 of the 25 branch-less judges are that
-same case — a fact about the source, not a failed join.
+and the page prints no "Br" for it.
 
-TWO FALLBACK RUNGS BELOW THE EXACT KEY (added 2026-09-10), because the state's
-own two pages write nine of 261 judges' names differently and each was shipping
-with no branch and no phone while both sat on the contact page:
+WHAT THE 37 BRANCH-LESS JUDGES ACTUALLY ARE, measured 2026-09-12 (this
+docstring said "24 of the 25" and the total was wrong; the 24 was right):
+24 have a contact row whose branch is null — Richland's case, a fact about the
+source rather than a failed join — and the other 13 have no contact row on the
+page at all, so there is nothing to fail to match. Walworth's Scholz is in the
+second group because the contact page spells her `SCHOLTZ`, which is the
+deliberate non-join recorded below.
 
+THREE FALLBACK RUNGS BELOW THE EXACT KEY, because the state's own two pages
+write twelve of 261 judges' names differently and each was shipping with no
+branch and no phone while both sat on the contact page:
+
+  * SUFFIX (added 2026-09-12) — a generational suffix takes the surname's slot,
+    because fold() makes the LAST token the surname: `Paul Bugenhagen Jr.` on
+    the bench table against `Paul Bugenhagen Br 10` on the contact page keys as
+    (jr, paul) against (bugenhagen, paul). Three judges shipped with no branch
+    and no phone on that alone — Waukesha's Br 10, Jefferson's Br 3 and
+    Milwaukee's Br 2. Keyed on the name with any trailing suffix dropped,
+    computed for both sides so it works whichever page carries it.
   * SPACING — `De Vries, Hon. Martin J.` on the bench table against
     `DEVRIES, HON. MARTIN J. Br 2` on the contact page. Same letters, same
     order, one space. Keyed on the whole name with separators removed.
@@ -34,7 +48,7 @@ with no branch and no phone while both sat on the contact page:
     `R. Michael Waterman`/`Richard Michael Waterman`,
     `Zach Wittchow`/`Zachary Wittchow`. Keyed on surname + first INITIAL.
 
-Both rungs require the match to be UNIQUE ON BOTH SIDES — one contact row is
+All three rungs require the match to be UNIQUE ON BOTH SIDES — one contact row is
 not enough, because two judges of one bench sharing a key would each claim it.
 Every fallback join is PRINTED on every run: each one is this builder deciding
 that two differently-written names are one judge, and a reader can say no. The
@@ -48,6 +62,14 @@ name-only, and her Br 1 line, (262) 741-7023, is deliberately NOT attached:
 the surname is the identity anchor, and picking a spelling would be this
 project guessing which of two state pages is right about a sitting judge's
 name. Recorded in wi/WATCH.md for a human to settle with the county.
+
+NOR IS A SUFFIX ALLOWED TO BRIDGE A GIVEN NAME AS WELL. Waukesha's Br 5 is
+`Jack A. Melvin` on the contact page and `J. Arthur Melvin III` on the bench
+table — two differences at once. Ignore the suffix in the given-name rung too
+and both sides key on (melvin, j), and this builder would assert that two
+differently-named people are one judge; they may be, and nothing published says
+so. The suffix is dropped in its own rung only, and initial_key() says why it
+does not drop it. `--selftest` asserts both halves on doctored input.
 
 Keyed by CIRCUIT KEY — the same keys build_wi_circuit_courts.py stamps on the
 geometry (66 county slugs + buffalo-pepin, florence-forest,
@@ -147,14 +169,211 @@ def solid_key(name):
 
 def initial_key(name):
     """(surname-ish, first INITIAL) — the rung that bridges a given name the
-    two pages write differently at the same length as each other's."""
+    two pages write differently at the same length as each other's.
+
+    IT DOES NOT STRIP A GENERATIONAL SUFFIX, and that is the guard rather than
+    an oversight: stripping here would let a suffix difference and a given-name
+    difference compound, which is exactly Waukesha's Br 5 — the bench table's
+    `J. Arthur Melvin III` against the contact page's `Jack A. Melvin`. Ignore
+    the suffix and both sides key on (melvin, j), and this builder would assert
+    that two differently-named people are one judge. They may be; nothing
+    published says so.
+    """
     parts = fold(name)
     if not parts or not parts[0]:
         return None
     return (parts[-1], parts[0][0])
 
 
+# Generational suffixes as fold() leaves them (punctuation already gone, so
+# `Jr.` and `, Jr.` both arrive as `jr`). Only these five are observed on the
+# two wicourts pages; a sixth is added when a run prints a judge who needs it,
+# never pre-emptively.
+SUFFIXES = ("jr", "sr", "ii", "iii", "iv")
+
+
+def suffix_key(name):
+    """match_key with any trailing generational suffix dropped.
+
+    fold() makes the LAST token the surname slot, so a suffix takes the
+    surname's place and the exact key misses: the bench table writes
+    `Paul Bugenhagen Jr.` and the contact page `Paul Bugenhagen`, which key as
+    (jr, paul) and (bugenhagen, paul). Three judges shipped with no branch and
+    no phone on that alone — Waukesha's Br 10, Jefferson's Br 3 and
+    Milwaukee's Br 2 — while both pages named them.
+
+    Computed for EVERY name, not only suffixed ones, so the rung works whichever
+    side carries the suffix; for an unsuffixed name it equals match_key, which
+    can only matter after the exact rung has already missed.
+    """
+    parts = fold(name)
+    while len(parts) > 2 and parts[-1] in SUFFIXES:
+        parts = parts[:-1]
+    if len(parts) < 2:
+        return None
+    return (parts[-1], parts[0])
+
+
+def join_circuit(bench, rows):
+    """(entries, fallback joins) for one circuit's judges against its contact rows.
+
+    Extracted from main() so the rules below can be asserted on doctored input
+    (`--selftest`) rather than only on whatever the two live pages happen to say
+    this week. The order of the rungs is the order of certainty: the exact key,
+    then a suffix, then spacing, then a given name.
+
+    EVERY FALLBACK REQUIRES THE MATCH TO BE UNIQUE ON BOTH SIDES. One matching
+    contact row is not enough, because two judges of one bench sharing a key
+    would each claim it. The NAME always comes from the bench table; a fallback
+    attaches branch and phone and never changes a spelling.
+    """
+    enrich, by_solid, by_initial, by_suffix = {}, {}, {}, {}
+    for row in rows:
+        mk = match_key(row["name"])
+        if mk and mk not in enrich:
+            enrich[mk] = row
+        sk = solid_key(row["name"])
+        if sk:
+            by_solid.setdefault(sk, []).append(row)
+        ik = initial_key(row["name"])
+        if ik:
+            by_initial.setdefault(ik, []).append(row)
+        xk = suffix_key(row["name"])
+        if xk:
+            by_suffix.setdefault(xk, []).append(row)
+
+    bench_solid, bench_initial, bench_suffix = {}, {}, {}
+    for j in bench:
+        sk, ik, xk = solid_key(j["name"]), initial_key(j["name"]), suffix_key(j["name"])
+        if sk:
+            bench_solid[sk] = bench_solid.get(sk, 0) + 1
+        if ik:
+            bench_initial[ik] = bench_initial.get(ik, 0) + 1
+        if xk:
+            bench_suffix[xk] = bench_suffix.get(xk, 0) + 1
+
+    entries, fallbacks = [], []
+    for j in bench:
+        mk = match_key(j["name"])
+        row = enrich.get(mk) if mk else None
+        if row is None:
+            xk = suffix_key(j["name"])
+            cand = by_suffix.get(xk, []) if xk else []
+            if len(cand) == 1 and bench_suffix.get(xk) == 1:
+                row = cand[0]
+                fallbacks.append((j["name"], row["name"], "suffix"))
+        if row is None:
+            sk = solid_key(j["name"])
+            cand = by_solid.get(sk, []) if sk else []
+            if len(cand) == 1 and bench_solid.get(sk) == 1:
+                row = cand[0]
+                fallbacks.append((j["name"], row["name"], "spacing"))
+        if row is None:
+            ik = initial_key(j["name"])
+            cand = by_initial.get(ik, []) if ik else []
+            if len(cand) == 1 and bench_initial.get(ik) == 1:
+                row = cand[0]
+                fallbacks.append((j["name"], row["name"], "given name"))
+        entry = {"name": j["name"]}
+        if j.get("role"):
+            entry["role"] = j["role"]
+        if row:
+            if row.get("branch"):
+                entry["branch"] = row["branch"]
+            if row.get("phone"):
+                entry["phone"] = row["phone"]
+            if row.get("role") and "role" not in entry:
+                entry["role"] = row["role"]
+        entries.append(entry)
+    return entries, fallbacks
+
+
+def _selftest():
+    """The join rules, on doctored input — offline, stdlib only.
+
+    Every case here is a real pair of spellings from the two wicourts pages, or
+    the collision one of them would cause. A rule nothing exercises is a rule
+    nobody can change safely, and the suffix rung was added to a builder whose
+    join had no test at all.
+    """
+    def row(name, branch=None, phone=None):
+        return {"name": name, "branch": branch, "phone": phone, "role": None}
+
+    def one(bench_names, rows):
+        bench = [{"name": n, "role": None} for n in bench_names]
+        entries, joins = join_circuit(bench, rows)
+        return {e["name"]: e for e in entries}, {b: why for b, _c, why in joins}
+
+    failures = []
+
+    def check(label, cond):
+        if not cond:
+            failures.append(label)
+
+    # 1. The suffix on the BENCH side, which is the case that shipped three
+    #    judges with no branch and no phone: Waukesha Br 10, Jefferson Br 3,
+    #    Milwaukee Br 2.
+    got, joins = one(["Paul Bugenhagen Jr."],
+                     [row("Paul Bugenhagen", "10", "(262) 548-7454")])
+    check("bugenhagen joins", got["Paul Bugenhagen Jr."].get("branch") == "10")
+    check("bugenhagen phone", got["Paul Bugenhagen Jr."].get("phone") == "(262) 548-7454")
+    check("bugenhagen reported", joins.get("Paul Bugenhagen Jr.") == "suffix")
+    check("bugenhagen keeps the bench spelling",
+          "Paul Bugenhagen Jr." in got and "Paul Bugenhagen" not in got)
+
+    # 2. THE CASE THIS RUNG MUST NOT REACH. Waukesha Br 5 is `Jack A. Melvin`
+    #    on the contact page and `J. Arthur Melvin III` on the bench table.
+    #    Ignore the suffix AND the given name and both key on (melvin, j);
+    #    ignore only the suffix and they do not match, which is the answer.
+    got, joins = one(["J. Arthur Melvin III"], [row("Jack A. Melvin", "5", "(262) 548-7543")])
+    check("melvin withheld", "branch" not in got["J. Arthur Melvin III"])
+    check("melvin unjoined", "J. Arthur Melvin III" not in joins)
+
+    # 3. The suffix on the CONTACT side instead — Iron writes
+    #    `Anthony J. Stella, Jr.` where a bench table need not.
+    got, joins = one(["Anthony J. Stella"], [row("Anthony J. Stella, Jr.", "1", "(715) 561-3434")])
+    check("stella joins from the contact side", got["Anthony J. Stella"].get("branch") == "1")
+    check("stella reported", joins.get("Anthony J. Stella") == "suffix")
+
+    # 4. Both sides suffixed is the EXACT key and must not be reported as a
+    #    fallback — Iron's real pair, which has always joined.
+    got, joins = one(["Anthony J. Stella Jr."], [row("Anthony J. Stella, Jr.", None, "(715) 561-3434")])
+    check("stella exact", got["Anthony J. Stella Jr."].get("phone") == "(715) 561-3434")
+    check("stella not a fallback", not joins)
+    check("no branch invented", "branch" not in got["Anthony J. Stella Jr."])
+
+    # 5. Unique on BOTH sides. Two judges whose names differ only by suffix
+    #    would each claim the one contact row, so neither may have it.
+    got, joins = one(["Ann Reed Jr.", "Ann Reed Sr."], [row("Ann Reed", "4", "(555) 555-0100")])
+    check("colliding suffixes withheld",
+          "branch" not in got["Ann Reed Jr."] and "branch" not in got["Ann Reed Sr."])
+    check("collision unreported", not joins)
+
+    # 6. A surname a letter apart is still not bridged. Walworth's Br 1 is
+    #    `Scholz` on the bench table and `SCHOLTZ` on the contact page.
+    got, joins = one(["Estee Scholz"], [row("Estee Scholtz", "1", "(262) 741-7023")])
+    check("scholz still withheld", "branch" not in got["Estee Scholz"])
+
+    # 7. The two existing rungs still fire, so this change did not displace them.
+    got, joins = one(["Martin J. De Vries"], [row("Martin J. DeVries", "2", "(920) 386-3570")])
+    check("spacing rung intact", joins.get("Martin J. De Vries") == "spacing")
+    got, joins = one(["Zach Wittchow"], [row("Zachary Wittchow", "6", "(262) 548-7584")])
+    check("given-name rung intact", joins.get("Zach Wittchow") == "given name")
+
+    # 8. A judge the contact page does not list at all ships name-only rather
+    #    than dropping — Portage's Br 2 is absent from the contact page.
+    got, joins = one(["Louis J. Molepske Jr."], [row("Michael D Zell", "1", "(715) 346-1364")])
+    check("absent judge still ships", got["Louis J. Molepske Jr."] == {"name": "Louis J. Molepske Jr."})
+
+    if failures:
+        raise SystemExit("join selftest FAILED: " + "; ".join(failures))
+    print("join selftest: 8 cases, all rules hold")
+
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        _selftest()
+        return
     raw_path = sys.argv[sys.argv.index("--in") + 1] if "--in" in sys.argv else RAW
     with open(raw_path) as f:
         raw = json.load(f)
@@ -179,64 +398,19 @@ def main():
     for key, c in circuits.items():
         # branch/phone lookup across the circuit's counties (a merged
         # circuit's judge can sit in either county's courthouse block)
-        enrich = {}
-        by_solid = {}
-        by_initial = {}
+        rows = []
         courthouses = []
         for county in c["counties"]:
             block = contact.get(county_fold(county)) or {}
-            for row in block.get("branch_rows", []):
-                mk = match_key(row["name"])
-                if mk and mk not in enrich:
-                    enrich[mk] = row
-                sk = solid_key(row["name"])
-                if sk:
-                    by_solid.setdefault(sk, []).append(row)
-                ik = initial_key(row["name"])
-                if ik:
-                    by_initial.setdefault(ik, []).append(row)
+            rows.extend(block.get("branch_rows", []))
             for addr in block.get("addresses", []):
                 # first line is the judicial-district label; keep the location
                 lines = [ln for ln in addr if not ln.lower().endswith("judicial district")]
                 if lines and {"county": county, "lines": lines} not in courthouses:
                     courthouses.append({"county": county, "lines": lines})
-        # A fallback must be unique on BOTH sides. One matching contact row is
-        # not enough: two judges of one bench sharing a key would each claim it.
-        bench_solid, bench_initial = {}, {}
-        for j in c["judges"]:
-            sk, ik = solid_key(j["name"]), initial_key(j["name"])
-            if sk:
-                bench_solid[sk] = bench_solid.get(sk, 0) + 1
-            if ik:
-                bench_initial[ik] = bench_initial.get(ik, 0) + 1
-
-        judges = []
-        for j in c["judges"]:
-            mk = match_key(j["name"])
-            row = enrich.get(mk) if mk else None
-            if row is None:
-                sk = solid_key(j["name"])
-                cand = by_solid.get(sk, []) if sk else []
-                if len(cand) == 1 and bench_solid.get(sk) == 1:
-                    row = cand[0]
-                    fallbacks.append((key, j["name"], row["name"], "spacing"))
-            if row is None:
-                ik = initial_key(j["name"])
-                cand = by_initial.get(ik, []) if ik else []
-                if len(cand) == 1 and bench_initial.get(ik) == 1:
-                    row = cand[0]
-                    fallbacks.append((key, j["name"], row["name"], "given name"))
-            entry = {"name": j["name"]}
-            if j.get("role"):
-                entry["role"] = j["role"]
-            if row:
-                if row.get("branch"):
-                    entry["branch"] = row["branch"]
-                if row.get("phone"):
-                    entry["phone"] = row["phone"]
-                if row.get("role") and "role" not in entry:
-                    entry["role"] = row["role"]
-            judges.append(entry)
+        judges, joined = join_circuit(c["judges"], rows)
+        fallbacks.extend((key, bench_name, contact_name, why)
+                         for bench_name, contact_name, why in joined)
         if not judges:
             raise SystemExit("circuit %s parsed with no judges" % key)
         if not courthouses:

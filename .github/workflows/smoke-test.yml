@@ -424,6 +424,19 @@ jobs:
       - name: User-agent measurements still describe the tree
         run: python3 scripts/probe_user_agents.py --check
 
+      # THE CIRCUIT-COURT JOIN DECIDES THAT TWO DIFFERENTLY-WRITTEN NAMES ARE
+      # ONE JUDGE, and until 2026-09-12 nothing tested it. It now has three
+      # fallback rungs below the exact key, and the newest one — dropping a
+      # generational suffix, which fold() otherwise leaves in the surname slot —
+      # is one careless line away from also bridging a GIVEN name, which would
+      # merge Waukesha's `J. Arthur Melvin III` with the contact page's
+      # `Jack A. Melvin`. This runs the join against doctored input: three
+      # recoveries that must happen, and the non-joins that must not (Melvin,
+      # Walworth's Scholz/Scholtz, two judges colliding on one contact row).
+      # Stdlib only, no network.
+      - name: The circuit-court name join still joins only what it should
+        run: python3 wi/scripts/build_wi_circuit_court_roster.py --selftest
+
       # The Jasper test decides whether a county's precinct fabric is still the
       # Census 2020 fabric, and its five reconciliation causes are the
       # difference between reading a county as re-precincted and reading it as
