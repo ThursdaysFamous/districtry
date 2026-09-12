@@ -25,8 +25,13 @@ metro fork. Never edit it in one fork only.*
 > retired release channel as current for ten days, in a file whose own header
 > says the same copy ships everywhere and must never be edited in one fork
 > only. Its block inventory below is separately stale and is NOT corrected
-> here: it lists 53 blocks where the root copy lists 59. `ls engine/` is the
-> authority for both.
+> here: the heading says 53 where this instance's own `index.html` holds
+> 60 fences (measured 2026-09-12), so the list is short by seven and
+> re-deriving it is its own change. The one block `il` carries that this
+> instance does not is `county-layer-dispatcher`, which dispatches
+> county-keyed concept layers this instance registers none of.
+> `ls engine/` and `python3 scripts/check_engine_parity.py ca/index.html`
+> are the authority.
 >
 > **SUPERSEDED IN PART — 2026-07-13.** The manual porting loop below (struck
 > through) is retired by `docs/MECHANIZATION_PLAYBOOK.md` Conversion 1 in the
