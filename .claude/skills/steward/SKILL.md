@@ -54,6 +54,7 @@ python3 wi/scripts/build_wi_county_outlines.py --check
 python3 scripts/build_brand_tokens.py --check
 python3 scripts/validate_contrast.py                     # text vs ground, both tiers
 python3 scripts/compose_app.py --check                   # engine/ vs every instance's fences
+python3 scripts/check_engine_parity.py --fleet            # fences agree across instances; names partial blocks
 python3 scripts/build_county_status.py --check
 python3 scripts/backfill_board_seats.py --check
 python3 scripts/build_county_board_offices.py --check  # ISBE addresses still agree with the counties' own
