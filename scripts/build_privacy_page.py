@@ -644,7 +644,7 @@ def _jsonld(title, desc):
         "name": title,
         "description": desc,
         "inLanguage": "en-US",
-        "author": { "@type": "Person", "name": "Adam Overberg", "url": "https://overberg.co" },
+        "author": { "@type": "Person", "@id": "https://districtry.com/#author", "name": "Adam Overberg", "url": "https://overberg.co" },
         "isPartOf": {"@id": SITE + "#website"},
         "breadcrumb": {
             "@type": "BreadcrumbList",

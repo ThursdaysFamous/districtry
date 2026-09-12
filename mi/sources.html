@@ -28,13 +28,13 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebPage",
+  "@type": "CollectionPage",
   "@id": "https://districtry.com/mi/sources.html",
   "url": "https://districtry.com/mi/sources.html",
   "name": "Sources & data layers — districtry Michigan",
   "description": "Every layer in districtry Michigan and where its data comes from: the boundary publisher, the officeholder roster, and the ground each layer actually answers on.",
   "inLanguage": "en-US",
-  "author": { "@type": "Person", "name": "Adam Overberg", "url": "https://overberg.co" },
+  "author": { "@type": "Person", "@id": "https://districtry.com/#author", "name": "Adam Overberg", "url": "https://overberg.co" },
   "isPartOf": { "@id": "https://districtry.com/mi/#website" },
   "breadcrumb": {
     "@type": "BreadcrumbList",
@@ -318,7 +318,7 @@ header.masthead {
   justify-content: space-between;
   gap: 14px 28px;
 }
-h1.title { margin: 0; min-width: 0; }
+.title { margin: 0; min-width: 0; }
 .title-row { display: flex; align-items: center; gap: 13px; }
 .masthead-star { display: none; }   /* the Chicago star, same story as the stripe */
 .districtry-mark { width: 34px; height: 34px; flex: 0 0 auto; }
@@ -331,7 +331,7 @@ h1.title { margin: 0; min-width: 0; }
   text-transform: uppercase;
   color: var(--ink);
 }
-h1.title small {
+.title small, .title .title-tagline {
   display: block;
   font-family: var(--font-body);
   font-weight: 400;
@@ -407,7 +407,7 @@ h1.title small {
   header.masthead { padding: 15px 0 16px; }
   .districtry-mark { width: 27px; height: 27px; }
   .title-text { font-size: 23px; }
-  h1.title small { font-size: 13px; margin-top: 4px; }
+  .title small, .title .title-tagline { font-size: 13px; margin-top: 4px; }
   .masthead-actions { justify-content: flex-start; margin-left: 0; width: 100%; gap: 6px; }
   .masthead-actions a { font-size: 12.5px; padding: 8px 13px; }
 }

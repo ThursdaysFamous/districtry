@@ -618,10 +618,16 @@ def render_masthead_brand(w):
         )
     else:
         wordmark = '        <span class="title-text">%s</span>' % e(b["app_name"])
+    # THE TAGLINE IS THE HEADING, not the wordmark. The hub's <h1> used to wrap
+    # the wordmark and the metro switcher, so the page's one heading resolved to
+    # the brand plus a navigation control — measured 90 characters of that on
+    # Illinois, with nothing in it about districts. Every sub-page already put
+    # the topic in the same class. Nothing moves on screen: the element that was
+    # a <small> is now the <h1>, styled by the same rules.
     return "\n".join([
         wordmark,
         "      </span>",
-        "      <small>%s</small>" % e(b["tagline"]),
+        '      <h1 class="title-tagline">%s</h1>' % e(b["tagline"]),
     ])
 
 
@@ -715,6 +721,7 @@ def render_jsonld_graph(w):
         return ""
     tag = b["instance_tag"]
     base = "https://districtry.com/%s/" % tag
+    SITE = "https://districtry.com/"
     name = b["app_name"]
 
     area = g["area_served"]
@@ -741,11 +748,19 @@ def render_jsonld_graph(w):
     a('      "name": %s,' % js_str(name))
     a('      "description": %s,' % js_str(g["site_description"]))
     a('      "inLanguage": "en-US",')
-    a('      "publisher": { "@id": "%s#publisher" }' % base)
+    a('      "publisher": { "@id": "%s#publisher" }' % SITE)
     a('    },')
     a('    {')
+    # ONE PUBLISHER FOR THE SITE, not one per instance. Six instances each
+    # minting their own #publisher described one organisation as seven, so
+    # nothing tied districtry Illinois's publisher to districtry Iowa's. The
+    # node stays INLINE on every page — a crawler reading one page cannot
+    # resolve an @id defined in another document — but the identifier is the
+    # same everywhere, which is what makes them one entity. The root path is
+    # what page_consistency_test.mjs allows as pointing UP rather than
+    # sideways into a sibling.
     a('      "@type": "Organization",')
-    a('      "@id": "%s#publisher",' % base)
+    a('      "@id": "%s#publisher",' % SITE)
     a('      "name": "Overberg",')
     a('      "url": "https://overberg.co"')
     a('    },')
@@ -757,10 +772,10 @@ def render_jsonld_graph(w):
     # 2026-09-11. A named author with a URL is the cheapest part of that bar
     # and the site had none of it.
     a('      "@type": "Person",')
-    a('      "@id": "%s#author",' % base)
+    a('      "@id": "%s#author",' % SITE)
     a('      "name": "Adam Overberg",')
     a('      "url": "https://overberg.co",')
-    a('      "worksFor": { "@id": "%s#publisher" }' % base)
+    a('      "worksFor": { "@id": "%s#publisher" }' % SITE)
     a('    },')
     a('    {')
     a('      "@type": "WebApplication",')
@@ -776,7 +791,7 @@ def render_jsonld_graph(w):
     a('      "image": "%sog-image.png",' % base)
     a('      "areaServed": %s,' % area_node)
     a('      "keywords": %s,' % js_str(g["keywords"]))
-    a('      "author": { "@id": "%s#author" },' % base)
+    a('      "author": { "@id": "%s#author" },' % SITE)
     a('      "isPartOf": { "@id": "%s#website" },' % base)
     # The one field this whole change exists to make possible. ISO 8601, from
     # the same key the footer prints in prose.

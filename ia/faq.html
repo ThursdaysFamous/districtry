@@ -30,7 +30,7 @@
   "name": "Common questions about Iowa districts — districtry Iowa",
   "description": "Iowa districts explained: county supervisor, Senate and House, school districts, townships and cities, U.S. House seats — and who represents you.",
   "inLanguage": "en-US",
-  "author": { "@type": "Person", "name": "Adam Overberg", "url": "https://overberg.co" },
+  "author": { "@type": "Person", "@id": "https://districtry.com/#author", "name": "Adam Overberg", "url": "https://overberg.co" },
   "isPartOf": {
     "@id": "https://districtry.com/ia/#website"
   },
@@ -388,7 +388,7 @@ header.masthead {
   justify-content: space-between;
   gap: 14px 28px;
 }
-h1.title { margin: 0; min-width: 0; }
+.title { margin: 0; min-width: 0; }
 .title-row { display: flex; align-items: center; gap: 13px; }
 .masthead-star { display: none; }   /* the Chicago star, same story as the stripe */
 .districtry-mark { width: 34px; height: 34px; flex: 0 0 auto; }
@@ -401,7 +401,7 @@ h1.title { margin: 0; min-width: 0; }
   text-transform: uppercase;
   color: var(--ink);
 }
-h1.title small {
+.title small, .title .title-tagline {
   display: block;
   font-family: var(--font-body);
   font-weight: 400;
@@ -477,7 +477,7 @@ h1.title small {
   header.masthead { padding: 15px 0 16px; }
   .districtry-mark { width: 27px; height: 27px; }
   .title-text { font-size: 23px; }
-  h1.title small { font-size: 13px; margin-top: 4px; }
+  .title small, .title .title-tagline { font-size: 13px; margin-top: 4px; }
   .masthead-actions { justify-content: flex-start; margin-left: 0; width: 100%; gap: 6px; }
   .masthead-actions a { font-size: 12.5px; padding: 8px 13px; }
 }
