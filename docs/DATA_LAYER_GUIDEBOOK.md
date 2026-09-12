@@ -2709,7 +2709,7 @@ it was right.**
 **THE RULE HAD NO NUMBERS BEHIND IT.** CLAUDE.md's browser-user-agent section (settled
 2026-09-11) allows a scraper to send a browser string where a site refuses the districtry
 token by client fingerprint, on the condition that the calling file records which token was
-refused, what the site answered, and the date. 115 files here send one (measured 2026-09-12). Almost none carried
+refused, what the site answered, and the date. 106 files here send one (measured 2026-09-12, corrected the same day — see below). Almost none carried
 that measurement, and `scripts/scraper_common.py`'s own docstring said the same thing from the
 other side: its UA constants "consolidate the DEFINITION, never the VALUE" because "several
 sites in this fleet block or challenge by client fingerprint" — naming none of them.
@@ -2741,9 +2741,17 @@ name would credit a browser string with a fix the stack made.
 | `crawl-delay-too-long` | 5 | Crawl-delay 15–60s; four rungs at that pace is not a polite probe |
 | `tls-chain` / `proxy-denied` | 5 | an incomplete chain (`probe_incomplete_tls_chains.py`'s subject) or this sandbox's egress |
 
-**SEVENTEEN HOSTS REFUSE THE TOKEN AND 203 DO NOT.** Per file: 17 files reach at least one
-host that genuinely refuses the token, **57 files send a browser string where every host
-they reach serves the token a full page, and 68 where no host they reach refuses it**. The largest single case is
+**SEVENTEEN HOSTS REFUSE THE TOKEN AND 203 DO NOT.** Per file, as `probe_user_agents.py
+--inventory` prints it: 106 files send a browser string; 17 reach at least one host that
+genuinely refuses the token, **55 reach only hosts that serve the token a full page, and 34
+more reach no host that refuses it** (one or more answered nothing or refused the `requests`
+stack). **THE FIRST FIGURES WERE 57 AND 68 OF 115, AND BOTH WERE WRONG FOR TWO REASONS.** The
+classifier recognised a districtry token only with a `/N` version, so `validate_sources.py`'s
+`districtry source validator (+https://districtry.com/il/)` read as a browser string on 51
+hosts (found by #910), and it did not follow a UA constant imported from a sibling module, so
+the fifteen Illinois board builders that do `from build_metro_outline import HEADERS` read as
+sending nothing — 32 files reclassified once both were fixed. And the 68 was derived by a rule
+nobody wrote down; the tally is now printed with its definition. The largest single case is
 `wi/scripts/wi_county_board_scraper.py`, whose default header set is a Chrome/124 string
 across 55 `token-ok` counties while its `BROWSER_HEADER_COUNTIES` pin — the structurally
 correct shape — holds exactly one county. **One file was renamed on that finding, Logan's, after its clerk's page was read both ways the same day; nothing else was.** A UA moves per county with

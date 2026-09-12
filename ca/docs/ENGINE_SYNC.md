@@ -3,6 +3,37 @@
 *This file is itself part of the shared engine: the SAME copy ships in every
 metro fork. Never edit it in one fork only.*
 
+> **SUPERSEDED AGAIN — R2.1 (recorded 2026-09-02).** The release channel the
+> note below describes was itself retired when the forks became folders of
+> this one repo: there is ONE copy of every block under `engine/`,
+> `scripts/compose_app.py` splices it into every instance and its `--check`
+> is the CI gate; `engine.lock.json`, `apply_engine.py`, `engine-bump.yml` and
+> the release workflows no longer exist (`docs/DEV_PROCESS_ASSESSMENT.md`).
+> What survives of this file is the block inventory — which omits the two
+> `engine/shared/` blocks; `ls engine/` is the authority — and the tombstone
+> convention. Read it as history, not procedure.
+> \
+> **The flag that assertion used is gone too (2026-09-12).**
+> `check_engine_parity.py --against-bundle` read an `engine.manifest.json`
+> that `apply_engine.py` produced, so it could not run once both were deleted;
+> it was removed rather than left as a mode that names three absent files.
+> `scripts/compose_app.py --check` asserts the splice now, against `engine/`
+> rather than a downloaded artifact, and
+> `check_engine_parity.py --fleet` compares every instance's fence interiors
+> and names the blocks only some instances carry.
+>
+> **This copy carried no R2.1 banner until 2026-09-12**, so it presented the
+> retired release channel as current for ten days, in a file whose own header
+> says the same copy ships everywhere and must never be edited in one fork
+> only. Its block inventory below was separately stale — the heading said
+> 53 where this instance's own `index.html` holds 60 fences — and was
+> re-derived from those fences on 2026-09-12; the re-sync note under that
+> section records what was missing and for how long. The one block `il`
+> carries that this instance does not is `county-layer-dispatcher`, which
+> dispatches county-keyed concept layers this instance registers none of.
+> `ls engine/` and `python3 scripts/check_engine_parity.py ca/index.html`
+> are the authority.
+>
 > **SUPERSEDED IN PART — 2026-07-13.** The manual porting loop below (struck
 > through) is retired by `docs/MECHANIZATION_PLAYBOOK.md` Conversion 1 in the
 > Chicago repo: the engine is now distributed as a **published, hash-verified
@@ -147,12 +178,14 @@ as reviewed PRs, then ship in the next release.
   > applying — that lives in the sibling repos, so it is a coordinated change,
   > not a Chicago one.
 - `scripts/check_engine_parity.py` — extract, lint, and compare ENGINE
-  blocks. Lint mode (`… index.html`) runs in every fork's
-  `validate_index.py`-adjacent workflow. **Demoted from drift detector to
-  post-assembly assertion**: `--against-bundle engine.manifest.json --strict`
-  runs inside every deploy's assemble job, right after `apply_engine.py`,
-  asserting the spliced blocks equal the downloaded bundle. The cross-fork
-  compare mode (`--against <path-or-URL>`) remains for ad-hoc checks.
+  blocks. Lint mode (`… index.html`) runs in `deploy-pages.yml`, against
+  `il/index.html` and `il/sw.js`. **The `--against-bundle` post-assembly
+  assertion this bullet used to describe was removed on 2026-09-12**, with
+  `apply_engine.py` and `engine.manifest.json`, which it read, already deleted
+  at R2.1. `compose_app.py --check` asserts the splice now. `--fleet`
+  (added 2026-09-12, runs in `smoke-test.yml`) compares every instance's fence
+  interiors and reports the blocks only some instances carry. The compare mode
+  (`--against <path-or-URL>`) remains for reading a deployed page.
 - **Cutting a release is three steps, and the middle of it races the deploy.**
   Bump `engine.lock.json` on main → `create-engine-tag.yml` → `release-engine.yml`
   at the new tag ref (a tag created with `GITHUB_TOKEN` does not fire
@@ -235,25 +268,38 @@ rather than re-running the failed sibling run.
 > in the changelog. A changelog that promises a clean adoption and doesn't
 > deliver one costs every sibling a red CI run and a manual repair.
 
-## Current ENGINE block inventory (53 in index.html + 2 in sw.js)
+## Current ENGINE block inventory (60 in index.html + 2 in sw.js)
 
-index.html: `app-token`, `arcgis-loader`, `arcgis-paged-loader`,
-`cached-loaders`, `card-helpers`, `chamber-factory`, `coverage-gaps`,
-`cps-network-factory`, `exports`, `extract-district-number`, `feedback`,
-`fetch-retry`, `find-prop-ci`, `gaps-html`, `gaps-modal-html`,
-`geocoder-search`, `geocoder-shell`, `geolocation`, `groups`, `haversine`,
-`hover-explorer`, `int-field`, `layer-registry`, `map-chrome-classes`,
-`map-pan-filter`, `metro-links`, `metro-links-html`, `metro-portal`,
-`nearest-point-factory`, `office-helpers`, `overlay-cards`, `permalink`,
-`poi-geocode`, `point-in-polygon`, `polygon-containment`,
-`polygon-factory`, `probe-geometry-column`, `relationship-pinning`,
-`render-helper`, `sanitize`, `school-zone-factory`, `scope-mask`,
-`selection-controls`, `socrata-loader`, `socrata-point-loader`, `state`,
-`styles-app`, `styles-card-v2`, `styles-core`, `styles-footer`,
+index.html: `app-token`, `arcgis-loader`, `arcgis-paged-loader`, `basemap`,
+`body-map-toolbar`, `brand-names`, `cached-loaders`, `card-helpers`,
+`chamber-factory`, `coverage-gaps`, `cps-network-factory`,
+`districtry-behavior`, `districtry-theme`, `exports`,
+`extract-district-number`, `feedback`, `fetch-retry`, `find-prop-ci`,
+`footer-independence`, `gaps-html`, `gaps-modal-html`, `geocoder-search`,
+`geocoder-shell`, `geolocation`, `groups`, `haversine`, `hover-explorer`,
+`int-field`, `layer-registry`, `map-chrome-classes`, `map-pan-filter`,
+`metro-links`, `metro-links-html`, `metro-portal`, `nearest-point-factory`,
+`office-helpers`, `overlay-cards`, `permalink`, `poi-geocode`,
+`point-in-polygon`, `polygon-containment`, `polygon-factory`,
+`probe-geometry-column`, `relationship-pinning`, `render-helper`,
+`sanitize`, `school-zone-factory`, `scope-mask`, `selection-controls`,
+`socrata-loader`, `socrata-point-loader`, `state`, `styles-app`,
+`styles-card-v2`, `styles-core`, `styles-districtry-skin`, `styles-footer`,
 `styles-hover-responsive`, `styles-markers`, `styles-sibling-result`.
 (Count and list re-synced against `check_engine_parity.py` output while
 adding the two card blocks — the previous list said 45 but had drifted,
-missing `map-chrome-classes`, `map-pan-filter`, and `styles-markers`.)
+missing `map-chrome-classes`, `map-pan-filter`, and `styles-markers`.
+Re-derived again 2026-09-12 from this instance's own fences, which is what
+the list above now is: it had said 53 against 60, short by seven blocks
+that arrived in four changes and reached the root copy's list and not this
+one — `body-map-toolbar`, `brand-names`, `districtry-theme` and
+`styles-districtry-skin` (#520, 2026-08-25), `districtry-behavior` (#532,
+2026-08-26), `basemap` (#539, 2026-08-26) and `footer-independence` (#885,
+2026-09-11). Eighteen days, and nothing failed, because
+`scripts/fleet_status.py` compares this section against the real fences
+for the root copy only. The count line is a claim
+`python3 scripts/check_engine_parity.py ca/index.html` can refute; re-run
+it whenever a fence is added.)
 
 (`card-helpers` + `styles-card-v2` are the card-system redesign surface —
 docs/CARD_RENDER_API.md. `renderFieldList` and its `.result-row` CSS were

@@ -12,6 +12,15 @@ metro fork. Never edit it in one fork only.*
 > What survives of this file is the block inventory — which omits the two
 > `engine/shared/` blocks; `ls engine/` is the authority — and the tombstone
 > convention. Read it as history, not procedure.
+> \
+> **The flag that assertion used is gone too (2026-09-12).**
+> `check_engine_parity.py --against-bundle` read an `engine.manifest.json`
+> that `apply_engine.py` produced, so it could not run once both were deleted;
+> it was removed rather than left as a mode that names three absent files.
+> `scripts/compose_app.py --check` asserts the splice now, against `engine/`
+> rather than a downloaded artifact, and
+> `check_engine_parity.py --fleet` compares every instance's fence interiors
+> and names the blocks only some instances carry.
 >
 > **SUPERSEDED IN PART — 2026-07-13.** The manual porting loop below (struck
 > through) is retired by `docs/MECHANIZATION_PLAYBOOK.md` Conversion 1 in the
@@ -157,12 +166,14 @@ as reviewed PRs, then ship in the next release.
   > applying — that lives in the sibling repos, so it is a coordinated change,
   > not a Chicago one.
 - `scripts/check_engine_parity.py` — extract, lint, and compare ENGINE
-  blocks. Lint mode (`… index.html`) runs in every fork's
-  `validate_index.py`-adjacent workflow. **Demoted from drift detector to
-  post-assembly assertion**: `--against-bundle engine.manifest.json --strict`
-  runs inside every deploy's assemble job, right after `apply_engine.py`,
-  asserting the spliced blocks equal the downloaded bundle. The cross-fork
-  compare mode (`--against <path-or-URL>`) remains for ad-hoc checks.
+  blocks. Lint mode (`… index.html`) runs in `deploy-pages.yml`, against
+  `il/index.html` and `il/sw.js`. **The `--against-bundle` post-assembly
+  assertion this bullet used to describe was removed on 2026-09-12**, with
+  `apply_engine.py` and `engine.manifest.json`, which it read, already deleted
+  at R2.1. `compose_app.py --check` asserts the splice now. `--fleet`
+  (added 2026-09-12, runs in `smoke-test.yml`) compares every instance's fence
+  interiors and reports the blocks only some instances carry. The compare mode
+  (`--against <path-or-URL>`) remains for reading a deployed page.
 - **Cutting a release is three steps, and the middle of it races the deploy.**
   Bump `engine.lock.json` on main → `create-engine-tag.yml` → `release-engine.yml`
   at the new tag ref (a tag created with `GITHUB_TOKEN` does not fire
@@ -245,14 +256,15 @@ rather than re-running the failed sibling run.
 > in the changelog. A changelog that promises a clean adoption and doesn't
 > deliver one costs every sibling a red CI run and a manual repair.
 
-## Current ENGINE block inventory (59 in index.html + 2 in sw.js)
+## Current ENGINE block inventory (61 in index.html + 2 in sw.js)
 
 index.html: `app-token`, `arcgis-loader`, `arcgis-paged-loader`,
 `basemap`, `body-map-toolbar`, `brand-names`, `cached-loaders`, `card-helpers`,
-`chamber-factory`, `coverage-gaps`,
+`chamber-factory`, `county-layer-dispatcher`, `coverage-gaps`,
 `cps-network-factory`, `districtry-behavior`, `districtry-theme`,
 `exports`, `extract-district-number`, `feedback`,
-`fetch-retry`, `find-prop-ci`, `gaps-html`, `gaps-modal-html`,
+`fetch-retry`, `find-prop-ci`, `footer-independence`, `gaps-html`,
+`gaps-modal-html`,
 `geocoder-search`, `geocoder-shell`, `geolocation`, `groups`, `haversine`,
 `hover-explorer`, `int-field`, `layer-registry`, `map-chrome-classes`,
 `map-pan-filter`, `metro-links`, `metro-links-html`, `metro-portal`,
@@ -270,8 +282,13 @@ missing `map-chrome-classes`, `map-pan-filter`, and `styles-markers`.
 Re-synced again 2026-08-26 while promoting `districtry-behavior`: the list
 had drifted a second time, missing `body-map-toolbar`, `districtry-theme`
 and `styles-districtry-skin` — the skin blocks that shipped with the
-redesign. The count line is a claim `check_engine_parity.py` can refute;
-re-run it whenever a fence is added.)
+redesign. Re-synced a third time 2026-09-12: the list said 59 against 61
+real fences, missing `footer-independence` (added 2026-09-11 by #885) and
+`county-layer-dispatcher` (added by #903). Neither PR updated this list,
+and no gate fails on it — `scripts/fleet_status.py` names the missing
+blocks, but it is WARN-only on a weekly issue, so a stale list stays
+stale until someone reads that issue. The count line is a claim
+`check_engine_parity.py` can refute; re-run it whenever a fence is added.)
 
 (`basemap` — promoted 2026-08-26, the day the basemap went vector: the
 CARTO-vector-with-raster-fallback boot, the WebGL2 probe and half-added-layer

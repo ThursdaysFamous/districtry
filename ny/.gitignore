@@ -15,10 +15,3 @@ scripts/vendor/
 
 # Scraper intermediate cache (stage-1 output, never committed)
 scripts/.cache/
-
-# Transient — pinned engine release assets (docs/MECHANIZATION_PLAYBOOK.md,
-# Conversion 1): `apply_engine.py` downloads them to the repo root when they're
-# absent, and CI fetches them fresh on every deploy/bump.
-# engine.lock.json (the version + sha256 pin) IS committed — never ignore it.
-/engine.bundle.js
-/engine.manifest.json

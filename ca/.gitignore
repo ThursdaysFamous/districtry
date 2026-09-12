@@ -18,10 +18,11 @@ scripts/vendor/
 perf-results.json
 docs/perf-app-screenshot.png
 
-# Transient — engine artifact outputs (docs/MECHANIZATION_PLAYBOOK.md, Conversion 1):
-# `build_engine_artifact.py --out dist/` writes here, and `apply_engine.py`
-# downloads the pinned release assets to the repo root when they're absent.
-# engine.lock.json (the version + sha256 pin) IS committed — never ignore it.
+# Generic build-output guard. Nothing in the tree writes here today — this
+# project has no build step. The reason recorded for it was
+# `build_engine_artifact.py --out dist/`, and it sat beside
+# /engine.bundle.js and /engine.manifest.json, the pinned release artifact
+# `apply_engine.py` downloaded. Those three scripts and both files left at
+# R2.1 with the engine release channel (docs/ENGINE_SYNC.md), so the two
+# ignores went with them on 2026-09-12; dist/ is kept as a plain guard.
 dist/
-/engine.bundle.js
-/engine.manifest.json
