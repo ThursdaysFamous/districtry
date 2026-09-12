@@ -691,6 +691,15 @@ jobs:
         if: steps.build.outcome == 'success'
         run: python3 scripts/build_history_page.py
 
+      # The history page this job just rewrote is IN the sitemap, and the
+      # sitemap's lastmod is that file's own last commit -- so regenerate it in
+      # the same run, or the smoke gate's `build_sitemap.py --check` fails on
+      # this PR for a date nobody typed. Same guard as the step above: if the
+      # build did not run, the page did not change and neither did its date.
+      - name: Regenerate the sitemap
+        if: steps.build.outcome == 'success'
+        run: python3 scripts/build_sitemap.py
+
       # Gate the regenerated data before it can reach a PR: the app must still
       # parse and carry every layer, and every data/app file must be present
       # and well formed. node is preinstalled on ubuntu-latest.
