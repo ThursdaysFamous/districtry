@@ -237,11 +237,16 @@ for _code in ("03004", "03007", "03011", "05008"):
 #
 # THREE COUNTY REPORTS AGREE ON EVERY LINE, measured 2026-09-12 for tax year
 # 2025. The roster below is the Clerk's "Taxcode Value within District Report",
-# which groups tax codes under each district; her "District Value within
-# Taxcode Report" inverts it, listing each code's districts, and assigns all 68
-# codes with ZERO disagreement; her narrower "District Rates by Taxcode Report"
-# covers 61 of the 68 and also disagrees on nothing. All three name the same 21
-# codes as carrying no fire district.
+# which groups tax codes under each district; her "District Value within Taxcode
+# Report" inverts it, listing each code's districts; her "District Rates by
+# Taxcode Report" does the same with rates. Each covers all 68 tax codes, each
+# puts 47 of them in a fire district, all three agree with the roster on every
+# one, and all three name the same 21 codes as carrying no fire district.
+#
+# COUNT THE BLOCKS BY THEIR `Totals for NNNNN` LINES, NOT BY THEIR HEADERS. Seven
+# of the rates report's blocks extract as `03008 -` with no trailing space, so a
+# header pattern expecting `NNNNN - ` silently skips them and the report reads as
+# 61 codes. This comment said 61 until the count was re-taken from the totals.
 #
 # The parcels partition exactly: 15,303 in the six districts + 8,351 in
 # Belvidere + 576 in Loves Park + 90 carrying no tax_code at all = 24,320, the

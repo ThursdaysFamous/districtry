@@ -14484,9 +14484,10 @@ function initChiExplorer() {
    * parcels paying its levy, and ground paying no levy is drawn by nobody.
    *
    * THE DISTRICTS ARE NUMBERED, NOT NAMED, AND THAT IS THE COUNTY'S OWN FORM.
-   * The Clerk's yearbook heads them DISTRICT NO. 1 through 5; her tax reports
-   * put words beside those numbers that the Comptroller's warehouse contradicts
-   * for three of the five, so no word ships for them (`boone-fire-names`). The
+   * The Clerk's yearbook heads them DISTRICT NO. 1 through 5. Her tax reports do
+   * put words beside those numbers, but the Comptroller's warehouse registers
+   * different ones for three of the five and none of the five publishes a name
+   * of its own, so no word ships for any of them (`boone-fire-names`). The
    * sixth ships named: the Clerk's report, the yearbook's own section heading
    * and the district's own site at cvfpd.com all name it in full. */
   var loadBooneFire = makeCached(function () {
@@ -24089,7 +24090,7 @@ function initChiExplorer() {
         },
         fields: [
           { name: "district", label: "Fire District", keys: ["district"], primary: true },
-          { label: "Note", value: "Boone County numbers its own five fire protection districts rather than naming them — the numbering its tax extensions are run on. The words its tax reports put beside those numbers are not the names the districts file with the State, so no name is shown for them.", when: booneFireIsNumbered },
+          { label: "Note", value: "Boone County numbers its own five fire protection districts rather than naming them — the numbering its tax extensions are run on. None of the five publishes a name for itself, and for three of them the County Clerk's tax reports and the State's filings give different names, so the number is what is shown.", when: booneFireIsNumbered },
           { label: "Note", value: "This district is seated in Winnebago County and its territory reaches across the line into Boone. Only its Boone territory is drawn here, and its board is not named here yet.", when: function (result) { return !booneFireIsNumbered(result); } },
           { label: "County", value: "Boone County" },
           { name: "officials", keys: ["dxofficials"], hidden: true }
