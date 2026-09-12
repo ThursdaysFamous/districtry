@@ -109,7 +109,21 @@ INSTANCE_NAMES = {
 # A past-tense count that was true when written and has since been overtaken.
 # Entries: {"path", "name", "count", "reason", "recorded"}. See the docstring —
 # empty is the measured state, not an unfinished table.
-HISTORICAL_COUNTS = []
+HISTORICAL_COUNTS = [
+    # The FIRST entry, 2026-09-12, when the `ssa` layer took Illinois 39 -> 40.
+    # This sentence is a DATED MEASUREMENT, not a live claim: it reports how many
+    # layers a Will or DuPage point resolved when the coverage-wash problem was
+    # diagnosed, and its three figures (17-21, 32, 25) were measured together
+    # against that same 39. Bumping only the denominator would leave a ratio
+    # nobody ever measured, which is worse than a stale number that says what it
+    # meant on its day — the same posture the county cards' dated rows take.
+    {"path": "docs/EXPANSION_GUIDE.md", "name": "Chicago", "count": 39,
+     "reason": "Dated measurement of the coverage-wash diagnosis: a Will or DuPage "
+               "point resolved 17-21 of the then-39 layers against Chicago's 32 and "
+               "suburban Cook's 25. All three figures were measured together, so the "
+               "39 cannot be updated alone.",
+     "recorded": "2026-09-12"},
+]
 
 # How far to look either side of a bare "N layers" for the instance it belongs
 # to. Back far enough for "the natural byline for the Iowa half (all 99

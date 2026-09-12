@@ -109,7 +109,7 @@ EXPECT_LAYER_IDS = [
     "school-board", "cps-hs-network", "cps-network", "ward", "ward-precinct",
     "police-district", "police-beat", "ccpsa-district-council",
     "community-area", "zip-code", "cps-high", "cps-middle", "county-precinct",
-    "tif-district", "cps-elementary", "school-site", "police-station",
+    "ssa", "tif-district", "cps-elementary", "school-site", "police-station",
     "fire-station", "post-office", "library", "early-voting",
 ]
 

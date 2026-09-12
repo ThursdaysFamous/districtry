@@ -87,6 +87,13 @@ SOCRATA = [
      "name_contains": "Boundaries - Ward Precincts"},
     {"id": "igwz-8jzy", "layer": "Community Area",
      "name_contains": "Boundaries - Community Areas"},
+    # THE ID THAT HAS ROTATED MOST. Measured 2026-09-12, the portal carries five
+    # DEPRECATED editions behind this one — uvpn-q65m, uhab-t2hm, i35c-ftqu,
+    # 9fit-fndz and aq3f-cb5w — so an SSA layer pinned to a stale id would keep
+    # answering with retired boundaries and no error. This is exactly the
+    # newer-year-edition WARN this gate exists to raise.
+    {"id": "cmr6-dn8c", "layer": "Special Service Area",
+     "name_contains": "Boundaries - Special Service Areas"},
     # ZIP Code moved off Socrata to the statewide Census ZCTA layer (no city
     # boundary line) — the endpoint is tracked in ENDPOINTS below, not here.
     {"id": "x8fc-8rcq", "layer": "Library locations (nearest N)",

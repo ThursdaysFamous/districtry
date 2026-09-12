@@ -2843,7 +2843,7 @@ different concept/card · UNIQUE = recorded Chicago/Cook-only.
 | `cps-elementary` / `cps-middle` / `cps-high` | your zoned school | School district | n/a | GATED — per-district opt-in class, never statewide |
 | `school-site` | nearest schools | amenity | n/a | Chicago-sourced · statewide source candidates recorded |
 
-### Geography (12)
+### Geography (13)
 
 | id | Answers | Level | Elected by | Statewide story |
 |---|---|---|---|---|
@@ -2855,6 +2855,7 @@ different concept/card · UNIQUE = recorded Chicago/Cook-only.
 | `library-district` | which library body taxes you | Special district | district trustees elected; municipal funds appointed | ENTRY · complete-tiling rule |
 | `mwrd` | in/out of the MWRD | Special district | nine at-large commissioners → link row | Cook body UNIQUE; class conversion trigger (§1.5) |
 | `tif-district` | your TIF district | Municipal finance overlay | none | Cook today · Kendall conversion trigger |
+| `ssa` | your Special Service Area | Municipal service + tax overlay | none — Council ordinance; Mayor-appointed commission; contracted provider agency | Chicago today · second-municipality conversion trigger (Cook clerkTaxDistricts L13, 286 county-wide) |
 | `community-area` | your Chicago community area | Reference | none | UNIQUE — correctly city-only |
 | `zip-code` | your ZCTA | Reference | none | DONE |
 | `post-office` | nearest post offices | amenity | n/a | DONE-capable (USGS national) |

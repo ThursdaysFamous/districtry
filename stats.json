@@ -7,10 +7,10 @@
     "counties_researched_unserved": 11,
     "counties_unresearched": 0
   },
-  "gap_records": 101,
+  "gap_records": 102,
   "places": 6,
   "layers": {
-    "il": 39,
+    "il": 40,
     "ny": 27,
     "ca": 16,
     "wi": 31,

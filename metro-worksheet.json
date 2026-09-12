@@ -751,10 +751,28 @@
       }
     },
     {
+      "id": "ssa",
+      "label": "Special Service Area",
+      "group": "geography",
+      "area_rank": 32,
+      "rank_note": "Chicago Special Service Areas — the city's current ACTIVE tiling (58, Data Portal cmr6-dn8c). Ranked between county-precinct and tif-district on MEASURED median polygon area: SSA 0.359 km² against TIF's 0.269 km² (both fetched 2026-09-12), and far under a suburban Cook precinct (1,430 over ~3,600 km²). Card shows the corridor name + the SSA number + the wards the city's own ward_2023 column lists (labelled as the city's list, because it disagrees with the ward geometry on 2 of 58) + status, and links the city's SSA program page; the dataset's comm_area column is deliberately not shown \u2014 bare community-area numbers, up to eight per SSA, that the Community Area layer already answers by name for the point; partial coverage (most points in the city are in no SSA), Chicago-gated. The portal carries FIVE deprecated editions behind this id, so it goes into validate_sources.py's manifest on day one. Dedicated Chicago layer per the consolidation rule until a second municipality ships SSAs — Cook's clerkTaxDistricts L13 carries 286 county-wide special-service tax districts, 63 of them Chicago's, recorded as the next entry",
+      "source": {
+        "answers": "Whether the point sits inside a Special Service Area — a local property-tax district funding street cleaning, landscaping, security, marketing and façade programs beyond the city's baseline service — and which one.",
+        "boundary": [
+          {
+            "label": "Chicago Data Portal — Boundaries: Special Service Areas (cmr6-dn8c)",
+            "url": "https://data.cityofchicago.org/d/cmr6-dn8c"
+          }
+        ],
+        "people": "No elected body — an SSA is created by City Council ordinance and overseen by a commission the Mayor appoints with Council consent, with a contracted service provider agency delivering the work. The city's boundary dataset names neither, so the card names nobody and links the city's SSA program page.",
+        "applies": "The City of Chicago — and most points in the city are in no SSA at all."
+      }
+    },
+    {
       "id": "tif-district",
       "label": "TIF District",
       "group": "geography",
-      "area_rank": 32,
+      "area_rank": 33,
       "rank_note": "Cook TIF districts — the Clerk's current tax-increment-financing agency tiling (418, county GIS clerkTaxDistricts L18: the un-yeared layer the Clerk refreshes in place, retired year editions archived in the year-versioned service); card shows name + Clerk agency number + the Clerk's TIF-reports link; partial coverage (most points are in no TIF), Cook-gated. Dedicated Cook layer per the consolidation rule until a second county ships TIFs (Kendall's server carries a TIF_Districts service — recorded as the next entry)",
       "source": {
         "answers": "Whether the point sits inside a tax increment financing district, and which one.",
@@ -772,7 +790,7 @@
       "id": "cps-elementary",
       "label": "CPS Elementary School Zone",
       "group": "schools",
-      "area_rank": 33,
+      "area_rank": 34,
       "rank_note": "Elementary School attendance zone — smallest polygon layer",
       "source": {
         "answers": "The CPS elementary school this address is zoned to.",
@@ -790,7 +808,7 @@
       "id": "school-site",
       "label": "School Location (all, incl. private, nearest N)",
       "group": "schools",
-      "area_rank": 34,
+      "area_rank": 35,
       "rank_note": "individual school-campus footprints — smallest polygons, above the zones",
       "source": {
         "answers": "The school campuses nearest the point, filterable by type — not a zone, a proximity list.",
@@ -808,7 +826,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 35,
+      "area_rank": 36,
       "rank_note": "point marker — no polygon area, always topmost",
       "source": {
         "answers": "The three police stations nearest the point, by straight-line distance.",
@@ -826,7 +844,7 @@
       "id": "fire-station",
       "label": "Fire Station",
       "group": "safety",
-      "area_rank": 36,
+      "area_rank": 37,
       "rank_note": "point marker — no polygon area, always topmost",
       "source": {
         "answers": "The three fire stations nearest the point, by straight-line distance.",
@@ -844,7 +862,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 37,
+      "area_rank": 38,
       "rank_note": "point marker — no polygon area, always topmost",
       "source": {
         "answers": "The three post offices nearest the point, by straight-line distance.",
@@ -862,7 +880,7 @@
       "id": "library",
       "label": "Library",
       "group": "geography",
-      "area_rank": 38,
+      "area_rank": 39,
       "rank_note": "point marker — no polygon area, always topmost",
       "source": {
         "answers": "The three Chicago Public Library branches nearest the point.",
@@ -880,7 +898,7 @@
       "id": "early-voting",
       "label": "Early Voting Site",
       "group": "political",
-      "area_rank": 39,
+      "area_rank": 40,
       "rank_note": "point marker — no polygon area, always topmost",
       "source": {
         "answers": "The early voting sites nearest the point — which double as the secured ballot drop boxes.",
