@@ -435,6 +435,8 @@ def _landing_jsonld(metros, title, desc):
                 "@id": CANONICAL + "#author",
                 "name": "Adam Overberg",
                 "url": "https://overberg.co",
+                # A contactable author, not just a named one. The quality guidelines ask how a reader reaches whoever stands behind the page, and a name plus a URL answers half of it.
+                "email": "hello@overberg.co",
                 "worksFor": {"@id": CANONICAL + "#publisher"},
             },
             {
@@ -869,14 +871,15 @@ footer .foot-links { margin-top: 12px; }
          officeholder names come from the public sources each place names on its sources
          page; seals and logos shown beside a county belong to that county and indicate
          whose district you are looking at, not any endorsement of this site.</p>
-      <p>Built and run by <a href="https://overberg.co/" target="_blank" rel="noopener">Adam
+      <p>Built and run by <a href="https://overberg.co/" rel="author noopener" target="_blank">Adam
          Overberg</a>. The whole thing is open source — every line that produced this page
          is public, the code under
          <a href="https://github.com/ThursdaysFamous/districtry/blob/main/LICENSE"
             target="_blank" rel="noopener">Apache&nbsp;2.0</a> and the data under
          <a href="https://github.com/ThursdaysFamous/districtry/blob/main/LICENSE-DATA.md"
             target="_blank" rel="noopener">ODbL&nbsp;1.0</a>. Fork it for your own state.</p>
-      <p>Each place above names its own sources on its sources page.</p>
+      <p>Each place above names its own sources on its sources page. Corrections, questions and
+         anything that looks wrong: <a href="mailto:hello@overberg.co">hello@overberg.co</a>.</p>
       <p class="support"><b>This project is unfunded and run at personal cost.</b> If it is useful
          to you, <a href="https://github.com/sponsors/ThursdaysFamous" target="_blank" rel="noopener">sponsoring
          it on GitHub</a> keeps the rosters current — that is where the ongoing work is. Sponsorship
