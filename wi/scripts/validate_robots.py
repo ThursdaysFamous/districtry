@@ -104,10 +104,16 @@ import urllib.request
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
-_ROOT_SCRIPTS = os.path.join(os.path.dirname(os.path.dirname(SCRIPT_DIR)), "scripts")
-if _ROOT_SCRIPTS not in sys.path:
-    sys.path.insert(1, _ROOT_SCRIPTS)
-from robots_policy import RobotsPolicy  # noqa: E402  (shared machinery — do not fork)
+# THE ROBOTS READER IS ONE COPY at the repo root, scripts/robots_policy.py
+# (2026-09-12; this file's own `*`-group parser was retired into it, and so
+# was the `robots_rules` module that had briefly carried it). APPENDED rather
+# than inserted, so this instance's own modules still win any name collision
+# — inserting the root scripts/ first is how a bare `import validate_sources`
+# once resolved to Illinois's and made this sweep report Kane and Coles hosts
+# as Wisconsin's.
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(SCRIPT_DIR)),
+                             "scripts"))
+from robots_policy import RobotsPolicy, resolve_template  # noqa: E402
 
 def robots_headers(host):
     """The header set THIS host's own pages are already crawled with.
@@ -423,33 +429,13 @@ def _strings(obj):
     return []
 
 
-def resolve_template(url):
-    """A `%s`-templated URL as the path shape actually requested.
-
-    Six of the swept constants are FORMAT TEMPLATES, not addresses — the
-    archive ladder's four (`https://web.archive.org/save/%s` and friends) and
-    Pierce's directory pair, which is templated on the year. Matching a
-    template against robots.txt verbatim asks the wrong question twice: `%s`
-    stands where a real path segment goes, and `%%20` is a doubled percent
-    that means a literal `%20` on the wire. Pierce's real path is
-    `/revize/piercewi/Agendas%20and%20Minutes/...`, so a host rule naming that
-    directory would not have matched the string this script was holding.
-
-    The substitution is exactly what `%` formatting does, in the same order:
-    the placeholder first, then the doubled percent. A path segment is
-    stand-in text of the right SHAPE, which is all a prefix rule can see; the
-    report marks these rows so nobody reads a checked template as a checked
-    address.
-    """
-    return url.replace("%s", "PLACEHOLDER").replace("%%", "%")
-
-
-# The parser and the longest-match evaluator that used to sit here were
-# retired into scripts/robots_policy.py on 2026-09-12, with the two cases they
-# had been written for asserted in its --selftest: cms5.revize.com's `Allow:
-# /*.pdf$` over `Disallow: /` (documents yes, everything else no — a
-# startswith matcher read it as a flat refusal), and Clark's `Disallow:
-# *?lightbox=`, which only a match against path AND query can see.
+# The parser, the longest-match evaluator and resolve_template() that used to
+# sit here were retired into scripts/robots_policy.py on 2026-09-12, with the
+# two cases they had been written for asserted in its --selftest:
+# cms5.revize.com's `Allow: /*.pdf$` over `Disallow: /` (documents yes,
+# everything else no — a startswith matcher read it as a flat refusal), and
+# Clark's `Disallow: *?lightbox=`, which only a match against path AND query
+# can see.
 
 
 def main():

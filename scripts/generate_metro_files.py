@@ -775,6 +775,8 @@ def render_jsonld_graph(w):
     a('      "@id": "%s#author",' % SITE)
     a('      "name": "Adam Overberg",')
     a('      "url": "https://overberg.co",')
+    # A contactable author, not just a named one. The quality guidelines ask how a reader reaches whoever stands behind the page, and a name plus a URL answers half of it.
+    a('      "email": "hello@overberg.co",')
     a('      "worksFor": { "@id": "%s#publisher" }' % SITE)
     a('    },')
     a('    {')

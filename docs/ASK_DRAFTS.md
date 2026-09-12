@@ -1769,11 +1769,26 @@ of this note.
 
 ## Ask 22 — Clay County Clerk: one Clay City precinct, or two?
 
-> **NOT YET ASKED — DRAFTED 2026-09-11.** A reply on the existing thread with County
-> Clerk Amy Britton, who has answered this project twice — 2026-08-24 on where the Clay
-> City district line falls, and 2026-08-26 confirming the board plan is current. This is
-> the same office and the same thread; it is not a new approach to a county that has not
-> heard from us.
+> **WITHDRAWN UNSENT 2026-09-12 — the county already publishes the answer.** Never
+> sent, and it must not be: the rule is that this project does not ask an office for
+> something already published. The County Clerk's own elections page carries "a list of
+> all current polling locations in Clay County" — eighteen rows, one of them Clay City —
+> and it can be read as a precinct list rather than a building list because it does not
+> group. Three of its buildings serve several precincts and every precinct still has its
+> own row: 202 N. Olive St. serves Harter 1, 3, 4 and 5; 435 Chestnut St. serves
+> Louisville 1 and 2; 4722 Cherrybark Ln. serves Harter 6 and 7. So a second Clay City at
+> 237 S. 2nd St. SE would have had a row of its own, and it has none. The list also
+> reproduces the county's own gap at Harter 2, which a list of buildings would not.
+> Clay's eighteen precincts shipped on 2026-09-12 and clay-precinct-geometry is retired.
+>
+> WITHDRAWN IS NOT UNANSWERED, and the distinction is the point: nobody declined and
+> nobody failed to reply. The page had been there the whole time and this project had
+> read the board page and the returns without reading the Clerk's own polling list.
+>
+> It was DRAFTED 2026-09-11 as a reply on the existing thread with County Clerk Amy
+> Britton, who has answered this project twice — 2026-08-24 on where the Clay City
+> district line falls, and 2026-08-26 confirming the board plan is current. The draft is
+> kept below as written, because a withdrawn ask is worth being able to read.
 
 **What this is about, and why it is one sentence long.** Clay's fourteen board districts
 ship. Its eighteen voting precincts do not, and exactly one fact is in the way.
@@ -1855,3 +1870,67 @@ District J at +39.8% and District L at +33.3% against the ideal — and she has 
 asked about it and answered ("These are the current maps"). Re-raising a question she has
 answered, inside a note that otherwise has a one-line answer, would make it harder to reply
 to and would read as doubting the first answer. It is recorded, not re-asked.
+
+## Ask 23 — Logan County Clerk: may an automated client read the yearbook?
+
+> **NOT YET ASKED — DRAFTED 2026-09-12.** A first approach to this office. It asks for
+> permission, not for data: the county already publishes the file and it already serves
+> normally to a browser. Nothing is blocked and nothing is being worked around.
+
+**What changed.** `scripts/logan_municipal_officials_scraper.py` read the County Clerk's
+*Reference and Yearbook* every Wednesday for its eleven municipalities' governing bodies —
+65 officials, with a phone on 51 and an e-mail on 41 — a phone on three of every four people it names, which no other county's source in this project matches on that measure (Sangamon's and Boone's outrank it on e-mail). On 2026-09-12 a fleet-wide sweep
+(`scripts/probe_user_agents.py`) read the site's `robots.txt` and found, in the group that
+binds this project's clients:
+
+    User-agent: *
+    Disallow: /images/
+
+The yearbook lives at `/images/Reference_and_Yearbook_2025-2026_updated.pdf`. So the weekly
+fetch stopped the same day. The clerk's own `/index.php` article page is permitted and is
+still read; the county board roster, which comes from that page, is unaffected.
+
+**What ships now.** The eleven municipalities and all 65 officials still ship, carried
+forward from the last read rather than re-fetched, because `robots.txt` governs retrieval and
+not what already-public information may be shown. What is lost is the weekly re-verification:
+an official who leaves office will sit on the card until the file can be read again or the
+data arrives another way.
+
+**The ask, in one sentence.** Would the Clerk's office be willing either to say that an
+automated weekly read of that one PDF is acceptable, or to place the yearbook at a path the
+`*` group permits?
+
+Draft:
+
+> Subject: districtry.com — permission to read the Reference & Yearbook automatically
+>
+> Dear Logan County Clerk's office,
+>
+> I run districtry.com, a free public map that shows anyone which civic districts cover a
+> given address in Illinois and who represents them there. For Logan County it lists the
+> mayors, clerks, treasurers and trustees of all eleven municipalities, taken from your
+> office's Reference and Yearbook, as read from your 2025-2026 edition.
+>
+> Until this week a script re-read that PDF once a week so the names stayed current. I have
+> stopped it, because your site's robots.txt asks automated clients not to read anything
+> under /images/, which is where the yearbook is filed. The file itself serves perfectly
+> well — this is me following the request, not a problem with your website.
+>
+> Two ways forward, whichever suits you better, and a plain "no" is a fine answer:
+>
+> 1. If an automated read of that one PDF, once a week, is acceptable to you, a short note
+>    saying so is all I need.
+> 2. If the /images/ rule is there for a reason, could the yearbook be linked from a path
+>    outside it — or could your office e-mail me each new edition when it is published?
+>
+> Either way the officials already published stay on the map, marked as read from the
+> 2025-2026 edition, so nobody is told a name is current when it has not been re-checked.
+>
+> Thank you for publishing the yearbook at all — few counties publish a directory with a
+> phone number for three of every four people it names.
+
+**If there is no reply.** Follow up at about three weeks and again about two weeks after
+that, then record the office as unresponsive — which is a different claim from "the county
+refused", and neither is the same as "no source exists". The scraper re-reads the policy every
+week regardless, so a rule change or a moved file restores the weekly read with no edit and no
+correspondence.

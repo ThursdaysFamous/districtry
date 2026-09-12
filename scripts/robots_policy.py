@@ -231,6 +231,28 @@ def _pattern_matches(pattern, path):
     return re.match(regex, path) is not None
 
 
+def resolve_template(url):
+    """A `%s`-templated URL as the path shape actually requested.
+
+    Some scraper constants are FORMAT TEMPLATES, not addresses — the archive
+    ladder's `https://web.archive.org/save/%s` and friends, and Pierce's
+    directory pair, templated on the year. Matching a template against
+    robots.txt verbatim asks the wrong question twice: `%s` stands where a real
+    path segment goes, and `%%20` is a doubled percent that means a literal
+    `%20` on the wire. Pierce's real path is
+    `/revize/piercewi/Agendas%20and%20Minutes/...`, so a host rule naming that
+    directory would not have matched the string the Wisconsin audit was holding.
+
+    The substitution is exactly what `%` formatting does, in the same order:
+    the placeholder first, then the doubled percent. A path segment is
+    stand-in text of the right SHAPE, which is all a prefix rule can see; a
+    report marks these rows so nobody reads a checked template as a checked
+    address. (Written for wi/scripts/validate_robots.py; shared here since
+    2026-09-12 because the user-agent probe needs the same shape.)
+    """
+    return url.replace("%s", "PLACEHOLDER").replace("%%", "%")
+
+
 # --- fetching ----------------------------------------------------------------
 
 class Verdict(object):

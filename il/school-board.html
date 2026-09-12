@@ -50,7 +50,8 @@
   "name": "Which Chicago school board district am I in? — districtry",
   "description": "Chicago school board district by address or ZIP — the district number, its sub-district, and the Board of Education member who holds your seat.",
   "inLanguage": "en-US",
-  "author": { "@type": "Person", "@id": "https://districtry.com/#author", "name": "Adam Overberg", "url": "https://overberg.co" },
+  "author": { "@type": "Person", "@id": "https://districtry.com/#author", "name": "Adam Overberg", "url": "https://overberg.co",
+"email": "hello@overberg.co" },
   "isPartOf": { "@id": "https://districtry.com/il/#website" },
   "breadcrumb": {
     "@type": "BreadcrumbList",
@@ -687,7 +688,50 @@ footer.site-footer a { color: var(--accent-deep); }
       <a href="faq.html">Common questions</a>
       <a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
       <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">View source on GitHub</a>
-        <p class="footer-byline">Written and maintained by <a href="https://overberg.co" rel="author" target="_blank" rel="noopener">Adam Overberg</a>. Corrections are welcome — every one gets a reply.</p>
+      <!-- ==== ENGINE:BEGIN footer-byline ==== -->
+      <!-- ONE copy of the author byline, for every page that is not the app.
+           It was twenty-four copies until 2026-09-12, and they had already
+           diverged: twenty wrote the dash as a literal — and the four generated
+           history pages wrote &mdash;, which is the same symptom this file's
+           neighbour styles-subpage.txt was created to stop.
+
+           The contact address is the reason it became one copy. The sentence
+           has invited corrections since the page shipped and gave the reader no
+           way to send one; putting an address in twenty-five literals is how
+           the next change to it misses four of them.
+
+           hello@ is the GENERAL address and the sentence is worded so it does
+           not read as a corrections channel. sponsorship.html publishes a
+           deliberate split -- sponsor@, data@, press@, corrections@, adam@ for
+           privacy -- and says in its own words that the addresses exist "so
+           that mail about money is not mixed in with mail about a wrong
+           district line". A byline on thirty-two pages saying corrections go to
+           hello@ would contradict the page that documents the routing, so it
+           names the general address and leaves the specific routes alone.
+
+           The pages that GENERATE their own footer (privacy.html and the four
+           history pages) read this same file from their builder instead of
+           carrying a fence, because a fence there would have to agree with
+           whatever the builder emits inside it, which means reading this file
+           anyway. One source, two mechanisms, stated here so the second is not
+           mistaken for a copy.
+
+           rel="author noopener", not rel="author" rel="noopener": the old
+           markup set the attribute twice, and a parser keeps the first and
+           drops the second, so target="_blank" was running without noopener on
+           every one of the twenty-five.
+
+           TWENTY-FIVE, not twenty-four. The first count searched for the
+           <p class="footer-byline"> wrapper and so missed traffic.html, which
+           carried the same sentence in a <span class="standing">. Counting
+           copies by their wrapper undercounts them; count by the sentence.
+           traffic.html now takes this block, with one CSS rule matching
+           .footer-byline to the .standing it replaced so nothing moved. -->
+      <p class="footer-byline">Written and maintained by
+      <a href="https://overberg.co" rel="author noopener" target="_blank">Adam Overberg</a>
+      — <a href="mailto:hello@overberg.co">hello@overberg.co</a>.
+      Corrections are welcome; every one gets a reply.</p>
+      <!-- ==== ENGINE:END footer-byline ==== -->
     </div>
   </div>
 </footer>

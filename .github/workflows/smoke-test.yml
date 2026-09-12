@@ -411,6 +411,19 @@ jobs:
       - name: The robots.txt reader agrees with the readings established by hand
         run: python3 scripts/robots_policy.py --selftest
 
+      # Over a hundred files here send a browser user-agent (115 when this was
+      # measured), and CLAUDE.md's rule for that
+      # (settled 2026-09-11) is that the calling file records which token was
+      # refused, what the site answered, and the date. Measured 2026-09-12,
+      # almost none did: 203 of 290 hosts reached by a browser-string caller
+      # serve the self-identifying districtry token a full page. This --check
+      # makes no requests. It re-audits user-agent-measurements.json against the
+      # tree, so an entry cannot outlive the file that fetched the host — the
+      # property EXPECTED_UNREACHABLE and ACCEPTED_DROPS already have, and the
+      # reason either can be trusted.
+      - name: User-agent measurements still describe the tree
+        run: python3 scripts/probe_user_agents.py --check
+
       # The Jasper test decides whether a county's precinct fabric is still the
       # Census 2020 fabric, and its five reconciliation causes are the
       # difference between reading a county as re-precincted and reading it as

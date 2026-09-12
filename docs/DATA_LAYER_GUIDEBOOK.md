@@ -366,20 +366,6 @@ detail into `blocker`.
       "wanted": "Clark County's current polling places paired with its 23 precinct names, in any typed form."
     },
     {
-      "id": "clay-precinct-geometry",
-      "concept": "Voting precincts",
-      "area": "Clay County",
-      "counties": [
-        "clay"
-      ],
-      "kind": "no-source",
-      "layer": "county-precinct",
-      "summary": "Clay County's voting precincts aren't drawn. Its 14 board districts are.",
-      "why": "The county's own two surfaces disagree on how many precincts it has — its board page names one more than its certified election returns do — and drawing either count would state more than is known.",
-      "blocker": "RECORDED 2026-09-11, closing an absence that had no record at all: Clay shipped its board districts on 2026-08-26 and its precincts were deliberately withheld, but nothing told a reader so. The decision itself is unchanged and is restated here with what has since been measured. THE DISAGREEMENT IS ABOUT THE COUNT AND NOTHING ELSE. claycounty.illinois.gov's County Board page states the board's composition letter by letter and names CLAY CITY I in District A and CLAY CITY II in District B; the county's certified returns, in ISBE's statewide precinct-level archive, report ONE precinct named CLAY CITY at one reporting id in the 2024 General and again in the 2026 General Primary. Census 2020 likewise drew one CLAY CITY I voting district (1,166 people). Clerk Amy Britton's reply of 2026-08-24 settled where the DISTRICT line falls — \"Clay City Dist A is located within the Village limits of Clay City\", \"Dist B is the unincorporated area of Clay City/Stanford\" — which is what the board build needed, and it does not say whether the county runs one polling precinct there or two. EVERYTHING ELSE IS SETTLED, which is why the ask is one sentence long. The census fabric carries all eighteen of the county's precinct names after eleven renames (roman ordinals, plus a vestigial trailing I on CLAY CITY I, LARKINSBURG I and PIXLEY I) and sums to the county's exact 2020 population of 13,288. The raw-canvass duplicate check that kept Washington from shipping on 2026-09-11 was run here the same day and Clay passes it: eighteen base names in both elections, no name reported at two ids, no sub-precinct unit, and only a PRESIDENTIAL ONLY BALLOT class to drop. WHY IT IS NOT SHIPPED ON THE RETURNS ALONE: a canvass reporting one Clay City is strong evidence of one precinct and is not the county saying so, and a card naming a precinct the county calls by two names would be this project inferring a fabric rather than reading one. The scripts/build_vtd_precincts.py docstring claimed on 2026-09-11 that the board page \"names Clay City under both District A and District B\", making this the Jackson and Douglas split-precinct shape where a canvass repeats one precinct's OWN name; that was wrong — the two slots carry different names — and it was corrected the same day. NOT YET ASKED — DRAFTED (Ask 22 in docs/ASK_DRAFTS.md), as a reply on the Clerk's own thread, since she has answered this project twice.",
-      "wanted": "One line from the County Clerk: does the county run one Clay City precinct or two? That is the only thing between the county's eighteen precincts and the map."
-    },
-    {
       "id": "clinton-precinct-geometry",
       "concept": "Voting precincts",
       "area": "Clinton County",
@@ -1016,20 +1002,20 @@ detail into `blocker`.
       "wanted": "Momence's adopted ward boundaries as map data. The seats are already published."
     },
     {
-      "id": "municipal-website-dead-ends",
-      "concept": "Municipal website link",
-      "area": "Morris, Calumet Park, Chatham and Rochester",
-      "counties": [
-        "grundy",
-        "sangamon"
-      ],
-      "kind": "data-quality",
-      "layer": "municipality",
-      "summary": "Four town cards — Morris, Calumet Park, Chatham and Rochester — link a website that opens to nothing: a for-sale page, a blank page, and two unconfigured servers.",
-      "why": "Each county publishes that address as the town's official website, and a link that answers but shows nothing looks perfectly healthy to an automated check.",
-      "blocker": "Found 2026-08-20 while re-measuring Morris's ward record, then swept across every municipal website this app ships — all 406 distinct URLs — because one of these is never just one. Four answer HTTP 200 and serve nothing a reader wants: MORRIS (morrisil.com) returns 114 bytes whose entire content is a script redirecting to a GoDaddy domain-for-sale lander, and the city's real site is morrisil.org; CALUMET PARK (calumetparkvillage.org) returns 200 with a COMPLETELY EMPTY BODY, zero bytes; CHATHAM (chathamil.gov) and ROCHESTER (rochesteril.org) both return the default \"IIS Windows Server\" placeholder page that ships with an unconfigured web server. THIS IS THE ONE FAILURE A STATUS-CODE CHECK CANNOT SEE, and it is worth stating plainly because this project already runs a link gate: validate_card_links.py asks whether a URL answers, and all four answer flawlessly. The tell is CONTENT, and the cheap version of it is size — every one of the four came back under 1,200 bytes, against a real municipal front page that runs to tens of thousands, and the whole 406-URL sweep surfaced only these four, so the false-positive cost of that check is close to nothing. NONE OF THE FOUR ENTERED THE ROSTER BY ERROR: each was published as that municipality's website by the county source the builder reads — Grundy's own 2026 directory of officials still prints WWW.MORRISIL.COM on its Morris page — so the counties are citing them too, and the Tazewell rule says a county's published value is not overridden on this project's own initiative. (This record is tagged to Grundy and Sangamon only for a mechanical reason worth stating rather than hiding: the gaps builder requires every county it names to have a shipped county-outline file, and Cook's coverage is drawn from a different tiling, so no record can tag it. Calumet Park is in Cook and is named here in full.)",
-      "wanted": "Each town's working web address, from the town itself or its county clerk, so the county directories this app reads can be corrected."
-    },
+        "id": "municipal-website-dead-ends",
+        "concept": "Municipal website link",
+        "area": "Morris, Calumet Park, Chatham and Rochester",
+        "counties": [
+          "grundy",
+          "sangamon"
+        ],
+        "kind": "data-quality",
+        "layer": "municipality",
+        "summary": "Four town cards — Morris, Calumet Park, Chatham and Rochester — link a website that opens to nothing: a for-sale page, a blank page, and two unconfigured servers.",
+        "why": "Each county publishes that address as the town's official website, and a link that answers but shows nothing looks perfectly healthy to an automated check.",
+        "blocker": "Found 2026-08-20 while re-measuring Morris's ward record, then swept across every municipal website this app ships — all 406 distinct URLs — because one of these is never just one. Four answer HTTP 200 and serve nothing a reader wants: MORRIS (morrisil.com) returns 114 bytes whose entire content is a script redirecting to a GoDaddy domain-for-sale lander, and the city's real site is morrisil.org; CALUMET PARK (calumetparkvillage.org) returns 200 with a COMPLETELY EMPTY BODY, zero bytes; CHATHAM (chathamil.gov) and ROCHESTER (rochesteril.org) both return the default \"IIS Windows Server\" placeholder page that ships with an unconfigured web server. THIS IS THE ONE FAILURE A STATUS-CODE CHECK CANNOT SEE, and it is worth stating plainly because this project already runs a link gate: validate_card_links.py asks whether a URL answers, and all four answer flawlessly. The tell is CONTENT, and the cheap version of it is size — every one of the four came back under 1,200 bytes, against a real municipal front page that runs to tens of thousands, and the whole 406-URL sweep surfaced only these four, so the false-positive cost of that check is close to nothing. NONE OF THE FOUR ENTERED THE ROSTER BY ERROR: each was published as that municipality's website by the county source the builder reads — Grundy's own 2026 directory of officials still prints WWW.MORRISIL.COM on its Morris page — so the counties are citing them too, and the Tazewell rule says a county's published value is not overridden on this project's own initiative. (This record is tagged to Grundy and Sangamon only for a mechanical reason worth stating rather than hiding: the gaps builder requires every county it names to have a shipped county-outline file, and Cook's coverage is drawn from a different tiling, so no record can tag it. Calumet Park is in Cook and is named here in full.)  RE-MEASURED 2026-09-12 AND UNCHANGED, fetched as the cards actually link them rather than by hostname — https://www.morrisil.com 114 bytes, https://calumetparkvillage.org 0 bytes, http://chathamil.gov 701 bytes, http://www.rochesteril.org 701 bytes, every one byte-identical to the 2026-08-20 sweep and every one still HTTP 200. The size test this record argued for EXISTS NOW: validate_card_links.py carries HOLLOW_MAX_BYTES = 1200 and hollow_body(), so the detection half is built and what is left is the data half — the towns' real addresses, which only the towns or their clerks can give. TWO THINGS ARE NEW AND NEITHER CHANGES THE VERDICT. Chatham and Rochester resolve to ONE shared address, 204.12.75.198, and serve the same 701-byte IIS default page, so this is one hosting account misconfigured rather than two towns independently — a single fix there would answer both, and an ask to either is worth mentioning the other in. And the HTTPS on both is now broken outright where it served the placeholder in August: chathamil.gov's certificate has EXPIRED and rochesteril.org's handshake fails. That does not reach a reader, because the cards link those two over http:// and http still answers 200 — but it is a trap for anyone who later 'upgrades' those two URLs to https on the assumption that https is always safer, which would turn a hollow page into a dead link.",
+        "wanted": "Each town's working web address, from the town itself or its county clerk, so the county directories this app reads can be corrected."
+      },
     {
       "id": "morris-ward-geometry",
       "concept": "City council district",
@@ -2692,6 +2678,112 @@ already publishes nine times over as a per-district `officeAddress` — a second
 `validate_index.py` already owned, so the builder now imports that reader rather than keeping
 one. **A gate that only ever passes has not been tested; this one failed three times before
 it was right.**
+
+## Which hosts actually refuse the districtry user-agent (2026-09-12)
+
+**THE RULE HAD NO NUMBERS BEHIND IT.** CLAUDE.md's browser-user-agent section (settled
+2026-09-11) allows a scraper to send a browser string where a site refuses the districtry
+token by client fingerprint, on the condition that the calling file records which token was
+refused, what the site answered, and the date. 115 files here send one (measured 2026-09-12). Almost none carried
+that measurement, and `scripts/scraper_common.py`'s own docstring said the same thing from the
+other side: its UA constants "consolidate the DEFINITION, never the VALUE" because "several
+sites in this fleet block or challenge by client fingerprint" — naming none of them.
+
+**THE SWEEP.** `scripts/probe_user_agents.py` asks each host the same page four ways, cheapest
+first, stopping when one answers: `requests` + `UA_ROSTER_BOT`, stdlib + `UA_ROSTER_BOT`,
+`requests` + Chrome/126 + client hints, stdlib + Chrome/126 + client hints. Its subject is
+DISCOVERED from the tree — every host a script that sends a browser string reaches, 290 of
+them — and it writes `user-agent-measurements.json`, re-audited offline by `--check` in CI so
+an entry cannot outlive the file that fetched the host.
+
+**BOTH AXES, BECAUSE ONE IS NOT ENOUGH.** `scraper_common.py`'s 2026-09-03 table already
+showed the HTTP STACK is refused as often as the token — `requests` never succeeded against
+five Illinois sources with or without browser headers, because urllib3's TLS ClientHello
+differs from the ssl module's and these edges fingerprint it. A probe that varied only the
+name would credit a browser string with a fix the stack made.
+
+**WHAT IT FOUND, across 290 hosts:**
+
+| verdict | hosts | what it means |
+|---|---|---|
+| `token-ok` | 203 | the districtry token gets a full page on the plain `requests` stack |
+| `token-refused-and-stack` | 15 | refuses the token on both stacks, serves stdlib + Chrome |
+| `stack-not-token` | 6 | refuses `requests`, serves the SAME token on stdlib |
+| `token-refused` | 2 | refuses the token on `requests`, serves Chrome on `requests` |
+| `all-refused` / `challenged` | 16 | refuses or challenges all four; a captcha is never answered |
+| `answers-nothing` / `path-answers-nothing` | 23 | HTTP 200 too small to be a page, or a 404/405/500 on the probed path |
+| `robots-disallows-this-path` | 15 | the `*` group disallows the probe's own chosen path, so it was not fetched |
+| `crawl-delay-too-long` | 5 | Crawl-delay 15–60s; four rungs at that pace is not a polite probe |
+| `tls-chain` / `proxy-denied` | 5 | an incomplete chain (`probe_incomplete_tls_chains.py`'s subject) or this sandbox's egress |
+
+**SEVENTEEN HOSTS REFUSE THE TOKEN AND 203 DO NOT.** Per file: 17 files reach at least one
+host that genuinely refuses the token, **57 files send a browser string where every host
+they reach serves the token a full page, and 68 where no host they reach refuses it**. The largest single case is
+`wi/scripts/wi_county_board_scraper.py`, whose default header set is a Chrome/124 string
+across 55 `token-ok` counties while its `BROWSER_HEADER_COUNTIES` pin — the structurally
+correct shape — holds exactly one county. **One file was renamed on that finding, Logan's, after its clerk's page was read both ways the same day; nothing else was.** A UA moves per county with
+that county's weekly run as the witness, which is the rule `scraper_common.py` already stated;
+what changed is that the move now starts from a number.
+
+**TWO RECORDS IT DISPROVED.** `validate_card_links.py`'s `EXPECTED_UNREACHABLE` said
+`lakecountyil.gov`'s "county edge refuses datacenter clients" and that "the board-roles scraper
+carries it via the Internet Archive". Measured: the edge refuses one STACK, serves
+`/2336/Board-Members` to the stdlib client with the plain token (117,290 bytes), and
+`lake_county_board_roles_scraper.py --engine stdlib` parses all 19 districts live — the archive
+is the third rung down, not the working path. Both records now say so.
+
+**ONE COMPLIANCE FINDING, AND IT IS NOT IN THE SEVENTEEN.** Of the 15 `robots-disallows-this-path`
+hosts, the Wisconsin ones are URLs held in tables and not fetched — `wi/scripts/validate_robots.py`
+ran green the same day ("every scheduled fetch is permitted by its host's `*` group"), and the
+seven counties whose crawl that gate stopped in August still carry their rosters as read.
+Knox's and Carroll's revize CDNs disallow everything except documents and both scrapers fetch
+only `.pdf`. Iowa's `johnson-county.granicus.com` is gated per fetch by `ia/scripts/robots_gate.py`.
+The exception is **Logan**, and it was stopped the same day rather than recorded for later.
+`www.logancountyil.gov` publishes `Disallow: /images/` in its `*` group, and
+`scripts/logan_municipal_officials_scraper.py` had been reading
+`/images/Reference_and_Yearbook_2025-2026_updated.pdf` every Wednesday. It now reads the policy
+before either request and declines that one, which is Ashland's precedent exactly — stop the
+crawl, keep the reader, carry the roster as read. **No data is lost and that was measured, not
+assumed**: the carry-forward machinery already existed and already listed Logan
+(`PRESERVABLE["logan"]` in `scripts/build_municipal_officials_roster.py`), the 11 shipped
+municipalities tagged `Logan` are exactly the 11 sourced from the yearbook, they carry 65
+officials, and the builder FATALs if a preserved county carries forward zero. The clerk's own
+`/index.php` page is permitted and still read, so the county board roster is untouched.
+
+**THE MONTHLY LINK CHECK FETCHED THE SAME PATH, and stopping only the weekly one would have been
+half a fix.** The yearbook URL is the `sourceUrl` on all 11 municipality records, so
+`validate_card_links.py` probed it every month. Its `ROBOTS_DECLINED` table is keyed by HOST and
+skips the whole host, which is Rochester Hills's shape and not Logan's — using it here would have
+stopped probing the permitted clerk page too and described a site that asked us away when it had
+not. So a narrower `ROBOTS_DECLINED_PATHS` names the prefix, with the same inversion: the path is
+not probed, and the day the rule goes is the WARN. Witnessed both ways — the yearbook returns
+`declined` with `still=True`, the clerk page returns `ok`.
+
+**The robots reader is now ONE copy, at `scripts/robots_policy.py`** (this change first lifted the Wisconsin audit's `*`-only parser out as `scripts/robots_rules.py`; the same day #886 retired it into the RFC 9309 reader every other gate and scraper had moved to, since a `*`-only reader cannot see a group a site writes for this client's own token, and three other readers had still been separate). It happened because this change produced
+its third consumer and the third was a SCRAPER. It had lived in `wi/scripts/validate_robots.py`,
+whose `permitted()` docstring records that literal `startswith` matching cannot match a rule
+containing `*` or `$` at all — the reading that turned `cms5.revize.com`'s "documents yes,
+everything else no" into a flat refusal. A second copy of that record is how it drifts. The
+extraction was witnessed rather than assumed: that gate's `--offline` output is byte-identical
+before and after, and its live run still reports every scheduled Wisconsin fetch permitted.
+
+**TWO THINGS THE PROBE GOT WRONG FIRST, and the second is why the classifier looks the way it
+does.** It read robots.txt once, with rung 1's client; Marathon, McHenry and DeKalb refuse that
+client the FILE, so their policies filed as unreadable while rung 4 fetched a page — a crawl
+whose rules were never read. And it called any body containing `captcha` a challenge, which
+reported `board.danecounty.gov` as challenged after that host served a 7.7 MB page titled "Dane
+County District Supervisor List" to the districtry token; the match was a CSS rule hiding the
+reCAPTCHA badge on a contact form. Size-gating the keyword at 60 KB reproduced the same error
+fifteen more times one size down — `www.appletonwi.gov` at 58 KB, four Dane County offices
+between 23 and 39 KB, every one a real page. **A keyword in a full page is a widget.** The
+verdict now turns on how much VISIBLE TEXT came back, and a captcha keyword on a page that
+passes that test is an annotation that changes nothing.
+
+**THE VANTAGE IS PART OF THE MEASUREMENT.** This sweep ran from a Claude Code sandbox through
+the session's agent proxy, and a refusal measured there is a fact about that address. The
+scrapers run in GitHub Actions; the artifact records which vantage produced it and the probe
+reports the runner when it runs there. One host (`badgersheriffs.com`) is recorded
+`proxy-denied` for exactly that reason rather than as a refusal.
 
 ## How to read the tables
 
@@ -6568,6 +6660,7 @@ ship no precincts. Asked on the 2024 General (election 66) and the 2026 General 
 | Wabash | 16 | census appends the county's own precinct number (`BELLMONT 14` for `BELLMONT`) |
 | Massac | 17 | same, and the county writes the number after a hyphen (`ADKINS-17`) |
 | Saline | 28 | county writes `EAST ELDORADO #1` to `#6`, census writes `ELDORADO 1` to `6` |
+| Clay | 18 | census writes roman where the county writes arabic (`HARTER III` for `HARTER 3`), plus a vestigial trailing `I` on `CLAY CITY I`, `LARKINSBURG I` and `PIXLEY I` — eleven renames, the most of any county here, and all of them the census's convention rather than its content |
 
 Every one passes the population identity exactly, and every one's certified returns name the same
 precincts in 2024 as in 2026. They ship from one table-driven builder,
@@ -7559,7 +7652,14 @@ fabric? — and nothing had asked it about the counties that ship no precincts a
 on elections 66 and 69, it gave two certified witnesses each for Mason, Pike, Union,
 Edwards, Wabash, Massac and Saline, all of which now ship
 (`scripts/build_vtd_precincts.py`), and a measured no for Alexander, Bond, Brown, Clinton,
-Jersey, Knox, Vermilion, Washington and Williamson. The section dated 2026-09-11 above has
+Jersey, Knox, Vermilion, Washington and Williamson. **CLAY BECAME THE EIGHTH ON
+2026-09-12**, and it is the one the archive alone could never have drawn: its returns name
+ONE Clay City where its board page names Clay City I and II, so eighteen was not inferable
+from the canvass and nineteen was not inferable from the board page. The County Clerk's own
+list of current polling locations broke the tie at eighteen, and it is readable as a precinct
+list rather than a building list because it does not group — three of its buildings serve
+several precincts and each precinct still has its own row, so a second Clay City would have
+had one. It also reproduces the county's own gap at Harter 2. The section dated 2026-09-11 above has
 the detail, including the one trap this use adds that the tripwire's own comparison does
 not have: reconcile against the RAW `PrecinctName` values, because the reporting-id strip
 that makes an election-to-election diff honest will also collapse two genuine reporting

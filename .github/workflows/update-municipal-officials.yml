@@ -221,6 +221,13 @@ jobs:
         continue-on-error: true
         run: python3 scripts/livingston_municipal_officials_scraper.py --out /tmp/livingston_municipal_officials.json
 
+      # LOGAN IS EXPECTED TO DECLINE, and that is not a failure. The yearbook
+      # sits under www.logancountyil.gov's `Disallow: /images/`, measured
+      # 2026-09-12, so the scraper reads the policy and stops; a non-zero exit
+      # is what routes `logan` to --preserved below, carrying its 11
+      # municipalities forward from the shipped roster. The step stays rather
+      # than being deleted, because it re-reads the policy every week: the day
+      # /images/ stops being disallowed, this resumes on its own.
       - name: Scrape the Logan County Clerk reference and yearbook
         id: scrape_logan
         continue-on-error: true
@@ -454,6 +461,7 @@ jobs:
           GRUNDY_OUTCOME: ${{ steps.scrape_grundy.outcome }}
           LIVINGSTON_OUTCOME: ${{ steps.scrape_livingston.outcome }}
           LOGAN_OUTCOME: ${{ steps.scrape_logan.outcome }}
+          LOGAN_REASON: ${{ steps.scrape_logan.outputs.reason }}
           MCLEAN_OUTCOME: ${{ steps.scrape_mclean.outcome }}
           SANGAMON_OUTCOME: ${{ steps.scrape_sangamon.outcome }}
           EWG_OUTCOME: ${{ steps.scrape_ewg.outcome }}
@@ -508,7 +516,25 @@ jobs:
           if [ "$DEKALB_OUTCOME" = "failure" ]; then raise_issue "DeKalb"; fi
           if [ "$GRUNDY_OUTCOME" = "failure" ]; then raise_issue "Grundy"; fi
           if [ "$LIVINGSTON_OUTCOME" = "failure" ]; then raise_issue "Livingston"; fi
-          if [ "$LOGAN_OUTCOME" = "failure" ]; then raise_issue "Logan"; fi
+          # LOGAN GETS ITS OWN WORDING, because raise_issue() says "source
+          # unavailable" and "could not scrape", and neither is true here: the
+          # host serves the file to this client and asks automated clients not
+          # to take it. Calling compliance an outage is how a robots refusal
+          # gets "fixed" by somebody later.
+          # ...and only when the scraper SAID it was robots.txt (it writes
+          # reason=robots to GITHUB_OUTPUT on a decline); any other Logan failure
+          # is an outage like every other county's and files as one.
+          if [ "$LOGAN_OUTCOME" = "failure" ] && [ "$LOGAN_REASON" != "robots" ]; then raise_issue "Logan"; fi
+          if [ "$LOGAN_OUTCOME" = "failure" ] && [ "$LOGAN_REASON" = "robots" ]; then
+            title="Municipal officials: Logan County yearbook declined by robots.txt"
+            existing="$(gh issue list --search "$title in:title" --state open --json number --jq '.[0].number')"
+            body="www.logancountyil.gov's \`User-agent: *\` group disallows /images/, where the County Clerk's Reference & Yearbook lives, so the weekly refresh on $(date -u +%Y-%m-%d) read the policy and did not fetch it. This is compliance, not an outage — the file serves normally to a browser. Logan's 11 municipalities and 65 officials carry forward from the shipped roster (--preserved logan). The clerk's own page is permitted and still read, so the county board roster is unaffected. The check runs every week: if /images/ stops being disallowed, or the yearbook moves to a permitted path, the scrape resumes on its own. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            if [ -n "$existing" ]; then
+              gh issue comment "$existing" --body "$body"
+            else
+              gh issue create --title "$title" --body "$body"
+            fi
+          fi
           if [ "$MCLEAN_OUTCOME" = "failure" ]; then raise_issue "McLean ward-city"; fi
           if [ "$SANGAMON_OUTCOME" = "failure" ]; then raise_issue "Sangamon"; fi
           if [ "$EWG_OUTCOME" = "failure" ]; then raise_issue "Madison + St. Clair (EWG)"; fi

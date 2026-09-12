@@ -73,6 +73,7 @@
       "@id": "https://districtry.com/#author",
       "name": "Adam Overberg",
       "url": "https://overberg.co",
+      "email": "hello@overberg.co",
       "worksFor": { "@id": "https://districtry.com/#publisher" }
     },
     {
@@ -3767,13 +3768,28 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <p><strong>Not for legal or official use.</strong> Boundary and roster data come from public
       sources that disclaim legal precision — confirm with the relevant government office before
       relying on them for anything official.</p>
+      <!-- ==== ENGINE:BEGIN footer-independence ==== -->
+      <!-- ONE copy of the app footer's independence notice. It was six
+           byte-identical copies until 2026-09-12 — the test this repo already
+           applies to an engine block (if two copies could drift and a reader
+           would want them identical, it is shared) and nothing about it is
+           per-state.
+
+           It carries the contact address for the same reason the sub-page
+           byline does: this is the paragraph a reader reaches after being told
+           the site is not a government service, which is exactly when they
+           want to know who to write to. hello@ is the general address; the
+           specific routes (corrections@, press@, data@, sponsor@, and adam@ for
+           privacy) stay where sponsorship.html documents them. -->
       <p class="dpf-independence"><strong>Independent and unofficial.</strong> districtry is not a
       government service and is not affiliated with, endorsed by, or operated by any government
       agency. It asks for an address only to place a point on the map — there is no account, no
       sign-in, and it never asks for personal or financial information. Seals shown beside a
       district belong to that body and indicate whose district you are looking at, not any
       endorsement of this site. Built and run by
-      <a href="https://overberg.co" target="_blank" rel="noopener">Adam Overberg</a>.</p>
+      <a href="https://overberg.co" rel="author noopener" target="_blank">Adam Overberg</a>,
+      reachable at <a href="mailto:hello@overberg.co">hello@overberg.co</a>.</p>
+      <!-- ==== ENGINE:END footer-independence ==== -->
       <div class="footer-meta" id="footer-meta">
         <span>Data last verified:
           <!-- ==== GENERATED:BEGIN verified-date ==== -->

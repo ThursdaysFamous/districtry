@@ -13,8 +13,41 @@ the county sources in this repo, a PER-PERSON phone and e-mail for most
 officials. Lincoln (4 wards), Mt. Pulaski (3) and Atlanta (3) elect
 alderpersons by ward, two per ward.
 
-FETCH POSTURE: open. Plain `requests` with a browser UA gets both the
-clerk's Joomla page and the PDF.
+FETCH POSTURE: the HTTP status is open and ROBOTS.TXT IS NOT, and this
+paragraph said only the first half until 2026-09-12. Plain `requests` gets
+both the clerk's Joomla page and the PDF. But www.logancountyil.gov's
+`User-agent: *` group reads, among a dozen Joomla internals,
+
+    Disallow: /images/
+
+and the yearbook this scraper reads lives at
+/images/Reference_and_Yearbook_2025-2026_updated.pdf — measured live that
+day, both the rule and the link the clerk's page currently offers. The `*`
+group is the one that binds this project (CLAUDE.md, settled 2026-09-08);
+the file's GPTBot / CCBot / anthropic-ai / Claude-Web groups are another
+vendor's crawlers and bind nothing here, and reading them instead would
+have shut a host that in fact permits almost all of it. The clerk's page
+itself (/index.php?option=com_content...) is permitted, so the county
+board roster built from it is unaffected.
+
+SO THE FETCH STOPPED. robots_verdict() below reads the policy before either
+request and decline() exits non-zero on the yearbook, which is what routes
+`logan` to --preserved in update-municipal-officials.yml: the builder
+re-inserts every shipped municipality tagged Logan — 11 of them, 65 officials,
+verified against the shipped file — and FATALs if it finds none, so the county
+cannot silently drop. This is Ashland's precedent
+(wi/scripts/wi_county_board_scraper.py): stop the crawl, keep the reader, carry
+the roster as read. robots.txt governs RETRIEVAL, not what already-public
+information may be shown.
+
+THE READER BELOW IS KEPT rather than deleted, and the check runs every week, so
+the day /images/ stops being disallowed — or the clerk moves the yearbook to a
+permitted path — this resumes on its own with no edit. The monthly link check
+declines the same path through ROBOTS_DECLINED_PATHS in
+scripts/validate_card_links.py, because stopping the weekly fetch and leaving
+the monthly one would be half a fix. An earlier version of this paragraph said
+the fetch was "still running as this is written" and that stopping it was "its
+own change rather than done here"; both were true for about an hour.
 
 URL DISCOVERY, not a hardcoded path. The yearbook lives under
 /images/Reference_and_Yearbook_*.pdf and the filename carries the edition;
@@ -57,7 +90,8 @@ import sys
 import urllib.parse
 
 import requests
-from scraper_common import UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
+from robots_policy import classify  # noqa: E402  (shared machinery — do not fork)
 
 try:
     import pdfplumber
@@ -69,8 +103,20 @@ REFERENCE_PAGE = ("https://www.logancountyil.gov/index.php?option=com_content"
 # Fallback only — the live URL is read off REFERENCE_PAGE (see module docstring).
 YEARBOOK_URL = ("https://www.logancountyil.gov/images/"
                 "Reference_and_Yearbook_2025-2026_updated.pdf")
+# THE DISTRICTRY TOKEN, MEASURED RATHER THAN ASSUMED (2026-09-12). This file sent
+# a pinned Chrome string with no measurement behind it — one of the 68
+# scripts/probe_user_agents.py found in that state. Asked the same clerk page
+# both ways on the same day, www.logancountyil.gov answered 108,250 bytes to
+# each, discovered the same yearbook link, and served robots.txt to the token as
+# well. So the browser string bought nothing here and the scraper now says what
+# it is. The witness is this county's own weekly run, which is what
+# scripts/scraper_common.py requires; if the host starts refusing the token, that
+# run fails visibly and Logan's 11 municipalities carry forward through
+# --preserved rather than dropping.
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
+    "Accept": "text/html,application/xhtml+xml,application/pdf,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
 }
 REQUEST_TIMEOUT = 120
 
@@ -139,6 +185,34 @@ def looks_like_name(text):
     if len(words) < 2 or len(words) > 5:
         return False
     return all(re.match(r"^[A-Z(\"“'][A-Za-z().,\"“”'’-]*$", w) for w in words)
+
+
+ROBOTS_TIMEOUT = 30
+
+
+def robots_verdict(url):
+    """(permitted, note) for one address, from its host's own `*` group.
+
+    Read with THIS scraper's header set, because sending a weaker client than
+    the crawl is the one asymmetry a compliance check must not have. The
+    reading is scripts/robots_policy.py's, the fleet's one copy, with two
+    consequences the first version of this function got backwards: a
+    robots.txt that is UNREACHABLE (a 5xx, a network failure, an HTTP 202
+    challenge) is disallow-all for that run (RFC 9309 §2.3.1.4) — the first
+    draft let a ConnectionError or a 503 through to the /images/ PDF — and a
+    401/403 on the file itself is read the way a municipal WEBSITE deserves,
+    as a firewall refusing this client, so nothing is fetched (the DuPage
+    scraper's posture; the shared default for API hosts is the RFC's allow).
+    """
+    split = urllib.parse.urlsplit(url)
+    robots = "%s://%s/robots.txt" % (split.scheme or "https", split.netloc)
+    try:
+        resp = requests.get(robots, headers=HEADERS, timeout=ROBOTS_TIMEOUT)
+    except Exception as exc:  # noqa: BLE001
+        verdict = classify(None, None, error="%s: %s" % (type(exc).__name__, exc))
+    else:
+        verdict = classify(resp.status_code, resp.text, final_url=resp.url)
+    return verdict.allows(HEADERS["User-Agent"], url, refused_is_refusal=True)
 
 
 def discover_pdf_url(warnings):
@@ -415,6 +489,38 @@ def parse(pdf_bytes, warnings):
     return municipalities, officials
 
 
+def decline(url, note):
+    """Stop, and say plainly that this is compliance rather than an outage.
+
+    EXIT 1 IS HOW THE DATA SURVIVES. update-municipal-officials.yml routes a
+    non-zero Logan scrape to `--preserved logan`, and the builder re-inserts
+    every shipped municipality tagged Logan — FATALing if it finds none, so the
+    county cannot silently drop. robots.txt governs RETRIEVAL, not what
+    already-public information may be shown, which is the Ashland precedent
+    (wi/scripts/wi_county_board_scraper.py): stop the crawl, keep the reader,
+    carry the roster as read.
+
+    Nothing here renames a client, tries another host, or reaches for a cached
+    copy of the same path to get around the rule. The reader below is kept
+    rather than deleted because it is what the county's own say-so, or a moved
+    file, would re-enable — and the check above runs every week, so the day
+    /images/ stops being disallowed this resumes on its own.
+    """
+    print("ROBOTS-DECLINED: %s — %s. Not fetched." % (url, note), file=sys.stderr)
+    # Tell the workflow WHY this run stopped, so its standing issue can say
+    # "declined by robots.txt" only when that is true: the scraper also exits 1
+    # on a parse failure or a floor, and those are outages, not compliance.
+    if os.environ.get("GITHUB_OUTPUT"):
+        with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as out:
+            out.write("reason=robots\n")
+    print("This is not an outage and not a block: the host serves the file to "
+          "this client and asks automated clients not to take it. The shipped "
+          "roster carries Logan's 11 municipalities forward (PRESERVABLE "
+          "['logan'] in scripts/build_municipal_officials_roster.py).",
+          file=sys.stderr)
+    sys.exit(1)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", required=True)
@@ -426,7 +532,18 @@ def main():
         if args.pdf:
             source_url, pdf_bytes = YEARBOOK_URL, open(args.pdf, "rb").read()
         else:
+            # THE CLERK'S PAGE IS ASKED ABOUT TOO, not only the PDF: robots.txt
+            # is read before the FIRST fetch of a host, and this page is that
+            # fetch. It is permitted today and the yearbook is not.
+            ok, note = robots_verdict(REFERENCE_PAGE)
+            print("  robots %s: %s" % (REFERENCE_PAGE, note), file=sys.stderr)
+            if not ok:
+                decline(REFERENCE_PAGE, note)
             source_url = discover_pdf_url(warnings)
+            ok, note = robots_verdict(source_url)
+            print("  robots %s: %s" % (source_url, note), file=sys.stderr)
+            if not ok:
+                decline(source_url, note)
             pdf_bytes = fetch_pdf(source_url)
         municipalities, officials = parse(pdf_bytes, warnings)
     except Exception as exc:  # noqa: BLE001

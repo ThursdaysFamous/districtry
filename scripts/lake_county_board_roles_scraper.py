@@ -27,10 +27,19 @@ Source page (Granicus/CivicPlus):
      "Board Vice-Chair" / "Board Member". Parsed from the page text (the
      CMS markup carries no stable classes), with count guards downstream.
 
-Fetch engines (`--engine auto`): the site's edge 403s this project's
-datacenter egress, so the ladder is `requests` first, then `wayback` (the
+Fetch engines (`--engine auto`): the site's edge 403s the `requests`
+stack, so the ladder is `requests`, then `stdlib`, then `wayback` (the
 Internet Archive crawls Lake's site fine — recent snapshots exist — and
 the newest snapshot is refused if older than WAYBACK_MAX_AGE_DAYS).
+THE MIDDLE RUNG IS WHERE THE DATA COMES FROM, and this paragraph named
+only two rungs until 2026-09-12, which read as though the archive were the
+working path. Measured that day by scripts/probe_user_agents.py: the edge
+serves /2336/Board-Members to the stdlib client — 117,290 bytes — with the
+plain UA_ROSTER_BOT token, so what it refuses is urllib3's ClientHello and
+not this project's name. `--engine stdlib` parses all 19 districts live.
+The browser headers fetch_stdlib sends by default are therefore not what
+unblocks this host; they are untested here and left alone, because a UA
+change belongs with this scraper's own weekly run as the witness.
 No Playwright rung: a single-page, secondary enrichment doesn't warrant a
 browser install, and an edge 403 of this class doesn't clear for headless
 Chromium anyway (verified on the Kendall/McHenry siblings).

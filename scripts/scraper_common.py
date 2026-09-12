@@ -25,6 +25,24 @@ per county with that county's weekly run as the witness. Single-file UA
 strings (the engine tooling, the jodaviess builder, validate_sources) stay in
 their own files: a one-consumer constant consolidates nothing.
 
+WHICH SITES THOSE ARE IS NOW MEASURED, AND IT IS FAR FEWER THAN SEND A BROWSER
+STRING. The sentence above said "several sites in this fleet" for ten days
+(it landed 2026-09-02) without naming one. scripts/probe_user_agents.py asks each host the same page
+four ways — each stack with UA_ROSTER_BOT and with UA_CHROME_WIN_126 plus
+UA_HINTS_CHROME_126 — and writes user-agent-measurements.json. Measured
+2026-09-12 across the 290 hosts a browser-string caller reaches: 203 serve
+UA_ROSTER_BOT a full page, 17 refuse it and answer the browser string, and 6
+refuse the `requests` STACK while serving the same token on the stdlib client,
+so on those a browser string is credited with a fix the stack made. 57 files
+send a browser string where every host they reach serves the token a full
+page, and 68 where no host they reach refuses it (the other 11 also reach a
+host that answered nothing or refuses the requests stack).
+
+That does not license a fleet-wide rename, and the rule above is unchanged: a
+file's UA moves per county with that county's weekly run as the witness. What
+the measurement changes is that the move now starts from a number instead of a
+guess, and a file that keeps its browser string can cite the host's own answer.
+
 STDLIB-ONLY AT MODULE SCOPE, deliberately: scripts/validate_workflow_deps.py
 walks module-scope import closures against each workflow's pip line, and this
 module is imported by scripts whose workflows install nothing. `requests` is
