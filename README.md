@@ -25,7 +25,7 @@ They share one engine — the metro-agnostic core, layer-registration framework,
 
 ## What it answers
 
-**39 layers** ship in Illinois today, split political (11) · public safety (7) · schools (9) · geography (12). Layers are location-aware: Chicago-only layers hide once you're outside the city, county-scoped layers only appear in counties that publish the underlying data, and the statewide layers (county, township, municipality, school district, ZIP) work anywhere in Illinois.
+**40 layers** ship in Illinois today, split political (11) · public safety (7) · schools (9) · geography (13). Layers are location-aware: Chicago-only layers hide once you're outside the city, county-scoped layers only appear in counties that publish the underlying data, and the statewide layers (county, township, municipality, school district, ZIP) work anywhere in Illinois.
 
 | Group | Layer | What you get |
 |---|---|---|

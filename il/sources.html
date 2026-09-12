@@ -913,7 +913,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">39 layers — 11 political and legislative, 7 public safety, 9 schools, 12 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">40 layers — 11 political and legislative, 7 public safety, 9 schools, 13 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1273,7 +1273,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="geography">
-        <h2>Geography &amp; amenities <span class="matrix-count">12 layers</span></h2>
+        <h2>Geography &amp; amenities <span class="matrix-count">13 layers</span></h2>
         <p class="matrix-blurb">The boundaries that place an address without electing anyone, plus the nearest public services.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1389,6 +1389,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">No officeholder. Where the county publishes polling places, the card names the one serving the precinct; where it publishes a board-district join, the card names that too.</td>
                 <td data-label="Where it applies">Suburban Cook County — city precincts belong to the Ward Precinct layer — plus the other counties that publish a precinct layer.</td>
+              </tr>
+              <tr id="layer-ssa">
+                <th scope="row"><span class="layer-name">Special Service Area</span><code>ssa</code></th>
+                <td data-label="What it answers">Whether the point sits inside a Special Service Area — a local property-tax district funding street cleaning, landscaping, security, marketing and façade programs beyond the city's baseline service — and which one.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://data.cityofchicago.org/d/cmr6-dn8c" target="_blank" rel="noopener">Chicago Data Portal — Boundaries: Special Service Areas (cmr6-dn8c)</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">No elected body — an SSA is created by City Council ordinance and overseen by a commission the Mayor appoints with Council consent, with a contracted service provider agency delivering the work. The city's boundary dataset names neither, so the card names nobody and links the city's SSA program page.</td>
+                <td data-label="Where it applies">The City of Chicago — and most points in the city are in no SSA at all.</td>
               </tr>
               <tr id="layer-tif-district">
                 <th scope="row"><span class="layer-name">TIF District</span><code>tif-district</code></th>
