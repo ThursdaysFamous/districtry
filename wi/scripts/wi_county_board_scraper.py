@@ -151,9 +151,12 @@ SEVEN WAYS THAT LIST HAS BEEN WRONG, EACH FOUND BY CHECKING RATHER THAN GUESSING
      153 KB page from this same datacenter address. Five of the nine were wrong.
      And Outagamie is the OPPOSITE case: its edge denies any `Mozilla/`-prefixed
      user-agent and serves a client that says honestly what it is, which is the
-     one county where the browser string WAS the block. See HONEST_UA_HOSTS and
-     BROWSER_HEADER_COUNTIES — both PINNED per host, never negotiated, so a
-     weekly run sends identical bytes and the log says which request worked.
+     one county where the browser string WAS the block. Outagamie's answer
+     generalised on 2026-09-12: asked with the token, 67 of the 74 hosts this
+     file fetches serve it a full page, so the token is now the default and the
+     six that refuse it are pinned in TOKEN_REFUSED_HOSTS — per host, never
+     negotiated, so a weekly run sends identical bytes and the log says which
+     request worked.
   2. A PDF IS A FORMAT, NOT A BLOCKER. "Publishes a PDF" sat in the unreadable
      bucket until Adams, and the disqualifier was always "no district column".
      The question is whether the document carries a TEXT LAYER and a district
@@ -587,10 +590,13 @@ which is exactly the pattern the record preserved without reading it.
 
 SO THE SPOOFED CHROME STRING IN `UA` WAS ITSELF THE CAUSE, and a UA meant to
 look ordinary is not a neutral default: on a bot-managed edge it is the single
-most suspicious thing a datacenter client can say. `HONEST_UA_HOSTS` pins the
-hosts that are served an honest client string instead — per HOST, because the
-rule belongs to the edge and not to the county's page shape, and pinned rather
-than detected so a weekly run sends the same bytes every week.
+most suspicious thing a datacenter client can say. Outagamie was pinned to an
+honest client string for two weeks while every other county kept the spoofed
+one; on 2026-09-12 the whole host list was asked with the token and 67 of 74
+served it, so the pin became the default and TOKEN_REFUSED_HOSTS carries the
+six exceptions — per HOST, because the rule belongs to the edge and not to the
+county's page shape, and pinned rather than detected so a weekly run sends the
+same bytes every week.
 
 THE FINDING IS BOUNDED, and was tested rather than generalised: all eight
 counties left in that bucket were re-probed with both UAs on 2026-08-29, and
@@ -971,6 +977,53 @@ DEFAULT_OUT = os.path.join(os.path.dirname(__file__), ".cache", "wi_county_board
 # fingerprints it — so copying this dict into a requests-based script
 # reproduces nothing. wi/scripts/validate_sources.py probes these two rows
 # through their own `scraper_get` for exactly that reason.
+# WHAT THIS FILE SENDS, AND THE MEASUREMENT THAT CHOSE IT (2026-09-12)
+# -------------------------------------------------------------------
+# THE DISTRICTRY TOKEN IS THE DEFAULT. Until this date it was the spoofed
+# Chrome string below, for every host, on no measurement — while the fleet rule
+# is that a scraper starts with a token and reaches for a browser string only
+# where a site refuses the token (CLAUDE.md, "Browser user-agent strings"). So
+# every host this file fetches was asked for ITS OWN page, on THIS file's stack
+# (stdlib urllib) and header shape, with the token:
+#
+#     67 of 74   HTTP 200, 6.9 KB to 7.7 MB of county page
+#      6 of 74   HTTP 403                      -> TOKEN_REFUSED_HOSTS below
+#      1 of 74   HTTP 202, 196 bytes           -> co.taylor.wi.us, whose every
+#                                                 path answers that meta-refresh
+#                                                 to every client; it rides
+#                                                 DOCUMENT_ROSTERS and is not
+#                                                 fetched, so it is not pinned
+#
+# ONE OF THE 67 HAS SINCE MOVED, and saying so is the difference between a
+# measurement and a claim: www.lafayettecountywi.org/bos served the token
+# 71,648 bytes that morning and answered 403 to BOTH clients two hours later.
+# Its record in the docstring above already calls it intermittent. It is not
+# pinned, because a pin says "this host wants the Chrome string" and this host
+# refuses that too.
+#
+# THE HOST SWEEP ALONE WAS NOT ENOUGH, and the two hosts it missed are worth
+# naming. It walks the URL literals in THIS file, so it never asked
+# racinecounty.gov (Racine rides ARCGIS_COUNTIES and its site is read by
+# nothing here) or www.co.sauk.wi.us (Sauk's board sits on saukdomino, a
+# different host). Both refuse the token — 403 and a reset connection — and
+# both serve Chrome/124 a full page, and both are reached by
+# build_wi_county_board_directory.py, which asks headers_for. They turned up
+# only when that builder's own 72 roots were probed with the new default. A
+# HOST-KEYED PIN IS ONLY AS COMPLETE AS THE HOST LIST IT WAS BUILT FROM.
+#
+# TWO DISAGREEMENTS WITH THE FLEET SWEEP (user-agent-measurements.json), each a
+# different lesson. www.wausharacountywi.gov is the STACK: 403 to `requests` +
+# the token, 200 to stdlib + the same token, which is why a verdict measured
+# with another client does not transfer. saukdomino.co.sauk.wi.us is the PATH:
+# the sweep read 404 at the URL it picked and this file's own URL serves
+# 113,018 bytes. The sweep also files nine of these hosts
+# `robots-disallows-this-path`, again for the path IT picked; all nine of this
+# file's own URLs on those hosts are permitted, read through
+# scripts/robots_policy.py with the token before each fetch in the count above.
+#
+# The client hints below say Chromium while the User-Agent says districtry,
+# which is two answers to one question. They are kept because they are what was
+# measured; dropping them is a separate change and needs its own probe.
 UA = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
                   "(KHTML, like Gecko) Chrome/124.0 Safari/537.36",
@@ -982,67 +1035,69 @@ UA = {
     "sec-ch-ua-platform": '"Windows"',
 }
 
-# The headers a Chrome NAVIGATION sends, for the counties whose edge refuses
-# the three above. Monroe is the measured case (see the docstring): its Akamai
-# front answers 403 to UA-plus-Accept-plus-Accept-Language from any User-Agent
-# and 200 to this set, from the same address — the difference is the Fetch
-# Metadata headers a browser attaches to a top-level navigation, which nothing
-# in this file was sending.
-#
-# THIS IS A SECOND HEADER SET, NOT A REPLACEMENT, and deliberately: what a
-# scraper sends changes how a site treats it (scripts/scraper_common.py's
-# docstring records the fleet ruling), so the 29 counties that already ship
-# keep the exact bytes their weekly runs were built on, and a county moves to
-# this set only with its own run as the witness.
-BROWSER = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                  "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,"
-              "image/avif,image/webp,image/apng,*/*;q=0.8",
-    "Accept-Language": "en-US,en;q=0.9",
-    "Accept-Encoding": "gzip",
-    "sec-ch-ua": '"Chromium";v="126", "Not;A=Brand";v="24"',
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": '"Windows"',
-    "Sec-Fetch-Dest": "document",
-    "Sec-Fetch-Mode": "navigate",
-    "Sec-Fetch-Site": "none",
-    "Sec-Fetch-User": "?1",
-    "Upgrade-Insecure-Requests": "1",
-}
-BROWSER_HEADER_COUNTIES = {"55081"}     # Monroe — measured 2026-08-29
-# HOSTS SERVED AN HONEST CLIENT STRING INSTEAD OF THE BROWSER ONE ABOVE.
-# See the docstring's Outagamie section: www.outagamie.gov sits behind an
-# Akamai rule that denies any `Mozilla/`-prefixed UA it cannot fingerprint as
-# a real browser, and serves the same page to a client that says what it is.
-# The pin is per HOST because the rule belongs to the edge rather than to the
-# county's page shape, and it is PINNED rather than negotiated at runtime so a
-# weekly run sends identical bytes every week — a UA ladder that retried on
-# 403 would make the request that actually worked invisible in the log.
+# The same headers, saying what this client is. The two sets differ in ONE
+# line, which is what makes the count above a measurement of the token rather
+# than of the header shape.
 HONEST_UA = dict(UA, **{
     "User-Agent": "districtry-roster-bot/1.0 (+https://districtry.com/; "
                   "weekly county board roster refresh)",
 })
-HONEST_UA_HOSTS = {"www.outagamie.gov"}
+
+# The hosts still asked as Chrome/124, with what each answered the token on
+# 2026-09-12. Per HOST, because the rule belongs to the edge rather than to the
+# county's page shape, and PINNED rather than negotiated at runtime so a weekly
+# run sends identical bytes every week — a ladder that retried on 403 would
+# make the request that actually worked invisible in the log.
+#
+# BOTH SPELLINGS OF SIX HOSTS ARE LISTED, and that is measured rather than
+# tidy. This file asks for `www.co.monroe.wi.us`; build_wi_county_board_
+# directory.py probes the same county as `co.monroe.wi.us` and asks this
+# function which client to use. A set keyed on the exact hostname answers
+# "token" for the bare form, which would make that probe a weaker client than
+# the crawl on the four counties it most needs to reach. Stripping `www.` in
+# the lookup would assume the two names share an edge; asking them instead
+# (2026-09-12, same minute) found they do — and found `fdlco.wi.gov` does not
+# behave like its sibling, which a fold would have hidden.
+TOKEN_REFUSED_HOSTS = {
+    "co.monroe.wi.us": "HTTP 403",
+    "co.rock.wi.us": "HTTP 403",
+    "fdlco.wi.gov": "TLS: UNEXPECTED_EOF_WHILE_READING — no client reaches it",
+    "lacrossecounty.org": "HTTP 403",
+    "marathoncounty.gov": "HTTP 403",
+    "racinecounty.gov": "HTTP 403; Chrome/124 gets 125,639 bytes",
+    "sheboygancounty.com": "HTTP 403",
+    "www.co.monroe.wi.us": "HTTP 403",
+    "www.co.rock.wi.us": "HTTP 403",
+    "www.fdlco.wi.gov": "HTTP 403",
+    "www.co.sauk.wi.us": "connection reset, twice; Chrome/124 gets 48,614 bytes",
+    "www.marathoncounty.gov": "HTTP 403",
+    "www.racinecounty.gov": "HTTP 403; Chrome/124 gets 125,640 bytes",
+    "www.sheboygancounty.com": "HTTP 403",
+}
+
+# BROWSER AND BROWSER_HEADER_COUNTIES WERE RETIRED HERE, BECAUSE THEY HAD NOT
+# REACHED THE WIRE SINCE 206cb9c (2026-08-29). That commit gave fetch_bytes a
+# line of its own — `headers = HONEST_UA if host in HONEST_UA_HOSTS else UA` —
+# which overwrote whatever header set its caller had chosen. So the Monroe pin
+# the docstring above describes at length was sent on no run, and Monroe has
+# been read with UA all along: 16 seats on 2026-09-10, like every other week.
+# The clobber did real damage elsewhere. fetch_archived hands `fetch` the
+# ARCHIVE_UA this file measured web.archive.org answering 200 to and the Chrome
+# string it measured getting 503, and the clobber substituted the second — so
+# the archive rung, which exists for the counties whose own sites refuse this
+# client, has been asking with the one client the archive was known to refuse.
+# fetch_bytes now honours the set it is handed.
 
 
+def headers_for(url):
+    """The header set this host is asked with — pinned, never negotiated.
 
-def headers_for(fips, url):
-    """The header set this county's page is asked with — pinned, never negotiated.
-
-    Two counties' edges refuse the plain client for opposite reasons, so there
-    are two exceptions and they cannot be collapsed: Monroe's Akamai rule wants
-    the header set a Chrome NAVIGATION sends (BROWSER), and Outagamie's denies
-    any `Mozilla/`-prefixed UA and serves a client that says what it is
-    (HONEST_UA). Both are pinned so a weekly run sends identical bytes every
-    week — a ladder that retried on 403 would hide which request actually
-    worked.
+    Takes a URL or a bare host, because wi/scripts/validate_robots.py asks by
+    host. That gate reads robots.txt with the client that does the crawling,
+    which means asking here rather than re-deriving the answer beside it.
     """
-    if urllib.parse.urlsplit(url).hostname in HONEST_UA_HOSTS:
-        return HONEST_UA
-    if fips in BROWSER_HEADER_COUNTIES:
-        return BROWSER
-    return UA
+    host = urllib.parse.urlsplit(url).hostname or url
+    return UA if host in TOKEN_REFUSED_HOSTS else HONEST_UA
 
 # (county FIPS, name as LTSB spells it, seats, reading direction, page)
 COUNTIES = [
@@ -1153,8 +1208,11 @@ COUNTIES = [
      "https://saukdomino.co.sauk.wi.us/Internet/Applications/main.nsf/"
      "publicDistrictList.xsp"),
     # --- 2026-08-29: the county whose 403 was the request, not the county ---
-    # Read with BROWSER (see BROWSER_HEADER_COUNTIES) and as a TABLE (see
-    # `_monroe`). robots.txt allows this path to every agent; only /scripts,
+    # Read as a TABLE (see `_monroe`), and as Chrome/124: Monroe is one of the
+    # six in TOKEN_REFUSED_HOSTS, 403 to the token on 2026-09-12. It was
+    # pinned to a Chrome-navigation header set that fetch_bytes discarded and
+    # never sent, so what its weekly runs have always used is the plain set.
+    # robots.txt allows this path to every agent; only /scripts,
     # /admin and *.asmx are disallowed.
     ("55081", "Monroe", 16, "table",
      "https://www.co.monroe.wi.us/government/county-board-of-supervisors/"
@@ -1166,7 +1224,8 @@ COUNTIES = [
      "supervisor-list/"),
     # --- 2026-08-29: the browser UA was the block, see the docstring ---
     # Reads `after`: "District 1" / "Cathy Thompson" / the district's map link,
-    # phone, county e-mail and committee. Its host is in HONEST_UA_HOSTS.
+    # phone, county e-mail and committee. Its host was the first pinned to an
+    # honest client string; since 2026-09-12 that is what every county gets.
     ("55087", "Outagamie", 36, "after",
      "https://www.outagamie.gov/Outagamie-County-Board/County-Board-of-Supervisors"),
     # --- 2026-08-31: the 51st county, and the fourth whose "no district-keyed
@@ -2343,7 +2402,7 @@ def vacant_districts(lines, seats, strategy="after"):
     return out
 
 
-def fetch_bytes(url, headers=UA, timeout=45, attempts=4, allow_lax_tls=True):
+def fetch_bytes(url, headers=None, timeout=45, attempts=4, allow_lax_tls=True):
     """Raw bytes plus THE URL THAT ANSWERED, which is not always the one asked.
 
     Kenosha's directory is addressed by a stable county page id that 302s to
@@ -2362,8 +2421,11 @@ def fetch_bytes(url, headers=UA, timeout=45, attempts=4, allow_lax_tls=True):
     lax = ssl.create_default_context()
     lax.check_hostname = False
     lax.verify_mode = ssl.CERT_NONE
-    host = urllib.parse.urlsplit(url).hostname or ""
-    headers = HONEST_UA if host in HONEST_UA_HOSTS else UA
+    # The caller's choice wins; headers_for decides only when it made none.
+    # Until 2026-09-12 this line read `headers = HONEST_UA if host in
+    # HONEST_UA_HOSTS else UA`, which discarded the argument — see the note
+    # beside TOKEN_REFUSED_HOSTS for the two things that cost.
+    headers = headers or headers_for(url)
     last = None
     for attempt in range(attempts):
         for ctx in (None, lax):
@@ -2371,8 +2433,10 @@ def fetch_bytes(url, headers=UA, timeout=45, attempts=4, allow_lax_tls=True):
                 req = urllib.request.Request(url, headers=headers)
                 with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
                     body = r.read()
-                    # BROWSER asks for gzip (a browser navigation does, and the
-                    # header set is scored as a whole); urllib never unwraps it.
+                    # urllib never unwraps gzip. Both header sets ask for
+                    # identity today and ARCHIVE_UA asks for nothing, so this is
+                    # for a server that compresses anyway — and for the next
+                    # header set that asks, which is how it got here.
                     if (r.headers.get("Content-Encoding") or "").lower() == "gzip":
                         body = gzip.decompress(body)
                     return body, r.geturl()
@@ -2410,6 +2474,11 @@ SNAPSHOT = "https://web.archive.org/web/%sid_/%s"     # id_ = the original bytes
 # capture, same second, 503 as Chrome and 200 as anything named). `UA` exists
 # for county CMSs that refuse non-browser clients; it is the wrong header
 # here, and sending it reads as an outage that is not one.
+#
+# THAT WAS TRUE AND UNENFORCED FROM 2026-08-29 TO 2026-09-12: fetch_archived
+# passed this dict and fetch_bytes overwrote it with `UA`, so every archive
+# read went out as the client the archive was measured refusing. See the note
+# beside TOKEN_REFUSED_HOSTS.
 ARCHIVE_UA = {"User-Agent": "districtry-county-board-scraper/1.0 "
                             "(+https://districtry.com; civic boundary data)"}
 
@@ -2454,7 +2523,7 @@ def _archive_json(url, tries=5):
 
 
 
-def fetch_or_archive(url, fips, county, headers=UA):
+def fetch_or_archive(url, fips, county, headers=None):
     """(page html, how it was read). LIVE FIRST, ALWAYS — a county that stops
     refusing this client starts reading live with no code change, and the run
     log says which rung answered either way."""
@@ -2469,7 +2538,7 @@ def fetch_or_archive(url, fips, county, headers=UA):
               % (county, live_error, stamp[:4], stamp[4:6], stamp[6:8]),
               file=sys.stderr)
         return page, "archive:" + stamp
-def fetch(url, headers=UA, timeout=45, attempts=4, allow_lax_tls=True):
+def fetch(url, headers=None, timeout=45, attempts=4, allow_lax_tls=True):
     return fetch_bytes(url, headers, timeout, attempts,
                        allow_lax_tls)[0].decode("utf-8", "replace")
 
@@ -3244,7 +3313,7 @@ def _spn_save(url):
             data = urllib.parse.urlencode({"url": url}).encode()
             req = urllib.request.Request(
                 "https://web.archive.org/save", data=data,
-                headers=dict(UA, Accept="application/json",
+                headers=dict(ARCHIVE_UA, Accept="application/json",
                              Authorization="LOW %s:%s" % (key, secret)))
             with urllib.request.urlopen(req, timeout=60) as r:
                 job = json.load(r).get("job_id")
@@ -3253,7 +3322,7 @@ def _spn_save(url):
                     time.sleep(5)
                     req = urllib.request.Request(
                         "https://web.archive.org/save/status/" + job,
-                        headers=dict(UA, Accept="application/json",
+                        headers=dict(ARCHIVE_UA, Accept="application/json",
                                      Authorization="LOW %s:%s" % (key, secret)))
                     with urllib.request.urlopen(req, timeout=30) as r:
                         st = json.load(r)
@@ -3264,7 +3333,7 @@ def _spn_save(url):
         except Exception as e:              # noqa: BLE001 - save is best-effort
             print("    SPN2 save failed (%s): %s" % (url, e), file=sys.stderr)
     try:
-        req = urllib.request.Request(WAYBACK_SAVE % url, headers=UA)
+        req = urllib.request.Request(WAYBACK_SAVE % url, headers=ARCHIVE_UA)
         with urllib.request.urlopen(req, timeout=180) as r:
             m = re.search(r"/web/(\d{14})", r.geturl() or "")
             if not m:
@@ -3280,7 +3349,8 @@ def _wayback_latest(url):
     """Timestamp of the newest existing snapshot, or None."""
     try:
         req = urllib.request.Request(
-            WAYBACK_AVAILABLE % urllib.parse.quote(url, safe=""), headers=UA)
+            WAYBACK_AVAILABLE % urllib.parse.quote(url, safe=""),
+            headers=ARCHIVE_UA)
         with urllib.request.urlopen(req, timeout=60) as r:
             snap = (json.load(r).get("archived_snapshots") or {}).get("closest") or {}
         return snap.get("timestamp") or None
@@ -3900,7 +3970,7 @@ def scrape_framed_table_county(spec):
 
 
 def _fetch_json(url):
-    req = urllib.request.Request(url, headers=UA)
+    req = urllib.request.Request(url, headers=headers_for(url))
     ctx = ssl.create_default_context()
     with urllib.request.urlopen(req, timeout=45, context=ctx) as r:
         return json.load(r)
@@ -9037,7 +9107,7 @@ def scrape_county(fips, name, seats, strategy, url):
         # Sauk's page names no district NEAR a name; it labels its own fields,
         # so the whole page is read at once rather than as a line list.
         return scrape_fielded_county(fips, name, seats, url), "live"
-    page_html, read_from = fetch_or_archive(url, fips, name, headers_for(fips, url))
+    page_html, read_from = fetch_or_archive(url, fips, name, headers_for(url))
     if strategy == "heading-block":
         # A name heading paired with a district heading, per supervisor. Its
         # roles come back separately for the same uniqueness gate `cells` uses.
@@ -9110,7 +9180,7 @@ def scrape_county(fips, name, seats, strategy, url):
         # district list came from, so the officer scan takes THAT page and the
         # row records where the role was read
         return attach_officer_roles(
-            to_lines(fetch(officers["url"], headers_for(fips, officers["url"]))),
+            to_lines(fetch(officers["url"], headers_for(officers["url"]))),
             out, name, officers.get("name_side"),
             OFFICER_LINE_BY_COUNTY.get(fips, OFFICER_LINE), officers["url"]), read_from
     return attach_officer_roles(lines, out, name, OFFICER_NAME_SIDE.get(fips),

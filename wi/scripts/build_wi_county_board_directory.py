@@ -290,11 +290,14 @@ COUNTY_SITES = {
 #
 # The seven that recovered are Fond du Lac, Marathon, Monroe, Outagamie,
 # Racine, Rock and Sheboygan, returning 21 KB to 200 KB of real county
-# navigation where the old set got a 403. Two of them are the exceptions
-# `headers_for` exists for and this file could never have reproduced by
-# guessing: Monroe wants the Fetch-Metadata set a Chrome NAVIGATION sends, and
-# Outagamie's Akamai rule denies any `Mozilla/`-prefixed UA and wants a client
-# that says what it is. The other five simply wanted the fuller header set.
+# navigation where the old set got a 403.
+#
+# WHAT `headers_for` CHOOSES BETWEEN CHANGED ON 2026-09-12 and the rule here
+# did not: it is still the scraper's own answer, asked rather than guessed.
+# The scraper now sends the districtry token to every host but the six
+# measured refusing it, so this probe does too — which is the point of asking,
+# since a copy of the old three-way table would now be probing 70 of its 72
+# hosts as a client the weekly run no longer uses.
 #
 # OUTAGAMIE IS WHY THIS MATTERS RATHER THAN BEING A TIDY-UP. A 403 is excused
 # below as "the county's host declining THIS client", so the probe SKIPS it —
@@ -333,7 +336,7 @@ def probe_headers(fips, url):
               "blocked than the weekly run actually sees" % type(exc).__name__,
               file=sys.stderr)
         return PROBE_UA
-    return headers_for(fips, url)
+    return headers_for(url)
 # A real county site is tens of KB of navigation. Every stub measured was under
 # 4 KB and every live county over 20 KB, so the floor sits between them and is
 # reported, never enforced.
