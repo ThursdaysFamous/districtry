@@ -21,34 +21,34 @@
   })();
 </script>
 
-<title>What Chicago police district am I in? — districtry Illinois</title>
-<meta name="description" content="Chicago police district and beat by address or ZIP — the district number, your beat, the nearest CPD station, and your elected Police District Council." />
+<title>Who is my alderman? Chicago wards — districtry Illinois</title>
+<meta name="description" content="Your Chicago ward and alderperson by address or ZIP — ward number, alderperson's ward office, phone and email, and when the seat is next on the ballot." />
 <meta name="robots" content="index, follow" />
-<link rel="canonical" href="https://districtry.com/il/police-district.html" />
+<link rel="canonical" href="https://districtry.com/il/ward.html" />
 
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="districtry Illinois" />
-<meta property="og:title" content="What Chicago police district am I in?" />
-<meta property="og:description" content="Look up your Chicago police district and beat by address or ZIP — district number, beat, nearest CPD station, and your elected Police District Council." />
-<meta property="og:url" content="https://districtry.com/il/police-district.html" />
+<meta property="og:title" content="Who is my alderman? Chicago ward lookup" />
+<meta property="og:description" content="Find your Chicago ward and alderperson by address or ZIP — the ward number, the ward office, phone and email, and when the seat is next on the ballot." />
+<meta property="og:url" content="https://districtry.com/il/ward.html" />
 <meta property="og:image" content="https://districtry.com/il/og-image.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:locale" content="en_US" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="What Chicago police district am I in?" />
-<meta name="twitter:description" content="Look up your Chicago police district and beat by address or ZIP — district, beat, nearest CPD station, and your elected Police District Council." />
+<meta name="twitter:title" content="Who is my alderman? Chicago ward lookup" />
+<meta name="twitter:description" content="Find your Chicago ward and alderperson by address or ZIP — ward number, ward office, phone and email, and when the seat is next on the ballot." />
 <meta name="twitter:image" content="https://districtry.com/il/og-image.png" />
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "@id": "https://districtry.com/il/police-district.html",
-  "url": "https://districtry.com/il/police-district.html",
-  "name": "What Chicago police district am I in? — districtry Illinois",
-  "description": "Look up your Chicago police district and beat by address or ZIP — the district number, your beat, the nearest CPD station, and your elected Police District Council.",
+  "@id": "https://districtry.com/il/ward.html",
+  "url": "https://districtry.com/il/ward.html",
+  "name": "Who is my alderman? Chicago wards — districtry Illinois",
+  "description": "Your Chicago ward and alderperson by address or ZIP — ward number, alderperson's ward office, phone and email, and when the seat is next on the ballot.",
   "inLanguage": "en-US",
   "author": { "@type": "Person", "@id": "https://districtry.com/#author", "name": "Adam Overberg", "url": "https://overberg.co",
 "email": "hello@overberg.co" },
@@ -57,7 +57,7 @@
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "districtry Illinois", "item": "https://districtry.com/il/" },
-      { "@type": "ListItem", "position": 2, "name": "What police district am I in?" }
+      { "@type": "ListItem", "position": 2, "name": "Who is my alderman?" }
     ]
   }
 }
@@ -606,6 +606,20 @@ footer.site-footer a { color: var(--accent-deep); }
 }
 .footer-links a:hover { color: var(--accent); text-decoration: underline; }
 /* ==== ENGINE:END styles-subpage ==== */
+
+/* The four-way comparison below is the one list on this page. Same panel and
+   border tokens the related grid uses; a list, not a table, because every row
+   is one sentence and a table's chrome would outweigh it. */
+.maps { list-style: none; margin: 0 0 18px; padding: 0; }
+.maps li {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 13px 16px;
+  margin: 0 0 10px;
+}
+.maps li:last-child { margin-bottom: 0; }
+.maps strong { color: var(--ink); }
 </style>
 </head>
 <body>
@@ -617,9 +631,9 @@ footer.site-footer a { color: var(--accent-deep); }
     <h1 class="title">
       <span class="title-row">
         <svg class="districtry-mark" viewBox="0 0 96 96" aria-hidden="true"><g style="mix-blend-mode:multiply"><polygon points="51.5,63.2 12.4,55.7 11.5,18.6 42.7,5.0 72.7,35.3" fill="#6d3fd1" fill-opacity="0.55"></polygon></g><g style="mix-blend-mode:multiply"><polygon points="54.1,81.9 34.6,47.9 56.5,19.3 87.5,28.1 83.8,71.0" fill="#1d5fd6" fill-opacity="0.5"></polygon></g><g style="mix-blend-mode:multiply"><polygon points="13.7,64.5 27.6,31.2 62.7,37.6 70.3,66.9 33.9,89.0" fill="#b0316e" fill-opacity="0.45"></polygon></g><circle cx="42" cy="60" r="17" fill="none" stroke="#17161c" stroke-width="11"></circle><line x1="59" y1="16" x2="59" y2="82.5" stroke="#17161c" stroke-width="11"></line></svg>
-        <span class="title-text">What police district am I in?</span>
+        <span class="title-text">Who is my alderman?</span>
       </span>
-      <small>Chicago police district &amp; beat lookup — free, by address, ZIP, or a tap on the map.</small>
+      <small>Chicago ward &amp; alderperson lookup — free, by address, ZIP, or a tap on the map.</small>
     </h1>
     <div class="masthead-actions">
       <a href="./">← Back to the map</a>
@@ -630,39 +644,87 @@ footer.site-footer a { color: var(--accent-deep); }
 <main id="page-main" tabindex="-1">
 
   <section>
-    <p class="lede"><strong>Chicago is divided into 22 police districts, each split into smaller
-      beats.</strong> Your district isn't the same as your ward or your ZIP code — it's the Chicago
-      Police Department's own boundary system, and the beat is the smaller patrol area inside it.</p>
-    <a class="cta" href="./#layers=police-district,police-beat">Look up your police district →</a>
-    <p class="cta-note">Opens the map with the police district and beat layers on. Search your
-      address or ZIP, or tap your location.</p>
+    <p class="lede"><strong>Chicago has 50 wards, and each one elects one member of the City
+      Council.</strong> The tool finds the ward that covers any point in the city and names the
+      person elected to it, with the ward office's address, phone number and email. Your ward is
+      not your police district, your ZIP code or your community area — it is the City Council's
+      own map, and it is the one that decides who answers your call about a pothole, a permit, a
+      zoning change or a street closure.</p>
+    <a class="cta" href="./#layers=ward">Find your ward and alderperson →</a>
+    <p class="cta-note">Opens the map with the ward layer on. Search your address or ZIP, or tap
+      your location.</p>
   </section>
 
   <section>
     <h2>What the lookup shows</h2>
     <div class="answer-card">
-      <p>Select any point in Chicago and the police district card shows the <strong>district
-        number</strong> that covers it, the <strong>beat</strong> inside that district, and the
-        <strong>nearest police station</strong>.</p>
-      <p>Each police district also has an elected <strong>Police District Council</strong> —
-        the map has a layer for those too, with the council members for your district:
-        <a href="./#layers=ccpsa-district-council">see your District Council</a>.</p>
+      <p>Select any point in Chicago and the ward card shows the <strong>ward number</strong>, the
+        <strong>alderperson</strong> elected to that seat, the <strong>ward office address</strong>,
+        and the office's <strong>phone number and email</strong>. Where the City publishes a ward
+        website, the card links it; where it does not, the card links the City's own ward lookup
+        rather than leaving you with nothing to click.</p>
+      <p>The card also says <strong>when the seat is next on the ballot</strong>. That one line
+        comes from a different office than the rest — the Cook County Clerk's directory of elected
+        officials — because the City's own roster carries contact details and no term information
+        at all. All 50 wards run on one four-year cycle, so the answer is the same for every ward.</p>
+      <p>If the City's roster is unreachable when you look, the card still tells you the ward from
+        the boundary data and leaves the name off. It never fills the gap with a guess.</p>
     </div>
   </section>
 
   <section>
-    <h2>Police district vs. ward</h2>
-    <p>They're different systems that rarely share boundaries. Your <a href="./#layers=ward">ward</a>
-      is a City Council district represented by an alderperson; your police district is how CPD
-      organizes patrol and command. The same address always has one of each, and the map shows both
-      at once if you toggle both layers.</p>
+    <h2>Alderman, alderperson, alder</h2>
+    <p>You will see all three. The City Council's own usage has moved to <em>alderperson</em>;
+      <em>alderman</em> is still what most people type into a search box, and it is the word this
+      page is written to answer. The card uses the seat's title as the City's data publishes it.
+      Whichever word you use, it is one seat: the member of the City Council elected from your
+      ward, one of fifty.</p>
   </section>
 
   <section>
-    <h2>Where the boundaries come from</h2>
-    <p>District and beat boundaries come from the Chicago Police Department's published GIS data;
-      every layer's exact source is listed on the <a href="sources.html">sources &amp; data layers</a>
-      page. The map is free, requires no login, and sets no tracking cookies.</p>
+    <h2>Ward, precinct, police district, community area</h2>
+    <p>Four Chicago maps cover the same address, and none of them share their lines.</p>
+    <ul class="maps">
+      <li><strong>Ward</strong> — one of 50 City Council seats. Ward boundaries are redrawn after
+        each decennial census, so the ward you were in a decade ago may not be the ward you are in
+        now.</li>
+      <li><strong>Ward precinct</strong> — the smaller unit inside a ward that the Board of
+        Election Commissioners runs elections in; your polling place is assigned by precinct. The
+        map has a layer for these too: <a href="./#layers=ward,ward-precinct">turn on the ward and
+        its precincts together</a>.</li>
+      <li><strong>Police district</strong> — one of 22 Chicago Police Department districts, each
+        split into beats. Patrol and command, not representation; see
+        <a href="police-district.html">what police district am I in?</a></li>
+      <li><strong>Community area</strong> — one of 77 planning and statistical areas with
+        long-settled names. Not an elected district at all, though the name is often what a
+        neighborhood calls itself.</li>
+    </ul>
+    <p>The map shows any of these at once if you toggle their layers, which is the quickest way to
+      see that a ward line and a police district line almost never sit on the same street.</p>
+  </section>
+
+  <section>
+    <h2>Outside Chicago</h2>
+    <p>The ward layer is not Chicago-only. Many suburbs elect their councils by ward or district,
+      and where a municipality — or the county on its behalf — publishes that map, the same layer
+      answers there: the suburbs of Cook County from the County's own political-boundary service,
+      Evanston from the city's data, Will County's municipalities, and a small city like Elmwood
+      whose wards are published by Peoria County rather than by the city itself.</p>
+    <p>The card carries whatever the publisher provides. Sometimes that is one council member with
+      a phone number and email, sometimes two members per ward, and sometimes only the boundary.
+      Where a suburb publishes no ward map, it simply does not get a ward card — the layer says
+      nothing rather than guessing.</p>
+  </section>
+
+  <section>
+    <h2>Where the data comes from</h2>
+    <p>Ward boundaries come from the City of Chicago Data Portal's <em>Boundaries – Wards</em>
+      dataset, and the alderperson, office address, phone, email and website from the Portal's
+      <em>Ward Offices</em> dataset. Both are read live, so a change the City publishes shows up
+      here without waiting for anyone to notice it. The seat's election cycle is refreshed weekly
+      from the Cook County Clerk's directory of elected officials. Each suburban ward source is
+      named on the <a href="sources.html">sources &amp; data layers</a> page. The map is free,
+      requires no login, and sets no tracking cookies.</p>
     <div class="disclaimer">
       <strong>Not for legal or official use.</strong> Boundary data comes from public sources that
       explicitly disclaim legal precision. Confirm district assignments with the relevant government
@@ -674,7 +736,7 @@ footer.site-footer a { color: var(--accent-deep); }
     <h2>Related lookups</h2>
     <ul class="related">
       <li><a href="./">What district am I in?</a><span>Every district for any Chicago address — ward, school board, county, state, federal.</span></li>
-      <li><a href="ward.html">Who is my alderman?</a><span>Your Chicago ward, the alderperson elected to it, and the ward office.</span></li>
+      <li><a href="police-district.html">What police district am I in?</a><span>Chicago police district and beat, the nearest station, and your Police District Council.</span></li>
       <li><a href="school-board.html">Which school board district am I in?</a><span>Chicago's elected Board of Education districts, with your board member.</span></li>
       <li><a href="county-board.html">Who is my county commissioner?</a><span>County board and commissioner districts, in Cook County and far beyond.</span></li>
     </ul>
