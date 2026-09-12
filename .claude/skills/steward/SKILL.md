@@ -78,12 +78,11 @@ python3 mi/scripts/build_metro_outline.py --check
 python3 scripts/build_press_list.py --check                # PRESS_LIST.md vs press-list.json
 python3 scripts/validate_doc_counts.py                    # "N layers" in prose vs the worksheets
 python3 scripts/validate_serp_lengths.py                  # every page's title and description fit a search result
-python3 scripts/robots_policy.py --selftest                # the one robots.txt reader, against three saved files
+python3 scripts/robots_policy.py --selftest                # the one robots.txt reader against three saved files, and the per-host Crawl-delay pacer: one queue per delay-stating site, `www.` folded, others parallel
 python3 scripts/probe_user_agents.py --check              # user-agent measurements vs the tree; retired brands; unmeasured browser-string files
 python3 scripts/isbe_precinct_fabric.py --selftest         # the five Jasper-test reconciliation causes
 python3 ia/scripts/ia_county_minutes_chair_scraper.py --selftest   # the four refusals that stand between a chair card and a wrong name
 python3 ia/scripts/build_ia_county_chair.py --selftest              # the carry-forward rules: only `unreachable`, never a refusal, never past 60 days or a January
-python3 ia/scripts/ia_county_chair_scraper.py --selftest            # the per-host Crawl-delay pacer: one queue per delay-stating site, `www.` folded, others parallel
 python3 ia/scripts/build_ia_county_officers.py --selftest           # display_name strips a salutation and keeps a Jr./Sr. suffix and a published credential
 python3 scripts/build_parcel_fabric_districts.py --selftest        # the geometry repair's three refusals and its drop count
 python3 scripts/check_roster_retention.py --base origin/main

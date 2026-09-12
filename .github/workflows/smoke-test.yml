@@ -408,6 +408,16 @@ jobs:
       # scraper now imports; this runs its self-test over three saved
       # robots.txt files (wyomingmi.gov, iowacourts.gov, sheboyganwi.gov)
       # whose correct readings are on the record. Stdlib only, no network.
+      #
+      # It also proves HostPacer, which ENACTS a Crawl-delay the reader above
+      # only reports. That test used to run as its own step against
+      # ia/scripts/ia_county_chair_scraper.py, where the class was first
+      # written; it moved here on 2026-09-12 when ia/scripts/validate_sources.py
+      # needed the same object, because a second caller means shared machinery
+      # rather than a copy. Two of its rules look right while being wrong:
+      # folding a leading `www.` (or one server gets two queues and half the
+      # delay it asked for) and leaving every other host's parallelism alone.
+      # Threads, small delays, still no network.
       - name: The robots.txt reader agrees with the readings established by hand
         run: python3 scripts/robots_policy.py --selftest
 
@@ -482,15 +492,6 @@ jobs:
       # exercises is a rule that loosens. Twenty-one literal cases, no network.
       - name: Iowa board-chair carry-forward rules still hold
         run: python3 ia/scripts/build_ia_county_chair.py --selftest
-
-      # The chair scrape runs six workers across 98 county hosts, so honouring
-      # a Crawl-delay is a per-host queue rather than a global sleep. Two of
-      # its rules are the kind that look right while being wrong: folding a
-      # leading `www.` (or one server gets two queues and half the delay it
-      # asked for) and leaving every other host's parallelism alone. Threads,
-      # no network, small delays.
-      - name: Iowa chair scrape still paces the hosts that ask for it
-        run: python3 ia/scripts/ia_county_chair_scraper.py --selftest
 
       # display_name strips a leading honorific from an officer's name, and a
       # name in that file is also the key ia-county-board-chairs.json joins on.
