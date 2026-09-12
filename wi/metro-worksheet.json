@@ -336,6 +336,7 @@
     },
     {
       "id": "county-board",
+      "guide": { "href": "county-board.html", "text": "Who is my county supervisor?" },
       "label": "County Board District",
       "group": "political",
       "area_rank": 15,
