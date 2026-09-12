@@ -1,6 +1,6 @@
 {
   "note": "The unit each fire and park district card joins to, and the cards that join to none. Rebuilt by il_special_district_officials_scraper.py --propose; every row is re-verified against the Warehouse on every scrape.",
-  "generated": "2026-09-11T10:30:43Z",
+  "generated": "2026-09-12T11:04:41Z",
   "districts": [
     {
       "county": "adams",
@@ -190,6 +190,16 @@
       "label": "North Boone #5",
       "type": "Fire Protection District",
       "warehouseCounty": "Boone",
+      "rule": "override"
+    },
+    {
+      "county": "boone",
+      "layer": "fire",
+      "card": "Cherry Valley Fire Protection District",
+      "code": "101/020/06",
+      "label": "Cherry Valley",
+      "type": "Fire Protection District",
+      "warehouseCounty": "Winnebago",
       "rule": "override"
     },
     {
