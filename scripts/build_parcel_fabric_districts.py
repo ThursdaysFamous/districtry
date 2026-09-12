@@ -266,6 +266,34 @@ for _code in ("03004", "03007", "03011", "05008"):
 # PROTECTION DISTRICT) and the district's own site at cvfpd.com.
 CHERRY_VALLEY_FIRE = "Cherry Valley Fire Protection District"
 
+# THE 68 TAX CODES THE CLERK'S 2025 REPORTS COVER. Declared so a parcel carrying
+# a code no crosswalk below ever saw FAILS rather than reading as "no district"
+# — see code_universe in build_source, and the Whiteside comment for why the
+# check has to be a live query rather than a scan of the fetched rows.
+#
+# THE COMMENT BELOW USED TO SAY THIS GUARD COULD NOT BE ARMED HERE, on the
+# ground that Boone's crosswalks cover every code they map so the check would be
+# vacuous "until someone re-measures it". Measured 2026-09-12 while building the
+# fire districts: all three of the Clerk's tax-year-2025 reports enumerate the
+# same 68 codes, and asked of the SERVICE, ZERO of the county's 24,320 parcels
+# carry a tax_code outside them (90 carry none at all, which the IS NULL probe
+# reports separately). So the guard is live rather than vacuous: it is what
+# stands between a re-coded parcel roll and three Boone cards quietly reading
+# "no district". PERTURBED THE SAME WAY WHITESIDE'S WAS, because a gate that
+# only ever passes is indistinguishable from one that cannot fail: dropping
+# 04003 (Capron village) from the universe makes the live query return 522
+# parcels and the build refuse. All three Boone files rebuild BYTE-IDENTICAL
+# with the guard in place.
+BOONE_CODE_UNIVERSE = (
+    "01001 01002 01003 01004 02001 02002 02003 02004 03001 03002 "
+    "03003 03004 03005 03006 03007 03008 03009 03010 03011 04001 "
+    "04002 04003 05001 05002 05005 05007 05008 05009 05010 05011 "
+    "05012 05110 05111 05901 05903 05904 06001 06002 06003 06004 "
+    "06005 06011 06012 06013 06111 07001 07002 07003 07004 07005 "
+    "07006 07007 07008 07012 07014 07044 07101 08001 08002 08102 "
+    "09001 09002 09003 09004 09005 09006 09007 09700").split()
+
+
 BOONE_FIRE_CODES = {}
 for _code in ("02001 02003 04001 04002 04003 09002").split():
     BOONE_FIRE_CODES[_code] = "1"
@@ -649,9 +677,10 @@ WOODFORD_PARK_PROBES = [
 # excluded before the gate can see it, and a scan of the response could only
 # ever report zero. Perturbed by dropping one code from the universe, the live
 # query returns 76 parcels and the build refuses; the response scan returned
-# zero. Boone carries the same hole and is not fixed here; its own crosswalk
-# covers every code it maps, so the guard would be vacuous there until someone
-# re-measures it.
+# zero. BOONE CARRIED THE SAME HOLE UNTIL 2026-09-12 and no longer does: its 68
+# codes were measured while building its fire districts and are declared as
+# BOONE_CODE_UNIVERSE above. Every other source in this file is still unguarded,
+# and each needs its own county's report read before a universe can be declared.
 #
 # WHY NOTHING HERE SHIPS, WITH ALL FIVE SOURCES THE GAP RECORD CARRIES. The
 # three sources below are `blocked` and this file only ever derives them. The
@@ -848,6 +877,7 @@ SOURCES = [
      "expect_rows": 12816,
      "expect_empty_codes": ["05010", "05110", "05901", "05903", "07044", "08102", "09700"],
      "out_prop": "district", "code_map": BOONE_PARK_CODES,
+     "code_universe": BOONE_CODE_UNIVERSE,
      "where": _in_clause(BOONE_PARK_CODES),
      "probes": [(42.25670, -88.83936, BELVIDERE_PARK),        # Belvidere City Hall (05005)
                 (42.32119, -88.83908, BELVIDERE_PARK),        # 05007 — the district reaches past the city
@@ -859,6 +889,7 @@ SOURCES = [
      "expect_rows": 9122,
      "expect_empty_codes": ["05901", "05903", "07044", "08102", "09700"],
      "out_prop": "district", "code_map": BOONE_LIBRARY_CODES,
+     "code_universe": BOONE_CODE_UNIVERSE,
      "where": _in_clause(BOONE_LIBRARY_CODES),
      "probes": [(42.25670, -88.83936, IDA_LIBRARY),              # Belvidere City Hall (05005)
                 (42.24308, -88.93207, CHERRY_VALLEY_LIBRARY),    # 05009
@@ -876,6 +907,7 @@ SOURCES = [
      "expect_rows": 15303,
      "expect_empty_codes": ["05010", "05110", "09006"],
      "out_prop": "district", "code_map": BOONE_FIRE_CODES,
+     "code_universe": BOONE_CODE_UNIVERSE,
      "where": _in_clause(BOONE_FIRE_CODES),
      "probes": [(42.39608, -88.74680, "1"),                   # 04003 — Capron village
                 (42.31031, -88.82441, "2"),                   # 05007

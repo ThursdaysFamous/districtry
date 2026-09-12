@@ -14486,11 +14486,19 @@ function initChiExplorer() {
    *
    * THE DISTRICTS ARE NUMBERED, NOT NAMED, AND THAT IS THE COUNTY'S OWN FORM.
    * The Clerk's yearbook heads them DISTRICT NO. 1 through 5. Her tax reports do
-   * put words beside those numbers, but the Comptroller's warehouse registers
-   * different ones for three of the five and none of the five publishes a name
-   * of its own, so no word ships for any of them (`boone-fire-names`). The
-   * sixth ships named: the Clerk's report, the yearbook's own section heading
-   * and the district's own site at cvfpd.com all name it in full. */
+   * put words beside those numbers, and the Comptroller's warehouse registers
+   * DIFFERENT ones for three of the five — CAPRON FPD against "Boone County #1",
+   * LEROY FPD against "Boone #4", MANCHESTER FPD against "North Boone #5" — so
+   * no word ships for any of the five (`boone-fire-names`).
+   *
+   * ONE OF THE FIVE DOES PUBLISH ITS OWN NAME and this comment said otherwise
+   * until 2026-09-12: northboonefire.com titles itself "North Boone Fire #3
+   * District" and its pages read "North Boone Fire Protection District #3",
+   * agreeing with the Clerk. It is still shown by number, because naming one of
+   * five and numbering the rest would read as the other four having no name
+   * rather than two that disagree and two nobody publishes. The SIXTH is
+   * different and ships named on three agreeing sources: the Clerk's report, the
+   * yearbook's own section heading and the district's own site at cvfpd.com. */
   var loadBooneFire = makeCached(function () {
     return fetchJSONWithRetry("data/app/boone-fire-districts.json", {}, 2);
   });
@@ -24091,7 +24099,7 @@ function initChiExplorer() {
         },
         fields: [
           { name: "district", label: "Fire District", keys: ["district"], primary: true },
-          { label: "Note", value: "Boone County numbers its own five fire protection districts rather than naming them — the numbering its tax extensions are run on. None of the five publishes a name for itself, and for three of them the County Clerk's tax reports and the State's filings give different names, so the number is what is shown.", when: booneFireIsNumbered },
+          { label: "Note", value: "Boone County numbers its own five fire protection districts rather than naming them — the numbering its tax extensions are run on. The names its County Clerk's tax reports print are not the names three of the five file with the State, so the number is what is shown.", when: booneFireIsNumbered },
           { label: "Note", value: "This district is seated in Winnebago County and its territory reaches across the line into Boone. Only its Boone territory is drawn here.", when: function (result) { return !booneFireIsNumbered(result); } },
           { label: "County", value: "Boone County" },
           { name: "officials", keys: ["dxofficials"], hidden: true }
