@@ -20,16 +20,17 @@ metro fork. Never edit it in one fork only.*
 > `scripts/compose_app.py --check` asserts the splice now, against `engine/`
 > rather than a downloaded artifact, and
 > `check_engine_parity.py --fleet` compares every instance's fence interiors
-> and names the blocks only some instances carry.>
+> and names the blocks only some instances carry.
+>
 > **This copy carried no R2.1 banner until 2026-09-12**, so it presented the
 > retired release channel as current for ten days, in a file whose own header
 > says the same copy ships everywhere and must never be edited in one fork
-> only. Its block inventory below is separately stale and is NOT corrected
-> here: the heading says 53 where this instance's own `index.html` holds
-> 60 fences (measured 2026-09-12), so the list is short by seven and
-> re-deriving it is its own change. The one block `il` carries that this
-> instance does not is `county-layer-dispatcher`, which dispatches
-> county-keyed concept layers this instance registers none of.
+> only. Its block inventory below was separately stale — the heading said
+> 53 where this instance's own `index.html` holds 60 fences — and was
+> re-derived from those fences on 2026-09-12; the re-sync note under that
+> section records what was missing and for how long. The one block `il`
+> carries that this instance does not is `county-layer-dispatcher`, which
+> dispatches county-keyed concept layers this instance registers none of.
 > `ls engine/` and `python3 scripts/check_engine_parity.py ca/index.html`
 > are the authority.
 >
@@ -267,25 +268,38 @@ rather than re-running the failed sibling run.
 > in the changelog. A changelog that promises a clean adoption and doesn't
 > deliver one costs every sibling a red CI run and a manual repair.
 
-## Current ENGINE block inventory (53 in index.html + 2 in sw.js)
+## Current ENGINE block inventory (60 in index.html + 2 in sw.js)
 
-index.html: `app-token`, `arcgis-loader`, `arcgis-paged-loader`,
-`cached-loaders`, `card-helpers`, `chamber-factory`, `coverage-gaps`,
-`cps-network-factory`, `exports`, `extract-district-number`, `feedback`,
-`fetch-retry`, `find-prop-ci`, `gaps-html`, `gaps-modal-html`,
-`geocoder-search`, `geocoder-shell`, `geolocation`, `groups`, `haversine`,
-`hover-explorer`, `int-field`, `layer-registry`, `map-chrome-classes`,
-`map-pan-filter`, `metro-links`, `metro-links-html`, `metro-portal`,
-`nearest-point-factory`, `office-helpers`, `overlay-cards`, `permalink`,
-`poi-geocode`, `point-in-polygon`, `polygon-containment`,
-`polygon-factory`, `probe-geometry-column`, `relationship-pinning`,
-`render-helper`, `sanitize`, `school-zone-factory`, `scope-mask`,
-`selection-controls`, `socrata-loader`, `socrata-point-loader`, `state`,
-`styles-app`, `styles-card-v2`, `styles-core`, `styles-footer`,
+index.html: `app-token`, `arcgis-loader`, `arcgis-paged-loader`, `basemap`,
+`body-map-toolbar`, `brand-names`, `cached-loaders`, `card-helpers`,
+`chamber-factory`, `coverage-gaps`, `cps-network-factory`,
+`districtry-behavior`, `districtry-theme`, `exports`,
+`extract-district-number`, `feedback`, `fetch-retry`, `find-prop-ci`,
+`footer-independence`, `gaps-html`, `gaps-modal-html`, `geocoder-search`,
+`geocoder-shell`, `geolocation`, `groups`, `haversine`, `hover-explorer`,
+`int-field`, `layer-registry`, `map-chrome-classes`, `map-pan-filter`,
+`metro-links`, `metro-links-html`, `metro-portal`, `nearest-point-factory`,
+`office-helpers`, `overlay-cards`, `permalink`, `poi-geocode`,
+`point-in-polygon`, `polygon-containment`, `polygon-factory`,
+`probe-geometry-column`, `relationship-pinning`, `render-helper`,
+`sanitize`, `school-zone-factory`, `scope-mask`, `selection-controls`,
+`socrata-loader`, `socrata-point-loader`, `state`, `styles-app`,
+`styles-card-v2`, `styles-core`, `styles-districtry-skin`, `styles-footer`,
 `styles-hover-responsive`, `styles-markers`, `styles-sibling-result`.
 (Count and list re-synced against `check_engine_parity.py` output while
 adding the two card blocks — the previous list said 45 but had drifted,
-missing `map-chrome-classes`, `map-pan-filter`, and `styles-markers`.)
+missing `map-chrome-classes`, `map-pan-filter`, and `styles-markers`.
+Re-derived again 2026-09-12 from this instance's own fences, which is what
+the list above now is: it had said 53 against 60, short by seven blocks
+that arrived in four changes and reached the root copy's list and not this
+one — `body-map-toolbar`, `brand-names`, `districtry-theme` and
+`styles-districtry-skin` (#520, 2026-08-25), `districtry-behavior` (#532,
+2026-08-26), `basemap` (#539, 2026-08-26) and `footer-independence` (#885,
+2026-09-11). Eighteen days, and nothing failed, because
+`scripts/fleet_status.py` compares this section against the real fences
+for the root copy only. The count line is a claim
+`python3 scripts/check_engine_parity.py ca/index.html` can refute; re-run
+it whenever a fence is added.)
 
 (`card-helpers` + `styles-card-v2` are the card-system redesign surface —
 docs/CARD_RENDER_API.md. `renderFieldList` and its `.result-row` CSS were
