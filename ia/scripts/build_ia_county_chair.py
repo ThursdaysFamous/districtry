@@ -281,6 +281,48 @@ def carry_forward(prior, out, verdicts, officers, today):
     return carried, lines
 
 
+def substantive_changes(prior, out):
+    """Which counties changed in a field OTHER than `confirmedOn`.
+
+    EVERY resolved record is re-stamped with today's date on every run, which
+    is what the carry rule needs and which also means the shipped file differs
+    from its base every single week. The workflow diffs that file to decide
+    whether to open a PR, so without this line a reviewer cannot tell a week
+    where a chair actually changed from a week where nothing did but the
+    stamps -- they open the diff to find out, every time. (The nine Illinois
+    AFR files have the same shape.)
+
+    Returns (lines, summary) where `summary` is one sentence for the PR body.
+    """
+    def bare(rec):
+        return {k: v for k, v in rec.items() if k != "confirmedOn"}
+
+    moved = []
+    for fips in sorted(set(prior) | set(out)):
+        was, now = prior.get(fips), out.get(fips)
+        if was is not None and now is not None:
+            if bare(was) == bare(now):
+                continue
+            fields = sorted(k for k in set(bare(was)) | set(bare(now))
+                            if bare(was).get(k) != bare(now).get(k))
+            moved.append(((now or was).get("county", fips), ", ".join(fields)))
+        elif now is not None:
+            moved.append((now.get("county", fips), "added"))
+        else:
+            moved.append((was.get("county", fips), "removed"))
+
+    lines = ["  CHANGED %s: %s" % (county, what) for county, what in moved]
+    if not moved:
+        summary = ("No county changed in any field other than `confirmedOn` — "
+                   "this refresh re-read the same chairs and only restamped "
+                   "the dates.")
+    else:
+        summary = ("%d county record(s) changed in a field other than "
+                   "`confirmedOn`: %s."
+                   % (len(moved), "; ".join("%s (%s)" % m for m in moved)))
+    return lines, summary
+
+
 def verdicts_by_fips(page_rows, minutes_rows):
     """{19xxx -> {verdict, ...}} across both scrapers' caches."""
     seen = {}
@@ -346,8 +388,37 @@ JANUARY_CASES = [
 ]
 
 
+# The PR body says "nothing moved" off this function, so a false negative
+# here tells a reviewer to skip a diff that did change a chair.
+A = {"chair": "Ray Peterson", "county": "Clayton", "route": "page",
+     "confirmedOn": "2026-09-12"}
+CHANGE_CASES = [
+    ("only confirmedOn moved — the ordinary weekly restamp",
+     {"19043": A}, {"19043": dict(A, confirmedOn="2026-09-19")}, 0),
+    ("nothing moved at all", {"19043": A}, {"19043": dict(A)}, 0),
+    ("the chair changed", {"19043": A},
+     {"19043": dict(A, chair="Doug Reimer", confirmedOn="2026-09-19")}, 1),
+    ("the route changed", {"19043": A},
+     {"19043": dict(A, route="page+minutes", confirmedOn="2026-09-19")}, 1),
+    ("a county was added", {}, {"19043": A}, 1),
+    ("a county was removed", {"19043": A}, {}, 1),
+    ("one restamp and one real change",
+     {"19043": A, "19001": dict(A, county="Adair")},
+     {"19043": dict(A, confirmedOn="2026-09-19"),
+      "19001": dict(A, county="Adair", chair="Someone Else")}, 1),
+]
+
+
 def selftest():
     bad = 0
+    for label, prior, out, expect in CHANGE_CASES:
+        lines, summary = substantive_changes(prior, out)
+        ok = len(lines) == expect
+        # a zero-change run must say so rather than listing nothing silently
+        if expect == 0 and "No county changed" not in summary:
+            ok = False
+        bad += 0 if ok else 1
+        print("  %-4s %-58s %d" % ("OK" if ok else "FAIL", label, len(lines)))
     for label, rec, saw, expect in CARRY_CASES:
         out = {}
         carry_forward({"19043": rec}, out, {"19043": saw}, ROSTER, TODAY)
@@ -363,7 +434,7 @@ def selftest():
         bad += 0 if got == expect else 1
         print("  %-4s %-58s %s" % ("OK" if got == expect else "FAIL", label,
                                    "carried" if got else "dropped"))
-    n = len(CARRY_CASES) + len(JANUARY_CASES)
+    n = len(CARRY_CASES) + len(JANUARY_CASES) + len(CHANGE_CASES)
     if bad:
         sys.exit("build-ia-county-chair --selftest: FAIL — %d of %d case(s)"
                  % (bad, n))
@@ -402,6 +473,7 @@ def main():
         print("  no previously shipped roster — nothing to carry forward")
     carried, carry_lines = carry_forward(
         prior, out, verdicts_by_fips(rows, minutes), officers, today)
+    change_lines, change_summary = substantive_changes(prior, out)
 
     for county, chair, route in dropped:
         print("  DROPPED %s (%s route): %r is not on the county's supervisor roster"
@@ -413,6 +485,17 @@ def main():
               "shipping neither" % (county, page_name, minutes_name))
     for line in carry_lines:
         print(line)
+    for line in change_lines:
+        print(line)
+    print("  %s" % change_summary)
+    # The weekly workflow puts this sentence in the PR body, so a reviewer can
+    # tell an empty refresh from a real one without opening the diff. Written
+    # through GITHUB_OUTPUT as a single line and consumed via `env:`, never
+    # interpolated into a shell command.
+    out_file = os.environ.get("GITHUB_OUTPUT")
+    if out_file:
+        with open(out_file, "a", encoding="utf-8") as fh:
+            fh.write("changes=%s\n" % change_summary.replace("\n", " "))
 
     if n_page < MIN_PAGE:
         sys.exit("build-ia-county-chair: FAIL — the board-page route resolved %d "
