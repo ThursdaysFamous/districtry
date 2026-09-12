@@ -131,6 +131,25 @@ jobs:
       - name: Instances carry exactly the shared engine
         run: python3 scripts/compose_app.py --check
 
+      # The same invariant read from the other side, plus the one thing the
+      # step above cannot say. compose_app splices by MARKER PRESENCE, so a
+      # block carried by three instances and absent from three is not wrong and
+      # is reported by nothing: county-layer-dispatcher is in il, ia and mi and
+      # absent from ca, ny and wi by design, because those three register no
+      # county-dispatched concept. --fleet states that shape instead of leaving
+      # a reader to infer it from a fence count, and it FAILS on any block whose
+      # interior differs between instances, comparing EVERY occurrence of a
+      # block rather than one per instance: the first version of this step kept
+      # one slot per instance, so a shared block spliced into several sub-pages
+      # was only compared in the sorted-last one, and doctoring il/faq.html's
+      # footer-byline fence passed. That failure is belt-and-braces behind the
+      # step above, which caught every doctoring this one missed. Instances are
+      # discovered from the TREE, never a table, and it refuses on fewer than
+      # two. Every count it prints is measured at run time and none is written
+      # down here, because the fleet's file list moves. Stdlib only.
+      - name: Every instance's fences agree, and partial blocks are named
+        run: python3 scripts/check_engine_parity.py --fleet
+
       # (The state-template gate was retired in R2.1 — the template repo is
       # archived and a new state is now a folder in this repo, not a generated
       # sibling. docs/DEV_PROCESS_ASSESSMENT.md.)

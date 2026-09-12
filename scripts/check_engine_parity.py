@@ -51,6 +51,9 @@ import re
 import sys
 import urllib.request
 
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ENGINE_DIR = os.path.join(REPO_ROOT, "engine")
+
 MARKER_RE = re.compile(
     r"^[ \t]*(?:/\*|<!--)[ \t]*==== ENGINE:(BEGIN|END) ([a-z0-9][a-z0-9-]*) ====[ \t]*(?:\*/|-->)[ \t]*$"
 )
@@ -153,10 +156,160 @@ def short_diff(name, ours, theirs, ours_label, theirs_label, max_lines=24):
     return "\n".join(clipped)
 
 
+def discover_surfaces():
+    """[(surface, relative path)] for every authored file that can carry fences.
+
+    The TREE is canonical, never a table: an instance is a top-level directory
+    with its own index.html and data/app/, the same rule
+    scripts/validate_instance_registration.py discovers by, because a table
+    would let this gate agree with itself about an instance nobody registered.
+    `root` is the pseudo-surface for the repo-root pages (the landing page, the
+    service-worker kill switch, and the shared sub-pages), which carry fences
+    too and compose exactly as the instances' do.
+    """
+    insts = sorted(
+        d for d in os.listdir(REPO_ROOT)
+        if os.path.isdir(os.path.join(REPO_ROOT, d))
+        and os.path.exists(os.path.join(REPO_ROOT, d, "index.html"))
+        and os.path.isdir(os.path.join(REPO_ROOT, d, "data", "app"))
+    )
+    out = []
+    for surface in ["root"] + insts:
+        prefix = "" if surface == "root" else surface + "/"
+        here = os.path.join(REPO_ROOT, prefix) if prefix else REPO_ROOT
+        names = sorted(f for f in os.listdir(here) if f.endswith(".html"))
+        if os.path.exists(os.path.join(here, "sw.js")):
+            names.append("sw.js")
+        for name in names:
+            out.append((surface, prefix + name))
+    return insts, out
+
+
+def group_key(basename, name):
+    """The key two occurrences of a block must share to be ONE block.
+
+    This mirrors scripts/compose_app.py's block_path(): a name with a source at
+    engine/shared/ is spliced from that ONE file into several basenames, so it
+    is keyed by NAME alone; anything else is keyed per basename. Keying a
+    shared block per basename would compare il/faq.html against ny/faq.html and
+    never compare either against il/sources.html, which is spliced from the
+    same source.
+    """
+    if os.path.exists(os.path.join(ENGINE_DIR, "shared", name + ".txt")):
+        return "shared:" + name
+    return "%s:%s" % (basename, name)
+
+
+def run_fleet():
+    """Compare every fence interior across every surface, and report the
+    blocks only some instances carry.
+
+    Two different jobs, deliberately with two different severities.
+
+    DRIFT is a hard FAIL, and it compares EVERY occurrence of a block group —
+    every file that carries it, not one per instance. That distinction is the
+    whole of the bug this function shipped with: see the comment on `groups`
+    below. It is also belt-and-braces behind `compose_app.py --check`, which
+    proves each file carries exactly the bytes in engine/ and therefore makes
+    this state impossible while it passes; this catches the case where both are
+    edited together.
+
+    THE PRESENCE INVENTORY only ever REPORTS, because a block legitimately
+    lives in some instances and not others: `county-layer-dispatcher` is in il,
+    ia and mi and absent from ca, ny and wi by design, since those three
+    register no county-dispatched concept. Nothing measured that before, and
+    compose_app cannot: it splices by MARKER PRESENCE, so a file with no fence
+    for a block is not wrong, it is simply not asked. An absence is stated here
+    so a reader sees the shape rather than inferring it from a fence count.
+
+    Every count in the output is measured at run time and none is written down
+    anywhere, because the fleet's file list moves: the first version of this
+    function quoted "51 files" in its own docstring and in the workflow, and
+    il/precinct.html made that 52 four days later.
+    """
+    insts, surfaces = discover_surfaces()
+    if len(insts) < 2:
+        print("engine-parity: FAIL — discovered %d instance(s) (%s); expected at least two, so "
+              "the discovery rule is broken rather than the tree"
+              % (len(insts), ", ".join(insts) or "none"), file=sys.stderr)
+        return 1
+
+    # key -> [(surface, relative path, body)], EVERY occurrence.
+    #
+    # This was a dict keyed by surface, which silently dropped occurrences: a
+    # `shared:` block is spliced into several files per instance, so il's seven
+    # sub-pages overwrote each other and only the sorted-last one was compared.
+    # Measured on that version — doctoring the footer-byline fence in
+    # il/faq.html or il/county-board.html passed with exit 0 while the same
+    # edit to il/ward.html failed — so the gate's own claim to catch any drift
+    # was false for six of il's seven sub-pages and the equivalent elsewhere.
+    groups = {}
+    carrying = 0
+    for surface, rel in surfaces:
+        path = os.path.join(REPO_ROOT, rel)
+        try:
+            found = extract_blocks(read_source(path), rel)
+        except (ValueError, OSError) as e:
+            print("engine-parity: FAIL — %s" % e, file=sys.stderr)
+            return 1
+        if found:
+            carrying += 1
+        for name, body in found.items():
+            groups.setdefault(group_key(os.path.basename(rel), name), []).append(
+                (surface, rel, body))
+
+    drifted = [key for key in sorted(groups)
+               if len({body for _s, _r, body in groups[key]}) > 1]
+
+    partial = []
+    for key in sorted(groups):
+        have = {surface for surface, _r, _b in groups[key]} & set(insts)
+        if not have:
+            continue                      # root-only block; no instance claim to make
+        absent = sorted(set(insts) - have)
+        if absent:
+            partial.append((key, sorted(have), absent))
+
+    print("engine-parity: %s — %d block group(s) over %d occurrence(s) in %d of %d file(s) "
+          "scanned, %d instance(s) (%s) + root"
+          % ("FAIL" if drifted else "OK", len(groups),
+             sum(len(v) for v in groups.values()), carrying, len(surfaces),
+             len(insts), ", ".join(insts)))
+
+    if partial:
+        print("  blocks some instances carry and others do not (reported, never failed):")
+        for key, have, absent in partial:
+            print("    %-44s have: %-24s absent: %s"
+                  % (key, ",".join(have), ",".join(absent)))
+    else:
+        print("  every block group is carried by every instance that has its file")
+
+    for key in drifted:
+        occ = sorted(groups[key], key=lambda t: t[1])
+        base_rel, base_body = occ[0][1], occ[0][2]
+        print("  DRIFT %s" % key, file=sys.stderr)
+        for surface, rel, body in occ:
+            mark = " <-- differs" if body != base_body else ""
+            print("    %-6s %s  %s%s" % (surface, digest(body), rel, mark), file=sys.stderr)
+        for surface, rel, body in occ:
+            if body != base_body:
+                print(short_diff(key, base_body, body, base_rel, rel), file=sys.stderr)
+                break
+    if drifted:
+        print("engine-parity: FAIL — %d block group(s) differ between instances; edit the block "
+              "under engine/ and run scripts/compose_app.py, never a fence inside an instance file"
+              % len(drifted), file=sys.stderr)
+        return 1
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("file", nargs="?", default="index.html", help="this fork's index.html")
     ap.add_argument("--against", help="sibling index.html: local path or deployed URL")
+    ap.add_argument("--fleet", action="store_true",
+                    help="compare every fence interior across every instance discovered "
+                         "from the tree, and report the blocks only some carry")
     ap.add_argument("--against-bundle", metavar="MANIFEST",
                     help="engine.manifest.json of a downloaded release: compare this file's "
                          "blocks against the bundle (post-assembly assertion; use with --strict)")
@@ -165,6 +318,9 @@ def main():
     ap.add_argument("--status-file", help="write ok|warn|fail to this path")
     ap.add_argument("--strict", action="store_true", help="exit 2 on drift (for local pre-port checks)")
     args = ap.parse_args()
+
+    if args.fleet:
+        sys.exit(run_fleet())
 
     status = "ok"
     report = []
