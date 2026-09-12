@@ -463,7 +463,9 @@ jobs:
       # property EXPECTED_UNREACHABLE and ACCEPTED_DROPS already have, and the
       # reason either can be trusted.
       - name: User-agent measurements still describe the tree
-        run: python3 scripts/probe_user_agents.py --check
+        run: |
+          python3 scripts/probe_user_agents.py --selftest
+          python3 scripts/probe_user_agents.py --check
 
       # THE CIRCUIT-COURT JOIN DECIDES THAT TWO DIFFERENTLY-WRITTEN NAMES ARE
       # ONE JUDGE, and until 2026-09-12 nothing tested it. It now has three
