@@ -18490,12 +18490,13 @@ function initChiExplorer() {
     return wrap;
   }
 
+  /* ==== ENGINE:BEGIN county-layer-dispatcher ==== */
   function registerCountyLayer(opts) {
     // opts.entries is the general form; opts.counties is the original name and
     // still the one every county-dispatched concept uses. The dispatch itself
     // was never county-specific — it needs disjoint footprints, nothing more —
-    // so `ward` keys its table by MUNICIPALITY through the same helper
-    // (docs/COUNTY_LAYER_CONSOLIDATION.md).
+    // so an instance can key its table by municipality or city through the
+    // same helper (docs/EXPANSION_GUIDE.md Part 2).
     var entries = opts.entries || opts.counties;
     var byKey = {};
     entries.forEach(function (entry) {
@@ -18503,13 +18504,13 @@ function initChiExplorer() {
       // byKey is last-wins, and render/cardIdentifier/primaryLink all dispatch
       // through it — so a second entry under an existing key does not merely
       // add a redundant lookup, it silently re-points the FIRST entry's cards
-      // at the second entry's renderer. That shipped: a precinct entry was
+      // at the second entry's renderer. That shipped in Illinois: a precinct entry was
       // pasted into the county-board table under key "stephenson" (2026-08-03),
       // and from then until 2026-08-04 a Stephenson board result rendered
       // through the precinct card. Nothing failed — every gate passed, because
       // the layer still registered and still had a working query walk.
       if (byKey[entry.key]) {
-        throw new Error(opts.id + ": duplicate county entry key '" + entry.key +
+        throw new Error(opts.id + ": duplicate entry key '" + entry.key +
           "' — byKey is last-wins, so this would re-point the earlier entry's card");
       }
       byKey[entry.key] = entry;
@@ -18539,7 +18540,7 @@ function initChiExplorer() {
     // total-failure path stays retryable: a rejection is never pinned — Retry
     // re-invokes this and the per-county loaders underneath (which do cache
     // successes) re-attempt. The recorded partial-union tradeoff
-    // (docs/COUNTY_LAYER_CONSOLIDATION.md) now applies only to counties whose
+    // (docs/EXPANSION_GUIDE.md §3.1) now applies only to counties whose
     // fetch actually FAILED: a merely slow county appends whenever it arrives,
     // while a failed one stays off the overlay until reload — its card/query
     // path (fetched per query, below) keeps working and keeps its own Retry.
@@ -18547,7 +18548,7 @@ function initChiExplorer() {
       var fc = { type: "FeatureCollection", features: [] };
       return new Promise(function (resolve, reject) {
         var resolved = false, pending = entries.length, anySuccess = false;
-        if (!pending) { reject(new Error(opts.label + ": no county source responded")); return; }
+        if (!pending) { reject(new Error(opts.label + ": no source responded")); return; }
         entries.forEach(function (entry) {
           entry.loadGeometry().then(function (geojson) {
             var wrapped = (geojson.features || []).map(function (f) {
@@ -18561,7 +18562,7 @@ function initChiExplorer() {
             .catch(function () { /* a drawing hiccup in one county must not skew the settle count */ })
             .then(function () {
               pending--;
-              if (!pending && !anySuccess) reject(new Error(opts.label + ": no county source responded"));
+              if (!pending && !anySuccess) reject(new Error(opts.label + ": no source responded"));
             });
         });
       });
@@ -18688,20 +18689,20 @@ function initChiExplorer() {
       },
       render: function (result) {
         var node = byKey[result.dxCounty].render(result);
-        // THE CARD'S LOCATION ROW, WHERE THE COUNTY PUBLISHES NONE. The fleet's
-        // card order is identity -> LOCATION -> contact -> link, and fifty of
-        // Illinois's sixty-three districted board cards were skipping the
-        // location outright — the instance's largest card-order gap. Appended
-        // HERE rather than in each entry's own renderer because there are
-        // sixty-three of those and no shared card path among them; a hook the
-        // concept declares reaches every one of them at a single site.
+        // The card's location row, where the unit publishes none. The fleet's
+        // card order is identity -> LOCATION -> contact -> link, and Illinois's
+        // districted board cards were skipping the location outright. Appended
+        // HERE rather than in each entry's own renderer because there is no
+        // shared card path among them; a hook the concept declares reaches
+        // every one at a single site. The share of cards still missing an
+        // address is a measurement, not a constant, so it is not quoted here.
         //
-        // It only ever ADDS. `opts.officeFallback` is asked for a county key
-        // and answers for the counties whose OWN roster publishes no address —
-        // the file it reads excludes every county that publishes one, so a
-        // county's own publication can never be overwritten or duplicated by
-        // this path (scripts/build_county_board_offices.py maintains that
-        // exclusion by measurement rather than by hand).
+        // It only ever ADDS. `opts.officeFallback` is asked for an entry key
+        // and answers for the units whose OWN roster publishes no address —
+        // the file it reads excludes every unit that publishes one, so a
+        // unit's own publication can never be overwritten or duplicated by
+        // this path (the instance's office builder maintains that exclusion by
+        // measurement rather than by hand).
         if (node && opts.officeFallback) {
           var extra = opts.officeFallback(result.dxCounty);
           if (extra) node.appendChild(extra);
@@ -18742,20 +18743,21 @@ function initChiExplorer() {
           return Promise.all(entries.map(function (entry) {
             return entry.hoverOfficial ? entry.hoverOfficial.load() : Promise.resolve(null);
           })).then(function (results) {
-            var byCounty = {};
-            entries.forEach(function (entry, idx) { byCounty[entry.key] = results[idx]; });
-            return byCounty;
+            var byUnit = {};
+            entries.forEach(function (entry, idx) { byUnit[entry.key] = results[idx]; });
+            return byUnit;
           });
         },
-        name: function (feature, byCounty) {
+        name: function (feature, byUnit) {
           var entry = byKey[feature.dxCounty];
-          if (!entry || !entry.hoverOfficial || !byCounty || !byCounty[entry.key]) return null;
-          return entry.hoverOfficial.name(feature, byCounty[entry.key]);
+          if (!entry || !entry.hoverOfficial || !byUnit || !byUnit[entry.key]) return null;
+          return entry.hoverOfficial.name(feature, byUnit[entry.key]);
         }
       } : undefined
     };
     registerLayer(spec);
   }
+  /* ==== ENGINE:END county-layer-dispatcher ==== */
 
   /* ---------- right-of-way snap for parcel-fabric tilings. A tax tiling
    * dissolved from parcels excludes road right-of-way, so a point on a road
