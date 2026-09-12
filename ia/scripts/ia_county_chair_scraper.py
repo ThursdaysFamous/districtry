@@ -610,11 +610,24 @@ def main():
         for r in ex.map(lambda kv: one_county(kv[0], kv[1], officers, cache), items):
             rows.append(r)
             counts[r["verdict"]] = counts.get(r["verdict"], 0) + 1
+            # EVERY county prints, not only the ones that resolved. This used
+            # to print `one` rows alone, and on 2026-09-08 that cost a real
+            # answer: the run dropped Clayton from the shipped roster and its
+            # log could not say whether the county had gone `none`, `no-roster`
+            # or `unreachable` -- the summary counts moved and no line named
+            # the county. A verdict nobody can attribute to a county is not a
+            # measurement.
             if r["verdict"] == "one":
                 extra = "= %s" % r["chair"]
                 if r["match"] != "exact":
                     extra += "   (%s join: page %r)" % (r["match"], r["pageName"])
-                print("  %-15s %-11s %s" % (r["county"], r["verdict"], extra), flush=True)
+            elif r["verdict"] in ("unreachable", "robots-refused"):
+                extra = r.get("code", "")
+            elif r["verdict"] == "many":
+                extra = "candidates: %s" % ", ".join(r.get("who") or [])
+            else:
+                extra = ""
+            print("  %-15s %-14s %s" % (r["county"], r["verdict"], extra), flush=True)
     print("\n  " + "  ".join("%s %d" % kv for kv in sorted(counts.items())))
     os.makedirs(CACHE_DIR, exist_ok=True)
     with open(OUT_PATH, "w", encoding="utf-8") as f:
