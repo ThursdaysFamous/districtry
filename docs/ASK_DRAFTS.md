@@ -1947,9 +1947,10 @@ correspondence.
 > a day earlier. **This project does not ask a public office for something it publishes.**
 
 **What the question was going to be.** The app's Circuit Court card for Waukesha names
-twelve judges and, before this change, gave nine of them a branch and a phone. Three carried
-neither, and one of the three was a spelling problem rather than a missing source: the state
-bench table at `wicourts.gov/courts/circuit/judges.htm` writes `J. Arthur Melvin III` where
+twelve judges and, before this change, gave eight of them a branch and a phone. Four carried
+neither — Domina, Melvin, Bugenhagen and Ramirez — and one of the four was a spelling problem
+rather than a missing source: the state bench table at
+`wicourts.gov/courts/circuit/judges.htm` writes `J. Arthur Melvin III` where
 the state contact page at `wicourts.gov/contact/Circuit_Courts.html` gives Branch 5 to
 `Jack A. Melvin`. Two differences at once — a generational suffix and a given name — so the
 builder withheld rather than assert that two differently-written names are one judge.
