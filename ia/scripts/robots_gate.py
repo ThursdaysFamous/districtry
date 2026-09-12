@@ -2,12 +2,26 @@
 """Ask a host's robots.txt before fetching it, for this instance's scrapers.
 
 SINCE 2026-09-12 THIS IS A SHIM. The reading lives in scripts/robots_policy.py,
-one copy for the fleet, and this file exists so the four Iowa callers keep
-the import and the two-tuple they have used since 2026-09-06:
+one copy for the fleet, and this file exists so the Iowa callers keep the
+import and the two-tuple they have used since 2026-09-06 (four files then;
+SIX now — the four page scrapers, ia_judicial_district_scraper.py, and
+validate_sources.py, which imports the pacer alone):
 
     from robots_gate import RobotsGate
     gate = RobotsGate(session, USER_AGENT)
     ok, why = gate.allows(url)
+
+HostPacer comes through here too, for the same reason and by the same route.
+It was written inside ia_county_chair_scraper.py when one file needed it; the
+Iowa source validator owes the same Crawl-delay to two other hosts, so the
+class moved to scripts/robots_policy.py beside the reader that supplies the
+number, with its self-test. Reading a delay and enacting one are different
+jobs and both now live in one place:
+
+    from robots_gate import RobotsGate, HostPacer
+    pacer = HostPacer(gate)
+    with pacer.hold(url):
+        ...                     # one request at a time per delay-stating host
 
 WHAT CHANGED, AND WHY IT HAD TO. The 2026-09-06 module parsed with Python's
 urllib.robotparser, and on 2026-09-12 that parser was measured keeping only
@@ -29,8 +43,8 @@ defect was latent here and live in the reading of wyomingmi.gov. The same
 probe found no host answering 200 with a blank body (so the empty-body fix
 below changes nothing today), 50 answering 404, 7 answering 202 (left alone),
 one refusing and one unreachable, and one binding Crawl-delay —
-kossuthcounty.iowa.gov, 10 seconds — that the six-worker board-chair scrape
-does not yet honour.
+kossuthcounty.iowa.gov, 10 seconds — which the six-worker board-chair scrape
+honours per host as of 2026-09-12 (HostPacer, below).
 
 Three readings the old module got wrong at the status level are also
 different now, and each is printed rather than silent:
@@ -47,9 +61,16 @@ different now, and each is printed rather than silent:
     county whose file is served by its CMS vendor (Revize, for Cherokee and
     Hamilton) can be seen to be.
 
-The gate also exposes two readings the old one could not give and no Iowa
-caller yet uses: gate.crawl_delay(url) and gate.content_signal(url). What a
-caller does with them is policy (CLAUDE.md, the honesty rules).
+The gate also exposes two readings the old one could not give:
+gate.crawl_delay(url) and gate.content_signal(url). What a caller does with
+them is policy (CLAUDE.md, the honesty rules). THIS PARAGRAPH SAID `no Iowa
+caller yet uses' THEM AND WAS STALE THE SAME DAY: three callers act on the
+delay now — ia_judicial_district_scraper.py sleeps it between its eight
+district pages, ia_county_chair_scraper.py paces it per host across six
+workers, and validate_sources.py puts it between its two iowacourts.gov
+probes. content_signal is still read by nobody here; iowacourts.gov states
+`search=yes, ai-train=no, use=reference', which CLAUDE.md's 2026-09-05 ruling
+already covers.
 
 THE 2026-09-06 MEASUREMENT STANDS AND IS KEPT HERE, because it is why any of
 this exists. FOUR Iowa scrapers fetch other people's pages on a weekly schedule
@@ -84,6 +105,6 @@ _ROOT_SCRIPTS = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(
 if _ROOT_SCRIPTS not in sys.path:
     sys.path.insert(0, _ROOT_SCRIPTS)
 
-from robots_policy import RobotsGate  # noqa: E402,F401  (shared machinery — do not fork)
+from robots_policy import RobotsGate, HostPacer  # noqa: E402,F401  (shared machinery — do not fork)
 
-__all__ = ["RobotsGate"]
+__all__ = ["RobotsGate", "HostPacer"]

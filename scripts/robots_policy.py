@@ -75,14 +75,26 @@ reason: scripts/validate_workflow_deps.py walks import closures against each
 workflow's pip line, and scrapers whose workflows install nothing import this.
 A `requests` session may be passed in; without one the fetch uses urllib.
 
+READING A Crawl-delay AND ENACTING ONE ARE DIFFERENT JOBS, and this module
+does both: RobotsPolicy.crawl_delay says what a host asked for, and HostPacer
+holds a caller to it. The pacer is here rather than in a scraper because the
+second caller needed it — it was written for ia/scripts/ia_county_chair_scraper.py
+and ia/scripts/validate_sources.py owes the same debt to two other hosts, so
+it is shared machinery now instead of a copy. What it is NOT is a global
+sleep: see its own docstring for why a pool of workers across many hosts
+needs a queue per host.
+
 Self-test: `python3 scripts/robots_policy.py --selftest` parses the three
-saved robots.txt files under scripts/fixtures/robots/ and asserts the readings
-this project has already established by hand for each.
+saved robots.txt files under scripts/fixtures/robots/, asserts the readings
+this project has already established by hand for each, and proves the pacer's
+rules with threads and no network.
 """
 import re
 import sys
 import threading
+import time
 import urllib.parse
+from contextlib import contextmanager
 
 CONTENT_SIGNAL_KEYS = ("search", "ai-input", "ai-train", "use")
 
@@ -374,6 +386,103 @@ class RobotsGate(object):
         return self.verdict(url).content_signal(self._ua)
 
 
+
+class HostPacer(object):
+    """Hold every host that states a Crawl-delay to one request at a time.
+
+    WHY THIS IS NOT A GLOBAL SLEEP. ia/scripts/ia_judicial_district_scraper.py
+    honours a Crawl-delay by sleeping between fetches, which is right for it:
+    one host, one thread. The board-chair scrape runs six workers across 98
+    different county hosts, so a global sleep would pace 97 hosts that asked
+    for nothing in order to pace the one that did. A host that states a delay
+    gets a queue of its own; every other host keeps the pool's full
+    parallelism. A single-threaded caller gets the same guarantee for free,
+    which is why ia/scripts/validate_sources.py can use the identical object
+    to put 30 seconds between its two www.iowacourts.gov probes.
+
+    MEASURED 2026-09-12 FROM A CLAUDE CODE SANDBOX, and the numbers are the
+    point. Of the 419 hosts the fleet's scheduled scrapers reach in code, 27
+    state a Crawl-delay that binds this project, and NOT ONE of them states a
+    different delay for a different token: the same value comes back for
+    `districtry/1.0`, `districtry-wisconsin/1.0`, the roster bot's string and a
+    Chrome/126 string alike, which is `User-agent: *` binding all of them
+    exactly as CLAUDE.md says. Twenty-one scheduled scripts read at least one
+    such host. THE VANTAGE IS NAMED BECAUSE REACHABILITY MOVES WITH IT:
+    review's sandbox and this one disagree about which county sites answer at
+    all (the address-dependence this repo records for Clayton and Polk). The
+    delays do not — they are in a file every vantage can read. ON THE
+    DENOMINATOR: CLAUDE.md records a 2026-09-12 sweep of "386 hosts the
+    scheduled scrapers read" finding 26 delays, and this one reads 419 and
+    finds 27. No file records the 386-host surface, so the two were NOT
+    reconciled and neither is claimed here to be the wrong count; the
+    difference is in how each defined the surface. This one is reproducible:
+    every string constant of every script a scheduled workflow runs, module
+    and function docstrings excluded (a URL a file EXPLAINS is not a URL a
+    file REQUESTS — one Iowa builder names iowacourts.gov four times in prose
+    and fetches a different host), plus the hosts the board-chair scrape reads
+    out of ia-county-board-directory.json.
+
+    TWO DECISIONS THAT LOOK LIKE DETAILS AND ARE NOT:
+
+    A LEADING `www.` IS FOLDED AWAY, because the pacer's key has to be the
+    SERVER and a netloc is not one. The chair scrape tries every path against
+    both `kossuthcounty.iowa.gov` and `www.kossuthcounty.iowa.gov`; measured,
+    the bare name 301s to the www one and both return the same 243,691-byte
+    body from the same Cloudflare server. Keying on the netloc would give one
+    machine two queues and halve the delay it asked for, while looking
+    correct in the log.
+
+    ROBOTS.TXT ITSELF IS NOT PACED. The delay is stated INSIDE robots.txt, so
+    the first fetch of it cannot be governed by a number it has not read yet,
+    and RobotsGate fetches each host's file once and caches it. Every other
+    request to a delay-stating site is paced.
+    """
+
+    def __init__(self, gate):
+        self._gate = gate
+        self._table_lock = threading.Lock()
+        self._sites = {}        # site -> [lock, last_request_monotonic]
+        self.honoured = {}      # site -> delay, for the printed report
+
+    @staticmethod
+    def site_of(url):
+        host = (urllib.parse.urlparse(url).netloc or "").lower()
+        return host[4:] if host.startswith("www.") else host
+
+    @contextmanager
+    def hold(self, url):
+        delay = None
+        try:
+            delay = self._gate.crawl_delay(url) if self._gate else None
+        except Exception:
+            delay = None        # a pacer must never be why a fetch fails
+        if not delay:
+            yield
+            return
+        site = self.site_of(url)
+        with self._table_lock:
+            entry = self._sites.setdefault(site, [threading.Lock(), 0.0])
+            self.honoured[site] = delay
+        with entry[0]:
+            wait = entry[1] + delay - time.monotonic()
+            if wait > 0:
+                time.sleep(wait)
+            try:
+                yield
+            finally:
+                entry[1] = time.monotonic()
+
+    def report(self, prefix="  "):
+        """The lines a caller prints so an honoured delay is not silent.
+
+        A delay that is honoured without saying so cannot be told from one
+        that is ignored, which is the whole reason the chair scrape prints it.
+        """
+        if self.honoured:
+            return ["%sCrawl-delay honoured: %s %g s" % (prefix, site, delay)
+                    for site, delay in sorted(self.honoured.items())]
+        return ["%sCrawl-delay honoured: no host this run stated one" % prefix]
+
 # --- self-test on the saved fixtures ------------------------------------------
 
 def _selftest():
@@ -487,17 +596,75 @@ def _selftest():
     check(classify(202, "").allows(ua, "https://h/")[0] is False, "challenge -> not fetched")
     check(classify(503, "").allows(ua, "https://h/")[0] is False, "unreachable -> not fetched")
 
+    # --- HostPacer: the three claims, proven with threads and no network ----
+    # Small delays so this stays under a second; the arithmetic is the same at
+    # Kossuth's ten and iowacourts.gov's thirty.
+    from concurrent.futures import ThreadPoolExecutor
+
+    class _FakeGate(object):
+        """A gate whose Crawl-delay answers come from a table, not a network."""
+
+        def __init__(self, table):
+            self._table = table
+
+        def crawl_delay(self, url):
+            return self._table.get(HostPacer.site_of(url))
+
+    # (1) a leading www. folds, so one server is one queue
+    check(HostPacer.site_of("https://www.kossuthcounty.iowa.gov/a")
+          == HostPacer.site_of("https://kossuthcounty.iowa.gov/b")
+          == "kossuthcounty.iowa.gov",
+          "pacer: www.host and host are not one pacing key")
+
+    DELAY = 0.20
+    pacer = HostPacer(_FakeGate({"paced.example": DELAY}))
+    stamps = {"paced": [], "free": []}
+    stamp_lock = threading.Lock()
+
+    def hit(bucket, url):
+        with pacer.hold(url):
+            with stamp_lock:
+                stamps[bucket].append(time.monotonic())
+            time.sleep(0.01)
+
+    # (2) a delay-stating site is serialised and spaced, across BOTH spellings
+    urls = ["https://paced.example/1", "https://www.paced.example/2",
+            "https://paced.example/3", "https://www.paced.example/4"]
+    t0 = time.monotonic()
+    with ThreadPoolExecutor(max_workers=6) as ex:
+        list(ex.map(lambda u: hit("paced", u), urls))
+    paced_elapsed = time.monotonic() - t0
+    gaps = [b - a for a, b in zip(sorted(stamps["paced"]), sorted(stamps["paced"])[1:])]
+    check(all(g >= DELAY * 0.9 for g in gaps),
+          "pacer: a stated delay did not space that site's requests (gaps %s)"
+          % ["%.2f" % g for g in gaps])
+    check(paced_elapsed >= DELAY * 3 * 0.9,
+          "pacer: four paced requests took %.2f s, under three delays" % paced_elapsed)
+
+    # (3) a site that states nothing keeps the pool's parallelism
+    t0 = time.monotonic()
+    with ThreadPoolExecutor(max_workers=6) as ex:
+        list(ex.map(lambda u: hit("free", u),
+                    ["https://free.example/%d" % i for i in range(6)]))
+    free_elapsed = time.monotonic() - t0
+    check(free_elapsed < DELAY,
+          "pacer: an unpaced site was slowed (%.2f s)" % free_elapsed)
+    check(list(pacer.honoured) == ["paced.example"],
+          "pacer: reported the wrong set of honoured sites (%s)" % pacer.honoured)
+
     if failures:
         for f in failures:
             print("robots_policy --selftest: FAIL — " + f, file=sys.stderr)
         sys.exit(1)
-    print("robots_policy --selftest: OK — 3 fixtures, %d assertions" % _count_checks())
+    print("robots_policy --selftest: OK — 3 fixtures + the pacer, %d assertions"
+          % _count_checks())
 
 
 def _count_checks():
     # The number of check() calls above; kept as a literal so the OK line
-    # cannot claim a count the code does not make.
-    return 48
+    # cannot claim a count the code does not make. 48 on the three saved
+    # robots.txt files, 5 on the pacer.
+    return 53
 
 
 if __name__ == "__main__":
