@@ -48,7 +48,7 @@ SENATOR_INFO_RE = re.compile(r'senatorInfo="([^"]*)"')
 MIN_SENATORS = 34
 
 HEADERS = {
-    "User-Agent": "districtry/1.0 (civic district explorer; "
+    "User-Agent": "districtry/1.0 (civic data; "
                   "https://github.com/ThursdaysFamous/districtry)"
 }
 TIMEOUT = 60

@@ -91,7 +91,7 @@ import urllib.parse
 
 import requests
 from scraper_common import UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
-from robots_rules import permitted, star_disallows  # noqa: E402
+from robots_policy import classify  # noqa: E402  (shared machinery — do not fork)
 
 try:
     import pdfplumber
@@ -194,29 +194,25 @@ def robots_verdict(url):
     """(permitted, note) for one address, from its host's own `*` group.
 
     Read with THIS scraper's header set, because sending a weaker client than
-    the crawl is the one asymmetry a compliance check must not have. An
-    unreadable robots.txt is reported unknown and does not block the fetch —
-    the fleet's posture, and the same one wi/scripts/validate_robots.py takes.
+    the crawl is the one asymmetry a compliance check must not have. The
+    reading is scripts/robots_policy.py's, the fleet's one copy, with two
+    consequences the first version of this function got backwards: a
+    robots.txt that is UNREACHABLE (a 5xx, a network failure, an HTTP 202
+    challenge) is disallow-all for that run (RFC 9309 §2.3.1.4) — the first
+    draft let a ConnectionError or a 503 through to the /images/ PDF — and a
+    401/403 on the file itself is read the way a municipal WEBSITE deserves,
+    as a firewall refusing this client, so nothing is fetched (the DuPage
+    scraper's posture; the shared default for API hosts is the RFC's allow).
     """
     split = urllib.parse.urlsplit(url)
     robots = "%s://%s/robots.txt" % (split.scheme or "https", split.netloc)
     try:
         resp = requests.get(robots, headers=HEADERS, timeout=ROBOTS_TIMEOUT)
     except Exception as exc:  # noqa: BLE001
-        return True, "robots.txt unreadable (%s) — policy unknown, not assumed" % (
-            type(exc).__name__)
-    if resp.status_code in (404, 410):
-        return True, "no robots.txt (HTTP %d) — nothing disallowed" % resp.status_code
-    if resp.status_code != 200 or not resp.content:
-        return True, "robots.txt unreadable (HTTP %d) — policy unknown, not assumed" % (
-            resp.status_code)
-    rules = star_disallows(resp.text)
-    if rules is None:
-        return True, "robots.txt has no `*` group — nothing disallowed to this client"
-    path = (split.path or "/") + (("?" + split.query) if split.query else "")
-    if permitted(path, rules):
-        return True, "the `*` group permits %s" % path
-    return False, "the `*` group disallows %s" % path
+        verdict = classify(None, None, error="%s: %s" % (type(exc).__name__, exc))
+    else:
+        verdict = classify(resp.status_code, resp.text, final_url=resp.url)
+    return verdict.allows(HEADERS["User-Agent"], url, refused_is_refusal=True)
 
 
 def discover_pdf_url(warnings):
@@ -511,6 +507,12 @@ def decline(url, note):
     /images/ stops being disallowed this resumes on its own.
     """
     print("ROBOTS-DECLINED: %s — %s. Not fetched." % (url, note), file=sys.stderr)
+    # Tell the workflow WHY this run stopped, so its standing issue can say
+    # "declined by robots.txt" only when that is true: the scraper also exits 1
+    # on a parse failure or a floor, and those are outages, not compliance.
+    if os.environ.get("GITHUB_OUTPUT"):
+        with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as out:
+            out.write("reason=robots\n")
     print("This is not an outage and not a block: the host serves the file to "
           "this client and asks automated clients not to take it. The shipped "
           "roster carries Logan's 11 municipalities forward (PRESERVABLE "

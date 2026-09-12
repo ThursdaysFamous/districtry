@@ -397,7 +397,22 @@ jobs:
       - name: Titles and descriptions fit a search result
         run: python3 scripts/validate_serp_lengths.py
 
-      # 116 files here send a browser user-agent, and CLAUDE.md's rule for that
+      # ONE READING OF robots.txt, and it has to agree with the readings this
+      # project established by hand. Until 2026-09-12 the fleet had four
+      # readers, and the one deciding fetches for the most scrapers (Iowa's,
+      # 108 hosts a week) used urllib.robotparser, which keeps only the FIRST
+      # `User-agent: *` group of a file and drops every later one — the
+      # wyomingmi.gov misreading (#806) reproduced in code, and exactly the
+      # shape Cloudflare's managed block produces above a site's own rules.
+      # scripts/robots_policy.py is the RFC 9309 reading every gate and
+      # scraper now imports; this runs its self-test over three saved
+      # robots.txt files (wyomingmi.gov, iowacourts.gov, sheboyganwi.gov)
+      # whose correct readings are on the record. Stdlib only, no network.
+      - name: The robots.txt reader agrees with the readings established by hand
+        run: python3 scripts/robots_policy.py --selftest
+
+      # Over a hundred files here send a browser user-agent (115 when this was
+      # measured), and CLAUDE.md's rule for that
       # (settled 2026-09-11) is that the calling file records which token was
       # refused, what the site answered, and the date. Measured 2026-09-12,
       # almost none did: 203 of 290 hosts reached by a browser-string caller

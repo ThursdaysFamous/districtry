@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Measure which county and city hosts actually refuse this project's own
-user-agent, so that the 116 files sending a browser string can say whether they
+user-agent, so that the files sending a browser string (115 measured 2026-09-12) can say whether they
 need one.
 
 WHY THIS EXISTS
@@ -15,7 +15,7 @@ the same thing from the other side: its UA constants "consolidate the
 DEFINITION, never the VALUE", because "several sites in this fleet block or
 challenge by client fingerprint" and nobody had measured which.
 
-Measured 2026-09-12: 297 hosts are reached by a caller that sends a browser
+Measured 2026-09-12: 290 hosts are reached by a caller that sends a browser
 string, and almost none of them had such a measurement on file. This script is
 that measurement.
 
@@ -33,7 +33,7 @@ axes, cheapest cell first, stopping the moment something answers:
     1. requests + districtry token      <- what a scraper should send
     2. stdlib   + districtry token      <- same claim, different stack
     3. requests + Chrome/126 + hints
-    4. stdlib   + Chrome/126 + hints    <- what 116 files send today
+    4. stdlib   + Chrome/126 + hints    <- what 115 files send today
 
 A host that answers cell 1 needs no browser string. One that answers cell 2
 needs a different STACK, not a different name. Only a host that answers 3 or 4
@@ -110,47 +110,17 @@ ARTIFACT = os.path.join(ROOT, "user-agent-measurements.json")
 INSTANCES = ("il", "ny", "ca", "wi", "ia", "mi")
 
 
-# --- robots.txt: ONE COPY, at scripts/robots_rules.py.
+# --- robots.txt: ONE COPY, at scripts/robots_policy.py (RFC 9309: every group
+# naming the fetching client, merged, else every `*` group, merged; longest
+# match wins; Crawl-delay and Content-Signal read from the binding groups).
 #
-# This module used to load wi/scripts/validate_robots.py by file path and undo
-# its sys.path insert, with a comment saying a root script importing an instance
-# file is backwards and the fix was to move those functions. The fix happened the
-# same day, for a reason neither consumer anticipated: a SCRAPER needed
-# permitted() too (logan_municipal_officials_scraper.py, whose yearbook sits
-# under a Disallow), and importing a probe from a scraper is worse than either.
-from robots_rules import permitted, resolve_template, star_disallows  # noqa: E402
-
-star_group = star_disallows
-
-
-def crawl_delay(text):
-    """The `*` group's Crawl-delay in seconds, or None.
-
-    Read from the file rather than from star_disallows()'s output, which
-    collects Allow and Disallow only — reaching for it there returned None for
-    every host, so a 60-second delay would have been honoured as zero.
-    """
-    current, pending, delay = [], True, None
-    for raw in text.splitlines():
-        line = raw.split("#", 1)[0].strip()
-        if not line or ":" not in line:
-            continue
-        key, value = (p.strip() for p in line.split(":", 1))
-        key = key.lower()
-        if key == "user-agent":
-            if not pending:
-                current, pending = [], True
-            current.append(value.lower())
-        elif key in ("disallow", "allow", "crawl-delay"):
-            if current:
-                pending = False
-            if key == "crawl-delay" and "*" in current:
-                try:
-                    delay = float(value)
-                except ValueError:
-                    pass
-    return delay
-
+# This module used to load wi/scripts/validate_robots.py by file path, then for
+# part of 2026-09-12 imported a `robots_rules` module that carried that audit's
+# `*`-only parser. Both are retired: a reader that evaluates only `*` cannot
+# see a group a site writes for this client's own token, and this probe reads
+# each host's policy with the RUNG'S client, so the token that fetches is the
+# token the policy is asked about.
+from robots_policy import RobotsPolicy, classify, resolve_template  # noqa: E402
 
 # --- what each rung sends.
 TOKEN_HEADERS = {
@@ -176,6 +146,9 @@ MIN_VISIBLE_TEXT = 500
 
 _STRIP_RE = re.compile(r"(?is)<(script|style|noscript|template)\b.*?</\1>")
 _TAG_RE = re.compile(r"(?s)<[^>]*>")
+
+
+
 
 
 def visible_text(text):
@@ -212,6 +185,7 @@ BROWSER_MARKERS = ("UA_CHROME_WIN_126_FULL", "UA_CHROME_WIN_126", "UA_CHROME_WIN
                    "fetch_stdlib")
 SELF_MARKERS = ("UA_ROSTER_BOT", "UA_ROSTER_COMPACT", "UA_CIVIC_BOT")
 SELF_INLINE_RE = re.compile(r"districtry|chidistricts|DistrictExplorer", re.I)
+SELF_TOKEN_RE = re.compile(r"\bdistrictry[\w.-]*/\d", re.I)
 BROWSER_INLINE_RE = re.compile(
     r"Mozilla/5\.0 \((?:Windows NT|X11;|Macintosh;|iPhone|Android)")
 
@@ -247,6 +221,13 @@ def ua_kind(text):
         kinds.add("browser")
     for literal in literals:
         if "Mozilla/5.0" not in literal:
+            # A plain product token of ours — `districtry/1.0 (+https://…)`,
+            # `districtry-wisconsin/1.0` — is what the Iowa and Wisconsin
+            # scrapers send, and the first version of this read every one as
+            # 'unknown' (317 files), then reported the Iowa judicial scraper's
+            # switch from a Chrome string as 'browser -> unknown'.
+            if SELF_TOKEN_RE.search(literal):
+                kinds.add("self")
             continue
         if SELF_INLINE_RE.search(literal):
             kinds.add("self")          # UA_ROSTER_COMPACT's shape: Mozilla, but ours
@@ -435,15 +416,22 @@ def read_robots(getter, headers, scheme, host):
         code, body, _hdrs, _final = getter(url, headers, timeout=20)
     except Exception as exc:  # noqa: BLE001
         return None, None, "unreadable (%s)" % type(exc).__name__
-    if code == 200 and body:
-        text = body.decode("utf-8", "replace")
-        rules, delay = star_group(text), crawl_delay(text)
-        if rules is None:
-            return [], delay, "read, no * group"
-        return rules, delay, "read, * group with %d rule(s)" % len(rules)
-    if code in (404, 410) or (code and 200 <= code < 400 and not body):
-        return [], None, "none (HTTP %s)" % code
-    return None, None, "unreadable (HTTP %s)" % code
+    text = body.decode("utf-8", "replace") if body else ""
+    verdict = classify(code, text)
+    ua = headers["User-Agent"]
+    if verdict.status == "served":
+        policy = verdict.policy
+        bound = policy.binding_groups(ua)
+        rules = sum(len(g.rules) for g in bound)
+        return policy, policy.crawl_delay(ua), "read, %d group(s) bind this client with %d rule(s)" % (len(bound), rules)
+    if verdict.status == "absent":
+        return RobotsPolicy(""), None, "none (HTTP %s)" % code
+    if verdict.status == "refused":
+        # 401/403 on robots.txt itself: no readable policy, allowed by default
+        # (RFC 9309 §2.3.1.3; the fleet's reading, robots_policy.py's docstring).
+        return RobotsPolicy(""), None, "refused to this client (HTTP %s) — no readable policy" % code
+    # challenge (202) or unreachable (5xx): this rung may not fetch.
+    return None, None, "%s (HTTP %s)" % (verdict.status, code)
 
 
 def verdict_for(cells):
@@ -486,8 +474,18 @@ def probe_host(host, url, pace, sleep=None):
         if rules is None:
             rules, delay, note = read_robots(getter, headers, scheme, host)
             out["robots"][name] = note
+            if rules is None:
+                # THIS RUNG MAY NOT FETCH. A policy this client could not read
+                # (a challenge, a 5xx, a network failure) is disallow-all for
+                # it (RFC 9309 §2.3.1.4); the next rung reads with its own
+                # client. The first version fetched anyway and the artifact
+                # carried 24 such hosts — dekalbcounty.org's robots.txt
+                # answered 202 to every client and a page was taken regardless.
+                out["cells"][name] = {"kind": "not-fetched",
+                                      "note": "robots.txt %s — not fetched by this client" % note}
+                continue
             if rules is not None:
-                if not permitted(path, rules):
+                if not rules.allows(headers["User-Agent"], path):
                     out["verdict"] = "robots-disallows-this-path"
                     out["note"] = ("the * group disallows %s — not fetched, so this "
                                    "host carries no user-agent measurement" % path[:90])
@@ -510,6 +508,10 @@ def probe_host(host, url, pace, sleep=None):
             break
     if rules is None:
         out["robots"]["policy"] = "unreadable to every client on the ladder"
+        out["verdict"] = "robots-unreadable"
+        out["note"] = ("robots.txt could not be read by any rung — no page was fetched, "
+                       "so this host carries no user-agent measurement")
+        return out
     out["verdict"] = verdict_for(out["cells"])
     out["note"] = "; ".join("%s %s" % (n, c["note"]) for n, c in out["cells"].items())
     # A REFUSAL CAN BE THE PATH RATHER THAN THE CLIENT, and the two need
@@ -613,6 +615,60 @@ def tally(hosts):
     return dict(sorted(out.items()))
 
 
+RETIRED_BRAND_RE = re.compile(r"chidistricts|districtexplorer|district-explorer|district explorer", re.I)
+UA_CONSTANT_RE = re.compile(r"^(UA|USER_AGENT|BOT|BROWSER|HONEST_UA|ARCHIVE_UA|[A-Z0-9_]*_UA|UA_[A-Z0-9_]+)$")
+
+
+def retired_brand_user_agents():
+    """[(relpath, string)] for every user-agent POSITION carrying a retired brand.
+
+    Positions, not substrings: a dict value under a "User-Agent" key (a Name
+    resolved to a module-level string constant), a module constant whose name
+    says it is a UA, the token handed to RobotsGate(), and a user_agent= keyword.
+    """
+    found = []
+    for path in script_paths():
+        rel = os.path.relpath(path, ROOT)
+        with open(path, encoding="utf-8", errors="replace") as f:
+            text = f.read()
+        try:
+            tree = ast.parse(text)
+        except SyntaxError:
+            continue
+        consts = {}
+        for node in tree.body:
+            if isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
+                if isinstance(node.value, ast.Constant) and isinstance(node.value.value, str):
+                    consts[node.targets[0].id] = node.value.value
+        def value_of(node):
+            if isinstance(node, ast.Constant) and isinstance(node.value, str):
+                return node.value
+            if isinstance(node, ast.Name):
+                return consts.get(node.id)
+            return None
+        hits = []
+        for name, value in consts.items():
+            if UA_CONSTANT_RE.match(name):
+                hits.append(value)
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Dict):
+                for k, v in zip(node.keys, node.values):
+                    if isinstance(k, ast.Constant) and str(k.value).lower() == "user-agent":
+                        hits.append(value_of(v))
+            elif isinstance(node, ast.Call):
+                fn = node.func
+                fname = fn.id if isinstance(fn, ast.Name) else getattr(fn, "attr", "")
+                if fname == "RobotsGate" and len(node.args) >= 2:
+                    hits.append(value_of(node.args[1]))
+                for kw in node.keywords:
+                    if kw.arg == "user_agent":
+                        hits.append(value_of(kw.value))
+        for h in hits:
+            if h and RETIRED_BRAND_RE.search(h):
+                found.append((rel, h))
+    return sorted(set(found))
+
+
 def check(args):
     """Offline: the artifact against the tree. No requests.
 
@@ -625,11 +681,27 @@ def check(args):
         print("user-agent probe: FAIL — %s is missing; run --probe"
               % os.path.relpath(ARTIFACT, ROOT), file=sys.stderr)
         return 1
-    payload = json.load(open(ARTIFACT))
+    try:
+        payload = json.load(open(ARTIFACT))
+    except ValueError as exc:
+        print("user-agent probe: FAIL — %s is not valid JSON (%s)"
+              % (os.path.relpath(ARTIFACT, ROOT), exc), file=sys.stderr)
+        return 1
     inventory = build_inventory()
     subject = set(subject_hosts(inventory))
     recorded = payload["hosts"]
     problems, notes = [], []
+    # A RETIRED BRAND IN A USER-AGENT POSITION IS A FAILURE. On 2026-09-12 the
+    # three shared tokens and nineteen single-file ones still said
+    # chidistricts.com, DistrictExplorer or districtexplorer, weeks after the
+    # rename; every one was measured host by host and switched (#886). Only
+    # UA positions are scanned — a dict value under "User-Agent", a UA-named
+    # constant, RobotsGate's token, a user_agent= keyword — because the old
+    # domain legitimately survives elsewhere as a redirect heading, an old
+    # cache name and the old repository slug.
+    for rel, ua_string in retired_brand_user_agents():
+        problems.append("%s sends a retired brand as its user-agent: %r — say districtry"
+                        % (rel, ua_string[:70]))
 
     for host, row in sorted(recorded.items()):
         if host not in inventory:
@@ -662,10 +734,20 @@ def check(args):
                          "(--refresh-callers records that)"
                          % (host, ", ".join(lost)))
     unmeasured = sorted(subject - set(recorded))
-    if unmeasured:
-        notes.append("%d subject host(s) carry no measurement: %s"
-                     % (len(unmeasured), ", ".join(unmeasured[:8])
-                        + (" ..." if len(unmeasured) > 8 else "")))
+    # AN UNMEASURED HOST REACHED BY A BROWSER-STRING FILE FAILS. The first
+    # version made this a NOTE with exit 0, so a fifteenth browser-string file
+    # could ship against a host nobody measured and the gate would say OK. A
+    # host reached only by files sending their own token stays a NOTE: nothing
+    # there needs a measurement to justify.
+    for host in unmeasured:
+        kinds = set(inventory[host]["callers"].values())
+        if kinds & {"browser", "both"}:
+            problems.append("%s is reached by a browser-string file (%s) and carries no "
+                            "measurement — run --probe for it, or send the token"
+                            % (host, ", ".join(f for f, k in sorted(inventory[host]["callers"].items())
+                                               if k in ("browser", "both"))))
+        else:
+            notes.append("%s carries no measurement (its callers send their own token)" % host)
     if payload.get("summary") != tally(recorded):
         problems.append("the summary block does not count the hosts below it")
 

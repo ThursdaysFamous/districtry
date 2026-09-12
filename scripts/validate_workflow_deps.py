@@ -115,13 +115,15 @@ ALWAYS_AVAILABLE = {"setuptools", "pip", "pkg_resources"}
 # Keep this SHORT. A shared module is one whose whole point is that every
 # instance agrees with the others: `undeliverable` is the fleet's list of
 # addresses that cannot receive mail, and three copies of it would be three
-# different lists within a month. `robots_rules` is the same test one subject
-# over — how this project reads a `*` group, and whether it permits a path —
-# and it earned the entry the day a scraper needed it (2026-09-12): three copies
-# of that parser would be three different readings of the same robots.txt, and
-# one of them already got cms5.revize.com's "documents yes, everything else no"
-# backwards. Both are stdlib-only, which is why neither needs a pip line.
-FLEET_SHARED = {"undeliverable", "robots_rules"}
+# different lists within a month. `robots_policy` (2026-09-12) is the one
+# reading of robots.txt: four readers had four answers to what a split
+# `User-agent: *` block means, and ia/scripts/robots_gate.py, the Wisconsin
+# audit, the DuPage and Logan scrapers, validate_card_links.py and the
+# user-agent probe all import it. (A `robots_rules` entry lived here for
+# part of that day, for the `*`-only parser #887 lifted out of the
+# Wisconsin audit; that module was retired into this one the same day.)
+# Both are stdlib-only, which is why neither needs a pip line.
+FLEET_SHARED = {"undeliverable", "robots_policy"}
 ROOT_SCRIPTS = os.path.join(REPO_ROOT, "scripts")
 
 PIP_RE = re.compile(r"pip3?\s+install\s+([^\n]*)")

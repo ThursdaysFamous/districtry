@@ -142,7 +142,7 @@ import zlib
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from scraper_common import UA_CHROME_WIN_126  # noqa: E402  (shared machinery — do not fork)
-from robots_rules import permitted, star_disallows  # noqa: E402
+from robots_policy import RobotsPolicy  # noqa: E402  (shared machinery — do not fork)
 
 try:
     import requests
@@ -963,7 +963,16 @@ def robots_still_disallows(host):
 
     Returns True (still shut), False (the rule has gone) or None (could not
     tell), and None is never reported as good news.
+
+    SINCE 2026-09-12 the file is read by scripts/robots_policy.py, the fleet's
+    one reading, asked whether the token this check sends may fetch "/". The
+    scan this replaced looked only for a literal `Disallow: /` under `*`, and
+    a run of agent lines in the order `*` then `Googlebot` reset its flag so
+    that group's `Disallow: /` was missed; a group naming districtry now binds
+    ahead of `*`, as RFC 9309 says it should.
     """
+    from robots_policy import RobotsPolicy
+
     for scheme in ("https", "http"):
         try:
             resp = requests.get("%s://%s/robots.txt" % (scheme, host), headers=HONEST_UA,
@@ -972,18 +981,7 @@ def robots_still_disallows(host):
             continue
         if resp.status_code >= 400:
             continue
-        star, disallowed = False, False
-        for raw in resp.text.splitlines():
-            line = raw.split("#", 1)[0].strip()
-            if not line or ":" not in line:
-                continue
-            field, value = (p.strip() for p in line.split(":", 1))
-            field = field.lower()
-            if field == "user-agent":
-                star = value == "*"
-            elif field == "disallow" and star and value == "/":
-                disallowed = True
-        return disallowed
+        return not RobotsPolicy(resp.text).allows(HONEST_UA["User-Agent"], "/")
     return None
 
 
@@ -991,10 +989,10 @@ def robots_still_disallows_path(host, path):
     """Does this host's `*` group still disallow this path?
 
     The sibling above answers only the whole-site question (`Disallow: /`),
-    which is Rochester Hills's shape and not Logan's. This one runs the real
-    longest-match rules from scripts/robots_rules.py, so an Allow that outranks
-    a Disallow is honoured rather than ignored — the mistake that file's own
-    docstring records.
+    which is Rochester Hills's shape and not Logan's. This one asks the fleet's
+    reader (scripts/robots_policy.py) whether the token this checker sends may
+    fetch the path, so an Allow that outranks a Disallow is honoured and a
+    group naming this client is read ahead of `*`.
 
     True (still disallowed), False (the rule has gone) or None (could not tell),
     and None is never reported as good news.
@@ -1007,10 +1005,7 @@ def robots_still_disallows_path(host, path):
             continue
         if resp.status_code >= 400:
             continue
-        rules = star_disallows(resp.text)
-        if rules is None:
-            return False           # no `*` group: nothing disallowed to this client
-        return not permitted(path, rules)
+        return not RobotsPolicy(resp.text).allows(HONEST_UA["User-Agent"], path)
     return None
 
 
@@ -1027,14 +1022,17 @@ def probe(url, resolved=None):
         or ROBOTS_DECLINED.get(host[4:] if host.startswith("www.") else host)
     if declined:
         still = robots_still_disallows(host)
-        return {"state": "declined", "detail": declined, "still": still}
+        return {"state": "declined", "detail": declined, "still": still,
+                "table": "ROBOTS_DECLINED", "entry": host}
     path = urllib.parse.urlsplit(url).path or "/"
     for candidate in (host, "www." + host,
                       host[4:] if host.startswith("www.") else host):
         for prefix, reason in ROBOTS_DECLINED_PATHS.get(candidate, ()):
             if path.startswith(prefix):
                 return {"state": "declined", "detail": reason,
-                        "still": robots_still_disallows_path(candidate, path)}
+                        "still": robots_still_disallows_path(candidate, path),
+                        "table": "ROBOTS_DECLINED_PATHS",
+                        "entry": "(%s, %s)" % (candidate, prefix)}
     if resolved is None:
         resolved = resolves(host)
     ok_dns, why = resolved
@@ -1205,11 +1203,12 @@ def evaluate(cites, origin, results):
                         "than worked around. %s. Cited at %s" % (detail, where))
             elif still is False:
                 row(WARN,
-                    "this host's robots.txt NO LONGER disallows `*` — the request this "
-                    "checker has been honouring appears to have been withdrawn. Re-read "
-                    "it, and if it is really gone drop %s from ROBOTS_DECLINED so the "
-                    "link is checked again (and reconsider any roster gap recorded "
-                    "against it). Recorded: %s. Cited at %s" % (host, detail, where))
+                    "this host's robots.txt NO LONGER disallows this client here — the "
+                    "request this checker has been honouring appears to have been "
+                    "withdrawn. Re-read it, and if it is really gone drop %s from %s so "
+                    "the link is checked again (and reconsider any roster gap recorded "
+                    "against it). Recorded: %s. Cited at %s"
+                    % (res.get("entry", host), res.get("table", "ROBOTS_DECLINED"), detail, where))
             else:
                 row(OK, "NOT PROBED (robots.txt declined) and its robots.txt could not "
                         "be re-read this run, so the recorded request stands. %s"
@@ -1312,14 +1311,26 @@ def check_expected_list_still_earned(cites, rows):
                          "listed in ROBOTS_DECLINED but the app no longer cites any URL on "
                          "this host — delete the entry. Recorded request: %s" % reason,
                          AUTHORED))
+    # A PATH entry earns its place by a cited URL under its PREFIX, not by the
+    # host: Logan's clerk page is cited ten times and read weekly, so a
+    # host-level test could never retire the /images/ entry after the yearbook
+    # moves — the exact case the scraper's own docstring anticipates.
+    cited_paths = {}
+    for u in cites:
+        h = host_of(u)
+        p = urllib.parse.urlsplit(u).path or "/"
+        cited_paths.setdefault(h, set()).add(p)
+        if h.startswith("www."):
+            cited_paths.setdefault(h[4:], set()).add(p)
     for host, entries in sorted(ROBOTS_DECLINED_PATHS.items()):
         bare = host[4:] if host.startswith("www.") else host
+        paths = cited_paths.get(host, set()) | cited_paths.get(bare, set()) | cited_paths.get("www." + bare, set())
         for prefix, reason in entries:
-            if host not in cited_hosts and bare not in cited_hosts:
+            if not any(p.startswith(prefix) for p in paths):
                 rows.append((WARN, host,
                              "listed in ROBOTS_DECLINED_PATHS (%s) but the app no longer "
-                             "cites any URL on this host — delete the entry. Recorded "
-                             "request: %s" % (prefix, reason), AUTHORED))
+                             "cites any URL under that prefix on this host — delete the "
+                             "entry. Recorded request: %s" % (prefix, reason), AUTHORED))
 
 
 # ---- reporting ---------------------------------------------------------------

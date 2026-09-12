@@ -22,7 +22,7 @@ import time
 import urllib.request
 
 URL = "https://council.nyc.gov/districts/"
-UA = "Mozilla/5.0 (compatible; NYCDistrictExplorer/1.0; +https://nyc.chidistricts.com)"
+UA = "Mozilla/5.0 (compatible; districtry-nyc/1.0; +https://districtry.com/ny/)"
 DEFAULT_OUT = os.path.join(os.path.dirname(__file__), ".cache", "council_raw.json")
 
 

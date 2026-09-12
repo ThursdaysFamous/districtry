@@ -59,7 +59,7 @@ MARKER_RE = re.compile(
 def read_source(spec):
     """Read text from a local path or an http(s) URL."""
     if spec.startswith("http://") or spec.startswith("https://"):
-        req = urllib.request.Request(spec, headers={"User-Agent": "district-explorer-engine-parity"})
+        req = urllib.request.Request(spec, headers={"User-Agent": "districtry-engine-parity"})
         with urllib.request.urlopen(req, timeout=30) as resp:
             return resp.read().decode("utf-8")
     with open(spec, encoding="utf-8") as f:

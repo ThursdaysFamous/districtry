@@ -1087,7 +1087,7 @@ def http_get(url, want_json=True, params=None):
             url,
             params=params,
             timeout=HTTP_TIMEOUT,
-            headers={"User-Agent": "DistrictExplorer-CHI source validator (+https://chidistricts.com)"},
+            headers={"User-Agent": "districtry source validator (+https://districtry.com/il/)"},
         )
     except Exception as e:  # network/TLS/proxy errors are a finding, not a crash
         return False, "request failed: %s" % e

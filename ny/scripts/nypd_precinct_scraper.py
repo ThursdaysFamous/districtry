@@ -56,7 +56,7 @@ NAME_RE = re.compile(
     r"Commanding Officer:\s*(" + _RANK +
     r"(?:\s+(?!" + _STOP + r"\b)[A-Z][A-Za-z'\u2019.,\-]*){1,4})"
 )
-UA = "Mozilla/5.0 (compatible; NYCDistrictExplorer/1.0; +https://nyc.chidistricts.com)"
+UA = "Mozilla/5.0 (compatible; districtry-nyc/1.0; +https://districtry.com/ny/)"
 DEFAULT_OUT = os.path.join(os.path.dirname(__file__), ".cache", "nypd_precincts_raw.json")
 
 

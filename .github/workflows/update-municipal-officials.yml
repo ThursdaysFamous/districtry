@@ -461,6 +461,7 @@ jobs:
           GRUNDY_OUTCOME: ${{ steps.scrape_grundy.outcome }}
           LIVINGSTON_OUTCOME: ${{ steps.scrape_livingston.outcome }}
           LOGAN_OUTCOME: ${{ steps.scrape_logan.outcome }}
+          LOGAN_REASON: ${{ steps.scrape_logan.outputs.reason }}
           MCLEAN_OUTCOME: ${{ steps.scrape_mclean.outcome }}
           SANGAMON_OUTCOME: ${{ steps.scrape_sangamon.outcome }}
           EWG_OUTCOME: ${{ steps.scrape_ewg.outcome }}
@@ -520,7 +521,11 @@ jobs:
           # host serves the file to this client and asks automated clients not
           # to take it. Calling compliance an outage is how a robots refusal
           # gets "fixed" by somebody later.
-          if [ "$LOGAN_OUTCOME" = "failure" ]; then
+          # ...and only when the scraper SAID it was robots.txt (it writes
+          # reason=robots to GITHUB_OUTPUT on a decline); any other Logan failure
+          # is an outage like every other county's and files as one.
+          if [ "$LOGAN_OUTCOME" = "failure" ] && [ "$LOGAN_REASON" != "robots" ]; then raise_issue "Logan"; fi
+          if [ "$LOGAN_OUTCOME" = "failure" ] && [ "$LOGAN_REASON" = "robots" ]; then
             title="Municipal officials: Logan County yearbook declined by robots.txt"
             existing="$(gh issue list --search "$title in:title" --state open --json number --jq '.[0].number')"
             body="www.logancountyil.gov's \`User-agent: *\` group disallows /images/, where the County Clerk's Reference & Yearbook lives, so the weekly refresh on $(date -u +%Y-%m-%d) read the policy and did not fetch it. This is compliance, not an outage — the file serves normally to a browser. Logan's 11 municipalities and 65 officials carry forward from the shipped roster (--preserved logan). The clerk's own page is permitted and still read, so the county board roster is unaffected. The check runs every week: if /images/ stops being disallowed, or the yearbook moves to a permitted path, the scrape resumes on its own. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

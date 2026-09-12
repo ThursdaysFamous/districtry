@@ -54,7 +54,7 @@
    "note": "the * group disallows /bos \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -142,7 +142,7 @@
    "note": "requests+token HTTP 200, 260995 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "blackriverfallswi.gov": {
@@ -197,7 +197,7 @@
    "note": "requests+token HTTP 200, 25417 bytes",
    "callers": {
     "wi/scripts/validate_sources.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "board.danecounty.gov": {
@@ -217,7 +217,7 @@
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/validate_sources.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "burnettcountywi.gov": {
@@ -236,7 +236,7 @@
    "note": "requests+token HTTP 200, 680328 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -256,7 +256,7 @@
    "note": "requests+token HTTP 200, 428103 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -317,8 +317,8 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 60831 bytes",
    "callers": {
-    "ia/scripts/ia_county_city_officials_scraper.py": "unknown",
-    "ia/scripts/ia_county_minutes_chair_scraper.py": "browser",
+    "ia/scripts/ia_county_city_officials_scraper.py": "self",
+    "ia/scripts/ia_county_minutes_chair_scraper.py": "both",
     "ia/scripts/validate_sources.py": "unknown"
    }
   },
@@ -364,7 +364,7 @@
    "note": "requests+token HTTP 200, 565442 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -668,7 +668,7 @@
    "verdict": "robots-disallows-this-path",
    "note": "the * group disallows /revize/piercewi/Agendas%%20and%%20Minutes/ \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "cms9files.revize.com": {
@@ -757,7 +757,7 @@
    "note": "requests+token HTTP 200, 117111 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "co.forest.wi.gov": {
@@ -776,7 +776,7 @@
    "note": "requests+token HTTP 200, 157114 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "co.grant.wi.gov": {
@@ -795,7 +795,7 @@
    "note": "requests+token HTTP 200, 178899 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "co.monroe.wi.us": {
@@ -847,7 +847,7 @@
    "note": "requests+token HTTP 200, 464181 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -921,7 +921,7 @@
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/validate_sources.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "co.trempealeau.wi.us": {
@@ -940,7 +940,7 @@
    "note": "requests+token HTTP 200, 71790 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -960,7 +960,7 @@
    "note": "requests+token HTTP 200, 985489 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -980,7 +980,7 @@
    "note": "requests+token HTTP 200, 315412 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -1130,8 +1130,8 @@
    "note": "requests+token HTTP 200, 41527 bytes",
    "callers": {
     "wi/scripts/build_milwaukee_city_layers.py": "unknown",
-    "wi/scripts/build_mke_polling_places.py": "unknown",
-    "wi/scripts/build_mps_school_board_districts.py": "unknown",
+    "wi/scripts/build_mke_polling_places.py": "self",
+    "wi/scripts/build_mps_school_board_districts.py": "self",
     "wi/scripts/validate_sources.py": "browser",
     "wi/scripts/wi_alderperson_scraper.py": "browser"
    }
@@ -1328,7 +1328,7 @@
    "note": "requests+token HTTP 200, 636473 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -1342,7 +1342,7 @@
    "verdict": "robots-disallows-this-path",
    "note": "the * group disallows /uc?export=download&id= \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "dunncountywi.gov": {
@@ -1356,7 +1356,7 @@
    "note": "the * group disallows /treasurer \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -1394,7 +1394,7 @@
    "note": "requests+token HTTP 200, 144465 bytes (page carries a captcha widget)",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -1485,7 +1485,7 @@
    },
    "callers": {
     "wi/scripts/build_wi_municipal_clerks.py": "unknown",
-    "wi/scripts/build_wi_polling_places.py": "unknown",
+    "wi/scripts/build_wi_polling_places.py": "self",
     "wi/scripts/validate_sources.py": "browser",
     "wi/scripts/wi_wec_probe.py": "browser",
     "wi/scripts/wi_wec_recon.py": "browser"
@@ -1541,7 +1541,7 @@
    },
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "fliphtml5.com": {
@@ -1775,7 +1775,7 @@
    "note": "requests+token HTTP 200, 523978 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -1831,7 +1831,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 97626 bytes",
    "callers": {
-    "ia/scripts/ia_county_auditor_scraper.py": "browser"
+    "ia/scripts/ia_county_auditor_scraper.py": "both"
    }
   },
   "il-clark.accessliberty.com": {
@@ -1889,7 +1889,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 97119 bytes (page carries a captcha widget)",
    "callers": {
-    "ia/scripts/build_ia_aea.py": "browser"
+    "ia/scripts/build_ia_aea.py": "both"
    }
   },
   "iowaauditors.org": {
@@ -1907,7 +1907,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 99913 bytes",
    "callers": {
-    "ia/scripts/ia_county_auditor_scraper.py": "browser",
+    "ia/scripts/ia_county_auditor_scraper.py": "both",
     "ia/scripts/validate_sources.py": "unknown"
    }
   },
@@ -1945,7 +1945,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 634438 bytes",
    "callers": {
-    "ia/scripts/build_ia_city_contact.py": "browser",
+    "ia/scripts/build_ia_city_contact.py": "both",
     "ia/scripts/validate_sources.py": "unknown"
    }
   },
@@ -2004,7 +2004,7 @@
    "note": "requests+token HTTP 200, 227857 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "johnson-county.granicus.com": {
@@ -2017,7 +2017,7 @@
    "verdict": "robots-disallows-this-path",
    "note": "the * group disallows /ViewPublisher.php?view_id=1&count=20 \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
-    "ia/scripts/ia_county_minutes_chair_scraper.py": "browser"
+    "ia/scripts/ia_county_minutes_chair_scraper.py": "both"
    }
   },
   "lacrossecounty.org": {
@@ -2052,7 +2052,7 @@
    },
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "lafayettecountywi.org": {
@@ -2160,7 +2160,7 @@
    "note": "requests+token HTTP 200, 108985 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -2217,8 +2217,8 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 3176 bytes",
    "callers": {
-    "wi/scripts/build_madison_city_layers.py": "unknown",
-    "wi/scripts/build_madison_polling_places.py": "unknown",
+    "wi/scripts/build_madison_city_layers.py": "self",
+    "wi/scripts/build_madison_polling_places.py": "self",
     "wi/scripts/validate_sources.py": "browser"
    }
   },
@@ -2272,7 +2272,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 8353 bytes",
    "callers": {
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "maps.grundyco.org": {
@@ -2362,7 +2362,7 @@
     "note": "HTTP 200, 3140 bytes but 13 chars of text"
    },
    "callers": {
-    "wi/scripts/build_rusd_school_board_districts.py": "unknown",
+    "wi/scripts/build_rusd_school_board_districts.py": "self",
     "wi/scripts/build_wi_aldermanic_districts.py": "unknown",
     "wi/scripts/validate_sources.py": "browser"
    }
@@ -2478,7 +2478,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 49445 bytes",
    "callers": {
-    "ia/scripts/ia_county_directory_scraper.py": "unknown",
+    "ia/scripts/ia_county_directory_scraper.py": "self",
     "ia/scripts/ia_county_officers_scraper.py": "browser",
     "ia/scripts/validate_sources.py": "unknown"
    }
@@ -2494,8 +2494,8 @@
    "note": "the * group disallows /arcgis/rest/services/ \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_milwaukee_city_layers.py": "unknown",
-    "wi/scripts/build_mke_polling_places.py": "unknown",
-    "wi/scripts/build_mps_school_board_districts.py": "unknown",
+    "wi/scripts/build_mke_polling_places.py": "self",
+    "wi/scripts/build_mps_school_board_districts.py": "self",
     "wi/scripts/validate_sources.py": "browser"
    }
   },
@@ -2636,7 +2636,7 @@
    "note": "requests+token HTTP 200, 417843 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -2681,7 +2681,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 395639 bytes",
    "callers": {
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "pulaskicountyil.net": {
@@ -2782,7 +2782,7 @@
    "note": "the * group disallows /index.asp?SEC=DB387A4E-E124-4584-B32C-2C95880C63F0 \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "rockislandcountyil.gov": {
@@ -2832,7 +2832,7 @@
    "note": "the * group disallows /supervisors \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "salinecounty.illinois.gov": {
@@ -2905,7 +2905,7 @@
    },
    "callers": {
     "wi/scripts/validate_sources.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "sccwi.gov": {
@@ -2924,7 +2924,7 @@
    "note": "requests+token HTTP 200, 629999 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -2964,7 +2964,7 @@
    },
    "callers": {
     "scripts/build_dewitt_board_districts.py": "unknown",
-    "scripts/build_logan_park_districts.py": "unknown",
+    "scripts/build_logan_park_districts.py": "self",
     "scripts/build_parcel_fabric_districts.py": "unknown",
     "scripts/build_statewide_library_districts.py": "unknown",
     "scripts/il_special_district_officials_scraper.py": "self",
@@ -2973,17 +2973,17 @@
     "scripts/tazewell_county_board_scraper.py": "self",
     "scripts/validate_sources.py": "browser",
     "ca/scripts/validate_sources.py": "unknown",
-    "ia/scripts/build_cedar_rapids_wards.py": "unknown",
-    "ia/scripts/build_dsm_council.py": "unknown",
-    "ia/scripts/build_dsm_wards.py": "unknown",
-    "ia/scripts/build_ia_aea.py": "browser",
-    "ia/scripts/build_ia_cc_director_districts.py": "unknown",
+    "ia/scripts/build_cedar_rapids_wards.py": "self",
+    "ia/scripts/build_dsm_council.py": "self",
+    "ia/scripts/build_dsm_wards.py": "self",
+    "ia/scripts/build_ia_aea.py": "both",
+    "ia/scripts/build_ia_cc_director_districts.py": "self",
     "ia/scripts/build_ia_community_colleges.py": "unknown",
     "ia/scripts/build_ia_precincts.py": "unknown",
-    "ia/scripts/build_ia_school_director_districts.py": "unknown",
-    "ia/scripts/build_ia_school_districts.py": "unknown",
+    "ia/scripts/build_ia_school_director_districts.py": "self",
+    "ia/scripts/build_ia_school_districts.py": "self",
     "ia/scripts/build_ia_school_sites.py": "unknown",
-    "ia/scripts/build_ia_supervisor_districts.py": "unknown",
+    "ia/scripts/build_ia_supervisor_districts.py": "self",
     "ia/scripts/validate_sources.py": "unknown"
    }
   },
@@ -3027,15 +3027,15 @@
     "scripts/build_parcel_fabric_districts.py": "unknown",
     "scripts/il_special_district_officials_scraper.py": "self",
     "scripts/validate_sources.py": "browser",
-    "wi/scripts/build_madison_polling_places.py": "unknown",
-    "wi/scripts/build_mke_polling_places.py": "unknown",
-    "wi/scripts/build_wi_polling_places.py": "unknown",
-    "wi/scripts/build_wi_supervisory_districts.py": "unknown",
+    "wi/scripts/build_madison_polling_places.py": "self",
+    "wi/scripts/build_mke_polling_places.py": "self",
+    "wi/scripts/build_wi_polling_places.py": "self",
+    "wi/scripts/build_wi_supervisory_districts.py": "self",
     "wi/scripts/validate_sources.py": "browser",
     "wi/scripts/wi_alderperson_scraper.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
-    "ia/scripts/build_waterloo_council.py": "unknown",
-    "ia/scripts/build_waterloo_wards.py": "unknown",
+    "wi/scripts/wi_county_board_scraper.py": "both",
+    "ia/scripts/build_waterloo_council.py": "self",
+    "ia/scripts/build_waterloo_wards.py": "self",
     "ia/scripts/validate_sources.py": "unknown",
     "mi/scripts/build_mi_lansing_wards.py": "unknown"
    }
@@ -3077,7 +3077,7 @@
    "callers": {
     "scripts/validate_sources.py": "browser",
     "wi/scripts/validate_sources.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_municipal_executive_scraper.py": "browser",
     "ia/scripts/build_ia_judicial_district.py": "unknown",
     "ia/scripts/validate_sources.py": "unknown",
@@ -3239,7 +3239,7 @@
    "callers": {
     "wi/scripts/build_wi_libraries.py": "unknown",
     "wi/scripts/build_wi_school_sites.py": "unknown",
-    "wi/scripts/build_wi_wtcs_districts.py": "unknown",
+    "wi/scripts/build_wi_wtcs_districts.py": "self",
     "wi/scripts/validate_sources.py": "browser",
     "mi/scripts/build_mi_warren_wards.py": "unknown"
    }
@@ -3281,7 +3281,7 @@
    "callers": {
     "scripts/build_parcel_fabric_districts.py": "unknown",
     "scripts/validate_sources.py": "browser",
-    "wi/scripts/build_wi_supervisory_districts.py": "unknown",
+    "wi/scripts/build_wi_supervisory_districts.py": "self",
     "wi/scripts/validate_sources.py": "browser"
    }
   },
@@ -3333,7 +3333,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 238759 bytes",
    "callers": {
-    "ia/scripts/ia_county_auditor_scraper.py": "browser",
+    "ia/scripts/ia_county_auditor_scraper.py": "both",
     "ia/scripts/validate_sources.py": "unknown"
    }
   },
@@ -3437,7 +3437,7 @@
     "scripts/build_washington_board_districts.py": "unknown",
     "scripts/build_white_boundaries.py": "unknown",
     "scripts/build_woodford_board_districts.py": "unknown",
-    "scripts/il_library_contacts_scraper.py": "unknown",
+    "scripts/il_library_contacts_scraper.py": "self",
     "scripts/isbe_precinct_fabric.py": "browser",
     "scripts/validate_sources.py": "browser",
     "scripts/vtd_board_districts.py": "unknown",
@@ -3449,13 +3449,13 @@
     "wi/scripts/build_metro_outline.py": "unknown",
     "wi/scripts/build_wi_municipal_clerks.py": "unknown",
     "wi/scripts/validate_sources.py": "browser",
-    "ia/scripts/build_cedar_rapids_wards.py": "unknown",
-    "ia/scripts/build_ia_city_contact.py": "browser",
-    "ia/scripts/build_ia_school_districts.py": "unknown",
+    "ia/scripts/build_cedar_rapids_wards.py": "self",
+    "ia/scripts/build_ia_city_contact.py": "both",
+    "ia/scripts/build_ia_school_districts.py": "self",
     "ia/scripts/build_legislative_boundaries.py": "unknown",
     "ia/scripts/build_metro_outline.py": "unknown",
     "ia/scripts/build_state_counties.py": "unknown",
-    "ia/scripts/build_story_supervisor_districts.py": "unknown",
+    "ia/scripts/build_story_supervisor_districts.py": "self",
     "ia/scripts/validate_sources.py": "unknown",
     "mi/scripts/build_legislative_boundaries.py": "unknown",
     "mi/scripts/build_metro_outline.py": "unknown",
@@ -3580,7 +3580,7 @@
    "note": "requests+token HTTP 200, 801259 bytes",
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "wincoil.gov": {
@@ -3672,7 +3672,7 @@
    "note": "requests+token HTTP 200, 85539 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -3762,9 +3762,9 @@
     "note": "HTTP 200, 823 bytes"
    },
    "callers": {
-    "scripts/build_logan_park_districts.py": "unknown",
+    "scripts/build_logan_park_districts.py": "self",
     "wi/scripts/validate_sources.py": "browser",
-    "ia/scripts/build_dsm_wards.py": "unknown",
+    "ia/scripts/build_dsm_wards.py": "self",
     "mi/scripts/build_mi_battle_creek_wards.py": "unknown",
     "mi/scripts/build_mi_flint_wards.py": "unknown",
     "mi/scripts/build_mi_grand_rapids_wards.py": "unknown",
@@ -3877,7 +3877,7 @@
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/validate_sources.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -3898,7 +3898,7 @@
    "note": "requests+token HTTP 200, 294197 bytes (page carries a captcha widget)",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -4063,8 +4063,8 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 80655 bytes",
    "callers": {
-    "wi/scripts/build_madison_city_layers.py": "unknown",
-    "wi/scripts/build_madison_polling_places.py": "unknown",
+    "wi/scripts/build_madison_city_layers.py": "self",
+    "wi/scripts/build_madison_polling_places.py": "self",
     "wi/scripts/validate_sources.py": "browser",
     "wi/scripts/wi_alderperson_scraper.py": "browser"
    }
@@ -4140,7 +4140,7 @@
    "note": "requests+token HTTP 200, 965076 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -4159,7 +4159,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 251443 bytes",
    "callers": {
-    "ia/scripts/ia_county_minutes_chair_scraper.py": "browser"
+    "ia/scripts/ia_county_minutes_chair_scraper.py": "both"
    }
   },
   "www.co.adams.wi.us": {
@@ -4179,7 +4179,7 @@
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/validate_sources.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -4198,7 +4198,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 32695 bytes",
    "callers": {
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "www.co.columbia.wi.us": {
@@ -4217,7 +4217,7 @@
    "note": "requests+token HTTP 200, 52541 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -4239,7 +4239,7 @@
    "callers": {
     "wi/scripts/build_wi_circuit_court_roster.py": "unknown",
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "www.co.grant.wi.gov": {
@@ -4276,7 +4276,7 @@
    "note": "requests+token HTTP 200, 830935 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -4291,7 +4291,7 @@
    "note": "the * group disallows /vertical/sites/%7B4C09F8F2-A8A2-4929-9E2A-A836851B00CC%7D/uploads/2026_-_2027_County_Boar \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "www.co.juneau.wi.gov": {
@@ -4310,7 +4310,7 @@
    "note": "requests+token HTTP 200, 81162 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -4330,7 +4330,7 @@
    "note": "requests+token HTTP 200, 59930 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -4384,7 +4384,7 @@
    "note": "requests+token HTTP 200, 20337 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "www.co.monroe.wi.us": {
@@ -4422,7 +4422,7 @@
    },
    "callers": {
     "wi/scripts/validate_sources.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "www.co.pepin.wi.us": {
@@ -4436,7 +4436,7 @@
    "note": "the * group disallows /bos \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -4456,7 +4456,7 @@
    "note": "requests+token HTTP 200, 69798 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "www.co.portage.wi.gov": {
@@ -4475,7 +4475,7 @@
    "note": "requests+token HTTP 200, 583639 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -4513,7 +4513,7 @@
     "note": "HTTP 403"
    },
    "callers": {
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "www.co.sauk.wi.us": {
@@ -4547,7 +4547,7 @@
    "note": "requests+token HTTP 200, 22596 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "www.colesco.illinois.gov": {
@@ -4661,7 +4661,7 @@
    "note": "requests+token HTTP 200, 154769 bytes (page carries a captcha widget)",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "www.dallascountyiowa.gov": {
@@ -4679,7 +4679,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 319149 bytes",
    "callers": {
-    "ia/scripts/ia_county_minutes_chair_scraper.py": "browser"
+    "ia/scripts/ia_county_minutes_chair_scraper.py": "both"
    }
   },
   "www.desmoinescounty.iowa.gov": {
@@ -4697,7 +4697,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 629234 bytes",
    "callers": {
-    "ia/scripts/ia_county_minutes_chair_scraper.py": "browser"
+    "ia/scripts/ia_county_minutes_chair_scraper.py": "both"
    }
   },
   "www.dewittcountyil.gov": {
@@ -4832,7 +4832,7 @@
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/validate_sources.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "www.florencecountywi.com": {
@@ -4851,7 +4851,7 @@
    "note": "requests+token HTTP 200, 18663 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -4927,7 +4927,7 @@
    "note": "requests+token HTTP 200, 46472 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -5133,7 +5133,7 @@
    "note": "requests+token HTTP 200, 129515 bytes (page carries a captcha widget)",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "www.iowacourts.gov": {
@@ -5148,7 +5148,7 @@
    "note": "Crawl-delay: 30.0 \u2014 not fetched; four rungs at that pace is not a polite probe",
    "callers": {
     "ia/scripts/build_ia_judicial_district.py": "unknown",
-    "ia/scripts/ia_judicial_district_scraper.py": "browser",
+    "ia/scripts/ia_judicial_district_scraper.py": "self",
     "ia/scripts/validate_sources.py": "unknown"
    }
   },
@@ -5329,7 +5329,7 @@
     "wi/scripts/validate_sources.py": "browser",
     "wi/scripts/verify_kenosha_supervisory_map.py": "browser",
     "wi/scripts/wi_alderperson_scraper.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -5349,7 +5349,7 @@
    "note": "requests+token HTTP 200, 29069 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "www.knoxcountyil.gov": {
@@ -5411,7 +5411,7 @@
    },
    "callers": {
     "wi/scripts/validate_sources.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "www.lakecountyil.gov": {
@@ -5478,7 +5478,7 @@
    "note": "requests+token HTTP 200, 98444 bytes",
    "callers": {
     "ia/scripts/build_ia_judicial_district.py": "unknown",
-    "ia/scripts/build_story_supervisor_districts.py": "unknown",
+    "ia/scripts/build_story_supervisor_districts.py": "self",
     "ia/scripts/ia_legislature_scraper.py": "browser",
     "ia/scripts/validate_sources.py": "unknown"
    }
@@ -5588,7 +5588,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 230765 bytes",
    "callers": {
-    "ia/scripts/ia_county_minutes_chair_scraper.py": "browser"
+    "ia/scripts/ia_county_minutes_chair_scraper.py": "both"
    }
   },
   "www.manitowoc.org": {
@@ -5643,7 +5643,7 @@
     "note": "HTTP 403"
    },
    "callers": {
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "www.marinettecountywi.gov": {
@@ -5662,7 +5662,7 @@
    "note": "requests+token HTTP 200, 57886 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -5682,7 +5682,7 @@
    "note": "requests+token HTTP 200, 202605 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -5910,7 +5910,7 @@
    "note": "requests+token HTTP 200, 407784 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -5968,7 +5968,7 @@
    "note": "requests+token HTTP 200, 257999 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -5988,7 +5988,7 @@
    "note": "requests+token HTTP 200, 106184 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "www.peoriacounty.gov": {
@@ -6040,7 +6040,7 @@
    "note": "the * group disallows /government/elected_officials/sheriff/index.php \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -6078,7 +6078,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 101347 bytes",
    "callers": {
-    "wi/scripts/build_madison_city_layers.py": "unknown",
+    "wi/scripts/build_madison_city_layers.py": "self",
     "wi/scripts/validate_sources.py": "browser"
    }
   },
@@ -6118,7 +6118,7 @@
    "note": "requests+token HTTP 200, 626082 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -6176,7 +6176,7 @@
    },
    "callers": {
     "wi/scripts/validate_sources.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -6342,7 +6342,7 @@
    "note": "requests+token HTTP 200, 137046 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -6362,7 +6362,7 @@
    "note": "requests+token HTTP 200, 107398 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser"
+    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "www.villageofhoward.com": {
@@ -6398,7 +6398,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 11166 bytes",
    "callers": {
-    "ia/scripts/ia_county_auditor_scraper.py": "browser"
+    "ia/scripts/ia_county_auditor_scraper.py": "both"
    }
   },
   "www.washburnsheriff.org": {
@@ -6439,7 +6439,7 @@
    "note": "requests+token HTTP 200, 237224 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -6477,7 +6477,7 @@
    "note": "requests+token HTTP 200, 112993 bytes (page carries a captcha widget)",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -6524,7 +6524,7 @@
    },
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },
@@ -6562,7 +6562,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 97506 bytes",
    "callers": {
-    "ia/scripts/ia_county_auditor_scraper.py": "browser"
+    "ia/scripts/ia_county_auditor_scraper.py": "both"
    }
   },
   "www.whitecounty-il.gov": {
@@ -6693,7 +6693,7 @@
    "note": "requests+token HTTP 200, 170721 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
-    "wi/scripts/wi_county_board_scraper.py": "browser",
+    "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
    }
   },

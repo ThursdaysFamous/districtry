@@ -1879,8 +1879,7 @@ to and would read as doubting the first answer. It is recorded, not re-asked.
 
 **What changed.** `scripts/logan_municipal_officials_scraper.py` read the County Clerk's
 *Reference and Yearbook* every Wednesday for its eleven municipalities' governing bodies —
-65 officials, with a phone on 51 and an e-mail on 41, which is the most complete municipal
-contact data any Illinois county in this project publishes. On 2026-09-12 a fleet-wide sweep
+65 officials, with a phone on 51 and an e-mail on 41 — a phone on three of every four people it names, which no other county's source in this project matches on that measure (Sangamon's and Boone's outrank it on e-mail). On 2026-09-12 a fleet-wide sweep
 (`scripts/probe_user_agents.py`) read the site's `robots.txt` and found, in the group that
 binds this project's clients:
 
@@ -1910,7 +1909,7 @@ Draft:
 > I run districtry.com, a free public map that shows anyone which civic districts cover a
 > given address in Illinois and who represents them there. For Logan County it lists the
 > mayors, clerks, treasurers and trustees of all eleven municipalities, taken from your
-> office's Reference and Yearbook, with a link back to the yearbook on every card.
+> office's Reference and Yearbook, as read from your 2025-2026 edition.
 >
 > Until this week a script re-read that PDF once a week so the names stayed current. I have
 > stopped it, because your site's robots.txt asks automated clients not to read anything
@@ -1924,11 +1923,11 @@ Draft:
 > 2. If the /images/ rule is there for a reason, could the yearbook be linked from a path
 >    outside it — or could your office e-mail me each new edition when it is published?
 >
-> Either way the officials already published stay on the map, with the yearbook's date
-> shown, so nobody is told a name is current when it has not been re-checked.
+> Either way the officials already published stay on the map, marked as read from the
+> 2025-2026 edition, so nobody is told a name is current when it has not been re-checked.
 >
-> Thank you for publishing the yearbook at all — it is the most complete municipal
-> directory any county in this project has found.
+> Thank you for publishing the yearbook at all — few counties publish a directory with a
+> phone number for three of every four people it names.
 
 **If there is no reply.** Follow up at about three weeks and again about two weeks after
 that, then record the office as unresponsive — which is a different claim from "the county
