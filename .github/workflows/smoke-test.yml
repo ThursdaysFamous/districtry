@@ -563,6 +563,21 @@ jobs:
           pip install -c scripts/requirements.txt requests shapely
           python3 scripts/build_parcel_fabric_districts.py --selftest
 
+      # Nine Illinois data files carry a top-level `generated` stamp, so each
+      # weekly workflow opens a bot PR whether or not an officeholder moved.
+      # The stamp is right and stays; what the nine builders now print beside it
+      # is a line saying whether anything ELSE moved, which is what a reviewer
+      # reads instead of the diff. That line is only worth trusting if it can be
+      # WRONG in the quiet direction — a helper that reported a change every week
+      # would pass every count guard in the repo and tell a reviewer nothing. So
+      # --selftest runs it against doctored input both ways: a week where only
+      # the stamp moves must say so, a changed field must name the record, an
+      # add and a remove must be counted separately, and a stated depth that is
+      # too deep must REFUSE rather than compare a record's fields as if each
+      # were a record. Stdlib only, no network, every case a literal.
+      - name: The what-moved line still says nothing when nothing moved
+        run: python3 scripts/scraper_common.py --selftest
+
       # A roster's count guard proves it still has twelve members; it proves
       # nothing about whether those twelve still carry an e-mail. On 2026-08-08
       # Cloudflare's e-mail obfuscation quietly emptied all seven of Brown

@@ -54,6 +54,9 @@ import json
 import os
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from scraper_common import substantive_changes, emit_changes_output  # noqa: E402  (shared machinery — do not fork)
+
 APP_DIR = os.path.join("il", "data", "app")
 OUT = os.path.join(APP_DIR, "boone-district-officials.json")
 GEOMETRY_FILES = [
@@ -231,6 +234,21 @@ def main():
     check_warnings(payload)
     out = build(payload)
     check(out)
+    # WHAT MOVED BESIDES THE STAMP. `generated` is rewritten every run, so
+    # this file differs from its base every week and the workflow opens a PR
+    # whether or not an officeholder changed. The stamp is right and stays;
+    # this line is what lets a reviewer tell an empty refresh from a real one
+    # without reading the diff. Depth is STATED — see scraper_common.
+    prior = {}
+    if os.path.exists(args.out):
+        with open(args.out, encoding="utf-8") as fh:
+            prior = json.load(fh)
+    moved_lines, moved_summary = substantive_changes(prior, out, "districts", 1)
+    for line in moved_lines:
+        print(line)
+    print("  %s" % moved_summary)
+    emit_changes_output(moved_summary)
+
     with open(args.out, "w", encoding="utf-8") as fh:
         json.dump(out, fh, indent=2, ensure_ascii=False)
         fh.write("\n")
