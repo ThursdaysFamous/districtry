@@ -220,7 +220,15 @@ def load(path, what):
 
 
 # Honorifics and post-nominals the two sources disagree about publishing.
-_TITLES = {"mr", "mrs", "ms", "miss", "dr", "hon", "sheriff", "the"}
+# _SALUTATIONS is the subset display_name may STRIP; _TITLES is the wider set
+# name_tokens IGNORES when deciding whether two directories name one person.
+# The two differ on purpose, and only in one direction: `sheriff` and `the` are
+# safe to ignore while MATCHING ("Sheriff Jane Doe" is Jane Doe) and are not
+# salutations, so stripping them would edit what a publisher wrote rather than
+# drop a courtesy title. No shipped name begins with either today; keeping them
+# out of the strip means none silently loses a word if one ever does.
+_SALUTATIONS = {"mr", "mrs", "ms", "miss", "dr", "hon"}
+_TITLES = _SALUTATIONS | {"sheriff", "the"}
 _SUFFIXES = {"jr", "sr", "ii", "iii", "iv", "jd", "esq", "phd"}
 
 
@@ -236,6 +244,36 @@ def name_tokens(name):
     # evidence about which person this is.
     return [t for t in toks
             if len(t) > 1 and t not in _TITLES and t not in _SUFFIXES]
+
+
+def display_name(raw):
+    """The name as a card should print it: a LEADING honorific removed.
+
+    Measured 2026-09-12 on the shipped file: SEVEN records carry one -- six
+    supervisors (Benton, Clinton, Keokuk, Lee, Sioux, Washington) and Lee's
+    treasurer -- against 340-odd that do not, because ISAC publishes a title
+    for those counties and not for the rest. The card prints what this file
+    holds, so `Mr. Mike Hadley` sat beside every plain name in the fleet.
+
+    `_SALUTATIONS` is the subset of the `_TITLES` set `name_tokens` already uses
+    to decide whether two directories name the same person, so display and
+    matching are defined in one place and cannot drift apart. It is a SUBSET
+    rather than the same set: `sheriff` and `the` are safe to ignore while
+    matching and are not courtesy titles, so stripping either would edit a
+    publisher's words. Every strip is printed in the weekly build log.
+
+    ONLY A LEADING HONORIFIC IS TAKEN, and the two records that show why:
+      * `Mr. Jim Irwin Jr.` -> `Jim Irwin Jr.` -- a suffix is part of a man's
+        name, and `_SUFFIXES` is deliberately a different set.
+      * `Dr. Tim Wondra, D.C.` -> `Tim Wondra, D.C.` -- the trailing credential
+        is what the county published about him and is not an honorific. Taking
+        it would be editing a source rather than normalising a salutation.
+    """
+    s = (raw or "").strip()
+    first, sep, rest = s.partition(" ")
+    if sep and first.rstrip(".").lower() in _SALUTATIONS and rest.strip():
+        return rest.strip()
+    return s
 
 
 def surname(name):
@@ -332,7 +370,51 @@ def clean_phone(raw):
     return re.sub(r"\s+", " ", m.group(0)).strip() if m else None
 
 
+# display_name changes a NAME, and a name here is also the key
+# ia-county-board-chairs.json joins on, so the rule gets literal cases rather
+# than a comment. Every input below is a string that has really shipped, apart
+# from the two guards at the end.
+DISPLAY_CASES = [
+    ("Mr. Mike Hadley", "Mike Hadley"),
+    ("Mrs. Becky Gaylord", "Becky Gaylord"),
+    ("Mr. Bruce E. Volz", "Bruce E. Volz"),
+    ("Mr. Carl L. Vande Weerd", "Carl L. Vande Weerd"),
+    # a suffix is part of the name and _SUFFIXES is deliberately a separate set
+    ("Mr. Jim Irwin Jr.", "Jim Irwin Jr."),
+    ("Mr. Jack Seward Jr.", "Jack Seward Jr."),
+    # a TRAILING credential is what the county published and is not a salutation
+    ("Dr. Tim Wondra, D.C.", "Tim Wondra, D.C."),
+    # names with no honorific are returned untouched, curly apostrophe included
+    ("Jack Seward Jr.", "Jack Seward Jr."),
+    ("Shane P. O\u2019Toole", "Shane P. O\u2019Toole"),
+    ("Cathy Reece", "Cathy Reece"),
+    # guards: a bare title is not a name to strip to nothing, and a surname
+    # that merely BEGINS with a title's letters is not a title
+    ("Mr.", "Mr."),
+    ("Mrs Hadley", "Hadley"),
+    ("Drake Wilson", "Drake Wilson"),
+    # in _TITLES for matching, NOT in _SALUTATIONS, so never stripped for display
+    ("Sheriff Jane Doe", "Sheriff Jane Doe"),
+    ("The Honorable Ann Lee", "The Honorable Ann Lee"),
+]
+
+
+def selftest():
+    bad = []
+    for raw, want in DISPLAY_CASES:
+        got = display_name(raw)
+        if got != want:
+            bad.append("%r -> %r, wanted %r" % (raw, got, want))
+        print("  %-4s %-28r -> %r" % ("OK" if got == want else "FAIL", raw, got))
+    if bad:
+        sys.exit("build-ia-county-officers --selftest: FAIL — %d case(s): %s"
+                 % (len(bad), "; ".join(bad)))
+    print("build-ia-county-officers --selftest: OK — %d case(s)" % len(DISPLAY_CASES))
+
+
 def main():
+    if "--selftest" in sys.argv[1:]:
+        return selftest()
     check_only = "--check" in sys.argv[1:]
 
     counties = load(COUNTIES, "state-counties.json")
@@ -392,6 +474,10 @@ def main():
     scraped_emails = unwitnessed = carried_emails = dropped_emails = 0
     pins_used = set()
     withheld_detail = []
+    # Every name this build strips a leading honorific from, printed so the
+    # edit is reviewable rather than silent -- it changes a NAME, and a name
+    # here is also the key ia-county-board-chairs.json joins on.
+    honorifics = []
 
     for county, geoid in sorted(geoid_by_name.items()):
         rows = isac.get(county, {}).get("rows", [])
@@ -517,6 +603,11 @@ def main():
                               "%r and the office is now %r"
                               % (county, key, was["email"], was["name"],
                                  best["name"]), file=sys.stderr)
+            shown = display_name(best["name"])
+            if shown != best["name"]:
+                honorifics.append("%s %s: %r -> %r"
+                                  % (county, key, best["name"], shown))
+                best["name"] = shown
             entry[key] = best
             filled[key] += 1
 
@@ -537,7 +628,11 @@ def main():
         else:
             members = []
             for r in sups:
-                m = {"name": r["name"]}
+                shown = display_name(r["name"])
+                if shown != r["name"]:
+                    honorifics.append("%s supervisor: %r -> %r"
+                                      % (county, r["name"], shown))
+                m = {"name": shown}
                 ph = clean_phone(r.get("phone"))
                 if ph:
                     m["phone"] = ph
@@ -622,6 +717,10 @@ def main():
                 raise RuntimeError("%s supervisor carries unexpected field(s) %s"
                                    % (geoid, sorted(set(m) - {"name", "phone", "party"})))
 
+    for line in sorted(honorifics):
+        print("  honorific stripped: %s" % line, file=sys.stderr)
+    print("  leading honorifics stripped for display: %d name(s)" % len(honorifics),
+          file=sys.stderr)
     print("  switchboard phones hoisted off member rows: %d board(s)" % switchboards,
           file=sys.stderr)
     print("  e-mails added from the counties' own sites / the treasurers' state "

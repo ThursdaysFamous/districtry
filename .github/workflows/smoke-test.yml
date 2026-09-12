@@ -483,6 +483,22 @@ jobs:
       - name: Iowa board-chair carry-forward rules still hold
         run: python3 ia/scripts/build_ia_county_chair.py --selftest
 
+      # The chair scrape runs six workers across 98 county hosts, so honouring
+      # a Crawl-delay is a per-host queue rather than a global sleep. Two of
+      # its rules are the kind that look right while being wrong: folding a
+      # leading `www.` (or one server gets two queues and half the delay it
+      # asked for) and leaving every other host's parallelism alone. Threads,
+      # no network, small delays.
+      - name: Iowa chair scrape still paces the hosts that ask for it
+        run: python3 ia/scripts/ia_county_chair_scraper.py --selftest
+
+      # display_name strips a leading honorific from an officer's name, and a
+      # name in that file is also the key ia-county-board-chairs.json joins on.
+      # The cases that matter are the ones it must NOT touch: a Jr./Sr. suffix
+      # and a trailing credential the county itself published.
+      - name: Iowa officer display names keep suffixes and credentials
+        run: python3 ia/scripts/build_ia_county_officers.py --selftest
+
       # The parcel-fabric builder repairs invalid geometry before it writes, and
       # its repair had four branches nothing exercised. One of them was wrong
       # for as long as it existed: `dropped` was `len(parts) - len(polys)`,

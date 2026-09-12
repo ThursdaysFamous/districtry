@@ -88,7 +88,10 @@ import json
 import os
 import re
 import sys
+import threading
+import time
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import contextmanager
 from html.parser import HTMLParser
 from urllib.parse import urljoin, urlparse
 
@@ -109,6 +112,7 @@ HEADERS = {"User-Agent": "districtry/1.0 (+https://districtry.com/ia/)",
 # One gate for the whole run, shared across the worker pool (it locks its own
 # fetches). Set in main(); None only when a caller imports this module.
 GATE = None
+PACER = None  # set in main() beside GATE; None only when a caller imports this
 TIMEOUT = 25
 WORKERS = 6
 MAX_PAGES = 8
@@ -383,6 +387,81 @@ def looks_like_a_person(seg):
     return None
 
 
+class HostPacer(object):
+    """Hold a host that states a Crawl-delay to one request at a time.
+
+    WHY THIS IS NOT A GLOBAL SLEEP. ia_judicial_district_scraper.py honours a
+    Crawl-delay by sleeping between fetches, which is right for it: one host,
+    one thread. This scrape runs six workers across 98 different county hosts,
+    so a global sleep would pace 97 hosts that asked for nothing in order to
+    pace the one that did. A host that states a delay gets a queue of its own;
+    every other host keeps the pool's full parallelism.
+
+    MEASURED 2026-09-12 FROM A CLAUDE CODE SANDBOX, and the number is the
+    point: of the 98 hosts this scrape reads, ONE states a Crawl-delay binding
+    `districtry` -- kossuthcounty.iowa.gov, 10 s. (41 serve no robots.txt at
+    all, 52 serve one that states no delay, and the rest challenge, refuse or
+    did not answer.) THE VANTAGE IS NAMED BECAUSE THE SPLIT MOVES WITH IT:
+    review's sandbox measured the same 98 hosts as 46 served / 43 absent /
+    7 challenge / 1 refused / 1 unreachable, which is the address-dependence
+    this instance already records for Clayton and Polk. The ONE Crawl-delay is
+    the same from both, and it is the only figure the pacer depends on.
+    The other three Iowa weekly page scrapers reference 23 hosts between them
+    and not one states a delay, which is why only this file grew a pacer. The
+    mechanism is general, so a county that starts stating one is paced by the
+    next Friday run with nothing to edit.
+
+    TWO DECISIONS THAT LOOK LIKE DETAILS AND ARE NOT:
+
+    A LEADING `www.` IS FOLDED AWAY, because the pacer's key has to be the
+    SERVER and a netloc is not one. This scrape tries every path against both
+    `kossuthcounty.iowa.gov` and `www.kossuthcounty.iowa.gov`; measured, the
+    bare name 301s to the www one and both return the same 243,691-byte body
+    from the same Cloudflare server. Keying on the netloc would give one
+    machine two queues and halve the delay it asked for, while looking
+    correct in the log.
+
+    ROBOTS.TXT ITSELF IS NOT PACED. The delay is stated INSIDE robots.txt, so
+    the first fetch of it cannot be governed by a number it has not read yet,
+    and RobotsGate fetches each host's file once and caches it. Every other
+    request to a delay-stating site is paced.
+    """
+
+    def __init__(self, gate):
+        self._gate = gate
+        self._table_lock = threading.Lock()
+        self._sites = {}        # site -> [lock, last_request_monotonic]
+        self.honoured = {}      # site -> delay, for the printed report
+
+    @staticmethod
+    def site_of(url):
+        host = (urlparse(url).netloc or "").lower()
+        return host[4:] if host.startswith("www.") else host
+
+    @contextmanager
+    def hold(self, url):
+        delay = None
+        try:
+            delay = self._gate.crawl_delay(url) if self._gate else None
+        except Exception:
+            delay = None        # a pacer must never be why a fetch fails
+        if not delay:
+            yield
+            return
+        site = self.site_of(url)
+        with self._table_lock:
+            entry = self._sites.setdefault(site, [threading.Lock(), 0.0])
+            self.honoured[site] = delay
+        with entry[0]:
+            wait = entry[1] + delay - time.monotonic()
+            if wait > 0:
+                time.sleep(wait)
+            try:
+                yield
+            finally:
+                entry[1] = time.monotonic()
+
+
 def get(url, cache=None):
     if cache is not None:
         key = os.path.join(cache, hashlib.sha256(url.encode()).hexdigest()[:24] + ".html")
@@ -407,7 +486,13 @@ def get(url, cache=None):
             return ("%s: %s" % ("robots-refused" if stated
                                 else "robots-unknown", why), "")
     try:
-        r = requests.get(url, headers=HEADERS, timeout=TIMEOUT, allow_redirects=True)
+        if PACER is not None:
+            with PACER.hold(url):
+                r = requests.get(url, headers=HEADERS, timeout=TIMEOUT,
+                                 allow_redirects=True)
+        else:
+            r = requests.get(url, headers=HEADERS, timeout=TIMEOUT,
+                             allow_redirects=True)
         out = (r.status_code, r.text if r.status_code == 200 else "")
     except Exception as e:
         out = (type(e).__name__, "")
@@ -583,19 +668,95 @@ def one_county(fips, meta, officers, cache=None):
             "sourceUrl": best["url"], "witnesses": len(hits)}
 
 
+class _FakeGate(object):
+    """A gate whose Crawl-delay answers come from a table, not a network."""
+
+    def __init__(self, table):
+        self._table = table
+
+    def crawl_delay(self, url):
+        return self._table.get(HostPacer.site_of(url))
+
+
+def selftest():
+    """The pacer's three claims, proven with threads and no network.
+
+    Small delays so this stays under a second; the arithmetic is the same at
+    Kossuth's ten.
+    """
+    failures = []
+
+    def case(label, ok, detail=""):
+        if not ok:
+            failures.append(label)
+        print("  %-4s %-56s %s" % ("OK" if ok else "FAIL", label, detail))
+
+    # (1) a leading www. folds, so one server is one queue
+    case("www.host and host are one pacing key",
+         HostPacer.site_of("https://www.kossuthcounty.iowa.gov/a")
+         == HostPacer.site_of("https://kossuthcounty.iowa.gov/b")
+         == "kossuthcounty.iowa.gov")
+
+    DELAY = 0.20
+    pacer = HostPacer(_FakeGate({"paced.example": DELAY}))
+    stamps = {"paced": [], "free": []}
+    lock = threading.Lock()
+
+    def hit(bucket, url):
+        with pacer.hold(url):
+            with lock:
+                stamps[bucket].append(time.monotonic())
+            time.sleep(0.01)
+
+    # (2) a delay-stating site is serialised and spaced, across BOTH spellings
+    urls = ["https://paced.example/1", "https://www.paced.example/2",
+            "https://paced.example/3", "https://www.paced.example/4"]
+    t0 = time.monotonic()
+    with ThreadPoolExecutor(max_workers=6) as ex:
+        list(ex.map(lambda u: hit("paced", u), urls))
+    paced_elapsed = time.monotonic() - t0
+    gaps = [b - a for a, b in zip(sorted(stamps["paced"]), sorted(stamps["paced"])[1:])]
+    case("a stated delay spaces that site's requests",
+         all(g >= DELAY * 0.9 for g in gaps),
+         "gaps %s" % ["%.2f" % g for g in gaps])
+    case("four paced requests take at least three delays",
+         paced_elapsed >= DELAY * 3 * 0.9, "%.2f s" % paced_elapsed)
+
+    # (3) a site that states nothing keeps the pool's parallelism
+    t0 = time.monotonic()
+    with ThreadPoolExecutor(max_workers=6) as ex:
+        list(ex.map(lambda u: hit("free", u),
+                    ["https://free.example/%d" % i for i in range(6)]))
+    free_elapsed = time.monotonic() - t0
+    case("an unpaced site is not slowed", free_elapsed < DELAY,
+         "%.2f s" % free_elapsed)
+    case("only the delay-stating site is reported",
+         list(pacer.honoured) == ["paced.example"], str(pacer.honoured))
+
+    if failures:
+        sys.exit("ia-county-chair --selftest: FAIL — %d case(s): %s"
+                 % (len(failures), "; ".join(failures)))
+    print("ia-county-chair --selftest: OK — 5 case(s)")
+
+
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--selftest", action="store_true",
+                    help="prove the Crawl-delay pacer's rules; no network")
     ap.add_argument("--county", action="append", default=[])
     ap.add_argument("--cache", action="store_true",
                     help="reuse pages already fetched into .cache/pages")
     args = ap.parse_args()
+    if args.selftest:
+        return selftest()
     cache = None
     if args.cache:
         cache = os.path.join(CACHE_DIR, "pages")
         os.makedirs(cache, exist_ok=True)
 
-    global GATE
+    global GATE, PACER
     GATE = RobotsGate(requests.Session(), HEADERS["User-Agent"])
+    PACER = HostPacer(GATE)
 
     directory = json.load(open(DIRECTORY, encoding="utf-8"))
     officers = json.load(open(OFFICERS, encoding="utf-8"))
@@ -629,6 +790,13 @@ def main():
                 extra = ""
             print("  %-15s %-14s %s" % (r["county"], r["verdict"], extra), flush=True)
     print("\n  " + "  ".join("%s %d" % kv for kv in sorted(counts.items())))
+    # Say which hosts asked to be slowed down and by how much. A delay that is
+    # honoured silently cannot be told from one that is ignored.
+    if PACER.honoured:
+        for site, delay in sorted(PACER.honoured.items()):
+            print("  Crawl-delay honoured: %s %g s" % (site, delay))
+    else:
+        print("  Crawl-delay honoured: no host this run stated one")
     os.makedirs(CACHE_DIR, exist_ok=True)
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         json.dump(rows, f, indent=1, sort_keys=True)
