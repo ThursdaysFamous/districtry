@@ -298,15 +298,26 @@ def parse_inventory(doc_text):
 def inventory_diff(repo_root):
     """(report_line, warn_list) for CHI's ENGINE_SYNC inventory vs its real fences.
 
-    CHI-only on purpose: since R5 there is one copy of docs/ENGINE_SYNC.md and
-    one copy of the ENGINE fences, both in this repo — re-reading them once
-    per instance would add network for no new signal, since every instance
-    would report the identical answer. (Before the fork consolidation this
-    check also diffed each fork's own copy of the doc against CHI's; that half
-    is gone along with the forks it compared, per the module docstring.)
-    Checking the canonical copy against the canonical fences is what catches
-    the real failure: a release that adds blocks and never updates the list,
-    which is how the count sat at 50 while the fences held 53.
+    Reads docs/ENGINE_SYNC.md against il/index.html and il/sw.js, all three
+    paths hardcoded. (Before the fork consolidation this check also diffed
+    each fork's own copy of the doc against CHI's; that half is gone along
+    with the forks it compared, per the module docstring.)
+
+    It stays CHI-only, but the reason this docstring gave until 2026-09-12 was
+    wrong: "since R5 there is one copy of docs/ENGINE_SYNC.md ... every
+    instance would report the identical answer". There are THREE copies — this
+    one, ca/docs/ENGINE_SYNC.md and ny/docs/ENGINE_SYNC.md — and they did not
+    agree. Both siblings' headings said 53 where their own index.html held 60
+    fences, and had since 2026-08-25; nothing reported it, because this
+    function never reads them. Widening it is a real change — it would have to
+    take the doc and the fence files as arguments, and rule on whether a
+    sibling carrying a different fence set from CHI's is a WARN or expected —
+    so it is a follow-up rather than something to do in passing. ca and ny
+    were re-derived by hand in the change that corrected this text.
+
+    What it does catch is the failure it was built for: a release that adds
+    blocks and never updates the list, which is how the count sat at 50 while
+    the fences held 53.
     """
     try:
         with open(os.path.join(repo_root, ENGINE_SYNC_PATH), encoding="utf-8") as f:
