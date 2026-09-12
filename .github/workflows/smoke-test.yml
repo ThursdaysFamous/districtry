@@ -231,6 +231,18 @@ jobs:
       - name: Install manifests match the brand keys
         run: python3 scripts/build_manifests.py --check
 
+      # sitemap.xml is GENERATED, and it is the last hand-kept surface on the
+      # site. Measured on 2026-09-12, 32 of its 36 entries carried a lastmod
+      # OLDER than the page's own last commit -- median 18 days, worst 25 --
+      # because a hand-typed date is right only on the day it is typed. On a
+      # site whose whole claim is that it knows who holds a seat today, that
+      # signal was telling crawlers not to come back. Several gates already
+      # READ this file to discover pages and not one looked at its dates.
+      # Inclusion is derived too, so a new topic page joins the day it ships
+      # rather than when somebody remembers. Stdlib only.
+      - name: Sitemap lastmod matches each page's last commit
+        run: python3 scripts/build_sitemap.py --check
+
       # The favicon is the one branded asset whose audience is a CRAWLER, and it
       # was the one nobody could see was broken: every page carried the mark
       # inline as a data: URI, which renders perfectly in a browser tab and is
