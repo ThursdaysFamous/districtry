@@ -401,26 +401,53 @@ class HostPacer(object):
     to put 30 seconds between its two www.iowacourts.gov probes.
 
     MEASURED 2026-09-12 FROM A CLAUDE CODE SANDBOX, and the numbers are the
-    point. Of the 419 hosts the fleet's scheduled scrapers reach in code, 27
-    state a Crawl-delay that binds this project, and NOT ONE of them states a
-    different delay for a different token: the same value comes back for
-    `districtry/1.0`, `districtry-wisconsin/1.0`, the roster bot's string and a
-    Chrome/126 string alike, which is `User-agent: *` binding all of them
-    exactly as CLAUDE.md says. Twenty-one scheduled scripts read at least one
-    such host. THE VANTAGE IS NAMED BECAUSE REACHABILITY MOVES WITH IT:
-    review's sandbox and this one disagree about which county sites answer at
-    all (the address-dependence this repo records for Clayton and Polk). The
-    delays do not — they are in a file every vantage can read. ON THE
-    DENOMINATOR: CLAUDE.md records a 2026-09-12 sweep of "386 hosts the
-    scheduled scrapers read" finding 26 delays, and this one reads 419 and
-    finds 27. No file records the 386-host surface, so the two were NOT
-    reconciled and neither is claimed here to be the wrong count; the
-    difference is in how each defined the surface. This one is reproducible:
-    every string constant of every script a scheduled workflow runs, module
-    and function docstrings excluded (a URL a file EXPLAINS is not a URL a
-    file REQUESTS — one Iowa builder names iowacourts.gov four times in prose
-    and fetches a different host), plus the hosts the board-chair scrape reads
-    out of ia-county-board-directory.json.
+    point. 237 scheduled scripts NAME 430 distinct hosts in code; reading
+    every one of their robots.txt files, 25 STATE A Crawl-delay THAT BINDS
+    THIS PROJECT, and 24 of those scripts name at least one. NOT ONE host
+    states a different delay for a different token: the same value comes back
+    for `districtry/1.0`, `districtry-wisconsin/1.0`, the roster bot's string
+    and a Chrome/126 string alike, which is `User-agent: *` binding all of
+    them exactly as CLAUDE.md says. THE VANTAGE IS NAMED BECAUSE REACHABILITY
+    MOVES WITH IT: review's sandbox and this one disagree about which county
+    sites answer at all (the address-dependence this repo records for Clayton
+    and Polk). The delays do not — they are in a file every vantage can read.
+
+    THE SURFACE, stated so it can be re-derived: every string constant of
+    every script a scheduled workflow runs, module and function docstrings
+    excluded (a URL a file EXPLAINS is not a URL a file REQUESTS — one Iowa
+    builder names iowacourts.gov four times in prose and fetches a different
+    host), plus the hosts the board-chair scrape reads out of
+    ia-county-board-directory.json. Four strings that parse as a netloc are
+    not hosts and are excluded: a `maps.*` template and the three XML/JSON-LD
+    NAMESPACE URIs (schema.org, schemas.openxmlformats.org, www.opengis.net),
+    which are identifiers and are never fetched.
+
+    NAMING IS NOT FETCHING, which is the correction that produced these
+    numbers. A first cut skipped any script whose source did not mention
+    requests, urlopen, urllib.request, httpx or playwright, meaning to skip
+    pure builders — and it dropped 135 of 290 scheduled scripts, including
+    scrapers that fetch through a shared helper, a bound `session.get`, or a
+    curl subprocess. With no filter, three more scripts name a delay-stating
+    host and ALL THREE ONLY CITE IT: ia/scripts/build_dsm_wards.py carries
+    data.dsm.city (60 s) as TERMS_URL and writes it into the file it builds,
+    curling services.arcgis.com instead; scripts/build_montgomery_board_roster.py
+    and wi/scripts/build_wi_circuit_court_roster.py make no network call at
+    all. A BUILDER CITES ITS SOURCE URL IN THE FILE IT WRITES, so a
+    host-naming surface bounds who MIGHT fetch and settles nothing on its own.
+
+    THREE DELAY-STATING HOSTS SIT OUTSIDE THAT SURFACE, each for a stated
+    reason: www.cityofdodgeville.com and www.cityofwestby.org appear only
+    inside a COMMENT block in wi/scripts/wi_alderperson_scraper.py, which ast
+    drops by construction; and www.kossuthcounty.iowa.gov is CONSTRUCTED at
+    runtime by the chair scrape, which tries both spellings of every path
+    while the directory names only the bare one. An earlier draft of this
+    docstring said "419 hosts, 27 delays", which paired one surface's
+    denominator with another's numerator — the 27 came from a first pass that
+    regexed raw file text and therefore caught the two commented-out URLs.
+    ON CLAUDE.md's OWN FIGURE: it records a 2026-09-12 sweep of "386 hosts
+    the scheduled scrapers read" finding 26 delays. No file records that
+    surface, so the two were NOT reconciled and neither is claimed here to be
+    the wrong count.
 
     TWO DECISIONS THAT LOOK LIKE DETAILS AND ARE NOT:
 
