@@ -184,6 +184,7 @@
     },
     {
       "id": "county-commissioner",
+      "guide": { "href": "county-commissioner.html", "text": "What county commissioner district am I in?" },
       "label": "County Commissioner District",
       "group": "political",
       "area_rank": 7,

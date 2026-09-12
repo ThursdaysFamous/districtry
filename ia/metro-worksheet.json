@@ -111,7 +111,7 @@
       }
     },
     {
-      "id": "county-supervisor", "label": "County Supervisor District", "group": "political", "area_rank": 7,
+      "id": "county-supervisor", "guide": { "href": "county-supervisor.html", "text": "Who is my county supervisor?" }, "label": "County Supervisor District", "group": "political", "area_rank": 7,
       "rank_note": "The flagship layer: 272 features across 98 counties, PLANTYPE-aware (at-large / residence-district / single-member)",
       "source": {
         "answers": "The county supervisor district covering the point (where drawn), the county's election plan (at-large, residence-district-elected-countywide, or single-member district), and the board's size.",

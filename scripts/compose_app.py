@@ -80,9 +80,9 @@ SUBPAGES = {
     "ny": ["ny/faq.html", "ny/sources.html", "ny/council-district.html",
            "ny/community-board.html"],
     "ca": ["ca/faq.html", "ca/sources.html", "ca/supervisor-district.html"],
-    "wi": ["wi/faq.html", "wi/sources.html"],
-    "ia": ["ia/faq.html", "ia/sources.html"],
-    "mi": ["mi/faq.html", "mi/sources.html"],
+    "wi": ["wi/faq.html", "wi/sources.html", "wi/county-board.html"],
+    "ia": ["ia/faq.html", "ia/sources.html", "ia/county-supervisor.html"],
+    "mi": ["mi/faq.html", "mi/sources.html", "mi/county-commissioner.html"],
 }
 
 # Blocks whose ONE source is engine/shared/<name>.txt rather than
