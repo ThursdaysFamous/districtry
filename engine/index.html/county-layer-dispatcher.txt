@@ -1,0 +1,266 @@
+  function registerCountyLayer(opts) {
+    // opts.entries is the general form; opts.counties is the original name and
+    // still the one every county-dispatched concept uses. The dispatch itself
+    // was never county-specific — it needs disjoint footprints, nothing more —
+    // so an instance can key its table by municipality or city through the
+    // same helper (docs/EXPANSION_GUIDE.md Part 2).
+    var entries = opts.entries || opts.counties;
+    var byKey = {};
+    entries.forEach(function (entry) {
+      // A DUPLICATE KEY IS A SILENT DISASTER, so it throws at boot instead.
+      // byKey is last-wins, and render/cardIdentifier/primaryLink all dispatch
+      // through it — so a second entry under an existing key does not merely
+      // add a redundant lookup, it silently re-points the FIRST entry's cards
+      // at the second entry's renderer. That shipped in Illinois: a precinct entry was
+      // pasted into the county-board table under key "stephenson" (2026-08-03),
+      // and from then until 2026-08-04 a Stephenson board result rendered
+      // through the precinct card. Nothing failed — every gate passed, because
+      // the layer still registered and still had a working query walk.
+      if (byKey[entry.key]) {
+        throw new Error(opts.id + ": duplicate entry key '" + entry.key +
+          "' — byKey is last-wins, so this would re-point the earlier entry's card");
+      }
+      byKey[entry.key] = entry;
+    });
+
+    // Union overlay, drawn INCREMENTALLY: one attempt per county, each feature
+    // WRAPPED (never mutating the per-county caches — other cards spatial-join
+    // against them) and stamped dxCounty so hover dispatches per feature.
+    //
+    // The union used to resolve only when EVERY county had settled, which made
+    // the whole drawing hostage to the slowest of ~40 independent county
+    // servers: one slow or down host — up to 28.5 s through the fetch-retry
+    // ladder, longer on the 30 s-timeout sources — kept every county's
+    // boundaries off the map for a minute-plus, even though most of them were
+    // in memory within seconds (reported 2026-08-04 as "the county board layer
+    // no longer shows boundaries"). Now the load resolves as soon as the FIRST
+    // county's geometry is in. The engine caches the resolved FeatureCollection
+    // as rt.geojson and builds the Leaflet overlay from it; this closure keeps
+    // mutating that same live object as later counties land, so every
+    // rt.geojson consumer (highlight, hover, relationship outlines, the P11
+    // rebuild) sees them — and drawAppendedCountyFeatures below teaches the
+    // already-built Leaflet layer about them.
+    //
+    // A county whose source is DOWN still just drops out of the drawing while
+    // the others render; only if every county fails does the load reject
+    // (overlay error + Retry). Deliberately not makeCached, so the
+    // total-failure path stays retryable: a rejection is never pinned — Retry
+    // re-invokes this and the per-county loaders underneath (which do cache
+    // successes) re-attempt. The recorded partial-union tradeoff
+    // (docs/COUNTY_LAYER_CONSOLIDATION.md) now applies only to counties whose
+    // fetch actually FAILED: a merely slow county appends whenever it arrives,
+    // while a failed one stays off the overlay until reload — its card/query
+    // path (fetched per query, below) keeps working and keeps its own Retry.
+    function loadUnion() {
+      var fc = { type: "FeatureCollection", features: [] };
+      return new Promise(function (resolve, reject) {
+        var resolved = false, pending = entries.length, anySuccess = false;
+        if (!pending) { reject(new Error(opts.label + ": no source responded")); return; }
+        entries.forEach(function (entry) {
+          entry.loadGeometry().then(function (geojson) {
+            var wrapped = (geojson.features || []).map(function (f) {
+              return { type: "Feature", geometry: f.geometry, properties: f.properties, dxCounty: entry.key };
+            });
+            anySuccess = true;
+            Array.prototype.push.apply(fc.features, wrapped);
+            if (!resolved) { resolved = true; resolve(fc); }
+            else drawAppendedCountyFeatures(wrapped);
+          }, function () { /* down county: absent from the drawing (tradeoff above) */ })
+            .catch(function () { /* a drawing hiccup in one county must not skew the settle count */ })
+            .then(function () {
+              pending--;
+              if (!pending && !anySuccess) reject(new Error(opts.label + ": no source responded"));
+            });
+        });
+      });
+    }
+
+    // Draw one late-arriving county onto the already-built union overlay. Its
+    // features are already in the resolved FeatureCollection (=== rt.geojson,
+    // which highlight/hover/outline consumers re-read on every event), so this
+    // only has to teach the LEAFLET layer about them: addData creates their
+    // paths, then they're restyled to the current stack state — the flat style
+    // captured at L.geoJSON build time goes stale, because fill-opacity scaling
+    // tracks the active-layer count and an active selection highlight keeps
+    // every non-matched path faded.
+    function drawAppendedCountyFeatures(features) {
+      var rt = layerRuntime[spec.id];
+      // No live Leaflet layer (toggled off, relevance-hidden, or the engine's
+      // load handler hasn't built it yet): nothing to draw — the engine
+      // (re)builds from rt.geojson when the overlay next attaches, and these
+      // features are already in it.
+      if (!rt || !rt.overlayLayer || !features.length) return;
+      rt.overlayLayer.addData({ type: "FeatureCollection", features: features });
+      var style = rt.highlightApplied ? fadedStyle(baseStyleFor(spec)) : baseStyleFor(spec);
+      if (style) {
+        rt.overlayLayer.eachLayer(function (subLayer) {
+          if (subLayer.setStyle && features.indexOf(subLayer.feature) !== -1) subLayer.setStyle(style);
+        });
+      }
+      reorderActiveLayers(); // fresh paths must not sit above smaller layers' boundaries
+      // Disjoint county footprints mean an active highlight never belongs to an
+      // appended county — but the selected point CAN (the previously-no-match
+      // case). Run the full highlight pass so the user's own district lights up
+      // the moment its county lands, instead of waiting for the next point move.
+      if (state.selectedPoint && state.layersOn[spec.id] &&
+          findFeatureContaining({ type: "FeatureCollection", features: features }, state.selectedPoint)) {
+        updateLayerHighlight(spec);
+      }
+    }
+
+    var anyHoverOfficial = entries.some(function (entry) { return !!entry.hoverOfficial; });
+
+    /* Which counties' COVERAGE contains the point, evaluated in PARALLEL.
+     *
+     * This is the layer's hot path, and it used to be a serial walk. The query
+     * dispatcher below asked each county's `query` in table order until one
+     * returned a hit — and a county's query fetches that county's district
+     * geometry from that county's own GIS before it can test containment. So a
+     * point in the LAST county of a 39-entry table cost 39 sequential
+     * round-trips to 39 different servers, each one waiting on the last. That
+     * is what made the county board card slow, and it got worse with every
+     * county added, because new counties append to the end of the table.
+     *
+     * Coverage is the cheap question: every entry gates on a county OUTLINE
+     * that is same-origin, a couple of KB, and cached after first use. Asking
+     * all of them at once costs one round of small local fetches and names the
+     * ONE county worth querying — so the expensive remote call happens once
+     * instead of up to 39 times.
+     *
+     * Errors are collected, not thrown, so a single county's coverage outage
+     * cannot decide the answer for the others; both callers below re-raise the
+     * first error only when nothing matched, which is the behaviour they had. */
+    function coverageMatches(point) {
+      var firstErr = null;
+      return Promise.all(entries.map(function (entry) {
+        return Promise.resolve().then(function () { return entry.coverage(point); })
+          .then(function (inside) { return inside ? entry : null; },
+                function (err) { if (!firstErr) firstErr = err; return null; });
+      })).then(function (hits) {
+        return { matches: hits.filter(Boolean), firstErr: firstErr };
+      });
+    }
+
+    // Held in a var (rather than passed as a literal) so
+    // drawAppendedCountyFeatures above can hand the registered module to the
+    // engine's style/highlight helpers — registerLayer stores this same object.
+    var spec = {
+      id: opts.id,
+      group: opts.group,
+      label: opts.label,
+      // OR of the per-county coverage tests (each a cached same-origin outline
+      // check), asked in parallel. A throwing test cannot decide the answer for
+      // the others; if none matched and one threw, the error propagates so the
+      // engine's fail-open applies — a coverage outage never hides the layer.
+      coverage: function (point) {
+        return coverageMatches(point).then(function (r) {
+          if (r.matches.length) return true;
+          if (r.firstErr) throw r.firstErr;
+          return false;
+        });
+      },
+      hoverName: function (feature) {
+        var entry = byKey[feature.dxCounty];
+        return entry && entry.hoverName ? entry.hoverName(feature) : null;
+      },
+      overlay: { load: loadUnion, style: opts.style },
+      // Dispatch by CONTAINMENT, not coverage: the footprints are disjoint, so
+      // at most one county's query returns a hit. A downed county is skipped
+      // while the others still resolve; if nothing matched and a county
+      // errored, that error propagates — a point in the downed county gets the
+      // honest error card + Retry, never a lying "No result for this point."
+      query: function (point, seq) {
+        // COVERAGE NARROWS, CONTAINMENT DECIDES. The final answer is still the
+        // county whose geometry actually contains the point — coverage only
+        // chooses which counties are worth asking, which is what turns up to N
+        // sequential remote fetches into (normally) one. If coverage names
+        // nobody, fall back to the full table: that is the pre-2026-08-04
+        // behaviour exactly, so an entry whose coverage test is missing or
+        // wrong still resolves rather than silently going blank.
+        return coverageMatches(point).then(function (r) {
+          var list = r.matches.length ? r.matches : entries;
+          var i = 0, firstErr = r.matches.length ? null : r.firstErr;
+          function next() {
+            if (i >= list.length) {
+              if (firstErr) throw firstErr;
+              return null;
+            }
+            var entry = list[i++];
+            return entry.query(point, seq).then(function (result) {
+              if (result) { result.dxCounty = entry.key; return result; }
+              return next();
+            }, function (err) { if (!firstErr) firstErr = err; return next(); });
+          }
+          return next();
+        });
+      },
+      render: function (result) {
+        var node = byKey[result.dxCounty].render(result);
+        // The card's location row, where the unit publishes none. The fleet's
+        // card order is identity -> LOCATION -> contact -> link, and Illinois's
+        // districted board cards were skipping the location outright. Appended
+        // HERE rather than in each entry's own renderer because there is no
+        // shared card path among them; a hook the concept declares reaches
+        // every one at a single site. The share of cards still missing an
+        // address is a measurement, not a constant, so it is not quoted here.
+        //
+        // It only ever ADDS. `opts.officeFallback` is asked for an entry key
+        // and answers for the units whose OWN roster publishes no address —
+        // the file it reads excludes every unit that publishes one, so a
+        // unit's own publication can never be overwritten or duplicated by
+        // this path (the instance's office builder maintains that exclusion by
+        // measurement rather than by hand).
+        if (node && opts.officeFallback) {
+          var extra = opts.officeFallback(result.dxCounty);
+          if (extra) node.appendChild(extra);
+        }
+        return node;
+      },
+      // per-county pill + footer link (docs/CARD_RENDER_API.md), dispatched
+      // like render — an entry that declares neither renders extras-free
+      cardIdentifier: function (result) {
+        var entry = byKey[result.dxCounty];
+        return entry && entry.cardIdentifier ? entry.cardIdentifier(result) : null;
+      },
+      primaryLink: function (result) {
+        var entry = byKey[result.dxCounty];
+        return entry && entry.primaryLink ? entry.primaryLink(result) : null;
+      },
+      pointOfInterest: function (result) {
+        var entry = byKey[result.dxCounty];
+        return entry && entry.pointOfInterest ? entry.pointOfInterest(result) : null;
+      },
+      // concept-level (not per-county) nesting + toggle hook, passed through
+      // verbatim — county-precinct nests under township in every county, with
+      // the same outline-only handoff its per-county predecessors declared
+      subOf: opts.subOf,
+      onToggle: opts.onToggle,
+      hoverOfficial: anyHoverOfficial ? {
+        // composite prefetch: every county's officeholder data, keyed by
+        // county for the per-feature dispatch in name(). All-or-retry ON
+        // PURPOSE: the engine caches a resolved roster for the session
+        // (rt.roster — prefetchHoverRoster never refetches a truthy value),
+        // so resolving with a failed county's slot null would pin that gap
+        // until reload. Rejecting instead leaves rt.roster unset — the engine
+        // swallows the rejection and the next toggle-on retries, with the
+        // already-succeeded counties' cached loaders resolving instantly.
+        // Hover simply omits names until every county's data is in; the click
+        // cards fetch per query and are unaffected either way.
+        load: function () {
+          return Promise.all(entries.map(function (entry) {
+            return entry.hoverOfficial ? entry.hoverOfficial.load() : Promise.resolve(null);
+          })).then(function (results) {
+            var byUnit = {};
+            entries.forEach(function (entry, idx) { byUnit[entry.key] = results[idx]; });
+            return byUnit;
+          });
+        },
+        name: function (feature, byUnit) {
+          var entry = byKey[feature.dxCounty];
+          if (!entry || !entry.hoverOfficial || !byUnit || !byUnit[entry.key]) return null;
+          return entry.hoverOfficial.name(feature, byUnit[entry.key]);
+        }
+      } : undefined
+    };
+    registerLayer(spec);
+  }
