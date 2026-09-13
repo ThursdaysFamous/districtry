@@ -17,9 +17,17 @@ each <li> is one SEAT:
         District 17: Stockton II precinct and part Rush precincts</li>
 
 or, for an unfilled seat, the same shape with "VACANT" in place of the linked
-name (District 16 at first ship). The seat count is the guard, not the name
-count — a vacancy is COUNTED, never named (the Lee rule; the engine's
-Livingston-style `vacancies` rendering).
+name. The seat count is the guard, not the name count — a vacancy is COUNTED,
+never named (the Lee rule; the engine's Livingston-style `vacancies` rendering).
+
+WHICH SEAT IS VACANT MOVES, so it is not written down here as though it were a
+property of the page: District 16 was the vacancy at first ship and District 10
+is the vacancy as of 2026-09-13, the same day the county filled 16. Both changes
+were held out of the shipped file for a day by the shape guard below, which is
+the guard doing its job rather than a bug — it refused a half-parse instead of
+shipping one.
+
+THE DIRECTORY LINK ALSO EXISTS IN TWO SHAPES; see the LINK_RE note.
 
 Each named member's /directory.aspx?EID=nn page carries the e-mail (a plain
 mailto, sometimes with a stray space after the colon — John Lang's reads
@@ -77,8 +85,20 @@ TAG_RE = re.compile(r"<[^>]+>")
 # One seat: an optional directory link (a vacancy has none), then the seat's
 # lines. Non-greedy up to </li> so a seat can never absorb its neighbour.
 SEAT_RE = re.compile(r"<li[^>]*>(.*?)</li>", re.S | re.I)
-LINK_RE = re.compile(r'<a href="(/directory\.aspx\?EID=(\d+))">(.*?)</a>',
-                     re.S | re.I)
+# TWO LINK SHAPES, BOTH LIVE ON ONE PAGE, and that is why the 2026-09-12 run
+# stopped: CivicPlus has moved this directory from /directory.aspx?EID=nn to
+# /m/directory/employee?eid=nn, and the county updated only the seat it
+# edited. Measured 2026-09-13: fifteen seats still link the legacy path, the
+# newly filled District 16 links the new one, and the LEGACY PATH REDIRECTS
+# to the new one for every member (checked on eid 59 and on the control
+# eid 30), so both reach the same page and the new one is what the county now
+# serves. The shipped `url` is normalised to it rather than storing whichever
+# shape a given <li> happens to carry, which would put two spellings of one
+# address in one file for no reason a reader could see.
+LINK_RE = re.compile(
+    r'<a href="(/(?:directory\.aspx\?EID=|m/directory/employee\?eid=)(\d+))">'
+    r'(.*?)</a>', re.S | re.I)
+MEMBER_URL = BASE + "/m/directory/employee?eid=%s"
 # "LaDon Trost (R), Chair" / "Lynn L. Gallagher (D)" — name, party, role.
 NAME_RE = re.compile(r"^(.*?)\s*\(([RD])\)\s*(?:,\s*(.+))?$")
 TERM_RE = re.compile(r"Term:?\s*(\d{4})\s*(?:to|[-–])\s*(\d{4})", re.I)
@@ -146,7 +166,7 @@ def parse_board_page(page):
                "name": nm.group(1).strip(),
                "party": nm.group(2),
                "eid": int(link.group(2)),
-               "url": BASE + "/directory.aspx?EID=" + link.group(2)}
+               "url": MEMBER_URL % link.group(2)}
         if nm.group(3):
             rec["role"] = nm.group(3).strip()
         if term_str:
