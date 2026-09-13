@@ -456,6 +456,7 @@ const ROSTER_URLS = [
   "./data/app/il-library-district-officials.json",
   "./data/app/il-library-contacts.json",
   "./data/app/il-county-board-offices.json",
+  "./data/app/chicago-ssa-providers.json",
   "./data/app/il-special-district-officials.json",
 ];
 /* ==== GENERATED:END sw-metro-config ==== */
