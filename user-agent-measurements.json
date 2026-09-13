@@ -13,7 +13,7 @@
   "crawl-delay-too-long": 5,
   "path-answers-nothing": 7,
   "proxy-denied": 1,
-  "robots-disallows-this-path": 12,
+  "robots-disallows-this-path": 11,
   "robots-unreadable": 4,
   "stack-not-token": 7,
   "tls-chain": 1,
@@ -1339,19 +1339,6 @@
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
-   }
-  },
-  "drive.google.com": {
-   "host": "drive.google.com",
-   "url": "https://drive.google.com/uc?export=download&id=",
-   "cells": {},
-   "robots": {
-    "requests+token": "read, * group with 36 rule(s)"
-   },
-   "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /uc?export=download&id= \u2014 not fetched, so this host carries no user-agent measurement",
-   "callers": {
-    "wi/scripts/wi_county_board_scraper.py": "both"
    }
   },
   "dunncountywi.gov": {
@@ -5074,7 +5061,7 @@
     "scripts/build_jodaviess_board_districts.py": "self",
     "scripts/build_jodaviess_board_roster.py": "unknown",
     "scripts/build_jodaviess_precincts.py": "unknown",
-    "scripts/jodaviess_county_board_scraper.py": "browser",
+    "scripts/jodaviess_county_board_scraper.py": "self",
     "scripts/validate_sources.py": "both"
    }
   },

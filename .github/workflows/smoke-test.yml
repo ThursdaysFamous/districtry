@@ -364,6 +364,32 @@ jobs:
       - name: Esri ring nesting behaves on fixtures
         run: node scripts/esri_rings_test.mjs
 
+      # THE SOCIAL CARD IS THE ONE PAGE ASSET NOBODY ON THE TEAM EVER LOOKS AT,
+      # because it renders in somebody else's app. Adam shared an /il/ permalink
+      # into a Signal group on 2026-09-13 and the preview showed "CHICAGO
+      # DISTRICT EXPLORER · chidistricts.com" under a correct districtry title —
+      # the pre-rebrand card. Measured across all seven surfaces, four were
+      # wrong: il, ny and ca still on the retired brand (ca carrying CHICAGO's
+      # flag star), and the fleet root labelled "illinois". 97 of the site's 201
+      # pages name one of those four.
+      #
+      # validate_instance_assets.py already checked that og-image.png EXISTS,
+      # and all four existed. This checks WHAT IT IS: every surface in
+      # metros.json has a manifest entry, its label still matches that entry's
+      # TAG, its bytes still hash to what the renderer wrote, and it is
+      # 1200x630. Node, but no browser and no network — the rendering needs
+      # Playwright, the check does not.
+      #
+      # The label is the tag (il, ny, ca, …) rather than the place name: the
+      # long names wrapped to a second line and pushed the strapline down, and
+      # metros.json's own comment already calls the tag what the brand spec
+      # prints in the wordmark.
+      #
+      # It proves PROVENANCE, not correctness: a card whose design is wrong
+      # passes, and only a person looking at it catches that.
+      - name: Social cards are the ones the renderer wrote
+        run: node scripts/build_og_image.mjs --check
+
       # ADDING A STATE IS NOT ONE EDIT. The instance is a folder, and a dozen
       # other places have to learn its tag — the generator's table, the fleet
       # manifest, four hand-kept tables in four builders, and the three literal
@@ -528,6 +554,28 @@ jobs:
       # Stdlib only, no network.
       - name: The circuit-court name join still joins only what it should
         run: python3 wi/scripts/build_wi_circuit_court_roster.py --selftest
+
+      # THE COUNTY BOARD SCRAPE ASKS EACH HOST'S ROBOTS.TXT BEFORE ITS FIRST
+      # FETCH (2026-09-13), and this runs that decision against doctored
+      # robots.txt text: a site-wide disallow refuses, an admin-only file allows
+      # the board page and still refuses /admin/, a 403 on a county website
+      # refuses while a 403 on an ArcGIS host does not, a 404 allows, a 5xx and
+      # a 202 both refuse, a Crawl-delay is read, and the Internet Archive rung
+      # re-raises rather than going round a disallow. Seven of the 74 hosts
+      # publish `Disallow: /`, so the reading is load-bearing rather than
+      # theoretical. Stdlib only, no network.
+      #
+      # pypdf IS INSTALLED FOR AN OFFLINE TEST, which looks odd and is what
+      # scripts/validate_workflow_deps.py correctly insists on: it reads an
+      # entry point WITH its function-local imports, because running a script
+      # runs its functions, and this module reads three counties' PDFs. The
+      # self-test returns before any of them, so the package is never used —
+      # but a gate that trusted a comment about which code path CI takes would
+      # be no gate. Constrained to the same pin the weekly workflow uses.
+      - name: The county board scrape reads robots.txt the same way every time
+        run: |
+          pip install -c wi/scripts/requirements.txt pypdf
+          python3 wi/scripts/wi_county_board_scraper.py --selftest
 
       # The Jasper test decides whether a county's precinct fabric is still the
       # Census 2020 fabric, and its five reconciliation causes are the

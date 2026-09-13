@@ -2727,37 +2727,48 @@ five Illinois sources with or without browser headers, because urllib3's TLS Cli
 differs from the ssl module's and these edges fingerprint it. A probe that varied only the
 name would credit a browser string with a fix the stack made.
 
-**WHAT IT FOUND, across 290 hosts** (2026-09-12; 60 re-measured 2026-09-13 — see below):
+**WHAT IT FOUND, across 290 hosts** (2026-09-12; 61 re-measured 2026-09-13 — see below).
+It was 291 until #944's second commit: `drive.google.com` was recorded
+`robots-disallows-this-path`, the Wisconsin board scrape stopped fetching the Drive
+document it named, and `--check` then failed the entry as orphaned. A host leaving the
+tree moves these figures exactly as a renamed scraper does, so all three files were
+updated in that commit:
 
 | verdict | hosts | what it means |
 |---|---|---|
 | `token-ok` | 220 | the districtry token gets a full page on the plain `requests` stack |
 | `token-refused-and-stack` | 15 | refuses the token on both stacks, serves stdlib + Chrome |
 | `stack-not-token` | 7 | refuses `requests`, serves the SAME token on stdlib |
-| `token-refused` | 2 | refuses the token on `requests`, serves Chrome on `requests` |
+| `token-refused` | 3 | refuses the token on `requests`, serves Chrome on `requests` |
 | `all-refused` / `challenged` | 12 | refuses or challenges all four; a captcha is never answered |
 | `answers-nothing` / `path-answers-nothing` | 11 | HTTP 200 too small to be a page, or a 404/405/500 on the probed path |
-| `robots-disallows-this-path` | 12 | the `*` group disallows the probe's own chosen path, so it was not fetched |
+| `robots-disallows-this-path` | 11 | the `*` group disallows the probe's own chosen path, so it was not fetched |
 | `crawl-delay-too-long` | 5 | Crawl-delay 15–60s; four rungs at that pace is not a polite probe |
 | `robots-unreadable` | 4 | robots.txt could not be read by any rung, so no page was asked for: Coles, Gallatin and Vermilion (the incomplete-chain hosts) and docs.legis.wisconsin.gov (timed out twice on 2026-09-13 from the sandbox, curl included; the 2026-09-12 sweep read it `token-ok`, so this is the vantage's route, not the host) |
 | `tls-chain` / `proxy-denied` | 2 | an incomplete chain (`probe_incomplete_tls_chains.py`'s subject) or this sandbox's egress |
 
 **THE FIRST SWEEP READ 203 `token-ok`, AND 60 HOSTS HAD BEEN MEASURED AT THE WRONG ADDRESS** (found by #928 on www.chicago.gov, 2026-09-12; re-measured 2026-09-13). The probe's inventory ran a regex over the raw file text, so a URL written as two adjacent string literals contributed only its first half — a bare directory — and `choose_url()` ranked by shortest path, so that directory outranked the page the scraper reads. 37 hosts were probed at such a fragment and 23 more at a directory a page sat under. A directory that denies everyone read as a host that denies the token (www.chicago.gov: `all-refused` at the directory, `token-refused` at the page), and a directory that answers a 458-byte listing read as `answers-nothing` (seven ArcGIS Online orgs, all `token-ok` at the service they actually serve). Re-probed at the page, 25 verdicts moved, 17 of them to `token-ok`; **not one moved INTO a refusal**, so no browser string in the fleet was ever licensed by a wrong address. `probe_user_agents.py` now joins adjacent literals through the AST, ranks a page above a directory, dates each re-measured row on its own, and moves the top-level `measured` only on a full sweep.
 
-**SEVENTEEN HOSTS REFUSE THE TOKEN AND 220 DO NOT.** Per file, as `probe_user_agents.py
---inventory` prints it on this tree: 104 files send a browser string; 17 reach at least one
-host that genuinely refuses the token, **65 reach only hosts that serve the token a full
+**18 HOSTS REFUSE THE TOKEN AND 220 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
+--inventory` prints it on this tree: 104 files send a browser string; 18 reach at least one
+host that genuinely refuses the token, **64 reach only hosts that serve the token a full
 page, and 22 more reach no host that refuses it** (one or more answered nothing or refused
 the `requests` stack); 282 of the 290 measured hosts are still reached by such a caller.
-**TWO OF THOSE FILES HAVE BEEN RENAMED TO THE TOKEN SINCE THE SWEEP** and the per-file
+**THREE OF THOSE FILES HAVE BEEN RENAMED TO THE TOKEN SINCE THE SWEEP** and the per-file
 figures move with them — the Iowa minutes-chair scraper (#916) and the Iowa county-officers
-scraper — which is the rule working rather than drift: a file whose host serves the token a
-full page gets the token back, one at a time, with its own weekly run as the witness. **TWO FILES HAVE BEEN RENAMED TO THE TOKEN SINCE THAT SWEEP** and the per-file
-figures move with them — the Iowa minutes-chair scraper (#916) and the Iowa county-officers
-scraper (both measured `token-ok`) — which is the rule working rather than drift: a file
+scraper (both measured `token-ok`), and `jodaviess_county_board_scraper.py` (#945, whose own
+page was read both ways the same day: HTTP 200 and 82,783 bytes to each) — which is the rule
+working rather than drift: a file
 whose host serves the token a full page gets the token back, one at a time, with its own
-weekly run as the witness. The VERDICT table above is unchanged; `--refresh-callers` moves
-caller rows only. **THE FIRST FIGURES WERE 57 AND 68 OF 115, AND BOTH WERE WRONG FOR TWO REASONS.** The
+weekly run as the witness. `--refresh-callers` moves caller rows only. **EVERY FIGURE IN
+THIS SECTION AND ITS TABLE IS GATED SINCE 2026-09-13**: `probe_user_agents.py --check`
+parses them out of this file, `CLAUDE.md` and `scripts/scraper_common.py` and FAILS, naming
+the current figures, when any differs from the tree and the artifact. The gate's first run
+found all three files saying 104 files / 17 refusing / 282 of 290 hosts and this table
+saying two `token-refused` hosts, the day after #928 (a new browser-string file on a host it
+measured `token-refused`) and #929 had moved every one of them — nothing had compared a
+sentence to the inventory it quoted, which is the drift class `validate_doc_counts.py`
+already guards for "N layers". **THE FIRST FIGURES WERE 57 AND 68 OF 115, AND BOTH WERE WRONG FOR TWO REASONS.** The
 classifier recognised a districtry token only with a `/N` version, so `validate_sources.py`'s
 `districtry source validator (+https://districtry.com/il/)` read as a browser string on 51
 hosts (found by #910), and it did not follow a UA constant imported from a sibling module, so
@@ -5849,9 +5860,13 @@ is measured off the shipped file, and each verdict is read off the builder's own
 guard.
 
 **Six counties already answer it.** Livingston, Lee, Stephenson, Shelby, Jo
-Daviess and now Sangamon carry an explicit vacancy path; Jo Daviess ships
-`vacancies: 1` on district 16 today. The vocabulary was never missing — its
-application to single-member boards was.
+Daviess and now Sangamon carry an explicit vacancy path; Jo Daviess ships one
+counted, never named `vacancies: 1`, and WHICH district holds it is not
+recorded here, because it moves — read it from the shipped file, never from
+this sentence. (It was district 16 when this was written and district 10 as of
+2026-09-13. This is the third of three references that named a number; the
+other two were corrected in #932 and this one was missed.) The vocabulary was
+never missing — its application to single-member boards was.
 
 **Ten counties elect single-member districts, where a vacancy takes the whole
 key.** Eight of them REFUSE THE WRITE rather than ship a short roster, because

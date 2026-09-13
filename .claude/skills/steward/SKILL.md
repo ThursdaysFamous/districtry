@@ -74,6 +74,7 @@ python3 scripts/undeliverable.py                         # the shipped e-mail do
 python3 scripts/validate_skills.py                       # every skill's pointers resolve
 python3 scripts/validate_arcgis_format.py                # no app asks ArcGIS for f=geojson
 node scripts/esri_rings_test.mjs                          # ring nesting, on fixtures
+node scripts/build_og_image.mjs --check                    # every surface's social card is the one the renderer wrote, labelled with its metros.json tag (provenance, not pixels)
 python3 scripts/validate_instance_registration.py         # every instance named in every table
 python3 scripts/validate_instance_assets.py               # every same-origin asset a page names exists
 python3 scripts/build_metro_outline.py --check           # IL ring + anchor registry
@@ -86,8 +87,9 @@ python3 scripts/validate_doc_counts.py --selftest         # pattern C reads the 
 python3 scripts/validate_serp_lengths.py                  # every page's title and description fit a search result
 python3 scripts/robots_policy.py --selftest                # the one robots.txt reader against three saved files AND this site's own (its Content-Signal must parse: search=yes, ai-input=yes, ai-train=no, use=reference), plus the per-host Crawl-delay pacer: one queue per delay-stating site, `www.` folded, others parallel
 python3 scripts/probe_user_agents.py --selftest           # read_robots() over stub responses: the robots-read path --probe depends on
-python3 scripts/probe_user_agents.py --check              # user-agent measurements vs the tree; retired brands; unmeasured browser-string files
+python3 scripts/probe_user_agents.py --check              # user-agent measurements vs the tree; retired brands; unmeasured browser-string files; the figures CLAUDE.md, the guidebook and scraper_common.py quote
 python3 wi/scripts/build_wi_circuit_court_roster.py --selftest      # the circuit-court name join: three recoveries, and the collisions it must refuse
+python3 wi/scripts/wi_county_board_scraper.py --selftest            # the county board scrape's robots decision: a site-wide disallow refuses, an API host's 403 does not, 5xx and 202 refuse, and the Archive rung never routes round a disallow
 python3 scripts/isbe_precinct_fabric.py --selftest         # the five Jasper-test reconciliation causes
 python3 ia/scripts/ia_county_minutes_chair_scraper.py --selftest   # the four refusals that stand between a chair card and a wrong name
 python3 ia/scripts/build_ia_county_chair.py --selftest              # the carry-forward rules: only `unreachable`, never a refusal, never past 60 days or a January
