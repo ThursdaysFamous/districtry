@@ -103,7 +103,7 @@ jobs:
           # touched those same files errors instead of pushing, which is right.
           git fetch --depth=1 origin main
           git checkout -B "$branch" FETCH_HEAD
-          # The 73 per-county board pages (il/county-board/) are GENERATED from
+          # The per-county board pages (il/county-board/) are GENERATED from
           # the roster this job just rewrote, so regenerate them here or the
           # smoke gate's `build_county_pages.py --check` fails on this PR with a
           # page naming last week's members. The sitemap follows, because those

@@ -90,7 +90,14 @@ jobs:
           # touched those same files errors instead of pushing, which is right.
           git fetch --depth=1 origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add ia/data/app/ia-supervisor-members.json
+          # The per-county board of supervisors pages (ia/county-supervisor/) are GENERATED from
+          # the roster this job just rewrote, so regenerate them here or the
+          # smoke gate's `build_county_pages.py --check` fails on this PR with a
+          # page naming last week's members. The sitemap follows, because those
+          # pages are in it and its lastmod is each file's own last commit.
+          python3 scripts/build_county_pages.py
+          python3 scripts/build_sitemap.py
+          git add ia/data/app/ia-supervisor-members.json ia/county-supervisor ia/county-supervisor.html sitemap.xml
           git commit -m "Update IA supervisor district roster"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

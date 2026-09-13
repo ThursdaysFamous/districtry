@@ -58,29 +58,48 @@ const WHY = "https://overberg.co/why/";
 
 // GENERATED PER-COUNTY PAGES ARE SAMPLED, NOT SWEPT, and the reason is a
 // measurement rather than a preference: this gate costs 5.1s a page (3m8s for
-// 37, timed 2026-09-13), and il/county-board/ added 73 more, which would take
-// it past nine minutes on every PR — with Wisconsin's 72 counties next.
+// 37, timed 2026-09-13), and the per-county board pages added 164 more — 75 in
+// Illinois, 72 in Wisconsin, 17 in Iowa — which swept would take it past twenty
+// minutes on every PR.
 //
-// What makes sampling honest here is that the 73 are ONE template.
+// What makes sampling honest here is that they are ONE template.
 // scripts/build_county_pages.py --check regenerates every one and compares it
 // byte for byte, so a page that differs from the template cannot ship, and the
 // same run reads each page back and asserts every name in that county's roster
 // appears on it. Content is gated per page, statically. What a browser adds is
 // whether the template renders, boots its theme, resolves its skip link and
-// keeps its tap targets apart — one answer for all 73. Four are visited, spread
-// across the alphabet so the sample is not clustered, and the set is fixed so
-// CI is reproducible.
-const SAMPLE_GENERATED = 4;
+// keeps its tap targets apart.
+//
+// THE SAMPLE IS PER INSTANCE, not per site, and that is the correction of
+// 2026-09-13. An evenly-spaced sample of four across the whole sitemap can
+// land entirely inside one instance, and the instances differ in exactly the
+// place a template bug hides: each carries its own heading, title, breadcrumb
+// label and map link, and the first Wisconsin draft titled every page
+// "Menominee County County Board" while Illinois's were correct. A gate that
+// could have sampled only Illinois would have passed it. Three per instance,
+// spread across that instance's own alphabet, fixed so CI is reproducible.
+const SAMPLE_GENERATED = 3;
 
 function sampleGenerated(all) {
-  const generated = all.filter((p) => p.split("/").filter(Boolean).length > 2);
-  if (generated.length <= SAMPLE_GENERATED) return all;
-  const gset = new Set(generated);
-  const keep = new Set();
-  for (let i = 0; i < SAMPLE_GENERATED; i++) {
-    keep.add(generated[Math.round((i * (generated.length - 1)) / (SAMPLE_GENERATED - 1))]);
+  const deep = (p) => p.split("/").filter(Boolean).length > 2;
+  const byInstance = new Map();
+  for (const p of all) {
+    if (!deep(p)) continue;
+    const tag = p.split("/").filter(Boolean)[0];
+    if (!byInstance.has(tag)) byInstance.set(tag, []);
+    byInstance.get(tag).push(p);
   }
-  return all.filter((p) => !gset.has(p) || keep.has(p));
+  const keep = new Set();
+  for (const pages of byInstance.values()) {
+    if (pages.length <= SAMPLE_GENERATED) {
+      for (const p of pages) keep.add(p);
+      continue;
+    }
+    for (let i = 0; i < SAMPLE_GENERATED; i++) {
+      keep.add(pages[Math.round((i * (pages.length - 1)) / (SAMPLE_GENERATED - 1))]);
+    }
+  }
+  return all.filter((p) => !deep(p) || keep.has(p));
 }
 
 const paths = sampleGenerated([...readFileSync(join(ROOT, "sitemap.xml"), "utf8")
