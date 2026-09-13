@@ -147,7 +147,7 @@ def load_districted():
                 continue
             source = source or entry.get("sourceUrl")
             if isinstance(entry.get("members"), list):
-                districts.append((key, entry["members"]))
+                districts.append((key, entry["members"], entry.get("vacancies") or 0))
             elif (entry.get("name") or "").strip():
                 # A flat record that names someone: the board chair in all five
                 # files that carry one. Not a district, and not an extra either.
@@ -155,7 +155,7 @@ def load_districted():
                 chair.setdefault("role", "Chair")
             else:
                 skipped.append(key)          # a per-county extra, not a district
-        named = sum(1 for _, ms in districts
+        named = sum(1 for _, ms, _v in districts
                     for m in ms if (m.get("name") or "").strip())
         named += 1 if chair else 0
         if not named:
@@ -223,8 +223,8 @@ def member_html(m):
 
 
 def districted_body(name, rec):
-    seats = sum(len(ms) for _, ms in rec["districts"])
-    named = sum(1 for _, ms in rec["districts"] for m in ms if (m.get("name") or "").strip())
+    seats = sum(len(ms) for _, ms, _v in rec["districts"])
+    named = sum(1 for _, ms, _v in rec["districts"] for m in ms if (m.get("name") or "").strip())
     chair_named = 1 if rec.get("chair") else 0
     n_dist = len(rec["districts"])
     out = []
@@ -247,22 +247,35 @@ def districted_body(name, rec):
             out.append('<h2>Board chair</h2>')
             out.append('<ul class="members">%s</ul>' % row)
             out.append('</section>')
-    for label, members in rec["districts"]:
+    for label, members, vacancies in rec["districts"]:
         anchor = "district-%s" % re.sub(r"[^A-Za-z0-9]+", "-", label).lower()
         out.append('<section class="district" id="%s">' % esc(anchor))
         out.append('<h2>District %s</h2>' % esc(label))
         rows = [h for h in (member_html(m) for m in members) if h]
         if rows:
             out.append('<ul class="members">%s</ul>' % "".join(rows))
-        else:
-            # The app's own wording for a seat its source does not name. A
-            # district dropped from the page would read as a board of n-1.
+        if vacancies:
+            # A VACANCY IS NOT AN ABSENT NAME, and saying "not listed" about a
+            # seat the county has explicitly reported open is a false statement
+            # about the county rather than a gap in this project. The app's own
+            # card has always distinguished the two ("N of M seats is vacant");
+            # the first draft of this page did not, and Jo Daviess's District 10
+            # is exactly the case — filled last week, reported vacant this week.
+            out.append('<p class="unlisted">%d of %d seat%s here %s vacant, '
+                       'as the county reports it.</p>'
+                       % (vacancies, len(rows) + vacancies,
+                          "" if len(rows) + vacancies == 1 else "s",
+                          "is" if vacancies == 1 else "are"))
+        elif not rows:
+            # No name AND no vacancy declared: the county's own source does not
+            # say. A district dropped from the page would read as a board of n-1.
             out.append('<p class="unlisted">Not listed in the county\'s '
                        'directory.</p>')
         out.append('</section>')
-    if seats != named:
-        out.append('<p class="unlisted">%d of %d seats are not named by the '
-                   'county\'s own source.</p>' % (seats - named, seats))
+    unnamed = seats - named
+    if unnamed:
+        out.append('<p class="unlisted">%d of %d listed seats are not named by '
+                   'the county\'s own source.</p>' % (unnamed, seats))
     return "\n".join(out), n_dist, named + chair_named
 
 
@@ -595,7 +608,7 @@ def roster_names(rec, at_large):
     if at_large:
         names += [m.get("name") for m in rec["members"]]
     else:
-        names += [m.get("name") for _, ms in rec["districts"] for m in ms]
+        names += [m.get("name") for _, ms, _v in rec["districts"] for m in ms]
         if rec.get("chair"):
             names.append(rec["chair"].get("name"))
     return [n.strip() for n in names if (n or "").strip()]
@@ -626,7 +639,7 @@ def verify_page(name, rec, at_large, html):
     # Every district heading, too: a district dropped from the page reads to a
     # reader as a board one seat smaller than it is.
     if not at_large:
-        for label, _ in rec["districts"]:
+        for label, _ms, _v in rec["districts"]:
             if ("<h2>District %s</h2>" % esc(label)) not in html:
                 problems.append("%s: district %s has no section on its page"
                                 % (name, label))
@@ -733,7 +746,7 @@ def main():
         # District members plus the elected chair where the county has one —
         # the same total the index prints, because two adjacent numbers five
         # apart read as one of them being wrong.
-        people += sum(len(ms) for _, ms in rec["districts"])
+        people += sum(len(ms) for _, ms, _v in rec["districts"])
         people += 1 if rec.get("chair") else 0
         skipped += len(rec["skipped"])
     for name, rec in sorted(at_large.items()):
@@ -779,7 +792,7 @@ def main():
     rows = []
     for name, rec in sorted(districted.items()):
         rows.append((name, rec["slug"], False,
-                     sum(len(ms) for _, ms in rec["districts"])
+                     sum(len(ms) for _, ms, _v in rec["districts"])
                      + (1 if rec.get("chair") else 0)))
     for name, rec in sorted(at_large.items()):
         rows.append((name, rec["slug"], True, len(rec["members"])))
