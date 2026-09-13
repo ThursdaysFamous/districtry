@@ -250,6 +250,15 @@ def main():
                  sum(len(e["heads"]) for e in out["districts"].values())))
         return
 
+    # A NAMED REFUSAL RATHER THAN A TRACEBACK, the sentence
+    # build_chicago_ssa_providers.py got in #945 and this builder did not. Run
+    # with no --input and no saved payload, it died on a bare FileNotFoundError
+    # naming a path nothing had written — which reads as a missing file rather
+    # than as a step not yet run.
+    if not os.path.exists(args.input):
+        fail("no scraper payload at %s — run "
+             "scripts/boone_district_officials_scraper.py first, or pass "
+             "--input to name a saved one" % args.input)
     with open(args.input, encoding="utf-8") as fh:
         payload = json.load(fh)
     check_warnings(payload)
