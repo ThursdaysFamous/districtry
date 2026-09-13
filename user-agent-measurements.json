@@ -5074,7 +5074,7 @@
     "scripts/build_jodaviess_board_districts.py": "self",
     "scripts/build_jodaviess_board_roster.py": "unknown",
     "scripts/build_jodaviess_precincts.py": "unknown",
-    "scripts/jodaviess_county_board_scraper.py": "browser",
+    "scripts/jodaviess_county_board_scraper.py": "self",
     "scripts/validate_sources.py": "both"
    }
   },
