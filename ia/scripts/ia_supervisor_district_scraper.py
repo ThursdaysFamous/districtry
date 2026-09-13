@@ -209,6 +209,53 @@ def candidate_pages(home):
     return out[:MAX_PAGES_PER_COUNTY]
 
 
+# A path no county publishes. Used to ask a host whether it is serving ONE
+# document for everything, which is what a suspended or parked domain does.
+PROBE_PATH = "districtry-probe-no-such-path/"
+
+
+def serves_one_document(home):
+    """Does this host answer every path with the same bytes?
+
+    WHY THIS EXISTS. On 2026-09-12 Mitchell County keyed nothing and the
+    scraper reported "the page names no district", which is a statement about
+    what the COUNTY publishes. It was false: mitchellcounty.iowa.gov's hosting
+    account is suspended, and the host answers HTTP 200 with one 7,640-byte
+    "Account Suspended" page on every path -- the supervisors page, the home
+    page, /robots.txt, and a path invented for this probe, all byte-identical
+    (sha256 d5bf5dc6f2d9..., measured 2026-09-13). A 200 is a 200, so nothing
+    upstream noticed, and the skip reason sent a reader to re-read a page that
+    does not exist.
+
+    THE TEST IS STRUCTURAL, NOT A KEYWORD. Searching bodies for "suspended" or
+    "parked" is the mistake scraper_common.py already records from the other
+    direction: a sweep that searched for "captcha" reported sixteen real pages
+    as challenges. So this asks the host a question instead -- fetch the home
+    page and a path nobody publishes, and compare the bytes. A live site
+    answers those differently (measured the same day across the eight other
+    counties skipped for the same reason: Black Hawk, Butler, Calhoun, Howard,
+    Ida, Kossuth, Winnebago and Worth all differ, and for all eight the
+    original reason is true).
+
+    COMPARED AGAINST THE HOME PAGE, DELIBERATELY, not against the supervisors
+    page that just failed: a site whose supervisors URL 404s to a standard
+    error page would match the probe path and read as suspended when it is
+    merely a moved page.
+
+    Costs two requests and runs ONLY where a county already keyed nothing, so
+    a healthy run pays nothing for it.
+    """
+    import hashlib
+    root = fetch(home)
+    if not root:
+        return False
+    probe = fetch(urllib.parse.urljoin(home, PROBE_PATH))
+    if not probe:
+        return False
+    return (hashlib.sha256(root.encode("utf-8", "replace")).hexdigest()
+            == hashlib.sha256(probe.encode("utf-8", "replace")).hexdigest())
+
+
 def key_page(text, names):
     """Match each known supervisor to the nearest district number.
 
@@ -287,6 +334,12 @@ def main():
                 break
             time.sleep(1)
         if not keyed:
+            # Before recording a reason ABOUT THE COUNTY, check whether the host
+            # is answering everything with one document. See serves_one_document.
+            if serves_one_document(home):
+                reason = ("the county site answers every path with one document "
+                          "(suspended or parked) -- not a page that stopped "
+                          "naming districts")
             skipped.append((county, reason or "no readable supervisors page"))
             continue
 
