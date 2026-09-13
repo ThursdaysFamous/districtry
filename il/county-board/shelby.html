@@ -224,6 +224,11 @@ h1 {
 .member { margin: 0 0 12px; }
 .m-name { display: block; font-weight: 650; }
 .m-role { display: block; font-size: 13px; color: var(--muted); }
+.m-party { display: block; font-size: 13px; color: var(--muted); }
+/* How old the name is. Small, and under the contact details rather than over
+   them, because it qualifies the name rather than competing with it — but it is
+   on the page, because a name with no date reads as today's. */
+.m-asof { display: block; font-size: 12.5px; color: var(--muted); margin-top: 2px; }
 /* line-height 28px, the WCAG 2.5.8 spacing floor the landing and history
    footers were fixed to on 2026-09-13: these are 13.5px links that wrap. */
 .m-contact { display: block; font-size: 13.5px; line-height: 28px; }
@@ -302,27 +307,27 @@ h1 {
 <p class="cta-note">Opens the map with the county and county board layers on. Search your address or ZIP, or tap your location.</p>
 <section class="district" id="district-1">
 <h2>District 1</h2>
-<ul class="members"><li class="member"><span class="m-name">Tim Brown</span><span class="m-contact"><a href="mailto:district1-1@shelbycounty-il.gov">district1-1@shelbycounty-il.gov</a> · <a href="tel:2179721240">217-972-1240</a></span></li><li class="member"><span class="m-name">Shawn Conlin</span><span class="m-contact"><a href="mailto:district1-2@shelbycounty-il.gov">district1-2@shelbycounty-il.gov</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Tim Brown</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:district1-1@shelbycounty-il.gov">district1-1@shelbycounty-il.gov</a> · <a href="tel:2179721240">217-972-1240</a></span></li><li class="member"><span class="m-name">Shawn Conlin</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:district1-2@shelbycounty-il.gov">district1-2@shelbycounty-il.gov</a></span></li></ul>
 </section>
 <section class="district" id="district-2">
 <h2>District 2</h2>
-<ul class="members"><li class="member"><span class="m-name">Judy Wood</span><span class="m-contact"><a href="mailto:district2@shelbycounty-il.gov">district2@shelbycounty-il.gov</a> · <a href="tel:2172591507">217-259-1507</a></span></li><li class="member"><span class="m-name">Clay Hardy</span><span class="m-contact"><a href="mailto:district2-2@shelbycounty-il.gov">district2-2@shelbycounty-il.gov</a> · <a href="tel:2173433711">217-343-3711</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Judy Wood</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:district2@shelbycounty-il.gov">district2@shelbycounty-il.gov</a> · <a href="tel:2172591507">217-259-1507</a></span></li><li class="member"><span class="m-name">Clay Hardy</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:district2-2@shelbycounty-il.gov">district2-2@shelbycounty-il.gov</a> · <a href="tel:2173433711">217-343-3711</a></span></li></ul>
 </section>
 <section class="district" id="district-3">
 <h2>District 3</h2>
-<ul class="members"><li class="member"><span class="m-name">Teresa Boehm</span><span class="m-role">Vice Chair</span><span class="m-contact"><a href="mailto:district3-1@shelbycounty-il.gov">district3-1@shelbycounty-il.gov</a> · <a href="tel:2178531727">217-853-1727</a></span></li><li class="member"><span class="m-name">Tad Mayhall</span><span class="m-role">Chair</span><span class="m-contact"><a href="mailto:district3-2@shelbycounty-il.gov">district3-2@shelbycounty-il.gov</a> · <a href="tel:2172463592">217-246-3592</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Teresa Boehm</span><span class="m-role">Vice Chair</span><span class="m-party">Democratic</span><span class="m-contact"><a href="mailto:district3-1@shelbycounty-il.gov">district3-1@shelbycounty-il.gov</a> · <a href="tel:2178531727">217-853-1727</a></span></li><li class="member"><span class="m-name">Tad Mayhall</span><span class="m-role">Chair</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:district3-2@shelbycounty-il.gov">district3-2@shelbycounty-il.gov</a> · <a href="tel:2172463592">217-246-3592</a></span></li></ul>
 </section>
 <section class="district" id="district-4">
 <h2>District 4</h2>
-<ul class="members"><li class="member"><span class="m-name">Christy Wafford</span><span class="m-contact"><a href="mailto:district4-1@shelbycounty-il.gov">district4-1@shelbycounty-il.gov</a> · <a href="tel:2178239789">217-823-9789</a></span></li><li class="member"><span class="m-name">Austin Pritchard</span><span class="m-contact"><a href="mailto:district4-2@shelbycounty-il.gov">district4-2@shelbycounty-il.gov</a> · <a href="tel:2173436265">217-343-6265</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Christy Wafford</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:district4-1@shelbycounty-il.gov">district4-1@shelbycounty-il.gov</a> · <a href="tel:2178239789">217-823-9789</a></span></li><li class="member"><span class="m-name">Austin Pritchard</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:district4-2@shelbycounty-il.gov">district4-2@shelbycounty-il.gov</a> · <a href="tel:2173436265">217-343-6265</a></span></li></ul>
 </section>
 <section class="district" id="district-5">
 <h2>District 5</h2>
-<ul class="members"><li class="member"><span class="m-name">Larry Syfert</span><span class="m-contact"><a href="mailto:district5-1@shelbycounty-il.gov">district5-1@shelbycounty-il.gov</a> · <a href="tel:2172599659">217-259-9659</a></span></li><li class="member"><span class="m-name">Brent Wallace</span><span class="m-contact"><a href="mailto:district5-2@shelbycounty-il.gov">district5-2@shelbycounty-il.gov</a> · <a href="tel:6182929227">618-292-9227</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Larry Syfert</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:district5-1@shelbycounty-il.gov">district5-1@shelbycounty-il.gov</a> · <a href="tel:2172599659">217-259-9659</a></span></li><li class="member"><span class="m-name">Brent Wallace</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:district5-2@shelbycounty-il.gov">district5-2@shelbycounty-il.gov</a> · <a href="tel:6182929227">618-292-9227</a></span></li></ul>
 </section>
 <section class="district" id="district-6">
 <h2>District 6</h2>
-<ul class="members"><li class="member"><span class="m-name">Heath McCormick</span><span class="m-contact"><a href="mailto:district6-1@shelbycounty-il.gov">district6-1@shelbycounty-il.gov</a> · <a href="tel:2176905205">217-690-5205</a></span></li><li class="member"><span class="m-name">Don Tate</span><span class="m-contact"><a href="mailto:state1947@hotmail.com">state1947@hotmail.com</a> · <a href="tel:2176825562">217-682-5562</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Heath McCormick</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:district6-1@shelbycounty-il.gov">district6-1@shelbycounty-il.gov</a> · <a href="tel:2176905205">217-690-5205</a></span></li><li class="member"><span class="m-name">Don Tate</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:state1947@hotmail.com">state1947@hotmail.com</a> · <a href="tel:2176825562">217-682-5562</a></span></li></ul>
 </section>
 <section class="district" id="district-7">
 <h2>District 7</h2>
@@ -330,19 +335,19 @@ h1 {
 </section>
 <section class="district" id="district-8">
 <h2>District 8</h2>
-<ul class="members"><li class="member"><span class="m-name">Christine Matlock</span><span class="m-contact"><a href="mailto:district8-1@shelbycounty-il.gov">district8-1@shelbycounty-il.gov</a> · <a href="tel:2172543555">217-254-3555</a></span></li><li class="member"><span class="m-name">John Strohl</span><span class="m-contact"><a href="mailto:district8-2@shelbycounty-il.gov">district8-2@shelbycounty-il.gov</a> · <a href="tel:2173436926">217-343-6926</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Christine Matlock</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:district8-1@shelbycounty-il.gov">district8-1@shelbycounty-il.gov</a> · <a href="tel:2172543555">217-254-3555</a></span></li><li class="member"><span class="m-name">John Strohl</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:district8-2@shelbycounty-il.gov">district8-2@shelbycounty-il.gov</a> · <a href="tel:2173436926">217-343-6926</a></span></li></ul>
 </section>
 <section class="district" id="district-9">
 <h2>District 9</h2>
-<ul class="members"><li class="member"><span class="m-name">Chad Yantis</span><span class="m-contact"><a href="mailto:district9-1@shelbycounty-il.gov">district9-1@shelbycounty-il.gov</a> · <a href="tel:2174126735">217-412-6735</a></span></li><li class="member"><span class="m-name">Chrissy Grant</span><span class="m-contact"><a href="mailto:district9-2@shelbycounty-il.gov">district9-2@shelbycounty-il.gov</a> · <a href="tel:2176906719">217-690-6719</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Chad Yantis</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:district9-1@shelbycounty-il.gov">district9-1@shelbycounty-il.gov</a> · <a href="tel:2174126735">217-412-6735</a></span></li><li class="member"><span class="m-name">Chrissy Grant</span><span class="m-party">Democratic</span><span class="m-contact"><a href="mailto:district9-2@shelbycounty-il.gov">district9-2@shelbycounty-il.gov</a> · <a href="tel:2176906719">217-690-6719</a></span></li></ul>
 </section>
 <section class="district" id="district-10">
 <h2>District 10</h2>
-<ul class="members"><li class="member"><span class="m-name">Jeff Gregg</span><span class="m-contact"><a href="mailto:district10-1@shelbycounty-il.gov">district10-1@shelbycounty-il.gov</a> · <a href="tel:2173228484">217-322-8484</a></span></li><li class="member"><span class="m-name">Tim Morse</span><span class="m-contact"><a href="mailto:district10-2@shelbycounty-il.gov">district10-2@shelbycounty-il.gov</a> · <a href="tel:2176207467">217-620-7467</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Jeff Gregg</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:district10-1@shelbycounty-il.gov">district10-1@shelbycounty-il.gov</a> · <a href="tel:2173228484">217-322-8484</a></span></li><li class="member"><span class="m-name">Tim Morse</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:district10-2@shelbycounty-il.gov">district10-2@shelbycounty-il.gov</a> · <a href="tel:2176207467">217-620-7467</a></span></li></ul>
 </section>
 <section class="district" id="district-11">
 <h2>District 11</h2>
-<ul class="members"><li class="member"><span class="m-name">Carol Cole</span><span class="m-contact"><a href="mailto:district11-1@shelbycounty-il.gov">district11-1@shelbycounty-il.gov</a> · <a href="tel:2178273790">217-827-3790</a></span></li><li class="member"><span class="m-name">Julie Edwards</span><span class="m-contact"><a href="mailto:district11-2@shelbycounty-il.gov">district11-2@shelbycounty-il.gov</a> · <a href="tel:2178270668">217-827-0668</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Carol Cole</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:district11-1@shelbycounty-il.gov">district11-1@shelbycounty-il.gov</a> · <a href="tel:2178273790">217-827-3790</a></span></li><li class="member"><span class="m-name">Julie Edwards</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:district11-2@shelbycounty-il.gov">district11-2@shelbycounty-il.gov</a> · <a href="tel:2178270668">217-827-0668</a></span></li></ul>
 </section>
 <p class="source-note">Source: <a href="https://www.shelbycounty-il.gov/coboard.aspx" rel="noopener" target="_blank">the county's own published roster</a>, re-read on a schedule and landed as a reviewed pull request.</p>
 <p class="disclaimer">districtry is an independent, unofficial civic reference.

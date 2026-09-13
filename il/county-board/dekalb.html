@@ -224,6 +224,11 @@ h1 {
 .member { margin: 0 0 12px; }
 .m-name { display: block; font-weight: 650; }
 .m-role { display: block; font-size: 13px; color: var(--muted); }
+.m-party { display: block; font-size: 13px; color: var(--muted); }
+/* How old the name is. Small, and under the contact details rather than over
+   them, because it qualifies the name rather than competing with it — but it is
+   on the page, because a name with no date reads as today's. */
+.m-asof { display: block; font-size: 12.5px; color: var(--muted); margin-top: 2px; }
 /* line-height 28px, the WCAG 2.5.8 spacing floor the landing and history
    footers were fixed to on 2026-09-13: these are 13.5px links that wrap. */
 .m-contact { display: block; font-size: 13.5px; line-height: 28px; }
@@ -302,51 +307,51 @@ h1 {
 <p class="cta-note">Opens the map with the county and county board layers on. Search your address or ZIP, or tap your location.</p>
 <section class="district" id="district-1">
 <h2>District 1</h2>
-<ul class="members"><li class="member"><span class="m-name">Rhonda Henke</span><span class="m-contact"><a href="mailto:rhenke@dekalbcounty.org">rhenke@dekalbcounty.org</a> · <a href="tel:8157629546">815-762-9546</a></span></li><li class="member"><span class="m-name">Tim Hughes</span><span class="m-contact"><a href="mailto:thughes@dekalbcounty.org">thughes@dekalbcounty.org</a> · <a href="tel:8159703385">815-970-3385</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Rhonda Henke</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:rhenke@dekalbcounty.org">rhenke@dekalbcounty.org</a> · <a href="tel:8157629546">815-762-9546</a></span></li><li class="member"><span class="m-name">Tim Hughes</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:thughes@dekalbcounty.org">thughes@dekalbcounty.org</a> · <a href="tel:8159703385">815-970-3385</a></span></li></ul>
 </section>
 <section class="district" id="district-2">
 <h2>District 2</h2>
-<ul class="members"><li class="member"><span class="m-name">Kathy Lampkins</span><span class="m-contact"><a href="mailto:kklampkins@dekalbcounty.org">kklampkins@dekalbcounty.org</a> · <a href="tel:8157611522">815-761-1522</a></span></li><li class="member"><span class="m-name">Patrick Deutsch</span><span class="m-contact"><a href="mailto:pdeutsch@dekalbcounty.org">pdeutsch@dekalbcounty.org</a> · <a href="tel:8157394639">815-739-4639</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Kathy Lampkins</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:kklampkins@dekalbcounty.org">kklampkins@dekalbcounty.org</a> · <a href="tel:8157611522">815-761-1522</a></span></li><li class="member"><span class="m-name">Patrick Deutsch</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:pdeutsch@dekalbcounty.org">pdeutsch@dekalbcounty.org</a> · <a href="tel:8157394639">815-739-4639</a></span></li></ul>
 </section>
 <section class="district" id="district-3">
 <h2>District 3</h2>
-<ul class="members"><li class="member"><span class="m-name">Kim Coovert</span><span class="m-contact"><a href="mailto:kcoovert@dekalbcounty.org">kcoovert@dekalbcounty.org</a> · <a href="tel:8157621997">815-762-1997</a></span></li><li class="member"><span class="m-name">Tim Bagby</span><span class="m-contact"><a href="mailto:tbagby@dekalbcounty.org">tbagby@dekalbcounty.org</a> · <a href="tel:8156415253">815-641-5253</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Kim Coovert</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:kcoovert@dekalbcounty.org">kcoovert@dekalbcounty.org</a> · <a href="tel:8157621997">815-762-1997</a></span></li><li class="member"><span class="m-name">Tim Bagby</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:tbagby@dekalbcounty.org">tbagby@dekalbcounty.org</a> · <a href="tel:8156415253">815-641-5253</a></span></li></ul>
 </section>
 <section class="district" id="district-4">
 <h2>District 4</h2>
-<ul class="members"><li class="member"><span class="m-name">Elizabeth Lundeen</span><span class="m-contact"><a href="mailto:elundeen@dekalbcounty.org">elundeen@dekalbcounty.org</a> · <a href="tel:6303418492">630-341-8492</a></span></li><li class="member"><span class="m-name">Laurie Emmer</span><span class="m-contact"><a href="mailto:lemmer@dekalbcounty.org">lemmer@dekalbcounty.org</a> · <a href="tel:8155019711">815-501-9711</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Elizabeth Lundeen</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:elundeen@dekalbcounty.org">elundeen@dekalbcounty.org</a> · <a href="tel:6303418492">630-341-8492</a></span></li><li class="member"><span class="m-name">Laurie Emmer</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:lemmer@dekalbcounty.org">lemmer@dekalbcounty.org</a> · <a href="tel:8155019711">815-501-9711</a></span></li></ul>
 </section>
 <section class="district" id="district-5">
 <h2>District 5</h2>
-<ul class="members"><li class="member"><span class="m-name">Benjamin Haier</span><span class="m-contact"><a href="mailto:bhaier@dekalbcounty.org">bhaier@dekalbcounty.org</a> · <a href="tel:8473344527">847-334-4527</a></span></li><li class="member"><span class="m-name">Suzanne Fahnestock</span><span class="m-contact"><a href="mailto:sfahnestock@dekalbcounty.org">sfahnestock@dekalbcounty.org</a> · <a href="tel:6304480310">630-448-0310</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Benjamin Haier</span><span class="m-party">Democratic</span><span class="m-contact"><a href="mailto:bhaier@dekalbcounty.org">bhaier@dekalbcounty.org</a> · <a href="tel:8473344527">847-334-4527</a></span></li><li class="member"><span class="m-name">Suzanne Fahnestock</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:sfahnestock@dekalbcounty.org">sfahnestock@dekalbcounty.org</a> · <a href="tel:6304480310">630-448-0310</a></span></li></ul>
 </section>
 <section class="district" id="district-6">
 <h2>District 6</h2>
-<ul class="members"><li class="member"><span class="m-name">Meryl Domina</span><span class="m-contact"><a href="mailto:mdomina@dekalbcounty.org">mdomina@dekalbcounty.org</a> · <a href="tel:8157584827">815-758-4827</a></span></li><li class="member"><span class="m-name">Rukisha Crawford</span><span class="m-contact"><a href="mailto:rcrawford@dekalbcounty.org">rcrawford@dekalbcounty.org</a> · <a href="tel:8156906810">815-690-6810</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Meryl Domina</span><span class="m-party">Democratic</span><span class="m-contact"><a href="mailto:mdomina@dekalbcounty.org">mdomina@dekalbcounty.org</a> · <a href="tel:8157584827">815-758-4827</a></span></li><li class="member"><span class="m-name">Rukisha Crawford</span><span class="m-party">Democratic</span><span class="m-contact"><a href="mailto:rcrawford@dekalbcounty.org">rcrawford@dekalbcounty.org</a> · <a href="tel:8156906810">815-690-6810</a></span></li></ul>
 </section>
 <section class="district" id="district-7">
 <h2>District 7</h2>
-<ul class="members"><li class="member"><span class="m-name">Scott Campbell</span><span class="m-contact"><a href="mailto:scampbell@dekalbcounty.org">scampbell@dekalbcounty.org</a> · <a href="tel:7083054441">708-305-4441</a></span></li><li class="member"><span class="m-name">Terri Mann-Lamb</span><span class="m-contact"><a href="mailto:tmannlamb@dekalbcounty.org">tmannlamb@dekalbcounty.org</a> · <a href="tel:8157614545">815-761-4545</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Scott Campbell</span><span class="m-party">Democratic</span><span class="m-contact"><a href="mailto:scampbell@dekalbcounty.org">scampbell@dekalbcounty.org</a> · <a href="tel:7083054441">708-305-4441</a></span></li><li class="member"><span class="m-name">Terri Mann-Lamb</span><span class="m-party">Democratic</span><span class="m-contact"><a href="mailto:tmannlamb@dekalbcounty.org">tmannlamb@dekalbcounty.org</a> · <a href="tel:8157614545">815-761-4545</a></span></li></ul>
 </section>
 <section class="district" id="district-8">
 <h2>District 8</h2>
-<ul class="members"><li class="member"><span class="m-name">Chris Porterfield</span><span class="m-contact"><a href="mailto:cporterfield@dekalbcounty.org">cporterfield@dekalbcounty.org</a></span></li><li class="member"><span class="m-name">Michelle Pickett</span><span class="m-contact"><a href="mailto:mpickett@dekalbcounty.org">mpickett@dekalbcounty.org</a> · <a href="tel:7799021924">779-902-1924</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Chris Porterfield</span><span class="m-party">Democratic</span><span class="m-contact"><a href="mailto:cporterfield@dekalbcounty.org">cporterfield@dekalbcounty.org</a></span></li><li class="member"><span class="m-name">Michelle Pickett</span><span class="m-party">Democratic</span><span class="m-contact"><a href="mailto:mpickett@dekalbcounty.org">mpickett@dekalbcounty.org</a> · <a href="tel:7799021924">779-902-1924</a></span></li></ul>
 </section>
 <section class="district" id="district-9">
 <h2>District 9</h2>
-<ul class="members"><li class="member"><span class="m-name">Ellingsworth Webb</span><span class="m-contact"><a href="mailto:ewebb@dekalbcounty.org">ewebb@dekalbcounty.org</a> · <a href="tel:8155082316">815-508-2316</a></span></li><li class="member"><span class="m-name">Jim Luebke</span><span class="m-contact"><a href="mailto:jluebke@dekalbcounty.org">jluebke@dekalbcounty.org</a> · <a href="tel:6304650747">630-465-0747</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Ellingsworth Webb</span><span class="m-party">Democratic</span><span class="m-contact"><a href="mailto:ewebb@dekalbcounty.org">ewebb@dekalbcounty.org</a> · <a href="tel:8155082316">815-508-2316</a></span></li><li class="member"><span class="m-name">Jim Luebke</span><span class="m-party">Democratic</span><span class="m-contact"><a href="mailto:jluebke@dekalbcounty.org">jluebke@dekalbcounty.org</a> · <a href="tel:6304650747">630-465-0747</a></span></li></ul>
 </section>
 <section class="district" id="district-10">
 <h2>District 10</h2>
-<ul class="members"><li class="member"><span class="m-name">Laura Hoffman</span><span class="m-contact"><a href="mailto:lhoffman@dekalbcounty.org">lhoffman@dekalbcounty.org</a></span></li><li class="member"><span class="m-name">Mary Cozad</span><span class="m-contact"><a href="mailto:mcozad@dekalbcounty.org">mcozad@dekalbcounty.org</a> · <a href="tel:8157569908">815-756-9908</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Laura Hoffman</span><span class="m-party">Democratic</span><span class="m-contact"><a href="mailto:lhoffman@dekalbcounty.org">lhoffman@dekalbcounty.org</a></span></li><li class="member"><span class="m-name">Mary Cozad</span><span class="m-party">Democratic</span><span class="m-contact"><a href="mailto:mcozad@dekalbcounty.org">mcozad@dekalbcounty.org</a> · <a href="tel:8157569908">815-756-9908</a></span></li></ul>
 </section>
 <section class="district" id="district-11">
 <h2>District 11</h2>
-<ul class="members"><li class="member"><span class="m-name">Joseph Marcinkowski</span><span class="m-contact"><a href="mailto:jmarcinkowski@dekalbcounty.org">jmarcinkowski@dekalbcounty.org</a> · <a href="tel:3315758814">331-575-8814</a></span></li><li class="member"><span class="m-name">Roy Plote</span><span class="m-contact"><a href="mailto:rplote@dekalbcounty.org">rplote@dekalbcounty.org</a> · <a href="tel:8154741679">815-474-1679</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Joseph Marcinkowski</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:jmarcinkowski@dekalbcounty.org">jmarcinkowski@dekalbcounty.org</a> · <a href="tel:3315758814">331-575-8814</a></span></li><li class="member"><span class="m-name">Roy Plote</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:rplote@dekalbcounty.org">rplote@dekalbcounty.org</a> · <a href="tel:8154741679">815-474-1679</a></span></li></ul>
 </section>
 <section class="district" id="district-12">
 <h2>District 12</h2>
-<ul class="members"><li class="member"><span class="m-name">John Frieders</span><span class="m-role">Board Chair</span><span class="m-contact"><a href="mailto:jfrieders@dekalbcounty.org">jfrieders@dekalbcounty.org</a> · <a href="tel:8154747152">815-474-7152</a></span></li><li class="member"><span class="m-name">Rebecca Johnson</span><span class="m-contact"><a href="mailto:rjohnson@dekalbcounty.org">rjohnson@dekalbcounty.org</a> · <a href="tel:6305506879">630-550-6879</a></span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">John Frieders</span><span class="m-role">Board Chair</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:jfrieders@dekalbcounty.org">jfrieders@dekalbcounty.org</a> · <a href="tel:8154747152">815-474-7152</a></span></li><li class="member"><span class="m-name">Rebecca Johnson</span><span class="m-party">Republican</span><span class="m-contact"><a href="mailto:rjohnson@dekalbcounty.org">rjohnson@dekalbcounty.org</a> · <a href="tel:6305506879">630-550-6879</a></span></li></ul>
 </section>
 <p class="source-note">Source: <a href="https://dekalbcounty.org/government/county-board/county-board-members/" rel="noopener" target="_blank">the county's own published roster</a>, re-read on a schedule and landed as a reviewed pull request.</p>
 <p class="disclaimer">districtry is an independent, unofficial civic reference.

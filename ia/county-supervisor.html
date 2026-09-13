@@ -617,6 +617,19 @@ footer.site-footer a { color: var(--accent-deep); }
 }
 .maps li:last-child { margin-bottom: 0; }
 .maps strong { color: var(--ink); }
+/* The county index, generated into this page by scripts/build_county_pages.py.
+   Two columns from 560px so the list is one scan rather than one long
+   scroll; the count beside each name is what tells a reader a board of three
+   from a board of thirty before they click. */
+.county-index { list-style: none; margin: 8px 0 0; padding: 0; }
+.county-index li { margin: 0 0 2px; line-height: 28px; }
+.county-index a { font-weight: 600; text-decoration: none; }
+.county-index a:hover { text-decoration: underline; }
+.county-index-n { color: var(--slate); font-size: 13.5px; white-space: nowrap; }
+@media (min-width: 560px) {
+  .county-index { columns: 2; column-gap: 28px; }
+  .county-index li { break-inside: avoid; }
+}
 </style>
 </head>
 <body>
@@ -720,6 +733,32 @@ footer.site-footer a { color: var(--accent-deep); }
       officeholders with the relevant government office before relying on them for anything
       official.
     </div>
+  </section>
+
+  <section>
+    <h2>Every board of supervisors, county by county</h2>
+    <!-- ==== GENERATED:BEGIN county-index ==== -->
+    <p class="matrix-lede">Every Iowa county whose roster this project has: <b>17 counties</b>, <b>67 people</b>, each name published by the county itself.</p>
+    <ul class="county-index">
+      <li><a href="county-supervisor/adams.html">Adams County</a> <span class="county-index-n">5 members</span></li>
+      <li><a href="county-supervisor/bremer.html">Bremer County</a> <span class="county-index-n">3 members</span></li>
+      <li><a href="county-supervisor/cerro-gordo.html">Cerro Gordo County</a> <span class="county-index-n">3 members</span></li>
+      <li><a href="county-supervisor/franklin.html">Franklin County</a> <span class="county-index-n">3 members</span></li>
+      <li><a href="county-supervisor/grundy.html">Grundy County</a> <span class="county-index-n">5 members</span></li>
+      <li><a href="county-supervisor/hamilton.html">Hamilton County</a> <span class="county-index-n">3 members</span></li>
+      <li><a href="county-supervisor/linn.html">Linn County</a> <span class="county-index-n">3 members</span></li>
+      <li><a href="county-supervisor/lyon.html">Lyon County</a> <span class="county-index-n">5 members</span></li>
+      <li><a href="county-supervisor/madison.html">Madison County</a> <span class="county-index-n">3 members</span></li>
+      <li><a href="county-supervisor/mitchell.html">Mitchell County</a> <span class="county-index-n">5 members</span></li>
+      <li><a href="county-supervisor/monona.html">Monona County</a> <span class="county-index-n">3 members</span></li>
+      <li><a href="county-supervisor/pocahontas.html">Pocahontas County</a> <span class="county-index-n">5 members</span></li>
+      <li><a href="county-supervisor/polk.html">Polk County</a> <span class="county-index-n">5 members</span></li>
+      <li><a href="county-supervisor/sac.html">Sac County</a> <span class="county-index-n">3 members</span></li>
+      <li><a href="county-supervisor/taylor.html">Taylor County</a> <span class="county-index-n">3 members</span></li>
+      <li><a href="county-supervisor/webster.html">Webster County</a> <span class="county-index-n">5 members</span></li>
+      <li><a href="county-supervisor/winneshiek.html">Winneshiek County</a> <span class="county-index-n">5 members</span></li>
+    </ul>
+    <!-- ==== GENERATED:END county-index ==== -->
   </section>
 
   <section>

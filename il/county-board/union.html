@@ -224,6 +224,11 @@ h1 {
 .member { margin: 0 0 12px; }
 .m-name { display: block; font-weight: 650; }
 .m-role { display: block; font-size: 13px; color: var(--muted); }
+.m-party { display: block; font-size: 13px; color: var(--muted); }
+/* How old the name is. Small, and under the contact details rather than over
+   them, because it qualifies the name rather than competing with it — but it is
+   on the page, because a name with no date reads as today's. */
+.m-asof { display: block; font-size: 12.5px; color: var(--muted); margin-top: 2px; }
 /* line-height 28px, the WCAG 2.5.8 spacing floor the landing and history
    footers were fixed to on 2026-09-13: these are 13.5px links that wrap. */
 .m-contact { display: block; font-size: 13.5px; line-height: 28px; }
@@ -297,11 +302,11 @@ h1 {
 <p class="kicker"><svg class="districtry-mark" width="18" height="18" aria-hidden="true" style="vertical-align:-3px;margin-right:6px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><polygon points="16,20 60,8 90,34 84,74 46,90 12,64" fill="#6d3fd1"></polygon><circle cx="42" cy="58" r="15" fill="none" stroke="#fff" stroke-width="10"></circle><line x1="57" y1="20" x2="57" y2="77.5" stroke="#fff" stroke-width="10"></line></svg><a href="../">districtry / illinois</a></p>
 <h1>Union County Board</h1>
 <p class="title-sub">Every member of the Union County Board, from the county&#x27;s own published roster.</p>
-<p class="lede">Union County elects its board <b>at large</b> — every member is chosen countywide, so there are no board districts to be in. These 5 members represent the whole county.</p>
+<p class="lede">Union County elects its county board <b>at large</b> — every member is chosen countywide, so there are no board districts to be in. These 5 members represent the whole county.</p>
 <p class="structure">Commission form — 5 commissioners elected countywide by lettered seat, six-year staggered terms</p>
 <section class="district" id="members">
 <h2>Members</h2>
-<ul class="members"><li class="member"><span class="m-name">Kent L Pitts</span></li><li class="member"><span class="m-name">Darryl G. Harvell</span></li><li class="member"><span class="m-name">David Gould</span></li><li class="member"><span class="m-name">Max Miller</span></li><li class="member"><span class="m-name">Brandon Bierstedt</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Kent L Pitts</span><span class="m-party">Republican</span></li><li class="member"><span class="m-name">Darryl G. Harvell</span><span class="m-party">Republican</span></li><li class="member"><span class="m-name">David Gould</span><span class="m-party">Republican</span></li><li class="member"><span class="m-name">Max Miller</span><span class="m-party">Republican</span></li><li class="member"><span class="m-name">Brandon Bierstedt</span><span class="m-party">Republican</span></li></ul>
 </section>
 <a class="cta" href="../#layers=county">See Union County on the map →</a>
 <p class="cta-note">Opens the map with the county layer on. An at-large board has no district geometry, so the members above are the answer for anywhere in the county.</p>

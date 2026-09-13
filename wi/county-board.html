@@ -617,6 +617,19 @@ footer.site-footer a { color: var(--accent-deep); }
 }
 .maps li:last-child { margin-bottom: 0; }
 .maps strong { color: var(--ink); }
+/* The county index, generated into this page by scripts/build_county_pages.py.
+   Two columns from 560px so the list is one scan rather than one long
+   scroll; the count beside each name is what tells a reader a board of three
+   from a board of thirty before they click. */
+.county-index { list-style: none; margin: 8px 0 0; padding: 0; }
+.county-index li { margin: 0 0 2px; line-height: 28px; }
+.county-index a { font-weight: 600; text-decoration: none; }
+.county-index a:hover { text-decoration: underline; }
+.county-index-n { color: var(--slate); font-size: 13.5px; white-space: nowrap; }
+@media (min-width: 560px) {
+  .county-index { columns: 2; column-gap: 28px; }
+  .county-index li { break-inside: avoid; }
+}
 </style>
 </head>
 <body>
@@ -720,6 +733,87 @@ footer.site-footer a { color: var(--accent-deep); }
       officeholders with the relevant government office before relying on them for anything
       official.
     </div>
+  </section>
+
+  <section>
+    <h2>Every county board, county by county</h2>
+    <!-- ==== GENERATED:BEGIN county-index ==== -->
+    <p class="matrix-lede">Every Wisconsin county whose roster this project has: <b>72 counties</b>, <b>1575 people</b>, each name published by the county itself.</p>
+    <ul class="county-index">
+      <li><a href="county-board/adams.html">Adams County</a> <span class="county-index-n">20 members</span></li>
+      <li><a href="county-board/ashland.html">Ashland County</a> <span class="county-index-n">21 members</span></li>
+      <li><a href="county-board/barron.html">Barron County</a> <span class="county-index-n">29 members</span></li>
+      <li><a href="county-board/bayfield.html">Bayfield County</a> <span class="county-index-n">13 members</span></li>
+      <li><a href="county-board/brown.html">Brown County</a> <span class="county-index-n">26 members</span></li>
+      <li><a href="county-board/buffalo.html">Buffalo County</a> <span class="county-index-n">14 members</span></li>
+      <li><a href="county-board/burnett.html">Burnett County</a> <span class="county-index-n">21 members</span></li>
+      <li><a href="county-board/calumet.html">Calumet County</a> <span class="county-index-n">21 members</span></li>
+      <li><a href="county-board/chippewa.html">Chippewa County</a> <span class="county-index-n">21 members</span></li>
+      <li><a href="county-board/clark.html">Clark County</a> <span class="county-index-n">29 members</span></li>
+      <li><a href="county-board/columbia.html">Columbia County</a> <span class="county-index-n">28 members</span></li>
+      <li><a href="county-board/crawford.html">Crawford County</a> <span class="county-index-n">17 members</span></li>
+      <li><a href="county-board/dane.html">Dane County</a> <span class="county-index-n">37 members</span></li>
+      <li><a href="county-board/dodge.html">Dodge County</a> <span class="county-index-n">33 members</span></li>
+      <li><a href="county-board/door.html">Door County</a> <span class="county-index-n">21 members</span></li>
+      <li><a href="county-board/douglas.html">Douglas County</a> <span class="county-index-n">20 members</span></li>
+      <li><a href="county-board/dunn.html">Dunn County</a> <span class="county-index-n">29 members</span></li>
+      <li><a href="county-board/eau-claire.html">Eau Claire County</a> <span class="county-index-n">29 members</span></li>
+      <li><a href="county-board/florence.html">Florence County</a> <span class="county-index-n">11 members</span></li>
+      <li><a href="county-board/fond-du-lac.html">Fond Du Lac County</a> <span class="county-index-n">25 members</span></li>
+      <li><a href="county-board/forest.html">Forest County</a> <span class="county-index-n">17 members</span></li>
+      <li><a href="county-board/grant.html">Grant County</a> <span class="county-index-n">17 members</span></li>
+      <li><a href="county-board/green.html">Green County</a> <span class="county-index-n">31 members</span></li>
+      <li><a href="county-board/green-lake.html">Green Lake County</a> <span class="county-index-n">17 members</span></li>
+      <li><a href="county-board/iowa.html">Iowa County</a> <span class="county-index-n">21 members</span></li>
+      <li><a href="county-board/iron.html">Iron County</a> <span class="county-index-n">14 members</span></li>
+      <li><a href="county-board/jackson.html">Jackson County</a> <span class="county-index-n">19 members</span></li>
+      <li><a href="county-board/jefferson.html">Jefferson County</a> <span class="county-index-n">30 members</span></li>
+      <li><a href="county-board/juneau.html">Juneau County</a> <span class="county-index-n">21 members</span></li>
+      <li><a href="county-board/kenosha.html">Kenosha County</a> <span class="county-index-n">23 members</span></li>
+      <li><a href="county-board/kewaunee.html">Kewaunee County</a> <span class="county-index-n">20 members</span></li>
+      <li><a href="county-board/la-crosse.html">La Crosse County</a> <span class="county-index-n">30 members</span></li>
+      <li><a href="county-board/lafayette.html">Lafayette County</a> <span class="county-index-n">16 members</span></li>
+      <li><a href="county-board/langlade.html">Langlade County</a> <span class="county-index-n">21 members</span></li>
+      <li><a href="county-board/lincoln.html">Lincoln County</a> <span class="county-index-n">21 members</span></li>
+      <li><a href="county-board/manitowoc.html">Manitowoc County</a> <span class="county-index-n">25 members</span></li>
+      <li><a href="county-board/marathon.html">Marathon County</a> <span class="county-index-n">38 members</span></li>
+      <li><a href="county-board/marinette.html">Marinette County</a> <span class="county-index-n">29 members</span></li>
+      <li><a href="county-board/marquette.html">Marquette County</a> <span class="county-index-n">17 members</span></li>
+      <li><a href="county-board/menominee.html">Menominee County</a> <span class="county-index-n">7 members</span></li>
+      <li><a href="county-board/milwaukee.html">Milwaukee County</a> <span class="county-index-n">18 members</span></li>
+      <li><a href="county-board/monroe.html">Monroe County</a> <span class="county-index-n">16 members</span></li>
+      <li><a href="county-board/oconto.html">Oconto County</a> <span class="county-index-n">31 members</span></li>
+      <li><a href="county-board/oneida.html">Oneida County</a> <span class="county-index-n">20 members</span></li>
+      <li><a href="county-board/outagamie.html">Outagamie County</a> <span class="county-index-n">36 members</span></li>
+      <li><a href="county-board/ozaukee.html">Ozaukee County</a> <span class="county-index-n">25 members</span></li>
+      <li><a href="county-board/pepin.html">Pepin County</a> <span class="county-index-n">12 members</span></li>
+      <li><a href="county-board/pierce.html">Pierce County</a> <span class="county-index-n">17 members</span></li>
+      <li><a href="county-board/polk.html">Polk County</a> <span class="county-index-n">15 members</span></li>
+      <li><a href="county-board/portage.html">Portage County</a> <span class="county-index-n">25 members</span></li>
+      <li><a href="county-board/price.html">Price County</a> <span class="county-index-n">13 members</span></li>
+      <li><a href="county-board/racine.html">Racine County</a> <span class="county-index-n">21 members</span></li>
+      <li><a href="county-board/richland.html">Richland County</a> <span class="county-index-n">21 members</span></li>
+      <li><a href="county-board/rock.html">Rock County</a> <span class="county-index-n">29 members</span></li>
+      <li><a href="county-board/rusk.html">Rusk County</a> <span class="county-index-n">17 members</span></li>
+      <li><a href="county-board/sauk.html">Sauk County</a> <span class="county-index-n">30 members</span></li>
+      <li><a href="county-board/sawyer.html">Sawyer County</a> <span class="county-index-n">15 members</span></li>
+      <li><a href="county-board/shawano.html">Shawano County</a> <span class="county-index-n">26 members</span></li>
+      <li><a href="county-board/sheboygan.html">Sheboygan County</a> <span class="county-index-n">25 members</span></li>
+      <li><a href="county-board/st-croix.html">St Croix County</a> <span class="county-index-n">19 members</span></li>
+      <li><a href="county-board/taylor.html">Taylor County</a> <span class="county-index-n">17 members</span></li>
+      <li><a href="county-board/trempealeau.html">Trempealeau County</a> <span class="county-index-n">17 members</span></li>
+      <li><a href="county-board/vernon.html">Vernon County</a> <span class="county-index-n">19 members</span></li>
+      <li><a href="county-board/vilas.html">Vilas County</a> <span class="county-index-n">21 members</span></li>
+      <li><a href="county-board/walworth.html">Walworth County</a> <span class="county-index-n">11 members</span></li>
+      <li><a href="county-board/washburn.html">Washburn County</a> <span class="county-index-n">21 members</span></li>
+      <li><a href="county-board/washington.html">Washington County</a> <span class="county-index-n">21 members</span></li>
+      <li><a href="county-board/waukesha.html">Waukesha County</a> <span class="county-index-n">25 members</span></li>
+      <li><a href="county-board/waupaca.html">Waupaca County</a> <span class="county-index-n">27 members</span></li>
+      <li><a href="county-board/waushara.html">Waushara County</a> <span class="county-index-n">11 members</span></li>
+      <li><a href="county-board/winnebago.html">Winnebago County</a> <span class="county-index-n">36 members</span></li>
+      <li><a href="county-board/wood.html">Wood County</a> <span class="county-index-n">19 members</span></li>
+    </ul>
+    <!-- ==== GENERATED:END county-index ==== -->
   </section>
 
   <section>
