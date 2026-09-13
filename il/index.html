@@ -2446,7 +2446,34 @@ svg.leaflet-image-layer.leaflet-interactive path {
      share one left and one right edge. The table is the one thing that can
      exceed it, and it scrolls inside its own box — which is what
      .batch-results' overflow-x has always been for. */
-  .feedback-panel.batch-panel { max-width: 688px; max-height: 88vh; overflow-y: auto; }
+  .feedback-panel.batch-panel { max-width: 688px; max-height: 88vh; overflow-y: auto; transition: max-width .22s ease; }
+
+  /* THE WINDOW GROWS FOR THE TABLE AND FOR NOTHING ELSE. 688px is the form's
+     width and the form does not want to change shape because a table appeared,
+     so every block above the results keeps the same 640px column in both
+     states; only .batch-results is left uncapped to use the extra room.
+
+     MEASURED at 1440px, two addresses, counting the table's own scrollWidth:
+     one selected layer needs 888px, two need 1092px and three need 1353px —
+     each extra layer adds a value column and an edge column. 1152px therefore
+     covers one and two with NO horizontal scroll at all, which is the case
+     this tool was built for (a ward, or a ward and its precincts). Three and
+     up still scroll and no cap avoids that: 1401px does not fit a 1440px
+     screen. 94vw keeps the window inside whatever viewport it opens in.
+
+     1152 AND NOT 1140, WHICH IS THE ARITHMETIC THIS FIRST GOT WRONG: the
+     panel's width is not the table's box. 24px of shell padding each side and
+     .batch-results' own 1px border each side come off first, so 1140 left a
+     1090px box against a 1092px table and two layers scrolled by two pixels —
+     with the comment above claiming they did not. Re-measured in a browser
+     rather than recomputed on paper. */
+  .feedback-panel.batch-panel.has-results { max-width: min(1152px, 94vw); }
+  .batch-panel .batch-lede,
+  .batch-panel .batch-caveat,
+  .batch-panel .batch-field,
+  .batch-panel .batch-controls,
+  .batch-panel .batch-status,
+  .batch-panel .batch-summary { max-width: 640px; }
   .batch-lede { font-size: 13px; color: var(--slate); margin: 0 0 12px; line-height: 1.55; }
 
   /* The caveat is not decoration and is not collapsible. What this tool
@@ -2558,8 +2585,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .batch-row-flag { background: var(--brand-tint); }
   .batch-cell-none { color: var(--slate); font-style: italic; }
 
+  @media (prefers-reduced-motion: reduce) {
+    .feedback-panel.batch-panel { transition: none; }
+  }
+
   @media (max-width: 700px) {
-    .feedback-panel.batch-panel { max-width: 100%; }
+    .feedback-panel.batch-panel,
+    .feedback-panel.batch-panel.has-results { max-width: 100%; }
     .batch-panel .batch-layers { column-count: 1; }
   }
   /* ==== ENGINE:BEGIN styles-hover-responsive ==== */
@@ -30713,6 +30745,7 @@ function initChiExplorer() {
     var statusEl = document.getElementById("batch-status");
     var summaryEl = document.getElementById("batch-summary");
     var resultsEl = document.getElementById("batch-results");
+    var panelEl = modal.querySelector(".batch-panel");
 
     var MAX_ADDRESSES = 500;      // a cap on what one run can ask of a donated endpoint
     var SPACING_MS = 1100;        // >=1s between lookups, like the POI queue
@@ -31043,6 +31076,7 @@ function initChiExplorer() {
       summaryEl.hidden = true;
       resultsEl.hidden = true;
       resultsEl.textContent = "";
+      syncPanelWidth();
       setStatus("Loading " + mods.length + (mods.length === 1 ? " boundary set…" : " boundary sets…"));
 
       // Per-layer failure isolation, the same contract the cards keep: a layer
@@ -31144,7 +31178,16 @@ function initChiExplorer() {
       summaryEl.hidden = false;
     }
 
+    /* The window is wide only while there is a table to be wide for. One
+       writer, called from renderResults (which runs per row during a run, so
+       the widening lands with the first result) and from the reset in
+       runBatch, which empties rows without going through it. */
+    function syncPanelWidth() {
+      if (panelEl) panelEl.classList.toggle("has-results", rows.length > 0);
+    }
+
     function renderResults() {
+      syncPanelWidth();
       renderSummary();
       resultsEl.textContent = "";
       if (!rows.length) { resultsEl.hidden = true; return; }
