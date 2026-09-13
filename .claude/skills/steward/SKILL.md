@@ -64,7 +64,7 @@ python3 scripts/build_coverage_map.py --check            # every instance's outl
 python3 scripts/build_privacy_page.py --check
 python3 scripts/build_history_page.py --check
 python3 scripts/build_manifests.py --check
-python3 scripts/build_sitemap.py --check                 # every page's sitemap lastmod vs its last commit
+python3 scripts/build_sitemap.py --check                 # every page's sitemap lastmod vs its last commit (regenerate with no flag; a page you have edited but not committed dates today, so the order you run it in no longer matters)
 python3 scripts/validate_favicon.py
 python3 scripts/validate_shell_continuations.py
 python3 scripts/validate_workflow_deps.py
