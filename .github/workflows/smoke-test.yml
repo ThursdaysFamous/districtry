@@ -267,7 +267,14 @@ jobs:
       - name: County board pages match their rosters
         run: python3 scripts/build_county_pages.py --check
 
-      - name: Sitemap lastmod matches each page's last commit
+      # Both halves matter. The dates are why this gate was written; the PARSE
+      # is why it was rewritten. sitemap.xml shipped with a double hyphen inside
+      # its own header comment (2026-09-12, the commit that first generated it),
+      # which XML forbids, so Google, Bing and every browser rejected the whole
+      # document and all 110 URLs with it — and this step stayed green, because
+      # it read the file with a regex that matched each <url> block one at a time
+      # and never asked whether the file around them parsed.
+      - name: Sitemap parses, and its lastmods match each page's last commit
         run: python3 scripts/build_sitemap.py --check
 
       # The favicon is the one branded asset whose audience is a CRAWLER, and it
