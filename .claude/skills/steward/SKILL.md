@@ -124,6 +124,17 @@ fails every bare-visit assertion with `http://localhost:8000//`;
 strip one. Do not `pkill -f` the server
 by its command line from a shell whose own command line contains it.
 
+`scripts/page_consistency_test.mjs` red on a `target … is 24px or clear of its
+neighbours` line means a control is under WCAG 2.5.8's 24px floor AND close
+enough to a neighbour to be mis-tapped; the message gives its size, its parent
+and the neighbour's distance. The fix is nearly always the container's spacing
+rather than the control (a wrapped link row wants a bigger row gap or
+line-height), and a control floating over the map wants `min-height: 24px`. If
+one of 2.5.8's own exceptions genuinely covers it, record it in
+`TARGET_EXCEPTIONS` naming which exception and why — an entry there fails once
+nothing matches it. Red on `carries a skip link` or `carries a <main>` means a
+new page shipped without the keyboard entry every other page has.
+
 `scripts/probe_contrast_pairs.mjs` measures every text node on every sitemap
 page in both themes and asserts one thing: a pair below its WCAG floor is one
 `scripts/validate_contrast.py` already measures and already calls short. Red

@@ -762,6 +762,19 @@ h2 {
 .does b { display: block; font: var(--font-heading-weight) 17px/1.25 var(--font-heading); margin-bottom: 5px; }
 .does p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--ink-3); }
 
+/* Focus-only, and the pair validate_contrast.py already measures: --paper on
+   --ink, 16.08:1 light and 15.36:1 dark. The app and the twelve sub-pages have
+   carried one since the rebrand; these pages did not, so a keyboard reader met
+   a different site depending on which page they landed on. What it bypasses
+   here is short — that is the honest size of it — but the <main> landmark it
+   needs is the part a screen reader was missing outright. */
+.skip-link {
+  position: absolute; left: -9999px; top: 0;
+  background: var(--ink); color: var(--paper);
+  padding: 10px 16px; z-index: 10; border-radius: 0 0 6px 0;
+}
+.skip-link:focus { left: 0; }
+
 footer { margin-top: 52px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13.5px; color: var(--muted); }
 footer a { color: var(--brand-600); }
 footer a:hover { color: var(--brand-700); }
@@ -778,7 +791,10 @@ footer .support {
   border-radius: var(--radius-card); color: var(--ink-3);
 }
 footer .support b { color: var(--ink); }
-footer .foot-links { margin-top: 12px; }
+/* line-height 28px, not the body's 20.9: these links are 17px tall and wrap
+   at 390px, which put the next row's box 4px under this row's centre — inside
+   WCAG 2.5.8's 24px circle. 28 leaves 5.5px clear. Measured 2026-09-13. */
+footer .foot-links { margin-top: 12px; line-height: 28px; }
 
 @media (max-width: 560px) {
   .wrap { padding: 36px 18px 56px; }
@@ -796,6 +812,7 @@ footer .foot-links { margin-top: 12px; }
 </style>
 </head>
 <body>
+  <a href="#page-main" class="skip-link">Skip to content</a>
   <div class="shell">
 %(notice)s    <div class="wrap">
     <header class="mast">
@@ -803,6 +820,7 @@ footer .foot-links { margin-top: 12px; }
       <span class="wordmark">districtry</span>
     </header>
 
+    <main id="page-main">
     <h1>Every district that covers a point, and who represents it.</h1>
     <p class="lede">%(desc)s</p>
 
@@ -860,6 +878,7 @@ footer .foot-links { margin-top: 12px; }
            from. What nobody publishes is listed too, rather than quietly missing.</p>
       </div>
     </div>
+    </main>
 
     <footer>
       <p>districtry is a public civic reference built from official published

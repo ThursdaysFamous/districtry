@@ -418,7 +418,7 @@ ACCEPTED_SHORTFALLS = {
 # decision the brand --faint and --muted entries above are still waiting on
 # does not arise where one page owns the value.
 TRAFFIC_PAIRS = [
-    ("ink",         "plane",       "text", "body, and .backlink a:hover — .wrap paints nothing, so the page ground is --plane"),
+    ("ink",         "plane",       "text", "body, and .backlink a:hover — .wrap paints nothing, so the page ground is --plane. Also the .skip-link, which paints the pair the other way round (--plane on --ink); contrast is symmetric, so one row measures both"),
     ("ink",         "surface",     "text", ".caveat strong, .note strong, .meter-label b, .barrow .name 13px, td:first-child — all inside .card or .caveat, which paint --surface"),
     ("ink-2",       "plane",       "text", ".eyebrow 11px, .period 14px, .backlink a 13px, footer .standing a 12.5px"),
     ("ink-2",       "surface",     "text", ".caveat 13.5px, .tile .sub 12.5px, .card .sub 13px, .legend 13px, .bar value 12.5px, .note 13px, .empty code 12px, .meter-label 13px, summary 13px, td"),

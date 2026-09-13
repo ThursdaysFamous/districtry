@@ -1,5 +1,6 @@
-// Behaviour gate: every page in the sitemap carries the same brand and the same
-// standing links — run in CI by smoke-test.yml.
+// Behaviour gate: every page in the sitemap carries the same brand, the same
+// standing links, the same keyboard entry, and tap targets a finger can hit —
+// run in CI by smoke-test.yml.
 //
 // WHY THIS EXISTS. On 2026-08-24 three published pages were found still serving
 // the pre-rebrand skin — ny/council-district.html, ny/community-board.html and
@@ -13,6 +14,17 @@
 // documents look like the same product. The pages were found by a throwaway
 // script that drove all seventeen urls and printed a row each; this is that
 // script, kept.
+//
+// TWO CHECKS ADDED 2026-09-13, both from the SEO re-audit and both the same
+// shape as the rebrand miss above: a claim nobody compared against the pages.
+// Six pages carried no skip link and no <main> — the root, traffic.html and the
+// four history pages — while the app and the twelve sub-pages carried both, so
+// a keyboard reader met a different site depending where they landed. And a
+// sweep of WCAG 2.5.8 target size across all 37 pages at 390 and 1280 found
+// four link rows short: the app's panel foot at a 2px row gap, the landing and
+// history footers' wrapped rows, and the map-tile banner's 21x19 dismiss. The
+// audit that reported the first of them had sampled four pages, which is why
+// this sweeps every one.
 //
 // IT DERIVES ITS SURFACE, IT DOES NOT CARRY A LIST. The pages come from
 // sitemap.xml and the expectations from the tree — a page is expected to link
@@ -48,7 +60,123 @@ const paths = [...readFileSync(join(ROOT, "sitemap.xml"), "utf8")
   .matchAll(/<loc>([^<]+)<\/loc>/g)]
   .map((m) => m[1].replace(/^https?:\/\/[^/]+/, ""));
 
+// WCAG 2.5.8 Target Size (Minimum), swept below. An entry here is a target
+// under 24 CSS px whose 24px circle reaches a neighbour and which the
+// criterion's own exceptions cover — recorded with the exception it claims and
+// a date, the shape ACCEPTED_SHORTFALLS and EXPECTED_UNREACHABLE already use,
+// and re-audited every run: an entry nothing matches FAILS rather than sitting
+// here after the thing it excused has gone.
+// Runs in the page. Returns every target under 24 CSS px whose 24px circle
+// reaches a neighbour and which none of WCAG 2.5.8's exceptions covers.
+//
+// Three things it took three passes to get right, each a false positive it
+// produced on its own first runs:
+//
+//   PER FRAGMENT, not per element. getBoundingClientRect() on an inline link
+//   that wraps returns the UNION of its lines — 335x45 for one 13.5px link in
+//   the landing footer — a rectangle covering whitespace nobody can tap, which
+//   then "collides" with every target near it. getClientRects() gives the line
+//   boxes a reader sees.
+//
+//   AN ANCESTOR IS NOT A NEIGHBOUR. Leaflet's map container is focusable and
+//   fills the map, so without this every overlay control on every app page
+//   collides with it forever. A control inside a surface is nested, not
+//   something you mis-tap beside it.
+//
+//   THE INLINE EXCEPTION WANTS THREE TESTS, not one. It covers a target that is
+//   part of a line of text: an <a> (a button or a summary placed beside prose
+//   is a control, not prose), computed display inline (an <a> set to block or
+//   flex is a control too), and a parent whose remaining text is more than
+//   separator punctuation (a row of links joined by "·" is a link list, and
+//   that list is exactly what failed on three surfaces).
+const TARGETS_FN = () => {
+  const SEL = "a[href], button, input:not([type=hidden]), select, textarea, summary, " +
+              "[role=button], [role=link], [tabindex]:not([tabindex='-1'])";
+  const SEPARATORS = /^[\s·•|/–—,;>→←]*$/;
+  const name = (el) => {
+    const cls = el.getAttribute && el.getAttribute("class");
+    return el.tagName.toLowerCase() +
+      (cls && cls.trim() ? "." + cls.trim().split(/\s+/).slice(0, 2).join(".") : "");
+  };
+  const els = [...document.querySelectorAll(SEL)].filter((el) => {
+    const cs = getComputedStyle(el);
+    if (cs.display === "none" || cs.visibility === "hidden") return false;
+    const r = el.getBoundingClientRect();
+    // A skip link parks itself at left:-9999px until focused; it is not a
+    // target a pointer can reach and measuring it there is meaningless.
+    return r.width > 0 && r.height > 0 && r.left > -1000 && r.top > -1000;
+  });
+  const boxes = [];
+  for (const el of els) {
+    for (const r of el.getClientRects()) {
+      if (r.width <= 0 || r.height <= 0) continue;
+      boxes.push({ el, x: r.left, y: r.top, w: r.width, h: r.height,
+                   cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    }
+  }
+  const inline = (el) => {
+    if (el.tagName !== "A" || getComputedStyle(el).display !== "inline") return false;
+    const parent = el.parentElement;
+    if (!parent) return false;
+    let other = parent.textContent || "";
+    for (const a of parent.querySelectorAll(SEL)) other = other.replace(a.textContent || "", "");
+    return !SEPARATORS.test(other);
+  };
+  const circleHitsRect = (cx, cy, r) => {
+    const nx = Math.max(r.x, Math.min(cx, r.x + r.w));
+    const ny = Math.max(r.y, Math.min(cy, r.y + r.h));
+    return Math.hypot(cx - nx, cy - ny) < 12;
+  };
+  const out = [];
+  for (let i = 0; i < boxes.length; i++) {
+    const b = boxes[i];
+    if (b.w >= 24 && b.h >= 24) continue;
+    if (inline(b.el)) continue;
+    let worst = null;
+    for (let j = 0; j < boxes.length; j++) {
+      const o = boxes[j];
+      if (i === j || o.el === b.el) continue;
+      if (o.el.contains(b.el) || b.el.contains(o.el)) continue;
+      const undersized = o.w < 24 || o.h < 24;
+      const hit = undersized ? Math.hypot(b.cx - o.cx, b.cy - o.cy) < 24
+                             : circleHitsRect(b.cx, b.cy, o);
+      if (!hit) continue;
+      const d = Math.round(Math.hypot(b.cx - o.cx, b.cy - o.cy) * 10) / 10;
+      if (!worst || d < worst.d) {
+        worst = { d, sel: name(o.el),
+                  text: (o.el.textContent || o.el.value || "").trim().replace(/\s+/g, " ").slice(0, 26) };
+      }
+    }
+    if (!worst) continue;                       // the spacing exception is met
+    out.push({ sel: name(b.el),
+               text: (b.el.textContent || b.el.value || "").trim().replace(/\s+/g, " ").slice(0, 30),
+               parent: b.el.parentElement ? name(b.el.parentElement) : "—",
+               w: Math.round(b.w * 10) / 10, h: Math.round(b.h * 10) / 10, near: worst });
+  }
+  // One row per (selector, parent): 124 chart columns are one finding.
+  const seen = new Set();
+  return out.filter((t) => {
+    const k = `${t.sel}|${t.parent}`;
+    if (seen.has(k)) return false;
+    seen.add(k); return true;
+  });
+};
+
+const TARGET_EXCEPTIONS = [
+  {
+    page: "/traffic.html", sel: "rect.hitcol", date: "2026-09-13",
+    exception: "Equivalent",
+    reason: "the daily chart's per-day hit columns, 13.2px wide at 1280 and " +
+            "4.7px at 390 and necessarily touching — a 51-day chart cannot give " +
+            "each day 24px without showing fewer days. 2.5.8's Equivalent " +
+            "exception applies rather than Essential: the same numbers are on " +
+            "the same page in the `View as table` disclosure below the chart, " +
+            "whose rows are full-width.",
+  },
+];
+
 const failures = [];
+const exercised = new Set();
 const probed = new Map();
 function check(page, name, ok, detail) {
   if (!ok) failures.push(`${page} — ${name}${detail ? ": " + detail : ""}`);
@@ -182,6 +310,20 @@ try {
           .flatMap((s) => (s.textContent || "")
             .match(/https?:\/\/(?:www\.)?districtry\.com\/[^"\s]*/g) || []),
         ogTitle: !!document.querySelector('meta[property="og:title"]'),
+        // A skip link and the landmark it needs. Measured 2026-09-12, six
+        // sitemap pages had neither — the root, traffic.html and the four
+        // history pages — while the app and the twelve sub-pages had both, so
+        // a keyboard reader met a different site depending where they landed.
+        // The href must RESOLVE: a skip link pointing at an id nothing carries
+        // is worse than none, because it reads as present and does nothing.
+        skip: (() => {
+          const a = [...document.querySelectorAll("a[href^='#']")]
+            .find((x) => /skip/i.test(x.textContent || "") || /skip/i.test(x.className || ""));
+          if (!a) return { present: false };
+          const id = a.getAttribute("href").slice(1);
+          return { present: true, target: !!id && !!document.getElementById(id), id };
+        })(),
+        hasMain: !!document.querySelector("main"),
         links: [...document.querySelectorAll("a[href]")].map((a) => a.getAttribute("href") || ""),
       }));
 
@@ -217,6 +359,12 @@ try {
       }
       check(path, "canonical", !!info.canonical);
       check(path, "og:title", info.ogTitle);
+      check(path, `carries a skip link (${scheme})`, info.skip.present);
+      if (info.skip.present) {
+        check(path, `the skip link resolves (${scheme})`, info.skip.target,
+              `#${info.skip.id} matches no element`);
+      }
+      check(path, `carries a <main> landmark (${scheme})`, info.hasMain);
 
       // --- the page's identity is its OWN ------------------------------------
       // All 31 sitemap pages self-canonicalise exactly, measured 2026-09-03, so
@@ -268,6 +416,27 @@ try {
         check(path, `links ${w}`, has || (w === "privacy" && file === "privacy.html"));
       }
 
+      // --- WCAG 2.5.8 target size, at the two widths that matter -----------
+      // Measured 2026-09-13 across all 37 pages: four link rows failed (the
+      // app's panel foot at a 2px row gap, the landing and history footers'
+      // wrapped rows, and the map-tile banner's 21x19 dismiss), and the audit
+      // that found the first of them had sampled four pages. A sweep is the
+      // only honest way to answer "does this hold everywhere".
+      for (const [label, vw, vh] of [[390, 390, 844], [1280, 1280, 900]]) {
+        await p.setViewportSize({ width: vw, height: vh });
+        await p.waitForTimeout(150);
+        const bad = await p.evaluate(TARGETS_FN);
+        for (const t of bad) {
+          const exc = TARGET_EXCEPTIONS.find((e) => e.page === path && e.sel === t.sel);
+          if (exc) { exercised.add(`${exc.page}|${exc.sel}`); continue; }
+          check(path, `target ${t.sel} is 24px or clear of its neighbours (@${label})`,
+                false,
+                `"${t.text}" ${t.w}x${t.h} in ${t.parent}, ${t.near.d}px from ` +
+                `${t.near.sel} "${t.near.text}"`);
+        }
+      }
+      await p.setViewportSize({ width: 1280, height: 720 });
+
       // --- every relative link resolves, each distinct url probed ONCE -------
       for (const h of info.links.filter((x) => x && !/^(https?:|mailto:|#)/.test(x))) {
         const abs = new URL(h, BASE + path).href;
@@ -281,9 +450,22 @@ try {
   await browser.close();
 }
 
+// An exception that no longer excuses anything is a hole in the gate with
+// nothing saying so — the property check_roster_retention.py's ACCEPTED_DROPS
+// had to be given after the fact.
+for (const e of TARGET_EXCEPTIONS) {
+  if (!exercised.has(`${e.page}|${e.sel}`)) {
+    failures.push(`TARGET_EXCEPTIONS records ${e.sel} on ${e.page} (${e.exception}, ` +
+      `${e.date}) and nothing on that page matches it now — drop the entry`);
+  } else {
+    console.log(`  ~ ${e.page} ${e.sel}: under 24px, WCAG 2.5.8 ${e.exception} ` +
+      `exception, recorded ${e.date} — ${e.reason}`);
+  }
+}
+
 if (failures.length) {
   console.error(`\n${failures.length} consistency failure(s):`);
   for (const f of failures) console.error("  - " + f);
   process.exit(1);
 }
-console.log(`All ${paths.length} sitemap page(s) consistent — brand, metadata, standing links, no dead links.`);
+console.log(`All ${paths.length} sitemap page(s) consistent — brand, metadata, standing links, no dead links, a skip link that resolves into a <main>, and every tap target at 390 and 1280 either 24px or clear of its neighbours.`);
