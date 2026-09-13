@@ -2443,25 +2443,54 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .batch-caveat p { margin: 0 0 7px; }
   .batch-caveat p:last-child { margin: 0; }
 
+  /* EVERY rule from here down is scoped under .batch-panel, and that is
+     load-bearing rather than tidiness. The modal shell this panel reuses
+     styles its own labels — `.feedback-panel label { display: block; … }` in
+     the engine's styles-footer fence — at specificity (0,1,1), which beats a
+     bare (0,1,0) class however late it appears. Unscoped, every rule below
+     that lands on a <label> silently lost: `.batch-layer-opt`'s display:flex
+     became `block`, and a gap on a block does nothing, so each checkbox sat
+     flush against its layer name, in the engine's label colour and weight
+     rather than this panel's. MEASURED in a browser rather than read off the
+     cascade — computed display `block`, visual gap 0px — which is the only
+     way to catch a rule that loses on specificity to a fence you must not
+     edit. Two of these selectors are on a <span> and need no scope; they
+     carry it anyway, so the next rule added here inherits the protection
+     instead of rediscovering the bug. */
   .batch-field { margin: 0 0 16px; }
-  .batch-field-label {
+  .batch-panel .batch-field-label {
     display: block; font-family: var(--font-display); font-size: 12px;
-    text-transform: uppercase; letter-spacing: 0.04em; color: var(--slate);
-    margin: 0 0 7px; padding-bottom: 4px; border-bottom: 1px solid var(--line);
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
+    color: var(--slate); margin: 0 0 7px; padding-bottom: 4px;
+    border-bottom: 1px solid var(--line);
   }
-  .batch-hint { font-size: 12px; color: var(--slate); margin: 6px 0 0; line-height: 1.5; }
+  .batch-panel .batch-hint { font-size: 12px; color: var(--slate); margin: 6px 0 0; line-height: 1.5; }
 
   /* Layer picker — the eligible polygon layers, in the same broad-to-granular
      order the hover popup lists them, grouped by the sidebar's own groups. */
-  .batch-layers { display: flex; flex-wrap: wrap; gap: 6px 14px; }
-  .batch-layer-group { flex: 1 1 210px; min-width: 0; }
-  .batch-layer-group h4 {
+  .batch-panel .batch-layers { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  .batch-panel .batch-layer-group { flex: 1 1 210px; min-width: 0; }
+  .batch-panel .batch-layer-group h4 {
     font-family: var(--font-display); font-size: 11px; text-transform: uppercase;
     letter-spacing: 0.04em; color: var(--slate); margin: 0 0 5px;
   }
-  .batch-layer-opt { display: flex; align-items: baseline; gap: 7px; padding: 2px 0; font-size: 13px; color: var(--ink); cursor: pointer; }
-  .batch-layer-opt input { margin: 0; flex: none; accent-color: var(--accent); }
-  .batch-layer-opt span { min-width: 0; overflow-wrap: anywhere; }
+  /* flex-start rather than center: a long layer name wraps to two lines in a
+     narrow column ("CPS Network (High School, admin office)"), and centring
+     would float the box against the middle of the block instead of against
+     the name's first line. */
+  .batch-panel .batch-layer-opt {
+    display: flex; align-items: flex-start; gap: 9px; padding: 3px 0;
+    font-size: 13px; font-weight: 400; line-height: 1.35; color: var(--ink); cursor: pointer;
+  }
+  /* 17px and accent-coloured, which is what the sidebar's own layer toggles
+     are (.layer-block-head input[type="checkbox"]). The browser default is
+     13px and system-blue, so an unsized box here read as unstyled next to
+     every other checkbox in the app. */
+  .batch-panel .batch-layer-opt input {
+    width: 17px; height: 17px; margin: 0; flex: none;
+    accent-color: var(--accent); cursor: pointer;
+  }
+  .batch-panel .batch-layer-opt span { min-width: 0; overflow-wrap: anywhere; padding-top: 1px; }
 
   .batch-textarea {
     width: 100%; box-sizing: border-box; min-height: 130px; resize: vertical;
@@ -2472,8 +2501,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .batch-textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 
   .batch-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 0 0 14px; }
-  .batch-threshold { display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--slate); }
-  .batch-threshold input {
+  .batch-panel .batch-threshold {
+    display: flex; align-items: center; gap: 7px; margin: 0;
+    font-size: 12.5px; font-weight: 400; color: var(--slate);
+  }
+  .batch-panel .batch-threshold input {
     width: 72px; font-family: var(--font-body); font-size: 13px; color: var(--ink);
     background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 5px 7px;
   }
