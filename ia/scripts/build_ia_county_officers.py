@@ -321,10 +321,28 @@ def party_row_for(isac_rows, established):
                                    read as one. A tie is that limit showing,
                                    so the field is withheld and the reason
                                    printed.
-      none matches              -> None. Cerro Gordo's county attorney is the
-                                   live case: ISAC publishes no row for him at
-                                   all, so his name comes from the ICAA roster
-                                   and no party is available to join.
+      none matches              -> None, and this is LIVE in eight offices
+                                   (measured 2026-09-13), in two shapes. Four
+                                   have NO ISAC ROW AT ALL under the label --
+                                   Benton's sheriff, Dubuque's county
+                                   attorney, Marshall's and Woodbury's
+                                   recorders -- so there is nothing to join.
+                                   The other four have exactly ONE row and it
+                                   names SOMEBODY ELSE: the mislabels, where
+                                   ISAC's row is a deputy or an assistant who
+                                   appears in the office's own directory as
+                                   such. Those four are the whole point of the
+                                   join -- the old code read the party off
+                                   that row and printed the deputy's party
+                                   under the elected officer's name.
+
+                                   CORRECTED 2026-09-13. This bullet used to
+                                   name Cerro Gordo's county attorney as the
+                                   live no-match case, on the same exact-string
+                                   lookup #916 got wrong. ISAC publishes him as
+                                   `Carlyle Dalen, D`; the join matches it (see
+                                   the middle-initial case in the selftest) and
+                                   he ships WITH a party.
 
     `established` is the name the record will ship under. Called with no
     established name the answer is None, because there is nothing to join on.
@@ -462,8 +480,10 @@ PARTY_JOIN_CASES = [
      "John Westering", "R"),
     # one row, the ordinary county: the same join with one candidate
     ("single row", [("Matt Schultz", "R")], "Matt Schultz", "R"),
-    # no ISAC row names the officer -- Cerro Gordo's county attorney, whose
-    # name comes from the ICAA roster while ISAC lists only his assistants
+    # no ISAC row names the officer. The rows here are synthetic, but the
+    # SHAPE is live in eight offices (see party_row_for's docstring): four with
+    # no ISAC row at all, four whose one row names a deputy. Two non-matching
+    # rows is the harder version of the same thing and is what is exercised.
     ("no matching row", [("Jaclyn Smith", ""), ("Kaitlyn Ausborn", "")],
      "Carlyle D. Dalen", None),
     # TWO rows name the same person: same_person folds a dropped middle name,
@@ -477,7 +497,10 @@ PARTY_JOIN_CASES = [
     # nothing established to join on (no other directory named the officer)
     ("no established name", [("Ryan Kolpin", "R")], "", None),
     # the officer is named with a middle initial in one directory and not the
-    # other, and no second row competes: still one match
+    # other, and no second row competes: still one match. THIS is Cerro Gordo's
+    # real shape -- ISAC publishes `Carlyle Dalen, D` where the ICAA roster
+    # carries `Carlyle D. Dalen` -- and reading that as "no ISAC row at all" is
+    # the exact-string error #916 recorded and this change corrects.
     ("middle initial only", [("Carlyle Dalen", "D")], "Carlyle D. Dalen", "D"),
 ]
 

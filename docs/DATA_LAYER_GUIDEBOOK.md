@@ -2709,7 +2709,7 @@ it was right.**
 **THE RULE HAD NO NUMBERS BEHIND IT.** CLAUDE.md's browser-user-agent section (settled
 2026-09-11) allows a scraper to send a browser string where a site refuses the districtry
 token by client fingerprint, on the condition that the calling file records which token was
-refused, what the site answered, and the date. 106 files here send one (measured 2026-09-12, corrected the same day — see below). Almost none carried
+refused, what the site answered, and the date. 104 files here send one (measured 2026-09-12, twice corrected the same day — see below). Almost none carried
 that measurement, and `scripts/scraper_common.py`'s own docstring said the same thing from the
 other side: its UA constants "consolidate the DEFINITION, never the VALUE" because "several
 sites in this fleet block or challenge by client fingerprint" — naming none of them.
@@ -2718,7 +2718,7 @@ sites in this fleet block or challenge by client fingerprint" — naming none of
 first, stopping when one answers: `requests` + `UA_ROSTER_BOT`, stdlib + `UA_ROSTER_BOT`,
 `requests` + Chrome/126 + client hints, stdlib + Chrome/126 + client hints. Its subject is
 DISCOVERED from the tree — every host a script that sends a browser string reaches, 290 of
-them — and it writes `user-agent-measurements.json`, re-audited offline by `--check` in CI so
+them at sweep time and 282 today — and it writes `user-agent-measurements.json`, re-audited offline by `--check` in CI so
 an entry cannot outlive the file that fetched the host.
 
 **BOTH AXES, BECAUSE ONE IS NOT ENOUGH.** `scraper_common.py`'s 2026-09-03 table already
@@ -2742,10 +2742,15 @@ name would credit a browser string with a fix the stack made.
 | `tls-chain` / `proxy-denied` | 5 | an incomplete chain (`probe_incomplete_tls_chains.py`'s subject) or this sandbox's egress |
 
 **SEVENTEEN HOSTS REFUSE THE TOKEN AND 203 DO NOT.** Per file, as `probe_user_agents.py
---inventory` prints it: 106 files send a browser string; 17 reach at least one host that
-genuinely refuses the token, **55 reach only hosts that serve the token a full page, and 34
+--inventory` prints it: 104 files send a browser string; 17 reach at least one host that
+genuinely refuses the token, **54 reach only hosts that serve the token a full page, and 33
 more reach no host that refuses it** (one or more answered nothing or refused the `requests`
-stack). **THE FIRST FIGURES WERE 57 AND 68 OF 115, AND BOTH WERE WRONG FOR TWO REASONS.** The
+stack). **TWO FILES HAVE BEEN RENAMED TO THE TOKEN SINCE THAT SWEEP** and the per-file
+figures move with them — the Iowa minutes-chair scraper (#916) and the Iowa county-officers
+scraper (both measured `token-ok`) — which is the rule working rather than drift: a file
+whose host serves the token a full page gets the token back, one at a time, with its own
+weekly run as the witness. The VERDICT table above is unchanged; `--refresh-callers` moves
+caller rows only. **THE FIRST FIGURES WERE 57 AND 68 OF 115, AND BOTH WERE WRONG FOR TWO REASONS.** The
 classifier recognised a districtry token only with a `/N` version, so `validate_sources.py`'s
 `districtry source validator (+https://districtry.com/il/)` read as a browser string on 51
 hosts (found by #910), and it did not follow a UA constant imported from a sibling module, so
