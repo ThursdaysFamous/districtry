@@ -59,6 +59,32 @@ appointed ones -- but the ALLOW-LIST is what decides, never the party cell,
 because a party value is data about a person and absence of one is not
 proof of anything.
 
+WHY THE TOKEN AND NOT A BROWSER STRING (measured 2026-09-13).
+
+This file sent a pinned Chrome/120 string from the day it shipped, and
+nothing had ever asked the host whether it needed one. It does not.
+`scripts/probe_user_agents.py` fetches this host with requests carrying the
+districtry token and gets a full page: HTTP 200, recorded in
+user-agent-measurements.json with the verdict token-ok. The host serves no
+robots.txt (HTTP 404), so no group binds and the fetch is allowed; and two
+other callers of this same host -- ia_county_directory_scraper.py and
+ia/scripts/validate_sources.py -- have sent the token all along.
+
+THE PROBE READS A PER-COUNTY PAGE, WHICH IS THE PAGE THIS SCRAPER READS.
+It first measured the directory BASE url (2026-09-12, 49,445 bytes), and
+this docstring recorded that as a limit on the measurement: the 99 county
+pages under it were only inferred to behave the same way. #931 closed that
+gap for the whole fleet -- it re-probed 60 hosts at the page a scraper reads
+rather than the directory above it -- and this host is one of them:
+.../countydirectory/directory/Story, HTTP 200, 60,832 bytes, 2026-09-13.
+
+The weekly run remains the witness for the other 98 county pages, and the
+gate is arithmetic rather than a status code: a bad county name on this
+portal returns HTTP 200 with an empty table (trap 2 above), so a county that
+stops answering fails loudly on the parsed row count rather than returning a
+thin county. A browser string goes back only on a measurement that says the
+token is refused, recorded here with its date.
+
 Usage:
     python3 ia/scripts/ia_county_officers_scraper.py
 """
@@ -98,10 +124,9 @@ SUPERVISOR_OFFICE = "Supervisor"
 EXPECT_COUNTIES = 99
 MIN_ROWS_PER_COUNTY = 6  # a real county page carries ~15-20; 6 is a floor, not a target
 
-HEADERS = {
-    "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                    "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"),
-}
+# The districtry token, the same string ia_county_directory_scraper.py has
+# always sent to this host. See "WHY THE TOKEN AND NOT A BROWSER STRING" above.
+HEADERS = {"User-Agent": "districtry/1.0 (+https://districtry.com/ia/)"}
 REQUEST_TIMEOUT = 45
 
 ROW_RE = re.compile(r"<tr[^>]*>(.*?)</tr>", re.S)

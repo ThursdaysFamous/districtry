@@ -293,6 +293,72 @@ def _edit_distance(a, b, cap=2):
     return prev[-1]
 
 
+def party_row_for(isac_rows, established):
+    """The ISAC row whose name IS the officer's, or None with the reason why.
+
+    PARTY RIDES A JOIN, NEVER A PICK. Until 2026-09-12 the builder took
+    `isac_rows[0] if len(isac_rows) == 1 else None` and read the party off
+    that, which meant a county publishing two rows under one office label lost
+    the field silently while the NAME, coming from the office's own statewide
+    directory, survived. That is what happened on 2026-09-11: ISAC began
+    listing assistants and deputies under the officer's own office label --
+    four `County Attorney` rows in Cerro Gordo, three in Cherokee, two in six
+    more counties, and two `Sheriff` rows in two -- and six county attorneys
+    and two sheriffs lost a party ISAC was still publishing. Refusing to pick
+    one of several rows was right; dropping the field was the accident.
+
+    So the row is chosen by MATCHING THE NAME ALREADY ESTABLISHED by the other
+    directory, which is a join on a fact a second publisher supplied rather
+    than a preference among rows this one supplied.
+
+    THREE ANSWERS, and two of them are None:
+      exactly one row matches   -> that row (its party may still be blank)
+      two or more match         -> None. same_person deliberately folds a
+                                   dropped middle name and a one-character
+                                   misspelling, and its own docstring names
+                                   the limit: two people sharing a surname and
+                                   a first initial in one office of one county
+                                   read as one. A tie is that limit showing,
+                                   so the field is withheld and the reason
+                                   printed.
+      none matches              -> None, and this is LIVE in eight offices
+                                   (measured 2026-09-13), in two shapes. Four
+                                   have NO ISAC ROW AT ALL under the label --
+                                   Benton's sheriff, Dubuque's county
+                                   attorney, Marshall's and Woodbury's
+                                   recorders -- so there is nothing to join.
+                                   The other four have exactly ONE row and it
+                                   names SOMEBODY ELSE: the mislabels, where
+                                   ISAC's row is a deputy or an assistant who
+                                   appears in the office's own directory as
+                                   such. Those four are the whole point of the
+                                   join -- the old code read the party off
+                                   that row and printed the deputy's party
+                                   under the elected officer's name.
+
+                                   CORRECTED 2026-09-13. This bullet used to
+                                   name Cerro Gordo's county attorney as the
+                                   live no-match case, on the same exact-string
+                                   lookup #916 got wrong. ISAC publishes him as
+                                   `Carlyle Dalen, D`; the join matches it (see
+                                   the middle-initial case in the selftest) and
+                                   he ships WITH a party.
+
+    `established` is the name the record will ship under. Called with no
+    established name the answer is None, because there is nothing to join on.
+    """
+    if not established:
+        return None, "no established name to join on"
+    matches = [r for r in isac_rows if same_person(r.get("name") or "", established)]
+    if len(matches) == 1:
+        return matches[0], "matched %r" % matches[0].get("name")
+    if not matches:
+        return None, "no ISAC row names %r" % established
+    return None, ("%d ISAC rows all match %r (%s) -- ambiguous, no party"
+                  % (len(matches), established,
+                     ", ".join(repr(r.get("name")) for r in matches)))
+
+
 def same_person(a, b):
     """Do two directories name the SAME person, spelled differently?
 
@@ -399,6 +465,46 @@ DISPLAY_CASES = [
 ]
 
 
+# The duplicate-label shape, taken from what ISAC actually published on
+# 2026-09-12. `rows` is (name, party) pairs under ONE office label; `want` is
+# the party the join may take, or None where it must take none.
+PARTY_JOIN_CASES = [
+    # the shape that broke it: the officer plus an assistant, in the order
+    # ISAC happens to publish them. Both orders, because a pick would depend
+    # on the order and a join does not.
+    ("Cherokee attorney", [("Elizabeth R. Warnke", ""), ("Ryan Kolpin", "R"),
+                           ("Wendy Koch", "R")], "Ryan Kolpin", "R"),
+    ("Washington sheriff", [("Gina Greiner", ""), ("Jared Schneider", "R")],
+     "Jared Schneider", "R"),
+    ("Cass sheriff", [("John Westering", "R"), ("Nicole Wills", "")],
+     "John Westering", "R"),
+    # one row, the ordinary county: the same join with one candidate
+    ("single row", [("Matt Schultz", "R")], "Matt Schultz", "R"),
+    # no ISAC row names the officer. The rows here are synthetic, but the
+    # SHAPE is live in eight offices (see party_row_for's docstring): four with
+    # no ISAC row at all, four whose one row names a deputy. Two non-matching
+    # rows is the harder version of the same thing and is what is exercised.
+    ("no matching row", [("Jaclyn Smith", ""), ("Kaitlyn Ausborn", "")],
+     "Carlyle D. Dalen", None),
+    # TWO rows name the same person: same_person folds a dropped middle name,
+    # so this is its stated limit showing. Withhold rather than pick.
+    ("ambiguous match", [("Ryan Kolpin", "R"), ("Ryan J. Kolpin", "D")],
+     "Ryan Kolpin", None),
+    # a matched row with no party is a match with nothing to take, NOT a
+    # licence to look at the next row
+    ("match carries no party", [("Jared Schneider", ""), ("Gina Greiner", "R")],
+     "Jared Schneider", None),
+    # nothing established to join on (no other directory named the officer)
+    ("no established name", [("Ryan Kolpin", "R")], "", None),
+    # the officer is named with a middle initial in one directory and not the
+    # other, and no second row competes: still one match. THIS is Cerro Gordo's
+    # real shape -- ISAC publishes `Carlyle Dalen, D` where the ICAA roster
+    # carries `Carlyle D. Dalen` -- and reading that as "no ISAC row at all" is
+    # the exact-string error #916 recorded and this change corrects.
+    ("middle initial only", [("Carlyle Dalen", "D")], "Carlyle D. Dalen", "D"),
+]
+
+
 def selftest():
     bad = []
     for raw, want in DISPLAY_CASES:
@@ -406,10 +512,19 @@ def selftest():
         if got != want:
             bad.append("%r -> %r, wanted %r" % (raw, got, want))
         print("  %-4s %-28r -> %r" % ("OK" if got == want else "FAIL", raw, got))
+    for label, pairs, established, want in PARTY_JOIN_CASES:
+        rows = [{"name": n, "party": p} for n, p in pairs]
+        prow, why = party_row_for(rows, established)
+        got = (prow or {}).get("party") or None
+        if got != want:
+            bad.append("%s -> %r, wanted %r" % (label, got, want))
+        print("  %-4s %-24s -> %-6r %s"
+              % ("OK" if got == want else "FAIL", label, got, why))
+    total = len(DISPLAY_CASES) + len(PARTY_JOIN_CASES)
     if bad:
         sys.exit("build-ia-county-officers --selftest: FAIL — %d case(s): %s"
                  % (len(bad), "; ".join(bad)))
-    print("build-ia-county-officers --selftest: OK — %d case(s)" % len(DISPLAY_CASES))
+    print("build-ia-county-officers --selftest: OK — %d case(s)" % total)
 
 
 def main():
@@ -478,6 +593,7 @@ def main():
     # edit is reviewable rather than silent -- it changes a NAME, and a name
     # here is also the key ia-county-board-chairs.json joins on.
     honorifics = []
+    party_joins = []
 
     for county, geoid in sorted(geoid_by_name.items()):
         rows = isac.get(county, {}).get("rows", [])
@@ -547,12 +663,44 @@ def main():
 
             if best is None:
                 continue
-            if "phone" not in best and isac_row:
-                ph = clean_phone(isac_row.get("phone"))
+            # The joined row -- the one whose NAME is this officer's, not the
+            # only row under the label. A county publishing one row is the same
+            # join with one candidate; one publishing several is where the
+            # fields below used to vanish or, worse, come off another person.
+            prow, why = party_row_for(isac_rows, best.get("name"))
+            if len(isac_rows) > 1:
+                # One line per county-office where the join had to choose. The
+                # single-row counties are not printed: ~400 lines of "matched"
+                # would bury the ten that mean something.
+                party_joins.append("  party join  %-13s %-15s %d rows -- %s"
+                                   % (county, key, len(isac_rows), why))
+            # PHONE RIDES THE SAME JOIN, for the same reason party does: a
+            # contact detail must belong to the person it is printed under.
+            # This is a FALLBACK -- it fires only where the office's own
+            # directory published no number -- and the old read took it off
+            # `isac_row`, the row under the LABEL rather than the row naming
+            # this officer.
+            #
+            # Measured 2026-09-12: no county's phone changes. 101 records reach
+            # this line (all 99 treasurers, plus the Muscatine and Sac
+            # sheriffs); ISAC published exactly ONE row under the label in every
+            # one, and in every one that row's name joins to the shipped name,
+            # so old and new read the same row. The records whose shipped name
+            # is NOT the ISAC row's -- the four mislabels, Crawford and Sioux
+            # sheriff and both Page offices -- each carry a phone from their own
+            # directory and so never reach this line. That is where the old read
+            # would have put a deputy's desk line under the elected officer's
+            # name, and it is why the line changes although today's file does
+            # not. Sac shows the join is not only defensive: its pinned
+            # divergence ships ISAC's name without the directory's contact
+            # block, the fallback fires, and ISAC's number is the right one --
+            # which is the row the join returns.
+            if "phone" not in best and prow:
+                ph = clean_phone(prow.get("phone"))
                 if ph:
                     best["phone"] = ph
-            if isac_row and isac_row.get("party"):
-                party = expand_party(isac_row["party"], county, key)
+            if prow and prow.get("party"):
+                party = expand_party(prow["party"], county, key)
                 if party:
                     best["party"] = party
 
@@ -717,6 +865,10 @@ def main():
                 raise RuntimeError("%s supervisor carries unexpected field(s) %s"
                                    % (geoid, sorted(set(m) - {"name", "phone", "party"})))
 
+    for line in party_joins:
+        print(line, file=sys.stderr)
+    print("  offices where ISAC published more than one row under the label: %d"
+          % len(party_joins), file=sys.stderr)
     for line in sorted(honorifics):
         print("  honorific stripped: %s" % line, file=sys.stderr)
     print("  leading honorifics stripped for display: %d name(s)" % len(honorifics),

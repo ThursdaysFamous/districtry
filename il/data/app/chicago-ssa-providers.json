@@ -1,0 +1,342 @@
+{
+ "1": {
+  "address": "55 W. Monroe St. Suite 2660, Chicago, IL 60603",
+  "phone": "312.782.9160",
+  "provider": "Chicago Loop Alliance",
+  "ref": "1-2015",
+  "url": "http://www.chicagoloopalliance.com"
+ },
+ "10": {
+  "address": "4555 S. Ashland Ave., Chicago, IL 60609",
+  "phone": "872.281.7832",
+  "provider": "Back of the Yards Neighborhood Council",
+  "ref": "10",
+  "url": "http://www.bync.org"
+ },
+ "13": {
+  "address": "4555 S. Ashland Ave., Chicago, IL 60609",
+  "phone": "872.281.7832",
+  "provider": "Back of the Yards Neighborhood Council",
+  "ref": "13",
+  "url": "http://www.bync.org"
+ },
+ "17": {
+  "address": "3138 N. Broadway, Chicago, IL 60657",
+  "phone": "773.348.8608",
+  "provider": "Lake View East Chamber of Commerce",
+  "ref": "17",
+  "url": "http://www.lakevieweast.com"
+ },
+ "18": {
+  "address": "3656 N. Halsted St., Chicago, IL 60613",
+  "phone": "773.883.0500",
+  "provider": "Northalsted Business Alliance",
+  "ref": "18",
+  "url": "https://www.northalsted.com"
+ },
+ "19": {
+  "address": "1448 W. Morse Ave., Chicago, IL 60626",
+  "phone": "773.508.5885",
+  "provider": "Rogers Park Business Alliance",
+  "ref": "19",
+  "url": "https://www.rpba.org"
+ },
+ "2": {
+  "address": "4936 W. Irving Park Rd., Chicago, IL 60641",
+  "phone": "773.777.2020",
+  "provider": "Portage Park Chamber of Commerce",
+  "ref": "2",
+  "url": "https://www.portageparkchamber.org/"
+ },
+ "20": {
+  "address": "10827 S. Western Ave., Chicago, IL 60643",
+  "phone": "773.779.2530",
+  "provider": "Morgan Park Beverly Hills Business Association",
+  "ref": "20"
+ },
+ "21": {
+  "address": "4505 N. Lincoln Ave., Chicago, IL 60625",
+  "phone": "872.806.0685",
+  "provider": "Lincoln Square Ravenswood Chamber of Commerce",
+  "ref": "21-2016",
+  "url": "https://www.lincolnsquare.org"
+ },
+ "22": {
+  "address": "5217 N. Clark St., #3, Chicago, IL 60640",
+  "phone": "773.728.2995",
+  "provider": "Andersonville Chamber of Commerce",
+  "ref": "22",
+  "url": "https://www.andersonville.org"
+ },
+ "23": {
+  "address": "2468 N. Lincoln Ave., Chicago, IL 60614",
+  "phone": "773.880.5200",
+  "provider": "Lincoln Park Chamber of Commerce",
+  "ref": "23",
+  "url": "https://www.visitclarkstreet.com"
+ },
+ "24": {
+  "address": "1448 W. Morse Ave., Chicago, IL 60626",
+  "phone": "773.508.5885",
+  "provider": "Rogers Park Business Alliance",
+  "ref": "24",
+  "url": "https://www.rpba.org"
+ },
+ "25": {
+  "address": "3610 W. 26th St., 2nd Floor, Chicago, IL 60623",
+  "phone": "773.521.5387",
+  "provider": "Little Village Chamber of Commerce",
+  "ref": "25",
+  "url": "https://www.lavillitachamber.org"
+ },
+ "26": {
+  "address": "1210 W. Rosedale Ave., Chicago, IL 60660",
+  "phone": "773.561.6000",
+  "provider": "Edgewater Chamber of Commerce",
+  "ref": "26",
+  "url": "https://www.edgewater.org"
+ },
+ "27": {
+  "address": "1409 W. Addison St., Chicago, IL 60613",
+  "phone": "773.472.7171",
+  "provider": "Lakeview Roscoe Village Chamber of Commerce",
+  "ref": "27",
+  "url": "https://www.lakeviewroscoevillage.org"
+ },
+ "29": {
+  "address": "1819 W. Chicago Ave., Chicago, IL 60622",
+  "phone": "312.850.9390",
+  "provider": "West Town Chicago Chamber of Commerce",
+  "ref": "29-2014",
+  "url": "https://www.westtownchamber.org/"
+ },
+ "3": {
+  "address": "2601 W. 63rd St., Chicago, IL 60629",
+  "phone": "773.436.1000",
+  "provider": "Greater Southwest Chamber of Commerce",
+  "ref": "3",
+  "url": "http://www.greatersouthwest.org"
+ },
+ "31": {
+  "address": "1770 W. Berteau Ave., Suite 101, Chicago, IL 60613",
+  "phone": "773.975.2088",
+  "provider": "Greater Ravenswood Chamber of Commerce",
+  "ref": "31",
+  "url": "https://www.ravenswoodchicago.org/"
+ },
+ "32": {
+  "address": "800 E. 78th St., Chicago, IL 60619",
+  "phone": "773.994.5006",
+  "provider": "Chatham Business Association, SBDI",
+  "ref": "32-2024",
+  "url": "https://www.cbaworks.org/"
+ },
+ "33": {
+  "address": "1414 N. Ashland Ave., Chicago, IL 60622",
+  "phone": "773.384.2672",
+  "provider": "Wicker Park.Bucktown Chamber of Commerce",
+  "ref": "33",
+  "url": "https://www.wickerparkbucktown.com/"
+ },
+ "34": {
+  "address": "4619 N. Broadway, Chicago, IL 60640",
+  "phone": "773.878.1064",
+  "provider": "Uptown United",
+  "ref": "34",
+  "url": "https://exploreuptown.org/"
+ },
+ "35": {
+  "address": "2468 N. Lincoln Ave., Chicago, IL 60614",
+  "phone": "773.880.5200",
+  "provider": "Lincoln Park Chamber of Commerce",
+  "ref": "35-2015",
+  "url": "http://www.lincolnavessa.com"
+ },
+ "38": {
+  "address": "4054 N. Lincoln Ave., Chicago, IL 60618",
+  "phone": "773.525.3609",
+  "provider": "Northcenter Chamber of Commerce",
+  "ref": "38",
+  "url": "http://www.northcenterchamber.com"
+ },
+ "39": {
+  "address": "4555 S. Ashland Ave., Chicago, IL 60609",
+  "phone": "872.281.7832",
+  "provider": "Back of the Yards Neighborhood Council",
+  "ref": "39",
+  "url": "http://www.bync.org"
+ },
+ "4": {
+  "address": "2100 W. 95th St., Chicago, IL 60643",
+  "phone": "773.238.4094",
+  "provider": "95th Street/Beverly Hills Business Association",
+  "ref": "4",
+  "url": "http://95thstreetba.org/"
+ },
+ "42": {
+  "address": "1750 E 71st St., Chicago, IL 60649",
+  "phone": "773.955.9508",
+  "provider": "South Shore Chamber, Inc.",
+  "ref": "42",
+  "url": "http://southshorechamberinc.org/"
+ },
+ "43": {
+  "address": "1448 W. Morse Ave., Chicago, IL 60626",
+  "phone": "773.508.5885",
+  "provider": "Rogers Park Business Alliance",
+  "ref": "43",
+  "url": "http://www.rpba.org"
+ },
+ "44": {
+  "address": "10827 S. Western Ave., Chicago, IL 60643",
+  "phone": "773.779.2530",
+  "provider": "Morgan Park Beverly Hills Business Association",
+  "ref": "44"
+ },
+ "45": {
+  "address": "837 W. 115th St., Chicago, IL 60643",
+  "phone": "773.831.7107",
+  "provider": "The Far South Community Development Corp.",
+  "ref": "45",
+  "url": "http://www.farsouthcdc.org"
+ },
+ "47": {
+  "address": "4210 S. Berkeley Ave., Chicago, IL 60653",
+  "phone": "773.268.7232",
+  "provider": "Quad Communities Development Corp.",
+  "ref": "47",
+  "url": "https://www.qcdc.org/"
+ },
+ "48": {
+  "address": "1543 N. Wells St., Lower Level, Chicago, IL 60610",
+  "phone": "312.951.6106",
+  "provider": "Old Town Merchants & Residents Association",
+  "ref": "48",
+  "url": "http://www.oldtownchicago.org"
+ },
+ "5": {
+  "address": "10241 S. Commercial Ave., Chicago, IL 60617",
+  "phone": "773.734.2222",
+  "provider": "South Chicago Parents and Friends, Inc.",
+  "ref": "5",
+  "url": "http://www.scpf-inc.org"
+ },
+ "50": {
+  "address": "8334 S. Stony Island Ave., Chicago, IL 60617",
+  "phone": "773.734.0626",
+  "provider": "Southeast Chicago Chamber of Commerce",
+  "ref": "50",
+  "url": "http://www.southeastchgochamber.org"
+ },
+ "51": {
+  "address": "800 E. 78th St., Chicago, IL 60619",
+  "phone": "773.994.5006",
+  "provider": "Chatham Business Association SBDI",
+  "ref": "51",
+  "url": "http://www.cbaworks.org"
+ },
+ "52": {
+  "address": "220 E. 51st St., Chicago, IL 60616",
+  "phone": "773.285.3401",
+  "provider": "51st Street Business Association",
+  "ref": "52-2021"
+ },
+ "54": {
+  "address": "1448 W. Morse Ave., Chicago, IL 60626",
+  "phone": "773.508.5885",
+  "provider": "Rogers Park Business Alliance",
+  "ref": "54",
+  "url": "http://www.rpba.org"
+ },
+ "55": {
+  "address": "3400 W. 111th St., Suite B, Chicago, IL 60655",
+  "phone": "773.881.0622",
+  "provider": "Mount Greenwood Community & Business Assoc.",
+  "ref": "55",
+  "url": "https://www.mgcba.org/"
+ },
+ "56": {
+  "address": "4210 S. Berkeley Ave., Chicago, IL 60653",
+  "phone": "773.268.7232",
+  "provider": "Quad Communities Development Corp.",
+  "ref": "56-2022",
+  "url": "https://www.qcdc.org/"
+ },
+ "59": {
+  "address": "4555 S. Ashland Ave., Chicago, IL 60609",
+  "phone": "872.281.7832",
+  "provider": "Back of the Yards Neighborhood Council",
+  "ref": "59-2022",
+  "url": "https://bync.org/"
+ },
+ "60": {
+  "address": "3403 W. Lawrence Ave., Suite 201, Chicago, IL 60625",
+  "phone": "773.478.0202",
+  "provider": "North River Commission",
+  "ref": "60",
+  "url": "https://northrivercommission.org/"
+ },
+ "61": {
+  "address": "1511 E. 53rd St., 2nd Floor, Chicago, IL 60615",
+  "phone": "773.324.6926",
+  "provider": "South East Chicago Commission (SECC)",
+  "ref": "61-2023",
+  "url": "https://www.secc-chicago.org/"
+ },
+ "62": {
+  "address": "4740 W. Peterson Ave., Chicago, IL 60646",
+  "phone": "773.545.9300",
+  "provider": "Edgebrook Sauganash Chamber of Commerce",
+  "ref": "62",
+  "url": "http://escc60646.com/"
+ },
+ "63": {
+  "address": "3620 W. Chicago Ave., Chicago, IL 60651",
+  "phone": "773.342.0036",
+  "provider": "West Humboldt Park Family and Community Development Council",
+  "ref": "63",
+  "url": "https://www.whpdevelopmentcouncil.net/"
+ },
+ "7": {
+  "address": "4555 S. Ashland Ave., Chicago, IL 60609",
+  "phone": "872.281.7832",
+  "provider": "Back of the Yards Neighborhood Council",
+  "ref": "7",
+  "url": "https://bync.org/ssa7-2"
+ },
+ "79": {
+  "address": "4000 W. Montrose Ave., Chicago, IL 60641",
+  "phone": "331.248.7127",
+  "provider": "Pulaski Elston Business Association",
+  "ref": "79",
+  "url": "https://www.pebachamber.org/"
+ },
+ "8": {
+  "address": "3138 N. Broadway, Chicago, IL 60657",
+  "phone": "773.348.8608",
+  "provider": "Lake View East Chamber of Commerce",
+  "ref": "8",
+  "url": "http://www.lakevieweast.com"
+ },
+ "80": {
+  "address": "815 W. 63rd St., Chicago, IL 60621",
+  "phone": "773.651.2400",
+  "provider": "Greater Englewood Community Development Corporation",
+  "ref": "80",
+  "url": "https://www.gecdc.org/"
+ },
+ "81": {
+  "address": "839 W. 79th St., Chicago, IL 60620",
+  "phone": "773.483.3696",
+  "provider": "Greater Auburn Gresham Development Corporation",
+  "ref": "81",
+  "url": "https://www.gagdc.org/index.html"
+ },
+ "82": {
+  "address": "18 W. Ontario St., Chicago, IL 60654",
+  "phone": "312.664.6656",
+  "provider": "Division Street Merchants Association",
+  "ref": "82",
+  "url": "https://www.divisionstreetmerchants.org/"
+ }
+}

@@ -639,6 +639,7 @@
   },
   "sheriff": {
    "name": "John Westering",
+   "party": "Republican",
    "phone": "(712) 243-2206"
   },
   "supervisorPlan": "PLAN 3",
@@ -729,6 +730,7 @@
   "countyAttorney": {
    "email": "cdalen@cgcounty.org",
    "name": "Carlyle D. Dalen",
+   "party": "Democratic",
    "phone": "641-421-3101"
   },
   "recorder": {
@@ -772,6 +774,7 @@
   "countyAttorney": {
    "email": "rrkolpin@co.cherokee.ia.us",
    "name": "Ryan Kolpin",
+   "party": "Republican",
    "phone": "712-225-2835"
   },
   "recorder": {
@@ -1057,6 +1060,7 @@
   "countyAttorney": {
    "email": "colin.johnson@crawfordca.org",
    "name": "Colin Johnson",
+   "party": "Democratic",
    "phone": "712-263-5601"
   },
   "recorder": {
@@ -1068,7 +1072,6 @@
   "sheriff": {
    "email": "jsteinkuehler@crawfordso.net",
    "name": "James Steinkuehler",
-   "party": "Republican",
    "phone": "(712) 263-2146"
   },
   "supervisorPlan": "PLAN 1",
@@ -1108,6 +1111,7 @@
   "countyAttorney": {
    "email": "DCAttorney@dallascountyiowa.gov",
    "name": "Matt Schultz",
+   "party": "Republican",
    "phone": "515-993-5060"
   },
   "recorder": {
@@ -1571,6 +1575,7 @@
   "countyAttorney": {
    "email": "pjohnson@co.fremont.ia.us",
    "name": "Peter Johnson",
+   "party": "Democratic",
    "phone": "712-374-2751"
   },
   "recorder": {
@@ -3706,7 +3711,6 @@
   "sheriff": {
    "email": "jamievv@siouxcounty.org",
    "name": "Jamie Van Voorst",
-   "party": "Republican",
    "phone": "(712) 737-2280"
   },
   "supervisorPlan": "PLAN 3",
@@ -4027,6 +4031,7 @@
   },
   "sheriff": {
    "name": "Jared Schneider",
+   "party": "Republican",
    "phone": "(319) 653-2107"
   },
   "supervisorPlan": "PLAN 3",
@@ -4109,6 +4114,7 @@
   "countyAttorney": {
    "email": "darren.driscoll@webstercountyia.gov",
    "name": "Darren Driscoll",
+   "party": "Democratic",
    "phone": "515-573-1452"
   },
   "recorder": {

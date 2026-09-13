@@ -18,7 +18,7 @@
   "stack-not-token": 7,
   "tls-chain": 1,
   "token-ok": 220,
-  "token-refused": 2,
+  "token-refused": 3,
   "token-refused-and-stack": 15
  },
  "hosts": {
@@ -319,7 +319,7 @@
    "note": "requests+token HTTP 200, 60831 bytes",
    "callers": {
     "ia/scripts/ia_county_city_officials_scraper.py": "self",
-    "ia/scripts/ia_county_minutes_chair_scraper.py": "both",
+    "ia/scripts/ia_county_minutes_chair_scraper.py": "self",
     "ia/scripts/validate_sources.py": "self"
    }
   },
@@ -2013,7 +2013,7 @@
    "verdict": "robots-disallows-this-path",
    "note": "the * group disallows /ViewPublisher.php?view_id=1&count=20 \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
-    "ia/scripts/ia_county_minutes_chair_scraper.py": "both"
+    "ia/scripts/ia_county_minutes_chair_scraper.py": "self"
    }
   },
   "lacrossecounty.org": {
@@ -2453,7 +2453,7 @@
    "note": "requests+token HTTP 200, 60832 bytes",
    "callers": {
     "ia/scripts/ia_county_directory_scraper.py": "self",
-    "ia/scripts/ia_county_officers_scraper.py": "browser",
+    "ia/scripts/ia_county_officers_scraper.py": "self",
     "ia/scripts/validate_sources.py": "self"
    },
    "measured": "2026-09-13"
@@ -3782,6 +3782,38 @@
    },
    "measured": "2026-09-13"
   },
+  "www.chicago.gov": {
+   "host": "www.chicago.gov",
+   "url": "https://www.chicago.gov/city/en/depts/dcd/supp_info/special_service_areassaprogram.html",
+   "cells": {
+    "requests+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "stdlib+token": {
+     "kind": "refused",
+     "note": "HTTP 403"
+    },
+    "requests+chrome": {
+     "kind": "ok",
+     "note": "HTTP 200, 60267 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
+   },
+   "verdict": "token-refused",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 200, 60267 bytes",
+   "root": {
+    "kind": "refused",
+    "note": "HTTP 403"
+   },
+   "callers": {
+    "scripts/chicago_ssa_provider_scraper.py": "browser",
+    "scripts/validate_sources.py": "both"
+   },
+   "measured": "2026-09-13"
+  },
   "www.chicagopolice.org": {
    "host": "www.chicagopolice.org",
    "url": "https://www.chicagopolice.org",
@@ -3997,7 +4029,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 251443 bytes",
    "callers": {
-    "ia/scripts/ia_county_minutes_chair_scraper.py": "both"
+    "ia/scripts/ia_county_minutes_chair_scraper.py": "self"
    }
   },
   "www.co.adams.wi.us": {
@@ -4513,7 +4545,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 319149 bytes",
    "callers": {
-    "ia/scripts/ia_county_minutes_chair_scraper.py": "both"
+    "ia/scripts/ia_county_minutes_chair_scraper.py": "self"
    }
   },
   "www.desmoinescounty.iowa.gov": {
@@ -4531,7 +4563,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 629234 bytes",
    "callers": {
-    "ia/scripts/ia_county_minutes_chair_scraper.py": "both"
+    "ia/scripts/ia_county_minutes_chair_scraper.py": "self"
    }
   },
   "www.dewittcountyil.gov": {
@@ -5403,7 +5435,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 230765 bytes",
    "callers": {
-    "ia/scripts/ia_county_minutes_chair_scraper.py": "both"
+    "ia/scripts/ia_county_minutes_chair_scraper.py": "self"
    }
   },
   "www.manitowoc.org": {
@@ -6537,5 +6569,5 @@
    }
   }
  },
- "callers_refreshed": "2026-09-12"
+ "callers_refreshed": "2026-09-13"
 }

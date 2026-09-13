@@ -39,10 +39,15 @@ stack made. (The first sweep read 203: 37 hosts had been probed at the first
 half of a URL split across two string literals, and 23 more at a directory a
 page sat under; not one re-probe moved a host INTO a refusal.) Per file
 (`probe_user_agents.py --inventory` prints this tally, re-derived from the tree
-and the artifact rather than remembered): 106 files send a browser string; 55
-of them reach only hosts that serve the token a full page, 34 more reach no
+and the artifact rather than remembered): 104 files send a browser string; 65
+of them reach only hosts that serve the token a full page, 22 more reach no
 host that refuses the token (one or more answered nothing or refused the
-`requests` stack), and 17 reach at least one host that refuses it. An earlier
+`requests` stack), and 17 reach at least one host that refuses it -- and 282 of
+the 290 measured hosts are still reached by such a caller. TWO OF THOSE FILES HAVE BEEN RENAMED TO THE TOKEN SINCE THE SWEEP and the
+per-file figures move with them -- the Iowa minutes-chair scraper (#916) and
+the Iowa county-officers scraper -- which is this rule working rather than
+drift: a file whose host serves the token a full page gets the token back, one
+at a time, with its own weekly run as the witness. An earlier
 version of this paragraph said 57 and 68 of 115: the classifier then read a
 districtry token without a `/N` version, and a UA constant imported from a
 sibling module, as a browser string or as nothing, and the 68 was derived by a
@@ -242,6 +247,18 @@ def fetch(url, headers, timeout=60, attempts=5, retry_after_cap=30.0, verify=Non
 #   "did anything move" stays right and only the NAME in the line gets shorter.
 #   That is why it is documented rather than guarded, and why the nine call
 #   sites state a depth that was measured against the shipped file.
+#
+# WHAT A DOCTORED-INPUT PROOF OF THIS CAN AND CANNOT BE, because the
+# distinction was blurred once already. Calling substantive_changes()
+# directly proves the HELPER; running a builder end to end proves the
+# helper AND its call site. Those are not interchangeable, and for some
+# builders only the first is available: an add-or-remove case cannot reach
+# this code through build_boone_district_officials.py at all, because that
+# builder's check() refuses any roster whose keys are not exactly the
+# `district` values of the two shipped geometry files — the doctored payload
+# dies at the geometry gate, which is that gate working. So a line reported
+# for such a builder is this function's output on that builder's real data,
+# never a record of a build that ran; say which when quoting one.
 
 def flatten_records(container, depth, *, path=()):
     """{'a.b.c': record} from a container nested exactly `depth` keys deep.

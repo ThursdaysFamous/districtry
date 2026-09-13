@@ -926,6 +926,22 @@ PROVENANCE = [
 # check is reachability — a rename or retirement shows up here before users hit
 # a broken card. WARN-only: the app already isolates a down source per-card.
 ENDPOINTS = [
+    # The `ssa` card's people row. This is a HAND-MAINTAINED HTML PAGE, not a
+    # dataset, and it is the only source anywhere for which non-profit runs a
+    # Chicago Special Service Area. It is also not reachable from the DPD
+    # landing page — you get to it through Business Assistance — so if it is
+    # ever moved, nothing else will point at the new address. Its host refuses
+    # the districtry token on BOTH HTTP stacks (Akamai "Access Denied",
+    # measured 2026-09-12) and serves a browser string on both, so the scraper
+    # sends one. This check reaches it through the 403 second opinion below
+    # rather than needing a rule of its own, and says so in its own row.
+    {"layer": "Chicago SSA service providers (ssa card roster)",
+     # ONE literal, not two adjacent ones — see the long note in
+     # chicago_ssa_provider_scraper.py. probe_user_agents.py takes the first
+     # fragment of a split URL and then prefers the shortest path, so a split
+     # here makes it probe `.../supp_info/`, a directory that 403s to every
+     # client, and record this host as refusing us on all four rungs.
+     "url": "https://www.chicago.gov/city/en/depts/dcd/supp_info/special_service_areasandproviderlist.html"},
     # Suburban municipal ward boundaries — the non-Chicago entries of the
     # consolidated `ward` layer. No consolidated source exists, hence four.
     {"layer": "Suburban Cook municipal wards (21 municipalities, ward layer)",
