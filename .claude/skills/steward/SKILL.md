@@ -64,7 +64,7 @@ python3 scripts/build_coverage_map.py --check            # every instance's outl
 python3 scripts/build_privacy_page.py --check
 python3 scripts/build_history_page.py --check
 python3 scripts/build_manifests.py --check
-python3 scripts/build_sitemap.py --check                 # every page's sitemap lastmod vs its last commit
+python3 scripts/build_sitemap.py --check                 # every page's sitemap lastmod vs its last commit (regenerate with no flag; a page you have edited but not committed dates today, so the order you run it in no longer matters)
 python3 scripts/validate_favicon.py
 python3 scripts/validate_shell_continuations.py
 python3 scripts/validate_workflow_deps.py
@@ -123,6 +123,17 @@ fails every bare-visit assertion with `http://localhost:8000//`;
 `scripts/page_consistency_test.mjs` and `scripts/probe_contrast_pairs.mjs`
 strip one. Do not `pkill -f` the server
 by its command line from a shell whose own command line contains it.
+
+`scripts/page_consistency_test.mjs` red on a `target … is 24px or clear of its
+neighbours` line means a control is under WCAG 2.5.8's 24px floor AND close
+enough to a neighbour to be mis-tapped; the message gives its size, its parent
+and the neighbour's distance. The fix is nearly always the container's spacing
+rather than the control (a wrapped link row wants a bigger row gap or
+line-height), and a control floating over the map wants `min-height: 24px`. If
+one of 2.5.8's own exceptions genuinely covers it, record it in
+`TARGET_EXCEPTIONS` naming which exception and why — an entry there fails once
+nothing matches it. Red on `carries a skip link` or `carries a <main>` means a
+new page shipped without the keyboard entry every other page has.
 
 `scripts/probe_contrast_pairs.mjs` measures every text node on every sitemap
 page in both themes and asserts one thing: a pair below its WCAG floor is one

@@ -1373,6 +1373,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
     cursor: pointer;
     font-size: 15px;
     line-height: 1;
+    /* 24x24, WCAG 2.5.8's floor. It measured 21x19 and floats over the map, so
+       a miss pans the map instead of dismissing the banner — the case the
+       criterion is about. Measured 2026-09-13. */
+    min-width: 24px;
+    min-height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 2px 4px;
   }
   .tile-banner-dismiss:hover { color: var(--ink); }
@@ -2851,7 +2859,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .dpf-independence strong { color: var(--ink); font-weight: 650; }
   .dpf-independence a { color: var(--accent-deep); text-decoration: none; }
   .dpf-independence a:hover { text-decoration: underline; }
-  .dpf-links { display: flex; flex-wrap: wrap; gap: 2px 12px; margin: 0 0 8px; }
+  /* The ROW gap is 10px rather than 2px because these links are 16.5px tall:
+     at 2px a wrapped row put two targets 18.5px apart centre to centre, and
+     WCAG 2.5.8's spacing exception for an under-24px target asks for 24.
+     Measured 2026-09-13 on all six app pages at 390px and 1280px. */
+  .dpf-links { display: flex; flex-wrap: wrap; gap: 10px 12px; margin: 0 0 8px; }
   /* The support line is the one thing in this foot a reader is being ASKED to
      act on, so it is not a seventh equal item in .dpf-links — which is exactly
      what it was: "💛 Support this project", one of six, in a panel foot, on a
@@ -3096,6 +3108,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
     align-items: center;
     gap: 8px;
     cursor: pointer;
+    /* 24px tall, WCAG 2.5.8's floor. It measured 13px, and it sits ON the map:
+       a miss pans the map rather than opening the legend, which is the case
+       the criterion is about. The margin-bottom below drops from 6 to 0 to pay
+       for most of it, so measured on /il/ at 1280 the card goes 133.3px to
+       138.3px and its TOP edge rises 5px — the legend is bottom-anchored, so
+       the items row and the card's bottom edge do not move at all (items top
+       749 both ways). Measured 2026-09-13. */
+    min-height: 24px;
     font-family: var(--font-display);
     font-size: 10.5px;
     font-weight: 600;
@@ -3107,7 +3127,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
        sits outside it, so the gap has to be spelled out — without this the
        desktop legend tightens by 5px, which a pixel-diff catches and an eye
        does not. */
-    margin-bottom: 6px;
+    margin-bottom: 0;
   }
   /* A chevron, so the label reads as a control rather than a caption: down
      when closed, up when open. Two borders rather than a glyph, so it takes

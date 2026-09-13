@@ -332,6 +332,16 @@ body {
   -webkit-text-size-adjust: 100%%;
 }
 a { color: var(--brand-700); }
+/* Focus-only, and the pair validate_contrast.py already measures: --paper on
+   --ink, 16.08:1 light and 15.36:1 dark. The app and the twelve sub-pages have
+   carried one since the rebrand; these pages did not, so a keyboard reader met
+   a different site depending on which page they landed on. */
+.skip-link {
+  position: absolute; left: -9999px; top: 0;
+  background: var(--ink); color: var(--paper);
+  padding: 10px 16px; z-index: 10; border-radius: 0 0 6px 0;
+}
+.skip-link:focus { left: 0; }
 main { max-width: 760px; margin: 0 auto; padding: 40px 20px 64px; }
 .kicker {
   font: 600 13px/1 var(--font-body); letter-spacing: 0.08em;
@@ -372,7 +382,10 @@ table { border-collapse: collapse; width: 100%%; margin-top: 12px; font-size: 14
 th, td { text-align: left; padding: 7px 12px 7px 0; border-bottom: 1px solid var(--border); vertical-align: top; }
 th { font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
 code { font: 400 12.5px/1.4 ui-monospace, "SF Mono", Menlo, Consolas, monospace; color: var(--ink-2); }
-.foot { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 14px; color: var(--muted); }
+/* line-height 28px for the same reason build_landing_page.py gives its own
+   footer row: 17px links inheriting 1.6 wrap at 390px into rows 22.4px apart,
+   under WCAG 2.5.8's 24. Measured 2026-09-13. */
+.foot { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 14px; line-height: 28px; color: var(--muted); }
 .foot a { margin-right: 14px; }
 </style>
 <script type="application/ld+json">
@@ -380,7 +393,8 @@ code { font: 400 12.5px/1.4 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 </script>
 </head>
 <body>
-<main>
+<a href="#page-main" class="skip-link">Skip to content</a>
+<main id="page-main">
 <p class="kicker"><svg class="districtry-mark" viewBox="0 0 96 96" width="18" height="18" aria-hidden="true" style="vertical-align:-3px;margin-right:6px"><g style="mix-blend-mode:multiply"><polygon points="51.5,63.2 12.4,55.7 11.5,18.6 42.7,5.0 72.7,35.3" fill="#6d3fd1" fill-opacity="0.55"></polygon></g><g style="mix-blend-mode:multiply"><polygon points="54.1,81.9 34.6,47.9 56.5,19.3 87.5,28.1 83.8,71.0" fill="#1d5fd6" fill-opacity="0.5"></polygon></g><g style="mix-blend-mode:multiply"><polygon points="13.7,64.5 27.6,31.2 62.7,37.6 70.3,66.9 33.9,89.0" fill="#b0316e" fill-opacity="0.45"></polygon></g><circle cx="42" cy="60" r="17" fill="none" stroke="#17161c" stroke-width="11"></circle><line x1="59" y1="16" x2="59" y2="82.5" stroke="#17161c" stroke-width="11"></line></svg><a href="./">districtry / %(metro_lower)s</a></p>
 <h1>How this deployment grew</h1>
 <p class="intro">%(intro)s</p>
