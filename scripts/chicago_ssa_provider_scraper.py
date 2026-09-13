@@ -86,8 +86,15 @@ import requests  # noqa: E402
 # measuring it took three runs:
 #   (1) its inventory reads URL literals out of the tree, so a URL split across
 #       adjacent string literals contributes its FIRST fragment alone — here
-#       `https://www.chicago.gov/city/en/depts/dcd/supp_info/`, a bare
-#       directory; and
+#       the bare directory `/city/en/depts/dcd/supp_info/` on this host; and
+#
+#   AND A COMMENT IS NOT EXEMPT, which this comment proved on itself. Written
+#   with the scheme and host spelled out inside backticks, the line above became
+#   an inventory CANDIDATE: probe_user_agents.py scans URL text, not code, so it
+#   picked up the quoted address WITH ITS CLOSING BACKTICK and reported
+#   www.chicago.gov as all-refused on a 404 for a path that does not exist. The
+#   path is written without the scheme for that reason — a prose example of a
+#   URL should not be spellable as one.
 #   (2) choose_url() then ranks candidates by SHORTEST path (after preferring
 #       https and a non-root path), so that fragment outranks the page the
 #       scraper actually reads.

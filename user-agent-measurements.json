@@ -7,16 +7,17 @@
  },
  "subject": "every host reached by a script that sends a browser string; hosts reached only by a self-identifying caller are not in question and are not probed",
  "summary": {
-  "all-refused": 14,
-  "answers-nothing": 12,
+  "all-refused": 10,
+  "answers-nothing": 4,
   "challenged": 2,
   "crawl-delay-too-long": 5,
-  "path-answers-nothing": 11,
+  "path-answers-nothing": 7,
   "proxy-denied": 1,
-  "robots-disallows-this-path": 15,
-  "stack-not-token": 6,
-  "tls-chain": 4,
-  "token-ok": 203,
+  "robots-disallows-this-path": 12,
+  "robots-unreadable": 4,
+  "stack-not-token": 7,
+  "tls-chain": 1,
+  "token-ok": 220,
   "token-refused": 3,
   "token-refused-and-stack": 15
  },
@@ -537,21 +538,22 @@
   },
   "cityofracinewi.gov": {
    "host": "cityofracinewi.gov",
-   "url": "https://cityofracinewi.gov/government/city-leadership",
+   "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 776255 bytes"
+     "note": "HTTP 200, 794193 bytes"
     }
    },
    "robots": {
-    "requests+token": "read, * group with 3 rule(s)"
+    "requests+token": "read, 2 group(s) bind this client with 2 rule(s)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 776255 bytes",
+   "note": "requests+token HTTP 200, 794193 bytes",
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "cityofwaupaca.org": {
    "host": "cityofwaupaca.org",
@@ -612,115 +614,119 @@
   },
   "cms.hamiltoncountyil.gov": {
    "host": "cms.hamiltoncountyil.gov",
-   "url": "https://cms.hamiltoncountyil.gov/app/uploads/2026/02/",
+   "url": "https://cms.hamiltoncountyil.gov/app/uploads/2026/02/03-17-2026-GPE-Polling-Places-Addresses.pdf",
    "cells": {
     "requests+token": {
-     "kind": "refused",
-     "note": "HTTP 403"
-    },
-    "stdlib+token": {
-     "kind": "refused",
-     "note": "HTTP 403"
-    },
-    "requests+chrome": {
-     "kind": "refused",
-     "note": "HTTP 403"
-    },
-    "stdlib+chrome": {
-     "kind": "refused",
-     "note": "HTTP 403"
+     "kind": "ok",
+     "note": "HTTP 200, 117600 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
-   "verdict": "all-refused",
-   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 403; the front door answers the token (HTTP 200, 167110 bytes), so the refusal is this path",
-   "root": {
-    "kind": "ok",
-    "note": "HTTP 200, 167110 bytes"
-   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 117600 bytes",
    "callers": {
     "scripts/build_hamilton_precinct_polling.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "cms2.revize.com": {
    "host": "cms2.revize.com",
-   "url": "https://cms2.revize.com/revize/knoxcounty/",
-   "cells": {},
-   "robots": {
-    "requests+token": "read, * group with 13 rule(s)"
-   },
-   "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /revize/knoxcounty/ \u2014 not fetched, so this host carries no user-agent measurement",
-   "callers": {
-    "scripts/build_knox_board_districts.py": "browser",
-    "scripts/knox_county_board_scraper.py": "browser"
-   }
-  },
-  "cms5.revize.com": {
-   "host": "cms5.revize.com",
-   "url": "https://cms5.revize.com/revize/piercewi/Agendas%%20and%%20Minutes/",
-   "cells": {},
-   "robots": {
-    "requests+token": "read, * group with 6 rule(s)"
-   },
-   "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /revize/piercewi/Agendas%%20and%%20Minutes/ \u2014 not fetched, so this host carries no user-agent measurement",
-   "callers": {
-    "wi/scripts/wi_county_board_scraper.py": "both"
-   }
-  },
-  "cms9files.revize.com": {
-   "host": "cms9files.revize.com",
-   "url": "https://cms9files.revize.com/carrollil/",
-   "cells": {},
-   "robots": {
-    "requests+token": "read, * group with 6 rule(s)"
-   },
-   "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /carrollil/ \u2014 not fetched, so this host carries no user-agent measurement",
-   "callers": {
-    "scripts/build_carroll_precinct_polling.py": "browser",
-    "scripts/carroll_municipal_officials_scraper.py": "browser"
-   }
-  },
-  "co.cass.il.us": {
-   "host": "co.cass.il.us",
-   "url": "https://co.cass.il.us/download_file/view/",
+   "url": "https://cms2.revize.com/revize/knoxcounty/Documents/Department/County%20Clerk/Elections%20Information/General%20Information%20about%20Elections/Political%20Districts/County-District-Map-2022.pdf",
    "cells": {
     "requests+token": {
-     "kind": "error",
-     "note": "HTTP 500"
-    },
-    "stdlib+token": {
-     "kind": "error",
-     "note": "HTTP 500"
-    },
-    "requests+chrome": {
-     "kind": "error",
-     "note": "HTTP 500"
-    },
-    "stdlib+chrome": {
-     "kind": "error",
-     "note": "HTTP 500"
+     "kind": "ok",
+     "note": "HTTP 200, 683928 bytes"
     }
    },
    "robots": {
-    "requests+token": "read, * group with 16 rule(s)"
+    "requests+token": "read, 1 group(s) bind this client with 13 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 683928 bytes",
+   "callers": {
+    "scripts/build_knox_board_districts.py": "browser",
+    "scripts/knox_county_board_scraper.py": "browser"
+   },
+   "measured": "2026-09-13"
+  },
+  "cms5.revize.com": {
+   "host": "cms5.revize.com",
+   "url": "https://cms5.revize.com/revize/piercewi/Agendas%20and%20Minutes/Government/Board%20of%20Supervisor/%d%20Directory_Pierce%20County.pdf",
+   "cells": {
+    "requests+token": {
+     "kind": "error",
+     "note": "HTTP 404"
+    },
+    "stdlib+token": {
+     "kind": "error",
+     "note": "HTTP 400"
+    },
+    "requests+chrome": {
+     "kind": "error",
+     "note": "HTTP 404"
+    },
+    "stdlib+chrome": {
+     "kind": "error",
+     "note": "HTTP 400"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 6 rule(s)"
    },
    "verdict": "path-answers-nothing",
-   "note": "requests+token HTTP 500; stdlib+token HTTP 500; requests+chrome HTTP 500; stdlib+chrome HTTP 500; the front door answers the token (HTTP 200, 31737 bytes), so the refusal is this path",
+   "note": "requests+token HTTP 404; stdlib+token HTTP 400; requests+chrome HTTP 404; stdlib+chrome HTTP 400",
    "root": {
-    "kind": "ok",
-    "note": "HTTP 200, 31737 bytes"
+    "kind": "refused",
+    "note": "HTTP 403"
    },
+   "callers": {
+    "wi/scripts/wi_county_board_scraper.py": "both"
+   },
+   "measured": "2026-09-13"
+  },
+  "cms9files.revize.com": {
+   "host": "cms9files.revize.com",
+   "url": "https://cms9files.revize.com/carrollil/NOTICE%20OF%20POLLING%20PLACES%20FOR%20THE.pdf",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 78537 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 6 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 78537 bytes",
+   "callers": {
+    "scripts/build_carroll_precinct_polling.py": "browser",
+    "scripts/carroll_municipal_officials_scraper.py": "browser"
+   },
+   "measured": "2026-09-13"
+  },
+  "co.cass.il.us": {
+   "host": "co.cass.il.us",
+   "url": "https://co.cass.il.us/download_file/view/446/202",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 402547 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 16 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 402547 bytes",
    "callers": {
     "scripts/build_cass_board_districts.py": "self",
     "scripts/build_cass_board_roster.py": "unknown",
     "scripts/cass_county_board_scraper.py": "browser",
     "scripts/cass_municipal_officials_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "co.dodge.wi.gov": {
    "host": "co.dodge.wi.gov",
@@ -926,23 +932,24 @@
   },
   "co.trempealeau.wi.us": {
    "host": "co.trempealeau.wi.us",
-   "url": "https://co.trempealeau.wi.us/government/agendas_minutes/standing_committees/",
+   "url": "https://co.trempealeau.wi.us/departments/court___legal_departments/county_coroner.php",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 71790 bytes"
+     "note": "HTTP 200, 82669 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 71790 bytes",
+   "note": "requests+token HTTP 200, 82669 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "co.walworth.wi.us": {
    "host": "co.walworth.wi.us",
@@ -1200,37 +1207,22 @@
   },
   "dekalbcountyclerkil.gov": {
    "host": "dekalbcountyclerkil.gov",
-   "url": "https://dekalbcountyclerkil.gov/wp-content/uploads/2025/11/",
+   "url": "https://dekalbcountyclerkil.gov/wp-content/uploads/2025/11/2025-2026_Yearbook_Web.pdf",
    "cells": {
     "requests+token": {
-     "kind": "error",
-     "note": "HTTP 404"
-    },
-    "stdlib+token": {
-     "kind": "error",
-     "note": "HTTP 404"
-    },
-    "requests+chrome": {
-     "kind": "error",
-     "note": "HTTP 404"
-    },
-    "stdlib+chrome": {
-     "kind": "error",
-     "note": "HTTP 404"
+     "kind": "ok",
+     "note": "HTTP 200, 4963275 bytes"
     }
    },
    "robots": {
-    "requests+token": "read, * group with 1 rule(s)"
+    "requests+token": "read, 1 group(s) bind this client with 0 rule(s)"
    },
-   "verdict": "path-answers-nothing",
-   "note": "requests+token HTTP 404; stdlib+token HTTP 404; requests+chrome HTTP 404; stdlib+chrome HTTP 404; the front door answers the token (HTTP 200, 319171 bytes), so the refusal is this path",
-   "root": {
-    "kind": "ok",
-    "note": "HTTP 200, 319171 bytes"
-   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 4963275 bytes",
    "callers": {
     "scripts/dekalb_municipal_officials_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "detroitmi.gov": {
    "host": "detroitmi.gov",
@@ -1293,24 +1285,41 @@
   },
   "docs.legis.wisconsin.gov": {
    "host": "docs.legis.wisconsin.gov",
-   "url": "https://docs.legis.wisconsin.gov/misc/lrb/blue_book/",
+   "url": "https://docs.legis.wisconsin.gov/2025/legislators/senate",
    "cells": {
     "requests+token": {
-     "kind": "ok",
-     "note": "HTTP 200, 13492 bytes"
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (ConnectionError) \u2014 not fetched by this client"
+    },
+    "stdlib+token": {
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
+    },
+    "requests+chrome": {
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (ReadTimeout) \u2014 not fetched by this client"
+    },
+    "stdlib+chrome": {
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (TimeoutError) \u2014 not fetched by this client"
     }
    },
    "robots": {
-    "requests+token": "read, * group with 17 rule(s)"
+    "requests+token": "unreadable (ConnectionError)",
+    "stdlib+token": "unreadable (URLError)",
+    "requests+chrome": "unreadable (ReadTimeout)",
+    "stdlib+chrome": "unreadable (TimeoutError)",
+    "policy": "unreadable to every client on the ladder"
    },
-   "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 13492 bytes",
+   "verdict": "robots-unreadable",
+   "note": "robots.txt could not be read by any rung \u2014 no page was fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/validate_sources.py": "both",
     "wi/scripts/wi_bluebook_municipal_scraper.py": "browser",
     "wi/scripts/wi_county_clerk_scraper.py": "browser",
     "wi/scripts/wi_legislature_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "douglascountywi.gov": {
    "host": "douglascountywi.gov",
@@ -1576,23 +1585,23 @@
   },
   "gallatinco.illinois.gov": {
    "host": "gallatinco.illinois.gov",
-   "url": "https://gallatinco.illinois.gov/elections/",
+   "url": "https://gallatinco.illinois.gov/wp-content/uploads/2022/05/Precient-map.pdf",
    "cells": {
     "requests+token": {
-     "kind": "error",
-     "note": "SSLError: HTTPSConnectionPool(host='gallatinco.illinois.gov', port=443): Max retries exceeded with url: /elections/ (Caused by SSLError(SSLCertVerific"
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
     },
     "stdlib+token": {
-     "kind": "error",
-     "note": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)>"
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
     },
     "requests+chrome": {
-     "kind": "error",
-     "note": "SSLError: HTTPSConnectionPool(host='gallatinco.illinois.gov', port=443): Max retries exceeded with url: /elections/ (Caused by SSLError(SSLCertVerific"
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
     },
     "stdlib+chrome": {
-     "kind": "error",
-     "note": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)>"
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
     }
    },
    "robots": {
@@ -1602,78 +1611,78 @@
     "stdlib+chrome": "unreadable (URLError)",
     "policy": "unreadable to every client on the ladder"
    },
-   "verdict": "tls-chain",
-   "note": "requests+token SSLError: HTTPSConnectionPool(host='gallatinco.illinois.gov', port=443): Max retries exceeded with url: /elections/ (Caused by SSLError(SSLCertVerific; stdlib+token URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)>; requests+chrome SSLError: HTTPSConnectionPool(host='gallatinco.illinois.gov', port=443): Max retries exceeded with url: /elections/ (Caused by SSLError(SSLCertVerific; stdlib+chrome URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)>",
-   "root": {
-    "kind": "error",
-    "note": "SSLError: HTTPSConnectionPool(host='gallatinco.illinois.gov', port=443): Max retries exceeded with url: / (Cau"
-   },
+   "verdict": "robots-unreadable",
+   "note": "robots.txt could not be read by any rung \u2014 no page was fetched, so this host carries no user-agent measurement",
    "callers": {
     "scripts/build_gallatin_precincts.py": "unknown",
     "scripts/il_county_commissioners_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "gis-city.kenosha.org": {
    "host": "gis-city.kenosha.org",
-   "url": "https://gis-city.kenosha.org/server/rest/services/Organizational_Layers",
+   "url": "https://gis-city.kenosha.org/server/rest/services/Organizational_Layers/Districts_ElectedRepresentation/FeatureServer/150",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 3849 bytes"
+     "note": "HTTP 200, 9620 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 3849 bytes",
+   "note": "requests+token HTTP 200, 9620 bytes",
    "callers": {
     "wi/scripts/validate_sources.py": "both",
     "wi/scripts/wi_alderperson_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "gis.aurora.il.us": {
    "host": "gis.aurora.il.us",
-   "url": "https://gis.aurora.il.us/arcgis/rest/services/Administrative_Boundaries/",
+   "url": "https://gis.aurora.il.us/arcgis/rest/services/Administrative_Boundaries/2022Wards/FeatureServer/0/query",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 3402 bytes"
+     "note": "HTTP 200, 18578 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 3402 bytes",
+   "note": "requests+token HTTP 200, 18578 bytes",
    "callers": {
     "scripts/validate_sources.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "gis.cookcountyil.gov": {
    "host": "gis.cookcountyil.gov",
-   "url": "https://gis.cookcountyil.gov/traditional/rest/services/",
+   "url": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 15445 bytes"
+     "note": "HTTP 200, 9005 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 15445 bytes",
+   "note": "requests+token HTTP 200, 9005 bytes",
    "callers": {
     "scripts/build_municipal_ward_coverage.py": "browser",
     "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/il_special_district_officials_scraper.py": "self",
     "scripts/validate_sources.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "gis.knoxcountyil.gov": {
    "host": "gis.knoxcountyil.gov",
-   "url": "https://gis.knoxcountyil.gov/server/rest/services/Public/",
+   "url": "https://gis.knoxcountyil.gov/server/rest/services/Public/Knox_V4/MapServer/60",
    "cells": {
     "requests+token": {
      "kind": "refused",
@@ -1703,7 +1712,8 @@
    },
    "callers": {
     "scripts/build_knox_board_districts.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "gis.leecountyil.gov": {
    "host": "gis.leecountyil.gov",
@@ -1726,38 +1736,23 @@
   },
   "gis.wiu.edu": {
    "host": "gis.wiu.edu",
-   "url": "https://gis.wiu.edu/arcgis/rest/services/precinct_map/",
+   "url": "https://gis.wiu.edu/arcgis/rest/services/precinct_map/MapServer",
    "cells": {
     "requests+token": {
-     "kind": "error",
-     "note": "HTTP 404"
-    },
-    "stdlib+token": {
-     "kind": "error",
-     "note": "HTTP 404"
-    },
-    "requests+chrome": {
-     "kind": "error",
-     "note": "HTTP 404"
-    },
-    "stdlib+chrome": {
-     "kind": "error",
-     "note": "HTTP 404"
+     "kind": "ok",
+     "note": "HTTP 200, 5427 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
-   "verdict": "path-answers-nothing",
-   "note": "requests+token HTTP 404; stdlib+token HTTP 404; requests+chrome HTTP 404; stdlib+chrome HTTP 404",
-   "root": {
-    "kind": "hollow",
-    "note": "HTTP 200, 352 bytes"
-   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 5427 bytes",
    "callers": {
     "scripts/build_mcdonough_board_districts.py": "browser",
     "scripts/build_mcdonough_precincts.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "greencountywi.org": {
    "host": "greencountywi.org",
@@ -1970,23 +1965,24 @@
   },
   "jeffersoncounty.illinois.gov": {
    "host": "jeffersoncounty.illinois.gov",
-   "url": "https://jeffersoncounty.illinois.gov/services/",
+   "url": "https://jeffersoncounty.illinois.gov/county_board/index.php",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 60076 bytes"
+     "note": "HTTP 200, 67803 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 60076 bytes",
+   "note": "requests+token HTTP 200, 67803 bytes",
    "callers": {
     "scripts/build_jefferson_board_roster.py": "unknown",
     "scripts/build_jefferson_precincts.py": "unknown",
     "scripts/jefferson_county_board_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "jeffersoncountywi.gov": {
    "host": "jeffersoncountywi.gov",
@@ -2126,22 +2122,23 @@
   },
   "maconcounty.illinois.gov": {
    "host": "maconcounty.illinois.gov",
-   "url": "https://maconcounty.illinois.gov/departments/county-board/",
+   "url": "https://maconcounty.illinois.gov/departments/county-board/macon-county-board-members/",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 1292267 bytes (page carries a captcha widget)"
+     "note": "HTTP 200, 1293304 bytes (page carries a captcha widget)"
     }
    },
    "robots": {
-    "requests+token": "read, no * group"
+    "requests+token": "read, 0 group(s) bind this client with 0 rule(s)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 1292267 bytes (page carries a captcha widget)",
+   "note": "requests+token HTTP 200, 1293304 bytes (page carries a captcha widget)",
    "callers": {
     "scripts/build_macon_board_roster.py": "unknown",
     "scripts/macon_county_board_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "manitowoccountywi.gov": {
    "host": "manitowoccountywi.gov",
@@ -2166,41 +2163,43 @@
   },
   "maps.boonecountyil.org": {
    "host": "maps.boonecountyil.org",
-   "url": "https://maps.boonecountyil.org/arcgis/rest/services/",
+   "url": "https://maps.boonecountyil.org/arcgis/rest/services/Boone_Sales_Locator/Devnet_Parcels/MapServer/0",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 9295 bytes"
+     "note": "HTTP 200, 17294 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 9295 bytes",
+   "note": "requests+token HTTP 200, 17294 bytes",
    "callers": {
     "scripts/boone_municipal_officials_scraper.py": "browser",
     "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/validate_sources.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "maps.cityofevanston.org": {
    "host": "maps.cityofevanston.org",
-   "url": "https://maps.cityofevanston.org/arcgis/rest/services/OpenData/",
+   "url": "https://maps.cityofevanston.org/arcgis/rest/services/OpenData/ArcGISOpenData2Administrative/MapServer/0/query",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 2817 bytes"
+     "note": "HTTP 200, 10836 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 2817 bytes",
+   "note": "requests+token HTTP 200, 10836 bytes",
    "callers": {
     "scripts/validate_sources.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "maps.cityofmadison.com": {
    "host": "maps.cityofmadison.com",
@@ -2224,116 +2223,88 @@
   },
   "maps.co.kendall.il.us": {
    "host": "maps.co.kendall.il.us",
-   "url": "https://maps.co.kendall.il.us/server/rest/services/",
+   "url": "https://maps.co.kendall.il.us/server/rest/services/Hosted?f=json",
    "cells": {
     "requests+token": {
-     "kind": "hollow",
-     "note": "HTTP 200, 2618 bytes but 466 chars of text"
-    },
-    "stdlib+token": {
-     "kind": "hollow",
-     "note": "HTTP 200, 2618 bytes but 466 chars of text"
-    },
-    "requests+chrome": {
-     "kind": "hollow",
-     "note": "HTTP 200, 2618 bytes but 466 chars of text"
-    },
-    "stdlib+chrome": {
-     "kind": "hollow",
-     "note": "HTTP 200, 2618 bytes but 466 chars of text"
+     "kind": "ok",
+     "note": "HTTP 200, 17985 bytes"
     }
    },
    "robots": {
-    "requests+token": "read, no * group"
+    "requests+token": "read, 0 group(s) bind this client with 0 rule(s)"
    },
-   "verdict": "answers-nothing",
-   "note": "requests+token HTTP 200, 2618 bytes but 466 chars of text; stdlib+token HTTP 200, 2618 bytes but 466 chars of text; requests+chrome HTTP 200, 2618 bytes but 466 chars of text; stdlib+chrome HTTP 200, 2618 bytes but 466 chars of text",
-   "root": {
-    "kind": "hollow",
-    "note": "HTTP 200, 3380 bytes but 322 chars of text"
-   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 17985 bytes",
    "callers": {
     "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/validate_sources.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "maps.co.lincoln.wi.us": {
    "host": "maps.co.lincoln.wi.us",
-   "url": "https://maps.co.lincoln.wi.us/arcgis/rest/services/",
+   "url": "https://maps.co.lincoln.wi.us/arcgis/rest/services/WebMerc_Admin/MapServer/5",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 8353 bytes"
+     "note": "HTTP 200, 14452 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 8353 bytes",
+   "note": "requests+token HTTP 200, 14452 bytes",
    "callers": {
     "wi/scripts/wi_county_board_scraper.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "maps.grundyco.org": {
    "host": "maps.grundyco.org",
-   "url": "https://maps.grundyco.org/arcgis/rest/services/",
+   "url": "https://maps.grundyco.org/arcgis/rest/services/CountyClerk/PollingPlaces_SPIE_Public/MapServer/1/query",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 4134 bytes"
+     "note": "HTTP 200, 10876 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 4134 bytes",
+   "note": "requests+token HTTP 200, 10876 bytes",
    "callers": {
     "scripts/build_grundy_board_districts.py": "self",
     "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/validate_sources.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "maps.wingis.org": {
    "host": "maps.wingis.org",
-   "url": "https://maps.wingis.org/public/rest/services/ElectedOfficials/",
+   "url": "https://maps.wingis.org/public/rest/services/ElectedOfficials/MapServer",
    "cells": {
     "requests+token": {
-     "kind": "error",
-     "note": "HTTP 404"
-    },
-    "stdlib+token": {
-     "kind": "error",
-     "note": "HTTP 404"
-    },
-    "requests+chrome": {
-     "kind": "error",
-     "note": "HTTP 404"
-    },
-    "stdlib+chrome": {
-     "kind": "error",
-     "note": "HTTP 404"
+     "kind": "ok",
+     "note": "HTTP 200, 8029 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
-   "verdict": "path-answers-nothing",
-   "note": "requests+token HTTP 404; stdlib+token HTTP 404; requests+chrome HTTP 404; stdlib+chrome HTTP 404",
-   "root": {
-    "kind": "hollow",
-    "note": "HTTP 200, 703 bytes"
-   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 8029 bytes",
    "callers": {
     "scripts/build_winnebago_county_board_roster.py": "browser",
     "scripts/validate_sources.py": "both",
     "scripts/winnebago_municipal_officials_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "mapservices.legis.wisconsin.gov": {
    "host": "mapservices.legis.wisconsin.gov",
-   "url": "https://mapservices.legis.wisconsin.gov/arcgis/rest/services",
+   "url": "https://mapservices.legis.wisconsin.gov/arcgis/rest/services/BAS_Collection/BAS_Live_Collection_Wards/FeatureServer/0/query",
    "cells": {
     "requests+token": {
      "kind": "error",
@@ -2365,7 +2336,8 @@
     "wi/scripts/build_rusd_school_board_districts.py": "self",
     "wi/scripts/build_wi_aldermanic_districts.py": "unknown",
     "wi/scripts/validate_sources.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "marathoncounty.gov": {
    "host": "marathoncounty.gov",
@@ -2402,45 +2374,47 @@
   },
   "marshallcountyillinois.gov": {
    "host": "marshallcountyillinois.gov",
-   "url": "https://marshallcountyillinois.gov/directory/county-board/",
+   "url": "https://marshallcountyillinois.gov/wp-content/uploads/2026/01/2026-New-County-Board-Roster-.pdf",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 187457 bytes"
+     "note": "HTTP 200, 201717 bytes"
     }
    },
    "robots": {
-    "requests+token": "read, * group with 2 rule(s)"
+    "requests+token": "read, 1 group(s) bind this client with 2 rule(s)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 187457 bytes",
+   "note": "requests+token HTTP 200, 201717 bytes",
    "callers": {
     "scripts/build_marshall_board_districts.py": "self",
     "scripts/build_marshall_board_roster.py": "unknown",
     "scripts/marshall_county_board_scraper.py": "browser",
     "scripts/marshall_municipal_officials_scraper.py": "unknown"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "masoncountyil.gov": {
    "host": "masoncountyil.gov",
-   "url": "https://masoncountyil.gov/county-board/",
+   "url": "https://masoncountyil.gov/wp-content/uploads/2026/05/Board-Members-.pdf",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 86585 bytes"
+     "note": "HTTP 200, 146150 bytes"
     }
    },
    "robots": {
-    "requests+token": "read, * group with 1 rule(s)"
+    "requests+token": "read, 1 group(s) bind this client with 0 rule(s)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 86585 bytes",
+   "note": "requests+token HTTP 200, 146150 bytes",
    "callers": {
     "scripts/build_mason_board_districts.py": "self",
     "scripts/build_mason_board_roster.py": "self",
     "scripts/mason_municipal_officials_scraper.py": "self",
     "scripts/mason_roster_watch.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "mcg.mcdonough.il.us": {
    "host": "mcg.mcdonough.il.us",
@@ -2465,39 +2439,41 @@
   },
   "member-portal.iowacounties.org": {
    "host": "member-portal.iowacounties.org",
-   "url": "https://member-portal.iowacounties.org/countydirectory/directory/",
+   "url": "https://member-portal.iowacounties.org/countydirectory/directory/Story",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 49445 bytes"
+     "note": "HTTP 200, 60832 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 49445 bytes",
+   "note": "requests+token HTTP 200, 60832 bytes",
    "callers": {
     "ia/scripts/ia_county_directory_scraper.py": "self",
     "ia/scripts/ia_county_officers_scraper.py": "browser",
     "ia/scripts/validate_sources.py": "self"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "milwaukeemaps.milwaukee.gov": {
    "host": "milwaukeemaps.milwaukee.gov",
-   "url": "https://milwaukeemaps.milwaukee.gov/arcgis/rest/services/",
+   "url": "https://milwaukeemaps.milwaukee.gov/arcgis/rest/services/MPD/MPD_geography/MapServer/1",
    "cells": {},
    "robots": {
-    "requests+token": "read, * group with 1 rule(s)"
+    "requests+token": "read, 1 group(s) bind this client with 1 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /arcgis/rest/services/ \u2014 not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /arcgis/rest/services/MPD/MPD_geography/MapServer/1 \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "wi/scripts/build_milwaukee_city_layers.py": "unknown",
     "wi/scripts/build_mke_polling_places.py": "self",
     "wi/scripts/build_mps_school_board_districts.py": "self",
     "wi/scripts/validate_sources.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "monroecountyil.gov": {
    "host": "monroecountyil.gov",
@@ -2520,24 +2496,25 @@
   },
   "montgomerycountyil.gov": {
    "host": "montgomerycountyil.gov",
-   "url": "https://montgomerycountyil.gov/county-board/",
+   "url": "https://montgomerycountyil.gov/wp-content/uploads/PRECINCTPOLLINGPLACELISTING1124.pdf",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 95871 bytes"
+     "note": "HTTP 200, 10380 bytes"
     }
    },
    "robots": {
-    "requests+token": "read, * group with 8 rule(s)",
+    "requests+token": "read, 1 group(s) bind this client with 8 rule(s)",
     "crawl-delay": 10.0
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 95871 bytes",
+   "note": "requests+token HTTP 200, 10380 bytes",
    "callers": {
     "scripts/build_montgomery_board_roster.py": "unknown",
     "scripts/build_montgomery_precinct_polling.py": "unknown",
     "scripts/montgomery_county_board_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "montrealwis.com": {
    "host": "montrealwis.com",
@@ -2855,58 +2832,44 @@
   },
   "sangamonil.gov": {
    "host": "sangamonil.gov",
-   "url": "https://sangamonil.gov/departments/a-c/county-clerk/",
+   "url": "https://sangamonil.gov/departments/a-c/county-board/districts",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 73786 bytes"
+     "note": "HTTP 200, 215010 bytes"
     }
    },
    "robots": {
-    "requests+token": "read, * group with 29 rule(s)"
+    "requests+token": "read, 1 group(s) bind this client with 29 rule(s)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 73786 bytes",
+   "note": "requests+token HTTP 200, 215010 bytes",
    "callers": {
     "scripts/build_sangamon_county_board_roster.py": "unknown",
     "scripts/sangamon_county_board_scraper.py": "browser",
     "scripts/sangamon_municipal_officials_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "saukdomino.co.sauk.wi.us": {
    "host": "saukdomino.co.sauk.wi.us",
-   "url": "https://saukdomino.co.sauk.wi.us/Internet/Applications/",
+   "url": "https://saukdomino.co.sauk.wi.us/Internet/Applications/main.nsf/publicDistrictList.xsp",
    "cells": {
     "requests+token": {
-     "kind": "error",
-     "note": "HTTP 404"
-    },
-    "stdlib+token": {
-     "kind": "error",
-     "note": "HTTP 404"
-    },
-    "requests+chrome": {
-     "kind": "error",
-     "note": "HTTP 404"
-    },
-    "stdlib+chrome": {
-     "kind": "error",
-     "note": "HTTP 404"
+     "kind": "ok",
+     "note": "HTTP 200, 113018 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
-   "verdict": "path-answers-nothing",
-   "note": "requests+token HTTP 404; stdlib+token HTTP 404; requests+chrome HTTP 404; stdlib+chrome HTTP 404",
-   "root": {
-    "kind": "error",
-    "note": "ReadTimeout: HTTPSConnectionPool(host='saukdomino.co.sauk.wi.us', port=443): Read timed out. (read timeout=25)"
-   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 113018 bytes",
    "callers": {
     "wi/scripts/validate_sources.py": "both",
     "wi/scripts/wi_county_board_scraper.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "sccwi.gov": {
    "host": "sccwi.gov",
@@ -2930,38 +2893,18 @@
   },
   "services.arcgis.com": {
    "host": "services.arcgis.com",
-   "url": "https://services.arcgis.com/iPiPjILCMYxPZWTc/arcgis/rest/",
+   "url": "https://services.arcgis.com/i14SLLmXo7Hn9vNc/ArcGIS/rest/services",
    "cells": {
     "requests+token": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "stdlib+token": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "requests+chrome": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "stdlib+chrome": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
+     "kind": "ok",
+     "note": "HTTP 200, 26654 bytes"
     }
    },
    "robots": {
-    "requests+token": "unreadable (HTTP 403)",
-    "stdlib+token": "unreadable (HTTP 403)",
-    "requests+chrome": "unreadable (HTTP 403)",
-    "stdlib+chrome": "unreadable (HTTP 403)",
-    "policy": "unreadable to every client on the ladder"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
-   "verdict": "answers-nothing",
-   "note": "requests+token HTTP 200, 1184 bytes but 89 chars of text; stdlib+token HTTP 200, 1184 bytes but 89 chars of text; requests+chrome HTTP 200, 1184 bytes but 89 chars of text; stdlib+chrome HTTP 200, 1184 bytes but 89 chars of text",
-   "root": {
-    "kind": "hollow",
-    "note": "HTTP 200, 1117 bytes but 83 chars of text"
-   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 26654 bytes",
    "callers": {
     "scripts/build_dewitt_board_districts.py": "self",
     "scripts/build_logan_park_districts.py": "self",
@@ -2985,42 +2928,23 @@
     "ia/scripts/build_ia_school_sites.py": "unknown",
     "ia/scripts/build_ia_supervisor_districts.py": "self",
     "ia/scripts/validate_sources.py": "self"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "services1.arcgis.com": {
    "host": "services1.arcgis.com",
-   "url": "https://services1.arcgis.com/a3k0qIja5SolIRYR/arcgis/",
+   "url": "https://services1.arcgis.com/FDsAtKBk8Hy4cAH0/arcgis/rest/services",
    "cells": {
     "requests+token": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "stdlib+token": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "requests+chrome": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "stdlib+chrome": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
+     "kind": "ok",
+     "note": "HTTP 200, 17115 bytes"
     }
    },
    "robots": {
-    "requests+token": "unreadable (HTTP 403)",
-    "stdlib+token": "unreadable (HTTP 403)",
-    "requests+chrome": "unreadable (HTTP 403)",
-    "stdlib+chrome": "unreadable (HTTP 403)",
-    "policy": "unreadable to every client on the ladder"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
-   "verdict": "answers-nothing",
-   "note": "requests+token HTTP 200, 1184 bytes but 89 chars of text; stdlib+token HTTP 200, 1184 bytes but 89 chars of text; requests+chrome HTTP 200, 1184 bytes but 89 chars of text; stdlib+chrome HTTP 200, 1184 bytes but 89 chars of text",
-   "root": {
-    "kind": "hollow",
-    "note": "HTTP 200, 1117 bytes but 83 chars of text"
-   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 17115 bytes",
    "callers": {
     "scripts/build_knox_board_districts.py": "browser",
     "scripts/build_macon_board_district_labels.py": "self",
@@ -3038,42 +2962,23 @@
     "ia/scripts/build_waterloo_wards.py": "self",
     "ia/scripts/validate_sources.py": "self",
     "mi/scripts/build_mi_lansing_wards.py": "unknown"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "services2.arcgis.com": {
    "host": "services2.arcgis.com",
-   "url": "https://services2.arcgis.com/L81TiOwAPO1ZvU9b/arcgis/rest/",
+   "url": "https://services2.arcgis.com/5ckbIY7K9TUKoseK/arcgis/rest/services",
    "cells": {
     "requests+token": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "stdlib+token": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "requests+chrome": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "stdlib+chrome": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
+     "kind": "ok",
+     "note": "HTTP 200, 42858 bytes"
     }
    },
    "robots": {
-    "requests+token": "unreadable (HTTP 403)",
-    "stdlib+token": "unreadable (HTTP 403)",
-    "requests+chrome": "unreadable (HTTP 403)",
-    "stdlib+chrome": "unreadable (HTTP 403)",
-    "policy": "unreadable to every client on the ladder"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
-   "verdict": "answers-nothing",
-   "note": "requests+token HTTP 200, 1184 bytes but 89 chars of text; stdlib+token HTTP 200, 1184 bytes but 89 chars of text; requests+chrome HTTP 200, 1184 bytes but 89 chars of text; stdlib+chrome HTTP 200, 1184 bytes but 89 chars of text",
-   "root": {
-    "kind": "hollow",
-    "note": "HTTP 200, 1117 bytes but 83 chars of text"
-   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 42858 bytes",
    "callers": {
     "scripts/validate_sources.py": "both",
     "wi/scripts/validate_sources.py": "both",
@@ -3085,42 +2990,23 @@
     "mi/scripts/build_mi_flint_wards.py": "unknown",
     "mi/scripts/build_mi_grand_rapids_wards.py": "unknown",
     "mi/scripts/validate_sources.py": "self"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "services3.arcgis.com": {
    "host": "services3.arcgis.com",
-   "url": "https://services3.arcgis.com/HESxeTbDliKKvec2/arcgis/rest/",
+   "url": "https://services3.arcgis.com/HXjsHxkFFcZquC8P/arcgis/rest/services",
    "cells": {
     "requests+token": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "stdlib+token": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "requests+chrome": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "stdlib+chrome": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
+     "kind": "ok",
+     "note": "HTTP 200, 8466 bytes"
     }
    },
    "robots": {
-    "requests+token": "unreadable (HTTP 403)",
-    "stdlib+token": "unreadable (HTTP 403)",
-    "requests+chrome": "unreadable (HTTP 403)",
-    "stdlib+chrome": "unreadable (HTTP 403)",
-    "policy": "unreadable to every client on the ladder"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
-   "verdict": "answers-nothing",
-   "note": "requests+token HTTP 200, 1184 bytes but 89 chars of text; stdlib+token HTTP 200, 1184 bytes but 89 chars of text; requests+chrome HTTP 200, 1184 bytes but 89 chars of text; stdlib+chrome HTTP 200, 1184 bytes but 89 chars of text",
-   "root": {
-    "kind": "hollow",
-    "note": "HTTP 200, 1117 bytes but 83 chars of text"
-   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 8466 bytes",
    "callers": {
     "scripts/build_douglas_boundaries.py": "unknown",
     "scripts/il_special_district_officials_scraper.py": "self",
@@ -3136,42 +3022,23 @@
     "mi/scripts/build_mi_rochester_hills_wards.py": "unknown",
     "mi/scripts/build_mi_warren_wards.py": "unknown",
     "mi/scripts/validate_sources.py": "self"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "services6.arcgis.com": {
    "host": "services6.arcgis.com",
-   "url": "https://services6.arcgis.com/cuKwt0IKP5B84jop/arcgis/rest/",
+   "url": "https://services6.arcgis.com/am689ZyfXfdo9vCK/arcgis/rest/services",
    "cells": {
     "requests+token": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "stdlib+token": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "requests+chrome": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "stdlib+chrome": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
+     "kind": "ok",
+     "note": "HTTP 200, 5034 bytes"
     }
    },
    "robots": {
-    "requests+token": "unreadable (HTTP 403)",
-    "stdlib+token": "unreadable (HTTP 403)",
-    "requests+chrome": "unreadable (HTTP 403)",
-    "stdlib+chrome": "unreadable (HTTP 403)",
-    "policy": "unreadable to every client on the ladder"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
-   "verdict": "answers-nothing",
-   "note": "requests+token HTTP 200, 1184 bytes but 89 chars of text; stdlib+token HTTP 200, 1184 bytes but 89 chars of text; requests+chrome HTTP 200, 1184 bytes but 89 chars of text; stdlib+chrome HTTP 200, 1184 bytes but 89 chars of text",
-   "root": {
-    "kind": "hollow",
-    "note": "HTTP 200, 1117 bytes but 83 chars of text"
-   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 5034 bytes",
    "callers": {
     "scripts/build_vermilion_boundaries.py": "unknown",
     "scripts/il_special_district_officials_scraper.py": "self",
@@ -3179,47 +3046,29 @@
     "ny/scripts/validate_sources.py": "self",
     "mi/scripts/build_mi_battle_creek_wards.py": "unknown",
     "mi/scripts/validate_sources.py": "self"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "services7.arcgis.com": {
    "host": "services7.arcgis.com",
-   "url": "https://services7.arcgis.com/Sngx5exQaxXjq6qG/arcgis/rest",
+   "url": "https://services7.arcgis.com/Sngx5exQaxXjq6qG/arcgis/rest/services/Voting_Districts/FeatureServer/0",
    "cells": {
     "requests+token": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "stdlib+token": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "requests+chrome": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "stdlib+chrome": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
+     "kind": "ok",
+     "note": "HTTP 200, 5868 bytes"
     }
    },
    "robots": {
-    "requests+token": "unreadable (HTTP 403)",
-    "stdlib+token": "unreadable (HTTP 403)",
-    "requests+chrome": "unreadable (HTTP 403)",
-    "stdlib+chrome": "unreadable (HTTP 403)",
-    "policy": "unreadable to every client on the ladder"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
-   "verdict": "answers-nothing",
-   "note": "requests+token HTTP 200, 1184 bytes but 89 chars of text; stdlib+token HTTP 200, 1184 bytes but 89 chars of text; requests+chrome HTTP 200, 1184 bytes but 89 chars of text; stdlib+chrome HTTP 200, 1184 bytes but 89 chars of text",
-   "root": {
-    "kind": "hollow",
-    "note": "HTTP 200, 1117 bytes but 83 chars of text"
-   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 5868 bytes",
    "callers": {
     "scripts/il_special_district_officials_scraper.py": "self",
     "scripts/validate_sources.py": "both",
     "wi/scripts/build_wi_aldermanic_districts.py": "unknown"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "services8.arcgis.com": {
    "host": "services8.arcgis.com",
@@ -3246,44 +3095,25 @@
   },
   "services9.arcgis.com": {
    "host": "services9.arcgis.com",
-   "url": "https://services9.arcgis.com/6FnscPPlUa9DXXOk/arcgis/rest/",
+   "url": "https://services9.arcgis.com/6FnscPPlUa9DXXOk/arcgis/rest/services/SilvisWards/FeatureServer/0/query",
    "cells": {
     "requests+token": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "stdlib+token": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "requests+chrome": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
-    },
-    "stdlib+chrome": {
-     "kind": "hollow",
-     "note": "HTTP 200, 1184 bytes but 89 chars of text"
+     "kind": "ok",
+     "note": "HTTP 200, 11210 bytes"
     }
    },
    "robots": {
-    "requests+token": "unreadable (HTTP 403)",
-    "stdlib+token": "unreadable (HTTP 403)",
-    "requests+chrome": "unreadable (HTTP 403)",
-    "stdlib+chrome": "unreadable (HTTP 403)",
-    "policy": "unreadable to every client on the ladder"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
-   "verdict": "answers-nothing",
-   "note": "requests+token HTTP 200, 1184 bytes but 89 chars of text; stdlib+token HTTP 200, 1184 bytes but 89 chars of text; requests+chrome HTTP 200, 1184 bytes but 89 chars of text; stdlib+chrome HTTP 200, 1184 bytes but 89 chars of text",
-   "root": {
-    "kind": "hollow",
-    "note": "HTTP 200, 1117 bytes but 83 chars of text"
-   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 11210 bytes",
    "callers": {
     "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/validate_sources.py": "both",
     "wi/scripts/build_wi_supervisory_districts.py": "self",
     "wi/scripts/validate_sources.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "sheboygancounty.com": {
    "host": "sheboygancounty.com",
@@ -3339,18 +3169,18 @@
   },
   "stephensoncountyil.gov": {
    "host": "stephensoncountyil.gov",
-   "url": "https://stephensoncountyil.gov/government/",
+   "url": "https://stephensoncountyil.gov/government/county_board/index.php",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 78260 bytes"
+     "note": "HTTP 200, 92559 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 78260 bytes",
+   "note": "requests+token HTTP 200, 92559 bytes",
    "callers": {
     "scripts/build_stephenson_board_districts.py": "self",
     "scripts/build_stephenson_county_board_roster.py": "unknown",
@@ -3358,7 +3188,8 @@
     "scripts/stephenson_county_board_scraper.py": "browser",
     "scripts/stephenson_municipal_officials_scraper.py": "browser",
     "scripts/validate_sources.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "stevenspoint.com": {
    "host": "stevenspoint.com",
@@ -3380,23 +3211,24 @@
   },
   "tazewell-il.gov": {
    "host": "tazewell-il.gov",
-   "url": "https://tazewell-il.gov/boardreps/",
+   "url": "https://tazewell-il.gov/wp-content/uploads/2026/05/FULL-YEARBOOK-1.pdf",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 64571 bytes"
+     "note": "HTTP 200, 33165952 bytes"
     }
    },
    "robots": {
-    "requests+token": "read, * group with 1 rule(s)"
+    "requests+token": "read, 1 group(s) bind this client with 0 rule(s)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 64571 bytes",
+   "note": "requests+token HTTP 200, 33165952 bytes",
    "callers": {
     "scripts/build_tazewell_board_roster.py": "unknown",
     "scripts/tazewell_county_board_scraper.py": "self",
     "scripts/tazewell_municipal_officials_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "tigerweb.geo.census.gov": {
    "host": "tigerweb.geo.census.gov",
@@ -3527,21 +3359,22 @@
   },
   "viroqua-wisconsin.com": {
    "host": "viroqua-wisconsin.com",
-   "url": "https://viroqua-wisconsin.com/government",
+   "url": "https://viroqua-wisconsin.com/government/city_council_and_committees.php",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 60260 bytes"
+     "note": "HTTP 200, 67516 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 60260 bytes",
+   "note": "requests+token HTTP 200, 67516 bytes",
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "washingtonco.illinois.gov": {
    "host": "washingtonco.illinois.gov",
@@ -3566,22 +3399,23 @@
   },
   "webapi.legistar.com": {
    "host": "webapi.legistar.com",
-   "url": "https://webapi.legistar.com/v1/milwaukee/officerecords",
+   "url": "https://webapi.legistar.com/v1/milwaukee/officerecords?$filter=OfficeRecordBodyId%20eq%201&$top=1000",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 801259 bytes"
+     "note": "HTTP 200, 116512 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 801259 bytes",
+   "note": "requests+token HTTP 200, 116512 bytes",
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "wincoil.gov": {
    "host": "wincoil.gov",
@@ -3714,26 +3548,27 @@
   },
   "www.appletonwi.gov": {
    "host": "www.appletonwi.gov",
-   "url": "https://www.appletonwi.gov/government/departments/clerk",
+   "url": "https://www.appletonwi.gov/government/common_council.php",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 57974 bytes"
+     "note": "HTTP 200, 138226 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 57974 bytes",
+   "note": "requests+token HTTP 200, 138226 bytes",
    "callers": {
     "wi/scripts/build_wi_aldermanic_districts.py": "unknown",
     "wi/scripts/wi_alderperson_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "www.arcgis.com": {
    "host": "www.arcgis.com",
-   "url": "https://www.arcgis.com/sharing/rest/content/items/",
+   "url": "https://www.arcgis.com/sharing/rest/content/items/ac140f8d81b94edc804e34470308c865",
    "cells": {
     "requests+token": {
      "kind": "hollow",
@@ -3753,7 +3588,7 @@
     }
    },
    "robots": {
-    "requests+token": "read, * group with 0 rule(s)"
+    "requests+token": "read, 1 group(s) bind this client with 0 rule(s)"
    },
    "verdict": "answers-nothing",
    "note": "requests+token HTTP 200, 458 bytes; stdlib+token HTTP 200, 458 bytes; requests+chrome HTTP 200, 458 bytes; stdlib+chrome HTTP 200, 458 bytes",
@@ -3771,7 +3606,8 @@
     "mi/scripts/build_mi_lansing_wards.py": "unknown",
     "mi/scripts/build_mi_rochester_hills_wards.py": "unknown",
     "mi/scripts/build_mi_warren_wards.py": "unknown"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "www.barroncountywi.gov": {
    "host": "www.barroncountywi.gov",
@@ -3821,25 +3657,26 @@
   },
   "www.boonecountyil.gov": {
    "host": "www.boonecountyil.gov",
-   "url": "https://www.boonecountyil.gov/government/departments/",
+   "url": "https://www.boonecountyil.gov/government/county_board_members.php",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 71117 bytes"
+     "note": "HTTP 200, 72915 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 71117 bytes",
+   "note": "requests+token HTTP 200, 72915 bytes",
    "callers": {
     "scripts/boone_county_board_scraper.py": "self",
     "scripts/boone_municipal_officials_scraper.py": "browser",
     "scripts/build_boone_board_roster.py": "unknown",
     "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/validate_sources.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "www.browncoil.org": {
    "host": "www.browncoil.org",
@@ -3923,18 +3760,18 @@
   },
   "www.carrollcountyil.gov": {
    "host": "www.carrollcountyil.gov",
-   "url": "https://www.carrollcountyil.gov/county_departments/",
+   "url": "https://www.carrollcountyil.gov/county_board/board_members.php",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 43582 bytes"
+     "note": "HTTP 200, 49315 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 43582 bytes",
+   "note": "requests+token HTTP 200, 49315 bytes",
    "callers": {
     "scripts/build_carroll_board_districts.py": "self",
     "scripts/build_carroll_county_board_roster.py": "unknown",
@@ -3942,7 +3779,8 @@
     "scripts/carroll_county_board_scraper.py": "browser",
     "scripts/carroll_municipal_officials_scraper.py": "browser",
     "scripts/validate_sources.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "www.chicago.gov": {
    "host": "www.chicago.gov",
@@ -3973,7 +3811,8 @@
    "callers": {
     "scripts/chicago_ssa_provider_scraper.py": "browser",
     "scripts/validate_sources.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "www.chicagopolice.org": {
    "host": "www.chicagopolice.org",
@@ -4234,23 +4073,24 @@
   },
   "www.co.columbia.wi.us": {
    "host": "www.co.columbia.wi.us",
-   "url": "https://www.co.columbia.wi.us/ColumbiaCounty/",
+   "url": "https://www.co.columbia.wi.us/ColumbiaCounty/registerofdeeds/VitalRecords/tabid/375/Default.aspx",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 52541 bytes"
+     "note": "HTTP 200, 62183 bytes"
     }
    },
    "robots": {
-    "requests+token": "read, no * group"
+    "requests+token": "read, 0 group(s) bind this client with 0 rule(s)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 52541 bytes",
+   "note": "requests+token HTTP 200, 62183 bytes",
    "callers": {
     "wi/scripts/build_wi_county_board_directory.py": "browser",
     "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "www.co.dodge.wi.gov": {
    "host": "www.co.dodge.wi.gov",
@@ -4420,11 +4260,11 @@
   },
   "www.co.monroe.wi.us": {
    "host": "www.co.monroe.wi.us",
-   "url": "https://www.co.monroe.wi.us/government/county-board-of-supervisors/",
+   "url": "https://www.co.monroe.wi.us/government/county-board-of-supervisors/districts-supervisors",
    "cells": {
     "requests+token": {
-     "kind": "refused",
-     "note": "HTTP 403"
+     "kind": "error",
+     "note": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))"
     },
     "stdlib+token": {
      "kind": "refused",
@@ -4436,25 +4276,23 @@
     },
     "stdlib+chrome": {
      "kind": "ok",
-     "note": "HTTP 200, 94844 bytes (page carries a captcha widget)"
+     "note": "HTTP 200, 150224 bytes (page carries a captcha widget)"
     }
    },
    "robots": {
-    "requests+token": "unreadable (HTTP 403)",
-    "stdlib+token": "unreadable (HTTP 403)",
-    "requests+chrome": "unreadable (HTTP 403)",
-    "stdlib+chrome": "read, * group with 176 rule(s)"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-refused-and-stack",
-   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 94844 bytes (page carries a captcha widget)",
+   "note": "requests+token ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer')); stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 150224 bytes (page carries a captcha widget)",
    "root": {
-    "kind": "refused",
-    "note": "HTTP 403"
+    "kind": "error",
+    "note": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))"
    },
    "callers": {
     "wi/scripts/validate_sources.py": "both",
     "wi/scripts/wi_county_board_scraper.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "www.co.pepin.wi.us": {
    "host": "www.co.pepin.wi.us",
@@ -4583,23 +4421,23 @@
   },
   "www.colesco.illinois.gov": {
    "host": "www.colesco.illinois.gov",
-   "url": "https://www.colesco.illinois.gov/board/",
+   "url": "https://www.colesco.illinois.gov/board/committees",
    "cells": {
     "requests+token": {
-     "kind": "error",
-     "note": "SSLError: HTTPSConnectionPool(host='www.colesco.illinois.gov', port=443): Max retries exceeded with url: /board/ (Caused by SSLError(SSLCertVerificati"
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
     },
     "stdlib+token": {
-     "kind": "error",
-     "note": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)>"
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
     },
     "requests+chrome": {
-     "kind": "error",
-     "note": "SSLError: HTTPSConnectionPool(host='www.colesco.illinois.gov', port=443): Max retries exceeded with url: /board/ (Caused by SSLError(SSLCertVerificati"
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
     },
     "stdlib+chrome": {
-     "kind": "error",
-     "note": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)>"
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
     }
    },
    "robots": {
@@ -4609,17 +4447,14 @@
     "stdlib+chrome": "unreadable (URLError)",
     "policy": "unreadable to every client on the ladder"
    },
-   "verdict": "tls-chain",
-   "note": "requests+token SSLError: HTTPSConnectionPool(host='www.colesco.illinois.gov', port=443): Max retries exceeded with url: /board/ (Caused by SSLError(SSLCertVerificati; stdlib+token URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)>; requests+chrome SSLError: HTTPSConnectionPool(host='www.colesco.illinois.gov', port=443): Max retries exceeded with url: /board/ (Caused by SSLError(SSLCertVerificati; stdlib+chrome URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)>",
-   "root": {
-    "kind": "error",
-    "note": "SSLError: HTTPSConnectionPool(host='www.colesco.illinois.gov', port=443): Max retries exceeded with url: / (Ca"
-   },
+   "verdict": "robots-unreadable",
+   "note": "robots.txt could not be read by any rung \u2014 no page was fetched, so this host carries no user-agent measurement",
    "callers": {
     "scripts/build_coles_board_roster.py": "unknown",
     "scripts/coles_county_board_scraper.py": "browser",
     "scripts/validate_sources.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "www.cookcountyboardofreview.com": {
    "host": "www.cookcountyboardofreview.com",
@@ -4772,34 +4607,18 @@
   },
   "www.elections.il.gov": {
    "host": "www.elections.il.gov",
-   "url": "https://www.elections.il.gov/ElectionOperations/",
+   "url": "https://www.elections.il.gov/ElectionOperations/ElectionVoteTotals.aspx",
    "cells": {
     "requests+token": {
-     "kind": "refused",
-     "note": "HTTP 403"
-    },
-    "stdlib+token": {
-     "kind": "refused",
-     "note": "HTTP 403"
-    },
-    "requests+chrome": {
-     "kind": "refused",
-     "note": "HTTP 403"
-    },
-    "stdlib+chrome": {
-     "kind": "refused",
-     "note": "HTTP 403"
+     "kind": "ok",
+     "note": "HTTP 200, 255002 bytes"
     }
    },
    "robots": {
-    "requests+token": "read, * group with 1 rule(s)"
+    "requests+token": "read, 1 group(s) bind this client with 1 rule(s)"
    },
-   "verdict": "all-refused",
-   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 403; the front door answers the token (HTTP 200, 66089 bytes), so the refusal is this path",
-   "root": {
-    "kind": "ok",
-    "note": "HTTP 200, 66089 bytes"
-   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 255002 bytes",
    "callers": {
     "scripts/build_calhoun_precincts.py": "unknown",
     "scripts/build_stephenson_fire_districts.py": "self",
@@ -4807,7 +4626,8 @@
     "scripts/il_county_clerk_scraper.py": "browser",
     "scripts/isbe_precinct_fabric.py": "browser",
     "scripts/validate_sources.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "www.ewgateway.org": {
    "host": "www.ewgateway.org",
@@ -4964,60 +4784,55 @@
   },
   "www.grundycountyil.gov": {
    "host": "www.grundycountyil.gov",
-   "url": "https://www.grundycountyil.gov/Documents/Communities/",
+   "url": "https://www.grundycountyil.gov/government/county_board.php",
    "cells": {
     "requests+token": {
-     "kind": "refused",
-     "note": "HTTP 403"
-    },
-    "stdlib+token": {
-     "kind": "refused",
-     "note": "HTTP 403"
-    },
-    "requests+chrome": {
-     "kind": "refused",
-     "note": "HTTP 403"
-    },
-    "stdlib+chrome": {
-     "kind": "refused",
-     "note": "HTTP 403"
+     "kind": "ok",
+     "note": "HTTP 200, 167180 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
-   "verdict": "all-refused",
-   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 403; the front door answers the token (HTTP 200, 103664 bytes), so the refusal is this path",
-   "root": {
-    "kind": "ok",
-    "note": "HTTP 200, 103664 bytes"
-   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 167180 bytes",
    "callers": {
     "scripts/build_grundy_board_districts.py": "self",
     "scripts/build_grundy_board_roster.py": "unknown",
     "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/grundy_county_board_scraper.py": "self",
     "scripts/grundy_municipal_officials_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "www.hamiltoncountyil.gov": {
    "host": "www.hamiltoncountyil.gov",
-   "url": "https://www.hamiltoncountyil.gov/election-notices/",
+   "url": "https://www.hamiltoncountyil.gov/departments/county-board/",
    "cells": {
     "requests+token": {
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
+    },
+    "stdlib+token": {
      "kind": "ok",
-     "note": "HTTP 200, 191698 bytes"
+     "note": "HTTP 200, 531282 bytes"
     }
    },
    "robots": {
-    "requests+token": "read, * group with 2 rule(s)"
+    "requests+token": "unreadable (SSLError)",
+    "stdlib+token": "read, 1 group(s) bind this client with 2 rule(s)"
    },
-   "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 191698 bytes",
+   "verdict": "stack-not-token",
+   "note": "requests+token robots.txt unreadable (SSLError) \u2014 not fetched by this client; stdlib+token HTTP 200, 531282 bytes; the front door answers the token (HTTP 200, 167240 bytes), so the refusal is this path",
+   "root": {
+    "kind": "ok",
+    "note": "HTTP 200, 167240 bytes"
+   },
    "callers": {
     "scripts/build_hamilton_precinct_polling.py": "browser",
     "scripts/il_county_commissioners_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "www.henrycty.com": {
    "host": "www.henrycty.com",
@@ -5556,19 +5371,20 @@
   },
   "www.logancountyil.gov": {
    "host": "www.logancountyil.gov",
-   "url": "https://www.logancountyil.gov/images/",
+   "url": "https://www.logancountyil.gov/images/Reference_and_Yearbook_2025-2026_updated.pdf",
    "cells": {},
    "robots": {
-    "requests+token": "read, * group with 15 rule(s)"
+    "requests+token": "read, 1 group(s) bind this client with 15 rule(s)"
    },
    "verdict": "robots-disallows-this-path",
-   "note": "the * group disallows /images/ \u2014 not fetched, so this host carries no user-agent measurement",
+   "note": "the * group disallows /images/Reference_and_Yearbook_2025-2026_updated.pdf \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
     "scripts/build_logan_board_roster.py": "unknown",
     "scripts/build_logan_precinct_polling.py": "browser",
     "scripts/logan_county_board_scraper.py": "self",
     "scripts/logan_municipal_officials_scraper.py": "self"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "www.macoupinvotes.gov": {
    "host": "www.macoupinvotes.gov",
@@ -5814,21 +5630,22 @@
   },
   "www.menashawi.gov": {
    "host": "www.menashawi.gov",
-   "url": "https://www.menashawi.gov/residents/government",
+   "url": "https://www.menashawi.gov/residents/government/common_council/index.php",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 46486 bytes"
+     "note": "HTTP 200, 55468 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 46486 bytes",
+   "note": "requests+token HTTP 200, 55468 bytes",
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "www.menomonie-wi.gov": {
    "host": "www.menomonie-wi.gov",
@@ -5947,41 +5764,26 @@
   },
   "www.oglecountyil.gov": {
    "host": "www.oglecountyil.gov",
-   "url": "https://www.oglecountyil.gov/document_center/County%20Board/",
+   "url": "https://www.oglecountyil.gov/departments/county_clerk/index.php",
    "cells": {
     "requests+token": {
-     "kind": "refused",
-     "note": "HTTP 403"
-    },
-    "stdlib+token": {
-     "kind": "refused",
-     "note": "HTTP 403"
-    },
-    "requests+chrome": {
-     "kind": "refused",
-     "note": "HTTP 403"
-    },
-    "stdlib+chrome": {
-     "kind": "refused",
-     "note": "HTTP 403"
+     "kind": "ok",
+     "note": "HTTP 200, 94784 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
-   "verdict": "all-refused",
-   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 403; the front door answers the token (HTTP 200, 95760 bytes), so the refusal is this path",
-   "root": {
-    "kind": "ok",
-    "note": "HTTP 200, 95760 bytes"
-   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 94784 bytes",
    "callers": {
     "scripts/build_ogle_board_districts.py": "self",
     "scripts/build_ogle_county_board_roster.py": "unknown",
     "scripts/ogle_county_board_scraper.py": "browser",
     "scripts/ogle_municipal_officials_scraper.py": "browser",
     "scripts/validate_sources.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "www.oneidacountywi.gov": {
    "host": "www.oneidacountywi.gov",
@@ -6174,7 +5976,7 @@
   },
   "www.sheboygancounty.com": {
    "host": "www.sheboygancounty.com",
-   "url": "https://www.sheboygancounty.com/departments/county-board/",
+   "url": "https://www.sheboygancounty.com/government/elected-officials",
    "cells": {
     "requests+token": {
      "kind": "refused",
@@ -6190,17 +5992,14 @@
     },
     "stdlib+chrome": {
      "kind": "ok",
-     "note": "HTTP 200, 89292 bytes (page carries a captcha widget)"
+     "note": "HTTP 200, 99869 bytes (page carries a captcha widget)"
     }
    },
    "robots": {
-    "requests+token": "unreadable (HTTP 403)",
-    "stdlib+token": "unreadable (HTTP 403)",
-    "requests+chrome": "unreadable (HTTP 403)",
-    "stdlib+chrome": "read, * group with 178 rule(s)"
+    "requests+token": "refused to this client (HTTP 403) \u2014 no readable policy"
    },
    "verdict": "token-refused-and-stack",
-   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 89292 bytes (page carries a captcha widget)",
+   "note": "requests+token HTTP 403; stdlib+token HTTP 403; requests+chrome HTTP 403; stdlib+chrome HTTP 200, 99869 bytes (page carries a captcha widget)",
    "root": {
     "kind": "refused",
     "note": "HTTP 403"
@@ -6209,7 +6008,8 @@
     "wi/scripts/validate_sources.py": "both",
     "wi/scripts/wi_county_board_scraper.py": "both",
     "wi/scripts/wi_county_officer_contact_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "www.sheboyganwi.gov": {
    "host": "www.sheboyganwi.gov",
@@ -6270,21 +6070,22 @@
   },
   "www.sturgeonbaywi.org": {
    "host": "www.sturgeonbaywi.org",
-   "url": "https://www.sturgeonbaywi.org/government/",
+   "url": "https://www.sturgeonbaywi.org/government/city_council/index.php",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 45053 bytes"
+     "note": "HTTP 200, 54348 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 45053 bytes",
+   "note": "requests+token HTTP 200, 54348 bytes",
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "www.superiorwi.gov": {
    "host": "www.superiorwi.gov",
@@ -6320,42 +6121,39 @@
   },
   "www.vercounty.org": {
    "host": "www.vercounty.org",
-   "url": "https://www.vercounty.org/election-commission/",
+   "url": "https://www.vercounty.org/county-clerk/election-results/",
    "cells": {
     "requests+token": {
-     "kind": "error",
-     "note": "SSLError: HTTPSConnectionPool(host='www.vercounty.org', port=443): Max retries exceeded with url: /election-commission/ (Caused by SSLError(SSLCertVer"
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
     },
     "stdlib+token": {
-     "kind": "error",
-     "note": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)>"
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
     },
     "requests+chrome": {
-     "kind": "error",
-     "note": "SSLError: HTTPSConnectionPool(host='www.vercounty.org', port=443): Max retries exceeded with url: /election-commission/ (Caused by SSLError(SSLCertVer"
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (SSLError) \u2014 not fetched by this client"
     },
     "stdlib+chrome": {
-     "kind": "error",
-     "note": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)>"
+     "kind": "not-fetched",
+     "note": "robots.txt unreadable (URLError) \u2014 not fetched by this client"
     }
    },
    "robots": {
-    "requests+token": "unreadable (ReadTimeout)",
+    "requests+token": "unreadable (SSLError)",
     "stdlib+token": "unreadable (URLError)",
     "requests+chrome": "unreadable (SSLError)",
     "stdlib+chrome": "unreadable (URLError)",
     "policy": "unreadable to every client on the ladder"
    },
-   "verdict": "tls-chain",
-   "note": "requests+token SSLError: HTTPSConnectionPool(host='www.vercounty.org', port=443): Max retries exceeded with url: /election-commission/ (Caused by SSLError(SSLCertVer; stdlib+token URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)>; requests+chrome SSLError: HTTPSConnectionPool(host='www.vercounty.org', port=443): Max retries exceeded with url: /election-commission/ (Caused by SSLError(SSLCertVer; stdlib+chrome URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)>",
-   "root": {
-    "kind": "error",
-    "note": "SSLError: HTTPSConnectionPool(host='www.vercounty.org', port=443): Max retries exceeded with url: / (Caused by"
-   },
+   "verdict": "robots-unreadable",
+   "note": "robots.txt could not be read by any rung \u2014 no page was fetched, so this host carries no user-agent measurement",
    "callers": {
     "scripts/build_vermilion_boundaries.py": "unknown",
     "scripts/vermilion_county_board_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "www.vernoncountywi.gov": {
    "host": "www.vernoncountywi.gov",
@@ -6398,7 +6196,7 @@
   },
   "www.villageofhoward.com": {
    "host": "www.villageofhoward.com",
-   "url": "https://www.villageofhoward.com/208",
+   "url": "https://www.villageofhoward.com/208/Village-President-Board-of-Trustees",
    "cells": {
     "requests+token": {
      "kind": "ok",
@@ -6406,13 +6204,14 @@
     }
    },
    "robots": {
-    "requests+token": "read, * group with 23 rule(s)"
+    "requests+token": "read, 1 group(s) bind this client with 23 rule(s)"
    },
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 91395 bytes",
    "callers": {
     "wi/scripts/wi_alderperson_scraper.py": "browser"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "www.wapellocounty.org": {
    "host": "www.wapellocounty.org",
@@ -6580,21 +6379,22 @@
   },
   "www.webstercountyia.gov": {
    "host": "www.webstercountyia.gov",
-   "url": "https://www.webstercountyia.gov/departments/",
+   "url": "https://www.webstercountyia.gov/departments/auditor_commissioner_of_elections/index.php",
    "cells": {
     "requests+token": {
      "kind": "ok",
-     "note": "HTTP 200, 97506 bytes"
+     "note": "HTTP 200, 47817 bytes"
     }
    },
    "robots": {
     "requests+token": "none (HTTP 404)"
    },
    "verdict": "token-ok",
-   "note": "requests+token HTTP 200, 97506 bytes",
+   "note": "requests+token HTTP 200, 47817 bytes",
    "callers": {
     "ia/scripts/ia_county_auditor_scraper.py": "both"
-   }
+   },
+   "measured": "2026-09-13"
   },
   "www.whitecounty-il.gov": {
    "host": "www.whitecounty-il.gov",
@@ -6769,5 +6569,5 @@
    }
   }
  },
- "callers_refreshed": "2026-09-12"
+ "callers_refreshed": "2026-09-13"
 }

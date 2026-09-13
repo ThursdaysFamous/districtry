@@ -30,10 +30,14 @@ STRING. The sentence above said "several sites in this fleet" for ten days
 (it landed 2026-09-02) without naming one. scripts/probe_user_agents.py asks each host the same page
 four ways — each stack with UA_ROSTER_BOT and with UA_CHROME_WIN_126 plus
 UA_HINTS_CHROME_126 — and writes user-agent-measurements.json. Measured
-2026-09-12 across the 290 hosts a browser-string caller reaches: 203 serve
-UA_ROSTER_BOT a full page, 17 refuse it and answer the browser string, and 6
-refuse the `requests` STACK while serving the same token on the stdlib client,
-so on those a browser string is credited with a fix the stack made. Per file
+2026-09-12 across the 290 hosts a browser-string caller reaches, 60 of them
+re-measured 2026-09-13 at the page a scraper reads rather than the directory
+above it: 220 serve UA_ROSTER_BOT a full page, 17 refuse it and answer the
+browser string, and 7 refuse the `requests` STACK while serving the same token
+on the stdlib client, so on those a browser string is credited with a fix the
+stack made. (The first sweep read 203: 37 hosts had been probed at the first
+half of a URL split across two string literals, and 23 more at a directory a
+page sat under; not one re-probe moved a host INTO a refusal.) Per file
 (`probe_user_agents.py --inventory` prints this tally, re-derived from the tree
 and the artifact rather than remembered): 106 files send a browser string; 55
 of them reach only hosts that serve the token a full page, 34 more reach no
