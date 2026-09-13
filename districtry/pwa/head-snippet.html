@@ -6,7 +6,12 @@
 <link rel="mask-icon" href="icons/pinned-tab.svg" color="#6d3fd1">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#6d3fd1">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#15131b">
-<meta property="og:title" content="districtry — Illinois">
+<!-- og:title names THIS instance; og:image is the card
+     scripts/build_og_image.mjs renders for it, from the label in metros.json.
+     Do not paste a copied PNG in beside this snippet: a stale one shipped as
+     the whole fleet's social preview until 2026-09-13, and the copy that used
+     to sit next to this file said "illinois" whatever instance pasted it. -->
+<meta property="og:title" content="districtry — <Place>">
 <meta property="og:description" content="They're your Districts. Now in one place.">
-<meta property="og:image" content="og-districtry.png">
+<meta property="og:image" content="https://districtry.com/<tag>/og-image.png">
 <meta name="twitter:card" content="summary_large_image">

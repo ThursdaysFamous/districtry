@@ -1,0 +1,58 @@
+{
+  "root": {
+    "path": "og-image.png",
+    "label": null,
+    "sha256": "1ed1047edcf3ed0b8fc978c37254c72d3c87e4b2f0c603e1fb875a3b558ddb57",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-13"
+  },
+  "il": {
+    "path": "il/og-image.png",
+    "label": "illinois",
+    "sha256": "dcd4e45c575de9ef41454e11cb62100f614d31a20692e55d33cf5f1e4ae84869",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-13"
+  },
+  "ny": {
+    "path": "ny/og-image.png",
+    "label": "new york city",
+    "sha256": "383fb478e7e24484a9605aa44bafbd4b89df5310fafc37a73df465071519c47e",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-13"
+  },
+  "ca": {
+    "path": "ca/og-image.png",
+    "label": "san francisco",
+    "sha256": "2cac91cd5c4d2a3d47e0751ed9318b6e8d18bff85efd80109faa24361882170b",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-13"
+  },
+  "wi": {
+    "path": "wi/og-image.png",
+    "label": "wisconsin",
+    "sha256": "9f2640044312b033dbd0a3bba7c7ff0dd5b7224e20dd924e7ef447ff0a8de893",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-13"
+  },
+  "ia": {
+    "path": "ia/og-image.png",
+    "label": "iowa",
+    "sha256": "ce11853a8f4f7db00b9cab705b0df955f505798a9de584c6cfca66a7c3bcb885",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-13"
+  },
+  "mi": {
+    "path": "mi/og-image.png",
+    "label": "michigan",
+    "sha256": "ef0d1d90be7e86c738ad8cebb0548ac2e60e67f67e89af10406af3d939500f90",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-13"
+  }
+}
