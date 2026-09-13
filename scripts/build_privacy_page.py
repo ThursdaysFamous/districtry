@@ -169,6 +169,47 @@ GEOCODERS = {
         "suggestions can appear."),
 }
 
+# THE BATCH ADDRESS CHECK (Illinois today) is a second way an address leaves a
+# browser, and a materially different one: a reader who pastes a petition sheet
+# is sending OTHER PEOPLE's addresses, not their own, and sending a few hundred
+# of them rather than one. A geocoder row describing only a search box would be
+# true of what it says and silent about the larger flow, so the row names the
+# surfaces that have such a panel and says what it sends.
+#
+# THREE markers, all required. A partial match means a rename got half way —
+# and the failure that would cause is the disclosure going quiet while the
+# panel keeps sending, so some-but-not-all FAILS rather than measuring false.
+ADDRESS_LIST_MARKERS = ('id="batch-modal"', 'id="batch-input"', "wireBatchCheck(")
+
+
+def measure_address_list(src, name):
+    """Which geocoder hosts the batch address panel sends a pasted list to.
+
+    Sliced out of the panel's OWN function rather than searched for across the
+    file. An app reaches several geocoders for different jobs — Illinois reaches
+    Photon for the list and Nominatim for office pins — so a file-wide search
+    would have the pin geocoder confessing to a transmission it never receives.
+    """
+    hits = [m for m in ADDRESS_LIST_MARKERS if m in src]
+    if not hits:
+        return []
+    if len(hits) != len(ADDRESS_LIST_MARKERS):
+        fail("%s carries %d of the %d batch-address-check markers (%s). A partial "
+             "match is a half-finished rename: fix the markers, because the "
+             "geocoder row below stops naming this surface while it goes on "
+             "sending pasted lists."
+             % (name, len(hits), len(ADDRESS_LIST_MARKERS), ", ".join(hits)))
+    start = src.find("(function wireBatchCheck()")
+    end = src.find("\n  })();", start)
+    block = src[start:end if end > start else len(src)]
+    hosts = sorted(h for h in GEOCODERS if h in block)
+    if not hosts:
+        fail("%s ships a batch address check that reaches none of the known "
+             "geocoders — either it found a new one (add it to GEOCODERS) or the "
+             "slice above no longer covers the panel's own code." % name)
+    return hosts
+
+
 # FLEET CLAIMS — stated once on the page, and required to be identical. The
 # tuple is what the measurement must return for EVERY app that has a map.
 # `metro-portal/` (the sibling-metro CARD was shown) left the vocabulary on
@@ -272,6 +313,7 @@ def measure(rel, name, url, tag):
     # as requesting no tiles at all.
     app["tiles"] = "basemaps.cartocdn.com" in src_all
     app["cdn"] = "cdnjs.cloudflare.com" in src_all
+    app["address_list_hosts"] = measure_address_list(src, app["name"])
 
     # A layer that asks a government server about the SELECTED POINT rather than
     # downloading the layer and testing in the browser.
@@ -488,9 +530,23 @@ def render_recipient_rows(apps):
     for host in sorted({h for a in apps for h in a["geocoders"]}):
         label, sub, policy, what = GEOCODERS[host]
         users = [a["name"] for a in apps if host in a["geocoders"]]
-        rows.append(recipient_row(label, sub, policy, what,
-                                  "Only while you are searching for an address, or when a "
-                                  "card places an office pin.",
+        when = ("Only while you are searching for an address, or when a "
+                "card places an office pin.")
+        # MEASURED per (surface, host), not per surface: an app reaches more
+        # than one geocoder, and only the one the batch panel actually calls
+        # receives a pasted list.
+        listers = [a["name"] for a in apps if host in a["address_list_hosts"]]
+        if listers:
+            what += (" <strong>%s</strong> also offer%s a batch check for people working "
+                     "from a list — a petition sheet, a canvass list. That sends "
+                     "<strong>every address in the list you paste</strong>, one lookup a "
+                     "second until it is done. Those are usually other people&#39;s "
+                     "addresses rather than your own, and the list itself is never "
+                     "uploaded anywhere: it stays in your browser, and only the address "
+                     "text goes to this geocoder." % (
+                         esc(", ".join(listers)), "" if len(listers) > 1 else "s"))
+            when += " A batch check sends its whole list, one address a second."
+        rows.append(recipient_row(label, sub, policy, what, when,
                                   ", ".join(users) + "."))
     rows.append(recipient_row(
         "Public GIS services", "the district data itself", None,
