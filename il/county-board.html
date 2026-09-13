@@ -620,6 +620,20 @@ footer.site-footer a { color: var(--accent-deep); }
 }
 .footer-links a:hover { color: var(--accent); text-decoration: underline; }
 /* ==== ENGINE:END styles-subpage ==== */
+
+/* The county index, generated into this page by scripts/build_county_pages.py.
+   Two columns from 560px so 73 counties are one scan rather than one long
+   scroll; the count beside each name is what tells a reader a board of three
+   from a board of thirty before they click. */
+.county-index { list-style: none; margin: 8px 0 0; padding: 0; }
+.county-index li { margin: 0 0 2px; line-height: 28px; }
+.county-index a { font-weight: 600; text-decoration: none; }
+.county-index a:hover { text-decoration: underline; }
+.county-index-n { color: var(--slate); font-size: 13.5px; white-space: nowrap; }
+@media (min-width: 560px) {
+  .county-index { columns: 2; column-gap: 28px; }
+  .county-index li { break-inside: avoid; }
+}
 </style>
 </head>
 <body>
@@ -666,6 +680,88 @@ footer.site-footer a { color: var(--accent-deep); }
         map at all. For those, the members appear on the County card instead — you still see who
         represents you, there's just no boundary to draw.</p>
     </div>
+  </section>
+
+  <section>
+    <h2>Every county board, county by county</h2>
+    <!-- ==== GENERATED:BEGIN county-index ==== -->
+    <p class="matrix-lede">Every Illinois county whose board roster this project has: <b>73 counties</b>, <b>908 people</b>, each name published by the county itself. 20 elect their boards at large, with no districts.</p>
+    <ul class="county-index">
+      <li><a href="county-board/adams.html">Adams County</a> <span class="county-index-n">7 members</span></li>
+      <li><a href="county-board/alexander.html">Alexander County</a> <span class="county-index-n">3 members, at large</span></li>
+      <li><a href="county-board/boone.html">Boone County</a> <span class="county-index-n">12 members</span></li>
+      <li><a href="county-board/brown.html">Brown County</a> <span class="county-index-n">7 members, at large</span></li>
+      <li><a href="county-board/calhoun.html">Calhoun County</a> <span class="county-index-n">5 members, at large</span></li>
+      <li><a href="county-board/carroll.html">Carroll County</a> <span class="county-index-n">8 members</span></li>
+      <li><a href="county-board/cass.html">Cass County</a> <span class="county-index-n">11 members</span></li>
+      <li><a href="county-board/clark.html">Clark County</a> <span class="county-index-n">7 members</span></li>
+      <li><a href="county-board/clay.html">Clay County</a> <span class="county-index-n">14 members</span></li>
+      <li><a href="county-board/clinton.html">Clinton County</a> <span class="county-index-n">15 members</span></li>
+      <li><a href="county-board/coles.html">Coles County</a> <span class="county-index-n">12 members</span></li>
+      <li><a href="county-board/crawford.html">Crawford County</a> <span class="county-index-n">10 members</span></li>
+      <li><a href="county-board/dewitt.html">De Witt County</a> <span class="county-index-n">12 members</span></li>
+      <li><a href="county-board/dekalb.html">DeKalb County</a> <span class="county-index-n">24 members</span></li>
+      <li><a href="county-board/douglas.html">Douglas County</a> <span class="county-index-n">7 members</span></li>
+      <li><a href="county-board/dupage.html">DuPage County</a> <span class="county-index-n">19 members</span></li>
+      <li><a href="county-board/edgar.html">Edgar County</a> <span class="county-index-n">7 members</span></li>
+      <li><a href="county-board/edwards.html">Edwards County</a> <span class="county-index-n">3 members, at large</span></li>
+      <li><a href="county-board/franklin.html">Franklin County</a> <span class="county-index-n">9 members</span></li>
+      <li><a href="county-board/fulton.html">Fulton County</a> <span class="county-index-n">15 members</span></li>
+      <li><a href="county-board/gallatin.html">Gallatin County</a> <span class="county-index-n">5 members, at large</span></li>
+      <li><a href="county-board/greene.html">Greene County</a> <span class="county-index-n">7 members, at large</span></li>
+      <li><a href="county-board/grundy.html">Grundy County</a> <span class="county-index-n">17 members</span></li>
+      <li><a href="county-board/hamilton.html">Hamilton County</a> <span class="county-index-n">5 members, at large</span></li>
+      <li><a href="county-board/hancock.html">Hancock County</a> <span class="county-index-n">15 members</span></li>
+      <li><a href="county-board/henry.html">Henry County</a> <span class="county-index-n">20 members</span></li>
+      <li><a href="county-board/iroquois.html">Iroquois County</a> <span class="county-index-n">16 members</span></li>
+      <li><a href="county-board/jackson.html">Jackson County</a> <span class="county-index-n">14 members</span></li>
+      <li><a href="county-board/jefferson.html">Jefferson County</a> <span class="county-index-n">13 members</span></li>
+      <li><a href="county-board/jo-daviess.html">Jo Daviess County</a> <span class="county-index-n">16 members</span></li>
+      <li><a href="county-board/kane.html">Kane County</a> <span class="county-index-n">25 members</span></li>
+      <li><a href="county-board/kendall.html">Kendall County</a> <span class="county-index-n">10 members</span></li>
+      <li><a href="county-board/knox.html">Knox County</a> <span class="county-index-n">15 members</span></li>
+      <li><a href="county-board/lasalle.html">LaSalle County</a> <span class="county-index-n">30 members</span></li>
+      <li><a href="county-board/lee.html">Lee County</a> <span class="county-index-n">19 members</span></li>
+      <li><a href="county-board/livingston.html">Livingston County</a> <span class="county-index-n">18 members</span></li>
+      <li><a href="county-board/logan.html">Logan County</a> <span class="county-index-n">12 members</span></li>
+      <li><a href="county-board/macon.html">Macon County</a> <span class="county-index-n">15 members</span></li>
+      <li><a href="county-board/marshall.html">Marshall County</a> <span class="county-index-n">12 members</span></li>
+      <li><a href="county-board/mason.html">Mason County</a> <span class="county-index-n">8 members</span></li>
+      <li><a href="county-board/massac.html">Massac County</a> <span class="county-index-n">3 members, at large</span></li>
+      <li><a href="county-board/mcdonough.html">McDonough County</a> <span class="county-index-n">21 members</span></li>
+      <li><a href="county-board/mchenry.html">McHenry County</a> <span class="county-index-n">19 members</span></li>
+      <li><a href="county-board/mercer.html">Mercer County</a> <span class="county-index-n">10 members</span></li>
+      <li><a href="county-board/monroe.html">Monroe County</a> <span class="county-index-n">3 members, at large</span></li>
+      <li><a href="county-board/montgomery.html">Montgomery County</a> <span class="county-index-n">14 members</span></li>
+      <li><a href="county-board/morgan.html">Morgan County</a> <span class="county-index-n">3 members, at large</span></li>
+      <li><a href="county-board/moultrie.html">Moultrie County</a> <span class="county-index-n">9 members, at large</span></li>
+      <li><a href="county-board/ogle.html">Ogle County</a> <span class="county-index-n">24 members</span></li>
+      <li><a href="county-board/peoria.html">Peoria County</a> <span class="county-index-n">18 members</span></li>
+      <li><a href="county-board/pike.html">Pike County</a> <span class="county-index-n">9 members, at large</span></li>
+      <li><a href="county-board/pulaski.html">Pulaski County</a> <span class="county-index-n">3 members, at large</span></li>
+      <li><a href="county-board/putnam.html">Putnam County</a> <span class="county-index-n">5 members, at large</span></li>
+      <li><a href="county-board/randolph.html">Randolph County</a> <span class="county-index-n">3 members, at large</span></li>
+      <li><a href="county-board/richland.html">Richland County</a> <span class="county-index-n">7 members</span></li>
+      <li><a href="county-board/rock-island.html">Rock Island County</a> <span class="county-index-n">19 members</span></li>
+      <li><a href="county-board/saline.html">Saline County</a> <span class="county-index-n">13 members, at large</span></li>
+      <li><a href="county-board/sangamon.html">Sangamon County</a> <span class="county-index-n">28 members</span></li>
+      <li><a href="county-board/schuyler.html">Schuyler County</a> <span class="county-index-n">7 members, at large</span></li>
+      <li><a href="county-board/shelby.html">Shelby County</a> <span class="county-index-n">22 members</span></li>
+      <li><a href="county-board/stark.html">Stark County</a> <span class="county-index-n">8 members</span></li>
+      <li><a href="county-board/stephenson.html">Stephenson County</a> <span class="county-index-n">15 members</span></li>
+      <li><a href="county-board/tazewell.html">Tazewell County</a> <span class="county-index-n">22 members</span></li>
+      <li><a href="county-board/union.html">Union County</a> <span class="county-index-n">5 members, at large</span></li>
+      <li><a href="county-board/vermilion.html">Vermilion County</a> <span class="county-index-n">27 members</span></li>
+      <li><a href="county-board/wabash.html">Wabash County</a> <span class="county-index-n">3 members, at large</span></li>
+      <li><a href="county-board/warren.html">Warren County</a> <span class="county-index-n">15 members</span></li>
+      <li><a href="county-board/washington.html">Washington County</a> <span class="county-index-n">15 members</span></li>
+      <li><a href="county-board/wayne.html">Wayne County</a> <span class="county-index-n">14 members</span></li>
+      <li><a href="county-board/white.html">White County</a> <span class="county-index-n">5 members</span></li>
+      <li><a href="county-board/will.html">Will County</a> <span class="county-index-n">22 members</span></li>
+      <li><a href="county-board/williamson.html">Williamson County</a> <span class="county-index-n">3 members, at large</span></li>
+      <li><a href="county-board/woodford.html">Woodford County</a> <span class="county-index-n">15 members</span></li>
+    </ul>
+    <!-- ==== GENERATED:END county-index ==== -->
   </section>
 
   <section>

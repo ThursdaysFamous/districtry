@@ -79,6 +79,12 @@ def authored_pages():
         for f in sorted(os.listdir(d)):
             if f.endswith(".html"):
                 out.append("%s/%s" % (name, f))
+            # Concept SUBDIRECTORIES too, one level deep: il/county-board/ holds 73 generated per-county pages (scripts/build_county_pages.py) and every gate here discovered pages one level up, so all 73 would have shipped unwatched — the same miss validate_card_links.py made when Iowa arrived as a fifth instance.
+            sub = os.path.join(d, f)
+            if os.path.isdir(sub):
+                for g in sorted(os.listdir(sub)):
+                    if g.endswith(".html"):
+                        out.append("%s/%s/%s" % (name, f, g))
     return out
 
 

@@ -56,9 +56,36 @@ if (LEAFLET) console.log("  (serving Leaflet from scripts/vendor/leaflet — CDN
 const BASE = (process.env.BASE_URL || "http://localhost:8000").replace(/\/$/, "");
 const WHY = "https://overberg.co/why/";
 
-const paths = [...readFileSync(join(ROOT, "sitemap.xml"), "utf8")
+// GENERATED PER-COUNTY PAGES ARE SAMPLED, NOT SWEPT, and the reason is a
+// measurement rather than a preference: this gate costs 5.1s a page (3m8s for
+// 37, timed 2026-09-13), and il/county-board/ added 73 more, which would take
+// it past nine minutes on every PR — with Wisconsin's 72 counties next.
+//
+// What makes sampling honest here is that the 73 are ONE template.
+// scripts/build_county_pages.py --check regenerates every one and compares it
+// byte for byte, so a page that differs from the template cannot ship, and the
+// same run reads each page back and asserts every name in that county's roster
+// appears on it. Content is gated per page, statically. What a browser adds is
+// whether the template renders, boots its theme, resolves its skip link and
+// keeps its tap targets apart — one answer for all 73. Four are visited, spread
+// across the alphabet so the sample is not clustered, and the set is fixed so
+// CI is reproducible.
+const SAMPLE_GENERATED = 4;
+
+function sampleGenerated(all) {
+  const generated = all.filter((p) => p.split("/").filter(Boolean).length > 2);
+  if (generated.length <= SAMPLE_GENERATED) return all;
+  const gset = new Set(generated);
+  const keep = new Set();
+  for (let i = 0; i < SAMPLE_GENERATED; i++) {
+    keep.add(generated[Math.round((i * (generated.length - 1)) / (SAMPLE_GENERATED - 1))]);
+  }
+  return all.filter((p) => !gset.has(p) || keep.has(p));
+}
+
+const paths = sampleGenerated([...readFileSync(join(ROOT, "sitemap.xml"), "utf8")
   .matchAll(/<loc>([^<]+)<\/loc>/g)]
-  .map((m) => m[1].replace(/^https?:\/\/[^/]+/, ""));
+  .map((m) => m[1].replace(/^https?:\/\/[^/]+/, "")));
 
 // WCAG 2.5.8 Target Size (Minimum), swept below. An entry here is a target
 // under 24 CSS px whose 24px circle reaches a neighbour and which the
@@ -438,7 +465,13 @@ try {
       await p.setViewportSize({ width: 1280, height: 720 });
 
       // --- every relative link resolves, each distinct url probed ONCE -------
-      for (const h of info.links.filter((x) => x && !/^(https?:|mailto:|#)/.test(x))) {
+      // Anything with a SCHEME is not a relative link, matched generically
+      // rather than as the allowlist (https:, mailto:, #) this was. That
+      // allowlist held only while no page used a fourth scheme; the county
+      // pages put `tel:` on 523 phone numbers and the probe tried to fetch one,
+      // which Playwright refuses outright — the whole gate died on a link that
+      // was never its subject.
+      for (const h of info.links.filter((x) => x && !/^([a-z][a-z0-9+.-]*:|#)/i.test(x))) {
         const abs = new URL(h, BASE + path).href;
         if (!probed.has(abs)) probed.set(abs, (await p.request.get(abs)).status());
         check(path, `link ${h}`, probed.get(abs) === 200, `HTTP ${probed.get(abs)}`);
@@ -468,4 +501,4 @@ if (failures.length) {
   for (const f of failures) console.error("  - " + f);
   process.exit(1);
 }
-console.log(`All ${paths.length} sitemap page(s) consistent — brand, metadata, standing links, no dead links, a skip link that resolves into a <main>, and every tap target at 390 and 1280 either 24px or clear of its neighbours.`);
+console.log(`All ${paths.length} page(s) consistent — brand, metadata, standing links, no dead links, a skip link that resolves into a <main>, and every tap target at 390 and 1280 either 24px or clear of its neighbours.`);

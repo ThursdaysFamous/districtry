@@ -109,6 +109,12 @@ def page_type(rel):
         return "history"
     if top:
         return {"traffic.html": "traffic"}.get(base, "root-static")
+    if rel.count("/") > 1:
+        # A generated per-county page under a concept folder
+        # (il/county-board/adams.html). Below the topic page that indexes it,
+        # because that page is what should rank for the concept and these are
+        # its 73 children.
+        return "county"
     return "topic"          # faq.html and every topic page
 
 
@@ -117,11 +123,17 @@ RULES = {
     "flagship-hub": ("weekly",  "1.0"),
     "hub":          ("weekly",  "0.9"),
     "topic":        ("monthly", "0.7"),
+    "county":       ("weekly",  "0.6"),   # its roster is re-read weekly
     "sources":      ("monthly", "0.6"),
     "history":      ("monthly", "0.5"),
     "root-static":  ("yearly",  "0.3"),   # privacy.html, sponsorship.html
     "traffic":      ("weekly",  "0.3"),
 }
+
+
+# Files with no commit yet, collected rather than printed one line at a time:
+# adding il/county-board/ put 73 of them in one run, which buried the result.
+NEW_FILES = []
 
 
 def _dirty():
@@ -148,8 +160,7 @@ def last_commit_date(rel, dirty=frozenset()):
     except Exception:                                          # noqa: BLE001
         out = ""
     if not out:
-        sys.stderr.write(
-            "build-sitemap: %s has no commit yet — using today's date\n" % rel)
+        NEW_FILES.append(rel)
         return datetime.date.today().isoformat()
     return out
 
@@ -159,6 +170,8 @@ def collect():
     files = sorted(glob.glob(os.path.join(REPO, "*.html")))
     for i in instances():
         files += sorted(glob.glob(os.path.join(REPO, i, "*.html")))
+        # Concept SUBDIRECTORIES too, one level deep: il/county-board/ holds 73 generated per-county pages (scripts/build_county_pages.py) and every gate here discovered pages one level up, so all 73 would have shipped unwatched — the same miss validate_card_links.py made when Iowa arrived as a fifth instance.
+        files += sorted(glob.glob(os.path.join(REPO, i, "*", "*.html")))
     rows = []
     for path in files:
         rel = os.path.relpath(path, REPO)
@@ -201,6 +214,11 @@ def main():
     args = ap.parse_args()
 
     rows = collect()
+    if NEW_FILES:
+        sys.stderr.write(
+            "build-sitemap: %d file(s) have no commit yet — dated today (%s%s)\n"
+            % (len(NEW_FILES), ", ".join(NEW_FILES[:3]),
+               ", …" if len(NEW_FILES) > 3 else ""))
     new = render(rows)
     old = open(SITEMAP, encoding="utf-8").read() if os.path.exists(SITEMAP) else ""
 

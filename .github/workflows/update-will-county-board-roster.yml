@@ -82,7 +82,14 @@ jobs:
           # touched those same files errors instead of pushing, which is right.
           git fetch --depth=1 origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add il/data/app/will-county-board-members.json
+          # The 73 per-county board pages (il/county-board/) are GENERATED from
+          # the roster this job just rewrote, so regenerate them here or the
+          # smoke gate's `build_county_pages.py --check` fails on this PR with a
+          # page naming last week's members. The sitemap follows, because those
+          # pages are in it and its lastmod is each file's own last commit.
+          python3 scripts/build_county_pages.py
+          python3 scripts/build_sitemap.py
+          git add il/data/app/will-county-board-members.json il/county-board il/county-board.html sitemap.xml
           git commit -m "Update Will County Board roster from willcountyboard.com"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

@@ -64,6 +64,7 @@ python3 scripts/build_coverage_map.py --check            # every instance's outl
 python3 scripts/build_privacy_page.py --check
 python3 scripts/build_history_page.py --check
 python3 scripts/build_manifests.py --check
+python3 scripts/build_county_pages.py --check            # the 73 per-county board pages vs their rosters, and the 55 workflows that rewrite one
 python3 scripts/build_sitemap.py --check                 # every page's sitemap lastmod vs its last commit (regenerate with no flag; a page you have edited but not committed dates today, so the order you run it in no longer matters)
 python3 scripts/validate_favicon.py
 python3 scripts/validate_shell_continuations.py
@@ -123,6 +124,16 @@ fails every bare-visit assertion with `http://localhost:8000//`;
 `scripts/page_consistency_test.mjs` and `scripts/probe_contrast_pairs.mjs`
 strip one. Do not `pkill -f` the server
 by its command line from a shell whose own command line contains it.
+
+`scripts/build_county_pages.py` red comes in four shapes and each names its
+own fix. A STALE page means a roster changed and the pages were not
+regenerated — run it with no flag. A roster name that "does not appear on the
+page it generated" means the template stopped rendering something, not that
+the roster is wrong. A workflow that "never runs scripts/build_county_pages.py"
+needs the regenerate step beside its `git add`, which is why bot roster PRs
+carry it. And `NAMES_NOBODY` records the one county whose roster names nobody;
+if it fails as stale, that county's roster has started naming people and the
+entry should go so the page generates.
 
 `scripts/page_consistency_test.mjs` red on a `target … is 24px or clear of its
 neighbours` line means a control is under WCAG 2.5.8's 24px floor AND close
