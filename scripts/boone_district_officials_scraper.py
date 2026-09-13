@@ -193,11 +193,25 @@ from __future__ import annotations
 import argparse
 import html as html_mod
 import json
+import os
 import re
 import sys
 from datetime import datetime, timezone
 
-sys.path.insert(0, __file__.rsplit("/", 1)[0])
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+
+# THE DEFAULT LANDS UNDER il/, ANCHORED TO THIS FILE. It was a bare
+# "data/source/boone-district-officials.json" until 2026-09-13 — resolved
+# against the working directory, so from the repo root it named a directory
+# that has not existed since the app moved to il/ at R2.3, and from anywhere
+# else it named something different again. The weekly workflow passes --out
+# explicitly, which is why nothing ever failed on it; a person or an agent
+# running the scraper to reproduce a parse would have created a stray
+# data/source/ beside the instance the app actually serves from. Same fix and
+# same reason as the SSA pair's (scripts/chicago_ssa_provider_scraper.py).
+DEFAULT_OUT = os.path.normpath(os.path.join(HERE, "..", "il", "data", "source",
+                                            "boone-district-officials.json"))
 
 from boone_municipal_officials_scraper import (  # noqa: E402
     HEADERS,
@@ -1385,7 +1399,7 @@ def scrape(pdf_bytes, source_url, warnings, own_boards=True):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--out", default="data/source/boone-district-officials.json")
+    ap.add_argument("--out", default=DEFAULT_OUT)
     ap.add_argument("--pdf", help="parse a local PDF instead of fetching")
     ap.add_argument("--no-own-boards", action="store_true",
                     help="yearbook only — skip each body's own board page "
@@ -1402,6 +1416,7 @@ def main():
 
     payload = scrape(pdf_bytes, source_url, warnings,
                      own_boards=not args.no_own_boards)
+    os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
     with open(args.out, "w", encoding="utf-8") as fh:
         json.dump(payload, fh, indent=2, ensure_ascii=False)
         fh.write("\n")
