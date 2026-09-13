@@ -32,11 +32,24 @@ one; every refusal exits 1 and writes nothing.
 now and exits non-zero on any difference, writing nothing. It is in no
 workflow and the comment above main() says why.
 
-Measured 2026-09-12: 49 of the boundary file's 58 SSAs get a provider. The
-nine that do not are Greek Town (16), Six Corners (28-2014), 95th/Ashland
-(69), Roseland (71), Village:Austin (72), Chinatown (73), Oak Street (75),
-North Michigan Avenue (76-2024) and West Garfield Park (77) — the city's list
-simply has no entry for them, so those cards say so rather than guessing.
+ALL 58 OF THE BOUNDARY FILE'S SSAs GET A PROVIDER as of 2026-09-13, and the
+nine that did not were never the city's omission. This file said on 2026-09-12
+that "the city's list simply has no entry" for Greek Town (16), Six Corners
+(28-2014), 95th/Ashland (69), Roseland (71), Village:Austin (72), Chinatown
+(73), Oak Street (75), North Michigan Avenue (76-2024) and West Garfield Park
+(77). The city's list has an entry for every one of them. Their headings close
+the bold run with a <br /> inside it, which the scraper's heading pattern could
+not cross, so those nine blocks were absorbed into the block above and never
+parsed — and an absent block reads exactly like an absent provider. The cards,
+the gap record, the worksheet note and this docstring all then stated it as a
+fact about the city. scripts/chicago_ssa_provider_scraper.py carries it as trap
+9 and GATES it: a bolded heading that does not become a block is now a failed
+run. #73 needed a second fix, trap 10 — its street number carries a letter.
+
+THE LESSON FOR THE NEXT GAP RECORD: a parser that loses a block cannot tell
+you it lost one, so "the source does not publish X" is only ever as good as the
+proof that the source was fully read. A count guard is not that proof — 49
+records passed every floor here for a day.
 """
 import argparse
 import json
@@ -66,8 +79,13 @@ DEFAULT_RAW = os.path.normpath(os.path.join(HERE, "..", "il", "data", "source",
 OUT = os.path.normpath(os.path.join(HERE, "..", "il", "data", "app",
                                     "chicago-ssa-providers.json"))
 
-# 49 parse today. The floor allows a handful of blocks to lapse between city
-# edits without a false alarm, and refuses a run that lost a third of them.
+# 58 parse today, one per active SSA. The floor allows a handful of blocks to
+# lapse between city edits without a false alarm, and refuses a run that lost a
+# third of them. IT IS DELIBERATELY NOT RAISED TO 58: what a floor can catch is
+# a scrape that collapsed, and 49 of 58 sailed through this one for a day, so
+# raising it would buy a narrower version of a guard that already failed. The
+# check that actually holds the count is the heading gate in the scraper, plus
+# check_against_boundaries() printing every area with no provider.
 MIN_PROVIDERS = 40
 # Every shipped record carries all four; a run that drops one has parsed badly.
 REQUIRED = ("provider", "address", "phone")
@@ -128,10 +146,13 @@ def check_against_boundaries(out, path):
            before this change it printed a line and wrote 50 records with exit
            0, because the report ran AFTER the write and never gated.
 
-    WHAT DOES NOT GATE, and must not: boundary areas with NO provider. Nine of
-    the 58 are in that state because the city's list omits them, which is the
-    open half of the gap record rather than an error. They are printed so a jump
-    is visible in the run log.
+    WHAT DOES NOT GATE, and must not: boundary areas with NO provider. NONE are
+    in that state today — the nine that were are trap 9 in the scraper, a
+    parser defect the city's page never had — but the city can add an area
+    before it lets a contract, and a build that refused to write until every
+    new SSA had an agency would withhold every correct answer over one the
+    city has not awarded yet. They are printed instead, so the run log names
+    each one and a jump is visible.
     """
     with open(path, encoding="utf-8") as fh:
         feats = json.load(fh).get("features") or []

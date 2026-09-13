@@ -18512,8 +18512,10 @@ function initChiExplorer() {
    * honest links — because nobody is elected to it: City Council creates one
    * by ordinance, the Mayor appoints its commission with Council consent, and
    * a contracted service provider agency does the work. The city's boundary
-   * dataset names neither the commission nor the agency, so this card names
-   * NOBODY (gap: chicago-ssa-service-providers).
+   * dataset names neither the commission nor the agency. The card names the
+   * AGENCY anyway, joined from the department's own provider list (all 58
+   * since 2026-09-13); it names no commissioner, which is what is left of gap
+   * chicago-ssa-service-providers.
    *
    * MEASURED 2026-09-12: 58 features, every one a MultiPolygon with geometry,
    * every one status "Active", and all five read fields present on all 58.
@@ -18582,8 +18584,12 @@ function initChiExplorer() {
         // in all three of the senses that phrase has: no two providers fold to
         // one bare number, no two of the city's own areas do either, and no
         // provider names a number the boundary dataset does not carry. Areas
-        // with NO provider deliberately do not gate — nine are in that state,
-        // which is the open half of the gap record.
+        // with NO provider deliberately do not gate, and none are in that
+        // state: all 58 name an agency since 2026-09-13. Nine did not for a
+        // day, and that was a parser defect rather than the city's silence —
+        // their blocks close the bold heading with a <br /> inside it and were
+        // never split out (trap 9 in the scraper). What is left of the gap
+        // record is the COMMISSION, which nobody publishes for any of the 58.
         var num = ref ? String(ref).replace(/[^0-9-]/g, "").split("-")[0] : "";
         var prov = num && providers[num];
         if (!prov) return;
@@ -18620,8 +18626,10 @@ function initChiExplorer() {
       { name: "number", label: "SSA number", keys: ["ssa_number"] },
       // Nobody is ELECTED to an SSA, so the people row is the organisation the
       // city contracts with to run the corridor — the one a reader would call
-      // about it. 49 of the 58 have one; the other nine simply are not on the
-      // city's provider list and say nothing rather than guessing.
+      // about it. All 58 have one. Nine read as having none for a day, which
+      // was the scraper losing nine blocks rather than the city listing no
+      // agency; the row still renders nothing where the join finds nothing,
+      // because a new SSA can be drawn before its contract is let.
       { name: "provider", label: "Service provider", keys: ["ssa_provider"] },
       { name: "providerAddress", label: "Provider's office", keys: ["ssa_provider_address"] },
       { name: "providerPhone", label: "Provider's phone", keys: ["ssa_provider_phone"] },
