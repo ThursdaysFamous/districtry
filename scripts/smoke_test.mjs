@@ -982,6 +982,19 @@ try {
     });
   });
 
+  // The panel's own width and the width of the form column inside it. The two
+  // move independently by design, which is the whole of what the check below
+  // asserts — so it reads them relationally rather than pinning the px values
+  // the CSS already owns.
+  const panelWidths = (page) => page.evaluate(() => {
+    const w = (s) => { const e = document.querySelector(s); return e ? Math.round(e.getBoundingClientRect().width) : null; };
+    const box = document.getElementById("batch-results");
+    const tbl = box && box.querySelector("table");
+    return { panel: w(".batch-panel"), lede: w(".batch-lede"), picker: w(".batch-layers"),
+      textarea: w("#batch-input"),
+      overflows: tbl && box && !box.hidden ? tbl.scrollWidth > box.clientWidth + 1 : null };
+  });
+
   // Drive one run and return the rendered table as plain text rows. The wait
   // is on the run having FINISHED (the button re-enabled) as well as on the
   // row count, so a check can never read a half-built table.
@@ -1017,6 +1030,8 @@ try {
     check("batch picker inherits the layers already switched on",
       picked.length === 1 && /School Board/.test(picked[0]), picked.join(", ") || "(none)");
 
+    const formOnly = await panelWidths(page);
+
     const rows = await runList(page, [
       "233 HOUSE Dr, Chicago",
       "1 STREET Ave, Chicago",
@@ -1026,6 +1041,21 @@ try {
     const cols = rows[0] ? rows[0].length : 0;
     check("batch turns a pasted list into one row per address",
       rows.length === 4 && cols === 7, `${rows.length} row(s) x ${cols} column(s)`);
+
+    // The window is sized to the form until there is a table to be wide for.
+    // The form column must NOT move when it grows: a table appearing is no
+    // reason for the prose and the picker to change shape, and the panel is
+    // 688px wide precisely because that is what the picker needs.
+    const withRows = await panelWidths(page);
+    check("the window widens for the results table and the form column does not",
+      withRows.panel > formOnly.panel &&
+      withRows.lede === formOnly.lede && withRows.picker === formOnly.picker &&
+      withRows.textarea === formOnly.textarea,
+      `panel ${formOnly.panel} -> ${withRows.panel}px; form column ${formOnly.picker}px in both`);
+    // One selected layer is the case this tool was built for, and at that width
+    // its table must not need a sideways scroll to reach the Review column.
+    check("one layer's results table needs no horizontal scroll",
+      withRows.overflows === false, `table overflows its box: ${withRows.overflows}`);
 
     // [#, Address, Matched, Match, <layer>, Edge (ft), Review]
     const [house, street, miss, outside] = rows.map((r) => r || []);
