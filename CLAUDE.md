@@ -46,9 +46,9 @@ Chicago District Explorer: a single-file, dependency-light web app. Click a poin
 
 This list undercounts what actually runs, and **the figure is stated WITH ITS METHOD AND ITS
 DATE**, because successive counts disagreed and no reader could tell which counting rule any of
-them used. MEASURED 2026-09-13 against `main` at 59c4db8: a static gate is one NAMED step in
-the `smoke` job ahead of the `actions/setup-node` step, which is **46**; counted instead as
-script invocations the whole battery is **71 — 61 that need no browser and 10 that boot
+them used. MEASURED 2026-09-13 against `main` at a9239d9: a static gate is one NAMED step in
+the `smoke` job ahead of the `actions/setup-node` step, which is **47**; counted instead as
+script invocations the whole battery is **72 — 62 that need no browser and 10 that boot
 Chromium** (a Playwright smoke test per instance `il`/`ca`/`ny`/`wi`/`ia`/`mi`, 2 root-page
 tests, and the two fleet-wide probes for point transmission and contrast pairs), the
 per-instance `validate_index.py` runs included, and excluding the two `npx playwright install`
@@ -59,21 +59,25 @@ browser run: `scripts/build_og_image.mjs --check` imports playwright through a d
 `await import()` inside `render()`, which `--check` never calls — its own usage line says
 "stdlib-free drift gate, no browser" — and it is a named static step AHEAD of
 `actions/setup-node`, before Playwright is installed, which it would have to follow to boot
-anything. Counting it as Chromium answers 60 + 11 for the same 71, which is what a first
+anything. Counting it as Chromium answers 61 + 11 for the same 72, which is what a first
 reading of #942 gave. And a `^node` match that allows a word boundary also catches
 `node-version: "20"`, the setup-node INPUT rather than a command, which adds a phantom
 no-browser invocation.
 
 Re-measure rather than increment: the pair moves when ANYTHING merges, not only when you add a
-gate, and it moved five times in two days — 42/66 against a tree two merges old, then 43/67,
-then 43/68 when #927 added a tenth Chromium run an hour later, then 45/70, then this 46/71.
+gate, and it moved six times in two days — 42/66 against a tree two merges old, then 43/67,
+then 43/68 when #927 added a tenth Chromium run an hour later, then 45/70, then 46/71, then
+this 47/72 when #944's robots self-test merged while #947 was in review. The measurement it
+replaced was two hours old and had been independently verified in between; a verified figure
+goes stale exactly as fast as an unverified one.
 The figure before the 2026-09-04 count was 19, and the two counts after it (24, then 31) were
 each stale within the day.
 
 Treat the workflow file as the source of truth for the full battery and its order;
 `.claude/skills/steward/SKILL.md` mirrors it as locally-runnable commands with per-gate
-rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-13, **71
-invocations for 71**, diffed both ways with each side's trailing rationale comment stripped,
+rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-13, **72
+invocations for 72**, diffed both ways with each side's trailing rationale comment stripped
+and `$BASE` resolved to the branch point the skill spells `origin/main`,
 after four gates were found missing from it on 2026-09-12 (`build_sitemap.py`,
 `undeliverable.py`, the circuit-court join self-test, and that change's own). What follows is
 the short list worth knowing by name, not the whole battery.
