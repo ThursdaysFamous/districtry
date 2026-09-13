@@ -5276,8 +5276,12 @@ every URL with its home page) lists all 17 seats with party, term and a
 precinct-parts description, and links 16 member directory pages carrying a
 direct phone and an e-mail each — 16 DISTINCT numbers, so the Calhoun
 switchboard test was run and does not apply, and personal gmail/icloud
-addresses ship exactly as published. District 16 is printed VACANT and ships
-as a counted, never named vacancy (the Livingston posture). The weekly
+addresses ship exactly as published. One seat is printed VACANT and ships
+as a counted, never named vacancy (the Livingston posture). WHICH seat is not
+recorded here, because it moves: District 16 at first ship, District 10 as of
+2026-09-13, when the county filled 16 with Tony Jones (R) and 10 fell vacant in
+the same edit. Read the current one from the shipped file, never from this
+sentence. The weekly
 scraper cross-checks each directory page against the board page on district
 number and surname + first initial (unique, asserted), paces its seventeen
 fetches, and never parses the home addresses the directory pages print (the
