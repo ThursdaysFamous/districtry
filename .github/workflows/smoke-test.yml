@@ -778,4 +778,19 @@ jobs:
           # browser in its own step — reads the artifact and refuses to publish
           # when the apps have moved under it.
           BASE_URL=http://localhost:8000        node scripts/probe_point_transmission.mjs --check || status=1
+
+          # Every text node on every sitemap page, both themes, joined against
+          # what validate_contrast.py measures. That gate tests a STATED table
+          # of pairs — it has to, because no regex follows `color:` through the
+          # cascade to the ground four ancestors up — and the cost is that a
+          # pair with no row reads as covered. Three did: traffic.html's own
+          # fifteen-colour palette (2.93:1 at 12px), the sources matrix's
+          # row-header band, which had no dark counterpart and put light text on
+          # a light grey block (1.25:1), and --faint on two tints the table
+          # covered under --muted and --ink only. All three were found by a
+          # browser sweep that lived in a scratch directory; this is that sweep,
+          # kept, and it asserts only that a below-floor pair is one the static
+          # gate already calls short. It aborts every cross-origin request but
+          # cdnjs, so it needs no third party and takes ~30s.
+          BASE_URL=http://localhost:8000        node scripts/probe_contrast_pairs.mjs || status=1
           exit $status

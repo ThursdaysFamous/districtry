@@ -750,10 +750,19 @@ table.matrix thead th {
 table.matrix tbody tr:last-child th,
 table.matrix tbody tr:last-child td { border-bottom: none; }
 table.matrix tbody tr:target { background: rgba(65,182,230,0.12); }
+/* The row-header band is --paper, the same ground the thead band uses, and it
+   used to be rgba(244,247,249,0.6) — a cool near-white with no dark
+   counterpart. Over --panel in dark that composites to rgb(159,160,166), a
+   light grey block carrying light text: the layer name at 2.18:1, its id at
+   1.25:1 and the guide link at 1.37:1, measured 2026-09-12 in a browser on all
+   six sources pages. It went unseen twice over — validate_contrast.py has no
+   row for a ground nothing names, and the earlier sweep that found every other
+   short pair ran at 390px wide, where the media query below turns the table
+   into stacked blocks and this rule stops applying. */
 table.matrix tbody th[scope="row"] {
   min-width: 170px;
   font-weight: 600;
-  background: rgba(244,247,249,0.6);
+  background: var(--paper);
 }
 .layer-name { display: block; }
 /* The link from a layer to its own explainer page. Measured 2026-09-11, no
