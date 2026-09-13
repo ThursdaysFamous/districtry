@@ -1,0 +1,390 @@
+{
+ "077": {
+  "county": "Kalamazoo",
+  "districts": {
+   "1": {
+    "name": "Tami Rey",
+    "phone": "269-329-8512"
+   },
+   "2": {
+    "name": "Jen Strebs",
+    "phone": "269-903-6429",
+    "role": "Chair"
+   },
+   "3": {
+    "name": "Monteze Morales",
+    "phone": "269-808-3189"
+   },
+   "4": {
+    "name": "Abigail Wheeler",
+    "phone": "616-951-5363"
+   },
+   "5": {
+    "name": "John Taylor",
+    "phone": "815-245-7160",
+    "role": "Vice Chair"
+   },
+   "6": {
+    "name": "John H Gisler",
+    "phone": "269-217-2119"
+   },
+   "7": {
+    "name": "Jeff Heppler",
+    "phone": "269-629-5124",
+    "role": "Vice Chair Pro Tem"
+   },
+   "8": {
+    "name": "Wendy Mazer",
+    "phone": "269-372-7198"
+   },
+   "9": {
+    "name": "Dale DeLeeuw",
+    "phone": "269-720-6885"
+   }
+  },
+  "seats": 9,
+  "sourceUrl": "https://www.kalcounty.gov/479/Board-of-Commissioners"
+ },
+ "081": {
+  "county": "Kent",
+  "districts": {
+   "1": {
+    "email": "ben.greene@kentcountymi.gov",
+    "name": "Ben Greene",
+    "phone": "616-632-7160",
+    "role": "Chair"
+   },
+   "10": {
+    "email": "robin.halsted@kentcountymi.gov",
+    "name": "Robin Halsted",
+    "phone": "616-450-9987"
+   },
+   "11": {
+    "email": "lindsey.thiel@kentcountymi.gov",
+    "name": "Lindsey Thiel",
+    "phone": "616-632-7164",
+    "role": "Vice Chair"
+   },
+   "12": {
+    "email": "monica.sparks@kentcountymi.gov",
+    "name": "Monica Sparks",
+    "phone": "616-813-9397"
+   },
+   "13": {
+    "email": "michelle.mccloud@kentcountymi.gov",
+    "name": "Michelle McCloud",
+    "phone": "616-632-7170"
+   },
+   "14": {
+    "email": "carol.hennessy@kentcountymi.gov",
+    "name": "Carol Hennessy",
+    "phone": "616-632-7166"
+   },
+   "15": {
+    "email": "lisa.oliver-king@kentcountymi.gov",
+    "name": "Lisa Oliver-King",
+    "phone": "616-632-7153"
+   },
+   "16": {
+    "email": "melissa.lagrand@kentcountymi.gov",
+    "name": "Melissa LaGrand",
+    "phone": "616-632-7168"
+   },
+   "17": {
+    "email": "robert.womack@kentcountymi.gov",
+    "name": "Robert S. Womack",
+    "phone": "616-295-8953"
+   },
+   "18": {
+    "email": "stephen.faber@kentcountymi.gov",
+    "name": "Steve Faber",
+    "phone": "616-821-8006",
+    "role": "Minority Vice Chair"
+   },
+   "19": {
+    "email": "Kristofer.pachla@kentcountymi.gov",
+    "name": "Kris Pachla",
+    "phone": "616-632-7155"
+   },
+   "2": {
+    "email": "elizabeth.morse@kentcountymi.gov",
+    "name": "Liz Morse",
+    "phone": "616-218-0488"
+   },
+   "20": {
+    "email": "nancy.morales@kentcountymi.gov",
+    "name": "Nancy Morales",
+    "phone": "562-360-8550"
+   },
+   "21": {
+    "email": "walter.bujak@kentcountymi.gov",
+    "name": "Walter Bujak",
+    "phone": "616-632-7157"
+   },
+   "3": {
+    "email": "jennifer.merchant@kentcountymi.gov",
+    "name": "Jennifer Merchant",
+    "phone": "616-632-7150"
+   },
+   "4": {
+    "email": "katie.deboer@kentcountymi.gov",
+    "name": "Katie DeBoer",
+    "phone": "616-481-7499"
+   },
+   "5": {
+    "email": "dave.hildenbrand@kentcountymi.gov",
+    "name": "Dave Hildenbrand",
+    "phone": "616-632-7152"
+   },
+   "6": {
+    "email": "stan.stek@kentcountymi.gov",
+    "name": "Stan Stek",
+    "phone": "616-632-7163"
+   },
+   "7": {
+    "email": "stan.ponstein@kentcountymi.gov",
+    "name": "Stan Ponstein"
+   },
+   "8": {
+    "email": "dan.burrill@kentcountymi.gov",
+    "name": "Dan Burrill",
+    "phone": "616-292-3876"
+   },
+   "9": {
+    "email": "matt.kallman@kentcountymi.gov",
+    "name": "Matt Kallman",
+    "phone": "616-632-7167"
+   }
+  },
+  "seats": 21,
+  "sourceUrl": "https://www.kentcountymi.gov/1464/Meet-the-Commissioners"
+ },
+ "099": {
+  "county": "Macomb",
+  "districts": {
+   "1": {
+    "name": "Ken Goike",
+    "profileUrl": "https://bocmacomb.org/commissioners/ken-goike/"
+   },
+   "10": {
+    "name": "Harold L. Haugh",
+    "profileUrl": "https://bocmacomb.org/commissioners/harold-haugh/",
+    "role": "Vice Chair"
+   },
+   "11": {
+    "name": "Lisa Wojno",
+    "profileUrl": "https://bocmacomb.org/commissioners/lisa-wojno/"
+   },
+   "12": {
+    "name": "Michael J. Howard II",
+    "profileUrl": "https://bocmacomb.org/commissioners/michael-howard/"
+   },
+   "13": {
+    "name": "Sarah Lucido",
+    "profileUrl": "https://bocmacomb.org/commissioners/sarah-lucido/"
+   },
+   "2": {
+    "name": "Phil Kraft",
+    "profileUrl": "https://bocmacomb.org/commissioners/phil-kraft/"
+   },
+   "3": {
+    "name": "Sylvia Grot",
+    "profileUrl": "https://bocmacomb.org/commissioners/sylvia-grot/",
+    "role": "Sergeant-at-Arms"
+   },
+   "4": {
+    "name": "Joe Sabatini",
+    "profileUrl": "https://bocmacomb.org/commissioners/joe-sabatini/",
+    "role": "Board Chair"
+   },
+   "5": {
+    "name": "Don VanSyckel",
+    "profileUrl": "https://bocmacomb.org/commissioners/don-vansyckel/"
+   },
+   "6": {
+    "name": "Joseph V. Romano",
+    "profileUrl": "https://bocmacomb.org/commissioners/joseph-v-romano/"
+   },
+   "7": {
+    "name": "James M. Perna",
+    "profileUrl": "https://bocmacomb.org/commissioners/james-m-perna/"
+   },
+   "8": {
+    "name": "Antoinette Wallace",
+    "profileUrl": "https://bocmacomb.org/commissioners/antoinette-wallace/"
+   },
+   "9": {
+    "name": "Barbara Zinner",
+    "profileUrl": "https://bocmacomb.org/commissioners/barbara-zinner/"
+   }
+  },
+  "seats": 13,
+  "sourceUrl": "https://bocmacomb.org/find-your-commissioner/"
+ },
+ "121": {
+  "county": "Muskegon",
+  "districts": {
+   "1": {
+    "email": "cyrki@muskegoncounty.net",
+    "name": "Kim Cyr",
+    "party": "Republican",
+    "phone": "231-206-4052"
+   },
+   "2": {
+    "email": "hermanjb@co.muskegon.mi.us",
+    "name": "J. Brett Herman",
+    "party": "Republican",
+    "phone": "231-578-2299"
+   },
+   "3": {
+    "email": "hazekampmi@muskegoncounty.net",
+    "name": "Michelle Hazekamp",
+    "party": "Republican",
+    "phone": "231-670-7633"
+   },
+   "4": {
+    "email": "mcguiganch@muskegoncounty.net",
+    "name": "Chris McGuigan",
+    "party": "Democratic",
+    "phone": "231-286-7298"
+   },
+   "5": {
+    "email": "nashch@co.muskegon.mi.us",
+    "name": "Charles Nash",
+    "party": "Democratic",
+    "phone": "231-329-2421"
+   },
+   "6": {
+    "email": "cookje@muskegoncounty.net",
+    "name": "Jessica Cook",
+    "party": "Democratic",
+    "phone": "231-282-9051"
+   },
+   "7": {
+    "email": "simski@co.muskegon.mi.us",
+    "name": "Kimberly D. Sims",
+    "party": "Democratic"
+   }
+  },
+  "seats": 7,
+  "sourceUrl": "https://co.muskegon.mi.us/1965/Your-Muskegon-County-Commissioners"
+ },
+ "145": {
+  "county": "Saginaw",
+  "districts": {
+   "1": {
+    "name": "Mark Piotrowski",
+    "profileUrl": "https://www.saginawcountymi.gov/departments/board-of-commissioners/commissioner-roster/district-1-mark-piotrowski/"
+   },
+   "10": {
+    "name": "Lisa Coney",
+    "profileUrl": "https://www.saginawcountymi.gov/departments/board-of-commissioners/commissioner-roster/district-10-lisa-coney/"
+   },
+   "11": {
+    "name": "Michael Webster",
+    "profileUrl": "https://www.saginawcountymi.gov/departments/board-of-commissioners/commissioner-roster/district-11-michael-a-webster/"
+   },
+   "2": {
+    "name": "Jack Tany",
+    "profileUrl": "https://www.saginawcountymi.gov/departments/board-of-commissioners/commissioner-roster/district-2-jack-tany-chairman/"
+   },
+   "3": {
+    "name": "Rich Spitzer",
+    "profileUrl": "https://www.saginawcountymi.gov/departments/board-of-commissioners/commissioner-roster/district-3-rich-spitzer/"
+   },
+   "4": {
+    "name": "Sheldon Matthews",
+    "profileUrl": "https://www.saginawcountymi.gov/departments/board-of-commissioners/commissioner-roster/district-4-sheldon-matthews/"
+   },
+   "5": {
+    "name": "Tracey Slodowski",
+    "profileUrl": "https://www.saginawcountymi.gov/departments/board-of-commissioners/commissioner-roster/district-5-tracey-slodowski/"
+   },
+   "6": {
+    "name": "Denny Harris",
+    "profileUrl": "https://www.saginawcountymi.gov/departments/board-of-commissioners/commissioner-roster/district-6-denny-harris/"
+   },
+   "7": {
+    "name": "John Kaczynski",
+    "profileUrl": "https://www.saginawcountymi.gov/departments/board-of-commissioners/commissioner-roster/district-7-john-kaczynski/"
+   },
+   "8": {
+    "name": "Gerald Little",
+    "profileUrl": "https://www.saginawcountymi.gov/departments/board-of-commissioners/commissioner-roster/district-8-gerald-little/"
+   },
+   "9": {
+    "name": "Christopher Boyd",
+    "profileUrl": "https://www.saginawcountymi.gov/departments/board-of-commissioners/commissioner-roster/district-9-christopher-boyd/"
+   }
+  },
+  "seats": 11,
+  "sourceUrl": "https://www.saginawcountymi.gov/departments/board-of-commissioners/"
+ },
+ "163": {
+  "county": "Wayne",
+  "districts": {
+   "1": {
+    "name": "Tim Killeen",
+    "profileUrl": "https://www.waynecountymi.gov/Government/Elected-Officials/Commission/Commissioners/Tim-Killeen-Dist-1"
+   },
+   "10": {
+    "name": "Melissa Daub",
+    "profileUrl": "https://www.waynecountymi.gov/Government/Elected-Officials/Commission/Commissioners/Melissa-Daub-Dist-10"
+   },
+   "11": {
+    "name": "Allen R. Wilson",
+    "profileUrl": "https://www.waynecountymi.gov/Government/Elected-Officials/Commission/Commissioners/Allen-R.-Wilson-Dist-11"
+   },
+   "12": {
+    "name": "Glenn S. Anderson",
+    "profileUrl": "https://www.waynecountymi.gov/Government/Elected-Officials/Commission/Commissioners/Glenn-S.-Anderson-Dist-12"
+   },
+   "13": {
+    "name": "Sam Baydoun",
+    "profileUrl": "https://www.waynecountymi.gov/Government/Elected-Officials/Commission/Commissioners/Sam-Baydoun-Dist-13"
+   },
+   "14": {
+    "name": "Alex Garza",
+    "profileUrl": "https://www.waynecountymi.gov/Government/Elected-Officials/Commission/Commissioners/Alex-Garza-Dist-14"
+   },
+   "15": {
+    "name": "Joseph Palamara",
+    "profileUrl": "https://www.waynecountymi.gov/Government/Elected-Officials/Commission/Commissioners/Joseph-Palamara-Dist-15"
+   },
+   "2": {
+    "name": "Jonathan C. Kinloch",
+    "profileUrl": "https://www.waynecountymi.gov/Government/Elected-Officials/Commission/Commissioners/Jonathan-C.-Kinloch-Dist-2"
+   },
+   "3": {
+    "name": "Martha G. Scott",
+    "profileUrl": "https://www.waynecountymi.gov/Government/Elected-Officials/Commission/Commissioners/Martha-G.-Scott-Dist-3"
+   },
+   "4": {
+    "name": "Cara A. Clemente",
+    "profileUrl": "https://www.waynecountymi.gov/Government/Elected-Officials/Commission/Commissioners/Cara-Clemente-Dist-4"
+   },
+   "5": {
+    "name": "Angelique Peterson-Mayberry",
+    "profileUrl": "https://www.waynecountymi.gov/Government/Elected-Officials/Commission/Commissioners/Angelique-Peterson-Mayberry-Dist-5"
+   },
+   "6": {
+    "name": "Monique Baker McCormick",
+    "profileUrl": "https://www.waynecountymi.gov/Government/Elected-Officials/Commission/Commissioners/Monique-Baker-McCormick-Dist-6"
+   },
+   "7": {
+    "name": "Alisha Bell",
+    "profileUrl": "https://www.waynecountymi.gov/Government/Elected-Officials/Commission/Commissioners/Alisha-Bell-Dist-7"
+   },
+   "8": {
+    "name": "Hassan M. Ahmad",
+    "profileUrl": "https://www.waynecountymi.gov/Government/Elected-Officials/Commission/Commissioners/Hassan-M.-Ahmad-Dist-8"
+   },
+   "9": {
+    "name": "Terry Marecki",
+    "profileUrl": "https://www.waynecountymi.gov/Government/Elected-Officials/Commission/Commissioners/Terry-Marecki-Dist-9"
+   }
+  },
+  "seats": 15,
+  "sourceUrl": "https://www.waynecountymi.gov/Government/Elected-Officials/Commission"
+ }
+}

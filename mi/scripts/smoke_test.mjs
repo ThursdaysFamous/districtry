@@ -838,6 +838,76 @@ try {
         !/Drew Robbins/.test(card.text || ""), (card.text || "").slice(0, 160));
       await page.close();
     }
+
+    // COUNTY COMMISSIONER ROSTER — the check that proves which SOURCE a name
+    // came from. The state's boundary layer carries a Commissioner column
+    // naming the November 2024 winner, and for Wayne District 5 that person
+    // died on 10 June 2025. So this asserts the card names the commissioner
+    // the COUNTY publishes and does NOT name the one the boundary carries;
+    // a card that quietly read the boundary column would name Clark-Coleman
+    // and look entirely correct.
+    //
+    // Wayne 8 is the second replacement (Ahmad for Knezek) and is here for
+    // the same reason one Battle Creek ward was not enough: one point cannot
+    // tell a right answer from a wrong-but-consistent one.
+    //
+    // Muskegon 4 carries the whole contact row — a replacement name, plus the
+    // party, telephone and e-mail the county publishes and the state does not.
+    // Every point below is verified interior to exactly one district.
+    for (const cc of [
+      { label: "Wayne 5", point: "42.39943,-83.13297", district: "5",
+        name: "Angelique Peterson-Mayberry", stale: "Irma Clark-Coleman" },
+      { label: "Wayne 8", point: "42.31838,-83.29856", district: "8",
+        name: "Hassan M. Ahmad", stale: "David Knezek" },
+      { label: "Muskegon 4", point: "43.19072,-86.28166", district: "4",
+        name: "Chris McGuigan", stale: "Dan Potts", contact: "231-286-7298" }
+    ]) {
+      const page = await booted(context, `${BASE}#point=${cc.point}&layers=county-commissioner`);
+      const card = await cardText(page, "county-commissioner");
+      const pill = await page.evaluate(() => {
+        const el = document.getElementById("card-county-commissioner");
+        const p2 = el && el.parentElement ? el.parentElement.querySelector(".card-id-pill") : null;
+        return p2 ? p2.textContent.trim() : null;
+      });
+      const text = card.text || "";
+      check(`county-commissioner resolves ${cc.label} to its own district`,
+        pill === `District ${cc.district}`, `pill=${JSON.stringify(pill)}`);
+      check(`${cc.label} names the commissioner the county publishes`,
+        text.includes(cc.name), text.slice(0, 160));
+      check(`${cc.label} does not name the boundary layer's 2024 winner`,
+        !text.includes(cc.stale), text.slice(0, 160));
+      if (cc.contact) {
+        // Compare digits, not the string: the contact renderer prints
+        // telephone numbers with U+2011 non-breaking hyphens, so an ASCII
+        // "231-286-7298" never matches what the card actually shows.
+        const digits = (t) => t.replace(/[^0-9]/g, "");
+        check(`${cc.label} carries the contact the county publishes`,
+          digits(text).includes(digits(cc.contact)) && /Email/.test(text),
+          text.slice(0, 200));
+      }
+      await page.close();
+    }
+
+    // A COUNTY THE ROSTER HAS NOT REACHED MUST SAY SO AND NAME NOBODY. Ingham
+    // is the worksheet's own anchor point and its site refuses this client
+    // (robots.txt, one `*` group, Disallow: /), so it is in no tranche. The
+    // card has to state that plainly rather than leave a blank where a name
+    // goes — and it must not fall back to the boundary column, which names
+    // Ingham's 2024 winners perfectly well.
+    {
+      const page = await booted(context,
+        `${BASE}#point=42.73370,-84.55530&layers=county-commissioner`);
+      const card = await cardText(page, "county-commissioner");
+      const people = await page.evaluate(() => {
+        const el = document.getElementById("card-county-commissioner");
+        return el ? el.querySelectorAll(".card-person").length : -1;
+      });
+      const text = card.text || "";
+      check("a county the roster has not reached names nobody and says why",
+        people === 0 && /naming commissioners county by county/.test(text),
+        `personRows=${people} :: ${text.slice(0, 180)}`);
+      await page.close();
+    }
     await context.close();
   }
 } finally {

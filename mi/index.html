@@ -8820,35 +8820,128 @@ function initMichiganExplorer() {
    * commissioners by single-member district, so a polygon is the honest
    * surface everywhere — there is no at-large county to carve out.
    *
-   * THIS CARD NAMES NOBODY, ON PURPOSE. The source ships a Commissioner and
-   * Party on all 619 polygons and the builder DROPS them, for a measured
-   * reason: the column holds the certified November 2024 election winners,
-   * not the people now in office. It still names a Wayne County commissioner
-   * who died in June 2025. The builder refuses to write if those columns ever
-   * reach data/app/, and the note row below tells the reader plainly what the
-   * app does and does not know. ---------- */
+   * THE NAME COMES FROM THE COUNTY, NEVER FROM THE BOUNDARY. The state's
+   * layer ships a Commissioner and a Party on all 619 polygons and
+   * build_mi_commissioner_districts.py DROPS both, for a measured reason: the
+   * column holds the certified November 2024 election winners rather than the
+   * people in office now, and on 2026-09-13 it named a different person in 7
+   * of the 76 seats this card can now check — one of them a Wayne County
+   * commissioner who died on 10 June 2025. That builder still refuses to write
+   * if either column reaches data/app/.
+   *
+   * mi-commissioner-members.json is the replacement, built county by county
+   * from each county's own board page and refreshed weekly
+   * (mi/scripts/mi_commissioner_scraper.py + build_mi_commissioner_roster.py).
+   * It arrives IN TRANCHES, so most districts still name nobody: a county in
+   * the file names its commissioner, and a county absent from it keeps the
+   * note row saying plainly that this app does not know. The roster's own
+   * failure is not this layer's failure — a fetch miss degrades to that same
+   * note rather than to an error card. ---------- */
   var loadMiCommissionerDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/mi-commissioner-districts.json", {}, 2);
   });
+  var loadMiCommissionerMembers = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-commissioner-members.json", {}, 2);
+  });
 
-  registerPolygonLayer({
+  registerLayer({
     id: "county-commissioner",
     group: "political",
     label: "County Commissioner District",
-    loader: loadMiCommissionerDistricts,
-    style: { color: "#1B7A3D", weight: 2, fillColor: "#2E9E6B", fillOpacity: 0.06 },
-    fields: [
-      { name: "district", label: "District", keys: ["district"], primary: true },
-      { name: "county", label: "County", keys: ["county"] },
-      // 611 of 619 carry this; the factory shows a keyed row only when it
-      // hits, so Baraga 1 and the seven Cheboygan districts simply omit it.
-      { name: "population", label: "Population (2020 apportionment)", keys: ["population"] },
-      { label: "Your commissioner",
-        value: "Not named here. Michigan publishes these districts with the November 2024 " +
-               "election winner attached, but that list is not maintained — it still names " +
-               "commissioners who have since died, resigned or been replaced — so this app " +
-               "does not repeat it. Your county's own board page is the current source." }
-    ]
+    overlay: {
+      load: loadMiCommissionerDistricts,
+      style: { color: "#1B7A3D", weight: 2, fillColor: "#2E9E6B", fillOpacity: 0.06 }
+    },
+    // the same value the card's header pill shows, so hover and card cannot
+    // disagree about which district a polygon is
+    hoverName: function (feature) {
+      var district = findPropCI(feature.properties || {}, ["district"]);
+      return district != null ? String(district) : null;
+    },
+    query: function (point, seq) {
+      return Promise.all([
+        queryFeatureAt(loadMiCommissionerDistricts, point),
+        loadMiCommissionerMembers().catch(function () { return null; })
+      ]).then(function (parts) {
+        var feature = parts[0];
+        if (!feature) return null;
+        var props = feature.properties || {};
+        var fips = findPropCI(props, ["countyfips"]);
+        var district = findPropCI(props, ["district"]);
+        var entry = (parts[1] && fips != null) ? parts[1][String(fips)] : null;
+        var member = (entry && entry.districts && district != null)
+          ? entry.districts[String(district)] : null;
+        return {
+          seq: seq,
+          district: district,
+          county: findPropCI(props, ["county"]),
+          population: findPropCI(props, ["population"]),
+          member: member || null,
+          boardUrl: entry ? entry.sourceUrl : null
+        };
+      });
+    },
+    cardIdentifier: function (result) {
+      return result.district != null ? "District " + String(result.district) : "Unknown district";
+    },
+    render: function (result) {
+      var wrap = cardEl("div", "card-flush");
+      // The commissioner first — the header pill already carries "District N".
+      if (result.member && result.member.name) {
+        // The badge stays "Commissioner" and the county's own role word goes
+        // beside it: a badge reading "Chair" alone would drop the office the
+        // reader actually elected. No county in the file publishes both a role
+        // and a party today (Muskegon publishes party, the other five publish
+        // roles), but the note is built to carry either or both.
+        var person = { name: String(result.member.name), badge: "Commissioner" };
+        var note = [];
+        if (result.member.role) note.push(String(result.member.role));
+        if (result.member.party) note.push(String(result.member.party));
+        if (note.length) person.note = note.join(" · ");
+        if (result.member.phone) person.phone = String(result.member.phone);
+        if (result.member.email) person.email = String(result.member.email);
+        wrap.appendChild(renderPersonRows([person]));
+      }
+      var rows = [];
+      rows.push({
+        label: "County",
+        value: result.county != null ? String(result.county) : "Unknown county",
+        primary: true
+      });
+      if (result.population != null) {
+        // 611 of 619 districts carry a population; Baraga 1 and the seven
+        // Cheboygan districts simply omit the row.
+        rows.push({
+          label: "Population (2020 apportionment)",
+          value: Number(result.population).toLocaleString()
+        });
+      }
+      if (!(result.member && result.member.name)) {
+        rows.push({
+          label: "Your commissioner",
+          value: "Not named here yet. Michigan publishes these districts with the " +
+                 "November 2024 election winner attached, but that list is not " +
+                 "maintained — it still names commissioners who have since died, " +
+                 "resigned or been replaced — so this app does not repeat it. This " +
+                 "app is naming commissioners county by county from each county's " +
+                 "own board page; this county is not done. Your county's own board " +
+                 "page is the current source."
+        });
+      }
+      wrap.appendChild(renderFieldStack(rows));
+      return wrap;
+    },
+    primaryLink: function (result) {
+      var url = safeHttpUrl(result.member ? (result.member.profileUrl || result.boardUrl)
+                                          : result.boardUrl);
+      if (!url) return null;
+      return {
+        label: (result.member && result.member.profileUrl)
+          ? String(result.member.name) + "'s page"
+          : ((result.county != null ? String(result.county) : "County") + " board"),
+        url: url
+      };
+    }
   });
 
 

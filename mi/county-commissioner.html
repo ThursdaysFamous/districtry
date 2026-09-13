@@ -616,6 +616,22 @@ footer.site-footer a { color: var(--accent-deep); }
   margin: 0 0 10px;
 }
 .maps li:last-child { margin-bottom: 0; }
+/* The county index, generated into this page by scripts/build_county_pages.py.
+   Two columns from 560px so the list is one scan rather than one long scroll;
+   the count beside each name tells a reader a board of seven from a board of
+   twenty-one before they click. Page-local on purpose: this sits AFTER the
+   styles-subpage ENGINE fence, because anything inside a fence has to be
+   identical in every instance and is spliced from engine/, not edited here. */
+.matrix-lede { max-width: 78ch; color: var(--slate); margin: 0 0 14px; }
+.county-index { list-style: none; margin: 8px 0 0; padding: 0; }
+.county-index li { margin: 0 0 2px; line-height: 28px; }
+.county-index a { font-weight: 600; text-decoration: none; }
+.county-index a:hover { text-decoration: underline; }
+.county-index-n { color: var(--slate); font-size: 13.5px; white-space: nowrap; }
+@media (min-width: 560px) {
+  .county-index { columns: 2; column-gap: 28px; }
+  .county-index li { break-inside: avoid; }
+}
 .maps strong { color: var(--ink); }
 </style>
 </head>
@@ -725,6 +741,21 @@ footer.site-footer a { color: var(--accent-deep); }
       explicitly disclaim legal precision. Confirm district assignments with the relevant government
       office before relying on them for anything official.
     </div>
+  </section>
+
+  <section>
+    <h2>Every board of commissioners, county by county</h2>
+    <!-- ==== GENERATED:BEGIN county-index ==== -->
+    <p class="matrix-lede">Every Michigan county whose roster this project has: <b>6 counties</b>, <b>76 people</b>, each name published by the county itself.</p>
+    <ul class="county-index">
+      <li><a href="county-commissioner/kalamazoo.html">Kalamazoo County</a> <span class="county-index-n">9 members</span></li>
+      <li><a href="county-commissioner/kent.html">Kent County</a> <span class="county-index-n">21 members</span></li>
+      <li><a href="county-commissioner/macomb.html">Macomb County</a> <span class="county-index-n">13 members</span></li>
+      <li><a href="county-commissioner/muskegon.html">Muskegon County</a> <span class="county-index-n">7 members</span></li>
+      <li><a href="county-commissioner/saginaw.html">Saginaw County</a> <span class="county-index-n">11 members</span></li>
+      <li><a href="county-commissioner/wayne.html">Wayne County</a> <span class="county-index-n">15 members</span></li>
+    </ul>
+    <!-- ==== GENERATED:END county-index ==== -->
   </section>
 
   <section>
