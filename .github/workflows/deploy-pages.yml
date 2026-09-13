@@ -258,6 +258,20 @@ jobs:
             echo "::error::the coverage map fetches outline(s) the assemble did not publish:$missing"
             exit 1
           fi
+          # robots.txt and llms.txt. Neither is excluded above and both ship
+          # today, and neither has a loud failure mode, which is why they are
+          # asserted rather than assumed. robots.txt carries the site's
+          # Content-Signal — search=yes, ai-input=yes, ai-train=no,
+          # use=reference — and that line IS the reservation of rights: if the
+          # file stops being served, the reservation silently stops existing
+          # while every page on the site still looks correct. llms.txt is the
+          # guide robots.txt points a client at, so a dropped one turns a
+          # published pointer into a 404. Both are generated or gated
+          # (scripts/build_llms_txt.py --check, scripts/robots_policy.py
+          # --selftest), and neither gate can see what the deploy publishes.
+          test -f _site/robots.txt || { echo "::error::assemble produced no robots.txt — the Content-Signal reservation would not be served"; exit 1; }
+          test -f _site/llms.txt   || { echo "::error::assemble produced no llms.txt — robots.txt points clients at it"; exit 1; }
+          grep -q '^Content-Signal:' _site/robots.txt || { echo "::error::the published robots.txt carries no Content-Signal line"; exit 1; }
           # The FLOSS/fund manifest and its wellKnown proof. rsync -a copies
           # dotfolders (which is why .git/.github/.claude are excluded above),
           # so both ship today — but neither has a loud failure mode. A dropped

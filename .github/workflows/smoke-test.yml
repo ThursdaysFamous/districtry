@@ -270,6 +270,16 @@ jobs:
       - name: County board pages match their rosters
         run: python3 scripts/build_county_pages.py --check
 
+      # /llms.txt, the guide robots.txt points a client at. GENERATED, because
+      # the llms.txt convention is a hand-written markdown file and a
+      # hand-written one here would list the instances, their layer counts,
+      # their topic pages and the number of per-county pages — every one of
+      # which moves. Its page set comes from sitemap.xml, so it cannot name a
+      # page that does not exist, and it refuses to write a districtry.com link
+      # the sitemap does not list.
+      - name: llms.txt matches the fleet it describes
+        run: python3 scripts/build_llms_txt.py --check
+
       # Both halves matter. The dates are why this gate was written; the PARSE
       # is why it was rewritten. sitemap.xml shipped with a double hyphen inside
       # its own header comment (2026-09-12, the commit that first generated it),
@@ -477,6 +487,17 @@ jobs:
       # folding a leading `www.` (or one server gets two queues and half the
       # delay it asked for) and leaving every other host's parallelism alone.
       # Threads, small delays, still no network.
+      #
+      # Since 2026-09-13 it also reads THIS SITE'S OWN robots.txt, which now
+      # carries a Content-Signal of its own — search=yes, ai-input=yes,
+      # ai-train=no, use=reference, the same reading the project already applied
+      # to Sheboygan's. Nothing else in the repo looks at that file:
+      # validate_card_links.py scans *.html (and llms.txt), build_sitemap.py
+      # does not list robots.txt, and a Content-Signal this reader cannot parse
+      # is a reservation of rights that says nothing while the file still looks
+      # correct. Nine agents are asserted separately, because the failure this
+      # guards is a second group that names one client and silently drops the
+      # signal for the rest.
       - name: The robots.txt reader agrees with the readings established by hand
         run: python3 scripts/robots_policy.py --selftest
 

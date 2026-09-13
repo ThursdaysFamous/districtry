@@ -212,6 +212,15 @@ def authored_pages(instances):
     """
     pages = [os.path.basename(p)
              for p in sorted(glob.glob(os.path.join(REPO_ROOT, "*.html")))]
+    # llms.txt is authored too, and it is not HTML. It is GENERATED
+    # (scripts/build_llms_txt.py), and every districtry.com link in it comes
+    # from sitemap.xml — the generator refuses to write one that does not — so
+    # what this gate adds is the handful of OUTBOUND links nothing else probes:
+    # the repository URL and the corrections address's domain. A file the whole
+    # fleet points crawlers at, carrying a dead link, is exactly the Macon case
+    # this gate was written for.
+    if os.path.isfile(os.path.join(REPO_ROOT, "llms.txt")):
+        pages.append("llms.txt")
     for inst in instances:
         pages += ["%s/%s" % (inst, os.path.basename(p))
                   for p in sorted(glob.glob(os.path.join(REPO_ROOT, inst, "*.html")))]
