@@ -30633,6 +30633,15 @@ function initChiExplorer() {
     var FEET_PER_METER = 3.280839895;
     var DEFAULT_THRESHOLD_FT = 150;
     var COVERAGE_TIMEOUT_MS = 8000;   // see coverageAt: caps a failing coverage source ONCE per run
+    /* WHY THIS IS NOT "no geocoder match". geocodeOne is bounded to METRO_BBOX,
+       so a miss has two causes the query cannot tell apart: an address that
+       does not exist, and a real one outside the envelope. Naming only the
+       first sends a reader hunting for a typo in a perfectly good out-of-state
+       line. It says "search area" rather than "Illinois" alone because
+       METRO_BBOX is a RECTANGLE around the state, not the state: Gary, Indiana
+       sits inside it and does resolve. A sibling instance copying this panel
+       changes this string with its own METRO_BBOX. */
+    var NO_MATCH_FLAG = "no match in the Illinois search area";
 
     var lastFocus = null;
     var picked = null;            // layer id -> true; built on first open
@@ -30886,7 +30895,7 @@ function initChiExplorer() {
     function classify(raw, feature, sets) {
       if (!feature) {
         return Promise.resolve({ input: raw, matched: "", lat: null, lng: null,
-          quality: "none", cells: {}, flags: ["no geocoder match"] });
+          quality: "none", cells: {}, flags: [NO_MATCH_FLAG] });
       }
       var props = feature.properties || {};
       var coords = feature.geometry.coordinates;

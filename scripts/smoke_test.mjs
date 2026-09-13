@@ -1038,8 +1038,11 @@ try {
       house[6] === "", house[6] || "(no flags)");
     check("batch flags a street-level match as not an address",
       street[3] === "street" && /matched the street/.test(street[6]), street[6]);
-    check("batch flags an address the geocoder could not find",
-      miss[3] === "none" && /no geocoder match/.test(miss[6]), miss[6]);
+    // The wording matters as much as the flag: geocodeOne is bounded to
+    // METRO_BBOX, so this must not claim the address does not exist when it
+    // may simply sit outside the envelope.
+    check("batch flags a miss as the bounded search it was",
+      miss[3] === "none" && /no match in the .* search area/.test(miss[6]), miss[6]);
     check("batch reports out-of-coverage rather than inventing a district",
       /outside coverage/.test(outside[4]) && /outside .* coverage/.test(outside[6]),
       `cell=${outside[4]} review=${outside[6]}`);
@@ -1073,10 +1076,15 @@ try {
       `${csvRows.length - 1} data row(s): ${header.join("|")}`);
     // The CSV is the deliverable people work from, so it has to carry the
     // table's own values rather than a second derivation of them.
+    // Compared against the TABLE's own cells, never against a literal. The
+    // first version of this check retyped the miss flag, so rewording that
+    // flag updated one copy and left this one red — the gate working, and a
+    // second literal not worth keeping. table[2] is the miss row; csvRows[3]
+    // is the same row once the header is counted.
     check("CSV carries the values the table shows",
       csvRows[1].includes(table[0][4]) && csvRows[1].includes(String(Math.round(Number(table[0][5])))) &&
-      csvRows[3].includes("no geocoder match"),
-      csvRows[1]);
+      csvRows[3].includes(table[2][6]) && table[2][6] !== "",
+      `${csvRows[1]} || miss flag: ${table[2][6]}`);
     check("CSV quotes a field containing a comma",
       /,"[^"]*,[^"]*"/.test(csvRows[1]) || !table[0][1].includes(","), "comma handling");
 
