@@ -529,6 +529,28 @@ jobs:
       - name: The circuit-court name join still joins only what it should
         run: python3 wi/scripts/build_wi_circuit_court_roster.py --selftest
 
+      # THE COUNTY BOARD SCRAPE ASKS EACH HOST'S ROBOTS.TXT BEFORE ITS FIRST
+      # FETCH (2026-09-13), and this runs that decision against doctored
+      # robots.txt text: a site-wide disallow refuses, an admin-only file allows
+      # the board page and still refuses /admin/, a 403 on a county website
+      # refuses while a 403 on an ArcGIS host does not, a 404 allows, a 5xx and
+      # a 202 both refuse, a Crawl-delay is read, and the Internet Archive rung
+      # re-raises rather than going round a disallow. Seven of the 74 hosts
+      # publish `Disallow: /`, so the reading is load-bearing rather than
+      # theoretical. Stdlib only, no network.
+      #
+      # pypdf IS INSTALLED FOR AN OFFLINE TEST, which looks odd and is what
+      # scripts/validate_workflow_deps.py correctly insists on: it reads an
+      # entry point WITH its function-local imports, because running a script
+      # runs its functions, and this module reads three counties' PDFs. The
+      # self-test returns before any of them, so the package is never used —
+      # but a gate that trusted a comment about which code path CI takes would
+      # be no gate. Constrained to the same pin the weekly workflow uses.
+      - name: The county board scrape reads robots.txt the same way every time
+        run: |
+          pip install -c wi/scripts/requirements.txt pypdf
+          python3 wi/scripts/wi_county_board_scraper.py --selftest
+
       # The Jasper test decides whether a county's precinct fabric is still the
       # Census 2020 fabric, and its five reconciliation causes are the
       # difference between reading a county as re-precincted and reading it as

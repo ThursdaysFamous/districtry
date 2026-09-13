@@ -945,6 +945,7 @@ import random
 import re
 import ssl
 import sys
+import threading
 import time
 import urllib.error
 import urllib.parse
@@ -1028,10 +1029,20 @@ DEFAULT_OUT = os.path.join(os.path.dirname(__file__), ".cache", "wi_county_board
 # the token, 200 to stdlib + the same token, which is why a verdict measured
 # with another client does not transfer. saukdomino.co.sauk.wi.us is the PATH:
 # the sweep read 404 at the URL it picked and this file's own URL serves
-# 113,018 bytes. The sweep also files nine of these hosts
-# `robots-disallows-this-path`, again for the path IT picked; all nine of this
-# file's own URLs on those hosts are permitted, read through
-# scripts/robots_policy.py with the token before each fetch in the count above.
+# 113,018 bytes.
+#
+# CORRECTED 2026-09-13. This paragraph used to end "the sweep also files nine of
+# these hosts `robots-disallows-this-path`, again for the path IT picked; all
+# nine of this file's own URLs on those hosts are permitted". THE SECOND HALF
+# WAS FALSE. Seven of the nine publish `User-agent: *` with `Disallow: /`, so
+# this file's own URLs on them are NOT permitted: ashlandcountywi.gov,
+# dunncountywi.gov, richlandcountywi.gov, ruskcounty.org, www.co.jackson.wi.us,
+# www.co.pepin.wi.us and www.polkcountywi.gov. The check that produced the
+# claim called `Verdict.allows()`, which returns a `(bool, why)` TUPLE, and
+# truthiness-tested the tuple — `bool((False, "why"))` is True, so every host
+# printed as permitted. Nothing improper was fetched: all seven are
+# DOCUMENT_ROSTERS entries with no `live` spec, so their pages were never
+# requested. The gate below is what now decides this rather than a paragraph.
 #
 # The client hints below say Chromium while the User-Agent says districtry,
 # which is two answers to one question. They are kept because they are what was
@@ -1123,6 +1134,190 @@ def headers_for(url):
     """
     host = urllib.parse.urlsplit(url).hostname or url
     return UA if host in TOKEN_REFUSED_HOSTS else HONEST_UA
+
+
+# THE ROBOTS READER IS THE FLEET'S ONE COPY, scripts/robots_policy.py. APPENDED
+# to sys.path rather than inserted, the reason wi/scripts/validate_robots.py
+# records: inserting the root scripts/ first is how a bare import once resolved
+# to Illinois's module and made a Wisconsin sweep report Kane and Coles hosts.
+sys.path.append(os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+    "scripts"))
+import robots_policy as rp                                       # noqa: E402
+
+# ROBOTS.TXT IS READ BEFORE THE FIRST FETCH OF EACH HOST (2026-09-13), which
+# until today this file did not do. CLAUDE.md states the rule and names the
+# gap: the rule "is enacted by the four Iowa page scrapers, the DuPage, Logan
+# and Iowa judicial scrapers, and the two audits, and by nothing else — a
+# scraper that fetches without asking is not yet in breach of anything it read,
+# and is the next thing to fix." This scrape reads more hosts than any other in
+# the fleet, so it was the largest one not asking.
+#
+# ASKED AS THE CLIENT THIS FILE ACTUALLY SENDS, which is why there is a gate
+# per User-Agent rather than one for the file: headers_for() sends Chrome/124 to
+# the hosts in TOKEN_REFUSED_HOSTS and the districtry token to every other, and
+# a policy read by a different client from the crawl is the one asymmetry a
+# compliance check must not have. A pinned Chrome host is still bound by `*` —
+# no group anywhere names either string.
+#
+# WHAT THE 74 HOSTS SAID, measured 2026-09-13 from a Claude Code sandbox (the
+# vantage is named because reachability moves with it; the rules do not):
+#
+#     44  serve a robots.txt
+#     21  have none (HTTP 404) and allow everything
+#      7  refuse robots.txt to this client (HTTP 403)
+#      1  answers HTTP 202, a captcha front rather than a document
+#      1  was unreachable that minute and served the day before
+#
+# SEVEN OF THE 44 DISALLOW THIS CLIENT SITE-WIDE — ashlandcountywi.gov,
+# dunncountywi.gov, richlandcountywi.gov, ruskcounty.org, www.co.jackson.wi.us,
+# www.co.pepin.wi.us and www.polkcountywi.gov all publish `User-agent: *` with
+# `Disallow: /` — and NO COUNTY LOSES ITS WEEKLY REFRESH, because all seven are
+# DOCUMENT_ROSTERS entries with no `live` spec: their rosters are carried as
+# dated documents and their pages were never fetched. The rule was being held
+# by the shape of the tables rather than by a check, which is the arrangement
+# this gate replaces.
+#
+# WHAT THE FIRST GATED RUN COST, AND IT IS NOT NOTHING. 68 of 72 counties,
+# against 72 before, because asking first found two fetches that were
+# disallowed all along and nobody had asked:
+#
+#   Dodge    /fs/elements/9367 — the county's own robots.txt says Disallow: /fs/
+#   Adams    drive.google.com/uc — Google disallows /uc site-wide
+#
+# Both are re-sourcing rather than blocks — Dodge publishes a board page at a
+# permitted path — and wi/WATCH.md carries each with the permitted URL where one
+# is known. FOREST is a third kind: its robots.txt answers a connection reset,
+# so the policy cannot be read and RFC 9309 files that as disallow-all. The
+# fourth county the first run missed, Kenosha, was HTTP 429 from the sweep's own
+# probing that afternoon and is not a finding.
+#
+# build_wi_county_board_roster.py floors at MIN_COUNTIES = 70, so the weekly run
+# FAILS and opens no PR while this stands, and county-board-members.json keeps
+# the names it last read. That is the intended shape: a red job says two
+# counties need re-sourcing, where a green one would have gone on fetching two
+# pages their publishers had said not to.
+ROBOTS_TIMEOUT = 30
+ROBOTS_RETRIES = 3
+
+# A 403 ON ROBOTS.TXT MEANS DIFFERENT THINGS ON DIFFERENT KINDS OF HOST, and
+# CLAUDE.md draws the line: an ArcGIS FeatureServer answers 401/403 to
+# /robots.txt while serving its data to everyone, so the permissive reading is
+# right there, and a municipal WEBSITE answering 403 is a firewall refusing
+# this client, so the strict reading is right there. This file asks strictly by
+# default and lists the hosts that opt out.
+ROBOTS_PERMISSIVE_HOSTS = (
+    "services1.arcgis.com",
+    "services2.arcgis.com",
+    "webapi.legistar.com",
+    "web.archive.org",
+    "archive.org",
+)
+
+# THE FIVE MUNICIPAL SITES THAT REFUSE ROBOTS.TXT TO THIS CLIENT, carried at
+# today's behaviour because whether a refusal counts as a refusal by DEFAULT is
+# an open decision about scripts/robots_policy.py for the whole fleet, not a
+# Wisconsin one. Three of them are COUNTIES rows read every week (Monroe, Rock,
+# Sheboygan) and reading a 403 strictly would stop those three counties
+# refreshing; that is a coverage change and it is not made here. Each entry is
+# dated and re-audited on every run, so a host that starts serving its policy
+# leaves this list instead of sitting in it.
+ROBOTS_REFUSED_PENDING = {
+    "www.co.monroe.wi.us": "HTTP 403 on robots.txt, 2026-09-13; COUNTIES row",
+    "www.co.rock.wi.us": "HTTP 403 on robots.txt, 2026-09-13; COUNTIES row",
+    "www.sheboygancounty.com": "HTTP 403 on robots.txt, 2026-09-13; COUNTIES row",
+    "www.fdlco.wi.gov": "HTTP 403 on robots.txt, 2026-09-13; ARCHIVE_COUNTIES",
+    "www.marathoncounty.gov": "HTTP 403 on robots.txt, 2026-09-13; directory scrape",
+}
+
+_ROBOTS_CACHE = {}          # (user-agent, robots url) -> Verdict
+_ROBOTS_CACHE_LOCK = threading.Lock()
+_ROBOTS_SAID = {}
+_ROBOTS_SAID_LOCK = threading.Lock()
+
+
+def _robots_url(url):
+    parts = urllib.parse.urlsplit(url)
+    return "%s://%s/robots.txt" % (parts.scheme, parts.netloc)
+
+
+def _robots_verdict(url):
+    """One robots.txt read per (client, host), cached for the run.
+
+    scripts/robots_policy.RobotsGate does the caching and locking part of this
+    and is NOT used, for one reason: it is built with a single User-Agent and
+    this file sends two, so there would be a gate per client and the retry
+    below would have to reach into a gate's private cache to discard a verdict
+    it wants to re-ask. A dict and a lock here is less code than that.
+    """
+    ua = headers_for(url)["User-Agent"]
+    key = (ua, _robots_url(url))
+    with _ROBOTS_CACHE_LOCK:
+        if key in _ROBOTS_CACHE:
+            return _ROBOTS_CACHE[key]
+    verdict = rp.fetch_verdict(key[1], ua, timeout=ROBOTS_TIMEOUT)
+    # RFC 9309 files a 5xx or a network failure as disallow-all, which is
+    # right, and a single flaky read would otherwise drop a county out of the
+    # weekly file: co.forest.wi.gov served its policy on 2026-09-12 and was
+    # unreachable for one minute on 2026-09-13. So an `unreachable` verdict is
+    # re-asked before it is believed; nothing else is retried, because a served
+    # file, an absent one and a refusal are all answers.
+    for attempt in range(ROBOTS_RETRIES - 1):
+        if verdict.status != "unreachable":
+            break
+        time.sleep(2 ** attempt)
+        verdict = rp.fetch_verdict(key[1], ua, timeout=ROBOTS_TIMEOUT)
+    with _ROBOTS_CACHE_LOCK:
+        _ROBOTS_CACHE.setdefault(key, verdict)
+        return _ROBOTS_CACHE[key]
+
+
+class _PerHostDelay(object):
+    """HostPacer takes an object with crawl_delay(url); the delay comes off the
+    same verdict the allow/disallow answer does."""
+
+    def crawl_delay(self, url):
+        return _robots_verdict(url).crawl_delay(headers_for(url)["User-Agent"])
+
+
+# Four of the 74 state a Crawl-delay that binds this client, measured
+# 2026-09-13: manitowoccountywi.gov and www.buffalocountywi.gov 10 s,
+# www.co.dodge.wi.gov and www.iowacountywi.gov 5 s. A host that asks gets a
+# queue of its own and every other host keeps full speed — the reason the
+# shared HostPacer exists rather than a global sleep.
+ROBOTS_PACER = rp.HostPacer(_PerHostDelay())
+
+
+def robots_says(url):
+    """(allowed, why) for one URL, decided as the client this file sends.
+
+    Prints one line per host the first time that host is decided, so a weekly
+    run says what every policy said rather than only what stopped it.
+    """
+    host = urllib.parse.urlsplit(url).hostname or url
+    ua = headers_for(url)["User-Agent"]
+    verdict = _robots_verdict(url)
+    strict = host not in ROBOTS_PERMISSIVE_HOSTS and host not in ROBOTS_REFUSED_PENDING
+    allowed, why = verdict.allows(ua, url, refused_is_refusal=strict)
+    with _ROBOTS_SAID_LOCK:
+        first = host not in _ROBOTS_SAID
+        _ROBOTS_SAID[host] = (verdict.status, bool(allowed), why)
+    if first:
+        delay = verdict.crawl_delay(ua)
+        print("  robots  %-28s %-11s %s%s"
+              % (host, verdict.status, "allows" if allowed else "REFUSES",
+                 "" if not delay else " (crawl-delay %g s)" % delay),
+              file=sys.stderr)
+        if host in ROBOTS_REFUSED_PENDING and verdict.status != "refused":
+            print("  robots  %-28s NO LONGER REFUSES its policy — drop it from "
+                  "ROBOTS_REFUSED_PENDING and read it strictly" % host,
+                  file=sys.stderr)
+    return bool(allowed), why
+
+
+class RobotsRefused(Exception):
+    """This client may not fetch that URL. Kept distinct from every network
+    failure so a run never reports a refusal as an outage, or the reverse."""
 
 # (county FIPS, name as LTSB spells it, seats, reading direction, page)
 COUNTIES = [
@@ -2451,6 +2646,16 @@ def fetch_bytes(url, headers=None, timeout=45, attempts=4, allow_lax_tls=True):
     # HONEST_UA_HOSTS else UA`, which discarded the argument — see the note
     # beside TOKEN_REFUSED_HOSTS for the two things that cost.
     headers = headers or headers_for(url)
+    # ROBOTS FIRST, AT THE ONE PLACE EVERY FETCH IN THIS FILE PASSES THROUGH.
+    # Asking here rather than at each of the fifty call sites is what makes the
+    # rule hold for the rungs nobody remembers: the archive reader, the Save
+    # Page Now probe, every per-county directory scrape. RobotsRefused is
+    # raised rather than returned so a refusal can never be mistaken for an
+    # empty page, and never for an outage.
+    allowed, why = robots_says(url)
+    if not allowed:
+        raise RobotsRefused("%s: %s" % (url, why))
+    ROBOTS_PACER.hold(url)
     last = None
     for attempt in range(attempts):
         for ctx in (None, lax):
@@ -2508,6 +2713,107 @@ ARCHIVE_UA = {"User-Agent": "districtry-county-board-scraper/1.0 "
                             "(+https://districtry.com; civic boundary data)"}
 
 
+
+def _robots_selftest():
+    """The robots decision, on doctored robots.txt text — offline, no network.
+
+    Every fixture is a real shape from the 74 hosts this file reads: a site-wide
+    disallow (seven of them publish one), a file that disallows only its admin
+    paths, a 403, a 404, a 202 captcha front, a 5xx, and a Crawl-delay. The
+    verdicts come from scripts/robots_policy.classify, so this exercises the
+    fleet's real reader rather than a copy of its conclusions.
+    """
+    SITEWIDE = "User-agent: *\nDisallow: /\n"
+    ADMIN_ONLY = "User-agent: *\nDisallow: /admin/\nDisallow: /manager/\n"
+    DELAYED = "User-agent: *\nCrawl-delay: 10\nDisallow: /admin/\n"
+
+    failures = []
+
+    def check(label, cond):
+        if not cond:
+            failures.append(label)
+
+    def seed(host, status, body, path="/supervisors"):
+        url = "https://%s%s" % (host, path)
+        ua = headers_for(url)["User-Agent"]
+        with _ROBOTS_CACHE_LOCK:
+            _ROBOTS_CACHE[(ua, _robots_url(url))] = rp.classify(status, body)
+        with _ROBOTS_SAID_LOCK:
+            _ROBOTS_SAID.pop(host, None)
+        return url
+
+    # 1. A site-wide disallow refuses, which is what seven of these hosts say.
+    check("sitewide disallow refuses",
+          robots_says(seed("dunncountywi.gov.test", 200, SITEWIDE))[0] is False)
+
+    # 2. A file that disallows only its admin paths allows the board page. The
+    #    same file must still refuse the path it names.
+    check("admin-only allows the board page",
+          robots_says(seed("allowed.example.test", 200, ADMIN_ONLY))[0] is True)
+    check("admin-only refuses /admin/",
+          robots_says(seed("allowed.example.test", 200, ADMIN_ONLY,
+                           path="/admin/x"))[0] is False)
+
+    # 3. A 403 on a county WEBSITE is a firewall refusing this client, so it is
+    #    read strictly. This is the reading CLAUDE.md gives municipal sites.
+    check("403 on a website refuses",
+          robots_says(seed("refuses-policy.example.test", 403, ""))[0] is False)
+
+    # 4. A 403 on an API host is that API answering everyone while declining to
+    #    publish a policy — every ArcGIS FeatureServer does it — so those hosts
+    #    opt out of the strict reading by name.
+    api = list(ROBOTS_PERMISSIVE_HOSTS)[0]
+    check("403 on an API host allows",
+          robots_says(seed(api, 403, "", path="/arcgis/rest/services/x"))[0] is True)
+
+    # 5. The five municipal sites whose policy is refused are carried at
+    #    today's behaviour while the fleet-wide default is undecided.
+    pending = sorted(ROBOTS_REFUSED_PENDING)[0]
+    check("403 on a pending host allows for now",
+          robots_says(seed(pending, 403, "", path="/government/x"))[0] is True)
+
+    # 6. No robots.txt allows everything; RFC 9309 files a 404 that way.
+    check("404 allows", robots_says(seed("nofile.example.test", 404, ""))[0] is True)
+
+    # 7. A 5xx is disallow-all, and a 202 is a captcha front rather than a
+    #    document. Neither may read as permission.
+    check("5xx refuses", robots_says(seed("down.example.test", 503, ""))[0] is False)
+    check("202 refuses", robots_says(seed("challenged.example.test", 202,
+                                          "<meta http-equiv=refresh>"))[0] is False)
+
+    # 8. A stated Crawl-delay is read off the binding group, which is what the
+    #    pacer queues on.
+    url = seed("delayed.example.test", 200, DELAYED)
+    check("crawl-delay read",
+          _robots_verdict(url).crawl_delay(headers_for(url)["User-Agent"]) == 10)
+
+    # 9. A refusal raises rather than returning empty, and the archive rung does
+    #    not go round it.
+    url = seed("refused-live.example.test", 200, SITEWIDE)
+    try:
+        fetch(url)
+        check("refusal raises", False)
+    except RobotsRefused:
+        check("refusal raises", True)
+    except Exception:
+        check("refusal raises RobotsRefused and not something else", False)
+    try:
+        fetch_or_archive(url, "55999", "Nowhere")
+        check("archive does not route round a disallow", False)
+    except RobotsRefused:
+        check("archive does not route round a disallow", True)
+    except Exception:
+        check("archive re-raises RobotsRefused unchanged", False)
+
+    # 10. The two host lists are answers to different questions and must not
+    #     overlap: a host cannot be both permanently permissive and pending.
+    check("no host is in both lists",
+          not (set(ROBOTS_PERMISSIVE_HOSTS) & set(ROBOTS_REFUSED_PENDING)))
+
+    if failures:
+        raise SystemExit("robots selftest FAILED: " + "; ".join(failures))
+    print("robots selftest: 12 assertions, the decision holds")
+
 def board_seated_on(today=None):
     """The date the sitting county board took office.
 
@@ -2534,7 +2840,17 @@ assert board_seated_on(datetime.date(2025, 1, 1)) == datetime.date(2024, 4, 16)
 
 
 def _archive_json(url, tries=5):
-    """The Archive answers 503 while it is down; back off rather than give up."""
+    """The Archive answers 503 while it is down; back off rather than give up.
+
+    Gated like every other fetch even though web.archive.org is on
+    ROBOTS_PERMISSIVE_HOSTS and answers 404 to /robots.txt: a call site that
+    skips the gate because its host happens to be fine today is how the rule
+    stops holding when the host changes.
+    """
+    allowed, why = robots_says(url)
+    if not allowed:
+        raise RobotsRefused("%s: %s" % (url, why))
+    ROBOTS_PACER.hold(url)
     last = None
     for attempt in range(tries):
         try:
@@ -2554,6 +2870,12 @@ def fetch_or_archive(url, fips, county, headers=None):
     log says which rung answered either way."""
     try:
         return fetch(url, headers), "live"
+    except RobotsRefused:
+        # THE ARCHIVE IS NOT A WAY ROUND A DISALLOW. Reading the county's own
+        # page out of web.archive.org because the county's robots.txt said no
+        # would honour the letter of one policy by defeating it, so the refusal
+        # propagates and the county fails loudly instead.
+        raise
     except Exception as live_error:     # noqa: BLE001 - the refusal is the point
         if fips not in ARCHIVE_READ:
             raise
@@ -3330,7 +3652,14 @@ def _spn_save(url):
     same repo secrets Illinois' Kendall and McHenry workflows already pass)
     switch on the SPN2 job API, which is the reliable path when a shared runner
     address has spent the anonymous quota. Absent keys are not an error.
+
+    Gated once for the whole function: every request it makes goes to
+    web.archive.org, so one read of that policy covers the SPN2 job calls and
+    the plain save alike.
     """
+    allowed, why = robots_says(WAYBACK_SAVE % url)
+    if not allowed:
+        raise RobotsRefused("%s: %s" % (WAYBACK_SAVE % url, why))
     key = os.environ.get("ARCHIVE_SPN_ACCESS_KEY")
     secret = os.environ.get("ARCHIVE_SPN_SECRET_KEY")
     if key and secret:
@@ -3358,7 +3687,9 @@ def _spn_save(url):
         except Exception as e:              # noqa: BLE001 - save is best-effort
             print("    SPN2 save failed (%s): %s" % (url, e), file=sys.stderr)
     try:
-        req = urllib.request.Request(WAYBACK_SAVE % url, headers=ARCHIVE_UA)
+        save_url = WAYBACK_SAVE % url
+        ROBOTS_PACER.hold(save_url)
+        req = urllib.request.Request(save_url, headers=ARCHIVE_UA)
         with urllib.request.urlopen(req, timeout=180) as r:
             m = re.search(r"/web/(\d{14})", r.geturl() or "")
             if not m:
@@ -3372,6 +3703,11 @@ def _spn_save(url):
 
 def _wayback_latest(url):
     """Timestamp of the newest existing snapshot, or None."""
+    available = WAYBACK_AVAILABLE % urllib.parse.quote(url, safe="")
+    allowed, why = robots_says(available)
+    if not allowed:
+        raise RobotsRefused("%s: %s" % (available, why))
+    ROBOTS_PACER.hold(available)
     try:
         req = urllib.request.Request(
             WAYBACK_AVAILABLE % urllib.parse.quote(url, safe=""),
@@ -3995,6 +4331,10 @@ def scrape_framed_table_county(spec):
 
 
 def _fetch_json(url):
+    allowed, why = robots_says(url)
+    if not allowed:
+        raise RobotsRefused("%s: %s" % (url, why))
+    ROBOTS_PACER.hold(url)
     req = urllib.request.Request(url, headers=headers_for(url))
     ctx = ssl.create_default_context()
     with urllib.request.urlopen(req, timeout=45, context=ctx) as r:
@@ -9267,6 +9607,9 @@ SINGLE_COUNTY_CARRIERS = (
 
 
 def main():
+    if "--selftest" in sys.argv[1:]:
+        _robots_selftest()
+        return
     argv = sys.argv[1:]
     out_path = argv[argv.index("--out") + 1] if "--out" in argv else DEFAULT_OUT
     only = argv[argv.index("--only") + 1] if "--only" in argv else None
