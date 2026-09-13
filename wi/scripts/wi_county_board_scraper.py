@@ -21,8 +21,10 @@ TWELVE ROUTES, AND WHICH ONE A COUNTY TAKES IS A MEASUREMENT
   * WITNESSED_DOCUMENT_COUNTIES - Kenosha, whose Clerk publishes the roster in a
                                   directory PDF this file FETCHES and cross-checks
                                   against the board's own page every run;
-  * PDF_COUNTIES                - Adams, whose directory PDF is fetchable and
-                                  district-keyed, so it is re-read weekly like a page;
+  * DISTRICT_PAGE_COUNTIES      - Adams, whose listing page links a page per
+                                  district, each naming that seat's supervisor
+                                  and carrying the district mailbox that
+                                  witnesses the number;
   * CLARK_DIRECTORY             - Clark, whose board page names only the chair
                                   and whose Clerk's 44-page OFFICIAL DIRECTORY
                                   prints all 29 seats eleven pages further in,
@@ -2814,6 +2816,136 @@ def _robots_selftest():
         raise SystemExit("robots selftest FAILED: " + "; ".join(failures))
     print("robots selftest: 12 assertions, the decision holds")
 
+
+def _district_page_selftest():
+    """Adams's route, on fixtures — offline, no network.
+
+    Every guard in scrape_district_page_county is fired, because a guard that
+    has never refused anything has not been tested. The cases worth naming are
+    the pair the composition filter exists for: this county states a district's
+    WARDS in the same "District <n> - <x>" shape it states its supervisor, so
+    "District 1 - Wabeno Ward 3" must not read as a person -- while
+    "District 2 - Ben Ward" must, because Ward is also a surname.
+
+    THE ROSTER FIXTURE DELIBERATELY DOES NOT USE THAT SURNAME, and writing it
+    the other way is what found out why: the shared is_name() rejects any name
+    carrying a word from BAD, and `ward` is in BAD along with `town`, `city`,
+    `village` and `county`. So a supervisor genuinely surnamed Ward or Town is
+    refused by the NAME test rather than by the composition filter, in this
+    county and in all seventy-two. That is a limitation and not a data defect:
+    it fails loudly, because all-seats-or-nothing then refuses the whole county
+    rather than shipping somebody else's name in that seat. Widening BAD reaches
+    every strategy in this file and is not done here. None of Adams's own twenty
+    names touches it (measured 2026-09-13).
+    """
+    spec = {"fips": "55001", "name": "Adams", "seats": 3,
+            "page": "https://example.gov/gov/sd",
+            "source_url": "https://example.gov/gov/sd",
+            "title": "County Board Supervisor",
+            "mailbox": r"district\.?(\d{1,2})@co\.adams\.wi\.us"}
+    rows = [(1, "Ann Alpha"), (2, "Ben Beta"), (3, "Cy Gamma")]
+
+    def listing(pairs, links=None):
+        links = links if links is not None else [d for d, _ in pairs]
+        a = "".join('<a href="/gov/sd/district-%d">District %d</a>' % (d, d)
+                    for d in links)
+        p = "".join("<p>District %d - %s</p>" % (d, n) for d, n in pairs)
+        # the composition lines this page really carries, in both shapes
+        p += "<p>District 1 - Wabeno Ward 3</p>"
+        p += "<p>District 1 - Town of Adams Ward 1, Village of Friendship Ward 1</p>"
+        return "<html>%s%s</html>" % (a, p)
+
+    def dpage(d, name, mails=None):
+        mails = mails if mails is not None else ["district%d@co.adams.wi.us" % d]
+        return ("<p><span>County Board Supervisor</span></p><p><span>%s</span></p>%s"
+                % (name, "".join('<a href="mailto:%s">Email</a>' % x for x in mails)))
+
+    def pages(pairs=rows, links=None, overrides=None):
+        out = {spec["page"]: listing(pairs, links)}
+        for d, n in pairs:
+            out["https://example.gov/gov/sd/district-%d" % d] = dpage(d, n)
+        out.update(overrides or {})
+        return out
+
+    def run(stub):
+        saved = globals()["fetch"]
+        globals()["fetch"] = lambda u, *a, **k: stub[u]
+        try:
+            return scrape_district_page_county(spec)
+        finally:
+            globals()["fetch"] = saved
+
+    d2 = "https://example.gov/gov/sd/district-2"
+    cases = [
+        ("a clean three-seat board", pages(), True, None),
+        ("a seat's link missing", pages(links=[1, 2]), False,
+         "links 2 district page(s)"),
+        ("a district linked that the board does not seat", pages(links=[1, 2, 3, 4]),
+         False, "links 4 district page(s)"),
+        ("the listing names fewer seats than it links",
+         pages(pairs=rows[:2], links=[1, 2, 3]), False, "names 2 of 3"),
+        ("a district page naming someone else",
+         pages(overrides={d2: dpage(2, "Zed Omega")}), False,
+         "disagree about who holds the seat"),
+        ("a district page with no supervisor heading",
+         pages(overrides={d2: "<p>nothing here</p>"}), False,
+         "carries no 'County Board Supervisor' heading"),
+        ("two county mailboxes on one page",
+         pages(overrides={d2: dpage(2, "Ben Beta", ["district2@co.adams.wi.us",
+                                                   "district9@co.adams.wi.us"])}),
+         False, "carries 2 county mailbox(es)"),
+        ("no county mailbox on a page",
+         pages(overrides={d2: dpage(2, "Ben Beta", [])}), False,
+         "carries 0 county mailbox(es)"),
+        ("a mailbox whose number is not its own district",
+         pages(overrides={d2: dpage(2, "Ben Beta", ["district7@co.adams.wi.us"])}),
+         False, "never guess which is right"),
+        ("one person under two districts",
+         pages(pairs=[(1, "Ann Alpha"), (2, "Ann Alpha"), (3, "Cy Gamma")]), False,
+         "filed under two districts"),
+        ("a punctuated mailbox, which six of the twenty use",
+         pages(overrides={d2: dpage(2, "Ben Beta",
+                                    ["district.2@co.adams.wi.us"])}), True, None),
+    ]
+
+    failures = []
+    for label, stub, want_ok, needle in cases:
+        try:
+            got = run(stub)
+        except RuntimeError as e:
+            if want_ok:
+                failures.append("%s: should have parsed, refused with %s" % (label, e))
+            elif needle and needle not in str(e):
+                failures.append("%s: refused for the wrong reason: %s" % (label, e))
+            continue
+        except KeyError as e:
+            failures.append("%s: fetched a url the fixture does not stub (%s)"
+                            % (label, e))
+            continue
+        if not want_ok:
+            failures.append("%s: should have been refused, returned %d rows"
+                            % (label, len(got)))
+        elif sorted(got) != ["1", "2", "3"]:
+            failures.append("%s: returned %s" % (label, sorted(got)))
+        elif got["2"]["name"] != "Ben Beta":
+            failures.append("%s: returned %r for district 2" % (label, got["2"]["name"]))
+
+    # the composition lines must never have been read as people in the first
+    # place, which the clean case above proves only indirectly
+    for line, is_name_ in (("District 1 - Wabeno Ward 3", False),
+                           ("District 1 - Town of Adams Ward 1", False),
+                           ("District 2 - Ben Ward", True),
+                           ("District 3 - Cy Gamma", True)):
+        m = DP_ROW.match(line)
+        read = bool(m and not DP_NOT_NAME.search(line))
+        if read != is_name_:
+            failures.append("%r reads as %s" % (line, "a name" if read else "not a name"))
+
+    if failures:
+        raise SystemExit("district-page selftest FAILED: " + "; ".join(failures))
+    print("district-page selftest: %d cases, every guard refuses what it is for"
+          % (len(cases) + 4))
+
 def board_seated_on(today=None):
     """The date the sitting county board took office.
 
@@ -3954,187 +4086,205 @@ def scrape_archive_county(spec):
     return {str(d): members[d] for d in sorted(members)}, stamps
 
 
-# --- Adams: a roster that rides a PDF the county publishes ---------------------
-# THE ONE COUNTY WHOSE MEMBER LIST IS A DOCUMENT AND STILL SCRAPES WEEKLY.
-# Adams was filed under this file's "publish members as PDFs, images or prose"
-# bucket, and the gaps record's `wanted` line said outright that "a district
-# map, a PDF or an alphabetical list with no district column cannot be used".
-# That rule is right about the first and third and WRONG ABOUT THE MIDDLE ONE,
-# which is the finding: a PDF is a FORMAT, not a blocker. The question is
-# whether it carries a TEXT LAYER and a district column, and Adams's carries
-# both — twenty `DISTRICT <n>` headings, each with the supervisor's name, a
-# county mailbox and a phone (the Menard lesson in Illinois, one state over:
-# look for the text layer before reaching for the raster methods).
+# --- Adams: the county's own page per district ---------------------------------
+# THE COUNTY PUBLISHES ITS BOARD TWICE AND ONLY ONE COPY MAY BE FETCHED.
 #
-# NOTHING HERE IS HAND-CARRIED, which is what separates this from
-# DOCUMENT_ROSTERS below. The county clerk's "2026 Public Directory" is linked
-# as `County Directory` from the county's own site, and both hops are open to
-# an ordinary client: www.co.adams.wi.us answers 200, and the Drive file it
-# points at downloads unauthenticated. So the run RESOLVES THE LINK EVERY WEEK
-# rather than pinning a file id — the clerk republishes the directory under a
-# NEW Drive id each edition (this one is dated 28 August 2026 on its own cover),
-# and a pinned id would go on serving the superseded edition forever with no
-# error, which is the Socrata-dataset failure this project already guards
-# elsewhere. The link text is the contract; if it moves, the county fails its
-# guard and is skipped for that run, which is a page to re-read, not a flake.
+# Until 2026-09-13 this county was read from the Clerk's "2026 Public
+# Directory", a Drive PDF with a text layer and a district column. The finding
+# recorded here then was that A PDF IS A FORMAT, NOT A BLOCKER -- the question
+# is whether it carries a text layer and a district column -- and that finding
+# stands; it is why Kenosha, Clark, Pierce and Jackson are read the way they
+# are. What was wrong was the ROUTE, and #944 is what asked:
 #
-# A TRAP ON THIS HOST, recorded because it defeats the obvious check: it is a
+#   * drive.google.com/robots.txt is a list of Allow prefixes ending in
+#     `Disallow: /`. `/uc`, the download endpoint this file used, is covered by
+#     that Disallow and by no Allow. `/file` IS allowed, so the viewer page may
+#     be read -- and it answers 86 KB of HTML, not the document.
+#   * The only download URL Drive's own viewer names is
+#     drive.usercontent.google.com/uc, whose robots.txt is 26 bytes of
+#     `Disallow: /`. lh3.googleusercontent.com/d/<id> does answer, with a
+#     644 KB PNG of page one: no text layer, nothing to parse.
+#
+# TWO HOSTS SHUT THE CONTENT ROUTE INDEPENDENTLY, so there is no permitted way
+# to those bytes and this file does not hunt for one.
+#
+# THE ROSTER COMES FROM THE COUNTY'S OWN HOST INSTEAD, which publishes no
+# robots.txt at all (404, allow all) and states the board twice over:
+# /supervisory-districts lists all twenty as "District <n> - <name>", and each
+# of those rows links a page of its own carrying the seat's name under the
+# heading "County Board Supervisor" plus its district mailbox as a mailto. Both
+# surfaces are read and required to agree.
+#
+# THE MAILBOX IS STILL THE WITNESS, which is what makes this route as strong as
+# the document it replaces: each page states its own seat's number a second
+# time, in an address, so the district a name is filed under is checked rather
+# than trusted. Measured 2026-09-13 -- 20 of 20 pages carry exactly one such
+# address, every number agrees with its own page, and SIX punctuate it
+# `district.<n>@`, the same six the PDF printed that way. Two independent
+# publications of one roster agreeing on an oddity is the best corroboration
+# available here that this is the same board.
+#
+# THE ADDRESSES ARE DERIVABLE AND ARE NOT DERIVED, the rule Dodge's header
+# states for the same reason: a derived address witnesses nothing.
+#
+# WHAT THIS ROUTE DOES NOT CARRY, stated because it is a real loss:
+#
+#   * PHONE, on all twenty. The directory printed one per seat; the county's
+#     pages print none -- 0 of 20, measured, not "none found".
+#   * ROLE, on three (a chair and two vice chairs). The pages give every seat
+#     the same heading, "County Board Supervisor", and the word "chair" does not
+#     appear in the raw HTML of the board page, the districts listing or a
+#     district page. The county's website does not name its board chair.
+#
+# THAT SECOND ONE HAS A KNOCK-ON INTO A DIFFERENT FILE, and it was measured
+# rather than discovered on Thursday. build_wi_county_officer_roster.py takes a
+# county's chair from whichever member row MARKS one, superseding the Blue
+# Book's April 2025 snapshot; with no marked chair it falls back to the book's
+# name if that person still sits, and withholds otherwise. The book names
+# ADAMS's chair as John West (20 seats, section 210 page 19) and he is not one
+# of the twenty sitting supervisors, so `on_board` is False and the chair is
+# WITHHELD with its stated reason. So wi-county-officers.json loses
+# "Rick Pease, county-board-page" and gains no wrong name — which is the
+# outcome to want, and is why no pin is added here. The chairmanship is still a
+# real loss and Ask 25 is what would recover it.
+#
+# Both are dropped rather than carried forward from the old file, and the drop
+# is recorded with its reason in scripts/check_roster_retention.py's
+# ACCEPTED_DROPS. Re-reading the old values weekly is not available -- that is
+# the whole point -- and shipping them frozen beside eighteen weekly-refreshed
+# fields would age silently.
+#
+# `documentUrl` GOES FOR THE OPPOSITE REASON: it was not a loss to avoid but a
+# workaround whose cause is gone. The builder shipped it because "Adams's board
+# page names none of its twenty supervisors", so the directory was the only
+# surface a reader could check a name against. The per-district pages name
+# them, so each seat now ships `url` -> `profileUrl` ("Supervisor page") to the
+# page that names that supervisor and gives their address. The reader gains a
+# per-seat link and loses a PDF.
+#
+# THE NAME FORM CHANGES AND NEITHER FORM IS WRONG. The Clerk's directory prints
+# "Jay L. Churco" and "Gordon Carlson"; the county's pages print "Jay Churco"
+# and "Gordy Carlson". The pages are what the county maintains as its board, so
+# they are what ships.
+#
+# A TRAP ON THIS HOST, kept from the old entry because it still holds: it is a
 # Google Sites site, and a MISSING page answers HTTP 404 with a full 259 KB of
-# site chrome. A probe that reads the body length, or that follows redirects
-# and looks for content, calls that page healthy. Check the STATUS.
+# site chrome. A probe that reads the body length calls that page healthy.
+# Check the STATUS.
 #
-# THE DISTRICT MAILBOX IS THE WITNESS, and it is why this county needs no
-# pinned reading direction like the HTML ones above. Every supervisor's contact
-# line carries `district<n>@co.adams.wi.us` (six of the twenty punctuate it
-# `district.<n>@`), so the document states each seat's number a SECOND time, in
-# a string the layout engine cannot reorder. The parser reads the number from
-# the heading and asserts the mailbox agrees — the before/after ambiguity that
-# yields "a full, plausible, entirely wrong roster" on the page-scraped
-# counties cannot survive that check.
-#
-# THE STREET ADDRESSES ARE DELIBERATELY NOT CARRIED, the same rule Taylor's
-# entry states below: they are supervisors' homes, and a home address never
-# ships even where the source publishes it. Name, county mailbox and phone are
-# official contact details and do.
-PDF_COUNTIES = [
+# THE STREET ADDRESSES the directory printed were supervisors' homes and were
+# never carried. The county's pages publish none, so that rule costs nothing
+# here now; it is restated because the next county on this route may.
+DISTRICT_PAGE_COUNTIES = [
     {
         "fips": "55001", "name": "Adams", "seats": 20,
-        # the page that LINKS the directory, and the page a reader is sent to:
-        # the names are published in a document, and this is where the county
-        # publishes the document
-        "page": "https://www.co.adams.wi.us/government/county-board",
-        "source_url": "https://www.co.adams.wi.us/government/county-board",
-        "link_text": "County Directory",
+        "page": "https://www.co.adams.wi.us/government/county-board/"
+                "supervisory-districts",
+        "source_url": "https://www.co.adams.wi.us/government/county-board/"
+                      "supervisory-districts",
+        "title": "County Board Supervisor",
         "mailbox": r"district\.?(\d{1,2})@co\.adams\.wi\.us",
     },
 ]
+# "District 13 - Rick Pease" on the listing. The SAME page carries composition
+# lines under the same shape -- "District 13 - Town of Adams Ward 1, Town of
+# Strongs Prairie Ward 2" -- so a row is a name only when it carries no comma
+# and names no municipality. Ward is also a surname, so the municipality test
+# is on "<type> of" and "Ward <n>", never on the bare word. That rule was
+# learned on the directory this county no longer reads and it holds here too.
+DP_ROW = re.compile(r"^District\s+(\d{1,2})\s*[-\u2013\u2014]\s*([^,]+)$")
+DP_NOT_NAME = re.compile(r"(?i)\b(?:towns?|cities|city|villages?)\s+of\b|\bward\s*\d")
 
-# a template, not a pattern: the link TEXT is what identifies the document, so
-# it is escaped in per county rather than baked in here
-DRIVE_LINK = (r'href="(https://drive\.google\.com/file/d/([A-Za-z0-9_-]{20,})'
-              r'/[^"]*)"[^>]*>\s*%s\s*<')
-DIST_HEAD = re.compile(r"^\s*DISTRICT\s+(\d{1,2})\s*$")
-# "608-547-2688", and Adams prints one as "715-781- 0354" — a space the
-# extractor keeps and a reader never sees
+
+# A phone as a county directory prints it. The tolerance for an interior space
+# ("715-781- 0354") was measured on Adams's directory, which this file no longer
+# reads; the pattern stays because Clark's and Pierce's directories are read
+# through it and a PDF extractor stranding a space mid-number is general.
 PDF_PHONE = re.compile(r"\b(\d{3})[-\s.]\s?(\d{3})[-\s.]\s?(\d{4})\b")
-# "Jerry Poehler, 1st Vice Chair" / "Rick Pease, County Board Chair"
-PDF_ROLE = re.compile(
-    r",\s*((?:County\s+Board\s+)?(?:(?:1st|2nd)\s+)?(?:Vice\s+)?"
-    r"Chair(?:man|person|woman)?)\s*$", re.I)
-# A ward-composition line ("Town of Jackson Ward 2 & Town of New Haven Ward 1")
-# sits between the heading and the name and is never a person. It is matched on
-# "<municipality> of" or "Ward <n>" rather than on the bare words: WARD IS ALSO
-# A SURNAME, and a plain \bwards?\b would skip a supervisor named Ward on the
-# walk-back and take whatever line sat above them.
-PDF_WARDLINE = re.compile(r"(?i)(\b(?:towns?|cities|city|villages?)\s+of\b|\bwards?\s+\d)")
+def scrape_district_page_county(spec):
+    """All seats or nothing, one fetch per district, the mailbox as witness."""
+    county = spec["name"]
+    listing = fetch(spec["page"])
+    scheme, _, host, path = spec["page"].split("/", 3)
+    origin = "%s//%s" % (scheme, host)
+    # The link pattern is built from the listing's OWN path rather than matching
+    # any `/district-<n>` on the page: a county site's nav can link a district
+    # map or a ward page under the same last segment, and those are not seats.
+    link = re.compile(r'href="(%s/district-(\d{1,2}))(?:[?#][^"]*)?"'
+                      % re.escape("/" + path))
 
+    paths = {}
+    for href, num in link.findall(listing):
+        d = int(num)
+        if d in paths and paths[d] != href:
+            raise RuntimeError("%s: district %d is linked at two paths (%s, %s) — "
+                               "re-read %s"
+                               % (county, d, paths[d], href, spec["page"]))
+        paths[d] = href
+    want = set(range(1, spec["seats"] + 1))
+    if set(paths) != want:
+        raise RuntimeError("%s: the listing links %d district page(s) %s and the "
+                           "board seats %d — re-read %s"
+                           % (county, len(paths), sorted(paths), spec["seats"],
+                              spec["page"]))
 
-def pdf_lines(blob):
-    """The directory's text, one line per printed line.
+    # The listing states every name as well as every link, and the two are
+    # independent reads of the same page: the names cross-check the per-district
+    # pages below, so a page that names the wrong person fails rather than
+    # shipping.
+    listed = {}
+    for line in to_lines(listing):
+        m = DP_ROW.match(line)
+        if m and not DP_NOT_NAME.search(line):
+            listed[int(m.group(1))] = " ".join(m.group(2).split())
+    if set(listed) != want:
+        raise RuntimeError("%s: the listing names %d of %d seats (%s) — it states "
+                           "the links and the names separately and one of the two "
+                           "has reshaped; re-read %s"
+                           % (county, len(listed), spec["seats"], sorted(listed),
+                              spec["page"]))
 
-    Layout mode is required, not optional. A flattened read returns this
-    document one WORD per line (its text operators are per-word), which loses
-    the only thing the parser needs: that a supervisor's name, phone and
-    mailbox share a printed line.
-    """
-    import io
-    import pypdf                      # pinned in wi/scripts/requirements.txt
-    reader = pypdf.PdfReader(io.BytesIO(blob))
-    lines = []
-    for page in reader.pages:
-        lines += (page.extract_text(extraction_mode="layout") or "").split("\n")
-    return [re.sub(r"\s+", " ", ln).strip() for ln in lines]
-
-
-def scrape_pdf_county(spec):
-    """All seats or nothing, with the county's own mailbox as the witness."""
-    page = fetch(spec["page"])
-    link = re.search(DRIVE_LINK % re.escape(spec["link_text"]), page)
-    if not link:
-        raise RuntimeError("%s: no %r link on %s — the county has moved or "
-                           "renamed its directory; re-read the page"
-                           % (spec["name"], spec["link_text"], spec["page"]))
-    doc_url = link.group(1)
-    blob = fetch_bytes("https://drive.google.com/uc?export=download&id=" + link.group(2),
-                       timeout=90)[0]
-    if not blob.startswith(b"%PDF"):
-        raise RuntimeError("%s: %s did not return a PDF (%d bytes, starts %r) — "
-                           "a Drive interstitial is the usual cause"
-                           % (spec["name"], doc_url, len(blob), blob[:16]))
-    lines = pdf_lines(blob)
     mailbox = re.compile(spec["mailbox"], re.I)
-
-    heads = [(i, int(m.group(1)))
-             for i, ln in enumerate(lines) for m in [DIST_HEAD.match(ln)] if m]
-    # The City of Adams's aldermanic districts are in the same document under
-    # the same word, but print their members on the heading's own line, so the
-    # anchored heading above never matches them. Guard it anyway: a reshaped
-    # document that starts matching them would otherwise ship city alderpersons
-    # as county supervisors.
-    if len(heads) != spec["seats"]:
-        raise RuntimeError("%s: the directory carries %d 'DISTRICT n' headings "
-                           "and the board seats %d — re-read %s"
-                           % (spec["name"], len(heads), spec["seats"], doc_url))
-
-    seen = [d for _, d in heads]
-    if sorted(seen) != list(range(1, spec["seats"] + 1)):
-        # a repeated or skipped heading would collapse in `out` below and lose a
-        # seat silently; the builder's geometry check would catch it one stage
-        # later, but the document is what has changed and should say so
-        raise RuntimeError("%s: the directory's headings are %s, not 1..%d — "
-                           "re-read %s" % (spec["name"], seen, spec["seats"], doc_url))
-
     out = {}
-    for n, (i, district) in enumerate(heads):
-        end = heads[n + 1][0] if n + 1 < len(heads) else len(lines)
-        block = lines[i + 1:end]
-        at = next((k for k, ln in enumerate(block) if mailbox.search(ln)), None)
-        if at is None:
-            raise RuntimeError("%s: district %d carries no county mailbox — the "
-                               "directory has reshaped; re-read %s"
-                               % (spec["name"], district, doc_url))
-        m = mailbox.search(block[at])
-        if int(m.group(1)) != district:
-            # the document numbering itself disagrees; never guess which is right
-            raise RuntimeError("%s: the heading says district %d and the mailbox "
-                               "on that seat's line says %s (%s) — re-read %s"
-                               % (spec["name"], district, m.group(1),
-                                  m.group(0), doc_url))
-        line = block[at]
-        phone_m = PDF_PHONE.search(line)
-        phone = "-".join(phone_m.groups()) if phone_m else None
-        cut = min(phone_m.start() if phone_m else len(line), m.start())
-        name = line[:cut].strip(" ,;")
-        if not name:
-            # Two of the twenty print the name on its own line above the
-            # contact line (both carry a second phone: "608-254-5971 or
-            # 608-432-1971"), so walk back past the ward composition.
-            k = at - 1
-            while k >= 0 and (not block[k] or PDF_WARDLINE.search(block[k])):
-                k -= 1
-            name = block[k].strip() if k >= 0 else ""
-        role = None
-        role_m = PDF_ROLE.search(name)
-        if role_m:
-            role = role_case(role_m.group(1))
-            name = name[:role_m.start()].strip(" ,")
-        name = repair(clean(name)[0])
+    for district in sorted(paths):
+        url = origin + paths[district]
+        page = fetch(url)
+        lines = to_lines(page)
+        at = next((i for i, ln in enumerate(lines) if ln == spec["title"]), None)
+        if at is None or at + 1 >= len(lines):
+            raise RuntimeError("%s: district %d's page carries no %r heading with a "
+                               "line under it — re-read %s"
+                               % (county, district, spec["title"], url))
+        name = repair(clean(lines[at + 1])[0])
         if not is_name(name):
-            raise RuntimeError("%s: district %d resolved to %r, which does not "
-                               "read as a name — re-read %s"
-                               % (spec["name"], district, name, doc_url))
-        row = {"name": name, "vacant": False, "role": role,
-               "email": m.group(0).lower()}
-        if phone:
-            row["phone"] = phone
-        out[str(district)] = row
+            raise RuntimeError("%s: district %d resolved to %r, which does not read "
+                               "as a name — re-read %s" % (county, district, name, url))
+        if name != listed[district]:
+            raise RuntimeError("%s: district %d's own page says %r and the listing "
+                               "says %r — the county's two surfaces disagree about "
+                               "who holds the seat and neither is preferred here"
+                               % (county, district, name, listed[district]))
+        # the raw page, so a mailto: the visible text does not repeat still counts
+        found = sorted(set(m.group(0).lower() for m in mailbox.finditer(page)))
+        if len(found) != 1:
+            raise RuntimeError("%s: district %d's page carries %d county mailbox(es) "
+                               "%s — exactly one is the witness for the district "
+                               "number, so re-read %s"
+                               % (county, district, len(found), found, url))
+        stated = int(mailbox.match(found[0]).group(1))
+        if stated != district:
+            raise RuntimeError("%s: the page at %s says district %d and the mailbox "
+                               "on it says %d (%s) — never guess which is right"
+                               % (county, paths[district], district, stated, found[0]))
+        out[str(district)] = {"name": name, "vacant": False, "role": None,
+                              "email": found[0], "url": url}
 
     names = [r["name"] for r in out.values()]
     if len(set(names)) != len(names):
         dupes = sorted({n for n in names if names.count(n) > 1})
         raise RuntimeError("%s: the same person is filed under two districts (%s)"
-                           % (spec["name"], dupes))
-    return out, doc_url
+                           % (county, dupes))
+    return out
 
 
 # COUNTIES WHOSE ROSTER IS A TABLE THE LISTING PAGE FRAMES FROM ANOTHER HOST.
@@ -4560,21 +4710,32 @@ def scrape_arcgis_county(spec):
 # that published a forwarding note.
 #
 # THE DIRECTORY PAGINATES AT TWELVE, which is why this is a separate strategy
-# and not a row in COUNTIES. Three things about it were measured rather than
-# assumed, and each was wrong on the first guess:
+# and not a row in COUNTIES. A single fetch of the members URL sees 12 of 33,
+# and 12 seats of a 33-seat board is what the all-seats-or-nothing rule exists
+# to refuse.
 #
-#   * `?const_page=2` ON THE PAGE ITSELF IS DECORATION. The server returns page
-#     one for every value of it, so a single fetch of the members URL sees 12
-#     of 33 — and 12 seats of a 33-seat board is exactly what the
-#     all-seats-or-nothing rule exists to refuse.
-#   * The pagination works on the ELEMENT endpoint (/fs/elements/<id>) and
-#     ONLY when `const_search_group_ids` rides along. Without the group id that
-#     endpoint also returns page one, silently and with a 200.
+#   * WHAT PAGINATES IS `const_search_group_ids`, NOT THE ENDPOINT. Both
+#     parameters have to ride together: `?const_page=2` alone returns page one
+#     again, silently and with a 200, on the members page and on the element
+#     endpoint alike. With the group id beside it the members page answers
+#     "showing 13-24 of 33" (measured 2026-09-13, all three pages, districts
+#     1-33 exactly).
+#   * CORRECTED 2026-09-13, and the wrong version of this comment cost the
+#     county a run. It read "`?const_page=2` ON THE PAGE ITSELF IS DECORATION.
+#     The server returns page one for every value of it", and concluded that
+#     only /fs/elements/<id> could paginate. The first half was measured; the
+#     conclusion was not, because the page was never asked WITH the group id.
+#     When #944 started reading robots.txt before each fetch, the county's own
+#     `Disallow: /fs/` dropped Dodge out of the roster, and the file's own note
+#     said there was nowhere else to go. There was: the members page, which is
+#     permitted. A parameter measured alone says nothing about the same
+#     parameter measured in company.
 #   * NEITHER ID IS PINNED. Both are discovered from the members page on every
 #     run — the directory element by its own `fsConstituent fsDirectory` class,
-#     the group id from the county's own search form — so a site rebuild that
-#     renumbers elements keeps working, and a page carrying two directories
-#     fails loudly instead of scraping whichever came first.
+#     the group id from the county's own search form. The element id no longer
+#     builds a URL and is still read, because it is the check that the page
+#     carries ONE directory: a rebuild that puts two on the page fails loudly
+#     here instead of scraping whichever came first.
 #
 # THE E-MAILS ARE OBFUSCATED and would otherwise have shipped as nothing at
 # all: each address is written as a reversed-string JavaScript call
@@ -4669,8 +4830,10 @@ def scrape_constituent_county(spec):
         raise RuntimeError("%s: the page carries %d constituent director(ies) and %d "
                            "search group(s) — expected one of each; re-read it before "
                            "moving this entry" % (county, len(els), len(gids)))
-    root = spec["page_url"].split("/", 3)
-    base = "%s//%s/fs/elements/%s" % (root[0], root[2], els[0])
+    # The county disallows /fs/, so the directory is paged on its own members
+    # URL; the group id is what pages it, and both spellings need it. See the
+    # 2026-09-13 correction in this strategy's header.
+    base = spec["page_url"]
     label = _PAGE_LABEL.search(page)
     if not label:
         raise RuntimeError("%s: the directory states no total — it may have stopped "
@@ -9609,6 +9772,7 @@ SINGLE_COUNTY_CARRIERS = (
 def main():
     if "--selftest" in sys.argv[1:]:
         _robots_selftest()
+        _district_page_selftest()
         return
     argv = sys.argv[1:]
     out_path = argv[argv.index("--out") + 1] if "--out" in argv else DEFAULT_OUT
@@ -9622,7 +9786,8 @@ def main():
     jobs += [(c["fips"], c["name"], c["seats"], "constituent", c) for c in CONSTITUENT_COUNTIES]
     jobs += [(c["fips"], c["name"], c["seats"], "witnessed-document", c)
              for c in WITNESSED_DOCUMENT_COUNTIES]
-    jobs += [(d["fips"], d["name"], d["seats"], "pdf", d) for d in PDF_COUNTIES]
+    jobs += [(d["fips"], d["name"], d["seats"], "district-pages", d)
+             for d in DISTRICT_PAGE_COUNTIES]
     jobs += [(t["fips"], t["name"], t["seats"], "framed-table", t)
              for t in FRAMED_TABLE_COUNTIES]
     jobs += [(spec["fips"], spec["name"], spec["seats"], strategy, spec)
@@ -9699,8 +9864,8 @@ def main():
             elif strategy == "witnessed-document":
                 districts = scrape_witnessed_document(src)
                 source_url, read_from = src["source_url"], "live"
-            elif strategy == "pdf":
-                districts, doc_url = scrape_pdf_county(src)
+            elif strategy == "district-pages":
+                districts = scrape_district_page_county(src)
                 source_url, read_from = src["source_url"], "live"
             elif strategy == "framed-table":
                 districts = scrape_framed_table_county(src)
@@ -9771,7 +9936,7 @@ def main():
              + len(ARCHIVE_COUNTIES)
              + len(CONSTITUENT_COUNTIES)
              + len(WITNESSED_DOCUMENT_COUNTIES)
-             + len(PDF_COUNTIES)
+             + len(DISTRICT_PAGE_COUNTIES)
              + len(FRAMED_TABLE_COUNTIES) + len(SINGLE_COUNTY_CARRIERS), total,
              ", %d county/counties missed" % len(failures) if failures else ""),
           file=sys.stderr)
