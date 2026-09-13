@@ -89,7 +89,7 @@ python3 wi/scripts/build_wi_circuit_court_roster.py --selftest      # the circui
 python3 scripts/isbe_precinct_fabric.py --selftest         # the five Jasper-test reconciliation causes
 python3 ia/scripts/ia_county_minutes_chair_scraper.py --selftest   # the four refusals that stand between a chair card and a wrong name
 python3 ia/scripts/build_ia_county_chair.py --selftest              # the carry-forward rules: only `unreachable`, never a refusal, never past 60 days or a January
-python3 ia/scripts/build_ia_county_officers.py --selftest           # display_name strips a salutation and keeps a Jr./Sr. suffix and a published credential
+python3 ia/scripts/build_ia_county_officers.py --selftest           # display_name strips a salutation and keeps a Jr./Sr. suffix and a published credential; and the party name-join, which ships no party when no ISAC row matches the officer or when two do
 python3 scripts/build_parcel_fabric_districts.py --selftest        # the geometry repair's three refusals and its drop count
 python3 scripts/scraper_common.py --selftest                # the nine AFR builders' what-moved line, both ways: silent on a stamp-only week, names the record on a real one
 python3 scripts/check_roster_retention.py --base origin/main
