@@ -55,8 +55,34 @@ jobs:
       - name: Scrape the city's SSA provider list
         run: python3 scripts/chicago_ssa_provider_scraper.py --out /tmp/chicago_ssa_providers_raw.json
 
+      # THE COMPARAND FOR THE JOIN, and a step of its own so a failure here is
+      # a failed run rather than a skipped check. The builder requires it: the
+      # bare-number fold is only one-to-one if no two areas fold together and
+      # every provider lands on an area the city actually draws, and neither can
+      # be measured without the city's own boundary list. `--fail-with-body`
+      # makes an HTTP error an exit code, and the python line refuses a body
+      # that is not a FeatureCollection with features — a 200 carrying an error
+      # document would otherwise reach the builder as "no ref_no I can read".
+      - name: Fetch the SSA boundary dataset to join against
+        run: |
+          curl -sS --fail-with-body --retry 3 --retry-delay 5 \
+            -o /tmp/chicago_ssa_boundaries.geojson \
+            "https://data.cityofchicago.org/api/v3/views/cmr6-dn8c/query.geojson"
+          python3 - <<'PY'
+          import json, sys
+          d = json.load(open("/tmp/chicago_ssa_boundaries.geojson"))
+          n = len(d.get("features") or [])
+          if d.get("type") != "FeatureCollection" or n == 0:
+              sys.exit("the SSA boundary fetch returned %s with %d feature(s) — "
+                       "refusing to join against it" % (d.get("type"), n))
+          print("boundary dataset: %d feature(s)" % n)
+          PY
+
       - name: Rebuild roster data file
-        run: python3 scripts/build_chicago_ssa_providers.py --raw /tmp/chicago_ssa_providers_raw.json
+        run: |
+          python3 scripts/build_chicago_ssa_providers.py \
+            --raw /tmp/chicago_ssa_providers_raw.json \
+            --boundaries /tmp/chicago_ssa_boundaries.geojson
 
       # Gate the regenerated data before it can reach a PR.
       - name: Validate app + data files

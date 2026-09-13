@@ -40,8 +40,24 @@ than guessed at.
   8. One block says "Audit:" where every other says "Audits:" (#63), so a
      stop-word of "audits" lets a run of PDF years leak into the address.
 
-ROBOTS AND USER AGENT, measured 2026-09-12. www.chicago.gov serves NO
-robots.txt at all (HTTP 404), so no group binds and nothing is disallowed.
+ROBOTS AND USER AGENT, measured 2026-09-12 and re-measured 2026-09-13.
+WHAT robots.txt ANSWERS DEPENDS ON WHO ASKS, so both readings are recorded
+rather than the convenient one: to Chrome/126 with its client hints
+www.chicago.gov has NO robots.txt at all (HTTP 404), so no group binds and
+nothing is disallowed; to the districtry token Akamai refuses robots.txt ITSELF
+(HTTP 403), which RFC 9309 and CLAUDE.md both file with 404 as allow — so the
+answer is the same and the reason is not. An earlier version of this paragraph
+gave only the 404, which was true of the client this scraper sends and read as
+a fact about the host.
+
+IT IS ALSO READ AT RUN TIME, AS THE CLIENT THAT FETCHES. CLAUDE.md's rule is
+that robots.txt is read before the first fetch of a host, and it is read as the
+fetching client — so fetch() puts every request through a RobotsGate built on
+the same Chrome/126 User-Agent and client-hint headers the page fetch sends, and
+stops with a robots-refused verdict if the answer ever becomes a disallow. A
+measurement in this docstring is not a substitute for asking: the page is
+hand-maintained and the host is Akamai-fronted, so the policy can change between
+weekly runs.
 The site is Akamai-fronted and refuses the districtry token by client
 fingerprint: UA_ROSTER_BOT gets HTTP 403 (AkamaiGHost "Access Denied") on the
 requests stack AND on the stdlib client, while Chrome/126 with its client
@@ -61,6 +77,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from scraper_common import UA_CHROME_WIN_126, UA_HINTS_CHROME_126  # noqa: E402
+from robots_policy import RobotsGate  # noqa: E402  (one reader, fleet-wide)
 
 import requests  # noqa: E402
 
@@ -109,7 +126,33 @@ ZIP_RE = re.compile(r"\b(?:Chicago|CHICAGO)\s*,?\s*(?:IL|Illinois)\s*,?\s*(\d{5}
 REF_RE = re.compile(r"\s*SSA\s*#\s*0*(\d+)\s*(?:-\s*(\d{4}))?(.*)", re.S)
 
 
+_ROBOTS = None
+
+
+def robots_gate():
+    """One RobotsGate for this run, built on the CLIENT THIS SCRAPER SENDS.
+
+    The hints go on the SESSION rather than into per-request headers, because
+    robots_policy.fetch_verdict() sets only User-Agent and Accept itself and
+    merges whatever the session carries — so the robots.txt request goes out as
+    the same Chrome/126 client as the page request. Reading it as some other
+    client is the mistake this avoids: measured 2026-09-13, this host answers
+    robots.txt 404 to Chrome and 403 to the districtry token.
+    """
+    global _ROBOTS
+    if _ROBOTS is None:
+        session = requests.Session()
+        session.headers.update(UA_HINTS_CHROME_126)
+        _ROBOTS = RobotsGate(session, UA_CHROME_WIN_126)
+    return _ROBOTS
+
+
 def fetch(url, timeout=45):
+    # BEFORE THE FIRST FETCH OF THE HOST, and cached per host for the run by the
+    # gate itself. A refusal is its own verdict and is never worked around.
+    allowed, why = robots_gate().allows(url)
+    if not allowed:
+        sys.exit("chicago-ssa-providers: robots-refused — %s (%s)" % (why, url))
     headers = {"User-Agent": UA_CHROME_WIN_126}
     headers.update(UA_HINTS_CHROME_126)
     resp = requests.get(url, headers=headers, timeout=timeout)
@@ -252,7 +295,13 @@ def scrape():
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--out", default="data/source/chicago-ssa-providers.raw.json")
+    ap.add_argument("--out",
+                    # UNDER il/, where the other Illinois intermediates live.
+                    # The repo root has no data/source/ at all, so the old
+                    # default would have created a stray directory outside the
+                    # instance the app serves from; only data/search-performance
+                    # .json sits at the root.
+                    default="il/data/source/chicago-ssa-providers.raw.json")
     args = ap.parse_args()
     payload = scrape()
     os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)

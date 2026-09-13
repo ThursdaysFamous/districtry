@@ -18316,8 +18316,12 @@ function initChiExplorer() {
         // publishers put the establishing year in different places, so the
         // boundary file's SSA#17-2025 is the provider list's SSA#17 and its
         // SSA#29 "West Town-2014" is the list's SSA#29-2014 "West Town".
-        // scripts/build_chicago_ssa_providers.py measures that the fold is
-        // one-to-one in both directions on every run.
+        // scripts/build_chicago_ssa_providers.py GATES the fold on every run,
+        // in all three of the senses that phrase has: no two providers fold to
+        // one bare number, no two of the city's own areas do either, and no
+        // provider names a number the boundary dataset does not carry. Areas
+        // with NO provider deliberately do not gate — nine are in that state,
+        // which is the open half of the gap record.
         var num = ref ? String(ref).replace(/[^0-9-]/g, "").split("-")[0] : "";
         var prov = num && providers[num];
         if (!prov) return;
