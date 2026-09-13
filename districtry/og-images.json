@@ -1,0 +1,58 @@
+{
+  "root": {
+    "path": "og-image.png",
+    "label": null,
+    "sha256": "1ed1047edcf3ed0b8fc978c37254c72d3c87e4b2f0c603e1fb875a3b558ddb57",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-13"
+  },
+  "il": {
+    "path": "il/og-image.png",
+    "label": "il",
+    "sha256": "f5dc13e7bdfe378f6234ae7391dbd648d7b2e714e73b8d00f9224b955b51fd43",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-13"
+  },
+  "ny": {
+    "path": "ny/og-image.png",
+    "label": "ny",
+    "sha256": "fc12a67b6df730177cffd552035b4fd2832484625b21b32c964bca1ffb81b553",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-13"
+  },
+  "ca": {
+    "path": "ca/og-image.png",
+    "label": "ca",
+    "sha256": "7dbfb1f64a95dcf22649fc09ec24e41ae95ddd522fde0216f86d16f13905de5a",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-13"
+  },
+  "wi": {
+    "path": "wi/og-image.png",
+    "label": "wi",
+    "sha256": "7c391588945ec4872b07c161828d47eab03af396d786a2d57e11f3368cec1fcc",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-13"
+  },
+  "ia": {
+    "path": "ia/og-image.png",
+    "label": "ia",
+    "sha256": "07d6fdea82c4a88b391e02c19915c91a6ddc21913868ef205427c55c94649667",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-13"
+  },
+  "mi": {
+    "path": "mi/og-image.png",
+    "label": "mi",
+    "sha256": "d1e61643d4b576555387c87cd4676a37054e9f0c907720e99f967aad56f44e80",
+    "width": 1200,
+    "height": 630,
+    "rendered": "2026-09-13"
+  }
+}
