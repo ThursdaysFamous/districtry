@@ -23,7 +23,7 @@ The column is not merely old. Measured against the six counties here on
     Wayne 5      state: Irma Clark-Coleman county: Angelique Peterson-Mayberry
     Wayne 8      state: David Knezek       county: Hassan M. Ahmad
 
-Wayne 5 is the seat whose named commissioner died on 10 June 2025. Fourteen
+Wayne 5 is the seat whose named commissioner died on 10 June 2025. Sixteen
 more seats differ only in how the name is written (Kent 2 "Elizabeth Morse"
 against the county's "Liz Morse"; Saginaw 4 "Sheldon Mattews" against
 "Sheldon Matthews", a typo in the state column). THE COUNTY PAGE WINS in every
@@ -43,12 +43,19 @@ district layer's own 2020 populations.
 THE CLIENT, AND WHAT IT ASKS FIRST
 -----------------------------------
 Every host's robots.txt is read through scripts/robots_policy.py (via this
-instance's robots_gate shim) with UA_ROSTER_BOT BEFORE its first page fetch,
-and a stated Crawl-delay is honoured per host by HostPacer. No county here
-needs a browser user-agent: all six serve this token a full page. A county
-that refuses is skipped with its reason printed and its page never requested;
-it stays in PROBES so the weekly run re-asks and a county that changes its
-file re-enters by itself.
+instance's robots_gate shim) with UA_ROSTER_BOT BEFORE its first page fetch —
+the six county sites AND the state service the comparison reads, which is a
+seventh host — and a stated Crawl-delay is honoured per host by HostPacer,
+with what it honoured printed at the end of every run. The county pages take
+the STRICT reading of a 401/403 on robots.txt (`refused_is_refusal=True`,
+the DuPage and Logan pattern): on a website that status is a firewall refusing
+this client, where on an ArcGIS service it is the RFC's allow, so the state
+service keeps the default.
+
+No county here needs a browser user-agent: all six serve this token a full
+page. A county that refuses is skipped with its reason printed and its page
+never requested; it stays in PROBES so the weekly run re-asks and a county
+that changes its file re-enters by itself.
 
 A captcha is an access control. Livingston and Ottawa answer HTTP 202 on
 robots.txt itself — 202 is never a document — and nothing here tries to get
@@ -389,16 +396,30 @@ def ua_session():
     return s
 
 
-def state_commissioners(session, fips_list):
+def state_commissioners(session, gate, pacer, fips_list):
     """The state layer's own Commissioner column, for the comparison stage 2
-    prints. Never shipped — see the module docstring."""
+    prints. Never shipped — see the module docstring.
+
+    ROBOTS IS READ HERE TOO. The rule is every host before its first fetch,
+    and this is a different host from the six county sites. It is an ArcGIS
+    service rather than a website, so it takes the RFC's default reading of a
+    401/403 (allow) rather than the strict one the county pages opt into;
+    measured 2026-09-13, gisagocss.state.mi.us answers 404 on robots.txt, so
+    the verdict is `absent` and allow. A refusal skips the COMPARISON and
+    never the roster."""
     where = "CountyFIPS IN (%s)" % ",".join("'%s'" % f for f in fips_list)
     url = STATE_SERVICE + "/query"
     params = {"where": where, "outFields": "CountyFIPS,DistrictName,Commissioner",
               "returnGeometry": "false", "f": "json", "resultRecordCount": 1000}
     out = {}
+    allowed, why = gate.allows(url)
+    if not allowed:
+        print("  state column not read — robots %s: %s. The comparison is "
+              "skipped, the roster is not" % (gate.verdict(url).status, why))
+        return out
     try:
-        data = session.get(url, params=params, timeout=TIMEOUT).json()
+        with pacer.hold(url):
+            data = session.get(url, params=params, timeout=TIMEOUT).json()
     except Exception as exc:                                  # noqa: BLE001
         print("  state column unavailable (%s) — the comparison is skipped, "
               "the roster is not" % exc)
@@ -431,7 +452,15 @@ def main():
     for spec in wanted:
         url, county = spec["url"], spec["county"]
         verdict = gate.verdict(url)
-        allowed, why = gate.allows(url)
+        # THE STRICT READING, opted into by argument the way the DuPage and
+        # Logan municipal scrapers do. RFC 9309 files a 401/403 on robots.txt
+        # with a 404 and allows, which is right for the APIs that answer that
+        # way (every ArcGIS FeatureServer); these are county WEBSITES, where a
+        # 403 on robots.txt is a firewall refusing this client and fetching the
+        # page anyway is walking past a no. Moot on all six counties today —
+        # every one serves its file — and it decides what happens the day a
+        # county now in PROBES is promoted into COUNTIES.
+        allowed, why = verdict.allows(UA_ROSTER_BOT, url, refused_is_refusal=True)
         if not allowed:
             refused.append((county, why))
             print("  %-10s SKIPPED — robots %s: %s" % (county, verdict.status, why))
@@ -464,7 +493,7 @@ def main():
         print("mi-commissioner-scraper: FAIL — no county yielded a roster", file=sys.stderr)
         return 1
 
-    state = state_commissioners(session, sorted(entries))
+    state = state_commissioners(session, gate, pacer, sorted(entries))
     for fips, entry in entries.items():
         for district, rec in entry["districts"].items():
             named = (state.get(fips) or {}).get(district)
@@ -482,6 +511,9 @@ def main():
         json.dump(payload, handle, indent=1, sort_keys=True)
         handle.write("\n")
     total = sum(len(e["districts"]) for e in entries.values())
+    # A delay honoured without saying so cannot be told from one ignored.
+    for line in pacer.report():
+        print(line)
     print("mi-commissioner-scraper: %d counties, %d districts -> %s"
           % (len(entries), total, os.path.relpath(CACHE, os.path.dirname(HERE))))
     return 0
