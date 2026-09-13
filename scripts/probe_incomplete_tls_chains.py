@@ -49,6 +49,18 @@ confirmed out-of-band through DNS-over-HTTPS instead of trusting the local
 resolver. Do not record a county-side conclusion from a run whose proxy was
 refusing the host — check `$HTTPS_PROXY/__agentproxy/status` first.
 
+AND DO NOT MEASURE A CHAIN WITH `openssl s_client` FROM INSIDE ONE. Measured
+2026-09-13 in the Claude Code sandbox: every certificate `openssl s_client`
+reports is issued by `O = Anthropic, CN = Egress Gateway SDS Issuing CA
+(production)` — a transparent re-signing intercept — so every host reads as
+serving a complete, valid chain and a broken one is invisible. The Python stack
+these scrapers use tunnels through and sees the REAL certificate: this script
+returned COLES-PATTERN for www.colesco.illinois.gov and gallatinco.illinois.gov
+on that same day, with their true issuers (GoDaddy and Sectigo) and intermediate
+hashes, while a plain urlopen with a default context failed both on
+CERTIFICATE_VERIFY_FAILED. The two vantages disagree, and the one that matches
+what a scraper will do is the Python one.
+
 Usage:
     python3 scripts/probe_incomplete_tls_chains.py HOST [HOST ...]
     python3 scripts/probe_incomplete_tls_chains.py --clerk-domains   # every county
