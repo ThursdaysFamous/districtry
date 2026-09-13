@@ -68,12 +68,27 @@ import sys
 import time
 
 import requests
-from scraper_common import UA_CHROME_WIN_126, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import UA_ROSTER_BOT, fetch as fetch_with_retry  # noqa: E402  (shared machinery — do not fork)
 
 BASE = "https://www.jodaviesscountyil.gov"
 SOURCE_URL = BASE + "/1199/County-Board"
+# THE DISTRICTRY TOKEN, MEASURED RATHER THAN ASSUMED (2026-09-13). This file sent
+# a pinned Chrome string with no refusal recorded behind it, which is the state
+# scripts/probe_user_agents.py exists to find. Two measurements say the browser
+# string bought nothing here. The sweep of 2026-09-12 recorded this host
+# token-ok in user-agent-measurements.json (requests + the token, HTTP 200,
+# 85,523 bytes) — but it asked /1226/GIS-IT, and the #931 finding is that the
+# page matters, so THIS page was asked both ways on 2026-09-13: SOURCE_URL
+# answered HTTP 200 and 82,783 bytes to the token and to Chrome/126 alike, byte
+# for byte, and served robots.txt to both (816 bytes, one binding group, no rule
+# matching /1199/County-Board). A sibling already proves it weekly —
+# scripts/build_jodaviess_board_districts.py reads the same host under its own
+# districtry token. The witness for this change is Saturday's own weekly run,
+# which is what scripts/scraper_common.py requires; if the host starts refusing
+# the token, that run fails visibly rather than shipping a short roster, because
+# the seat-count guard below refuses the write.
 HEADERS = {
-    "User-Agent": UA_CHROME_WIN_126,
+    "User-Agent": UA_ROSTER_BOT,
 }
 REQUEST_TIMEOUT = 60
 FETCH_GAP_S = 1.0
