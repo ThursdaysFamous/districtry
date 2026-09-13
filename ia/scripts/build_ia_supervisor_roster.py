@@ -48,6 +48,15 @@ reader's district elected. A per-person number is a different fact and would
 have to arrive from a source that publishes one; the officer roster this reads
 from carries none, so none can leak through.
 
+A ROBOTS REFUSAL IS NOT AN OUTAGE. The scraper reads each host's robots.txt
+before its first fetch and caches {"robotsRefused": <why>} for a county whose
+own file says this client may not read it. That is the site's answer and it
+does not heal by next Saturday, so the drop guard below would otherwise fail
+this job every week for ever. It is excused -- but only where the refusal is
+BOTH reported by this run and recorded in ROBOTS_REFUSED_DROPS with what was
+measured, because a county newly reported refused is also what a bug in the
+robots read looks like, and the floors cannot see two counties leave.
+
 Usage:
     python3 ia/scripts/ia_supervisor_district_scraper.py   # refresh the cache
     python3 ia/scripts/build_ia_supervisor_roster.py
@@ -71,6 +80,42 @@ OUT = os.path.join(APP_DATA_DIR, "ia-supervisor-members.json")
 # 2026-08-28 (the rest 403, sit behind a captcha, or name no district at all).
 MIN_COUNTIES = 12
 MIN_DISTRICTS = 40
+
+# A ROBOTS REFUSAL IS A RECORDED DROP -- NOT AN OUTAGE, AND NOT A BLANKET
+# EXCUSE EITHER.
+#
+# The scraper reads each host's robots.txt before its first fetch and writes
+# {"robotsRefused": <why>} for a county it may not read. That is the site's own
+# answer and it does not heal by next Saturday, so the drop guard below would
+# otherwise fail this job every week for ever, or be dulled into ignoring every
+# county that vanishes.
+#
+# But a county the scraper has JUST STARTED reporting as refused is also
+# exactly what a bug in the robots read looks like -- and the floors above
+# cannot see it: they are sized for the file, so two or three counties
+# disappearing clears them with room to spare. That is the Grundy shape, and
+# the whole reason this file reads the roster it is about to overwrite.
+#
+# So a refusal excuses a drop only where it is BOTH reported by this run AND
+# recorded here with what was measured and when. Every entry prints on every
+# run; an entry whose county keys again is STALE and FAILS, and one naming a
+# county that is not a plan 3 county any more is ORPHANED and FAILS. Neither
+# can sit here quietly after it stops being true.
+ROBOTS_REFUSED_DROPS = {
+    "Bremer": (
+        "2026-09-13: bremercounty.iowa.gov and www.bremercounty.iowa.gov both "
+        "answer HTTP 500 on /robots.txt -- five reads over 40 s -- while the "
+        "site's own home page serves 178 KB. RFC 9309 and this project file a "
+        "5xx on robots.txt as disallow-all, so a broken endpoint on a working "
+        "site costs the county until it is fixed. Retires itself on the run "
+        "that URL answers."),
+    "Hamilton": (
+        "2026-09-13: hamiltoncounty.iowa.gov redirects /robots.txt to its CMS "
+        "vendor's per-tenant path, cms2.revize.com/revize/hamiltonia/robots.txt "
+        "-- Hamilton's own file rather than Revize's -- which gives five named "
+        "search-engine tokens Allow: / and `*` Disallow: /. No token this repo "
+        "sends is a vendor crawler token, so `*` binds us."),
+}
 
 
 def load(path, what):
@@ -102,9 +147,19 @@ def main():
 
     cache = load(CACHE, "supervisor district cache -- run the scraper first")
 
-    directory, skipped = {}, []
+    directory, skipped, refused_now = {}, [], {}
     for county in sorted(cache):
         entry = cache[county]
+        # The scraper's own outcome for a host it may not read. Reported before
+        # anything else is asked of the county, because it is a fact about the
+        # SITE: whether the roster names a board or the geometry seats one has
+        # no bearing on it, and a refusal reported as "no gated supervisor
+        # list" would read as this repo's own gap.
+        if entry.get("robotsRefused"):
+            refused_now[county] = entry["robotsRefused"]
+            skipped.append((county, "robots.txt refuses this client -- %s"
+                            % entry["robotsRefused"]))
+            continue
         keyed = entry.get("districts") or {}
         board = board_by_county.get(county)
         if not board:
@@ -193,13 +248,46 @@ def main():
             was = {rec["county"]: len(rec["districts"]) for rec in json.load(f).values()}
     except (OSError, ValueError):
         was = {}
-    gone = sorted(set(was) - {r["county"] for r in directory.values()} - allowed_drops)
+
+    # ROBOTS_REFUSED_DROPS, re-audited against THIS run before it is allowed to
+    # excuse anything. An entry that has stopped being true is a hole in the
+    # guard with nothing saying so, which is the failure mode every recorded
+    # exception in this repo is written to avoid.
+    plan3 = {c for c, plan in plan_by_county.items() if plan == "PLAN 3"}
+    for county in sorted(ROBOTS_REFUSED_DROPS):
+        why = ROBOTS_REFUSED_DROPS[county]
+        if county not in plan3:
+            raise RuntimeError(
+                "ROBOTS_REFUSED_DROPS names %s, which is not a plan 3 county in "
+                "the shipped geometry -- the entry is orphaned and should go"
+                % county)
+        if county in cache and county not in refused_now:
+            raise RuntimeError(
+                "ROBOTS_REFUSED_DROPS names %s, but this run read its site "
+                "without being refused -- the entry is stale. Retire it; the "
+                "county keys again like any other." % county)
+        state = "refused this run" if county in refused_now else "not read this run"
+        print("  robots-refused %-12s %s | %s" % (county, state, why),
+              file=sys.stderr)
+
+    # A refusal excuses a drop only where it is BOTH reported by this run and
+    # recorded above. A county newly refused and not recorded stops the build,
+    # which is the point: that is indistinguishable from a bug in the robots
+    # read until somebody looks at the host.
+    excused = {c for c in refused_now if c in ROBOTS_REFUSED_DROPS}
+    gone = sorted(set(was) - {r["county"] for r in directory.values()}
+                  - allowed_drops - excused)
     if gone:
         raise RuntimeError(
             "%s shipped last time and keyed nothing this time -- that is a page to "
             "re-read, not a diff to merge. The scraper's own skip reason for each is "
-            "above; pass --allow-drop to drop a county deliberately"
-            % ", ".join("%s (%d districts)" % (c, was[c]) for c in gone))
+            "above; pass --allow-drop to drop a county deliberately%s"
+            % (", ".join("%s (%d districts)" % (c, was[c]) for c in gone),
+               "" if not (set(gone) & set(refused_now)) else
+               ". Refused by its own robots.txt: %s -- record each in "
+               "ROBOTS_REFUSED_DROPS with what was measured, rather than "
+               "dropping it by hand"
+               % ", ".join(sorted(set(gone) & set(refused_now)))))
 
     # Structural refusal: only these two fields may ship on a person. No
     # address, ever -- and no phone, because the only number any of these

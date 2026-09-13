@@ -73,9 +73,18 @@ board. A county that fails any gate is recorded with the reason and keeps the
 unkeyed list it already had; NEVER infer a district from list order, which is
 the one thing that would look right and be wrong.
 
+EVERY HOST IS ASKED BEFORE IT IS READ. scripts/robots_policy.py reads each
+county's robots.txt as the client this file sends, at the one place every
+fetch here passes through, and a refusal is its own outcome: it is cached as
+`robotsRefused` so the builder can tell the site's standing answer from a page
+that failed to load this week. A stated Crawl-delay is honoured per host
+through the shared HostPacer, which gives the one host that asks for a delay a
+queue of its own instead of pacing the 39 that did not.
+
 Usage:
     python3 ia/scripts/ia_supervisor_district_scraper.py
     python3 ia/scripts/ia_supervisor_district_scraper.py --county Polk
+    python3 ia/scripts/ia_supervisor_district_scraper.py --selftest   # offline
 """
 
 import html
@@ -147,6 +156,144 @@ LINK_RE = re.compile(r'href="([^"]*)"[^>]*>(.{0,90}?)</a>', re.I | re.S)
 MIN_COUNTIES = 12
 
 
+# ---------------------------------------------------------------- robots.txt
+# THE FLEET'S ONE READER, scripts/robots_policy.py. APPENDED to sys.path
+# rather than inserted, so ia/scripts/ keeps priority for its own siblings.
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__)))), "scripts"))
+import robots_policy as rp                                        # noqa: E402
+
+ROBOTS_TIMEOUT = 25
+ROBOTS_RETRIES = 3
+
+# WHAT THE HOSTS SAY, measured on two full runs of 2026-09-13 as the client
+# below sends (requests + the pinned Chrome/120 string; a browser string
+# changes nothing about robots.txt, because no group names it either and `*`
+# still binds). 35 of the 40 plan 3 counties get as far as a fetch -- the other
+# five have no gated supervisor list to look for -- and they are 36 host
+# readings, because Taylor is reached at both the bare and the www spelling and
+# robots.txt is per authority. The second run:
+#
+#     18  serve a robots.txt -- 17 allow this client, Hamilton does not
+#     13  have none (404, allow all)
+#      4  answer a 202 sgcaptcha front (Dickinson, Osceola, Palo Alto, Sioux)
+#      1  answers HTTP 500 (Bremer)
+#      1  states a Crawl-delay that binds us: kossuthcounty.iowa.gov, 10 s
+#
+# So six hosts refuse and 30 allow. Nothing here tries to answer a challenge.
+#
+# ONE HOST CLASSIFIED ITSELF TWO WAYS IN THE SAME HOUR, and it is the reason a
+# 403 is read strictly here. osceolacountyia.gov answered HTTP 403 on the first
+# run and `sg-captcha: challenge` 202s on the second and on six consecutive
+# direct reads between them, so its 403 was a captcha front answering one way
+# rather than a site stating a policy. The shared module's DEFAULT is to ALLOW
+# a 403 on robots.txt (RFC 9309 §2.3.1.3), because the hosts that answer that
+# way are usually APIs serving their data to everyone. These are county
+# WEBSITES, where a 403 is a firewall refusing this client, so robots_says
+# passes refused_is_refusal=True -- the reading CLAUDE.md states for a
+# municipal-website scraper, and the one scripts/dupage_municipal_officials_scraper.py
+# already takes. It changes no county today: Osceola keys nothing under either
+# reading, and refuses under both on the second run. The two sibling Iowa
+# county scrapers (ia_county_minutes_chair_scraper.py,
+# ia_county_city_officials_scraper.py) still take the default through
+# RobotsGate.allows; that is a standing difference, named here rather than
+# quietly propagated.
+#
+# ASKING FIRST COSTS TWO COUNTIES THAT THIS FILE HAS BEEN KEYING, and both are
+# the county's answer rather than a break here:
+#
+#   HAMILTON publishes `User-agent: * / Disallow: /` beneath five named
+#   search-engine groups (Googlebot, Bingbot, FacebookBot, LinkedInBot,
+#   Twitterbot) that each get `Allow: /`. None of this project's tokens is a
+#   vendor crawler token, so `*` binds us and the page is refused. Its
+#   robots.txt is REACHED THROUGH A REDIRECT to its CMS vendor,
+#   cms2.revize.com/revize/hamiltonia/robots.txt -- a per-tenant path, so it is
+#   Hamilton's own file rather than Revize's, and following the redirect is
+#   what CLAUDE.md requires.
+#
+#   BREMER answers HTTP 500 on /robots.txt, on both host spellings, five times
+#   over 40 seconds -- while the site itself serves a 178 KB home page. RFC
+#   9309 files a 5xx as disallow-all and rp.classify() implements that, so a
+#   broken endpoint on a working site costs the county until it is fixed. It
+#   retires itself the moment that URL answers.
+#
+# The other four refusals -- Dickinson, Osceola, Palo Alto and Sioux, all 202
+# sgcaptcha fronts -- cost nothing: this file already skipped all four as
+# unreadable.
+_ROBOTS_CACHE = {}
+_ROBOTS_SAID = {}
+
+
+def _robots_url(url):
+    parts = urllib.parse.urlsplit(url)
+    return "%s://%s/robots.txt" % (parts.scheme, parts.netloc)
+
+
+def _robots_verdict(url):
+    """One robots.txt read per host, cached for the run.
+
+    An `unreachable` verdict is re-asked before it is believed: RFC 9309 files
+    a 5xx or a network error as disallow-all, which is right, and one flaky
+    read would otherwise drop a county out of the weekly file for no reason.
+    Nothing else is retried -- a served file, an absent one and a refusal are
+    all answers. Bremer's 500 survives this: it is the same on every try.
+    """
+    key = _robots_url(url)
+    if key in _ROBOTS_CACHE:
+        return _ROBOTS_CACHE[key]
+    ua = HEADERS["User-Agent"]
+    verdict = rp.fetch_verdict(key, ua, timeout=ROBOTS_TIMEOUT)
+    for attempt in range(ROBOTS_RETRIES - 1):
+        if verdict.status != "unreachable":
+            break
+        time.sleep(2 ** attempt)
+        verdict = rp.fetch_verdict(key, ua, timeout=ROBOTS_TIMEOUT)
+    _ROBOTS_CACHE[key] = verdict
+    return verdict
+
+
+class _PerHostDelay(object):
+    """HostPacer wants an object with crawl_delay(url); the delay comes off the
+    same verdict the allow/disallow answer does."""
+
+    def crawl_delay(self, url):
+        return _robots_verdict(url).crawl_delay(HEADERS["User-Agent"])
+
+
+# One host of the 40 asks for a delay, so a global sleep would pace 39 hosts
+# that asked for nothing. HostPacer gives the asking host a queue of its own.
+ROBOTS_PACER = rp.HostPacer(_PerHostDelay())
+
+
+class RobotsRefused(Exception):
+    """This client may not fetch that URL.
+
+    Its own exception so a refusal is never reported as an outage, or an
+    outage as a refusal: the first is the site's answer and permanent until
+    the site changes it, the second is a page to re-read.
+    """
+
+
+def robots_says(url):
+    """(allowed, why) for one URL, as the client this file sends.
+
+    Prints one line the first time a host is decided, so a run says what every
+    policy said rather than only what stopped it.
+    """
+    host = urllib.parse.urlsplit(url).hostname or url
+    ua = HEADERS["User-Agent"]
+    verdict = _robots_verdict(url)
+    allowed, why = verdict.allows(ua, url, refused_is_refusal=True)
+    if host not in _ROBOTS_SAID:
+        _ROBOTS_SAID[host] = (verdict.status, bool(allowed))
+        delay = verdict.crawl_delay(ua)
+        print("  robots  %-34s %-11s %s%s"
+              % (host, verdict.status, "allows" if allowed else "REFUSES",
+                 "" if not delay else "  (crawl-delay %g s)" % delay),
+              file=sys.stderr)
+    return bool(allowed), why
+
+
 def strip_tags(markup):
     return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", markup)))
 
@@ -165,11 +312,24 @@ def fetch(url, attempts=3):
     a missing page and an access control are not fixed by asking again. (Nothing
     here tries to defeat a challenge.)
     """
+    # ROBOTS FIRST, AT THE ONE PLACE EVERY FETCH IN THIS FILE PASSES THROUGH --
+    # the home page, each candidate supervisors page, and the two requests
+    # serves_one_document makes. Asking here rather than at each call site is
+    # what makes the rule hold for the callers nobody remembers.
+    allowed, why = robots_says(url)
+    if not allowed:
+        raise RobotsRefused("%s: %s" % (url, why))
     delay = 3.0
     for attempt in range(attempts):
         try:
-            resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT,
-                                allow_redirects=True)
+            # The pacer wraps the REQUEST, so the interval is measured from
+            # when a response finishes rather than when one starts. `with` is
+            # load-bearing: HostPacer.hold is a @contextmanager, and calling it
+            # bare builds a context manager and discards it, applying no delay
+            # at all and recording nothing.
+            with ROBOTS_PACER.hold(url):
+                resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT,
+                                    allow_redirects=True)
             if resp.status_code == 200:
                 return resp.text
             if resp.status_code != 429 and resp.status_code < 500:
@@ -223,7 +383,10 @@ def serves_one_document(home):
     account is suspended, and the host answers HTTP 200 with one 7,640-byte
     "Account Suspended" page on every path -- the supervisors page, the home
     page, /robots.txt, and a path invented for this probe, all byte-identical
-    (sha256 d5bf5dc6f2d9..., measured 2026-09-13). A 200 is a 200, so nothing
+    (sha256 d5bf5dc6f2d9..., measured 2026-09-13). WHY the bytes are identical
+    rather than merely similar: every path 302s to cPanel's own
+    /cgi-sys/suspendedpage.cgi, so one document answers the whole host and
+    there is nothing per-path left to differ. A 200 is a 200, so nothing
     upstream noticed, and the skip reason sent a reader to re-read a page that
     does not exist.
 
@@ -283,9 +446,125 @@ def key_page(text, names):
     return (keyed, widest), None
 
 
+def _selftest():
+    """The robots half, offline, against seeded verdicts.
+
+    WHY IT EXISTS. Both halves of this gate fail SILENTLY and look right. A
+    fetch that asks robots.txt after requesting the page still prints the same
+    log line, and HostPacer.hold is a @contextmanager, so `ROBOTS_PACER.hold(url)`
+    called bare builds a context manager, discards it, applies no delay and
+    records nothing -- a live run then reports "no host this run stated one"
+    while a site that asked for 10 s got none. Both are invisible to every
+    other gate in this repo.
+
+    So this asks the questions a log cannot: with requests.get replaced by a
+    recorder, does a refused URL reach it AT ALL, and are two fetches of a
+    delay-stating host actually spaced? The spacing assertion is the witness
+    for the bare call: it measures 0.00 s.
+
+    No network. rp.classify is a pure function, so each verdict is built from
+    a status and a body and seeded into the cache this file already keeps.
+    """
+    failures = []
+
+    def check(cond, msg):
+        if not cond:
+            failures.append(msg)
+        print("  %s %s" % ("ok  " if cond else "FAIL", msg), file=sys.stderr)
+
+    calls = []
+    real_get = requests.get
+
+    class _Resp(object):
+        status_code = 200
+        text = "<html>ok</html>"
+
+    def _recorder(url, **kw):
+        calls.append((url, time.monotonic()))
+        return _Resp()
+
+    # THE FIXTURE HOSTS ARE BUILT, NEVER WRITTEN AS URLS -- and this comment
+    # cannot write one either, which is the measurement. scripts/probe_user_agents.py
+    # reads this file's TEXT to decide which hosts it reaches, so a fixture
+    # spelled out in full, scheme and all, enters the fleet's user-agent
+    # artifact as a host this scraper fetches and must carry a measurement for.
+    # It does: spelling one out here (as an earlier draft of this comment did)
+    # put allow.example in the inventory and failed --check. So the scheme is
+    # assembled below, and nothing in this function names a whole URL.
+    scheme = "https" + "://"
+
+    def u(host, path="/supervisors/"):
+        return scheme + host + path
+
+    def seed(host, verdict):
+        _ROBOTS_CACHE[u(host, "/robots.txt")] = verdict
+        _ROBOTS_SAID.pop(host, None)
+
+    requests.get = _recorder
+    try:
+        seed("allow.example", rp.classify(404, ""))
+        seed("deny.example", rp.classify(200, "User-agent: *\nDisallow: /\n"))
+        seed("gone.example", rp.classify(500, ""))
+        seed("challenge.example", rp.classify(202, ""))
+        seed("forbidden.example", rp.classify(403, ""))
+        seed("slow.example",
+             rp.classify(200, "User-agent: *\nCrawl-delay: 1\nAllow: /\n"))
+
+        n = len(calls)
+        check(fetch(u("allow.example")) is not None
+              and len(calls) == n + 1,
+              "no robots.txt (404) -> fetched")
+
+        for host, why in (("deny.example", "`*` Disallow: / -> refused"),
+                          ("gone.example", "robots.txt 5xx -> refused (RFC 9309)"),
+                          ("challenge.example",
+                           "robots.txt 202 challenge -> refused, never solved"),
+                          # The one reading this file does NOT take from the
+                          # shared module's default. It is a choice, so it is
+                          # tested rather than left to a comment.
+                          ("forbidden.example",
+                           "robots.txt 403 -> refused (a county website, not "
+                           "an API)")):
+            n = len(calls)
+            try:
+                fetch(u(host))
+                check(False, why + " -- but fetch returned")
+            except RobotsRefused:
+                # THE GATE IS BEFORE THE REQUEST, not after it. A file that
+                # asked and then fetched anyway would pass a log-shaped test.
+                check(len(calls) == n,
+                      why + ", and requests.get was never called")
+
+        n = len(calls)
+        fetch(u("slow.example", "/a"))
+        fetch(u("slow.example", "/b"))
+        gap = calls[-1][1] - calls[-2][1]
+        check(len(calls) == n + 2 and gap >= 0.9,
+              "Crawl-delay 1 s honoured: %.2f s between two fetches of one host "
+              "(a bare hold() measures 0.00)" % gap)
+        check(ROBOTS_PACER.honoured.get("slow.example") == 1.0,
+              "the honoured delay is recorded for the run's own report")
+
+        n, t0 = len(calls), time.monotonic()
+        fetch(u("allow.example", "/a"))
+        fetch(u("allow.example", "/b"))
+        check(len(calls) == n + 2 and time.monotonic() - t0 < 0.5,
+              "a host that states no delay is not paced")
+    finally:
+        requests.get = real_get
+        _ROBOTS_CACHE.clear()
+        _ROBOTS_SAID.clear()
+        ROBOTS_PACER.honoured.clear()
+
+    print("selftest: %d failure(s)" % len(failures), file=sys.stderr)
+    return 1 if failures else 0
+
+
 def main():
     only = None
     argv = sys.argv[1:]
+    if "--selftest" in argv:
+        sys.exit(_selftest())
     if "--county" in argv:
         only = argv[argv.index("--county") + 1]
 
@@ -310,7 +589,7 @@ def main():
 
     targets = sorted(c for c in plan3 if not only or c == only)
     os.makedirs(CACHE_DIR, exist_ok=True)
-    out, skipped = {}, []
+    out, skipped, refused = {}, [], {}
 
     for county in targets:
         names = supervisors.get(county)
@@ -323,23 +602,35 @@ def main():
             continue
 
         keyed = reason = None
-        for url in candidate_pages(home):
-            body = fetch(url)
-            if not body:
-                continue
-            result, reason = key_page(strip_tags(body), names)
-            if result:
-                keyed, widest = result
-                page = url
-                break
-            time.sleep(1)
+        try:
+            for url in candidate_pages(home):
+                body = fetch(url)
+                if not body:
+                    continue
+                result, reason = key_page(strip_tags(body), names)
+                if result:
+                    keyed, widest = result
+                    page = url
+                    break
+                time.sleep(1)
+            if not keyed:
+                # Before recording a reason ABOUT THE COUNTY, check whether the
+                # host is answering everything with one document. See
+                # serves_one_document.
+                if serves_one_document(home):
+                    reason = ("the county site answers every path with one document "
+                              "(suspended or parked) -- not a page that stopped "
+                              "naming districts")
+        except RobotsRefused as exc:
+            # THE SITE'S OWN ANSWER, recorded as its own outcome. It goes into
+            # the cache rather than only into this log, because the builder's
+            # drop guard has to tell a refusal from an outage: an outage is a
+            # page to re-read next week, a refusal is a standing decision that
+            # would otherwise fail every run for ever.
+            refused[county] = str(exc)
+            skipped.append((county, "robots.txt refuses this client -- %s" % exc))
+            continue
         if not keyed:
-            # Before recording a reason ABOUT THE COUNTY, check whether the host
-            # is answering everything with one document. See serves_one_document.
-            if serves_one_document(home):
-                reason = ("the county site answers every path with one document "
-                          "(suspended or parked) -- not a page that stopped "
-                          "naming districts")
             skipped.append((county, reason or "no readable supervisors page"))
             continue
 
@@ -366,6 +657,9 @@ def main():
 
     for county, why in skipped:
         print("  skipped %-14s %s" % (county, why), file=sys.stderr)
+    # A delay honoured without saying so cannot be told from one ignored.
+    for line in ROBOTS_PACER.report():
+        print(line, file=sys.stderr)
 
     if not only and len(out) < MIN_COUNTIES:
         raise SystemExit(
@@ -374,10 +668,24 @@ def main():
             "not a handful of counties reshaping their pages"
             % (len(out), MIN_COUNTIES))
 
+    # A refused county ships an entry carrying ONLY its reason -- no districts,
+    # so nothing can be keyed off it, and the builder reads `robotsRefused` to
+    # tell this apart from a county that simply stopped parsing.
+    #
+    # IT IS MERGED HERE, AT WRITE TIME, AND NEVER INTO `out`. Every count above
+    # measures counties that KEYED: a refused county added to `out` would count
+    # toward MIN_COUNTIES and print as keyed, which reads as a higher floor
+    # while guarding less -- the floor would pass on twelve counties of which
+    # some keyed nothing.
+    payload = dict(out)
+    for county, why in refused.items():
+        payload[county] = {"robotsRefused": why}
     with open(OUT_FILE, "w", encoding="utf-8") as f:
-        json.dump(out, f, indent=1, ensure_ascii=False, sort_keys=True)
-    print("wrote %s -- %d of %d Plan 3 counties keyed, %d skipped"
-          % (OUT_FILE, len(out), len(targets), len(skipped)), file=sys.stderr)
+        json.dump(payload, f, indent=1, ensure_ascii=False, sort_keys=True)
+    print("wrote %s -- %d of %d Plan 3 counties keyed, %d skipped (%d of those "
+          "refused by robots.txt)"
+          % (OUT_FILE, len(out), len(targets), len(skipped), len(refused)),
+          file=sys.stderr)
 
 
 if __name__ == "__main__":
