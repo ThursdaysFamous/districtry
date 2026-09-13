@@ -21,8 +21,10 @@ TWELVE ROUTES, AND WHICH ONE A COUNTY TAKES IS A MEASUREMENT
   * WITNESSED_DOCUMENT_COUNTIES - Kenosha, whose Clerk publishes the roster in a
                                   directory PDF this file FETCHES and cross-checks
                                   against the board's own page every run;
-  * PDF_COUNTIES                - Adams, whose directory PDF is fetchable and
-                                  district-keyed, so it is re-read weekly like a page;
+  * DISTRICT_PAGE_COUNTIES      - Adams, whose listing page links a page per
+                                  district, each naming that seat's supervisor
+                                  and carrying the district mailbox that
+                                  witnesses the number;
   * CLARK_DIRECTORY             - Clark, whose board page names only the chair
                                   and whose Clerk's 44-page OFFICIAL DIRECTORY
                                   prints all 29 seats eleven pages further in,
@@ -945,6 +947,7 @@ import random
 import re
 import ssl
 import sys
+import threading
 import time
 import urllib.error
 import urllib.parse
@@ -1028,10 +1031,20 @@ DEFAULT_OUT = os.path.join(os.path.dirname(__file__), ".cache", "wi_county_board
 # the token, 200 to stdlib + the same token, which is why a verdict measured
 # with another client does not transfer. saukdomino.co.sauk.wi.us is the PATH:
 # the sweep read 404 at the URL it picked and this file's own URL serves
-# 113,018 bytes. The sweep also files nine of these hosts
-# `robots-disallows-this-path`, again for the path IT picked; all nine of this
-# file's own URLs on those hosts are permitted, read through
-# scripts/robots_policy.py with the token before each fetch in the count above.
+# 113,018 bytes.
+#
+# CORRECTED 2026-09-13. This paragraph used to end "the sweep also files nine of
+# these hosts `robots-disallows-this-path`, again for the path IT picked; all
+# nine of this file's own URLs on those hosts are permitted". THE SECOND HALF
+# WAS FALSE. Seven of the nine publish `User-agent: *` with `Disallow: /`, so
+# this file's own URLs on them are NOT permitted: ashlandcountywi.gov,
+# dunncountywi.gov, richlandcountywi.gov, ruskcounty.org, www.co.jackson.wi.us,
+# www.co.pepin.wi.us and www.polkcountywi.gov. The check that produced the
+# claim called `Verdict.allows()`, which returns a `(bool, why)` TUPLE, and
+# truthiness-tested the tuple — `bool((False, "why"))` is True, so every host
+# printed as permitted. Nothing improper was fetched: all seven are
+# DOCUMENT_ROSTERS entries with no `live` spec, so their pages were never
+# requested. The gate below is what now decides this rather than a paragraph.
 #
 # The client hints below say Chromium while the User-Agent says districtry,
 # which is two answers to one question. They are kept because they are what was
@@ -1123,6 +1136,212 @@ def headers_for(url):
     """
     host = urllib.parse.urlsplit(url).hostname or url
     return UA if host in TOKEN_REFUSED_HOSTS else HONEST_UA
+
+
+# THE ROBOTS READER IS THE FLEET'S ONE COPY, scripts/robots_policy.py. APPENDED
+# to sys.path rather than inserted, the reason wi/scripts/validate_robots.py
+# records: inserting the root scripts/ first is how a bare import once resolved
+# to Illinois's module and made a Wisconsin sweep report Kane and Coles hosts.
+sys.path.append(os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+    "scripts"))
+import robots_policy as rp                                       # noqa: E402
+
+# ROBOTS.TXT IS READ BEFORE THE FIRST FETCH OF EACH HOST (2026-09-13), which
+# until today this file did not do. CLAUDE.md states the rule and names the
+# gap: the rule "is enacted by the four Iowa page scrapers, the DuPage, Logan
+# and Iowa judicial scrapers, and the two audits, and by nothing else — a
+# scraper that fetches without asking is not yet in breach of anything it read,
+# and is the next thing to fix." This scrape reads more hosts than any other in
+# the fleet, so it was the largest one not asking.
+#
+# ASKED AS THE CLIENT THIS FILE ACTUALLY SENDS, which is why there is a gate
+# per User-Agent rather than one for the file: headers_for() sends Chrome/124 to
+# the hosts in TOKEN_REFUSED_HOSTS and the districtry token to every other, and
+# a policy read by a different client from the crawl is the one asymmetry a
+# compliance check must not have. A pinned Chrome host is still bound by `*` —
+# no group anywhere names either string.
+#
+# WHAT THE 74 HOSTS SAID, measured 2026-09-13 from a Claude Code sandbox (the
+# vantage is named because reachability moves with it; the rules do not):
+#
+#     44  serve a robots.txt
+#     21  have none (HTTP 404) and allow everything
+#      7  refuse robots.txt to this client (HTTP 403)
+#      1  answers HTTP 202, a captcha front rather than a document
+#      1  was unreachable that minute and served the day before
+#
+# SEVEN OF THE 44 DISALLOW THIS CLIENT SITE-WIDE — ashlandcountywi.gov,
+# dunncountywi.gov, richlandcountywi.gov, ruskcounty.org, www.co.jackson.wi.us,
+# www.co.pepin.wi.us and www.polkcountywi.gov all publish `User-agent: *` with
+# `Disallow: /` — and NO COUNTY LOSES ITS WEEKLY REFRESH, because all seven are
+# DOCUMENT_ROSTERS entries with no `live` spec: their rosters are carried as
+# dated documents and their pages were never fetched. The rule was being held
+# by the shape of the tables rather than by a check, which is the arrangement
+# this gate replaces.
+#
+# WHAT THE FIRST GATED RUN COST, AND IT IS NOT NOTHING. 68 of 72 counties,
+# against 72 before, because asking first found two fetches that were
+# disallowed all along and nobody had asked:
+#
+#   Dodge    /fs/elements/9367 — the county's own robots.txt says Disallow: /fs/
+#   Adams    drive.google.com/uc — Google disallows /uc site-wide
+#
+# Both are re-sourcing rather than blocks — Dodge publishes a board page at a
+# permitted path — and wi/WATCH.md carries each with the permitted URL where one
+# is known. FOREST is a third kind: its robots.txt answers a connection reset,
+# so the policy cannot be read and RFC 9309 files that as disallow-all. The
+# fourth county the first run missed, Kenosha, was HTTP 429 from the sweep's own
+# probing that afternoon and is not a finding.
+#
+# build_wi_county_board_roster.py floors at MIN_COUNTIES = 70, so the weekly run
+# FAILS and opens no PR while this stands, and county-board-members.json keeps
+# the names it last read. That is the intended shape: a red job says two
+# counties need re-sourcing, where a green one would have gone on fetching two
+# pages their publishers had said not to.
+ROBOTS_TIMEOUT = 30
+ROBOTS_RETRIES = 3
+
+# A 403 ON ROBOTS.TXT MEANS DIFFERENT THINGS ON DIFFERENT KINDS OF HOST, and
+# CLAUDE.md draws the line: an ArcGIS FeatureServer answers 401/403 to
+# /robots.txt while serving its data to everyone, so the permissive reading is
+# right there, and a municipal WEBSITE answering 403 is a firewall refusing
+# this client, so the strict reading is right there. This file asks strictly by
+# default and lists the hosts that opt out.
+ROBOTS_PERMISSIVE_HOSTS = (
+    "services1.arcgis.com",
+    "services2.arcgis.com",
+    "webapi.legistar.com",
+    "web.archive.org",
+    "archive.org",
+)
+
+# THE FIVE MUNICIPAL SITES THAT REFUSE ROBOTS.TXT TO THIS CLIENT, carried at
+# today's behaviour because whether a refusal counts as a refusal by DEFAULT is
+# an open decision about scripts/robots_policy.py for the whole fleet, not a
+# Wisconsin one. Three of them are COUNTIES rows read every week (Monroe, Rock,
+# Sheboygan) and reading a 403 strictly would stop those three counties
+# refreshing; that is a coverage change and it is not made here. Each entry is
+# dated and re-audited on every run, so a host that starts serving its policy
+# leaves this list instead of sitting in it.
+# Hosts that refuse to serve robots.txt TO THE CLIENT THIS FILE CRAWLS WITH, and
+# are carried at today's behaviour (RFC 9309 files a 401/403 with a 404: allow)
+# until the fleet settles whether a refusal should read as a refusal by default.
+#
+# EMPTY, AND THAT IS A MEASUREMENT RATHER THAN AN OMISSION. #944 listed five —
+# Monroe, Rock, Sheboygan, Fond du Lac and Marathon — and every one was an
+# artefact of reading the policy with a weaker client than the crawl: the gate
+# sent User-Agent + Accept where the scrape sends seven headers. Measured
+# 2026-09-13, all five answer 403 to the first and 200 to the second (6,641 /
+# 6,641 / 6,706 / 71 / 6,641 bytes), and wi/scripts/validate_robots.py, which
+# has always used headers_for, read all five as served the whole time. With the
+# read corrected all five serve a policy that PERMITS every path this file
+# fetches on them, so nothing is carried and no county's reading changes.
+#
+# An entry here is audited like ACCEPTED_DROPS: it FAILS when the host serves
+# its policy after all (the exception has outlived its reason) and when no
+# table in this file names the host any more (it is orphaned). Both run in
+# --selftest, so an entry cannot rot quietly the way a once-per-run print can.
+ROBOTS_REFUSED_PENDING = {}
+
+_ROBOTS_CACHE = {}          # (user-agent, robots url) -> Verdict
+_ROBOTS_CACHE_LOCK = threading.Lock()
+_ROBOTS_SAID = {}
+_ROBOTS_SAID_LOCK = threading.Lock()
+
+
+def _robots_url(url):
+    parts = urllib.parse.urlsplit(url)
+    return "%s://%s/robots.txt" % (parts.scheme, parts.netloc)
+
+
+def _robots_verdict(url):
+    """One robots.txt read per (client, host), cached for the run.
+
+    scripts/robots_policy.RobotsGate does the caching and locking part of this
+    and is NOT used, for one reason: it is built with a single User-Agent and
+    this file sends two, so there would be a gate per client and the retry
+    below would have to reach into a gate's private cache to discard a verdict
+    it wants to re-ask. A dict and a lock here is less code than that.
+    """
+    # THE POLICY IS READ WITH THE HEADER SET THE CRAWL SENDS. Reading it with
+    # only User-Agent + Accept measures a different client from the one that
+    # fetches, which is the asymmetry wi/WATCH.md names as the one an audit
+    # must not have -- and it is not hypothetical here: measured 2026-09-13,
+    # all five hosts #944 listed in ROBOTS_REFUSED_PENDING answered 403 to the
+    # two-header read and 200 to these headers, so that whole list was a fact
+    # about the gate rather than about the scraper.
+    crawl_headers = headers_for(url)
+    ua = crawl_headers["User-Agent"]
+    key = (ua, _robots_url(url))
+    with _ROBOTS_CACHE_LOCK:
+        if key in _ROBOTS_CACHE:
+            return _ROBOTS_CACHE[key]
+    verdict = rp.fetch_verdict(key[1], ua, timeout=ROBOTS_TIMEOUT,
+                               headers=crawl_headers)
+    # RFC 9309 files a 5xx or a network failure as disallow-all, which is
+    # right, and a single flaky read would otherwise drop a county out of the
+    # weekly file: co.forest.wi.gov served its policy on 2026-09-12 and was
+    # unreachable for one minute on 2026-09-13. So an `unreachable` verdict is
+    # re-asked before it is believed; nothing else is retried, because a served
+    # file, an absent one and a refusal are all answers.
+    for attempt in range(ROBOTS_RETRIES - 1):
+        if verdict.status != "unreachable":
+            break
+        time.sleep(2 ** attempt)
+        verdict = rp.fetch_verdict(key[1], ua, timeout=ROBOTS_TIMEOUT,
+                               headers=crawl_headers)
+    with _ROBOTS_CACHE_LOCK:
+        _ROBOTS_CACHE.setdefault(key, verdict)
+        return _ROBOTS_CACHE[key]
+
+
+class _PerHostDelay(object):
+    """HostPacer takes an object with crawl_delay(url); the delay comes off the
+    same verdict the allow/disallow answer does."""
+
+    def crawl_delay(self, url):
+        return _robots_verdict(url).crawl_delay(headers_for(url)["User-Agent"])
+
+
+# Four of the 74 state a Crawl-delay that binds this client, measured
+# 2026-09-13: manitowoccountywi.gov and www.buffalocountywi.gov 10 s,
+# www.co.dodge.wi.gov and www.iowacountywi.gov 5 s. A host that asks gets a
+# queue of its own and every other host keeps full speed — the reason the
+# shared HostPacer exists rather than a global sleep.
+ROBOTS_PACER = rp.HostPacer(_PerHostDelay())
+
+
+def robots_says(url):
+    """(allowed, why) for one URL, decided as the client this file sends.
+
+    Prints one line per host the first time that host is decided, so a weekly
+    run says what every policy said rather than only what stopped it.
+    """
+    host = urllib.parse.urlsplit(url).hostname or url
+    ua = headers_for(url)["User-Agent"]
+    verdict = _robots_verdict(url)
+    strict = host not in ROBOTS_PERMISSIVE_HOSTS and host not in ROBOTS_REFUSED_PENDING
+    allowed, why = verdict.allows(ua, url, refused_is_refusal=strict)
+    with _ROBOTS_SAID_LOCK:
+        first = host not in _ROBOTS_SAID
+        _ROBOTS_SAID[host] = (verdict.status, bool(allowed), why)
+    if first:
+        delay = verdict.crawl_delay(ua)
+        print("  robots  %-28s %-11s %s%s"
+              % (host, verdict.status, "allows" if allowed else "REFUSES",
+                 "" if not delay else " (crawl-delay %g s)" % delay),
+              file=sys.stderr)
+        if host in ROBOTS_REFUSED_PENDING and verdict.status != "refused":
+            print("  robots  %-28s NO LONGER REFUSES its policy — drop it from "
+                  "ROBOTS_REFUSED_PENDING and read it strictly" % host,
+                  file=sys.stderr)
+    return bool(allowed), why
+
+
+class RobotsRefused(Exception):
+    """This client may not fetch that URL. Kept distinct from every network
+    failure so a run never reports a refusal as an outage, or the reverse."""
 
 # (county FIPS, name as LTSB spells it, seats, reading direction, page)
 COUNTIES = [
@@ -1320,6 +1539,22 @@ _DROP = re.compile(r"(?is)<(script|style)[^>]*>.*?</\1>")
 _BREAK = re.compile(r"(?is)<br\s*/?>|</t[dh]>|</tr>|</p>|</li>|</div>|</h\d>|</a>|</span>|</strong>|</b>")
 _TAG = re.compile(r"(?s)<[^>]+>")
 _FRAGMENT = re.compile(r"[a-z]{1,2}")
+
+
+def why_unfetched(exc):
+    """The CAUSE of a skipped fetch, in words that tell a refusal from an outage.
+
+    RobotsRefused is an Exception, so every `except Exception as e` in this file
+    that printed `%s % e` reported a host's own published policy as though the
+    host had failed. No fetch happens either way -- the gate already stopped it
+    -- but the two send the next reader somewhere different: an outage is worth
+    re-running, a refusal is worth re-sourcing or asking the county about. The
+    log lines that said `unreachable` now say `not read`, for the same reason.
+    Found 2026-09-13 with the fetch_page defect.
+    """
+    if isinstance(exc, RobotsRefused):
+        return "not fetched: robots.txt refuses this path"
+    return str(exc)
 
 
 def to_lines(page_html):
@@ -2451,12 +2686,30 @@ def fetch_bytes(url, headers=None, timeout=45, attempts=4, allow_lax_tls=True):
     # HONEST_UA_HOSTS else UA`, which discarded the argument — see the note
     # beside TOKEN_REFUSED_HOSTS for the two things that cost.
     headers = headers or headers_for(url)
+    # ROBOTS FIRST, AT THE ONE PLACE EVERY FETCH IN THIS FILE PASSES THROUGH.
+    # Asking here rather than at each of the fifty call sites is what makes the
+    # rule hold for the rungs nobody remembers: the archive reader, the Save
+    # Page Now probe, every per-county directory scrape. RobotsRefused is
+    # raised rather than returned so a refusal can never be mistaken for an
+    # empty page, and never for an outage.
+    allowed, why = robots_says(url)
+    if not allowed:
+        raise RobotsRefused("%s: %s" % (url, why))
     last = None
     for attempt in range(attempts):
         for ctx in (None, lax):
             try:
                 req = urllib.request.Request(url, headers=headers)
-                with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
+                # `hold` is a CONTEXT MANAGER: a bare call builds the generator
+                # and never enters it, so the delay is skipped and `honoured`
+                # stays empty. #944 shipped all five sites in this file as bare
+                # calls and claimed in its own body that four hosts were paced;
+                # measured, two bare calls against a 2 s delay elapsed 0.00 s.
+                # It wraps the REQUEST rather than the retry loop, because a
+                # Crawl-delay governs requests: one `with` around the loop would
+                # pace the first attempt and let the retries go back to back.
+                with ROBOTS_PACER.hold(url), \
+                        urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
                     body = r.read()
                     # urllib never unwraps gzip. Both header sets ask for
                     # identity today and ARCHIVE_UA asks for nothing, so this is
@@ -2508,6 +2761,289 @@ ARCHIVE_UA = {"User-Agent": "districtry-county-board-scraper/1.0 "
                             "(+https://districtry.com; civic boundary data)"}
 
 
+
+_SOURCE_TEXT = ""       # this file's own source, read by the selftest only
+
+
+def _robots_selftest():
+    """The robots decision, on doctored robots.txt text — offline, no network.
+
+    Every fixture is a real shape from the 74 hosts this file reads: a site-wide
+    disallow (seven of them publish one), a file that disallows only its admin
+    paths, a 403, a 404, a 202 captcha front, a 5xx, and a Crawl-delay. The
+    verdicts come from scripts/robots_policy.classify, so this exercises the
+    fleet's real reader rather than a copy of its conclusions.
+    """
+    SITEWIDE = "User-agent: *\nDisallow: /\n"
+    ADMIN_ONLY = "User-agent: *\nDisallow: /admin/\nDisallow: /manager/\n"
+    DELAYED = "User-agent: *\nCrawl-delay: 10\nDisallow: /admin/\n"
+
+    global _SOURCE_TEXT
+    with open(__file__, encoding="utf-8") as _f:
+        _SOURCE_TEXT = _f.read()
+    failures = []
+
+    ran = []
+
+    def check(label, cond):
+        # COUNTED, never stated: the final line used to carry a literal 12, so
+        # the three cases added on 2026-09-13 ran and the run went on reporting
+        # twelve. A number a reader trusts has to come from the thing it counts.
+        ran.append(label)
+        if not cond:
+            failures.append(label)
+
+    def seed(host, status, body, path="/supervisors"):
+        url = "https://%s%s" % (host, path)
+        ua = headers_for(url)["User-Agent"]
+        with _ROBOTS_CACHE_LOCK:
+            _ROBOTS_CACHE[(ua, _robots_url(url))] = rp.classify(status, body)
+        with _ROBOTS_SAID_LOCK:
+            _ROBOTS_SAID.pop(host, None)
+        return url
+
+    # 1. A site-wide disallow refuses, which is what seven of these hosts say.
+    check("sitewide disallow refuses",
+          robots_says(seed("dunncountywi.gov.test", 200, SITEWIDE))[0] is False)
+
+    # 2. A file that disallows only its admin paths allows the board page. The
+    #    same file must still refuse the path it names.
+    check("admin-only allows the board page",
+          robots_says(seed("allowed.example.test", 200, ADMIN_ONLY))[0] is True)
+    check("admin-only refuses /admin/",
+          robots_says(seed("allowed.example.test", 200, ADMIN_ONLY,
+                           path="/admin/x"))[0] is False)
+
+    # 3. A 403 on a county WEBSITE is a firewall refusing this client, so it is
+    #    read strictly. This is the reading CLAUDE.md gives municipal sites.
+    check("403 on a website refuses",
+          robots_says(seed("refuses-policy.example.test", 403, ""))[0] is False)
+
+    # 4. A 403 on an API host is that API answering everyone while declining to
+    #    publish a policy — every ArcGIS FeatureServer does it — so those hosts
+    #    opt out of the strict reading by name.
+    api = list(ROBOTS_PERMISSIVE_HOSTS)[0]
+    check("403 on an API host allows",
+          robots_says(seed(api, 403, "", path="/arcgis/rest/services/x"))[0] is True)
+
+    # 5. A host carried in ROBOTS_REFUSED_PENDING is read permissively while the
+    #    fleet-wide default is undecided. The table is EMPTY today (see its
+    #    header), so the MECHANISM is tested with a host put there for the
+    #    duration rather than by indexing whatever happens to be in it — which
+    #    is what this case used to do, and what would make it vanish silently
+    #    the moment the list emptied.
+    pending = "carried.example.test"
+    ROBOTS_REFUSED_PENDING[pending] = "selftest only"
+    try:
+        check("403 on a pending host allows for now",
+              robots_says(seed(pending, 403, "", path="/government/x"))[0] is True)
+    finally:
+        ROBOTS_REFUSED_PENDING.pop(pending, None)
+
+    # 5a. The table audits itself the way ACCEPTED_DROPS does: an entry whose
+    #     host now serves its policy has outlived its reason, and one no table
+    #     in this file names any more is orphaned. Both FAIL rather than print.
+    for host, why in sorted(ROBOTS_REFUSED_PENDING.items()):
+        v = _robots_verdict("https://%s/" % host)
+        check("pending %s still refuses its policy (recorded: %s)" % (host, why),
+              v.status == "refused")
+        # THE ENTRY ITSELF NAMES THE HOST, so searching the whole file always
+        # found it and this half could not fail -- vacuous the hour it was
+        # written. The pending block is excised before the search, so the test
+        # asks what it means to ask: does any OTHER table name this host?
+        elsewhere = re.sub(r"(?s)ROBOTS_REFUSED_PENDING = \{.*?\n\}", "",
+                           _SOURCE_TEXT, count=1)
+        check("pending %s is still named by a table in this file" % host,
+              host in elsewhere)
+
+    # 6. No robots.txt allows everything; RFC 9309 files a 404 that way.
+    check("404 allows", robots_says(seed("nofile.example.test", 404, ""))[0] is True)
+
+    # 7. A 5xx is disallow-all, and a 202 is a captcha front rather than a
+    #    document. Neither may read as permission.
+    check("5xx refuses", robots_says(seed("down.example.test", 503, ""))[0] is False)
+    check("202 refuses", robots_says(seed("challenged.example.test", 202,
+                                          "<meta http-equiv=refresh>"))[0] is False)
+
+    # 8. A stated Crawl-delay is read off the binding group, which is what the
+    #    pacer queues on.
+    url = seed("delayed.example.test", 200, DELAYED)
+    check("crawl-delay read",
+          _robots_verdict(url).crawl_delay(headers_for(url)["User-Agent"]) == 10)
+
+    # 9. A refusal raises rather than returning empty, and the archive rung does
+    #    not go round it.
+    url = seed("refused-live.example.test", 200, SITEWIDE)
+    try:
+        fetch(url)
+        check("refusal raises", False)
+    except RobotsRefused:
+        check("refusal raises", True)
+    except Exception:
+        check("refusal raises RobotsRefused and not something else", False)
+    try:
+        fetch_or_archive(url, "55999", "Nowhere")
+        check("archive does not route round a disallow", False)
+    except RobotsRefused:
+        check("archive does not route round a disallow", True)
+    except Exception:
+        check("archive re-raises RobotsRefused unchanged", False)
+    # 9a. fetch_page is the OTHER archive rung — the ARCHIVE_COUNTIES path — and
+    #     it had no case here, which is exactly why it shipped broken: its bare
+    #     `except Exception` swallowed RobotsRefused and served the Archive copy
+    #     of a path the host had disallowed. Testing one rung is not testing the
+    #     rule.
+    _saved_archived = globals()["fetch_archived"]
+    globals()["fetch_archived"] = lambda u, *a, **k: ("<html>archive</html>", "2026")
+    try:
+        fetch_page(url)
+        check("fetch_page does not route round a disallow", False)
+    except RobotsRefused:
+        check("fetch_page does not route round a disallow", True)
+    except Exception:
+        check("fetch_page re-raises RobotsRefused unchanged", False)
+    finally:
+        globals()["fetch_archived"] = _saved_archived
+
+    # 10. The two host lists are answers to different questions and must not
+    #     overlap: a host cannot be both permanently permissive and pending.
+    check("no host is in both lists",
+          not (set(ROBOTS_PERMISSIVE_HOSTS) & set(ROBOTS_REFUSED_PENDING)))
+
+    if failures:
+        raise SystemExit("robots selftest FAILED: " + "; ".join(failures))
+    print("robots selftest: %d assertions, the decision holds" % len(ran))
+
+
+def _district_page_selftest():
+    """Adams's route, on fixtures — offline, no network.
+
+    Every guard in scrape_district_page_county is fired, because a guard that
+    has never refused anything has not been tested. The cases worth naming are
+    the pair the composition filter exists for: this county states a district's
+    WARDS in the same "District <n> - <x>" shape it states its supervisor, so
+    "District 1 - Wabeno Ward 3" must not read as a person -- while
+    "District 2 - Ben Ward" must, because Ward is also a surname.
+
+    THE ROSTER FIXTURE DELIBERATELY DOES NOT USE THAT SURNAME, and writing it
+    the other way is what found out why: the shared is_name() rejects any name
+    carrying a word from BAD, and `ward` is in BAD along with `town`, `city`,
+    `village` and `county`. So a supervisor genuinely surnamed Ward or Town is
+    refused by the NAME test rather than by the composition filter, in this
+    county and in all seventy-two. That is a limitation and not a data defect:
+    it fails loudly, because all-seats-or-nothing then refuses the whole county
+    rather than shipping somebody else's name in that seat. Widening BAD reaches
+    every strategy in this file and is not done here. None of Adams's own twenty
+    names touches it (measured 2026-09-13).
+    """
+    spec = {"fips": "55001", "name": "Adams", "seats": 3,
+            "page": "https://example.gov/gov/sd",
+            "source_url": "https://example.gov/gov/sd",
+            "title": "County Board Supervisor",
+            "mailbox": r"district\.?(\d{1,2})@co\.adams\.wi\.us"}
+    rows = [(1, "Ann Alpha"), (2, "Ben Beta"), (3, "Cy Gamma")]
+
+    def listing(pairs, links=None):
+        links = links if links is not None else [d for d, _ in pairs]
+        a = "".join('<a href="/gov/sd/district-%d">District %d</a>' % (d, d)
+                    for d in links)
+        p = "".join("<p>District %d - %s</p>" % (d, n) for d, n in pairs)
+        # the composition lines this page really carries, in both shapes
+        p += "<p>District 1 - Wabeno Ward 3</p>"
+        p += "<p>District 1 - Town of Adams Ward 1, Village of Friendship Ward 1</p>"
+        return "<html>%s%s</html>" % (a, p)
+
+    def dpage(d, name, mails=None):
+        mails = mails if mails is not None else ["district%d@co.adams.wi.us" % d]
+        return ("<p><span>County Board Supervisor</span></p><p><span>%s</span></p>%s"
+                % (name, "".join('<a href="mailto:%s">Email</a>' % x for x in mails)))
+
+    def pages(pairs=rows, links=None, overrides=None):
+        out = {spec["page"]: listing(pairs, links)}
+        for d, n in pairs:
+            out["https://example.gov/gov/sd/district-%d" % d] = dpage(d, n)
+        out.update(overrides or {})
+        return out
+
+    def run(stub):
+        saved = globals()["fetch"]
+        globals()["fetch"] = lambda u, *a, **k: stub[u]
+        try:
+            return scrape_district_page_county(spec)
+        finally:
+            globals()["fetch"] = saved
+
+    d2 = "https://example.gov/gov/sd/district-2"
+    cases = [
+        ("a clean three-seat board", pages(), True, None),
+        ("a seat's link missing", pages(links=[1, 2]), False,
+         "links 2 district page(s)"),
+        ("a district linked that the board does not seat", pages(links=[1, 2, 3, 4]),
+         False, "links 4 district page(s)"),
+        ("the listing names fewer seats than it links",
+         pages(pairs=rows[:2], links=[1, 2, 3]), False, "names 2 of 3"),
+        ("a district page naming someone else",
+         pages(overrides={d2: dpage(2, "Zed Omega")}), False,
+         "disagree about who holds the seat"),
+        ("a district page with no supervisor heading",
+         pages(overrides={d2: "<p>nothing here</p>"}), False,
+         "carries no 'County Board Supervisor' heading"),
+        ("two county mailboxes on one page",
+         pages(overrides={d2: dpage(2, "Ben Beta", ["district2@co.adams.wi.us",
+                                                   "district9@co.adams.wi.us"])}),
+         False, "carries 2 county mailbox(es)"),
+        ("no county mailbox on a page",
+         pages(overrides={d2: dpage(2, "Ben Beta", [])}), False,
+         "carries 0 county mailbox(es)"),
+        ("a mailbox whose number is not its own district",
+         pages(overrides={d2: dpage(2, "Ben Beta", ["district7@co.adams.wi.us"])}),
+         False, "never guess which is right"),
+        ("one person under two districts",
+         pages(pairs=[(1, "Ann Alpha"), (2, "Ann Alpha"), (3, "Cy Gamma")]), False,
+         "filed under two districts"),
+        ("a punctuated mailbox, which six of the twenty use",
+         pages(overrides={d2: dpage(2, "Ben Beta",
+                                    ["district.2@co.adams.wi.us"])}), True, None),
+    ]
+
+    failures = []
+    for label, stub, want_ok, needle in cases:
+        try:
+            got = run(stub)
+        except RuntimeError as e:
+            if want_ok:
+                failures.append("%s: should have parsed, refused with %s" % (label, e))
+            elif needle and needle not in str(e):
+                failures.append("%s: refused for the wrong reason: %s" % (label, e))
+            continue
+        except KeyError as e:
+            failures.append("%s: fetched a url the fixture does not stub (%s)"
+                            % (label, e))
+            continue
+        if not want_ok:
+            failures.append("%s: should have been refused, returned %d rows"
+                            % (label, len(got)))
+        elif sorted(got) != ["1", "2", "3"]:
+            failures.append("%s: returned %s" % (label, sorted(got)))
+        elif got["2"]["name"] != "Ben Beta":
+            failures.append("%s: returned %r for district 2" % (label, got["2"]["name"]))
+
+    # the composition lines must never have been read as people in the first
+    # place, which the clean case above proves only indirectly
+    for line, is_name_ in (("District 1 - Wabeno Ward 3", False),
+                           ("District 1 - Town of Adams Ward 1", False),
+                           ("District 2 - Ben Ward", True),
+                           ("District 3 - Cy Gamma", True)):
+        m = DP_ROW.match(line)
+        read = bool(m and not DP_NOT_NAME.search(line))
+        if read != is_name_:
+            failures.append("%r reads as %s" % (line, "a name" if read else "not a name"))
+
+    if failures:
+        raise SystemExit("district-page selftest FAILED: " + "; ".join(failures))
+    print("district-page selftest: %d cases, every guard refuses what it is for"
+          % (len(cases) + 4))
+
 def board_seated_on(today=None):
     """The date the sitting county board took office.
 
@@ -2534,12 +3070,22 @@ assert board_seated_on(datetime.date(2025, 1, 1)) == datetime.date(2024, 4, 16)
 
 
 def _archive_json(url, tries=5):
-    """The Archive answers 503 while it is down; back off rather than give up."""
+    """The Archive answers 503 while it is down; back off rather than give up.
+
+    Gated like every other fetch even though web.archive.org is on
+    ROBOTS_PERMISSIVE_HOSTS and answers 404 to /robots.txt: a call site that
+    skips the gate because its host happens to be fine today is how the rule
+    stops holding when the host changes.
+    """
+    allowed, why = robots_says(url)
+    if not allowed:
+        raise RobotsRefused("%s: %s" % (url, why))
     last = None
     for attempt in range(tries):
         try:
             req = urllib.request.Request(url, headers=ARCHIVE_UA)
-            with urllib.request.urlopen(req, timeout=60) as r:
+            with ROBOTS_PACER.hold(url), \
+                    urllib.request.urlopen(req, timeout=60) as r:
                 return json.load(r)
         except Exception as e:      # noqa: BLE001 - reachability, retried below
             last = e
@@ -2554,6 +3100,12 @@ def fetch_or_archive(url, fips, county, headers=None):
     log says which rung answered either way."""
     try:
         return fetch(url, headers), "live"
+    except RobotsRefused:
+        # THE ARCHIVE IS NOT A WAY ROUND A DISALLOW. Reading the county's own
+        # page out of web.archive.org because the county's robots.txt said no
+        # would honour the letter of one policy by defeating it, so the refusal
+        # propagates and the county fails loudly instead.
+        raise
     except Exception as live_error:     # noqa: BLE001 - the refusal is the point
         if fips not in ARCHIVE_READ:
             raise
@@ -3194,7 +3746,7 @@ def document_county(spec):
                   % (spec["name"], spec["seats"], live["strategy"]), file=sys.stderr)
             return districts, False
         except Exception as e:      # noqa: BLE001 - refusal is the expected case
-            print("  live %-12s still refused (%s)" % (spec["name"], e),
+            print("  live %-12s still refused (%s)" % (spec["name"], why_unfetched(e)),
                   file=sys.stderr)
     read = datetime.date(*map(int, spec["read_on"].split("-")))
     age = (datetime.date.today() - read).days
@@ -3330,7 +3882,14 @@ def _spn_save(url):
     same repo secrets Illinois' Kendall and McHenry workflows already pass)
     switch on the SPN2 job API, which is the reliable path when a shared runner
     address has spent the anonymous quota. Absent keys are not an error.
+
+    Gated once for the whole function: every request it makes goes to
+    web.archive.org, so one read of that policy covers the SPN2 job calls and
+    the plain save alike.
     """
+    allowed, why = robots_says(WAYBACK_SAVE % url)
+    if not allowed:
+        raise RobotsRefused("%s: %s" % (WAYBACK_SAVE % url, why))
     key = os.environ.get("ARCHIVE_SPN_ACCESS_KEY")
     secret = os.environ.get("ARCHIVE_SPN_SECRET_KEY")
     if key and secret:
@@ -3356,27 +3915,34 @@ def _spn_save(url):
                     if st.get("status") == "error":
                         break
         except Exception as e:              # noqa: BLE001 - save is best-effort
-            print("    SPN2 save failed (%s): %s" % (url, e), file=sys.stderr)
+            print("    SPN2 save failed (%s): %s" % (url, why_unfetched(e)), file=sys.stderr)
     try:
-        req = urllib.request.Request(WAYBACK_SAVE % url, headers=ARCHIVE_UA)
-        with urllib.request.urlopen(req, timeout=180) as r:
+        save_url = WAYBACK_SAVE % url
+        req = urllib.request.Request(save_url, headers=ARCHIVE_UA)
+        with ROBOTS_PACER.hold(save_url), \
+                urllib.request.urlopen(req, timeout=180) as r:
             m = re.search(r"/web/(\d{14})", r.geturl() or "")
             if not m:
                 m = re.search(r"/web/(\d{14})", r.headers.get("Content-Location", "") or "")
             if m:
                 return m.group(1)
     except Exception as e:                  # noqa: BLE001 - save is best-effort
-        print("    Save Page Now unavailable (%s): %s" % (url, e), file=sys.stderr)
+        print("    Save Page Now unavailable (%s): %s" % (url, why_unfetched(e)), file=sys.stderr)
     return None
 
 
 def _wayback_latest(url):
     """Timestamp of the newest existing snapshot, or None."""
+    available = WAYBACK_AVAILABLE % urllib.parse.quote(url, safe="")
+    allowed, why = robots_says(available)
+    if not allowed:
+        raise RobotsRefused("%s: %s" % (available, why))
     try:
         req = urllib.request.Request(
             WAYBACK_AVAILABLE % urllib.parse.quote(url, safe=""),
             headers=ARCHIVE_UA)
-        with urllib.request.urlopen(req, timeout=60) as r:
+        with ROBOTS_PACER.hold(available), \
+                urllib.request.urlopen(req, timeout=60) as r:
             snap = (json.load(r).get("archived_snapshots") or {}).get("closest") or {}
         return snap.get("timestamp") or None
     except Exception:                       # noqa: BLE001 - reachability probe
@@ -3398,6 +3964,11 @@ def _cdx_latest(url):
     do not always agree about what the Archive holds, so both are asked."""
     try:
         rows = _archive_json(CDX % urllib.parse.quote(url, safe=""))
+    except RobotsRefused:
+        # "no capture" and "we may not ask" are different facts about the
+        # Archive, and returning None here said the first when it meant the
+        # second. The caller decides; this rung does not swallow it.
+        raise
     except Exception:                       # noqa: BLE001 - reachability probe
         return None
     stamps = sorted(r[0] for r in rows[1:]) if rows and rows[0][0] == "timestamp" \
@@ -3451,6 +4022,15 @@ def fetch_page(url):
         page = fetch(url, timeout=30)
         if not BLOCK_PAGE.search(page):
             return page, None
+    except RobotsRefused:
+        # THE ARCHIVE IS NOT A WAY ROUND A DISALLOW, and a bare `except
+        # Exception` here made it one: RobotsRefused is an Exception, so a
+        # host that told us not to fetch a path got that path served from the
+        # Archive instead. `fetch_or_archive` already re-raised; this rung,
+        # which is the ARCHIVE_COUNTIES path, did not. Found 2026-09-13 by
+        # seeding www.fdlco.wi.gov with `Disallow: /`: this function returned
+        # the Archive copy while robots_says returned False for the same url.
+        raise
     except Exception:                       # noqa: BLE001 - the expected path
         pass
     return fetch_archived(url)
@@ -3618,187 +4198,205 @@ def scrape_archive_county(spec):
     return {str(d): members[d] for d in sorted(members)}, stamps
 
 
-# --- Adams: a roster that rides a PDF the county publishes ---------------------
-# THE ONE COUNTY WHOSE MEMBER LIST IS A DOCUMENT AND STILL SCRAPES WEEKLY.
-# Adams was filed under this file's "publish members as PDFs, images or prose"
-# bucket, and the gaps record's `wanted` line said outright that "a district
-# map, a PDF or an alphabetical list with no district column cannot be used".
-# That rule is right about the first and third and WRONG ABOUT THE MIDDLE ONE,
-# which is the finding: a PDF is a FORMAT, not a blocker. The question is
-# whether it carries a TEXT LAYER and a district column, and Adams's carries
-# both — twenty `DISTRICT <n>` headings, each with the supervisor's name, a
-# county mailbox and a phone (the Menard lesson in Illinois, one state over:
-# look for the text layer before reaching for the raster methods).
+# --- Adams: the county's own page per district ---------------------------------
+# THE COUNTY PUBLISHES ITS BOARD TWICE AND ONLY ONE COPY MAY BE FETCHED.
 #
-# NOTHING HERE IS HAND-CARRIED, which is what separates this from
-# DOCUMENT_ROSTERS below. The county clerk's "2026 Public Directory" is linked
-# as `County Directory` from the county's own site, and both hops are open to
-# an ordinary client: www.co.adams.wi.us answers 200, and the Drive file it
-# points at downloads unauthenticated. So the run RESOLVES THE LINK EVERY WEEK
-# rather than pinning a file id — the clerk republishes the directory under a
-# NEW Drive id each edition (this one is dated 28 August 2026 on its own cover),
-# and a pinned id would go on serving the superseded edition forever with no
-# error, which is the Socrata-dataset failure this project already guards
-# elsewhere. The link text is the contract; if it moves, the county fails its
-# guard and is skipped for that run, which is a page to re-read, not a flake.
+# Until 2026-09-13 this county was read from the Clerk's "2026 Public
+# Directory", a Drive PDF with a text layer and a district column. The finding
+# recorded here then was that A PDF IS A FORMAT, NOT A BLOCKER -- the question
+# is whether it carries a text layer and a district column -- and that finding
+# stands; it is why Kenosha, Clark, Pierce and Jackson are read the way they
+# are. What was wrong was the ROUTE, and #944 is what asked:
 #
-# A TRAP ON THIS HOST, recorded because it defeats the obvious check: it is a
+#   * drive.google.com/robots.txt is a list of Allow prefixes ending in
+#     `Disallow: /`. `/uc`, the download endpoint this file used, is covered by
+#     that Disallow and by no Allow. `/file` IS allowed, so the viewer page may
+#     be read -- and it answers 86 KB of HTML, not the document.
+#   * The only download URL Drive's own viewer names is
+#     drive.usercontent.google.com/uc, whose robots.txt is 26 bytes of
+#     `Disallow: /`. lh3.googleusercontent.com/d/<id> does answer, with a
+#     644 KB PNG of page one: no text layer, nothing to parse.
+#
+# TWO HOSTS SHUT THE CONTENT ROUTE INDEPENDENTLY, so there is no permitted way
+# to those bytes and this file does not hunt for one.
+#
+# THE ROSTER COMES FROM THE COUNTY'S OWN HOST INSTEAD, which publishes no
+# robots.txt at all (404, allow all) and states the board twice over:
+# /supervisory-districts lists all twenty as "District <n> - <name>", and each
+# of those rows links a page of its own carrying the seat's name under the
+# heading "County Board Supervisor" plus its district mailbox as a mailto. Both
+# surfaces are read and required to agree.
+#
+# THE MAILBOX IS STILL THE WITNESS, which is what makes this route as strong as
+# the document it replaces: each page states its own seat's number a second
+# time, in an address, so the district a name is filed under is checked rather
+# than trusted. Measured 2026-09-13 -- 20 of 20 pages carry exactly one such
+# address, every number agrees with its own page, and SIX punctuate it
+# `district.<n>@`, the same six the PDF printed that way. Two independent
+# publications of one roster agreeing on an oddity is the best corroboration
+# available here that this is the same board.
+#
+# THE ADDRESSES ARE DERIVABLE AND ARE NOT DERIVED, the rule Dodge's header
+# states for the same reason: a derived address witnesses nothing.
+#
+# WHAT THIS ROUTE DOES NOT CARRY, stated because it is a real loss:
+#
+#   * PHONE, on all twenty. The directory printed one per seat; the county's
+#     pages print none -- 0 of 20, measured, not "none found".
+#   * ROLE, on three (a chair and two vice chairs). The pages give every seat
+#     the same heading, "County Board Supervisor", and the word "chair" does not
+#     appear in the raw HTML of the board page, the districts listing or a
+#     district page. The county's website does not name its board chair.
+#
+# THAT SECOND ONE HAS A KNOCK-ON INTO A DIFFERENT FILE, and it was measured
+# rather than discovered on Thursday. build_wi_county_officer_roster.py takes a
+# county's chair from whichever member row MARKS one, superseding the Blue
+# Book's April 2025 snapshot; with no marked chair it falls back to the book's
+# name if that person still sits, and withholds otherwise. The book names
+# ADAMS's chair as John West (20 seats, section 210 page 19) and he is not one
+# of the twenty sitting supervisors, so `on_board` is False and the chair is
+# WITHHELD with its stated reason. So wi-county-officers.json loses
+# "Rick Pease, county-board-page" and gains no wrong name — which is the
+# outcome to want, and is why no pin is added here. The chairmanship is still a
+# real loss and Ask 25 is what would recover it.
+#
+# Both are dropped rather than carried forward from the old file, and the drop
+# is recorded with its reason in scripts/check_roster_retention.py's
+# ACCEPTED_DROPS. Re-reading the old values weekly is not available -- that is
+# the whole point -- and shipping them frozen beside eighteen weekly-refreshed
+# fields would age silently.
+#
+# `documentUrl` GOES FOR THE OPPOSITE REASON: it was not a loss to avoid but a
+# workaround whose cause is gone. The builder shipped it because "Adams's board
+# page names none of its twenty supervisors", so the directory was the only
+# surface a reader could check a name against. The per-district pages name
+# them, so each seat now ships `url` -> `profileUrl` ("Supervisor page") to the
+# page that names that supervisor and gives their address. The reader gains a
+# per-seat link and loses a PDF.
+#
+# THE NAME FORM CHANGES AND NEITHER FORM IS WRONG. The Clerk's directory prints
+# "Jay L. Churco" and "Gordon Carlson"; the county's pages print "Jay Churco"
+# and "Gordy Carlson". The pages are what the county maintains as its board, so
+# they are what ships.
+#
+# A TRAP ON THIS HOST, kept from the old entry because it still holds: it is a
 # Google Sites site, and a MISSING page answers HTTP 404 with a full 259 KB of
-# site chrome. A probe that reads the body length, or that follows redirects
-# and looks for content, calls that page healthy. Check the STATUS.
+# site chrome. A probe that reads the body length calls that page healthy.
+# Check the STATUS.
 #
-# THE DISTRICT MAILBOX IS THE WITNESS, and it is why this county needs no
-# pinned reading direction like the HTML ones above. Every supervisor's contact
-# line carries `district<n>@co.adams.wi.us` (six of the twenty punctuate it
-# `district.<n>@`), so the document states each seat's number a SECOND time, in
-# a string the layout engine cannot reorder. The parser reads the number from
-# the heading and asserts the mailbox agrees — the before/after ambiguity that
-# yields "a full, plausible, entirely wrong roster" on the page-scraped
-# counties cannot survive that check.
-#
-# THE STREET ADDRESSES ARE DELIBERATELY NOT CARRIED, the same rule Taylor's
-# entry states below: they are supervisors' homes, and a home address never
-# ships even where the source publishes it. Name, county mailbox and phone are
-# official contact details and do.
-PDF_COUNTIES = [
+# THE STREET ADDRESSES the directory printed were supervisors' homes and were
+# never carried. The county's pages publish none, so that rule costs nothing
+# here now; it is restated because the next county on this route may.
+DISTRICT_PAGE_COUNTIES = [
     {
         "fips": "55001", "name": "Adams", "seats": 20,
-        # the page that LINKS the directory, and the page a reader is sent to:
-        # the names are published in a document, and this is where the county
-        # publishes the document
-        "page": "https://www.co.adams.wi.us/government/county-board",
-        "source_url": "https://www.co.adams.wi.us/government/county-board",
-        "link_text": "County Directory",
+        "page": "https://www.co.adams.wi.us/government/county-board/"
+                "supervisory-districts",
+        "source_url": "https://www.co.adams.wi.us/government/county-board/"
+                      "supervisory-districts",
+        "title": "County Board Supervisor",
         "mailbox": r"district\.?(\d{1,2})@co\.adams\.wi\.us",
     },
 ]
+# "District 13 - Rick Pease" on the listing. The SAME page carries composition
+# lines under the same shape -- "District 13 - Town of Adams Ward 1, Town of
+# Strongs Prairie Ward 2" -- so a row is a name only when it carries no comma
+# and names no municipality. Ward is also a surname, so the municipality test
+# is on "<type> of" and "Ward <n>", never on the bare word. That rule was
+# learned on the directory this county no longer reads and it holds here too.
+DP_ROW = re.compile(r"^District\s+(\d{1,2})\s*[-\u2013\u2014]\s*([^,]+)$")
+DP_NOT_NAME = re.compile(r"(?i)\b(?:towns?|cities|city|villages?)\s+of\b|\bward\s*\d")
 
-# a template, not a pattern: the link TEXT is what identifies the document, so
-# it is escaped in per county rather than baked in here
-DRIVE_LINK = (r'href="(https://drive\.google\.com/file/d/([A-Za-z0-9_-]{20,})'
-              r'/[^"]*)"[^>]*>\s*%s\s*<')
-DIST_HEAD = re.compile(r"^\s*DISTRICT\s+(\d{1,2})\s*$")
-# "608-547-2688", and Adams prints one as "715-781- 0354" — a space the
-# extractor keeps and a reader never sees
+
+# A phone as a county directory prints it. The tolerance for an interior space
+# ("715-781- 0354") was measured on Adams's directory, which this file no longer
+# reads; the pattern stays because Clark's and Pierce's directories are read
+# through it and a PDF extractor stranding a space mid-number is general.
 PDF_PHONE = re.compile(r"\b(\d{3})[-\s.]\s?(\d{3})[-\s.]\s?(\d{4})\b")
-# "Jerry Poehler, 1st Vice Chair" / "Rick Pease, County Board Chair"
-PDF_ROLE = re.compile(
-    r",\s*((?:County\s+Board\s+)?(?:(?:1st|2nd)\s+)?(?:Vice\s+)?"
-    r"Chair(?:man|person|woman)?)\s*$", re.I)
-# A ward-composition line ("Town of Jackson Ward 2 & Town of New Haven Ward 1")
-# sits between the heading and the name and is never a person. It is matched on
-# "<municipality> of" or "Ward <n>" rather than on the bare words: WARD IS ALSO
-# A SURNAME, and a plain \bwards?\b would skip a supervisor named Ward on the
-# walk-back and take whatever line sat above them.
-PDF_WARDLINE = re.compile(r"(?i)(\b(?:towns?|cities|city|villages?)\s+of\b|\bwards?\s+\d)")
+def scrape_district_page_county(spec):
+    """All seats or nothing, one fetch per district, the mailbox as witness."""
+    county = spec["name"]
+    listing = fetch(spec["page"])
+    scheme, _, host, path = spec["page"].split("/", 3)
+    origin = "%s//%s" % (scheme, host)
+    # The link pattern is built from the listing's OWN path rather than matching
+    # any `/district-<n>` on the page: a county site's nav can link a district
+    # map or a ward page under the same last segment, and those are not seats.
+    link = re.compile(r'href="(%s/district-(\d{1,2}))(?:[?#][^"]*)?"'
+                      % re.escape("/" + path))
 
+    paths = {}
+    for href, num in link.findall(listing):
+        d = int(num)
+        if d in paths and paths[d] != href:
+            raise RuntimeError("%s: district %d is linked at two paths (%s, %s) — "
+                               "re-read %s"
+                               % (county, d, paths[d], href, spec["page"]))
+        paths[d] = href
+    want = set(range(1, spec["seats"] + 1))
+    if set(paths) != want:
+        raise RuntimeError("%s: the listing links %d district page(s) %s and the "
+                           "board seats %d — re-read %s"
+                           % (county, len(paths), sorted(paths), spec["seats"],
+                              spec["page"]))
 
-def pdf_lines(blob):
-    """The directory's text, one line per printed line.
+    # The listing states every name as well as every link, and the two are
+    # independent reads of the same page: the names cross-check the per-district
+    # pages below, so a page that names the wrong person fails rather than
+    # shipping.
+    listed = {}
+    for line in to_lines(listing):
+        m = DP_ROW.match(line)
+        if m and not DP_NOT_NAME.search(line):
+            listed[int(m.group(1))] = " ".join(m.group(2).split())
+    if set(listed) != want:
+        raise RuntimeError("%s: the listing names %d of %d seats (%s) — it states "
+                           "the links and the names separately and one of the two "
+                           "has reshaped; re-read %s"
+                           % (county, len(listed), spec["seats"], sorted(listed),
+                              spec["page"]))
 
-    Layout mode is required, not optional. A flattened read returns this
-    document one WORD per line (its text operators are per-word), which loses
-    the only thing the parser needs: that a supervisor's name, phone and
-    mailbox share a printed line.
-    """
-    import io
-    import pypdf                      # pinned in wi/scripts/requirements.txt
-    reader = pypdf.PdfReader(io.BytesIO(blob))
-    lines = []
-    for page in reader.pages:
-        lines += (page.extract_text(extraction_mode="layout") or "").split("\n")
-    return [re.sub(r"\s+", " ", ln).strip() for ln in lines]
-
-
-def scrape_pdf_county(spec):
-    """All seats or nothing, with the county's own mailbox as the witness."""
-    page = fetch(spec["page"])
-    link = re.search(DRIVE_LINK % re.escape(spec["link_text"]), page)
-    if not link:
-        raise RuntimeError("%s: no %r link on %s — the county has moved or "
-                           "renamed its directory; re-read the page"
-                           % (spec["name"], spec["link_text"], spec["page"]))
-    doc_url = link.group(1)
-    blob = fetch_bytes("https://drive.google.com/uc?export=download&id=" + link.group(2),
-                       timeout=90)[0]
-    if not blob.startswith(b"%PDF"):
-        raise RuntimeError("%s: %s did not return a PDF (%d bytes, starts %r) — "
-                           "a Drive interstitial is the usual cause"
-                           % (spec["name"], doc_url, len(blob), blob[:16]))
-    lines = pdf_lines(blob)
     mailbox = re.compile(spec["mailbox"], re.I)
-
-    heads = [(i, int(m.group(1)))
-             for i, ln in enumerate(lines) for m in [DIST_HEAD.match(ln)] if m]
-    # The City of Adams's aldermanic districts are in the same document under
-    # the same word, but print their members on the heading's own line, so the
-    # anchored heading above never matches them. Guard it anyway: a reshaped
-    # document that starts matching them would otherwise ship city alderpersons
-    # as county supervisors.
-    if len(heads) != spec["seats"]:
-        raise RuntimeError("%s: the directory carries %d 'DISTRICT n' headings "
-                           "and the board seats %d — re-read %s"
-                           % (spec["name"], len(heads), spec["seats"], doc_url))
-
-    seen = [d for _, d in heads]
-    if sorted(seen) != list(range(1, spec["seats"] + 1)):
-        # a repeated or skipped heading would collapse in `out` below and lose a
-        # seat silently; the builder's geometry check would catch it one stage
-        # later, but the document is what has changed and should say so
-        raise RuntimeError("%s: the directory's headings are %s, not 1..%d — "
-                           "re-read %s" % (spec["name"], seen, spec["seats"], doc_url))
-
     out = {}
-    for n, (i, district) in enumerate(heads):
-        end = heads[n + 1][0] if n + 1 < len(heads) else len(lines)
-        block = lines[i + 1:end]
-        at = next((k for k, ln in enumerate(block) if mailbox.search(ln)), None)
-        if at is None:
-            raise RuntimeError("%s: district %d carries no county mailbox — the "
-                               "directory has reshaped; re-read %s"
-                               % (spec["name"], district, doc_url))
-        m = mailbox.search(block[at])
-        if int(m.group(1)) != district:
-            # the document numbering itself disagrees; never guess which is right
-            raise RuntimeError("%s: the heading says district %d and the mailbox "
-                               "on that seat's line says %s (%s) — re-read %s"
-                               % (spec["name"], district, m.group(1),
-                                  m.group(0), doc_url))
-        line = block[at]
-        phone_m = PDF_PHONE.search(line)
-        phone = "-".join(phone_m.groups()) if phone_m else None
-        cut = min(phone_m.start() if phone_m else len(line), m.start())
-        name = line[:cut].strip(" ,;")
-        if not name:
-            # Two of the twenty print the name on its own line above the
-            # contact line (both carry a second phone: "608-254-5971 or
-            # 608-432-1971"), so walk back past the ward composition.
-            k = at - 1
-            while k >= 0 and (not block[k] or PDF_WARDLINE.search(block[k])):
-                k -= 1
-            name = block[k].strip() if k >= 0 else ""
-        role = None
-        role_m = PDF_ROLE.search(name)
-        if role_m:
-            role = role_case(role_m.group(1))
-            name = name[:role_m.start()].strip(" ,")
-        name = repair(clean(name)[0])
+    for district in sorted(paths):
+        url = origin + paths[district]
+        page = fetch(url)
+        lines = to_lines(page)
+        at = next((i for i, ln in enumerate(lines) if ln == spec["title"]), None)
+        if at is None or at + 1 >= len(lines):
+            raise RuntimeError("%s: district %d's page carries no %r heading with a "
+                               "line under it — re-read %s"
+                               % (county, district, spec["title"], url))
+        name = repair(clean(lines[at + 1])[0])
         if not is_name(name):
-            raise RuntimeError("%s: district %d resolved to %r, which does not "
-                               "read as a name — re-read %s"
-                               % (spec["name"], district, name, doc_url))
-        row = {"name": name, "vacant": False, "role": role,
-               "email": m.group(0).lower()}
-        if phone:
-            row["phone"] = phone
-        out[str(district)] = row
+            raise RuntimeError("%s: district %d resolved to %r, which does not read "
+                               "as a name — re-read %s" % (county, district, name, url))
+        if name != listed[district]:
+            raise RuntimeError("%s: district %d's own page says %r and the listing "
+                               "says %r — the county's two surfaces disagree about "
+                               "who holds the seat and neither is preferred here"
+                               % (county, district, name, listed[district]))
+        # the raw page, so a mailto: the visible text does not repeat still counts
+        found = sorted(set(m.group(0).lower() for m in mailbox.finditer(page)))
+        if len(found) != 1:
+            raise RuntimeError("%s: district %d's page carries %d county mailbox(es) "
+                               "%s — exactly one is the witness for the district "
+                               "number, so re-read %s"
+                               % (county, district, len(found), found, url))
+        stated = int(mailbox.match(found[0]).group(1))
+        if stated != district:
+            raise RuntimeError("%s: the page at %s says district %d and the mailbox "
+                               "on it says %d (%s) — never guess which is right"
+                               % (county, paths[district], district, stated, found[0]))
+        out[str(district)] = {"name": name, "vacant": False, "role": None,
+                              "email": found[0], "url": url}
 
     names = [r["name"] for r in out.values()]
     if len(set(names)) != len(names):
         dupes = sorted({n for n in names if names.count(n) > 1})
         raise RuntimeError("%s: the same person is filed under two districts (%s)"
-                           % (spec["name"], dupes))
-    return out, doc_url
+                           % (county, dupes))
+    return out
 
 
 # COUNTIES WHOSE ROSTER IS A TABLE THE LISTING PAGE FRAMES FROM ANOTHER HOST.
@@ -3995,9 +4593,13 @@ def scrape_framed_table_county(spec):
 
 
 def _fetch_json(url):
+    allowed, why = robots_says(url)
+    if not allowed:
+        raise RobotsRefused("%s: %s" % (url, why))
     req = urllib.request.Request(url, headers=headers_for(url))
     ctx = ssl.create_default_context()
-    with urllib.request.urlopen(req, timeout=45, context=ctx) as r:
+    with ROBOTS_PACER.hold(url), \
+            urllib.request.urlopen(req, timeout=45, context=ctx) as r:
         return json.load(r)
 
 
@@ -4098,8 +4700,8 @@ def district_geometry_witness(fips, county, layer, seats):
         if not ltsb or not cty:
             raise RuntimeError("no districts on one side")
     except Exception as e:          # noqa: BLE001 - the witness, never the source
-        print("  WITNESS SKIPPED %-9s district geometry unreachable (%s) — the "
-              "roster ships unwitnessed this run" % (county, e), file=sys.stderr)
+        print("  WITNESS SKIPPED %-9s district geometry not read (%s) — the "
+              "roster ships unwitnessed this run" % (county, why_unfetched(e)), file=sys.stderr)
         return set()
     if sorted(ltsb) != sorted(cty) != list(range(1, seats + 1)):
         raise RuntimeError(
@@ -4220,21 +4822,32 @@ def scrape_arcgis_county(spec):
 # that published a forwarding note.
 #
 # THE DIRECTORY PAGINATES AT TWELVE, which is why this is a separate strategy
-# and not a row in COUNTIES. Three things about it were measured rather than
-# assumed, and each was wrong on the first guess:
+# and not a row in COUNTIES. A single fetch of the members URL sees 12 of 33,
+# and 12 seats of a 33-seat board is what the all-seats-or-nothing rule exists
+# to refuse.
 #
-#   * `?const_page=2` ON THE PAGE ITSELF IS DECORATION. The server returns page
-#     one for every value of it, so a single fetch of the members URL sees 12
-#     of 33 — and 12 seats of a 33-seat board is exactly what the
-#     all-seats-or-nothing rule exists to refuse.
-#   * The pagination works on the ELEMENT endpoint (/fs/elements/<id>) and
-#     ONLY when `const_search_group_ids` rides along. Without the group id that
-#     endpoint also returns page one, silently and with a 200.
+#   * WHAT PAGINATES IS `const_search_group_ids`, NOT THE ENDPOINT. Both
+#     parameters have to ride together: `?const_page=2` alone returns page one
+#     again, silently and with a 200, on the members page and on the element
+#     endpoint alike. With the group id beside it the members page answers
+#     "showing 13-24 of 33" (measured 2026-09-13, all three pages, districts
+#     1-33 exactly).
+#   * CORRECTED 2026-09-13, and the wrong version of this comment cost the
+#     county a run. It read "`?const_page=2` ON THE PAGE ITSELF IS DECORATION.
+#     The server returns page one for every value of it", and concluded that
+#     only /fs/elements/<id> could paginate. The first half was measured; the
+#     conclusion was not, because the page was never asked WITH the group id.
+#     When #944 started reading robots.txt before each fetch, the county's own
+#     `Disallow: /fs/` dropped Dodge out of the roster, and the file's own note
+#     said there was nowhere else to go. There was: the members page, which is
+#     permitted. A parameter measured alone says nothing about the same
+#     parameter measured in company.
 #   * NEITHER ID IS PINNED. Both are discovered from the members page on every
 #     run — the directory element by its own `fsConstituent fsDirectory` class,
-#     the group id from the county's own search form — so a site rebuild that
-#     renumbers elements keeps working, and a page carrying two directories
-#     fails loudly instead of scraping whichever came first.
+#     the group id from the county's own search form. The element id no longer
+#     builds a URL and is still read, because it is the check that the page
+#     carries ONE directory: a rebuild that puts two on the page fails loudly
+#     here instead of scraping whichever came first.
 #
 # THE E-MAILS ARE OBFUSCATED and would otherwise have shipped as nothing at
 # all: each address is written as a reversed-string JavaScript call
@@ -4329,8 +4942,10 @@ def scrape_constituent_county(spec):
         raise RuntimeError("%s: the page carries %d constituent director(ies) and %d "
                            "search group(s) — expected one of each; re-read it before "
                            "moving this entry" % (county, len(els), len(gids)))
-    root = spec["page_url"].split("/", 3)
-    base = "%s//%s/fs/elements/%s" % (root[0], root[2], els[0])
+    # The county disallows /fs/, so the directory is paged on its own members
+    # URL; the group id is what pages it, and both spellings need it. See the
+    # 2026-09-13 correction in this strategy's header.
+    base = spec["page_url"]
     label = _PAGE_LABEL.search(page)
     if not label:
         raise RuntimeError("%s: the directory states no total — it may have stopped "
@@ -4864,7 +5479,7 @@ def member_pages(spec, districts, county):
             page = fetch(url)
         except Exception as e:      # noqa: BLE001 - one page never fails the county
             print("  note %-12s district %s page unfetched (%s)"
-                  % (county, key, e), file=sys.stderr)
+                  % (county, key, why_unfetched(e)), file=sys.stderr)
             continue
         flat = " ".join(html_lib.unescape(_TAG.sub(" ", page)).split())
         m = re.search(_MEMBER_HEADING % int(key), flat)
@@ -5112,8 +5727,8 @@ def ward_number_witness(fips, county, wards, seats, min_pairs=None, munis=None):
         if not feats:
             raise RuntimeError("no wards returned")
     except Exception as e:      # noqa: BLE001 - the witness, never the source
-        print("  WITNESS SKIPPED %-9s LTSB ward layer unreachable (%s) — the "
-              "roster ships unwitnessed this run" % (county, e), file=sys.stderr)
+        print("  WITNESS SKIPPED %-9s LTSB ward layer not read (%s) — the "
+              "roster ships unwitnessed this run" % (county, why_unfetched(e)), file=sys.stderr)
         return
     ltsb, types_by_name = {}, {}
     for f in feats:
@@ -5284,7 +5899,7 @@ def ward_number_witness(fips, county, wards, seats, min_pairs=None, munis=None):
                                   int(str(a.get("WARDID") or 0))))
         except Exception as e:      # noqa: BLE001 - the explanation, never the source
             print("  note    %-12s could not check whether the unmatched wards sit "
-                  "in a neighbouring county (%s)" % (county, e), file=sys.stderr)
+                  "in a neighbouring county (%s)" % (county, why_unfetched(e)), file=sys.stderr)
     across = [k for k in absent if k in crossing]
     nowhere = [k for k in absent if k not in crossing]
     if across:
@@ -5870,18 +6485,29 @@ def scrape_pierce_directory(spec):
     import pdfplumber                   # noqa: PLC0415 - pinned in requirements
     county, seats = spec["name"], spec["seats"]
     year = int(time.strftime("%Y"))
-    blob, link, tried = None, None, []
+    blob, link, tried, refused = None, None, [], []
     for candidate in (year, year + 1, year - 1):
         url = spec["doc_template"] % candidate
         tried.append(str(candidate))
         try:
             body = fetch_bytes(url, timeout=120)[0]
+        except RobotsRefused as e:
+            # A refusal is NOT "try the next year", and the message below
+            # blames a renamed file. A Disallow can be path-specific, so the
+            # loop still tries the other editions -- but the refusal is carried
+            # so the failure names its real cause.
+            refused.append(str(e))
+            continue
         except Exception:               # noqa: BLE001 - a 404 is the next year
             continue
         if body.startswith(b"%PDF"):
             blob, link = body, url
             break
     if blob is None:
+        if refused:
+            raise RobotsRefused(
+                "%s: every directory edition tried (%s) is refused by the host's "
+                "own robots.txt — %s" % (county, "/".join(tried), refused[0]))
         raise RuntimeError("%s: no directory PDF answered for %s — the county has "
                            "renamed the file or changed its path, and robots.txt "
                            "forbids reading the page that links it, so the URL in "
@@ -6530,8 +7156,8 @@ def scrape_chippewa_directory(spec):
     try:
         raw = fetch(spec["witness_url"])
     except Exception as e:              # noqa: BLE001 - the witness, never the source
-        print("  WITNESS SKIPPED %-9s staff directory unreachable (%s) — the "
-              "roster ships on the board page alone this run" % (county, e),
+        print("  WITNESS SKIPPED %-9s staff directory not read (%s) — the "
+              "roster ships on the board page alone this run" % (county, why_unfetched(e)),
               file=sys.stderr)
     else:
         # MATCHED ON LETTERS AND DIGITS ALONE, in both directions. The two
@@ -6707,8 +7333,8 @@ def scrape_menominee_board(spec):
         try:
             own = dmi_flat(fetch(member["url"]))
         except Exception as e:          # noqa: BLE001 - the witness, never the source
-            print("  note %-12s %s's own page unreachable (%s) — unwitnessed this "
-                  "run" % (county, member["name"], e), file=sys.stderr)
+            print("  note %-12s %s's own page not read (%s) — unwitnessed this "
+                  "run" % (county, member["name"], why_unfetched(e)), file=sys.stderr)
             continue
         said_name, said_ward = MN_OWN_NAME.search(own), MN_OWN_WARD.search(own)
         if not (said_name and said_ward):
@@ -6782,8 +7408,8 @@ def municipality_name_witness(fips, county, texts, seats):
         if not feats:
             raise RuntimeError("no wards returned")
     except Exception as e:          # noqa: BLE001 - the witness, never the source
-        print("  WITNESS SKIPPED %-9s LTSB ward layer unreachable (%s) — the "
-              "roster ships unwitnessed this run" % (county, e), file=sys.stderr)
+        print("  WITNESS SKIPPED %-9s LTSB ward layer not read (%s) — the "
+              "roster ships unwitnessed this run" % (county, why_unfetched(e)), file=sys.stderr)
         return
     ltsb = {}
     for f in feats:
@@ -7646,8 +8272,8 @@ def scrape_sawyer_directory(spec):
         comp = fetch(spec["composition_url"])
     except Exception as e:      # noqa: BLE001 - the witness, never the source
         print("  WITNESS SKIPPED %-9s the Supervisory Districts page is "
-              "unreachable (%s) — the roster ships unwitnessed this run"
-              % (county, e), file=sys.stderr)
+              "not read (%s) — the roster ships unwitnessed this run"
+              % (county, why_unfetched(e)), file=sys.stderr)
         comp = None
     if comp:
         flat = re.sub(r"(?i)<br\s*/?>|</(p|div|li)>", "\n", comp)
@@ -7838,8 +8464,8 @@ def scrape_florence_board(spec):
         board = FL_MEMBER_BLOCK.search(fetch(spec["board_url"]))
     except Exception as e:      # noqa: BLE001 - the witness, never the source
         print("  WITNESS SKIPPED %-9s the County Board committee page is "
-              "unreachable (%s) — the roster ships without its third surface "
-              "this run" % (county, e), file=sys.stderr)
+              "not read (%s) — the roster ships without its third surface "
+              "this run" % (county, why_unfetched(e)), file=sys.stderr)
         board = None
     if board:
         # THE NAMES ARE ANCHOR TEXTS INSIDE TABLE CELLS, not lines: a first
@@ -8725,8 +9351,8 @@ def _oconto_profiles(cards, county, base):
         try:
             page = fetch(urllib.parse.urljoin(base, url))
         except Exception as e:          # noqa: BLE001 - contact, never the roster
-            print("  note %-12s district %d profile unreachable (%s) — no phone "
-                  "this run" % (county, district, e), file=sys.stderr)
+            print("  note %-12s district %d profile not read (%s) — no phone "
+                  "this run" % (county, district, why_unfetched(e)), file=sys.stderr)
             continue
         title = OC_TITLE.search(page)
         named = html_lib.unescape(title.group(1)) if title else ""
@@ -8830,8 +9456,8 @@ def _ward_witness(fips, county, wards, seats):
         if not feats:
             raise RuntimeError("no wards returned")
     except Exception as e:      # noqa: BLE001 - the witness, never the source
-        print("  WITNESS SKIPPED %-9s LTSB ward layer unreachable (%s) — the "
-              "roster ships unwitnessed this run" % (county, e), file=sys.stderr)
+        print("  WITNESS SKIPPED %-9s LTSB ward layer not read (%s) — the "
+              "roster ships unwitnessed this run" % (county, why_unfetched(e)), file=sys.stderr)
         return
     ltsb = {}
     for f in feats:
@@ -9051,7 +9677,7 @@ def attach_profiles(page, list_url, districts, county):
             profile = fetch(links[d])
         except Exception as e:      # noqa: BLE001 - one page never fails the county
             print("  note %-12s district %s: profile page unreadable (%s)"
-                  % (county, d, e), file=sys.stderr)
+                  % (county, d, why_unfetched(e)), file=sys.stderr)
             continue
         block = PROFILE_BLOCK.search(profile)
         block = block.group(1) if block else ""
@@ -9267,6 +9893,10 @@ SINGLE_COUNTY_CARRIERS = (
 
 
 def main():
+    if "--selftest" in sys.argv[1:]:
+        _robots_selftest()
+        _district_page_selftest()
+        return
     argv = sys.argv[1:]
     out_path = argv[argv.index("--out") + 1] if "--out" in argv else DEFAULT_OUT
     only = argv[argv.index("--only") + 1] if "--only" in argv else None
@@ -9279,7 +9909,8 @@ def main():
     jobs += [(c["fips"], c["name"], c["seats"], "constituent", c) for c in CONSTITUENT_COUNTIES]
     jobs += [(c["fips"], c["name"], c["seats"], "witnessed-document", c)
              for c in WITNESSED_DOCUMENT_COUNTIES]
-    jobs += [(d["fips"], d["name"], d["seats"], "pdf", d) for d in PDF_COUNTIES]
+    jobs += [(d["fips"], d["name"], d["seats"], "district-pages", d)
+             for d in DISTRICT_PAGE_COUNTIES]
     jobs += [(t["fips"], t["name"], t["seats"], "framed-table", t)
              for t in FRAMED_TABLE_COUNTIES]
     jobs += [(spec["fips"], spec["name"], spec["seats"], strategy, spec)
@@ -9356,8 +9987,8 @@ def main():
             elif strategy == "witnessed-document":
                 districts = scrape_witnessed_document(src)
                 source_url, read_from = src["source_url"], "live"
-            elif strategy == "pdf":
-                districts, doc_url = scrape_pdf_county(src)
+            elif strategy == "district-pages":
+                districts = scrape_district_page_county(src)
                 source_url, read_from = src["source_url"], "live"
             elif strategy == "framed-table":
                 districts = scrape_framed_table_county(src)
@@ -9371,8 +10002,8 @@ def main():
                     districts, read_from = got
                 source_url = src
         except Exception as e:      # noqa: BLE001 - one county never fails the run
-            failures.append("%s (%s): %s" % (name, fips, e))
-            print("  MISS %-12s %s" % (name, e), file=sys.stderr)
+            failures.append("%s (%s): %s" % (name, fips, why_unfetched(e)))
+            print("  MISS %-12s %s" % (name, why_unfetched(e)), file=sys.stderr)
             continue
         counties[fips] = {"county": name, "seats": seats, "source_url": source_url,
                           "scraped_at": scraped_at, "read_from": read_from,
@@ -9428,10 +10059,16 @@ def main():
              + len(ARCHIVE_COUNTIES)
              + len(CONSTITUENT_COUNTIES)
              + len(WITNESSED_DOCUMENT_COUNTIES)
-             + len(PDF_COUNTIES)
+             + len(DISTRICT_PAGE_COUNTIES)
              + len(FRAMED_TABLE_COUNTIES) + len(SINGLE_COUNTY_CARRIERS), total,
              ", %d county/counties missed" % len(failures) if failures else ""),
           file=sys.stderr)
+    # A DELAY HONOURED IN SILENCE CANNOT BE TOLD FROM ONE THAT IS SKIPPED, which
+    # is how #944 shipped five bare `ROBOTS_PACER.hold(url)` calls — a context
+    # manager never entered — while its own PR body said four hosts were paced.
+    # The Iowa chair scrape prints this for the same reason.
+    for line in ROBOTS_PACER.report():
+        print(line, file=sys.stderr)
 
 
 if __name__ == "__main__":

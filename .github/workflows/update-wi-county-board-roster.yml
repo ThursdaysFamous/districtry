@@ -10,7 +10,11 @@ name: Update WI county board roster
 # DISTRICT KEY is witnessed by sampling the county's polygons against the
 # shipped state filing — one seat is withheld where the two disagree),
 # Fond du Lac through the Internet Archive, Dodge's
-# constituent directory, Kenosha's and Adams's directory PDFs, Clark's Official
+# constituent directory (paged on the county's own members page, because the
+# county disallows the /fs/ element endpoint the pagination used to ride),
+# Adams's twenty per-district pages (its Clerk's directory PDF is a better
+# document and Google disallows every route to its bytes), Kenosha's directory
+# PDF, Clark's Official
 # Directory PDF (its link discovered by anchor text, because the county serves
 # it from a content hash that changes on re-upload), Pierce's annual directory
 # PDF (pinned by year, because that host allows documents and forbids pages),

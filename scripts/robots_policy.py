@@ -323,10 +323,25 @@ def classify(http_status, body, final_url=None, error=None):
                    final_url=final_url, http_status=http_status)
 
 
-def fetch_verdict(robots_url, user_agent, timeout=30, session=None):
+def fetch_verdict(robots_url, user_agent, timeout=30, session=None, headers=None):
     """GET one robots.txt and classify it. `session` may be a requests.Session;
-    without one the stdlib client is used so this module stays stdlib-only."""
-    headers = {"User-Agent": user_agent, "Accept": "text/plain,*/*"}
+    without one the stdlib client is used so this module stays stdlib-only.
+
+    READ THE POLICY WITH THE CLIENT THAT WILL CRAWL. `headers`, when given, is
+    the full header set the caller's own fetches send; User-Agent is forced to
+    `user_agent` so the group that binds still matches what is passed in. A
+    caller that sends seven headers and reads robots.txt with two is measuring
+    a different client from the one it crawls with, and several county CMSs
+    answer the two differently: measured 2026-09-13, all five hosts in
+    wi_county_board_scraper.ROBOTS_REFUSED_PENDING returned 403 to the
+    User-Agent + Accept pair and 200 to the crawl's own headers. The asymmetry
+    runs one way only -- reading with a STRONGER client than the crawl would be
+    defeating a control, so no caller may pass headers its fetches do not send.
+
+    Optional and additive: existing callers keep the two-header behaviour.
+    """
+    headers = dict(headers or {}, **{"User-Agent": user_agent}) if headers \
+        else {"User-Agent": user_agent, "Accept": "text/plain,*/*"}
     try:
         if session is not None:
             r = session.get(robots_url, headers=headers, timeout=timeout, allow_redirects=True)
