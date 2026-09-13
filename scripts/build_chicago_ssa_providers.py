@@ -28,6 +28,10 @@ write, and all three senses of the claim refuse it: duplicate providers,
 duplicate boundary areas, and a provider with no area. Verified by running each
 one; every refusal exits 1 and writes nothing.
 
+--check re-reads the shipped file against a build from the sources read just
+now and exits non-zero on any difference, writing nothing. It is in no
+workflow and the comment above main() says why.
+
 Measured 2026-09-12: 49 of the boundary file's 58 SSAs get a provider. The
 nine that do not are Greek Town (16), Six Corners (28-2014), 95th/Ashland
 (69), Roseland (71), Village:Austin (72), Chinatown (73), Oak Street (75),
@@ -40,17 +44,27 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+from scraper_common import flatten_records  # noqa: E402  (shared machinery — do not fork)
+
 # BOTH PATHS ANCHOR TO HERE, and both live under il/. DEFAULT_RAW pointed at
 # the repo root's data/source/ until 2026-09-13 — a directory that does not
-# exist and that the scraper never wrote to — so the builder with no --raw
-# read nothing, and --scrape would have created a stray root directory beside
-# the instance the app actually serves from. The weekly workflow passes --raw
-# explicitly, which is why the mismatch never failed a run.
-DEFAULT_RAW = os.path.join(HERE, "..", "il", "data", "source",
-                           "chicago-ssa-providers.raw.json")
-OUT = os.path.join(HERE, "..", "il", "data", "app", "chicago-ssa-providers.json")
+# exist and that the scraper never wrote to — so a build with no --raw died on
+# a FileNotFoundError, and --scrape would have created a stray root directory
+# beside the instance the app actually serves from. The weekly workflow passes
+# --raw explicitly, which is why the mismatch never failed a run. That absence
+# is now a named refusal rather than a traceback, since a --check is the case
+# most likely to be run by hand with nothing saved.
+#
+# normpath so a refusal or a log line names il/data/app/... rather than
+# scripts/../il/..., which is the form a reader can paste back.
+DEFAULT_RAW = os.path.normpath(os.path.join(HERE, "..", "il", "data", "source",
+                                            "chicago-ssa-providers.raw.json"))
+OUT = os.path.normpath(os.path.join(HERE, "..", "il", "data", "app",
+                                    "chicago-ssa-providers.json"))
 
 # 49 parse today. The floor allows a handful of blocks to lapse between city
 # edits without a false alarm, and refuses a run that lost a third of them.
@@ -67,8 +81,11 @@ def bare(ref):
 def build(raw):
     providers = raw.get("providers") or {}
     if len(providers) < MIN_PROVIDERS:
-        raise SystemExit("chicago-ssa-providers: only %d provider(s) parsed, floor is %d "
-                         "— refusing to overwrite a good file with a bad scrape"
+        raise SystemExit("chicago-ssa-providers: only %d provider(s) parsed, floor "
+                         "is %d — refusing to build from a scrape this thin, in "
+                         "either mode: writing it would replace a good file with "
+                         "a bad one, and checking against it would call a good "
+                         "file drifted"
                          % (len(providers), MIN_PROVIDERS))
 
     out, seen = {}, {}
@@ -159,12 +176,113 @@ def check_against_boundaries(out, path):
         print("    no provider: %-14s %s" % refs[n])
 
 
+def sort_key(number):
+    """Order SSA keys numerically, and survive one that is not a number.
+
+    Every key this builder writes is bare digits, so int() would do — but the
+    whole point of --check is to read a file that may have been hand-edited,
+    and a ValueError traceback out of the sort is a worse answer than the
+    report the caller came for.
+    """
+    return (0, int(number), "") if str(number).isdigit() else (1, 0, str(number))
+
+
+def read_shipped(path):
+    """The shipped roster as {bare number: record}, or a refusal.
+
+    flatten_records at depth 1 is the shape gate: it refuses a top level that
+    is not a dict of dicts, which is exactly what a hand-edit breaks first.
+    """
+    if not os.path.exists(path):
+        raise SystemExit("chicago-ssa-providers: %s is missing, so there is "
+                         "nothing to check — run without --check to build it"
+                         % path)
+    with open(path, encoding="utf-8") as fh:
+        shipped = json.load(fh)
+    try:
+        return flatten_records(shipped, 1)
+    except ValueError as exc:
+        raise SystemExit("chicago-ssa-providers: %s is not a flat {SSA number: "
+                         "record} map — %s" % (path, exc))
+
+
+def drift_lines(shipped, fresh):
+    """Every difference between the shipped roster and a fresh build.
+
+    Empty means the two agree exactly. Values are printed with %r so an
+    added or lost trailing space — the shape of edit a phone or address
+    reformat makes — is visible rather than rendering as an identical string.
+    """
+    lines = []
+    for key in sorted(set(shipped) - set(fresh), key=sort_key):
+        lines.append("  ONLY IN THE SHIPPED FILE  #%s (%s)"
+                     % (key, shipped[key].get("provider") or "?"))
+    for key in sorted(set(fresh) - set(shipped), key=sort_key):
+        lines.append("  ONLY IN A FRESH BUILD     #%s (%s)"
+                     % (key, fresh[key].get("provider") or "?"))
+    for key in sorted(set(shipped) & set(fresh), key=sort_key):
+        was, now = shipped[key], fresh[key]
+        for field in sorted(set(was) | set(now)):
+            if was.get(field) != now.get(field):
+                lines.append("  CHANGED #%s %s: %r -> %r"
+                             % (key, field, was.get(field), now.get(field)))
+    return lines
+
+
+# WHERE --check BELONGS, AND WHY IT IS IN NO WORKFLOW TODAY.
+#
+# Every other generator here has a --check that runs in smoke-test.yml: it
+# rebuilds from files already in the tree and fails a PR that hand-edited a
+# generated file. This one cannot be that, for two reasons and the second is
+# the one that matters.
+#
+#   It needs two live fetches — the city's provider page and the Socrata
+#   boundary dataset. A merge gate that reaches the internet fails every
+#   unrelated PR in the repo on the afternoon chicago.gov is slow.
+#
+#   And even with both hosts up it goes red on a DATA EVENT. The shipped file
+#   stops matching a fresh build the moment the city edits a provider's
+#   telephone, which is not a defect in anything and is exactly what the weekly
+#   workflow already turns into a reviewable PR. A gate that fires for reasons
+#   unrelated to the diff in front of it is one people learn to ignore.
+#
+# Nor is it a new step in update-chicago-ssa-providers.yml, where it would be
+# redundant: that workflow rebuilds the file and `git diff`s it, which asks the
+# same question and then does something useful with the answer.
+#
+# So it is a tool rather than a gate — what to run when you want to know
+# whether the shipped file is still current without mutating the tree, and the
+# first thing to reach for if the weekly workflow has been failing. The
+# invocation is:
+#
+#   python3 scripts/build_chicago_ssa_providers.py --check \
+#     --boundaries <the cmr6-dn8c GeoJSON, as the workflow curls it>
+#
+# WHAT WOULD MAKE IT A MERGE GATE is committing a raw scraper payload and a
+# boundary snapshot beside the roster, after which `--check --raw <snapshot>
+# --boundaries <snapshot>` is offline and answers a different, narrower
+# question: did the BUILDER change without the shipped file being rebuilt?
+# That is worth having and is deliberately not in this change — it needs a
+# rule for when the snapshots are refreshed, or they rot into a gate that
+# passes against a city page nobody has read in a year.
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--raw", default=DEFAULT_RAW)
+    ap.add_argument("--raw", default=None,
+                    help="a saved scraper payload. A build reads %s; a --check "
+                         "with no --raw scrapes fresh into a temporary file "
+                         "instead, because a check writes nothing."
+                         % os.path.relpath(DEFAULT_RAW, os.path.dirname(HERE)))
     ap.add_argument("--out", default=OUT)
     ap.add_argument("--scrape", action="store_true",
                     help="run the scraper first instead of reading a saved --raw")
+    ap.add_argument("--check", action="store_true",
+                    help="compare the shipped --out against a build from the "
+                         "sources read just now and exit non-zero on any "
+                         "difference, writing nothing. NOT a merge gate: it "
+                         "needs two live fetches and it goes red on a data "
+                         "event (the city editing a provider's telephone) as "
+                         "readily as on a defect. See the note above main().")
     ap.add_argument("--boundaries", required=True,
                     help="the Socrata SSA GeoJSON (cmr6-dn8c). REQUIRED, because a\n"
                          "comparand you can omit is a gate you can skip: this used to\n"
@@ -174,22 +292,55 @@ def main():
                          "job failing loudly is for.")
     args = ap.parse_args()
 
-    if args.scrape:
-        subprocess.check_call([sys.executable,
-                               os.path.join(HERE, "chicago_ssa_provider_scraper.py"),
-                               "--out", args.raw])
-    with open(args.raw, encoding="utf-8") as fh:
-        raw = json.load(fh)
+    with tempfile.TemporaryDirectory() as tmp:
+        if args.check and not args.raw:
+            raw_path, scrape = os.path.join(tmp, "raw.json"), True
+        else:
+            raw_path, scrape = args.raw or DEFAULT_RAW, args.scrape
+        if scrape:
+            subprocess.check_call([sys.executable,
+                                   os.path.join(HERE, "chicago_ssa_provider_scraper.py"),
+                                   "--out", raw_path])
+        if not os.path.exists(raw_path):
+            raise SystemExit("chicago-ssa-providers: no scraper payload at %s — "
+                             "pass --scrape to fetch one, or --raw to name a "
+                             "saved one" % raw_path)
+        with open(raw_path, encoding="utf-8") as fh:
+            raw = json.load(fh)
 
-    out = build(raw)
-    # BEFORE THE WRITE. It ran after it until 2026-09-13, which is why an orphan
-    # provider could be reported and shipped in the same run.
-    check_against_boundaries(out, args.boundaries)
-    os.makedirs(os.path.dirname(args.out), exist_ok=True)
-    with open(args.out, "w", encoding="utf-8") as fh:
-        json.dump(out, fh, indent=1, sort_keys=True, ensure_ascii=False)
-        fh.write("\n")
-    print("chicago-ssa-providers: wrote %d provider(s) to %s" % (len(out), args.out))
+        out = build(raw)
+        # BEFORE THE WRITE. It ran after it until 2026-09-13, which is why an
+        # orphan provider could be reported and shipped in the same run. A
+        # --check runs it too, so the check is never weaker than the build.
+        check_against_boundaries(out, args.boundaries)
+
+        if args.check:
+            # SAY WHICH PAYLOAD WAS COMPARED. "the sources read just now" is
+            # true of the default --check and false of --check --raw <saved>,
+            # and a check that overstates its own freshness is the one kind of
+            # wrong answer this mode exists to avoid.
+            note = ("the provider page read just now" if scrape
+                    else "the saved payload %s" % raw_path)
+            lines = drift_lines(read_shipped(args.out), out)
+            if lines:
+                print("\n".join(lines))
+                raise SystemExit(
+                    "chicago-ssa-providers: %d difference(s) between %s and a "
+                    "build from %s. Usually this is the city editing its "
+                    "provider page, which the weekly workflow turns into a PR; "
+                    "re-run without --check to write it."
+                    % (len(lines), args.out, note))
+            print("chicago-ssa-providers: OK — %d provider(s); the shipped file "
+                  "is exactly what %s and %s build"
+                  % (len(out), note, args.boundaries))
+            return
+
+        os.makedirs(os.path.dirname(args.out), exist_ok=True)
+        with open(args.out, "w", encoding="utf-8") as fh:
+            json.dump(out, fh, indent=1, sort_keys=True, ensure_ascii=False)
+            fh.write("\n")
+        print("chicago-ssa-providers: wrote %d provider(s) to %s"
+              % (len(out), args.out))
 
 
 if __name__ == "__main__":

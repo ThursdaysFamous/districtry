@@ -54,11 +54,32 @@ import json
 import os
 import sys
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
 from scraper_common import substantive_changes, emit_changes_output  # noqa: E402  (shared machinery — do not fork)
 
-APP_DIR = os.path.join("il", "data", "app")
+# EVERY PATH ANCHORS TO THIS FILE, and until 2026-09-13 none of them did.
+#
+# APP_DIR was a bare os.path.join("il", "data", "app"), resolved against the
+# working directory — so the roster and the two geometry files were found from
+# the repo root and from nowhere else. Run from any other directory, --check
+# failed on "il/data/app/boone-district-officials.json is missing", which
+# reads as a file that needs building rather than a path that needs fixing.
+#
+# The --input default was worse: it named the repo root's data/source/, a
+# directory that has not existed since the app moved to il/ at R2.3. So even
+# from the repo root a build with no --input died on a FileNotFoundError for a
+# path nothing has ever written to, while --check (which does not read it) was
+# fine. The weekly workflow passes --input explicitly, which is why no run
+# ever failed on it.
+#
+# normpath because GEOMETRY_FILES reaches a reader: it is named in the message
+# telling them to build the boundaries first, and il/data/app/... is the form
+# they can paste back.
+APP_DIR = os.path.normpath(os.path.join(HERE, "..", "il", "data", "app"))
 OUT = os.path.join(APP_DIR, "boone-district-officials.json")
+DEFAULT_INPUT = os.path.normpath(os.path.join(HERE, "..", "il", "data", "source",
+                                              "boone-district-officials.json"))
 GEOMETRY_FILES = [
     os.path.join(APP_DIR, "boone-park-districts.json"),
     os.path.join(APP_DIR, "boone-library-districts.json"),
@@ -210,7 +231,7 @@ def check(out):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--input", default="data/source/boone-district-officials.json")
+    ap.add_argument("--input", default=DEFAULT_INPUT)
     ap.add_argument("--out", default=OUT)
     ap.add_argument("--check", action="store_true",
                     help="verify the shipped file rather than rewriting it")
