@@ -179,6 +179,20 @@ INSTANCES = [
          all_label="All Iowa boards of supervisors",
          app_name="districtry Iowa", app_url="https://districtry.com/ia/",
          district_word="District", adapters=("ia_supervisors",)),
+    dict(tag="mi", state="Michigan", concept="county-commissioner",
+         index_page="county-commissioner.html",
+         heading="%(county)s County Board of Commissioners",
+         # The <title> is shorter than the <h1> here alone, and deliberately:
+         # "Kalamazoo County Board of Commissioners — districtry Michigan" is
+         # 61 characters against validate_serp_lengths.py's 60, so a search
+         # result would cut the last of it. "County Commissioners" is what the
+         # members are called and what a reader searches, and it leaves room —
+         # Grand Traverse, Michigan's longest county name, lands at 57.
+         page_title="%(county)s County Commissioners",
+         phrase="board of commissioners", index_label="Boards of commissioners",
+         all_label="All Michigan boards of commissioners",
+         app_name="districtry Michigan", app_url="https://districtry.com/mi/",
+         district_word="District", adapters=("mi_commissioners",)),
 ]
 
 
@@ -477,6 +491,61 @@ def ia_supervisors(inst):
     return out, problems, nameless, [path] + ([chair_path] if chairs else []), note
 
 
+def mi_commissioners(inst):
+    """Michigan: ONE file keyed by 3-digit county FIPS, each carrying the
+    county's name, the seat count the shipped geometry draws, and a `districts`
+    object of {label: {name, role?, party?, phone?, email?, profileUrl?}}.
+
+    IT COVERS SIX OF 83 COUNTIES AND IS MEANT TO. Michigan publishes no
+    maintained statewide roster of commissioners — the one statewide name
+    column, on the state's own district layer, holds the certified November
+    2024 election winners — so the names are read from each county's own board
+    page, a tranche at a time. A county absent from the file gets no page,
+    which is the same rule Iowa's 26 chair-only counties meet: one name and a
+    link is the thin shape the per-county decision rejected.
+
+    THE CHAIR IS A ROLE ON A COMMISSIONER, the Iowa shape rather than the
+    Illinois one, and it arrives already attached: four of the six counties
+    badge their own officers ("Chair", "Vice Chair", "Board Chair",
+    "Sergeant-at-Arms") in the same block the name comes from, so there is no
+    second file to join and no name match to get wrong.
+
+    EVERY COUNTY HERE IS FULL BY CONSTRUCTION. build_mi_commissioner_roster.py
+    refuses to write a county whose districts are not exactly 1..N for the seat
+    count the shipped geometry draws, so a partial board cannot reach this
+    file; the `nameless` return stays empty and a county that somehow arrived
+    empty would be reported rather than published as a board of nobody."""
+    data_dir = app_data(inst["tag"])
+    path = os.path.join(data_dir, "mi-commissioner-members.json")
+    out, problems, nameless = {}, [], set()
+    for fips, rec in sorted(_read(path).items()):
+        name = (rec.get("county") or "").strip()
+        if not name:
+            problems.append("mi-commissioner-members.json %r carries no county" % fips)
+            continue
+        districts = []
+        for label in sorted(rec.get("districts") or {}, key=district_sort_key):
+            districts.append(district(label, [dict((rec["districts"] or {})[label])]))
+        seats = rec.get("seats")
+        if seats is not None and len(districts) != seats:
+            problems.append(
+                "mi %s County publishes %d district(s) against a %d-seat board — "
+                "the roster and the shipped geometry disagree"
+                % (name, len(districts), seats))
+            continue
+        if not _count_named(districts, []):
+            if _nobody_key(inst, name) not in NAMES_NOBODY:
+                problems.append("mi %s County names nobody" % name)
+            nameless.add(name)
+            continue
+        out[name] = {"districts": districts, "sourceUrl": rec.get("sourceUrl"),
+                     "extras": [], "skipped": [], "slug": county_slug(name),
+                     "at_large": False}
+    note = ("%d of Michigan's 83 counties name their commissioners; the rest are "
+            "unreached tranches, not empty boards" % len(out))
+    return out, problems, nameless, [path], note
+
+
 def _nobody_key(inst, county):
     return "%s/%s" % (inst["tag"], county)
 
@@ -497,7 +566,8 @@ def _count_named(districts, extras):
 #               the gate the moment an adapter reads it.
 #   note        one line for the OK output, or None.
 ADAPTERS = {"il_districted": il_districted, "il_at_large": il_at_large,
-            "wi_seats": wi_seats, "ia_supervisors": ia_supervisors}
+            "wi_seats": wi_seats, "ia_supervisors": ia_supervisors,
+            "mi_commissioners": mi_commissioners}
 
 
 # Party, as the fleet's rosters actually spell it. MEASURED 2026-09-13 across
@@ -860,7 +930,7 @@ h1 {
 <body>
 <a href="#page-main" class="skip-link">Skip to content</a>
 <main id="page-main">
-<p class="kicker">%(mark)s<a href="../">districtry / illinois</a></p>
+<p class="kicker">%(mark)s<a href="../">districtry / %(instance_word)s</a></p>
 <h1>%(h1)s</h1>
 <p class="title-sub">%(standfirst)s</p>
 %(body)s
@@ -972,6 +1042,15 @@ def build_page(inst, name, rec, at_large, shell):
         og_image=esc(inst["app_url"] + "og-image.png"),
         app_name=esc(inst["app_name"]), index_page=esc(inst["index_page"]),
         all_label=esc(inst["all_label"]),
+        # The masthead kicker names THIS instance. It was the literal
+        # "districtry / illinois" until 2026-09-13, so all 72 Wisconsin and 17
+        # Iowa pages carried Illinois's name in their own masthead — correct
+        # for the instance the template was written in, wrong for every other,
+        # and nothing compared it against the page it sat on. Found while
+        # registering Michigan as the fourth instance. It belongs here rather
+        # than in shell_for_pages(), which is built once and shared by all of
+        # them and so cannot know which instance it is rendering.
+        instance_word=esc(inst["state"].lower()),
     )
 
 

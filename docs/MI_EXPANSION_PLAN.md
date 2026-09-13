@@ -313,10 +313,15 @@ Each opens its own refreshed plan PR with its own measured ledger when it begins
   audited.
   **NEXT: no third Michigan city has been researched.** Lansing, Ann Arbor and Sterling Heights are
   the obvious candidates by population; none has been checked for a published boundary.
-- **The 619 commissioners** — gap `mi-commissioner-roster`. The honest route is county-by-county
-  against each board's own page, weekly and count-guarded; ten of the twelve counties sampled
-  publish a readable one. Oakland answers only through its CMS origin and Ottawa sits behind a
-  captcha, which this project does not route around.
+- **The other 543 commissioners** — gap `mi-commissioner-roster`. Tranche 1 shipped 2026-09-13:
+  six counties, 76 of the 619 districts, from each county's own board page, weekly and
+  count-guarded (`mi/scripts/mi_commissioner_scraper.py` + `build_mi_commissioner_roster.py`,
+  `update-mi-commissioner-roster.yml`). The earlier claim that "ten of the twelve counties sampled
+  publish a readable one" was optimistic: six of the twelve did not yield, and each now carries a
+  measured reason in that scraper's `PROBES` table rather than a guess — two `Disallow: /`, two
+  HTTP 202 on robots.txt itself, Oakland refused at its Akamai edge to every client string tested,
+  and Washtenaw answering 200 with its commissioners named only inside prose biographies. The next
+  tranche picks up from Michigan's 13th county by population.
 - **Michigan's full fleet bbox**, and with it the last four misroutes (Ironwood, Houghton, Iron
   Mountain, Menominee). Needs `validate_index`'s "a bbox must not contain a sibling's centre"
   rule relaxed AND the in-app `metro-portal` moved onto the same ring test — its `siblingMetroAt`

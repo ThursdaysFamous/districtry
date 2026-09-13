@@ -1,0 +1,108 @@
+name: Update Michigan county commissioner roster
+
+# Weekly refresh of mi/data/app/mi-commissioner-members.json, read by
+# mi/index.html's `county-commissioner` card.
+#
+# WHY IT IS NOT ONE STATEWIDE FETCH. Michigan has 83 counties and no
+# maintained statewide roster. The one statewide name source — the Commissioner
+# column on the state's own district layer — holds the certified November 2024
+# election winners, and measured 2026-09-13 against six counties it names a
+# different person in 7 of 76 seats, one of them a Wayne County commissioner
+# who died on 10 June 2025. So the names come from each county's own board
+# page, county by county, in tranches.
+#
+# Tranche 1 is six counties and 76 districts: Kalamazoo, Kent, Macomb,
+# Muskegon, Saginaw and Wayne. mi/scripts/mi_commissioner_scraper.py's PROBES
+# table records the six counties tried and refused with the reason for each —
+# two disallow this client in robots.txt, two answer HTTP 202 on robots.txt
+# itself, one is refused at its edge to every client string tested, and one
+# publishes its roster only as free prose. The refused counties stay in the
+# table so this run re-asks every week and a county that changes its file
+# re-enters by itself.
+#
+# The builder refuses to write unless each county's districts are exactly 1..N
+# for the seat count the shipped geometry draws, so a redistricting or a board
+# resize fails this run instead of shipping a roster keyed to lines that moved.
+# Its floors tolerate any two of the six going dark and refuse a collapse.
+#
+# Nothing here works around an access control. robots.txt is read through
+# scripts/robots_policy.py before the first fetch of every host and a stated
+# Crawl-delay is honoured; a captcha is left alone.
+
+on:
+  schedule:
+    - cron: "30 20 * * 6" # Saturday 20:30 UTC (between Illinois's Sat 20:00 and 21:00 jobs)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI; falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install -c mi/scripts/requirements.txt requests
+
+      - name: Scrape each county's own board page
+        run: python3 mi/scripts/mi_commissioner_scraper.py
+
+      - name: Rebuild the commissioner roster
+        run: python3 mi/scripts/build_mi_commissioner_roster.py
+
+      - name: Validate app + data files
+        run: python3 mi/scripts/validate_index.py mi/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- mi/data/app/mi-commissioner-members.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          # Fixed branch (not per-run): an unmerged roster PR is refreshed in
+          # place by the force-push below instead of spawning a duplicate PR.
+          branch="bot/mi-commissioner-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's CURRENT tip — see update-mi-legislature-roster.yml
+          # for the measured reason.
+          git fetch --depth=1 origin main
+          git checkout -B "$branch" FETCH_HEAD
+          # The per-county pages (mi/county-commissioner/) are GENERATED from
+          # the roster this job just rewrote, so regenerate them here or the
+          # smoke gate's `build_county_pages.py --check` fails on this PR with a
+          # page naming last week's commissioners. The sitemap follows, because
+          # those pages are in it and its lastmod is each file's own last commit.
+          python3 scripts/build_county_pages.py
+          python3 scripts/build_sitemap.py
+          git add mi/data/app/mi-commissioner-members.json mi/county-commissioner mi/county-commissioner.html sitemap.xml
+          git commit -m "Update Michigan county commissioner roster"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Michigan county commissioner roster" \
+              --body "Automated weekly refresh of the \`county-commissioner\` card's names, read from each county's own board page. Tranche 1 covers six counties and 76 of Michigan's 619 districts: Kalamazoo, Kent, Macomb, Muskegon, Saginaw and Wayne. The builder refuses to write unless each county's districts are exactly 1..N for the seat count the shipped geometry draws, so a redistricting fails the run instead of reshaping the card. The state's own Commissioner column ships nowhere — it lists the November 2024 election winners — and the run prints every seat where it disagrees with the county. Please review the diff before merging — this changes data about real officeholders." \
+              --base main \
+              --head "$branch"
+          else
+            echo "PR already open for $branch; force-push refreshed it."
+          fi
