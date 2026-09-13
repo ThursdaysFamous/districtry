@@ -2750,8 +2750,8 @@ host that genuinely refuses the token, **64 reach only hosts that serve the toke
 page, and 22 more reach no host that refuses it** (one or more answered nothing or refused
 the `requests` stack); 283 of the 291 measured hosts are still reached by such a caller.
 **THREE OF THOSE FILES HAVE BEEN RENAMED TO THE TOKEN SINCE THE SWEEP** and the per-file
-figures move with them — the Iowa minutes-chair scraper (#916), the Iowa county-officers
-scraper (both measured `token-ok`) and `jodaviess_county_board_scraper.py` (#945, whose own
+figures move with them — the Iowa minutes-chair scraper (#916) and the Iowa county-officers
+scraper (both measured `token-ok`), and `jodaviess_county_board_scraper.py` (#945, whose own
 page was read both ways the same day: HTTP 200 and 82,783 bytes to each) — which is the rule
 working rather than drift: a file
 whose host serves the token a full page gets the token back, one at a time, with its own
@@ -2763,7 +2763,8 @@ found all three files saying 104 files / 17 refusing / 282 of 290 hosts and this
 saying two `token-refused` hosts, the day after #928 (a new browser-string file on a host it
 measured `token-refused`) and #929 had moved every one of them — nothing had compared a
 sentence to the inventory it quoted, which is the drift class `validate_doc_counts.py`
-already guards for "N layers". **THE FIRST FIGURES WERE 57 AND 68 OF 115, AND BOTH WERE WRONG FOR TWO REASONS.** Theclassifier recognised a districtry token only with a `/N` version, so `validate_sources.py`'s
+already guards for "N layers". **THE FIRST FIGURES WERE 57 AND 68 OF 115, AND BOTH WERE WRONG FOR TWO REASONS.** The
+classifier recognised a districtry token only with a `/N` version, so `validate_sources.py`'s
 `districtry source validator (+https://districtry.com/il/)` read as a browser string on 51
 hosts (found by #910), and it did not follow a UA constant imported from a sibling module, so
 the fifteen Illinois board builders that do `from build_metro_outline import HEADERS` read as
