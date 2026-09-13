@@ -640,14 +640,10 @@ def main():
 
             if best is None:
                 continue
-            if "phone" not in best and isac_row:
-                ph = clean_phone(isac_row.get("phone"))
-                if ph:
-                    best["phone"] = ph
-            # Party comes from the row whose NAME is this officer's, not from
-            # the only row under the label. A county publishing one row is the
-            # same join with one candidate; one publishing several is where the
-            # field used to vanish.
+            # The joined row -- the one whose NAME is this officer's, not the
+            # only row under the label. A county publishing one row is the same
+            # join with one candidate; one publishing several is where the
+            # fields below used to vanish or, worse, come off another person.
             prow, why = party_row_for(isac_rows, best.get("name"))
             if len(isac_rows) > 1:
                 # One line per county-office where the join had to choose. The
@@ -655,6 +651,31 @@ def main():
                 # would bury the ten that mean something.
                 party_joins.append("  party join  %-13s %-15s %d rows -- %s"
                                    % (county, key, len(isac_rows), why))
+            # PHONE RIDES THE SAME JOIN, for the same reason party does: a
+            # contact detail must belong to the person it is printed under.
+            # This is a FALLBACK -- it fires only where the office's own
+            # directory published no number -- and the old read took it off
+            # `isac_row`, the row under the LABEL rather than the row naming
+            # this officer.
+            #
+            # Measured 2026-09-12: no county's phone changes. 101 records reach
+            # this line (all 99 treasurers, plus the Muscatine and Sac
+            # sheriffs); ISAC published exactly ONE row under the label in every
+            # one, and in every one that row's name joins to the shipped name,
+            # so old and new read the same row. The records whose shipped name
+            # is NOT the ISAC row's -- the four mislabels, Crawford and Sioux
+            # sheriff and both Page offices -- each carry a phone from their own
+            # directory and so never reach this line. That is where the old read
+            # would have put a deputy's desk line under the elected officer's
+            # name, and it is why the line changes although today's file does
+            # not. Sac shows the join is not only defensive: its pinned
+            # divergence ships ISAC's name without the directory's contact
+            # block, the fallback fires, and ISAC's number is the right one --
+            # which is the row the join returns.
+            if "phone" not in best and prow:
+                ph = clean_phone(prow.get("phone"))
+                if ph:
+                    best["phone"] = ph
             if prow and prow.get("party"):
                 party = expand_party(prow["party"], county, key)
                 if party:

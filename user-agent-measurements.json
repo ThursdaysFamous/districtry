@@ -318,7 +318,7 @@
    "note": "requests+token HTTP 200, 60831 bytes",
    "callers": {
     "ia/scripts/ia_county_city_officials_scraper.py": "self",
-    "ia/scripts/ia_county_minutes_chair_scraper.py": "both",
+    "ia/scripts/ia_county_minutes_chair_scraper.py": "self",
     "ia/scripts/validate_sources.py": "self"
    }
   },
@@ -2017,7 +2017,7 @@
    "verdict": "robots-disallows-this-path",
    "note": "the * group disallows /ViewPublisher.php?view_id=1&count=20 \u2014 not fetched, so this host carries no user-agent measurement",
    "callers": {
-    "ia/scripts/ia_county_minutes_chair_scraper.py": "both"
+    "ia/scripts/ia_county_minutes_chair_scraper.py": "self"
    }
   },
   "lacrossecounty.org": {
@@ -2479,7 +2479,7 @@
    "note": "requests+token HTTP 200, 49445 bytes",
    "callers": {
     "ia/scripts/ia_county_directory_scraper.py": "self",
-    "ia/scripts/ia_county_officers_scraper.py": "browser",
+    "ia/scripts/ia_county_officers_scraper.py": "self",
     "ia/scripts/validate_sources.py": "self"
    }
   },
@@ -4159,7 +4159,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 251443 bytes",
    "callers": {
-    "ia/scripts/ia_county_minutes_chair_scraper.py": "both"
+    "ia/scripts/ia_county_minutes_chair_scraper.py": "self"
    }
   },
   "www.co.adams.wi.us": {
@@ -4679,7 +4679,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 319149 bytes",
    "callers": {
-    "ia/scripts/ia_county_minutes_chair_scraper.py": "both"
+    "ia/scripts/ia_county_minutes_chair_scraper.py": "self"
    }
   },
   "www.desmoinescounty.iowa.gov": {
@@ -4697,7 +4697,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 629234 bytes",
    "callers": {
-    "ia/scripts/ia_county_minutes_chair_scraper.py": "both"
+    "ia/scripts/ia_county_minutes_chair_scraper.py": "self"
    }
   },
   "www.dewittcountyil.gov": {
@@ -5588,7 +5588,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 230765 bytes",
    "callers": {
-    "ia/scripts/ia_county_minutes_chair_scraper.py": "both"
+    "ia/scripts/ia_county_minutes_chair_scraper.py": "self"
    }
   },
   "www.manitowoc.org": {
