@@ -99,6 +99,14 @@ import requests  # noqa: E402
 # report `token-refused`, which is what the host does. The first half of this is
 # the blind spot validate_card_links.py already handles, by naming concatenated
 # literals instead of probing them.
+# UNDER il/, where the other Illinois intermediates live, and ANCHORED TO THIS
+# FILE rather than the working directory — build_chicago_ssa_providers.py
+# anchors its own OUT and DEFAULT_RAW the same way, so the pair agrees from
+# any directory. The repo root has no data/source/ at all; only
+# data/search-performance.json sits at the root.
+HERE = os.path.dirname(os.path.abspath(__file__))
+DEFAULT_OUT = os.path.join(HERE, "..", "il", "data", "source",
+                           "chicago-ssa-providers.raw.json")
 SOURCE_URL = "https://www.chicago.gov/city/en/depts/dcd/supp_info/special_service_areasandproviderlist.html"
 # The program page that links it, and what the `ssa` card links. Recorded here
 # because the list's own URL is not discoverable from the department landing
@@ -295,13 +303,7 @@ def scrape():
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--out",
-                    # UNDER il/, where the other Illinois intermediates live.
-                    # The repo root has no data/source/ at all, so the old
-                    # default would have created a stray directory outside the
-                    # instance the app serves from; only data/search-performance
-                    # .json sits at the root.
-                    default="il/data/source/chicago-ssa-providers.raw.json")
+    ap.add_argument("--out", default=DEFAULT_OUT)
     args = ap.parse_args()
     payload = scrape()
     os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)

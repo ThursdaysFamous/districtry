@@ -42,7 +42,14 @@ import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-DEFAULT_RAW = os.path.join(HERE, "..", "data", "source", "chicago-ssa-providers.raw.json")
+# BOTH PATHS ANCHOR TO HERE, and both live under il/. DEFAULT_RAW pointed at
+# the repo root's data/source/ until 2026-09-13 — a directory that does not
+# exist and that the scraper never wrote to — so the builder with no --raw
+# read nothing, and --scrape would have created a stray root directory beside
+# the instance the app actually serves from. The weekly workflow passes --raw
+# explicitly, which is why the mismatch never failed a run.
+DEFAULT_RAW = os.path.join(HERE, "..", "il", "data", "source",
+                           "chicago-ssa-providers.raw.json")
 OUT = os.path.join(HERE, "..", "il", "data", "app", "chicago-ssa-providers.json")
 
 # 49 parse today. The floor allows a handful of blocks to lapse between city
