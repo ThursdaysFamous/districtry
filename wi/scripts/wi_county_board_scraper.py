@@ -2847,8 +2847,14 @@ def _robots_selftest():
         v = _robots_verdict("https://%s/" % host)
         check("pending %s still refuses its policy (recorded: %s)" % (host, why),
               v.status == "refused")
+        # THE ENTRY ITSELF NAMES THE HOST, so searching the whole file always
+        # found it and this half could not fail -- vacuous the hour it was
+        # written. The pending block is excised before the search, so the test
+        # asks what it means to ask: does any OTHER table name this host?
+        elsewhere = re.sub(r"(?s)ROBOTS_REFUSED_PENDING = \{.*?\n\}", "",
+                           _SOURCE_TEXT, count=1)
         check("pending %s is still named by a table in this file" % host,
-              host in _SOURCE_TEXT)
+              host in elsewhere)
 
     # 6. No robots.txt allows everything; RFC 9309 files a 404 that way.
     check("404 allows", robots_says(seed("nofile.example.test", 404, ""))[0] is True)
@@ -3958,6 +3964,11 @@ def _cdx_latest(url):
     do not always agree about what the Archive holds, so both are asked."""
     try:
         rows = _archive_json(CDX % urllib.parse.quote(url, safe=""))
+    except RobotsRefused:
+        # "no capture" and "we may not ask" are different facts about the
+        # Archive, and returning None here said the first when it meant the
+        # second. The caller decides; this rung does not swallow it.
+        raise
     except Exception:                       # noqa: BLE001 - reachability probe
         return None
     stamps = sorted(r[0] for r in rows[1:]) if rows and rows[0][0] == "timestamp" \
@@ -6474,18 +6485,29 @@ def scrape_pierce_directory(spec):
     import pdfplumber                   # noqa: PLC0415 - pinned in requirements
     county, seats = spec["name"], spec["seats"]
     year = int(time.strftime("%Y"))
-    blob, link, tried = None, None, []
+    blob, link, tried, refused = None, None, [], []
     for candidate in (year, year + 1, year - 1):
         url = spec["doc_template"] % candidate
         tried.append(str(candidate))
         try:
             body = fetch_bytes(url, timeout=120)[0]
+        except RobotsRefused as e:
+            # A refusal is NOT "try the next year", and the message below
+            # blames a renamed file. A Disallow can be path-specific, so the
+            # loop still tries the other editions -- but the refusal is carried
+            # so the failure names its real cause.
+            refused.append(str(e))
+            continue
         except Exception:               # noqa: BLE001 - a 404 is the next year
             continue
         if body.startswith(b"%PDF"):
             blob, link = body, url
             break
     if blob is None:
+        if refused:
+            raise RobotsRefused(
+                "%s: every directory edition tried (%s) is refused by the host's "
+                "own robots.txt — %s" % (county, "/".join(tried), refused[0]))
         raise RuntimeError("%s: no directory PDF answered for %s — the county has "
                            "renamed the file or changed its path, and robots.txt "
                            "forbids reading the page that links it, so the URL in "
