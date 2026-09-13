@@ -906,6 +906,7 @@ def check(args):
             notes.append("%s carries no measurement (its callers send their own token)" % host)
     if payload.get("summary") != tally(recorded):
         problems.append("the summary block does not count the hosts below it")
+    problems.extend(check_doc_counts(inventory, payload))
 
     for line in notes:
         print("user-agent probe: NOTE — %s" % line)
@@ -1029,45 +1030,184 @@ def show_inventory(args):
     return 0
 
 
-def file_summary(inventory):
-    """The per-FILE tally CLAUDE.md and the guidebook quote, derived rather
-    than remembered. A file sends a browser string if its kind is 'browser' or
-    'both'. Against the artifact's per-host verdicts, each such file is one of:
-    every host it reaches is `token-ok`; no host it reaches refuses the token
-    (all measured, none `token-refused*`, but at least one `stack-not-token`,
-    `answers-nothing` or another non-refusal); at least one host refuses the
-    token; or it reaches a host the artifact does not carry. The four are
-    disjoint and sum to the browser-string file count. Without an artifact the
-    first line still prints and the rest are skipped."""
+BUCKET_EVERY_OK = "every host serves the token a full page"
+BUCKET_NO_REFUSE = "no host refuses the token (some answered nothing or refused the stack)"
+BUCKET_REFUSES = "at least one host refuses the token"
+BUCKET_UNMEASURED = "reaches a host the artifact does not carry"
+
+
+def file_buckets(inventory, verdicts):
+    """The per-FILE tally, derived rather than remembered. A file sends a
+    browser string if its kind is 'browser' or 'both'. Against the artifact's
+    per-host verdicts, each such file is one of: every host it reaches is
+    `token-ok`; no host it reaches refuses the token (all measured, none
+    `token-refused*`, but at least one `stack-not-token`, `answers-nothing` or
+    another non-refusal); at least one host refuses the token; or it reaches a
+    host the artifact does not carry. The four are disjoint and sum to the
+    browser-string file count. Returns (browser files, files sending both,
+    {bucket label: count})."""
     files = {}
     for host, entry in inventory.items():
         for rel, kind in entry["callers"].items():
             files.setdefault(rel, {"kind": kind, "hosts": set()})["hosts"].add(host)
     browser = sorted(f for f, d in files.items() if d["kind"] in ("browser", "both"))
-    lines = ["files sending a browser string: %d (%d of them the token as well)"
-             % (len(browser), sum(1 for f in browser if files[f]["kind"] == "both"))]
-    if not os.path.exists(ARTIFACT):
-        return lines
-    verdicts = {h: r["verdict"] for h, r in json.load(open(ARTIFACT))["hosts"].items()}
+    both = sum(1 for f in browser if files[f]["kind"] == "both")
     refusing = {h for h, v in verdicts.items() if v.startswith("token-refused")}
     token_ok = {h for h, v in verdicts.items() if v == "token-ok"}
-    buckets = {"every host serves the token a full page": 0,
-               "no host refuses the token (some answered nothing or refused the stack)": 0,
-               "at least one host refuses the token": 0,
-               "reaches a host the artifact does not carry": 0}
+    buckets = {BUCKET_EVERY_OK: 0, BUCKET_NO_REFUSE: 0, BUCKET_REFUSES: 0, BUCKET_UNMEASURED: 0}
     for f in browser:
         hosts = files[f]["hosts"]
         if hosts - set(verdicts):
-            buckets["reaches a host the artifact does not carry"] += 1
+            buckets[BUCKET_UNMEASURED] += 1
         elif hosts & refusing:
-            buckets["at least one host refuses the token"] += 1
+            buckets[BUCKET_REFUSES] += 1
         elif hosts <= token_ok:
-            buckets["every host serves the token a full page"] += 1
+            buckets[BUCKET_EVERY_OK] += 1
         else:
-            buckets["no host refuses the token (some answered nothing or refused the stack)"] += 1
+            buckets[BUCKET_NO_REFUSE] += 1
+    return len(browser), both, buckets
+
+
+def file_summary(inventory):
+    """The per-file lines --inventory prints (the tally CLAUDE.md, the
+    guidebook and scraper_common.py quote, and check_doc_counts() holds them
+    to). Without an artifact the first line still prints and the rest are
+    skipped."""
+    verdicts = ({h: r["verdict"] for h, r in json.load(open(ARTIFACT))["hosts"].items()}
+                if os.path.exists(ARTIFACT) else None)
+    n_browser, both, buckets = file_buckets(inventory, verdicts or {})
+    lines = ["files sending a browser string: %d (%d of them the token as well)"
+             % (n_browser, both)]
+    if verdicts is None:
+        return lines
     for label, n in buckets.items():
         lines.append("  %-74s %4d" % (label, n))
     return lines
+
+
+# THE FIGURES THREE DOCUMENTS QUOTE ARE HELD TO THE TREE AND THE ARTIFACT.
+# CLAUDE.md, docs/DATA_LAYER_GUIDEBOOK.md and scripts/scraper_common.py each
+# restate the --inventory tally and the artifact's host breakdown in prose,
+# and nothing compared them: on 2026-09-13 all three said "104 files send a
+# browser string ... 17 reach at least one host that does ... 282 of the 290
+# measured hosts" while --inventory printed 105 / 18 / 283 and the artifact
+# held 291 hosts — #928 had added a browser-string file and a token-refused
+# host between the sentence being written and the PR merging, with every gate
+# green. Each pattern below names one figure; a file is scanned with its
+# whitespace collapsed so a number and its noun can sit on different lines,
+# and every occurrence must equal the derived figure. A FAIL prints the
+# current figures so the fix is a copy. A file that stops carrying the
+# sentence the gate exists for FAILS as orphaned — the property ACCEPTED_DROPS
+# and EXPECTED_UNREACHABLE already have.
+DOC_COUNT_FILES = ("CLAUDE.md", "docs/DATA_LAYER_GUIDEBOOK.md", "scripts/scraper_common.py")
+DOC_COUNT_PATTERNS = (
+    # (figure key(s), regex over whitespace-collapsed text)
+    ("files_browser", r"(\d+) files send a browser string"),
+    ("files_every_ok", r"(\d+) (?:of them )?reach only hosts that serve the token a full page"),
+    ("files_no_refuse", r"(\d+) more reach no host that refuses"),
+    ("files_refuses", r"(\d+) reach at least one host that"),
+    (("subject_measured", "hosts"), r"(\d+) of the (\d+) measured hosts are still reached"),
+    # "across N hosts" alone is not this figure: CLAUDE.md also counts the 386
+    # hosts the scheduled scrapers read, and the guidebook a 72-host sweep.
+    ("hosts", r"[Aa]cross the (\d+) hosts measured \("),
+    ("hosts", r"across (\d+) hosts\*\* \(20"),
+    ("hosts", r"across the (\d+) hosts a browser-string caller reaches"),
+    ("hosts", r"\((\d+) hosts, four rungs"),
+    ("remeasured", r"(\d+) (?:of them )?re-measured 20\d\d-"),
+    ("token_ok", r"(\d+) serve (?:the districtry token|UA_ROSTER_BOT) a full page"),
+    ("refuse", r"(\d+) refuse it and answer the browser string"),
+    ("stack", r"(\d+) refuse the .requests. (?:stack|STACK) while serving"),
+    (("refuse", "token_ok"), r"(\d+) HOSTS REFUSE THE TOKEN AND (\d+) SERVE IT A FULL PAGE"),
+    # the guidebook's verdict table, one row per line
+    ("token_ok", r"\| `token-ok` \| (\d+) \|"),
+    ("token_refused_and_stack", r"\| `token-refused-and-stack` \| (\d+) \|"),
+    ("stack", r"\| `stack-not-token` \| (\d+) \|"),
+    ("token_refused", r"\| `token-refused` \| (\d+) \|"),
+    ("all_refused_challenged", r"\| `all-refused` / `challenged` \| (\d+) \|"),
+    ("answers_nothing", r"\| `answers-nothing` / `path-answers-nothing` \| (\d+) \|"),
+    ("robots_disallows", r"\| `robots-disallows-this-path` \| (\d+) \|"),
+    ("crawl_delay", r"\| `crawl-delay-too-long` \| (\d+) \|"),
+    ("robots_unreadable", r"\| `robots-unreadable` \| (\d+) \|"),
+    ("tls_proxy", r"\| `tls-chain` / `proxy-denied` \| (\d+) \|"),
+)
+DOC_COUNT_REQUIRED = "files_browser"   # the sentence each file must still carry
+
+
+def doc_figures(inventory, payload):
+    """Every figure DOC_COUNT_PATTERNS can name, derived from the tree and the
+    artifact."""
+    recorded = payload["hosts"]
+    verdicts = {h: r["verdict"] for h, r in recorded.items()}
+    summary = tally(recorded)
+    n_browser, _both, buckets = file_buckets(inventory, verdicts)
+    subject = set(subject_hosts(inventory))
+    return {
+        "files_browser": n_browser,
+        "files_every_ok": buckets[BUCKET_EVERY_OK],
+        "files_no_refuse": buckets[BUCKET_NO_REFUSE],
+        "files_refuses": buckets[BUCKET_REFUSES],
+        "subject_measured": len(subject & set(recorded)),
+        "hosts": len(recorded),
+        "remeasured": sum(1 for r in recorded.values()
+                          if r.get("measured", payload["measured"]) > payload["measured"]),
+        "token_ok": summary.get("token-ok", 0),
+        "token_refused": summary.get("token-refused", 0),
+        "token_refused_and_stack": summary.get("token-refused-and-stack", 0),
+        "refuse": summary.get("token-refused", 0) + summary.get("token-refused-and-stack", 0),
+        "stack": summary.get("stack-not-token", 0),
+        "all_refused_challenged": summary.get("all-refused", 0) + summary.get("challenged", 0),
+        "answers_nothing": summary.get("answers-nothing", 0) + summary.get("path-answers-nothing", 0),
+        "robots_disallows": summary.get("robots-disallows-this-path", 0),
+        "crawl_delay": summary.get("crawl-delay-too-long", 0),
+        "robots_unreadable": summary.get("robots-unreadable", 0),
+        "tls_proxy": summary.get("tls-chain", 0) + summary.get("proxy-denied", 0),
+    }
+
+
+def doc_count_mismatches(rel, text, figures):
+    """Every figure `text` states that differs from `figures`, one line each,
+    plus one line if the required sentence is absent. Pure, for --selftest."""
+    flat = re.sub(r"\s+", " ", text)
+    out = []
+    seen_required = False
+    for keys, pattern in DOC_COUNT_PATTERNS:
+        keys = (keys,) if isinstance(keys, str) else keys
+        for m in re.finditer(pattern, flat):
+            if DOC_COUNT_REQUIRED in keys:
+                seen_required = True
+            for key, said in zip(keys, m.groups()):
+                if int(said) != figures[key]:
+                    out.append("%s says %r; the tree and the artifact say %s = %d"
+                               % (rel, m.group(0)[:80], key, figures[key]))
+    if not seen_required:
+        out.append("%s no longer carries the '<N> files send a browser string' sentence "
+                   "this gate holds it to — restore it or drop the file from "
+                   "DOC_COUNT_FILES" % rel)
+    return out
+
+
+def check_doc_counts(inventory, payload):
+    figures = doc_figures(inventory, payload)
+    problems = []
+    for rel in DOC_COUNT_FILES:
+        path = os.path.join(ROOT, rel)
+        if not os.path.exists(path):
+            problems.append("%s is named in DOC_COUNT_FILES and does not exist" % rel)
+            continue
+        problems.extend(doc_count_mismatches(rel, open(path, encoding="utf-8").read(), figures))
+    if problems:
+        problems.append("current figures — files: %d send a browser string, %d reach only "
+                        "token-ok hosts, %d more reach no refusing host, %d reach a refusing "
+                        "host; hosts: %d measured (%d re-measured since the sweep), %d of them "
+                        "reached by a browser-string caller; verdicts: %d token-ok, %d refuse "
+                        "the token (%d token-refused + %d token-refused-and-stack), %d "
+                        "stack-not-token"
+                        % (figures["files_browser"], figures["files_every_ok"],
+                           figures["files_no_refuse"], figures["files_refuses"],
+                           figures["hosts"], figures["remeasured"], figures["subject_measured"],
+                           figures["token_ok"], figures["refuse"], figures["token_refused"],
+                           figures["token_refused_and_stack"], figures["stack"]))
+    return problems
 
 
 def selftest():
@@ -1146,12 +1286,27 @@ def selftest():
                         % (out["measured"], out.get("callers_refreshed")))
     if merge_measurements(None, {"b.example": row}, "2026-09-20", full_sweep=False)["measured"] != "2026-09-20":
         failures.append("merge_measurements: a first artifact must carry today's date")
+    # doc_count_mismatches(): a stated figure is read across a line break, a
+    # wrong one is named with the derived value, a right one is silent, and a
+    # file that drops the required sentence is reported as orphaned.
+    figures = {k: 0 for k, _p in DOC_COUNT_PATTERNS if isinstance(k, str)}
+    figures.update({"subject_measured": 0, "files_browser": 105, "files_refuses": 18,
+                    "hosts": 291, "token_refused": 3})
+    text = ("prose: 105 files send a browser string; 17 reach at least one\n"
+            "host that does -- and 283 of the 291 measured hosts are still reached.\n"
+            "| `token-refused` | 3 |\n")
+    got = doc_count_mismatches("doc.md", text, figures)
+    if len(got) != 2 or "files_refuses = 18" not in got[0] or "subject_measured = 0" not in got[1]:
+        failures.append("doc_count_mismatches: got %r" % got)
+    got = doc_count_mismatches("doc.md", "nothing here", figures)
+    if len(got) != 1 or "no longer carries" not in got[0]:
+        failures.append("doc_count_mismatches (orphan): got %r" % got)
     if failures:
         for line in failures:
             print("probe --selftest: FAIL — %s" % line, file=sys.stderr)
         return 1
     print("probe --selftest: OK — read_robots() over 7 stub responses; file_urls, "
-          "choose_url and merge_measurements over 8 cases")
+          "choose_url, merge_measurements and doc_count_mismatches over 10 cases")
     return 0
 
 
