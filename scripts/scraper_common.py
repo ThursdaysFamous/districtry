@@ -30,21 +30,24 @@ STRING. The sentence above said "several sites in this fleet" for ten days
 (it landed 2026-09-02) without naming one. scripts/probe_user_agents.py asks each host the same page
 four ways — each stack with UA_ROSTER_BOT and with UA_CHROME_WIN_126 plus
 UA_HINTS_CHROME_126 — and writes user-agent-measurements.json. Measured
-2026-09-12 across 290 hosts, of which 282 are still reached by a browser-string
-caller today: 203 serve
-UA_ROSTER_BOT a full page, 17 refuse it and answer the browser string, and 6
-refuse the `requests` STACK while serving the same token on the stdlib client,
-so on those a browser string is credited with a fix the stack made. Per file
+2026-09-12 across the 290 hosts a browser-string caller reaches, 60 of them
+re-measured 2026-09-13 at the page a scraper reads rather than the directory
+above it: 220 serve UA_ROSTER_BOT a full page, 17 refuse it and answer the
+browser string, and 7 refuse the `requests` STACK while serving the same token
+on the stdlib client, so on those a browser string is credited with a fix the
+stack made. (The first sweep read 203: 37 hosts had been probed at the first
+half of a URL split across two string literals, and 23 more at a directory a
+page sat under; not one re-probe moved a host INTO a refusal.) Per file
 (`probe_user_agents.py --inventory` prints this tally, re-derived from the tree
-and the artifact rather than remembered): 104 files send a browser string; 54
-of them reach only hosts that serve the token a full page, 33 more reach no
+and the artifact rather than remembered): 104 files send a browser string; 65
+of them reach only hosts that serve the token a full page, 22 more reach no
 host that refuses the token (one or more answered nothing or refused the
-`requests` stack), and 17 reach at least one host that refuses it. TWO FILES
-HAVE BEEN RENAMED TO THE TOKEN SINCE THAT SWEEP and the per-file figures move
-with them -- the Iowa minutes-chair scraper (#916) and the Iowa county-officers
-scraper -- which is this rule working rather than drift: a file whose host is
-measured token-ok gets the token back, one at a time, with its own weekly run
-as the witness. An earlier
+`requests` stack), and 17 reach at least one host that refuses it -- and 282 of
+the 290 measured hosts are still reached by such a caller. TWO OF THOSE FILES HAVE BEEN RENAMED TO THE TOKEN SINCE THE SWEEP and the
+per-file figures move with them -- the Iowa minutes-chair scraper (#916) and
+the Iowa county-officers scraper -- which is this rule working rather than
+drift: a file whose host serves the token a full page gets the token back, one
+at a time, with its own weekly run as the witness. An earlier
 version of this paragraph said 57 and 68 of 115: the classifier then read a
 districtry token without a `/N` version, and a UA constant imported from a
 sibling module, as a browser string or as nothing, and the 68 was derived by a

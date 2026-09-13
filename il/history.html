@@ -181,6 +181,16 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 a { color: var(--brand-700); }
+/* Focus-only, and the pair validate_contrast.py already measures: --paper on
+   --ink, 16.08:1 light and 15.36:1 dark. The app and the twelve sub-pages have
+   carried one since the rebrand; these pages did not, so a keyboard reader met
+   a different site depending on which page they landed on. */
+.skip-link {
+  position: absolute; left: -9999px; top: 0;
+  background: var(--ink); color: var(--paper);
+  padding: 10px 16px; z-index: 10; border-radius: 0 0 6px 0;
+}
+.skip-link:focus { left: 0; }
 main { max-width: 760px; margin: 0 auto; padding: 40px 20px 64px; }
 .kicker {
   font: 600 13px/1 var(--font-body); letter-spacing: 0.08em;
@@ -221,7 +231,10 @@ table { border-collapse: collapse; width: 100%; margin-top: 12px; font-size: 14p
 th, td { text-align: left; padding: 7px 12px 7px 0; border-bottom: 1px solid var(--border); vertical-align: top; }
 th { font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
 code { font: 400 12.5px/1.4 ui-monospace, "SF Mono", Menlo, Consolas, monospace; color: var(--ink-2); }
-.foot { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 14px; color: var(--muted); }
+/* line-height 28px for the same reason build_landing_page.py gives its own
+   footer row: 17px links inheriting 1.6 wrap at 390px into rows 22.4px apart,
+   under WCAG 2.5.8's 24. Measured 2026-09-13. */
+.foot { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 14px; line-height: 28px; color: var(--muted); }
 .foot a { margin-right: 14px; }
 </style>
 <script type="application/ld+json">
@@ -234,7 +247,7 @@ code { font: 400 12.5px/1.4 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   "description": "How the Illinois deployment grew and what it checks on a schedule — dated, measured, and regenerated with every change.",
   "inLanguage": "en-US",
   "datePublished": "2026-08-04",
-  "dateModified": "2026-08-26",
+  "dateModified": "2026-09-12",
   "author": {
     "@type": "Person",
     "@id": "https://districtry.com/#author",
@@ -265,7 +278,8 @@ code { font: 400 12.5px/1.4 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 </script>
 </head>
 <body>
-<main>
+<a href="#page-main" class="skip-link">Skip to content</a>
+<main id="page-main">
 <p class="kicker"><svg class="districtry-mark" viewBox="0 0 96 96" width="18" height="18" aria-hidden="true" style="vertical-align:-3px;margin-right:6px"><g style="mix-blend-mode:multiply"><polygon points="51.5,63.2 12.4,55.7 11.5,18.6 42.7,5.0 72.7,35.3" fill="#6d3fd1" fill-opacity="0.55"></polygon></g><g style="mix-blend-mode:multiply"><polygon points="54.1,81.9 34.6,47.9 56.5,19.3 87.5,28.1 83.8,71.0" fill="#1d5fd6" fill-opacity="0.5"></polygon></g><g style="mix-blend-mode:multiply"><polygon points="13.7,64.5 27.6,31.2 62.7,37.6 70.3,66.9 33.9,89.0" fill="#b0316e" fill-opacity="0.45"></polygon></g><circle cx="42" cy="60" r="17" fill="none" stroke="#17161c" stroke-width="11"></circle><line x1="59" y1="16" x2="59" y2="82.5" stroke="#17161c" stroke-width="11"></line></svg><a href="./">districtry / illinois</a></p>
 <h1>How this deployment grew</h1>
 <p class="intro">districtry Illinois began as a Chicago-only explorer and grew outward one county at a time — 91 of the state&#x27;s 102 counties as of 26 August 2026. The counties that are missing are missing for reasons this project measured and wrote down, not for want of looking, and every one of them is on the record in the app&#x27;s own data-gaps panel. This page is the deployment&#x27;s record: what it ships, what it re-reads on a schedule, and the corrections its own machinery has caught.</p>
@@ -276,6 +290,13 @@ its own date, and none is edited after the fact.</p>
 <div class="tiles"><div class="tile"><div class="tile-n">40</div><div class="tile-l">map layers</div><div class="tile-s">11 political · 7 public safety · 9 schools · 13 geography</div></div><div class="tile"><div class="tile-n">76</div><div class="tile-l">scheduled refresh &amp; audit jobs</div><div class="tile-s">each lands as a reviewed change, never silently</div></div><div class="tile"><div class="tile-n">629</div><div class="tile-l">villages, towns and cities with their own officials named</div><div class="tile-s">each read from the county clerk&#x27;s own published directory, refreshed weekly</div></div><div class="tile"><div class="tile-n">586</div><div class="tile-l">municipalities whose mayor or village president is named</div><div class="tile-s">where a municipality publishes a board without naming who leads it, the card says so rather than guess</div></div><div class="tile"><div class="tile-n">101</div><div class="tile-l">county clerks&#x27; offices, re-read weekly</div><div class="tile-s">name, address, phone and e-mail, from the State Board of Elections&#x27; own directory of election authorities</div></div><div class="tile"><div class="tile-n">118</div><div class="tile-l">Illinois House seats with their member, party and both offices</div><div class="tile-s">the whole chamber, re-read from the General Assembly&#x27;s own roster every Monday</div></div><div class="tile"><div class="tile-n">59</div><div class="tile-l">Illinois Senate seats with their member, party and both offices</div><div class="tile-s">refreshed in the same Monday run as the House; a member who leaves is a change a person reviews, never one that ships on its own</div></div><div class="tile"><div class="tile-n">102</div><div class="tile-l">recorded data gaps</div><div class="tile-s">what the publishers withhold, on the record in the app</div></div></div>
 <h2>The changelog</h2>
 <ul class="timeline">
+<li class="entry"><div class="entry-date">12 September 2026</div><h3>Checking a list of addresses, not just one</h3><p>The map has always answered one address at a time. That is the right shape for a resident and the wrong shape for anyone holding a list — a petition sheet, a canvass list, a membership roll. A new panel takes a pasted list, runs each line against whichever boundaries you tick, and hands back a table and a CSV. Nothing in it re-implements a layer: the boundaries, the coverage tests and the district names are the same ones the cards and the hover popup already use, so a row in the table and a card on the map cannot disagree.
+
+It is built to say what it cannot settle, because the places it would be wrong are exactly the places people consult it. A geocoded point is an estimate, and most of these district lines run down street centrelines and alleys, so an address near a line can resolve to the wrong side of it. Every row therefore carries the distance from the point to the nearest edge of the district it landed in, and anything inside the review distance you set is flagged rather than answered. A line the geocoder resolved only to a street rather than to a house number is flagged too, and so is one it could not find at all. Clicking a flagged row puts that point on the map, which is where a person settles it.
+
+What it does not know is worth stating plainly: nothing here knows whether anyone is registered to vote at an address, which is the fact a petition signature actually turns on. The election authority&#x27;s own record governs that. This says which district a point falls in and which rows need a human.
+
+The list stays in your browser. Only the address text goes out, one lookup a second so a shared geocoder is asked no more than one person typing would ask it, and the privacy page now measures that flow and names it rather than describing the app as having only a search box.</p></li>
 <li class="entry"><div class="entry-date">26 August 2026</div><h3>Clay, the ninety-first county</h3><p>Clay County&#x27;s board districts ship, taking the map to 91 of Illinois&#x27;s 102 counties. Its fourteen lettered districts were never the problem — the county publishes them, and seven are independently confirmed by certified 2026 primary returns — but the census draws one Clay City precinct where the county runs two districts through it, and nothing published said where that line falls. County Clerk Amy Britton answered in two sentences: District A is the village of Clay City, District B the unincorporated area around it. That is a corporate-limits line the census already draws, so the split was resolved block by block — 833 people inside the village, 333 outside, every block sorting cleanly to one side, and the two blocks that sit on the margin shipped with their measured precinct rather than absorbed quietly. Two of the districts sit further from equal population than this project&#x27;s own ceiling normally allows; they ship only because the Clerk confirmed the map is current, and the measured figure is recorded rather than smoothed. Clay ships its board and not its precincts, because its two published surfaces disagree on how many precincts it has, and a precinct card would state more than is known.</p></li>
 <li class="entry"><div class="entry-date">25 August 2026</div><h3>A county held back by its own numbers, and the letter that released it</h3><p>Wayne County&#x27;s district composition had been corroborated twice over for weeks: the county&#x27;s own board page states which precincts make up each of its seven districts, and its certified November 2024 General — 27 precinct-level results grouped by which board candidate each precinct actually voted on — partitions the same 27 precincts the same way, agreeing on six of seven exactly. The one difference is the county seat, where the board page omits two Fairfield precincts that the certified ballot shows voting in District 7, so the page is incomplete rather than the ballots wrong. None of that was the blocker. Composed against an ideal of 2,311 people, one district deviates by 32.4% — past the 30% ceiling this project enforces everywhere else, and both sources agreed on that district exactly, which is what made the number worth pausing over instead of dismissing as a mis-transcription. Clerk Elizabeth Woodrow was asked directly whether the plan had moved since it was drawn. Her reply: “Nothing has changed with this map for years.” The ceiling was raised for Wayne alone rather than widened for the fleet, and the measured deviation is on the record.</p></li>
 <li class="entry"><div class="entry-date">23 August 2026</div><h3>Four counties in one day, and a lesson about labels</h3><p>Richland, Jackson, Douglas and Vermilion all join. Vermilion is the largest county the project has added and the one that teaches the most: it publishes three board-district layers, and the best-labelled one is obsolete. A service described as “Governmental and school districts” holds the 2011 plan, while the plan actually in force is an undocumented layer with a typo in its own name. Currency is a measurement, not a reading of a name — a plan drawn to a census balances on that census, and across 4,943 census blocks the layer that ships runs within 0.7% of equal population where the better-labelled one runs 15.1% out. The builder now refuses to write if that comparison ever reverses, in either direction. Jackson, the same day, is the first county in the fleet whose districts split precincts and are built anyway: its adopted map is a vector PDF whose districts are real polygon objects, so the shapes were read from the file rather than sampled from its pixels, and nothing traced ships — the map only ever chose between the two districts the county&#x27;s own canvass had already named.</p></li>

@@ -32,6 +32,16 @@ changefreq and priority.
     other direction. A file with no commit yet (new, unstaged) falls back to
     today and says so on stderr.
 
+    A page MODIFIED IN THE WORKING TREE takes today's date too, for the same
+    reason and against a failure this script caused on its own second outing.
+    A generated sitemap is regenerated before the commit, when `git log -1`
+    still answers with the date of the change BEFORE this one — so a branch
+    that touched five pages and regenerated shipped their old dates, and CI
+    failed on the very commit that changed them (2026-09-13, PR #933: five
+    pages "2 days behind"). Regenerating after committing fixes one instance
+    and leaves the trap; reading the working tree fixes the class. In CI the
+    tree is clean, so this changes nothing there.
+
   * CHANGEFREQ and PRIORITY are per page TYPE, from the table below. Google has
     ignored both since 2023; they are kept because they were already there and
     dropping them is an editorial change, not a drift fix. The table was
@@ -114,7 +124,23 @@ RULES = {
 }
 
 
-def last_commit_date(rel):
+def _dirty():
+    """Paths modified in the working tree or staged, relative to the repo. One
+    git call, cached by the caller."""
+    try:
+        out = subprocess.run(["git", "diff", "--name-only", "HEAD"],
+                             cwd=REPO, capture_output=True, text=True,
+                             timeout=30).stdout
+    except Exception:                                          # noqa: BLE001
+        return set()
+    return {line.strip() for line in out.splitlines() if line.strip()}
+
+
+def last_commit_date(rel, dirty=frozenset()):
+    if rel in dirty:
+        # About to be committed, so its commit date is today, not the date of
+        # whatever change came before. See LASTMOD in the docstring.
+        return datetime.date.today().isoformat()
     try:
         out = subprocess.run(
             ["git", "log", "-1", "--format=%cs", "--", rel],
@@ -129,6 +155,7 @@ def last_commit_date(rel):
 
 
 def collect():
+    dirty = _dirty()
     files = sorted(glob.glob(os.path.join(REPO, "*.html")))
     for i in instances():
         files += sorted(glob.glob(os.path.join(REPO, i, "*.html")))
@@ -140,7 +167,7 @@ def collect():
             continue
         loc = BASE + (rel[:-len("index.html")] if rel.endswith("index.html") else rel)
         freq, prio = RULES[page_type(rel)]
-        rows.append((loc, last_commit_date(rel), freq, prio))
+        rows.append((loc, last_commit_date(rel, dirty), freq, prio))
     # Sitemap order is priority first, then path, so the file reads as a
     # ranking rather than as whatever order the filesystem returned.
     rows.sort(key=lambda r: (-float(r[3]), r[0]))

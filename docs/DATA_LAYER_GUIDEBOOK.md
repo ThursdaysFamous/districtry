@@ -2727,25 +2727,32 @@ five Illinois sources with or without browser headers, because urllib3's TLS Cli
 differs from the ssl module's and these edges fingerprint it. A probe that varied only the
 name would credit a browser string with a fix the stack made.
 
-**WHAT IT FOUND, across 290 hosts:**
+**WHAT IT FOUND, across 290 hosts** (2026-09-12; 60 re-measured 2026-09-13 — see below):
 
 | verdict | hosts | what it means |
 |---|---|---|
-| `token-ok` | 203 | the districtry token gets a full page on the plain `requests` stack |
+| `token-ok` | 220 | the districtry token gets a full page on the plain `requests` stack |
 | `token-refused-and-stack` | 15 | refuses the token on both stacks, serves stdlib + Chrome |
-| `stack-not-token` | 6 | refuses `requests`, serves the SAME token on stdlib |
+| `stack-not-token` | 7 | refuses `requests`, serves the SAME token on stdlib |
 | `token-refused` | 2 | refuses the token on `requests`, serves Chrome on `requests` |
-| `all-refused` / `challenged` | 16 | refuses or challenges all four; a captcha is never answered |
-| `answers-nothing` / `path-answers-nothing` | 23 | HTTP 200 too small to be a page, or a 404/405/500 on the probed path |
-| `robots-disallows-this-path` | 15 | the `*` group disallows the probe's own chosen path, so it was not fetched |
+| `all-refused` / `challenged` | 12 | refuses or challenges all four; a captcha is never answered |
+| `answers-nothing` / `path-answers-nothing` | 11 | HTTP 200 too small to be a page, or a 404/405/500 on the probed path |
+| `robots-disallows-this-path` | 12 | the `*` group disallows the probe's own chosen path, so it was not fetched |
 | `crawl-delay-too-long` | 5 | Crawl-delay 15–60s; four rungs at that pace is not a polite probe |
-| `tls-chain` / `proxy-denied` | 5 | an incomplete chain (`probe_incomplete_tls_chains.py`'s subject) or this sandbox's egress |
+| `robots-unreadable` | 4 | robots.txt could not be read by any rung, so no page was asked for: Coles, Gallatin and Vermilion (the incomplete-chain hosts) and docs.legis.wisconsin.gov (timed out twice on 2026-09-13 from the sandbox, curl included; the 2026-09-12 sweep read it `token-ok`, so this is the vantage's route, not the host) |
+| `tls-chain` / `proxy-denied` | 2 | an incomplete chain (`probe_incomplete_tls_chains.py`'s subject) or this sandbox's egress |
 
-**SEVENTEEN HOSTS REFUSE THE TOKEN AND 203 DO NOT.** Per file, as `probe_user_agents.py
---inventory` prints it: 104 files send a browser string; 17 reach at least one host that
-genuinely refuses the token, **54 reach only hosts that serve the token a full page, and 33
-more reach no host that refuses it** (one or more answered nothing or refused the `requests`
-stack). **TWO FILES HAVE BEEN RENAMED TO THE TOKEN SINCE THAT SWEEP** and the per-file
+**THE FIRST SWEEP READ 203 `token-ok`, AND 60 HOSTS HAD BEEN MEASURED AT THE WRONG ADDRESS** (found by #928 on www.chicago.gov, 2026-09-12; re-measured 2026-09-13). The probe's inventory ran a regex over the raw file text, so a URL written as two adjacent string literals contributed only its first half — a bare directory — and `choose_url()` ranked by shortest path, so that directory outranked the page the scraper reads. 37 hosts were probed at such a fragment and 23 more at a directory a page sat under. A directory that denies everyone read as a host that denies the token (www.chicago.gov: `all-refused` at the directory, `token-refused` at the page), and a directory that answers a 458-byte listing read as `answers-nothing` (seven ArcGIS Online orgs, all `token-ok` at the service they actually serve). Re-probed at the page, 25 verdicts moved, 17 of them to `token-ok`; **not one moved INTO a refusal**, so no browser string in the fleet was ever licensed by a wrong address. `probe_user_agents.py` now joins adjacent literals through the AST, ranks a page above a directory, dates each re-measured row on its own, and moves the top-level `measured` only on a full sweep.
+
+**SEVENTEEN HOSTS REFUSE THE TOKEN AND 220 DO NOT.** Per file, as `probe_user_agents.py
+--inventory` prints it on this tree: 104 files send a browser string; 17 reach at least one
+host that genuinely refuses the token, **65 reach only hosts that serve the token a full
+page, and 22 more reach no host that refuses it** (one or more answered nothing or refused
+the `requests` stack); 282 of the 290 measured hosts are still reached by such a caller.
+**TWO OF THOSE FILES HAVE BEEN RENAMED TO THE TOKEN SINCE THE SWEEP** and the per-file
+figures move with them — the Iowa minutes-chair scraper (#916) and the Iowa county-officers
+scraper — which is the rule working rather than drift: a file whose host serves the token a
+full page gets the token back, one at a time, with its own weekly run as the witness. **TWO FILES HAVE BEEN RENAMED TO THE TOKEN SINCE THAT SWEEP** and the per-file
 figures move with them — the Iowa minutes-chair scraper (#916) and the Iowa county-officers
 scraper (both measured `token-ok`) — which is the rule working rather than drift: a file
 whose host serves the token a full page gets the token back, one at a time, with its own

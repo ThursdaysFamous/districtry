@@ -1397,6 +1397,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
     cursor: pointer;
     font-size: 15px;
     line-height: 1;
+    /* 24x24, WCAG 2.5.8's floor. It measured 21x19 and floats over the map, so
+       a miss pans the map instead of dismissing the banner — the case the
+       criterion is about. Measured 2026-09-13. */
+    min-width: 24px;
+    min-height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 2px 4px;
   }
   .tile-banner-dismiss:hover { color: var(--ink); }
@@ -2415,6 +2423,134 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .faq-section details[open] summary::after { content: "\2013"; }
   .faq-section details p { margin: 0 0 16px; color: var(--slate); font-size: 14px; line-height: 1.55; max-width: 70ch; }
   /* ==== TEMPLATE:END styles-faq ==== */
+  /* ---- batch address check ----------------------------------------------
+     A screening tool for someone holding a LIST of addresses — a petition
+     sheet, a canvass list — rather than the one address the map answers for.
+
+     It reuses the feedback modal's shell (.feedback-modal / -backdrop /
+     -panel) exactly as the gaps panel does, so this file carries one modal
+     idiom rather than three; only the controls and the table below are new.
+
+     Fork-owned, and outside every ENGINE fence on purpose: no sibling
+     instance ships this. Every colour here is one of the app's own tokens,
+     which is why there is no second block for the dark tier — the tokens swap
+     under the theme and these rules do not. --faint is deliberately unused
+     (measured at 2.5:1 on white, below the floor for text of any size). */
+  .feedback-panel.batch-panel { max-width: 1120px; max-height: 88vh; overflow-y: auto; }
+  .batch-lede { font-size: 13px; color: var(--slate); margin: 0 0 12px; line-height: 1.55; max-width: 78ch; }
+
+  /* The caveat is not decoration and is not collapsible. What this tool
+     measures (a point against a published line) is not what a petition
+     signature turns on (whether a person is registered to vote there), and a
+     reader who misses that distinction will read the table as a verdict. */
+  .batch-caveat {
+    font-size: 12.5px; line-height: 1.6; color: var(--ink);
+    background: var(--brand-tint); border-left: 3px solid var(--accent-deep);
+    border-radius: 0 6px 6px 0; padding: 11px 13px; margin: 0 0 18px; max-width: 78ch;
+  }
+  .batch-caveat p { margin: 0 0 7px; }
+  .batch-caveat p:last-child { margin: 0; }
+
+  /* EVERY rule from here down is scoped under .batch-panel, and that is
+     load-bearing rather than tidiness. The modal shell this panel reuses
+     styles its own labels — `.feedback-panel label { display: block; … }` in
+     the engine's styles-footer fence — at specificity (0,1,1), which beats a
+     bare (0,1,0) class however late it appears. Unscoped, every rule below
+     that lands on a <label> silently lost: `.batch-layer-opt`'s display:flex
+     became `block`, and a gap on a block does nothing, so each checkbox sat
+     flush against its layer name, in the engine's label colour and weight
+     rather than this panel's. MEASURED in a browser rather than read off the
+     cascade — computed display `block`, visual gap 0px — which is the only
+     way to catch a rule that loses on specificity to a fence you must not
+     edit. Two of these selectors are on a <span> and need no scope; they
+     carry it anyway, so the next rule added here inherits the protection
+     instead of rediscovering the bug. */
+  .batch-field { margin: 0 0 16px; }
+  .batch-panel .batch-field-label {
+    display: block; font-family: var(--font-display); font-size: 12px;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
+    color: var(--slate); margin: 0 0 7px; padding-bottom: 4px;
+    border-bottom: 1px solid var(--line);
+  }
+  .batch-panel .batch-hint { font-size: 12px; color: var(--slate); margin: 6px 0 0; line-height: 1.5; }
+
+  /* Layer picker — the eligible polygon layers, in the same broad-to-granular
+     order the hover popup lists them, grouped by the sidebar's own groups. */
+  .batch-panel .batch-layers { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  .batch-panel .batch-layer-group { flex: 1 1 210px; min-width: 0; }
+  .batch-panel .batch-layer-group h4 {
+    font-family: var(--font-display); font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.04em; color: var(--slate); margin: 0 0 5px;
+  }
+  /* flex-start rather than center: a long layer name wraps to two lines in a
+     narrow column ("CPS Network (High School, admin office)"), and centring
+     would float the box against the middle of the block instead of against
+     the name's first line. */
+  .batch-panel .batch-layer-opt {
+    display: flex; align-items: flex-start; gap: 9px; padding: 3px 0;
+    font-size: 13px; font-weight: 400; line-height: 1.35; color: var(--ink); cursor: pointer;
+  }
+  /* 17px and accent-coloured, which is what the sidebar's own layer toggles
+     are (.layer-block-head input[type="checkbox"]). The browser default is
+     13px and system-blue, so an unsized box here read as unstyled next to
+     every other checkbox in the app. */
+  .batch-panel .batch-layer-opt input {
+    width: 17px; height: 17px; margin: 0; flex: none;
+    accent-color: var(--accent); cursor: pointer;
+  }
+  .batch-panel .batch-layer-opt span { min-width: 0; overflow-wrap: anywhere; padding-top: 1px; }
+
+  .batch-textarea {
+    width: 100%; box-sizing: border-box; min-height: 130px; resize: vertical;
+    font-family: var(--font-body); font-size: 13px; line-height: 1.5;
+    color: var(--ink); background: var(--surface);
+    border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px;
+  }
+  .batch-textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .batch-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 0 0 14px; }
+  .batch-panel .batch-threshold {
+    display: flex; align-items: center; gap: 7px; margin: 0;
+    font-size: 12.5px; font-weight: 400; color: var(--slate);
+  }
+  .batch-panel .batch-threshold input {
+    width: 72px; font-family: var(--font-body); font-size: 13px; color: var(--ink);
+    background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 5px 7px;
+  }
+  .batch-status { font-size: 12.5px; color: var(--slate); min-height: 1.4em; margin: 0 0 12px; }
+  .batch-status[data-tone="error"] { color: var(--error-ink); }
+
+  .batch-summary { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
+  .batch-tally {
+    font-size: 12px; padding: 4px 10px; border-radius: 999px;
+    border: 1px solid var(--line); color: var(--slate); background: var(--paper);
+  }
+  .batch-tally[data-tone="review"] { border-color: var(--accent-deep); color: var(--accent-deep); background: var(--brand-tint); }
+
+  /* Results table. It scrolls in its own box rather than widening the panel:
+     one column per selected layer plus an edge-distance column each, so a
+     three-layer run is already wider than a phone. */
+  .batch-results { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+  .batch-table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
+  .batch-table th, .batch-table td { padding: 7px 10px; text-align: left; vertical-align: top; white-space: nowrap; }
+  .batch-table thead th {
+    position: sticky; top: 0; z-index: 1;
+    font-family: var(--font-display); font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.04em; color: var(--slate);
+    background: var(--paper); border-bottom: 1px solid var(--line);
+  }
+  .batch-table tbody tr { border-top: 1px solid var(--line); cursor: pointer; }
+  .batch-table tbody tr:hover, .batch-table tbody tr:focus-visible { background: var(--brand-tint); outline: none; }
+  .batch-table td.batch-addr { white-space: normal; min-width: 200px; max-width: 320px; }
+  .batch-table td.batch-num { text-align: right; font-variant-numeric: tabular-nums; }
+  .batch-table td.batch-review { white-space: normal; min-width: 180px; color: var(--accent-deep); }
+  .batch-row-flag { background: var(--brand-tint); }
+  .batch-cell-none { color: var(--slate); font-style: italic; }
+
+  @media (max-width: 700px) {
+    .feedback-panel.batch-panel { max-width: 100%; }
+    .batch-layer-group { flex-basis: 100%; }
+  }
   /* ==== ENGINE:BEGIN styles-hover-responsive ==== */
 
   /* ---- hover explorer: a live popup that follows the cursor and names the
@@ -2870,7 +3006,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .dpf-independence strong { color: var(--ink); font-weight: 650; }
   .dpf-independence a { color: var(--accent-deep); text-decoration: none; }
   .dpf-independence a:hover { text-decoration: underline; }
-  .dpf-links { display: flex; flex-wrap: wrap; gap: 2px 12px; margin: 0 0 8px; }
+  /* The ROW gap is 10px rather than 2px because these links are 16.5px tall:
+     at 2px a wrapped row put two targets 18.5px apart centre to centre, and
+     WCAG 2.5.8's spacing exception for an under-24px target asks for 24.
+     Measured 2026-09-13 on all six app pages at 390px and 1280px. */
+  .dpf-links { display: flex; flex-wrap: wrap; gap: 10px 12px; margin: 0 0 8px; }
   /* The support line is the one thing in this foot a reader is being ASKED to
      act on, so it is not a seventh equal item in .dpf-links — which is exactly
      what it was: "💛 Support this project", one of six, in a panel foot, on a
@@ -3115,6 +3255,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
     align-items: center;
     gap: 8px;
     cursor: pointer;
+    /* 24px tall, WCAG 2.5.8's floor. It measured 13px, and it sits ON the map:
+       a miss pans the map rather than opening the legend, which is the case
+       the criterion is about. The margin-bottom below drops from 6 to 0 to pay
+       for most of it, so measured on /il/ at 1280 the card goes 133.3px to
+       138.3px and its TOP edge rises 5px — the legend is bottom-anchored, so
+       the items row and the card's bottom edge do not move at all (items top
+       749 both ways). Measured 2026-09-13. */
+    min-height: 24px;
     font-family: var(--font-display);
     font-size: 10.5px;
     font-weight: 600;
@@ -3126,7 +3274,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
        sits outside it, so the gap has to be spelled out — without this the
        desktop legend tightens by 5px, which a pixel-diff catches and an eye
        does not. */
-    margin-bottom: 6px;
+    margin-bottom: 0;
   }
   /* A chevron, so the label reads as a control rather than a caption: down
      when closed, up when open. Two borders rather than a glyph, so it takes
@@ -3709,6 +3857,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <!-- ==== ENGINE:BEGIN gaps-html ==== -->
       <button type="button" id="gaps-btn" class="footer-link-btn">What data is missing?</button>
       <!-- ==== ENGINE:END gaps-html ==== -->
+      <!-- Batch address check — fork-owned (Illinois), deliberately NOT inside
+           the gaps-html fence above: no sibling instance ships this tool. It
+           carries .masthead-action-link so the phone layout's door-moving pass
+           (dstPlaceDoors) picks it up with the others rather than stranding it
+           in a masthead that is hidden at that width. -->
+      <button type="button" id="batch-btn" class="masthead-action-link">Check an address list</button>
       <a class="masthead-action-link" href="./sources.html">Sources &amp; data layers</a>
       <a class="masthead-action-link" href="./faq.html">Common questions</a>
       <!-- This deployment's own record — GENERATED by scripts/build_history_page.py
@@ -3923,6 +4077,61 @@ svg.leaflet-image-layer.leaflet-interactive path {
   </div>
 </div>
 <!-- ==== ENGINE:END gaps-modal-html ==== -->
+
+<!-- Batch address check. Fork-owned (Illinois) and outside every ENGINE fence:
+     no sibling instance ships this. The shell classes are the feedback modal's,
+     reused exactly as the gaps panel above reuses them. -->
+<div class="feedback-modal" id="batch-modal" hidden role="dialog" aria-modal="true" aria-labelledby="batch-title">
+  <div class="feedback-backdrop" id="batch-backdrop"></div>
+  <div class="feedback-panel batch-panel" role="document">
+    <button type="button" class="feedback-close" id="batch-close" aria-label="Close">&times;</button>
+    <h2 id="batch-title">Check an address list</h2>
+    <p class="batch-lede">Paste a list of addresses — one per line — and this runs each one against the
+      boundaries you tick below, then hands back a table and a CSV. It is built for the lists people
+      actually hold: petition sheets, canvass lists, membership rolls.</p>
+
+    <div class="batch-caveat">
+      <p><strong>This screens a list. It does not decide anything.</strong></p>
+      <p>Each address is sent to a public OpenStreetMap-based geocoder, and the point that comes back
+        is tested against the published boundary. Two limits are worth knowing before you rely on a row.
+        <strong>A geocoded point is an estimate</strong> — most of these lines run down street centrelines
+        and alleys, so an address close to one can land on the wrong side of it. Every row therefore
+        carries how far the point sits from the nearest edge of the district it landed in, and anything
+        inside your review distance is flagged rather than answered.</p>
+      <p><strong>Nothing here knows whether anyone is registered to vote at an address</strong>, which is
+        the fact a petition signature turns on. The election authority's own record governs that; this
+        tells you which district a point falls in, and which rows need a person to look.</p>
+      <p>Your list stays in this browser. Only the address text goes out, to the geocoder named on the
+        <a href="../privacy.html">privacy page</a>.</p>
+    </div>
+
+    <div class="batch-field">
+      <span class="batch-field-label" id="batch-layers-label">Boundaries to check</span>
+      <div class="batch-layers" id="batch-layers" role="group" aria-labelledby="batch-layers-label"></div>
+      <p class="batch-hint" id="batch-layers-hint"></p>
+    </div>
+
+    <div class="batch-field">
+      <label class="batch-field-label" for="batch-input">Addresses, one per line</label>
+      <textarea id="batch-input" class="batch-textarea" spellcheck="false"
+        placeholder="1901 W Madison St, Chicago IL 60612&#10;121 N LaSalle St, Chicago IL 60602"></textarea>
+      <p class="batch-hint" id="batch-count"></p>
+    </div>
+
+    <div class="batch-controls">
+      <button type="button" class="btn-primary" id="batch-run">Check addresses</button>
+      <button type="button" class="btn-secondary" id="batch-cancel" hidden>Stop</button>
+      <button type="button" class="btn-secondary" id="batch-csv" hidden>Download CSV</button>
+      <label class="batch-threshold" for="batch-threshold">Flag a point within
+        <input type="number" id="batch-threshold" value="150" min="0" max="5280" step="10" /> ft of a boundary
+      </label>
+    </div>
+
+    <p class="batch-status" id="batch-status" role="status" aria-live="polite"></p>
+    <div class="batch-summary" id="batch-summary" hidden></div>
+    <div class="batch-results" id="batch-results" hidden></div>
+  </div>
+</div>
 
 <!-- Leaflet loaded DEFERRED: non-render-blocking, so it downloads in parallel
      with HTML parsing instead of blocking first paint (~1.3 s on mobile, PSI's
@@ -30370,6 +30579,645 @@ function initChiExplorer() {
     else if (dstPhoneMQ.addListener) dstPhoneMQ.addListener(dstApplyPhoneLayout);
   }
   /* ==== ENGINE:END districtry-behavior ==== */
+
+  /* =========================================================================
+   * BATCH ADDRESS CHECK — Illinois-only, fork-owned. Outside every ENGINE
+   * fence on purpose: no sibling instance ships this, so there is nothing here
+   * to keep byte-identical with.
+   *
+   * WHY IT EXISTS. The map answers one address at a time, which is the right
+   * shape for a resident and the wrong shape for someone holding a list — a
+   * petition sheet, a canvass list, a membership roll. This runs the same
+   * question down a pasted list and hands back a table and a CSV.
+   *
+   * WHAT IT REUSES, WHICH IS THE WHOLE DESIGN. Nothing here re-implements a
+   * layer. Geometry comes from each layer's own mod.overlay.load(); the
+   * district identity from hoverValue(), the same function the hover popup
+   * prints, so a CSV cell and a hover row cannot disagree; location relevance
+   * from mod.coverage(); the point test from findFeatureContaining(); and the
+   * unit-fragment stripping from cleanPoiAddress(), which already knows that
+   * "Suite 200" and "Apt 3B" return zero geocoder results — exactly the shapes
+   * a hand-written petition line carries. A second copy of any of those is how
+   * two surfaces drift apart, which is the failure this codebase spends most
+   * of its gates preventing.
+   *
+   * WHAT IT REFUSES TO CLAIM, and why the caveat in the markup is not
+   * decoration. A geocoded point is an estimate; the lines it is tested
+   * against mostly run down street centrelines and alleys, so an address near
+   * one can resolve to the wrong side of it. Every containment therefore
+   * carries the distance from the point to the nearest edge of the district it
+   * landed in, and anything inside the reader's review distance is FLAGGED
+   * rather than reported as an answer. Nothing here knows whether a person is
+   * registered to vote at an address, which is the fact a petition signature
+   * actually turns on.
+   *
+   * PACING. photon.komoot.io is a shared, donated service. Every lookup goes
+   * through one serial queue spaced >=1s apart — the discipline the POI
+   * geocode queue already applies — so a 200-line sheet costs the endpoint no
+   * more than one person typing at it, and takes about four minutes.
+   *
+   * NO ANALYTICS OF ITS OWN. This fires no trackEvent. The event vocabulary is
+   * gated identical across the fleet by scripts/build_privacy_page.py, so a
+   * new name here would fail that build — and a batch of somebody's petition
+   * addresses is the last thing that should become a metric. Clicking a result
+   * row selects that point, which emits the engine's ordinary two-decimal
+   * "select" like any other selection.
+   *
+   * NO OFFICEHOLDER COLUMN, deliberately. hoverOfficialName() would supply one,
+   * but only from a roster that prefetchHoverRoster() happens to have cached on
+   * toggle-on — so the column would be full or empty depending on unrelated app
+   * state, and a blank cell would read as "nobody represents this district".
+   * The question here is which district a point is in; the card answers who.
+   * ======================================================================= */
+  (function wireBatchCheck() {
+    var modal = document.getElementById("batch-modal");
+    var openBtn = document.getElementById("batch-btn");
+    if (!modal || !openBtn) return;   // an instance without the panel markup
+
+    var closeBtn = document.getElementById("batch-close");
+    var backdrop = document.getElementById("batch-backdrop");
+    var layersEl = document.getElementById("batch-layers");
+    var layersHint = document.getElementById("batch-layers-hint");
+    var inputEl = document.getElementById("batch-input");
+    var countEl = document.getElementById("batch-count");
+    var runBtn = document.getElementById("batch-run");
+    var cancelBtn = document.getElementById("batch-cancel");
+    var csvBtn = document.getElementById("batch-csv");
+    var thresholdEl = document.getElementById("batch-threshold");
+    var statusEl = document.getElementById("batch-status");
+    var summaryEl = document.getElementById("batch-summary");
+    var resultsEl = document.getElementById("batch-results");
+
+    var MAX_ADDRESSES = 500;      // a cap on what one run can ask of a donated endpoint
+    var SPACING_MS = 1100;        // >=1s between lookups, like the POI queue
+    var FEET_PER_METER = 3.280839895;
+    var DEFAULT_THRESHOLD_FT = 150;
+    var COVERAGE_TIMEOUT_MS = 8000;   // see coverageAt: caps a failing coverage source ONCE per run
+    /* WHY THIS IS NOT "no geocoder match". geocodeOne is bounded to METRO_BBOX,
+       so a miss has two causes the query cannot tell apart: an address that
+       does not exist, and a real one outside the envelope. Naming only the
+       first sends a reader hunting for a typo in a perfectly good out-of-state
+       line. It says "search area" rather than "Illinois" alone because
+       METRO_BBOX is a RECTANGLE around the state, not the state: Gary, Indiana
+       sits inside it and does resolve. A sibling instance copying this panel
+       changes this string with its own METRO_BBOX. */
+    var NO_MATCH_FLAG = "no match in the Illinois search area";
+
+    var lastFocus = null;
+    var picked = null;            // layer id -> true; built on first open
+    var rows = [];                // the last run's result rows
+    var runCols = [];             // the layers THAT RUN used — not the current ticks, so
+                                  // re-ticking after a run can never re-label its columns
+    var runThreshold = DEFAULT_THRESHOLD_FT;
+    var runSets = [];             // the run's loaded boundary sets, so finish() can
+                                  // report a coverage gate that coverageAt retired
+    var running = false;
+    var cancelled = false;
+    var controller = null;
+
+    /* ---- which layers can be checked ----------------------------------- */
+
+    /* The polygon layers, broad to granular. The eligibility test is the hover
+       popup's own (see hoverContainingLayers): a flat overlay.style is what
+       separates a polygon layer from a point dataset, whose nearest-N answer is
+       a distance rather than a containment and has no meaning in this table. */
+    function eligibleLayers() {
+      var out = [];
+      for (var i = 0; i < LAYER_AREA_RANK.length; i++) {
+        var mod = getLayerById(LAYER_AREA_RANK[i]);
+        if (!mod || !mod.overlay || !mod.overlay.style || !mod.overlay.load) continue;
+        out.push(mod);
+      }
+      return out;
+    }
+
+    function pickedLayers() {
+      return eligibleLayers().filter(function (mod) { return picked && picked[mod.id]; });
+    }
+
+    /* The first open inherits whatever the reader already has switched on —
+       they have just been looking at it, and a tool that opens having silently
+       forgotten their context is the more surprising of the two behaviours. A
+       reader with nothing on gets the City Ward, which is the layer this was
+       built for; failing that, the first eligible layer, so the panel is never
+       empty on an instance that registers no ward. */
+    function initialPicks() {
+      var out = {}, any = false, eligible = eligibleLayers();
+      eligible.forEach(function (mod) {
+        if (state.layersOn[mod.id]) { out[mod.id] = true; any = true; }
+      });
+      if (any) return out;
+      var fallback = getLayerById("ward");
+      if (!fallback || !fallback.overlay || !fallback.overlay.style) fallback = eligible[0];
+      if (fallback) out[fallback.id] = true;
+      return out;
+    }
+
+    function renderLayerPicker() {
+      layersEl.textContent = "";
+      var eligible = eligibleLayers();
+      GROUPS.forEach(function (group) {
+        var mods = eligible.filter(function (mod) { return mod.group === group.id; });
+        if (!mods.length) return;
+        var box = document.createElement("div");
+        box.className = "batch-layer-group";
+        var h = document.createElement("h4");
+        h.textContent = group.label;
+        box.appendChild(h);
+        mods.forEach(function (mod) {
+          var label = document.createElement("label");
+          label.className = "batch-layer-opt";
+          var cb = document.createElement("input");
+          cb.type = "checkbox";
+          cb.checked = !!picked[mod.id];
+          cb.addEventListener("change", function () {
+            if (cb.checked) picked[mod.id] = true; else delete picked[mod.id];
+            refreshHints();
+          });
+          var text = document.createElement("span");
+          text.textContent = mod.label;
+          label.appendChild(cb);
+          label.appendChild(text);
+          box.appendChild(label);
+        });
+        layersEl.appendChild(box);
+      });
+    }
+
+    /* ---- input --------------------------------------------------------- */
+
+    /* One address per line. A pasted sheet often carries the row's own number
+       in front of the address; the strip is narrow on purpose — it requires the
+       "." or ")" that a numbered list puts there, so an ordinary line beginning
+       with its HOUSE number is left exactly as typed. */
+    function parseAddresses(text) {
+      var out = [], lines = String(text || "").split(/\r?\n/);
+      for (var i = 0; i < lines.length && out.length < MAX_ADDRESSES; i++) {
+        var s = lines[i].replace(/^\s*\d{1,4}\s*[.)]\s+/, "").trim();
+        if (s) out.push(s);
+      }
+      return out;
+    }
+
+    function reviewThreshold() {
+      var v = parseFloat(thresholdEl.value);
+      return isFinite(v) && v >= 0 ? v : DEFAULT_THRESHOLD_FT;
+    }
+
+    function refreshHints() {
+      var n = parseAddresses(inputEl.value).length;
+      var mins = Math.max(1, Math.round(n * SPACING_MS / 60000));
+      var total = String(inputEl.value || "").split(/\r?\n/).filter(function (s) { return s.trim(); }).length;
+      countEl.textContent = !n ? "" :
+        n + (n === 1 ? " address" : " addresses") + " — about " + mins +
+        (mins === 1 ? " minute" : " minutes") + " at one lookup a second" +
+        (total > n ? ". Only the first " + MAX_ADDRESSES + " of " + total + " will run." : ".");
+      var picks = pickedLayers();
+      layersHint.textContent = !picks.length
+        ? "Tick at least one."
+        : picks.length + (picks.length === 1 ? " boundary set" : " boundary sets") +
+          " — each is downloaded once, then every address is tested against it in this browser.";
+    }
+
+    /* ---- geocoding ----------------------------------------------------- */
+
+    /* Deliberately NOT the search box's geocodeAddress(): that aborts its
+       previous request on every call — right for a type-ahead, fatal for a
+       queue — and normalizes away the properties this needs to judge how
+       precisely a line resolved. The bbox is METRO_BBOX, the same envelope the
+       search box uses, so a line that resolves here resolves there too.
+       limit=5 rather than 1 because Photon ranks by its own relevance, and for
+       this job a worse-ranked ROOFTOP beats a better-ranked street centreline. */
+    function geocodeOne(query, signal) {
+      var bbox = [METRO_BBOX.minLng, METRO_BBOX.minLat, METRO_BBOX.maxLng, METRO_BBOX.maxLat].join(",");
+      var url = "https://photon.komoot.io/api/?q=" + encodeURIComponent(query) +
+        "&lang=en&limit=5&lat=41.88&lon=-87.63&bbox=" + bbox;
+      return fetch(url, { signal: signal, headers: { "Accept": "application/json" } })
+        .then(function (res) {
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return res.json();
+        })
+        .then(function (fc) {
+          var feats = (fc && fc.features) || [], fallback = null;
+          for (var i = 0; i < feats.length; i++) {
+            var c = (feats[i].geometry && feats[i].geometry.coordinates) || [];
+            if (c.length < 2 || c[0] == null || c[1] == null) continue;
+            if ((feats[i].properties || {}).housenumber) return feats[i];
+            if (!fallback) fallback = feats[i];
+          }
+          return fallback;
+        });
+    }
+
+    /* How precisely the geocoder resolved the line — the difference between
+       "found your address" and "found the street your address is on", and the
+       second is no answer at all to a question about which side of that street
+       you are on. */
+    function matchQuality(props) {
+      if (props.housenumber) return "house";
+      if (props.street || String(props.type || "").toLowerCase() === "street") return "street";
+      return "area";
+    }
+
+    /* ---- distance to the nearest district edge ------------------------- */
+
+    /* Metres per degree at a latitude (the standard WGS84 series). Used to
+       project one neighbourhood onto a local plane: over the few hundred feet
+       this measures, planar and geodesic differ by far less than the thing
+       being measured, and the output is a review threshold, not a survey. */
+    function metersPerDegree(lat) {
+      var r = lat * Math.PI / 180;
+      return {
+        lat: 111132.92 - 559.82 * Math.cos(2 * r) + 1.175 * Math.cos(4 * r),
+        lng: 111412.84 * Math.cos(r) - 93.5 * Math.cos(3 * r)
+      };
+    }
+
+    function pointToSegment(px, py, ax, ay, bx, by) {
+      var dx = bx - ax, dy = by - ay, len2 = dx * dx + dy * dy;
+      var t = len2 ? ((px - ax) * dx + (py - ay) * dy) / len2 : 0;
+      if (t < 0) t = 0; else if (t > 1) t = 1;
+      var ox = ax + t * dx - px, oy = ay + t * dy - py;
+      return Math.sqrt(ox * ox + oy * oy);
+    }
+
+    /* Shortest distance in FEET from the point to any edge of the feature it
+       landed in — INTERIOR rings included, because the edge of a hole bounds
+       that district exactly as its outer ring does. */
+    function edgeDistanceFeet(point, geometry) {
+      if (!geometry) return null;
+      var polys = geometry.type === "MultiPolygon" ? geometry.coordinates
+        : geometry.type === "Polygon" ? [geometry.coordinates] : null;
+      if (!polys) return null;
+      var mpd = metersPerDegree(point.lat);
+      var px = point.lng * mpd.lng, py = point.lat * mpd.lat, best = Infinity;
+      for (var i = 0; i < polys.length; i++) {
+        for (var j = 0; j < (polys[i] || []).length; j++) {
+          var ring = polys[i][j] || [];
+          for (var k = 0; k + 1 < ring.length; k++) {
+            var a = ring[k], b = ring[k + 1];
+            if (!a || !b || a.length < 2 || b.length < 2) continue;
+            var d = pointToSegment(px, py, a[0] * mpd.lng, a[1] * mpd.lat, b[0] * mpd.lng, b[1] * mpd.lat);
+            if (d < best) best = d;
+          }
+        }
+      }
+      return isFinite(best) ? best * FEET_PER_METER : null;
+    }
+
+    /* mod.coverage at an ARBITRARY point. layerRelevance() answers the same
+       question, but only ever about state.selectedPoint and memoized per
+       selection — neither of which fits a list. Fails OPEN, exactly as
+       layerRelevance does, so a coverage test that cannot answer never
+       silently empties a column.
+
+       IT ALSO BOUNDS A COST ONE CLICK NEVER PAYS, which is the whole reason
+       this is not three lines. A coverage test can be SLOW rather than broken:
+       chicagoCoverage's second leg downloads a whole tiling from the City's
+       portal, and makeCached() deliberately CLEARS its cached promise when a
+       load fails so that a Retry can try again. That is right for a card with
+       a Retry button and wrong for a list — with that portal down, every
+       address re-runs the failed download from scratch, through
+       fetchJSONWithRetry's own retries, and a 200-line sheet turns into 200
+       slow re-fetches against a server that is already failing.
+
+       So a test that has not settled within COVERAGE_TIMEOUT_MS retires that
+       layer's coverage gate for the REST OF THE RUN: every later address skips
+       it, the column keeps answering ungated, and finish() names the layer so
+       the reader knows which column was not location-checked. Measured rather
+       than reasoned about — it turned up as a screenshot run that never
+       completed, against exactly that unreachable portal. */
+    function coverageAt(set, point) {
+      var mod = set.mod;
+      if (!mod.coverage || set.coverageOff) return Promise.resolve(true);
+      return new Promise(function (resolve) {
+        var settled = false;
+        function done(value, retire) {
+          if (settled) return;
+          settled = true;
+          if (retire) set.coverageOff = true;
+          resolve(value);
+        }
+        var timer = setTimeout(function () { done(true, true); }, COVERAGE_TIMEOUT_MS);
+        Promise.resolve().then(function () { return mod.coverage(point); })
+          .then(function (inside) { clearTimeout(timer); done(!!inside, false); },
+                function () { clearTimeout(timer); done(true, true); });
+      });
+    }
+
+    /* ---- the run ------------------------------------------------------- */
+
+    function setStatus(text, tone) {
+      statusEl.textContent = text || "";
+      if (tone) statusEl.setAttribute("data-tone", tone); else statusEl.removeAttribute("data-tone");
+    }
+
+    function classify(raw, feature, sets) {
+      if (!feature) {
+        return Promise.resolve({ input: raw, matched: "", lat: null, lng: null,
+          quality: "none", cells: {}, flags: [NO_MATCH_FLAG] });
+      }
+      var props = feature.properties || {};
+      var coords = feature.geometry.coordinates;
+      var point = { lat: coords[1], lng: coords[0] };
+      var row = { input: raw, matched: photonLabel(props), lat: point.lat, lng: point.lng,
+        quality: matchQuality(props), cells: {}, flags: [] };
+      if (row.quality === "street") row.flags.push("matched the street, not the address");
+      else if (row.quality === "area") row.flags.push("matched an area, not the address");
+
+      return Promise.all(sets.map(function (set) {
+        var mod = set.mod;
+        if (set.error) {
+          row.cells[mod.id] = { status: "error" };
+          row.flags.push(mod.label + " boundaries unavailable");
+          return null;
+        }
+        return coverageAt(set, point).then(function (inside) {
+          if (!inside) {
+            row.cells[mod.id] = { status: "outside" };
+            row.flags.push("outside " + mod.label + " coverage");
+            return;
+          }
+          var hit = findFeatureContaining(set.geojson, point);
+          if (!hit) {
+            row.cells[mod.id] = { status: "none" };
+            row.flags.push("no " + mod.label + " covers this point");
+            return;
+          }
+          var ft = edgeDistanceFeet(point, hit.geometry);
+          row.cells[mod.id] = { status: "in", value: hoverValue(mod, hit), edgeFt: ft };
+          if (ft !== null && ft <= runThreshold) {
+            row.flags.push(Math.round(ft) + " ft from a " + mod.label + " line");
+          }
+        });
+      })).then(function () { return row; });
+    }
+
+    function isAbort(err) {
+      return !!err && (err.name === "AbortError" || cancelled);
+    }
+
+    function runBatch() {
+      if (running) return;
+      var mods = pickedLayers();
+      var list = parseAddresses(inputEl.value);
+      if (!mods.length) { setStatus("Tick at least one boundary to check.", "error"); return; }
+      if (!list.length) { setStatus("Paste some addresses first — one per line.", "error"); return; }
+
+      running = true;
+      cancelled = false;
+      controller = new AbortController();
+      rows = [];
+      runSets = [];
+      runCols = mods.slice();
+      runThreshold = reviewThreshold();
+      runBtn.disabled = true;
+      cancelBtn.hidden = false;
+      csvBtn.hidden = true;
+      summaryEl.hidden = true;
+      resultsEl.hidden = true;
+      resultsEl.textContent = "";
+      setStatus("Loading " + mods.length + (mods.length === 1 ? " boundary set…" : " boundary sets…"));
+
+      // Per-layer failure isolation, the same contract the cards keep: a layer
+      // whose boundaries won't load reports that in its own column and the
+      // other columns still answer.
+      Promise.all(mods.map(function (mod) {
+        return mod.overlay.load().then(
+          function (geojson) { return { mod: mod, geojson: geojson, error: null }; },
+          function (err) { return { mod: mod, geojson: null, error: err }; });
+      })).then(function (sets) {
+        runSets = sets;
+        var i = 0;
+        function step() {
+          if (cancelled || i >= list.length) return Promise.resolve();
+          var raw = list[i];
+          return geocodeOne(cleanPoiAddress(raw), controller.signal)
+            .then(function (feature) { return classify(raw, feature, sets); })
+            .then(null, function (err) {
+              if (isAbort(err)) throw err;
+              return { input: raw, matched: "", lat: null, lng: null, quality: "none",
+                cells: {}, flags: ["lookup failed (" + (err && err.message ? err.message : "error") + ")"] };
+            })
+            .then(function (row) {
+              if (cancelled) return;
+              rows.push(row);
+              i += 1;
+              renderResults();
+              setStatus("Checked " + rows.length + " of " + list.length + "…");
+              if (i >= list.length) return;
+              return new Promise(function (resolve) { setTimeout(resolve, SPACING_MS); }).then(step);
+            });
+        }
+        return step();
+      }).then(function () {
+        finish(cancelled ? "Stopped. " + rows.length + " of " + list.length + " checked." : null);
+      }, function (err) {
+        if (isAbort(err)) { finish("Stopped. " + rows.length + " of " + list.length + " checked."); return; }
+        finish(null, err);
+      });
+    }
+
+    function finish(note, err) {
+      running = false;
+      controller = null;
+      runBtn.disabled = false;
+      cancelBtn.hidden = true;
+      csvBtn.hidden = !rows.length;
+      renderResults();
+      if (err) {
+        setStatus("Stopped: " + (err.message || "something went wrong") + ". " +
+          rows.length + " row" + (rows.length === 1 ? "" : "s") + " kept.", "error");
+        return;
+      }
+      var flagged = rows.filter(function (r) { return r.flags.length; }).length;
+      // A retired coverage gate is named rather than left silent: that column
+      // answered for every address, including any the layer does not actually
+      // cover, and a reader working from the table has no other way to know.
+      var ungated = runSets.filter(function (s) { return s.coverageOff; })
+        .map(function (s) { return s.mod.label; });
+      setStatus((note ? note + " " : "Done. ") +
+        (flagged ? flagged + " of " + rows.length + " need a look." : "Nothing flagged for review.") +
+        (ungated.length ? " " + ungated.join(" and ") + " could not be location-checked — " +
+          "that source did not respond, so the column answers everywhere." : ""));
+    }
+
+    function cancelRun() {
+      if (!running) return;
+      cancelled = true;
+      if (controller) controller.abort();
+    }
+
+    /* ---- results ------------------------------------------------------- */
+
+    function cellText(cell) {
+      if (!cell) return "";
+      if (cell.status === "in") return cell.value || "";
+      if (cell.status === "outside") return "outside coverage";
+      if (cell.status === "none") return "no district";
+      if (cell.status === "error") return "unavailable";
+      return "";
+    }
+
+    function renderSummary() {
+      summaryEl.textContent = "";
+      if (!rows.length) { summaryEl.hidden = true; return; }
+      var flagged = rows.filter(function (r) { return r.flags.length; }).length;
+      var tallies = [
+        { text: rows.length + (rows.length === 1 ? " row" : " rows"), tone: null },
+        { text: rows.filter(function (r) { return r.quality === "house"; }).length + " matched to an address", tone: null },
+        { text: flagged + " flagged for review", tone: flagged ? "review" : null }
+      ];
+      tallies.forEach(function (t) {
+        var el = document.createElement("span");
+        el.className = "batch-tally";
+        if (t.tone) el.setAttribute("data-tone", t.tone);
+        el.textContent = t.text;
+        summaryEl.appendChild(el);
+      });
+      summaryEl.hidden = false;
+    }
+
+    function renderResults() {
+      renderSummary();
+      resultsEl.textContent = "";
+      if (!rows.length) { resultsEl.hidden = true; return; }
+
+      var table = document.createElement("table");
+      table.className = "batch-table";
+      var thead = document.createElement("thead");
+      var hr = document.createElement("tr");
+      var heads = ["#", "Address", "Matched", "Match"];
+      runCols.forEach(function (mod) { heads.push(mod.label, "Edge (ft)"); });
+      heads.push("Review");
+      heads.forEach(function (text) {
+        var th = document.createElement("th");
+        th.scope = "col";
+        th.textContent = text;
+        hr.appendChild(th);
+      });
+      thead.appendChild(hr);
+      table.appendChild(thead);
+
+      var tbody = document.createElement("tbody");
+      rows.forEach(function (row, index) {
+        var tr = document.createElement("tr");
+        if (row.flags.length) tr.className = "batch-row-flag";
+        // Every row is a way back to the map: the point a flagged row could not
+        // settle is exactly the one somebody has to look at.
+        if (row.lat !== null) {
+          tr.tabIndex = 0;
+          tr.title = "Show this point on the map";
+          tr.addEventListener("click", function () { showOnMap(row); });
+          tr.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); showOnMap(row); }
+          });
+        }
+        appendCell(tr, String(index + 1), "batch-num");
+        appendCell(tr, row.input, "batch-addr");
+        appendCell(tr, row.matched, "batch-addr", !row.matched);
+        appendCell(tr, row.quality, null, row.quality !== "house");
+        runCols.forEach(function (mod) {
+          var cell = row.cells[mod.id];
+          appendCell(tr, cellText(cell), null, !cell || cell.status !== "in");
+          appendCell(tr, cell && cell.edgeFt !== null && cell.edgeFt !== undefined
+            ? String(Math.round(cell.edgeFt)) : "", "batch-num");
+        });
+        appendCell(tr, row.flags.join("; "), "batch-review");
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      resultsEl.appendChild(table);
+      resultsEl.hidden = false;
+    }
+
+    // Every value that reaches the table is external — a geocoder's label, a
+    // publisher's district name — so it goes in through textContent, never
+    // markup. (The app's honesty rules, and the reason sanitize() exists.)
+    function appendCell(tr, text, className, muted) {
+      var td = document.createElement("td");
+      if (className) td.className = className;
+      if (muted && text) td.className = (td.className ? td.className + " " : "") + "batch-cell-none";
+      td.textContent = text;
+      tr.appendChild(td);
+    }
+
+    function showOnMap(row) {
+      if (row.lat === null) return;
+      close();
+      setSelectedPoint(row.lat, row.lng);
+    }
+
+    /* ---- CSV ----------------------------------------------------------- */
+
+    function csvCell(value) {
+      var s = value === null || value === undefined ? "" : String(value);
+      return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    }
+
+    function buildCsv() {
+      var head = ["row", "address", "matched", "lat", "lng", "match"];
+      runCols.forEach(function (mod) { head.push(mod.label, mod.label + " edge (ft)"); });
+      head.push("review");
+      var lines = [head.map(csvCell).join(",")];
+      rows.forEach(function (row, index) {
+        var cells = [index + 1, row.input, row.matched,
+          row.lat === null ? "" : row.lat.toFixed(6),
+          row.lng === null ? "" : row.lng.toFixed(6), row.quality];
+        runCols.forEach(function (mod) {
+          var cell = row.cells[mod.id];
+          cells.push(cellText(cell),
+            cell && cell.edgeFt !== null && cell.edgeFt !== undefined ? Math.round(cell.edgeFt) : "");
+        });
+        cells.push(row.flags.join("; "));
+        lines.push(cells.map(csvCell).join(","));
+      });
+      return lines.join("\r\n");
+    }
+
+    function downloadCsv() {
+      if (!rows.length) return;
+      // The BOM is for Excel, which otherwise reads a UTF-8 CSV as Latin-1 and
+      // mangles every accented street name in the file.
+      var blob = new Blob(["\ufeff" + buildCsv()], { type: "text/csv;charset=utf-8" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = "districtry-address-check-" + new Date().toISOString().slice(0, 10) + ".csv";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 0);
+    }
+
+    /* ---- open / close -------------------------------------------------- */
+
+    function open() {
+      lastFocus = document.activeElement;
+      if (!picked) picked = initialPicks();
+      renderLayerPicker();
+      refreshHints();
+      modal.hidden = false;
+      if (closeBtn) closeBtn.focus();
+    }
+    function close() {
+      cancelRun();
+      modal.hidden = true;
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    openBtn.addEventListener("click", open);
+    if (closeBtn) closeBtn.addEventListener("click", close);
+    if (backdrop) backdrop.addEventListener("click", close);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !modal.hidden) close();
+    });
+    inputEl.addEventListener("input", refreshHints);
+    thresholdEl.addEventListener("change", refreshHints);
+    runBtn.addEventListener("click", runBatch);
+    cancelBtn.addEventListener("click", cancelRun);
+    csvBtn.addEventListener("click", downloadCsv);
+  })();
 
 }
 // Deferred Leaflet (above) executes before DOMContentLoaded, so L is ready by
