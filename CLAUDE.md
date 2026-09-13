@@ -49,16 +49,18 @@ count was 19, and the two counts after it (24, then 31) were each stale within t
 figure is now stated WITH ITS METHOD**, because three successive counts disagreed and no reader
 could tell which counting rule any of them used: a static gate is one NAMED step in the `smoke`
 job ahead of the `actions/setup-node` step, which is 43; counted instead as script invocations
-the whole battery is 67 — 58 that need no browser and 9 that boot Chromium, the per-instance
+the whole battery is 68 — 58 that need no browser and 10 that boot Chromium, the per-instance
 `validate_index.py` runs included. Both
-figures have now been re-measured on THREE successive trees, twice because a branch was behind
-its base: 42/66 was measured against a tree two merges old, and 43/67 is this one. Re-measure
-rather than increment — the pair moves when anything merges, not only when you add a gate. It is
+figures have now been re-measured on FOUR successive trees in one evening, three times because
+a branch was behind its base: 42/66 against a tree two merges old, then 43/67, then 43/68 when
+#927 added a tenth Chromium run an hour later. Re-measure rather than increment — the pair moves
+when anything merges, not only when you add a gate, and the merge that moved it here was
+somebody else's. It is
 dated as well because the next addition makes it wrong again and a bare number gives a reader no
 way to know. Treat the workflow
 file as the source of truth for the full battery and its order; `.claude/skills/steward/SKILL.md`
 mirrors it as locally-runnable commands with per-gate rationale, for driving a PR to green — and
-mirrors it EXACTLY as of 2026-09-12, 67 invocations for 67 (diffed both ways), after four gates
+mirrors it EXACTLY as of 2026-09-13, 68 invocations for 68 (diffed both ways), after four gates
 were found missing from it (`build_sitemap.py`, `undeliverable.py`, the circuit-court join
 self-test, and this change's own). What
 follows is the short list worth knowing by name, not the whole battery.
