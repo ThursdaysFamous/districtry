@@ -259,6 +259,14 @@ jobs:
       # READ this file to discover pages and not one looked at its dates.
       # Inclusion is derived too, so a new topic page joins the day it ships
       # rather than when somebody remembers. Stdlib only.
+      # The 73 per-county board pages, and three things at once: that each is
+      # byte-identical to what its roster generates, that every name in that
+      # roster actually appears on the page (byte-equality cannot see an empty
+      # template), and that all 55 weekly jobs which rewrite one of those
+      # rosters regenerate the pages in the same run.
+      - name: County board pages match their rosters
+        run: python3 scripts/build_county_pages.py --check
+
       - name: Sitemap lastmod matches each page's last commit
         run: python3 scripts/build_sitemap.py --check
 

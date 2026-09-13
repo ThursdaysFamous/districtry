@@ -215,6 +215,9 @@ def authored_pages(instances):
     for inst in instances:
         pages += ["%s/%s" % (inst, os.path.basename(p))
                   for p in sorted(glob.glob(os.path.join(REPO_ROOT, inst, "*.html")))]
+        # Concept SUBDIRECTORIES too, one level deep: il/county-board/ holds 73 generated per-county pages (scripts/build_county_pages.py) and every gate here discovered pages one level up, so all 73 would have shipped unwatched — the same miss validate_card_links.py made when Iowa arrived as a fifth instance.
+        pages += [os.path.relpath(p, REPO_ROOT).replace(os.sep, "/")
+                  for p in sorted(glob.glob(os.path.join(REPO_ROOT, inst, "*", "*.html")))]
     return pages
 
 

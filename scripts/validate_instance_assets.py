@@ -154,6 +154,18 @@ def surfaces():
         for f in sorted(os.listdir(d)):
             if f.endswith(".html"):
                 out.append(("%s/%s" % (tag, f), os.path.join(d, f)))
+            # Concept SUBDIRECTORIES too, one level deep: il/county-board/
+            # holds 73 generated per-county pages
+            # (scripts/build_county_pages.py) and every gate here discovered
+            # pages one level up, so all 73 would have shipped unwatched — the
+            # same miss validate_card_links.py made when Iowa arrived as a
+            # fifth instance. These pages reference the fonts and the mark by
+            # a ../ hop, which is exactly what this gate exists to resolve.
+            sub = os.path.join(d, f)
+            if os.path.isdir(sub):
+                for g in sorted(os.listdir(sub)):
+                    if g.endswith(".html"):
+                        out.append(("%s/%s/%s" % (tag, f, g), os.path.join(sub, g)))
     return out
 
 
