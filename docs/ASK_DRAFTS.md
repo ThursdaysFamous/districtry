@@ -1975,3 +1975,58 @@ measurement is in `wi/WATCH.md`; the decision is a person's.
 Clerk of Courts page publishes one address, `Monica.Paz@wicourts.gov`, and the Blue Book
 2025-26 (April 2025) names Monica Paz as Clerk of Circuit Court "appointed to fill a
 vacancy" — a dated source, corroborated by that live page but worth confirming on the day.
+
+---
+
+## Ask 25 — Adams County, Wisconsin: two details the county's own pages do not carry
+
+> **NOT YET ASKED — DRAFTED 2026-09-13.** Nothing here is sent by the agent that wrote
+> it. Note this is Adams County, **Wisconsin** — Ask 13 is Adams County, **Illinois**, a
+> different county with the same name and a different clerk. Do not merge the threads.
+
+**To:** Liana Glavin, County Clerk, Adams County — `liana.glavin@co.adams.wi.us`
+**Subject:** Two details about the county board that your website does not carry
+
+### Why this ask exists
+
+This is the residue of a measurement, which is this file's rule 1. Until 2026-09-13 this
+project read Adams's twenty supervisors from the Clerk's own "2026 Public Directory" —
+the Drive PDF linked from the county board page as "County Directory". That document is
+excellent: a text layer, a district heading per seat, a county mailbox and a phone for
+every supervisor.
+
+It is no longer read, and **not because of anything the county did.** Google's
+`drive.google.com/robots.txt` disallows `/uc`, the download endpoint, and
+`drive.usercontent.google.com` — the only download host Drive's own viewer names — serves
+26 bytes of `Disallow: /`. This project reads robots.txt before it fetches and does not
+look for a way around a publisher's answer, so there is no permitted route to that file's
+bytes. The viewer page is permitted and returns the page furniture, not the document.
+
+So the roster now comes from the county's own site, which publishes it well:
+`/government/county-board/supervisory-districts` lists all twenty seats, and each links a
+page carrying that supervisor's name and their `district<n>@co.adams.wi.us` address. That
+is a better source in every respect but two, and those two are the ask.
+
+### What is asked
+
+**1. The supervisors' phone numbers.** The directory printed one for each of the twenty;
+the district pages print none. If those numbers are ones the county is content to publish
+— they are already in the directory — adding them to each district page would put them
+back in front of a reader, and would not depend on any document being fetchable.
+
+**2. Who chairs the board.** The word "chair" does not appear on the county board page,
+the districts listing, or any district page. The directory named Rick Pease as chair; the
+Wisconsin Blue Book's April 2025 snapshot names John West, who is no longer a supervisor.
+Rather than print a name two publishers disagree about, the card now says the chair is not
+named and why. **One line on the board page saying who chairs it would settle that**, and
+would keep settling it after each April organizational meeting.
+
+### What a "no" costs, said plainly
+
+Nothing that matters to the county. Twenty supervisors, their districts and their county
+mailboxes ship either way, refreshed weekly from the county's own pages. A "no" leaves the
+card naming what it knows: the supervisors, and — for the chair — that it does not know.
+A clean no is a good outcome and the draft says so.
+
+**Home addresses are not asked for and would not be used.** The directory prints one per
+supervisor and this project has never carried them.

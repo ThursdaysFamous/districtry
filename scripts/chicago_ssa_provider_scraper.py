@@ -135,8 +135,11 @@ import requests  # noqa: E402
 # any directory. The repo root has no data/source/ at all; only
 # data/search-performance.json sits at the root.
 HERE = os.path.dirname(os.path.abspath(__file__))
-DEFAULT_OUT = os.path.join(HERE, "..", "il", "data", "source",
-                           "chicago-ssa-providers.raw.json")
+# normpath for the same reason its builder's constants carry it: this path is
+# printed on every run ("wrote <path>"), and il/data/source/... is the form a
+# reader can paste back where scripts/../il/data/source/... is not.
+DEFAULT_OUT = os.path.normpath(os.path.join(HERE, "..", "il", "data", "source",
+                                            "chicago-ssa-providers.raw.json"))
 SOURCE_URL = "https://www.chicago.gov/city/en/depts/dcd/supp_info/special_service_areasandproviderlist.html"
 # The program page that links it, and what the `ssa` card links. Recorded here
 # because the list's own URL is not discoverable from the department landing
