@@ -375,10 +375,15 @@ jobs:
       #
       # validate_instance_assets.py already checked that og-image.png EXISTS,
       # and all four existed. This checks WHAT IT IS: every surface in
-      # metros.json has a manifest entry, its label still matches that file, its
-      # bytes still hash to what the renderer wrote, and it is 1200x630. Node,
-      # but no browser and no network — the rendering needs Playwright, the
-      # check does not.
+      # metros.json has a manifest entry, its label still matches that entry's
+      # TAG, its bytes still hash to what the renderer wrote, and it is
+      # 1200x630. Node, but no browser and no network — the rendering needs
+      # Playwright, the check does not.
+      #
+      # The label is the tag (il, ny, ca, …) rather than the place name: the
+      # long names wrapped to a second line and pushed the strapline down, and
+      # metros.json's own comment already calls the tag what the brand spec
+      # prints in the wordmark.
       #
       # It proves PROVENANCE, not correctness: a card whose design is wrong
       # passes, and only a person looking at it catches that.

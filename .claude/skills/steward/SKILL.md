@@ -74,7 +74,7 @@ python3 scripts/undeliverable.py                         # the shipped e-mail do
 python3 scripts/validate_skills.py                       # every skill's pointers resolve
 python3 scripts/validate_arcgis_format.py                # no app asks ArcGIS for f=geojson
 node scripts/esri_rings_test.mjs                          # ring nesting, on fixtures
-node scripts/build_og_image.mjs --check                    # every surface's social card is the one the renderer wrote, labelled as metros.json says (provenance, not pixels)
+node scripts/build_og_image.mjs --check                    # every surface's social card is the one the renderer wrote, labelled with its metros.json tag (provenance, not pixels)
 python3 scripts/validate_instance_registration.py         # every instance named in every table
 python3 scripts/validate_instance_assets.py               # every same-origin asset a page names exists
 python3 scripts/build_metro_outline.py --check           # IL ring + anchor registry

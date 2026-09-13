@@ -37,11 +37,24 @@
 // another city's card had been the fleet's social preview for as long as the
 // rebrand has existed.
 //
-// THE LABEL IS NOW DERIVED, NEVER TYPED. It comes from metros.json's
-// `landing_name`, lowercased — the same field the landing page and the
-// coverage map read — because a hand-typed argument is exactly how the root
-// came to say "illinois": the design source said it, and it was copied. The
-// root takes NO label, since the fleet is not one of its states.
+// THE LABEL IS NOW DERIVED, NEVER TYPED. It is the instance's `tag` from
+// metros.json — il, ny, ca, wi, ia, mi — because a hand-typed argument is
+// exactly how the root came to say "illinois": the design source said it, and
+// it was copied. The root takes NO label, since the fleet is not one of its
+// states.
+//
+// THE TAG RATHER THAN THE PLACE NAME, decided 2026-09-13 after the first pass
+// rendered `landing_name`. Two reasons, and the second is the stronger one.
+// The long names broke the layout: "new york city" and "san francisco" wrap to
+// a second line at 82px and push the strapline down, and every future state is
+// one bad name away from the same thing. And metros.json's own comment already
+// says what this card is supposed to print — `tag` is "the instance tag the
+// brand spec sets in the wordmark (districtry / il)" — so rendering the place
+// name was the card disagreeing with the brand spec, and with the URL the
+// reader is about to open. NY and CA are STATE codes on purpose even though
+// those two instances serve one city each: the tag is the path, /ny/ and /ca/,
+// and a card reading "new york city" over a link to /ny/ names two different
+// things.
 //
 // Rare operator step for the rendering itself (it needs Playwright), but
 // `--check` is stdlib-only and runs in CI. See the manifest note on
@@ -65,10 +78,10 @@ function surfaces() {
     readFileSync(join(REPO_ROOT, "metros.json"), "utf8")).metros;
   const out = [{ tag: "root", dir: ".", label: null }];
   for (const m of fleet) {
-    if (!m.tag || !m.landing_name) {
-      throw new Error(`metros.json entry ${JSON.stringify(m)} has no tag/landing_name`);
+    if (!m.tag) {
+      throw new Error(`metros.json entry ${JSON.stringify(m)} has no tag`);
     }
-    out.push({ tag: m.tag, dir: m.tag, label: m.landing_name.toLowerCase() });
+    out.push({ tag: m.tag, dir: m.tag, label: m.tag });
   }
   return out;
 }
@@ -161,7 +174,7 @@ body{margin:0}
 // an entry, every entry's label still matches metros.json, every PNG's hash
 // still matches, and every card is 1200x630. That catches a card never
 // rendered (no entry — which is exactly what il, ny and ca would have failed
-// on), a card replaced by hand, and a landing_name changed without a re-render.
+// on), a card replaced by hand, and a tag changed without a re-render.
 //
 // IT CANNOT READ THE PIXELS. A card whose DESIGN is wrong — the wrong star, an
 // unreadable colour — passes, and only a person looking at it will catch that.
@@ -205,7 +218,7 @@ function check() {
     }
     if ((e.label ?? null) !== s.label) {
       problems.push(`${s.tag}: its card was rendered with the label `
-        + `${JSON.stringify(e.label)} and metros.json now says `
+        + `${JSON.stringify(e.label)} and metros.json's tag is now `
         + `${JSON.stringify(s.label)} — re-render it.`);
     }
     const file = pngPath(s);
