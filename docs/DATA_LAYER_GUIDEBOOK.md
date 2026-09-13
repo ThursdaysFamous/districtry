@@ -2727,7 +2727,12 @@ five Illinois sources with or without browser headers, because urllib3's TLS Cli
 differs from the ssl module's and these edges fingerprint it. A probe that varied only the
 name would credit a browser string with a fix the stack made.
 
-**WHAT IT FOUND, across 291 hosts** (2026-09-12; 61 re-measured 2026-09-13 — see below):
+**WHAT IT FOUND, across 290 hosts** (2026-09-12; 61 re-measured 2026-09-13 — see below).
+It was 291 until #944's second commit: `drive.google.com` was recorded
+`robots-disallows-this-path`, the Wisconsin board scrape stopped fetching the Drive
+document it named, and `--check` then failed the entry as orphaned. A host leaving the
+tree moves these figures exactly as a renamed scraper does, so all three files were
+updated in that commit:
 
 | verdict | hosts | what it means |
 |---|---|---|
@@ -2737,7 +2742,7 @@ name would credit a browser string with a fix the stack made.
 | `token-refused` | 3 | refuses the token on `requests`, serves Chrome on `requests` |
 | `all-refused` / `challenged` | 12 | refuses or challenges all four; a captcha is never answered |
 | `answers-nothing` / `path-answers-nothing` | 11 | HTTP 200 too small to be a page, or a 404/405/500 on the probed path |
-| `robots-disallows-this-path` | 12 | the `*` group disallows the probe's own chosen path, so it was not fetched |
+| `robots-disallows-this-path` | 11 | the `*` group disallows the probe's own chosen path, so it was not fetched |
 | `crawl-delay-too-long` | 5 | Crawl-delay 15–60s; four rungs at that pace is not a polite probe |
 | `robots-unreadable` | 4 | robots.txt could not be read by any rung, so no page was asked for: Coles, Gallatin and Vermilion (the incomplete-chain hosts) and docs.legis.wisconsin.gov (timed out twice on 2026-09-13 from the sandbox, curl included; the 2026-09-12 sweep read it `token-ok`, so this is the vantage's route, not the host) |
 | `tls-chain` / `proxy-denied` | 2 | an incomplete chain (`probe_incomplete_tls_chains.py`'s subject) or this sandbox's egress |
@@ -2748,7 +2753,7 @@ name would credit a browser string with a fix the stack made.
 --inventory` prints it on this tree: 105 files send a browser string; 18 reach at least one
 host that genuinely refuses the token, **65 reach only hosts that serve the token a full
 page, and 22 more reach no host that refuses it** (one or more answered nothing or refused
-the `requests` stack); 283 of the 291 measured hosts are still reached by such a caller.
+the `requests` stack); 282 of the 290 measured hosts are still reached by such a caller.
 **TWO OF THOSE FILES HAVE BEEN RENAMED TO THE TOKEN SINCE THE SWEEP** and the per-file
 figures move with them — the Iowa minutes-chair scraper (#916) and the Iowa county-officers
 scraper (both measured `token-ok`) — which is the rule working rather than drift: a file
