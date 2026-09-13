@@ -1224,13 +1224,25 @@ ROBOTS_PERMISSIVE_HOSTS = (
 # refreshing; that is a coverage change and it is not made here. Each entry is
 # dated and re-audited on every run, so a host that starts serving its policy
 # leaves this list instead of sitting in it.
-ROBOTS_REFUSED_PENDING = {
-    "www.co.monroe.wi.us": "HTTP 403 on robots.txt, 2026-09-13; COUNTIES row",
-    "www.co.rock.wi.us": "HTTP 403 on robots.txt, 2026-09-13; COUNTIES row",
-    "www.sheboygancounty.com": "HTTP 403 on robots.txt, 2026-09-13; COUNTIES row",
-    "www.fdlco.wi.gov": "HTTP 403 on robots.txt, 2026-09-13; ARCHIVE_COUNTIES",
-    "www.marathoncounty.gov": "HTTP 403 on robots.txt, 2026-09-13; directory scrape",
-}
+# Hosts that refuse to serve robots.txt TO THE CLIENT THIS FILE CRAWLS WITH, and
+# are carried at today's behaviour (RFC 9309 files a 401/403 with a 404: allow)
+# until the fleet settles whether a refusal should read as a refusal by default.
+#
+# EMPTY, AND THAT IS A MEASUREMENT RATHER THAN AN OMISSION. #944 listed five —
+# Monroe, Rock, Sheboygan, Fond du Lac and Marathon — and every one was an
+# artefact of reading the policy with a weaker client than the crawl: the gate
+# sent User-Agent + Accept where the scrape sends seven headers. Measured
+# 2026-09-13, all five answer 403 to the first and 200 to the second (6,641 /
+# 6,641 / 6,706 / 71 / 6,641 bytes), and wi/scripts/validate_robots.py, which
+# has always used headers_for, read all five as served the whole time. With the
+# read corrected all five serve a policy that PERMITS every path this file
+# fetches on them, so nothing is carried and no county's reading changes.
+#
+# An entry here is audited like ACCEPTED_DROPS: it FAILS when the host serves
+# its policy after all (the exception has outlived its reason) and when no
+# table in this file names the host any more (it is orphaned). Both run in
+# --selftest, so an entry cannot rot quietly the way a once-per-run print can.
+ROBOTS_REFUSED_PENDING = {}
 
 _ROBOTS_CACHE = {}          # (user-agent, robots url) -> Verdict
 _ROBOTS_CACHE_LOCK = threading.Lock()
@@ -1252,12 +1264,21 @@ def _robots_verdict(url):
     below would have to reach into a gate's private cache to discard a verdict
     it wants to re-ask. A dict and a lock here is less code than that.
     """
-    ua = headers_for(url)["User-Agent"]
+    # THE POLICY IS READ WITH THE HEADER SET THE CRAWL SENDS. Reading it with
+    # only User-Agent + Accept measures a different client from the one that
+    # fetches, which is the asymmetry wi/WATCH.md names as the one an audit
+    # must not have -- and it is not hypothetical here: measured 2026-09-13,
+    # all five hosts #944 listed in ROBOTS_REFUSED_PENDING answered 403 to the
+    # two-header read and 200 to these headers, so that whole list was a fact
+    # about the gate rather than about the scraper.
+    crawl_headers = headers_for(url)
+    ua = crawl_headers["User-Agent"]
     key = (ua, _robots_url(url))
     with _ROBOTS_CACHE_LOCK:
         if key in _ROBOTS_CACHE:
             return _ROBOTS_CACHE[key]
-    verdict = rp.fetch_verdict(key[1], ua, timeout=ROBOTS_TIMEOUT)
+    verdict = rp.fetch_verdict(key[1], ua, timeout=ROBOTS_TIMEOUT,
+                               headers=crawl_headers)
     # RFC 9309 files a 5xx or a network failure as disallow-all, which is
     # right, and a single flaky read would otherwise drop a county out of the
     # weekly file: co.forest.wi.gov served its policy on 2026-09-12 and was
@@ -1268,7 +1289,8 @@ def _robots_verdict(url):
         if verdict.status != "unreachable":
             break
         time.sleep(2 ** attempt)
-        verdict = rp.fetch_verdict(key[1], ua, timeout=ROBOTS_TIMEOUT)
+        verdict = rp.fetch_verdict(key[1], ua, timeout=ROBOTS_TIMEOUT,
+                               headers=crawl_headers)
     with _ROBOTS_CACHE_LOCK:
         _ROBOTS_CACHE.setdefault(key, verdict)
         return _ROBOTS_CACHE[key]
@@ -1517,6 +1539,22 @@ _DROP = re.compile(r"(?is)<(script|style)[^>]*>.*?</\1>")
 _BREAK = re.compile(r"(?is)<br\s*/?>|</t[dh]>|</tr>|</p>|</li>|</div>|</h\d>|</a>|</span>|</strong>|</b>")
 _TAG = re.compile(r"(?s)<[^>]+>")
 _FRAGMENT = re.compile(r"[a-z]{1,2}")
+
+
+def why_unfetched(exc):
+    """The CAUSE of a skipped fetch, in words that tell a refusal from an outage.
+
+    RobotsRefused is an Exception, so every `except Exception as e` in this file
+    that printed `%s % e` reported a host's own published policy as though the
+    host had failed. No fetch happens either way -- the gate already stopped it
+    -- but the two send the next reader somewhere different: an outage is worth
+    re-running, a refusal is worth re-sourcing or asking the county about. The
+    log lines that said `unreachable` now say `not read`, for the same reason.
+    Found 2026-09-13 with the fetch_page defect.
+    """
+    if isinstance(exc, RobotsRefused):
+        return "not fetched: robots.txt refuses this path"
+    return str(exc)
 
 
 def to_lines(page_html):
@@ -2657,13 +2695,21 @@ def fetch_bytes(url, headers=None, timeout=45, attempts=4, allow_lax_tls=True):
     allowed, why = robots_says(url)
     if not allowed:
         raise RobotsRefused("%s: %s" % (url, why))
-    ROBOTS_PACER.hold(url)
     last = None
     for attempt in range(attempts):
         for ctx in (None, lax):
             try:
                 req = urllib.request.Request(url, headers=headers)
-                with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
+                # `hold` is a CONTEXT MANAGER: a bare call builds the generator
+                # and never enters it, so the delay is skipped and `honoured`
+                # stays empty. #944 shipped all five sites in this file as bare
+                # calls and claimed in its own body that four hosts were paced;
+                # measured, two bare calls against a 2 s delay elapsed 0.00 s.
+                # It wraps the REQUEST rather than the retry loop, because a
+                # Crawl-delay governs requests: one `with` around the loop would
+                # pace the first attempt and let the retries go back to back.
+                with ROBOTS_PACER.hold(url), \
+                        urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
                     body = r.read()
                     # urllib never unwraps gzip. Both header sets ask for
                     # identity today and ARCHIVE_UA asks for nothing, so this is
@@ -2716,6 +2762,9 @@ ARCHIVE_UA = {"User-Agent": "districtry-county-board-scraper/1.0 "
 
 
 
+_SOURCE_TEXT = ""       # this file's own source, read by the selftest only
+
+
 def _robots_selftest():
     """The robots decision, on doctored robots.txt text — offline, no network.
 
@@ -2729,9 +2778,18 @@ def _robots_selftest():
     ADMIN_ONLY = "User-agent: *\nDisallow: /admin/\nDisallow: /manager/\n"
     DELAYED = "User-agent: *\nCrawl-delay: 10\nDisallow: /admin/\n"
 
+    global _SOURCE_TEXT
+    with open(__file__, encoding="utf-8") as _f:
+        _SOURCE_TEXT = _f.read()
     failures = []
 
+    ran = []
+
     def check(label, cond):
+        # COUNTED, never stated: the final line used to carry a literal 12, so
+        # the three cases added on 2026-09-13 ran and the run went on reporting
+        # twelve. A number a reader trusts has to come from the thing it counts.
+        ran.append(label)
         if not cond:
             failures.append(label)
 
@@ -2768,11 +2826,29 @@ def _robots_selftest():
     check("403 on an API host allows",
           robots_says(seed(api, 403, "", path="/arcgis/rest/services/x"))[0] is True)
 
-    # 5. The five municipal sites whose policy is refused are carried at
-    #    today's behaviour while the fleet-wide default is undecided.
-    pending = sorted(ROBOTS_REFUSED_PENDING)[0]
-    check("403 on a pending host allows for now",
-          robots_says(seed(pending, 403, "", path="/government/x"))[0] is True)
+    # 5. A host carried in ROBOTS_REFUSED_PENDING is read permissively while the
+    #    fleet-wide default is undecided. The table is EMPTY today (see its
+    #    header), so the MECHANISM is tested with a host put there for the
+    #    duration rather than by indexing whatever happens to be in it — which
+    #    is what this case used to do, and what would make it vanish silently
+    #    the moment the list emptied.
+    pending = "carried.example.test"
+    ROBOTS_REFUSED_PENDING[pending] = "selftest only"
+    try:
+        check("403 on a pending host allows for now",
+              robots_says(seed(pending, 403, "", path="/government/x"))[0] is True)
+    finally:
+        ROBOTS_REFUSED_PENDING.pop(pending, None)
+
+    # 5a. The table audits itself the way ACCEPTED_DROPS does: an entry whose
+    #     host now serves its policy has outlived its reason, and one no table
+    #     in this file names any more is orphaned. Both FAIL rather than print.
+    for host, why in sorted(ROBOTS_REFUSED_PENDING.items()):
+        v = _robots_verdict("https://%s/" % host)
+        check("pending %s still refuses its policy (recorded: %s)" % (host, why),
+              v.status == "refused")
+        check("pending %s is still named by a table in this file" % host,
+              host in _SOURCE_TEXT)
 
     # 6. No robots.txt allows everything; RFC 9309 files a 404 that way.
     check("404 allows", robots_says(seed("nofile.example.test", 404, ""))[0] is True)
@@ -2806,6 +2882,22 @@ def _robots_selftest():
         check("archive does not route round a disallow", True)
     except Exception:
         check("archive re-raises RobotsRefused unchanged", False)
+    # 9a. fetch_page is the OTHER archive rung — the ARCHIVE_COUNTIES path — and
+    #     it had no case here, which is exactly why it shipped broken: its bare
+    #     `except Exception` swallowed RobotsRefused and served the Archive copy
+    #     of a path the host had disallowed. Testing one rung is not testing the
+    #     rule.
+    _saved_archived = globals()["fetch_archived"]
+    globals()["fetch_archived"] = lambda u, *a, **k: ("<html>archive</html>", "2026")
+    try:
+        fetch_page(url)
+        check("fetch_page does not route round a disallow", False)
+    except RobotsRefused:
+        check("fetch_page does not route round a disallow", True)
+    except Exception:
+        check("fetch_page re-raises RobotsRefused unchanged", False)
+    finally:
+        globals()["fetch_archived"] = _saved_archived
 
     # 10. The two host lists are answers to different questions and must not
     #     overlap: a host cannot be both permanently permissive and pending.
@@ -2814,7 +2906,7 @@ def _robots_selftest():
 
     if failures:
         raise SystemExit("robots selftest FAILED: " + "; ".join(failures))
-    print("robots selftest: 12 assertions, the decision holds")
+    print("robots selftest: %d assertions, the decision holds" % len(ran))
 
 
 def _district_page_selftest():
@@ -2982,12 +3074,12 @@ def _archive_json(url, tries=5):
     allowed, why = robots_says(url)
     if not allowed:
         raise RobotsRefused("%s: %s" % (url, why))
-    ROBOTS_PACER.hold(url)
     last = None
     for attempt in range(tries):
         try:
             req = urllib.request.Request(url, headers=ARCHIVE_UA)
-            with urllib.request.urlopen(req, timeout=60) as r:
+            with ROBOTS_PACER.hold(url), \
+                    urllib.request.urlopen(req, timeout=60) as r:
                 return json.load(r)
         except Exception as e:      # noqa: BLE001 - reachability, retried below
             last = e
@@ -3648,7 +3740,7 @@ def document_county(spec):
                   % (spec["name"], spec["seats"], live["strategy"]), file=sys.stderr)
             return districts, False
         except Exception as e:      # noqa: BLE001 - refusal is the expected case
-            print("  live %-12s still refused (%s)" % (spec["name"], e),
+            print("  live %-12s still refused (%s)" % (spec["name"], why_unfetched(e)),
                   file=sys.stderr)
     read = datetime.date(*map(int, spec["read_on"].split("-")))
     age = (datetime.date.today() - read).days
@@ -3817,19 +3909,19 @@ def _spn_save(url):
                     if st.get("status") == "error":
                         break
         except Exception as e:              # noqa: BLE001 - save is best-effort
-            print("    SPN2 save failed (%s): %s" % (url, e), file=sys.stderr)
+            print("    SPN2 save failed (%s): %s" % (url, why_unfetched(e)), file=sys.stderr)
     try:
         save_url = WAYBACK_SAVE % url
-        ROBOTS_PACER.hold(save_url)
         req = urllib.request.Request(save_url, headers=ARCHIVE_UA)
-        with urllib.request.urlopen(req, timeout=180) as r:
+        with ROBOTS_PACER.hold(save_url), \
+                urllib.request.urlopen(req, timeout=180) as r:
             m = re.search(r"/web/(\d{14})", r.geturl() or "")
             if not m:
                 m = re.search(r"/web/(\d{14})", r.headers.get("Content-Location", "") or "")
             if m:
                 return m.group(1)
     except Exception as e:                  # noqa: BLE001 - save is best-effort
-        print("    Save Page Now unavailable (%s): %s" % (url, e), file=sys.stderr)
+        print("    Save Page Now unavailable (%s): %s" % (url, why_unfetched(e)), file=sys.stderr)
     return None
 
 
@@ -3839,12 +3931,12 @@ def _wayback_latest(url):
     allowed, why = robots_says(available)
     if not allowed:
         raise RobotsRefused("%s: %s" % (available, why))
-    ROBOTS_PACER.hold(available)
     try:
         req = urllib.request.Request(
             WAYBACK_AVAILABLE % urllib.parse.quote(url, safe=""),
             headers=ARCHIVE_UA)
-        with urllib.request.urlopen(req, timeout=60) as r:
+        with ROBOTS_PACER.hold(available), \
+                urllib.request.urlopen(req, timeout=60) as r:
             snap = (json.load(r).get("archived_snapshots") or {}).get("closest") or {}
         return snap.get("timestamp") or None
     except Exception:                       # noqa: BLE001 - reachability probe
@@ -3919,6 +4011,15 @@ def fetch_page(url):
         page = fetch(url, timeout=30)
         if not BLOCK_PAGE.search(page):
             return page, None
+    except RobotsRefused:
+        # THE ARCHIVE IS NOT A WAY ROUND A DISALLOW, and a bare `except
+        # Exception` here made it one: RobotsRefused is an Exception, so a
+        # host that told us not to fetch a path got that path served from the
+        # Archive instead. `fetch_or_archive` already re-raised; this rung,
+        # which is the ARCHIVE_COUNTIES path, did not. Found 2026-09-13 by
+        # seeding www.fdlco.wi.gov with `Disallow: /`: this function returned
+        # the Archive copy while robots_says returned False for the same url.
+        raise
     except Exception:                       # noqa: BLE001 - the expected path
         pass
     return fetch_archived(url)
@@ -4484,10 +4585,10 @@ def _fetch_json(url):
     allowed, why = robots_says(url)
     if not allowed:
         raise RobotsRefused("%s: %s" % (url, why))
-    ROBOTS_PACER.hold(url)
     req = urllib.request.Request(url, headers=headers_for(url))
     ctx = ssl.create_default_context()
-    with urllib.request.urlopen(req, timeout=45, context=ctx) as r:
+    with ROBOTS_PACER.hold(url), \
+            urllib.request.urlopen(req, timeout=45, context=ctx) as r:
         return json.load(r)
 
 
@@ -4588,8 +4689,8 @@ def district_geometry_witness(fips, county, layer, seats):
         if not ltsb or not cty:
             raise RuntimeError("no districts on one side")
     except Exception as e:          # noqa: BLE001 - the witness, never the source
-        print("  WITNESS SKIPPED %-9s district geometry unreachable (%s) — the "
-              "roster ships unwitnessed this run" % (county, e), file=sys.stderr)
+        print("  WITNESS SKIPPED %-9s district geometry not read (%s) — the "
+              "roster ships unwitnessed this run" % (county, why_unfetched(e)), file=sys.stderr)
         return set()
     if sorted(ltsb) != sorted(cty) != list(range(1, seats + 1)):
         raise RuntimeError(
@@ -5367,7 +5468,7 @@ def member_pages(spec, districts, county):
             page = fetch(url)
         except Exception as e:      # noqa: BLE001 - one page never fails the county
             print("  note %-12s district %s page unfetched (%s)"
-                  % (county, key, e), file=sys.stderr)
+                  % (county, key, why_unfetched(e)), file=sys.stderr)
             continue
         flat = " ".join(html_lib.unescape(_TAG.sub(" ", page)).split())
         m = re.search(_MEMBER_HEADING % int(key), flat)
@@ -5615,8 +5716,8 @@ def ward_number_witness(fips, county, wards, seats, min_pairs=None, munis=None):
         if not feats:
             raise RuntimeError("no wards returned")
     except Exception as e:      # noqa: BLE001 - the witness, never the source
-        print("  WITNESS SKIPPED %-9s LTSB ward layer unreachable (%s) — the "
-              "roster ships unwitnessed this run" % (county, e), file=sys.stderr)
+        print("  WITNESS SKIPPED %-9s LTSB ward layer not read (%s) — the "
+              "roster ships unwitnessed this run" % (county, why_unfetched(e)), file=sys.stderr)
         return
     ltsb, types_by_name = {}, {}
     for f in feats:
@@ -5787,7 +5888,7 @@ def ward_number_witness(fips, county, wards, seats, min_pairs=None, munis=None):
                                   int(str(a.get("WARDID") or 0))))
         except Exception as e:      # noqa: BLE001 - the explanation, never the source
             print("  note    %-12s could not check whether the unmatched wards sit "
-                  "in a neighbouring county (%s)" % (county, e), file=sys.stderr)
+                  "in a neighbouring county (%s)" % (county, why_unfetched(e)), file=sys.stderr)
     across = [k for k in absent if k in crossing]
     nowhere = [k for k in absent if k not in crossing]
     if across:
@@ -7033,8 +7134,8 @@ def scrape_chippewa_directory(spec):
     try:
         raw = fetch(spec["witness_url"])
     except Exception as e:              # noqa: BLE001 - the witness, never the source
-        print("  WITNESS SKIPPED %-9s staff directory unreachable (%s) — the "
-              "roster ships on the board page alone this run" % (county, e),
+        print("  WITNESS SKIPPED %-9s staff directory not read (%s) — the "
+              "roster ships on the board page alone this run" % (county, why_unfetched(e)),
               file=sys.stderr)
     else:
         # MATCHED ON LETTERS AND DIGITS ALONE, in both directions. The two
@@ -7210,8 +7311,8 @@ def scrape_menominee_board(spec):
         try:
             own = dmi_flat(fetch(member["url"]))
         except Exception as e:          # noqa: BLE001 - the witness, never the source
-            print("  note %-12s %s's own page unreachable (%s) — unwitnessed this "
-                  "run" % (county, member["name"], e), file=sys.stderr)
+            print("  note %-12s %s's own page not read (%s) — unwitnessed this "
+                  "run" % (county, member["name"], why_unfetched(e)), file=sys.stderr)
             continue
         said_name, said_ward = MN_OWN_NAME.search(own), MN_OWN_WARD.search(own)
         if not (said_name and said_ward):
@@ -7285,8 +7386,8 @@ def municipality_name_witness(fips, county, texts, seats):
         if not feats:
             raise RuntimeError("no wards returned")
     except Exception as e:          # noqa: BLE001 - the witness, never the source
-        print("  WITNESS SKIPPED %-9s LTSB ward layer unreachable (%s) — the "
-              "roster ships unwitnessed this run" % (county, e), file=sys.stderr)
+        print("  WITNESS SKIPPED %-9s LTSB ward layer not read (%s) — the "
+              "roster ships unwitnessed this run" % (county, why_unfetched(e)), file=sys.stderr)
         return
     ltsb = {}
     for f in feats:
@@ -8149,8 +8250,8 @@ def scrape_sawyer_directory(spec):
         comp = fetch(spec["composition_url"])
     except Exception as e:      # noqa: BLE001 - the witness, never the source
         print("  WITNESS SKIPPED %-9s the Supervisory Districts page is "
-              "unreachable (%s) — the roster ships unwitnessed this run"
-              % (county, e), file=sys.stderr)
+              "not read (%s) — the roster ships unwitnessed this run"
+              % (county, why_unfetched(e)), file=sys.stderr)
         comp = None
     if comp:
         flat = re.sub(r"(?i)<br\s*/?>|</(p|div|li)>", "\n", comp)
@@ -8341,8 +8442,8 @@ def scrape_florence_board(spec):
         board = FL_MEMBER_BLOCK.search(fetch(spec["board_url"]))
     except Exception as e:      # noqa: BLE001 - the witness, never the source
         print("  WITNESS SKIPPED %-9s the County Board committee page is "
-              "unreachable (%s) — the roster ships without its third surface "
-              "this run" % (county, e), file=sys.stderr)
+              "not read (%s) — the roster ships without its third surface "
+              "this run" % (county, why_unfetched(e)), file=sys.stderr)
         board = None
     if board:
         # THE NAMES ARE ANCHOR TEXTS INSIDE TABLE CELLS, not lines: a first
@@ -9228,8 +9329,8 @@ def _oconto_profiles(cards, county, base):
         try:
             page = fetch(urllib.parse.urljoin(base, url))
         except Exception as e:          # noqa: BLE001 - contact, never the roster
-            print("  note %-12s district %d profile unreachable (%s) — no phone "
-                  "this run" % (county, district, e), file=sys.stderr)
+            print("  note %-12s district %d profile not read (%s) — no phone "
+                  "this run" % (county, district, why_unfetched(e)), file=sys.stderr)
             continue
         title = OC_TITLE.search(page)
         named = html_lib.unescape(title.group(1)) if title else ""
@@ -9333,8 +9434,8 @@ def _ward_witness(fips, county, wards, seats):
         if not feats:
             raise RuntimeError("no wards returned")
     except Exception as e:      # noqa: BLE001 - the witness, never the source
-        print("  WITNESS SKIPPED %-9s LTSB ward layer unreachable (%s) — the "
-              "roster ships unwitnessed this run" % (county, e), file=sys.stderr)
+        print("  WITNESS SKIPPED %-9s LTSB ward layer not read (%s) — the "
+              "roster ships unwitnessed this run" % (county, why_unfetched(e)), file=sys.stderr)
         return
     ltsb = {}
     for f in feats:
@@ -9554,7 +9655,7 @@ def attach_profiles(page, list_url, districts, county):
             profile = fetch(links[d])
         except Exception as e:      # noqa: BLE001 - one page never fails the county
             print("  note %-12s district %s: profile page unreadable (%s)"
-                  % (county, d, e), file=sys.stderr)
+                  % (county, d, why_unfetched(e)), file=sys.stderr)
             continue
         block = PROFILE_BLOCK.search(profile)
         block = block.group(1) if block else ""
@@ -9879,8 +9980,8 @@ def main():
                     districts, read_from = got
                 source_url = src
         except Exception as e:      # noqa: BLE001 - one county never fails the run
-            failures.append("%s (%s): %s" % (name, fips, e))
-            print("  MISS %-12s %s" % (name, e), file=sys.stderr)
+            failures.append("%s (%s): %s" % (name, fips, why_unfetched(e)))
+            print("  MISS %-12s %s" % (name, why_unfetched(e)), file=sys.stderr)
             continue
         counties[fips] = {"county": name, "seats": seats, "source_url": source_url,
                           "scraped_at": scraped_at, "read_from": read_from,
@@ -9940,6 +10041,12 @@ def main():
              + len(FRAMED_TABLE_COUNTIES) + len(SINGLE_COUNTY_CARRIERS), total,
              ", %d county/counties missed" % len(failures) if failures else ""),
           file=sys.stderr)
+    # A DELAY HONOURED IN SILENCE CANNOT BE TOLD FROM ONE THAT IS SKIPPED, which
+    # is how #944 shipped five bare `ROBOTS_PACER.hold(url)` calls — a context
+    # manager never entered — while its own PR body said four hosts were paced.
+    # The Iowa chair scrape prints this for the same reason.
+    for line in ROBOTS_PACER.report():
+        print(line, file=sys.stderr)
 
 
 if __name__ == "__main__":
