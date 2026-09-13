@@ -1,0 +1,95 @@
+# districtry
+
+> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. Six instances across Illinois, Wisconsin, Iowa, Michigan, New York City and San Francisco. Every boundary and every name comes from a government publisher and is cited to it.
+
+Free, no account, no tracking of individuals. The map runs in the browser; what each page sends to whom is listed at https://districtry.com/privacy.html.
+
+## The whole site
+
+- [districtry](https://districtry.com/): the front door. Type an address and it opens whichever instance covers it, with the point already selected; a point nobody covers is told so rather than routed somewhere wrong.
+- [Privacy](https://districtry.com/privacy.html)
+- [Sponsorship](https://districtry.com/sponsorship.html)
+- [Traffic report](https://districtry.com/traffic.html)
+
+## Illinois
+
+91 counties. Wards, county boards, police districts and beats, school zones, judicial subcircuits, and the people who hold those seats.
+
+- [Illinois district lookup](https://districtry.com/il/): 40 layers, 91 counties.
+- [Who is my county commissioner?](https://districtry.com/il/county-board.html): links a page per county, 75 of them, each naming every member with whatever contact details that county publishes.
+- [What Chicago police district am I in?](https://districtry.com/il/police-district.html)
+- [What precinct am I in?](https://districtry.com/il/precinct.html)
+- [Which Chicago school board district am I in?](https://districtry.com/il/school-board.html)
+- [Sources & data layers](https://districtry.com/il/sources.html)
+- [Who is my alderman? Chicago wards](https://districtry.com/il/ward.html)
+- [Chicago district questions](https://districtry.com/il/faq.html)
+- [History](https://districtry.com/il/history.html)
+
+## New York City
+
+Boroughs, City Council and community districts, NYPD precincts and sectors, school zones, and the state and federal seats above them.
+
+- [New York City district lookup](https://districtry.com/ny/): 27 layers, 5 boroughs.
+- [What community board am I in?](https://districtry.com/ny/community-board.html)
+- [What Council district am I in?](https://districtry.com/ny/council-district.html)
+- [Sources & data layers](https://districtry.com/ny/sources.html)
+- [NYC district questions](https://districtry.com/ny/faq.html)
+
+## San Francisco
+
+Supervisor districts, neighborhoods, police districts, school attendance areas, and the state and federal seats above them.
+
+- [San Francisco district lookup](https://districtry.com/ca/): 16 layers, 1 city.
+- [Sources & data layers](https://districtry.com/ca/sources.html)
+- [What supervisor district am I in?](https://districtry.com/ca/supervisor-district.html)
+- [SF district questions](https://districtry.com/ca/faq.html)
+
+## Wisconsin
+
+County boards, circuit courts, wards and aldermanic districts across all 72 counties — clerk to Court of Appeals — plus school districts, cities, villages and towns, and the Assembly, Senate and U.S. House seats, and who holds those.
+
+- [Wisconsin district lookup](https://districtry.com/wi/): 31 layers, all 72 counties.
+- [Who is my county supervisor?](https://districtry.com/wi/county-board.html): links a page per county, 72 of them, each naming every member with whatever contact details that county publishes.
+- [Sources & data layers](https://districtry.com/wi/sources.html)
+- [Wisconsin district questions](https://districtry.com/wi/faq.html)
+- [History](https://districtry.com/wi/history.html)
+
+## Iowa
+
+All 99 counties: supervisor districts with each county's own election plan, townships and cities, school districts, ZIP codes and post offices — and the Iowa Senate, House and U.S. House seats, and who holds those.
+
+- [Iowa district lookup](https://districtry.com/ia/): 20 layers, all 99 counties.
+- [Who is my county supervisor?](https://districtry.com/ia/county-supervisor.html): links a page per county, 17 of them, each naming every member with whatever contact details that county publishes.
+- [Sources & data layers](https://districtry.com/ia/sources.html)
+- [Common questions about Iowa districts](https://districtry.com/ia/faq.html)
+- [History](https://districtry.com/ia/history.html)
+
+## Michigan
+
+All 83 counties: commissioner districts, compiled by the state from the plan each county's apportionment commission files — plus townships and charter townships, cities and villages, school districts, and the Michigan Senate, House and U.S. House seats, and who holds those.
+
+- [Michigan district lookup](https://districtry.com/mi/): 15 layers, all 83 counties.
+- [County commissioner district lookup](https://districtry.com/mi/county-commissioner.html)
+- [Sources & data layers](https://districtry.com/mi/sources.html)
+- [Michigan district questions](https://districtry.com/mi/faq.html)
+- [History](https://districtry.com/mi/history.html)
+
+## Where the answers come from
+
+Each instance's sources page carries one row per layer: what it answers, the publisher its boundary comes from, where the names on its card come from, and the ground it answers on. That page is generated from the same list that registers the layers, so a layer cannot ship without a row.
+
+Officeholder names are never guessed. Where no verifiable roster exists, a card links the official body instead of inventing a name, and what the project does not know is recorded rather than left blank — each instance ships a machine-readable list of its own gaps at `<instance>/data/app/coverage-gaps.json`.
+
+Sources last reverified September 11, 2026.
+
+This is a civic reference tool and it disclaims legal precision. Confirm a district assignment with the government office that draws it before relying on it for anything official.
+
+## Terms
+
+`https://districtry.com/robots.txt` publishes a Content-Signal, and these are the values in it: ai-input=yes, ai-train=no, search=yes, use=reference.
+
+In plain words: indexing and search are welcome, and so is grounding an answer in these pages, on the terms the signal names — by reference, with a link back to the page that names the person, so a reader can check the government source behind it. Training is reserved. No crawler is disallowed by name: a site that wants its answers found does not gain anything by refusing the clients that find them.
+
+The boundaries and rosters are public records from the publishers each sources page names; this project's own work is the collection, the citation and the code.
+
+Corrections: corrections@overberg.co. Source: https://github.com/ThursdaysFamous/districtry

@@ -65,6 +65,7 @@ python3 scripts/build_privacy_page.py --check
 python3 scripts/build_history_page.py --check
 python3 scripts/build_manifests.py --check
 python3 scripts/build_county_pages.py --check            # the 164 per-county board pages (il 75, wi 72, ia 17) vs their rosters, the 60 workflows that rewrite one, and any county roster no adapter reads
+python3 scripts/build_llms_txt.py --check                 # /llms.txt vs the fleet it describes; its page set comes from sitemap.xml, so it cannot name a page that is not there
 python3 scripts/build_sitemap.py --check                 # sitemap.xml PARSES as XML, and every page's lastmod matches its last commit (regenerate with no flag; a page you have edited but not committed dates today, so the order you run it in no longer matters). A parse FAIL means no crawler can read any of it — that is what a double hyphen in its header comment did on 2026-09-12.
 python3 scripts/validate_favicon.py
 python3 scripts/validate_shell_continuations.py
@@ -83,7 +84,7 @@ python3 scripts/build_press_list.py --check                # PRESS_LIST.md vs pr
 python3 scripts/validate_doc_counts.py                    # "N layers" in prose vs the worksheets
 python3 scripts/validate_doc_counts.py --selftest         # pattern C reads the one real "N for <instance>" count and not the four sentences sharing its shape
 python3 scripts/validate_serp_lengths.py                  # every page's title and description fit a search result
-python3 scripts/robots_policy.py --selftest                # the one robots.txt reader against three saved files, and the per-host Crawl-delay pacer: one queue per delay-stating site, `www.` folded, others parallel
+python3 scripts/robots_policy.py --selftest                # the one robots.txt reader against three saved files AND this site's own (its Content-Signal must parse: search=yes, ai-input=yes, ai-train=no, use=reference), plus the per-host Crawl-delay pacer: one queue per delay-stating site, `www.` folded, others parallel
 python3 scripts/probe_user_agents.py --selftest           # read_robots() over stub responses: the robots-read path --probe depends on
 python3 scripts/probe_user_agents.py --check              # user-agent measurements vs the tree; retired brands; unmeasured browser-string files
 python3 wi/scripts/build_wi_circuit_court_roster.py --selftest      # the circuit-court name join: three recoveries, and the collisions it must refuse

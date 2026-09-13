@@ -697,19 +697,59 @@ def _selftest():
     check(list(pacer.honoured) == ["paced.example"],
           "pacer: reported the wrong set of honoured sites (%s)" % pacer.honoured)
 
+    # THIS PROJECT'S OWN robots.txt, read by this same reader. Everything above
+    # measures how districtry reads other people's files; districtry publishes
+    # one too, and on 2026-09-13 it started carrying the Content-Signal line —
+    # search=yes, ai-input=yes, ai-train=no, use=reference — which is the same
+    # reading it already applied to Sheboygan's. A line this reader cannot
+    # parse is a reservation of rights that says nothing, and nothing else in
+    # the repo looks at this file: validate_card_links.py scans *.html, and
+    # build_sitemap.py does not list robots.txt. So the assertions are here.
+    own = os.path.join(os.path.dirname(here), "robots.txt")
+    if not os.path.exists(own):
+        check(False, "districtry's own robots.txt is not in the tree at %s" % own)
+    else:
+        with open(own, encoding="utf-8") as f:
+            mine = RobotsPolicy(f.read())
+        want = {"search": "yes", "ai-input": "yes", "ai-train": "no",
+                "use": "reference"}
+        check(mine.catch_all_group_count() == 1,
+              "own robots.txt: expected exactly one `*` group, found %d — a second "
+              "one would change what the signal says to whoever the first does "
+              "not name" % mine.catch_all_group_count())
+        # Each agent separately, because the bug this guards is a group that
+        # names one client and silently drops the signal for the rest.
+        for who in (ua, "Googlebot", "Bingbot", "ClaudeBot", "GPTBot", "CCBot",
+                    "Google-Extended", "anthropic-ai", "meta-externalagent"):
+            check(mine.content_signal(who) == want,
+                  "own robots.txt: %s must read the full signal, got %r"
+                  % (who, mine.content_signal(who)))
+            check(mine.allows(who, "/il/county-board/lasalle.html"),
+                  "own robots.txt: %s must be allowed to fetch a county board "
+                  "page — no crawler is disallowed by name here, and a page "
+                  "published to be found cannot be withheld from the clients "
+                  "that find it" % who)
+        check(mine.allows(ua, "/llms.txt"),
+              "own robots.txt: /llms.txt must be fetchable — it is the guide "
+              "this file points at")
+
     if failures:
         for f in failures:
             print("robots_policy --selftest: FAIL — " + f, file=sys.stderr)
         sys.exit(1)
-    print("robots_policy --selftest: OK — 3 fixtures + the pacer, %d assertions"
-          % _count_checks())
+    print("robots_policy --selftest: OK — 3 fixtures + this site's own "
+          "robots.txt + the pacer, %d assertions" % _count_checks())
 
 
 def _count_checks():
     # The number of check() calls above; kept as a literal so the OK line
     # cannot claim a count the code does not make. 48 on the three saved
-    # robots.txt files, 5 on the pacer.
-    return 53
+    # robots.txt files, 5 on the pacer, and 20 on this site's own robots.txt
+    # (one structural, nine agents x two, plus /llms.txt). COUNTED BY RUNNING
+    # IT rather than by reading the source: the file-missing check() is a call
+    # in the source that the normal path never executes, and a first draft of
+    # this literal said 74 for exactly that reason.
+    return 73
 
 
 if __name__ == "__main__":
