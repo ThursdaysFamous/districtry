@@ -352,6 +352,44 @@ def script_paths():
     return out
 
 
+def file_urls(text):
+    """Every URL a file names, with adjacent string literals JOINED.
+
+    URL_RE runs over the raw text and stops at a quote, so a URL written as
+    two adjacent literals —
+
+        "<scheme>://www.chicago.gov/city/en/depts/dcd/supp_info/"
+        "special_service_areasandproviderlist.html"
+
+    — contributed only its first half, a bare directory. Python's own parser
+    joins adjacent literals into one Constant, so the AST pass below sees the
+    whole address. The regex pass is kept because it also reads comments,
+    which the AST does not carry, and the two are unioned.
+
+    A FRAGMENT IS NOT AN ADDRESS. A regex match that is a proper prefix of a
+    joined literal, and is not itself a whole literal anywhere in the file, is
+    the first half of a split and is dropped — otherwise it would stay a
+    candidate and could still be chosen. Found by #928 (2026-09-12): that
+    directory answers 403 from Apache to every client, so the probe reported
+    www.chicago.gov `all-refused` while the page the scraper reads is a plain
+    token refusal.
+    """
+    regex_found = {m.group(0).rstrip(".,;:%") for m in URL_RE.finditer(text)}
+    try:
+        tree = ast.parse(text)
+    except SyntaxError:
+        return sorted(regex_found)
+    ast_found = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Constant) and isinstance(node.value, str):
+            for m in URL_RE.finditer(node.value):
+                ast_found.add(m.group(0).rstrip(".,;:%"))
+    urls = ast_found | regex_found
+    return sorted(u for u in urls
+                  if u in ast_found
+                  or not any(o != u and o.startswith(u) for o in ast_found))
+
+
 def build_inventory():
     """{host: {"urls": {url: [file]}, "callers": {file: kind}}}"""
     hosts = {}
@@ -360,8 +398,7 @@ def build_inventory():
         with open(path, encoding="utf-8", errors="replace") as f:
             text = f.read()
         kind = ua_kind(text, path)
-        for m in URL_RE.finditer(text):
-            url = m.group(0).rstrip(".,;:%")
+        for url in file_urls(text):
             try:
                 host = (urllib.parse.urlsplit(url).hostname or "").lower()
             except ValueError:
@@ -398,6 +435,17 @@ def choose_url(entry):
     it everywhere, but a path-level refusal answers 200 at the root, and a probe
     that asked only for the root would report "the token works" about the one
     address where it does not.
+
+    A PAGE OVER A DIRECTORY, even a page with a query string, and only then
+    the shorter path. The first rank ended on the shortest path, so a bare
+    directory (a path ending in `/`) outranked the page beneath it, and a
+    directory that denies everyone read as a host that denies the token
+    (#928, 2026-09-12). A directory literal is usually the base a scraper
+    composes its real requests from; the page or the `?f=json` request is
+    what the host actually answers. Shortest-path stays as the tie-break
+    among pages. Re-ranking moved the choice on 60 of the 290 measured hosts,
+    37 of which had been measured at the first half of a split literal; all
+    60 were re-probed on 2026-09-13 (see the per-row `measured`).
     """
     cands = [u for u in entry["urls"] if not re.search(r"%[sd]|[{<]", u)]
     if not cands:
@@ -405,9 +453,11 @@ def choose_url(entry):
 
     def rank(url):
         split = urllib.parse.urlsplit(url)
-        root = (split.path or "/") in ("", "/")
-        return (split.scheme != "https", root, bool(split.query),
-                len(split.path or "/"), url)
+        path = split.path or "/"
+        root = path in ("", "/")
+        directory = not root and path.endswith("/")
+        return (split.scheme != "https", root, directory, bool(split.query),
+                len(path), url)
 
     return sorted(cands, key=rank)[0]
 
@@ -641,9 +691,36 @@ def run_probe(args):
                   % (done, len(subject), row["verdict"], row["host"],
                      row.get("note", "")[:110]), file=sys.stderr)
 
-    merged = {}
+    prior = None
     if args.merge and os.path.exists(ARTIFACT):
-        merged = json.load(open(ARTIFACT))["hosts"]
+        prior = json.load(open(ARTIFACT))
+    payload = merge_measurements(prior, results, datetime.date.today().isoformat(),
+                                 full_sweep=not (args.hosts or args.limit))
+    with open(ARTIFACT, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=1, sort_keys=False)
+        f.write("\n")
+    print("\nprobe: wrote %s (%d host(s))" % (os.path.relpath(ARTIFACT, ROOT),
+                                              len(payload["hosts"])), file=sys.stderr)
+    for verdict, n in sorted(payload["summary"].items(), key=lambda kv: -kv[1]):
+        print("  %-28s %4d" % (verdict, n), file=sys.stderr)
+    return 0
+
+
+def merge_measurements(prior, results, today, full_sweep):
+    """The artifact to write: this run's rows over the prior artifact's.
+
+    A ONE-HOST RUN IS NOT A SWEEP. The first version stamped `today` on the
+    top-level `measured` on every write and rebuilt the payload from scratch,
+    so probing one host re-dated 290 rows it never asked and dropped
+    `callers_refreshed`, the date --refresh-callers records (#928, 2026-09-12;
+    it shipped nothing false only because the artifact already carried that
+    day's date). Now every row this run probed carries its own `measured`,
+    the top-level `measured` is the date of the last FULL sweep and moves only
+    on one, and every other top-level key of the prior artifact is carried
+    forward. A row with no `measured` of its own was measured on the top-level
+    date — the shape every row had before this.
+    """
+    merged = dict(prior["hosts"]) if prior else {}
     for host, row in results.items():
         # A HOST THIS PROBE RATE-LIMITED IS NOT A HOST THAT REFUSES US. Rerunning
         # a subset turned www.wcgl.org from a 50 KB page into four 429s, which is
@@ -654,13 +731,12 @@ def run_probe(args):
                 and row["verdict"] not in ("token-ok",)
                 and "429" in row.get("note", "")):
             before["note"] += ("; a re-probe on %s was rate-limited (429) — this "
-                               "probe's own load, not a change of policy"
-                               % datetime.date.today().isoformat())
+                               "probe's own load, not a change of policy" % today)
             continue
-        merged[host] = row
-
-    payload = {
-        "measured": datetime.date.today().isoformat(),
+        merged[host] = dict(row, measured=today)
+    payload = dict(prior) if prior else {}
+    payload.update({
+        "measured": today if (full_sweep or not prior) else prior["measured"],
         "vantage": vantage(),
         "tokens": {"self": UA_ROSTER_BOT, "browser": UA_CHROME_WIN_126},
         "subject": ("every host reached by a script that sends a browser string; "
@@ -668,15 +744,8 @@ def run_probe(args):
                     "question and are not probed"),
         "summary": tally(merged),
         "hosts": dict(sorted(merged.items())),
-    }
-    with open(ARTIFACT, "w", encoding="utf-8") as f:
-        json.dump(payload, f, indent=1, sort_keys=False)
-        f.write("\n")
-    print("\nprobe: wrote %s (%d host(s))" % (os.path.relpath(ARTIFACT, ROOT),
-                                              len(merged)), file=sys.stderr)
-    for verdict, n in sorted(payload["summary"].items(), key=lambda kv: -kv[1]):
-        print("  %-28s %4d" % (verdict, n), file=sys.stderr)
-    return 0
+    })
+    return payload
 
 
 def tally(hosts):
@@ -773,6 +842,22 @@ def check(args):
     for rel, ua_string in retired_brand_user_agents():
         problems.append("%s sends a retired brand as its user-agent: %r — say districtry"
                         % (rel, ua_string[:70]))
+    # THE ARTIFACT'S OWN TOKENS ARE A USER-AGENT POSITION TOO. This scan read
+    # files only, so `tokens.self` went on saying chidistricts.com roster bot
+    # for two days past #886's rename, with --check green (#928, 2026-09-12).
+    # A token that is not retired but is no longer the one the constant sends
+    # is a NOTE: the measurement was taken with the old string and stands
+    # until a sweep re-takes it.
+    tokens = payload.get("tokens") or {}
+    for which, ua_string in sorted(tokens.items()):
+        if ua_string and RETIRED_BRAND_RE.search(ua_string):
+            problems.append("the artifact's tokens.%s carries a retired brand: %r — "
+                            "re-run --probe, or set it to the string now sent"
+                            % (which, ua_string[:70]))
+    if tokens.get("self") and tokens["self"] != UA_ROSTER_BOT:
+        notes.append("the artifact's tokens.self (%r) is not the token now sent (%r); "
+                     "its verdicts were measured with the old string"
+                     % (tokens["self"][:60], UA_ROSTER_BOT[:60]))
 
     for host, row in sorted(recorded.items()):
         if host not in inventory:
@@ -828,9 +913,16 @@ def check(args):
         for line in problems:
             print("user-agent probe: FAIL — %s" % line, file=sys.stderr)
         return 1
-    print("user-agent probe: OK — %d host(s) measured %s from %s; %d subject "
-          "host(s) in the tree" % (len(recorded), payload["measured"],
-                                   payload["vantage"].split(",")[0], len(subject)))
+    later = sorted({r["measured"] for r in recorded.values()
+                    if r.get("measured") and r["measured"] > payload["measured"]})
+    print("user-agent probe: OK — %d host(s) measured %s from %s%s; %d subject "
+          "host(s) in the tree"
+          % (len(recorded), payload["measured"], payload["vantage"].split(",")[0],
+             (", %d re-measured since (latest %s)"
+              % (sum(1 for r in recorded.values()
+                     if r.get("measured", payload["measured"]) > payload["measured"]),
+                 later[-1])) if later else "",
+             len(subject)))
     return 0
 
 
@@ -1005,11 +1097,61 @@ def selftest():
     policy, _delay, _note = read_robots(lambda *a, **k: (200, served, {}, "u"), ua, "https", "h.example")
     if policy.allows(ua["User-Agent"], "/private/x") or not policy.allows(ua["User-Agent"], "/public/x"):
         failures.append("served policy did not apply its Disallow: /private/ rule")
+
+    # file_urls(): a URL split across adjacent literals is one address, and
+    # its first half is not a second one; a whole literal that is a prefix of
+    # another whole literal stays.
+    # (The fixtures are built from "%s://" so that this file's own literals
+    # are not addresses in the inventory it audits.)
+    h = "%s://" % "https"
+    split = ('SOURCE = ("' + h + 'www.example.gov/city/en/depts/"\n'
+             '          "providerlist.html")\n'
+             'BASE = "' + h + 'api.example.gov/v1/x.json"\n'
+             'Q = "' + h + 'api.example.gov/v1/x.json?$limit=5"\n'
+             '# see ' + h + 'docs.example.gov/notes/\n')
+    got = file_urls(split)
+    want = [h + "api.example.gov/v1/x.json", h + "api.example.gov/v1/x.json?$limit=5",
+            h + "docs.example.gov/notes/", h + "www.example.gov/city/en/depts/providerlist.html"]
+    if got != want:
+        failures.append("file_urls: got %r, want %r" % (got, want))
+    # choose_url(): a page beats a directory beats the root; among pages the
+    # shorter path still wins.
+    entry = {"urls": {h + "h.example/": [], h + "h.example/a/b/": [],
+                      h + "h.example/a/b/page.html": [], h + "h.example/a/deeper/x.html": []}}
+    if choose_url(entry) != h + "h.example/a/b/page.html":
+        failures.append("choose_url: chose %r" % choose_url(entry))
+    entry = {"urls": {h + "h.example/": [], h + "h.example/a/b/": []}}
+    if choose_url(entry) != h + "h.example/a/b/":
+        failures.append("choose_url: a directory should still beat the root, chose %r"
+                        % choose_url(entry))
+    entry = {"urls": {h + "h.example/rest/services/": [], h + "h.example/rest/services/X/MapServer/1?f=json": []}}
+    if choose_url(entry) != h + "h.example/rest/services/X/MapServer/1?f=json":
+        failures.append("choose_url: a query page should beat a directory, chose %r"
+                        % choose_url(entry))
+    # merge_measurements(): a subset run keeps the sweep date and the callers
+    # date and dates only the rows it probed; a full sweep re-dates the top.
+    prior = {"measured": "2026-09-12", "callers_refreshed": "2026-09-12",
+             "hosts": {"a.example": {"host": "a.example", "verdict": "token-ok", "callers": {}},
+                       "b.example": {"host": "b.example", "verdict": "token-ok", "callers": {}}}}
+    row = {"host": "b.example", "verdict": "token-refused", "note": "HTTP 403", "callers": {}}
+    out = merge_measurements(prior, {"b.example": row}, "2026-09-20", full_sweep=False)
+    if (out["measured"] != "2026-09-12" or out.get("callers_refreshed") != "2026-09-12"
+            or out["hosts"]["b.example"].get("measured") != "2026-09-20"
+            or "measured" in out["hosts"]["a.example"]
+            or out["summary"] != {"token-ok": 1, "token-refused": 1}):
+        failures.append("merge_measurements (subset): %r" % {k: out[k] for k in ("measured", "callers_refreshed", "summary")})
+    out = merge_measurements(prior, {"b.example": row}, "2026-09-20", full_sweep=True)
+    if out["measured"] != "2026-09-20" or out.get("callers_refreshed") != "2026-09-12":
+        failures.append("merge_measurements (full sweep): measured %r, callers_refreshed %r"
+                        % (out["measured"], out.get("callers_refreshed")))
+    if merge_measurements(None, {"b.example": row}, "2026-09-20", full_sweep=False)["measured"] != "2026-09-20":
+        failures.append("merge_measurements: a first artifact must carry today's date")
     if failures:
         for line in failures:
             print("probe --selftest: FAIL — %s" % line, file=sys.stderr)
         return 1
-    print("probe --selftest: OK — read_robots() over 7 stub responses")
+    print("probe --selftest: OK — read_robots() over 7 stub responses; file_urls, "
+          "choose_url and merge_measurements over 8 cases")
     return 0
 
 
