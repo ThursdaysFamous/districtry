@@ -213,8 +213,12 @@ const TARGET_EXCEPTIONS = [
     page: "/traffic.html", sel: "rect.hitcol", date: "2026-09-13",
     exception: "Equivalent",
     reason: "the daily chart's per-day hit columns, 13.2px wide at 1280 and " +
-            "4.7px at 390 and necessarily touching — a 51-day chart cannot give " +
-            "each day 24px without showing fewer days. 2.5.8's Equivalent " +
+            "4.7px at 390 and necessarily touching — a chart of a two-month " +
+            "window cannot give each day 24px without showing fewer days. The " +
+            "two widths are re-measured above and hold whatever the day count; " +
+            "the day count itself was in this reason and moved the first time " +
+            "the window did (51 to 62 on 2026-09-14), so it is not stated. " +
+            "2.5.8's Equivalent " +
             "exception applies rather than Essential: the same numbers are on " +
             "the same page in the `View as table` disclosure below the chart, " +
             "whose rows are full-width.",
