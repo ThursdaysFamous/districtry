@@ -58,8 +58,10 @@ MIN_PAGEVIEWS = 1
 
 TIMEOUT = 60
 
-# The dashboard HTML of the last session(), kept for --explore to look at.
+# The dashboard HTML of the last session(), kept for --explore to look at,
+# and whether the last widget said its list was cut short.
 DASH = []
+MORE = []
 
 
 def token():
@@ -128,9 +130,15 @@ def widget(s, n, total, start, end, **extra):
         note = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", body)).strip()
         sys.exit("widget %s: HTTP %d — %s" % (n, r.status_code, note[:400]))
     try:
-        return r.json().get("html", "")
+        body = r.json()
     except ValueError:
         sys.exit("widget %s: not JSON (%d bytes)" % (n, len(r.content)))
+    # "more" is the widget saying its list is cut short. It is carried out of
+    # here rather than dropped, because a truncated list that looks complete
+    # is how a total silently stops adding up.
+    MORE.clear()
+    MORE.append(bool(body.get("more")))
+    return body.get("html", "")
 
 
 def window():
@@ -259,6 +267,7 @@ def collect(s, total, start, end):
 
     page_rows = pages(widget(s, 0, total, start, end, max=mx,
                              filter="is:pageview"))
+    pages_truncated = MORE and MORE[0]
     event_rows = pages(widget(s, 0, total, start, end, max=mx,
                               filter="is:event"))
     layer_rows = pages(widget(s, 0, total, start, end, max=mx, filter="layer/"))
@@ -272,7 +281,24 @@ def collect(s, total, start, end):
         "top_events": top(event_rows, 20),
         "layers": top(layer_rows, 20),
         "instances": split_by_instance(page_rows),
+        "pages_truncated": bool(pages_truncated),
     }
+    # THE INSTANCE BARS MUST SUM TO THE PAGEVIEW TOTAL, and they are counted
+    # two different ways: the total off the totals widget, the split off the
+    # pages list. The pages list is capped, so a few pageviews on the long
+    # tail are in the first and not the second — 9 of 1,232 when this was
+    # written. That difference is a row of its own rather than a rounding
+    # nobody sees, and a LARGE one is an error rather than a tail.
+    attributed = sum(r["count"] for r in out["instances"])
+    residual = out["pageviews"] - attributed
+    if residual < 0 or residual > max(20, out["pageviews"] // 20):
+        sys.exit("the instance split does not reconcile: %d pageviews in the "
+                 "totals widget, %d attributed from the pages list. A cap on "
+                 "the list explains a small positive difference and nothing "
+                 "explains this one." % (out["pageviews"], attributed))
+    if residual:
+        out["instances"].append({"key": "(not in the pages list)",
+                                 "count": residual})
     for n, name in [(2, "referrers"), (3, "campaigns"), (4, "browsers"),
                     (5, "systems"), (6, "locations"), (7, "languages"),
                     (8, "sizes")]:
