@@ -1433,6 +1433,27 @@ that taught them — the wording is Illinois's because Illinois paid for them. *
 the cross-state synthesis**; this section is the county-work detail behind it, and where
 the two overlap Part 5 is the shorter statement of the same rule.
 
+- **WHEN A NEW SOURCE HOST LANDS IN THE TREE, RE-CHECK THE UNSERVED COUNTIES AGAINST
+  IT.** Henderson's gap record said "no map data for the county exists anywhere public"
+  and was accurate on the day it was written (2026-08-03, re-measured 2026-08-20). It went
+  stale on 2026-09-01, when the two McDonough builders began reading `gis.wiu.edu` — the
+  WIU GIS Center, a REGIONAL provider serving six west-central counties, Henderson among
+  them with a fourteen-layer service of its own. Nobody re-checked the frontier against the
+  new host, so for a fortnight the app told readers a county had no public map data while
+  this repo was already reading that county's GIS server for its neighbour. The check costs
+  one request per unserved county and belongs in the same change that adds the host, not in
+  a later sweep. The same move found the corroboration that made Henderson's build stronger
+  than its siblings': the county's own Townships layer, which no other county on the
+  census-fabric route has had. **A HOST IS A FLEET FACT, NOT ONE COUNTY'S.**
+
+- **A COUNTY THAT PUBLISHES A FULL GIS MAY STILL PUBLISH NO ELECTORAL GEOMETRY, AND THE
+  TWO ARE MEASURED SEPARATELY.** Henderson's service carries parcels, townships, zoning,
+  roads and three emergency-service tilings and NOT ONE board district or precinct —
+  confirmed four ways rather than one: the service's layer list, the viewer's own config,
+  the server's whole directory, and the ArcGIS Online catalogue. "The county has a GIS" and
+  "the county publishes its districts" are different claims; a record that runs them
+  together will be wrong in one direction or the other.
+
 - **A COUNTY THAT PUBLISHES ITS PARCEL LAYER UNDER A DISTRICT'S NAME HAS PUBLISHED THE
   DISTRICT.** Ask this before writing any county off for want of a boundary layer, and ask
   it of the PARCEL layer specifically — the sweep that misses it is the one that searches a

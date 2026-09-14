@@ -784,6 +784,20 @@ METRO_COUNTY_FIPS = ("031", "043", "197", "097", "089", "111", "093",
                      # enclosed alone and Fayette-Marion as a pair. READ THE
                      # RING COUNT FROM --check, NEVER FROM A MAP IN YOUR HEAD.
                      "025",
+                     # Henderson (17071) — the 92nd county, 2026-09-14, and the
+                     # first joined on a route that read NOTHING the county
+                     # publishes. Its own domain is parked and no results vendor
+                     # carries it, but ISBE's certified per-precinct results
+                     # cover all 102 counties, and Henderson's thirteen precinct
+                     # names are identical there across the 2022 General, the
+                     # 2024 General and the 2026 General Primary. The Jasper
+                     # test passes 13/13 with NO alias and the population
+                     # identity is exact at 6,387. It fills its own NOTCH —
+                     # Mercer, Warren and Hancock all serve and its western edge
+                     # is the Mississippi, the Iowa state line — so no successor
+                     # OUTSIDE anchor is called for. READ THE RING COUNT FROM
+                     # --check, NEVER FROM A MAP IN YOUR HEAD.
+                     "071",
                      # judicial-subcircuit secondary counties (see below)
                      "005", "083", "061", "137", "171")
 STATE_FIPS = "17"
@@ -944,6 +958,17 @@ DISPATCH_COUNTY_FIPS = {
     # precinct card would overstate what is known
     # (scripts/build_clay_boundaries.py).
     "clay": "025",
+    # Henderson joins 2026-09-14 as a PRECINCT-ONLY dispatch entry, the 92nd
+    # county — thirteen precincts, the Census 2020 voting-district fabric one
+    # for one under the names ISBE's certified per-precinct results give in the
+    # 2022 General, the 2024 General and the 2026 General Primary alike. NO
+    # BOARD ENTRY AND NO COUNTY-CARD ROW: the county's domain is parked, no
+    # results publisher carries its canvasses, and ISBE's archive holds no
+    # county board contest at any election, so nothing reachable names its
+    # members or proves how they are elected (gap henderson-county-website).
+    # Johnson and Perry set this shape — a county joining on precincts alone
+    # with its own site never read (scripts/build_vtd_precincts.py).
+    "henderson": "071",
 }
 # ==== TEMPLATE:END outline-county-config ====
 
@@ -1243,6 +1268,13 @@ INSIDE = {
     # this move is the guard doing its job: the build failed until it was
     # promoted. Oquawka (Henderson) inherits the western frontier.
     "Monmouth (Warren)": (40.9114, -90.6473),
+    # Oquawka (Henderson) — the county seat, 2026-09-14. It held a place in the
+    # OUTSIDE list from Warren's join on 2026-08-21, written to prove the fill
+    # stopped at Henderson's line; the county then joined on its PRECINCTS with
+    # its website never read, and the guard failed the build until this point
+    # was promoted. Henderson's own recorded gap is still open — nothing
+    # reachable names its board — which is why it joins on precincts alone.
+    "Oquawka (Henderson)": (40.9339, -90.9484),
     # Toledo (Cumberland) — the county seat, 2026-08-21, the 63rd dispatched
     # county. It held a place in the OUTSIDE list from Coles's join on
     # 2026-08-17, written to prove the fill stopped at Cumberland's line; four
@@ -1430,12 +1462,6 @@ OUTSIDE = {
     # anchor is what proves the notch stays unwashed; the ring count is read
     # from --check, never reasoned about here.
     "Lawrenceville (Lawrence)": (38.7263, -87.6873),
-    # Oquawka (Henderson) — the successor Warren's join calls for. Warren left
-    # the OUTSIDE list on 2026-08-21 when its own board page and precinct-map
-    # legend turned out to be reachable all along; Henderson is the honest
-    # frontier it leaves behind, bordering Warren and served by nothing, and its
-    # own recorded gap is that its published web address leads to a holding page.
-    "Oquawka (Henderson)": (40.9339, -90.9484),
     # Newton (Jasper) — the successor anchor Cumberland's join calls for
     # (2026-08-21). Cumberland left exactly one unserved neighbour behind and
     # this is it, and Jasper is a MEASURED frontier rather than an unexamined
