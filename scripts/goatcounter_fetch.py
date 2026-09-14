@@ -48,6 +48,9 @@ WIDGETS = {0: "pages", 1: "totals", 2: "referrers", 3: "campaigns",
 
 TIMEOUT = 60
 
+# The dashboard HTML of the last session(), kept for --explore to look at.
+DASH = []
+
 
 def token():
     raw = os.environ.get("GOAT_COUNTER", "").strip()
@@ -86,6 +89,7 @@ def session(tok, start, end):
               params={"period-start": start, "period-end": end})
     if r.status_code != 200:
         sys.exit("dashboard for %s..%s: HTTP %d" % (start, end, r.status_code))
+    DASH.append(r.text)
     m = re.search(r'js-total-utc"?>([\d,]+)<', r.text)
     if not m:
         sys.exit("dashboard: no js-total-utc in %d bytes. The dashboard's "
@@ -107,9 +111,12 @@ def widget(s, n, total, start, end, **extra):
         # GoatCounter's error page is mostly stylesheet; the message is the
         # only part worth printing, and the URL is never printed because the
         # token is in the session rather than in it.
-        note = re.sub(r"<[^>]+>", " ", r.text)
-        note = re.sub(r"\s+", " ", note)
-        sys.exit("widget %s: HTTP %d — %s" % (n, r.status_code, note[-300:]))
+        # GoatCounter's error page is mostly stylesheet; the message sits
+        # after the last </style>, which is why the first version of this
+        # printed CSS and said nothing.
+        body = r.text.rsplit("</style>", 1)[-1]
+        note = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", body)).strip()
+        sys.exit("widget %s: HTTP %d — %s" % (n, r.status_code, note[:400]))
     try:
         return r.json().get("html", "")
     except ValueError:
@@ -125,6 +132,12 @@ def window():
 def explore(s, total, start, end):
     """Print the shape of each response. Prints no URL — the token is in it."""
     print("period total (js-total-utc): %d" % total)
+    # The dashboard's own widget containers say what each index is and what
+    # the page's script passes when it loads them.
+    print("\n--- dashboard widget containers ---")
+    for m in re.findall(r"<div[^>]*data-widget[^>]*>", DASH[0])[:14]:
+        print("  " + m[:200])
+
     # WHICH INDEX IS WHICH IS NOT ASSUMED. The index is a position in the
     # dashboard's own widget list, so it is read off each widget's own heading
     # rather than taken from a table written somewhere else.
