@@ -57,7 +57,11 @@ WINDOW_DAYS = 62
 MIN_IMPRESSIONS = 1
 
 TIMEOUT = 120
-DATE_RE = re.compile(r"^/Date\((-?\d+)([+-]\d{4})\)/$")
+# Microsoft's samples all show an offset — /Date(1316156400000-0700)/ — and
+# the live API sends none: measured 2026-09-14, every row came back as
+# /Date(1784073600000)/, a bare UTC midnight, which the offset-required form
+# refused. The offset is optional here and absent means UTC.
+DATE_RE = re.compile(r"^/Date\((-?\d+)(?:([+-]\d{4}))?\)/$")
 
 
 def key():
@@ -95,10 +99,12 @@ def day(value):
     if not m:
         sys.exit("unparseable date from Bing: %r" % (value,))
     ms, off = int(m.group(1)), m.group(2)
-    sign = 1 if off[0] == "+" else -1
-    delta = datetime.timedelta(hours=int(off[1:3]), minutes=int(off[3:5]))
     moment = datetime.datetime.fromtimestamp(ms / 1000.0, datetime.timezone.utc)
-    return (moment + sign * delta).date().isoformat()
+    if off:
+        sign = 1 if off[0] == "+" else -1
+        moment += sign * datetime.timedelta(hours=int(off[1:3]),
+                                            minutes=int(off[3:5]))
+    return moment.date().isoformat()
 
 
 def window():
@@ -156,6 +162,12 @@ def main():
     start, end = window()
 
     sites = call("GetUserSites", apikey)
+    # Print the whole list, verified or not. The rename means two properties
+    # are expected and a missing one is a fact about Bing Webmaster Tools
+    # rather than about this script, so it has to be visible in the log.
+    for site in sites:
+        print("property %s — verified=%s"
+              % (site.get("Url"), site.get("IsVerified")))
     verified = [s["Url"] for s in sites if s.get("IsVerified")]
     if not verified:
         sys.exit("no verified Bing Webmaster properties for this key (%d "
