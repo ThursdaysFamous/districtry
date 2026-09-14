@@ -20,11 +20,13 @@ on:
   schedule:
     - cron: "45 13 * * *" # daily, quarter of an hour after the Search Console fetch
   workflow_dispatch: {}
-  # TEMPORARY, DELETE BEFORE MERGE. The same device update-search-performance.yml
-  # used to prove itself before merging: a workflow that has never run is a
-  # workflow nobody has tested, and the secret it needs exists only here.
-  push:
-    branches: [claude/goat-counter-data-access-g5ycax]
+  # A branch-scoped `push:` trigger stood here so this workflow could prove
+  # itself before merging, the device update-search-performance.yml used. It
+  # ran on 2026-09-14, fetched real data and committed it, and is removed as
+  # that workflow's own comment asks. It also demonstrated why it cannot stay:
+  # the file carries a `fetched` timestamp, so every run changes it, so every
+  # run commits, and a commit pushed as BOT_PR_TOKEN (a PAT, unlike
+  # GITHUB_TOKEN) triggers the next run. Two runs in, it was looping.
 
 permissions:
   contents: write
