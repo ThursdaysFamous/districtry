@@ -635,6 +635,24 @@ jobs:
       - name: Iowa officer display names and the party name-join
         run: python3 ia/scripts/build_ia_county_officers.py --selftest
 
+      # BOTH HALVES OF THIS GATE FAIL SILENTLY AND LOOK RIGHT, which is why it
+      # needs a test rather than a reading. A fetch that asks robots.txt AFTER
+      # requesting the page prints exactly the same log line as one that asks
+      # first; and HostPacer.hold is a @contextmanager, so `ROBOTS_PACER.hold(url)`
+      # called bare builds a context manager, discards it, applies no delay and
+      # records nothing -- the run then reports "no host this run stated one"
+      # while a site that asked for 10 s got none. So the self-test replaces
+      # requests.get with a recorder and asks the two questions a log cannot:
+      # did a refused URL reach it at all, and are two fetches of a
+      # delay-stating host actually spaced. Eight cases on verdicts seeded from
+      # rp.classify, no network. requests is a module-scope import of the
+      # scraper, pinned as the weekly workflow pins it, so the step does not
+      # depend on an earlier one having installed it.
+      - name: Iowa supervisor scrape asks robots.txt before it fetches, and paces what asks
+        run: |
+          pip install -c ia/scripts/requirements.txt requests
+          python3 ia/scripts/ia_supervisor_district_scraper.py --selftest
+
       # The parcel-fabric builder repairs invalid geometry before it writes, and
       # its repair had four branches nothing exercised. One of them was wrong
       # for as long as it existed: `dropped` was `len(parts) - len(polys)`,
