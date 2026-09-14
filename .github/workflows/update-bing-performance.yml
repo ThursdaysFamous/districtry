@@ -1,0 +1,74 @@
+name: Update Bing search performance
+
+# Daily fetch of Bing Webmaster Tools performance into
+# data/bing-search-performance.json, the second half of the search picture the
+# traffic report draws. The Google half is update-search-performance.yml and
+# this follows it in every respect that matters:
+#
+#   * the credential is a repo secret, which exists only inside a job, so the
+#     fetch runs here and the committed JSON is the handoff;
+#   * it commits to main rather than opening a PR, because this is aggregate
+#     counts about this project's own search results with nobody's name in it,
+#     and a daily PR for a numbers refresh is noise that trains the eye to skim.
+#
+# Bing's own cadence is what sets the schedule: GetRankAndTrafficStats is
+# documented as updating daily, GetQueryStats and GetPageStats weekly, so a
+# daily run keeps the traffic series current and re-reads the other two at no
+# extra cost.
+
+on:
+  schedule:
+    - cron: "45 13 * * *" # daily, quarter of an hour after the Search Console fetch
+  workflow_dispatch: {}
+  # A branch-scoped `push:` trigger stood here so this workflow could prove
+  # itself before merging, the device update-search-performance.yml used. It
+  # ran on 2026-09-14, fetched real data and committed it, and is removed as
+  # that workflow's own comment asks. It also demonstrated why it cannot stay:
+  # the file carries a `fetched` timestamp, so every run changes it, so every
+  # run commits, and a commit pushed as BOT_PR_TOKEN (a PAT, unlike
+  # GITHUB_TOKEN) triggers the next run. Two runs in, it was looping.
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bing-performance
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      # BOT_PR_TOKEN for the push at the end, for the reason spelled out in
+      # update-search-performance.yml: the "Protect main branch" ruleset
+      # requires a pull request on the default branch and github-actions[bot]
+      # is not a bypass actor, so a plain checkout dies at the push with GH013
+      # while the fetch itself works.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: pip install -c scripts/requirements.txt requests
+
+      - name: Fetch Bing Webmaster performance
+        env:
+          BING_API_KEY: ${{ secrets.BING_API_KEY }}
+        run: python3 scripts/bing_fetch.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Stage first, then diff the INDEX: `git diff --quiet -- <path>`
+          # compares the working tree against HEAD and does not see an
+          # untracked file, so on the first run — the one where this file does
+          # not exist yet — it reports "no change" and commits nothing.
+          git add data/bing-search-performance.json
+          if git diff --cached --quiet -- data/bing-search-performance.json; then
+            echo "no change"
+            exit 0
+          fi
+          git commit -m "Update Bing search performance data"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
