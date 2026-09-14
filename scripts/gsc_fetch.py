@@ -43,9 +43,16 @@ SCOPES = ["https://www.googleapis.com/auth/webmasters.readonly"]
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                    "data", "search-performance.json")
 
-# Before the site existed (launch 2026-07-10), so the API clamps to whatever
-# each property actually holds and the start date is measured, not assumed.
-START = "2026-06-01"
+# A ROLLING TWO MONTHS, stated in days because months are not all the same
+# length, and the same window scripts/goatcounter_fetch.py and
+# scripts/bing_fetch.py use. It was a fixed 2026-06-01 until 2026-09-14, which
+# was fine while nothing but a total was read off it and wrong once the traffic
+# report drew a query table: the per-query rows carry NO DATE, so a file
+# covering three and a half months cannot be clipped to the report's two, and
+# the card would have counted searches from outside its own window. Each
+# property's real first and last day are still recorded per property, measured
+# rather than assumed — the API clamps to whatever that property holds.
+WINDOW_DAYS = 62
 PAGE = 25000          # the API's own per-request ceiling
 MAX_ROWS = 100000     # sanity stop; this site is nowhere near it
 
@@ -96,7 +103,9 @@ def series(rows, key="keys"):
 def main():
     creds = credentials()
     headers = {"Authorization": "Bearer %s" % creds.token}
-    end = (datetime.date.today() - datetime.timedelta(days=1)).isoformat()
+    end = datetime.date.today() - datetime.timedelta(days=1)
+    start = (end - datetime.timedelta(days=WINDOW_DAYS - 1)).isoformat()
+    end = end.isoformat()
 
     r = requests.get("%s/sites" % API, headers=headers, timeout=60)
     if r.status_code != 200:
@@ -116,10 +125,10 @@ def main():
                      "domain still surfaces in results and redirects across."),
         "fetched": datetime.datetime.now(datetime.timezone.utc)
                            .strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "window": {"start": START, "end": end},
+        "window": {"start": start, "end": end, "days": WINDOW_DAYS},
         "properties": {},
     }
-    window = {"startDate": START, "endDate": end}
+    window = {"startDate": start, "endDate": end}
     total_impressions = 0
 
     for site in sorted(sites):
