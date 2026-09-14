@@ -73,11 +73,19 @@ def session(tok, start, end):
     """
     s = requests.Session()
     s.headers["User-Agent"] = "districtry-traffic/1.0 (+https://districtry.com/)"
-    r = s.get(SITE + "/", timeout=TIMEOUT, params={
-        "access-token": tok, "period-start": start, "period-end": end})
+    # TWO REQUESTS, NOT ONE. The share link redirects once to set its cookie,
+    # and a redirect drops the query string with it — asked for a period in the
+    # same request as the token, the dashboard answered its DEFAULT period's
+    # total (561 against a two-month window, measured 2026-09-14). Authenticate
+    # first, then ask the authenticated session for the period.
+    r = s.get(SITE + "/", timeout=TIMEOUT, params={"access-token": tok})
     if r.status_code != 200:
         sys.exit("dashboard: HTTP %d — the share token may have been rotated "
                  "or revoked." % r.status_code)
+    r = s.get(SITE + "/", timeout=TIMEOUT,
+              params={"period-start": start, "period-end": end})
+    if r.status_code != 200:
+        sys.exit("dashboard for %s..%s: HTTP %d" % (start, end, r.status_code))
     m = re.search(r'js-total-utc"?>([\d,]+)<', r.text)
     if not m:
         sys.exit("dashboard: no js-total-utc in %d bytes. The dashboard's "
@@ -96,7 +104,12 @@ def widget(s, n, total, start, end, **extra):
                    "group": "day", "total": total}, **extra)
     r = s.get(SITE + "/load-widget", params=params, timeout=TIMEOUT)
     if r.status_code != 200:
-        sys.exit("widget %s: HTTP %d" % (n, r.status_code))
+        # GoatCounter's error page is mostly stylesheet; the message is the
+        # only part worth printing, and the URL is never printed because the
+        # token is in the session rather than in it.
+        note = re.sub(r"<[^>]+>", " ", r.text)
+        note = re.sub(r"\s+", " ", note)
+        sys.exit("widget %s: HTTP %d — %s" % (n, r.status_code, note[-300:]))
     try:
         return r.json().get("html", "")
     except ValueError:
@@ -112,20 +125,26 @@ def window():
 def explore(s, total, start, end):
     """Print the shape of each response. Prints no URL — the token is in it."""
     print("period total (js-total-utc): %d" % total)
-    calls = [(1, "totals", {}), (1, "totals is:pageview", {"filter": "is:pageview"}),
-             (0, "pages", {}), (0, "pages is:event", {"filter": "is:event"}),
-             (0, "pages layer/", {"filter": "layer/"}),
-             (0, "pages is:pageview", {"filter": "is:pageview"}),
-             (2, "referrers", {}), (3, "campaigns", {}), (4, "browsers", {}),
-             (5, "systems", {}), (6, "locations", {})]
-    for n, name, extra in calls:
+    # WHICH INDEX IS WHICH IS NOT ASSUMED. The index is a position in the
+    # dashboard's own widget list, so it is read off each widget's own heading
+    # rather than taken from a table written somewhere else.
+    for n in range(10):
+        try:
+            html = widget(s, n, total, start, end)
+        except SystemExit as e:
+            print("widget %d: %s" % (n, str(e)[:160]))
+            continue
+        head = re.search(r"<h2>([^<]*)", html)
+        print("widget %d: %-16s %d bytes" % (n, (head.group(1).strip()
+                                                 if head else "?"), len(html)))
+
+    for n, name, extra in [(2, "referrers", {}), (4, "browsers", {}),
+                           (6, "locations", {})]:
         html = widget(s, n, total, start, end, **extra)
         body = re.sub(r"[ \t]*\n[ \t\n]*", "\n", html).strip()
-        # Drop the header block; what matters is the rows under it.
         cut = body.find("</div>")
-        rows = body[cut + 6:] if cut > 0 else body
-        print("\n--- widget %d (%s): %d bytes ---" % (n, name, len(html)))
-        print(rows[:900])
+        print("\n--- widget %d (%s) rows ---" % (n, name))
+        print((body[cut + 6:] if cut > 0 else body)[:700])
 
 
 def main():
