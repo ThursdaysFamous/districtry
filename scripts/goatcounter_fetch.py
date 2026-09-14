@@ -26,6 +26,7 @@ it is cookieless, stores no identifier, and every number here is a count.
 
 import argparse
 import datetime
+import html as html_lib
 import json
 import os
 import re
@@ -129,6 +130,47 @@ def window():
     return start.isoformat(), end.isoformat()
 
 
+def series(html):
+    """The daily counts out of a totals widget.
+
+    The series is not in the markup as rows — it is the chart's own
+    data-stats attribute, an HTML-escaped JSON list of
+    {day, hourly[], daily, ...}. Reading the attribute is exact where
+    scraping a chart's <rect>s would be an estimate.
+    """
+    m = re.search(r'data-stats="([^"]*)"', html)
+    if not m:
+        raise SystemExit("totals widget carries no data-stats; the dashboard's "
+                         "markup has changed — run --explore.")
+    stats = json.loads(html_lib.unescape(m.group(1)))
+    return {row["day"]: row.get("daily", 0) for row in stats}
+
+
+def rows(html):
+    """The (key, label, count) rows out of a horizontal-bar widget.
+
+    data-key is the value; the .cutoff span is what a reader sees, and the two
+    differ where GoatCounter resolves a code to a name (US -> United States).
+    The count is the LAST col-count span, because the first carries the
+    percentage, and its thousands separator is a narrow no-break space rather
+    than a comma.
+    """
+    out = []
+    for block in re.split(r'(?=<div class="[^"]*" data-key=)', html)[1:]:
+        key = re.search(r'data-key="([^"]*)"', block)
+        label = re.search(r'<span class="cutoff">([^<]*)</span>', block)
+        counts = re.findall(r'<span class="col-count">([^<]*)</span>', block)
+        if not key or not counts:
+            continue
+        digits = re.sub(r"[^\d]", "", counts[-1])
+        if not digits:
+            continue
+        out.append({"key": html_lib.unescape(key.group(1)),
+                    "label": html_lib.unescape(label.group(1)) if label else None,
+                    "count": int(digits)})
+    return out
+
+
 def explore(s, total, start, end):
     """Print the shape of each response. Prints no URL — the token is in it."""
     print("period total (js-total-utc): %d" % total)
@@ -150,14 +192,6 @@ def explore(s, total, start, end):
         head = re.search(r"<h2>([^<]*)", html)
         print("widget %d: %-16s %d bytes" % (n, (head.group(1).strip()
                                                  if head else "?"), len(html)))
-
-    for n, name, extra in [(2, "referrers", {}), (4, "browsers", {}),
-                           (6, "locations", {})]:
-        html = widget(s, n, total, start, end, **extra)
-        body = re.sub(r"[ \t]*\n[ \t\n]*", "\n", html).strip()
-        cut = body.find("</div>")
-        print("\n--- widget %d (%s) rows ---" % (n, name))
-        print((body[cut + 6:] if cut > 0 else body)[:700])
 
 
 def main():
