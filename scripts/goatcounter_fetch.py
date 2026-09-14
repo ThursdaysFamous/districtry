@@ -180,18 +180,21 @@ def explore(s, total, start, end):
     for m in re.findall(r"<div[^>]*data-widget[^>]*>", DASH[0])[:14]:
         print("  " + m[:200])
 
-    # WHICH INDEX IS WHICH IS NOT ASSUMED. The index is a position in the
-    # dashboard's own widget list, so it is read off each widget's own heading
-    # rather than taken from a table written somewhere else.
-    for n in range(10):
-        try:
-            html = widget(s, n, total, start, end)
-        except SystemExit as e:
-            print("widget %d: %s" % (n, str(e)[:160]))
-            continue
-        head = re.search(r"<h2>([^<]*)", html)
-        print("widget %d: %-16s %d bytes" % (n, (head.group(1).strip()
-                                                 if head else "?"), len(html)))
+    # WIDGET 0 WANTS A max. It answered HTTP 400 with its own reason —
+    # '"max" query parameter wrong: strconv.Atoi: parsing ""' — and the value
+    # is the busiest day in the period, which the totals widget publishes as
+    # its chart's data-max.
+    html = widget(s, 1, total, start, end)
+    mx = re.search(r'data-max="(\d+)"', html).group(1)
+    print("data-max: %s" % mx)
+    for name, extra in [("pages", {"filter": "is:pageview"}),
+                        ("events", {"filter": "is:event"}),
+                        ("layers", {"filter": "layer/"}),
+                        ("/il", {"filter": "/il"})]:
+        h = widget(s, 0, total, start, end, max=mx, **extra)
+        body = re.sub(r"[ \t]*\n[ \t\n]*", "\n", h).strip()
+        print("\n--- widget 0 %s: %d bytes ---" % (name, len(h)))
+        print(body[:1100])
 
 
 def main():

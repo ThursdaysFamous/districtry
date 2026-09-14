@@ -1,0 +1,67 @@
+name: Update traffic data
+
+# Daily fetch of the fleet's GoatCounter dashboard into
+# data/goatcounter-traffic.json, which the traffic report reads when it
+# rebuilds.
+#
+# WHY THIS EXISTS AT ALL. Until 2026-09-14 this fetch was done by an agent
+# session that held the dashboard share token in a GOAT_COUNTER environment
+# variable and rebuilt its fetch and build scripts from scratch each week. On
+# 2026-09-14 the variable was not in the session, the scratch scripts had been
+# reclaimed, and the refresh could not run — with the token sitting in the
+# repository secrets the whole time. A credential that lives in the repository
+# belongs to a workflow: this runs on a schedule nobody has to remember, and
+# the committed JSON is the handoff to whatever draws the chart.
+#
+# It commits to main rather than opening a PR, for the reason
+# update-search-performance.yml gives: aggregate counts about this project's
+# own traffic, nobody's name in them, and a daily PR for a numbers refresh is
+# noise that trains the eye to skim.
+
+on:
+  schedule:
+    - cron: "15 14 * * *" # daily, after the two search fetches
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: traffic-data
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      # BOT_PR_TOKEN so the push at the end is allowed: the "Protect main
+      # branch" ruleset requires a pull request on the default branch and
+      # github-actions[bot] is not a bypass actor, so a plain checkout dies at
+      # the push with GH013 while the fetch itself works.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: pip install -c scripts/requirements.txt requests
+
+      - name: Fetch the GoatCounter dashboard
+        env:
+          GOAT_COUNTER: ${{ secrets.GOAT_COUNTER }}
+        run: python3 scripts/goatcounter_fetch.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Stage first, then diff the index: `git diff --quiet -- <path>` does
+          # not see an untracked file, so on the first run it would report "no
+          # change" and commit nothing.
+          git add data/goatcounter-traffic.json
+          if git diff --cached --quiet -- data/goatcounter-traffic.json; then
+            echo "no change"
+            exit 0
+          fi
+          git commit -m "Update traffic data"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
