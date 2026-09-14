@@ -340,6 +340,32 @@
             "address": "20904 Grade School Rd",
             "city": "Caledonia IL 61011"
           }
+        },
+        "Cherry Valley Fire Protection District": {
+          "board": [
+            {
+              "name": "Karl Ericksen",
+              "role": "President"
+            },
+            {
+              "name": "Steve Schwartz",
+              "role": "Secretary"
+            }
+          ],
+          "comptrollerCode": "101/020/06",
+          "filedFor": "2025",
+          "filesIn": "Winnebago",
+          "heads": [
+            {
+              "name": "Bill LeFevre",
+              "role": "Treas./Admin."
+            }
+          ],
+          "office": {
+            "address": "4919 Blackhawk Road",
+            "city": "Rockford IL 61109",
+            "phone": "(815) 332-5382"
+          }
         }
       }
     },
@@ -5693,7 +5719,7 @@
             }
           ],
           "comptrollerCode": "049/040/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Ray Larson",
@@ -5702,7 +5728,7 @@
           ],
           "office": {
             "address": "500 waukegan rd",
-            "city": "Deerfield IL 60015",
+            "city": "deerfield IL 60015",
             "phone": "(847) 945-4066"
           }
         },
@@ -7853,7 +7879,7 @@
             }
           ],
           "comptrollerCode": "037/080/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Henry",
           "heads": [
             {
@@ -9304,7 +9330,7 @@
       }
     }
   },
-  "generated": "2026-09-11T10:59:00Z",
+  "generated": "2026-09-14T18:21:57Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
