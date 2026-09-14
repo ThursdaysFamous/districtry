@@ -1435,10 +1435,16 @@
         "note": "Hardin County coverage outline — the coverage test for the county's county-precinct dispatch entry, and what puts the county inside the coverage ring. It shipped on 2026-08-04 as gap-location geometry only, from the pass-13 detached-counties sweep, and was promoted on 2026-08-23 when Hardin joined ON ITS PRECINCTS: its board is elected countywide, so there is no district geometry to seek, and its roster stays unshipped because the county's own web domain is a parking lander on both hosts."
       },
       {
+        "file": "henderson-precincts.json",
+        "min_features": 13,
+        "max_features": 13,
+        "note": "Henderson County's thirteen voting precincts, and the first county in the fleet joined on a route that read NOTHING the county itself publishes: its domain is PARKED, no results vendor carries its canvasses (pollresults returns the fabricated-county shell, accessliberty 404s, GBS does not enumerate it, platinum carries it at no id across five election slugs, Clarity 404s), and ISBE's per-precinct archive holds no county board contest at any election. What ISBE DOES hold is certified per-precinct results for all 102 counties, and Henderson's thirteen precinct names are identical there in the 2022 General, the 2024 General and the 2026 General Primary. The geometry is the Census 2020 voting-district fabric, one for one, with NO alias — rare on this route — summing to the county's exact 6,387. A THIRD witness of a kind no other county built this way has had: the WIU GIS Center publishes Henderson's own Townships layer, and its eleven names match the thirteen precincts' base names exactly both ways (Gladstone and Oquawka are each split in two) AND, dissolved to base name, their shared boundaries agreeing at a mean IoU of 0.9977 (minimum 0.9961) against the shipped polygons, which is digitisation drift between two independently drawn layers rather than a disagreement. So a county-published source checks the geometry and not only the names. Bounds are an EQUALITY because that is the county's whole precinct list. No polling place and no roster ship, and the card carries no board-district row because nothing reachable proves how the board is elected."
+      },
+      {
         "file": "henderson-county-outline.json",
         "min_features": 1,
         "max_features": 1,
-        "note": "Henderson County outline — gap-location geometry only, not a dispatched county. Added by the pass-10 frontier sweep (2026-08-03) so its gap entry attaches to ground.",
+        "note": "Henderson County outline. Gap-location geometry from the pass-10 frontier sweep (2026-08-03) until the county JOINED on 2026-09-14 as the 92nd; the outline now gates its county-precinct dispatch entry, which resolves it by slug through countyOutlineCoverage rather than naming a loader. Henderson still carries a gap as well, because nothing reachable names its board.",
         "dynamic_reference": true
       },
       {
@@ -3250,7 +3256,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-il-shell-v31",
+    "cache_name": "districtry-il-shell-v32",
     "shell_urls": [
       "./",
       "./sources.html",

@@ -27,8 +27,15 @@ return as CSV (scripts/isbe_precinct_fabric.py reads the same archive as a
 re-precincting tripwire). That file is the COUNTY'S canvass, published by the
 state, so it is a county source and not a state one. TWO WITNESSES PER COUNTY:
 the 2024 General (election 66) and the 2026 General Primary (election 69) name
-the same precincts in all eight counties here, so a name is never taken from a
-single ballot.
+the same precincts in all nine counties here, so a name is never taken from a
+single ballot. Henderson has a THIRD witness of a kind no other county on this
+route has had: the WIU GIS Center publishes the county's own Townships layer,
+and its eleven names match the thirteen precincts' base names exactly in both
+directions — Gladstone and Oquawka are each split in two. THE CHECK IS ON THE
+GEOMETRY AND NOT ONLY THE NAMES, and it is measured rather than asserted:
+dissolved to base name, the eleven township polygons agree with the shipped
+ones at a mean IoU of 0.9977, minimum 0.9961. That residue is digitisation
+drift between two independently drawn layers, the Richland sliver shape.
 
 SUB-PRECINCT REPORTING UNITS ARE NOT PRECINCTS. Massac reports ADKINS-17 and
 ADKINS-17B on the same canvass, five such pairs in 2024 and one in 2026, and its
@@ -295,6 +302,31 @@ COUNTIES = {
                   "one of its precincts could not carry one anyway: CLAY CITY "
                   "is split between districts A and B at the village limits, "
                   "which is a board-layer fact and is drawn there."),
+    },
+    "henderson": {
+        "fips": "071", "pop2020": 6387, "county": "Henderson County",
+        "precincts": (
+            "BALD BLUFF", "BIGGSVILLE", "CARMAN", "GLADSTONE 1", "GLADSTONE 2",
+            "LOMAX", "MEDIA", "OQUAWKA 1", "OQUAWKA 2", "RARITAN", "ROZETTA",
+            "STRONGHURST", "TERRE HAUTE"),
+        # No alias: the census fabric and the county's certified returns agree
+        # on all thirteen names exactly, which is rare on this route.
+        "aliases": {},
+        # WHAT IS AND IS NOT KNOWN ABOUT THIS BOARD, because the reader sees
+        # this sentence. Henderson's own domain is PARKED, no results vendor
+        # carries it (pollresults returns the fabricated-county shell,
+        # accessliberty 404s, GBS does not enumerate it, platinum carries it at
+        # no id across five election slugs, Clarity 404s), and ISBE's
+        # per-precinct archive carries no county board contest at any election
+        # — federal and statewide offices only. ISBE's 2007 county-board
+        # structure table says At-Large with eleven members, which matches four
+        # counties verified here by other means (Hamilton, Hardin, Hancock,
+        # Jackson) and was measured WRONG on Union in exactly this dimension.
+        # So the form is indicated and not proven, and this note claims
+        # neither. Gap henderson-county-website carries the whole measurement.
+        "board": ("Henderson County's board members are not carried: its own "
+                  "site is a parked domain and no election-results publisher "
+                  "carries its canvasses, so nothing reachable names them."),
     },
 }
 

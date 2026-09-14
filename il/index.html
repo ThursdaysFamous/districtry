@@ -11828,6 +11828,9 @@ function initChiExplorer() {
   var loadEdwardsPrecincts = makeCached(function () {
     return fetchJSONWithRetry("data/app/edwards-precincts.json", {}, 2);
   });
+  var loadHendersonPrecincts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/henderson-precincts.json", {}, 2);
+  });
   var loadMasonPrecincts = makeCached(function () {
     return fetchJSONWithRetry("data/app/mason-precincts.json", {}, 2);
   });
@@ -29408,6 +29411,11 @@ function initChiExplorer() {
         key: "edwards",
         county: "Edwards County",
         loader: loadEdwardsPrecincts
+      }),
+      vtdPrecinctEntry({
+        key: "henderson",
+        county: "Henderson County",
+        loader: loadHendersonPrecincts
       }),
       vtdPrecinctEntry({
         key: "mason",

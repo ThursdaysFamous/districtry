@@ -1937,6 +1937,7 @@ correspondence.
 
 ---
 
+
 ## Ask 24 — Waukesha Clerk of Circuit Court: not asked, because the county publishes it
 
 > **NOT ASKED — UNNECESSARY, 2026-09-12.** Nothing was drafted and nothing must be. The
@@ -2030,3 +2031,67 @@ A clean no is a good outcome and the draft says so.
 
 **Home addresses are not asked for and would not be used.** The directory prints one per
 supervisor and this project has never carried them.
+
+## Ask 26 — Henderson County Clerk: who is on the county board, and how are they elected?
+
+**Status: NOT YET ASKED — DRAFTED (2026-09-14).** Gap `henderson-county-website`.
+
+**To:** Amanda Van Arsdale, Henderson County Clerk & Recorder —
+`avanarsdale.coclerk@hendersoncountyil.gov`
+(307 Warren Street, PO Box 308, Oquawka, IL 61469 · (309) 867-2911)
+
+**Why this one is asked at all.** Henderson's thirteen precincts now ship, built without
+reading anything the county publishes: ISBE's certified per-precinct results name them and
+the Census 2020 voting districts draw them. The board is the one thing left, and every
+non-ask route to it is measured shut — `hendersoncountyil.gov` is a parked domain, no
+election-results publisher carries the county's canvasses, and ISBE's downloadable archive
+covers federal and statewide offices only, with no county board contest at any election.
+So this is not a question the county could have answered by publishing better; nothing
+reachable holds it.
+
+**A second recipient, if this one goes unanswered.** The WIU GIS Center
+(`wiu.edu/cas/gis_center`) hosts Henderson's county GIS and publishes McDonough's precincts
+AND board districts. It is a different office from the Clerk and worth trying for board
+DISTRICT geometry — but only if the answer below is "by district". It cannot answer who
+sits on the board, so it is not the first ask.
+
+---
+
+**Subject:** Henderson County Board — members, and whether they are elected county-wide
+
+Dear Ms Van Arsdale,
+
+I run districtry (https://districtry.com/il/), a free, non-commercial civic map. You click
+a point in Illinois and it tells you every district that covers it and who represents you
+there. It covers 92 counties, and Henderson joined this week.
+
+Henderson's thirteen precincts are now on the map — Bald Bluff, Biggsville, Carman,
+Gladstone 1 and 2, Lomax, Media, Oquawka 1 and 2, Raritan, Rozetta, Stronghurst and Terre
+Haute — drawn from the State Board of Elections' certified precinct-level results and the
+Census Bureau's 2020 voting districts.
+
+The county board is the one thing I cannot show, and I would rather leave it blank than
+guess. Two questions, and a one-line reply to each would be plenty:
+
+1. **Are your board members elected county-wide, or by district?**
+2. **Who currently sits on the board?** A list of names is all I need. If there is a
+   district or seat attached to each, that helps; if not, the names alone are useful.
+
+I have not been able to answer either from anything published. The address listed for the
+county in the state's clerk directory, hendersoncountyil.gov, leads to a holding page
+rather than a county site, and I could find no published election results for Henderson
+that include a county board contest.
+
+I am not asking for anything the county does not already have to hand, and **a reply
+saying the county would rather not provide this is a genuinely useful answer** — I will
+record it and stop asking. Nothing about how districtry works depends on my getting a yes.
+
+Anything you send is credited to the county on the page that shows it, and I do not
+publish home addresses or personal contact details for officeholders — office contact
+only, or nothing.
+
+With thanks for your time,
+
+<YOUR NAME>
+<YOUR E-MAIL>
+https://districtry.com/il/
