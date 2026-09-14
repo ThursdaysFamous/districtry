@@ -2662,7 +2662,7 @@ def vacant_districts(lines, seats, strategy="after"):
     return out
 
 
-def fetch_bytes(url, headers=None, timeout=45, attempts=4, allow_lax_tls=True):
+def fetch_bytes(url, headers=None, timeout=45, attempts=4):
     """Raw bytes plus THE URL THAT ANSWERED, which is not always the one asked.
 
     Kenosha's directory is addressed by a stable county page id that 302s to
@@ -2677,10 +2677,29 @@ def fetch_bytes(url, headers=None, timeout=45, attempts=4, allow_lax_tls=True):
     therefore waited out (a numeric Retry-After is honoured, capped, so a
     hostile value cannot hang CI); 403 and 404 are not, because a refusal or a
     moved page is not fixed by waiting.
+    TLS VERIFICATION IS NEVER DISABLED, and until 2026-09-13 it was, on every
+    request to every host. This function built a context with
+    `check_hostname = False` and `verify_mode = CERT_NONE` and retried each
+    attempt through it -- `for ctx in (None, lax)` -- so any failure on the
+    verified attempt was silently re-run unverified. CLAUDE.md's standing rule
+    is that verification is never turned off; the approved shape for a server
+    that omits its intermediate is the COLES one, which fetches the missing
+    issuer from the leaf's own AIA extension and PINS its SHA-256
+    (scripts/probe_incomplete_tls_chains.py reports the hash).
+
+    The `allow_lax_tls` parameter is gone rather than repaired. It was never
+    consulted inside the loop, so `fetch_archived`'s `allow_lax_tls=False` had
+    no effect and the flag read as a control while controlling nothing.
+
+    MEASURED BEFORE REMOVING, because a fallback that protects a real host is
+    not dead code. Every host this module names was asked with a strict context
+    on 2026-09-13: 75 completed TLS verification (63 answering 2xx/3xx, 12 a
+    4xx, which still means the certificate verified) and NONE failed it, so
+    there is no intermediate to pin. Two hosts could not be measured --
+    co.forest.wi.gov resets the connection and saukdomino.co.sauk.wi.us times
+    out -- and neither could have been helped anyway: both fail BELOW the
+    certificate layer, where CERT_NONE changes nothing.
     """
-    lax = ssl.create_default_context()
-    lax.check_hostname = False
-    lax.verify_mode = ssl.CERT_NONE
     # The caller's choice wins; headers_for decides only when it made none.
     # Until 2026-09-12 this line read `headers = HONEST_UA if host in
     # HONEST_UA_HOSTS else UA`, which discarded the argument — see the note
@@ -2697,7 +2716,7 @@ def fetch_bytes(url, headers=None, timeout=45, attempts=4, allow_lax_tls=True):
         raise RobotsRefused("%s: %s" % (url, why))
     last = None
     for attempt in range(attempts):
-        for ctx in (None, lax):
+        for ctx in (None,):
             try:
                 req = urllib.request.Request(url, headers=headers)
                 # `hold` is a CONTEXT MANAGER: a bare call builds the generator
@@ -3115,9 +3134,8 @@ def fetch_or_archive(url, fips, county, headers=None):
               % (county, live_error, stamp[:4], stamp[4:6], stamp[6:8]),
               file=sys.stderr)
         return page, "archive:" + stamp
-def fetch(url, headers=None, timeout=45, attempts=4, allow_lax_tls=True):
-    return fetch_bytes(url, headers, timeout, attempts,
-                       allow_lax_tls)[0].decode("utf-8", "replace")
+def fetch(url, headers=None, timeout=45, attempts=4):
+    return fetch_bytes(url, headers, timeout, attempts)[0].decode("utf-8", "replace")
 
 
 # COUNTIES WHOSE ROSTER RIDES THEIR OWN ARCGIS LAYER, NOT A PAGE. The
@@ -3883,37 +3901,54 @@ def _spn_save(url):
     switch on the SPN2 job API, which is the reliable path when a shared runner
     address has spent the anonymous quota. Absent keys are not an error.
 
-    Gated once for the whole function: every request it makes goes to
+    EVERY REQUEST IS GATED AND PACED, not one per function. This used to read
+    "gated once for the whole function: every request it makes goes to
     web.archive.org, so one read of that policy covers the SPN2 job calls and
-    the plain save alike.
+    the plain save alike", which conflates the HOST with the PATH: robots rules
+    are per-path, and this function asks for three different ones -- /save/<url>,
+    /save, and /save/status/<job>. A policy allowing the first and disallowing
+    the third would have passed that gate and then polled thirty times. The
+    pacer reached none of them either, only the GET below. Measured 2026-09-13,
+    web.archive.org serves no robots.txt at all (404, allow all) and is in
+    ROBOTS_PERMISSIVE_HOSTS besides, so nothing was actually fetched against a
+    refusal -- the reasoning was unsound rather than the behaviour.
     """
-    allowed, why = robots_says(WAYBACK_SAVE % url)
-    if not allowed:
-        raise RobotsRefused("%s: %s" % (WAYBACK_SAVE % url, why))
     key = os.environ.get("ARCHIVE_SPN_ACCESS_KEY")
     secret = os.environ.get("ARCHIVE_SPN_SECRET_KEY")
     if key and secret:
         try:
             data = urllib.parse.urlencode({"url": url}).encode()
+            job_url = "https://web.archive.org/save"
+            allowed, why = robots_says(job_url)
+            if not allowed:
+                raise RobotsRefused("%s: %s" % (job_url, why))
             req = urllib.request.Request(
-                "https://web.archive.org/save", data=data,
+                job_url, data=data,
                 headers=dict(ARCHIVE_UA, Accept="application/json",
                              Authorization="LOW %s:%s" % (key, secret)))
-            with urllib.request.urlopen(req, timeout=60) as r:
+            with ROBOTS_PACER.hold(job_url), \
+                    urllib.request.urlopen(req, timeout=60) as r:
                 job = json.load(r).get("job_id")
             if job:
+                status_url = "https://web.archive.org/save/status/" + job
+                allowed, why = robots_says(status_url)
+                if not allowed:
+                    raise RobotsRefused("%s: %s" % (status_url, why))
                 for _ in range(30):          # ~2.5 minutes, SPN2's own pace
                     time.sleep(5)
                     req = urllib.request.Request(
-                        "https://web.archive.org/save/status/" + job,
+                        status_url,
                         headers=dict(ARCHIVE_UA, Accept="application/json",
                                      Authorization="LOW %s:%s" % (key, secret)))
-                    with urllib.request.urlopen(req, timeout=30) as r:
+                    with ROBOTS_PACER.hold(status_url), \
+                            urllib.request.urlopen(req, timeout=30) as r:
                         st = json.load(r)
                     if st.get("status") == "success":
                         return st.get("timestamp")
                     if st.get("status") == "error":
                         break
+        except RobotsRefused:
+            raise
         except Exception as e:              # noqa: BLE001 - save is best-effort
             print("    SPN2 save failed (%s): %s" % (url, why_unfetched(e)), file=sys.stderr)
     try:
@@ -4005,7 +4040,9 @@ def fetch_archived(url):
             "Now did not take a fresh one — refusing to ship officeholders read "
             "from it" % (url, age, WAYBACK_MAX_AGE_DAYS))
     # verified TLS only: see fetch_bytes
-    page = fetch(WAYBACK_RAW % (ts, url), ARCHIVE_UA, allow_lax_tls=False)
+    # (this used to pass allow_lax_tls=False, which fetch_bytes never read;
+    # verification is now on for every host, so there is nothing to opt out of)
+    page = fetch(WAYBACK_RAW % (ts, url), ARCHIVE_UA)
     if BLOCK_PAGE.search(page):
         raise RuntimeError("the archived copy of %s is itself a block page (%s)"
                            % (url, ts))
