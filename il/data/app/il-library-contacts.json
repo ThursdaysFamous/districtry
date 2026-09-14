@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-11T13:52:08Z",
+  "generated": "2026-09-14T17:10:22Z",
   "libraries": {
     "A. Herr Smith & E.E. Smith Loda Township Library": {
       "address": "105 East Adams Street",
@@ -1299,10 +1299,6 @@
     },
     "Jonesboro Public Library": {
       "address": "412 South Main Street",
-      "admin": {
-        "name": "Cassandra Weisgerber",
-        "role": "Library Director"
-      },
       "city": "Jonesboro",
       "phone": "(618) 833-8121"
     },
@@ -1491,13 +1487,10 @@
       "url": "https://mackinawpubliclibrary.org/"
     },
     "Macomb Public Library District": {
-      "address": "235 South Lafayette Street",
       "admin": {
         "name": "Dennis Danowski",
         "role": "Library Staff"
-      },
-      "city": "Macomb",
-      "phone": "(309) 833-2714"
+      }
     },
     "Madison Public Library": {
       "address": "1700 Fifth Street",
