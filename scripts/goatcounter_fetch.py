@@ -44,8 +44,17 @@ WINDOW_DAYS = 62
 
 # The dashboard's widget indices, learned from the dashboard itself. These are
 # positional, not named, which is why --explore exists.
-WIDGETS = {0: "pages", 1: "totals", 2: "referrers", 3: "campaigns",
-           4: "browsers", 5: "systems", 6: "locations"}
+# The dashboard's widget indices, read off the dashboard's own containers and
+# each widget's own heading on 2026-09-14: 0 pages, 1 totals, 2 referrers,
+# 3 campaigns, 4 browsers, 5 systems, 6 locations, 7 languages, 8 sizes.
+# There is no widget 9; asking for one is an HTTP 500.
+
+# The day the Illinois app moved from "/" to "/il/" and the fleet landing page
+# took the root path.
+ROOT_MOVED = "2026-08-24"
+
+# A dashboard answering nothing is a revoked token, not a quiet two months.
+MIN_PAGEVIEWS = 1
 
 TIMEOUT = 60
 
@@ -171,36 +180,149 @@ def rows(html):
     return out
 
 
+def pages(html):
+    """The (path, title, count) rows out of the pages widget.
+
+    Different markup from the bar widgets: a table whose every row carries the
+    path as its id and the count as data-count, so nothing has to be read out
+    of a rendered number. The per-row chart's data-stats carries that path's
+    own daily series, which is what splits the root path at the rename.
+    """
+    out = []
+    for block in re.split(r'(?=<tr id=")', html)[1:]:
+        path = re.search(r'<tr id="([^"]*)"', block)
+        count = re.search(r'data-count="(\d+)"', block)
+        if not path or not count:
+            continue
+        title = re.search(r'<small class="page-title ?[^"]*">([^<]*)</small>',
+                          block)
+        row = {"path": html_lib.unescape(path.group(1)).strip(),
+               "title": html_lib.unescape(title.group(1)).strip() if title else None,
+               "count": int(count.group(1))}
+        try:
+            row["daily"] = series(block)
+        except SystemExit:
+            row["daily"] = {}
+        out.append(row)
+    return out
+
+
+def top(rows, n=10):
+    return [{k: v for k, v in r.items() if k != "daily"}
+            for r in sorted(rows, key=lambda r: -r["count"])[:n]]
+
+
+def fleet_tags():
+    with open(os.path.join(os.path.dirname(os.path.dirname(
+            os.path.abspath(__file__))), "metros.json"), encoding="utf-8") as f:
+        return [m["tag"] for m in json.load(f)["metros"] if m.get("tag")]
+
+
 def explore(s, total, start, end):
     """Print the shape of each response. Prints no URL — the token is in it."""
     print("period total (js-total-utc): %d" % total)
-    # The dashboard's own widget containers say what each index is and what
-    # the page's script passes when it loads them.
     print("\n--- dashboard widget containers ---")
     for m in re.findall(r"<div[^>]*data-widget[^>]*>", DASH[0])[:14]:
         print("  " + m[:200])
-
-    # WIDGET 0 WANTS A max. It answered HTTP 400 with its own reason —
-    # '"max" query parameter wrong: strconv.Atoi: parsing ""' — and the value
-    # is the busiest day in the period, which the totals widget publishes as
-    # its chart's data-max.
     html = widget(s, 1, total, start, end)
     mx = re.search(r'data-max="(\d+)"', html).group(1)
     print("data-max: %s" % mx)
-    for name, extra in [("pages", {"filter": "is:pageview"}),
-                        ("events", {"filter": "is:event"}),
-                        ("layers", {"filter": "layer/"}),
-                        ("/il", {"filter": "/il"})]:
-        h = widget(s, 0, total, start, end, max=mx, **extra)
-        body = re.sub(r"[ \t]*\n[ \t\n]*", "\n", h).strip()
-        print("\n--- widget 0 %s: %d bytes ---" % (name, len(h)))
-        print(body[:1100])
+    for n in range(10):
+        try:
+            h = widget(s, n, total, start, end, max=mx)
+        except SystemExit as e:
+            print("widget %d: %s" % (n, str(e)[:160]))
+            continue
+        head = re.search(r"<h2>([^<]*)", h)
+        print("widget %d: %-16s %d bytes" % (n, (head.group(1).strip()
+                                                 if head else "?"), len(h)))
+
+
+def collect(s, total, start, end):
+    """Everything the traffic report reads, in one pass over the dashboard."""
+    hits = widget(s, 1, total, start, end)
+    mx = re.search(r'data-max="(\d+)"', hits)
+    if not mx:
+        sys.exit("totals widget carries no data-max; run --explore.")
+    mx = mx.group(1)
+    hits, views = series(hits), series(
+        widget(s, 1, total, start, end, filter="is:pageview"))
+
+    daily = []
+    for date in sorted(hits):
+        pv = views.get(date, 0)
+        # Events are what is left of the hits once the pageviews are taken
+        # out: GoatCounter counts a layer toggle and a page load in the same
+        # series, and the report draws them as two bands.
+        daily.append({"date": date, "pageviews": pv,
+                      "events": hits[date] - pv})
+
+    page_rows = pages(widget(s, 0, total, start, end, max=mx,
+                             filter="is:pageview"))
+    event_rows = pages(widget(s, 0, total, start, end, max=mx,
+                              filter="is:event"))
+    layer_rows = pages(widget(s, 0, total, start, end, max=mx, filter="layer/"))
+
+    out = {
+        "total": total,
+        "daily": daily,
+        "pageviews": sum(d["pageviews"] for d in daily),
+        "events": sum(d["events"] for d in daily),
+        "pages": top(page_rows, 20),
+        "top_events": top(event_rows, 20),
+        "layers": top(layer_rows, 20),
+        "instances": split_by_instance(page_rows),
+    }
+    for n, name in [(2, "referrers"), (3, "campaigns"), (4, "browsers"),
+                    (5, "systems"), (6, "locations"), (7, "languages"),
+                    (8, "sizes")]:
+        out[name] = rows(widget(s, n, total, start, end))
+    return out
+
+
+def split_by_instance(page_rows):
+    """Pageviews per instance, by path.
+
+    THE ROOT PATH BELONGS TO TWO DIFFERENT THINGS AND THE DATE SAYS WHICH. The
+    Illinois app served at "/" until it moved to "/il/" on 2026-08-24, and the
+    fleet landing page has served at "/" since. The old rule for this was
+    prose in the refresh instructions; here it is arithmetic, because every
+    row carries its own daily series — a root pageview before the move is
+    Illinois's and one on or after it is the landing page's, one day at a
+    time, with no whole-row guess either way.
+    """
+    tags = fleet_tags()
+    counts = {t: 0 for t in tags}
+    counts["landing"] = 0
+    unattributed = 0
+    for row in page_rows:
+        path = row["path"]
+        if path in ("/", "/index.html"):
+            for date, n in row["daily"].items():
+                if date < ROOT_MOVED:
+                    counts["il"] += n
+                else:
+                    counts["landing"] += n
+            continue
+        tag = path.lstrip("/").split("/", 1)[0]
+        if tag in counts:
+            counts[tag] += row["count"]
+        else:
+            unattributed += row["count"]
+    out = [{"key": t, "count": counts[t]} for t in tags + ["landing"]]
+    if unattributed:
+        # Named rather than folded into a bar: these are the site's own
+        # non-instance pages (privacy, traffic, sponsorship) plus anything new.
+        out.append({"key": "(other pages)", "count": unattributed})
+    return out
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--explore", action="store_true",
                     help="print each response's shape and stop")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="fetch and summarise, write nothing")
     args = ap.parse_args()
 
     tok = token()
@@ -210,7 +332,44 @@ def main():
     if args.explore:
         explore(s, total, start, end)
         return
-    sys.exit("only --explore is implemented so far")
+
+    data = collect(s, total, start, end)
+
+    # The period total and the daily series are two different counts of the
+    # same period — GoatCounter deduplicates visits for the first and does not
+    # for the second — so they are both kept and neither is derived from the
+    # other. What must hold is that the series is not EMPTY.
+    if not data["daily"] or data["pageviews"] < MIN_PAGEVIEWS:
+        sys.exit("refusing to write: %d pageviews across %d days in %s..%s. "
+                 "That is a revoked token or a changed dashboard, not a quiet "
+                 "week." % (data["pageviews"], len(data["daily"]), start, end))
+
+    attributed = sum(r["count"] for r in data["instances"])
+    print("%d pageviews, %d events over %d days; instances sum to %d"
+          % (data["pageviews"], data["events"], len(data["daily"]), attributed))
+    for r in data["instances"]:
+        print("  %-14s %d" % (r["key"], r["count"]))
+
+    out = {
+        "_comment": ("Generated by scripts/goatcounter_fetch.py from the "
+                     "districtry.goatcounter.com dashboard. The window is a "
+                     "rolling two months ending on the last full day. 'total' "
+                     "is GoatCounter's deduplicated period total, which is "
+                     "NOT the sum of the daily series."),
+        "fetched": datetime.datetime.now(datetime.timezone.utc)
+                           .strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "site": SITE,
+        "window": {"start": start, "end": end, "days": WINDOW_DAYS},
+    }
+    out.update(data)
+    if args.dry_run:
+        print("dry run — nothing written")
+        return
+    os.makedirs(os.path.dirname(OUT), exist_ok=True)
+    with open(OUT, "w", encoding="utf-8") as f:
+        json.dump(out, f, indent=1, sort_keys=False)
+        f.write("\n")
+    print("wrote %s" % os.path.relpath(OUT))
 
 
 if __name__ == "__main__":
