@@ -20,6 +20,13 @@
   "ref": "13",
   "url": "http://www.bync.org"
  },
+ "16": {
+  "address": "917 W. Washington Blvd., #173, Chicago, IL 60607",
+  "phone": "312.902.4922",
+  "provider": "West Central Association",
+  "ref": "16",
+  "url": "http://www.wcachicago.org"
+ },
  "17": {
   "address": "3138 N. Broadway, Chicago, IL 60657",
   "phone": "773.348.8608",
@@ -102,6 +109,13 @@
   "provider": "Lakeview Roscoe Village Chamber of Commerce",
   "ref": "27",
   "url": "https://www.lakeviewroscoevillage.org"
+ },
+ "28": {
+  "address": "4936 W. Irving Park Rd., Chicago, IL 60641",
+  "phone": "773.777.2020",
+  "provider": "Portage Park Chamber of Commerce",
+  "ref": "28-2014",
+  "url": "https://www.portageparkchamber.org/"
  },
  "29": {
   "address": "1819 W. Chicago Ave., Chicago, IL 60622",
@@ -297,12 +311,61 @@
   "ref": "63",
   "url": "https://www.whpdevelopmentcouncil.net/"
  },
+ "69": {
+  "address": "839 W. 79th St., Chicago, IL 60620",
+  "phone": "773.483.3696",
+  "provider": "Greater Auburn Gresham Development Corporation",
+  "ref": "69",
+  "url": "http://www.gagdc.org/index.html"
+ },
  "7": {
   "address": "4555 S. Ashland Ave., Chicago, IL 60609",
   "phone": "872.281.7832",
   "provider": "Back of the Yards Neighborhood Council",
   "ref": "7",
   "url": "https://bync.org/ssa7-2"
+ },
+ "71": {
+  "address": "1000 E. 111th St., Chicago, IL 60628",
+  "phone": "773.928.6000",
+  "provider": "Calumet Area Industrial Commission",
+  "ref": "71",
+  "url": "https://www.calumetareaindustrial.com"
+ },
+ "72": {
+  "address": "4800 W. Chicago Ave., Chicago, IL 60651",
+  "phone": "773.378.1878",
+  "provider": "Westside Health Authority",
+  "ref": "72",
+  "url": "https://healthauthority.org/"
+ },
+ "73": {
+  "address": "2169B S. China Place, Chicago, IL 60616",
+  "phone": "312.326.5320",
+  "provider": "Chicago Chinatown Chamber of Commerce",
+  "ref": "73",
+  "url": "https://chicagochinatown.org/"
+ },
+ "75": {
+  "address": "111 E. Oak St., Chicago, IL 60611",
+  "phone": "773.575.5822",
+  "provider": "Oak Street Council",
+  "ref": "75",
+  "url": "https://www.oakstreetdistrict.org/"
+ },
+ "76": {
+  "address": "625 N. Michigan Ave., Chicago, IL 60611",
+  "phone": "312.642.3570",
+  "provider": "The Magnificent Mile Association",
+  "ref": "76-2024",
+  "url": "https://www.themagnificentmileassociation.com//"
+ },
+ "77": {
+  "address": "4800 W. Chicago Ave., Chicago, IL 60651",
+  "phone": "773.378.1878",
+  "provider": "Westside Health Authority",
+  "ref": "77",
+  "url": "https://healthauthority.org/"
  },
  "79": {
   "address": "4000 W. Montrose Ave., Chicago, IL 60641",

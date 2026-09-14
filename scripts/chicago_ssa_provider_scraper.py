@@ -34,11 +34,33 @@ than guessed at.
      street+city (#33), phone+fax+website (#51).
   6. THE WEBSITE TEXT IS NOT THE URL. SSA #4's link text is
      "www.info@95thstreetba.org" — an e-mail with www. glued on — while its
-     href is the real site. The href is what ships.
+     href is the real site. The href is what ships. Nor is the TITLE the
+     answer: #76-2024's anchor is titled "Westside Health Authority website"
+     and points at themagnificentmileassociation.com, a copy-paste left over
+     from the two blocks that really are Westside Health Authority's.
   7. Three SSAs list no website at all (#20, #44, #52-2021) and one lists two
      (#27). Two write the host with no www. (#55, #60).
   8. One block says "Audit:" where every other says "Audits:" (#63), so a
      stop-word of "audits" lets a run of PDF years leak into the address.
+  9. THE HEADING CARRIES ITS OWN <br />, and this one cost nine live SSAs
+     their provider. Eight blocks close the bold run with a line break INSIDE
+     it — "<strong>SSA #16 Greektown<br /></strong>" — which a heading pattern
+     of [^<]* cannot cross, so those eight were never split out at all and
+     their text was absorbed into the block above. #71 makes it nine: its REAL
+     block has this shape, while the phantom of trap 1 does not, so the parser
+     saw the phantom, dropped it as empty, and never saw Roseland's actual
+     agency two paragraphs below. For a day the app told readers the city named
+     no provider for nine areas whose providers are on the same page.
+     Measured 2026-09-13; split_blocks() now GATES on it — every bolded
+     run starting "SSA #" must become a block, so a heading shape this parser
+     cannot read is a failed run rather than a silent loss.
+ 10. A HOUSE NUMBER CAN CARRY A LETTER. #73's street is "2169B S. China
+     Place", and the digits-then-compass test of trap 4 reads a number with a
+     letter suffix as more of the organisation's name — so that block parsed
+     to "Chicago Chinatown Chamber of Commerce 2169B S. China Place" with no
+     address at all. One optional capital between the number and the compass
+     direction separates it, and still does not touch "95th Street/..." or
+     "51st Street...", whose suffixes are two lowercase letters.
 
 ROBOTS AND USER AGENT, measured 2026-09-12 and re-measured 2026-09-13.
 WHAT robots.txt ANSWERS DEPENDS ON WHO ASKS, so both readings are recorded
@@ -69,6 +91,7 @@ Writes intermediate JSON; scripts/build_chicago_ssa_providers.py turns it
 into il/data/app/chicago-ssa-providers.json.
 """
 import argparse
+import collections
 import html
 import json
 import os
@@ -125,6 +148,10 @@ PROGRAM_URL = "https://www.chicago.gov/city/en/depts/dcd/supp_info/special_servi
 
 # Blocks that parse to no organisation and are EXPECTED to. Today this is the
 # single phantom from trap 1. A new empty block means the page changed shape.
+# #71 IS HERE FOR THE PHANTOM AND NOT FOR ROSELAND: the page bolds that name
+# twice, and since trap 9 was fixed the second one — the real block, with the
+# Calumet Area Industrial Commission in it — parses and ships. An empty 71 is
+# still expected because the phantom is still there.
 EXPECTED_EMPTY = {"71"}
 
 # Everything after one of these words belongs to the document archive, not the
@@ -132,8 +159,13 @@ EXPECTED_EMPTY = {"71"}
 STOP_WORDS = re.compile(r"(?i)^(audits?|agreements?|map|budgets?|annual|sp[ae])\b")
 PHONE_RE = re.compile(r"(?i)\bphone:?\s*([0-9][0-9.\-() ]{7,})")
 # A house number followed by a compass direction — see the org/street note
-# in parse_block(). Deliberately not "starts with a digit".
-STREET_RE = re.compile(r"^\d+\s+[NSEW]\b")
+# in parse_block(). Deliberately not "starts with a digit". The optional
+# capital is trap 10: #73 sits at "2169B S. China Place", and a bare \d+ reads
+# that whole line as more of the agency's name. It stays ONE uppercase letter
+# so the two agencies named for their street ("95th Street/Beverly Hills
+# Business Association", "51st Street Business Association") are still not
+# addresses — their suffixes are two lowercase letters and match neither.
+STREET_RE = re.compile(r"^\d+[A-Z]?\s+[NSEW]\b")
 # A line that is ONLY a hostname. Two blocks write the site with no www.
 # and no scheme (#55 "mgcba.org", #60 "northrivercommission.org"); a
 # www.-or-scheme test misses both and they land in the street address.
@@ -142,6 +174,12 @@ HOSTLINE_RE = re.compile(r"^(?:https?://)?(?:www\.)?[A-Za-z0-9.\-]+\.[A-Za-z]{2,
 FAX_RE = re.compile(r"(?i)\bfax:?\s*[0-9][0-9.\-() ]{7,}")
 ZIP_RE = re.compile(r"\b(?:Chicago|CHICAGO)\s*,?\s*(?:IL|Illinois)\s*,?\s*(\d{5})\b")
 REF_RE = re.compile(r"\s*SSA\s*#\s*0*(\d+)\s*(?:-\s*(\d{4}))?(.*)", re.S)
+# A heading is a bolded run whose text starts "SSA #". The trailing group is
+# trap 9: eight of them close with a <br /> inside the <strong>, and [^<] can
+# never cross it. ANY_HEADING_RE is the same anchor with NO tolerance for what
+# follows, and exists only to be COUNTED against the first — see split_blocks.
+HEADING_RE = re.compile(r"(?is)<strong>\s*(SSA\s*#[^<]*?)\s*(?:<br\s*/?>\s*)*</strong>")
+ANY_HEADING_RE = re.compile(r"(?is)<strong>\s*(SSA\s*#.*?)\s*</strong>")
 
 
 _ROBOTS = None
@@ -189,8 +227,35 @@ def split_blocks(page):
     if not table:
         raise SystemExit("chicago-ssa-providers: the provider page has no table — "
                          "the page's shape changed; re-read it before trusting this parser")
-    parts = re.split(r"(?is)<strong>\s*(SSA\s*#[^<]*?)\s*</strong>", table.group(0))
-    return [(parts[i], parts[i + 1]) for i in range(1, len(parts) - 1, 2)]
+    body = table.group(0)
+    parts = re.split(HEADING_RE, body)
+    blocks = [(parts[i], parts[i + 1]) for i in range(1, len(parts) - 1, 2)]
+
+    # EVERY BOLDED RUN STARTING "SSA #" MUST BECOME A BLOCK, and until
+    # 2026-09-13 nine of them did not. A heading this parser cannot read does
+    # not fail — it silently merges its block into the one above, so the page
+    # keeps its shape, the parse keeps its count guard, and the areas it lost
+    # simply have no provider. That is indistinguishable from the city not
+    # publishing one, which is what the cards, the gap record and four
+    # docstrings then said about nine live SSAs. So the loose pattern counts
+    # what the strict one must find. A bolded sentence that merely opens "SSA
+    # #" would fail here too; on a hand-maintained page that is the right way
+    # round, because it asks a person to look.
+    #
+    # A MULTISET difference, not a set one: "SSA #71 Roseland" is bolded twice
+    # on this page — once as trap 1's phantom and once as the real block — and
+    # a set test would see the phantom and call the real one found.
+    lost = (collections.Counter(_text(h) for h in ANY_HEADING_RE.findall(body))
+            - collections.Counter(_text(h) for h, _ in blocks))
+    if lost:
+        raise SystemExit(
+            "chicago-ssa-providers: %d bolded SSA heading(s) did not become a "
+            "block, so their providers would be absorbed into the block above "
+            "and those areas would read as having none: %s. The page's heading "
+            "markup changed; read it before trusting this parse."
+            % (sum(lost.values()),
+               "; ".join(sorted(lost.elements()))))
+    return blocks
 
 
 def parse_block(heading, body):
