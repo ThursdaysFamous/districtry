@@ -19,13 +19,13 @@
       {
         "email": "jglenn@logancountyil.gov",
         "name": "James Glenn",
-        "phone": "217-737-4316",
-        "role": "Chair"
+        "phone": "217-737-4316"
       },
       {
         "email": "jkuhlman@logancountyil.gov",
         "name": "Joseph Kuhlman",
-        "phone": "708-831-0036"
+        "phone": "708-831-0036",
+        "role": "Vice Chair"
       }
     ],
     "sourceUrl": "https://www.logancountyil.gov/index.php?option=com_content&view=article&id=176&Itemid=541&lang=en"
@@ -68,9 +68,7 @@
         "phone": "201-362-6039"
       },
       {
-        "email": "mdeross@logancountyil.gov",
-        "name": "Michael DeRoss",
-        "phone": "773-403-3789"
+        "name": "VACANT"
       }
     ],
     "sourceUrl": "https://www.logancountyil.gov/index.php?option=com_content&view=article&id=176&Itemid=541&lang=en"
@@ -80,13 +78,13 @@
       {
         "email": "dnelson@logancountyil.gov",
         "name": "Dale Nelson",
-        "phone": "217-381-4051",
-        "role": "Vice Chair"
+        "phone": "217-381-4051"
       },
       {
         "email": "lconahan@logancountyil.gov",
         "name": "J Lance Conahan",
-        "phone": "217-737-9819"
+        "phone": "217-737-9819",
+        "role": "Chair"
       }
     ],
     "sourceUrl": "https://www.logancountyil.gov/index.php?option=com_content&view=article&id=176&Itemid=541&lang=en"
