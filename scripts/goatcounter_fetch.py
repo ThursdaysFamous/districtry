@@ -57,16 +57,50 @@ def token():
     return raw
 
 
-def session(tok):
+def session(tok, start, end):
+    """Open the share session and read the period total off the dashboard.
+
+    TWO THINGS HERE ARE LOAD-BEARING, both measured on 2026-09-14.
+
+    The share link authenticates by query parameter and sets a cookie for the
+    rest of the session; every later request rides that cookie.
+
+    And the dashboard must be asked for THE SAME PERIOD the widgets will be,
+    because js-total-utc is that period's total and every widget takes it as a
+    parameter. Asked with no period it answers the default one — 561 against a
+    two-month window — and a widget handed that number reports the wrong
+    share of the wrong whole.
+    """
     s = requests.Session()
     s.headers["User-Agent"] = "districtry-traffic/1.0 (+https://districtry.com/)"
-    # The share link authenticates by query parameter and sets a cookie for the
-    # rest of the session; every later request rides that cookie.
-    r = s.get(SITE + "/", params={"access-token": tok}, timeout=TIMEOUT)
+    r = s.get(SITE + "/", timeout=TIMEOUT, params={
+        "access-token": tok, "period-start": start, "period-end": end})
     if r.status_code != 200:
         sys.exit("dashboard: HTTP %d — the share token may have been rotated "
                  "or revoked." % r.status_code)
-    return s, r.text
+    m = re.search(r'js-total-utc"?>([\d,]+)<', r.text)
+    if not m:
+        sys.exit("dashboard: no js-total-utc in %d bytes. The dashboard's "
+                 "markup has changed; run --explore." % len(r.text))
+    return s, int(m.group(1).replace(",", ""))
+
+
+def widget(s, n, total, start, end, **extra):
+    """One load-widget call. Returns its html.
+
+    total is not optional: without it widget 0 answers HTTP 400 and the
+    horizontal-bar widgets answer "Nothing to display" — measured 2026-09-14,
+    which is what the first version of this script got back.
+    """
+    params = dict({"widget": n, "period-start": start, "period-end": end,
+                   "group": "day", "total": total}, **extra)
+    r = s.get(SITE + "/load-widget", params=params, timeout=TIMEOUT)
+    if r.status_code != 200:
+        sys.exit("widget %s: HTTP %d" % (n, r.status_code))
+    try:
+        return r.json().get("html", "")
+    except ValueError:
+        sys.exit("widget %s: not JSON (%d bytes)" % (n, len(r.content)))
 
 
 def window():
@@ -75,28 +109,23 @@ def window():
     return start.isoformat(), end.isoformat()
 
 
-def explore(s, home, start, end):
-    print("dashboard: %d bytes" % len(home))
-    for pat in (r'js-total-utc[^>]*>([^<]*)<', r'id="js-total-utc"[^>]*>([^<]*)<',
-                r'js-total-utc.{0,120}'):
-        m = re.search(pat, home, re.S)
-        print("  %-34s %r" % (pat[:34], m.group(0)[:160] if m else None))
-    for n, name in sorted(WIDGETS.items()):
-        r = s.get(SITE + "/load-widget", timeout=TIMEOUT, params={
-            "widget": n, "period-start": start, "period-end": end,
-            "group": "day"})
-        print("\nwidget %d (%s): HTTP %d  %d bytes  content-type=%s"
-              % (n, name, r.status_code, len(r.content),
-                 r.headers.get("content-type")))
-        body = r.text
-        try:
-            j = r.json()
-            print("  json keys: %s" % sorted(j))
-            body = j.get("html", "")
-            print("  html %d bytes" % len(body))
-        except ValueError:
-            print("  not json")
-        print("  " + body[:1200].replace("\n", "\n  "))
+def explore(s, total, start, end):
+    """Print the shape of each response. Prints no URL — the token is in it."""
+    print("period total (js-total-utc): %d" % total)
+    calls = [(1, "totals", {}), (1, "totals is:pageview", {"filter": "is:pageview"}),
+             (0, "pages", {}), (0, "pages is:event", {"filter": "is:event"}),
+             (0, "pages layer/", {"filter": "layer/"}),
+             (0, "pages is:pageview", {"filter": "is:pageview"}),
+             (2, "referrers", {}), (3, "campaigns", {}), (4, "browsers", {}),
+             (5, "systems", {}), (6, "locations", {})]
+    for n, name, extra in calls:
+        html = widget(s, n, total, start, end, **extra)
+        body = re.sub(r"[ \t]*\n[ \t\n]*", "\n", html).strip()
+        # Drop the header block; what matters is the rows under it.
+        cut = body.find("</div>")
+        rows = body[cut + 6:] if cut > 0 else body
+        print("\n--- widget %d (%s): %d bytes ---" % (n, name, len(html)))
+        print(rows[:900])
 
 
 def main():
@@ -107,10 +136,10 @@ def main():
 
     tok = token()
     start, end = window()
-    s, home = session(tok)
+    s, total = session(tok, start, end)
     print("window %s..%s (%d days)" % (start, end, WINDOW_DAYS))
     if args.explore:
-        explore(s, home, start, end)
+        explore(s, total, start, end)
         return
     sys.exit("only --explore is implemented so far")
 
