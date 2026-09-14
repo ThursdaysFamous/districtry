@@ -22,13 +22,13 @@ on:
   schedule:
     - cron: "15 14 * * *" # daily, after the two search fetches
   workflow_dispatch: {}
-  # TEMPORARY, DELETE ONCE IT HAS RUN. The device update-search-performance.yml
-  # used to prove itself before merging. Removing it is not optional: the file
-  # carries a `fetched` stamp, so every run changes it, so every run commits,
-  # and a commit pushed as BOT_PR_TOKEN triggers the next run — the Bing
-  # workflow was looping two runs in on 2026-09-14.
-  push:
-    branches: [claude/goat-counter-data-access-g5ycax]
+  # A branch-scoped `push:` trigger stood here so this workflow could prove
+  # itself before merging, the device update-search-performance.yml used. It
+  # ran on 2026-09-14, wrote data/goatcounter-traffic.json and committed it,
+  # and is removed as that workflow's own comment asks. Removing it is not
+  # optional: the file carries a `fetched` stamp, so every run changes it, so
+  # every run commits, and a commit pushed as BOT_PR_TOKEN (a PAT, unlike
+  # GITHUB_TOKEN) triggers the next run.
 
 permissions:
   contents: write
