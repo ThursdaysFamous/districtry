@@ -4,23 +4,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- Google tag (gtag.js) — production host only; keeps local dev + CI out of analytics.
-     Same guard as index.html: hostname-gated and top-level-only. -->
-<script>
-  (function () {
-    if (location.hostname !== 'districtry.com') return;
-    if (window.top !== window.self) return;
-    var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-YPJ570LWJB';
-    document.head.appendChild(s);
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function () { dataLayer.push(arguments); };
-    gtag('js', new Date());
-    gtag('config', 'G-YPJ570LWJB');
-  })();
-</script>
-
 <title>What NYPD precinct am I in? — districtry New York City</title>
 <meta name="description" content="Your NYPD precinct by address or ZIP — the precinct number, its commanding officer, the station house, and every other district covering that point." />
 <meta name="robots" content="index, follow" />

@@ -4,23 +4,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- Google tag (gtag.js) — production host only; keeps local dev + CI out of analytics.
-     Same guard as index.html: hostname-gated and top-level-only. -->
-<script>
-  (function () {
-    if (location.hostname !== 'districtry.com') return;
-    if (window.top !== window.self) return;
-    var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-YPJ570LWJB';
-    document.head.appendChild(s);
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function () { dataLayer.push(arguments); };
-    gtag('js', new Date());
-    gtag('config', 'G-YPJ570LWJB');
-  })();
-</script>
-
 <title>Chicago district questions — districtry Illinois</title>
 <meta name="description" content="What district am I in, how many wards Chicago has, what a community area is, which school board district covers an address — and who represents you." />
 <meta name="robots" content="index, follow" />

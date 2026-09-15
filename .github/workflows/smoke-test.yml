@@ -242,6 +242,18 @@ jobs:
       - name: About page matches the tree it describes
         run: python3 scripts/build_about_page.py --check
 
+      # Which analytics host each page loads, held to the worksheet that
+      # declares it. `brand.analytics` is the one place that says whether an
+      # instance runs Google Analytics, and the generator emits the tag into
+      # that instance's index.html and nowhere else — every sub-page's was a
+      # hand-written copy, and two of them (ca/sources.html, wi/sources.html)
+      # were reporting into Chicago's property while their own apps declare no
+      # ga_id. It also held the counter figure: 192 of 236 pages carry no
+      # counter at all, including all 183 per-county pages, so the traffic
+      # report has never counted the largest page set on the site.
+      - name: Analytics match the worksheets that declare them
+        run: python3 scripts/validate_analytics.py
+
       # The deployment-history pages (opt-in per instance): the stat tiles are
       # MEASURED from the shipped data files, so any change that moves a number
       # regenerates the page or fails here — a history page that has drifted

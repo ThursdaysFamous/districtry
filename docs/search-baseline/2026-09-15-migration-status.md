@@ -509,8 +509,58 @@ Clean, fast, confidently wrong: the same shape as the Knox fill-colour method
 this project already records. An adjacency worth shipping comes from the Census
 Bureau's own county adjacency file.
 
+### 8. Google Analytics only where it is needed — done 2026-09-15
+
+`gtag.js` is about 175 KB and was on **15 pages**, thirteen of which draw no
+map. On `il/county-board.html` it was roughly 69% of the payload, beside a 3 KB
+cookieless counter. It is now on **two**: `il/index.html` and `ny/index.html`,
+the two apps whose worksheets declare a `ga_id`.
+
+**Nothing this project reports on was lost.** GoatCounter was already on all
+fifteen, and GoatCounter is what `data/goatcounter-traffic.json` and the traffic
+report read.
+
+**Two of the thirteen were reporting into another instance's property.**
+`ca/sources.html` and `wi/sources.html` loaded Google Analytics while their own
+apps declare no `ga_id` at all — both pages were cloned from Illinois's, and the
+tag came with them. Nothing compared them: `brand.analytics` is the one place
+that says whether an instance runs GA, `generate_metro_files.py` emits it into
+that instance's `index.html` and nowhere else, and every sub-page's copy was
+hand-written. `build_privacy_page.py` measures each app's own `index.html`,
+which is the right subject for what it publishes and cannot see a sub-page.
+
+`scripts/validate_analytics.py` is that comparison, and it fails on a GA tag
+anywhere the worksheet does not put it.
+
+**IT ALSO FOUND THE MIRROR IMAGE, AND THAT ONE IS NOT THIS SESSION'S TO DECIDE.**
+Measured 2026-09-15: **192 of 236 pages carry no counter at all** — all 183
+per-county pages, the four history pages, and five root pages (`404.html`,
+`about.html`, `coverage-map.html`, `sponsorship.html`, `traffic.html`). So the
+traffic report, whose subject is what this fleet gets read, has never counted
+the largest page set on the site: the 183 pages carrying 2,869 officeholders,
+which are the whole subject of this phase.
+
+Two of the 192 are deliberate and recorded with a reason — the 404 page, where a
+count would put other people's broken links in the report as pages, and the
+coverage map, which is the landing page's iframe body rather than a destination.
+**The other 190 are an omission nobody decided.** Adding a counter to 190 pages
+changes what those pages send, which is the operator's call, so the figure is
+HELD rather than fixed: the gate fails when it moves in either direction, up
+because a page shipped uncounted, down because somebody closed part of the gap
+and the recorded number has to move with it.
+
 ### Still open in phase 2
 
 - County-page uniqueness above 60%, which needs the overlapping-districts work
   above and therefore an Illinois county fabric.
+- **Splitting and minifying the map script.** Not attempted, and the reason is
+  worth stating rather than leaving as an omission. The script is ~1.4 MB inline
+  in each `index.html`, in ES5, fenced with the `ENGINE:BEGIN` markers
+  `compose_app.py` splices and `check_engine_parity.py` lints — the fences are
+  line-anchored comments, so a minifier that strips comments destroys the
+  mechanism that keeps one copy of the engine across six instances. Externalising
+  the script means changing how every instance is composed and served. The audit
+  rates the finding High and also records that it is lab-measured only and blocks
+  neither indexing nor ranking; it is a build-system change, not a template one,
+  and it deserves its own PR rather than the end of a long session.
 - **Split and minify the map script; load GA only where it is needed.**
