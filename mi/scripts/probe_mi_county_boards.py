@@ -280,8 +280,36 @@ def confirm_host(session, gate, pacer, host, county, notes):
 
 # ----------------------------------------------------------------- stage three
 
+# THE COUNTY BOARD, not any board. `board members` alone is too loose: it
+# matches every advisory body a county runs, and those bodies are frequently
+# SEATED ONE PER COMMISSIONER DISTRICT, so their pages carry real districts
+# beside real names and score exactly like a roster. Measured 2026-09-15, that
+# sent the Bay sweep to
+# baycountymi.gov/health_community/department_on_aging/advisory_board_members.php
+# and scored it 7/7 districts with 13 name-pairs -- a confident, well-evidenced
+# reading of the wrong body. So the hint requires the office by name.
 BOARD_HINT = re.compile(
-    r"board[\s_\-]*of[\s_\-]*commission|commissioner|board[\s_\-]*members?\b",
+    r"board[\s_\-]*of[\s_\-]*commission"
+    r"|county[\s_\-]*board"
+    r"|commissioners?\b"
+    r"|\bboc\b",
+    re.I)
+
+# "COMMISSIONER" IS NOT UNIQUE TO THE COUNTY BOARD EITHER, and in Michigan that
+# is not a quibble: a county elects a DRAIN COMMISSIONER under MCL 280 and may
+# run a ROAD COMMISSION, both separate offices with their own pages. Ranking by
+# the word alone sent the same sweep to
+# baycountymi.gov/departments/drain_commissioner/index.php, which reported
+# `no-districts` -- the right family of answer for entirely the wrong reason,
+# which is worse than a wrong answer because it reads as a measurement.
+NOT_THE_BOARD = re.compile(
+    r"drain|road[\s_\-]*commission|soil|water[\s_\-]*resource|equaliz"
+    r"|planning[\s_\-]*commission|parks?[\s_\-]*commission|canvass"
+    r"|zoning|apportionment[\s_\-]*commission|election[\s_\-]*commission"
+    # advisory and subordinate bodies, which a county seats BY district
+    r"|advisory|aging|veteran|librar|health[\s_\-]*board|mental|airport"
+    r"|brownfield|\bdda\b|land[\s_\-]*bank|housing|transit|medical[\s_\-]*care"
+    r"|construction[\s_\-]*code|jury|retirement|drug|substance",
     re.I)
 
 
@@ -298,6 +326,8 @@ def board_links(root, body):
     for m in re.finditer(r'<a\b[^>]*href="([^"#?]+)"[^>]*>(.*?)</a>', body, re.S | re.I):
         href, text = m.group(1), re.sub(r"<[^>]+>", " ", m.group(2))
         if not BOARD_HINT.search(href) and not BOARD_HINT.search(text):
+            continue
+        if NOT_THE_BOARD.search(href) or NOT_THE_BOARD.search(text):
             continue
         url = urljoin(root, href)
         if host not in url or url.rstrip("/") == root.rstrip("/") or url in seen:
@@ -354,7 +384,8 @@ def sitemap_pages(session, gate, pacer, root):
                 pass
         host = root.split("/")[2]
         out = [l for l in locs
-               if BOARD_HINT.search(l) and not SKIP_PATH.search(l) and host in l]
+               if BOARD_HINT.search(l) and not SKIP_PATH.search(l)
+               and not NOT_THE_BOARD.search(l) and host in l]
         if out:
             break
     return out
@@ -368,7 +399,8 @@ def rank_pages(urls):
         return (0 if re.search(r"member|commissioner|directory|who", blob) else 1,
                 1 if re.search(r"district|map|apportion", blob) else 0,
                 len(u))
-    return sorted({u for u in urls if not SKIP_PATH.search(u)}, key=key)[:8]
+    return sorted({u for u in urls if not SKIP_PATH.search(u)
+                   and not NOT_THE_BOARD.search(u)}, key=key)[:8]
 
 
 # ------------------------------------------------------------------ stage four
