@@ -2617,15 +2617,16 @@
         "note": "sheriffs, DAs, treasurers, clerks of court, registers of deeds, executives, examiners"
       },
       {
-        "label": "county-board seats named on the card",
+        "label": "county-board supervisors named on the card",
         "file": "data/app/county-board-members.json",
-        "metric": "keys",
+        "metric": "people:name+atLarge",
         "note": "in every county whose district-keyed roster this can obtain"
       },
       {
         "label": "circuit courts with their full bench named",
         "file": "data/app/wi-circuit-judges.json",
         "metric": "keys",
+        "naming": "judges",
         "note": "every judge, refreshed weekly from the court system's own directory"
       }
     ],

@@ -8,6 +8,22 @@ chance to paste a number into the wrong array. Everything between the
 TRAFFIC-DATA markers is now derived, so the daily refresh is one command and the
 only judgment left is the PROSE, which is where judgment belongs.
 
+IT ALSO WRITES THE data-stat FALLBACKS, added 2026-09-15. Every figure in the
+prose sits in a `<span data-stat="key">` whose text the page replaces at load
+from the same data block. The literal inside it is what a CRAWLER reads and
+what a reader with no JavaScript sees, and it was hand-typed once and never
+again. Measured that day, traffic.html carried THREE different windows: the
+header span said "July 10 – August 29, 2026 · 51 days", the note's said
+"July 14 – September 13, 2026, 62 days", and the data block said 15 July to
+14 September. Two of the three were stale and all three disagreed, on a page
+whose subject is measurement.
+
+So the fallbacks for the figures this already derives are written here, and two
+spans carrying the same key must carry the same text — which is the check that
+would have caught the two windows, since they are both `data-stat="range"`.
+A key this cannot compute keeps its literal and is PRINTED on every run, so the
+remaining hand-typed ones are visible rather than assumed current.
+
 WHAT IT DOES NOT DO, deliberately:
 
   * It does not touch a word of prose. The page's sentences make claims the data
@@ -35,6 +51,10 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# The day the Illinois app moved off `/`. The page annotates the peak with it
+# only while the peak IS that day, so the literal here must agree with the
+# REBRAND constant traffic.html's own script carries.
+REBRAND = "2026-08-24"
 PAGE = os.path.join(ROOT, "traffic.html")
 BEGIN = "  /* ==== TRAFFIC-DATA:BEGIN ==== */"
 END = "  /* ==== TRAFFIC-DATA:END ==== */"
@@ -93,6 +113,10 @@ def load(name):
 def label(iso):
     y, m, d = (int(x) for x in iso.split("-"))
     return "%s %d" % (MONTH[m - 1], d)
+
+
+def long_label(iso):
+    return datetime.date.fromisoformat(iso).strftime("%B %-d")
 
 
 def rows(pairs, per_line=3):
@@ -321,7 +345,71 @@ def build():
         datetime.date.fromisoformat(gc["fetched"][:10]).strftime("%B %-d, %Y"),
         int(start[:4]), gc["total"], END)
 
-    return block, gc, instances, residual, daily_sum
+    # The fallbacks a crawler reads. Only the keys this script already derives;
+    # everything else keeps its literal and is printed below.
+    fallbacks = {
+        # LONG month names, matching the page's own longMonth(): a literal in a
+        # different format from what the script writes makes the text visibly
+        # change on load, which is its own small lie about the measurement.
+        "range": "%s – %s, %d" % (long_label(start), long_label(end), int(end[:4])),
+        "days": str(len(gc["daily"])),
+        "total": "{:,}".format(gc["total"]),
+        "pageviews": "{:,}".format(gc["pageviews"]),
+        "dailySum": "{:,}".format(daily_sum),
+        "dailyGap": "{:,}".format(abs(gc["total"] - daily_sum)),
+        "exportDate": datetime.date.fromisoformat(
+            gc["fetched"][:10]).strftime("%B %-d, %Y"),
+    }
+    # The peak day, computed the way the page computes it: the daily row with
+    # the largest pageviews + events. Its two spans disagreed until this ran —
+    # one said "August 24" and the other "Monday, Aug 24 — rebrand day", and
+    # the page overwrote both with the second, so only a crawler saw the split.
+    peak = max(gc["daily"], key=lambda d: d["pageviews"] + d["events"])
+    peak_date = datetime.date.fromisoformat(peak["date"])
+    fallbacks["peak"] = "{:,}".format(peak["pageviews"] + peak["events"])
+    # The location bar's first row is the United States, and the tile beside it
+    # states that count against the window total. Both are in the data block.
+    us = gc["locations"][0]
+    fallbacks["usCount"] = "{:,}".format(us["count"])
+    fallbacks["usPct"] = "%d%%" % round(100.0 * us["count"] / gc["total"])
+    fallbacks["perDay"] = str(round(gc["pageviews"] / len(gc["daily"])))
+    fallbacks["peakLabel"] = "%s, %s%s" % (
+        peak_date.strftime("%A"), label(peak["date"]),
+        " \u2014 rebrand day" if peak["date"] == REBRAND else "")
+    return block, gc, instances, residual, daily_sum, fallbacks
+
+
+SPAN_RE = re.compile(r'(<span data-stat="([A-Za-z]+)">)([^<]*)(</span>)')
+
+
+def apply_fallbacks(page, fallbacks):
+    """Rewrite each data-stat span's literal, and hold duplicates to one text.
+
+    The duplicate check is the one that matters. Two spans can name the same
+    key and carry different words, and the page looks right in a browser
+    because the script overwrites both — so the disagreement is visible only to
+    a crawler, which is the reader this page's own prose is least written for.
+    """
+    seen, unwritten = {}, {}
+
+    def one(m):
+        open_tag, key, text, close = m.groups()
+        if key in fallbacks:
+            text = fallbacks[key]
+        else:
+            unwritten.setdefault(key, set()).add(text)
+        seen.setdefault(key, set()).add(text)
+        return open_tag + text + close
+
+    page = SPAN_RE.sub(one, page)
+    clashes = sorted(k for k, v in seen.items() if len(v) > 1)
+    if clashes:
+        k = clashes[0]
+        fail("%d data-stat key(s) carry more than one fallback, starting with "
+             "%r: %s. A reader with JavaScript sees one number and a crawler "
+             "sees two different ones."
+             % (len(clashes), k, " / ".join(sorted("%r" % t for t in seen[k]))))
+    return page, unwritten
 
 
 def main():
@@ -330,14 +418,14 @@ def main():
                     help="report what would change and write nothing")
     args = ap.parse_args()
 
-    block, gc, instances, residual, daily_sum = build()
+    block, gc, instances, residual, daily_sum, fallbacks = build()
     page = open(PAGE, encoding="utf-8").read()
     if BEGIN not in page or END not in page:
         fail("traffic.html carries no TRAFFIC-DATA markers. Add them around the "
              "daily/searchData/bingData/barData/META declarations.")
     head, rest = page.split(BEGIN, 1)
     _, tail = rest.split(END, 1)
-    updated = head + block + tail
+    updated, unwritten = apply_fallbacks(head + block + tail, fallbacks)
 
     print("window %s → %s (%d days), read %s"
           % (gc["window"]["start"], gc["window"]["end"], len(gc["daily"]),
@@ -348,6 +436,9 @@ def main():
     for name, count in instances:
         print("  %-16s %d" % (name, count))
     print("  %-16s %d (long tail, in no bar)" % ("(not listed)", residual))
+    print("  %d data-stat span(s) written from the data; %d key(s) keep a "
+          "hand-typed fallback a crawler reads: %s"
+          % (len(fallbacks), len(unwritten), ", ".join(sorted(unwritten)) or "none"))
 
     if args.check:
         print("build-traffic-page: %s"

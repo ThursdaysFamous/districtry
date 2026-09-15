@@ -3818,7 +3818,7 @@
       {
         "label": "villages, towns and cities with their own officials named",
         "file": "data/app/municipal-officials.json",
-        "metric": "keys",
+        "metric": "keys-naming:head+board+officers",
         "note": "each read from the county clerk's own published directory, refreshed weekly"
       },
       {
@@ -3837,12 +3837,14 @@
         "label": "Illinois House seats with their member, party and both offices",
         "file": "data/app/il-house-members.json",
         "metric": "keys",
+        "naming": "name",
         "note": "the whole chamber, re-read from the General Assembly's own roster every Monday"
       },
       {
         "label": "Illinois Senate seats with their member, party and both offices",
         "file": "data/app/il-senate-members.json",
         "metric": "keys",
+        "naming": "name",
         "note": "refreshed in the same Monday run as the House; a member who leaves is a change a person reviews, never one that ships on its own"
       }
     ],

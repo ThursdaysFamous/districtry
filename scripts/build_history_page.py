@@ -25,7 +25,26 @@ OPT-IN PER INSTANCE, like sources_page: a worksheet without a
 `history_page` key generates nothing, and `--check` fails if an orphaned
 history file exists without the key that owns it. The declared metrics
 vocabulary is deliberately tiny (keys / features / sum:<field> /
-count-nonzero:<field>) so a metric can only ever restate a shipped file.
+count-nonzero:<field> / people:<fields> / keys-naming:<fields>) so a metric
+can only ever restate a shipped file.
+
+A MEASURED TILE CANNOT DRIFT FROM ITS FILE AND CAN STILL BE FALSE, which is
+what the last two verbs are for. Measured 2026-09-15, two tiles counted KEYS
+under a label about PEOPLE. Wisconsin's said "1,591 county-board seats named
+on the card": 1,591 is the roster's key count, of which 16 are vacant, one is
+withheld, and one is Menominee's at-large key holding TWO countywide
+supervisors — 1,575 people, on 1,592 seats, and 1,591 is neither. Illinois's
+said "629 villages, towns and cities with their own officials named", where 41
+of the 629 name nobody at all. Both were correct restatements of the wrong
+quantity, maintained automatically, for as long as they shipped.
+
+So a metric about people NAMES THE FIELDS THE PEOPLE ARE IN, joined by `+`,
+and nothing is inferred: a field's value may be a name, an object with a
+`name`, or a list of them. That matters because a record's own `name` is a
+PERSON in Wisconsin's roster and a MUNICIPALITY in Illinois's, and no
+traversal can tell which without being told. `people:` counts everyone;
+`keys-naming:` counts the top-level keys where that is at least one. And a
+`keys` metric under a label that claims people now FAILS, naming both.
 
 Usage:
     python3 scripts/build_history_page.py            # (re)generate in place
@@ -82,7 +101,29 @@ INSTANCES = (("il", "metro-worksheet.json"),
              ("ia", "ia/metro-worksheet.json"),
              ("mi", "mi/metro-worksheet.json"))
 
-METRIC_RE = re.compile(r"^(keys|features|sum:[A-Za-z]+|count-nonzero:[A-Za-z]+)$")
+METRIC_RE = re.compile(
+    r"^(keys|features|sum:[A-Za-z]+|count-nonzero:[A-Za-z]+"
+    r"|people:[A-Za-z]+(?:\+[A-Za-z]+)*|keys-naming:[A-Za-z]+(?:\+[A-Za-z]+)*)$")
+
+# A label using one of these is claiming something about PEOPLE, which is what
+# makes a `keys` metric under it worth checking. The word list only decides
+# WHETHER TO CHECK; it never decides the answer. That distinction is the
+# correction of this gate's own first draft, which failed two ILGA tiles —
+# "118 Illinois House seats with their member, party and both offices" — that
+# are true: one key per seat, every key naming a member. A word cannot tell a
+# true claim from a false one, so the check below measures instead.
+PERSON_WORDS = ("named", "seats", "officials", "members", "supervisors",
+                "officeholders", "officers")
+
+
+def fail(msg):
+    """This module's own, rather than build_privacy_page's.
+
+    Its failures printed `build-privacy-page: FAIL` until 2026-09-15, which
+    sends whoever reads it to the wrong file.
+    """
+    print("build-history-page: FAIL — %s" % msg, file=sys.stderr)
+    sys.exit(1)
 GROUP_ORDER = ("political", "safety", "schools", "geography")
 GROUP_LABEL = {"political": "political", "safety": "public safety",
                "schools": "schools", "geography": "geography"}
@@ -94,6 +135,29 @@ def load_worksheet(worksheet_rel):
         return None
     with open(path, encoding="utf-8") as f:
         return json.load(f)
+
+
+def _people_in(record, fields):
+    """People named on one record, under the fields the metric names.
+
+    Three shapes, all of them in the shipped rosters: a bare name (Wisconsin's
+    district records), an object with a `name` (a municipality's `head`), and a
+    list of objects (a village board, Menominee's two countywide supervisors).
+    Nothing outside the named fields is looked at, which is the whole point —
+    `name` on a Wisconsin record is a supervisor and on an Illinois municipal
+    record is the village.
+    """
+    found = 0
+    for field in fields:
+        value = record.get(field)
+        if isinstance(value, str) and value.strip():
+            found += 1
+        elif isinstance(value, dict) and (value.get("name") or "").strip():
+            found += 1
+        elif isinstance(value, list):
+            found += sum(1 for item in value
+                         if isinstance(item, dict) and (item.get("name") or "").strip())
+    return found
 
 
 def measure_metric(inst, spec):
@@ -109,6 +173,37 @@ def measure_metric(inst, spec):
     if metric == "keys":
         if not isinstance(data, dict):
             fail("%s: %s is not an object — 'keys' cannot count it" % (inst, spec["file"]))
+        label = spec["label"].lower()
+        claimed = [w for w in PERSON_WORDS if w in label]
+        if claimed:
+            # A label about people, on a count of records. Whether that is false
+            # is MEASURED, not reasoned: the tile declares where its people are
+            # and this compares the keys against the keys that name somebody.
+            # Equal, and one key is one named seat and `keys` is exactly right.
+            # Unequal, and the tile is publishing a number for a different
+            # quantity than its own words.
+            naming = spec.get("naming")
+            if not naming:
+                fail("%s: metric %r counts KEYS and its label says %r, so it "
+                     "needs a \"naming\" key giving the field(s) its people are "
+                     "in, joined by +. Nothing can infer that: `name` on a "
+                     "Wisconsin board record is a supervisor and on an Illinois "
+                     "municipal record is the village."
+                     % (inst, spec["label"], claimed[0]))
+            fields = naming.split("+")
+            counts = [_people_in(v, fields) for v in data.values()
+                      if isinstance(v, dict)]
+            naming_keys = sum(1 for c in counts if c)
+            if not naming_keys:
+                fail("%s: metric %r declares naming=%r and no record in %s names "
+                     "anybody under it" % (inst, spec["label"], naming, spec["file"]))
+            if naming_keys != len(data):
+                fail("%s: metric %r counts %d KEYS and its label says %r, but "
+                     "only %d of those keys name anybody (naming=%s). Use "
+                     "keys-naming:%s for the keys that do, or people:%s for "
+                     "everyone named — %d of them."
+                     % (inst, spec["label"], len(data), claimed[0], naming_keys,
+                        naming, naming, naming, sum(counts)))
         return len(data)
     if metric == "features":
         feats = data.get("features") if isinstance(data, dict) else None
@@ -119,6 +214,14 @@ def measure_metric(inst, spec):
     op, field = metric.split(":", 1)
     if not isinstance(data, dict):
         fail("%s: %s is not an object — '%s' cannot walk it" % (inst, spec["file"], op))
+    if op in ("people", "keys-naming"):
+        fields = field.split("+")
+        counts = [_people_in(v, fields) for v in data.values() if isinstance(v, dict)]
+        if not any(counts):
+            fail("%s: metric %r finds nobody in %s under %s — the fields named "
+                 "are not where this file keeps its people"
+                 % (inst, spec["label"], spec["file"], "+".join(fields)))
+        return sum(counts) if op == "people" else sum(1 for c in counts if c)
     values = [v.get(field) for v in data.values() if isinstance(v, dict)]
     if op == "sum":
         return sum(v for v in values if isinstance(v, (int, float)))

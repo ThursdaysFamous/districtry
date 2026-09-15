@@ -341,7 +341,56 @@ was right and the request was not. Four county GIS hosts are measured now
 (`token-ok` on all four), taking the artifact to 294 hosts and 224 `token-ok`,
 with the three documents that quote those figures updated in the same change.
 
+### 5. Consistent counts — done 2026-09-15
+
+Two surfaces, and both defects were the same shape one level down from the one
+the gates already guard: a number that cannot DRIFT from its source and does not
+MEASURE what its own label says.
+
+**The history pages' stat tiles.** The tiles are measured at build time through
+a tiny vocabulary, so a tile cannot fall out of step with the file it counts.
+Two of them counted the wrong quantity from the day they shipped. Wisconsin's
+said **1,591 county-board seats named on the card**: 1,591 is the roster's KEY
+count, of which 16 are vacant, one is withheld, and one is Menominee's at-large
+key holding TWO countywide supervisors. The county files 1,590 supervisory
+districts with the state and elects two more countywide, so there are 1,592
+seats and 1,575 people named, and 1,591 is neither. Illinois's said **629
+villages, towns and cities with their own officials named**, where 41 of the 629
+name nobody at all; the true figure is 588.
+
+Two verbs were added — `people:<fields>` and `keys-naming:<fields>` — and they
+NAME THE FIELDS because nothing can infer them: `name` on a Wisconsin
+county-board record is a supervisor and on an Illinois municipal record is the
+village. The tiles now read 1,575 and 588.
+
+**The gate took two goes, and the first one was the mistake it now guards
+against.** Its first draft failed any `keys` metric whose label used a person
+word, which failed two true tiles — "118 Illinois House seats with their member,
+party and both offices" is correct, one key per seat, every key naming a member.
+A word cannot tell a true claim from a false one. So the word list now only
+decides WHETHER TO CHECK, and the check is measured: a `keys` metric under such a
+label must declare where its people are, and fails when the key count and the
+naming-key count differ. Three tiles declare it and pass.
+
+**traffic.html carried three different windows.** Every figure in its prose sits
+in a `<span data-stat="key">` whose text the page overwrites at load from its own
+data block, so the literal inside is what a crawler reads and what a reader with
+no JavaScript sees — hand-typed once and never again. The header said "July 10 –
+August 29, 2026 · 51 days", the note said "July 14 – September 13, 2026, 62
+days", and the data said 15 July to 14 September. `build_traffic_page.py` now
+writes twelve of those literals from the same data it already derives, and FAILS
+when two spans naming one key carry different text — which is exactly the two
+windows, both `data-stat="range"`. That check immediately found a second pair:
+`peakLabel` read "August 24" in one place and "Monday, Aug 24 — rebrand day" in
+the other. The remaining 43 hand-typed keys are PRINTED on every run rather than
+assumed current. All twelve were verified in Chromium against what the page
+actually renders, which is the check that proves the builder computes them the
+same way the page does.
+
+The third example in the audit's finding, overberg.co's "4 places live", is on a
+site this repository does not build.
+
 ### Still open in phase 2
 
-- **`/about.html`**, consistent counts, county-page uniqueness above 60%.
+- **`/about.html`** and county-page uniqueness above 60%.
 - **Split and minify the map script; load GA only where it is needed.**

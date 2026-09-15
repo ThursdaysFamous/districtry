@@ -710,7 +710,8 @@
             "properties": {
               "label": { "type": "string", "minLength": 1 },
               "file": { "type": "string", "pattern": "^data/app/[a-z0-9.-]+\\.json$" },
-              "metric": { "type": "string", "pattern": "^(keys|features|sum:[A-Za-z]+|count-nonzero:[A-Za-z]+)$" },
+              "metric": { "type": "string", "pattern": "^(keys|features|sum:[A-Za-z]+|count-nonzero:[A-Za-z]+|people:[A-Za-z]+(\\+[A-Za-z]+)*|keys-naming:[A-Za-z]+(\\+[A-Za-z]+)*)$" },
+              "naming": { "type": "string", "pattern": "^[A-Za-z]+(\\+[A-Za-z]+)*$", "description": "Required on a `keys` metric whose LABEL claims something about people: the field(s) a person's name lives in on one record, joined by +. build_history_page.py then measures whether every key names somebody and fails when they do not, which is how two tiles were found counting records under a label about officeholders. Nothing can infer this — `name` on a Wisconsin county-board record is a supervisor and on an Illinois municipal record is the village." },
               "note": { "type": "string" }
             }
           }
