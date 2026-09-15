@@ -308,6 +308,18 @@ jobs:
       - name: Question pages carry the address box their own CTA describes
         run: python3 scripts/build_question_forms.py --check
 
+      # The city rosters in the served bytes. build_county_pages.py put 2,650
+      # county officeholders where a crawler can read them and left the city
+      # seats behind a JSON fetch: measured 2026-09-15, NYC's 51 Council
+      # Members and SF's 11 Supervisors appeared in no served byte of this
+      # site. This gates the tables against the rosters they are built from,
+      # FAILS on a weekly roster workflow that rewrites one without
+      # regenerating the page, and re-audits the seats recorded as not tabled
+      # yet — Chicago's 50 alderpeople, whose roster is a live Socrata call
+      # rather than a shipped file.
+      - name: City officeholder tables match their rosters
+        run: python3 scripts/build_officeholder_tables.py --check
+
       # The favicon is the one branded asset whose audience is a CRAWLER, and it
       # was the one nobody could see was broken: every page carried the mark
       # inline as a data: URI, which renders perfectly in a browser tab and is

@@ -69,6 +69,7 @@ python3 scripts/build_llms_txt.py --check                 # /llms.txt vs the fle
 python3 scripts/build_sitemap.py --check                 # sitemap.xml PARSES as XML, and every page's lastmod matches its last commit (regenerate with no flag; a page you have edited but not committed dates today, so the order you run it in no longer matters). A parse FAIL means no crawler can read any of it — that is what a double hyphen in its header comment did on 2026-09-12.
 python3 scripts/build_redirect_stubs.py --check           # the 8 root shells + 404.html vs their targets
 python3 scripts/build_question_forms.py --check          # the 11 question pages' address box vs each page's own .cta
+python3 scripts/build_officeholder_tables.py --check      # the NYC council and SF supervisor tables vs their rosters, and the weekly workflows that rewrite one
 python3 scripts/validate_favicon.py
 python3 scripts/validate_shell_continuations.py
 python3 scripts/validate_workflow_deps.py
