@@ -159,7 +159,8 @@ INSTANCES = [
          phrase="county board", index_label="County boards",
          all_label="All Illinois county boards",
          app_name="districtry Illinois", app_url="https://districtry.com/il/",
-         district_word="District", adapters=("il_districted", "il_at_large")),
+         district_word="District", adapters=("il_districted", "il_at_large"),
+         contacts="il_clerk_contact"),
     dict(tag="wi", state="Wisconsin", concept="county-board",
          index_page="county-board.html",
          heading="%(county)s County Board",
@@ -167,7 +168,8 @@ INSTANCES = [
          phrase="county board", index_label="County boards",
          all_label="All Wisconsin county boards",
          app_name="districtry Wisconsin", app_url="https://districtry.com/wi/",
-         district_word="District", adapters=("wi_seats",)),
+         district_word="District", adapters=("wi_seats",),
+         contacts="wi_clerk_contact"),
     dict(tag="ia", state="Iowa", concept="county-supervisor",
          index_page="county-supervisor.html",
          heading="%(county)s County Board of Supervisors",
@@ -175,7 +177,8 @@ INSTANCES = [
          phrase="board of supervisors", index_label="Boards of supervisors",
          all_label="All Iowa boards of supervisors",
          app_name="districtry Iowa", app_url="https://districtry.com/ia/",
-         district_word="District", adapters=("ia_supervisors",)),
+         district_word="District", adapters=("ia_supervisors",),
+         contacts="ia_board_contact"),
     dict(tag="mi", state="Michigan", concept="county-commissioner",
          index_page="county-commissioner.html",
          heading="%(county)s County Board of Commissioners",
@@ -744,35 +747,64 @@ def member_html(m):
                 break
     if contact:
         bits.append('<span class="m-contact">%s</span>' % " · ".join(contact))
-    fresh = freshness(m)
-    if fresh:
-        bits.append('<span class="m-asof">%s</span>' % fresh)
+    when, _why = freshness(m)
+    if when:
+        bits.append('<span class="m-asof">%s</span>' % esc(when))
     return '<li class="member">%s</li>' % "".join(bits)
 
 
-def freshness(m):
-    """How old this name is, in the app's own three branches.
+DEFAULT_AS_OF_WHY = ("The county's website refuses automated readers, so these "
+                     "names are a dated capture rather than the weekly re-read "
+                     "the other named counties get.")
 
-    A NAME WITH NO DATE READS AS TODAY'S. Wisconsin's card learned that the
-    hard way — the row was lost in a merge and 63 dated captures read as weekly
+
+def freshness(m):
+    """How old this name is, split into the DATE and the EXPLANATION.
+
+    A NAME WITH NO DATE READS AS TODAY'S. Wisconsin's card learned that the hard
+    way — the row was lost in a merge and 63 dated captures read as weekly
     re-reads for as long as it was gone — so where the roster carries the date,
     the page carries it too. Illinois's per-county rosters carry none of these
-    fields and render nothing, exactly as before."""
+    fields and render nothing, exactly as before.
+
+    THE TWO ARE SEPARATED BECAUSE ONE IS PER MEMBER AND THE OTHER IS NOT. The
+    date can differ row to row and belongs on the row. The explanation is a fact
+    about the COUNTY's website, identical on every row, and it was rendered on
+    every one: measured 2026-09-15, Wisconsin's Dunn County page carried the
+    same 27-word sentence 29 times in 1,312 words, so 60% of that page was one
+    repeated sentence. Seven pages did it, 134 repetitions between them.
+    """
     as_of = (m.get("asOf") or "").strip()
     if as_of:
-        why = (m.get("asOfWhy") or "").strip()
-        return esc("From %s. %s" % (as_of, why or
-                   "The county's website refuses automated readers, so this "
-                   "name is a dated capture rather than the weekly re-read the "
-                   "other named counties get."))
+        return ("From %s." % as_of,
+                (m.get("asOfWhy") or "").strip() or DEFAULT_AS_OF_WHY)
     read_on = (m.get("readOn") or "").strip()
     if not read_on:
-        return ""
+        return "", ""
     via = (m.get("readVia") or "").strip()
     if via:
-        return esc("Read from %s's capture of %s. That is the day the copy was "
-                   "taken, not the day it was fetched." % (via, read_on))
-    return esc("Read on %s, and re-read every week." % read_on)
+        return ("Read from %s's capture of %s." % (via, read_on),
+                "That is the day the copy was taken, not the day it was fetched.")
+    return ("Read on %s, and re-read every week." % read_on, "")
+
+
+def freshness_notes(members):
+    """Each distinct explanation once, in the order it first appears.
+
+    The sentence is the ROSTER's, printed as published. Wisconsin's reads "so
+    this name is a dated capture", which is exact on the app's card (one member
+    per row) and slightly off here, where one copy now covers a whole board.
+    Rewriting somebody else's provenance sentence from this side is worse than
+    the nit; the fix, if it is worth making, is one word in
+    wi/scripts/build_wi_county_board_roster.py, where it would be right on both
+    surfaces.
+    """
+    out = []
+    for m in members:
+        _when, why = freshness(m)
+        if why and why not in out:
+            out.append(why)
+    return "".join('<p class="unlisted">%s</p>' % esc(w) for w in out)
 
 
 def districted_body(inst, name, rec):
@@ -867,7 +899,11 @@ def districted_body(inst, name, rec):
                    'which is %d more than the %d district%s above.</p>'
                    % (board_seats, "" if board_seats == 1 else "s",
                       board_seats - n_dist, n_dist, "" if n_dist == 1 else "s"))
-    return "\n".join(out), n_dist, named + extra_named
+    # ONE COPY OF EACH EXPLANATION, not one per member — see freshness().
+    everyone = [m for d in rec["districts"] for m in d["members"]]
+    everyone += [m for _a, _h, ms in (rec.get("extras") or []) for m in ms]
+    out.append(freshness_notes(everyone))
+    return "\n".join(x for x in out if x), n_dist, named + extra_named
 
 
 def at_large_body(inst, name, rec):
@@ -897,7 +933,8 @@ def at_large_body(inst, name, rec):
     out.append('<p class="cta-note">Opens the map with the county layer on. An '
                'at-large board has no district geometry, so the members above '
                'are the answer for anywhere in the county.</p>')
-    return "\n".join(out), 0, named
+    out.append(freshness_notes(rec["members"]))
+    return "\n".join(x for x in out if x), 0, named
 
 
 def source_note(rec, at_large):
@@ -1041,6 +1078,17 @@ h1 {
   margin: 22px 0 0; padding: 12px 14px; font-size: 13.5px; color: var(--ink-3);
   background: var(--surface-2); border-radius: var(--radius-card);
 }
+/* WHO TO ASK. Its own rules rather than a reuse of .district, because a clerk
+   is not a district: the same border and heading, and a body that reads as an
+   address block rather than a list of members. */
+.contact { margin: 18px 0 0; padding: 14px 0 2px; border-top: 1px solid var(--border); }
+.contact h2 {
+  font: var(--font-heading-weight, 700) 19px/1.2 var(--font-heading);
+  margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.02em;
+}
+.contact .who { margin: 0; font-weight: 600; }
+.contact .where { margin: 2px 0 0; font-size: 14px; color: var(--ink-3); }
+.contact .detail { margin: 4px 0 0; font-size: 13.5px; line-height: 1.5; }
 .disclaimer { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
 .foot {
   margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border);
@@ -1088,11 +1136,17 @@ def mark_svg():
     return svg
 
 
-def build_page(inst, name, rec, at_large, shell):
+def build_page(inst, name, rec, at_large, shell, contact=None):
     slug = rec["slug"]
     canonical = "%s%s/%s.html" % (inst["app_url"], inst["concept"], slug)
     body, n_dist, named = (at_large_body(inst, name, rec) if at_large
                            else districted_body(inst, name, rec))[:3]
+    # WHO TO ASK, after the seats and before the source line. The page names who
+    # holds the seats; a reader who thinks one of those names is wrong, or who
+    # wants a ballot, needs the office that answers for it.
+    block = contact_html(contact)
+    if block:
+        body = body + "\n" + block
     head = heading_of(inst, name)
     title = "%s — %s" % (inst["page_title"] % {"county": name}, inst["app_name"])
     if at_large:
@@ -1479,6 +1533,151 @@ def check_registration(read_paths):
     return problems, found
 
 
+# ——— WHO TO ASK, PER COUNTY ———
+#
+# The county page names who HOLDS the seats and said nothing about who to ask
+# when a reader thinks one of those names is wrong, or wants a ballot. Every
+# instance but Michigan already ships that: Illinois and Wisconsin publish a
+# county clerk with an office and a telephone, and Iowa's officers file carries
+# the board's own line plus the representation plan the county elects under.
+#
+# IT IS A SEPARATE ADAPTER FROM THE ROSTER, and deliberately: a clerk is not an
+# officeholder on this board, and folding the two together would put one in the
+# member count. It reads the file the APP already reads for the same county, so
+# the page and the card cannot name different clerks.
+#
+# WHAT IS RENDERED IS WHAT IS PUBLISHED. Illinois's file stores the clerk's name
+# and office in capitals — "RYAN A. NIEKAMP", "507 VERMONT STREET QUINCY, IL
+# 62301" — and the app's own county card renders them exactly that way.
+# Title-casing a person's name here would make this page disagree with the card
+# about how the county spells them, which is a decision about somebody's name
+# that belongs to the county.
+def _norm_county(name):
+    """The app's own normCountyName, character for character.
+
+    il/index.html joins the clerk roster to a county polygon with
+    `toUpperCase().replace(/\s*COUNTY\s*$/, "").replace(/[^A-Z]/g, "")`, and
+    this page must join it the same way or the two can name different clerks for
+    one county. That is not a nicety: the Illinois file's keys are
+    space-stripped (`JODAVIESS`, `ROCKISLAND`, `STCLAIR`), and Wisconsin's clerk
+    file spells two counties differently from its own supervisor roster ("Fond
+    du Lac" against "Fond Du Lac", "St. Croix" against "St Croix"). A
+    title-case join dropped six real counties' contacts over a spelling.
+    """
+    return re.sub(r"[^A-Z]", "",
+                  re.sub(r"\s*COUNTY\s*$", "", str(name or "").upper()))
+
+
+def _contact(label, name=None, lines=(), phone=None, email=None, website=None,
+             note=None, seats=None):
+    lines = [l for l in lines if (l or "").strip()]
+    if not (name or lines or phone or email or note):
+        return None
+    return dict(label=label, name=name, lines=lines, phone=phone, email=email,
+                website=website, note=note, seats=seats)
+
+
+def il_clerk_contact(inst):
+    """Illinois: il-county-clerks.json, keyed by the county's name in capitals.
+
+    101 of Illinois's 102 counties. PEORIA is not in the file at all — measured
+    2026-09-15, a real absence in the source rather than a join that missed, and
+    its page carries no contact rather than an empty one.
+    """
+    path = os.path.join(app_data("il"), "il-county-clerks.json")
+    if not os.path.exists(path):
+        return {}, [path]
+    by_norm = {_norm_county(n): n for n in IL_NAME_BY_SLUG.values()}
+    out = {}
+    for key, rec in _read(path).items():
+        if not isinstance(rec, dict):
+            continue
+        county = by_norm.get(_norm_county(key))
+        if not county:
+            continue
+        c = _contact("County Clerk", rec.get("name"), [rec.get("address")],
+                     rec.get("phone"), rec.get("email"))
+        if c:
+            out[_norm_county(county)] = c
+    return out, [path]
+
+
+def wi_clerk_contact(inst):
+    """Wisconsin: wi-county-clerks.json, keyed by FIPS and carrying the name."""
+    path = os.path.join(app_data("wi"), "wi-county-clerks.json")
+    if not os.path.exists(path):
+        return {}, [path]
+    out = {}
+    for rec in _read(path).values():
+        if not isinstance(rec, dict) or not (rec.get("county") or "").strip():
+            continue
+        lines = rec.get("address")
+        if isinstance(lines, str):
+            lines = [lines]
+        c = _contact("County Clerk", rec.get("name"), lines or [],
+                     rec.get("phone"), rec.get("email"), rec.get("website"))
+        if c:
+            out[_norm_county(rec["county"])] = c
+    return out, [path]
+
+
+def ia_board_contact(inst):
+    """Iowa: the BOARD'S own line and the plan it elects under.
+
+    ia-county-officers.json carries no clerk or auditor — measured 2026-09-15,
+    `auditor` is null on all 99 — so what this contributes is the board's own
+    telephone (90 of 99) and its representation plan (89), which is a fact about
+    how the county elects rather than a person.
+    """
+    path = os.path.join(app_data("ia"), "ia-county-officers.json")
+    if not os.path.exists(path):
+        return {}, [path]
+    out = {}
+    for rec in _read(path).values():
+        if not isinstance(rec, dict) or not (rec.get("county") or "").strip():
+            continue
+        plan, seats = rec.get("supervisorPlan"), rec.get("supervisorSeats")
+        note = None
+        if plan and seats:
+            note = ("The county elects %d supervisors under %s, the "
+                    "representation plan it has adopted."
+                    % (seats, str(plan).title()))
+        c = _contact("Board of Supervisors", None, [], rec.get("boardPhone"),
+                     None, None, note, seats=seats)
+        if c:
+            out[_norm_county(rec["county"])] = c
+    return out, [path]
+
+
+def contact_html(c):
+    """One contact block. Nothing is invented: a field the county does not
+    publish simply does not render."""
+    if not c:
+        return ""
+    bits = ['<section class="contact">', '<h2>%s</h2>' % esc(c["label"])]
+    if c["name"]:
+        bits.append('<p class="who">%s</p>' % esc(c["name"]))
+    if c["lines"]:
+        bits.append('<p class="where">%s</p>'
+                    % "<br>".join(esc(l) for l in c["lines"]))
+    details = []
+    if c["phone"]:
+        details.append('<a href="tel:%s">%s</a>'
+                       % (esc(re.sub(r"[^0-9+]", "", c["phone"])), esc(c["phone"])))
+    if c["email"]:
+        details.append('<a href="mailto:%s">%s</a>'
+                       % (esc(c["email"]), esc(c["email"])))
+    if c["website"]:
+        details.append('<a href="%s" target="_blank" rel="noopener">County website</a>'
+                       % esc(c["website"]))
+    if details:
+        bits.append('<p class="detail">%s</p>' % " &middot; ".join(details))
+    if c["note"]:
+        bits.append('<p class="detail">%s</p>' % esc(c["note"]))
+    bits.append('</section>')
+    return "\n".join(bits)
+
+
 def shell_for_pages():
     """The styling every page shares, read from the files that own it."""
     tokens_css = read(TOKENS, "the design tokens")
@@ -1573,10 +1772,45 @@ def main():
     stale, orphans, totals, wrong = [], [], [], []
     for inst in INSTANCES:
         _i, counties, notes = loaded[inst["tag"]]
+        # WHO TO ASK, from the file the app already reads for the same county.
+        # An instance with no source names none — Michigan publishes no county
+        # clerk roster, so its pages carry no contact rather than a blank one.
+        contacts = {}
+        if inst.get("contacts"):
+            contacts, _paths = globals()[inst["contacts"]](inst)
+            # TWO FILES NOW STATE A SEAT COUNT ON ONE PAGE. Iowa's page says
+            # "3 districts and the 3 members who hold them" from the roster and
+            # "the county elects 3 supervisors under Plan 3" from the officers
+            # file. Measured 2026-09-15 all 17 agree; a page that states both
+            # and contradicts itself is worse than one that states neither, so
+            # the disagreement fails rather than shipping.
+            for n, rec in sorted(counties.items()):
+                c = contacts.get(_norm_county(n))
+                if not c or not c.get("seats") or rec["at_large"]:
+                    continue
+                held = sum(len(d["members"]) for d in rec["districts"])
+                if c["seats"] != held:
+                    # INTO `wrong`, not `problems`: that list is checked before
+                    # this loop runs, so an append there would be collected and
+                    # never read. The gate's own negative test found it.
+                    wrong.append(
+                        "%s: the roster seats %d and %s says the county elects "
+                        "%d. The page states both and would contradict itself"
+                        % (heading_of(inst, n), held, inst["contacts"],
+                           c["seats"]))
+            missing = sorted(n for n in counties
+                             if _norm_county(n) not in contacts)
+            print("  %s  %d of %d county page(s) name an office to ask%s"
+                  % (inst["tag"], len(counties) - len(missing), len(counties),
+                     "" if not missing else
+                     "; %d do not (%s%s)"
+                     % (len(missing), ", ".join(missing[:4]),
+                        ", …" if len(missing) > 4 else "")))
         pages, people, skipped, rows = {}, 0, 0, []
         for name, rec in sorted(counties.items()):
             at_large = rec["at_large"]
-            html = build_page(inst, name, rec, at_large, shell)
+            html = build_page(inst, name, rec, at_large, shell,
+                              contacts.get(_norm_county(name)))
             pages[rec["slug"]] = html
             wrong += ["%s: %s" % (inst["tag"], w)
                       for w in verify_page(inst, name, rec, at_large, html)]

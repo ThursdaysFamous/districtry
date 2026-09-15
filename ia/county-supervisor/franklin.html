@@ -237,6 +237,17 @@ h1 {
   margin: 22px 0 0; padding: 12px 14px; font-size: 13.5px; color: var(--ink-3);
   background: var(--surface-2); border-radius: var(--radius-card);
 }
+/* WHO TO ASK. Its own rules rather than a reuse of .district, because a clerk
+   is not a district: the same border and heading, and a body that reads as an
+   address block rather than a list of members. */
+.contact { margin: 18px 0 0; padding: 14px 0 2px; border-top: 1px solid var(--border); }
+.contact h2 {
+  font: var(--font-heading-weight, 700) 19px/1.2 var(--font-heading);
+  margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.02em;
+}
+.contact .who { margin: 0; font-weight: 600; }
+.contact .where { margin: 2px 0 0; font-size: 14px; color: var(--ink-3); }
+.contact .detail { margin: 4px 0 0; font-size: 13.5px; line-height: 1.5; }
 .disclaimer { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
 .foot {
   margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border);
@@ -316,6 +327,11 @@ h1 {
 <section class="district" id="district-3">
 <h2>District 3</h2>
 <ul class="members"><li class="member"><span class="m-name">Chris Vanness</span><span class="m-party">Republican</span><span class="m-contact"><a href="tel:6414565624">(641) 456-5624</a></span></li></ul>
+</section>
+<section class="contact">
+<h2>Board of Supervisors</h2>
+<p class="detail"><a href="tel:6414565624">(641) 456-5624</a></p>
+<p class="detail">The county elects 3 supervisors under Plan 3, the representation plan it has adopted.</p>
 </section>
 <p class="source-note">Source: <a href="https://www.franklincountyia.gov/government/board_of_supervisors/index.php" rel="noopener" target="_blank">the county's own published roster</a>, re-read on a schedule and landed as a reviewed pull request.</p>
 <p class="disclaimer">districtry is an independent, unofficial civic reference.

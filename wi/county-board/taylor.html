@@ -237,6 +237,17 @@ h1 {
   margin: 22px 0 0; padding: 12px 14px; font-size: 13.5px; color: var(--ink-3);
   background: var(--surface-2); border-radius: var(--radius-card);
 }
+/* WHO TO ASK. Its own rules rather than a reuse of .district, because a clerk
+   is not a district: the same border and heading, and a body that reads as an
+   address block rather than a list of members. */
+.contact { margin: 18px 0 0; padding: 14px 0 2px; border-top: 1px solid var(--border); }
+.contact h2 {
+  font: var(--font-heading-weight, 700) 19px/1.2 var(--font-heading);
+  margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.02em;
+}
+.contact .who { margin: 0; font-weight: 600; }
+.contact .where { margin: 2px 0 0; font-size: 14px; color: var(--ink-3); }
+.contact .detail { margin: 4px 0 0; font-size: 13.5px; line-height: 1.5; }
 .disclaimer { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
 .foot {
   margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border);
@@ -307,71 +318,78 @@ h1 {
 <p class="cta-note">Opens the map with the county and county board layers on. Search your address or ZIP, or tap your location.</p>
 <section class="district" id="district-1">
 <h2>District 1</h2>
-<ul class="members"><li class="member"><span class="m-name">Lisa Carbaugh</span><span class="m-contact"><a href="mailto:lisa.carbaugh@co.taylor.wi.us">lisa.carbaugh@co.taylor.wi.us</a> · <a href="tel:7159651980">715-965-1980</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Lisa Carbaugh</span><span class="m-contact"><a href="mailto:lisa.carbaugh@co.taylor.wi.us">lisa.carbaugh@co.taylor.wi.us</a> · <a href="tel:7159651980">715-965-1980</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-2">
 <h2>District 2</h2>
-<ul class="members"><li class="member"><span class="m-name">Tim Hansen</span><span class="m-contact"><a href="mailto:tim.hansen@co.taylor.wi.us">tim.hansen@co.taylor.wi.us</a> · <a href="tel:7159657662">715-965-7662</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Tim Hansen</span><span class="m-contact"><a href="mailto:tim.hansen@co.taylor.wi.us">tim.hansen@co.taylor.wi.us</a> · <a href="tel:7159657662">715-965-7662</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-3">
 <h2>District 3</h2>
-<ul class="members"><li class="member"><span class="m-name">Susan Swiantek</span><span class="m-contact"><a href="mailto:sue.swiantek@co.taylor.wi.us">sue.swiantek@co.taylor.wi.us</a> · <a href="tel:7155609409">715-560-9409</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Susan Swiantek</span><span class="m-contact"><a href="mailto:sue.swiantek@co.taylor.wi.us">sue.swiantek@co.taylor.wi.us</a> · <a href="tel:7155609409">715-560-9409</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-4">
 <h2>District 4</h2>
-<ul class="members"><li class="member"><span class="m-name">Michael Bub</span><span class="m-contact"><a href="mailto:michael.bub@co.taylor.wi.us">michael.bub@co.taylor.wi.us</a> · <a href="tel:7159657748">715-965-7748</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Michael Bub</span><span class="m-contact"><a href="mailto:michael.bub@co.taylor.wi.us">michael.bub@co.taylor.wi.us</a> · <a href="tel:7159657748">715-965-7748</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-5">
 <h2>District 5</h2>
-<ul class="members"><li class="member"><span class="m-name">Loren (Jim) Metz</span><span class="m-contact"><a href="mailto:jim.metz@co.taylor.wi.us">jim.metz@co.taylor.wi.us</a> · <a href="tel:7157480740">715-748-0740</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Loren (Jim) Metz</span><span class="m-contact"><a href="mailto:jim.metz@co.taylor.wi.us">jim.metz@co.taylor.wi.us</a> · <a href="tel:7157480740">715-748-0740</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-6">
 <h2>District 6</h2>
-<ul class="members"><li class="member"><span class="m-name">Scott Mildbrand</span><span class="m-contact"><a href="mailto:scott.mildbrand@co.taylor.wi.us">scott.mildbrand@co.taylor.wi.us</a> · <a href="tel:7157483988">715-748-3988</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Scott Mildbrand</span><span class="m-contact"><a href="mailto:scott.mildbrand@co.taylor.wi.us">scott.mildbrand@co.taylor.wi.us</a> · <a href="tel:7157483988">715-748-3988</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-7">
 <h2>District 7</h2>
-<ul class="members"><li class="member"><span class="m-name">Lorie Floyd</span><span class="m-contact"><a href="mailto:lorie.floyd@co.taylor.wi.us">lorie.floyd@co.taylor.wi.us</a> · <a href="tel:6084122974">608-412-2974</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Lorie Floyd</span><span class="m-contact"><a href="mailto:lorie.floyd@co.taylor.wi.us">lorie.floyd@co.taylor.wi.us</a> · <a href="tel:6084122974">608-412-2974</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-8">
 <h2>District 8</h2>
-<ul class="members"><li class="member"><span class="m-name">Charles Zenner</span><span class="m-contact"><a href="mailto:chuck.zenner@co.taylor.wi.us">chuck.zenner@co.taylor.wi.us</a> · <a href="tel:7156782172">715-678-2172</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Charles Zenner</span><span class="m-contact"><a href="mailto:chuck.zenner@co.taylor.wi.us">chuck.zenner@co.taylor.wi.us</a> · <a href="tel:7156782172">715-678-2172</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-9">
 <h2>District 9</h2>
-<ul class="members"><li class="member"><span class="m-name">Diane J. Albrecht</span><span class="m-contact"><a href="mailto:diane.albrecht@co.taylor.wi.us">diane.albrecht@co.taylor.wi.us</a> · <a href="tel:7157485471">715-748-5471</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Diane J. Albrecht</span><span class="m-contact"><a href="mailto:diane.albrecht@co.taylor.wi.us">diane.albrecht@co.taylor.wi.us</a> · <a href="tel:7157485471">715-748-5471</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-10">
 <h2>District 10</h2>
-<ul class="members"><li class="member"><span class="m-name">Catherine Lemke</span><span class="m-contact"><a href="mailto:catherine.lemke@co.taylor.wi.us">catherine.lemke@co.taylor.wi.us</a> · <a href="tel:7157485694">715-748-5694</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Catherine Lemke</span><span class="m-contact"><a href="mailto:catherine.lemke@co.taylor.wi.us">catherine.lemke@co.taylor.wi.us</a> · <a href="tel:7157485694">715-748-5694</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-11">
 <h2>District 11</h2>
-<ul class="members"><li class="member"><span class="m-name">James Gebauer</span><span class="m-contact"><a href="mailto:jim.gebauer@co.taylor.wi.us">jim.gebauer@co.taylor.wi.us</a> · <a href="tel:7157484871">715-748-4871</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">James Gebauer</span><span class="m-contact"><a href="mailto:jim.gebauer@co.taylor.wi.us">jim.gebauer@co.taylor.wi.us</a> · <a href="tel:7157484871">715-748-4871</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-12">
 <h2>District 12</h2>
-<ul class="members"><li class="member"><span class="m-name">Rollie Thums</span><span class="m-contact"><a href="mailto:rollie.thums@co.taylor.wi.us">rollie.thums@co.taylor.wi.us</a> · <a href="tel:7154275809">715-427-5809</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Rollie Thums</span><span class="m-contact"><a href="mailto:rollie.thums@co.taylor.wi.us">rollie.thums@co.taylor.wi.us</a> · <a href="tel:7154275809">715-427-5809</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-13">
 <h2>District 13</h2>
-<ul class="members"><li class="member"><span class="m-name">Harvey &#x27;Bud&#x27; Suckow</span><span class="m-contact"><a href="mailto:bud.suckow@co.taylor.wi.us">bud.suckow@co.taylor.wi.us</a> · <a href="tel:7158974514">715-897-4514</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Harvey &#x27;Bud&#x27; Suckow</span><span class="m-contact"><a href="mailto:bud.suckow@co.taylor.wi.us">bud.suckow@co.taylor.wi.us</a> · <a href="tel:7158974514">715-897-4514</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-14">
 <h2>District 14</h2>
-<ul class="members"><li class="member"><span class="m-name">Karen Cummings</span><span class="m-contact"><a href="mailto:karen.cummings@co.taylor.wi.us">karen.cummings@co.taylor.wi.us</a> · <a href="tel:7156685226">715-668-5226</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Karen Cummings</span><span class="m-contact"><a href="mailto:karen.cummings@co.taylor.wi.us">karen.cummings@co.taylor.wi.us</a> · <a href="tel:7156685226">715-668-5226</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-15">
 <h2>District 15</h2>
-<ul class="members"><li class="member"><span class="m-name">Lynette Rosemeyer</span><span class="m-contact"><a href="mailto:lynn.rosemeyer@co.taylor.wi.us">lynn.rosemeyer@co.taylor.wi.us</a> · <a href="tel:7158270027">715-827-0027</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Lynette Rosemeyer</span><span class="m-contact"><a href="mailto:lynn.rosemeyer@co.taylor.wi.us">lynn.rosemeyer@co.taylor.wi.us</a> · <a href="tel:7158270027">715-827-0027</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-16">
 <h2>District 16</h2>
-<ul class="members"><li class="member"><span class="m-name">Darrell Thompson</span><span class="m-contact"><a href="mailto:darrell.thompson@co.taylor.wi.us">darrell.thompson@co.taylor.wi.us</a> · <a href="tel:7156448285">715-644-8285</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Darrell Thompson</span><span class="m-contact"><a href="mailto:darrell.thompson@co.taylor.wi.us">darrell.thompson@co.taylor.wi.us</a> · <a href="tel:7156448285">715-644-8285</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-17">
 <h2>District 17</h2>
-<ul class="members"><li class="member"><span class="m-name">Rodney Adams</span><span class="m-contact"><a href="mailto:rod.adams@co.taylor.wi.us">rod.adams@co.taylor.wi.us</a> · <a href="tel:7156782397">715-678-2397</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Rodney Adams</span><span class="m-contact"><a href="mailto:rod.adams@co.taylor.wi.us">rod.adams@co.taylor.wi.us</a> · <a href="tel:7156782397">715-678-2397</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
+</section>
+<p class="unlisted">The county&#x27;s website refuses automated readers, so these names are a dated capture rather than the weekly re-read the other named counties get.</p>
+<section class="contact">
+<h2>County Clerk</h2>
+<p class="who">Andria M. Farrand</p>
+<p class="where">224 South 2nd St<br>Medford WI 54451</p>
+<p class="detail"><a href="tel:7157481460">715-748-1460</a> &middot; <a href="mailto:andria.farrand@co.taylor.wi.us">andria.farrand@co.taylor.wi.us</a> &middot; <a href="https://co.taylor.wi.us" target="_blank" rel="noopener">County website</a></p>
 </section>
 <p class="source-note">Source: <a href="https://co.taylor.wi.us/directory/county-board/" rel="noopener" target="_blank">the county's own published roster</a>, re-read on a schedule and landed as a reviewed pull request.</p>
 <p class="disclaimer">districtry is an independent, unofficial civic reference.

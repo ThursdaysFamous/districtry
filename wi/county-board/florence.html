@@ -237,6 +237,17 @@ h1 {
   margin: 22px 0 0; padding: 12px 14px; font-size: 13.5px; color: var(--ink-3);
   background: var(--surface-2); border-radius: var(--radius-card);
 }
+/* WHO TO ASK. Its own rules rather than a reuse of .district, because a clerk
+   is not a district: the same border and heading, and a body that reads as an
+   address block rather than a list of members. */
+.contact { margin: 18px 0 0; padding: 14px 0 2px; border-top: 1px solid var(--border); }
+.contact h2 {
+  font: var(--font-heading-weight, 700) 19px/1.2 var(--font-heading);
+  margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.02em;
+}
+.contact .who { margin: 0; font-weight: 600; }
+.contact .where { margin: 2px 0 0; font-size: 14px; color: var(--ink-3); }
+.contact .detail { margin: 4px 0 0; font-size: 13.5px; line-height: 1.5; }
 .disclaimer { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
 .foot {
   margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border);
@@ -352,6 +363,12 @@ h1 {
 <section class="district" id="district-12">
 <h2>District 12</h2>
 <ul class="members"><li class="member"><span class="m-name">Chase Erickson</span><span class="m-contact"><a href="mailto:chasesellsrealestate@outlook.com">chasesellsrealestate@outlook.com</a> · <a href="tel:9063965428">906-396-5428</a></span><span class="m-asof">Read on 2026-09-10, and re-read every week.</span></li></ul>
+</section>
+<section class="contact">
+<h2>County Clerk</h2>
+<p class="who">Donna Trudell</p>
+<p class="where">501 Lake St<br>P.O. Box 410<br>Florence WI 54121</p>
+<p class="detail"><a href="tel:7155283201">715-528-3201</a> &middot; <a href="mailto:dtrudell@florencecountywi.gov">dtrudell@florencecountywi.gov</a> &middot; <a href="https://www.florencecountywi.com/" target="_blank" rel="noopener">County website</a></p>
 </section>
 <p class="source-note">Source: <a href="https://www.florencecountywi.com/government/boards_and_committees/" rel="noopener" target="_blank">the county's own published roster</a>, re-read on a schedule and landed as a reviewed pull request.</p>
 <p class="disclaimer">districtry is an independent, unofficial civic reference.

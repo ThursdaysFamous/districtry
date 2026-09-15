@@ -237,6 +237,17 @@ h1 {
   margin: 22px 0 0; padding: 12px 14px; font-size: 13.5px; color: var(--ink-3);
   background: var(--surface-2); border-radius: var(--radius-card);
 }
+/* WHO TO ASK. Its own rules rather than a reuse of .district, because a clerk
+   is not a district: the same border and heading, and a body that reads as an
+   address block rather than a list of members. */
+.contact { margin: 18px 0 0; padding: 14px 0 2px; border-top: 1px solid var(--border); }
+.contact h2 {
+  font: var(--font-heading-weight, 700) 19px/1.2 var(--font-heading);
+  margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.02em;
+}
+.contact .who { margin: 0; font-weight: 600; }
+.contact .where { margin: 2px 0 0; font-size: 14px; color: var(--ink-3); }
+.contact .detail { margin: 4px 0 0; font-size: 13.5px; line-height: 1.5; }
 .disclaimer { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
 .foot {
   margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border);
@@ -307,11 +318,11 @@ h1 {
 <p class="cta-note">Opens the map with the county and county board layers on. Search your address or ZIP, or tap your location.</p>
 <section class="district" id="district-1">
 <h2>District 1</h2>
-<ul class="members"><li class="member"><span class="m-name">Alec Hampton</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Alec Hampton</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-2">
 <h2>District 2</h2>
-<ul class="members"><li class="member"><span class="m-name">Jerry Biller</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Jerry Biller</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-3">
 <h2>District 3</h2>
@@ -319,11 +330,11 @@ h1 {
 </section>
 <section class="district" id="district-4">
 <h2>District 4</h2>
-<ul class="members"><li class="member"><span class="m-name">John Moore</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">John Moore</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-5">
 <h2>District 5</h2>
-<ul class="members"><li class="member"><span class="m-name">Terry Wedwick</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Terry Wedwick</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-6">
 <h2>District 6</h2>
@@ -331,55 +342,62 @@ h1 {
 </section>
 <section class="district" id="district-7">
 <h2>District 7</h2>
-<ul class="members"><li class="member"><span class="m-name">Bill Stewart</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Bill Stewart</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-8">
 <h2>District 8</h2>
-<ul class="members"><li class="member"><span class="m-name">Tom Cudo</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Tom Cudo</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-9">
 <h2>District 9</h2>
-<ul class="members"><li class="member"><span class="m-name">Lisa Podgornik</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Lisa Podgornik</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-10">
 <h2>District 10</h2>
-<ul class="members"><li class="member"><span class="m-name">Anton Ziesler</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Anton Ziesler</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-11">
 <h2>District 11</h2>
-<ul class="members"><li class="member"><span class="m-name">Phil Schneider</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Phil Schneider</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-12">
 <h2>District 12</h2>
-<ul class="members"><li class="member"><span class="m-name">Jim Meyer</span><span class="m-role">Vice-Chairman</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Jim Meyer</span><span class="m-role">Vice-Chairman</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-13">
 <h2>District 13</h2>
-<ul class="members"><li class="member"><span class="m-name">Kurt Gorsegner</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Kurt Gorsegner</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-14">
 <h2>District 14</h2>
-<ul class="members"><li class="member"><span class="m-name">Jeremy Vincent</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Jeremy Vincent</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-15">
 <h2>District 15</h2>
-<ul class="members"><li class="member"><span class="m-name">Tom Hanson</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Tom Hanson</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-16">
 <h2>District 16</h2>
-<ul class="members"><li class="member"><span class="m-name">Lois Goode</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Lois Goode</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-17">
 <h2>District 17</h2>
-<ul class="members"><li class="member"><span class="m-name">Dave Willingham</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Dave Willingham</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-18">
 <h2>District 18</h2>
-<ul class="members"><li class="member"><span class="m-name">Mike Russell</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Mike Russell</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-19">
 <h2>District 19</h2>
-<ul class="members"><li class="member"><span class="m-name">Ron Freeman</span><span class="m-role">Chairman</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Ron Freeman</span><span class="m-role">Chairman</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
+</section>
+<p class="unlisted">The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</p>
+<section class="contact">
+<h2>County Clerk</h2>
+<p class="who">Connie Meyer</p>
+<p class="where">311 Miner Ave East<br>Suite C150<br>Ladysmith WI 54848</p>
+<p class="detail"><a href="tel:7155322100">715-532-2100</a> &middot; <a href="mailto:cmeyer@ruskcountywi.us">cmeyer@ruskcountywi.us</a> &middot; <a href="https://ruskcounty.org/" target="_blank" rel="noopener">County website</a></p>
 </section>
 <p class="source-note">Source: <a href="https://ruskcounty.org/supervisors" rel="noopener" target="_blank">the county's own published roster</a>, re-read on a schedule and landed as a reviewed pull request.</p>
 <p class="disclaimer">districtry is an independent, unofficial civic reference.

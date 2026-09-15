@@ -237,6 +237,17 @@ h1 {
   margin: 22px 0 0; padding: 12px 14px; font-size: 13.5px; color: var(--ink-3);
   background: var(--surface-2); border-radius: var(--radius-card);
 }
+/* WHO TO ASK. Its own rules rather than a reuse of .district, because a clerk
+   is not a district: the same border and heading, and a body that reads as an
+   address block rather than a list of members. */
+.contact { margin: 18px 0 0; padding: 14px 0 2px; border-top: 1px solid var(--border); }
+.contact h2 {
+  font: var(--font-heading-weight, 700) 19px/1.2 var(--font-heading);
+  margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.02em;
+}
+.contact .who { margin: 0; font-weight: 600; }
+.contact .where { margin: 2px 0 0; font-size: 14px; color: var(--ink-3); }
+.contact .detail { margin: 4px 0 0; font-size: 13.5px; line-height: 1.5; }
 .disclaimer { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
 .foot {
   margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border);
@@ -307,51 +318,58 @@ h1 {
 <p class="cta-note">Opens the map with the county and county board layers on. Search your address or ZIP, or tap your location.</p>
 <section class="district" id="district-1">
 <h2>District 1</h2>
-<ul class="members"><li class="member"><span class="m-name">Michael Wright</span><span class="m-contact"><a href="mailto:pcsdist1@co.pepin.wi.us">pcsdist1@co.pepin.wi.us</a> · <a href="tel:7159263210">715-926-3210</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Michael Wright</span><span class="m-contact"><a href="mailto:pcsdist1@co.pepin.wi.us">pcsdist1@co.pepin.wi.us</a> · <a href="tel:7159263210">715-926-3210</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-2">
 <h2>District 2</h2>
-<ul class="members"><li class="member"><span class="m-name">Gary S. Bauer</span><span class="m-contact"><a href="mailto:pcdistrict2@co.pepin.wi.us">pcdistrict2@co.pepin.wi.us</a> · <a href="tel:7154951532">715-495-1532</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Gary S. Bauer</span><span class="m-contact"><a href="mailto:pcdistrict2@co.pepin.wi.us">pcdistrict2@co.pepin.wi.us</a> · <a href="tel:7154951532">715-495-1532</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-3">
 <h2>District 3</h2>
-<ul class="members"><li class="member"><span class="m-name">Andy Winkler</span><span class="m-contact"><a href="mailto:pcsdist3@co.pepin.wi.us">pcsdist3@co.pepin.wi.us</a> · <a href="tel:7155779534">715-577-9534</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Andy Winkler</span><span class="m-contact"><a href="mailto:pcsdist3@co.pepin.wi.us">pcsdist3@co.pepin.wi.us</a> · <a href="tel:7155779534">715-577-9534</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-4">
 <h2>District 4</h2>
-<ul class="members"><li class="member"><span class="m-name">Joe Schieffer</span><span class="m-contact"><a href="tel:7154957217">715-495-7217</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Joe Schieffer</span><span class="m-contact"><a href="tel:7154957217">715-495-7217</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-5">
 <h2>District 5</h2>
-<ul class="members"><li class="member"><span class="m-name">Randall Weiss</span><span class="m-contact"><a href="tel:7154957429">715-495-7429</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Randall Weiss</span><span class="m-contact"><a href="tel:7154957429">715-495-7429</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-6">
 <h2>District 6</h2>
-<ul class="members"><li class="member"><span class="m-name">Elizabeth Bauer</span><span class="m-contact"><a href="mailto:pcsdist6@co.pepin.wi.us">pcsdist6@co.pepin.wi.us</a> · <a href="tel:5047233560">504-723-3560</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Elizabeth Bauer</span><span class="m-contact"><a href="mailto:pcsdist6@co.pepin.wi.us">pcsdist6@co.pepin.wi.us</a> · <a href="tel:5047233560">504-723-3560</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-7">
 <h2>District 7</h2>
-<ul class="members"><li class="member"><span class="m-name">Kris Sabelko</span><span class="m-contact"><a href="mailto:pcdist7@co.pepin.wi.us">pcdist7@co.pepin.wi.us</a> · <a href="tel:7155053936">715-505-3936</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Kris Sabelko</span><span class="m-contact"><a href="mailto:pcdist7@co.pepin.wi.us">pcdist7@co.pepin.wi.us</a> · <a href="tel:7155053936">715-505-3936</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-8">
 <h2>District 8</h2>
-<ul class="members"><li class="member"><span class="m-name">Tom Milliren</span><span class="m-role">Chairperson</span><span class="m-contact"><a href="mailto:pcsdist8@co.pepin.wi.us">pcsdist8@co.pepin.wi.us</a> · <a href="tel:7154956597">715-495-6597</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Tom Milliren</span><span class="m-role">Chairperson</span><span class="m-contact"><a href="mailto:pcsdist8@co.pepin.wi.us">pcsdist8@co.pepin.wi.us</a> · <a href="tel:7154956597">715-495-6597</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-9">
 <h2>District 9</h2>
-<ul class="members"><li class="member"><span class="m-name">John C. Andrews</span><span class="m-role">Vice-Chairperson</span><span class="m-contact"><a href="mailto:pcsdist9@co.pepin.wi.us">pcsdist9@co.pepin.wi.us</a> · <a href="tel:7152793058">715-279-3058</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">John C. Andrews</span><span class="m-role">Vice-Chairperson</span><span class="m-contact"><a href="mailto:pcsdist9@co.pepin.wi.us">pcsdist9@co.pepin.wi.us</a> · <a href="tel:7152793058">715-279-3058</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-10">
 <h2>District 10</h2>
-<ul class="members"><li class="member"><span class="m-name">Kevin C. Kosok</span><span class="m-contact"><a href="mailto:pcsdist10@co.pepin.wi.us">pcsdist10@co.pepin.wi.us</a> · <a href="tel:7154951761">715-495-1761</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Kevin C. Kosok</span><span class="m-contact"><a href="mailto:pcsdist10@co.pepin.wi.us">pcsdist10@co.pepin.wi.us</a> · <a href="tel:7154951761">715-495-1761</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-11">
 <h2>District 11</h2>
-<ul class="members"><li class="member"><span class="m-name">Vicki Kosok</span><span class="m-contact"><a href="mailto:pcdistrict11@co.pepin.wi.us">pcdistrict11@co.pepin.wi.us</a> · <a href="tel:7154423071">715-442-3071</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Vicki Kosok</span><span class="m-contact"><a href="mailto:pcdistrict11@co.pepin.wi.us">pcdistrict11@co.pepin.wi.us</a> · <a href="tel:7154423071">715-442-3071</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
 </section>
 <section class="district" id="district-12">
 <h2>District 12</h2>
-<ul class="members"><li class="member"><span class="m-name">Angie Bocksell</span><span class="m-role">2nd Vice-Chairperson</span><span class="m-contact"><a href="mailto:pcsdist12@co.pepin.wi.us">pcsdist12@co.pepin.wi.us</a> · <a href="tel:7155590830">715-559-0830</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Angie Bocksell</span><span class="m-role">2nd Vice-Chairperson</span><span class="m-contact"><a href="mailto:pcsdist12@co.pepin.wi.us">pcsdist12@co.pepin.wi.us</a> · <a href="tel:7155590830">715-559-0830</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-31.</span></li></ul>
+</section>
+<p class="unlisted">The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</p>
+<section class="contact">
+<h2>County Clerk</h2>
+<p class="who">Audrey Bauer</p>
+<p class="where">740 7th Avenue W<br>P.O. Box 39<br>Durand WI 54736</p>
+<p class="detail"><a href="tel:7156728857">715-672-8857</a> &middot; <a href="mailto:countyclerk@co.pepin.wi.us">countyclerk@co.pepin.wi.us</a> &middot; <a href="https://www.co.pepin.wi.us/" target="_blank" rel="noopener">County website</a></p>
 </section>
 <p class="source-note">Source: <a href="https://www.co.pepin.wi.us/bos" rel="noopener" target="_blank">the county's own published roster</a>, re-read on a schedule and landed as a reviewed pull request.</p>
 <p class="disclaimer">districtry is an independent, unofficial civic reference.

@@ -431,7 +431,86 @@ Three things the build found:
   shared footer byline, and `build_county_pages.py --check` said so. That is the
   one-copy byline working.
 
+### 7. County-page uniqueness — measured and improved, not yet at 60%
+
+The audit reported the county pages at a median 27% unique text against a 60%
+target, 2 of 170 passing. **Re-measured on this branch before touching
+anything: median 42.2%, 21 of 183 passing, median 336 words, 79 under 300.** The
+audit's figure was taken before the pages gained Cook, the seven GIS-only
+counties and the shared-byline About link; it is not reproduced and it is not
+disputed, it is superseded by a figure whose method is stated.
+
+`scripts/measure_county_page_text.py` keeps that method, because the first
+version of it lived in a scratch directory. **It reports two numbers, and one of
+them exists because the other cannot see the defect it finds.** The audit's
+measure is the share of a page's distinct 5-word shingles that appear on no
+other county page. That compares SETS, so a sentence printed 29 times counts
+exactly as much as a sentence printed once — and Wisconsin's Dunn County page
+said the same 27-word provenance sentence **29 times, 783 of its 1,312 words**,
+while scoring an unremarkable 47% unique. Seven pages did it, 134 repetitions
+between them. The second number is the share of a page's words inside a sentence
+the page repeats.
+
+Two changes:
+
+- **The per-member provenance explanation is lifted to one copy per page**, which
+  is the collapse the audit asked for. `freshness()` now returns the DATE and the
+  EXPLANATION separately: the date can differ row to row and stays on the row,
+  the explanation is a fact about the county's WEBSITE and is printed once. Dunn
+  went from 1,312 words to 556. The repeated-sentence figure went from 9 pages to
+  0 — and the shingle figure moved by nothing at all, which is the point of
+  measuring both.
+- **Every page now names an office to ask.** 171 of 183 carry a county clerk with
+  an office, a telephone and an e-mail (Illinois and Wisconsin) or the board's own
+  line and the representation plan the county elects under (Iowa), read from the
+  file the app already reads for the same county. Michigan publishes no county
+  clerk roster, so its eleven carry none rather than a blank block. Illinois's
+  Peoria is the one real absence: 101 of 102 counties are in the clerk file and
+  Peoria is not.
+
+**The join is the app's own `normCountyName`, character for character**, and it
+had to be: the Illinois clerk file's keys are space-stripped (`JODAVIESS`,
+`ROCKISLAND`, `STCLAIR`) and Wisconsin's clerk file spells two counties
+differently from its own supervisor roster ("Fond du Lac" against "Fond Du Lac",
+"St. Croix" against "St Croix"). A title-case join dropped six real counties'
+contacts over a spelling, and the build printed the six, which is how it was
+caught.
+
+**After both: median 45.5%, 28 of 183 passing, median 356 words, 68 under 300.**
+
+**TWO FILES NOW STATE A SEAT COUNT ON ONE IOWA PAGE, so the two are gated
+against each other.** The page says "3 districts and the 3 members who hold
+them" from the roster and "the county elects 3 supervisors under Plan 3" from
+the officers file. Measured 2026-09-15 all 17 agree; a page that states both and
+contradicts itself is worse than one that states neither, so a disagreement
+fails the build. Its negative test caught the gate reporting into a list that is
+checked BEFORE the loop that fills it, where the failure was collected and never
+read — a gate whose own test is the only thing that would have found it.
+
+**THE REMAINING LEVER IS MEASURED AND BLOCKED ON A MISSING FILE.** The audit's
+other suggestion — the districts that overlap each county — is the biggest
+per-county fact still unwritten, and it would link the new legislator pages from
+183 places. All four instances ship congressional and both legislative chambers
+as geometry, and a grid-sampled overlap runs in well under a second and gives
+right answers where it can be checked (Warren County: congressional 15 and 17,
+Senate 36 and 47, House 71 and 94 — internally consistent, since Illinois pairs
+two House districts to each Senate district). **Illinois ships county polygons
+for only the counties that need a coverage test**, so Cook and most others have
+no geometry here at all; the app fetches a 3.5 MB statewide county layer from
+TIGERweb at runtime. Closing this needs an Illinois county fabric shipped as a
+file, which is its own pipeline and its own gate.
+
+**A cheap neighbouring-county adjacency was tried and rejected, which is worth
+recording so it is not tried again.** Snapping the shipped outlines to a ~440 m
+grid and calling two counties adjacent when they share a cell gives correct
+answers for Warren, Monroe and Jo Daviess and says **Cook County borders
+nothing** — the outlines are independently simplified and do not share vertices.
+Clean, fast, confidently wrong: the same shape as the Knox fill-colour method
+this project already records. An adjacency worth shipping comes from the Census
+Bureau's own county adjacency file.
+
 ### Still open in phase 2
 
-- County-page uniqueness above 60%.
+- County-page uniqueness above 60%, which needs the overlapping-districts work
+  above and therefore an Illinois county fabric.
 - **Split and minify the map script; load GA only where it is needed.**

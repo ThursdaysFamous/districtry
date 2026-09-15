@@ -237,6 +237,17 @@ h1 {
   margin: 22px 0 0; padding: 12px 14px; font-size: 13.5px; color: var(--ink-3);
   background: var(--surface-2); border-radius: var(--radius-card);
 }
+/* WHO TO ASK. Its own rules rather than a reuse of .district, because a clerk
+   is not a district: the same border and heading, and a body that reads as an
+   address block rather than a list of members. */
+.contact { margin: 18px 0 0; padding: 14px 0 2px; border-top: 1px solid var(--border); }
+.contact h2 {
+  font: var(--font-heading-weight, 700) 19px/1.2 var(--font-heading);
+  margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.02em;
+}
+.contact .who { margin: 0; font-weight: 600; }
+.contact .where { margin: 2px 0 0; font-size: 14px; color: var(--ink-3); }
+.contact .detail { margin: 4px 0 0; font-size: 13.5px; line-height: 1.5; }
 .disclaimer { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
 .foot {
   margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border);
@@ -307,123 +318,130 @@ h1 {
 <p class="cta-note">Opens the map with the county and county board layers on. Search your address or ZIP, or tap your location.</p>
 <section class="district" id="district-1">
 <h2>District 1</h2>
-<ul class="members"><li class="member"><span class="m-name">Kelly Leibold</span><span class="m-contact"><a href="tel:5072725408">507 272 5408</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Kelly Leibold</span><span class="m-contact"><a href="tel:5072725408">507 272 5408</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-2">
 <h2>District 2</h2>
-<ul class="members"><li class="member"><span class="m-name">Ralph Geary</span><span class="m-contact"><a href="tel:6085196175">608-519-6175</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Ralph Geary</span><span class="m-contact"><a href="tel:6085196175">608-519-6175</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-3">
 <h2>District 3</h2>
-<ul class="members"><li class="member"><span class="m-name">David Pierce</span><span class="m-role">1st Vice Chair</span><span class="m-contact"><a href="tel:6083431031">608-343-1031</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">David Pierce</span><span class="m-role">1st Vice Chair</span><span class="m-contact"><a href="tel:6083431031">608-343-1031</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-4">
 <h2>District 4</h2>
-<ul class="members"><li class="member"><span class="m-name">Kathy Allen</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Kathy Allen</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-5">
 <h2>District 5</h2>
-<ul class="members"><li class="member"><span class="m-name">Emily &quot;Em&quot; Anderson</span><span class="m-contact"><a href="tel:2627444982">262-744-4982</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Emily &quot;Em&quot; Anderson</span><span class="m-contact"><a href="tel:2627444982">262-744-4982</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-6">
 <h2>District 6</h2>
-<ul class="members"><li class="member"><span class="m-name">Grant Mathu</span><span class="m-contact"><a href="tel:6085180368">(608) 518-0368</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Grant Mathu</span><span class="m-contact"><a href="tel:6085180368">(608) 518-0368</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-7">
 <h2>District 7</h2>
-<ul class="members"><li class="member"><span class="m-name">Beth Piggush</span><span class="m-contact"><a href="tel:8603710130">860-371-0130</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Beth Piggush</span><span class="m-contact"><a href="tel:8603710130">860-371-0130</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-8">
 <h2>District 8</h2>
-<ul class="members"><li class="member"><span class="m-name">Peggy Isola</span><span class="m-contact"><a href="tel:6085197365">608-519-7365</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Peggy Isola</span><span class="m-contact"><a href="tel:6085197365">608-519-7365</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-9">
 <h2>District 9</h2>
-<ul class="members"><li class="member"><span class="m-name">Angie Manke</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Angie Manke</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-10">
 <h2>District 10</h2>
-<ul class="members"><li class="member"><span class="m-name">Kim Cable</span><span class="m-role">2nd Vice Chair</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Kim Cable</span><span class="m-role">2nd Vice Chair</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-11">
 <h2>District 11</h2>
-<ul class="members"><li class="member"><span class="m-name">Patrick Scheller</span><span class="m-contact"><a href="tel:6087698502">608-769-8502</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Patrick Scheller</span><span class="m-contact"><a href="tel:6087698502">608-769-8502</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-12">
 <h2>District 12</h2>
-<ul class="members"><li class="member"><span class="m-name">Randy Erickson</span><span class="m-contact"><a href="tel:6085196292">608-519-6292</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Randy Erickson</span><span class="m-contact"><a href="tel:6085196292">608-519-6292</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-13">
 <h2>District 13</h2>
-<ul class="members"><li class="member"><span class="m-name">Tina Tryggestad</span><span class="m-role">Chair</span><span class="m-contact"><a href="tel:6087902912">608-790-2912</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Tina Tryggestad</span><span class="m-role">Chair</span><span class="m-contact"><a href="tel:6087902912">608-790-2912</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-14">
 <h2>District 14</h2>
-<ul class="members"><li class="member"><span class="m-name">Steve Duffrin</span><span class="m-contact"><a href="tel:6087802247">608-780-2247</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Steve Duffrin</span><span class="m-contact"><a href="tel:6087802247">608-780-2247</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-15">
 <h2>District 15</h2>
-<ul class="members"><li class="member"><span class="m-name">Monica Kruse</span><span class="m-contact"><a href="tel:6087389195">608-738-9195</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Monica Kruse</span><span class="m-contact"><a href="tel:6087389195">608-738-9195</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-16">
 <h2>District 16</h2>
-<ul class="members"><li class="member"><span class="m-name">Dan Ferries</span><span class="m-contact"><a href="tel:6087807282">608-780-7282</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Dan Ferries</span><span class="m-contact"><a href="tel:6087807282">608-780-7282</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-17">
 <h2>District 17</h2>
-<ul class="members"><li class="member"><span class="m-name">Lia Manock</span><span class="m-contact"><a href="tel:6083152855">608-315-2855</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Lia Manock</span><span class="m-contact"><a href="tel:6083152855">608-315-2855</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-18">
 <h2>District 18</h2>
-<ul class="members"><li class="member"><span class="m-name">Joanna Drazkowski</span><span class="m-contact"><a href="tel:6123878820">612-387-8820</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Joanna Drazkowski</span><span class="m-contact"><a href="tel:6123878820">612-387-8820</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-19">
 <h2>District 19</h2>
-<ul class="members"><li class="member"><span class="m-name">Anna McBride</span><span class="m-contact"><a href="tel:6083856701">608-385-6701</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Anna McBride</span><span class="m-contact"><a href="tel:6083856701">608-385-6701</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-20">
 <h2>District 20</h2>
-<ul class="members"><li class="member"><span class="m-name">Steve Doyle</span><span class="m-contact"><a href="tel:6087831204">608-783-1204</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Steve Doyle</span><span class="m-contact"><a href="tel:6087831204">608-783-1204</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-21">
 <h2>District 21</h2>
-<ul class="members"><li class="member"><span class="m-name">Jeff Fimreite</span><span class="m-contact"><a href="tel:6087809966">608-780-9966</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Jeff Fimreite</span><span class="m-contact"><a href="tel:6087809966">608-780-9966</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-22">
 <h2>District 22</h2>
-<ul class="members"><li class="member"><span class="m-name">Joe Kovacevich</span><span class="m-contact"><a href="tel:6082150664">608-215-0664</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Joe Kovacevich</span><span class="m-contact"><a href="tel:6082150664">608-215-0664</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-23">
 <h2>District 23</h2>
-<ul class="members"><li class="member"><span class="m-name">Joseph (Joe) Carty</span><span class="m-contact"><a href="tel:6087993701">608-799-3701</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Joseph (Joe) Carty</span><span class="m-contact"><a href="tel:6087993701">608-799-3701</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-24">
 <h2>District 24</h2>
-<ul class="members"><li class="member"><span class="m-name">Kristie Tweed</span><span class="m-contact"><a href="tel:6083171331">608-317-1331</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Kristie Tweed</span><span class="m-contact"><a href="tel:6083171331">608-317-1331</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-25">
 <h2>District 25</h2>
-<ul class="members"><li class="member"><span class="m-name">Dennis &quot;Jake&quot; Jacobsen</span><span class="m-contact"><a href="tel:17155727948">1-715-572-7948</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Dennis &quot;Jake&quot; Jacobsen</span><span class="m-contact"><a href="tel:17155727948">1-715-572-7948</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-26">
 <h2>District 26</h2>
-<ul class="members"><li class="member"><span class="m-name">Beth Arentz-Clements</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Beth Arentz-Clements</span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-27">
 <h2>District 27</h2>
-<ul class="members"><li class="member"><span class="m-name">Paul Wuensch</span><span class="m-contact"><a href="tel:6083867830">608-386-7830</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Paul Wuensch</span><span class="m-contact"><a href="tel:6083867830">608-386-7830</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-28">
 <h2>District 28</h2>
-<ul class="members"><li class="member"><span class="m-name">Ron Rothering</span><span class="m-contact"><a href="tel:6087803086">608-780-3086</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Ron Rothering</span><span class="m-contact"><a href="tel:6087803086">608-780-3086</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-29">
 <h2>District 29</h2>
-<ul class="members"><li class="member"><span class="m-name">Ken Schlimgen</span><span class="m-contact"><a href="tel:6087864382">608-786-4382</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Ken Schlimgen</span><span class="m-contact"><a href="tel:6087864382">608-786-4382</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
 </section>
 <section class="district" id="district-30">
 <h2>District 30</h2>
-<ul class="members"><li class="member"><span class="m-name">Dillon Mader</span><span class="m-contact"><a href="tel:6087926650">608-792-6650</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29. The county&#x27;s website refuses automated readers, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Dillon Mader</span><span class="m-contact"><a href="tel:6087926650">608-792-6650</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-08-29.</span></li></ul>
+</section>
+<p class="unlisted">The county&#x27;s website refuses automated readers, so these names are a dated capture rather than the weekly re-read the other named counties get.</p>
+<section class="contact">
+<h2>County Clerk</h2>
+<p class="who">Ginny Dankmeyer</p>
+<p class="where">212 6th Street N<br>Room 1500<br>La Crosse WI 54601</p>
+<p class="detail"><a href="tel:6087859581">(608) 785-9581</a> &middot; <a href="mailto:gdankmeyer@lacrossecounty.org">gdankmeyer@lacrossecounty.org</a> &middot; <a href="https://www.lacrossecounty.org/" target="_blank" rel="noopener">County website</a></p>
 </section>
 <p class="source-note">Source: <a href="https://lacrossecounty.org/countyboard/members" rel="noopener" target="_blank">the county's own published roster</a>, re-read on a schedule and landed as a reviewed pull request.</p>
 <p class="disclaimer">districtry is an independent, unofficial civic reference.

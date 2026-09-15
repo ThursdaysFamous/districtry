@@ -237,6 +237,17 @@ h1 {
   margin: 22px 0 0; padding: 12px 14px; font-size: 13.5px; color: var(--ink-3);
   background: var(--surface-2); border-radius: var(--radius-card);
 }
+/* WHO TO ASK. Its own rules rather than a reuse of .district, because a clerk
+   is not a district: the same border and heading, and a body that reads as an
+   address block rather than a list of members. */
+.contact { margin: 18px 0 0; padding: 14px 0 2px; border-top: 1px solid var(--border); }
+.contact h2 {
+  font: var(--font-heading-weight, 700) 19px/1.2 var(--font-heading);
+  margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.02em;
+}
+.contact .who { margin: 0; font-weight: 600; }
+.contact .where { margin: 2px 0 0; font-size: 14px; color: var(--ink-3); }
+.contact .detail { margin: 4px 0 0; font-size: 13.5px; line-height: 1.5; }
 .disclaimer { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
 .foot {
   margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border);
@@ -316,6 +327,12 @@ h1 {
 <section class="district" id="district-3">
 <h2>District 3</h2>
 <ul class="members"><li class="member"><span class="m-name">Autum Jones</span><span class="m-contact"><a href="mailto:ajones@woodford-county.org">ajones@woodford-county.org</a> · <a href="tel:3098397196">309-839-7196</a> · <a href="https://www.woodford-county.org/m/directory/employee?eid=131" rel="noopener" target="_blank">Official profile</a></span></li><li class="member"><span class="m-name">Nick Miller</span><span class="m-contact"><a href="mailto:nmiller@woodfordcountyil.gov">nmiller@woodfordcountyil.gov</a> · <a href="tel:3094177329">309-417-7329</a> · <a href="https://www.woodford-county.org/m/directory/employee?eid=158" rel="noopener" target="_blank">Official profile</a></span></li><li class="member"><span class="m-name">Blake Parsons</span><span class="m-contact"><a href="mailto:bparsons@woodford-county.org">bparsons@woodford-county.org</a> · <a href="tel:3092569662">309-256-9662</a> · <a href="https://www.woodford-county.org/m/directory/employee?eid=102" rel="noopener" target="_blank">Official profile</a></span></li><li class="member"><span class="m-name">Richard Reeb</span><span class="m-contact"><a href="mailto:rreeb@woodfordcountyil.gov">rreeb@woodfordcountyil.gov</a> · <a href="tel:3093039327">309-303-9327</a> · <a href="https://www.woodford-county.org/m/directory/employee?eid=119" rel="noopener" target="_blank">Official profile</a></span></li><li class="member"><span class="m-name">Don Rood</span><span class="m-contact"><a href="mailto:drood@woodfordcountyil.gov">drood@woodfordcountyil.gov</a> · <a href="tel:5626468058">562-646-8058</a> · <a href="https://www.woodford-county.org/m/directory/employee?eid=63" rel="noopener" target="_blank">Official profile</a></span></li></ul>
+</section>
+<section class="contact">
+<h2>County Clerk</h2>
+<p class="who">DAWN L. KUPFER</p>
+<p class="where">115 NORTH MAIN STREET ROOM 202 EUREKA, IL 61530</p>
+<p class="detail"><a href="tel:3094672822">(309) 467-2822</a> &middot; <a href="mailto:cntyclk@woodfordcountyil.gov">cntyclk@woodfordcountyil.gov</a></p>
 </section>
 <p class="source-note">Source: <a href="https://www.woodford-county.org/m/directory/department?did=22" rel="noopener" target="_blank">the county's own published roster</a>, re-read on a schedule and landed as a reviewed pull request.</p>
 <p class="disclaimer">districtry is an independent, unofficial civic reference.

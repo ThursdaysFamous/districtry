@@ -237,6 +237,17 @@ h1 {
   margin: 22px 0 0; padding: 12px 14px; font-size: 13.5px; color: var(--ink-3);
   background: var(--surface-2); border-radius: var(--radius-card);
 }
+/* WHO TO ASK. Its own rules rather than a reuse of .district, because a clerk
+   is not a district: the same border and heading, and a body that reads as an
+   address block rather than a list of members. */
+.contact { margin: 18px 0 0; padding: 14px 0 2px; border-top: 1px solid var(--border); }
+.contact h2 {
+  font: var(--font-heading-weight, 700) 19px/1.2 var(--font-heading);
+  margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.02em;
+}
+.contact .who { margin: 0; font-weight: 600; }
+.contact .where { margin: 2px 0 0; font-size: 14px; color: var(--ink-3); }
+.contact .detail { margin: 4px 0 0; font-size: 13.5px; line-height: 1.5; }
 .disclaimer { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
 .foot {
   margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border);
@@ -310,6 +321,12 @@ h1 {
 </section>
 <a class="cta" href="../#layers=county">See Wabash County on the map →</a>
 <p class="cta-note">Opens the map with the county layer on. An at-large board has no district geometry, so the members above are the answer for anywhere in the county.</p>
+<section class="contact">
+<h2>County Clerk</h2>
+<p class="who">JANET L. WILL</p>
+<p class="where">401 NORTH MARKET STREET PO BOX 277 MT. CARMEL, IL 62863</p>
+<p class="detail"><a href="tel:6182624561">(618) 262-4561</a> &middot; <a href="mailto:wccr1@wabashcounty.illinois.gov">wccr1@wabashcounty.illinois.gov</a></p>
+</section>
 <p class="source-note">Source: Commissioners&#x27; names and addresses, sent by e-mail by County Clerk &amp; Recorder Janet L. Will, 2026-08-16; the chairmanship confirmed by her e-mail of 2026-08-17. Verified 2026-08-17.</p>
 <p class="disclaimer">districtry is an independent, unofficial civic reference.
 It never guesses at who holds a seat: every name above is published by the

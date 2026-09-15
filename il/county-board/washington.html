@@ -237,6 +237,17 @@ h1 {
   margin: 22px 0 0; padding: 12px 14px; font-size: 13.5px; color: var(--ink-3);
   background: var(--surface-2); border-radius: var(--radius-card);
 }
+/* WHO TO ASK. Its own rules rather than a reuse of .district, because a clerk
+   is not a district: the same border and heading, and a body that reads as an
+   address block rather than a list of members. */
+.contact { margin: 18px 0 0; padding: 14px 0 2px; border-top: 1px solid var(--border); }
+.contact h2 {
+  font: var(--font-heading-weight, 700) 19px/1.2 var(--font-heading);
+  margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.02em;
+}
+.contact .who { margin: 0; font-weight: 600; }
+.contact .where { margin: 2px 0 0; font-size: 14px; color: var(--ink-3); }
+.contact .detail { margin: 4px 0 0; font-size: 13.5px; line-height: 1.5; }
 .disclaimer { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
 .foot {
   margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border);
@@ -316,6 +327,12 @@ h1 {
 <section class="district" id="district-3">
 <h2>District 3</h2>
 <ul class="members"><li class="member"><span class="m-name">Doug Bening</span><span class="m-contact"><a href="tel:6189789755">618-978-9755</a></span></li><li class="member"><span class="m-name">Eric Brammeier</span><span class="m-contact"><a href="mailto:eric.brammeier@washingtonco.illinois.gov">eric.brammeier@washingtonco.illinois.gov</a> · <a href="tel:6182011979">618-201-1979</a></span></li><li class="member"><span class="m-name">David Karg</span><span class="m-contact"><a href="mailto:david_karg@yahoo.com">david_karg@yahoo.com</a> · <a href="tel:6183143058">618-314-3058</a></span></li><li class="member"><span class="m-name">David Meyer</span><span class="m-contact"><a href="mailto:ddmeyerfarms@att.net">ddmeyerfarms@att.net</a> · <a href="tel:6185345921">618-534-5921</a></span></li><li class="member"><span class="m-name">Paul Todd</span><span class="m-contact"><a href="mailto:paul.todd@washingtonco.illinois.gov">paul.todd@washingtonco.illinois.gov</a> · <a href="tel:6185990821">618-599-0821</a></span></li></ul>
+</section>
+<section class="contact">
+<h2>County Clerk</h2>
+<p class="who">SHARI HEMPEN</p>
+<p class="where">101 EAST ST. LOUIS STREET NASHVILLE, IL 62263</p>
+<p class="detail"><a href="tel:6183274800300">(618) 327-4800 x300</a> &middot; <a href="mailto:shari.hempen@washingtonco.illinois.gov">shari.hempen@washingtonco.illinois.gov</a></p>
 </section>
 <p class="source-note">Source: <a href="https://washingtonco.illinois.gov/county-board/" rel="noopener" target="_blank">the county's own published roster</a>, re-read on a schedule and landed as a reviewed pull request.</p>
 <p class="disclaimer">districtry is an independent, unofficial civic reference.

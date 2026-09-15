@@ -237,6 +237,17 @@ h1 {
   margin: 22px 0 0; padding: 12px 14px; font-size: 13.5px; color: var(--ink-3);
   background: var(--surface-2); border-radius: var(--radius-card);
 }
+/* WHO TO ASK. Its own rules rather than a reuse of .district, because a clerk
+   is not a district: the same border and heading, and a body that reads as an
+   address block rather than a list of members. */
+.contact { margin: 18px 0 0; padding: 14px 0 2px; border-top: 1px solid var(--border); }
+.contact h2 {
+  font: var(--font-heading-weight, 700) 19px/1.2 var(--font-heading);
+  margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.02em;
+}
+.contact .who { margin: 0; font-weight: 600; }
+.contact .where { margin: 2px 0 0; font-size: 14px; color: var(--ink-3); }
+.contact .detail { margin: 4px 0 0; font-size: 13.5px; line-height: 1.5; }
 .disclaimer { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
 .foot {
   margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border);
@@ -307,87 +318,94 @@ h1 {
 <p class="cta-note">Opens the map with the county and county board layers on. Search your address or ZIP, or tap your location.</p>
 <section class="district" id="district-1">
 <h2>District 1</h2>
-<ul class="members"><li class="member"><span class="m-name">Elizabeth Gehred</span><span class="m-contact"><a href="mailto:elizabeth.gehred@ashlandcountywi.gov">elizabeth.gehred@ashlandcountywi.gov</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Elizabeth Gehred</span><span class="m-contact"><a href="mailto:elizabeth.gehred@ashlandcountywi.gov">elizabeth.gehred@ashlandcountywi.gov</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-2">
 <h2>District 2</h2>
-<ul class="members"><li class="member"><span class="m-name">Thomas D. Trudeau</span><span class="m-contact"><a href="mailto:thomas.trudeau@ashlandcountywi.gov">thomas.trudeau@ashlandcountywi.gov</a> · <a href="tel:7152093920">715-209-3920</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Thomas D. Trudeau</span><span class="m-contact"><a href="mailto:thomas.trudeau@ashlandcountywi.gov">thomas.trudeau@ashlandcountywi.gov</a> · <a href="tel:7152093920">715-209-3920</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-3">
 <h2>District 3</h2>
-<ul class="members"><li class="member"><span class="m-name">Laura L. Nagro</span><span class="m-contact"><a href="mailto:laura.nagro@ashlandcountywi.gov">laura.nagro@ashlandcountywi.gov</a> · <a href="tel:7152161886">715-216-1886</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Laura L. Nagro</span><span class="m-contact"><a href="mailto:laura.nagro@ashlandcountywi.gov">laura.nagro@ashlandcountywi.gov</a> · <a href="tel:7152161886">715-216-1886</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-4">
 <h2>District 4</h2>
-<ul class="members"><li class="member"><span class="m-name">William Metzinger</span><span class="m-contact"><a href="mailto:william.metzinger@ashlandcountywi.gov">william.metzinger@ashlandcountywi.gov</a> · <a href="tel:7156825942">715-682-5942</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">William Metzinger</span><span class="m-contact"><a href="mailto:william.metzinger@ashlandcountywi.gov">william.metzinger@ashlandcountywi.gov</a> · <a href="tel:7156825942">715-682-5942</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-5">
 <h2>District 5</h2>
-<ul class="members"><li class="member"><span class="m-name">Clarence Campbell</span><span class="m-role">Vice Chair</span><span class="m-contact"><a href="mailto:clarence.campbell@ashlandcountywi.gov">clarence.campbell@ashlandcountywi.gov</a> · <a href="tel:7152921160">715-292-1160</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Clarence Campbell</span><span class="m-role">Vice Chair</span><span class="m-contact"><a href="mailto:clarence.campbell@ashlandcountywi.gov">clarence.campbell@ashlandcountywi.gov</a> · <a href="tel:7152921160">715-292-1160</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-6">
 <h2>District 6</h2>
-<ul class="members"><li class="member"><span class="m-name">Bradley Ray</span><span class="m-contact"><a href="mailto:bradley.ray@ashlandcountywi.gov">bradley.ray@ashlandcountywi.gov</a> · <a href="tel:7155136067">715-513-6067</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Bradley Ray</span><span class="m-contact"><a href="mailto:bradley.ray@ashlandcountywi.gov">bradley.ray@ashlandcountywi.gov</a> · <a href="tel:7155136067">715-513-6067</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-7">
 <h2>District 7</h2>
-<ul class="members"><li class="member"><span class="m-name">(Donald) Patrick Kinney</span><span class="m-contact"><a href="mailto:patrick.kinney@ashlandcountywi.gov">patrick.kinney@ashlandcountywi.gov</a> · <a href="tel:7156829198">715-682-9198</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">(Donald) Patrick Kinney</span><span class="m-contact"><a href="mailto:patrick.kinney@ashlandcountywi.gov">patrick.kinney@ashlandcountywi.gov</a> · <a href="tel:7156829198">715-682-9198</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-8">
 <h2>District 8</h2>
-<ul class="members"><li class="member"><span class="m-name">Richard Pufall</span><span class="m-contact"><a href="mailto:richard.pufall@ashlandcountywi.gov">richard.pufall@ashlandcountywi.gov</a> · <a href="tel:7156826116">715-682-6116</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Richard Pufall</span><span class="m-contact"><a href="mailto:richard.pufall@ashlandcountywi.gov">richard.pufall@ashlandcountywi.gov</a> · <a href="tel:7156826116">715-682-6116</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-9">
 <h2>District 9</h2>
-<ul class="members"><li class="member"><span class="m-name">Elizabeth A. Franek</span><span class="m-contact"><a href="mailto:elizabeth.franek@ashlandcountywi.gov">elizabeth.franek@ashlandcountywi.gov</a> · <a href="tel:7159696732">715-969-6732</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Elizabeth A. Franek</span><span class="m-contact"><a href="mailto:elizabeth.franek@ashlandcountywi.gov">elizabeth.franek@ashlandcountywi.gov</a> · <a href="tel:7159696732">715-969-6732</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-10">
 <h2>District 10</h2>
-<ul class="members"><li class="member"><span class="m-name">Paul Wilharm</span><span class="m-contact"><a href="mailto:paul.wilharm@ashlandcountywi.gov">paul.wilharm@ashlandcountywi.gov</a> · <a href="tel:6126850445">612-685-0445</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Paul Wilharm</span><span class="m-contact"><a href="mailto:paul.wilharm@ashlandcountywi.gov">paul.wilharm@ashlandcountywi.gov</a> · <a href="tel:6126850445">612-685-0445</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-11">
 <h2>District 11</h2>
-<ul class="members"><li class="member"><span class="m-name">Ronald Sztyndor</span><span class="m-contact"><a href="mailto:ronald.sztyndor@ashlandcountywi.gov">ronald.sztyndor@ashlandcountywi.gov</a> · <a href="tel:8455177725">845-517-7725</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Ronald Sztyndor</span><span class="m-contact"><a href="mailto:ronald.sztyndor@ashlandcountywi.gov">ronald.sztyndor@ashlandcountywi.gov</a> · <a href="tel:8455177725">845-517-7725</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-12">
 <h2>District 12</h2>
-<ul class="members"><li class="member"><span class="m-name">Benjamen Connors Sr.</span><span class="m-contact"><a href="mailto:benjamen.connors@ashlandcountywi.gov">benjamen.connors@ashlandcountywi.gov</a> · <a href="tel:7152921728">715-292-1728</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Benjamen Connors Sr.</span><span class="m-contact"><a href="mailto:benjamen.connors@ashlandcountywi.gov">benjamen.connors@ashlandcountywi.gov</a> · <a href="tel:7152921728">715-292-1728</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-13">
 <h2>District 13</h2>
-<ul class="members"><li class="member"><span class="m-name">Philip Livingston</span><span class="m-contact"><a href="mailto:philip.livingston@ashlandcountywi.gov">philip.livingston@ashlandcountywi.gov</a> · <a href="tel:7152925339">715-292-5339</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Philip Livingston</span><span class="m-contact"><a href="mailto:philip.livingston@ashlandcountywi.gov">philip.livingston@ashlandcountywi.gov</a> · <a href="tel:7152925339">715-292-5339</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-14">
 <h2>District 14</h2>
-<ul class="members"><li class="member"><span class="m-name">George E. Bussey</span><span class="m-contact"><a href="mailto:george.bussey@ashlandcountywi.gov">george.bussey@ashlandcountywi.gov</a> · <a href="tel:7152092508">715-209-2508</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">George E. Bussey</span><span class="m-contact"><a href="mailto:george.bussey@ashlandcountywi.gov">george.bussey@ashlandcountywi.gov</a> · <a href="tel:7152092508">715-209-2508</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-15">
 <h2>District 15</h2>
-<ul class="members"><li class="member"><span class="m-name">Marques Jolma</span><span class="m-contact"><a href="mailto:philip.livingston@ashlandcountywi.gov">philip.livingston@ashlandcountywi.gov</a> · <a href="tel:7154131928">715-413-1928</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Marques Jolma</span><span class="m-contact"><a href="mailto:philip.livingston@ashlandcountywi.gov">philip.livingston@ashlandcountywi.gov</a> · <a href="tel:7154131928">715-413-1928</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-16">
 <h2>District 16</h2>
-<ul class="members"><li class="member"><span class="m-name">Shawn Sederholm</span><span class="m-contact"><a href="mailto:shawn.sederholm@ashlandcountywi.gov">shawn.sederholm@ashlandcountywi.gov</a> · <a href="tel:7152090841">715-209-0841</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Shawn Sederholm</span><span class="m-contact"><a href="mailto:shawn.sederholm@ashlandcountywi.gov">shawn.sederholm@ashlandcountywi.gov</a> · <a href="tel:7152090841">715-209-0841</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-17">
 <h2>District 17</h2>
-<ul class="members"><li class="member"><span class="m-name">Terrance Van Buren</span><span class="m-contact"><a href="mailto:terrance.vanburen@ashlandcountywi.gov">terrance.vanburen@ashlandcountywi.gov</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Terrance Van Buren</span><span class="m-contact"><a href="mailto:terrance.vanburen@ashlandcountywi.gov">terrance.vanburen@ashlandcountywi.gov</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-18">
 <h2>District 18</h2>
-<ul class="members"><li class="member"><span class="m-name">James R. Schultz</span><span class="m-contact"><a href="mailto:james.schultz@ashlandcountywi.gov">james.schultz@ashlandcountywi.gov</a> · <a href="tel:7152783781">715-278-3781</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">James R. Schultz</span><span class="m-contact"><a href="mailto:james.schultz@ashlandcountywi.gov">james.schultz@ashlandcountywi.gov</a> · <a href="tel:7152783781">715-278-3781</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-19">
 <h2>District 19</h2>
-<ul class="members"><li class="member"><span class="m-name">Gary Eder. Jr.</span><span class="m-contact"><a href="mailto:gary.eder@ashlandcountywi.gov">gary.eder@ashlandcountywi.gov</a> · <a href="tel:7156630727">715-663-0727</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Gary Eder. Jr.</span><span class="m-contact"><a href="mailto:gary.eder@ashlandcountywi.gov">gary.eder@ashlandcountywi.gov</a> · <a href="tel:7156630727">715-663-0727</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-20">
 <h2>District 20</h2>
-<ul class="members"><li class="member"><span class="m-name">(Wilfred) David Meindl</span><span class="m-contact"><a href="mailto:dave.meindl@ashlandcountywi.gov">dave.meindl@ashlandcountywi.gov</a> · <a href="tel:7157693355">715-769-3355</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">(Wilfred) David Meindl</span><span class="m-contact"><a href="mailto:dave.meindl@ashlandcountywi.gov">dave.meindl@ashlandcountywi.gov</a> · <a href="tel:7157693355">715-769-3355</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
 </section>
 <section class="district" id="district-21">
 <h2>District 21</h2>
-<ul class="members"><li class="member"><span class="m-name">Gary A. Mertig</span><span class="m-role">Chair</span><span class="m-contact"><a href="mailto:gary.mertig@ashlandcountywi.gov">gary.mertig@ashlandcountywi.gov</a> · <a href="tel:7156610243">715-661-0243</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02. The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</span></li></ul>
+<ul class="members"><li class="member"><span class="m-name">Gary A. Mertig</span><span class="m-role">Chair</span><span class="m-contact"><a href="mailto:gary.mertig@ashlandcountywi.gov">gary.mertig@ashlandcountywi.gov</a> · <a href="tel:7156610243">715-661-0243</a></span><span class="m-asof">From the county&#x27;s own page, captured 2026-09-02.</span></li></ul>
+</section>
+<p class="unlisted">The county asks automated readers not to crawl its site, so this name is a dated capture rather than the weekly re-read the other named counties get.</p>
+<section class="contact">
+<h2>County Clerk</h2>
+<p class="who">Heather W. Schutte</p>
+<p class="where">201 W Main Street<br>Room 202<br>Ashland WI 54806</p>
+<p class="detail"><a href="tel:7156827000">715-682-7000</a> &middot; <a href="mailto:heather.schutte@ashlandcountywi.gov">heather.schutte@ashlandcountywi.gov</a> &middot; <a href="https://ashlandcountywi.gov/" target="_blank" rel="noopener">County website</a></p>
 </section>
 <p class="source-note">Source: <a href="https://ashlandcountywi.gov/bos" rel="noopener" target="_blank">the county's own published roster</a>, re-read on a schedule and landed as a reviewed pull request.</p>
 <p class="disclaimer">districtry is an independent, unofficial civic reference.
