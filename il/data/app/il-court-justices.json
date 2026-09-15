@@ -1,0 +1,356 @@
+{
+ "1": {
+  "appellate": {
+   "addressLines": [
+    "Michael A. Bilandic Building",
+    "160 North LaSalle St.",
+    "Chicago, IL 60601"
+   ],
+   "clerk": "Thomas D. Palella",
+   "counties": 1,
+   "justices": [
+    {
+     "name": "Cynthia Y. Cobbs",
+     "url": "https://www.illinoiscourts.gov/justice/1/Cynthia-Y-Cobbs/justice/"
+    },
+    {
+     "name": "David W. Ellis",
+     "url": "https://www.illinoiscourts.gov/justice/6/David-W-Ellis/justice/"
+    },
+    {
+     "name": "Timothy C. Evans",
+     "url": "https://www.illinoiscourts.gov/justice/324/Timothy-C-Evans/justice/"
+    },
+    {
+     "name": "Celia Gamrath",
+     "url": "https://www.illinoiscourts.gov/justice/331/Celia-Gamrath/justice/"
+    },
+    {
+     "name": "Nathaniel Howse",
+     "url": "https://www.illinoiscourts.gov/justice/12/Nathaniel-Howse/justice/"
+    },
+    {
+     "name": "Michael B. Hyman",
+     "url": "https://www.illinoiscourts.gov/justice/13/Michael-B-Hyman/justice/"
+    },
+    {
+     "name": "Sharon O. Johnson",
+     "url": "https://www.illinoiscourts.gov/justice/8/Sharon-O-Johnson/justice/"
+    },
+    {
+     "name": "Bertina E. Lampkin",
+     "url": "https://www.illinoiscourts.gov/justice/14/Bertina-E-Lampkin/justice/"
+    },
+    {
+     "name": "Freddrenna M. Lyle",
+     "url": "https://www.illinoiscourts.gov/justice/364/Freddrenna-M-Lyle/justice/"
+    },
+    {
+     "name": "LeRoy K. Martin Jr.",
+     "url": "https://www.illinoiscourts.gov/justice/2122/LeRoy-K-Martin-Jr/justice/"
+    },
+    {
+     "name": "Mary L. Mikva",
+     "url": "https://www.illinoiscourts.gov/justice/2232/Mary-L-Mikva/justice/"
+    },
+    {
+     "name": "Raymond W. Mitchell",
+     "url": "https://www.illinoiscourts.gov/justice/248/Raymond-W-Mitchell/justice/"
+    },
+    {
+     "name": "David R. Navarro",
+     "url": "https://www.illinoiscourts.gov/justice/384/David-R-Navarro/justice/"
+    },
+    {
+     "name": "Ramon Ocasio III",
+     "url": "https://www.illinoiscourts.gov/justice/2128/Ramon-Ocasio-III/justice/"
+    },
+    {
+     "name": "Aurelia Pucinski",
+     "url": "https://www.illinoiscourts.gov/justice/20/Aurelia-Pucinski/justice/"
+    },
+    {
+     "name": "Clare J. Quish",
+     "url": "https://www.illinoiscourts.gov/justice/264/Clare-J-Quish/justice/"
+    },
+    {
+     "name": "Jesse G. Reyes",
+     "url": "https://www.illinoiscourts.gov/justice/21/Jesse-G-Reyes/justice/"
+    },
+    {
+     "name": "Mary K. Rochford",
+     "url": "https://www.illinoiscourts.gov/justice/22/Mary-K-Rochford/justice/"
+    },
+    {
+     "name": "James Fitzgerald Smith",
+     "url": "https://www.illinoiscourts.gov/justice/23/James-Fitzgerald-Smith/justice/"
+    },
+    {
+     "name": "Margaret Stanton-McBride",
+     "url": "https://www.illinoiscourts.gov/justice/16/Margaret-Stanton-McBride/justice/"
+    },
+    {
+     "name": "Rena M. Van Tine",
+     "url": "https://www.illinoiscourts.gov/justice/187/Rena-M-Van-Tine/justice/"
+    },
+    {
+     "name": "Debra B. Walker",
+     "url": "https://www.illinoiscourts.gov/justice/280/Debra-B-Walker/justice/"
+    },
+    {
+     "name": "Carl A. Walker",
+     "url": "https://www.illinoiscourts.gov/justice/24/Carl-A-Walker/justice/"
+    },
+    {
+     "name": "Thaddeus L. Wilson",
+     "url": "https://www.illinoiscourts.gov/justice/434/Thaddeus-L-Wilson/justice/"
+    }
+   ],
+   "phone": "(312) 793-5600",
+   "population": 5194625,
+   "seat": "Chicago",
+   "sourceUrl": "https://www.illinoiscourts.gov/courts/appellate-court/districts-first-district/"
+  },
+  "supreme": [
+   {
+    "name": "P. Scott Neville, Jr.",
+    "role": "Chief Justice"
+   },
+   {
+    "name": "Joy V. Cunningham",
+    "role": "Justice"
+   },
+   {
+    "name": "Sanjay T. Tailor",
+    "role": "Justice"
+   }
+  ],
+  "supremeSourceUrl": "https://www.illinoiscourts.gov/courts/supreme-court/meet-the-justices/"
+ },
+ "2": {
+  "appellate": {
+   "addressLines": [
+    "Appellate Court Building",
+    "55 Symphony Way",
+    "Elgin, IL 60120"
+   ],
+   "clerk": "Jeffrey H. Kaplan",
+   "counties": 5,
+   "justices": [
+    {
+     "name": "Joseph E. Birkett",
+     "url": "https://www.illinoiscourts.gov/justice/25/Joseph-E-Birkett/justice/"
+    },
+    {
+     "name": "Susan F. Hutchinson",
+     "url": "https://www.illinoiscourts.gov/justice/28/Susan-F-Hutchinson/justice/"
+    },
+    {
+     "name": "Ann B. Jorgensen",
+     "url": "https://www.illinoiscourts.gov/justice/29/Ann-B-Jorgensen/justice/"
+    },
+    {
+     "name": "Christopher M. Kennedy",
+     "url": "https://www.illinoiscourts.gov/justice/569/Christopher-M-Kennedy/justice/"
+    },
+    {
+     "name": "Robert D. McLaren",
+     "url": "https://www.illinoiscourts.gov/justice/30/Robert-D-McLaren/justice/"
+    },
+    {
+     "name": "Margaret J. Mullen",
+     "url": "https://www.illinoiscourts.gov/justice/2266/Margaret-J-Mullen/justice/"
+    },
+    {
+     "name": "Mary S. Schostok",
+     "url": "https://www.illinoiscourts.gov/justice/31/Mary-S-Schostok/justice/"
+    }
+   ],
+   "phone": "(847) 695-3750",
+   "population": 1810152,
+   "seat": "Elgin",
+   "sourceUrl": "https://www.illinoiscourts.gov/courts/appellate-court/districts-second-district/"
+  },
+  "supreme": [
+   {
+    "name": "Elizabeth M. Rochford",
+    "role": "Justice"
+   }
+  ],
+  "supremeSourceUrl": "https://www.illinoiscourts.gov/courts/supreme-court/meet-the-justices/"
+ },
+ "3": {
+  "appellate": {
+   "addressLines": [
+    "Appellate Court Building",
+    "1004 Columbus Street",
+    "Ottawa, IL 61350"
+   ],
+   "clerk": "Zachary A. Hooper",
+   "counties": 7,
+   "justices": [
+    {
+     "name": "John C. Anderson",
+     "url": "https://www.illinoiscourts.gov/justice/2347/John-C-Anderson/justice/"
+    },
+    {
+     "name": "Matthew Bertani",
+     "url": "https://www.illinoiscourts.gov/justice/665/Matthew-Bertani/justice/"
+    },
+    {
+     "name": "Liam C. Brennan",
+     "url": "https://www.illinoiscourts.gov/justice/555/Liam-C-Brennan/justice/"
+    },
+    {
+     "name": "Linda E. Davenport",
+     "url": "https://www.illinoiscourts.gov/justice/543/Linda-E-Davenport/justice/"
+    },
+    {
+     "name": "Joseph P. Hettel",
+     "url": "https://www.illinoiscourts.gov/justice/709/Joseph-P-Hettel/justice/"
+    },
+    {
+     "name": "William E. Holdridge",
+     "url": "https://www.illinoiscourts.gov/justice/33/William-E-Holdridge/justice/"
+    },
+    {
+     "name": "Lance R. Peterson",
+     "url": "https://www.illinoiscourts.gov/justice/712/Lance-R-Peterson/justice/"
+    }
+   ],
+   "phone": "(815) 434-5050",
+   "population": 1972561,
+   "seat": "Ottawa",
+   "sourceUrl": "https://www.illinoiscourts.gov/courts/appellate-court/districts-third-district/"
+  },
+  "supreme": [
+   {
+    "name": "Mary K. O'Brien",
+    "role": "Justice"
+   }
+  ],
+  "supremeSourceUrl": "https://www.illinoiscourts.gov/courts/supreme-court/meet-the-justices/"
+ },
+ "4": {
+  "appellate": {
+   "addressLines": [
+    "201 West Monroe Street",
+    "Springfield, IL 62708"
+   ],
+   "clerk": "Carla L. Bender",
+   "counties": 41,
+   "justices": [
+    {
+     "name": "Peter C. Cavanagh",
+     "url": "https://www.illinoiscourts.gov/justice/39/Peter-C-Cavanagh/justice/"
+    },
+    {
+     "name": "Craig H. DeArmond",
+     "url": "https://www.illinoiscourts.gov/justice/40/Craig-H-DeArmond/justice/"
+    },
+    {
+     "name": "Eugene Doherty",
+     "url": "https://www.illinoiscourts.gov/justice/500/Eugene-Doherty/justice/"
+    },
+    {
+     "name": "Raylene Grischow",
+     "url": "https://www.illinoiscourts.gov/justice/807/Raylene-Grischow/justice/"
+    },
+    {
+     "name": "Thomas M. Harris",
+     "url": "https://www.illinoiscourts.gov/justice/41/Thomas-M-Harris/justice/"
+    },
+    {
+     "name": "James A. Knecht",
+     "url": "https://www.illinoiscourts.gov/justice/42/James-A-Knecht/justice/"
+    },
+    {
+     "name": "Amy C. Lannerd",
+     "url": "https://www.illinoiscourts.gov/justice/817/Amy-C-Lannerd/justice/"
+    },
+    {
+     "name": "Robert J. Steigmann",
+     "url": "https://www.illinoiscourts.gov/justice/43/Robert-J-Steigmann/justice/"
+    },
+    {
+     "name": "David L. Vancil Jr.",
+     "url": "https://www.illinoiscourts.gov/justice/2147/David-L-Vancil-Jr/justice/"
+    },
+    {
+     "name": "Kathryn E. Zenoff",
+     "url": "https://www.illinoiscourts.gov/justice/32/Kathryn-E-Zenoff/justice/"
+    }
+   ],
+   "phone": "(217) 782-2586",
+   "population": 1963058,
+   "seat": "Springfield",
+   "sourceUrl": "https://www.illinoiscourts.gov/courts/appellate-court/districts-fourth-district/"
+  },
+  "supreme": [
+   {
+    "name": "Lisa Holder White",
+    "role": "Justice"
+   }
+  ],
+  "supremeSourceUrl": "https://www.illinoiscourts.gov/courts/supreme-court/meet-the-justices/"
+ },
+ "5": {
+  "appellate": {
+   "addressLines": [
+    "14th & Main Street",
+    "Mt. Vernon, IL 62864"
+   ],
+   "clerk": "Cortney Kuntze",
+   "counties": 48,
+   "justices": [
+    {
+     "name": "John B. Barberis",
+     "url": "https://www.illinoiscourts.gov/justice/46/John-B-Barberis/justice/"
+    },
+    {
+     "name": "Mark M. Boie",
+     "url": "https://www.illinoiscourts.gov/justice/47/Mark-M-Boie/justice/"
+    },
+    {
+     "name": "Robert C. Bollinger",
+     "url": "https://www.illinoiscourts.gov/justice/780/Robert-C-Bollinger/justice/"
+    },
+    {
+     "name": "Judy Lynn Cates",
+     "url": "https://www.illinoiscourts.gov/justice/48/Judy-Lynn-Cates/justice/"
+    },
+    {
+     "name": "Mark H. Clarke",
+     "url": "https://www.illinoiscourts.gov/justice/2407/Mark-H-Clarke/justice/"
+    },
+    {
+     "name": "James Hackett",
+     "url": "https://www.illinoiscourts.gov/justice/2390/James-Hackett/justice/"
+    },
+    {
+     "name": "Michael D. McHaney",
+     "url": "https://www.illinoiscourts.gov/justice/918/Michael-D-McHaney/justice/"
+    },
+    {
+     "name": "Amy Sholar",
+     "url": "https://www.illinoiscourts.gov/justice/2050/Amy-Sholar/justice/"
+    },
+    {
+     "name": "Barry L. Vaughan",
+     "url": "https://www.illinoiscourts.gov/justice/967/Barry-L-Vaughan/justice/"
+    }
+   ],
+   "phone": "(618) 242-3120",
+   "population": 1778745,
+   "seat": "Mt. Vernon",
+   "sourceUrl": "https://www.illinoiscourts.gov/courts/appellate-court/districts-fifth-district/"
+  },
+  "supreme": [
+   {
+    "name": "David K. Overstreet",
+    "role": "Justice"
+   }
+  ],
+  "supremeSourceUrl": "https://www.illinoiscourts.gov/courts/supreme-court/meet-the-justices/"
+ }
+}
