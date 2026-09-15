@@ -228,6 +228,43 @@ is not, so no term or election date is carried.
 `scripts/cook_county_board_scraper.py` + `build_cook_county_board.py` write the
 roster weekly; 17 districts plus the Board President.
 
+### 3. NYC police precinct page — done 2026-09-15
+
+`ny/police-precinct.html`. The audit measured about 60 impressions at positions
+7–9 across "find my precinct" and roughly 25 variants, 0 clicks, every one of
+them landing on `/ny/` — a page that answers the question among twenty-seven
+others and never says the word in a heading.
+
+The page carries the address box, a section on what the card shows, one on how a
+precinct, a sector and a station house differ, and a generated table of all 78
+commanding officers. No precinct count is written into the prose; the table's
+own sentence is the only place a number appears and it is `len(roster)`.
+
+Three changes to `build_officeholder_tables.py`, each of them the smallest thing
+that made this roster fit:
+
+- **`name_field`.** `nypd-precinct-info.json` names the person in `commander`.
+  Nothing mechanical says which key on a record holds a person, so it is stated
+  per section the way `seat` and `holder` already are, defaulting to `name`.
+- **`unit` and `prep`.** The lede read "All N seats on <body>", which is right
+  for the eleven entries whose holders are elected and wrong for the one whose
+  holders are appointed. Both words are stated, with the elected reading as the
+  default. The same sentence's "where the roster does not name a seat" became
+  "where the roster names nobody", which needed no variant at all.
+- **A derived citation column.** Each of the 78 commanders comes from that
+  precinct's own NYPD page, and the 78 links are 78 different pages, so the
+  column exists where every named record carries `source_url` — measured
+  2026-09-15, that is this roster and no other the tables read. Deliberately not
+  keyed on `url`, which nine legislature rosters carry as the member's own
+  official page; adding a column to those tables is a different decision. The
+  cell carries no `itemprop`: it sits inside the row's Person scope, and the
+  precinct's page is a citation for the row rather than a property of the
+  person.
+
+`check_workflows()` caught the missing half before it shipped, which is what it
+was written for: it failed the build naming `ny-update-nypd-roster.yml` and the
+two lines it lacked. That workflow now regenerates the page and the sitemap.
+
 ### Still open in phase 2
 
 - **The other missing large counties**: Winnebago, Madison, St. Clair,
@@ -237,7 +274,5 @@ roster weekly; 17 districts plus the Board President.
   e-mail local parts look like names (`ABooker@`, `JWebster@`); deriving a
   person's name from an e-mail address is exactly the guess this project does
   not make. That is a scraper gap, not a page gap.
-- **NYC police precinct page.** ~60 impressions at positions 7–9, 0 clicks, all
-  landing on `/ny/`.
 - **`/about.html`**, consistent counts, county-page uniqueness above 60%.
 - **Split and minify the map script; load GA only where it is needed.**

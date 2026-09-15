@@ -35,6 +35,7 @@ Boroughs, City Council and community districts, NYPD precincts and sectors, scho
 - [What community board am I in?](https://districtry.com/ny/community-board.html)
 - [Who is my U.S. representative?](https://districtry.com/ny/congress.html)
 - [What Council district am I in?](https://districtry.com/ny/council-district.html)
+- [What NYPD precinct am I in?](https://districtry.com/ny/police-precinct.html)
 - [Sources & data layers](https://districtry.com/ny/sources.html)
 - [Who is my NY state legislator?](https://districtry.com/ny/state-legislature.html)
 - [NYC district questions](https://districtry.com/ny/faq.html)

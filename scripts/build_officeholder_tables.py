@@ -87,6 +87,20 @@ CITY_TABLES = [
                         office_label="District office",
                         body="the San Francisco Board of Supervisors",
                         heading="Who represents each supervisor district")]),
+    # THE ONE SECTION WHOSE HOLDER IS NOT ELECTED. An NYPD precinct commander is
+    # appointed, so `unit`/`prep` exist to keep the sentence from calling 78
+    # commands "seats on" a body. The roster names the person in `commander`
+    # rather than `name`, which is why name_field is stated: nothing mechanical
+    # says which key on a record holds a person.
+    dict(tag="ny", page="police-precinct.html", worksheet="ny/metro-worksheet.json",
+         sections=[dict(roster="data/app/nypd-precinct-info.json",
+                        seat="Precinct", holder="Commanding Officer",
+                        name_field="commander",
+                        office_label="Station house",
+                        link_label="NYPD page",
+                        unit="precincts", prep="in",
+                        body="the New York City Police Department",
+                        heading="Who commands each NYPD precinct")]),
 ]
 
 
@@ -155,8 +169,9 @@ def district_key(k):
 
 def render_section(tag, section, verified):
     roster = load(roster_path(tag, section["roster"]))
+    name_field = section.get("name_field", "name")
     keys = sorted(roster, key=district_key)
-    named = [k for k in keys if isinstance(roster[k], dict) and roster[k].get("name")]
+    named = [k for k in keys if isinstance(roster[k], dict) and roster[k].get(name_field)]
     if not named:
         fail("%s/%s names nobody — refusing to write an empty table"
              % (tag, section["roster"]))
@@ -177,18 +192,32 @@ def render_section(tag, section, verified):
     office_key = next((f for f in ("office", "districtOffice")
                        if any(isinstance(roster[k].get(f), str) and roster[k][f]
                               for k in named)), None)
+    # A CITATION COLUMN WHERE THE ROSTER CITES PER RECORD. Measured 2026-09-15
+    # across every roster these tables read, `source_url` appears on exactly one
+    # — nypd-precinct-info.json, where each commander comes from that precinct's
+    # own NYPD page and the 78 links are 78 different pages. Deliberately NOT
+    # keyed on `url` or `sourceUrl`: `url` is on nine legislature rosters as the
+    # member's own official page, and adding a column to those tables is a
+    # different decision than this one. The label is stated, like `seat` and
+    # `holder`, because nothing in a URL says what to call it.
+    link_key = "source_url" if all(roster[k].get("source_url") for k in named) else None
+    if link_key and not section.get("link_label"):
+        fail("%s/%s carries source_url on every record and the section names no "
+             "link_label — a column heading cannot be derived from a URL"
+             % (tag, section["roster"]))
 
     rows = []
     for k in keys:
         rec = roster[k] if isinstance(roster[k], dict) else {}
-        name = rec.get("name")
+        name = rec.get(name_field)
         seat = "%s %s" % (section["seat"], k)
         if not name:
             # A seat the roster does not name is printed as one. Leaving it out
             # would make the table claim a smaller body than the state elects.
             cells = ['<td>%s</td>' % html.escape(seat),
                      '<td class="who">Not listed</td>']
-            cells += ["<td></td>"] * (bool(has_party) + bool(office_key))
+            cells += ["<td></td>"] * (bool(has_party) + bool(office_key)
+                                      + bool(link_key))
             rows.append("      <tr>%s</tr>" % "".join(cells))
             continue
         # The <meta> sits INSIDE a cell, not between <tr> and <td>. An HTML
@@ -209,6 +238,13 @@ def render_section(tag, section, verified):
         if office_key:
             cells.append('<td itemprop="address">%s</td>'
                          % html.escape(rec.get(office_key) or ""))
+        if link_key:
+            # No itemprop. The cell sits inside the Person scope, so any
+            # itemprop here would claim the precinct's page is a property of the
+            # commander. It is a citation for the row, not a fact about them.
+            cells.append('<td><a href="%s" target="_blank" rel="noopener">%s</a></td>'
+                         % (html.escape(rec[link_key], quote=True),
+                            html.escape(section["link_label"])))
         rows.append(
             '      <tr itemscope itemtype="https://schema.org/Person">%s</tr>'
             % "".join(cells))
@@ -219,6 +255,8 @@ def render_section(tag, section, verified):
         head.append("<th>Party</th>")
     if office_key:
         head.append("<th>%s</th>" % html.escape(section["office_label"]))
+    if link_key:
+        head.append("<th>Source</th>")
 
     # WHETHER THE MAP READS THIS FILE IS DERIVED, NOT STATED, because it is the
     # one sentence here that can be false. An instance whose roster is in
@@ -238,8 +276,8 @@ def render_section(tag, section, verified):
 
     return """  <section>
     <h2>%(heading)s</h2>
-    <p>All %(n)d seats on %(body)s, as this site had them on <strong>%(verified)s</strong>.
-      %(agreement)s Where the roster does not name a seat it says so rather than guessing.
+    <p>All %(n)d %(unit)s %(prep)s %(body)s, as this site had them on <strong>%(verified)s</strong>.
+      %(agreement)s Where the roster names nobody it says so rather than guessing.
       <a href="sources.html">Where these names come from</a>.</p>
     <div class="flow-table-wrap">
     <table class="flow">
@@ -254,6 +292,11 @@ def render_section(tag, section, verified):
 """ % {
         "heading": html.escape(section["heading"]),
         "n": len(keys),
+        # "seats on the Illinois House" is right for eleven of the twelve
+        # entries and wrong for the one whose holders are appointed, so both
+        # words are stated with the elected reading as the default.
+        "unit": html.escape(section.get("unit", "seats")),
+        "prep": html.escape(section.get("prep", "on")),
         "body": html.escape(section["body"]),
         "verified": html.escape(verified),
         "head": "".join(head),
@@ -312,16 +355,17 @@ def verify_shipped(entry):
     named = 0
     for section in entry["sections"]:
         roster = load(roster_path(entry["tag"], section["roster"]))
+        field = section.get("name_field", "name")
         missing = [k for k, rec in sorted(roster.items(),
                                           key=lambda kv: district_key(kv[0]))
-                   if isinstance(rec, dict) and rec.get("name")
-                   and html.escape(rec["name"]) not in shipped]
+                   if isinstance(rec, dict) and rec.get(field)
+                   and html.escape(rec[field]) not in shipped]
         if missing:
             fail("%s does not name %d of %s's members (%s) — the table is "
                  "present and does not carry them"
                  % (rel, len(missing), section["roster"], ", ".join(missing[:5])))
         named += sum(1 for rec in roster.values()
-                     if isinstance(rec, dict) and rec.get("name"))
+                     if isinstance(rec, dict) and rec.get(field))
     return named
 
 
