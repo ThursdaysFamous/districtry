@@ -290,6 +290,15 @@ jobs:
       - name: Sitemap parses, and its lastmods match each page's last commit
         run: python3 scripts/build_sitemap.py --check
 
+      # The eight root redirect shells and the 404 are generated from one
+      # template plus metros.json, so a new instance reaches the 404's list and
+      # a retitled page reaches its shell's wording without anybody remembering.
+      # Two of the eight were simply MISSING until 2026-09-15 — /ward.html and
+      # /precinct.html both 404'd while six siblings had shells — which is what
+      # eight near-identical hand-written files produce.
+      - name: Redirect shells and the 404 match their sources
+        run: python3 scripts/build_redirect_stubs.py --check
+
       # The favicon is the one branded asset whose audience is a CRAWLER, and it
       # was the one nobody could see was broken: every page carried the mark
       # inline as a data: URI, which renders perfectly in a browser tab and is

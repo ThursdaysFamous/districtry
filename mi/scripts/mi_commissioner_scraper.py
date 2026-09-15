@@ -317,6 +317,144 @@ def parse_wayne(page):
     return out
 
 
+# ---------------------------------------------------- tranche 2 parsers ---
+
+ORDINAL_DISTRICT = re.compile(r"(\d+)(?:st|nd|rd|th)\s+District", re.I)
+
+
+def parse_stclair(page):
+    """Homepage-style TILES rather than a directory widget: each commissioner
+    is an <a href="/Offices/NNN"> whose <h2> reads "District 1 - Steven
+    Simasko". The district and the name arrive in one string, so there is no
+    pairing to get wrong."""
+    out = {}
+    for block in re.finditer(r'<a\b[^>]*href="(/Offices/\d+)"[^>]*>(.*?)</a>', page, re.S):
+        head = re.search(r"<h2>\s*District\s+(\d+)\s*-\s*(.*?)\s*</h2>", block.group(2), re.S)
+        if not head:
+            continue
+        out[head.group(1)] = {
+            "name": txt(head.group(2)),
+            "profileUrl": "https://www.stclaircounty.org" + block.group(1),
+        }
+    return out
+
+
+def parse_monroe(page):
+    """CivicPlus staff directory, and BOTH of its fields carry two facts.
+
+    `p-name` is "David Vensel (R)" — the party sits INSIDE the name, so a
+    verbatim read ships it as part of a person's name. `p-job-title` is
+    "Commissioner (District 6) (Chairman)" — the district AND the role
+    together. The directory lists ELEVEN rows for a nine-seat board (the
+    Administrator and a Deputy Clerk among them), so the job-title SHAPE is
+    what keeps a non-member out; a count would not.
+
+    DISTRICT 2 IS NOT NAMED AND IS NOT GUESSED. Measured 2026-09-13 and again
+    2026-09-15, byte-identical: the county's own row for it is malformed —
+    `p-name` reads "District 2" and `p-job-title` reads "Commissioner Vensel",
+    where Vensel is District 6's chairman. So the row names no District 2
+    commissioner and the only name on it belongs to another district. This
+    parser therefore returns EIGHT, and `malformed` counts the rows it refused
+    so a change on the county's side is visible either way: if the county fixes
+    the row, District 2 appears on its own; if the row vanishes, the count
+    drops to zero and the run says so.
+    """
+    out, malformed = {}, []
+    for blk in re.findall(r'<li class="widgetItem h-card">(.*?)</li>', page, re.S):
+        name_el = re.search(r'class="widgetTitle field p-name">\s*(.*?)\s*</h4>', blk, re.S)
+        job_el = re.search(r'class="field p-job-title">(.*?)</div>', blk, re.S)
+        if not (name_el or job_el):
+            continue
+        raw_name = txt(name_el.group(1)) if name_el else ""
+        job = txt(job_el.group(1)) if job_el else ""
+        keyed = re.match(r"Commissioner\s*\(District\s+(\d+)\)\s*(?:\((.+?)\))?\s*$", job)
+        if not keyed:
+            # A row whose TITLE says Commissioner while its name field holds a
+            # district label is the malformed case above, not a member.
+            if re.match(r"Commissioner\b", job) or ORDINAL_DISTRICT.search(raw_name) \
+                    or re.match(r"District\s+\d+\s*$", raw_name):
+                malformed.append((raw_name, job))
+            continue
+        tagged = re.match(r"(.*?)\s*\((R|D|I)\)\s*$", raw_name)
+        rec = {"name": tagged.group(1) if tagged else raw_name}
+        if tagged:
+            rec["party"] = PARTY[tagged.group(2)]
+        if keyed.group(2):
+            rec["role"] = keyed.group(2).strip()
+        mail = re.search(r'href="mailto:([^"?]+)"', blk)
+        if mail:
+            rec["email"] = mail.group(1).strip()
+        tel = re.search(r'href="tel:([^"]+)"', blk)
+        if tel and phone(tel.group(1)):
+            rec["phone"] = phone(tel.group(1))
+        out[keyed.group(1)] = rec
+    if malformed:
+        print("    Monroe: %d directory row(s) name a district and no person, "
+              "refused: %s" % (len(malformed), "; ".join("%r / %r" % m for m in malformed)))
+    return out
+
+
+def parse_berrien(page):
+    """Editor HTML, one block per commissioner:
+    <h2 class="subhead1">David Vollrath</h2>
+    <h3 class="subhead2">1st District Commissioner</h3>
+
+    The district is ORDINAL, so a "District N" regex finds nothing here. The
+    block's own profile link slugs a NICKNAME (/750/Dave-Vollrath for David
+    Vollrath), so the heading is the name and the link is not.
+
+    One name ships as the county prints it: District 9 reads "Alex R. ott",
+    lowercase surname. It is published that way and is not silently corrected
+    (the Carroll "Distirct" precedent)."""
+    out = {}
+    for block in re.finditer(r'<h2 class="subhead1[^"]*">\s*(.*?)\s*</h2>\s*'
+                             r'<h3 class="subhead2[^"]*">\s*(.*?)\s*</h3>', page, re.S):
+        name, sub = txt(block.group(1)), txt(block.group(2))
+        keyed = ORDINAL_DISTRICT.search(sub)
+        if name and keyed:
+            out[keyed.group(1)] = {"name": name}
+    return out
+
+
+def parse_jackson(page):
+    """Nav links carry both facts — "District 1 - Tony Bair" pointing at that
+    member's own page — and District 5's link text badges the Chairman inside
+    the same string, so the role is stripped off the name rather than left on
+    it."""
+    out = {}
+    for block in re.finditer(r'<a\b[^>]*href="([^"]*?/\d+/District-\d+[^"]*)"[^>]*>\s*'
+                             r'District\s+(\d+)\s*-\s*(.*?)\s*</a>', page, re.S):
+        href, who = block.group(1), txt(block.group(3))
+        rec = {"profileUrl": href if href.startswith("http")
+               else "https://www.mijackson.org" + href}
+        role = re.match(r"(Chairman|Chair|Vice[- ]Chair(?:man)?)\s+(.*)$", who, re.I)
+        if role:
+            rec["role"] = role.group(1)
+            who = role.group(2).strip()
+        rec["name"] = who
+        out[block.group(2)] = rec
+    return out
+
+
+def parse_calhoun(page):
+    """A two-column TABLE whose columns interleave districts 1-4 with 5-7. A
+    flat read is safe only because every cell carries its own district anchor;
+    reading by position would pair District 2 with District 5's member. The
+    role follows a comma ("Derek King , Chair")."""
+    out = {}
+    for cell in re.finditer(r'#District(\d+)"[^>]*>\s*District\s+\d+\s*</a>\s*:?\s*(.*?)\s*</td>',
+                            page, re.S):
+        body = txt(cell.group(2)).lstrip(": ").strip()
+        if not body:
+            continue
+        parts = [part.strip() for part in body.split(",")]
+        rec = {"name": parts[0]}
+        if len(parts) > 1 and parts[1]:
+            rec["role"] = parts[1]
+        out[cell.group(1)] = rec
+    return out
+
+
 # ------------------------------------------------------------- the tranche ---
 
 COUNTIES = (
@@ -332,6 +470,17 @@ COUNTIES = (
      "url": "https://www.saginawcountymi.gov/departments/board-of-commissioners/"},
     {"fips": "163", "county": "Wayne", "seats": 15, "parse": parse_wayne,
      "url": "https://www.waynecountymi.gov/Government/Elected-Officials/Commission"},
+    # --- tranche 2, 2026-09-15: the next five by population that yielded ---
+    {"fips": "021", "county": "Berrien", "seats": 12, "parse": parse_berrien,
+     "url": "https://www.berriencounty.org/735/Meet-Your-Commissioners"},
+    {"fips": "025", "county": "Calhoun", "seats": 7, "parse": parse_calhoun,
+     "url": "https://www.calhouncountymi.gov/departments/board_of_commissioners/index.php"},
+    {"fips": "075", "county": "Jackson", "seats": 9, "parse": parse_jackson,
+     "url": "https://www.mijackson.org/365/Jackson-County-Commissioners"},
+    {"fips": "115", "county": "Monroe", "seats": 9, "parse": parse_monroe,
+     "url": "https://www.co.monroe.mi.us/374/Board-of-Commissioners"},
+    {"fips": "147", "county": "St. Clair", "seats": 7, "parse": parse_stclair,
+     "url": "https://www.stclaircounty.org/SubHome/Index/620"},
 )
 
 # Every county tried in tranche 1, measured 2026-09-13 from this project's
@@ -375,6 +524,15 @@ PROBES = (
      "robots": "challenge — robots.txt itself answers HTTP 202, same shape as Ottawa",
      "answered": "not fetched",
      "date": "2026-09-13"},
+    {"county": "Allegan", "fips": "005", "seats": 5,
+     "host": "www.allegancounty.org and the apex allegancounty.org",
+     "robots": "refused — HTTP 403 from the site's own edge (server: AkamaiGHost) on "
+               "robots.txt, to UA_ROSTER_BOT and to Chrome/126 with its client hints "
+               "alike. Under the strict reading county websites take, that is a refusal",
+     "answered": "403 on / as well, to both client strings, on both hosts — so the "
+                 "stack is refused rather than the token and a browser string buys "
+                 "nothing. The Oakland shape exactly",
+     "date": "2026-09-15"},
     {"county": "Washtenaw", "fips": "161", "seats": 9,
      "host": "www.washtenaw.org",
      "robots": "served — no rule in the binding `*` group matches, Crawl-delay 20",

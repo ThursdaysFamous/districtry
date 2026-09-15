@@ -5375,8 +5375,8 @@ function initChiExplorer() {
 
   /* ==== ENGINE:BEGIN permalink ==== */
   /* =========================================================================
-   * SHAREABLE URL — #point=lat,lng&layers=id1,id2&zoom=N mirrors the current
-   * selection so any view can be copied out of the URL bar (or via the
+   * SHAREABLE URL — #point=lat,lng&layers=id1,id2&pin=id&zoom=N mirrors the
+   * current selection so any view can be copied out of the URL bar (or via the
    * point chip's Copy-link button) and restored on load. replaceState, not
    * location.hash assignment, so clicking around never pollutes the back
    * button. Parsed once at boot by applyStateFromHash().
@@ -5396,6 +5396,16 @@ function initChiExplorer() {
     var on = layers.filter(function (l) { return state.layersOn[l.id]; })
       .map(function (l) { return l.id; });
     if (on.length) parts.push("layers=" + on.join(","));
+    // The PINNED PARENT rides the permalink too, because the relationship
+    // outlines ARE part of the view being shared: a link that restores the
+    // point and the layers and drops the pin hands the reader the same map
+    // without the comparison the sender was looking at, and nothing on screen
+    // says a pin was ever set. Emitted only while its layer is on, which is
+    // also why `pin=` can never be the ONLY parameter in a hash — the same
+    // condition puts that id in `on` above, so `layers=` is always emitted
+    // beside it, and the root's app-parameter forwarding guard (which matches
+    // point/layers/zoom) still recognises every link that carries a pin.
+    if (pinnedParentId && state.layersOn[pinnedParentId]) parts.push("pin=" + pinnedParentId);
     // Zoom rides the permalink because it is part of what was shared: an embed of
     // a whole county answers a different question from an embed of one block, and
     // a refresh should not throw the reader back to the default view. Emitted
@@ -5465,6 +5475,30 @@ function initChiExplorer() {
       }
     }
     if (zoom !== null && !framed) map.setView(map.getCenter(), zoom, { animate: false });
+    // Parsed LAST, after the layers are on and the point is set, because a pin
+    // is a reference to one of those layers AT that point. A pin that cannot
+    // be honoured is DROPPED SILENTLY rather than half-applied — a legend
+    // naming a parent whose outlines can never be drawn is worse than no pin,
+    // because it reads as present and does nothing. Three ways that happens,
+    // and all three are ordinary rather than exceptional: the id names no
+    // layer this instance registers (a link from a sibling that has it, or
+    // from before a rename), its layer is not on (the `layers=` list disagreed
+    // with the pin, or a toggle refused), and it is not a polygon layer — the
+    // same test appendPinControl applies before it offers the control at all,
+    // so a hand-typed `pin=fire-station` restores nothing.
+    //
+    // Setting the pin here with no geometry loaded yet is correct and not a
+    // race: refreshRelationshipOutlines runs again as each layer's query
+    // resolves, so the outlines appear when the parent's boundaries arrive,
+    // and the card's own button picks up the pinned styling from
+    // pinnedParentId whenever that card next renders.
+    if (params.pin) {
+      var parent = getLayerById(params.pin);
+      if (parent && state.layersOn[parent.id] &&
+          parent.overlay && parent.overlay.style) {
+        setPinnedParent(parent.id);
+      }
+    }
   }
 
   /* ---------- share controls — the point chip's single "Share" surface -----
@@ -11365,6 +11399,34 @@ function initChiExplorer() {
   });
   var loadClayBoardMembers = makeCached(function () {
     return fetchJSONWithRetry("data/app/clay-county-board-members.json", {}, 2);
+  });
+  /* Christian (the 93rd county, 2026-09-15) — the first districted county to
+   * ship its board districts with NO member names, and the first whose
+   * boundary is dissolved from a precinct fabric the county no longer runs.
+   * Christian re-precincted after 2020: the census carries thirty voting
+   * districts and the county runs twenty-nine, so the Jasper test fails and no
+   * precinct layer can be drawn. The DISTRICTS still can, because they were
+   * drawn on the thirty — the county's own 2021 County Board District and
+   * Precinct Map, whose four published district populations this dissolve
+   * reproduces exactly (build_christian_boundaries.py). Three certified
+   * elections partition the 29 current precincts into the same four districts,
+   * and the county's own registration counts place the one new precinct,
+   * Taylorville 9, inside District 2 with its two parents.
+   *
+   * NO ROSTER. The county's board page named only its Chairman and Vice
+   * Chairman when it was last readable, and christiancountyil.gov has sat
+   * behind a Cloudflare managed challenge since 2026-09-15, which is an access
+   * control. The card names your district and links the board. */
+  var loadChristianCountyOutline = makeCached(function () {
+    return fetchJSONWithRetry("data/app/christian-county-outline.json", {}, 2);
+  });
+  function christianCountyCoverage(point) {
+    return loadChristianCountyOutline().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
+  var loadChristianBoardDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/christian-county-board-districts.json", {}, 2);
   });
   /* Jackson (the 87th county, 2026-08-23) — the first county served whose board
    * districts SPLIT precincts. Its own certified 2024 General canvass reports
@@ -23925,6 +23987,61 @@ function initChiExplorer() {
             return names.length ? names.join(", ") : null;
           }
         }
+      },
+      // Christian — 4 districts of FOUR members each (16 seats, staggered:
+      // the 2022 General ran a 4-year and a 2-year contest in every district),
+      // dissolved from the THIRTY Census 2020 voting districts the county's own
+      // 2021 plan was drawn on (build_christian_boundaries.py). The county has
+      // since re-precincted to 29, so its precincts cannot be drawn from census
+      // geometry and none ship; all three changes fell inside a single district,
+      // so no district boundary moved. THE ONLY ENTRY HERE THAT NAMES NOBODY:
+      // the county's board page lists its Chairman and Vice Chairman and no
+      // members, and christiancountyil.gov has been behind a Cloudflare managed
+      // challenge since 2026-09-15. The card gives the district and the precincts
+      // that compose it, and links the board.
+      {
+        key: "christian",
+        coverage: christianCountyCoverage,
+        loadGeometry: loadChristianBoardDistricts,
+        hoverName: function (feature) {
+          var v = findPropCI(feature.properties || {}, ["district"]);
+          return (v == null || v === "") ? null : String(v);
+        },
+        query: function (point, seq) {
+          return loadChristianBoardDistricts().then(function (geojson) {
+            var feature = findFeatureContaining(geojson, point);
+            if (!feature) return null;
+            var props = feature.properties || {};
+            return {
+              seq: seq,
+              district: findPropCI(props, ["district"]),
+              precincts: findPropCI(props, ["precincts"]),
+              seats: findPropCI(props, ["seats"])
+            };
+          });
+        },
+        render: function (result) {
+          var wrap = cardEl("div", "card-flush");
+          wrap.appendChild(renderBodyIntro({
+            title: "Christian County Board",
+            note: "Four members represent this district. Christian County "
+                + "publishes no list of its board members, so none are named "
+                + "here."
+          }));
+          if (result.precincts && result.precincts.length) {
+            wrap.appendChild(renderFieldStack([
+              { label: "Precincts", value: result.precincts.join(", ") }
+            ]));
+          }
+          return wrap;
+        },
+        cardIdentifier: function (result) {
+          return result.district != null && result.district !== ""
+            ? "District " + String(result.district) : null;
+        },
+        primaryLink: function () {
+          return { label: "Christian County Board (official)", url: "https://www.christiancountyil.gov/county-board/" };
+        }
       }
     ]
   });
@@ -29470,10 +29587,17 @@ function initChiExplorer() {
   });
 
   // Permalink compatibility for consolidated layers: pre-consolidation ids in
-  // a shared #layers= list are rewritten to the consolidated id BEFORE the
-  // boot-time applyStateFromHash parse reads the hash (unknown ids there are
-  // otherwise dropped silently, so an old link would simply lose the layer).
+  // a shared #layers= list — and in its #pin= — are rewritten to the
+  // consolidated id BEFORE the boot-time applyStateFromHash parse reads the
+  // hash (unknown ids there are otherwise dropped silently, so an old link
+  // would simply lose the layer, or the pinned parent of a comparison).
   // Every future consolidation appends its retired ids here.
+  //
+  // `pin=` is rewritten for the NEXT consolidation rather than for any link
+  // that exists today: the parameter shipped after every id in this table was
+  // already retired, so no shared link can carry `pin=commissioner`. Handling
+  // it here is what stops the next consolidation having to remember that a
+  // second parameter names a layer.
   var CONSOLIDATED_LAYER_ALIASES = {
     "commissioner": "county-board",
     "will-county-board": "county-board",
@@ -29489,20 +29613,30 @@ function initChiExplorer() {
   };
   (function rewriteAliasedPermalink() {
     var raw = location.hash.replace(/^#/, "");
-    var m = /(^|&)layers=([^&]*)/.exec(raw);
-    if (!m) return;
-    var seen = {};
-    var ids = m[2].split(",").map(function (id) {
-      return CONSOLIDATED_LAYER_ALIASES[id] || id;
-    }).filter(function (id) { // aliasing can duplicate the target — keep one
-      if (seen[id]) return false;
-      seen[id] = true;
-      return true;
-    });
-    if (ids.join(",") === m[2]) return;
-    var newHash = "#" + raw.replace(/(^|&)layers=[^&]*/, "$1layers=" + ids.join(","));
+    var next = raw;
+    var m = /(^|&)layers=([^&]*)/.exec(next);
+    if (m) {
+      var seen = {};
+      var ids = m[2].split(",").map(function (id) {
+        return CONSOLIDATED_LAYER_ALIASES[id] || id;
+      }).filter(function (id) { // aliasing can duplicate the target — keep one
+        if (seen[id]) return false;
+        seen[id] = true;
+        return true;
+      });
+      if (ids.join(",") !== m[2]) {
+        next = next.replace(/(^|&)layers=[^&]*/, "$1layers=" + ids.join(","));
+      }
+    }
+    // The pin carries ONE id, so there is no duplicate to collapse.
+    var p = /(^|&)pin=([^&]*)/.exec(next);
+    if (p && CONSOLIDATED_LAYER_ALIASES[p[2]]) {
+      next = next.replace(/(^|&)pin=[^&]*/,
+        "$1pin=" + CONSOLIDATED_LAYER_ALIASES[p[2]]);
+    }
+    if (next === raw) return;
     try {
-      history.replaceState(null, "", newHash);
+      history.replaceState(null, "", "#" + next);
     } catch (e) {
       // some file:// contexts refuse replaceState — the old link degrades to
       // default layers there, everything else keeps working
@@ -30016,6 +30150,17 @@ function initChiExplorer() {
     pinnedParentId = (pinnedParentId === id) ? null : id;
     refreshAllPinButtons();
     refreshRelationshipOutlines();
+    // The pin is part of the shared view, so pinning and unpinning both move
+    // the permalink (see syncUrlHash). This call also carries the RESTORE
+    // path, which is easy to miss: applyStateFromHash selects the point
+    // before it reads `pin=`, and that selection's own syncUrlHash rewrites
+    // the hash while pinnedParentId is still null, so the incoming pin is
+    // gone by the time the restore runs. Without this line a shared link
+    // restores the pin on screen and hands the next reader a pin-less URL.
+    // The other path that clears the pin — toggling the parent layer OFF —
+    // needs no call here: onLayerToggled clears pinnedParentId directly and
+    // its own change handler runs syncUrlHash immediately afterwards.
+    syncUrlHash();
   }
 
   // Update every card's pin button to reflect the current pinned layer.

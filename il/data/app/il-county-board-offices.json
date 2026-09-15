@@ -20,6 +20,13 @@
    "source": "isbe",
    "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
   },
+  "christian": {
+   "address": "101 South Main Street, P.O. Box 647, Taylorville, IL 62568",
+   "asOf": "2025-12-15",
+   "confirmedBy": "County Clerk",
+   "source": "isbe",
+   "sourceUrl": "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
+  },
   "clay": {
    "address": "111 Chestnut Street, Louisville, IL 62858",
    "asOf": "2025-12-15",
