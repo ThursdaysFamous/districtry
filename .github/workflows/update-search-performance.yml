@@ -18,7 +18,12 @@ name: Update search performance
 
 on:
   schedule:
-    - cron: "30 13 * * *" # daily, after Search Console's own ~2-day lag settles
+    - cron: "30 11 * * *" # daily; Search Console's own lag is ~2 DAYS, so the
+      # hour does not matter to it — this one is set by what reads the file.
+      # The traffic report fires at 13:00 UTC (8am in Chicago, which is what
+      # was asked for), so all three fetches moved two hours earlier on
+      # 2026-09-15 to stay ahead of it. A fetch that lands after its reader has
+      # run is a day late every day, and nothing would report that.
   workflow_dispatch: {}
   # A branch-scoped `push:` trigger stood here so this workflow could prove
   # itself BEFORE merging -- the failure validate_workflow_deps.py exists

@@ -18,7 +18,8 @@ name: Update Bing search performance
 
 on:
   schedule:
-    - cron: "45 13 * * *" # daily, quarter of an hour after the Search Console fetch
+    - cron: "45 11 * * *" # daily, quarter of an hour after the Search Console
+      # fetch and 75 minutes before the traffic report reads all three.
   workflow_dispatch: {}
   # A branch-scoped `push:` trigger stood here so this workflow could prove
   # itself before merging, the device update-search-performance.yml used. It

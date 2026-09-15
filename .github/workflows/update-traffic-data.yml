@@ -20,7 +20,8 @@ name: Update traffic data
 
 on:
   schedule:
-    - cron: "15 14 * * *" # daily, after the two search fetches
+    - cron: "15 12 * * *" # daily, after the two search fetches and 45 minutes
+      # before the traffic report reads all three at 13:00 UTC.
   workflow_dispatch: {}
   # A branch-scoped `push:` trigger stood here so this workflow could prove
   # itself before merging, the device update-search-performance.yml used. It
