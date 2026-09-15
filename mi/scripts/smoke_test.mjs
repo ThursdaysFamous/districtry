@@ -860,7 +860,23 @@ try {
       { label: "Wayne 8", point: "42.31838,-83.29856", district: "8",
         name: "Hassan M. Ahmad", stale: "David Knezek" },
       { label: "Muskegon 4", point: "43.19072,-86.28166", district: "4",
-        name: "Chris McGuigan", stale: "Dan Potts", contact: "231-286-7298" }
+        name: "Chris McGuigan", stale: "Dan Potts", contact: "231-286-7298" },
+      // TRANCHE 2 ADDS TWO, EACH FOR A TRAP ITS PARSER HAD TO AVOID.
+      //
+      // St. Clair 5 is the tranche's own replacement: the county names Paul
+      // Zeller where the state layer still names Robert Fielitz.
+      //
+      // Calhoun 2 is the interleaved-table trap. Calhoun lists its seven
+      // commissioners in a two-column table whose columns run 1-4 beside 5-7,
+      // so a read by POSITION pairs District 2 with District 5's member. That
+      // failure names a real commissioner of a real district and looks
+      // entirely correct on the card, which is why the assertion is not only
+      // that District 2 names Monique French but that it does NOT name Derek
+      // King, who holds District 5.
+      { label: "St. Clair 5", point: "42.88269,-82.55890", district: "5",
+        name: "Paul Zeller", stale: "Robert Fielitz" },
+      { label: "Calhoun 2", point: "42.32012,-85.16446", district: "2",
+        name: "Monique French", stale: "Derek King" }
     ]) {
       const page = await booted(context, `${BASE}#point=${cc.point}&layers=county-commissioner`);
       const card = await cardText(page, "county-commissioner");
@@ -885,6 +901,64 @@ try {
           digits(text).includes(digits(cc.contact)) && /Email/.test(text),
           text.slice(0, 200));
       }
+      await page.close();
+    }
+
+    // A DISTRICT THE COUNTY ITSELF DOES NOT NAME IS A THIRD STATE, and it has
+    // to read differently from both a named district and a county the roster
+    // has not reached. Monroe is the case: its board seats nine, its directory
+    // lists eleven rows, and one row is malformed — labelled District 2, and
+    // the only name on it is "Commissioner Vensel", who holds District 6. So
+    // the card must (a) still be District 2, (b) name nobody, (c) NOT name
+    // Vensel, which is what a lax parser would do with that row, and (d) say
+    // the county's own entry names no person rather than the
+    // county-not-reached sentence, which would be false here.
+    {
+      const page = await booted(context,
+        `${BASE}#point=42.00489,-83.51345&layers=county-commissioner`);
+      const card = await cardText(page, "county-commissioner");
+      const pill = await page.evaluate(() => {
+        const el = document.getElementById("card-county-commissioner");
+        const p2 = el && el.parentElement ? el.parentElement.querySelector(".card-id-pill") : null;
+        return p2 ? p2.textContent.trim() : null;
+      });
+      const people = await page.evaluate(() => {
+        const el = document.getElementById("card-county-commissioner");
+        return el ? el.querySelectorAll(".card-person").length : -1;
+      });
+      const text = card.text || "";
+      check("Monroe District 2 still resolves to its own district",
+        pill === "District 2", `pill=${JSON.stringify(pill)}`);
+      check("Monroe District 2 names nobody and says the county's entry does not",
+        people === 0 && /county's own entry for this district names no person/.test(text),
+        `personRows=${people} :: ${text.slice(0, 220)}`);
+      check("Monroe District 2 does not borrow the malformed row's name",
+        !/Vensel/.test(text), text.slice(0, 220));
+      check("Monroe District 2 is not told the county is unreached",
+        !/this county is not done/.test(text), text.slice(0, 220));
+      await page.close();
+    }
+
+    // Monroe District 6 is the other half of that malformed row: Vensel holds
+    // THIS district, so the name has to land here and not two districts back.
+    // It is also the first Michigan card to print a role and a party together
+    // — the county badges its chairman and publishes party on the same page —
+    // so the note must read "Chairman · Republican" rather than one of them.
+    {
+      const page = await booted(context,
+        `${BASE}#point=41.89101,-83.38123&layers=county-commissioner`);
+      const card = await cardText(page, "county-commissioner");
+      const pill = await page.evaluate(() => {
+        const el = document.getElementById("card-county-commissioner");
+        const p2 = el && el.parentElement ? el.parentElement.querySelector(".card-id-pill") : null;
+        return p2 ? p2.textContent.trim() : null;
+      });
+      const text = card.text || "";
+      check("Monroe District 6 is where the malformed row's name belongs",
+        pill === "District 6" && /David Vensel/.test(text),
+        `pill=${JSON.stringify(pill)} :: ${text.slice(0, 160)}`);
+      check("Monroe District 6 prints the role and the party together",
+        /Chairman/.test(text) && /Republican/.test(text), text.slice(0, 200));
       await page.close();
     }
 

@@ -1,4 +1,120 @@
 {
+ "021": {
+  "county": "Berrien",
+  "districts": {
+   "1": {
+    "name": "David Vollrath"
+   },
+   "10": {
+    "name": "Mac Elliott"
+   },
+   "11": {
+    "name": "Jim Curran"
+   },
+   "12": {
+    "name": "Sharon J. Tyler"
+   },
+   "2": {
+    "name": "Jon Hinkelman"
+   },
+   "3": {
+    "name": "Chokwe Pitchford"
+   },
+   "4": {
+    "name": "Mamie Yarbrough"
+   },
+   "5": {
+    "name": "Rayonte D. Bell"
+   },
+   "6": {
+    "name": "Julie Wuerfel"
+   },
+   "7": {
+    "name": "Bob Harrison"
+   },
+   "8": {
+    "name": "Teri Sue Freehling"
+   },
+   "9": {
+    "name": "Alex R. ott"
+   }
+  },
+  "seats": 12,
+  "sourceUrl": "https://www.berriencounty.org/735/Meet-Your-Commissioners"
+ },
+ "025": {
+  "county": "Calhoun",
+  "districts": {
+   "1": {
+    "name": "Dominic Oo"
+   },
+   "2": {
+    "name": "Monique French"
+   },
+   "3": {
+    "name": "Albert Morehart"
+   },
+   "4": {
+    "name": "Dan Strowbridge"
+   },
+   "5": {
+    "name": "Derek King",
+    "role": "Chair"
+   },
+   "6": {
+    "name": "Matt Saxton"
+   },
+   "7": {
+    "name": "Gary Tompkins"
+   }
+  },
+  "seats": 7,
+  "sourceUrl": "https://www.calhouncountymi.gov/departments/board_of_commissioners/index.php"
+ },
+ "075": {
+  "county": "Jackson",
+  "districts": {
+   "1": {
+    "name": "Tony Bair",
+    "profileUrl": "https://www.mijackson.org/1123/District-1---Tony-Bair"
+   },
+   "2": {
+    "name": "Margie J. Walz",
+    "profileUrl": "https://www.mijackson.org/1124/District-2---Margie-J-Walz"
+   },
+   "3": {
+    "name": "Corey Kennedy",
+    "profileUrl": "https://www.mijackson.org/1183/District-3---Corey-Kennedy"
+   },
+   "4": {
+    "name": "Philip Duckham",
+    "profileUrl": "https://www.mijackson.org/1193/District-4---Philip-Duckham"
+   },
+   "5": {
+    "name": "James Shotwell Jr",
+    "profileUrl": "https://www.mijackson.org/1194/District-5---Chairman-James-Shotwell-Jr",
+    "role": "Chairman"
+   },
+   "6": {
+    "name": "Earl Poleski",
+    "profileUrl": "https://www.mijackson.org/1323/District-6---Earl-Poleski"
+   },
+   "7": {
+    "name": "John L. Willis",
+    "profileUrl": "https://www.mijackson.org/2819/District-7---John-L-Willis"
+   },
+   "8": {
+    "name": "Darius Williams",
+    "profileUrl": "https://www.mijackson.org/1197/District-8---Darius-Williams"
+   },
+   "9": {
+    "name": "Ray Snell",
+    "profileUrl": "https://www.mijackson.org/2451/District-9---Ray-Snell"
+   }
+  },
+  "seats": 9,
+  "sourceUrl": "https://www.mijackson.org/365/Jackson-County-Commissioners"
+ },
  "077": {
   "county": "Kalamazoo",
   "districts": {
@@ -221,6 +337,50 @@
   "seats": 13,
   "sourceUrl": "https://bocmacomb.org/find-your-commissioner/"
  },
+ "115": {
+  "county": "Monroe",
+  "districts": {
+   "1": {
+    "name": "David C. Hoffman",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Dawn Asper",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Jay Heinzerling",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Brian Lamour",
+    "party": "Republican",
+    "role": "Vice-Chairman"
+   },
+   "6": {
+    "name": "David Vensel",
+    "party": "Republican",
+    "role": "Chairman"
+   },
+   "7": {
+    "name": "David Swartout",
+    "party": "Republican"
+   },
+   "8": {
+    "name": "Greg Moore, Jr.",
+    "party": "Republican"
+   },
+   "9": {
+    "name": "J. Henry Lievens",
+    "party": "Republican"
+   }
+  },
+  "seats": 9,
+  "sourceUrl": "https://www.co.monroe.mi.us/374/Board-of-Commissioners",
+  "unnamedDistricts": [
+   "2"
+  ]
+ },
  "121": {
   "county": "Muskegon",
   "districts": {
@@ -319,6 +479,41 @@
   },
   "seats": 11,
   "sourceUrl": "https://www.saginawcountymi.gov/departments/board-of-commissioners/"
+ },
+ "147": {
+  "county": "St. Clair",
+  "districts": {
+   "1": {
+    "name": "Steven Simasko",
+    "profileUrl": "https://www.stclaircounty.org/Offices/624"
+   },
+   "2": {
+    "name": "Kerry Ange",
+    "profileUrl": "https://www.stclaircounty.org/Offices/625"
+   },
+   "3": {
+    "name": "Lisa Beedon",
+    "profileUrl": "https://www.stclaircounty.org/Offices/626"
+   },
+   "4": {
+    "name": "Joi Torello",
+    "profileUrl": "https://www.stclaircounty.org/Offices/627"
+   },
+   "5": {
+    "name": "Paul Zeller",
+    "profileUrl": "https://www.stclaircounty.org/Offices/628"
+   },
+   "6": {
+    "name": "David Rushing",
+    "profileUrl": "https://www.stclaircounty.org/Offices/629"
+   },
+   "7": {
+    "name": "Dave Vandenbossche",
+    "profileUrl": "https://www.stclaircounty.org/Offices/630"
+   }
+  },
+  "seats": 7,
+  "sourceUrl": "https://www.stclaircounty.org/SubHome/Index/620"
  },
  "163": {
   "county": "Wayne",
