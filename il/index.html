@@ -11400,6 +11400,34 @@ function initChiExplorer() {
   var loadClayBoardMembers = makeCached(function () {
     return fetchJSONWithRetry("data/app/clay-county-board-members.json", {}, 2);
   });
+  /* Christian (the 93rd county, 2026-09-15) — the first districted county to
+   * ship its board districts with NO member names, and the first whose
+   * boundary is dissolved from a precinct fabric the county no longer runs.
+   * Christian re-precincted after 2020: the census carries thirty voting
+   * districts and the county runs twenty-nine, so the Jasper test fails and no
+   * precinct layer can be drawn. The DISTRICTS still can, because they were
+   * drawn on the thirty — the county's own 2021 County Board District and
+   * Precinct Map, whose four published district populations this dissolve
+   * reproduces exactly (build_christian_boundaries.py). Three certified
+   * elections partition the 29 current precincts into the same four districts,
+   * and the county's own registration counts place the one new precinct,
+   * Taylorville 9, inside District 2 with its two parents.
+   *
+   * NO ROSTER. The county's board page named only its Chairman and Vice
+   * Chairman when it was last readable, and christiancountyil.gov has sat
+   * behind a Cloudflare managed challenge since 2026-09-15, which is an access
+   * control. The card names your district and links the board. */
+  var loadChristianCountyOutline = makeCached(function () {
+    return fetchJSONWithRetry("data/app/christian-county-outline.json", {}, 2);
+  });
+  function christianCountyCoverage(point) {
+    return loadChristianCountyOutline().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
+  var loadChristianBoardDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/christian-county-board-districts.json", {}, 2);
+  });
   /* Jackson (the 87th county, 2026-08-23) — the first county served whose board
    * districts SPLIT precincts. Its own certified 2024 General canvass reports
    * three of its 56 precincts TWICE, under two districts each with their
@@ -23958,6 +23986,61 @@ function initChiExplorer() {
               .map(function (m) { return m.name; });
             return names.length ? names.join(", ") : null;
           }
+        }
+      },
+      // Christian — 4 districts of FOUR members each (16 seats, staggered:
+      // the 2022 General ran a 4-year and a 2-year contest in every district),
+      // dissolved from the THIRTY Census 2020 voting districts the county's own
+      // 2021 plan was drawn on (build_christian_boundaries.py). The county has
+      // since re-precincted to 29, so its precincts cannot be drawn from census
+      // geometry and none ship; all three changes fell inside a single district,
+      // so no district boundary moved. THE ONLY ENTRY HERE THAT NAMES NOBODY:
+      // the county's board page lists its Chairman and Vice Chairman and no
+      // members, and christiancountyil.gov has been behind a Cloudflare managed
+      // challenge since 2026-09-15. The card gives the district and the precincts
+      // that compose it, and links the board.
+      {
+        key: "christian",
+        coverage: christianCountyCoverage,
+        loadGeometry: loadChristianBoardDistricts,
+        hoverName: function (feature) {
+          var v = findPropCI(feature.properties || {}, ["district"]);
+          return (v == null || v === "") ? null : String(v);
+        },
+        query: function (point, seq) {
+          return loadChristianBoardDistricts().then(function (geojson) {
+            var feature = findFeatureContaining(geojson, point);
+            if (!feature) return null;
+            var props = feature.properties || {};
+            return {
+              seq: seq,
+              district: findPropCI(props, ["district"]),
+              precincts: findPropCI(props, ["precincts"]),
+              seats: findPropCI(props, ["seats"])
+            };
+          });
+        },
+        render: function (result) {
+          var wrap = cardEl("div", "card-flush");
+          wrap.appendChild(renderBodyIntro({
+            title: "Christian County Board",
+            note: "Four members represent this district. Christian County "
+                + "publishes no list of its board members, so none are named "
+                + "here."
+          }));
+          if (result.precincts && result.precincts.length) {
+            wrap.appendChild(renderFieldStack([
+              { label: "Precincts", value: result.precincts.join(", ") }
+            ]));
+          }
+          return wrap;
+        },
+        cardIdentifier: function (result) {
+          return result.district != null && result.district !== ""
+            ? "District " + String(result.district) : null;
+        },
+        primaryLink: function () {
+          return { label: "Christian County Board (official)", url: "https://www.christiancountyil.gov/county-board/" };
         }
       }
     ]

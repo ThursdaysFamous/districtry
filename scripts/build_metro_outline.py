@@ -798,6 +798,18 @@ METRO_COUNTY_FIPS = ("031", "043", "197", "097", "089", "111", "093",
                      # OUTSIDE anchor is called for. READ THE RING COUNT FROM
                      # --check, NEVER FROM A MAP IN YOUR HEAD.
                      "071",
+                     # Christian (2026-09-15), the 93rd county and the one that
+                     # CLOSES THE SECOND ENCLAVE — the hole Shelby's join opened
+                     # on 2026-08-11, with Sangamon, Macon, Shelby and
+                     # Montgomery all around it. Board-only: its four districts
+                     # dissolve from the thirty Census 2020 voting districts its
+                     # own 2021 plan was drawn on, reproducing all four of that
+                     # plan's published district populations exactly. Its
+                     # precincts cannot ship — the county re-precincted to 29
+                     # after the census, so the Jasper test fails. Taylorville
+                     # moves from OUTSIDE to INSIDE with this join. READ THE
+                     # RING COUNT FROM --check, NEVER FROM A MAP IN YOUR HEAD.
+                     "021",
                      # judicial-subcircuit secondary counties (see below)
                      "005", "083", "061", "137", "171")
 STATE_FIPS = "17"
@@ -969,6 +981,17 @@ DISPATCH_COUNTY_FIPS = {
     # Johnson and Perry set this shape — a county joining on precincts alone
     # with its own site never read (scripts/build_vtd_precincts.py).
     "henderson": "071",
+    # Christian joins 2026-09-15 as a BOARD-ONLY dispatch entry, the 93rd
+    # county, and CLOSES THE SECOND ENCLAVE — the hole Shelby's join opened on
+    # 2026-08-11. Four districts of four members, dissolved from the THIRTY
+    # Census 2020 voting districts the county's own 2021 plan was drawn on;
+    # this dissolve reproduces all four of that plan's published district
+    # populations exactly. NO PRECINCT ENTRY: the county re-precincted after
+    # 2020 and now runs 29 where the census carries 30, so the Jasper test
+    # fails and no precinct layer can be drawn from census geometry — the
+    # district plan predates the change and all three changes fell inside one
+    # district (scripts/build_christian_boundaries.py).
+    "christian": "021",
 }
 # ==== TEMPLATE:END outline-county-config ====
 
@@ -1137,6 +1160,13 @@ INSIDE = {
     # one polygon and Edwards is the only island left. The same join encloses
     # Christian as the wash's second hole — see Taylorville, OUTSIDE.
     "Shelbyville (Shelby)": (39.4130, -88.7940),
+    # Taylorville (Christian) — the county seat, moved up from the OUTSIDE list
+    # on 2026-09-15, where it had held the wash's second enclave open since
+    # Shelby's join enclosed the county on 2026-08-11. Christian was never
+    # frontier: it is interior, ringed by Sangamon, Macon, Shelby and
+    # Montgomery, so a reader saw it as a doughnut in the coverage. Its board
+    # districts closed it.
+    "Taylorville (Christian)": (39.5490, -89.2945),
     # The SECOND island (pass 14, 2026-08-05): Hamilton, deep-south and five
     # unserved neighbours around it — Fairfield (Wayne) holds the corridor
     # toward Effingham OUTSIDE.
@@ -1470,13 +1500,6 @@ OUTSIDE = {
     # names echo and no whole-precinct dissolve can answer there. Newton is
     # the county seat.
     "Newton (Jasper)": (38.9903, -88.1631),
-    # Christian — ENCLOSED 2026-08-11 by Shelby's join: with Sangamon, Macon,
-    # Shelby and Montgomery all served, Christian is the second enclave after
-    # Bureau, an interior ring rather than frontier. This anchor is what
-    # proves the hole IS a hole: mis-nested, the ring would render
-    # identically under the wash and Taylorville would answer True here,
-    # failing the build.
-    "Taylorville (Christian)": (39.5490, -89.2945),
     "Milwaukee (WI)": (43.0389, -87.9065),
     # DeKalb used to sit here, described as "enclosed on three sides by served
     # counties and the one border-ring county with no locatable GIS". The second

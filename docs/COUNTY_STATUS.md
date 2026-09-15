@@ -9,7 +9,7 @@
      CI drift gate (smoke-test.yml):
          python3 scripts/build_county_status.py --check -->
 
-**92 of 102 Illinois counties are served** — 92 through their own dispatch entries, 0 through a shipped judicial circuit, and 0 through the County card alone. 10 more are researched-but-unserved (every one carries a recorded gap saying why), leaving 0 unresearched.
+**93 of 102 Illinois counties are served** — 93 through their own dispatch entries, 0 through a shipped judicial circuit, and 0 through the County card alone. 9 more are researched-but-unserved (every one carries a recorded gap saying why), leaving 0 unresearched.
 
 ## How to read this
 
@@ -19,7 +19,7 @@
 - **Open gaps** — records from the guidebook's gaps block (`data/app/coverage-gaps.json`, the app's Data gaps panel). A record naming several counties appears in each of their rows.
 - **"Complete"** here means: served, and `none` in the gaps column. A served county with open gaps is honest-but-unfinished; what each gap needs is the record's `wanted` line in the guidebook. One exception worth naming: a row reading **`no gap record`** in the Board column is NOT complete even though its gaps column says `none` — nobody has measured what it is missing, which is a weaker claim than having nothing missing.
 
-## Served counties (92)
+## Served counties (93)
 
 | County | FIPS | Served through | Board | County-keyed dispatch entries | Open gaps |
 |---|---|---|---|---|---|
@@ -31,6 +31,7 @@
 | Calhoun | 17013 | dispatch | at-large — County card | `county-precinct`, `library-district` | none |
 | Carroll | 17015 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 4 — `carroll-special-districts` (no-source); `carroll-ward-geometry` (no-source); `library-governance-type` (data-quality); `statewide-library-officials` (no-source) |
 | Cass | 17017 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `pass9-ward-seats-without-maps` (no-source); `statewide-library-officials` (no-source) |
+| Christian | 17021 | dispatch | districted | `county-board` | 2 — `christian-county-board-roster` (no-source); `christian-precinct-geometry` (no-source) |
 | Clark | 17023 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 3 — `clark-board-contact` (data-quality); `clark-precinct-polling` (data-quality); `statewide-library-officials` (no-source) |
 | Clay | 17025 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Clinton | 17027 | dispatch | districted | `county-board`, `library-district` | 3 — `clinton-precinct-geometry` (no-source); `county-board-office-addresses` (no-source); `statewide-library-officials` (no-source) |
@@ -116,7 +117,7 @@
 | Winnebago | 17201 | dispatch | districted | `county-board`, `county-precinct`, `judicial-subcircuit`, `library-district` | 3 — `rockford-city-precincts` (no-source); `statewide-library-officials` (no-source); `winnebago-special-districts` (no-source) |
 | Woodford | 17203 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 1 — `woodford-special-district-boards` (data-quality) |
 
-## Researched frontier (10) — gap-recorded, not yet served
+## Researched frontier (9) — gap-recorded, not yet served
 
 Counties outside the coverage ring that a research pass has already measured; each row's records say what blocks it and what a submission would need to contain.
 
@@ -124,7 +125,6 @@ Counties outside the coverage ring that a research pass has already measured; ea
 |---|---|---|
 | Bureau | 17011 | 1 — `bureau-county-board-districts` (no-source) |
 | Champaign | 17019 | 1 — `champaign-piatt-ccgisc-license` (blocked) |
-| Christian | 17021 | 1 — `christian-county-board-districts` (no-source) |
 | Fayette | 17051 | 1 — `fayette-county-board-geometry` (no-source) |
 | Ford | 17053 | 1 — `ford-county-board-vintage` (no-source) |
 | Jasper | 17079 | 1 — `jasper-county-board` (no-source) |
@@ -139,4 +139,4 @@ Counties outside the coverage ring that a research pass has already measured; ea
 
 ## Gap records not tagged to a county (2)
 
-City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 102 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.
+City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 103 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.
