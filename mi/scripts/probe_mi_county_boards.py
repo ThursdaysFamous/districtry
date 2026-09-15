@@ -220,12 +220,30 @@ def frontier():
 
 # ------------------------------------------------------------------- stage one
 
-def _resolve(host):
-    try:
-        socket.setdefaulttimeout(4)
-        return host, socket.gethostbyname(host)
-    except Exception:                                             # noqa: BLE001
-        return host, None
+def _resolve(host, attempts=3):
+    """DNS WITH RETRIES, because a flaky lookup silently deletes a county's
+    real host from its own candidate list.
+
+    Marquette is the measured case. Sweep 1 read its board from
+    co.marquette.mi.us; sweep 2 returned `no-board-page` and that host appears
+    in neither the confirmed nor the rejected list, because its lookup failed
+    once and nothing retried it. The county was recorded as publishing no board
+    page on the strength of one dropped UDP packet.
+
+    validate_card_links.py already carries this rule for the same reason -- a
+    flaky parallel lookup there reported two live sites as having no DNS record
+    -- and this file simply had not applied it."""
+    for i in range(attempts):
+        try:
+            socket.setdefaulttimeout(4)
+            return host, socket.gethostbyname(host)
+        except socket.gaierror:
+            return host, None          # a real NXDOMAIN, not worth retrying
+        except Exception:                                         # noqa: BLE001
+            if i == attempts - 1:
+                return host, None
+            time.sleep(0.4 * (i + 1))
+    return host, None
 
 
 def resolve_candidates(county):
@@ -582,7 +600,13 @@ def probe_county(row):
             confirmed.append((host, page))
         else:
             rejected.append({"host": host, "why": why, "detail": detail})
-        if len(confirmed) >= 3:
+        # NO CAP ON CONFIRMED HOSTS UNTIL A BOARD PAGE IS FOUND. Capping at
+        # three meant a county's real host could be crowded out by other
+        # spellings that also confirm and carry nothing, which is the second
+        # half of the Marquette regression: marquettecounty.org, its www
+        # form and marquette.org all confirmed and none carries a board
+        # page. Confirming is cheap; it is the board-page fetches that cost.
+        if len(confirmed) >= 6:
             break
     if not confirmed:
         kinds = {r["why"] for r in rejected}
