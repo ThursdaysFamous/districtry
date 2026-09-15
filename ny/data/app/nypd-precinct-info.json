@@ -1,6 +1,6 @@
 {
 "1": {
-"commander": "Captain Robert Fisher",
+"commander": "Deputy Inspector Robert Fisher",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/1st-precinct.page"
 },
 "5": {
@@ -8,11 +8,11 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/5th-precinct.page"
 },
 "6": {
-"commander": "Captain Nicholas D. Minor",
+"commander": "Deputy Inspector Nicholas D. Minor",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/6th-precinct.page"
 },
 "7": {
-"commander": "Captain Jayson Evert",
+"commander": "Deputy Inspector Jayson Evert",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/7th-precinct.page"
 },
 "9": {
@@ -28,19 +28,19 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/13th-precinct.page"
 },
 "14": {
-"commander": "Deputy Inspector Christopher Treubig",
+"commander": "Inspector Christopher Treubig",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/midtown-south-precinct.page"
 },
 "17": {
-"commander": "Captain Allen Kirmss",
+"commander": "Deputy Inspector Allen Kirmss",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/17th-precinct.page"
 },
 "18": {
-"commander": "Deputy Inspector Maggie Clamp",
+"commander": "Inspector Maggie Clamp",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/midtown-north-precinct.page"
 },
 "19": {
-"commander": "Deputy Inspector Noreen E. Lazarus",
+"commander": "Inspector Noreen E. Lazarus",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/19th-precinct.page"
 },
 "20": {
@@ -68,7 +68,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/26th-precinct.page"
 },
 "28": {
-"commander": "Captain James M. Whitlock",
+"commander": "Deputy Inspector James M. Whitlock",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/28th-precinct.page"
 },
 "30": {
@@ -80,7 +80,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/32nd-precinct.page"
 },
 "33": {
-"commander": "Captain Christian R. Hernandez",
+"commander": "Deputy Inspector Christian R. Hernandez",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/33rd-precinct.page"
 },
 "34": {
@@ -92,7 +92,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/40th-precinct.page"
 },
 "41": {
-"commander": "Captain Elvis Badia",
+"commander": "Deputy Inspector Elvis Badia",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/41st-precinct.page"
 },
 "42": {
@@ -104,7 +104,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/43rd-precinct.page"
 },
 "44": {
-"commander": "Deputy Inspector Joe A. Pulgarin",
+"commander": "Inspector Joe A. Pulgarin",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/44th-precinct.page"
 },
 "45": {
@@ -116,7 +116,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/46th-precinct.page"
 },
 "47": {
-"commander": "Deputy Inspector Muhammad J. Ashraf",
+"commander": "Inspector Muhammad J. Ashraf",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/47th-precinct.page"
 },
 "48": {
@@ -132,7 +132,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/50th-precinct.page"
 },
 "52": {
-"commander": "Deputy Inspector Chase A. Maneri",
+"commander": "Deputy Inspector Asif Iqbal",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/52nd-precinct.page"
 },
 "60": {
@@ -160,7 +160,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/67th-precinct.page"
 },
 "68": {
-"commander": "Captain John Dasaro",
+"commander": "Captain Christopher Vincenti",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/68th-precinct.page"
 },
 "69": {
@@ -172,7 +172,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/70th-precinct.page"
 },
 "71": {
-"commander": "Deputy Inspector Ronald Perez",
+"commander": "Deputy Inspector John G. Dasaro",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/71st-precinct.page"
 },
 "72": {
@@ -192,7 +192,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/76th-precinct.page"
 },
 "77": {
-"commander": "Deputy Inspector Omar M. Birchwood",
+"commander": "Inspector Omar M. Birchwood",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/77th-precinct.page"
 },
 "78": {
@@ -232,11 +232,11 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/100th-precinct.page"
 },
 "101": {
-"commander": "Captain George Ng",
+"commander": "Deputy Inspector George Ng",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/101st-precinct.page"
 },
 "102": {
-"commander": "Captain Pratima B. Maldonado",
+"commander": "Deputy Inspector Pratima B. Maldonado",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/102nd-precinct.page"
 },
 "103": {
@@ -260,7 +260,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/107th-precinct.page"
 },
 "108": {
-"commander": "Captain Hameed S. Armani",
+"commander": "Deputy Inspector Hameed S. Armani",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/108th-precinct.page"
 },
 "109": {
@@ -304,7 +304,7 @@
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/121st-precinct.page"
 },
 "122": {
-"commander": "Captain Luigi Carrubba",
+"commander": "Captain Bailey Goon",
 "source_url": "https://www.nyc.gov/site/nypd/bureaus/patrol/precincts/122nd-precinct.page"
 },
 "123": {
