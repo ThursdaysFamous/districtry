@@ -52,3 +52,10 @@ dist/
 # forgotten file in the tree is exactly how one would ship
 # (scripts/build_parcel_fabric_districts.py).
 /scratch/
+
+# Transient scrape output. Every scraper → builder pair writes its intermediate
+# JSON under a `.cache` directory beside the script, and the builder writes the
+# reviewed file into data/app or data/source — that file is the artifact, the
+# scrape is not. UNANCHORED for the reason the Leaflet pattern above is: each
+# instance has its own scripts/ directory.
+**/scripts/.cache/

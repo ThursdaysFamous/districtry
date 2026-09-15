@@ -265,14 +265,83 @@ that made this roster fit:
 was written for: it failed the build naming `ny-update-nypd-roster.yml` and the
 two lines it lacked. That workflow now regenerates the page and the sitemap.
 
+### 4. The other missing large counties — done 2026-09-15
+
+Seven, not six, and one gap rather than seven. The audit named Winnebago,
+Madison, St. Clair, Champaign, McLean and Kankakee; measured against
+`il/index.html`'s own board cards, Champaign has no card at all (it is inside
+the unserved Champaign/Ford/Piatt enclave) and Effingham and Whiteside were
+missing too. The seven with a card and no page are Effingham, Kankakee, Madison,
+McLean, St. Clair, Whiteside and Winnebago — 158 seats.
+
+**None of them was missing a source.** Each publishes its members on the SAME
+GIS feature that carries the board boundary, so the app asks for both in one
+request and no roster file ever existed — and `build_county_pages.py` enumerates
+roster FILES. That is the Cook County shape exactly, and the fix is the same:
+snapshot what the app fetches, weekly, into `il/data/source/`.
+
+The earlier note here about Winnebago was half right and half wrong. Its roster
+does ship 20 districts with an e-mail and a phone and no `name`, and deriving a
+name from `ABooker@` is a guess this project does not make — but the name was
+never missing. `build_winnebago_county_board_roster.py` reads it from WinGIS to
+cross-check the board page and then deliberately drops it, because the card gets
+it from WinGIS live. The county page now takes the same GIS name, so the two
+cannot disagree.
+
+Four things the build decided, each of them a property of a county's own
+service rather than a preference:
+
+- **Four record shapes.** One seat per row for five counties; two seats in
+  parallel COLUMNS for McLean (`REPNAME`/`REPNAME2`, a seat with no name being a
+  vacancy that drops out, the app's own rule); nine names in ONE
+  comma-separated string for Whiteside; and a layer holding every office's
+  districts in one table, filtered exactly as `whitesideIsBoardFeature` filters
+  it.
+- **Whiteside's split is guarded.** Nine names in one field split on commas
+  because no member's name contains one. St. Clair's own roster carries "Robert
+  Allen, Jr.", so that day is coming; a fragment that is a bare suffix now fails
+  the build naming the county rather than shipping half-people.
+- **A link that names the county is dropped.** Whiteside's `districturl1` is the
+  same board page on all three rows, so it is the file's `sourceUrl` and rides
+  no member — the rule `build_cook_county_board.py` states for `url1`.
+- **A gate that asks what the page generator cannot.** `--check` reads
+  `il/index.html`'s own board-card titles and FAILS on a county that has one,
+  has no roster file, and is neither snapshotted nor recorded with a reason. One
+  is recorded: Christian, whose site has answered every client with a Cloudflare
+  managed challenge since 2026-09-15 and whose last readable board page named
+  only its Chairman and Vice Chairman.
+
+**Two latent defects in the page generator, both surfaced by Winnebago being
+the one county described by two files.** Its data/app roster is contact-only —
+twenty flat records with an e-mail, a phone and a source URL and no name
+anywhere, because the card reads the member from WinGIS live — and the new
+data/source roster names the same twenty. `il_districted` globbed both
+directories into one `sorted()` list and let the later path replace the earlier,
+so which file won was an accident of the two directory names sorting
+`app` before `source`. It happened to produce the right page; the other order
+would have produced a county naming nobody, and either way the county's own
+published e-mail and phone were dropped from every row. The rule is stated now:
+the data/source file wins, the data/app file must not name anybody the source
+file does not, and a disagreement about who holds a seat FAILS rather than
+picking one. `build_il_gis_board_rosters.py` folds the contact onto the members
+it seats, refusing where a district has more than one member and so no
+unambiguous owner for one address. And `NAMES_NOBODY` — which recorded Winnebago
+as naming nobody — failed the build as stale the moment the collision stopped
+hiding it. That table is empty now.
+
+**One defect found in passing, in a gate rather than in this work.** An ArcGIS
+`/query` URL now carries its query string in the literal instead of a `params`
+dict, because `probe_user_agents.py` builds its host inventory by reading URL
+literals and fetches each as written. Passed separately, the probe fetched a
+`/query` path with no parameters, which the service is entitled to refuse — and
+did, recording `gisportal.co.madison.il.us` as `all-refused` on all four rungs
+while this scraper was reading 26 rows from it in the same minute. That is the
+wrong-address defect the probe already records, one step further in: the address
+was right and the request was not. Four county GIS hosts are measured now
+(`token-ok` on all four), taking the artifact to 294 hosts and 224 `token-ok`,
+with the three documents that quote those figures updated in the same change.
+
 ### Still open in phase 2
 
-- **The other missing large counties**: Winnebago, Madison, St. Clair,
-  Champaign, McLean and Kankakee. Winnebago is the instructive one — its roster
-  ships with 20 districts carrying an e-mail and a phone each and **no `name`
-  field at all**, so `build_county_pages.py` correctly gives it no page. The
-  e-mail local parts look like names (`ABooker@`, `JWebster@`); deriving a
-  person's name from an e-mail address is exactly the guess this project does
-  not make. That is a scraper gap, not a page gap.
 - **`/about.html`**, consistent counts, county-page uniqueness above 60%.
 - **Split and minify the map script; load GA only where it is needed.**

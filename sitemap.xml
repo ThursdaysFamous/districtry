@@ -458,6 +458,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/il/county-board/effingham.html</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/il/county-board/franklin.html</loc>
     <lastmod>2026-09-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -536,6 +542,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/il/county-board/kankakee.html</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/il/county-board/kendall.html</loc>
     <lastmod>2026-09-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -584,6 +596,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/il/county-board/madison.html</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/il/county-board/marshall.html</loc>
     <lastmod>2026-09-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -610,6 +628,12 @@
   <url>
     <loc>https://districtry.com/il/county-board/mchenry.html</loc>
     <lastmod>2026-09-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/il/county-board/mclean.html</loc>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -722,6 +746,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/il/county-board/st-clair.html</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/il/county-board/stark.html</loc>
     <lastmod>2026-09-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -782,6 +812,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/il/county-board/whiteside.html</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/il/county-board/will.html</loc>
     <lastmod>2026-09-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -790,6 +826,12 @@
   <url>
     <loc>https://districtry.com/il/county-board/williamson.html</loc>
     <lastmod>2026-09-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/il/county-board/winnebago.html</loc>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

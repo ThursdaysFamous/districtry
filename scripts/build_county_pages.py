@@ -114,16 +114,13 @@ from build_county_status import ALL_COUNTIES, slug_of  # noqa: E402
 # both have a Winnebago County, Wisconsin has a county named IOWA, and eleven
 # other names are shared between the two states — a bare county name would let
 # an entry written about one state silence a real regression in another.
-NAMES_NOBODY = {
-    "il/Winnebago": dict(
-        date="2026-09-13",
-        reason="all 20 district keys are flat records carrying an e-mail, a "
-               "phone and the county's source URL, and no name field anywhere "
-               "in the file. The county publishes per-district contact details "
-               "rather than a member list; wincoil.gov's board page is the "
-               "roster and nothing here parses names out of it yet.",
-    ),
-}
+NAMES_NOBODY = {}
+# EMPTY, which is a measurement rather than an omission. It carried one entry
+# from 2026-09-13 — Illinois's Winnebago, whose data/app file is 20 flat records
+# with an e-mail, a phone and a source URL and no name field anywhere, because
+# the card reads the member from WinGIS live. il_gis_board_scraper.py
+# snapshotted those names on 2026-09-15 and this gate FAILED the build on the
+# stale entry, which is what it is for.
 
 # ——— the fleet registry ———
 #
@@ -253,6 +250,80 @@ def district(label, members=(), vacancies=0, note=None):
             "vacancies": vacancies, "note": note}
 
 
+def _slug_of(path):
+    return re.sub(r"-(county-board-members|commissioner-members|"
+                  r"county-board-roles)\.json$", "", os.path.basename(path))
+
+
+def _resolve_duplicate_slugs(paths):
+    """One county, one roster file — and where there are two, data/source wins.
+
+    A county can legitimately have a file in BOTH directories. Winnebago does:
+    data/app carries the CONTACT its GIS declares and never fills, joined by the
+    card as an enrichment, while data/source carries the members snapshotted
+    from that same GIS so this generator has names to put on a page. Before this
+    ran, `sorted()` decided which one won — alphabetically, app before source —
+    and the later one silently replaced the earlier. It happened to produce the
+    right page and would have produced a county naming nobody if the two
+    directory names had sorted the other way.
+
+    So the rule is stated rather than incidental: the data/source file wins,
+    because it is the one this generator is FOR, and the data/app file must not
+    name anybody it does not. A county whose app roster names a member the
+    source roster has never heard of is a real disagreement between two files
+    about who holds a seat, and it fails rather than picking one.
+    """
+    by_slug, problems = {}, []
+    for path in paths:
+        by_slug.setdefault(_slug_of(path), []).append(path)
+    keep = []
+    for slug, found in sorted(by_slug.items()):
+        if len(found) == 1:
+            keep.append(found[0])
+            continue
+        source = [p for p in found if os.sep + "source" + os.sep in p]
+        app = [p for p in found if p not in source]
+        if len(source) != 1 or len(app) != 1:
+            problems.append(
+                "%s has %d roster files and this can only resolve one app file "
+                "against one source file: %s"
+                % (slug, len(found),
+                   ", ".join(os.path.relpath(p, REPO_ROOT) for p in sorted(found))))
+            continue
+        named_in_app = {
+            (r.get("name") or "").strip()
+            for r in _read(app[0]).values() if isinstance(r, dict)
+        } | {
+            (m.get("name") or "").strip()
+            for r in _read(app[0]).values() if isinstance(r, dict)
+            for m in (r.get("members") or []) if isinstance(m, dict)
+        }
+        named_in_app.discard("")
+        named_in_source = {
+            (m.get("name") or "").strip()
+            for r in _read(source[0]).values() if isinstance(r, dict)
+            for m in (r.get("members") or []) if isinstance(m, dict)
+        } | {
+            (r.get("name") or "").strip()
+            for r in _read(source[0]).values() if isinstance(r, dict)
+        }
+        named_in_source.discard("")
+        orphaned = sorted(named_in_app - named_in_source)
+        if orphaned:
+            problems.append(
+                "%s: %s names %s, whom %s does not — two files disagreeing "
+                "about who holds a seat on one board"
+                % (slug, os.path.relpath(app[0], REPO_ROOT),
+                   ", ".join(orphaned[:4]),
+                   os.path.relpath(source[0], REPO_ROOT)))
+            continue
+        print("build-county-pages: %s reads %s and takes %s for its names"
+              % (slug, os.path.relpath(app[0], REPO_ROOT),
+                 os.path.relpath(source[0], REPO_ROOT)))
+        keep.append(source[0])
+    return sorted(keep), problems
+
+
 def il_districted(inst):
     """Illinois: one file per county, keyed by district.
 
@@ -293,7 +364,8 @@ def il_districted(inst):
         for pattern in ("*-county-board-members.json", "*-commissioner-members.json",
                         "*-county-board-roles.json")
         for path in glob.glob(os.path.join(d, pattern))))
-    out, problems, nameless, used = {}, [], set(), []
+    paths, problems = _resolve_duplicate_slugs(paths)
+    out, nameless, used = {}, set(), []
     for path in paths:
         slug = re.sub(r"-(county-board-members|commissioner-members|"
                       r"county-board-roles)\.json$", "", os.path.basename(path))

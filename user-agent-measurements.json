@@ -17,7 +17,7 @@
   "robots-unreadable": 4,
   "stack-not-token": 7,
   "tls-chain": 1,
-  "token-ok": 220,
+  "token-ok": 224,
   "token-refused": 3,
   "token-refused-and-stack": 15
  },
@@ -43,6 +43,27 @@
     "ia/scripts/validate_sources.py": "self",
     "mi/scripts/validate_sources.py": "self"
    }
+  },
+  "arcgispublicmap.co.st-clair.il.us": {
+   "host": "arcgispublicmap.co.st-clair.il.us",
+   "url": "https://arcgispublicmap.co.st-clair.il.us/server/rest/services/SCC_voting_districts/MapServer/2/query?where=1%3D1&outFields=district,name&returnGeometry=false&f=json",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 1837 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "none (HTTP 404)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 1837 bytes",
+   "callers": {
+    "scripts/build_stclair_precinct_polling.py": "unknown",
+    "scripts/il_gis_board_scraper.py": "self",
+    "scripts/il_special_district_officials_scraper.py": "self"
+   },
+   "measured": "2026-09-15"
   },
   "ashlandcountywi.gov": {
    "host": "ashlandcountywi.gov",
@@ -1723,6 +1744,25 @@
     "scripts/validate_sources.py": "both"
    }
   },
+  "gis.mcleancountyil.gov": {
+   "host": "gis.mcleancountyil.gov",
+   "url": "https://gis.mcleancountyil.gov/arcgis/rest/services/Clerks/MyElectedRepresentatives/MapServer/1/query?where=1%3D1&outFields=DISTRICTID,REPNAME,PARTY,DISTRICTURL,REPNAME2,PARTY2,DISTRICTURL2&returnGeometry=false&f=json",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 3535 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "none (HTTP 404)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 3535 bytes",
+   "callers": {
+    "scripts/il_gis_board_scraper.py": "self"
+   },
+   "measured": "2026-09-15"
+  },
   "gis.wiu.edu": {
    "host": "gis.wiu.edu",
    "url": "https://gis.wiu.edu/arcgis/rest/services/precinct_map/MapServer",
@@ -1742,6 +1782,25 @@
     "scripts/build_mcdonough_precincts.py": "browser"
    },
    "measured": "2026-09-13"
+  },
+  "gisportal.co.madison.il.us": {
+   "host": "gisportal.co.madison.il.us",
+   "url": "https://gisportal.co.madison.il.us/servera/rest/services/CountyClerk/CBDWS/MapServer/0/query?where=1%3D1&outFields=DISTRICT,OFFICIAL,PARTY,PHONE,EMAIL,URL&returnGeometry=false&f=json",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 6149 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "none (HTTP 404)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 6149 bytes",
+   "callers": {
+    "scripts/il_gis_board_scraper.py": "self"
+   },
+   "measured": "2026-09-15"
   },
   "greencountywi.org": {
    "host": "greencountywi.org",
@@ -2004,6 +2063,26 @@
    "callers": {
     "ia/scripts/ia_county_minutes_chair_scraper.py": "self"
    }
+  },
+  "k3gis.net": {
+   "host": "k3gis.net",
+   "url": "https://k3gis.net/arcgis/rest/services/BASE/Elected_Officials/MapServer/1/query?where=1%3D1&outFields=district,membername,party,phone,email&returnGeometry=false&f=json",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 4679 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "none (HTTP 404)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 4679 bytes",
+   "callers": {
+    "scripts/il_gis_board_scraper.py": "self",
+    "scripts/kankakee_district_officials_scraper.py": "unknown"
+   },
+   "measured": "2026-09-15"
   },
   "lacrossecounty.org": {
    "host": "lacrossecounty.org",
@@ -2286,10 +2365,11 @@
    "note": "requests+token HTTP 200, 8029 bytes",
    "callers": {
     "scripts/build_winnebago_county_board_roster.py": "browser",
+    "scripts/il_gis_board_scraper.py": "self",
     "scripts/validate_sources.py": "both",
     "scripts/winnebago_municipal_officials_scraper.py": "browser"
    },
-   "measured": "2026-09-13"
+   "measured": "2026-09-15"
   },
   "mapservices.legis.wisconsin.gov": {
    "host": "mapservices.legis.wisconsin.gov",
@@ -2899,6 +2979,7 @@
     "scripts/build_logan_park_districts.py": "self",
     "scripts/build_parcel_fabric_districts.py": "self",
     "scripts/build_statewide_library_districts.py": "unknown",
+    "scripts/il_gis_board_scraper.py": "self",
     "scripts/il_special_district_officials_scraper.py": "self",
     "scripts/peoria_county_board_scraper.py": "self",
     "scripts/peoria_district_officials_scraper.py": "unknown",
@@ -3422,6 +3503,7 @@
    "note": "requests+token HTTP 200, 127055 bytes (page carries a captcha widget)",
    "callers": {
     "scripts/build_winnebago_county_board_roster.py": "browser",
+    "scripts/il_gis_board_scraper.py": "self",
     "scripts/winnebago_county_board_scraper.py": "browser"
    }
   },
@@ -5595,6 +5677,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 135660 bytes",
    "callers": {
+    "scripts/il_gis_board_scraper.py": "self",
     "scripts/mclean_municipal_officials_scraper.py": "browser"
    }
   },
@@ -6422,6 +6505,7 @@
    "note": "requests+token HTTP 200, 80188 bytes",
    "callers": {
     "scripts/build_parcel_fabric_districts.py": "self",
+    "scripts/il_gis_board_scraper.py": "self",
     "scripts/whiteside_municipal_officials_scraper.py": "browser"
    }
   },

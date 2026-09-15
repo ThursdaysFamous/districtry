@@ -270,6 +270,16 @@ jobs:
       - name: County board pages match their rosters
         run: python3 scripts/build_county_pages.py --check
 
+      # The seven Illinois counties whose board MEMBERS ride the same GIS
+      # feature as the boundary, so the app fetches both in one request and no
+      # roster file ever existed — which meant the gate above, which enumerates
+      # roster FILES, gave none of them a page. This asks the question that gate
+      # cannot: is every county with a board card either snapshotted here or
+      # recorded with a reason why it cannot be. Offline; it reads il/index.html
+      # and the tree and fetches nothing.
+      - name: Every Illinois board card has a roster or a recorded reason
+        run: python3 scripts/build_il_gis_board_rosters.py --check
+
       # /llms.txt, the guide robots.txt points a client at. GENERATED, because
       # the llms.txt convention is a hand-written markdown file and a
       # hand-written one here would list the instances, their layer counts,
