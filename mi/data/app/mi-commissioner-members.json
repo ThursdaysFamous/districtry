@@ -71,6 +71,104 @@
   "seats": 7,
   "sourceUrl": "https://www.calhouncountymi.gov/departments/board_of_commissioners/index.php"
  },
+ "045": {
+  "county": "Eaton",
+  "districts": {
+   "1": {
+    "name": "Andy Shaver"
+   },
+   "10": {
+    "name": "Jacob Toomey"
+   },
+   "11": {
+    "name": "Scott Hansen"
+   },
+   "12": {
+    "name": "Nicole Christensen"
+   },
+   "13": {
+    "name": "Jim Mott",
+    "role": "Chair"
+   },
+   "14": {
+    "name": "Frank Holmes"
+   },
+   "15": {
+    "name": "Keith Barber"
+   },
+   "2": {
+    "name": "Chris Arndt"
+   },
+   "3": {
+    "name": "Jason Peek"
+   },
+   "4": {
+    "name": "Brandon Haskell"
+   },
+   "5": {
+    "name": "Jeanne Pearl-Wright"
+   },
+   "6": {
+    "name": "Jane M. Whitacre"
+   },
+   "7": {
+    "name": "Mark Mudry"
+   },
+   "8": {
+    "name": "Kyle Jones"
+   },
+   "9": {
+    "name": "Brian Droscha",
+    "role": "Vice Chair"
+   }
+  },
+  "seats": 15,
+  "sourceUrl": "https://www.eatoncounty.org/295/Board-of-Commissioners"
+ },
+ "055": {
+  "county": "Grand Traverse",
+  "districts": {
+   "1": {
+    "email": "bmcallister@gtcountymi.gov",
+    "name": "Brian McAllister"
+   },
+   "2": {
+    "email": "lflynn@gtcountymi.gov",
+    "name": "Lauren Flynn"
+   },
+   "3": {
+    "email": "awalter@gtcountymi.gov",
+    "name": "Ashlea Walter"
+   },
+   "4": {
+    "email": "fspence@gtcountymi.gov",
+    "name": "Fern Spence"
+   },
+   "5": {
+    "email": "rhentschel@gtcountymi.gov",
+    "name": "Rob Hentschel"
+   },
+   "6": {
+    "email": "dnelson@gtcountymi.gov",
+    "name": "Darryl Nelson"
+   },
+   "7": {
+    "email": "tandrews@gtcountymi.gov",
+    "name": "TJ Andrews"
+   },
+   "8": {
+    "email": "ssieffert@gtcountymi.gov",
+    "name": "Scott Sieffert",
+    "role": "Board Chair"
+   },
+   "9": {
+    "email": "pmorris@gtcountymi.gov",
+    "name": "Penny Morris"
+   }
+  },
+  "seats": 9,
+  "sourceUrl": "https://www.gtcountymi.gov/184/Board-of-Commissioners"
+ },
  "075": {
   "county": "Jackson",
   "districts": {
@@ -275,6 +373,102 @@
   "seats": 21,
   "sourceUrl": "https://www.kentcountymi.gov/1464/Meet-the-Commissioners"
  },
+ "087": {
+  "county": "Lapeer",
+  "districts": {
+   "1": {
+    "email": "smcmahan@lapeercounty.org",
+    "name": "Scott McMahan",
+    "phone": "810-245-4757"
+   },
+   "2": {
+    "email": "ghowell@lapeercounty.org",
+    "name": "Gary Howell",
+    "phone": "810-245-4768",
+    "role": "Chairman"
+   },
+   "3": {
+    "email": "kknisely@lapeercounty.org",
+    "name": "Kevin Knisely",
+    "phone": "810-245-4756"
+   },
+   "4": {
+    "email": "bhaggadone@lapeercounty.org",
+    "name": "Brad Haggadone",
+    "phone": "810-245-4767",
+    "role": "Vice Chairman"
+   },
+   "5": {
+    "email": "ikempf@lapeercounty.org",
+    "name": "Ian Kempf",
+    "phone": "810-245-4754"
+   },
+   "6": {
+    "email": "gwise@lapeercounty.org",
+    "name": "Greg Wise",
+    "phone": "810-245-4755"
+   },
+   "7": {
+    "email": "bzender@lapeercounty.org",
+    "name": "Bryan Zender",
+    "phone": "810-542-2575"
+   }
+  },
+  "seats": 7,
+  "sourceUrl": "https://lapeercountymi.gov/government/board_of_commissioners/index.php"
+ },
+ "091": {
+  "county": "Lenawee",
+  "districts": {
+   "1": {
+    "email": "comm.stimpson@lenawee.mi.us",
+    "name": "David Stimpson",
+    "phone": "517-423-0999"
+   },
+   "2": {
+    "email": "comm.krasny@lenawee.mi.us",
+    "name": "Dustin Krasny",
+    "phone": "734-224-9770"
+   },
+   "3": {
+    "email": "comm.aungst@lenawee.mi.us",
+    "name": "David Aungst",
+    "phone": "517-547-5001"
+   },
+   "4": {
+    "email": "comm.blanco@lenawee.mi.us",
+    "name": "Beth Blanco",
+    "phone": "517-605-5170"
+   },
+   "6": {
+    "email": "comm.collins@lenawee.mi.us",
+    "name": "Terry Collins",
+    "phone": "517-265-8546"
+   },
+   "7": {
+    "email": "comm.martis@lenawee.mi.us",
+    "name": "Kevon Martis",
+    "phone": "517-403-2438"
+   },
+   "8": {
+    "name": "Ralph Tillotson",
+    "phone": "517-263-1804"
+   },
+   "9": {
+    "email": "comm.vandoren@lenawee.mi.us",
+    "name": "Jim Van Doren",
+    "phone": "517-403-1590"
+   }
+  },
+  "seats": 9,
+  "sourceUrl": "https://www.lenawee.mi.us/896/Commissioners",
+  "unnamedDistricts": [
+   "5"
+  ],
+  "unnamedWhy": {
+   "5": "Lenawee's own News Flash of 10 September 2026 announces the death of Commissioner James \u201cJim\u201d Daly and says he represented District 5; the county's commissioner directory still lists him here. The two county surfaces disagree, so this app names nobody for this seat."
+  }
+ },
  "099": {
   "county": "Macomb",
   "districts": {
@@ -336,6 +530,42 @@
   },
   "seats": 13,
   "sourceUrl": "https://bocmacomb.org/find-your-commissioner/"
+ },
+ "111": {
+  "county": "Midland",
+  "districts": {
+   "1": {
+    "name": "Jeanette Snyder",
+    "phone": "989-832-6381"
+   },
+   "2": {
+    "name": "Mark Bone",
+    "phone": "989-832-6382",
+    "role": "Chair"
+   },
+   "3": {
+    "name": "Larry Schuelke",
+    "phone": "989-832-6383"
+   },
+   "4": {
+    "name": "Ken Mault",
+    "phone": "989-832-6386"
+   },
+   "5": {
+    "name": "Todd Gambrell",
+    "phone": "989-832-6387"
+   },
+   "6": {
+    "name": "Eric Dorrien",
+    "phone": "989-832-6388"
+   },
+   "7": {
+    "name": "Alaynah Smith",
+    "phone": "989-832-6389"
+   }
+  },
+  "seats": 7,
+  "sourceUrl": "https://midlandcountymi.gov/boc-people"
  },
  "115": {
   "county": "Monroe",

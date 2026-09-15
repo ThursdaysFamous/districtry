@@ -496,7 +496,7 @@ def mi_commissioners(inst):
     county's name, the seat count the shipped geometry draws, and a `districts`
     object of {label: {name, role?, party?, phone?, email?, profileUrl?}}.
 
-    IT COVERS ELEVEN OF 83 COUNTIES AND IS MEANT TO. Michigan publishes no
+    IT COVERS SIXTEEN OF 83 COUNTIES AND IS MEANT TO. Michigan publishes no
     maintained statewide roster of commissioners — the one statewide name
     column, on the state's own district layer, holds the certified November
     2024 election winners — so the names are read from each county's own board
@@ -505,19 +505,23 @@ def mi_commissioners(inst):
     link is the thin shape the per-county decision rejected.
 
     THE CHAIR IS A ROLE ON A COMMISSIONER, the Iowa shape rather than the
-    Illinois one, and it arrives already attached: measured 2026-09-15, six of
-    the eleven counties badge their own officers in the same block the name
-    comes from (eight spellings across them, "Chair" through "Board Chair",
-    "Vice Chair Pro Tem" and "Sergeant-at-Arms"), so there is no second file to
-    join and no name match to get wrong.
+    Illinois one, and it arrives already attached: measured 2026-09-15, ten of
+    the sixteen counties badge their own officers in the same block the name
+    comes from, in nine distinct spellings, so there is no second file to join
+    and no name match to get wrong. The spellings are re-measured per change
+    rather than listed here, because every tranche has added more.
 
-    A COUNTY CAN BE SHORT, AND `unnamedDistricts` IS HOW IT SAYS SO. Monroe is
-    the case: its directory carries a row whose district field reads
+    A COUNTY CAN BE SHORT, AND `unnamedDistricts` SAYS SO, with `unnamedWhy`
+    carrying a per-district reason where the shortfalls differ. TWO COUNTIES ARE
+    SHORT AND FOR DIFFERENT REASONS, which is why one sentence cannot serve
+    both. Monroe's directory carries a row whose district field reads
     "District 2" and whose name field reads "Commissioner Vensel", where Vensel
-    is District 6's chairman. The row names no District 2 commissioner, so the
-    builder lists 2 in `unnamedDistricts` and ships the other eight. That
-    district gets a `note` here, which prints "Not named — ..." with the reason,
-    the third state the `district()` helper already draws.
+    is District 6's chairman: that row names no District 2 commissioner.
+    Lenawee District 5's row DOES name somebody, Jim Daly, and the same county's
+    own News Flash of 10 September 2026 announces his death — two surfaces of
+    one county disagreeing, so nothing here names that seat. Each district gets
+    a `note`, printed as "Not named — ..." with its own reason, the third state
+    the `district()` helper already draws.
 
     THE GATE IS STILL EXACT, just not an equality on the named count: every
     district the shipped geometry draws must be either named or noted, no label
@@ -544,9 +548,14 @@ def mi_commissioners(inst):
             if label in named:
                 districts.append(district(label, [dict(named[label])]))
             else:
-                districts.append(district(
-                    label, note="the county's own directory row for this "
-                                "district carries no commissioner's name"))
+                # The builder records a per-district reason where the two
+                # absences differ: Monroe's row carries no name, and Lenawee
+                # District 5's names a commissioner the same county has
+                # announced died. Without one, the row simply named nobody.
+                districts.append(district(label, note=(rec.get("unnamedWhy") or {}).get(
+                    label,
+                    "the county's own directory row for this district carries "
+                    "no commissioner's name")))
         seats = rec.get("seats")
         if seats is not None and len(districts) != seats:
             problems.append(

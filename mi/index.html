@@ -8909,9 +8909,17 @@ function initMichiganExplorer() {
         // is a different fact from a county the roster has not reached, and
         // the card says so rather than giving both the same sentence.
         var unnamedHere = false;
+        var unnamedWhy = null;
         if (entry && !member && district != null && entry.unnamedDistricts) {
           for (var i = 0; i < entry.unnamedDistricts.length; i++) {
             if (String(entry.unnamedDistricts[i]) === String(district)) unnamedHere = true;
+          }
+          // A per-district reason where the builder recorded one. Two absences
+          // read differently to a reader: Monroe's directory row carries no
+          // name, and Lenawee District 5's names a commissioner the same county
+          // has announced died. The generic sentence is false of the second.
+          if (unnamedHere && entry.unnamedWhy) {
+            unnamedWhy = entry.unnamedWhy[String(district)] || null;
           }
         }
         return {
@@ -8921,6 +8929,7 @@ function initMichiganExplorer() {
           population: findPropCI(props, ["population"]),
           member: member || null,
           unnamedHere: unnamedHere,
+          unnamedWhy: unnamedWhy,
           seats: entry ? entry.seats : null,
           boardUrl: entry ? entry.sourceUrl : null
         };
@@ -8964,7 +8973,12 @@ function initMichiganExplorer() {
       if (!(result.member && result.member.name)) {
         rows.push({
           label: "Your commissioner",
-          value: result.unnamedHere
+          value: result.unnamedWhy
+            // The builder recorded WHY this one seat is unnamed, so print that
+            // rather than the generic shortfall sentence.
+            ? (String(result.unnamedWhy) + " The board page linked below is the "
+               + "place to ask.")
+            : result.unnamedHere
             // This county IS read weekly and its other districts are named;
             // this one is short on the county's own page, so say that and not
             // the county-not-done sentence, which would be false here.
