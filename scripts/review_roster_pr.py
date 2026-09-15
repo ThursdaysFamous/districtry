@@ -46,7 +46,25 @@ import re
 import subprocess
 import sys
 
-REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# THE TREE TO MEASURE IS THE ONE THE CALLER IS STANDING IN, NOT THE ONE THIS
+# FILE LIVES IN. A manager review runs this script from a per-PR WORKTREE while
+# the script itself sits in the main checkout, and deriving the root from
+# __file__ then diffs the manager's own branch instead of the PR — which on
+# 2026-09-15 printed "0 data/app file(s) differ" for a PR that adds a county's
+# board districts and rewrites three more files. A review that measures the
+# wrong tree reads exactly like a clean one, which is the failure docs/MANAGER.md
+# names about the checkout and this tool reproduced. So: ask git.
+def _repo_root():
+    try:
+        return subprocess.check_output(
+            ["git", "rev-parse", "--show-toplevel"], text=True).strip()
+    except (subprocess.CalledProcessError, OSError):
+        # not in a work tree at all — fall back to this file's own repo so the
+        # selftest, which needs no git, still runs
+        return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+REPO_ROOT = _repo_root()
 
 # Keys whose value is a person's (or, for a provider roster, an organisation's)
 # identity. A value under one of these that appears on both sides under a
@@ -315,7 +333,8 @@ def main(argv):
         return selftest()
     files = changed_data_files(args.base)
     head_label = "PR #%s" % args.pr if args.pr else "working tree"
-    print("review_roster_pr: %s against %s — %d data/app file(s) differ" % (head_label, args.base, len(files)))
+    print("review_roster_pr: %s against %s in %s — %d data/app file(s) differ"
+          % (head_label, args.base, REPO_ROOT, len(files)))
     if not files:
         print("  nothing to review")
         return 0
