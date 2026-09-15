@@ -99,7 +99,7 @@ from build_landing_page import (  # noqa: E402
 from build_privacy_page import (  # noqa: E402
     DARK_EXTRA, DARK_TOKENS, LIGHT_TOKENS, esc,
 )
-from build_history_page import shared_footer_byline  # noqa: E402
+from build_history_page import shared_footer_byline, shared_goatcounter  # noqa: E402
 from build_county_status import ALL_COUNTIES, slug_of  # noqa: E402
 
 # A county whose shipped roster names NOBODY. A page for it would be a page
@@ -969,6 +969,7 @@ PAGE = """<!DOCTYPE html>
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="%(canonical)s" />
 <link rel="icon" href="%(favicon)s" type="image/svg+xml" />
+%(goatcounter)s
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="%(app_name)s" />
 <meta property="og:title" content="%(title)s" />
@@ -1708,6 +1709,11 @@ def shell_for_pages():
         "favicon": "data:image/svg+xml," + urllib.parse.quote(favicon, safe=""),
         "mark": mark_svg(),
         "byline": shared_footer_byline(),
+        # THE COUNTER. These 183 pages carried none until 2026-09-15, so the
+        # largest page set on the site — and the one this whole run is about —
+        # was absent from the traffic report. Read from its one source rather
+        # than written here, the same as the byline above it.
+        "goatcounter": shared_goatcounter(),
     }
 
 

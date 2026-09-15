@@ -491,9 +491,14 @@ try {
     //
     // Nothing is lost: `pageerror` and non-network console errors — the app JS
     // failures this exists to catch — fire during parse and execution, and the
-    // 500 ms settle below still gives late ones time to arrive. The landing
-    // page is the only root page carrying that tag, so privacy.html and
-    // coverage-map.html deliberately keep `load`.
+    // 500 ms settle below still gives late ones time to arrive.
+    //
+    // CORRECTED 2026-09-15: this used to end "the landing page is the only root
+    // page carrying that tag, so privacy.html and coverage-map.html deliberately
+    // keep `load`". privacy.html carries it now — 191 pages gained the counter
+    // that day — and its check failed on the sandbox's cert interception within
+    // the hour. coverage-map.html still keeps `load`: it is the one root page
+    // deliberately uncounted, recorded in validate_analytics.NO_COUNTER.
     await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
     await page.waitForTimeout(500);
     check("landing page boots with no console errors", errs.length === 0, errs.slice(0, 2).join(" | "));
@@ -520,9 +525,20 @@ try {
     const ctx = await browser.newContext({ serviceWorkers: "block", colorScheme: scheme });
     const page = await ctx.newPage();
     const errs = [];
-    page.on("console", (m) => { if (m.type() === "error") errs.push(m.text()); });
+    // The same filter and the same `domcontentloaded` as the landing page's own
+    // check above, for the same reason and as of 2026-09-15: this page carries
+    // the fleet's GoatCounter tag now. gc.zgo.at is a third-party host that is
+    // unroutable from the sandbox and can hang in CI, and a failed request to it
+    // says nothing about whether the page boots. An app JS error still surfaces
+    // through pageerror and any non-network console error.
+    page.on("console", (m) => {
+      if (m.type() !== "error") return;
+      const t = m.text();
+      if (/Failed to load resource|net::ERR|gc\.zgo\.at|googletagmanager/i.test(t)) return;
+      errs.push(t);
+    });
     page.on("pageerror", (e) => errs.push(String(e)));
-    const resp = await page.goto(BASE + "/privacy.html", { waitUntil: "load" });
+    const resp = await page.goto(BASE + "/privacy.html", { waitUntil: "domcontentloaded" });
     check(`privacy page loads (${scheme})`, resp.status() === 200, `HTTP ${resp.status()}`);
     check(`privacy page has no console errors (${scheme})`, errs.length === 0,
       errs.slice(0, 2).join(" | "));

@@ -509,7 +509,7 @@ Clean, fast, confidently wrong: the same shape as the Knox fill-colour method
 this project already records. An adjacency worth shipping comes from the Census
 Bureau's own county adjacency file.
 
-### 8. Google Analytics only where it is needed — done 2026-09-15
+### 8. Analytics: GA only where the worksheet puts it, and a counter on every page — done 2026-09-15
 
 `gtag.js` is about 175 KB and was on **15 pages**, thirteen of which draw no
 map. On `il/county-board.html` it was roughly 69% of the payload, beside a 3 KB
@@ -540,14 +540,43 @@ traffic report, whose subject is what this fleet gets read, has never counted
 the largest page set on the site: the 183 pages carrying 2,869 officeholders,
 which are the whole subject of this phase.
 
-Two of the 192 are deliberate and recorded with a reason — the 404 page, where a
+Two of them are deliberate and recorded with a reason — the 404 page, where a
 count would put other people's broken links in the report as pages, and the
 coverage map, which is the landing page's iframe body rather than a destination.
-**The other 190 are an omission nobody decided.** Adding a counter to 190 pages
-changes what those pages send, which is the operator's call, so the figure is
-HELD rather than fixed: the gate fails when it moves in either direction, up
-because a page shipped uncounted, down because somebody closed part of the gap
-and the recorded number has to move with it.
+The rest were an omission nobody decided, and adding a counter changes what those
+pages send, so it went to the operator rather than into a generator.
+
+**THE ANSWER WAS TO COUNT THEM, AND 191 PAGES GAINED THE TAG THE SAME DAY.**
+
+**The figure was 193, not 192, and the gate's own first draft was why.** It
+matched the string `goatcounter` anywhere on a page, which credited
+`/privacy.html` for naming that URL in its own recipients TABLE as documentation
+while carrying no counter at all. A gate that greps for a host rewards a page for
+describing it; it looks for the `<script data-goatcounter=` tag now.
+
+**The tag has ONE copy**, `engine/shared/goatcounter.txt`, on the contract
+`engine/shared/footer-byline.txt` already uses for exactly this: every generated
+page's builder reads the file (`build_county_pages.py`, `build_history_page.py`,
+and the shared root-page shell in `build_privacy_page.py` that privacy.html and
+about.html both render through), and the two hand-authored root pages —
+`sponsorship.html` and `traffic.html` — take it as an ENGINE fence spliced by
+`compose_app.py`. It was seven hand-written copies before. The gate holds every
+worksheet's `brand.analytics.goatcounter_url` to the URL in that file, so a
+rename there cannot leave an instance reporting somewhere else, and the recorded
+gap is now 2 — the two exceptions and nothing else.
+
+**Confirmed in a browser rather than by grep**: the county pages, the history
+pages, about, privacy, traffic and sponsorship all request `gc.zgo.at` on load,
+and 404.html does not.
+
+**One sentence in another gate stopped being true and failed within the hour.**
+`scripts/landing_test.mjs` filters a failed request to `gc.zgo.at` out of its
+console-error check for the landing page, on a comment ending "the landing page is
+the only root page carrying that tag, so privacy.html and coverage-map.html
+deliberately keep `load`". privacy.html carries it now, and its check went red on
+the sandbox's cert interception. Both the filter and the `domcontentloaded` wait
+are on the privacy check too, and the comment says what changed. coverage-map.html
+still keeps `load`: it is the one root page deliberately uncounted.
 
 ### Still open in phase 2
 

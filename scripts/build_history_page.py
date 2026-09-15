@@ -89,8 +89,12 @@ from build_landing_page import (  # noqa: E402
     FAVICON, FONTFACE, TOKENS, parse_token_block, read, token_css,
 )
 from build_privacy_page import (  # noqa: E402
-    DARK_EXTRA, DARK_TOKENS, LIGHT_TOKENS, esc, fail,
+    DARK_EXTRA, DARK_TOKENS, LIGHT_TOKENS, esc, fail, shared_goatcounter,
 )
+# shared_goatcounter is re-exported deliberately: build_county_pages.py takes it
+# and shared_footer_byline from here together, and build_privacy_page is the
+# lower module — it cannot import from this one (this imports from it), which is
+# also why the byline reader below is a second copy of its own.
 
 # app dir -> worksheet path, matching generate_metro_files.py's INSTANCES
 # (the reference instance's worksheet lives at the repo ROOT, not under il/)
@@ -382,6 +386,7 @@ def build_instance(inst, w):
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="%(canonical)s" />
 <link rel="icon" href="%(favicon)s" type="image/svg+xml" />
+%(goatcounter)s
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="%(app_name)s" />
 <meta property="og:title" content="%(title)s" />
@@ -533,6 +538,8 @@ at the diff.</p>
 </html>
 """ % {
         "byline": shared_footer_byline(),
+        # THE COUNTER, from its one source. These four pages carried none.
+        "goatcounter": shared_goatcounter(),
         "jsonld": jsonld,
         "title": esc(title), "desc": esc(desc), "canonical": esc(canonical),
         "app_name": esc(app_name), "og_image": esc(app_url + "og-image.png"),

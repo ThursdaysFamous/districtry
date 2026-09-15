@@ -68,6 +68,21 @@ def shared_footer_byline(indent=""):
     markup = re.sub(r"(?s)^\s*<!--.*?-->\s*", "", text).strip()
     return "\n".join(indent + ln.strip() for ln in markup.splitlines())
 
+def shared_goatcounter(indent=""):
+    """The counter tag, read from its ONE source.
+
+    Same contract as shared_footer_byline above and for the same reason: the
+    authored pages take engine/shared/goatcounter.txt as an ENGINE fence, a
+    GENERATED page reads the file here, and the leading comment is for a reader
+    of the engine tree rather than the published page.
+    """
+    path = os.path.join(REPO_ROOT, "engine", "shared", "goatcounter.txt")
+    with open(path, encoding="utf-8") as fh:
+        text = fh.read()
+    markup = re.sub(r"(?s)^\s*<!--.*?-->\s*", "", text).strip()
+    return "\n".join(indent + ln.strip() for ln in markup.splitlines())
+
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 # The token file, the mark and the self-hosted font CSS are the LANDING page's
@@ -758,6 +773,7 @@ SHELL_HEAD = """<!DOCTYPE html>
 <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192" />
 <link rel="icon" href="/favicon.ico" sizes="32x32" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+%(goatcounter)s
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="districtry" />
 <meta property="og:title" content="%(title)s" />
@@ -1177,6 +1193,13 @@ def render_page(pagetitle, pagesub, generator, body, title, desc, jsonld,
         "pagesub": esc(pagesub),
         "generator": generator,
         "footerlinks": footerlinks,
+        # THE COUNTER. privacy.html read as counted until 2026-09-15 and was
+        # not: scripts/validate_analytics.py matched the string `goatcounter`
+        # anywhere on a page, and this page names the URL in its own recipients
+        # TABLE as documentation. A gate that greps for a host credits a page
+        # for describing it; the tag is what counts, and now both this page and
+        # /about.html carry one.
+        "goatcounter": shared_goatcounter(),
         "repo": REPO_URL,
         "contact": CONTACT,
     }
