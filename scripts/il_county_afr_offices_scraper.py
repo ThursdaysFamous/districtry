@@ -7,11 +7,14 @@ isbe-county-board-chairs.json and refreshed the same way — by an operator runn
 this script — because a courthouse does not move.
 
 WHY A SECOND SOURCE. `county-board-office-addresses` is Illinois's largest
-card-order gap. 13 counties publish a board address of their own and 33 more take
-one from ISBE's County Officers Book; 17 appeared in neither, so their cards named
-no place at all: Boone, Carroll, Clinton, Crawford, DeKalb, Franklin, Fulton,
-Hancock, Kendall, Marshall, Mason, McHenry, Mercer, Montgomery, Richland, Shelby
-and Wayne.
+card-order gap. WHEN THIS WAS WRITTEN (2026-09-06, 63 districted cards) 13 counties
+named a board office and 33 more took one from ISBE's County Officers Book; 17
+appeared in neither, so their cards named no place at all: Boone, Carroll, Clinton,
+Crawford, DeKalb, Franklin, Fulton, Hancock, Kendall, Marshall, Mason, McHenry,
+Mercer, Montgomery, Richland, Shelby and Wayne. That 13 counted counties NAMING an
+office, Cook and Lake included, which render theirs live; the number of counties
+PUBLISHING one of their own was and is eleven, and reusing the 13 for the narrower
+quantity is how the figure went wrong elsewhere.
 
 THE ROUTE WAS HIDDEN BY A FILTER, NOT BY THE SOURCE. Every Illinois unit of local
 government files an Annual Financial Report with the Comptroller, a county
