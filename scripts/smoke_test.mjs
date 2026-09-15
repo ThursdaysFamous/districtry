@@ -719,6 +719,132 @@ try {
     await context.close();
   }
 
+  // 2f. THE PINNED PARENT SURVIVES A SHARED LINK, and a pin that cannot be
+  //     honoured is dropped rather than half-applied. Both halves need a
+  //     browser: pinnedParentId is not exported, so the only honest reading
+  //     of the restore is the card button's own pressed state, and the only
+  //     honest reading of the write is location.hash after a real click.
+  //
+  //     This runs on Illinois alone and covers all six instances, for the
+  //     reason compose_app --check establishes: the permalink and
+  //     relationship-pinning blocks are ONE copy spliced byte-identically
+  //     into every instance, so the path a browser exercises here is the same
+  //     path everywhere. What is instance-specific is the fixture — a polygon
+  //     layer, switched on, with a district at the anchor point — and
+  //     school-board is that layer here, same-origin so it needs no network.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=school-board&pin=school-board`);
+    await cardText(page, "school-board"); // the pin control is appended as the card renders
+    // The `card-<id>` id is on the card BODY and the pin control is appended
+    // to a SIBLING `.card-footer`, so `#card-school-board .pin-parent-btn`
+    // matches nothing — measured, on the first run of this check. The card
+    // BLOCK is the body's parent, and that is what scopes a card's controls.
+    const restored = await page.evaluate(() => {
+      const btn = document.getElementById("card-school-board").parentElement
+        .querySelector(".pin-parent-btn");
+      return {
+        present: !!btn,
+        pressed: btn && btn.getAttribute("aria-pressed") === "true",
+        styled: btn && btn.classList.contains("is-pinned"),
+        inHash: /(^|[#&])pin=school-board(&|$)/.test(location.hash),
+      };
+    });
+    check(
+      "a shared #pin= restores the pinned parent and stays in the hash",
+      restored.present && restored.pressed && restored.styled && restored.inHash,
+      JSON.stringify(restored)
+    );
+
+    // The write path: unpin, then re-pin, reading the hash after each.
+    //
+    // `inHash` above is NOT redundant with this, which is worth stating
+    // because it looks it: the incoming `pin=` does not simply survive. The
+    // point selection inside applyStateFromHash runs syncUrlHash while
+    // pinnedParentId is still null, which REWRITES the hash without the pin,
+    // and the restore that follows is the only thing that puts it back —
+    // through setPinnedParent's own syncUrlHash call. Measured by removing
+    // that one call: the button reads pressed and styled, and the hash the
+    // reader would copy has no pin in it.
+    const roundTrip = await page.evaluate(() => {
+      const btn = document.getElementById("card-school-board").parentElement
+        .querySelector(".pin-parent-btn");
+      btn.click();
+      const afterUnpin = {
+        pressed: btn.getAttribute("aria-pressed") === "true",
+        inHash: /(^|[#&])pin=/.test(location.hash),
+      };
+      btn.click();
+      const afterRepin = {
+        pressed: btn.getAttribute("aria-pressed") === "true",
+        inHash: /(^|[#&])pin=school-board(&|$)/.test(location.hash),
+      };
+      return { afterUnpin, afterRepin };
+    });
+    check(
+      "unpinning drops pin= from the hash and re-pinning puts it back",
+      !roundTrip.afterUnpin.pressed && !roundTrip.afterUnpin.inHash &&
+        roundTrip.afterRepin.pressed && roundTrip.afterRepin.inHash,
+      JSON.stringify(roundTrip)
+    );
+    await context.close();
+  }
+
+  // 2g. The three ways a pin is refused, each driven separately, because a
+  //     single "no pin" result cannot tell which guard fired — and a guard
+  //     that has never refused anything has not been tested. fire-station is
+  //     a nearest-point layer: it is switched ON here, so the layersOn guard
+  //     passes and the polygon guard is the one under test.
+  {
+    const cases = [
+      ["an id no layer registers", "&layers=school-board&pin=not-a-layer"],
+      ["a layer that is not switched on", "&layers=school-board&pin=il-supreme-court"],
+      ["a layer with no polygons", "&layers=school-board,fire-station&pin=fire-station"],
+    ];
+    for (const [why, tail] of cases) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const page = await booted(context, `${BASE}#point=${POINT}${tail}`);
+      await cardText(page, "school-board"); // one card rendered = the hash parse is done
+      const res = await page.evaluate(() => ({
+        inHash: /(^|[#&])pin=/.test(location.hash),
+        anyPressed: !!document.querySelector('.pin-parent-btn[aria-pressed="true"]'),
+        hash: location.hash,
+      }));
+      check(
+        `a pin naming ${why} is dropped, not half-applied`,
+        !res.inHash && !res.anyPressed,
+        JSON.stringify(res)
+      );
+      await context.close();
+    }
+  }
+
+  // 2h. An aliased pin is rewritten with the layers. This is ILLINOIS-ONLY
+  //     code — CONSOLIDATED_LAYER_ALIASES and rewriteAliasedPermalink live
+  //     outside every engine fence — and it is here because the shim ran on
+  //     `layers=` alone: a link shared before the county consolidation
+  //     carries the old id in BOTH parameters, and a rewrite that fixed one
+  //     of them would light the consolidated layer and silently drop the pin.
+  //     The hash is the whole assertion: `pin=` is emitted only while its
+  //     layer is on, so reading `pin=county-board` back proves the alias was
+  //     applied AND the restore honoured it.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=commissioner&pin=commissioner`);
+    await cardText(page, "county-board");
+    const res = await page.evaluate(() => ({
+      aliased: /(^|[#&])pin=county-board(&|$)/.test(location.hash),
+      oldGone: location.hash.indexOf("commissioner") === -1,
+      hash: location.hash,
+    }));
+    check(
+      "an old permalink id in pin= aliases with the layers",
+      res.aliased && res.oldGone,
+      JSON.stringify(res)
+    );
+    await context.close();
+  }
+
   // ==== TEMPLATE:BEGIN smoke-failure-isolation ====
   // 3. A failing data source degrades to that layer's error card + Retry, in
   //    isolation — the app's per-layer failure-isolation rule. (Named on two
