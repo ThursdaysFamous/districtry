@@ -2695,9 +2695,11 @@ courthouse does not move. Two measurements license the address column and both a
   SECOND courthouse office on the same county's page prints the same street and city, so
   what ships is a shared public building and never anyone's home — the Madison/Peoria rule.
   72 of 102 counties clear that bar.
-* **It agrees with every county that publishes its own.** Seven of the 13 counties that ship
-  a board address can be compared, and all seven name the same building; the differences are
-  abbreviation, an added room, or an added PO box. The builder re-runs that comparison on
+* **It agrees with every county that publishes its own.** Eleven counties ship a board address
+  of their own; eight have an ISBE address beside it, seven of those eight are comparable, and
+  all seven name the same building; the differences are abbreviation, an added room, or an added
+  PO box. The eighth is White, which publishes its PO box alone, so there is no street to compare
+  and the comparison declines to judge it rather than counting it as agreement. The builder re-runs that comparison on
   every build and REFUSES TO WRITE on any disagreement, because a disagreement is exactly
   what would disprove the column.
 
