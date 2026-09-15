@@ -68,7 +68,7 @@ against the architecture: permalinks are lat/lng-based, so no permalink migratio
 |---|---|---|---|
 | US Congress (IL) | Decennial + court/mid-decade | IL General Assembly | geometry, TIGERweb CD field, roster join |
 | IL Senate / House | Decennial | IL General Assembly | geometry, roster join |
-| IL Supreme Court districts | Almost-never | IL General Assembly | geometry (see note) |
+| IL Supreme Court districts | Almost-never | IL General Assembly | geometry (see note), roster join — the same five districts seat the Appellate Court, so a redraw moves BOTH benches' cards and `build_il_court_justices.py`'s county gate is what notices |
 | Cook County Board of Review | Almost-never | statute | geometry |
 | Wards (50) | Decennial-municipal | Chicago City Council | geometry, roster join, anchor if used |
 | County board districts (consolidated: Cook 17 / Will 11 / DuPage 6 / Lake 19 / Kane 24 / McHenry 9 / Kendall 2) | Decennial-municipal | each county's board | per-county geometry + roster joins inside the one `county-board` layer (Lake's and Kane's rosters ride on their boundary GIS; Kendall's and McHenry's are weekly-scraped from each county's own directory — McHenry incl. its countywide-elected Chairman; Kendall's post-2020 reapportionment kept the line, so its County_Board_2010 service is the current map — re-verify at the next reapportionment) |
@@ -85,7 +85,10 @@ against the architecture: permalinks are lat/lng-based, so no permalink migratio
 IL Supreme Court note: Public Act 102-0011 changed the judicial district boundaries "for the first
 time since they were established in 1964." This layer redistricts almost never — do not assume it
 changes in 2031. That asymmetry is the whole point of the inventory: some layers change every
-decade, some almost never, some every year.
+decade, some almost never, some every year. The same act is 705 ILCS 23, the Judicial Districts Act
+of 2021, and `scripts/build_il_court_justices.py` holds a transcription of its county lists: the
+weekly roster run refuses to write unless the counties the court's own district pages name still
+match it, so a redraw surfaces as a failing refresh rather than as silence.
 
 ### NYC (27 layers)
 

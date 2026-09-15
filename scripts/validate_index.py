@@ -94,7 +94,7 @@ CAPABILITIES = [
 # ==== GENERATED:BEGIN validator-config ====
 # Floor, not a moving target: new layers only raise this; a drop means
 # modules were lost.
-MIN_REGISTER_LAYER = 17
+MIN_REGISTER_LAYER = 18
 
 # Every layer id that must be registered in index.html. Most modules register
 # through the factories, so deleting one would NOT lower the raw registerLayer(
@@ -436,6 +436,7 @@ ROSTER_FILES = {
     "mchenry-county-board-members.json": 9,  # 9 board districts (2 members each) + the countywide-elected Chairman, scraped weekly from mchenrycountyil.gov (bot-managed; the scraper falls back to Playwright)
     "early-voting-sites.json": 3,  # GeoJSON FeatureCollection (type/metadata/features — key floor is shape-only); hand-curated per election from chicagoelections.gov, network-first so a new election's list is never served stale
     "ccbr-roster.json": 3,
+    "il-court-justices.json": 5,  # The Supreme and Appellate Court justices of each judicial district, keyed "1".."5" — the seven Supreme Court justices with the district each was elected from and the Chief Justice badged, plus each district's appellate branch (its sitting justices with a link to each one's own page, the courthouse address, the telephone and the Clerk of the court). Scraped weekly from illinoiscourts.gov, which publishes all three on its own pages; the card named nobody until 2026-09-15 on the strength of a comment saying no verifiable roster source existed, which was true of the SHAPEFILE (no officeholder column) and never of the court. ONE FILE ANSWERS FOR BOTH COURTS: Illinois Constitution art. VI, sec. 2 divides the State into five Judicial Districts "for the selection of Supreme and Appellate Court Judges", 705 ILCS 25/1(a) puts a branch of the appellate court in each of them "as such districts are determined by law" and defines none of its own, and 705 ILCS 23 (PA 102-0011, the act this layer's shapefile comes from) determines them county by county — so the appellate districts ARE the shipped geometry and no second polygon ships. THE COUNTY LISTS ARE THE BUILD GATE: each district page names the circuits and counties it hears appeals from, and the build refuses to write unless all 102 match the statute, in the district the statute names. The appellate counts (57 justices on 2026-09-15, against the 42 seats 705 ILCS 25/1(b)-(c) elects) are what the court's directory lists, because sec. 1(d) lets the Supreme Court assign additional judges; no row claims which are elected and which assigned, because the directory does not say.
     "il-county-clerks.json": 101,
     "dupage-county-board-members.json": 6,
     "winnebago-county-board-members.json": 18,  # Winnebago County Board CONTACT keyed by district (20) — the phone and official @board.wincoil.gov e-mail the county's GIS declares and populates on 0 of 20 rows. Enrichment only: the member and party come from the GIS, so losing this file costs contact rows, never the officeholder. Each row is name-matched to the GIS at build time.

@@ -102,14 +102,14 @@
       "area_rank": 1,
       "rank_note": "judicial district — largest",
       "source": {
-        "answers": "Which Illinois Supreme Court district elects the justices sitting over this address.",
+        "answers": "Which of the five Illinois judicial districts this address sits in \u2014 the district that elects its Supreme Court justice and holds the Appellate Court branch hearing its appeals.",
         "boundary": [
           {
             "label": "Illinois Supreme Court districts as enacted by PA 102-0011 — shapefile from illinoiscourts.gov, simplified and shipped with the app",
             "url": "https://www.illinoiscourts.gov"
           }
         ],
-        "people": "No roster is joined; the card links the court itself rather than naming justices from an unverifiable list.",
+        "people": "The justices, from the courts' own site \u2014 illinoiscourts.gov's Meet the Justices page for the Supreme Court and its Judicial Directory for the Appellate Court, rebuilt weekly.",
         "applies": "Illinois — statewide."
       }
     },
@@ -913,7 +913,7 @@
       }
     }
   ],
-  "min_register_layer": 17,
+  "min_register_layer": 18,
   "layer_count_note": "17 base + police-beat (#43) + school-site (#45) + ccpsa-district-council + ward-precinct + 6 statewide local-gov layers (county, township, municipality, school districts x3 — TIGERweb) + 6 consolidated county-dispatched layers (county-board, judicial-subcircuit, fire-district, park-district, library-district, county-precinct — Cook/Will/DuPage/Lake/Kane/McHenry/Kendall entries; docs/COUNTY_LAYER_CONSOLIDATION.md) + 1 DuPage-only layer (dupage-county-special-police) + 2 Cook-only tax-agency layers (tif-district, mwrd — dedicated until a second county ships the concept) + 1 Chicago-only special-service layer (ssa — dedicated until a second municipality ships the concept) + 3 amenity nearest-point layers (post-office, library, early-voting) = 40 — THE SUM IS THE CLAIM, so a new layer needs its own term here and not just a bigger total: this read 39 for the day the `ssa` layer shipped because the total was the only part anyone would have changed. NOTHING GATES THIS NOTE — validate_doc_counts.py compares prose against layers[] and deliberately does not scan the worksheet it takes as canonical, so this is hand-kept. Addition re-checked against layers[] 2026-09-12; the underlying live verification of the layer list was 2026-07",
   "anchor_point": {
     "lat": 41.8825,
@@ -2916,6 +2916,11 @@
         "min_keys": 3
       },
       {
+        "file": "il-court-justices.json",
+        "min_keys": 5,
+        "note": "The Supreme and Appellate Court justices of each judicial district, keyed \"1\"..\"5\" \u2014 the seven Supreme Court justices with the district each was elected from and the Chief Justice badged, plus each district's appellate branch (its sitting justices with a link to each one's own page, the courthouse address, the telephone and the Clerk of the court). Scraped weekly from illinoiscourts.gov, which publishes all three on its own pages; the card named nobody until 2026-09-15 on the strength of a comment saying no verifiable roster source existed, which was true of the SHAPEFILE (no officeholder column) and never of the court. ONE FILE ANSWERS FOR BOTH COURTS: Illinois Constitution art. VI, sec. 2 divides the State into five Judicial Districts \"for the selection of Supreme and Appellate Court Judges\", 705 ILCS 25/1(a) puts a branch of the appellate court in each of them \"as such districts are determined by law\" and defines none of its own, and 705 ILCS 23 (PA 102-0011, the act this layer's shapefile comes from) determines them county by county \u2014 so the appellate districts ARE the shipped geometry and no second polygon ships. THE COUNTY LISTS ARE THE BUILD GATE: each district page names the circuits and counties it hears appeals from, and the build refuses to write unless all 102 match the statute, in the district the statute names. The appellate counts (57 justices on 2026-09-15, against the 42 seats 705 ILCS 25/1(b)-(c) elects) are what the court's directory lists, because sec. 1(d) lets the Supreme Court assign additional judges; no row claims which are elected and which assigned, because the directory does not say."
+      },
+      {
         "file": "il-county-clerks.json",
         "min_keys": 101
       },
@@ -3666,6 +3671,11 @@
       "schedule": "Mon 12:00 UTC"
     },
     {
+      "file": "update-il-court-justices.yml",
+      "purpose": "The Supreme and Appellate Court justices of each of the five Illinois judicial districts, read from illinoiscourts.gov \u2014 the seven Supreme Court justices with the district each was elected from and the Chief Justice badged, then each district's appellate branch: its sitting justices each linked to their own page, the courthouse address, the telephone and the Clerk of the court. ONE JOB ANSWERS FOR BOTH COURTS because one set of districts serves both: Const. art. VI, sec. 2 divides the State into five Judicial Districts \"for the selection of Supreme and Appellate Court Judges\", 705 ILCS 25/1(a) puts a branch of the appellate court in each of them \"as such districts are determined by law\" and defines none of its own, and 705 ILCS 23 (which IS PA 102-0011, the act the shipped shapefile comes from) determines them county by county. Three paced page reads plus one form postback \u2014 the directory is ASP.NET WebForms, so its full roster needs a POST carrying __VIEWSTATE rather than a query string. IT IS ALSO THE REDISTRICTING TRIPWIRE for a layer nobody watches: the builder carries 705 ILCS 23's county lists and refuses to write unless the counties the court's own district pages name are exactly those 102, in those districts, so a redraw or a page rewrite fails the run instead of quietly moving a card",
+      "schedule": "Wed 12:00 UTC"
+    },
+    {
       "file": "update-chicago-ssa-providers.yml",
       "purpose": "The SERVICE PROVIDER AGENCY of Chicago's Special Service Areas — the non-profit the city contracts with to run each corridor, with its office address, telephone and site. An SSA elects nobody, so this is the only people source the card has, and the city's boundary dataset carries none of it. The source is ONE HAND-MAINTAINED HTML PAGE reached through Business Assistance rather than the department's landing page, which is why this runs weekly and why the scraper enumerates its traps instead of trusting its shape — above all a PHANTOM BLOCK, where an expired area's notice bolds its replacement's name and a bold-keyed parser invents an empty provider for a live area. Two paced requests. All 58 areas have a provider; every area's Mayor-appointed commission stays recorded in gap chicago-ssa-service-providers",
       "schedule": "Tue 11:00 UTC"
@@ -3837,6 +3847,11 @@
       }
     ],
     "entries": [
+      {
+        "date": "2026-09-15",
+        "title": "Naming the justices who were published all along",
+        "body": "Illinois elects its Supreme Court by district \u2014 five of them, Cook County being the first and electing three of the seven justices \u2014 and this map has drawn those five districts since it shipped without ever naming a justice. The reason recorded in the code was that no roster source existed. That was true of the boundary file, which carries a district number and nothing else, and it was never true of the court: illinoiscourts.gov names all seven justices and says which district each was elected from, on a page anyone can read. Nobody had looked. The card now names them, with the Chief Justice marked, refreshed every week.\n\nThe same card now answers a second court, and that is a fact about Illinois law rather than a convenience. The state constitution divides Illinois into five judicial districts \"for the selection of Supreme and Appellate Court Judges\" \u2014 one set of districts, two benches. So the district already on the map is also the Appellate Court district: the card names the branch that hears appeals from your circuit court, where its courthouse is, its telephone, its clerk, and each justice sitting there with a link to their own page. Drawing a second set of boundaries for it would have drawn the same five shapes again.\n\nTwo things are deliberately not claimed. The Appellate Court elects 18 justices in the First District and six in each of the others, but the Supreme Court may assign additional judges where the caseload needs them, and the court's directory lists everyone sitting without saying which is which \u2014 so the card says how many it lists and leaves it there. And the weekly job that refreshes all this re-reads which counties each district covers and checks them against the statute that drew them, all 102, refusing to publish if the two disagree. These districts changed in 2021 for the first time since 1964, which is exactly the kind of boundary that moves once while nobody is watching."
+      },
       {
         "date": "2026-09-12",
         "title": "Checking a list of addresses, not just one",
