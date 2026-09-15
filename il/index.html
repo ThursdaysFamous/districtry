@@ -5375,8 +5375,8 @@ function initChiExplorer() {
 
   /* ==== ENGINE:BEGIN permalink ==== */
   /* =========================================================================
-   * SHAREABLE URL — #point=lat,lng&layers=id1,id2&zoom=N mirrors the current
-   * selection so any view can be copied out of the URL bar (or via the
+   * SHAREABLE URL — #point=lat,lng&layers=id1,id2&pin=id&zoom=N mirrors the
+   * current selection so any view can be copied out of the URL bar (or via the
    * point chip's Copy-link button) and restored on load. replaceState, not
    * location.hash assignment, so clicking around never pollutes the back
    * button. Parsed once at boot by applyStateFromHash().
@@ -5396,6 +5396,16 @@ function initChiExplorer() {
     var on = layers.filter(function (l) { return state.layersOn[l.id]; })
       .map(function (l) { return l.id; });
     if (on.length) parts.push("layers=" + on.join(","));
+    // The PINNED PARENT rides the permalink too, because the relationship
+    // outlines ARE part of the view being shared: a link that restores the
+    // point and the layers and drops the pin hands the reader the same map
+    // without the comparison the sender was looking at, and nothing on screen
+    // says a pin was ever set. Emitted only while its layer is on, which is
+    // also why `pin=` can never be the ONLY parameter in a hash — the same
+    // condition puts that id in `on` above, so `layers=` is always emitted
+    // beside it, and the root's app-parameter forwarding guard (which matches
+    // point/layers/zoom) still recognises every link that carries a pin.
+    if (pinnedParentId && state.layersOn[pinnedParentId]) parts.push("pin=" + pinnedParentId);
     // Zoom rides the permalink because it is part of what was shared: an embed of
     // a whole county answers a different question from an embed of one block, and
     // a refresh should not throw the reader back to the default view. Emitted
@@ -5465,6 +5475,30 @@ function initChiExplorer() {
       }
     }
     if (zoom !== null && !framed) map.setView(map.getCenter(), zoom, { animate: false });
+    // Parsed LAST, after the layers are on and the point is set, because a pin
+    // is a reference to one of those layers AT that point. A pin that cannot
+    // be honoured is DROPPED SILENTLY rather than half-applied — a legend
+    // naming a parent whose outlines can never be drawn is worse than no pin,
+    // because it reads as present and does nothing. Three ways that happens,
+    // and all three are ordinary rather than exceptional: the id names no
+    // layer this instance registers (a link from a sibling that has it, or
+    // from before a rename), its layer is not on (the `layers=` list disagreed
+    // with the pin, or a toggle refused), and it is not a polygon layer — the
+    // same test appendPinControl applies before it offers the control at all,
+    // so a hand-typed `pin=fire-station` restores nothing.
+    //
+    // Setting the pin here with no geometry loaded yet is correct and not a
+    // race: refreshRelationshipOutlines runs again as each layer's query
+    // resolves, so the outlines appear when the parent's boundaries arrive,
+    // and the card's own button picks up the pinned styling from
+    // pinnedParentId whenever that card next renders.
+    if (params.pin) {
+      var parent = getLayerById(params.pin);
+      if (parent && state.layersOn[parent.id] &&
+          parent.overlay && parent.overlay.style) {
+        setPinnedParent(parent.id);
+      }
+    }
   }
 
   /* ---------- share controls — the point chip's single "Share" surface -----
@@ -29553,10 +29587,17 @@ function initChiExplorer() {
   });
 
   // Permalink compatibility for consolidated layers: pre-consolidation ids in
-  // a shared #layers= list are rewritten to the consolidated id BEFORE the
-  // boot-time applyStateFromHash parse reads the hash (unknown ids there are
-  // otherwise dropped silently, so an old link would simply lose the layer).
+  // a shared #layers= list — and in its #pin= — are rewritten to the
+  // consolidated id BEFORE the boot-time applyStateFromHash parse reads the
+  // hash (unknown ids there are otherwise dropped silently, so an old link
+  // would simply lose the layer, or the pinned parent of a comparison).
   // Every future consolidation appends its retired ids here.
+  //
+  // `pin=` is rewritten for the NEXT consolidation rather than for any link
+  // that exists today: the parameter shipped after every id in this table was
+  // already retired, so no shared link can carry `pin=commissioner`. Handling
+  // it here is what stops the next consolidation having to remember that a
+  // second parameter names a layer.
   var CONSOLIDATED_LAYER_ALIASES = {
     "commissioner": "county-board",
     "will-county-board": "county-board",
@@ -29572,20 +29613,30 @@ function initChiExplorer() {
   };
   (function rewriteAliasedPermalink() {
     var raw = location.hash.replace(/^#/, "");
-    var m = /(^|&)layers=([^&]*)/.exec(raw);
-    if (!m) return;
-    var seen = {};
-    var ids = m[2].split(",").map(function (id) {
-      return CONSOLIDATED_LAYER_ALIASES[id] || id;
-    }).filter(function (id) { // aliasing can duplicate the target — keep one
-      if (seen[id]) return false;
-      seen[id] = true;
-      return true;
-    });
-    if (ids.join(",") === m[2]) return;
-    var newHash = "#" + raw.replace(/(^|&)layers=[^&]*/, "$1layers=" + ids.join(","));
+    var next = raw;
+    var m = /(^|&)layers=([^&]*)/.exec(next);
+    if (m) {
+      var seen = {};
+      var ids = m[2].split(",").map(function (id) {
+        return CONSOLIDATED_LAYER_ALIASES[id] || id;
+      }).filter(function (id) { // aliasing can duplicate the target — keep one
+        if (seen[id]) return false;
+        seen[id] = true;
+        return true;
+      });
+      if (ids.join(",") !== m[2]) {
+        next = next.replace(/(^|&)layers=[^&]*/, "$1layers=" + ids.join(","));
+      }
+    }
+    // The pin carries ONE id, so there is no duplicate to collapse.
+    var p = /(^|&)pin=([^&]*)/.exec(next);
+    if (p && CONSOLIDATED_LAYER_ALIASES[p[2]]) {
+      next = next.replace(/(^|&)pin=[^&]*/,
+        "$1pin=" + CONSOLIDATED_LAYER_ALIASES[p[2]]);
+    }
+    if (next === raw) return;
     try {
-      history.replaceState(null, "", newHash);
+      history.replaceState(null, "", "#" + next);
     } catch (e) {
       // some file:// contexts refuse replaceState — the old link degrades to
       // default layers there, everything else keeps working
@@ -30099,6 +30150,17 @@ function initChiExplorer() {
     pinnedParentId = (pinnedParentId === id) ? null : id;
     refreshAllPinButtons();
     refreshRelationshipOutlines();
+    // The pin is part of the shared view, so pinning and unpinning both move
+    // the permalink (see syncUrlHash). This call also carries the RESTORE
+    // path, which is easy to miss: applyStateFromHash selects the point
+    // before it reads `pin=`, and that selection's own syncUrlHash rewrites
+    // the hash while pinnedParentId is still null, so the incoming pin is
+    // gone by the time the restore runs. Without this line a shared link
+    // restores the pin on screen and hands the next reader a pin-less URL.
+    // The other path that clears the pin — toggling the parent layer OFF —
+    // needs no call here: onLayerToggled clears pinnedParentId directly and
+    // its own change handler runs syncUrlHash immediately afterwards.
+    syncUrlHash();
   }
 
   // Update every card's pin button to reflect the current pinned layer.
