@@ -89,4 +89,18 @@ jobs:
           # main; a pre-merge branch run leaves its data on the branch rather
           # than pushing to main behind review.
           git commit -m "Update Search Console performance data"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          # PUSH WITH A REBASE RETRY. Three workflows commit to main, and on
+          # 2026-09-15 all three were dispatched together: each checked out the
+          # same commit and the two that finished after the first push were
+          # rejected non-fast-forward. Their schedules are staggered, but
+          # GitHub runs them hours late (measured 3-5h on this repo) and in no
+          # guaranteed order, so a collision is a matter of time rather than a
+          # one-off. Rebasing is safe here: each job touches one file nothing
+          # else writes.
+          for attempt in 1 2 3; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "push rejected, rebasing (attempt $attempt)"
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+          done
+          echo "push still rejected after three rebases"
+          exit 1
