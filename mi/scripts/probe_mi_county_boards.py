@@ -495,11 +495,28 @@ def classify(html_body, seats):
 
 
 def verdict_for(ev):
+    """A DISTRICT-KEYED ROSTER NAMES ABOUT ONE PERSON PER DISTRICT, and that
+    ratio is the discriminator rather than the mere presence of a name.
+
+    Measured 2026-09-15 across the four counties whose answer is settled:
+
+        Eaton      15 districts, 15 named   1.00   ships 15
+        Lapeer      7 districts,  7 named   1.00   ships 7
+        Washtenaw   9 districts,  9 named   1.00   names present, in free prose
+        Bay         7 districts,  1 named   0.14   board pages name NOBODY
+
+    An earlier rule asked only whether the count was zero, and Bay's single
+    stray name on its districts page -- seven map links and no roster -- passed
+    it. The 0.6 floor sits in a gap between 1.00 and 0.14, so it is read off
+    that spread rather than tuned until a case passed; nothing here is a gate
+    being loosened to get a county through."""
     if ev is None:
         return "no-board-page"
     if ev["district_count"] == 0:
         return "no-districts"
-    if ev["near_pairs"] == 0 or ev["names_seen"] < 2:
+    if ev["names_seen"] < 2:
+        return "not-keyable"
+    if ev["near_pairs"] < max(2, 0.6 * ev["district_count"]):
         return "not-keyable"
     if ev["district_count"] >= max(2, ev["seats"] - 2):
         return "candidate"
