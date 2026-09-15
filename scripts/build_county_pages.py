@@ -277,9 +277,22 @@ def il_districted(inst):
     published members and neither had a page for a day. The registration gate
     below is what found them."""
     data_dir = app_data(inst["tag"])
-    paths = sorted(set(glob.glob(os.path.join(data_dir, "*-county-board-members.json"))
-                       + glob.glob(os.path.join(data_dir, "*-commissioner-members.json"))
-                       + glob.glob(os.path.join(data_dir, "*-county-board-roles.json"))))
+    # TWO DIRECTORIES, AND THE SECOND ONE HAS A REASON. data/app is where a
+    # roster lives when the APP reads it. Cook County's does not: il/index.html
+    # fetches the county's GIS people table live on every Cook click, so a file
+    # in data/app would fail validate_index.py's rule that every file there is
+    # referenced — and Cook, the second most populous county in the country, had
+    # no page at all while the Illinois hub's own prose named it. A roster the
+    # app does not read is a build-time source and sits in data/source with the
+    # rest of them; this reads both, because the reader of a county page does
+    # not care which of the two the names came from.
+    dirs = [data_dir, os.path.join(REPO_ROOT, inst["tag"], "data", "source")]
+    paths = sorted(set(
+        path
+        for d in dirs
+        for pattern in ("*-county-board-members.json", "*-commissioner-members.json",
+                        "*-county-board-roles.json")
+        for path in glob.glob(os.path.join(d, pattern))))
     out, problems, nameless, used = {}, [], set(), []
     for path in paths:
         slug = re.sub(r"-(county-board-members|commissioner-members|"
@@ -324,7 +337,8 @@ def il_districted(inst):
             nameless.add(name)
             continue
         out[name] = {"districts": districts, "sourceUrl": source, "extras": extras,
-                     "skipped": skipped, "slug": slug, "at_large": False}
+                     "skipped": skipped, "slug": slug, "at_large": False,
+                     "source_file": path}
     return out, problems, nameless, used, None
 
 
@@ -420,7 +434,8 @@ def wi_seats(inst):
         entry = directory.get(d["geoid"], {})
         out[name] = {"districts": districts, "sourceUrl": d["source"],
                      "extras": extras, "skipped": [], "slug": county_slug(name),
-                     "at_large": False, "seats": entry.get("seats")}
+                     "at_large": False, "seats": entry.get("seats"),
+                     "source_file": path}
     used = [path] + ([dir_path] if directory else [])
     return out, problems, nameless, used, None
 
@@ -484,7 +499,7 @@ def ia_supervisors(inst):
             continue
         out[name] = {"districts": districts, "sourceUrl": rec.get("sourceUrl"),
                      "extras": [], "skipped": [], "slug": county_slug(name),
-                     "at_large": False}
+                     "at_large": False, "source_file": path}
     note = ("%d of %d chair(s) joined; %d Iowa county board(s) have a published "
             "chair and no member list, so no page"
             % (chaired, len(out), max(0, len(chairs) - len(out))))
@@ -561,7 +576,7 @@ def mi_commissioners(inst):
             continue
         out[name] = {"districts": districts, "sourceUrl": rec.get("sourceUrl"),
                      "extras": [], "skipped": [], "slug": county_slug(name),
-                     "at_large": False}
+                     "at_large": False, "source_file": path}
     note = ("%d of Michigan's 83 counties name their commissioners; the rest are "
             "unreached tranches, not empty boards" % len(out))
     return out, problems, nameless, [path], note
@@ -694,14 +709,31 @@ def districted_body(inst, name, rec):
     extra_named = _count_named([], rec.get("extras") or [])
     n_dist = len(rec["districts"])
     out = []
+    # WHETHER THE MAP READS THIS FILE IS DERIVED, NOT WRITTEN, because it is the
+    # one clause here that can be false. Every roster but one is in data/app and
+    # is the very file the card fetches. Cook County's is not: il/index.html
+    # calls the county's GIS people table live, and this roster is a weekly
+    # snapshot of that same table, so the two can differ for up to a week.
+    # Printing "the same roster the map's card reads" on that page would be a
+    # false claim about the product on the product.
+    source_file = rec.get("source_file")
+    if not source_file:
+        fail("%s has no source_file, so this cannot tell whether the app reads "
+             "its roster — every adapter must record the path it read"
+             % heading_of(inst, name))
+    app_reads = "%sdata%sapp%s" % (os.sep, os.sep, os.sep) in source_file
+    same = ("it is the same roster the map's %s card reads"
+            % esc(inst["phrase"]) if app_reads else
+            "the map's %s card reads the same source live, so a card can be up "
+            "to a week newer than this page" % esc(inst["phrase"]))
     out.append(
         '<p class="lede">The %s is elected by district. This page '
         'lists %s %s and the %s who %s them, exactly as the county publishes '
-        'them — it is the same roster the map\'s %s card reads.</p>'
+        'them — %s.</p>'
         % (esc(heading_of(inst, name)), n_dist,
            "district" if n_dist == 1 else "districts",
            "member" if named == 1 else "%d members" % named,
-           "holds" if named == 1 else "hold", esc(inst["phrase"])))
+           "holds" if named == 1 else "hold", same))
     out.append('<a class="cta" href="../#layers=%s,county">'
                'Find your %s County district on the map →</a>'
                % (esc(inst["concept"]), esc(name)))

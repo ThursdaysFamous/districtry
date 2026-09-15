@@ -17,7 +17,7 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 
 - [Illinois district lookup](https://districtry.com/il/): 40 layers, 93 counties.
 - [Who is my U.S. representative?](https://districtry.com/il/congress.html)
-- [Who is my county commissioner?](https://districtry.com/il/county-board.html): links a page per county, 75 of them, each naming every member with whatever contact details that county publishes.
+- [Who is my county commissioner?](https://districtry.com/il/county-board.html): links a page per county, 76 of them, each naming every member with whatever contact details that county publishes.
 - [What Chicago police district am I in?](https://districtry.com/il/police-district.html)
 - [What precinct am I in?](https://districtry.com/il/precinct.html)
 - [Which Chicago school board district am I in?](https://districtry.com/il/school-board.html)

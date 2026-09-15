@@ -1,0 +1,85 @@
+name: Update Cook County Board roster
+
+# Weekly refresh of il/data/source/cook-county-board-members.json from the
+# county's own GIS people table. Opens a PR, never commits to main.
+#
+# WHY data/SOURCE. il/index.html fetches that table live on every Cook click,
+# so the app never reads this file and validate_index.py would rightly refuse a
+# file in data/app that index.html does not reference. What this file is for is
+# il/county-board/cook.html, which returned 404 until 2026-09-15 — the second
+# most populous county in the country, with the Illinois hub's own prose naming
+# it — because build_county_pages.py enumerates whatever the roster FILES carry
+# and Cook had none.
+
+on:
+  schedule:
+    - cron: "0 23 * * 3" # Wednesday 23:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI; a PR opened with the default GITHUB_TOKEN fires no workflows.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt requests
+      - name: Fetch the county's board rows
+        run: python3 scripts/cook_county_board_scraper.py --out cook_board.json
+      - name: Rebuild roster
+        # Refuses to write on anything but exactly 17 districts, on a district
+        # with no name, on a missing Board President, or on a field that drops
+        # below its floor.
+        run: python3 scripts/build_cook_county_board.py cook_board.json
+      - name: Regenerate the page that names them
+        run: python3 scripts/build_county_pages.py
+      - name: Validate app + data files
+        run: python3 scripts/validate_index.py il/index.html
+      - name: Check for changes
+        id: diff
+        run: |
+          git diff --quiet -- il/data/source/cook-county-board-members.json il/county-board \
+            && echo "changed=false" >> "$GITHUB_OUTPUT" \
+            || echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/cook-county-board-roster-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut the branch from main's CURRENT tip rather than from the checkout
+          # this run started with: these runs take tens of minutes, and a branch
+          # that also differs from main in .github/workflows/ reads to GitHub as
+          # a workflow update and is refused for a token without `workflow`
+          # scope.
+          git fetch --depth=1 origin main
+          git checkout -B "$branch" FETCH_HEAD
+          python3 scripts/cook_county_board_scraper.py --out cook_board.json
+          python3 scripts/build_cook_county_board.py cook_board.json
+          # il/county-board/cook.html is GENERATED from the roster this job just
+          # rewrote, so regenerate it here or the smoke gate's
+          # `build_county_pages.py --check` fails on this PR with a page naming
+          # last week's members. The sitemap follows, because that page is in it
+          # and its lastmod is the file's own last commit.
+          python3 scripts/build_county_pages.py
+          python3 scripts/build_sitemap.py
+          git add il/data/source/cook-county-board-members.json il/county-board il/county-board.html sitemap.xml
+          git commit -m "Update Cook County Board roster from the county's GIS people table"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create --title "Update Cook County Board roster" \
+              --body "Automated weekly refresh of Cook County's 17 commissioners and its Board President (\`scripts/cook_county_board_scraper.py\` + \`build_cook_county_board.py\`), with \`il/county-board/cook.html\` regenerated from it. The map card reads the county's service live and is unaffected. Review before merging." \
+              --base main --head "$branch"
+          fi

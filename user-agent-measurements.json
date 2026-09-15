@@ -1663,6 +1663,7 @@
    "callers": {
     "scripts/build_municipal_ward_coverage.py": "browser",
     "scripts/build_parcel_fabric_districts.py": "self",
+    "scripts/cook_county_board_scraper.py": "self",
     "scripts/il_special_district_officials_scraper.py": "self",
     "scripts/validate_sources.py": "both"
    },

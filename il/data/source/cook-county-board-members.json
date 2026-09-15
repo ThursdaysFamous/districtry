@@ -1,0 +1,193 @@
+{
+  "1": {
+    "members": [
+      {
+        "name": "Tara Stamps",
+        "phone": "(312) 603-4566",
+        "sourceUrl": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/26"
+      }
+    ]
+  },
+  "2": {
+    "members": [
+      {
+        "name": "Michael Scott Jr.",
+        "office": "3600 W. Ogden Ave., Chicago IL",
+        "email": "Michael.ScottJr@cookcountyil.gov",
+        "phone": "(312) 603-3019",
+        "sourceUrl": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/26"
+      }
+    ]
+  },
+  "3": {
+    "members": [
+      {
+        "name": "Bill Lowry",
+        "office": "3619 S. State St., 3rd Floor, Chicago IL",
+        "email": "bill.lowry@cookcountyil.gov",
+        "phone": "(312) 603-6391",
+        "sourceUrl": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/26"
+      }
+    ]
+  },
+  "4": {
+    "members": [
+      {
+        "name": "Stanley Moore",
+        "office": "8233 S. Princeton Ave., Chicago IL",
+        "email": "stanley.moore2@cookcountyil.gov",
+        "phone": "(312) 603-2065",
+        "sourceUrl": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/26"
+      }
+    ]
+  },
+  "5": {
+    "members": [
+      {
+        "name": "Kisha McCaskill",
+        "sourceUrl": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/26"
+      }
+    ]
+  },
+  "6": {
+    "members": [
+      {
+        "name": "Donna Miller",
+        "office": "15440 S. Central Ave., Oak Forest IL",
+        "email": "donna.miller@cookcountyil.gov",
+        "phone": "(312) 603-4216",
+        "sourceUrl": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/26"
+      }
+    ]
+  },
+  "7": {
+    "members": [
+      {
+        "name": "Alma E. Anaya",
+        "office": "4374 S. Archer Ave., Chicago IL",
+        "email": "alma.anaya@cookcountyil.gov",
+        "phone": "(312) 603-5443",
+        "sourceUrl": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/26"
+      }
+    ]
+  },
+  "8": {
+    "members": [
+      {
+        "name": "Jessica Vásquez",
+        "email": "district8@cookcountyil.gov",
+        "phone": "(312) 603-6386",
+        "sourceUrl": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/26"
+      }
+    ]
+  },
+  "9": {
+    "members": [
+      {
+        "name": "Maggie Trevor",
+        "office": "220 W Campbell, Suite A, Arlington Heights IL 32767",
+        "email": "district9@cookcountyil.gov",
+        "phone": "(312) 603-4393",
+        "sourceUrl": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/26"
+      }
+    ]
+  },
+  "10": {
+    "members": [
+      {
+        "name": "Bridget Gainer",
+        "office": "5533 N. Broadway St., Chicago IL",
+        "email": "district10@cookcountyil.gov",
+        "phone": "(312) 603-4210",
+        "url": "https://bridgetgainer.com",
+        "sourceUrl": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/26"
+      }
+    ]
+  },
+  "11": {
+    "members": [
+      {
+        "name": "John P. Daley",
+        "email": "john.daley@cookcountyil.gov",
+        "phone": "(312) 603-4400",
+        "sourceUrl": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/26"
+      }
+    ]
+  },
+  "12": {
+    "members": [
+      {
+        "name": "Bridget Degnen",
+        "office": "4253 N. Milwaukee Ave., Chicago IL",
+        "email": "bridget.degnen@cookcountyil.gov",
+        "phone": "(312) 603-6380",
+        "sourceUrl": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/26"
+      }
+    ]
+  },
+  "13": {
+    "members": [
+      {
+        "name": "Josina Morita",
+        "sourceUrl": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/26"
+      }
+    ]
+  },
+  "14": {
+    "members": [
+      {
+        "name": "Scott R. Britton",
+        "office": "1812 Waukegan Rd., Suite C, Glenview IL",
+        "email": "scott.britton@cookcountyil.gov",
+        "phone": "(312) 603-4932",
+        "sourceUrl": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/26"
+      }
+    ]
+  },
+  "15": {
+    "members": [
+      {
+        "name": "Kevin B. Morrison",
+        "office": "1325 Wiley Rd., Suite 141, Schaumburg IL",
+        "email": "kevin.morrison@cookcountyil.gov",
+        "phone": "(312) 603-6388",
+        "url": "https://commissionerkevinbmorrison.org",
+        "sourceUrl": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/26"
+      }
+    ]
+  },
+  "16": {
+    "members": [
+      {
+        "name": "Frank J. Aguilar",
+        "office": "7833 Ogden Ave., Lyons IL",
+        "email": "commissionerfrankjaguilar@gmail.com",
+        "phone": "(312) 603-4735",
+        "sourceUrl": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/26"
+      }
+    ]
+  },
+  "17": {
+    "members": [
+      {
+        "name": "Sean M. Morrison",
+        "office": "15040 Ravinia Ave., Suite 44, Orland Park IL",
+        "email": "sean.morrison@cookcountyil.gov",
+        "phone": "(312) 603-4215",
+        "url": "https://seanmorrison.com",
+        "sourceUrl": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/26"
+      }
+    ]
+  },
+  "chair": {
+    "name": "Toni H. Preckwinkle",
+    "role": "Board President",
+    "email": "tonipreckwinkle@cookcountyil.gov",
+    "phone": "(312) 603-6400",
+    "sourceUrl": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/26"
+  },
+  "board": {
+    "office": "118 N. Clark St., Chicago IL",
+    "sourceUrl": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/26"
+  }
+}
