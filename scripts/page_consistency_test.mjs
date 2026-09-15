@@ -499,6 +499,41 @@ try {
         if (!probed.has(abs)) probed.set(abs, (await p.request.get(abs)).status());
         check(path, `link ${h}`, probed.get(abs) === 200, `HTTP ${probed.get(abs)}`);
       }
+
+      // --- the question pages' address box, LAST because it navigates ------
+      // scripts/build_question_forms.py generates one form eleven times and
+      // its --check proves the bytes; this is the half a static check cannot
+      // have. The form ships `hidden` and its own script unhides it, so a
+      // reader with no JavaScript never meets an input that cannot submit —
+      // which means "hidden" is also what a broken script looks like, and
+      // only a browser can tell the two apart. The submit is then measured by
+      // the URL it produces: ./#q=<address>&layers=<the page's own cta>, with
+      // the address in the HASH, where count.js cannot send it.
+      if (await p.locator("#lookup").count()) {
+        check(path, "address box unhides when its script runs",
+              await p.locator("#lookup").isVisible());
+        const cta = await p.evaluate(() => {
+          const a = document.querySelector('a.cta[href^="./#layers="]');
+          return a ? a.getAttribute("href").split("#layers=")[1] : null;
+        });
+        check(path, "address box sits above a cta naming its layers", !!cta);
+        // The app is not this check's subject. Stubbing the instance root
+        // keeps eleven pages from booting a 26,000-line document each.
+        await p.route(`**/${tag}/`, (r) => r.fulfill({
+          status: 200, contentType: "text/html",
+          body: "<!doctype html><title>stub</title>" }));
+        await p.fill("#lookup-q", "233 S Wacker Dr");
+        await Promise.all([
+          p.waitForURL((u) => u.pathname === `/${tag}/`, { timeout: 5000 }).catch(() => {}),
+          p.click(".lookup-go"),
+        ]);
+        const got = new URL(p.url());
+        check(path, "submitting hands the address to the app in the hash",
+              got.pathname === `/${tag}/` &&
+              got.search === "" &&
+              got.hash === `#q=233%20S%20Wacker%20Dr&layers=${cta}`,
+              p.url());
+      }
       await ctx.close();
     }
   }

@@ -200,15 +200,15 @@ FLOORS = {"text": 4.5, "large": 3.0, "ui": 3.0, "decorative": None}
 PAIRS = [
     # — body text on the grounds —
     ("ink",        "surface",    "text", "cards, panels, masthead: header.masthead, .layer-block, .share-popover (skin); the sub-page shell's .answer-card body"),
-    ("ink",        "paper",      "text", "app ground: body (styles-app); every root page's body"),
+    ("ink",        "paper",      "text", "app ground: body (styles-app); every root page's body; the question pages' .lookup-input value, a --paper field inside the --panel .lookup-card (shell)"),
     ("ink",        "surface-2",  "text", ".layer-block-head in DARK only — the skin repaints it #262331 (== --surface-2 dark) under --card-ink #ece9f4 (== --ink dark); in light the head is styles-card-v2's literal #fff (== --surface), so the light half of this row re-measures (ink, surface). The --surface-2 VALUE reaches a light-tier reader through .card-section-label (the muted row below)"),
     ("ink",        "brand-tint", "text", "landing .notice-h and .pill; privacy .tldr (build_landing_page, build_privacy_page — children of body or of an unpainted main, i.e. on --paper)"),
     ("ink",        "brand-tint@surface", "text", "privacy .k inline code inside .card, a --surface panel (build_privacy_page)"),
     ("ink",        "border",     "text", ".gap-suggest:hover — text with the border colour as its ground (styles-footer; the gaps modal is composed outside the hidden footer)"),
     ("ink-2",      "surface",    "text", "history.html .tile-l (build_history_page)"),
     ("ink-2",      "paper",      "text", "history.html .intro, .entry p, code (build_history_page)"),
-    ("ink-3",      "surface",    "text", "h1.title small, .masthead-action-link (skin, as --slate); .share-popover-note / -label (styles-app, on the #fff popover); the gaps panel's .gap-area, .gap-detail, .gaps-credit and its group caret .gaps-section-label::before — a state indicator repainted from --line-strong on 2026-09-02 (styles-footer); renderSourceUnavailable paints it from JS"),
-    ("ink-3",      "paper",      "text", "sub-page details body, landing h1 at <=560px, .kbd-select-btn (shell, root, styles-app)"),
+    ("ink-3",      "surface",    "text", "the question pages' .lookup-label and .lookup-status on the --panel .lookup-card (shell); h1.title small, .masthead-action-link (skin, as --slate); .share-popover-note / -label (styles-app, on the #fff popover); the gaps panel's .gap-area, .gap-detail, .gaps-credit and its group caret .gaps-section-label::before — a state indicator repainted from --line-strong on 2026-09-02 (styles-footer); renderSourceUnavailable paints it from JS"),
+    ("ink-3",      "paper",      "text", "sub-page details body, landing h1 at <=560px, .kbd-select-btn (shell, root, styles-app); the .lookup-input PLACEHOLDER, which is --slate rather than the --slate-soft every other placeholder in the fleet uses \u2014 that pair is 2.28:1 on --paper and is the recorded (faint, paper) shortfall below, so a new field does not join it"),
     ("ink-3",      "surface-2",  "text", "privacy.html thead th at 12px (build_privacy_page)"),
     ("ink-3",      "brand-tint", "text", "landing .notice-b, footer .support (build_landing_page — on body)"),
     ("ink-3",      "border",     "text", ".gap-badge at 10px — text on the border colour (styles-footer)"),
@@ -238,6 +238,7 @@ PAIRS = [
     # — error state —
     ("error-ink",  "surface",    "text", ".layer-card-body.state-error — styles-card-v2's literal #7c2d12 wins by source order over styles-app's var(--err) and equals --error-ink light; the skin's dark #fdba74 equals --error-ink dark — literal equals token"),
     ("error",      "surface",    "text", "landing .search-status.err at 13.5px (build_landing_page)"),
+    ("brand-warm-deep", "surface", "text", ".lookup-status.err at 13.5px on the --panel .lookup-card (shell) \u2014 the question pages' failed-search line. It is NOT --error: the sub-page palette build_brand_tokens.py emits carries eleven aliases and no error token, and adding a twelfth to paint one line would put a value in every sub-page that nothing else uses. --accent-warm-deep is this shell's caution hue, the darker pair of the .disclaimer rule"),
     ("error",      "surface",    "ui",   ".layer-block:has(> .layer-card-body.state-error) border-left (styles-card-v2 literal == --error; skin dark #f97316 == --error dark)"),
 
     # — literal white as text: the engine's button faces, on every accent —
@@ -246,18 +247,19 @@ PAIRS = [
     # the same tokens are BUTTON FACES under white text (the polarity
     # inversion the sub-page reader named). build_landing_page.py already
     # flips its own button to --paper text in dark, and records why.
-    ("#fff",       "brand",      "text", ".search-row button (styles-core colour, skin ground), .masthead-actions a.is-primary:hover (shell), .footer-link-btn:hover (skin)"),
-    ("#fff",       "brand-700",  "text", ".cta and the RESTING .masthead-actions a.is-primary (shell, on every sub-page), .search-row button:hover, .btn-primary:hover (styles-core) — NOT the pressed/pinned toggles in dark: the skin's later [data-theme=dark] .hover-toggle-btn / .pin-parent-btn rules repaint those on --dst-raised, which is its own defect (see the entry below)"),
-    ("paper",      "brand",      "text", "landing .search-button in dark — the flip that HOLDS: build_landing_page records white on #a78bfa = 2.72 and paints --paper instead"),
-    ("paper",      "brand-700",  "text", "landing .search-button:hover in dark"),
+    ("#fff",       "brand",      "text", ".search-row button (styles-core colour, skin ground), .masthead-actions a.is-primary:hover (shell), .footer-link-btn:hover (skin), .lookup-go:hover in light (shell)"),
+    ("#fff",       "brand-700",  "text", ".lookup-go in LIGHT only \u2014 its dark face flips to --paper, the row below; .cta and the RESTING .masthead-actions a.is-primary (shell, on every sub-page), .search-row button:hover, .btn-primary:hover (styles-core) — NOT the pressed/pinned toggles in dark: the skin's later [data-theme=dark] .hover-toggle-btn / .pin-parent-btn rules repaint those on --dst-raised, which is its own defect (see the entry below)"),
+    ("paper",      "brand",      "text", ".lookup-go:hover in dark (shell); landing .search-button in dark — the flip that HOLDS: build_landing_page records white on #a78bfa = 2.72 and paints --paper instead"),
+    ("paper",      "brand-700",  "text", "landing .search-button:hover in dark; the question pages' .lookup-go at rest in dark, which makes the same flip for the same measurement (shell)"),
     ("paper",      "ink",        "text", ".skip-link — the app's (styles-core) and, since 2026-09-02, the sub-page shell's (engine/shared/styles-subpage); the root pages' skip links already painted this pair. Focus-only, and the one masthead element the skin does not restyle"),
 
     # — UI parts a reader must perceive to use (1.4.11) —
     ("brand-warm", "paper",      "ui",   "--focus-ring: 3px solid var(--accent-warm) on the app ground and every sub-page summary"),
     ("brand-warm", "surface",    "ui",   "focus ring on a card or the masthead; .group-safety .dot"),
-    ("brand",      "surface",    "ui",   "focused input border: .masthead .search-row input:focus (skin); .group-political .dot; the landing .search-input / .search-button rings inside .search-card"),
+    ("brand",      "surface",    "ui",   ".lookup-input and .lookup-go focus rings, drawn inside the --panel .lookup-card (shell); focused input border: .masthead .search-row input:focus (skin); .group-political .dot; the landing .search-input / .search-button rings inside .search-card"),
     ("brand",      "paper",      "ui",   "focus rings on the page ground: privacy :focus-visible on body links (build_privacy_page); landing .pill:focus-visible, drawn outside the pill over .pills, which has no background (build_landing_page)"),
     ("data-500",   "surface",    "ui",   "legend dot / selected-boundary swatch: .dml-dot (skin; literals #1d5fd6 / #6ea8ff equal the token's two tiers)"),
+    ("border-dot@paper", "surface", "ui", "the question pages' .lookup-input RESTING border (shell), composited over its own --paper interior and seen against the --panel .lookup-card. The stronger of the two border tokens, chosen over --line because --line is the pair recorded below as perceivable on neither edge; it is still short, and is recorded rather than swapped for a value the palette does not have"),
     ("border@paper", "surface",  "ui",   "the masthead search input's RESTING border, composited over its own interior (--dst-sunken: #ffffff in light, where --border is opaque anyway; #15131b == --paper in dark) and seen against the --panel masthead — 1.4.11's text-input case, where the boundary is the field's only indicator once a reader types"),
 
     # — decorative: measured, printed, never gated —
@@ -292,6 +294,24 @@ ACCEPTED_SHORTFALLS = {
     # and decoration. The app's legend chevron (.dml-kicker, currentColor at
     # opacity .8) rides the same token as an open/closed indicator, so a
     # decision to move small text off --faint should take the chevron with it.
+    # (0) The question pages' address field. 1.4.11 wants 3:1 on the boundary
+    # that identifies a text input, and this palette has no value that reaches
+    # it: --line-strong is the darker of the two border tokens and it lands at
+    # 1.69 light / 1.68 dark against the card it sits on. The alternatives were
+    # measured rather than assumed — --line composites to 1.10, and the field's
+    # own --paper interior against the --panel card is 1.10 light / 1.11 dark,
+    # so no combination of the shipped neutrals draws a perceivable edge. The
+    # decision this is waiting on is the same one the masthead search input's
+    # entry below is waiting on, and it is one decision, not two: the palette
+    # needs a border value with enough contrast to bound a control, or every
+    # input in the fleet stays bounded by its label alone.
+    ("border-dot@paper", "surface", "ui", "light"): dict(
+        measured=1.69, decided=False, date="2026-09-15",
+        reason="#c9c5d4 over the field's #f4f2ee interior against the #ffffff "
+               "card — the strongest border this palette publishes"),
+    ("border-dot@paper", "surface", "ui", "dark"): dict(
+        measured=1.68, decided=False, date="2026-09-15",
+        reason="rgba(236,233,244,0.22) over #15131b against the #201d29 card"),
     ("faint", "surface", "text", "light"): dict(
         measured=2.54, decided=False, date="2026-09-02",
         reason="#9aa3b2, luminance 0.363 against a 0.183 ceiling for 4.5:1 on "

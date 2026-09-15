@@ -299,6 +299,15 @@ jobs:
       - name: Redirect shells and the 404 match their sources
         run: python3 scripts/build_redirect_stubs.py --check
 
+      # The address box on the eleven question pages. It is one form generated
+      # eleven times, and every per-page fact in it — the layers it opens, the
+      # button's own words, the place named in the placeholder — is read off
+      # that page's .cta link and metros.json. A page that changes which layers
+      # it opens, or a new question page that ships without a form, fails here
+      # rather than serving a box that hands the app the wrong layers.
+      - name: Question pages carry the address box their own CTA describes
+        run: python3 scripts/build_question_forms.py --check
+
       # The favicon is the one branded asset whose audience is a CRAWLER, and it
       # was the one nobody could see was broken: every page carried the mark
       # inline as a data: URI, which renders perfectly in a browser tab and is

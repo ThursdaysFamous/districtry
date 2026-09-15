@@ -440,6 +440,54 @@ try {
     await context.close();
   }
 
+  // 1c. #q=<address> — the other end of the question pages' address box.
+  //     Those pages do not geocode: they hand the typed text to this app in
+  //     the HASH (never the query string, which count.js sends to the
+  //     analytics host) and the app runs the same bounded search. The app
+  //     SELECTS a result only when the geocoder returns exactly one; several
+  //     matches is where taking the first would name the wrong officeholder,
+  //     so the list stays up and the reader picks.
+  //
+  //     ONE INSTANCE PROVES IT. prefillGeocodeSearch is a single ENGINE block
+  //     spliced into all six apps and compose_app.py --check holds them
+  //     byte-identical, so the other five copies of this assertion would test
+  //     the same bytes. The GENERATING side — that eleven question pages carry
+  //     a form pointing at their own layers — is checked per page by
+  //     page_consistency_test.mjs and build_question_forms.py --check.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(
+      context,
+      `${BASE}#q=${encodeURIComponent(GEOCODER_QUERY_CLEANED)}&layers=${OFFLINE[0]}`,
+      async (p) => {
+        await p.route("**/photon.komoot.io/**", (route) =>
+          route.fulfill({
+            status: 200, contentType: "application/json",
+            body: JSON.stringify({
+              type: "FeatureCollection",
+              features: new URL(route.request().url()).searchParams.get("q") === GEOCODER_QUERY_CLEANED
+                ? [GEOCODER_STUB_FEATURE] : [],
+            }),
+          }));
+      });
+    await page
+      .waitForFunction(() => /^Selected:/.test(
+        (document.getElementById("geo-status") || {}).textContent || ""),
+        null, { timeout: QUERY_TIMEOUT })
+      .catch(() => {});
+    const handed = await page.evaluate((ns) => ({
+      typed: document.getElementById("geocode-input").value,
+      status: (document.getElementById("geo-status").textContent || "").trim(),
+      point: window[ns].state.selectedPoint,
+    }), EXPORTS_NAME);
+    check("#q= runs the app's own search on an address handed over in the hash",
+      handed.typed === GEOCODER_QUERY_CLEANED && !!handed.point,
+      `typed=${handed.typed} status=${handed.status} point=${JSON.stringify(handed.point)}`);
+    check("#q= selects the one result rather than leaving the reader to click",
+      /^Selected:/.test(handed.status), handed.status.slice(0, 70));
+    await context.close();
+  }
+
   // 2. The three no-API layers classify a known point against known ground
   //    truth, fetched from data/app/*.json. Two expected-value shapes: a
   //    NUMERIC expectation asserts the card's own "District N" token exactly
