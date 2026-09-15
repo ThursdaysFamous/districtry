@@ -64,6 +64,17 @@ requires". The record therefore says how many justices the district's page
 lists and never that this is the elected complement; no row here distinguishes
 an elected justice from an assigned one, because the directory does not.
 
+THE PER-JUSTICE PAGES WITNESS THE NAME AND NOT THE DISTRICT, checked on four
+of them (Cavanagh, Doherty, Vancil Jr., Zenoff) on 2026-09-15. Each answers
+200 and names its justice, and one of them prints the surname-with-suffix
+shape the directory publishes ("Vancil Jr., David L."). But every "Nth
+District" string on those pages is NAV CHROME -- the site's own menu of the
+five district pages -- so reading a district off one returns "First District"
+for all four. The person-to-district mapping therefore rests on the Judicial
+Directory alone, which is the court's own publication and enough; it is simply
+not two sources, and a later pass should not take the profile link for a
+second witness to the district.
+
 Usage:
     python3 il_court_justices_scraper.py --out /tmp/il_court_justices_raw.json
 """
@@ -197,7 +208,9 @@ def parse_directory_rows(body):
             "middle": label("MiddleName"),
             "title": label("Title"),
             "district": label("District"),
-            # each row links the justice's own page on the same site
+            # Each row links the justice's own page on the same site. It is a
+            # witness to the NAME only -- the district strings on it are nav
+            # chrome; see the docstring.
             "profile_url": html.unescape(profile.group(1)) if profile else None,
         })
     return rows
