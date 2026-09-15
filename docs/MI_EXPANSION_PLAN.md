@@ -313,15 +313,29 @@ Each opens its own refreshed plan PR with its own measured ledger when it begins
   audited.
   **NEXT: no third Michigan city has been researched.** Lansing, Ann Arbor and Sterling Heights are
   the obvious candidates by population; none has been checked for a published boundary.
-- **The other 543 commissioners** — gap `mi-commissioner-roster`. Tranche 1 shipped 2026-09-13:
-  six counties, 76 of the 619 districts, from each county's own board page, weekly and
-  count-guarded (`mi/scripts/mi_commissioner_scraper.py` + `build_mi_commissioner_roster.py`,
-  `update-mi-commissioner-roster.yml`). The earlier claim that "ten of the twelve counties sampled
-  publish a readable one" was optimistic: six of the twelve did not yield, and each now carries a
-  measured reason in that scraper's `PROBES` table rather than a guess — two `Disallow: /`, two
-  HTTP 202 on robots.txt itself, Oakland refused at its Akamai edge to every client string tested,
-  and Washtenaw answering 200 with its commissioners named only inside prose biographies. The next
-  tranche picks up from Michigan's 13th county by population.
+- **The other 500 commissioners** — gap `mi-commissioner-roster`. Tranche 1 shipped 2026-09-13
+  (six counties, 76 districts) and **tranche 2 on 2026-09-15** (five more — St. Clair 7, Monroe
+  8 of 9, Berrien 12, Jackson 9, Calhoun 7), so eleven counties and 119 of the 619 districts now
+  name a person, from each county's own board page, weekly and count-guarded
+  (`mi/scripts/mi_commissioner_scraper.py` + `build_mi_commissioner_roster.py`,
+  `update-mi-commissioner-roster.yml`). That is 4,714,023 of Michigan's 10,007,596 people (47.1%).
+  The earlier claim that "ten of the twelve counties sampled publish a readable one" was
+  optimistic: seven counties across the two tranches did not yield, and each carries a measured
+  reason in that scraper's `PROBES` table rather than a guess — two `Disallow: /`, two HTTP 202
+  on robots.txt itself, Oakland and Allegan refused at their own Akamai edges to every client
+  string tested, and Washtenaw answering 200 with its commissioners named only inside prose
+  biographies.
+  **TRANCHE 2 SHIPPED THE FLEET'S FIRST SHORT MICHIGAN COUNTY, and it is a parse decision rather
+  than a missing source.** Monroe's CivicPlus directory lists eleven rows for a nine-seat board and
+  one is malformed: `p-name` reads "District 2", `p-job-title` reads "Commissioner Vensel", and
+  Vensel holds District 6. So the row names no District 2 commissioner and the only name on it
+  belongs to another district. The builder records `unnamedDistricts: ["2"]`, ships the other
+  eight, and the card and the county page both state that district by number — the Alexander
+  precedent, where a board short a name says which seat rather than concealing one. The builder's
+  gate moved from "districts are exactly 1..N" to "every district the geometry draws is either
+  named or noted", which is not a loosened floor: a duplicate name, a district outside the drawn
+  set and an empty name all still refuse the county.
+  The next tranche picks up from Michigan's 18th county by population.
 - **Michigan's full fleet bbox**, and with it the last four misroutes (Ironwood, Houghton, Iron
   Mountain, Menominee). Needs `validate_index`'s "a bbox must not contain a sibling's centre"
   rule relaxed AND the in-app `metro-portal` moved onto the same ring test — its `siblingMetroAt`
