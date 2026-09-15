@@ -150,7 +150,38 @@ keeps reading Socrata live beside a shipped snapshot, or moves to the file.
 Given `/il/ward.html` is the page phase 0 asked Google to re-index and Chicago wards are the
 site's largest search term, this is the highest-value item left in phase 1.
 
+### 4. Verified dates and `dateModified` — measured, not built
+
+Measured 2026-09-15: **no page on this site carries `dateModified`**, and 3 of the 75
+Illinois county board pages print a visible verified date (`alexander`, `edwards`, `wabash`
+— the three whose at-large records carry a `verified` field the others do not).
+
+The obvious implementation does not work, and the reason is worth writing down before
+someone tries it. A county page's date should be its roster's, and git can supply that:
+`git log -1 --format=%cs -- <roster>`, the same call `build_sitemap.py` already makes for
+`lastmod`. But the weekly roster jobs open a PR and **this repo squash-merges**, which
+rewrites the committer date to the merge day. A job that runs Monday writes Monday into the
+page and commits both files together; the squash lands Wednesday; from then on git says the
+roster last changed Wednesday while the page says Monday, and `build_county_pages.py --check`
+fails on `main` for every roster PR that did not merge the day it opened.
+
+`build_sitemap.py` survives this only because its check tolerates a day of staleness. A
+printed date is a claim to a reader, and a day of tolerance is not a thing to give it.
+
+So the date has to live in the data, not in git: a roster stamps when it was read, and the
+page prints that. Wisconsin's `county-board-members.json` already carries `asOf` on 183
+records. Illinois's 75 do not, and stamping them means touching the builders behind 60 weekly
+workflows — which is the real size of this item, and why it is recorded here rather than
+half-done.
+
+The guide pages (faq, sources, the question pages, history) are a separable and much smaller
+piece: their date is the instance's own `verified_date`, a human-set worksheet value with no
+chicken-and-egg at all. Their `ld+json` is hand-written, so it needs an injector and a drift
+gate — about 31 pages.
+
 ### Still open
 
-- **Chicago ward roster pipeline**, and the table that follows it. See above.
-- **Verified dates and `dateModified`** site-wide. 3 of 75 Illinois county pages show one.
+- **Chicago ward roster pipeline**, and the table that follows it. See item 3.
+- **`dateModified` on the guide pages** from each worksheet's `verified_date`. Small.
+- **`asOf` stamps on the county rosters**, and the dates on the 170 county pages that follow.
+  Large: it reaches the builders behind 60 weekly workflows.
