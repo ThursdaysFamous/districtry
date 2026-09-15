@@ -419,7 +419,9 @@ NAMEISH = re.compile(r"\b[A-Z][a-z]{1,15}(?:\s+[A-Z]\.?)?\s+[A-Z][a-z'\-]{1,18}\
 STOPWORDS = ("Board Of", "County Board", "Board Meeting", "Read More",
              "Contact Us", "Skip To", "Public Comment", "Meeting Agenda",
              "Privacy Policy", "Site Map", "County Commissioner",
-             "Commissioner District", "Annual Report", "Home Page")
+             "Commissioner District", "Annual Report", "Home Page",
+             "Business Hours", "Office Hours", "Section Name",
+             "Quick Links", "Main Office", "Learn More", "View All")
 
 
 def classify(html_body, seats):
@@ -448,16 +450,41 @@ def classify(html_body, seats):
     # so a probe that called it a candidate was wrong in the expensive
     # direction. A name-shaped string appearing beside more than half the
     # districts is dropped before any pair is counted.
-    windows = []
-    for m in re.finditer(r"\bDistrict\s+#?\d{1,2}\b", txt, re.I):
-        w = txt[max(0, m.start() - 90): m.end() + 90]
-        windows.append({x.group(0) for x in NAMEISH.finditer(w)
-                        if not any(s.lower() in x.group(0).lower() for s in STOPWORDS)})
+    # SEGMENTS ARE KEYED BY DISTRICT NUMBER, NOT BY OCCURRENCE, and that
+    # distinction is the whole rule. Two earlier versions both discarded real
+    # commissioners as furniture, each for its own reason, and both still
+    # passed the settled counties while understating them -- which is how a
+    # denser page would have read as `not-keyable`.
+    #
+    # A fixed window around each district token OVERLAPS its neighbours on a
+    # dense page, so one name falls in two windows. Segmenting from each token
+    # to the next fixed that and exposed the second cause: a page names the
+    # same district MORE THAN ONCE -- Eaton carries a district nav list above
+    # its member list -- so a name appears in two segments of the SAME
+    # district. Measured 2026-09-15 on Eaton, a real 15-member roster: fixed
+    # windows left 4 near-pairs of 26 names, per-occurrence segments left 2 of
+    # 17, and keying by number leaves the roster intact.
+    marks = list(re.finditer(r"\bDistrict\s+#?(\d{1,2})\b", txt, re.I))
+    per_number = {}
+    for i, m in enumerate(marks):
+        end = marks[i + 1].start() if i + 1 < len(marks) else min(len(txt), m.end() + 180)
+        seg = txt[m.start():min(end, m.start() + 400)]
+        found = {x.group(0) for x in NAMEISH.finditer(seg)
+                 if not any(st.lower() in x.group(0).lower() for st in STOPWORDS)}
+        per_number.setdefault(int(m.group(1)), set()).update(found)
+    windows = list(per_number.values())
+    # A COMMISSIONER BELONGS TO ONE DISTRICT, so a name-shaped string sitting
+    # under more than one district NUMBER is not a district-keyed name. On
+    # these pages it is always page furniture: Bay's `Center Ave`, `Bay City`
+    # and `Business Hours` are its address block and nav, repeating under every
+    # district, and an earlier threshold of "more than half the districts" let
+    # `Business Hours` through on 3 of 7 and scored Bay -- whose board pages
+    # name nobody -- as a candidate.
     seen_in = {}
     for w in windows:
         for nm in w:
             seen_in[nm] = seen_in.get(nm, 0) + 1
-    chrome = {nm for nm, c in seen_in.items() if len(windows) > 2 and c > len(windows) / 2}
+    chrome = {nm for nm, c in seen_in.items() if len(windows) >= 3 and c > 1}
     near = sum(1 for w in windows if w - chrome)
     distinct_near = len(set().union(*windows) - chrome) if windows else 0
     return {"districts_found": sorted(nums), "district_count": len(nums),
