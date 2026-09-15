@@ -1,7 +1,7 @@
 <!-- ==== GENERATED:BEGIN metro-header ==== -->
 # districtry Wisconsin
 
-**Click the map for every district you're in, and who represents you.**
+**Every civic district that covers your point in Wisconsin, and who represents you there.**
 <!-- ==== GENERATED:END metro-header ==== -->
 
 A single-file, dependency-light web app: one `index.html`, Leaflet for the map, no build step, no framework, no server-side code. One instance of the [districtry](https://districtry.com/) fleet, serving at **[districtry.com/wi/](https://districtry.com/wi/)** — the first state to expand **in place** as a folder of the consolidated repo rather than as a fork.
