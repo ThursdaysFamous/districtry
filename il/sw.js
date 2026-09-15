@@ -43,7 +43,7 @@
 // refreshed per election.)
 /* ==== TEMPLATE:END sw-version-history ==== */
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-il-shell-v32";
+const CACHE_NAME = "districtry-il-shell-v33";
 
 const SHELL_URLS = [
   "./",
@@ -103,6 +103,7 @@ const GEOMETRY_URLS = [
   "./data/app/ccbr-districts.json",
   "./data/app/champaign-county-outline.json",
   "./data/app/christian-county-outline.json",
+  "./data/app/christian-county-board-districts.json",
   "./data/app/clark-county-board-districts.json",
   "./data/app/clark-county-outline.json",
   "./data/app/calhoun-precincts.json",

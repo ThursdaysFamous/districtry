@@ -73,6 +73,7 @@ that this page does not ask for more than an address).
 
 import argparse
 import difflib
+import glob
 import html
 import json
 import os
@@ -126,6 +127,20 @@ OUT = os.path.join(REPO_ROOT, "index.html")
 # The canonical host TODAY. R5 moves this to districtry.com along with
 # metros.json's urls; both are data, so that cutover is an edit here plus a
 # regenerate, never a rewrite of the page.
+# A question page is any .html directly inside an instance folder that is not
+# one of these four AND is not a redirect shell. The app itself, and the three
+# sub-pages every instance carries, are not answers to a question somebody
+# types into a search box.
+NOT_A_LOOKUP = {"index.html", "faq.html", "sources.html", "history.html"}
+
+# The second half of that test, and the half a filename cannot make: il/ has a
+# privacy.html that is a SHELL pointing at the root page, and the first draft
+# of this block linked it, labelled "Moved". Same rule build_sitemap.py uses to
+# decide what is a real page — a meta refresh or a noindex is not one — so a
+# shell added later is excluded without anybody updating a list.
+IS_SHELL = re.compile(r'http-equiv=["\']?refresh|name=["\']?robots["\']?[^>]*noindex',
+                      re.I)
+
 CANONICAL = "https://districtry.com/"
 
 # The one external profile that carries the name "districtry" and that this
@@ -365,6 +380,66 @@ def render_pills(metros):
                n)
         )
     return "\n".join(rows)
+
+
+def render_lookups(metros):
+    """The question pages, grouped by place, discovered from the tree.
+
+    WHY THIS BLOCK EXISTS. The 2026-09-15 search audit found the front door
+    linking NONE of the eleven pages that answer a question in words — the
+    pages a search for "who is my alderman" should land on — while
+    /il/ward.html sat in the sitemap uncrawled, "URL is unknown" to Google.
+    Everything about that page was already right: 200, self-canonical,
+    index/follow, sitemapped, linked from seven Illinois pages. What it did not
+    have was a link from the site's most-linked page.
+
+    DISCOVERED, NEVER LISTED. A question page is any .html directly inside an
+    instance folder that is not the app, the FAQ, the sources page or the
+    history page. So a new topic page joins this block the day it ships and
+    leaves it the day it goes, which is the same rule build_sitemap.py uses to
+    decide what is a topic page at all.
+
+    THE LABEL IS THE PAGE'S OWN <title>, first clause, cut at the question mark
+    — il/ward.html titles itself "Who is my alderman? Chicago wards" and only
+    the question belongs in a link. Two instances legitimately ask the SAME
+    question (Wisconsin and Iowa both "Who is my county supervisor?"), which is
+    why the block groups by place rather than presenting one flat list.
+    """
+    groups = []
+    for m in metros:
+        tag = m["tag"]
+        folder = os.path.join(REPO_ROOT, tag)
+        rows = []
+        for path in sorted(glob.glob(os.path.join(folder, "*.html"))):
+            base = os.path.basename(path)
+            if base in NOT_A_LOOKUP:
+                continue
+            with open(path, encoding="utf-8") as f:
+                head = f.read(8192)
+            if IS_SHELL.search(head):
+                continue
+            found = re.search(r"<title>([^<]*)</title>", head)
+            if not found:
+                fail("%s/%s has no <title> in its first 8KB, so the front "
+                     "door cannot label a link to it." % (tag, base))
+            label = html.unescape(found.group(1)).split(" — ")[0].strip()
+            if "?" in label:
+                label = label.split("?")[0].strip() + "?"
+            rows.append((base, label))
+        if not rows:
+            continue
+        links = "\n".join(
+            '          <li><a href="/%s/%s">%s</a></li>' % (
+                tag, base, html.escape(label)) for base, label in rows)
+        groups.append(
+            '      <div class="lookup-group">\n'
+            '        <h3>%s</h3>\n'
+            '        <ul>\n%s\n        </ul>\n'
+            '      </div>' % (html.escape(m["landing_name"]), links))
+    if not groups:
+        fail("no question pages found in any instance folder — this block "
+             "cannot be empty, and an empty one would ship silently.")
+    return "\n".join(groups)
 
 
 DC = "District of Columbia"
@@ -749,6 +824,18 @@ h2 {
 .pill:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
 .pill-n { font: 400 12px/1 var(--font-body); color: var(--faint); font-variant-numeric: tabular-nums; }
 
+.lookups { display: grid; gap: 14px 28px; margin: 10px 0 0;
+           grid-template-columns: repeat(auto-fit, minmax(15em, 1fr)); max-width: 62em; }
+.lookup-group h3 { font: 600 13px/1.3 var(--font); color: var(--muted);
+                   letter-spacing: .04em; text-transform: uppercase; margin: 0 0 4px; }
+.lookup-group ul { list-style: none; margin: 0; padding: 0; }
+.lookup-group li + li { margin-top: 2px; }
+/* 24px minimum target, WCAG 2.5.8: these are a LIST of links, which is the
+   shape that failed three surfaces when page_consistency_test.mjs began
+   sweeping for it, so the Inline exception does not apply. */
+.lookup-group a { display: block; padding: 4px 0; min-height: 24px; color: var(--brand-600);
+                  text-decoration: none; }
+.lookup-group a:hover, .lookup-group a:focus-visible { text-decoration: underline; }
 .not-yet { margin: 14px 0 0; max-width: 52em; }
 .not-yet > summary {
   cursor: pointer; font-size: 13px; line-height: 1.55; color: var(--muted);
@@ -857,6 +944,11 @@ footer .foot-links { margin-top: 12px; line-height: 28px; }
     <h2>Or choose a place</h2>
     <div class="pills">
 %(pills)s
+    </div>
+
+    <h2>Or start from a question</h2>
+    <div class="lookups">
+%(lookups)s
     </div>
     <details class="not-yet">
       <summary>Not yet: %(not_yet_summary)s — what nobody covers yet is listed here
@@ -1166,6 +1258,7 @@ footer .foot-links { margin-top: 12px; line-height: 28px; }
         "dark": token_css(DARK_TOKENS, dark, '[data-theme="dark"]', DARK_EXTRA,
                           indent="    "),
         "pills": render_pills(metros),
+        "lookups": render_lookups(metros),
         "mark": load_mark(),
         "notice": render_notice(),
         "independence": render_independence(),
