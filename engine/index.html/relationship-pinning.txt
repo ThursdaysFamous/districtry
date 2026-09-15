@@ -109,6 +109,17 @@
     pinnedParentId = (pinnedParentId === id) ? null : id;
     refreshAllPinButtons();
     refreshRelationshipOutlines();
+    // The pin is part of the shared view, so pinning and unpinning both move
+    // the permalink (see syncUrlHash). This call also carries the RESTORE
+    // path, which is easy to miss: applyStateFromHash selects the point
+    // before it reads `pin=`, and that selection's own syncUrlHash rewrites
+    // the hash while pinnedParentId is still null, so the incoming pin is
+    // gone by the time the restore runs. Without this line a shared link
+    // restores the pin on screen and hands the next reader a pin-less URL.
+    // The other path that clears the pin — toggling the parent layer OFF —
+    // needs no call here: onLayerToggled clears pinnedParentId directly and
+    // its own change handler runs syncUrlHash immediately afterwards.
+    syncUrlHash();
   }
 
   // Update every card's pin button to reflect the current pinned layer.

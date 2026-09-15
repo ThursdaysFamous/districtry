@@ -496,7 +496,7 @@ def mi_commissioners(inst):
     county's name, the seat count the shipped geometry draws, and a `districts`
     object of {label: {name, role?, party?, phone?, email?, profileUrl?}}.
 
-    IT COVERS SIX OF 83 COUNTIES AND IS MEANT TO. Michigan publishes no
+    IT COVERS ELEVEN OF 83 COUNTIES AND IS MEANT TO. Michigan publishes no
     maintained statewide roster of commissioners — the one statewide name
     column, on the state's own district layer, holds the certified November
     2024 election winners — so the names are read from each county's own board
@@ -505,16 +505,24 @@ def mi_commissioners(inst):
     link is the thin shape the per-county decision rejected.
 
     THE CHAIR IS A ROLE ON A COMMISSIONER, the Iowa shape rather than the
-    Illinois one, and it arrives already attached: four of the six counties
-    badge their own officers ("Chair", "Vice Chair", "Board Chair",
-    "Sergeant-at-Arms") in the same block the name comes from, so there is no
-    second file to join and no name match to get wrong.
+    Illinois one, and it arrives already attached: measured 2026-09-15, six of
+    the eleven counties badge their own officers in the same block the name
+    comes from (eight spellings across them, "Chair" through "Board Chair",
+    "Vice Chair Pro Tem" and "Sergeant-at-Arms"), so there is no second file to
+    join and no name match to get wrong.
 
-    EVERY COUNTY HERE IS FULL BY CONSTRUCTION. build_mi_commissioner_roster.py
-    refuses to write a county whose districts are not exactly 1..N for the seat
-    count the shipped geometry draws, so a partial board cannot reach this
-    file; the `nameless` return stays empty and a county that somehow arrived
-    empty would be reported rather than published as a board of nobody."""
+    A COUNTY CAN BE SHORT, AND `unnamedDistricts` IS HOW IT SAYS SO. Monroe is
+    the case: its directory carries a row whose district field reads
+    "District 2" and whose name field reads "Commissioner Vensel", where Vensel
+    is District 6's chairman. The row names no District 2 commissioner, so the
+    builder lists 2 in `unnamedDistricts` and ships the other eight. That
+    district gets a `note` here, which prints "Not named — ..." with the reason,
+    the third state the `district()` helper already draws.
+
+    THE GATE IS STILL EXACT, just not an equality on the named count: every
+    district the shipped geometry draws must be either named or noted, no label
+    may be both, and the union must be exactly the seat count. A missing label
+    nobody accounted for still fails the build."""
     data_dir = app_data(inst["tag"])
     path = os.path.join(data_dir, "mi-commissioner-members.json")
     out, problems, nameless = {}, [], set()
@@ -523,14 +531,27 @@ def mi_commissioners(inst):
         if not name:
             problems.append("mi-commissioner-members.json %r carries no county" % fips)
             continue
+        named = rec.get("districts") or {}
+        unnamed = [str(u) for u in (rec.get("unnamedDistricts") or [])]
+        both = sorted(set(named) & set(unnamed), key=district_sort_key)
+        if both:
+            problems.append(
+                "mi %s County lists district(s) %s as both named and unnamed"
+                % (name, ", ".join(both)))
+            continue
         districts = []
-        for label in sorted(rec.get("districts") or {}, key=district_sort_key):
-            districts.append(district(label, [dict((rec["districts"] or {})[label])]))
+        for label in sorted(set(named) | set(unnamed), key=district_sort_key):
+            if label in named:
+                districts.append(district(label, [dict(named[label])]))
+            else:
+                districts.append(district(
+                    label, note="the county's own directory row for this "
+                                "district carries no commissioner's name"))
         seats = rec.get("seats")
         if seats is not None and len(districts) != seats:
             problems.append(
-                "mi %s County publishes %d district(s) against a %d-seat board — "
-                "the roster and the shipped geometry disagree"
+                "mi %s County accounts for %d district(s) against a %d-seat "
+                "board — the roster and the shipped geometry disagree"
                 % (name, len(districts), seats))
             continue
         if not _count_named(districts, []):

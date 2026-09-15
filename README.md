@@ -14,7 +14,7 @@ This repo publishes six instances of the same app, one per place, each its own s
 
 | Metro | Live at | Covers |
 |---|---|---|
-| **Illinois** (reference implementation) | [districtry.com/il/](https://districtry.com/il/) | 92 counties — wards, county boards, police districts and beats, school zones, judicial subcircuits, and the people who hold those seats |
+| **Illinois** (reference implementation) | [districtry.com/il/](https://districtry.com/il/) | 93 counties — wards, county boards, police districts and beats, school zones, judicial subcircuits, and the people who hold those seats |
 | **New York City** | [districtry.com/ny/](https://districtry.com/ny/) | Boroughs, City Council and community districts, NYPD precincts and sectors, school zones, and the state and federal seats above them |
 | **San Francisco** | [districtry.com/ca/](https://districtry.com/ca/) | Supervisor districts, neighborhoods, police districts, school attendance areas, and the state and federal seats above them |
 | **Wisconsin** | [districtry.com/wi/](https://districtry.com/wi/) | 72 counties — cities, villages and towns, school districts, ZIP codes, and the Assembly, Senate and U.S. House seats, with who holds them |
@@ -194,7 +194,7 @@ ca/                                  SAN FRANCISCO — same shape as il/
 
 ## Expanding it
 
-[`docs/EXPANSION_GUIDE.md`](docs/EXPANSION_GUIDE.md) — the State Expansion Guide — is the primary guide for standing up a new state instance, deepening one county by county and city by city, or adding a new concept; its Part 5 collects what Illinois's 92 counties and Wisconsin's four phases taught. Start there. [`docs/DATA_LAYER_GUIDEBOOK.md`](docs/DATA_LAYER_GUIDEBOOK.md) is the fleet-wide layer inventory (what exists where, recorded parity debts, the backlog). Officeholder data is never guessed and a county is never added on a hunch — every roster and every boundary in this repo traces to a named, checkable public source.
+[`docs/EXPANSION_GUIDE.md`](docs/EXPANSION_GUIDE.md) — the State Expansion Guide — is the primary guide for standing up a new state instance, deepening one county by county and city by city, or adding a new concept; its Part 5 collects what Illinois's 93 counties and Wisconsin's four phases taught. Start there. [`docs/DATA_LAYER_GUIDEBOOK.md`](docs/DATA_LAYER_GUIDEBOOK.md) is the fleet-wide layer inventory (what exists where, recorded parity debts, the backlog). Officeholder data is never guessed and a county is never added on a hunch — every roster and every boundary in this repo traces to a named, checkable public source.
 
 ## Licence
 

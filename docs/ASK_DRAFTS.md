@@ -2095,3 +2095,58 @@ With thanks for your time,
 <YOUR NAME>
 <YOUR E-MAIL>
 https://districtry.com/il/
+
+---
+
+## Ask 27 — Christian County Clerk: who sits on the county board?
+
+**Status: NOT YET ASKED — DRAFTED.** Gap `christian-county-board-roster`.
+
+**Recipient:** Christian County Clerk & Recorder, `elections@christiancountyil.com` —
+the address the 5 August and 21 August 2026 inquiries used. **Two of this project's own
+records disagree on the clerk's first name** (the old gap blocker wrote Kandi Badman,
+this file's tranche table wrote Jodie Badman), so the draft below addresses the office
+rather than a person until that is settled from the county's own page.
+
+**Why this is worth sending, and what has changed since the last one.** The August asks
+were about Taylorville precinct 9, and that question is closed — the county's own
+certified canvasses answered it. Christian's four board districts now ship. What does
+not ship is the sixteen members: the county's board page named only its Chairman and
+Vice Chairman when it was last readable, and `christiancountyil.gov` has answered every
+automated client with a challenge page since 2026-09-15, so there is nothing left to
+read. This is the only districted county board in the Illinois instance whose card names
+nobody.
+
+**Draft:**
+
+> Subject: Christian County Board — a list of the sixteen members
+>
+> Dear Christian County Clerk & Recorder,
+>
+> I run districtry (https://districtry.com/il/), a free, non-commercial site that shows
+> anyone which civic districts cover a point they click on, and who represents them
+> there. It is not a campaign or a commercial product and it carries no advertising.
+>
+> Christian County's four board districts are now on it, drawn from the county's own 2021
+> County Board District and Precinct Map and checked against the certified results your
+> office publishes for the 2022 and 2024 General Elections and the 2026 General Primary.
+> Both are credited to the county on the page that shows them.
+>
+> The one thing I have not been able to find is a list of the board's sixteen members. The
+> county's board page names the Chairman and the Vice Chairman, and I could find no page
+> that names the other members or says which district each represents.
+>
+> Is there a current list of the sixteen members with their districts that I could link to
+> or be sent? If the district is not attached to each name, the names alone are useful.
+>
+> **A reply saying the county would rather not provide this is a genuinely useful answer** —
+> I will record it and stop asking. Nothing about how the site works depends on a yes.
+>
+> I do not publish home addresses or personal contact details for officeholders: office
+> contact only, or nothing.
+>
+> With thanks for your time,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/

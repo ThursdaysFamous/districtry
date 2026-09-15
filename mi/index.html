@@ -4823,8 +4823,8 @@ function initMichiganExplorer() {
 
   /* ==== ENGINE:BEGIN permalink ==== */
   /* =========================================================================
-   * SHAREABLE URL — #point=lat,lng&layers=id1,id2&zoom=N mirrors the current
-   * selection so any view can be copied out of the URL bar (or via the
+   * SHAREABLE URL — #point=lat,lng&layers=id1,id2&pin=id&zoom=N mirrors the
+   * current selection so any view can be copied out of the URL bar (or via the
    * point chip's Copy-link button) and restored on load. replaceState, not
    * location.hash assignment, so clicking around never pollutes the back
    * button. Parsed once at boot by applyStateFromHash().
@@ -4844,6 +4844,16 @@ function initMichiganExplorer() {
     var on = layers.filter(function (l) { return state.layersOn[l.id]; })
       .map(function (l) { return l.id; });
     if (on.length) parts.push("layers=" + on.join(","));
+    // The PINNED PARENT rides the permalink too, because the relationship
+    // outlines ARE part of the view being shared: a link that restores the
+    // point and the layers and drops the pin hands the reader the same map
+    // without the comparison the sender was looking at, and nothing on screen
+    // says a pin was ever set. Emitted only while its layer is on, which is
+    // also why `pin=` can never be the ONLY parameter in a hash — the same
+    // condition puts that id in `on` above, so `layers=` is always emitted
+    // beside it, and the root's app-parameter forwarding guard (which matches
+    // point/layers/zoom) still recognises every link that carries a pin.
+    if (pinnedParentId && state.layersOn[pinnedParentId]) parts.push("pin=" + pinnedParentId);
     // Zoom rides the permalink because it is part of what was shared: an embed of
     // a whole county answers a different question from an embed of one block, and
     // a refresh should not throw the reader back to the default view. Emitted
@@ -4913,10 +4923,36 @@ function initMichiganExplorer() {
       }
     }
     if (zoom !== null && !framed) map.setView(map.getCenter(), zoom, { animate: false });
+    // Parsed LAST, after the layers are on and the point is set, because a pin
+    // is a reference to one of those layers AT that point. A pin that cannot
+    // be honoured is DROPPED SILENTLY rather than half-applied — a legend
+    // naming a parent whose outlines can never be drawn is worse than no pin,
+    // because it reads as present and does nothing. Three ways that happens,
+    // and all three are ordinary rather than exceptional: the id names no
+    // layer this instance registers (a link from a sibling that has it, or
+    // from before a rename), its layer is not on (the `layers=` list disagreed
+    // with the pin, or a toggle refused), and it is not a polygon layer — the
+    // same test appendPinControl applies before it offers the control at all,
+    // so a hand-typed `pin=fire-station` restores nothing.
+    //
+    // Setting the pin here with no geometry loaded yet is correct and not a
+    // race: refreshRelationshipOutlines runs again as each layer's query
+    // resolves, so the outlines appear when the parent's boundaries arrive,
+    // and the card's own button picks up the pinned styling from
+    // pinnedParentId whenever that card next renders.
+    if (params.pin) {
+      var parent = getLayerById(params.pin);
+      if (parent && state.layersOn[parent.id] &&
+          parent.overlay && parent.overlay.style) {
+        setPinnedParent(parent.id);
+      }
+    }
     // #q=<address> — an address handed over by a question page's lookup
     // form; prefillGeocodeSearch runs the app's own bounded search on it.
     // A link carrying BOTH a point and a query keeps the point: it is
-    // already an exact answer, and re-geocoding could move it.
+    // already an exact answer, and re-geocoding could move it. It sits after
+    // the pin because it is not a state parse — it starts a search from the
+    // state the parses above have already applied.
     if (params.q && !params.point) prefillGeocodeSearch(params.q);
   }
 
@@ -8907,12 +8943,23 @@ function initMichiganExplorer() {
         var entry = (parts[1] && fips != null) ? parts[1][String(fips)] : null;
         var member = (entry && entry.districts && district != null)
           ? entry.districts[String(district)] : null;
+        // A county IN the roster whose own page names nobody for THIS district
+        // is a different fact from a county the roster has not reached, and
+        // the card says so rather than giving both the same sentence.
+        var unnamedHere = false;
+        if (entry && !member && district != null && entry.unnamedDistricts) {
+          for (var i = 0; i < entry.unnamedDistricts.length; i++) {
+            if (String(entry.unnamedDistricts[i]) === String(district)) unnamedHere = true;
+          }
+        }
         return {
           seq: seq,
           district: district,
           county: findPropCI(props, ["county"]),
           population: findPropCI(props, ["population"]),
           member: member || null,
+          unnamedHere: unnamedHere,
+          seats: entry ? entry.seats : null,
           boardUrl: entry ? entry.sourceUrl : null
         };
       });
@@ -8926,9 +8973,9 @@ function initMichiganExplorer() {
       if (result.member && result.member.name) {
         // The badge stays "Commissioner" and the county's own role word goes
         // beside it: a badge reading "Chair" alone would drop the office the
-        // reader actually elected. No county in the file publishes both a role
-        // and a party today (Muskegon publishes party, the other five publish
-        // roles), but the note is built to carry either or both.
+        // reader actually elected. The note carries either or both, and since
+        // tranche 2 both is real: Monroe publishes party AND badges its chair,
+        // so District 6 reads "Chairman · Republican".
         var person = { name: String(result.member.name), badge: "Commissioner" };
         var note = [];
         if (result.member.role) note.push(String(result.member.role));
@@ -8955,13 +9002,25 @@ function initMichiganExplorer() {
       if (!(result.member && result.member.name)) {
         rows.push({
           label: "Your commissioner",
-          value: "Not named here yet. Michigan publishes these districts with the " +
-                 "November 2024 election winner attached, but that list is not " +
-                 "maintained — it still names commissioners who have since died, " +
-                 "resigned or been replaced — so this app does not repeat it. This " +
-                 "app is naming commissioners county by county from each county's " +
-                 "own board page; this county is not done. Your county's own board " +
-                 "page is the current source."
+          value: result.unnamedHere
+            // This county IS read weekly and its other districts are named;
+            // this one is short on the county's own page, so say that and not
+            // the county-not-done sentence, which would be false here.
+            ? ("Not named by the county. This app reads " +
+               (result.county != null ? String(result.county) : "this county") +
+               "'s own board page every week and names its other commissioners " +
+               "from it" + (result.seats != null
+                 ? " — " + String(result.seats) + " seats in all" : "") +
+               ", but the county's own entry for this district names no person, so " +
+               "this app does not name one either. The board page linked below is " +
+               "the place to ask.")
+            : ("Not named here yet. Michigan publishes these districts with the " +
+               "November 2024 election winner attached, but that list is not " +
+               "maintained — it still names commissioners who have since died, " +
+               "resigned or been replaced — so this app does not repeat it. This " +
+               "app is naming commissioners county by county from each county's " +
+               "own board page; this county is not done. Your county's own board " +
+               "page is the current source.")
         });
       }
       wrap.appendChild(renderFieldStack(rows));
@@ -11052,6 +11111,17 @@ function initMichiganExplorer() {
     pinnedParentId = (pinnedParentId === id) ? null : id;
     refreshAllPinButtons();
     refreshRelationshipOutlines();
+    // The pin is part of the shared view, so pinning and unpinning both move
+    // the permalink (see syncUrlHash). This call also carries the RESTORE
+    // path, which is easy to miss: applyStateFromHash selects the point
+    // before it reads `pin=`, and that selection's own syncUrlHash rewrites
+    // the hash while pinnedParentId is still null, so the incoming pin is
+    // gone by the time the restore runs. Without this line a shared link
+    // restores the pin on screen and hands the next reader a pin-less URL.
+    // The other path that clears the pin — toggling the parent layer OFF —
+    // needs no call here: onLayerToggled clears pinnedParentId directly and
+    // its own change handler runs syncUrlHash immediately afterwards.
+    syncUrlHash();
   }
 
   // Update every card's pin button to reflect the current pinned layer.

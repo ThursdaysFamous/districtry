@@ -1161,8 +1161,13 @@
         "file": "christian-county-outline.json",
         "min_features": 1,
         "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Gap-location outline for Christian County — NOT a dispatched county. The pass-7 sweep measured its board geometry as blocked/partial; this outline exists solely so its recorded gap attaches to its ground in the data-gaps panel (scripts/build_county_outline.py). Referenced by slug-built URL, so the validator's literal-reference check skips it."
+        "note": "Christian County coverage outline (scripts/build_county_outline.py) — gates the county's county-board dispatch entry. It shipped as a gap-location outline from the pass-7 sweep until 2026-09-15, referenced only by slug-built URL; the county's own coverage function now names it literally."
+      },
+      {
+        "file": "christian-county-board-districts.json",
+        "min_features": 4,
+        "max_features": 4,
+        "note": "Christian County's four County Board districts, sixteen members at four per district on staggered terms (the certified 2022 General ran a 4-year and a 2-year contest in every district). THE ONLY DISTRICTED BOARD IN THE INSTANCE THAT NAMES NOBODY: the county's board page listed its Chairman and Vice Chairman and no members when it was last readable, and christiancountyil.gov has sat behind a Cloudflare managed challenge since 2026-09-15 \u2014 an access control, not worked around. The geometry is a dissolve of the THIRTY Census 2020 voting districts, which is the fabric the county's own 2021 County Board District and Precinct Map was drawn on; the county has since re-precincted to 29, so the Jasper test fails and NO precinct layer ships. The composition is gated on reproducing all four district populations that map publishes (8,918 / 8,210 / 8,441 / 8,463 of 34,032) and is independently witnessed by three certified elections \u2014 the 2022 and 2024 Generals and the 2026 General Primary \u2014 which partition the county's 29 current precincts into the same four districts with none in two of them. Bounds are an EQUALITY because four is the whole board."
       },
       {
         "file": "clark-county-board-districts.json",
@@ -3256,7 +3261,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-il-shell-v32",
+    "cache_name": "districtry-il-shell-v33",
     "shell_urls": [
       "./",
       "./sources.html",
