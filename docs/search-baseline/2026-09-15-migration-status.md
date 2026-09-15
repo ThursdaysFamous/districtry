@@ -390,7 +390,48 @@ same way the page does.
 The third example in the audit's finding, overberg.co's "4 places live", is on a
 site this repository does not build.
 
+### 6. `/about.html` — done 2026-09-15
+
+`/about.html`, `/methodology` and `/corrections` all returned 404, on a domain
+whose answers compete in search results with the county and state pages they are
+drawn from. A reader deciding whether to trust a name had nowhere on this site to
+learn who publishes it, how often it is re-read, or what happens when it is
+wrong; the footers pointed at overberg.co/why/, a different site about a
+different thing.
+
+**It is generated, and that is the point.** An about page is where a project
+states its size, and a stated size is the claim that goes stale first — "six
+apps", "91 counties", "2,711 officeholders" have each moved inside a fortnight in
+this repo's history. So it carries no number the generator did not read from a
+shipped file on the run that wrote it: the fleet and each instance's scope from
+`metros.json`, layer counts and verified dates from each worksheet, 183 county
+pages and 2,869 seats from `build_county_pages.py`'s own adapters, 1,248 tabled
+names from `build_officeholder_tables.py`, 145 recorded gaps from the shipped
+`coverage-gaps.json` files, and 127 scheduled jobs from the workflow directory
+GitHub actually reads. `--check` fails when the tree moves under it.
+
+**The root pages now share one shell.** `/about.html` needed the same head, the
+same 350 lines of CSS, the same masthead and the same footer as `/privacy.html`,
+and the choice was between a second copy and one function. A second copy of that
+is how the fleet came to carry four hand-kept palettes. `render_page()` in
+`build_privacy_page.py` takes the four things a page owns — masthead title, the
+line under it, the comment naming its generator, and its `<main>` — and the
+privacy page comes out byte-identical, which its own `--check` proves.
+
+Three things the build found:
+
+- `recorded_gaps()` looked for a `gaps` key, found none, and reported **0** for a
+  tree carrying 145. A derived number quietly derived from nothing is the exact
+  failure this page exists to avoid, so it fails now rather than printing zero.
+- `page_consistency_test.mjs` requires every page in the sitemap to link the
+  privacy page, and the shared shell carries no such link — `privacy.html` is
+  exempt from its own rule, so the shell never needed one. This page is the
+  shell's first other user.
+- The 183 county pages went stale the moment the About link was added to the
+  shared footer byline, and `build_county_pages.py --check` said so. That is the
+  one-copy byline working.
+
 ### Still open in phase 2
 
-- **`/about.html`** and county-page uniqueness above 60%.
+- County-page uniqueness above 60%.
 - **Split and minify the map script; load GA only where it is needed.**

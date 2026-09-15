@@ -231,6 +231,17 @@ jobs:
       - name: Privacy page matches what the apps actually do
         run: python3 scripts/build_privacy_page.py --check
 
+      # /about.html states this project's own size — how many places it answers
+      # in, how many officeholders it names, how many gaps it has recorded — and
+      # a stated size is the claim that goes stale first: every one of those
+      # numbers has moved inside a fortnight in this repo's history. So the page
+      # carries no number the generator did not read from a shipped file on the
+      # run that wrote it, and this fails when the tree moves under it. It
+      # shares the root pages' shell with the privacy page, so it also fails if
+      # that shell is edited for one page and not the other.
+      - name: About page matches the tree it describes
+        run: python3 scripts/build_about_page.py --check
+
       # The deployment-history pages (opt-in per instance): the stat tiles are
       # MEASURED from the shipped data files, so any change that moves a number
       # regenerates the page or fails here — a history page that has drifted

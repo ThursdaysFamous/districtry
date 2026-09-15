@@ -10,6 +10,7 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 - [Privacy](https://districtry.com/privacy.html)
 - [Sponsorship](https://districtry.com/sponsorship.html)
 - [Traffic report](https://districtry.com/traffic.html)
+- [About districtry](https://districtry.com/about.html)
 
 ## Illinois
 
