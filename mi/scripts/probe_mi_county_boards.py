@@ -147,16 +147,26 @@ def _forms(name):
     ab = flat[:3]
     ini = "".join(w[0] for w in words) if len(words) > 1 else None
     spec = [
-        (flat,              (".org", ".gov", ".mi.us")),
-        (flat + "county",   (".org", ".gov", ".com", ".net", ".us")),
-        (flat + "countymi", (".gov", ".org", ".com")),
-        (flat + "co",       (".org", ".gov")),
-        ("co" + flat,       (".org", ".gov", ".mi.us", ".com")),
-        ("mi" + flat,       (".org", ".gov", ".com")),
-        ("boc" + flat,      (".org", ".com")),
-        (ab + "gov",        (".com", ".org", ".gov")),
-        (ab + "county",     (".gov", ".org", ".com")),
-        (ab + "countymi",   (".gov",)),
+        (flat,               (".org", ".gov", ".mi.us")),
+        (flat + "county",    (".org", ".gov", ".com", ".net", ".us")),
+        (flat + "countymi",  (".gov", ".org", ".com")),
+        # HYPHENATED AND SHORT-SUFFIX FORMS. The first sweep recorded Clinton
+        # as `no-board-page`; its real site is clinton-county.org and its board
+        # page is /413/Board-of-Commissioners with all 7 districts. The
+        # generator simply had no hyphenated form, so the county was written
+        # down as publishing nothing when it publishes a full board -- the
+        # exact failure this file's docstring warns `no-host` can be. Measured
+        # 2026-09-15 by re-probing the 23 counties that did not yield: 14 had a
+        # form the generator never tried.
+        (flat + "-county",   (".org", ".gov", ".com", ".net", ".us")),
+        ("county-of-" + flat, (".org", ".com")),
+        (flat + "co",        (".org", ".gov", ".com", ".net", ".us")),
+        ("co" + flat,        (".org", ".gov", ".mi.us", ".com")),
+        ("mi" + flat,        (".org", ".gov", ".com")),
+        ("boc" + flat,       (".org", ".com")),
+        (ab + "gov",         (".com", ".org", ".gov")),
+        (ab + "county",      (".gov", ".org", ".com")),
+        (ab + "countymi",    (".gov",)),
     ]
     if ini:
         spec += [(ini + "county", (".gov", ".org")), (ini + "countymi", (".gov", ".org")),
