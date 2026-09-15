@@ -7783,13 +7783,15 @@ counter-example cost nothing.
 
 ### The frontier, classified by board form (2026-08-21)
 
-> **UPDATED 2026-09-04 — SEVENTEEN OF THESE TWENTY-EIGHT HAVE SHIPPED; ELEVEN
+> **UPDATED 2026-09-15 — NINETEEN OF THESE TWENTY-EIGHT HAVE SHIPPED; NINE
 > REMAIN.** Everything below is the 2026-08-21 snapshot and is kept as one, but
 > it opens on "28 remaining unserved counties" and its per-row *Reachable?*
 > column has been overtaken row by row, so read as a queue it is now mostly a
 > completion log. **`docs/COUNTY_STATUS.md` is the authority on who is left**
-> (generated; `--check` in CI): Bureau, Champaign, Christian, Fayette, Ford,
-> Henderson, Jasper, Lawrence, Marion, Piatt, Pope. Eight of the ten at-large
+> (generated; `--check` in CI), and a list restated here goes stale the next
+> time a county ships — as this one did, still naming Christian and Henderson
+> eleven days and one day after each joined. As of 2026-09-15: Bureau,
+> Champaign, Fayette, Ford, Jasper, Lawrence, Marion, Piatt, Pope. Eight of the ten at-large
 > rows shipped (all but Henderson and Pope) and nine of the eighteen districted
 > ones (Clay, Cumberland, Douglas, Hancock, Jackson, Knox, Union, Vermilion,
 > Wayne), several of them by routes this table's "blocked at the website" column
