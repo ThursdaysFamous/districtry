@@ -1117,6 +1117,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 3509583 bytes",
    "callers": {
+    "scripts/chicago_ward_scraper.py": "self",
     "scripts/validate_sources.py": "both"
    }
   },
@@ -6556,5 +6557,5 @@
    }
   }
  },
- "callers_refreshed": "2026-09-13"
+ "callers_refreshed": "2026-09-15"
 }

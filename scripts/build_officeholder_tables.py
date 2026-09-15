@@ -51,14 +51,19 @@ END = "<!-- ==== GENERATED:END %s ==== -->" % REGION
 # from the roster, the date from the instance's worksheet, the district count
 # from the roster itself.
 TABLES = [
+    dict(tag="il", page="ward.html",
+         roster="data/source/ward-members.json", worksheet="metro-worksheet.json",
+         seat="Ward", holder="Alderperson", office_label="Ward office",
+         body="the Chicago City Council",
+         heading="Who represents each Chicago ward"),
     dict(tag="ny", page="council-district.html",
-         roster="council-members.json", worksheet="ny/metro-worksheet.json",
-         seat="District", holder="Council Member",
+         roster="data/app/council-members.json", worksheet="ny/metro-worksheet.json",
+         seat="District", holder="Council Member", office_label="District office",
          body="the New York City Council",
          heading="Who represents each Council district"),
     dict(tag="ca", page="supervisor-district.html",
-         roster="sf-supervisor-members.json", worksheet="ca/metro-worksheet.json",
-         seat="District", holder="Supervisor",
+         roster="data/app/sf-supervisor-members.json", worksheet="ca/metro-worksheet.json",
+         seat="District", holder="Supervisor", office_label="District office",
          body="the San Francisco Board of Supervisors",
          heading="Who represents each supervisor district"),
 ]
@@ -66,17 +71,12 @@ TABLES = [
 # A seat this cannot table yet, with the reason and the date, in the shape
 # ACCEPTED_DROPS and EXPECTED_UNREACHABLE already use: re-audited every run, so
 # an entry that stops being true FAILS rather than going quiet.
-NOT_YET = [
-    dict(tag="il", page="ward.html", roster="ward-members.json",
-         date="2026-09-15",
-         reason="Chicago's 50 alderpeople are not a shipped roster: il/index.html "
-                "fetches Socrata htai-wnw4 live on first toggle of the ward layer, "
-                "so there is no data/app file to read. The dataset does carry all "
-                "50 with a name, ward office address, phone, e-mail and website, "
-                "so the work is a roster pipeline (scraper, builder, count guard, "
-                "weekly workflow opening a PR) plus the decision of whether the "
-                "card keeps reading Socrata live beside a shipped snapshot"),
-]
+NOT_YET = []
+# EMPTY, which is a measurement rather than an omission. It carried one entry
+# from 2026-09-15 — Chicago's 50 alderpeople, whose roster was a live Socrata
+# call and not a file — and scripts/chicago_ward_scraper.py closed it the same
+# day. Entries here are re-audited on every run: one whose roster has since
+# appeared FAILS rather than going quiet, which is what retired that one.
 
 # The region goes immediately before this section, on every page that has one.
 ANCHOR = "  <section>\n    <h2>Related lookups</h2>"
@@ -85,6 +85,15 @@ ANCHOR = "  <section>\n    <h2>Related lookups</h2>"
 def fail(msg):
     print("build-officeholder-tables: FAIL — %s" % msg, file=sys.stderr)
     sys.exit(1)
+
+
+def roster_path(entry):
+    """<tag>/<roster>. The path is STATED per entry rather than assembled from
+    data/app, because Chicago's is not in data/app: il/index.html reads the ward
+    roster live from Socrata, so a file the app never fetches would fail
+    validate_index.py's rule that every data/app file is referenced. It sits in
+    il/data/source beside the other build-time inputs instead."""
+    return os.path.join(entry["tag"], entry["roster"])
 
 
 def load(path):
@@ -98,7 +107,7 @@ def district_key(k):
 
 
 def render(entry):
-    roster = load(os.path.join(entry["tag"], "data", "app", entry["roster"]))
+    roster = load(roster_path(entry))
     worksheet = load(entry["worksheet"])
     verified = worksheet.get("verified_date")
     if not verified:
@@ -145,15 +154,30 @@ def render(entry):
     head = ["<th>%s</th>" % html.escape(entry["seat"]),
             "<th>%s</th>" % html.escape(entry["holder"])]
     if has_office:
-        head.append("<th>District office</th>")
+        head.append("<th>%s</th>" % html.escape(entry["office_label"]))
+
+    # WHETHER THE MAP READS THIS FILE IS DERIVED, NOT STATED, because it is the
+    # one sentence here that can be false. An instance whose roster is in
+    # data/app serves that file to its own card, so the card and this table are
+    # one source. Chicago's is not: il/index.html calls Socrata live, and this
+    # file is a weekly snapshot of the same dataset, so the two can differ for
+    # up to a week. Saying "the map reads the same roster" on that page would
+    # be a false claim about the product on the product.
+    app_reads = entry["roster"].startswith("data/app/")
+    if app_reads:
+        agreement = ("The map above reads the same roster, so a card and this table "
+                     "cannot disagree \u2014 but a table is a claim about a day, and "
+                     "this one names its day.")
+    else:
+        agreement = ("The map above reads the same source live rather than this file, "
+                     "so a card can be up to a week newer than this table \u2014 which "
+                     "is why the table names its day.")
 
     return """  <section>
     <h2>%(heading)s</h2>
     <p>All %(n)d seats on %(body)s, as this site had them on <strong>%(verified)s</strong>.
-      The map above reads the same roster, so a card and this table cannot disagree — but a
-      table is a claim about a day, and this one names its day. Where the roster does not name
-      a seat it says so rather than guessing. <a href="sources.html">Where these names come
-      from</a>.</p>
+      %(agreement)s Where the roster does not name a seat it says so rather than guessing.
+      <a href="sources.html">Where these names come from</a>.</p>
     <div class="flow-table-wrap">
     <table class="flow">
       <thead><tr>%(head)s</tr></thead>
@@ -170,6 +194,7 @@ def render(entry):
         "body": html.escape(entry["body"]),
         "verified": html.escape(verified),
         "head": "".join(head),
+        "agreement": agreement,
         "rows": "\n".join(rows),
     }
 
@@ -211,7 +236,7 @@ def verify_shipped(entry):
     rel = os.path.join(entry["tag"], entry["page"])
     with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as f:
         shipped = f.read()
-    roster = load(os.path.join(entry["tag"], "data", "app", entry["roster"]))
+    roster = load(roster_path(entry))
     missing = [k for k, rec in sorted(roster.items(), key=lambda kv: district_key(kv[0]))
                if isinstance(rec, dict) and rec.get("name")
                and html.escape(rec["name"]) not in shipped]
@@ -236,7 +261,7 @@ def check_workflows():
     the workflow and the two lines it is missing, before that ever happens.
     """
     for entry in TABLES:
-        roster = "%s/data/app/%s" % (entry["tag"], entry["roster"])
+        roster = roster_path(entry)
         page = "%s/%s" % (entry["tag"], entry["page"])
         for name in sorted(os.listdir(WORKFLOWS)):
             if not name.endswith((".yml", ".yaml")):

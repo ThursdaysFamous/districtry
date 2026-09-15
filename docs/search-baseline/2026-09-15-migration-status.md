@@ -140,15 +140,24 @@ months and nothing was missing except the table.
 The two weekly roster workflows now regenerate the page in the same run, and the gate FAILS
 a workflow that does not — otherwise the failure lands on the bot's own PR.
 
-**Chicago's 50 alderpeople are not tabled.** `il/index.html` fetches Socrata `htai-wnw4` live
-on first toggle of the ward layer, so there is no shipped roster to read. `NOT_YET` records
-that with its date and is re-audited every run. The dataset carries all 50 with a name, ward
-office address, phone, e-mail and website, so the work is a roster pipeline — scraper,
-builder, count guard, weekly workflow opening a PR — plus one decision: whether the card
-keeps reading Socrata live beside a shipped snapshot, or moves to the file.
+**Chicago's 50 alderpeople took a roster pipeline first**, built the same day.
+`il/index.html` fetches Socrata `htai-wnw4` live on first toggle, so there was no file for a
+page to read at all. `scripts/chicago_ward_scraper.py` + `build_chicago_ward_roster.py` make
+one weekly (`update-chicago-ward-roster.yml`, Tue 23:00 UTC, opening a PR), and
+`/il/ward.html` now names all 50 in its HTML — the page phase 0 asked Google to re-index, and
+Chicago wards are the site's largest search term.
 
-Given `/il/ward.html` is the page phase 0 asked Google to re-index and Chicago wards are the
-site's largest search term, this is the highest-value item left in phase 1.
+**The roster is in `il/data/source/`, not `il/data/app/`, and a gate is why.**
+`validate_index.py` requires every file in an instance's `data/app` to be referenced by its
+`index.html`, and this one is not: the card still calls Socrata. That gate is right, so the
+file sits with the other build-time inputs and is served to nobody. The day the card moves
+onto the file it moves to `data/app`, gains a worksheet entry and a network-first `sw.js`
+line, and the gate passes.
+
+The card staying live also decided a sentence on the page. "The map above reads the same
+roster" is true of NYC and SF, whose rosters the app serves, and false of Chicago, where the
+two can differ by up to a week. The generator reads the roster's own path and prints whichever
+sentence is true.
 
 ### 4. Verified dates and `dateModified` — measured, not built
 
@@ -181,7 +190,6 @@ gate — about 31 pages.
 
 ### Still open
 
-- **Chicago ward roster pipeline**, and the table that follows it. See item 3.
 - **`dateModified` on the guide pages** from each worksheet's `verified_date`. Small.
 - **`asOf` stamps on the county rosters**, and the dates on the 170 county pages that follow.
   Large: it reaches the builders behind 60 weekly workflows.

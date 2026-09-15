@@ -3661,6 +3661,11 @@
       "schedule": "Mon 12:00 UTC"
     },
     {
+      "file": "update-chicago-ward-roster.yml",
+      "purpose": "Chicago's 50 alderpeople, from the City's own Socrata dataset htai-wnw4, with each ward office's address, phone and e-mail. THE APP DOES NOT READ WHAT THIS WRITES: il/index.html calls that dataset live on first toggle of the ward layer, so the card is never a week behind the City. This job exists so the 50 names appear in the served bytes of il/ward.html \u2014 measured 2026-09-15, not one of them appeared in any page a crawler, an AI client or a reader with JavaScript off could read, which is the absence build_county_pages.py closed for 2,650 county seats and left open for the city. The roster therefore lands in il/data/source rather than data/app, where validate_index.py would rightly refuse a file the app never fetches, and the job regenerates the page in the same run because build_officeholder_tables.py --check fails a workflow that does not. One request, after robots.txt and the host's stated 1s crawl delay. The builder gates on EXACTLY 50 wards rather than a floor \u2014 Chicago elects one alderperson per ward and that number cannot move \u2014 with field floors of 45 e-mails, 45 phones and 45 offices under a measured 50 of each",
+      "schedule": "Tue 23:00 UTC"
+    },
+    {
       "file": "update-chicago-ssa-providers.yml",
       "purpose": "The SERVICE PROVIDER AGENCY of Chicago's Special Service Areas — the non-profit the city contracts with to run each corridor, with its office address, telephone and site. An SSA elects nobody, so this is the only people source the card has, and the city's boundary dataset carries none of it. The source is ONE HAND-MAINTAINED HTML PAGE reached through Business Assistance rather than the department's landing page, which is why this runs weekly and why the scraper enumerates its traps instead of trusting its shape — above all a PHANTOM BLOCK, where an expired area's notice bolds its replacement's name and a bold-keyed parser invents an empty provider for a live area. Two paced requests. All 58 areas have a provider; every area's Mayor-appointed commission stays recorded in gap chicago-ssa-service-providers",
       "schedule": "Tue 11:00 UTC"
