@@ -876,7 +876,35 @@ try {
       { label: "St. Clair 5", point: "42.88269,-82.55890", district: "5",
         name: "Paul Zeller", stale: "Robert Fielitz" },
       { label: "Calhoun 2", point: "42.32012,-85.16446", district: "2",
-        name: "Monique French", stale: "Derek King" }
+        name: "Monique French", stale: "Derek King" },
+      // TRANCHE 3 ADDS FOUR, EACH FOR A TRAP THAT PRODUCED A WRONG FIRST DRAFT.
+      //
+      // Eaton 12 is the empty-anchor trap: its <li> leads with an EMPTY anchor
+      // carrying the PREVIOUS member's slug (/334/Brian-Lautzenheiser before
+      // /334/Nicole-Christensen), and the same page id serves both, so nothing
+      // 404s to warn you. The `stale` name here is the predecessor a parse
+      // reading anchor[0] would have shipped.
+      //
+      // Grand Traverse 8 folds its role into the district field ("District 8,
+      // Board Chair") where the other eight read "District N" alone, so an
+      // anchored match drops it and the county silently ships 8 of 9.
+      //
+      // Lapeer 2 proves the Cloudflare e-mail decode: the address is in a
+      // data-cfemail attribute rather than a mailto, and the Brown County
+      // failure was seven rows in, seven rows out, every contact gone.
+      //
+      // Midland 2 carries its role in parentheses inside the name field
+      // ("Mark Bone (Chair)"), so the card must print the name without it.
+      { label: "Eaton 12", point: "42.53439,-84.81247", district: "12",
+        name: "Nicole Christensen", stale: "Brian Lautzenheiser" },
+      { label: "Grand Traverse 8", point: "44.58178,-85.60522", district: "8",
+        name: "Scott Sieffert", stale: "Penny Morris", role: "Board Chair" },
+      { label: "Lapeer 2", point: "43.23699,-83.20904", district: "2",
+        name: "Gary Howell", stale: "Scott McMahan", role: "Chairman",
+        contact: "810-245-4768", email: true },
+      { label: "Midland 2", point: "43.75351,-84.29375", district: "2",
+        name: "Mark Bone", stale: "Jeanette Snyder", role: "Chair",
+        contact: "989-832-6382", notName: "Mark Bone (Chair)" }
     ]) {
       const page = await booted(context, `${BASE}#point=${cc.point}&layers=county-commissioner`);
       const card = await cardText(page, "county-commissioner");
@@ -892,13 +920,26 @@ try {
         text.includes(cc.name), text.slice(0, 160));
       check(`${cc.label} does not name the boundary layer's 2024 winner`,
         !text.includes(cc.stale), text.slice(0, 160));
+      if (cc.role) {
+        check(`${cc.label} prints the role the county badges`,
+          text.includes(cc.role), text.slice(0, 200));
+      }
+      if (cc.notName) {
+        // The role must not ride along inside the person's name.
+        check(`${cc.label} does not print the role inside the name`,
+          !text.includes(cc.notName), text.slice(0, 200));
+      }
+      if (cc.email) {
+        check(`${cc.label} carries an e-mail the county obfuscates`,
+          /Email/.test(text), text.slice(0, 200));
+      }
       if (cc.contact) {
         // Compare digits, not the string: the contact renderer prints
         // telephone numbers with U+2011 non-breaking hyphens, so an ASCII
         // "231-286-7298" never matches what the card actually shows.
         const digits = (t) => t.replace(/[^0-9]/g, "");
         check(`${cc.label} carries the contact the county publishes`,
-          digits(text).includes(digits(cc.contact)) && /Email/.test(text),
+          digits(text).includes(digits(cc.contact)),
           text.slice(0, 200));
       }
       await page.close();
@@ -959,6 +1000,55 @@ try {
         `pill=${JSON.stringify(pill)} :: ${text.slice(0, 160)}`);
       check("Monroe District 6 prints the role and the party together",
         /Chairman/.test(text) && /Republican/.test(text), text.slice(0, 200));
+      await page.close();
+    }
+
+    // A SEAT WITHHELD BECAUSE THE COUNTY CONTRADICTS ITSELF IS A FOURTH STATE,
+    // and it has to read differently from a named district, from a row that
+    // names nobody, and from a county the roster has not reached. Lenawee
+    // District 5 is the case: its directory lists Jim Daly while the same
+    // county's News Flash of 10 September 2026 announces his death and says he
+    // represented District 5. The card must (a) still be District 5, (b) name
+    // nobody, (c) NOT name Daly, which is what reading the directory alone
+    // would do, (d) state the contradiction rather than the generic
+    // names-nobody sentence, and (e) not read as a county the roster has
+    // not reached, since the other eight districts are named.
+    {
+      const page = await booted(context,
+        `${BASE}#point=41.89741,-84.02485&layers=county-commissioner`);
+      const card = await cardText(page, "county-commissioner");
+      const pill = await page.evaluate(() => {
+        const el = document.getElementById("card-county-commissioner");
+        const p2 = el && el.parentElement ? el.parentElement.querySelector(".card-id-pill") : null;
+        return p2 ? p2.textContent.trim() : null;
+      });
+      const people = await page.evaluate(() => {
+        const el = document.getElementById("card-county-commissioner");
+        return el ? el.querySelectorAll(".card-person").length : -1;
+      });
+      const text = card.text || "";
+      check("Lenawee District 5 still resolves to its own district",
+        pill === "District 5", `pill=${JSON.stringify(pill)}`);
+      check("Lenawee District 5 names nobody",
+        people === 0, `personRows=${people} :: ${text.slice(0, 200)}`);
+      // The note NAMES Daly on purpose: a reader cannot check the county's own
+      // notice against its own directory without the name, and the sentence
+      // says he has died rather than presenting him as the sitting member. So
+      // the assertion is the one that matters — the shipped roster carries no
+      // name for this seat at all, which is what a card could otherwise read.
+      const rosterName = await page.evaluate(async () => {
+        const res = await fetch("data/app/mi-commissioner-members.json");
+        const all = await res.json();
+        const d = all["091"] && all["091"].districts;
+        return d && d["5"] ? (d["5"].name || null) : null;
+      });
+      check("the shipped roster carries no name for Lenawee District 5",
+        rosterName === null, `roster name=${JSON.stringify(rosterName)}`);
+      check("Lenawee District 5 states the contradiction, not the generic absence",
+        /News Flash of 10 September 2026/.test(text)
+          && !/carries no commissioner's name/.test(text), text.slice(0, 260));
+      check("Lenawee District 5 is not told the county is unreached",
+        !/this county is not done/.test(text), text.slice(0, 240));
       await page.close();
     }
 

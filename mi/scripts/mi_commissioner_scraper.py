@@ -32,28 +32,31 @@ the drift stays visible rather than being quietly resolved.
 
 WHAT A TRANCHE IS
 ------------------
-Michigan has 83 counties and no statewide roster. This is the first tranche:
-the counties whose own board page yields a district-keyed roster to the client
-this scraper sends. Every county tried in tranche 1 is recorded in PROBES
-below, whether it yielded or not — host, robots reading, what it answered, the
-date — so the next tranche starts from measurements instead of guesses. The
-twelve tried are Michigan's twelve most populous, 67.8% of the state by the
-district layer's own 2020 populations.
+Michigan has 83 counties and no statewide roster, so the names arrive a
+TRANCHE at a time: the counties whose own board page yields a district-keyed
+roster to the client this scraper sends, taken in order of population among
+those not yet tried. Sixteen counties yield today across three tranches, and
+eight more are recorded in PROBES below as tried and not yielded — host,
+robots reading, what it answered, the date — so the next tranche starts from
+measurements instead of guesses, and a county that changes its file re-enters
+by itself on the weekly run.
 
 THE CLIENT, AND WHAT IT ASKS FIRST
 -----------------------------------
 Every host's robots.txt is read through scripts/robots_policy.py (via this
 instance's robots_gate shim) with UA_ROSTER_BOT BEFORE its first page fetch —
-the six county sites AND the state service the comparison reads, which is a
-seventh host — and a stated Crawl-delay is honoured per host by HostPacer,
-with what it honoured printed at the end of every run. The county pages take
+every county site AND the state service the comparison reads, which is one
+more host — and a stated Crawl-delay is honoured PER HOST by HostPacer, with
+what it honoured printed at the end of every run. Midland states Crawl-delay:
+15 and is the first county here to state one; pacing per host rather than
+globally is what keeps the other fifteen at full speed. The county pages take
 the STRICT reading of a 401/403 on robots.txt (`refused_is_refusal=True`,
 the DuPage and Logan pattern): on a website that status is a firewall refusing
 this client, where on an ArcGIS service it is the RFC's allow, so the state
 service keeps the default.
 
-No county here needs a browser user-agent: all six serve this token a full
-page. A county that refuses is skipped with its reason printed and its page
+No county here needs a browser user-agent: every one of the sixteen serves
+this token a full page. A county that refuses is skipped with its reason printed and its page
 never requested; it stays in PROBES so the weekly run re-asks and a county
 that changes its file re-enters by itself.
 
@@ -457,6 +460,225 @@ def parse_calhoun(page):
 
 # ------------------------------------------------------------- the tranche ---
 
+
+# ------------------------------------------------------ tranche 3 parsers ---
+
+def parse_eaton(page):
+    """A hand-written <ul> in two editor widgets: `<li><a>Name</a>, District N</li>`,
+    fifteen items across the two lists. THREE of the county's own defects are in
+    it, and each one produced a confidently wrong first draft.
+
+    THE NAME IS THE LAST NON-EMPTY ANCHOR, NEVER THE FIRST. Districts 12 and 15
+    lead with an EMPTY anchor carrying the PREVIOUS member's slug —
+    `<a href="/334/Brian-Lautzenheiser"></a><a href=".../334/Nicole-Christensen
+    ---District-12">Nicole Christensen,</a>` — so reading anchor[0]'s href beside
+    anchor[-1]'s text pairs a current member with their predecessor's page. The
+    same page id serves both slugs, so nothing 404s to warn you.
+
+    THE DISTRICT FIELD CAN CARRY A ROLE after a dash ("District 9 - Vice Chair",
+    "District 13 - Chair"), so an anchored `District (\d+)$` match drops two of
+    fifteen.
+
+    AND THE COMMA CAN BE INSIDE THE ANCHOR ("<a>Jane M. Whitacre,</a> District
+    6"), so the name needs its trailing comma stripped rather than the split
+    being trusted.
+
+    District 13's own href reads `/337/HIDDEN-Jim-Mott`; the name is in the link
+    text and ships as the county prints it. No county e-mail or phone is
+    published on this page for any member.
+    """
+    out = {}
+    for li in re.findall(r"<li>(.*?)</li>", page, re.S):
+        if "District" not in li:
+            continue
+        flat = txt(li)
+        keyed = re.search(r",?\s*District\s+(\d+)\s*(?:[-\u2013]\s*(.+?))?\s*$", flat)
+        if not keyed:
+            continue
+        anchors = [a for a in (txt(x) for x in
+                               re.findall(r"<a\b[^>]*>(.*?)</a>", li, re.S)) if a]
+        name = (anchors[-1] if anchors else flat[:keyed.start()]).rstrip(",").strip()
+        if not name:
+            continue
+        rec = {"name": name}
+        role = (keyed.group(2) or "").strip()
+        if role:
+            rec["role"] = role
+        out[keyed.group(1)] = rec
+    return out
+
+
+def parse_lenawee(page):
+    """CivicPlus staff directory with the district in a THIRD place: `p-name` is
+    the name, `p-job-title` is the flat word "Commissioner" for all nine, and
+    the district is an `<h3>District N</h3>` inside the `p-note` body beside a
+    township list and a profession. Kalamazoo keys on job-title, Kent on the
+    widget heading, Monroe on job-title in parentheses; this one is the note.
+
+    TWO NON-MEMBERS SHARE THE WIDGET and are dropped by having no district in
+    their note: an h-card for the office itself (`p-name` "Commissioners", a
+    switchboard number) and the County Administrator.
+
+    DISTRICT 8's MAILTO IS THE COUNTY ADMINISTRATOR'S ADDRESS. The card's link
+    text reads "Email Comm Tillotson" while its href is
+    `county.administrator@lenawee.mi.us`, where the other eight all use
+    `comm.<surname>@`. That address is DROPPED rather than shipped under a
+    commissioner's name, and never rewritten to the address the pattern
+    suggests — inventing a working inbox for a named person is worse than
+    shipping none (the Douglas rule, where a typo'd domain was dropped).
+    """
+    out, dropped = {}, []
+    for li in re.findall(r'<li class="widgetItem h-card">(.*?)</li>', page, re.S):
+        nm = re.search(r'class="widgetTitle field p-name">\s*(.*?)\s*</h4>', li, re.S)
+        note = re.search(r'class="field p-note">(.*?)</div>', li, re.S)
+        if not nm:
+            continue
+        keyed = re.search(r"District\s+(\d+)", note.group(1)) if note else None
+        if not keyed:
+            continue
+        rec = {"name": txt(nm.group(1))}
+        email = re.search(r'mailto:([^"?]+)', li)
+        if email:
+            addr = email.group(1).strip()
+            if addr.lower().startswith("county.administrator@"):
+                dropped.append((keyed.group(1), addr))
+            else:
+                rec["email"] = addr
+        tel = re.search(r'href="tel:([0-9+\-() .]+)"', li)
+        if tel and phone(tel.group(1)):
+            rec["phone"] = phone(tel.group(1))
+        out[keyed.group(1)] = rec
+    for dist, addr in dropped:
+        print("  Lenawee District %s: dropped %s \u2014 the card labels it the "
+              "commissioner's and it is the County Administrator's" % (dist, addr))
+    return out
+
+
+def parse_grandtraverse(page):
+    """CivicPlus staff directory keyed on `p-job-title`, the Kalamazoo shape,
+    with an e-mail for all nine.
+
+    DISTRICT 8 FOLDS ITS ROLE INTO THE DISTRICT FIELD — "District 8, Board
+    Chair" where the other eight read "District N" alone — so an anchored match
+    silently ships eight of nine. The role is split off and kept rather than
+    discarded with the row.
+    """
+    out = {}
+    for li in re.findall(r'<li class="widgetItem h-card">(.*?)</li>', page, re.S):
+        nm = re.search(r'class="widgetTitle field p-name">\s*(.*?)\s*</h4>', li, re.S)
+        job = re.search(r'class="field p-job-title">(.*?)</div>', li, re.S)
+        if not (nm and job):
+            continue
+        keyed = re.match(r"District\s+(\d+)(?:\s*,\s*(.+))?$", txt(job.group(1)))
+        if not keyed:
+            continue
+        rec = {"name": txt(nm.group(1))}
+        role = (keyed.group(2) or "").strip()
+        if role:
+            rec["role"] = role
+        email = re.search(r'mailto:([^"?]+)', li)
+        if email:
+            rec["email"] = email.group(1).strip()
+        out[keyed.group(1)] = rec
+    return out
+
+
+def parse_lapeer(page):
+    """A Revize FAQ ACCORDION: each district is a collapsible whose header is
+    "District N" and whose body opens with the member's name, then "District N
+    Lapeer County Commissioner", a telephone, an e-mail and the townships.
+
+    THE E-MAILS ARE CLOUDFLARE-OBFUSCATED — `data-cfemail` rather than a
+    mailto, the Brown County trap that emptied seven addresses while every count
+    guard stayed satisfied — so they are decoded, and a run that finds the
+    markup and decodes nothing is a failure rather than a roster with no
+    contacts.
+
+    The role follows a comma in the name ("Gary Howell, Chairman").
+
+    THE HOST IS `lapeercountymi.gov` AND THAT IS NOT THE OBVIOUS ONE.
+    `lapeercountyweb.org` resolves, answers 200, and is a DIFFERENT
+    organisation whose site is a CATCH-ALL: measured 2026-09-15, its root, its
+    /government path and a deliberately nonexistent path all return the same
+    175,315 bytes with the same md5, so a 200 from it proves nothing and a
+    scraper pointed there would report "answers, no roster" forever. The
+    county's own e-mails are at a THIRD name, `@lapeercounty.org`, which serves
+    an empty 2 KB page.
+    """
+    out, markup, decoded = {}, 0, 0
+    for chunk in re.split(r'(?=<a class="faq-question-header")', page):
+        head = re.match(r'<a class="faq-question-header"[^>]*>\s*District\s+(\d+)\s*</a>',
+                        chunk)
+        if not head:
+            continue
+        dist = head.group(1)
+        body = strip_comments(chunk[head.end():])
+        flat = txt(re.sub(r"<script.*?</script>", " ", body, flags=re.S))
+        keyed = re.search(
+            r"([A-Z][A-Za-z.'\- ]{2,40}?)\s*(?:,\s*(Chairman|Chair|Vice[- ]Chair(?:man)?))?"
+            r"\s*District\s+%s\s+Lapeer County Commissioner" % dist, flat)
+        if not keyed:
+            continue
+        rec = {"name": re.sub(r"\s+", " ", keyed.group(1)).strip()}
+        role = (keyed.group(2) or "").strip()
+        if role:
+            rec["role"] = role
+        tel = re.search(r"\b(\d{3}-\d{3}-\d{4})\b", flat)
+        if tel and phone(tel.group(1)):
+            rec["phone"] = phone(tel.group(1))
+        cf = re.search(r'data-cfemail="([0-9a-f]+)"', body)
+        if cf:
+            markup += 1
+            addr = cf_decode(cf.group(1))
+            if addr and "@" in addr:
+                rec["email"] = addr
+                decoded += 1
+        out[dist] = rec
+    if markup and not decoded:
+        raise ValueError("Lapeer: %d data-cfemail present and none decoded \u2014 "
+                         "the obfuscation changed shape" % markup)
+    return out
+
+
+def parse_midland(page):
+    """The county's own CMS (`index.php?section=` paths; the roster is at
+    /boc-people). Each member reads "<Name>Commissioner, District N" followed
+    by a telephone and an Areas of Representation list.
+
+    THE ROLE IS IN PARENTHESES INSIDE THE NAME ("Mark Bone (Chair)"), and the
+    page's standing-committee block prints "Board of Commissioners, Chair"
+    BEFORE any member's name — the Franklin grid trap, where a role sits in the
+    column ahead of the row it belongs to — so the parse keys on each member's
+    own "Commissioner, District N" string and never on document order.
+
+    NON-BREAKING SPACES SIT INSIDE NAMES ("Jeanette\u00a0Snyder") and are
+    normalised by txt().
+
+    THIS HOST STATES `Crawl-delay: 15` and it is honoured per host by HostPacer
+    rather than globally, so the other four counties in this tranche keep full
+    speed.
+    """
+    out = {}
+    flat = re.sub(r"<script.*?</script>", " ", page, flags=re.S)
+    flat = re.sub(r"<[^>]+>", "|", flat)
+    flat = _html.unescape(re.sub(r"(\s*\|\s*)+", "|", flat)).replace(u"\u00a0", " ")
+    for m in re.finditer(r"\|([A-Z][^|]{2,40}?)\|?Commissioner,\s*District\s+(\d+)"
+                         r"\|?\s*(\(\d{3}\)\s*\d{3}-\d{4})?", flat):
+        name = re.sub(r"\s+", " ", m.group(1)).strip()
+        rec = {}
+        role = re.match(r"(.*?)\s*\((Chair|Chairman|Vice[- ]Chair(?:man)?)\)\s*$",
+                        name, re.I)
+        if role:
+            name, rec["role"] = role.group(1).strip(), role.group(2)
+        rec["name"] = name
+        if m.group(3):
+            tel = phone(m.group(3))
+            if tel:
+                rec["phone"] = tel
+        out[m.group(2)] = rec
+    return out
+
+
 COUNTIES = (
     {"fips": "077", "county": "Kalamazoo", "seats": 9, "parse": parse_kalamazoo,
      "url": "https://www.kalcounty.gov/479/Board-of-Commissioners"},
@@ -481,6 +703,17 @@ COUNTIES = (
      "url": "https://www.co.monroe.mi.us/374/Board-of-Commissioners"},
     {"fips": "147", "county": "St. Clair", "seats": 7, "parse": parse_stclair,
      "url": "https://www.stclaircounty.org/SubHome/Index/620"},
+    # --- tranche 3, 2026-09-15: the next five by population that yielded ---
+    {"fips": "045", "county": "Eaton", "seats": 15, "parse": parse_eaton,
+     "url": "https://www.eatoncounty.org/295/Board-of-Commissioners"},
+    {"fips": "055", "county": "Grand Traverse", "seats": 9, "parse": parse_grandtraverse,
+     "url": "https://www.gtcountymi.gov/184/Board-of-Commissioners"},
+    {"fips": "087", "county": "Lapeer", "seats": 7, "parse": parse_lapeer,
+     "url": "https://lapeercountymi.gov/government/board_of_commissioners/index.php"},
+    {"fips": "091", "county": "Lenawee", "seats": 9, "parse": parse_lenawee,
+     "url": "https://www.lenawee.mi.us/896/Commissioners"},
+    {"fips": "111", "county": "Midland", "seats": 7, "parse": parse_midland,
+     "url": "https://midlandcountymi.gov/boc-people"},
 )
 
 # Every county tried in tranche 1, measured 2026-09-13 from this project's
@@ -532,6 +765,25 @@ PROBES = (
      "answered": "403 on / as well, to both client strings, on both hosts — so the "
                  "stack is refused rather than the token and a browser string buys "
                  "nothing. The Oakland shape exactly",
+     "date": "2026-09-15"},
+    {"county": "Bay", "fips": "017", "seats": 7,
+     "host": "www.baycountymi.gov (and co.bay.mi.us)",
+     "robots": "served — no group binds this client, nothing disallowed. "
+               "co.bay.mi.us resolves to a DIFFERENT server whose robots.txt is "
+               "UNREACHABLE, which is disallow-all, so it was never fetched",
+     "answered": "200, and the roster is not keyable. The board's own Members "
+                 "page names NOBODY — prose about the Public Act 139 model, "
+                 "an address and a Board Advisor description — while the board "
+                 "index names only three OFFICERS with no district for any of "
+                 "them (Chairman Tim Banaszak, Vice Chair Vaughn Begick, "
+                 "Sergeant at Arms Kathy Niemiec) on a seven-seat board. The "
+                 "districts page is seven map links; the 1.4 MB meeting-results "
+                 "page names none of the three and carries no roll call. The "
+                 "boc. and commissioners. subdomains are a DNS WILDCARD — a "
+                 "name that cannot exist resolves identically — and the "
+                 "wildcard's own robots.txt disallows. Three names with no "
+                 "district key cannot go on a district card (the Christian "
+                 "County shape)",
      "date": "2026-09-15"},
     {"county": "Washtenaw", "fips": "161", "seats": 9,
      "host": "www.washtenaw.org",
