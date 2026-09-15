@@ -376,7 +376,7 @@
     </div>
   </header>
 
-  <p class="caveat"><strong>A note on the window and the paths:</strong> this is a <strong>rolling two months</strong> &mdash; <span data-stat="range">July 14 – September 13, 2026</span>, <span data-stat="days">62</span> days ending on the last full day. It used to run from launch on 10&nbsp;July and grow without bound. Tracking began that day, so nothing before it exists; everything before this window does, and is simply not drawn here. Until <strong>August 24</strong> the Illinois app was served from <code>/</code> at chidistricts.com; that day it moved under <code>/il/</code> and <code>/</code> became the fleet landing page. The series spans both, so <code>/</code> counts as Illinois on every day before the cutover and as the landing page on the cutover day and after &mdash; a whole day at a time, which is the granularity the dashboard publishes per path. Counts are GoatCounter "visits": cookieless, identity-free. The <strong><span data-stat="total">3,136</span></strong> figure is GoatCounter's own total for the window, and the browser, system and location bars below sum to it exactly; the daily columns sum to <span data-stat="dailySum">3,075</span>, <span data-stat="dailyGap">61</span> short. Both count the same period. This page does not know what that difference is, so it prints both rather than deriving one from the other.</p>
+  <p class="caveat"><strong>A note on the window and the paths:</strong> this is a <strong>rolling two months</strong> &mdash; <span data-stat="range">July 14 – September 13, 2026</span>, <span data-stat="days">62</span> days ending on the last full day. It used to run from launch on 10&nbsp;July and grow without bound. Tracking began that day, so nothing before it exists; everything before this window does, and is simply not drawn here. Until <strong>August 24</strong> the Illinois app was served from <code>/</code> at chidistricts.com; that day it moved under <code>/il/</code> and <code>/</code> became the fleet landing page. The series spans both, so <code>/</code> counts as Illinois on every day before the cutover and as the landing page on the cutover day and after &mdash; a whole day at a time, which is the granularity the dashboard publishes per path. Counts are GoatCounter "visits": cookieless, identity-free. The <strong><span data-stat="total">3,136</span></strong> figure is GoatCounter's own total for the window, and the browser, system and location bars below sum to it exactly; the daily columns sum to <span data-stat="dailySum">3,075</span>, <span data-stat="dailyGap">61</span> apart. Both count the same period, and which one is larger changes from day to day, so it is not a fixed offset. This page does not know what the difference is, so it prints both rather than deriving one from the other.</p>
 
   <div class="tiles">
     <div class="tile">
@@ -403,7 +403,7 @@
 
   <section class="card">
     <h2>Daily activity</h2>
-    <p class="sub">Every visitor who lands on the site (blue) plus every feature they use — point selections, searches, layer toggles (orange). <span data-stat="peakLabel">August 24</span> is the busiest day in this window, at <span data-stat="peak">133</span>.<span data-day="Aug 25"> <strong>August 25 is not a slump.</strong> Google Safe Browsing flagged the day-old districtry.com domain that morning, and Chrome shows its warning <em>before</em> the page loads, so blocked visits never reached the counter at all. The flag was a false positive and has since been cleared; the day is under-counted by an unknown amount and cannot be reconstructed.</span> The four days to <span data-stat="lastDay">August 30</span> ran <span data-stat="recentDays">93, 66, 72 and 30</span>, against a pre-rebrand average of <span data-stat="preAvg">39</span>. <span data-stat="bandNote">The last of those is a Sunday, the quietest weekday here and the first day since the rebrand to fall below that average.</span> The two Illinois SEO pages the narrative tracks are at <span data-stat="seoPolice">18</span> visits (<code>/il/police-district.html</code>) and <span data-stat="seoSchool">14</span> (<code>/il/school-board.html</code>, the third most-visited path on the site) — and <span data-stat="bestSinceDay">August 27</span> remains the strongest day since the rebrand at <span data-stat="bestSince">93</span>.</p>
+    <p class="sub">Every visitor who lands on the site (blue) plus every feature they use — point selections, searches, layer toggles (orange). <span data-stat="peakLabel">August 24</span> is the busiest day in this window, at <span data-stat="peak">133</span>.<span data-day="Aug 25"> <strong>August 25 is not a slump.</strong> Google Safe Browsing flagged the day-old districtry.com domain that morning, and Chrome shows its warning <em>before</em> the page loads, so blocked visits never reached the counter at all. The flag was a false positive and has since been cleared; the day is under-counted by an unknown amount and cannot be reconstructed.</span> The four days to <span data-stat="lastDay">August 30</span> ran <span data-stat="recentDays">93, 66, 72 and 30</span>, against a pre-rebrand average of <span data-stat="preAvg">39</span>. <span data-stat="bandNote">The last of those is a Sunday, the quietest weekday here and the first day since the rebrand to fall below that average.</span> The two Illinois SEO pages the narrative tracks are at <span data-stat="seoPolice">18</span> visits (<code>/il/police-district.html</code>) and <span data-stat="seoSchool">14</span> (<code>/il/school-board.html</code>, the third most-visited path on the site)<span data-stat="sinceRebrandNote"></span>.</p>
     <div class="legend">
       <span class="key"><span class="swatch" style="background:var(--s1)"></span>Page visits</span>
       <span class="key"><span class="swatch" style="background:var(--s2)"></span>Feature interactions</span>
@@ -440,11 +440,13 @@
     <p class="note">This is the one thing the visit counter cannot see: Google strips the query
       from the referrer, so every one of these arrives in the chart above as an anonymous
       &ldquo;Google&rdquo;. <strong>The pattern is high visibility and low clickthrough</strong> —
-      overall <span data-stat="searchCtr">2.31%</span>, and the single most-seen search,
-      <span data-stat="searchTopQuery">find my district</span>, converts at
-      <span data-stat="searchTopCtr">0.7%</span> from an average position of
-      <span data-stat="searchTopPos">7.4</span>. A position of seven is not a ranking problem;
-      being seen and not chosen is a title-and-description one.
+      overall <span data-stat="searchCtr">2.31%</span>. The single most-seen search,
+      <span data-stat="searchTopQuery">find my district</span>, sits at an average position of
+      <span data-stat="searchTopPos">7.4</span> and converts at
+      <span data-stat="searchTopCtr">0.7%</span> — so the searches people see most
+      are not the ones going least answered. A position of seven is not a ranking
+      problem, so what is left to move is the title and description a searcher reads
+      before deciding.
       <span class="muted-note">Two caveats, both structural. Counts combine
       <span data-stat="searchProps">2</span> Search Console properties, because the site renamed
       mid-window and the old domain still appears in results and redirects across — those are two
@@ -471,12 +473,13 @@
       <span data-stat="bingTopPos">7.0</span>. <strong>The searches differ from Google's
       in kind</strong> — Bing's are ward-and-alderman questions about Chicago where Google's
       are the generic &ldquo;what district am I in&rdquo;.
-      <span class="muted-note">Of the
-      <span data-stat="bingProps">2</span> verified properties,
-      <span data-stat="bingSilent">one</span> returns no rows at all: districtry.com is
-      verified and has reported nothing since the rename, while chidistricts.com carries
-      the whole figure above. That is a fact about Bing's index, not about the site,
-      and it is printed rather than hidden behind a single combined number.</span></p>
+      <span class="muted-note">The figures combine
+      <span data-stat="bingProps">2</span> verified properties and the newer one has only
+      just started: <span data-stat="bingNewHost">districtry.com</span> first appeared in
+      these results on <span data-stat="bingNewFirst">September 13</span>, with
+      <span data-stat="bingNewImpressions">29</span> impressions against chidistricts.com's
+      <span data-stat="bingOldImpressions">2,979</span>. Bing is still indexing the rename,
+      which is why the old domain carries nearly the whole figure above.</span></p>
   </section>
 
   <section class="grid2">
@@ -592,13 +595,17 @@
 (function () {
   "use strict";
 
-  /* ---- data (GoatCounter, districtry.goatcounter.com, 2026-07-14 → 2026-09-13) ----
-     Read from data/goatcounter-traffic.json, which
-     .github/workflows/update-traffic-data.yml writes daily. The window is a
-     ROLLING TWO MONTHS ending on the last full day, so this page no longer
-     runs from launch and grows without bound. ---- */
+  /* ==== TRAFFIC-DATA:BEGIN ==== */
+  /* GENERATED by scripts/build_traffic_page.py from data/goatcounter-traffic.json,
+     data/search-performance.json and data/bing-search-performance.json, which
+     three daily workflows commit. Do not hand-edit: rerun the script. The
+     window is a ROLLING TWO MONTHS ending on the last full day — 2026-07-15 → 2026-09-14 —
+     so this page no longer runs from launch and grows without bound.
+
+     The PROSE around this block is not generated and can outlive its numbers.
+     Read the script's reconciliation output, then read the page. */
+
   var daily = [
-    ["Jul 14", 14, 25],
     ["Jul 15", 8, 20],
     ["Jul 16", 10, 8],
     ["Jul 17", 7, 7],
@@ -659,63 +666,61 @@
     ["Sep 10", 27, 44],
     ["Sep 11", 9, 5],
     ["Sep 12", 28, 18],
-    ["Sep 13", 33, 94]
+    ["Sep 13", 33, 94],
+    ["Sep 14", 40, 96]
   ];
 
-  /* Google Search Console, from data/search-performance.json, over the same
-     window. Both properties are summed: the site renamed mid-history and the
-     old domain still appears in results and redirects across, so those are
-     two different results for one search rather than one counted twice. */
-  var searchData = {"clicks":152,"impressions":6441,"queries":751,"top":[{"q":"find my district","clicks":2,"impressions":300,"position":7.4},{"q":"what district am i in","clicks":13,"impressions":285,"position":7.2},{"q":"my district","clicks":1,"impressions":129,"position":12.3},{"q":"find my district chicago","clicks":0,"impressions":125,"position":8.0},{"q":"what school district am i in","clicks":0,"impressions":80,"position":8.3},{"q":"district","clicks":0,"impressions":67,"position":10.9},{"q":"find my cps board member","clicks":0,"impressions":58,"position":5.0},{"q":"what is my district","clicks":0,"impressions":34,"position":8.6},{"q":"find my precinct","clicks":0,"impressions":32,"position":8.6},{"q":"chicago district map","clicks":0,"impressions":31,"position":16.4},{"q":"what chicago district am i in","clicks":0,"impressions":31,"position":9.8},{"q":"what district am i in chicago","clicks":0,"impressions":31,"position":12.9}],"properties":2,"reporting":2,"first":"2026-07-14","last":"2026-09-12"};
+  /* Google Search Console. Both properties are summed: the site renamed
+     mid-history and the old domain still appears in results and redirects
+     across, so those are two different results for one search rather than one
+     counted twice. */
+  var searchData = {"clicks":156,"impressions":6499,"queries":758,"top":[{"q":"what district am i in","clicks":14,"impressions":298,"position":7.1},{"q":"find my district","clicks":2,"impressions":293,"position":7.4},{"q":"my district","clicks":1,"impressions":132,"position":13.6},{"q":"find my district chicago","clicks":0,"impressions":127,"position":8.2},{"q":"what school district am i in","clicks":0,"impressions":80,"position":8.3},{"q":"district","clicks":0,"impressions":67,"position":10.9},{"q":"find my cps board member","clicks":0,"impressions":58,"position":5.0},{"q":"what is my district","clicks":0,"impressions":34,"position":8.6},{"q":"find my precinct","clicks":0,"impressions":32,"position":8.6},{"q":"which chicago school board district am i in?","clicks":0,"impressions":31,"position":4.8},{"q":"what chicago district am i in","clicks":0,"impressions":31,"position":9.8},{"q":"chicago district map","clicks":0,"impressions":30,"position":15.9}],"properties":2,"reporting":2,"newest":{"host":"districtry.com","first":"2026-08-23","firstLabel":"August 23","clicks":16,"impressions":1434},"first":"2026-07-15","last":"2026-09-13"};
 
-  /* Bing Webmaster Tools, from data/bing-search-performance.json, the same
-     window. `reporting` is how many of the verified properties returned any
-     rows at all, which is not the same as how many exist. */
-  var bingData = {"clicks":20,"impressions":2979,"queries":256,"top":[{"q":"district","clicks":0,"impressions":93,"position":7.0},{"q":"chicago ward map","clicks":0,"impressions":22,"position":8.0},{"q":"find my ward chicago","clicks":0,"impressions":19,"position":7.4},{"q":"ward look up","clicks":0,"impressions":18,"position":8.4},{"q":"find my ward","clicks":0,"impressions":17,"position":7.5},{"q":"find my district","clicks":0,"impressions":15,"position":8.4},{"q":"ward map chicago","clicks":0,"impressions":13,"position":7.0},{"q":"what ward am i in chicago","clicks":0,"impressions":12,"position":4.6},{"q":"find my alderman chicago","clicks":0,"impressions":11,"position":7.7},{"q":"district chicago","clicks":0,"impressions":10,"position":5.1},{"q":"ward locator chicago","clicks":0,"impressions":7,"position":9.0},{"q":"what district am i in","clicks":0,"impressions":7,"position":6.0}],"properties":2,"reporting":1,"first":"2026-07-15","last":"2026-09-12"};
+  /* Bing Webmaster Tools, same window. `reporting` is how many of the verified
+     properties returned any rows at all. */
+  var bingData = {"clicks":23,"impressions":3008,"queries":256,"top":[{"q":"district","clicks":0,"impressions":93,"position":7.0},{"q":"chicago ward map","clicks":0,"impressions":22,"position":8.0},{"q":"find my ward chicago","clicks":0,"impressions":19,"position":7.4},{"q":"ward look up","clicks":0,"impressions":18,"position":8.4},{"q":"find my ward","clicks":0,"impressions":17,"position":7.5},{"q":"find my district","clicks":0,"impressions":15,"position":8.4},{"q":"ward map chicago","clicks":0,"impressions":13,"position":7.0},{"q":"what ward am i in chicago","clicks":0,"impressions":12,"position":4.6},{"q":"find my alderman chicago","clicks":0,"impressions":11,"position":7.7},{"q":"district chicago","clicks":0,"impressions":10,"position":5.1},{"q":"ward locator chicago","clicks":0,"impressions":7,"position":9.0},{"q":"what district am i in","clicks":0,"impressions":7,"position":6.0}],"properties":2,"reporting":2,"newest":{"host":"districtry.com","first":"2026-09-13","firstLabel":"September 13","clicks":3,"impressions":29},"first":"2026-07-15","last":"2026-09-13"};
 
   var barData = {
     instances: [
-      ["Illinois", 849], ["Fleet landing", 235], ["Wisconsin", 61],
-      ["New York", 59], ["Iowa", 12], ["San Francisco", 7],
+      ["Illinois", 861], ["Fleet landing", 243], ["New York", 64],
+      ["Wisconsin", 61], ["Iowa", 13], ["San Francisco", 7],
       ["Michigan", 0]
     ],
     layers: [
-      ["Ward", 149], ["School board", 98], ["Congress", 82],
-      ["IL House", 76], ["IL Senate", 59], ["County board", 53],
-      ["Police district", 39], ["Ward precinct", 38], ["Police council", 36],
-      ["County", 34]
+      ["Ward", 146], ["School board", 103], ["Congress", 84],
+      ["IL House", 76], ["IL Senate", 61], ["County board", 57],
+      ["Police district", 38], ["Ward precinct", 37], ["County", 36],
+      ["school-district-unified", 35]
     ],
     refs: [
-      ["Direct / unknown", 1279], ["Google", 347], ["DuckDuckGo", 126],
-      ["LinkedIn", 125], ["Bluesky", 114], ["Bing", 103]
+      ["Direct / unknown", 1257], ["Google", 396], ["DuckDuckGo", 131],
+      ["LinkedIn", 125], ["Bluesky", 117], ["Bing", 98]
     ],
     systems: [
-      ["iOS", 1090], ["Android", 858], ["Windows", 700],
-      ["macOS", 437], ["Linux", 46], ["Chrome OS", 5]
+      ["iOS", 1087], ["Android", 851], ["Windows", 695],
+      ["macOS", 470], ["Linux", 45], ["Chrome OS", 5]
     ],
     browsers: [
-      ["Chrome", 1781], ["Safari", 1208], ["Firefox", 135],
-      ["Edge", 9], ["(unknown)", 2], ["Dalvik", 1]
+      ["Chrome", 1790], ["Safari", 1219], ["Firefox", 135],
+      ["Edge", 7], ["(unknown)", 2]
     ],
     actions: [
-      ["Point selects", 369], ["Address searches", 229], ["Geolocations", 73]
+      ["Point selects", 385], ["Address searches", 234], ["Geolocations", 76]
     ],
     geo: [
-      ["United States", 3062], ["Canada", 24], ["Denmark", 11],
-      ["France", 6], ["Germany", 5], ["United Kingdom", 4]
+      ["United States", 3081], ["Canada", 23], ["Denmark", 11],
+      ["France", 7], ["Germany", 5], ["United Kingdom", 4]
     ],
     campaigns: [
       ["2026-08", 68], ["districtry-launch", 53]
     ],
     /* geolocate-success events; the meter is geoSuccess / Geolocations */
-    geoSuccess: 48,
-    /* the two Illinois SEO pages the narrative tracks, so the sentence
-       cannot claim a figure the path widget has moved past */
-    seo: { police: 22, school: 73 },
-    /* Page visits no instance bar carries. The split reads the dashboard's
-       pages list, which caps at ten rows, so the long tail is in the pageview
-       total and in no bar. Printed rather than absorbed: a reader who adds the
-       bars up should find the difference stated. */
+    geoSuccess: 50,
+    /* the two Illinois SEO pages the narrative tracks, so the sentence cannot
+       claim a figure the path widget has moved past */
+    seo: { police: 22, school: 78 },
+    /* Page visits no instance bar carries: the dashboard's pages list caps at
+       ten rows, so the long tail is in the pageview total and in no bar. */
     instResidual: 9
   };
 
@@ -724,18 +729,16 @@
 
        exportDate — the day the dashboard was read.
        total      — GoatCounter's own js-total-utc for the window. The browser,
-                    system and location bars sum to it EXACTLY (3,136), and the
-                    daily columns sum to 3,075, 61 short. Both count the same
-                    period and this page does not know what the difference is,
-                    so both are printed and neither is derived from the other.
-                    An earlier note here explained it as deduplication across
-                    the period; that would make this figure SMALLER than the
-                    daily sum and it is larger, so the explanation was wrong.
-                    It is not replaced with another guess.
+                    system and location bars sum to it EXACTLY (3,153), and the
+                    daily columns sum to 3,172 — 19 apart, and the SIGN FLIPS day
+                    to day (61 the other way on 2026-09-14), which rules out a
+                    fixed offset. Both count the same period and this page does
+                    not know what the difference is, so both are printed and
+                    neither is derived from the other.
 
-     EVERYTHING ELSE is computed below from `daily` and `barData`, so a
-     refresh cannot leave a sentence disagreeing with a chart beside it. */
-  var META = { exportDate: "September 14, 2026", year: 2026, total: 3136 };
+     EVERYTHING ELSE is computed below from `daily` and `barData`. */
+  var META = { exportDate: "September 15, 2026", year: 2026, total: 3153 };
+  /* ==== TRAFFIC-DATA:END ==== */
 
   var fmt = function (n) { return n.toLocaleString("en-US"); };
 
@@ -842,8 +845,25 @@
     bingTopQuery: bing.topQuery,
     bingTopCtr: bing.topCtr,
     bingTopPos: bing.topPos,
+    /* districtry.com was verified on Bing and reported NOTHING until
+       2026-09-13, and this card said exactly that as a plain sentence. The day
+       it stopped being true nothing would have caught it, so the clause is
+       derived from what the file reports. */
     bingSilent: bingData
       ? words(bingData.properties - bingData.reporting) : "—",
+    bingNewHost: bingData && bingData.newest ? bingData.newest.host : "—",
+    bingNewFirst: bingData && bingData.newest ? bingData.newest.firstLabel : "—",
+    bingNewImpressions: bingData && bingData.newest
+      ? fmt(bingData.newest.impressions) : "—",
+    bingOldImpressions: bingData && bingData.newest
+      ? fmt(bingData.impressions - bingData.newest.impressions) : "—",
+    /* Says nothing when the busiest day IS the best since the rebrand, which
+       a rolling window eventually makes true. A sentence repeating the one
+       before it reads as a mistake. */
+    sinceRebrandNote: (bestSince[0] === peakDay[0]) ? "" :
+      (" \u2014 and " + longMonth(bestSince[0]) +
+       " remains the strongest day since the rebrand at " +
+       fmt(bestSince[1] + bestSince[2])),
     instResidual: fmt(barData.instResidual),
     /* The bar-count sentence was typed "Six bars: five apps" and went wrong the
        day Michigan shipped -- the same literal-next-to-a-measurement failure as
