@@ -136,8 +136,23 @@ jobs:
             --status-file card-status.txt
           echo "status=$(cat card-status.txt)" >> "$GITHUB_OUTPUT"
 
+      # The THIRD surface a publisher can break silently, and the only one this
+      # repository does not serve: the old domain. Three weeks after the rename
+      # chidistricts.com still earned 91% of the site's clicks, every one of
+      # them arriving through a 301 configured at the registrar. If that
+      # forwarding is reconfigured or the domain lapses, nothing here changes
+      # and no gate goes red. Same posture as the two above: report, never edit.
+      - name: Legacy domain still forwards, and is still registered
+        id: legacy
+        continue-on-error: true
+        run: |
+          python3 scripts/check_legacy_redirects.py \
+            --report legacy-report.md \
+            --status-file legacy-status.txt
+          echo "status=$(cat legacy-status.txt)" >> "$GITHUB_OUTPUT"
+
       - name: Open or update tracking issue
-        if: steps.validate.outputs.status != 'ok' || steps.cardlinks.outputs.status != 'ok'
+        if: steps.validate.outputs.status != 'ok' || steps.cardlinks.outputs.status != 'ok' || steps.legacy.outputs.status != 'ok'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -156,6 +171,9 @@ jobs:
             echo
             if [ -f card-link-report.md ]; then cat card-link-report.md; else
               echo "> \`validate_card_links.py\` produced no report this run — check the job log."; fi
+            echo
+            if [ -f legacy-report.md ]; then cat legacy-report.md; else
+              echo "> \`check_legacy_redirects.py\` produced no report this run — check the job log."; fi
           } > issue-body.md
 
           # Search NARROWS; the exact title comparison DECIDES. `gh issue list
