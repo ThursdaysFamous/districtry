@@ -70,20 +70,20 @@
     "Central Fire District": {
       "board": [
         {
-          "name": "CHRIS MEYERS",
+          "name": "chris meyers",
           "role": "Secretary"
         }
       ],
       "comptrollerCode": "090/040/06",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Tazewell",
       "heads": [
         {
-          "name": "PAUL ANGLIN",
+          "name": "paul anglin",
           "role": "C.E.O."
         },
         {
-          "name": "JOHN THARP",
+          "name": "john tharp",
           "role": "C.F.O."
         }
       ],
@@ -501,7 +501,7 @@
       "office": {}
     }
   },
-  "generated": "2026-09-10T17:08:46Z",
+  "generated": "2026-09-15T00:05:18Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
