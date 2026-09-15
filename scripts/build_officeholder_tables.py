@@ -38,6 +38,11 @@ import json
 import os
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from build_county_pages import party_name                      # noqa: E402
+from build_legislator_pages import INSTANCES as LEGISLATOR_INSTANCES  # noqa: E402
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 REGION = "officeholder-table"
@@ -50,27 +55,69 @@ END = "<!-- ==== GENERATED:END %s ==== -->" % REGION
 # states one entry per state. Everything else is read: the names and offices
 # from the roster, the date from the instance's worksheet, the district count
 # from the roster itself.
-TABLES = [
-    dict(tag="il", page="ward.html",
-         roster="data/source/ward-members.json", worksheet="metro-worksheet.json",
-         seat="Ward", holder="Alderperson", office_label="Ward office",
-         body="the Chicago City Council",
-         heading="Who represents each Chicago ward"),
-    dict(tag="ny", page="council-district.html",
-         roster="data/app/council-members.json", worksheet="ny/metro-worksheet.json",
-         seat="District", holder="Council Member", office_label="District office",
-         body="the New York City Council",
-         heading="Who represents each Council district"),
-    dict(tag="ca", page="supervisor-district.html",
-         roster="data/app/sf-supervisor-members.json", worksheet="ca/metro-worksheet.json",
-         seat="District", holder="Supervisor", office_label="District office",
-         body="the San Francisco Board of Supervisors",
-         heading="Who represents each supervisor district"),
+# Where the tables go, and the words each page uses for its own seats. The
+# roster-to-page join has no mechanical source — nothing in council-members.json
+# says which page it belongs on — so it is stated, the way build_county_pages.py
+# states one entry per state. Everything else is read: the names, parties and
+# offices from the roster, the date from the instance's worksheet, the district
+# count from the roster itself.
+#
+# AN ENTRY IS A PAGE AND CARRIES A LIST OF SECTIONS, because a state legislature
+# page answers for two chambers over the same ground and splitting it would give
+# a reader half an answer per page. The twelve legislator pages' sections are
+# DERIVED from build_legislator_pages.INSTANCES rather than restated here —
+# that script already names every chamber, its layer and its roster, and two
+# copies of "Illinois House of Representatives" is one copy too many.
+CITY_TABLES = [
+    dict(tag="il", page="ward.html", worksheet="metro-worksheet.json",
+         sections=[dict(roster="data/source/ward-members.json",
+                        seat="Ward", holder="Alderperson",
+                        office_label="Ward office",
+                        body="the Chicago City Council",
+                        heading="Who represents each Chicago ward")]),
+    dict(tag="ny", page="council-district.html", worksheet="ny/metro-worksheet.json",
+         sections=[dict(roster="data/app/council-members.json",
+                        seat="District", holder="Council Member",
+                        office_label="District office",
+                        body="the New York City Council",
+                        heading="Who represents each Council district")]),
+    dict(tag="ca", page="supervisor-district.html", worksheet="ca/metro-worksheet.json",
+         sections=[dict(roster="data/app/sf-supervisor-members.json",
+                        seat="District", holder="Supervisor",
+                        office_label="District office",
+                        body="the San Francisco Board of Supervisors",
+                        heading="Who represents each supervisor district")]),
 ]
 
-# A seat this cannot table yet, with the reason and the date, in the shape
-# ACCEPTED_DROPS and EXPECTED_UNREACHABLE already use: re-audited every run, so
-# an entry that stops being true FAILS rather than going quiet.
+
+def legislator_tables():
+    """The twelve legislator pages, read from the script that generates them."""
+    out = []
+    for tag, inst in sorted(LEGISLATOR_INSTANCES.items()):
+        spec = inst["legislature"]
+        out.append(dict(
+            tag=tag, page=spec["file"], worksheet=inst["worksheet"],
+            sections=[dict(roster="data/app/" + ch["roster"],
+                           seat="District", holder=ch["holder"],
+                           office_label="District office",
+                           body="the " + ch["name"],
+                           heading="Who represents each %s district" % ch["name"])
+                      for ch in spec["chambers"]]))
+        cong = inst["congress"]
+        out.append(dict(
+            tag=tag, page=cong["file"], worksheet=inst["worksheet"],
+            sections=[dict(roster="data/app/" + cong["roster"],
+                           seat="District", holder="Representative",
+                           office_label="District office",
+                           body="%s's delegation to the U.S. House of Representatives"
+                                % cong["state"],
+                           heading="Who represents each %s congressional district"
+                                   % cong["state"])]))
+    return out
+
+
+TABLES = CITY_TABLES + legislator_tables()
+
 NOT_YET = []
 # EMPTY, which is a measurement rather than an omission. It carried one entry
 # from 2026-09-15 — Chicago's 50 alderpeople, whose roster was a live Socrata
@@ -87,13 +134,13 @@ def fail(msg):
     sys.exit(1)
 
 
-def roster_path(entry):
-    """<tag>/<roster>. The path is STATED per entry rather than assembled from
+def roster_path(tag, roster):
+    """<tag>/<roster>. The path is STATED per section rather than assembled from
     data/app, because Chicago's is not in data/app: il/index.html reads the ward
     roster live from Socrata, so a file the app never fetches would fail
     validate_index.py's rule that every data/app file is referenced. It sits in
     il/data/source beside the other build-time inputs instead."""
-    return os.path.join(entry["tag"], entry["roster"])
+    return os.path.join(tag, roster)
 
 
 def load(path):
@@ -106,33 +153,42 @@ def district_key(k):
     return (0, int(k), "") if k.isdigit() else (1, 0, k)
 
 
-def render(entry):
-    roster = load(roster_path(entry))
-    worksheet = load(entry["worksheet"])
-    verified = worksheet.get("verified_date")
-    if not verified:
-        fail("%s has no verified_date and the table is dated with it"
-             % entry["worksheet"])
-
+def render_section(tag, section, verified):
+    roster = load(roster_path(tag, section["roster"]))
     keys = sorted(roster, key=district_key)
     named = [k for k in keys if isinstance(roster[k], dict) and roster[k].get("name")]
     if not named:
-        fail("%s/data/app/%s names nobody — refusing to write an empty table"
-             % (entry["tag"], entry["roster"]))
-    has_office = any(roster[k].get("office") for k in named)
+        fail("%s/%s names nobody — refusing to write an empty table"
+             % (tag, section["roster"]))
+
+    # WHICH COLUMNS EXIST IS DERIVED FROM THE ROSTER, never listed. NYC's and
+    # SF's carry no party and get no party column; the legislature rosters carry
+    # one on every record; the offices are named differently per chamber and
+    # several are absent, so the first one a record carries wins per section.
+    has_party = any(roster[k].get("party") for k in named)
+    # AN OFFICE COLUMN ONLY WHERE THE OFFICE IS ONE LINE. The city rosters carry
+    # `office` as a single street address, which reads as a table cell. The
+    # legislature and congressional rosters carry `districtOffice` as a LIST of
+    # three or four lines with a telephone number among them, and flattening
+    # that into a cell on a 118-row table produces a column nobody can scan and
+    # a second copy of what the map card already renders. So the column exists
+    # when the value is a string and not when it is a list, which is a property
+    # of the roster rather than a choice restated per page.
+    office_key = next((f for f in ("office", "districtOffice")
+                       if any(isinstance(roster[k].get(f), str) and roster[k][f]
+                              for k in named)), None)
 
     rows = []
     for k in keys:
         rec = roster[k] if isinstance(roster[k], dict) else {}
         name = rec.get("name")
-        seat = "%s %s" % (entry["seat"], k)
+        seat = "%s %s" % (section["seat"], k)
         if not name:
             # A seat the roster does not name is printed as one. Leaving it out
-            # would make the table claim a smaller body than the city elects.
+            # would make the table claim a smaller body than the state elects.
             cells = ['<td>%s</td>' % html.escape(seat),
                      '<td class="who">Not listed</td>']
-            if has_office:
-                cells.append("<td></td>")
+            cells += ["<td></td>"] * (bool(has_party) + bool(office_key))
             rows.append("      <tr>%s</tr>" % "".join(cells))
             continue
         # The <meta> sits INSIDE a cell, not between <tr> and <td>. An HTML
@@ -142,29 +198,36 @@ def render(entry):
         cells = ['<td>%s</td>' % html.escape(seat),
                  '<td class="who"><meta itemprop="jobTitle" content="%s, %s">'
                  '<span itemprop="name">%s</span></td>'
-                 % (html.escape(entry["holder"], quote=True),
+                 % (html.escape(section["holder"], quote=True),
                     html.escape(seat, quote=True), html.escape(name))]
-        if has_office:
-            office = rec.get("office") or ""
-            cells.append('<td itemprop="address">%s</td>' % html.escape(office))
+        if has_party:
+            # party_name maps notation and decides nothing about a person: New
+            # York's fusion labels ("Democratic/Working Families") are not in the
+            # table and ship exactly as the state published them.
+            cells.append('<td itemprop="affiliation">%s</td>'
+                         % html.escape(party_name(rec.get("party")) or ""))
+        if office_key:
+            cells.append('<td itemprop="address">%s</td>'
+                         % html.escape(rec.get(office_key) or ""))
         rows.append(
             '      <tr itemscope itemtype="https://schema.org/Person">%s</tr>'
             % "".join(cells))
 
-    head = ["<th>%s</th>" % html.escape(entry["seat"]),
-            "<th>%s</th>" % html.escape(entry["holder"])]
-    if has_office:
-        head.append("<th>%s</th>" % html.escape(entry["office_label"]))
+    head = ["<th>%s</th>" % html.escape(section["seat"]),
+            "<th>%s</th>" % html.escape(section["holder"])]
+    if has_party:
+        head.append("<th>Party</th>")
+    if office_key:
+        head.append("<th>%s</th>" % html.escape(section["office_label"]))
 
     # WHETHER THE MAP READS THIS FILE IS DERIVED, NOT STATED, because it is the
     # one sentence here that can be false. An instance whose roster is in
     # data/app serves that file to its own card, so the card and this table are
-    # one source. Chicago's is not: il/index.html calls Socrata live, and this
-    # file is a weekly snapshot of the same dataset, so the two can differ for
-    # up to a week. Saying "the map reads the same roster" on that page would
-    # be a false claim about the product on the product.
-    app_reads = entry["roster"].startswith("data/app/")
-    if app_reads:
+    # one source. Chicago's ward roster is not: il/index.html calls Socrata
+    # live, and that file is a weekly snapshot of the same dataset, so the two
+    # can differ for up to a week. Saying "the map reads the same roster" on
+    # that page would be a false claim about the product on the product.
+    if section["roster"].startswith("data/app/"):
         agreement = ("The map above reads the same roster, so a card and this table "
                      "cannot disagree \u2014 but a table is a claim about a day, and "
                      "this one names its day.")
@@ -189,14 +252,24 @@ def render(entry):
   </section>
 
 """ % {
-        "heading": html.escape(entry["heading"]),
+        "heading": html.escape(section["heading"]),
         "n": len(keys),
-        "body": html.escape(entry["body"]),
+        "body": html.escape(section["body"]),
         "verified": html.escape(verified),
         "head": "".join(head),
         "agreement": agreement,
         "rows": "\n".join(rows),
     }
+
+
+def render(entry):
+    worksheet = load(entry["worksheet"])
+    verified = worksheet.get("verified_date")
+    if not verified:
+        fail("%s has no verified_date and the table is dated with it"
+             % entry["worksheet"])
+    return "".join(render_section(entry["tag"], s, verified)
+                   for s in entry["sections"])
 
 
 def apply(entry, body, check):
@@ -236,16 +309,20 @@ def verify_shipped(entry):
     rel = os.path.join(entry["tag"], entry["page"])
     with open(os.path.join(REPO_ROOT, rel), encoding="utf-8") as f:
         shipped = f.read()
-    roster = load(roster_path(entry))
-    missing = [k for k, rec in sorted(roster.items(), key=lambda kv: district_key(kv[0]))
-               if isinstance(rec, dict) and rec.get("name")
-               and html.escape(rec["name"]) not in shipped]
-    if missing:
-        fail("%s does not name %d of its own roster's members (%s) — the table "
-             "is present and does not carry them"
-             % (rel, len(missing), ", ".join(missing[:5])))
-    return sum(1 for rec in roster.values()
-               if isinstance(rec, dict) and rec.get("name"))
+    named = 0
+    for section in entry["sections"]:
+        roster = load(roster_path(entry["tag"], section["roster"]))
+        missing = [k for k, rec in sorted(roster.items(),
+                                          key=lambda kv: district_key(kv[0]))
+                   if isinstance(rec, dict) and rec.get("name")
+                   and html.escape(rec["name"]) not in shipped]
+        if missing:
+            fail("%s does not name %d of %s's members (%s) — the table is "
+                 "present and does not carry them"
+                 % (rel, len(missing), section["roster"], ", ".join(missing[:5])))
+        named += sum(1 for rec in roster.values()
+                     if isinstance(rec, dict) and rec.get("name"))
+    return named
 
 
 WORKFLOWS = os.path.join(REPO_ROOT, ".github", "workflows")
@@ -260,26 +337,30 @@ def check_workflows():
     and --check goes red on a PR nobody wrote. Catching it here instead names
     the workflow and the two lines it is missing, before that ever happens.
     """
+    seen = set()
     for entry in TABLES:
-        roster = roster_path(entry)
         page = "%s/%s" % (entry["tag"], entry["page"])
-        for name in sorted(os.listdir(WORKFLOWS)):
-            if not name.endswith((".yml", ".yaml")):
-                continue
-            path = os.path.join(WORKFLOWS, name)
-            with open(path, encoding="utf-8") as f:
-                text = f.read()
-            if ("git add" not in text) or (roster not in text):
-                continue
-            if "build_officeholder_tables.py" not in text:
-                fail(".github/workflows/%s rewrites %s and never regenerates %s "
-                     "— add a step running python3 "
-                     "scripts/build_officeholder_tables.py and `git add %s`"
-                     % (name, roster, page, page))
-            if page not in text:
-                fail(".github/workflows/%s regenerates the table and never "
-                     "commits it — add `git add %s`" % (name, page))
-            print("build-officeholder-tables: %s regenerates %s" % (name, page))
+        for section in entry["sections"]:
+            roster = roster_path(entry["tag"], section["roster"])
+            for name in sorted(os.listdir(WORKFLOWS)):
+                if not name.endswith((".yml", ".yaml")):
+                    continue
+                with open(os.path.join(WORKFLOWS, name), encoding="utf-8") as f:
+                    text = f.read()
+                if ("git add" not in text) or (roster not in text):
+                    continue
+                if "build_officeholder_tables.py" not in text:
+                    fail(".github/workflows/%s rewrites %s and never regenerates "
+                         "%s — add a step running python3 "
+                         "scripts/build_officeholder_tables.py and `git add %s`"
+                         % (name, roster, page, page))
+                if page not in text:
+                    fail(".github/workflows/%s regenerates the table and never "
+                         "commits it — add `git add %s`" % (name, page))
+                if (name, page) not in seen:
+                    seen.add((name, page))
+                    print("build-officeholder-tables: %s regenerates %s"
+                          % (name, page))
 
 
 def audit_not_yet():

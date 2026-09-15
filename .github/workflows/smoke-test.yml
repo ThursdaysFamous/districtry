@@ -317,6 +317,16 @@ jobs:
       # regenerating the page, and re-audits the seats recorded as not tabled
       # yet — Chicago's 50 alderpeople, whose roster is a live Socrata call
       # rather than a shipped file.
+      # The twelve legislator pages. Every app already carried its state's two
+      # chambers and its U.S. House districts with a named member on each card
+      # — 1,058 people across eighteen rosters — and measured 2026-09-15 not one
+      # of them appeared in any served byte, on a site with no page at all for
+      # "who is my state representative". This gates the pages against the
+      # rosters and the worksheets they are built from, and fails on a page
+      # naming a layer its own instance does not register.
+      - name: Legislator pages match their rosters
+        run: python3 scripts/build_legislator_pages.py --check
+
       - name: City officeholder tables match their rosters
         run: python3 scripts/build_officeholder_tables.py --check
 

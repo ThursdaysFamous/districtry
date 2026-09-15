@@ -46,6 +46,7 @@ thing this design asks you not to do, and --check is what notices.
 
 import argparse
 import difflib
+import glob
 import os
 import re
 import sys
@@ -70,21 +71,54 @@ INSTANCES = {
 # which diverged into four variants, of which three were wrong. `root` is a
 # pseudo-instance for the pages that sit at the repo root rather than inside an
 # instance folder.
-SUBPAGES = {
-    # sponsorship.html was outside this list while carrying the same footer
-    # byline as the twenty pages in it — found on 2026-09-12 when the byline
-    # became one shared block and one page would have kept its own copy.
-    "root": ["privacy.html", "sponsorship.html", "traffic.html"],
-    "il": ["il/faq.html", "il/sources.html", "il/police-district.html",
-           "il/school-board.html", "il/county-board.html", "il/ward.html",
-           "il/precinct.html"],
-    "ny": ["ny/faq.html", "ny/sources.html", "ny/council-district.html",
-           "ny/community-board.html"],
-    "ca": ["ca/faq.html", "ca/sources.html", "ca/supervisor-district.html"],
-    "wi": ["wi/faq.html", "wi/sources.html", "wi/county-board.html"],
-    "ia": ["ia/faq.html", "ia/sources.html", "ia/county-supervisor.html"],
-    "mi": ["mi/faq.html", "mi/sources.html", "mi/county-commissioner.html"],
-}
+# The sub-pages — every published page that is not the app. They compose the
+# same way the apps do, and they were added here because the alternative had
+# already been tried by accident: thirteen hand-kept copies of one stylesheet,
+# which diverged into four variants, of which three were wrong.
+#
+# DISCOVERED FROM THE TREE, NOT LISTED, since 2026-09-15. This was a hand-kept
+# table of 23 filenames until the twelve legislator pages were generated, and a
+# generated page is exactly what a hand-kept table cannot keep up with: a page
+# carrying ENGINE fences and missing from this dict is composed by nobody, so it
+# keeps whatever stylesheet it was born with while every sibling moves on — the
+# thirteen-copies failure, one file at a time, with no gate that would notice.
+# A sub-page is any .html directly inside an instance folder that is not that
+# instance's own index.html, which is the same rule build_landing_page.py and
+# build_sitemap.py already discover by. `root` stays explicit: the repo root
+# holds pages that are not sub-pages at all (the landing page, the redirect
+# shells, the coverage-map iframe body), so there is nothing to discover there.
+ROOT_SUBPAGES = ["privacy.html", "sponsorship.html", "traffic.html"]
+
+
+# A discovered page that carries NO ENGINE fence is not composed and is named
+# rather than counted. Five exist today — the four generated history pages,
+# which carry their own stylesheet, and il/privacy.html, a redirect shell left
+# by the move of the privacy page to the root. Neither is a defect this script
+# can decide; what would be a defect is a page that should carry the shared
+# shell, does not, and is invisible because a table never mentioned it.
+UNFENCED = []
+
+
+def discover_subpages():
+    out = {"root": list(ROOT_SUBPAGES)}
+    for tag in INSTANCES:
+        folder = os.path.join(REPO_ROOT, tag)
+        pages = []
+        for path in sorted(glob.glob(os.path.join(folder, "*.html"))):
+            base = os.path.basename(path)
+            if base == "index.html":
+                continue
+            rel = "%s/%s" % (tag, base)
+            with open(path, encoding="utf-8") as f:
+                if "ENGINE:BEGIN" in f.read():
+                    pages.append(rel)
+                else:
+                    UNFENCED.append(rel)
+        out[tag] = pages
+    return out
+
+
+SUBPAGES = discover_subpages()
 
 # Blocks whose ONE source is engine/shared/<name>.txt rather than
 # engine/<filename>/<name>.txt. A block belongs here when more than one FILENAME
@@ -108,6 +142,14 @@ OTHER_MARKER_RE = re.compile(
 def fail(msg):
     print("compose-app: FAIL — " + msg, file=sys.stderr)
     sys.exit(1)
+
+
+def unfenced_note():
+    """Name the discovered pages that carry no ENGINE fence, every run."""
+    if not UNFENCED:
+        return ""
+    return ("; %d page(s) carry no ENGINE fence and are composed by nobody: %s"
+            % (len(UNFENCED), ", ".join(sorted(UNFENCED))))
 
 
 def read(path):
@@ -171,6 +213,17 @@ def scan(text, label):
         if name in seen:
             fail("%s: duplicate ENGINE fence %r" % (label, name))
         seen.add(name)
+    # A MARKER THAT IS NOT ON ITS OWN LINE IS NOT A FENCE, and silence about
+    # that is the worst answer available: the pattern above is anchored to the
+    # whole line, so a file whose BEGIN and END share a line with anything else
+    # scans as having no blocks, composes to nothing, and is reported
+    # "recomposed". A generated page shipped that way on 2026-09-15 with an
+    # empty stylesheet — Times New Roman on a transparent ground — and both
+    # compose_app's own --check and its build path called it fine.
+    if not found and "ENGINE:BEGIN" in text:
+        fail("%s carries the text ENGINE:BEGIN and no fence this can read — a "
+             "marker must be alone on its line, with nothing before it but "
+             "indentation and a comment opener" % label)
     return found, lines
 
 
@@ -283,10 +336,10 @@ def main():
                  "Edit the block in engine/ and recompose; an ENGINE fence inside "
                  "an instance file is not the source." % len(drift))
         print("compose-app: OK — %d file(s) across %d instance(s) carry exactly the "
-              "shared engine" % (checked, len(ids)))
+              "shared engine%s" % (checked, len(ids), unfenced_note()))
     else:
-        print("compose-app: %d file(s) composed across %d instance(s)"
-              % (checked, len(ids)))
+        print("compose-app: %d file(s) composed across %d instance(s)%s"
+              % (checked, len(ids), unfenced_note()))
 
 
 if __name__ == "__main__":
