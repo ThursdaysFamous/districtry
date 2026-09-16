@@ -23,6 +23,15 @@ selected point", which is TRUE of Illinois and FALSE of the other two — five
 call sites against none. Copying the page across would have shipped a false
 confession twice; dropping the sentence would have hidden a true one once.
 
+ONE CLAIM IS MEASURED ACROSS THE WHOLE TREE, AND IT HAD TO BE. The recipients
+table said GoatCounter received from "the front door, Illinois, New York City,
+San Francisco, Wisconsin, Iowa and Michigan" — the seven files this generator
+reads — while the counter is in fact on every page of the site, put there by the
+phase-2 rollout. Seven surfaces named against 243 counted. The GoatCounter row
+is now measured through `validate_analytics.py`, which already discovers the
+pages and already records the two pages that deliberately carry no counter; see
+COUNTER_EXCEPTIONS below for what is gated and what is left unstated.
+
 TWO KINDS OF CLAIM, AND THE BUILD TREATS THEM DIFFERENTLY:
 
   * FLEET claims — asserted identical across every app, and GATED. The analytics
@@ -470,6 +479,108 @@ def gate_fleet_claims(apps):
                                        "CARTO tiles" if not a["tiles"] else "cdnjs"))
 
 
+# EVERY PAGE ON THIS SITE CARRIES THE COUNTER, NOT JUST THE APPS, and until
+# 2026-09-16 this page said otherwise. The recipients table named GoatCounter's
+# surfaces as the seven measured below -- the six apps and the front door --
+# because those are the only files this generator reads. The phase-2 rollout put
+# the tag on every page: the per-county board pages, the question pages, the
+# history pages, and this page itself. So the table understated its own
+# recipient, on the page whose whole standard is that whoever receives your IP
+# address is named.
+#
+# The fix is to measure the tree rather than to widen a list, and to measure it
+# THROUGH validate_analytics: that gate already discovers the pages, already
+# knows which are redirect shells, and already records the two deliberate
+# exceptions. Two readers of one question is where this fleet's recurring defect
+# starts, so there is one reader and this page borrows it.
+#
+# The reader-facing reason for each exception is written here rather than taken
+# from NO_COUNTER, whose reasons address a developer -- but the NAMES are gated
+# against it, so this page cannot name an exception the tree does not have.
+# Spelled out because the page is prose. A number past this table would be a
+# count of exceptions rather than of pages, so digits are fine as a fallback.
+COUNT_WORDS = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five"}
+COUNTER_EXCEPTIONS = {
+    "404.html": "served for a URL that does not exist",
+    "coverage-map.html":
+        "the front door\u2019s iframe body, counted by the page that embeds it",
+}
+
+
+def measure_counter_coverage(apps):
+    """Which pages on this site carry the GoatCounter tag.
+
+    NO COUNT IS PUBLISHED, deliberately. The number moves every time a county
+    ships, and a privacy claim that has to be regenerated for an unrelated change
+    is one somebody will eventually regenerate without reading. The page states
+    the SHAPE -- every page, bar the two named exceptions -- which is stable, and
+    this measurement is what holds it true.
+    """
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    try:
+        import validate_analytics as va
+    except ImportError as e:
+        fail("cannot import scripts/validate_analytics.py (%s). This page's "
+             "GoatCounter row is measured through it so the two cannot disagree "
+             "about which pages exist or which carry the tag." % e)
+    surface, _tags = va.pages()
+    counted, uncounted = [], []
+    for _tag, rel, path in surface:
+        with open(path, encoding="utf-8") as f:
+            page = f.read()
+        if va.REDIRECT_SHELL.search(page):
+            continue
+        (counted if va.GC_TAG.search(page) else uncounted).append(rel)
+
+    if not counted:
+        fail("no page on this site carries the GoatCounter tag, and the "
+             "recipients table names it — either the fleet changed or this "
+             "measurement is broken")
+    stray = sorted(set(uncounted) - set(COUNTER_EXCEPTIONS))
+    if stray:
+        fail("%s carries no GoatCounter tag and this page tells a reader every "
+             "page does. Either count it, or record it in COUNTER_EXCEPTIONS "
+             "here and in NO_COUNTER in scripts/validate_analytics.py."
+             % ", ".join(stray))
+    back = sorted(set(COUNTER_EXCEPTIONS) - set(uncounted))
+    if back:
+        fail("%s now carries the counter and COUNTER_EXCEPTIONS still names it "
+             "as an exception — drop the entry, here and in NO_COUNTER."
+             % ", ".join(back))
+    if sorted(COUNTER_EXCEPTIONS) != sorted(va.NO_COUNTER):
+        fail("COUNTER_EXCEPTIONS names %s and validate_analytics.NO_COUNTER "
+             "names %s. They are one claim written for two readers and must "
+             "name the same pages."
+             % (sorted(COUNTER_EXCEPTIONS), sorted(va.NO_COUNTER)))
+
+    # The two measurements must also agree about the seven files they BOTH read.
+    # This generator finds GoatCounter by its URL and the shared gate finds it by
+    # the script tag; a disagreement means one of them is wrong about a page a
+    # reader is served, which is the case neither can see alone.
+    have = set(counted)
+    for a in apps:
+        mine, theirs = bool(a["goatcounter"]), a["file"] in have
+        if mine != theirs:
+            fail("%s: this page measures GoatCounter as %s and "
+                 "scripts/validate_analytics.py measures it as %s. One of the "
+                 "two readers is wrong about a page a reader is served."
+                 % (a["file"], "present" if mine else "absent",
+                    "present" if theirs else "absent"))
+    return {"counted": counted, "uncounted": uncounted}
+
+
+def counter_who():
+    """The recipients table's "which surfaces" cell for GoatCounter.
+
+    Plain text: recipient_row escapes this column.
+    """
+    bits = ["%s (%s)" % (rel, why) for rel, why in sorted(COUNTER_EXCEPTIONS.items())]
+    n = len(bits)
+    return ("Every page on this site — the apps, the front door, and every page "
+            "they link. %s carr%s none: %s."
+            % (COUNT_WORDS.get(n, str(n)), "ies" if n == 1 else "y", joined(bits)))
+
+
 def load_apps():
     try:
         manifest = json.loads(read(MANIFEST, "the fleet manifest"))
@@ -575,16 +686,18 @@ def render_recipient_rows(apps):
         "while the full layer downloads. Layers whose data ships with the app contact "
         "nobody at all.",
         "When you turn a layer on and select a point.", "Every app with a map."))
-    for a in apps:
-        if not a["goatcounter"]:
-            continue
+    # NOT a list of the apps. Every page here carries the counter, so naming the
+    # seven surfaces this generator reads would have understated the recipient —
+    # see COUNTER_EXCEPTIONS. The WHEN column separates the two things that are
+    # sent, because they do not come from the same set of pages: every page sends
+    # a page view, and only an app's map sends a named event.
+    if any(a["goatcounter"] for a in apps):
         rows.append(recipient_row(
             "GoatCounter", "analytics", "https://www.goatcounter.com/help/privacy",
             "A page count and a few named events. See "
             '<a href="#analytics">Analytics, precisely</a>.',
-            "Every visit; events as you use the map.",
-            ", ".join(x["name"] for x in apps if x["goatcounter"]) + ".", once=True))
-        break
+            "Every visit to any page. The named events come from an app\u2019s map "
+            "only.", counter_who(), once=True))
     ga_users = [a["name"] for a in apps if a["ga"]]
     if ga_users:
         rows.append(recipient_row(
@@ -684,9 +797,10 @@ def render_analytics_section(apps):
     # statement on a privacy page. Both shapes are spelled out rather than interpolated.
     gc_sites = {a["goatcounter"]["site"] for a in gc}
     if len(gc_sites) == 1 and len(gc) > 1:
-        where = ("%s all report to a single GoatCounter site (%s); the page path is what "
-                 "distinguishes them" % (esc(joined(a["name"] for a in gc)),
-                                         code(sorted(gc_sites)[0])))
+        where = ("Every page on this site reports to a single GoatCounter site "
+                 "(%s) — the apps, the front door, and the text pages that answer "
+                 "one question or list one county\u2019s board; the page path is what "
+                 "distinguishes them" % code(sorted(gc_sites)[0]))
     else:
         where = ("%s each report to their own separate GoatCounter site (%s)"
                  % (esc(joined(a["name"] for a in gc)),
@@ -696,8 +810,9 @@ def render_analytics_section(apps):
         'rel="noopener">GoatCounter</a> is cookieless and does not build a profile across '
         "sites. %s. Besides the "
         "page view, each app sends named events for: %s. Exactly two of those — %s — carry "
-        "coordinates, <strong>rounded to %d decimal places</strong>. "
-        "<strong>Nothing you type is ever sent to it.</strong></p>"
+        "coordinates, <strong>rounded to %d decimal places</strong>. A page that is not an "
+        "app — a county list, a question page, this one — sends the page view and nothing "
+        "else. <strong>Nothing you type is ever sent to it.</strong></p>"
         % (where,
            esc(", ".join(EXPECTED_EVENTS)),
            esc(" and ".join(EXPECTED_COORD_EVENTS)), COORD_DECIMALS))
@@ -1214,6 +1329,7 @@ def build():
     apps = load_apps()
     gate_point_transmission(apps)
     gate_fleet_claims(apps)
+    measure_counter_coverage(apps)
 
     tokens_css = read(TOKENS, "the design tokens")
     light = parse_token_block(tokens_css, ":root", TOKENS)
