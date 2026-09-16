@@ -45,6 +45,8 @@ jobs:
         run: python3 wi/scripts/build_rusd_school_board_roster.py
 
       - name: Validate app + data files
+        run: python3 wi/scripts/validate_index.py wi/index.html
+
       # THE PAGE NAMES THESE PEOPLE AND COUNTS THEM IN ITS OWN PROSE, so it is
       # regenerated in the same run. Both generators gate on it: skip this and
       # the failure lands on THIS job's own pull request, where nobody wrote the
@@ -53,8 +55,6 @@ jobs:
         run: |
           python3 scripts/build_concept_pages.py
           python3 scripts/build_officeholder_tables.py
-
-        run: python3 wi/scripts/validate_index.py wi/index.html
 
       - name: Check for changes
         id: diff
