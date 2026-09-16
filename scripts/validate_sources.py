@@ -153,6 +153,15 @@ PROVENANCE = [
      "app_file": "il-supreme-court-districts.json",
      "source_url": "https://www.illinoiscourts.gov/",
      "note": "PA 102-0011 shapefile. Redrawn ~once a decade."},
+    {"layer": "IL Supreme and Appellate Court justices",
+     "app_file": "il-court-justices.json",
+     "source_url": "https://www.illinoiscourts.gov/courts/supreme-court/meet-the-justices/",
+     "note": "The seven Supreme Court justices with the district each was "
+             "elected from; the appellate half comes from the same site's "
+             "Judicial Directory. Rebuilt weekly by "
+             "update-il-court-justices.yml, whose build gate re-checks all 102 "
+             "counties against 705 ILCS 23 — so this manifest watches the page "
+             "and the weekly run watches the composition."},
     {"layer": "Cook County Board of Review districts",
      "app_file": "ccbr-districts.json",
      "source_url": "https://www.cookcountyboardofreview.com/",
