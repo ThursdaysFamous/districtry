@@ -77,6 +77,13 @@ LAYER_NAMES = {"ward": "Ward", "school-board": "School board",
                "police-district": "Police district",
                "ccpsa-district-council": "Police council",
                "school-district": "School district", "county": "County",
+               # The three tilings the app registers separately. Only the
+               # unified one has reached the top ten so far, and it did so
+               # unnamed: an id with no entry ships as the raw id, so the bar
+               # read "school-district-unified" beside "School board".
+               "school-district-unified": "School district (unified)",
+               "school-district-elementary": "School district (elementary)",
+               "school-district-secondary": "School district (high)",
                "judicial-subcircuit": "Judicial subcircuit",
                "county-precinct": "County precinct",
                "fire-district": "Fire district", "park-district": "Park district",
