@@ -141,17 +141,26 @@ def county_pages():
 
 
 def table_names():
-    """Everyone named in a generated officeholder table — the city rosters, the
-    NYPD commanders and the twelve legislator pages."""
-    from build_officeholder_tables import TABLES, load, roster_path  # noqa: E402
-    total = 0
+    """Everyone named in a generated officeholder table, and how many tables.
+
+    COUNTED THROUGH THE GENERATOR'S OWN ROW READER, not by walking the roster
+    files here. Four of those rosters are nested — a list of judges under a
+    circuit, three lists of officials under a township — and reading them flat
+    both MISSED every one of those people and counted each township's own name
+    as a person. That is what this file said until 2026-09-16: 1,277 against a
+    true 1,765, wrong in both directions at once. section_rows is the same
+    function the renderer and the read-it-back verifier use, so all three
+    answer with one reading.
+    """
+    from build_officeholder_tables import TABLES, section_rows  # noqa: E402
+    total, tables = 0, 0
     for entry in TABLES:
         for section in entry["sections"]:
-            roster = load(roster_path(entry["tag"], section["roster"]))
             field = section.get("name_field", "name")
-            total += sum(1 for r in roster.values()
-                         if isinstance(r, dict) and (r.get(field) or "").strip())
-    return total
+            total += sum(1 for _seat, rec in section_rows(entry["tag"], section)
+                         if (rec.get(field) or "").strip())
+            tables += 1
+    return total, tables
 
 
 def recorded_gaps():
@@ -237,7 +246,7 @@ def fleet_rows(fleet):
     return "\n".join(rows)
 
 
-def body(fleet, pages, seats, tabled, gaps, jobs, signal):
+def body(fleet, pages, seats, tabled, tables, gaps, jobs, signal):
     signal_text = ", ".join("%s=%s" % (k, v) for k, v in sorted(signal.items()))
     return """
   <section>
@@ -268,8 +277,8 @@ def body(fleet, pages, seats, tabled, gaps, jobs, signal):
     <ul class="facts">
       <li><strong>%(pages)s</strong> per-county pages naming <strong>%(seats)s</strong> county
         officeholders, one page per county board.</li>
-      <li><strong>%(tabled)s</strong> more in the tables on the question pages — state
-        legislators, U.S. House members, city council members, precinct commanders.</li>
+      <li><strong>%(tabled)s</strong> more across the <strong>%(tables)s</strong> rosters
+        tabled on its question pages, each one dated with the day it describes.</li>
       <li><strong>%(jobs)s</strong> scheduled jobs that re-read a published source on their own
         timetable. A job that finds a different officeholder opens a pull request rather than
         committing, so nothing about a person ships without someone looking at it first.</li>
@@ -321,6 +330,7 @@ def body(fleet, pages, seats, tabled, gaps, jobs, signal):
         "pages": "{:,}".format(pages),
         "seats": "{:,}".format(seats),
         "tabled": "{:,}".format(tabled),
+        "tables": "{:,}".format(tables),
         "gaps": "{:,}".format(gaps),
         "jobs": "{:,}".format(jobs),
         "repo": REPO_URL,
@@ -339,7 +349,7 @@ EXTRA_CSS = """
 def build():
     fleet = instances()
     pages, seats = county_pages()
-    tabled = table_names()
+    tabled, tables = table_names()
     gaps = recorded_gaps()
     jobs = weekly_jobs()
     signal = content_signal()
@@ -360,7 +370,8 @@ def build():
     # the next edit.
     return render_page(
         pagetitle="About", pagesub=SUB, generator=GENERATOR,
-        body=body(fleet, pages, seats, tabled, gaps, jobs, signal).replace("%", "%%"),
+        body=body(fleet, pages, seats, tabled, tables, gaps, jobs,
+                  signal).replace("%", "%%"),
         title=TITLE, desc=DESC, jsonld=jsonld(fleet),
         footerlinks=links, canonical=CANONICAL,
     ).replace("</head>", EXTRA_CSS.strip() + "\n</head>", 1), (

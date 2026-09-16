@@ -360,6 +360,15 @@ jobs:
       - name: Legislator pages match their rosters
         run: python3 scripts/build_legislator_pages.py --check
 
+      # The four concept pages — circuit court, township, school board and
+      # judicial subcircuit. Three name people who had shipped as data/app files
+      # for months and reached a reader only after JavaScript fetched them; the
+      # fourth names nobody, because an Illinois judge is elected FROM a
+      # subcircuit and then sits circuit-wide, and its inventory table is parsed
+      # out of il/index.html's own dispatch entries rather than kept by hand.
+      - name: Concept pages match their rosters
+        run: python3 scripts/build_concept_pages.py --check
+
       - name: City officeholder tables match their rosters
         run: python3 scripts/build_officeholder_tables.py --check
 
@@ -419,6 +428,16 @@ jobs:
       # written against it. Stdlib only.
       - name: Skills point at things that exist
         run: python3 scripts/validate_skills.py
+
+      # The steward skill is the battery below, written out for a reader to run
+      # locally, and CLAUDE.md has claimed since 2026-09-12 that the two agree
+      # exactly. Nothing compared them until 2026-09-16, when the skill turned
+      # out to be missing three gates wired into CI on the day that sentence was
+      # written — so an agent following the skill ran a green battery and pushed
+      # a branch this job failed, which is the one thing the skill exists to
+      # prevent.
+      - name: The steward skill runs the same battery this job does
+        run: python3 scripts/validate_steward_mirror.py
 
       # No app may ask an ArcGIS service for f=geojson. The export unnests a
       # feature's interior rings, so a publisher's cutout becomes ground the

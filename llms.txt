@@ -19,11 +19,13 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 - [Illinois district lookup](https://districtry.com/il/): 40 layers, 93 counties.
 - [Who is my U.S. representative?](https://districtry.com/il/congress.html)
 - [Who is my county commissioner?](https://districtry.com/il/county-board.html): links a page per county, 83 of them, each naming every member with whatever contact details that county publishes.
+- [What judicial subcircuit am I in?](https://districtry.com/il/judicial-subcircuit.html)
 - [What Chicago police district am I in?](https://districtry.com/il/police-district.html)
 - [What precinct am I in?](https://districtry.com/il/precinct.html)
 - [Which Chicago school board district am I in?](https://districtry.com/il/school-board.html)
 - [Sources & data layers](https://districtry.com/il/sources.html)
 - [Who is my Illinois state legislator?](https://districtry.com/il/state-legislature.html)
+- [What township am I in?](https://districtry.com/il/township.html)
 - [Who is my alderman? Chicago wards](https://districtry.com/il/ward.html)
 - [Chicago district questions](https://districtry.com/il/faq.html)
 - [History](https://districtry.com/il/history.html)
@@ -57,8 +59,10 @@ Supervisor districts, neighborhoods, police districts, school attendance areas, 
 County boards, circuit courts, wards and aldermanic districts across all 72 counties — clerk to Court of Appeals — plus school districts, cities, villages and towns, and the Assembly, Senate and U.S. House seats, and who holds those.
 
 - [Wisconsin district lookup](https://districtry.com/wi/): 31 layers, all 72 counties.
+- [Who is my circuit court judge?](https://districtry.com/wi/circuit-court.html)
 - [Who is my U.S. representative?](https://districtry.com/wi/congress.html)
 - [Who is my county supervisor?](https://districtry.com/wi/county-board.html): links a page per county, 72 of them, each naming every member with whatever contact details that county publishes.
+- [Who is on my school board?](https://districtry.com/wi/school-board.html)
 - [Sources & data layers](https://districtry.com/wi/sources.html)
 - [Who is my Wisconsin legislator?](https://districtry.com/wi/state-legislature.html)
 - [Wisconsin district questions](https://districtry.com/wi/faq.html)

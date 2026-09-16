@@ -42,27 +42,16 @@ naming a layer its app does not register fails the build.
 import argparse
 import difflib
 import html
-import json
 import os
-import re
 import sys
 
-REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-METROS = os.path.join(REPO_ROOT, "metros.json")
-SITE = "https://districtry.com"
-AUTHOR = ('{ "@type": "Person", "@id": "https://districtry.com/#author", '
-          '"name": "Adam Overberg", "url": "https://overberg.co", '
-          '"email": "hello@overberg.co" }')
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-# Regions this script writes EMPTY and never rewrites afterwards. Each is owned
-# by another generator; see the module docstring.
-PRESERVED = [
-    ("ENGINE", "tokens-brand", "css"),
-    ("ENGINE", "styles-subpage", "css"),
-    ("ENGINE", "footer-byline", "html"),
-    ("GENERATED", "question-lookup", "html"),
-    ("GENERATED", "officeholder-table", "html"),
-]
+from question_page import (METROS, PageError, check_layer, head, load,  # noqa: E402
+                           MARK_RE, preserved_from_disk, shared_head_block,
+                           shell, THEMEBOOT_RE)
+
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Per instance: the worksheet, and the two pages' wording. `layer` is the id the
 # page's map link switches on and is VERIFIED against the worksheet's layers[].
@@ -198,65 +187,6 @@ def fail(msg):
     sys.exit(1)
 
 
-def load(path):
-    with open(os.path.join(REPO_ROOT, path), encoding="utf-8") as f:
-        return json.load(f)
-
-
-def marker(kind, name, end, style):
-    body = "==== %s:%s %s ====" % (kind, "END" if end else "BEGIN", name)
-    return "/* %s */" % body if style == "css" else "<!-- %s -->" % body
-
-
-def preserved_from_disk(path):
-    """What the other four generators wrote, keyed by region name.
-
-    A page this script has never written returns empty strings, which is how a
-    new page is born with the markers present and the blocks empty.
-    """
-    out = {}
-    try:
-        with open(path, encoding="utf-8") as f:
-            text = f.read()
-    except OSError:
-        return {name: "" for _k, name, _s in PRESERVED}
-    for kind, name, style in PRESERVED:
-        begin, end = marker(kind, name, False, style), marker(kind, name, True, style)
-        if begin in text and end in text:
-            i, j = text.index(begin) + len(begin), text.index(end)
-            out[name] = text[i:j].strip("\n")
-        else:
-            out[name] = ""
-    return out
-
-
-def shared_head_block(tag, pattern, what):
-    """The @font-face set and the theme boot script, read from this instance's
-    own faq.html rather than restated here.
-
-    Both are byte-identical across all 23 sub-pages (measured 2026-09-15), and a
-    copy of a computed font override is exactly the kind of restatement
-    build_brand_tokens.py exists to stop. Reading a sibling means a new page
-    cannot ship with a stale one.
-    """
-    path = os.path.join(REPO_ROOT, tag, "faq.html")
-    with open(path, encoding="utf-8") as f:
-        text = f.read()
-    found = re.search(pattern, text, re.S)
-    if not found:
-        fail("cannot find the %s in %s/faq.html — the shared sub-page head "
-             "has changed shape and this generator must be updated" % (what, tag))
-    return found.group(1)
-
-
-FONTFACE_RE = r"(/\* Self-hosted subset.*?\n\})\n\n?/\* ==== ENGINE:BEGIN tokens-brand"
-# The <script> element that carries the theme key. Matched by its CONTENT
-# rather than by its opening comment: the comment is worded differently in
-# every instance (measured 2026-09-15), so a pattern keyed on it finds the
-# block in two instances and fails in four.
-THEMEBOOT_RE = r"(<script>(?:(?!</script>).)*districtry-theme(?:(?!</script>).)*</script>)"
-
-
 def roster_rows(tag, filename):
     data = load(os.path.join(tag, "data", "app", filename))
     if not isinstance(data, dict) or not data:
@@ -265,191 +195,6 @@ def roster_rows(tag, filename):
     if not named:
         fail("%s/data/app/%s names nobody" % (tag, filename))
     return data
-
-
-def check_layer(worksheet, layer_id, where):
-    ids = {l["id"] for l in worksheet["layers"]}
-    if layer_id not in ids:
-        fail("%s names layer %r, which its worksheet does not register"
-             % (where, layer_id))
-
-
-def head(tag, meta, brand, app_name, page_file, title, description, og_desc):
-    canonical = "%s/%s/%s" % (SITE, tag, page_file)
-    esc = lambda s: html.escape(s, quote=True)
-    jsonld = {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        "@id": canonical,
-        "url": canonical,
-        "name": "%s — %s" % (title, app_name),
-        "description": description,
-        "inLanguage": "en-US",
-        "isPartOf": {"@id": "%s/%s/#website" % (SITE, tag)},
-        "breadcrumb": {
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-                {"@type": "ListItem", "position": 1, "name": app_name,
-                 "item": "%s/%s/" % (SITE, tag)},
-                {"@type": "ListItem", "position": 2, "name": title},
-            ],
-        },
-    }
-    graph = json.dumps(jsonld, indent=2, ensure_ascii=False)
-    graph = graph.replace('"inLanguage": "en-US",',
-                          '"inLanguage": "en-US",\n  "author": %s,' % AUTHOR)
-    return """<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<!-- GoatCounter — cookieless page counts, the same site this instance's app reports to. -->
-<script data-goatcounter="%(gc)s"
-        async src="//gc.zgo.at/count.js"></script>
-
-<title>%(title)s — %(app)s</title>
-<meta name="description" content="%(desc)s" />
-<meta name="robots" content="index, follow" />
-<link rel="canonical" href="%(canonical)s" />
-
-<meta property="og:type" content="article" />
-<meta property="og:site_name" content="%(app)s" />
-<meta property="og:title" content="%(title)s" />
-<meta property="og:description" content="%(ogdesc)s" />
-<meta property="og:url" content="%(canonical)s" />
-<meta property="og:image" content="%(site)s/%(tag)s/og-image.png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta property="og:locale" content="en_US" />
-
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="%(title)s" />
-<meta name="twitter:description" content="%(ogdesc)s" />
-<meta name="twitter:image" content="%(site)s/%(tag)s/og-image.png" />
-
-<script type="application/ld+json">
-%(jsonld)s
-</script>
-
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="%(theme)s">
-
-<link rel="icon" type="image/svg+xml" href="%(favicon)s" />
-
-<style>
-%(fontface)s
-""" % dict(gc=esc(brand["analytics"]["goatcounter_url"]), title=esc(title),
-           app=esc(app_name), desc=esc(description), ogdesc=esc(og_desc),
-           canonical=canonical, site=SITE, tag=tag, jsonld=graph,
-           theme=esc(brand["theme_color"]),
-           favicon=esc(brand["favicon_data_uri"]),
-           fontface=shared_head_block(tag, FONTFACE_RE, "@font-face block"))
-
-
-def shell(app_name, title, subtitle, lede, sections, related,
-          preserved, themeboot, mark):
-    esc = html.escape
-    parts = []
-    # EVERY MARKER ON ITS OWN LINE. compose_app.py anchors its fence pattern to
-    # the whole line, so a BEGIN/END pair sharing a line with anything else is
-    # not a fence at all: the first draft emitted all four on one line, the
-    # composer found no blocks in the file, reported it recomposed, and the page
-    # shipped with an empty stylesheet — served in Times New Roman on a
-    # transparent ground, which is what the browser gate then said.
-    for kind, name, style, body in (
-            ("ENGINE", "tokens-brand", "css", preserved["tokens-brand"]),
-            ("ENGINE", "styles-subpage", "css", preserved["styles-subpage"])):
-        parts.append(marker(kind, name, False, style) + "\n")
-        if body:
-            parts.append(body + "\n")
-        parts.append(marker(kind, name, True, style) + "\n")
-    parts.append("</style>\n")
-    parts.append(themeboot)
-    parts.append("""
-</head>
-<body>
-
-<a href="#page-main" class="skip-link">Skip to content</a>
-
-<header class="masthead">
-  <div class="masthead-inner">
-    <div class="title-block">
-      <h1 class="title">
-        <span class="title-row">
-          %(mark)s
-          <span class="title-text">%(title)s</span>
-        </span>
-      </h1>
-      <p class="title-sub">%(subtitle)s</p>
-    </div>
-    <div class="masthead-actions">
-      <a href="./">← Back to the map</a>
-    </div>
-  </div>
-</header>
-
-<main id="page-main" tabindex="-1">
-
-  <section>
-    %(lede)s
-%(lookup_begin)s
-%(lookup_body)s
-%(lookup_end)s
-%(cta)s
-  </section>
-
-%(sections)s
-%(table_begin)s
-%(table_body)s
-%(table_end)s
-  <section>
-    <h2>Related lookups</h2>
-    <ul class="related">
-%(related)s
-    </ul>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="footer-inner">
-    <p>%(app)s answers one question: which civic districts contain the point you picked, and who
-      represents you there. It reads public data, cites its sources, and never guesses an
-      officeholder.</p>
-    <div class="footer-links">
-      <a href="./">← Back to the map</a>
-      <a href="faq.html">Common questions</a>
-      <a href="sources.html">Sources &amp; data layers</a>
-      <a href="../privacy.html">Privacy</a>
-      <a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
-      <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">View source on GitHub</a>
-      %(byline_begin)s
-%(byline_body)s
-%(byline_end)s
-    </div>
-  </div>
-</footer>
-
-</body>
-</html>
-""" % dict(
-        mark=mark, title=esc(title), subtitle=esc(subtitle), lede=lede["html"],
-        cta=lede["cta"], sections=sections, related=related, app=esc(app_name),
-        lookup_begin=marker("GENERATED", "question-lookup", False, "html"),
-        lookup_body=preserved["question-lookup"],
-        lookup_end=marker("GENERATED", "question-lookup", True, "html"),
-        table_begin=marker("GENERATED", "officeholder-table", False, "html"),
-        table_body=preserved["officeholder-table"],
-        table_end=marker("GENERATED", "officeholder-table", True, "html"),
-        byline_begin=marker("ENGINE", "footer-byline", False, "html"),
-        byline_body=preserved["footer-byline"],
-        byline_end=marker("ENGINE", "footer-byline", True, "html"),
-    ))
-    return "".join(parts)
-
-
-MARK_RE = r'(<svg class="districtry-mark".*?</svg>)'
 
 
 def legislature_page(tag, inst, worksheet, brand, app_name, landing, metros):
@@ -618,18 +363,12 @@ def build(tag, inst, metros, check):
          seats) = maker(tag, inst, worksheet, brand, app_name, landing, metros)
         path = os.path.join(REPO_ROOT, tag, page_file)
         preserved = preserved_from_disk(path)
-        page = head(tag, metros, brand, app_name, page_file, title, desc, og)
+        page = head(tag, brand, app_name, page_file, title, desc, og)
         page += shell(app_name, title, subtitle, lede, sections,
                       related_rows(tag, page_file, landing, metros), preserved,
                       themeboot, mark)
         results.append((os.path.join(tag, page_file), path, page, seats))
     return results
-MARK = ('<svg class="districtry-mark" viewBox="0 0 96 96" aria-hidden="true">'
-        '<g style="mix-blend-mode:multiply"><polygon points="51.5,63.2 12.4,55.7 11.5,18.6 42.7,5.0 72.7,35.3" fill="#6d3fd1" fill-opacity="0.55"></polygon></g>'
-        '<g style="mix-blend-mode:multiply"><polygon points="54.1,81.9 34.6,47.9 56.5,19.3 87.5,28.1 83.8,71.0" fill="#1d5fd6" fill-opacity="0.5"></polygon></g>'
-        '<g style="mix-blend-mode:multiply"><polygon points="13.7,64.5 27.6,31.2 62.7,37.6 70.3,66.9 33.9,89.0" fill="#b0316e" fill-opacity="0.45"></polygon></g>'
-        '<circle cx="42" cy="60" r="17" fill="none" stroke="#17161c" stroke-width="11"></circle>'
-        '<line x1="59" y1="16" x2="59" y2="82.5" stroke="#17161c" stroke-width="11"></line></svg>')
 
 
 def main():
@@ -639,6 +378,13 @@ def main():
                     help="drift gate: fail rather than write")
     args = ap.parse_args()
 
+    try:
+        return run(args)
+    except PageError as exc:
+        fail(str(exc))
+
+
+def run(args):
     metros = load(METROS)["metros"]
     known = {m["tag"] for m in metros}
     missing = set(INSTANCES) - known

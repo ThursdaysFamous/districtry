@@ -593,3 +593,113 @@ still keeps `load`: it is the one root page deliberately uncounted.
   neither indexing nor ranking; it is a build-system change, not a template one,
   and it deserves its own PR rather than the end of a long session.
 - **Split and minify the map script; load GA only where it is needed.**
+
+## Phase 3
+
+### 1. Four concept pages — done 2026-09-16
+
+The audit's phase 3 names judicial subcircuit, school district, township and
+circuit court. Measured 2026-09-16, none had a page, and the data behind three
+of them reached a reader only after JavaScript fetched a file and rendered a
+card. What shipped, with the counts each page reads at build time:
+
+| Page | Names | Source |
+| --- | --- | --- |
+| `wi/circuit-court.html` | 261 judges across 69 circuits, 248 with a direct line | `wi-circuit-judges.json`, weekly |
+| `il/township.html` | 220 officials in 29 Cook townships, plus 29 hall addresses | `township-officials.json`, weekly |
+| `wi/school-board.html` | 17 members of the two boards elected by district | `mps-`/`rusd-school-board-members.json`, weekly |
+| `il/judicial-subcircuit.html` | nobody — 9 counties and 9 circuits | `il/index.html`'s own dispatch entries |
+
+**The subcircuit page names nobody and is built anyway.** An Illinois judge is
+elected *from* a subcircuit and then sits circuit-wide, so there is no judge for
+a subcircuit and a roster keyed by one would be a claim nobody publishes — the
+app's card has said so since it shipped. The page answers what is answerable:
+which nine counties have subcircuits, which circuit each elects to, and how many
+each has. Its inventory table is parsed out of the dispatch entries rather than
+kept by hand, because a county list here would go stale at the speed the Illinois
+frontier moves and there is no file to read: four of the nine counties fetch
+their subcircuits live, so nothing on disk knows they exist. Those four print no
+number rather than a number nobody measured.
+
+**Illinois's own school board page gained its table in the same change.**
+`il/school-board.html` has existed since the elected board shipped and carried
+none of its 20 district members. That roster maps a district straight to a name
+string, and writes a vacant seat as the literal `VACANT`, which the table
+renderer would have marked up as a person of that name.
+
+**The shell is one copy now.** `build_legislator_pages.py` owned ~250 lines of
+head, masthead, marker plumbing and footer; a second generator of that shape
+would have been a second copy, so it moved to `scripts/question_page.py`. The
+extraction is proved by the twelve legislator pages coming out byte-identical,
+and it retired a dead `MARK` literal sitting beside the function that reads the
+same mark off each instance's own `faq.html`.
+
+**Four nested rosters, four adapters.** `build_officeholder_tables.py` renders
+`{seat: {name}}`; these are a list of judges under a circuit, three lists of
+officials under a township, members under a `members` key, and a name string.
+Each gets an adapter returning the ordered `(seat, record)` pairs the renderer
+already wants. The order is the adapter's, because these have a real one: circuit
+then branch, and inside a township the order a ballot lists the offices.
+
+Two column decisions are worth recording. `phone` is derived, so it reached
+`il/ward.html` too — Chicago's ward roster carries a telephone on all 50 records
+— which is what a derived column means rather than a side effect to suppress.
+`email` is deliberately **not** derived: it is on the Iowa, Michigan and Wisconsin
+legislature rosters, so deriving it would have put 429 more addresses onto three
+pages this change was not about, and the one section that would gain by it carries
+eight.
+
+**`about.html` was counting the tabled people wrong in both directions at once.**
+It walked the roster files flat, which missed every nested person and counted each
+township's own *name* as a person, publishing 1,277 against a true 1,765. It reads
+through `section_rows` now — the same function the renderer and the read-it-back
+verifier use — so all three answer with one reading.
+
+### 2. Two stated counts that nothing compared
+
+Both were found by re-measuring rather than incrementing, which is what
+`CLAUDE.md` tells a reader to do with its own gate figures.
+
+**The 52/77 gate count did not reproduce.** The same rule answers 49 and 74 on
+`origin/main` and 57 and 82 here, and this change adds two of each — so the
+branch stood at 55/80 before it. The three-gate gap is the three wired on this
+branch the day that figure was written (`build_about_page.py --check`,
+`build_il_gis_board_rosters.py --check`, `validate_analytics.py`): the number was
+taken before they were added and the sentence around it claimed they were
+included. A figure measured before the change it claims to include is stale the
+moment it is written, which is worse than one that goes stale later, because
+nothing about it looks old.
+
+**The steward skill was missing those same three gates.** `CLAUDE.md` has claimed
+since 2026-09-12 that `.claude/skills/steward/SKILL.md` mirrors `smoke-test.yml`
+exactly, and nothing compared them. An agent following the skill would have run a
+battery that passed and pushed a branch the merge gate failed, which is the one
+thing the skill exists to prevent. `scripts/validate_steward_mirror.py` compares
+them now, both ways as multisets, normalising away the trailing rationale comment,
+a `|| status=1`, a leading `BASE_URL=` and the workflow's `$BASE`. Order is
+deliberately not compared: the skill groups by what a reader is fixing and CI
+orders by cost.
+
+### 3. A gate that had been red on this branch since 15 September
+
+`build_manifests.py --check` fails when an instance's `manifest.webmanifest`
+disagrees with its worksheet. Commit `181a6ba` (phase 1, "put the place in every
+title and H1") rewrote Wisconsin's worksheet description and never regenerated
+the manifest, so that gate had been red on this branch for a day and nothing
+said so — because the battery was run as a remembered subset rather than as the
+workflow's own command list. `CLAUDE.md` already carries that lesson from
+Michigan's go-live, in those words. It is fixed by the regeneration, and the
+steward mirror above is the reason the subset problem is now measurable rather
+than a matter of remembering.
+
+### Still open in phase 3
+
+- **ItemList, DataCatalog and stable `@id`s in structured data.** Not started.
+  The county pages' `GovernmentOrganization` nodes still carry only a name and an
+  area while the members are listed on the page, which is the audit's own
+  high-severity schema finding.
+- **Wikidata item and outreach** to clerks, civic-tech groups, libraries and
+  newsrooms. Outbound, so nothing here sends anything; it needs drafting and a
+  person to send it.
+- Everything still open from phases 1 and 2 above: verified dates and
+  `dateModified`, county-page uniqueness above 60%, and splitting the map script.

@@ -62,16 +62,21 @@ python3 scripts/build_dark_map_palette.py --check
 python3 scripts/build_landing_page.py --check
 python3 scripts/build_coverage_map.py --check            # every instance's outline path resolves
 python3 scripts/build_privacy_page.py --check
+python3 scripts/build_about_page.py --check              # /about.html vs the tree it describes; every number on it is read at build time
+python3 scripts/validate_analytics.py                    # which counter each page loads: GoatCounter on all but the two recorded, GA only where a worksheet declares it
 python3 scripts/build_history_page.py --check
 python3 scripts/build_manifests.py --check
-python3 scripts/build_county_pages.py --check            # the 164 per-county board pages (il 75, wi 72, ia 17) vs their rosters, the 60 workflows that rewrite one, and any county roster no adapter reads
+python3 scripts/build_county_pages.py --check            # the 183 per-county board pages (il 83, wi 72, ia 17, mi 11) vs their rosters, the 60 workflows that rewrite one, and any county roster no adapter reads
+python3 scripts/build_il_gis_board_rosters.py --check     # the seven Illinois boards whose members ride the boundary feature; fails on a carded county with no roster and no recorded reason
 python3 scripts/build_llms_txt.py --check                 # /llms.txt vs the fleet it describes; its page set comes from sitemap.xml, so it cannot name a page that is not there
 python3 scripts/build_sitemap.py --check                 # sitemap.xml PARSES as XML, and every page's lastmod matches its last commit (regenerate with no flag; a page you have edited but not committed dates today, so the order you run it in no longer matters). A parse FAIL means no crawler can read any of it — that is what a double hyphen in its header comment did on 2026-09-12.
 python3 scripts/build_redirect_stubs.py --check           # the 8 root shells + 404.html vs their targets
-python3 scripts/build_question_forms.py --check          # the 11 question pages' address box vs each page's own .cta
+python3 scripts/build_question_forms.py --check          # every question page's address box vs that page's own .cta
 python3 scripts/build_legislator_pages.py --check         # the 12 state-legislature and congress pages vs their rosters and worksheets
-python3 scripts/build_officeholder_tables.py --check      # the 15 officeholder tables vs their rosters, and the weekly workflows that rewrite one
+python3 scripts/build_concept_pages.py --check           # circuit court, township, school board, judicial subcircuit vs their rosters and il/index.html
+python3 scripts/build_officeholder_tables.py --check      # the 20 officeholder tables vs their rosters, and the weekly workflows that rewrite one
 python3 scripts/validate_favicon.py
+python3 scripts/validate_steward_mirror.py                # this file runs the same battery smoke-test.yml does, compared both ways
 python3 scripts/validate_shell_continuations.py
 python3 scripts/validate_workflow_deps.py
 python3 scripts/undeliverable.py                         # the shipped e-mail domains still resolve MX; the recorded dead ones are still dead

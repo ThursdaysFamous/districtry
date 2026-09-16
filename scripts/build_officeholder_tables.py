@@ -36,6 +36,7 @@ import difflib
 import html
 import json
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -68,6 +69,99 @@ END = "<!-- ==== GENERATED:END %s ==== -->" % REGION
 # DERIVED from build_legislator_pages.INSTANCES rather than restated here —
 # that script already names every chamber, its layer and its roster, and two
 # copies of "Illinois House of Representatives" is one copy too many.
+# ---------------------------------------------------------------- adapters
+#
+# WHAT AN ADAPTER IS FOR. The renderer below reads a roster shaped
+# {seat: {"name": ...}} and eleven of the fleet's rosters are shaped that way.
+# Four are not: the Wisconsin bench keys a LIST of judges under a circuit, the
+# township directory keys three lists of officials under a township, the two
+# Wisconsin school boards nest their members under a `members` key beside the
+# board's own office, and Chicago's school board maps a district straight to a
+# NAME STRING. An adapter turns one of those into the ordered list of
+# (seat label, record) pairs the renderer wants, and nothing else here changes.
+#
+# THE ADAPTER DECIDES THE ORDER. A flat roster sorts by district number, which
+# is the only order it has; these four have a real one — circuit then branch,
+# township then the office a ballot lists first — and sorting them numerically
+# would scatter a township's own officials down the page.
+
+
+def circuit_judges(data):
+    """The Wisconsin bench: one row per judge, grouped by circuit.
+
+    A circuit's name is the counties it covers, never its slug: three circuits
+    cover two counties each and their slug ("buffalo-pepin") is an id rather
+    than a name anyone uses. The branch number goes in the seat cell because a
+    branch is part of which bench a judge sits on, and the only ROLE the court
+    system prints is Chief Judge, which is left empty for everyone else rather
+    than filled with a title the source does not claim.
+    """
+    rows = []
+    for key in sorted(data, key=lambda k: data[k]["counties"]):
+        circuit = " and ".join(c.replace(" County", "")
+                               for c in data[key]["counties"])
+        for judge in data[key]["judges"]:
+            seat = ("%s, Branch %s" % (circuit, judge["branch"])
+                    if judge.get("branch") else circuit)
+            rows.append((seat, judge))
+    return rows
+
+
+def township_officials(data):
+    """Cook County's township officials: one row per person.
+
+    The order inside a township is the order a ballot lists the offices —
+    supervisor, then the other county-wide officers, then the trustees — not
+    alphabetical, which would separate a township's clerk from its supervisor.
+    NO CONTACT IS CARRIED THROUGH. The county publishes one telephone and one
+    mailbox per township hall, often a staff member's, so it belongs beside the
+    hall on the page's own table and never beside a person's name; the record
+    handed on here holds a name and an office and nothing else.
+    """
+    rows = []
+    for geoid in sorted(data, key=lambda k: data[k]["name"]):
+        rec = data[geoid]
+        people = ([rec["head"]] if rec.get("head") else []) + \
+            list(rec.get("officers") or []) + list(rec.get("board") or [])
+        for person in people:
+            rows.append((rec["name"],
+                         {"name": person.get("name"), "role": person.get("role")}))
+    return rows
+
+
+def school_board_members(data):
+    """A Wisconsin elected school board, nested under `members`.
+
+    Milwaukee elects eight members from districts and one at large, and its
+    roster keys that ninth seat `AL` — printed as what it is rather than as
+    "District AL". Racine reports one seat vacant and it is carried through as
+    vacant: a seat left out would make the board look smaller than it is.
+    """
+    members = data["members"]
+    return [("At large" if k == "AL" else "District %s" % k, members[k])
+            for k in sorted(members, key=district_key)]
+
+
+def name_strings(data):
+    """Chicago's elected school board, which maps a district to a NAME STRING.
+
+    The roster writes a vacant seat as the literal "VACANT", which the renderer
+    would otherwise mark up as a person of that name. It becomes a vacancy here.
+    """
+    return [("District %s" % k,
+             {"vacant": True} if str(data[k]).strip().upper() == "VACANT"
+             else {"name": data[k]})
+            for k in sorted(data, key=district_key)]
+
+
+ADAPTERS = {
+    "circuit_judges": circuit_judges,
+    "township_officials": township_officials,
+    "school_board_members": school_board_members,
+    "name_strings": name_strings,
+}
+
+
 CITY_TABLES = [
     dict(tag="il", page="ward.html", worksheet="metro-worksheet.json",
          sections=[dict(roster="data/source/ward-members.json",
@@ -101,6 +195,49 @@ CITY_TABLES = [
                         unit="precincts", prep="in",
                         body="the New York City Police Department",
                         heading="Who commands each NYPD precinct")]),
+    # THE FOUR PHASE-3 PAGES, whose rosters are the reason ADAPTERS exist.
+    # Each one names people this site had shipped for months and served to
+    # nobody: the Wisconsin bench, Cook County's township officials, the two
+    # Wisconsin school boards elected by district, and Chicago's own elected
+    # board — which had a question page from the day it shipped and never a
+    # table on it.
+    dict(tag="wi", page="circuit-court.html", worksheet="wi/metro-worksheet.json",
+         sections=[dict(roster="data/app/wi-circuit-judges.json",
+                        adapter="circuit_judges",
+                        seat="Circuit", holder="Judge", role_label="Role",
+                        office_label="Courthouse",
+                        unit="judges", prep="in",
+                        body="Wisconsin's circuit courts",
+                        heading="Which judges sit in each circuit")]),
+    dict(tag="il", page="township.html", worksheet="metro-worksheet.json",
+         sections=[dict(roster="data/app/township-officials.json",
+                        adapter="township_officials",
+                        seat="Township", holder="Official", role_label="Office",
+                        office_label="Township hall",
+                        unit="elected officials", prep="in",
+                        body="Cook County's townships",
+                        heading="Who holds each township office")]),
+    dict(tag="wi", page="school-board.html", worksheet="wi/metro-worksheet.json",
+         sections=[dict(roster="data/app/mps-school-board-members.json",
+                        adapter="school_board_members",
+                        seat="Seat", holder="Director", role_label="Role",
+                        office_label="Office",
+                        body="the Milwaukee Board of School Directors",
+                        heading="Who sits on the Milwaukee Board of School Directors"),
+                   dict(roster="data/app/rusd-school-board-members.json",
+                        adapter="school_board_members",
+                        seat="Seat", holder="Board Member", role_label="Role",
+                        office_label="Office",
+                        body="the Racine Unified School District Board of Education",
+                        heading="Who sits on the Racine Unified school board")]),
+    dict(tag="il", page="school-board.html", worksheet="metro-worksheet.json",
+         sections=[dict(roster="data/app/school-board-members.json",
+                        adapter="name_strings",
+                        seat="District", holder="Board Member",
+                        office_label="Office",
+                        unit="elected district seats", prep="on",
+                        body="the Chicago Board of Education",
+                        heading="Who represents each Chicago school board district")]),
 ]
 
 
@@ -167,11 +304,30 @@ def district_key(k):
     return (0, int(k), "") if k.isdigit() else (1, 0, k)
 
 
+def section_rows(tag, section):
+    """(seat label, record) in the order the table prints them.
+
+    A section with an adapter hands the file to it; everything else is the flat
+    {district: {...}} shape, keyed and ordered by district number.
+    """
+    data = load(roster_path(tag, section["roster"]))
+    if not isinstance(data, dict) or not data:
+        fail("%s/%s is not a non-empty object" % (tag, section["roster"]))
+    if section.get("adapter"):
+        rows = ADAPTERS[section["adapter"]](data)
+    else:
+        rows = [("%s %s" % (section["seat"], k),
+                 data[k] if isinstance(data[k], dict) else {})
+                for k in sorted(data, key=district_key)]
+    if not rows:
+        fail("%s/%s produced no rows" % (tag, section["roster"]))
+    return rows
+
+
 def render_section(tag, section, verified):
-    roster = load(roster_path(tag, section["roster"]))
+    rows_in = section_rows(tag, section)
     name_field = section.get("name_field", "name")
-    keys = sorted(roster, key=district_key)
-    named = [k for k in keys if isinstance(roster[k], dict) and roster[k].get(name_field)]
+    named = [rec for _s, rec in rows_in if rec.get(name_field)]
     if not named:
         fail("%s/%s names nobody — refusing to write an empty table"
              % (tag, section["roster"]))
@@ -180,7 +336,7 @@ def render_section(tag, section, verified):
     # SF's carry no party and get no party column; the legislature rosters carry
     # one on every record; the offices are named differently per chamber and
     # several are absent, so the first one a record carries wins per section.
-    has_party = any(roster[k].get("party") for k in named)
+    has_party = any(rec.get("party") for rec in named)
     # AN OFFICE COLUMN ONLY WHERE THE OFFICE IS ONE LINE. The city rosters carry
     # `office` as a single street address, which reads as a table cell. The
     # legislature and congressional rosters carry `districtOffice` as a LIST of
@@ -190,8 +346,33 @@ def render_section(tag, section, verified):
     # when the value is a string and not when it is a list, which is a property
     # of the roster rather than a choice restated per page.
     office_key = next((f for f in ("office", "districtOffice")
-                       if any(isinstance(roster[k].get(f), str) and roster[k][f]
-                              for k in named)), None)
+                       if any(isinstance(rec.get(f), str) and rec[f]
+                              for rec in named)), None)
+    # THE SAME RULE FOR THREE MORE FIELDS, each of which is a fact about the
+    # person and not about the body. Measured 2026-09-16 across every roster
+    # these tables read: `role` appears on the township, judge and school-board
+    # sections and on no other, `phone` on Chicago's wards, the Wisconsin bench
+    # and Racine's board, and `termExpires` on the two Wisconsin boards. A
+    # column heading cannot be derived from a role, so role_label is stated the
+    # way `seat` is; the other two name themselves.
+    #
+    # THE PHONE COLUMN REACHES A PAGE THIS CHANGE WAS NOT ABOUT, which is what
+    # a derived column means: Chicago's ward roster carries a telephone on all
+    # 50 records, so il/ward.html gains the column too. That is the design
+    # working rather than a side effect to suppress.
+    #
+    # `email` IS DELIBERATELY NOT ONE OF THEM. It is on the Iowa, Michigan and
+    # Wisconsin legislature rosters, so deriving it would have put 429 more
+    # addresses into three pages this change was not about, and the one section
+    # here that would gain by it carries eight. A column that wide is its own
+    # decision, not a consequence of this one.
+    has_role = any(rec.get("role") for rec in named)
+    if has_role and not section.get("role_label"):
+        fail("%s/%s carries a role and the section names no role_label — a "
+             "column heading cannot be derived from one"
+             % (tag, section["roster"]))
+    has_phone = any(rec.get("phone") for rec in named)
+    has_term = any(rec.get("termExpires") for rec in named)
     # A CITATION COLUMN WHERE THE ROSTER CITES PER RECORD. Measured 2026-09-15
     # across every roster these tables read, `source_url` appears on exactly one
     # — nypd-precinct-info.json, where each commander comes from that precinct's
@@ -200,24 +381,27 @@ def render_section(tag, section, verified):
     # member's own official page, and adding a column to those tables is a
     # different decision than this one. The label is stated, like `seat` and
     # `holder`, because nothing in a URL says what to call it.
-    link_key = "source_url" if all(roster[k].get("source_url") for k in named) else None
+    link_key = ("source_url" if all(rec.get("source_url") for _s, rec in rows_in)
+                else None)
     if link_key and not section.get("link_label"):
         fail("%s/%s carries source_url on every record and the section names no "
              "link_label — a column heading cannot be derived from a URL"
              % (tag, section["roster"]))
 
+    extras = (bool(has_role) + bool(has_party) + bool(office_key)
+              + bool(has_phone) + bool(has_term) + bool(link_key))
     rows = []
-    for k in keys:
-        rec = roster[k] if isinstance(roster[k], dict) else {}
+    for seat, rec in rows_in:
         name = rec.get(name_field)
-        seat = "%s %s" % (section["seat"], k)
         if not name:
             # A seat the roster does not name is printed as one. Leaving it out
             # would make the table claim a smaller body than the state elects.
+            # A seat the source calls VACANT says so instead, which is a
+            # stronger statement than "not listed" and a different one.
             cells = ['<td>%s</td>' % html.escape(seat),
-                     '<td class="who">Not listed</td>']
-            cells += ["<td></td>"] * (bool(has_party) + bool(office_key)
-                                      + bool(link_key))
+                     '<td class="who">%s</td>'
+                     % ("Vacant" if rec.get("vacant") else "Not listed")]
+            cells += ["<td></td>"] * extras
             rows.append("      <tr>%s</tr>" % "".join(cells))
             continue
         # The <meta> sits INSIDE a cell, not between <tr> and <td>. An HTML
@@ -227,8 +411,10 @@ def render_section(tag, section, verified):
         cells = ['<td>%s</td>' % html.escape(seat),
                  '<td class="who"><meta itemprop="jobTitle" content="%s, %s">'
                  '<span itemprop="name">%s</span></td>'
-                 % (html.escape(section["holder"], quote=True),
+                 % (html.escape(rec.get("role") or section["holder"], quote=True),
                     html.escape(seat, quote=True), html.escape(name))]
+        if has_role:
+            cells.append("<td>%s</td>" % html.escape(rec.get("role") or ""))
         if has_party:
             # party_name maps notation and decides nothing about a person: New
             # York's fusion labels ("Democratic/Working Families") are not in the
@@ -238,6 +424,10 @@ def render_section(tag, section, verified):
         if office_key:
             cells.append('<td itemprop="address">%s</td>'
                          % html.escape(rec.get(office_key) or ""))
+        if has_phone:
+            cells.append("<td>%s</td>" % tel_link(rec.get("phone")))
+        if has_term:
+            cells.append("<td>%s</td>" % html.escape(rec.get("termExpires") or ""))
         if link_key:
             # No itemprop. The cell sits inside the Person scope, so any
             # itemprop here would claim the precinct's page is a property of the
@@ -251,10 +441,16 @@ def render_section(tag, section, verified):
 
     head = ["<th>%s</th>" % html.escape(section["seat"]),
             "<th>%s</th>" % html.escape(section["holder"])]
+    if has_role:
+        head.append("<th>%s</th>" % html.escape(section["role_label"]))
     if has_party:
         head.append("<th>Party</th>")
     if office_key:
         head.append("<th>%s</th>" % html.escape(section["office_label"]))
+    if has_phone:
+        head.append("<th>Telephone</th>")
+    if has_term:
+        head.append("<th>Term ends</th>")
     if link_key:
         head.append("<th>Source</th>")
 
@@ -291,7 +487,7 @@ def render_section(tag, section, verified):
 
 """ % {
         "heading": html.escape(section["heading"]),
-        "n": len(keys),
+        "n": len(rows_in),
         # "seats on the Illinois House" is right for eleven of the twelve
         # entries and wrong for the one whose holders are appointed, so both
         # words are stated with the elected reading as the default.
@@ -303,6 +499,13 @@ def render_section(tag, section, verified):
         "agreement": agreement,
         "rows": "\n".join(rows),
     }
+
+
+def tel_link(value):
+    if not value:
+        return ""
+    return '<a href="tel:%s">%s</a>' % (re.sub(r"[^0-9+]", "", value),
+                                        html.escape(value))
 
 
 def render(entry):
@@ -354,18 +557,15 @@ def verify_shipped(entry):
         shipped = f.read()
     named = 0
     for section in entry["sections"]:
-        roster = load(roster_path(entry["tag"], section["roster"]))
         field = section.get("name_field", "name")
-        missing = [k for k, rec in sorted(roster.items(),
-                                          key=lambda kv: district_key(kv[0]))
-                   if isinstance(rec, dict) and rec.get(field)
+        rows = section_rows(entry["tag"], section)
+        missing = [seat for seat, rec in rows if rec.get(field)
                    and html.escape(rec[field]) not in shipped]
         if missing:
             fail("%s does not name %d of %s's members (%s) — the table is "
                  "present and does not carry them"
                  % (rel, len(missing), section["roster"], ", ".join(missing[:5])))
-        named += sum(1 for rec in roster.values()
-                     if isinstance(rec, dict) and rec.get(field))
+        named += sum(1 for _seat, rec in rows if rec.get(field))
     return named
 
 
