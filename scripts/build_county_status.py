@@ -553,6 +553,11 @@ def check_published_counts(served):
                            % (m.group(1), served))
             break
 
+    for e in NOT_THE_SERVED_COUNT:
+        if not os.path.isfile(os.path.join(REPO_ROOT, e["page"])):
+            bad.append("NOT_THE_SERVED_COUNT excuses %s (%s) and that page is "
+                       "gone — drop the entry" % (e["page"], e["date"]))
+
     targets = sorted(glob.glob(os.path.join(REPO_ROOT, "*.html")) +
                      glob.glob(os.path.join(REPO_ROOT, "*", "*.html")))
     for path in targets:
@@ -570,7 +575,21 @@ def check_published_counts(served):
             continue
         with open(path, encoding="utf-8") as f:
             text = visible_text(f.read())
-        for m in re.finditer(r"(\d+)\s+Illinois\s+counties", text):
+        excused = next((e for e in NOT_THE_SERVED_COUNT
+                        if e["page"] == rel.replace(os.sep, "/")), None)
+        found = list(re.finditer(r"(\d+)\s+Illinois\s+counties", text))
+        if excused:
+            if not found:
+                bad.append("%s is excused from this sweep (%s) and no longer "
+                           "carries an '<n> Illinois counties' claim — drop the "
+                           "NOT_THE_SERVED_COUNT entry" % (rel, excused["date"]))
+            else:
+                print("build-county-status: ~ %s says %s Illinois counties and "
+                      "is not the served count (%s): %s"
+                      % (rel, found[0].group(1), excused["date"],
+                         excused["reason"]))
+            continue
+        for m in found:
             if int(m.group(1)) != served:
                 bad.append("%s: says %s Illinois counties, derived is %d"
                            % (rel, m.group(1), served))
@@ -632,6 +651,30 @@ def check_published_counts(served):
                        "this gate reads the served count there, so a reword "
                        "that drops the phrase leaves the manifest unguarded")
     return bad
+
+
+# "<n> Illinois counties" that is NOT the served-county claim.
+#
+# The page sweep below reads every "<n> Illinois counties" as a statement of how
+# far this site's county-dispatched layers reach, which held while that was the
+# only reason to write the phrase. il/judicial-subcircuit.html writes it about a
+# different set entirely — the counties whose circuit judges are elected from a
+# subcircuit — and there is nothing in the sentence a regex can tell apart.
+#
+# So the exception is stated, in the shape ACCEPTED_DROPS and
+# EXPECTED_UNREACHABLE already use: a reason, a date, and a re-audit every run.
+# An entry whose file is gone FAILS, and so does one whose file no longer
+# carries the phrase it excuses — which is what stops it outliving its subject.
+# The excused number is not unguarded: build_concept_pages.py derives it from
+# il/index.html's own dispatch entries on the run that writes the page, so it
+# cannot be hand-typed, which is the failure this sweep exists to catch.
+NOT_THE_SERVED_COUNT = [
+    dict(page="il/judicial-subcircuit.html",
+         reason="the counties that elect circuit judges from a subcircuit, "
+                "derived by build_concept_pages.py from il/index.html's own "
+                "judicial-subcircuit dispatch entries",
+         date="2026-09-16"),
+]
 
 
 def main():

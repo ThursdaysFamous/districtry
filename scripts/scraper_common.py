@@ -30,9 +30,10 @@ STRING. The sentence above said "several sites in this fleet" for ten days
 (it landed 2026-09-02) without naming one. scripts/probe_user_agents.py asks each host the same page
 four ways — each stack with UA_ROSTER_BOT and with UA_CHROME_WIN_126 plus
 UA_HINTS_CHROME_126 — and writes user-agent-measurements.json. Measured
-2026-09-12 across the 290 hosts a browser-string caller reaches, 61 of them
-re-measured 2026-09-13 at the page a scraper reads rather than the directory
-above it: 220 serve UA_ROSTER_BOT a full page, 18 refuse it and answer the
+2026-09-12 across 294 hosts, of which 282 are reached by a browser-string
+caller, 65 of them re-measured since — 61 on 2026-09-13 at the page a scraper
+reads rather than the directory above it, and four county GIS services on
+2026-09-15: 224 serve UA_ROSTER_BOT a full page, 18 refuse it and answer the
 browser string, and 7 refuse the `requests` STACK while serving the same token
 on the stdlib client, so on those a browser string is credited with a fix the
 stack made. (The first sweep read 203: 37 hosts had been probed at the first
@@ -43,7 +44,7 @@ and the artifact rather than remembered): 104 files send a browser string; 64
 of them reach only hosts that serve the token a full page, 22 more reach no
 host that refuses the token (one or more answered nothing or refused the
 `requests` stack), and 18 reach at least one host that refuses it -- and 282 of
-the 290 measured hosts are still reached by such a caller. THESE FIGURES ARE
+the 294 measured hosts are still reached by such a caller. THESE FIGURES ARE
 GATED: `probe_user_agents.py --check` parses them out of this docstring,
 CLAUDE.md and the guidebook and FAILS naming the current ones when any differs
 from the tree and the artifact, so renaming a scraper to the token moves them

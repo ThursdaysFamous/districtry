@@ -123,6 +123,13 @@
         setPinnedParent(parent.id);
       }
     }
+    // #q=<address> — an address handed over by a question page's lookup
+    // form; prefillGeocodeSearch runs the app's own bounded search on it.
+    // A link carrying BOTH a point and a query keeps the point: it is
+    // already an exact answer, and re-geocoding could move it. It sits after
+    // the pin because it is not a state parse — it starts a search from the
+    // state the parses above have already applied.
+    if (params.q && !params.point) prefillGeocodeSearch(params.q);
   }
 
   /* ---------- share controls — the point chip's single "Share" surface -----

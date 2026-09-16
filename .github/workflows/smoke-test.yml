@@ -231,6 +231,29 @@ jobs:
       - name: Privacy page matches what the apps actually do
         run: python3 scripts/build_privacy_page.py --check
 
+      # /about.html states this project's own size — how many places it answers
+      # in, how many officeholders it names, how many gaps it has recorded — and
+      # a stated size is the claim that goes stale first: every one of those
+      # numbers has moved inside a fortnight in this repo's history. So the page
+      # carries no number the generator did not read from a shipped file on the
+      # run that wrote it, and this fails when the tree moves under it. It
+      # shares the root pages' shell with the privacy page, so it also fails if
+      # that shell is edited for one page and not the other.
+      - name: About page matches the tree it describes
+        run: python3 scripts/build_about_page.py --check
+
+      # Which analytics host each page loads, held to the worksheet that
+      # declares it. `brand.analytics` is the one place that says whether an
+      # instance runs Google Analytics, and the generator emits the tag into
+      # that instance's index.html and nowhere else — every sub-page's was a
+      # hand-written copy, and two of them (ca/sources.html, wi/sources.html)
+      # were reporting into Chicago's property while their own apps declare no
+      # ga_id. It also held the counter figure: 192 of 236 pages carry no
+      # counter at all, including all 183 per-county pages, so the traffic
+      # report has never counted the largest page set on the site.
+      - name: Analytics match the worksheets that declare them
+        run: python3 scripts/validate_analytics.py
+
       # The deployment-history pages (opt-in per instance): the stat tiles are
       # MEASURED from the shipped data files, so any change that moves a number
       # regenerates the page or fails here — a history page that has drifted
@@ -270,6 +293,16 @@ jobs:
       - name: County board pages match their rosters
         run: python3 scripts/build_county_pages.py --check
 
+      # The seven Illinois counties whose board MEMBERS ride the same GIS
+      # feature as the boundary, so the app fetches both in one request and no
+      # roster file ever existed — which meant the gate above, which enumerates
+      # roster FILES, gave none of them a page. This asks the question that gate
+      # cannot: is every county with a board card either snapshotted here or
+      # recorded with a reason why it cannot be. Offline; it reads il/index.html
+      # and the tree and fetches nothing.
+      - name: Every Illinois board card has a roster or a recorded reason
+        run: python3 scripts/build_il_gis_board_rosters.py --check
+
       # /llms.txt, the guide robots.txt points a client at. GENERATED, because
       # the llms.txt convention is a hand-written markdown file and a
       # hand-written one here would list the instances, their layer counts,
@@ -298,6 +331,46 @@ jobs:
       # eight near-identical hand-written files produce.
       - name: Redirect shells and the 404 match their sources
         run: python3 scripts/build_redirect_stubs.py --check
+
+      # The address box on the eleven question pages. It is one form generated
+      # eleven times, and every per-page fact in it — the layers it opens, the
+      # button's own words, the place named in the placeholder — is read off
+      # that page's .cta link and metros.json. A page that changes which layers
+      # it opens, or a new question page that ships without a form, fails here
+      # rather than serving a box that hands the app the wrong layers.
+      - name: Question pages carry the address box their own CTA describes
+        run: python3 scripts/build_question_forms.py --check
+
+      # The city rosters in the served bytes. build_county_pages.py put 2,650
+      # county officeholders where a crawler can read them and left the city
+      # seats behind a JSON fetch: measured 2026-09-15, NYC's 51 Council
+      # Members and SF's 11 Supervisors appeared in no served byte of this
+      # site. This gates the tables against the rosters they are built from,
+      # FAILS on a weekly roster workflow that rewrites one without
+      # regenerating the page, and re-audits the seats recorded as not tabled
+      # yet — Chicago's 50 alderpeople, whose roster is a live Socrata call
+      # rather than a shipped file.
+      # The twelve legislator pages. Every app already carried its state's two
+      # chambers and its U.S. House districts with a named member on each card
+      # — 1,058 people across eighteen rosters — and measured 2026-09-15 not one
+      # of them appeared in any served byte, on a site with no page at all for
+      # "who is my state representative". This gates the pages against the
+      # rosters and the worksheets they are built from, and fails on a page
+      # naming a layer its own instance does not register.
+      - name: Legislator pages match their rosters
+        run: python3 scripts/build_legislator_pages.py --check
+
+      # The four concept pages — circuit court, township, school board and
+      # judicial subcircuit. Three name people who had shipped as data/app files
+      # for months and reached a reader only after JavaScript fetched them; the
+      # fourth names nobody, because an Illinois judge is elected FROM a
+      # subcircuit and then sits circuit-wide, and its inventory table is parsed
+      # out of il/index.html's own dispatch entries rather than kept by hand.
+      - name: Concept pages match their rosters
+        run: python3 scripts/build_concept_pages.py --check
+
+      - name: City officeholder tables match their rosters
+        run: python3 scripts/build_officeholder_tables.py --check
 
       # The favicon is the one branded asset whose audience is a CRAWLER, and it
       # was the one nobody could see was broken: every page carried the mark
@@ -355,6 +428,32 @@ jobs:
       # written against it. Stdlib only.
       - name: Skills point at things that exist
         run: python3 scripts/validate_skills.py
+
+      # The steward skill is the battery below, written out for a reader to run
+      # locally, and CLAUDE.md has claimed since 2026-09-12 that the two agree
+      # exactly. Nothing compared them until 2026-09-16, when the skill turned
+      # out to be missing three gates wired into CI on the day that sentence was
+      # written — so an agent following the skill ran a green battery and pushed
+      # a branch this job failed, which is the one thing the skill exists to
+      # prevent.
+      - name: The steward skill runs the same battery this job does
+        run: python3 scripts/validate_steward_mirror.py
+
+      # The graph the generated pages publish: 183 county boards, 20 rostered
+      # question pages and six data catalogues. Each generator's --check proves
+      # its page matches what that generator produces today, which is a different
+      # question from whether the graph is coherent — a dangling @id, a list
+      # whose numberOfItems disagrees with its own elements, or a block that no
+      # longer parses passes every one of them.
+      - name: Structured data parses, resolves and counts what it says
+        run: python3 scripts/validate_structured_data.py
+
+      # The drafted Wikidata item. Its jurisdictions come from metros.json, so a
+      # new instance has to reach it; nothing here edits wikidata.org. The
+      # network re-check of its 20 verified ids is --verify and is deliberately
+      # not scheduled — see the file it writes.
+      - name: The Wikidata draft still matches the fleet manifest
+        run: python3 scripts/build_wikidata_draft.py --check
 
       # No app may ask an ArcGIS service for f=geojson. The export unnests a
       # feature's interior rings, so a publisher's cutout becomes ground the

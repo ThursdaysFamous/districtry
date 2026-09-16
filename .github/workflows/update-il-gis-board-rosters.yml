@@ -1,0 +1,95 @@
+name: Update the seven GIS-only Illinois county board rosters
+
+# Weekly refresh of il/data/source/{effingham,kankakee,madison,mclean,st-clair,
+# whiteside,winnebago}-county-board-members.json from the same county GIS
+# services il/index.html already calls for the card. Opens a PR, never commits
+# to main.
+#
+# ONE JOB FOR SEVEN COUNTIES, because it is one gap rather than seven. Each of
+# these counties publishes its members on the SAME feature that carries the
+# board boundary, so the app asks for both in one request and no roster file
+# ever existed — which meant build_county_pages.py, which enumerates roster
+# FILES, gave none of them a page. 158 seats, three of the state's largest
+# boards, named in no served byte of this site until 2026-09-15.
+#
+# WHY data/SOURCE. The card still calls the GIS live, so validate_index.py would
+# rightly refuse these files in data/app, which it requires index.html to
+# reference. build_county_pages.il_districted reads both directories and derives
+# each page's "the map reads the same roster" sentence from which one the file
+# came from, so all seven pages say the card reads the source live and can be up
+# to a week newer than the table.
+
+on:
+  schedule:
+    - cron: "0 23 * * 4" # Thursday 23:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-rosters:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI; a PR opened with the default GITHUB_TOKEN fires no workflows.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Install dependencies
+        run: pip install -c scripts/requirements.txt requests
+      - name: Fetch the seven counties' board rows
+        # Reads robots.txt per host first and fails the whole run if any county
+        # is lost — a partial set would drop a county's page without saying so.
+        run: python3 scripts/il_gis_board_scraper.py
+      - name: Rebuild the rosters
+        # Refuses to write a county below its measured seat floor, and fails if
+        # Whiteside's nine-names-in-one-field split starts producing a bare name
+        # suffix.
+        run: python3 scripts/build_il_gis_board_rosters.py
+      - name: Regenerate the pages that name them
+        run: python3 scripts/build_county_pages.py
+      - name: Validate app + data files
+        run: python3 scripts/validate_index.py il/index.html
+      - name: Check for changes
+        id: diff
+        run: |
+          git diff --quiet -- il/data/source il/county-board \
+            && echo "changed=false" >> "$GITHUB_OUTPUT" \
+            || echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/il-gis-board-rosters-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut the branch from main's CURRENT tip rather than from the checkout
+          # this run started with: these runs take tens of minutes, and a branch
+          # that also differs from main in .github/workflows/ reads to GitHub as
+          # a workflow update and is refused for a token without `workflow`
+          # scope.
+          git fetch --depth=1 origin main
+          git checkout -B "$branch" FETCH_HEAD
+          python3 scripts/il_gis_board_scraper.py
+          python3 scripts/build_il_gis_board_rosters.py
+          # The seven il/county-board/*.html pages are GENERATED from the
+          # rosters this job just rewrote, so regenerate them here or the smoke
+          # gate's `build_county_pages.py --check` fails on this PR with pages
+          # naming last week's members. The sitemap follows, because those pages
+          # are in it and each lastmod is its own file's last commit.
+          python3 scripts/build_county_pages.py
+          python3 scripts/build_sitemap.py
+          git add il/data/source il/county-board il/county-board.html sitemap.xml
+          git commit -m "Update the seven GIS-only Illinois county board rosters"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create --title "Update the seven GIS-only Illinois county board rosters" \
+              --body "Automated weekly refresh of Effingham, Kankakee, Madison, McLean, St. Clair, Whiteside and Winnebago county board members from the same county GIS services the map cards call (\`scripts/il_gis_board_scraper.py\` + \`build_il_gis_board_rosters.py\`), with their \`il/county-board/*.html\` pages regenerated from it. The map cards read those services live and are unaffected. Review before merging." \
+              --base main --head "$branch"
+          fi

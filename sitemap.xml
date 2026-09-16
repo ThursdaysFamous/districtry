@@ -9,13 +9,13 @@
        it makes the whole sitemap unparseable. One did, from 2026-09-12. -->
   <url>
     <loc>https://districtry.com/il/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://districtry.com/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -33,7 +33,7 @@
   </url>
   <url>
     <loc>https://districtry.com/mi/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -50,1256 +50,1412 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://districtry.com/ca/congress.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/ca/faq.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ca/state-legislature.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://districtry.com/ca/supervisor-district.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ia/congress.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/faq.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ia/state-legislature.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/il/congress.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/faq.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/il/judicial-subcircuit.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/police-district.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/precinct.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/school-board.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/il/state-legislature.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/il/township.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/ward.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/mi/congress.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/county-commissioner.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/faq.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/mi/state-legislature.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://districtry.com/ny/community-board.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ny/congress.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://districtry.com/ny/council-district.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://districtry.com/ny/faq.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ny/police-precinct.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/ny/state-legislature.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/wi/circuit-court.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/wi/congress.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/faq.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/wi/school-board.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/wi/state-legislature.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://districtry.com/ca/sources.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/adams.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/bremer.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/cerro-gordo.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/franklin.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/grundy.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/hamilton.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/linn.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/lyon.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/madison.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/mitchell.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/monona.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/pocahontas.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/polk.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/sac.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/taylor.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/webster.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/county-supervisor/winneshiek.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/sources.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/adams.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/alexander.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/boone.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/brown.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/calhoun.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/carroll.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/cass.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/clark.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/clay.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/clinton.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/coles.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/il/county-board/cook.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/crawford.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/dekalb.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/dewitt.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/douglas.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/dupage.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/edgar.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/edwards.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/il/county-board/effingham.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/franklin.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/fulton.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/gallatin.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/greene.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/grundy.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/hamilton.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/hancock.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/henry.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/iroquois.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/jackson.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/jefferson.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/jo-daviess.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/kane.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/il/county-board/kankakee.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/kendall.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/knox.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/lake.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/lasalle.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/lee.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/livingston.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/logan.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/macon.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/il/county-board/madison.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/marshall.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/mason.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/massac.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/mcdonough.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/mchenry.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/il/county-board/mclean.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/menard.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/mercer.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/monroe.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/montgomery.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/morgan.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/moultrie.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/ogle.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/peoria.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/pike.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/pulaski.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/putnam.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/randolph.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/richland.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/rock-island.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/saline.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/sangamon.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/schuyler.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/shelby.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/il/county-board/st-clair.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/stark.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/stephenson.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/tazewell.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/union.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/vermilion.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/wabash.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/warren.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/washington.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/wayne.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/white.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/il/county-board/whiteside.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/will.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/williamson.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/il/county-board/winnebago.html</loc>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/county-board/woodford.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/sources.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/county-commissioner/berrien.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/county-commissioner/calhoun.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/county-commissioner/eaton.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/county-commissioner/grand-traverse.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/county-commissioner/jackson.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/county-commissioner/kalamazoo.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/county-commissioner/kent.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/county-commissioner/lapeer.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/county-commissioner/lenawee.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/county-commissioner/macomb.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/county-commissioner/midland.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/county-commissioner/monroe.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/county-commissioner/muskegon.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/county-commissioner/saginaw.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/county-commissioner/st-clair.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/county-commissioner/wayne.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/sources.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ny/sources.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/adams.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/ashland.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/barron.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/bayfield.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/brown.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/buffalo.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/burnett.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/calumet.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/chippewa.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/clark.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/columbia.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/crawford.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/dane.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/dodge.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/door.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/douglas.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/dunn.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/eau-claire.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/florence.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/fond-du-lac.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/forest.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/grant.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/green-lake.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/green.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/iowa.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/iron.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/jackson.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/jefferson.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/juneau.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/kenosha.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/kewaunee.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/la-crosse.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/lafayette.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/langlade.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/lincoln.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/manitowoc.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/marathon.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/marinette.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/marquette.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/menominee.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/milwaukee.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/monroe.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/oconto.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/oneida.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/outagamie.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/ozaukee.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/pepin.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/pierce.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/polk.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/portage.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/price.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/racine.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/richland.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/rock.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/rusk.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/sauk.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/sawyer.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/shawano.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/sheboygan.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/st-croix.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/taylor.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/trempealeau.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/vernon.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/vilas.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/walworth.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/washburn.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/washington.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/waukesha.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/waupaca.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/waushara.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/winnebago.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/county-board/wood.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/sources.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://districtry.com/ia/history.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://districtry.com/il/history.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://districtry.com/mi/history.html</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://districtry.com/wi/history.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://districtry.com/about.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/privacy.html</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://districtry.com/sponsorship.html</loc>
-    <lastmod>2026-09-11</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

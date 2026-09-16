@@ -689,6 +689,15 @@ jobs:
       # tile that has drifted from the data it counts.
       - name: Regenerate the history page
         if: steps.build.outcome == 'success'
+      # THE PAGE NAMES THESE PEOPLE AND COUNTS THEM IN ITS OWN PROSE, so it is
+      # regenerated in the same run. Both generators gate on it: skip this and
+      # the failure lands on THIS job's own pull request, where nobody wrote the
+      # change that broke it.
+      - name: Regenerate the township page
+        run: |
+          python3 scripts/build_concept_pages.py
+          python3 scripts/build_officeholder_tables.py
+
         run: python3 scripts/build_history_page.py
 
       # The history page this job just rewrote is IN the sitemap, and the
@@ -711,7 +720,7 @@ jobs:
         id: diff
         if: steps.build.outcome == 'success'
         run: |
-          if git diff --quiet -- il/data/app/ il/history.html; then
+          if git diff --quiet -- il/data/app/ il/township.html il/history.html; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -739,7 +748,7 @@ jobs:
           # touched those same files errors instead of pushing, which is right.
           git fetch --depth=1 origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add il/data/app/municipal-officials.json il/data/app/cook-library-trustees.json il/data/app/township-officials.json il/history.html
+          git add il/data/app/municipal-officials.json il/data/app/cook-library-trustees.json il/data/app/township-officials.json il/township.html il/history.html
           git commit -m "Update municipal and township officials rosters from the county clerk directories"
           git push -u origin "$branch" --force
           # Only open a PR if one isn't already open for this branch; if it is,

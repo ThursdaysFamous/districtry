@@ -5087,6 +5087,13 @@ function initNycExplorer() {
         setPinnedParent(parent.id);
       }
     }
+    // #q=<address> — an address handed over by a question page's lookup
+    // form; prefillGeocodeSearch runs the app's own bounded search on it.
+    // A link carrying BOTH a point and a query keeps the point: it is
+    // already an exact answer, and re-geocoding could move it. It sits after
+    // the pin because it is not a state parse — it starts a search from the
+    // state the parses above have already applied.
+    if (params.q && !params.point) prefillGeocodeSearch(params.q);
   }
 
   /* ---------- share controls — the point chip's single "Share" surface -----
@@ -6171,6 +6178,37 @@ function initNycExplorer() {
         renderGeocodeResults(retry);
         if (!retry || retry.length === 0) return maybeRenderSiblingMatches(q);
       });
+    });
+  }
+
+  /* ---------- an address handed over in the URL (#q=) ----------
+   * A question page (ward.html, county-board.html and the rest) carries its
+   * own address box. It does not geocode: it builds `./#q=<address>` and
+   * hands the typed text to this app, which runs the same bounded search a
+   * reader typing in the box runs.
+   *
+   * THE HASH RATHER THAN THE QUERY STRING, and that is a privacy decision.
+   * GoatCounter's count.js sends location.search with every hit, so a `?q=`
+   * would put a reader's typed street address into the analytics record on
+   * a site whose whole standard is that a selected point is rounded to two
+   * decimals before anything is sent. A hash never leaves the browser.
+   *
+   * It SELECTS a result only when the geocoder returns exactly one. Several
+   * matches is the case where taking the first would name the wrong
+   * officeholder, so the list stays up and the reader picks. A sibling-metro
+   * row is never auto-clicked — that button navigates to another instance. */
+  function prefillGeocodeSearch(q) {
+    geocodeInputEl.value = q;
+    geoStatus.textContent = "Searching\u2026";
+    geoStatus.className = "geo-status";
+    reengageSearchShell();
+    return runGeocodeSearch(q).then(function () {
+      var own = geoResultsList.querySelectorAll("li:not(.sibling-result) > button");
+      if (own.length === 1) own[0].click();
+    })["catch"](function (err) {
+      if (err.name === "AbortError") return;
+      geoStatus.textContent = "Search failed \u2014 the geocoder may be busy. Try again in a moment.";
+      geoStatus.className = "geo-status err";
     });
   }
 

@@ -2743,7 +2743,7 @@ five Illinois sources with or without browser headers, because urllib3's TLS Cli
 differs from the ssl module's and these edges fingerprint it. A probe that varied only the
 name would credit a browser string with a fix the stack made.
 
-**WHAT IT FOUND, across 290 hosts** (2026-09-12; 61 re-measured 2026-09-13 — see below).
+**WHAT IT FOUND, across 294 hosts** (2026-09-12; 65 re-measured 2026-09-13 — see below).
 It was 291 until #944's second commit: `drive.google.com` was recorded
 `robots-disallows-this-path`, the Wisconsin board scrape stopped fetching the Drive
 document it named, and `--check` then failed the entry as orphaned. A host leaving the
@@ -2752,7 +2752,7 @@ updated in that commit:
 
 | verdict | hosts | what it means |
 |---|---|---|
-| `token-ok` | 220 | the districtry token gets a full page on the plain `requests` stack |
+| `token-ok` | 224 | the districtry token gets a full page on the plain `requests` stack |
 | `token-refused-and-stack` | 15 | refuses the token on both stacks, serves stdlib + Chrome |
 | `stack-not-token` | 7 | refuses `requests`, serves the SAME token on stdlib |
 | `token-refused` | 3 | refuses the token on `requests`, serves Chrome on `requests` |
@@ -2765,11 +2765,11 @@ updated in that commit:
 
 **THE FIRST SWEEP READ 203 `token-ok`, AND 60 HOSTS HAD BEEN MEASURED AT THE WRONG ADDRESS** (found by #928 on www.chicago.gov, 2026-09-12; re-measured 2026-09-13). The probe's inventory ran a regex over the raw file text, so a URL written as two adjacent string literals contributed only its first half — a bare directory — and `choose_url()` ranked by shortest path, so that directory outranked the page the scraper reads. 37 hosts were probed at such a fragment and 23 more at a directory a page sat under. A directory that denies everyone read as a host that denies the token (www.chicago.gov: `all-refused` at the directory, `token-refused` at the page), and a directory that answers a 458-byte listing read as `answers-nothing` (seven ArcGIS Online orgs, all `token-ok` at the service they actually serve). Re-probed at the page, 25 verdicts moved, 17 of them to `token-ok`; **not one moved INTO a refusal**, so no browser string in the fleet was ever licensed by a wrong address. `probe_user_agents.py` now joins adjacent literals through the AST, ranks a page above a directory, dates each re-measured row on its own, and moves the top-level `measured` only on a full sweep.
 
-**18 HOSTS REFUSE THE TOKEN AND 220 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
+**18 HOSTS REFUSE THE TOKEN AND 224 SERVE IT A FULL PAGE.** Per file, as `probe_user_agents.py
 --inventory` prints it on this tree: 104 files send a browser string; 18 reach at least one
 host that genuinely refuses the token, **64 reach only hosts that serve the token a full
 page, and 22 more reach no host that refuses it** (one or more answered nothing or refused
-the `requests` stack); 282 of the 290 measured hosts are still reached by such a caller.
+the `requests` stack); 282 of the 294 measured hosts are still reached by such a caller.
 **THREE OF THOSE FILES HAVE BEEN RENAMED TO THE TOKEN SINCE THE SWEEP** and the per-file
 figures move with them — the Iowa minutes-chair scraper (#916) and the Iowa county-officers
 scraper (both measured `token-ok`), and `jodaviess_county_board_scraper.py` (#945, whose own

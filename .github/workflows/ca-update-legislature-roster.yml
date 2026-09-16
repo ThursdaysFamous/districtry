@@ -87,7 +87,14 @@ jobs:
           # touched those same files errors instead of pushing, which is right.
           git fetch --depth=1 origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add ca/data/app/ca-senate-members.json ca/data/app/ca-assembly-members.json
+          # The legislator page carries a GENERATED table of every member in
+          # this roster, so regenerate it here or the smoke gate's
+          # `build_officeholder_tables.py --check` fails on this PR with a
+          # table naming last week's members. The sitemap follows, because that
+          # page is in it and its lastmod is the file's own last commit.
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_sitemap.py
+          git add ca/data/app/ca-senate-members.json ca/data/app/ca-assembly-members.json ca/state-legislature.html sitemap.xml
           git commit -m "Update CA State Legislature roster from OpenStates"
           git push -u origin "$branch" --force
           # Only open a PR if one isn't already open for this branch; if it is,

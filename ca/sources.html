@@ -5,22 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!-- ==== TEMPLATE:BEGIN sources-analytics ==== -->
-<!-- Google tag (gtag.js) — production host only; keeps local dev + CI out of analytics.
-     Same guard as index.html: hostname-gated and top-level-only. -->
-<script>
-  (function () {
-    if (location.hostname !== 'districtry.com') return;
-    if (window.top !== window.self) return;
-    var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-YPJ570LWJB';
-    document.head.appendChild(s);
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function () { dataLayer.push(arguments); };
-    gtag('js', new Date());
-    gtag('config', 'G-YPJ570LWJB');
-  })();
-</script>
 <!-- ==== TEMPLATE:END sources-analytics ==== -->
 
 <title>Sources &amp; data layers — districtry San Francisco</title>
@@ -515,6 +499,77 @@ main details p:first-of-type { margin-top: -2px; }
 .cta:hover, .cta:focus-visible { background: var(--accent); color: #fff; }
 .cta-note { font-size: 13px; color: var(--slate-soft); margin: 4px 0 0; }
 
+/* The address box a question page carries above its .cta link. It does not
+   geocode: it hands the typed text to the app as `./#q=<address>` and the app
+   runs its own bounded search. See the geocoder-search ENGINE block.
+
+   IT IS HIDDEN UNTIL ITS SCRIPT UNHIDES IT, so a reader with no JavaScript
+   gets the .cta link below and never an input that cannot submit.
+
+   THE BUTTON FACE FLIPS IN DARK and that is a measurement, not a preference:
+   white on --accent-deep reads 1.91:1 there (the shortfall validate_contrast
+   already records for .cta), against 9.64:1 for --paper on the same violet.
+   The landing page's search button made the same flip for the same reason.
+
+   THE STATUS LINE HAS NO ERROR COLOUR because the sub-page palette carries no
+   error token — the shell speaks --accent/--slate/--panel, and --error is not
+   among the eleven aliases build_brand_tokens.py emits. --accent-warm-deep is
+   this shell's caution hue (the .disclaimer rule below uses its lighter pair)
+   and measures 8.11:1 light / 8.64:1 dark on --panel, so the failure state is
+   painted with it rather than by adding a twelfth token. The message says what
+   went wrong in words either way. */
+.lookup { margin: 6px 0 14px; max-width: 34rem; }
+.lookup[hidden] { display: none; }
+.lookup-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.lookup-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate);
+  margin: 0 0 8px;
+}
+.lookup-row { display: flex; gap: 10px; align-items: stretch; flex-wrap: wrap; }
+.lookup-input {
+  flex: 1 1 15rem;
+  min-width: 0;
+  padding: 12px 14px;
+  font: 400 15px/1.3 var(--font-body);
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+}
+.lookup-input::placeholder { color: var(--slate); }
+.lookup-input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.lookup-go {
+  flex: 0 1 auto;
+  padding: 12px 22px;
+  font: 600 15px/1.3 var(--font-body);
+  color: #fff;
+  background: var(--accent-deep);
+  border: 1px solid var(--accent-deep);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.lookup-go:hover { background: var(--accent); border-color: var(--accent); }
+.lookup-go:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.lookup-go:disabled { opacity: .6; cursor: default; }
+:root[data-theme="dark"] .lookup-go { color: var(--paper); }
+.lookup-status {
+  margin: 10px 0 0;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--slate);
+}
+.lookup-status.err { color: var(--accent-warm-deep); }
+.lookup-or { font-size: 13px; color: var(--slate); margin: 14px 0 2px; }
+.lookup-or[hidden] { display: none; }
+
 .answer-card {
   background: var(--panel);
   border: 1px solid var(--line);
@@ -837,7 +892,7 @@ table.matrix code {
       <h1 class="title">
         <span class="title-row">
           <svg class="districtry-mark" viewBox="0 0 96 96" aria-hidden="true"><g style="mix-blend-mode:multiply"><polygon points="51.5,63.2 12.4,55.7 11.5,18.6 42.7,5.0 72.7,35.3" fill="#6d3fd1" fill-opacity="0.55"></polygon></g><g style="mix-blend-mode:multiply"><polygon points="54.1,81.9 34.6,47.9 56.5,19.3 87.5,28.1 83.8,71.0" fill="#1d5fd6" fill-opacity="0.5"></polygon></g><g style="mix-blend-mode:multiply"><polygon points="13.7,64.5 27.6,31.2 62.7,37.6 70.3,66.9 33.9,89.0" fill="#b0316e" fill-opacity="0.45"></polygon></g><circle cx="42" cy="60" r="17" fill="none" stroke="#17161c" stroke-width="11"></circle><line x1="59" y1="16" x2="59" y2="82.5" stroke="#17161c" stroke-width="11"></line></svg>
-          <span class="title-text">Sources &amp; Data Layers</span>
+          <span class="title-text">San Francisco sources &amp; data layers</span>
         </span>
       </h1>
       <p class="title-sub">Every layer in districtry San Francisco, and exactly where its data comes from.</p>
@@ -1157,6 +1212,376 @@ table.matrix code {
           </table>
         </div>
       </section>
+
+      <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DataCatalog",
+  "@id": "https://districtry.com/ca/sources.html#catalog",
+  "name": "districtry San Francisco data layers",
+  "url": "https://districtry.com/ca/sources.html",
+  "publisher": {
+    "@type": "Organization",
+    "@id": "https://districtry.com/#publisher",
+    "name": "Overberg",
+    "url": "https://overberg.co"
+  },
+  "dataset": [
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ca/sources.html#dataset-congress",
+      "identifier": "congress",
+      "name": "U.S. House District",
+      "description": "Which U.S. House district covers this address, and who represents it. Members come from the unitedstates/congress-legislators dataset, refreshed weekly and reviewed before it ships.",
+      "url": "https://districtry.com/ca/sources.html#layer-congress",
+      "isPartOf": {
+        "@id": "https://districtry.com/ca/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Congressional districts from the U.S. Census Bureau's TIGERweb Legislative service, clipped to San Francisco and shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "San Francisco"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ca/sources.html#dataset-ca-senate",
+      "identifier": "ca-senate",
+      "name": "California State Senate District",
+      "description": "Which California State Senate district covers this address, and who holds the seat. Senators come from the OpenStates bulk people export, refreshed weekly and reviewed before it ships.",
+      "url": "https://districtry.com/ca/sources.html#layer-ca-senate",
+      "isPartOf": {
+        "@id": "https://districtry.com/ca/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "California Senate districts from the U.S. Census Bureau's TIGERweb Legislative service, clipped to San Francisco and shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "San Francisco"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ca/sources.html#dataset-ca-assembly",
+      "identifier": "ca-assembly",
+      "name": "California State Assembly District",
+      "description": "Which California State Assembly district covers this address, and who holds the seat. Assemblymembers come from the OpenStates bulk people export, refreshed weekly and reviewed before it ships.",
+      "url": "https://districtry.com/ca/sources.html#layer-ca-assembly",
+      "isPartOf": {
+        "@id": "https://districtry.com/ca/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "California Assembly districts from the U.S. Census Bureau's TIGERweb Legislative service, clipped to San Francisco and shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "San Francisco"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ca/sources.html#dataset-bart-director",
+      "identifier": "bart-director",
+      "name": "BART Director District",
+      "description": "Which BART Board of Directors district covers this address, and who represents it. Directors ship with the app from BART's own board roster; the card links the board rather than inferring a name.",
+      "url": "https://districtry.com/ca/sources.html#layer-bart-director",
+      "isPartOf": {
+        "@id": "https://districtry.com/ca/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "BART district boundaries as BART publishes them to ArcGIS Online",
+          "url": "https://www.bart.gov/about/bod"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "San Francisco — the districts themselves cross city and county lines"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ca/sources.html#dataset-election-precinct",
+      "identifier": "election-precinct",
+      "name": "Election Precinct",
+      "description": "Which voting precinct this address is in. No roster: a precinct has no officeholder. The card links the city's polling-place lookup.",
+      "url": "https://districtry.com/ca/sources.html#layer-election-precinct",
+      "isPartOf": {
+        "@id": "https://districtry.com/ca/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Voting precincts published by the Department of Elections on DataSF (jg6x-23ig)",
+          "url": "https://data.sfgov.org/d/jg6x-23ig"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "San Francisco"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ca/sources.html#dataset-supervisor-district",
+      "identifier": "supervisor-district",
+      "name": "Supervisor District",
+      "description": "Which Board of Supervisors district covers this address, and who represents it. Supervisors are rebuilt weekly from the same DataSF dataset and reviewed before they ship. The volatile name field is stripped from the shipped geometry, so a decadal boundary can never freeze an officeholder.",
+      "url": "https://districtry.com/ca/sources.html#layer-supervisor-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/ca/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Current Supervisor Districts from DataSF (hcgx-vtsb), simplified and shipped with the app",
+          "url": "https://data.sfgov.org/d/hcgx-vtsb"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "San Francisco"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ca/sources.html#dataset-police-district",
+      "identifier": "police-district",
+      "name": "Police District",
+      "description": "Which SFPD district covers this address, and which station serves it. No roster is joined; the card links SFPD's own station directory rather than naming officers.",
+      "url": "https://districtry.com/ca/sources.html#layer-police-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/ca/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Current Police Districts from DataSF (d4vc-q76h), simplified and shipped with the app",
+          "url": "https://data.sfgov.org/d/d4vc-q76h"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "San Francisco"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ca/sources.html#dataset-zip-code",
+      "identifier": "zip-code",
+      "name": "ZIP Code",
+      "description": "Which ZIP Code Tabulation Area contains this address. No roster: a ZIP code has no officeholder.",
+      "url": "https://districtry.com/ca/sources.html#layer-zip-code",
+      "isPartOf": {
+        "@id": "https://districtry.com/ca/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "ZCTAs from the U.S. Census Bureau's TIGERweb service",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "San Francisco"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ca/sources.html#dataset-neighborhood",
+      "identifier": "neighborhood",
+      "name": "Neighborhood",
+      "description": "Which of the city's analysis neighborhoods contains this address. No roster: a neighborhood has no officeholder. These are the boundaries the city uses for planning and statistics, which are not always the name a listing or a local would use.",
+      "url": "https://districtry.com/ca/sources.html#layer-neighborhood",
+      "isPartOf": {
+        "@id": "https://districtry.com/ca/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Analysis Neighborhoods from DataSF (j2bu-swwd), simplified and shipped with the app",
+          "url": "https://data.sfgov.org/d/j2bu-swwd"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "San Francisco"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ca/sources.html#dataset-elementary-attendance-area",
+      "identifier": "elementary-attendance-area",
+      "name": "Elementary Attendance Area",
+      "description": "Which SFUSD elementary attendance area this address falls in. No roster; the card links SFUSD's enrollment guidance, which is what decides a placement.",
+      "url": "https://districtry.com/ca/sources.html#layer-elementary-attendance-area",
+      "isPartOf": {
+        "@id": "https://districtry.com/ca/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Elementary attendance areas published on DataSF (e6tr-sxwg)",
+          "url": "https://data.sfgov.org/d/e6tr-sxwg"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "San Francisco"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ca/sources.html#dataset-police-station",
+      "identifier": "police-station",
+      "name": "Police Station",
+      "description": "The nearest SFPD stations to this point, by straight-line distance. No roster is joined; the card gives the station and its address.",
+      "url": "https://districtry.com/ca/sources.html#layer-police-station",
+      "isPartOf": {
+        "@id": "https://districtry.com/ca/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "City facility points on DataSF (rwdu-9wb2), filtered to police stations",
+          "url": "https://data.sfgov.org/d/rwdu-9wb2"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "San Francisco"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ca/sources.html#dataset-fire-station",
+      "identifier": "fire-station",
+      "name": "Fire Station",
+      "description": "The nearest fire stations to this point, by straight-line distance. No roster is joined; the card gives the station and its address.",
+      "url": "https://districtry.com/ca/sources.html#layer-fire-station",
+      "isPartOf": {
+        "@id": "https://districtry.com/ca/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "City facility points on DataSF (nc68-ngbr), filtered to Fire Department stations",
+          "url": "https://data.sfgov.org/d/nc68-ngbr"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "San Francisco"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ca/sources.html#dataset-school-site",
+      "identifier": "school-site",
+      "name": "School Location",
+      "description": "The nearest school sites to this point, by straight-line distance. No roster is joined; the card names the school and its address.",
+      "url": "https://districtry.com/ca/sources.html#layer-school-site",
+      "isPartOf": {
+        "@id": "https://districtry.com/ca/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "School sites published on DataSF (7e7j-59qk)",
+          "url": "https://data.sfgov.org/d/7e7j-59qk"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "San Francisco"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ca/sources.html#dataset-post-office",
+      "identifier": "post-office",
+      "name": "Post Office",
+      "description": "The nearest post offices to this point, by straight-line distance. No roster is joined; the card names the facility and its address.",
+      "url": "https://districtry.com/ca/sources.html#layer-post-office",
+      "isPartOf": {
+        "@id": "https://districtry.com/ca/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "USGS National Map structures service, queried within the metro bounding box",
+          "url": "https://www.usgs.gov/programs/national-geospatial-program/national-map"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "San Francisco"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ca/sources.html#dataset-library",
+      "identifier": "library",
+      "name": "Library",
+      "description": "The nearest public libraries to this point, by straight-line distance. No roster is joined; the card names the branch and its address.",
+      "url": "https://districtry.com/ca/sources.html#layer-library",
+      "isPartOf": {
+        "@id": "https://districtry.com/ca/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "City facility points on DataSF (fhhu-wqa7), filtered to the Public Library department",
+          "url": "https://data.sfgov.org/d/fhhu-wqa7"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "San Francisco"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ca/sources.html#dataset-early-voting",
+      "identifier": "early-voting",
+      "name": "Voting Center & Ballot Drop-off",
+      "description": "The nearest early-voting sites to this point for the current election. No roster: a voting site has no officeholder. Hours change per election — the card links the Department of Elections, which is the only current authority on them.",
+      "url": "https://districtry.com/ca/sources.html#layer-early-voting",
+      "isPartOf": {
+        "@id": "https://districtry.com/ca/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Early-voting sites transcribed per election from the Department of Elections and shipped with the app",
+          "url": "https://www.sf.gov/vote-in-person"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "San Francisco"
+      }
+    }
+  ]
+}
+      </script>
 <!-- ==== GENERATED:END layer-matrix ==== -->
   </section>
 
@@ -1222,7 +1647,8 @@ table.matrix code {
       <p class="footer-byline">Written and maintained by
       <a href="https://overberg.co" rel="author noopener" target="_blank">Adam Overberg</a>
       — <a href="mailto:hello@overberg.co">hello@overberg.co</a>.
-      Corrections are welcome; every one gets a reply.</p>
+      Corrections are welcome; every one gets a reply.
+      <a href="/about.html">About this project</a>.</p>
       <!-- ==== ENGINE:END footer-byline ==== -->
     </div>
   </div>

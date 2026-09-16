@@ -1,7 +1,7 @@
 <!-- ==== GENERATED:BEGIN metro-header ==== -->
 # districtry San Francisco
 
-**Click the map for every district you're in, and who represents you.**
+**Every civic district that covers your point in San Francisco, and who represents you there.**
 <!-- ==== GENERATED:END metro-header ==== -->
 
 A single-file, dependency-light web app: one `index.html`, Leaflet for the map, no build step, no framework, no server-side code. Deployed as a static site to [sf.chidistricts.com](https://sf.chidistricts.com/) — any static host or server works.

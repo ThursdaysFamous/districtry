@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!-- ==== GENERATED:BEGIN head-brand ==== -->
-<title>What district am I in? — districtry Wisconsin</title>
-<meta name="description" content="Tap the map or search a Wisconsin address: county, city or town, school district, state and U.S. House — and who represents you. Free, no login." />
+<title>Wisconsin district lookup — districtry Wisconsin</title>
+<meta name="description" content="Tap the map or search a Wisconsin address: county board, circuit court, school district, Assembly and Senate — and who represents you. Free, no login." />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://districtry.com/wi/" />
 
 <!-- Open Graph / social share previews (Facebook, LinkedIn, iMessage, Slack…) -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="districtry Wisconsin" />
-<meta property="og:title" content="What district am I in? — districtry Wisconsin" />
+<meta property="og:title" content="Wisconsin district lookup — districtry Wisconsin" />
 <meta property="og:description" content="Click the map or search any Wisconsin address to see every civic district that covers it, and who represents you." />
 <meta property="og:url" content="https://districtry.com/wi/" />
 <meta property="og:image" content="https://districtry.com/wi/og-image.png" />
@@ -24,7 +24,7 @@
 
 <!-- Twitter / X card -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="What district am I in? — districtry Wisconsin" />
+<meta name="twitter:title" content="Wisconsin district lookup — districtry Wisconsin" />
 <meta name="twitter:description" content="See every civic district that covers a Wisconsin address, and who represents you." />
 <meta name="twitter:image" content="https://districtry.com/wi/og-image.png" />
 <!-- ==== GENERATED:END head-brand ==== -->
@@ -3580,7 +3580,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 <!-- ==== GENERATED:BEGIN masthead-brand ==== -->
         <span class="title-text"><a class="dst-wordmark-link" href="../">districtry</a> <span class="dst-metro-switch"><button type="button" class="title-metro dst-metro-btn" aria-expanded="false" aria-haspopup="true" aria-label="districtry Wisconsin — switch explorer">/ wi<span class="dst-metro-caret" aria-hidden="true">&#9662;</span></button><span class="dst-metro-menu" role="menu"></span></span></span>
       </span>
-      <h1 class="title-tagline">Click the map for every district you're in, and who represents you.</h1>
+      <h1 class="title-tagline">Every civic district that covers your point in Wisconsin, and who represents you there.</h1>
 <!-- ==== GENERATED:END masthead-brand ==== -->
     </div>
     <div class="map-toolbar">
@@ -4948,6 +4948,13 @@ function initWisconsinExplorer() {
         setPinnedParent(parent.id);
       }
     }
+    // #q=<address> — an address handed over by a question page's lookup
+    // form; prefillGeocodeSearch runs the app's own bounded search on it.
+    // A link carrying BOTH a point and a query keeps the point: it is
+    // already an exact answer, and re-geocoding could move it. It sits after
+    // the pin because it is not a state parse — it starts a search from the
+    // state the parses above have already applied.
+    if (params.q && !params.point) prefillGeocodeSearch(params.q);
   }
 
   /* ---------- share controls — the point chip's single "Share" surface -----
@@ -6021,6 +6028,37 @@ function initWisconsinExplorer() {
         renderGeocodeResults(retry);
         if (!retry || retry.length === 0) return maybeRenderSiblingMatches(q);
       });
+    });
+  }
+
+  /* ---------- an address handed over in the URL (#q=) ----------
+   * A question page (ward.html, county-board.html and the rest) carries its
+   * own address box. It does not geocode: it builds `./#q=<address>` and
+   * hands the typed text to this app, which runs the same bounded search a
+   * reader typing in the box runs.
+   *
+   * THE HASH RATHER THAN THE QUERY STRING, and that is a privacy decision.
+   * GoatCounter's count.js sends location.search with every hit, so a `?q=`
+   * would put a reader's typed street address into the analytics record on
+   * a site whose whole standard is that a selected point is rounded to two
+   * decimals before anything is sent. A hash never leaves the browser.
+   *
+   * It SELECTS a result only when the geocoder returns exactly one. Several
+   * matches is the case where taking the first would name the wrong
+   * officeholder, so the list stays up and the reader picks. A sibling-metro
+   * row is never auto-clicked — that button navigates to another instance. */
+  function prefillGeocodeSearch(q) {
+    geocodeInputEl.value = q;
+    geoStatus.textContent = "Searching\u2026";
+    geoStatus.className = "geo-status";
+    reengageSearchShell();
+    return runGeocodeSearch(q).then(function () {
+      var own = geoResultsList.querySelectorAll("li:not(.sibling-result) > button");
+      if (own.length === 1) own[0].click();
+    })["catch"](function (err) {
+      if (err.name === "AbortError") return;
+      geoStatus.textContent = "Search failed \u2014 the geocoder may be busy. Try again in a moment.";
+      geoStatus.className = "geo-status err";
     });
   }
 

@@ -5,22 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!-- ==== TEMPLATE:BEGIN sources-analytics ==== -->
-<!-- Google tag (gtag.js) — production host only; keeps local dev + CI out of analytics.
-     Same guard as index.html: hostname-gated and top-level-only. -->
-<script>
-  (function () {
-    if (location.hostname !== 'districtry.com') return;
-    if (window.top !== window.self) return;
-    var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-YPJ570LWJB';
-    document.head.appendChild(s);
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function () { dataLayer.push(arguments); };
-    gtag('js', new Date());
-    gtag('config', 'G-YPJ570LWJB');
-  })();
-</script>
 <!-- ==== TEMPLATE:END sources-analytics ==== -->
 
 <title>Sources &amp; data layers — districtry Wisconsin</title>
@@ -515,6 +499,77 @@ main details p:first-of-type { margin-top: -2px; }
 .cta:hover, .cta:focus-visible { background: var(--accent); color: #fff; }
 .cta-note { font-size: 13px; color: var(--slate-soft); margin: 4px 0 0; }
 
+/* The address box a question page carries above its .cta link. It does not
+   geocode: it hands the typed text to the app as `./#q=<address>` and the app
+   runs its own bounded search. See the geocoder-search ENGINE block.
+
+   IT IS HIDDEN UNTIL ITS SCRIPT UNHIDES IT, so a reader with no JavaScript
+   gets the .cta link below and never an input that cannot submit.
+
+   THE BUTTON FACE FLIPS IN DARK and that is a measurement, not a preference:
+   white on --accent-deep reads 1.91:1 there (the shortfall validate_contrast
+   already records for .cta), against 9.64:1 for --paper on the same violet.
+   The landing page's search button made the same flip for the same reason.
+
+   THE STATUS LINE HAS NO ERROR COLOUR because the sub-page palette carries no
+   error token — the shell speaks --accent/--slate/--panel, and --error is not
+   among the eleven aliases build_brand_tokens.py emits. --accent-warm-deep is
+   this shell's caution hue (the .disclaimer rule below uses its lighter pair)
+   and measures 8.11:1 light / 8.64:1 dark on --panel, so the failure state is
+   painted with it rather than by adding a twelfth token. The message says what
+   went wrong in words either way. */
+.lookup { margin: 6px 0 14px; max-width: 34rem; }
+.lookup[hidden] { display: none; }
+.lookup-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.lookup-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate);
+  margin: 0 0 8px;
+}
+.lookup-row { display: flex; gap: 10px; align-items: stretch; flex-wrap: wrap; }
+.lookup-input {
+  flex: 1 1 15rem;
+  min-width: 0;
+  padding: 12px 14px;
+  font: 400 15px/1.3 var(--font-body);
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+}
+.lookup-input::placeholder { color: var(--slate); }
+.lookup-input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.lookup-go {
+  flex: 0 1 auto;
+  padding: 12px 22px;
+  font: 600 15px/1.3 var(--font-body);
+  color: #fff;
+  background: var(--accent-deep);
+  border: 1px solid var(--accent-deep);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.lookup-go:hover { background: var(--accent); border-color: var(--accent); }
+.lookup-go:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.lookup-go:disabled { opacity: .6; cursor: default; }
+:root[data-theme="dark"] .lookup-go { color: var(--paper); }
+.lookup-status {
+  margin: 10px 0 0;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--slate);
+}
+.lookup-status.err { color: var(--accent-warm-deep); }
+.lookup-or { font-size: 13px; color: var(--slate); margin: 14px 0 2px; }
+.lookup-or[hidden] { display: none; }
+
 .answer-card {
   background: var(--panel);
   border: 1px solid var(--line);
@@ -837,7 +892,7 @@ table.matrix code {
       <h1 class="title">
         <span class="title-row">
           <svg class="districtry-mark" viewBox="0 0 96 96" aria-hidden="true"><g style="mix-blend-mode:multiply"><polygon points="51.5,63.2 12.4,55.7 11.5,18.6 42.7,5.0 72.7,35.3" fill="#6d3fd1" fill-opacity="0.55"></polygon></g><g style="mix-blend-mode:multiply"><polygon points="54.1,81.9 34.6,47.9 56.5,19.3 87.5,28.1 83.8,71.0" fill="#1d5fd6" fill-opacity="0.5"></polygon></g><g style="mix-blend-mode:multiply"><polygon points="13.7,64.5 27.6,31.2 62.7,37.6 70.3,66.9 33.9,89.0" fill="#b0316e" fill-opacity="0.45"></polygon></g><circle cx="42" cy="60" r="17" fill="none" stroke="#17161c" stroke-width="11"></circle><line x1="59" y1="16" x2="59" y2="82.5" stroke="#17161c" stroke-width="11"></line></svg>
-          <span class="title-text">Sources &amp; Data Layers</span>
+          <span class="title-text">Wisconsin sources &amp; data layers</span>
         </span>
       </h1>
       <p class="title-sub">Every layer in districtry Wisconsin, and exactly where its data comes from.</p>
@@ -1329,6 +1384,776 @@ table.matrix code {
           </table>
         </div>
       </section>
+
+      <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DataCatalog",
+  "@id": "https://districtry.com/wi/sources.html#catalog",
+  "name": "districtry Wisconsin data layers",
+  "url": "https://districtry.com/wi/sources.html",
+  "publisher": {
+    "@type": "Organization",
+    "@id": "https://districtry.com/#publisher",
+    "name": "Overberg",
+    "url": "https://overberg.co"
+  },
+  "dataset": [
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-wi-court-of-appeals",
+      "identifier": "wi-court-of-appeals",
+      "name": "Court of Appeals District",
+      "description": "The Court of Appeals district whose judges hear appeals from the point's circuit court, with all of that district's judges — elected by district — their direct phones, and the district's chambers. wi-court-of-appeals-roster.json, rebuilt weekly by CI from wicourts.gov's contact page — the content blocks, never the judges index's nav menu, which is a stale former-judge list (6 of 16 names wrong when measured). The 4/4/3/5 seat split is gated, so a vacancy is read by a human rather than shipped silently; no judge e-mail exists on the host, so none ships.",
+      "url": "https://districtry.com/wi/sources.html#layer-wi-court-of-appeals",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Derived county unions — no agency publishes appellate geometry (measured), so no new line is drawn: each district is a union of whole counties from the shipped TIGERweb county file under a double witness that agrees county for county — Wis. Stat. 752.11(1), unchanged since 1977, and the court system's own appeals page, whose lists the weekly roster run re-asserts",
+          "url": "https://docs.legis.wisconsin.gov/statutes/statutes/752/11"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Wisconsin Court System — the appeals-district listing the composition is cross-witnessed against",
+          "url": "https://www.wicourts.gov/courts/appeals/index.htm"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — statewide, all 72 counties across 4 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-us-house",
+      "identifier": "us-house",
+      "name": "U.S. House",
+      "description": "The U.S. House district covering the point, and the representative holding it. congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.",
+      "url": "https://districtry.com/wi/sources.html#layer-us-house",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Legislative, layer 0 (congressional districts), pre-built for the state and shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-wtcs-district",
+      "identifier": "wtcs-district",
+      "name": "Technical College District",
+      "description": "The Wisconsin Technical College System district containing the point — the technical college your property tax funds (Wis. Stat. ch. 38). Identity-only, deliberately: the district board is APPOINTED (Wis. Stat. 38.08), not elected, and the card says so and names no one. None, deliberately: the board is appointed under Wis. Stat. 38.08, so there is no officeholder a voter elects — the card links the system's own site instead.",
+      "url": "https://districtry.com/wi/sources.html#layer-wtcs-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Wisconsin DPI — Technical College Districts (the shipped school-site and library builds' own org, same reference-use licence), pre-built by wi/scripts/build_wi_wtcs_districts.py under five gates: exactly 16, a seat witness pinning each college's home city inside its own district, no overlaps, and the union's one lawful hole being Lake Winnebago — the layer's 2019 title notwithstanding, the content is current (it carries Northwood, the 2021 rename)",
+          "url": "https://services8.arcgis.com/o4NJgD3NfeHnWy06/arcgis/rest/services/WI_Technical_College_Regions_2019/FeatureServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Statewide — every land point sits in exactly one district; open water (the Great Lakes, Lake Winnebago) honestly in none"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-wi-senate",
+      "identifier": "wi-senate",
+      "name": "Wisconsin State Senate District",
+      "description": "The Wisconsin State Senate district covering the point, and the senator holding it. wi-senate-members.json, rebuilt weekly by CI — the Open States current-people export (name, party) merged with the Legislature's own senate index page (Madison office room, phone, fax, e-mail, the current session link; the member's home Voting Address is refused by construction and the build proves it).",
+      "url": "https://districtry.com/wi/sources.html#layer-wi-senate",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-wi-assembly",
+      "identifier": "wi-assembly",
+      "name": "Wisconsin State Assembly District",
+      "description": "The Wisconsin State Assembly district covering the point, and the representative holding it. wi-assembly-members.json, rebuilt weekly by CI — the Open States current-people export (name, party) merged with the Legislature's own assembly index page (Madison office room, phones, fax, e-mail, the current session link; the member's home Voting Address is refused by construction and the build proves it).",
+      "url": "https://districtry.com/wi/sources.html#layer-wi-assembly",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber), pre-built for the state and shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-wi-circuit-court",
+      "identifier": "wi-circuit-court",
+      "name": "Circuit Court",
+      "description": "The circuit court whose bench serves the point — Wisconsin's trial court of general jurisdiction — with every judge on that bench, their branch and direct phone where the court system publishes them, and the courthouse. wi-circuit-judges.json, rebuilt weekly by CI from wicourts.gov's judges table (the bench) joined with its contact directory (branch, direct phone, courthouse). Everyone is titled Judge — appointees filling vacancies are indistinguishable from elected judges in any wicourts source, so the card claims neither; no judge e-mail exists anywhere on wicourts, so none ships.",
+      "url": "https://districtry.com/wi/sources.html#layer-wi-circuit-court",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Derived county unions — no agency publishes circuit geometry (measured), so no new line is drawn: each circuit is a union of whole counties from the shipped TIGERweb county file, composed under a double witness that agrees exactly — Wis. Stat. 753.06 (one circuit per county except Buffalo+Pepin, Florence+Forest, Menominee+Shawano) and the court system's own circuit listing, re-asserted by every weekly roster run",
+          "url": "https://docs.legis.wisconsin.gov/statutes/statutes/753/06"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Wisconsin Court System — the circuit listing the composition is cross-witnessed against",
+          "url": "https://www.wicourts.gov/courts/circuit/judges.htm"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — statewide, all 72 counties across 69 circuits"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-county",
+      "identifier": "county",
+      "name": "County",
+      "description": "Which county contains the point, the county clerk who holds its records and — outside Milwaukee — runs its elections, with the clerk's office, hours and contact. The card also names the COUNTY SEAT, from the same Blue Book's counties table and the same permission. A seat is named as a place, not as a municipality: three of Wisconsin's 72 are towns or unincorporated communities rather than cities or villages. wi-county-clerks.json, rebuilt weekly by CI from the Wisconsin Blue Book's county-officers table (a state publication carrying each clerk's party-or-appointed code) CROSS-GATED against wisconsincountyclerks.org, the clerks' own association (office, hours, phone, fax, e-mail) — WEC's own surfaces refuse automated clients, so the two open publishers witness each other; a name they disagree on ships from the association with the party withheld. Milwaukee's card also states that its elections are run by the APPOINTED county Election Commission (Wis. Stat. 7.20), linked and labeled, its members unnamed because its hosts refuse automation. PHASE 4: the card also names the county's OTHER officers — sheriff, district attorney, executive/administrator (the Blue Book's own CE/CA/AC/CM code decides the elected-vs-appointed label), board chair, treasurer, clerk of circuit court, register of deeds, and coroner or medical examiner — from the same Blue Book's officer tables (wi-county-officers.json), shipped DATED (April 2025) because no second publisher for these offices measures open. The chair column's supervisor count is witnessed against the shipped supervisory geometry (71 of 72 agree; Menominee's 7-vs-5 disagreement between two state publications is pinned and the card claims neither), and the Menominee/Shawano rows carry the book's own shared-prosecutorial-unit footnote (Wis. Stat. ch. 978). The BOARD CHAIR — the one officer who is also a supervisor, elected by each board at its April organizational meeting — is additionally reconciled weekly against county-board-members.json: a chair the county's own board page marks supersedes the book's (sourced and said on the card), a book chair absent from a complete county roster is withheld with the reason stated, and the 38 counties publishing no roster keep the dated book row. The county-by-county officer scrape (wi_county_officer_contact_scraper.py) reads FORTY-FOUR counties' own officer pages weekly — every county except the twenty-eight whose surfaces measure shut or unwitnessable (Barron, Bayfield, Crawford, Dodge, Door, Fond du Lac, Forest, Green Lake, Iowa, Jackson, Kewaunee, La Crosse, Lafayette, Lincoln, Marathon, Menominee, Milwaukee, Monroe, Outagamie, Pierce, Racine, Richland, Rock, Rusk, Shawano, Sheboygan, Taylor, Vilas — each characterized in the scraper's docstring) — adding office phone/e-mail/page links where the page witnesses the shipped name (surname as a whole word plus first-initial nearby; substring matching measured false-positive on 'Community Block Grant' vs Jennifer Grant), superseding the book where a county has visibly moved past it: the first run found Waukesha's own page recording that County Executive Paul Farrow died in office (Interim County Executive Tom Farley ships, and a builder pin refuses the stale name even when the scrape fails) and Walworth's medical examiner turned over; tranche 2's found a SECOND executive the book no longer has right — Portage's own directory and executive-office page both name County Executive Eric Olson where the book has John Pavelski. Milwaukee and Racine county sites refuse this client (403 — the same reason their board rosters ship from GIS layers), Tranche 3's sweep of the non-roster counties added twenty-five more counties and seven more turnovers the book cannot see (Calumet's and St. Croix's clerks of court, Iron's administrator and register of deeds, Oconto's treasurer, Price's medical examiner — and Sawyer's administrator FILLED where the book's cell literally prints Vacant, a word the builder now refuses to ship as anyone's name).",
+      "url": "https://districtry.com/wi/sources.html#layer-county",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-psap-area",
+      "identifier": "psap-area",
+      "name": "911 Answering Point (PSAP)",
+      "description": "The PSAP — public safety answering point — that answers a 911 call placed at the point, per the state's NG911 dataset (the rare overlaps ship exactly as filed). A dispatch-routing fact, never a taxing district or an elected body, so the card names no officeholder. Where a county 911 authority has not filed — three counties, plus provisioning-less Langlade, recorded as gap ng911-psap-filings — the card says so instead of hiding. None, deliberately: an answering point elects no one, and the NG911 schema names centers, never people.",
+      "url": "https://districtry.com/wi/sources.html#layer-psap-area",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Wisconsin Office of Emergency Communications — NG911 PSAPBoundary (statewide aggregate of every county's filing, updated roughly weekly; licence: “This data is free and open for use by the public”), per-agency dissolve pre-built by wi/scripts/build_wi_ng911_service_areas.py on the DsplayName+Agency_ID pair with a 4,000-point name-set agreement gate — the tiling whose FUTURE-dated Expire rows prove the builder's drop-by-date rule",
+          "url": "https://wi-oec.maps.arcgis.com/home/item.html?id=593d0da225b24601ad0c21598ef52fb0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Statewide, minus the measured filing absences the Data gaps panel lists"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-school-district-secondary",
+      "identifier": "school-district-secondary",
+      "name": "School District (Union High)",
+      "description": "The union high school district serving the point, where elementary and high school districts are separate. No roster is joined; the card names the district.",
+      "url": "https://districtry.com/wi/sources.html#layer-school-district-secondary",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — School, layer 1 (secondary school districts), live",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — the paired (non-unified) school territory; unified territory answers on the Unified card"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-school-district-unified",
+      "identifier": "school-district-unified",
+      "name": "School District (Unified)",
+      "description": "The unified (K-12) school district serving the point. No roster is joined; the card names the district.",
+      "url": "https://districtry.com/wi/sources.html#layer-school-district-unified",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — School, layer 0, pre-built for the state and shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-school-district-elementary",
+      "identifier": "school-district-elementary",
+      "name": "School District (Elementary)",
+      "description": "The elementary school district serving the point, where elementary and high school districts are separate. No roster is joined; the card names the district.",
+      "url": "https://districtry.com/wi/sources.html#layer-school-district-elementary",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), live",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — the paired (non-unified) school territory; unified territory answers on the Unified card"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-ems-service",
+      "identifier": "ems-service",
+      "name": "EMS Service Area",
+      "description": "The emergency medical service dispatched at the point, per the state's NG911 dataset — a response-area fact, never a taxing district or an elected body, so the card names no officeholder. Where a county 911 authority has not filed — four counties plus provisioning-less Langlade, recorded as gap ng911-ems-filings — the card says so instead of hiding. None, deliberately: a dispatch service area elects no one, and the NG911 schema names services, never people.",
+      "url": "https://districtry.com/wi/sources.html#layer-ems-service",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Wisconsin Office of Emergency Communications — NG911 EmergencyMedicalServicesBoundary (statewide aggregate of every county's filing, updated roughly weekly; licence: “This data is free and open for use by the public”), per-agency dissolve pre-built by wi/scripts/build_wi_ng911_service_areas.py on the DsplayName+Agency_ID pair with a 4,000-point name-set agreement gate — the tiling that re-proves the pair key on regional ambulance services filing under several counties' authorities",
+          "url": "https://wi-oec.maps.arcgis.com/home/item.html?id=593d0da225b24601ad0c21598ef52fb0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Statewide, minus the measured filing absences the Data gaps panel lists"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-law-service",
+      "identifier": "law-service",
+      "name": "Law Enforcement Service Area",
+      "description": "The law-enforcement agency (or agencies — concurrent jurisdiction ships exactly as filed) dispatched at the point, per the state's NG911 dataset. A response-area fact, never a taxing district or an elected body, so the card names no officeholder. Where a county 911 authority has not filed — four counties, plus Polk's partial filing, recorded as gap ng911-law-filings — the card says so instead of hiding. None, deliberately: a dispatch service area elects no one, and the NG911 schema names agencies, never people.",
+      "url": "https://districtry.com/wi/sources.html#layer-law-service",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Wisconsin Office of Emergency Communications — NG911 LawEnforcementBoundary (statewide aggregate of every county's filing, updated roughly weekly; licence: “This data is free and open for use by the public”), per-agency dissolve pre-built by wi/scripts/build_wi_ng911_service_areas.py on the DsplayName+Agency_ID pair with a 4,000-point name-set agreement gate",
+          "url": "https://wi-oec.maps.arcgis.com/home/item.html?id=593d0da225b24601ad0c21598ef52fb0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Statewide, minus the measured filing absences the Data gaps panel lists"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-fire-service",
+      "identifier": "fire-service",
+      "name": "Fire Service Area",
+      "description": "The fire department dispatched at the point, per the state's NG911 dataset — the guidebook's operational shape (who responds here), never a fire protection district and never an elected body, so the card names no officeholder. Where a county 911 authority has not filed — five counties, recorded as gap ng911-fire-filings — the card says so instead of hiding. None, deliberately: a dispatch service area elects no one, and the NG911 schema names agencies, never people.",
+      "url": "https://districtry.com/wi/sources.html#layer-fire-service",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Wisconsin Office of Emergency Communications — NG911 FireBoundary (statewide aggregate of every county's filing, updated roughly weekly; licence: “This data is free and open for use by the public”), per-agency dissolve pre-built by wi/scripts/build_wi_ng911_service_areas.py on the DsplayName+Agency_ID pair with a 4,000-point name-set agreement gate",
+          "url": "https://wi-oec.maps.arcgis.com/home/item.html?id=593d0da225b24601ad0c21598ef52fb0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Statewide, minus the measured filing absences the Data gaps panel lists"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-county-board",
+      "identifier": "county-board",
+      "name": "County Board District",
+      "description": "The county board supervisory district covering the point, the supervisor holding it where the county publishes one — with their contact where the county publishes that too — how many districts that board has, and a link to the board itself. For ALL 72 counties, the supervisor holding the district — 41 read weekly from each county's own board page, Clark's 29 and Pierce's 17 from those counties' own clerk-compiled directories, Marathon's 38 from its staff-directory table with each member's own page read to confirm their district (no e-mail: the county publishes every address only behind a JavaScript handler, which is an anti-harvesting control this project does not defeat), St. Croix's 19 from the county's own five-column district table, which prints each district's wards beside the supervisor and witnesses 131 of 131 wards against the state's filing, Chippewa's 21 from its board page's directory cards with every seat re-confirmed against the county's own staff directory, Menominee's joint County/Town board — five ward seats that the state files as districts 1 to 5, plus the two supervisors it elects countywide, who are named on every district card in the county rather than dropped for holding no district, Langlade's 21 from its own board page with each member's page read for the district again and for the contact, and its two supervisors sharing one Vice-Chair heading left untitled because the county cannot say which holds it, Barron's 29 from the county's own board table — on a SECOND county site that its canonical board page links twice and that this project had recorded as unreachable, the table giving each district's wards, supervisor, phone and mailbox, its three officers stated twice on the page and required to agree, and its address column never read because it is 28 home addresses, Forest's 21 from its own supervisors page — 17 named and 4 seats the county itself marks vacant, read one card at a time because each card carries three headings of which two are neighbouring supervisors' names, Florence's 12 from its own board list — 11 named and one seat the county files as an empty position, on the same vendor system Menominee and Langlade run, Sawyer's 15 from its staff directory with each member's own page read again for the district, Ashland's 21 read once from its board page and then carried as a dated document, because that county's robots.txt asks automated readers to stay off the whole site, Douglas's 21 from a table keyed by ordinal words rather than numbers, Iron's 15 from each member's own directory page, which is the only surface in that county stating a district at all, Milwaukee, Racine and Lincoln off their own GIS layers (Milwaukee Legistar-witnessed on every run; Lincoln's layer sits on a second county host its challenge-blocked website never links, and one of its 22 seats names nobody because the county's map and the state's filing draw that district differently), Fond du Lac through the Internet Archive with the county asked first and the capture's age gated, Dodge from its paginated constituent directory, Kenosha's and Adams's from directory PDFs, Columbia's from the table its listing page frames from a second county host, and ten as dated documents that are never re-fetched — Taylor, Lafayette and La Crosse because their hosts answer a challenge this project does not defeat, and Jackson, Richland, Rusk, Polk, Dunn, Pepin and Ashland because each of those sites publishes a robots.txt asking automated readers to stay off, so the reading stopped and the names stayed with the date they were read (county-board-members.json, 1,590 seats — every supervisory seat Wisconsin files — refreshed weekly by CI as a reviewed PR); a seat the county marks empty renders as vacant, and seventeen do; a seat two publishers draw differently is named by nobody and says so, and one is. Four St. Croix supervisors carry no phone because the number their county prints for them is the County Clerk's own line, shared by all four, and Menominee's seven carry none at all because that county's only contact channel is a per-member form rather than an address. No county is left unnamed — Wisconsin has no statewide roster of county supervisors, and all 72 have now been assembled one at a time.",
+      "url": "https://districtry.com/wi/sources.html#layer-county-board",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Wisconsin Legislative Technology Services Bureau — WI County Supervisory Districts (Current): the statewide aggregate of every county's twice-yearly filing under Wis. Stat. 5.15(4)(br)1, pre-built and shipped with the app",
+          "url": "https://services1.arcgis.com/FDsAtKBk8Hy4cAH0/arcgis/rest/services/WI_County_Supervisory_Districts_Current/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Trempealeau County — the county's own adopted 2021-2031 plan, shipped in place of LTSB's file for that county alone, which merges its districts 15 and 17 into one and so drops a district the county still elects",
+          "url": "https://services9.arcgis.com/cqHJZMbXoaOT0XrP/arcgis/rest/services/Trempealeau_County_County_Board_Supervisor_Districts_2021_2031_WFL1/FeatureServer/3"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — statewide, all 72 counties"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-county-subdivision",
+      "identifier": "county-subdivision",
+      "name": "County Subdivision",
+      "description": "The town, village or city containing the point — in Wisconsin the county subdivisions ARE the municipalities, so this layer answers everywhere while City or Village answers only inside the 608 incorporated ones. The card states each subdivision's type, which is what tells a reader why a city appears on both cards and a town on only this one. For a TOWN — and only a town — the card names the town CLERK, with the deputy clerk where the state lists one, the office phone, the town's own website and the date the state's record of that town was last updated. All 1,239 of Wisconsin's towns that the Elections Commission files a clerk for, from its own statewide directory, joined to this layer by county-subdivision GEOID and shipped one file per county. This is the ONLY card that answers for a town, which is why the clerk sits here. A city or village gets no clerk row on this card by design: the card already tells that reader their municipality also answers on the City or Village card, and its clerk is there, so repeating it would put one row on two cards at a single point. THREE of TIGER's 1,242 town records carry no clerk and the card shows none — Harrison (Calumet) and Bloomfield (Walworth), where a village incorporated out of the town and the Commission files only the village, and Campbell (La Crosse), which is the Census's own older name for the Village of French Island. The directory carries NO e-mail address (the clerks asked the Commission to withhold them) and this project ships NO address from it, because the file cannot tell a town hall from a clerk's own house. The town BOARD — chair and supervisors — is named nowhere: that is the Data gaps panel's `municipal-officers` record.",
+      "url": "https://districtry.com/wi/sources.html#layer-county-subdivision",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Places / county subdivisions, layer 1",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-municipality",
+      "identifier": "municipality",
+      "name": "City or Village",
+      "description": "The incorporated city or village containing the point — or, when there is none, that the point sits on unincorporated town land, which is an answer rather than a miss. NOT every municipality: Wis. Stat. 5.02(11) makes a town a municipality too, and TIGER's Places layer carries none of Wisconsin's 1,242 towns, which is why this layer is labelled City or Village and County Subdivision is the one that answers everywhere. The card also names the year the municipality was incorporated and the county or counties it lies in, from the Wisconsin Blue Book 2025–26's own tables of cities and villages, used by written permission from the Legislative Reference Bureau. 57 municipalities lie in more than one county and all of them are named. One village, Greenleaf, incorporated after that table's January 1, 2024 snapshot and the card says so rather than showing nothing. Milwaukee County's 19 municipal executives — mayors and village presidents — from Milwaukee County GIS & Land Information's own layer, joined by place GEOID. It is the only source in Wisconsin that names them as data, and its own last data edit predates the April 2026 election that fills these offices, so a NAME is shown only where the municipality's own page witnessed it at build time; where it could not be witnessed the card names the office and says why the person is not shown. STATEWIDE, and in all 608 cities and villages, the card also names the municipal CLERK — a different officer, labelled separately, from the Wisconsin Elections Commission's own clerk directory (the Commission sent it on request; it also publishes it at elections.wi.gov/clerks/directory, which refuses automation). Each clerk row carries the Commission's OWN per-record last-updated date, which runs from 2017 to 2026, and the card states that date rather than implying the whole directory is current. The directory carries NO e-mail address — the clerks asked the Commission to withhold them — and this project ships NO address from it, because the file cannot tell a village hall from a clerk's own house and demonstrably contains both. The municipality's governing BODY is still unnamed outside Milwaukee County: that is a per-county build (docs/EXPANSION_GUIDE.md §3.4) and the Data gaps panel's `municipal-officers` record.",
+      "url": "https://districtry.com/wi/sources.html#layer-municipality",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Places, layer 4",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-zip-code",
+      "identifier": "zip-code",
+      "name": "ZIP Code",
+      "description": "The ZIP Code Tabulation Area containing the point — the Census Bureau's approximation of USPS ZIP delivery areas, not the postal boundaries themselves. No officeholder exists for a ZIP code.",
+      "url": "https://districtry.com/wi/sources.html#layer-zip-code",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — ZCTA, layer 11 (ZIP Code Tabulation Areas), live",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-mpd-district",
+      "identifier": "mpd-district",
+      "name": "Milwaukee Police District",
+      "description": "The Milwaukee Police Department district covering the point, with its commanding officer named from the city's own per-district page and the district's phone from the city Directory — checked weekly. A district whose page names no officer would say so on the card rather than guessing. Outside Milwaukee the layer hides; no statewide who-polices-here boundary publisher exists (that concept's statewide candidate is the NG911 service-boundary route, recorded in the guidebook). Each district's commanding officer from the city's OWN per-district page (city.milwaukee.gov/police/districts/District-1..7), with the district phone paired from the city Directory page's tel: links — scraped weekly by update-mpd-captains-roster.yml (mpd_captains_scraper.py, the heading-anchored parse whose rank pattern tolerates District 2's measured 'Captai n' markup split; floors: all 7 districts, at least 6 named, a name under two districts refuses; TWO measured markup shapes — the officer h3, and District 4's empty h3 with the name in the contact block's own paragraph link). The phase-3 record said the city refuses automated readers — TRUE OF THE SANDBOX ONLY, measured 2026-08-27: the pages answer the weekly workflow's runners plain, which is the scraper's vantage. A district whose page names nobody ships null and its card states the absence.",
+      "url": "https://districtry.com/wi/sources.html#layer-mpd-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "City of Milwaukee — MPD districts, the city's own ArcGIS layer (CC-BY), server-reprojected and pre-built by wi/scripts/build_milwaukee_city_layers.py",
+          "url": "https://milwaukeemaps.milwaukee.gov/arcgis/rest/services/MPD/MPD_geography/MapServer/2"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Milwaukee open data — the same districts as a shapefile (CC-BY), the build-time witness: keys and area shares must agree between the two city surfaces before the file ships",
+          "url": "https://data.milwaukee.gov/dataset/milwaukee-police-district"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Milwaukee only — the layer hides everywhere else"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-mps-school-board",
+      "identifier": "mps-school-board",
+      "name": "Elected School Board District",
+      "description": "The elected school board district covering the point and the member holding it. Statute names Wisconsin's districted school boards exactly and there are two: Milwaukee Public Schools (eight districts plus an at-large director) and Racine Unified (nine). Every other board in the state is elected at large, so there is no district to draw and this layer hides. mps-school-board-members.json, rebuilt weekly by CI from the district's own directors page (one heading per seat: the at-large president and districts 1-8), cross-witnessed against the board index's committee lists — two surfaces the district maintains separately must name the same directors. The Board's shared contact form and office phone ride the card; outside Milwaukee the layer hides entirely. Racine Unified's nine come from rusd-school-board-members.json, rebuilt weekly from the district's own Board of Education page (each seat's own \"District N Schools\" label must agree with the heading above it, so a reordered page fails rather than filing every member under a neighbour's district); its members carry a phone and an e-mail each, and the one seat RUSD declares vacant says so on the card.",
+      "url": "https://districtry.com/wi/sources.html#layer-mps-school-board",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "City of Milwaukee — MPS Board Districts, the city's own ArcGIS layer, reprojected by the city's own server and pre-built by wi/scripts/build_mps_school_board_districts.py; the districts were adopted 25 February 2022 (the district's directors page states it) and redraw each census",
+          "url": "https://milwaukeemaps.milwaukee.gov/arcgis/rest/services/AGO/MPS_School_Districts/MapServer/1"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Milwaukee open data — the same districts as a shapefile (CC-BY), the build-time witness: every district's share of the city must agree between the two before the file ships",
+          "url": "https://data.milwaukee.gov/dataset/milwaukee-public-school-board-districts"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Racine Unified School District — the district's own \"Election District by Municipality\" table, which names every ward in each of the nine districts; the shapes are a dissolve of the Legislative Technology Services Bureau's live ward layer (wi/scripts/build_rusd_school_board_districts.py), witnessed against the Census's own Racine School District. RUSD's district maps are raster-backed PDFs with no vector district polygons, so no map is read",
+          "url": "https://www.rusd.org/documents/about/board-of-education/board-election-information/642739"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Milwaukee and the Racine Unified School District only — the layer hides everywhere else, because everywhere else elects its board at large"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-mpd-squad-area",
+      "identifier": "mpd-squad-area",
+      "name": "Milwaukee Police Squad Area",
+      "description": "The Milwaukee Police Department squad area — the patrol/beat subdivision — covering the point, with its parent district. A squad's NUMBER encodes its district (the hundreds digit), and the builder verifies that against the shipped district layer rather than asserting it. No officeholder: a patrol area elects no one. Outside Milwaukee the layer hides, and its toggle nests under the district layer exactly as the reference instance's police beats do. None, deliberately: a patrol area elects no one and MPD publishes no per-squad roster this project can verify.",
+      "url": "https://districtry.com/wi/sources.html#layer-mpd-squad-area",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "City of Milwaukee — MPD squad areas, the city's own ArcGIS layer (CC-BY), server-reprojected and pre-built by wi/scripts/build_milwaukee_city_layers.py; each squad is sample-verified inside its hundreds-digit district against the shipped district file",
+          "url": "https://milwaukeemaps.milwaukee.gov/arcgis/rest/services/MPD/MPD_geography/MapServer/1"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Milwaukee open data — the same squad areas as a shapefile (CC-BY), the build-time witness: keys and area shares must agree between the two city surfaces before the file ships",
+          "url": "https://data.milwaukee.gov/dataset/milwaukee-police-department-squad-areas"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Milwaukee only — the layer hides everywhere else, and its toggle shows only while the Police District layer is on"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-aldermanic-district",
+      "identifier": "aldermanic-district",
+      "name": "Aldermanic District",
+      "description": "The aldermanic district (in the nine villages that elect trustees by district, the trustee district) covering the point, in the 156 cities and villages whose districts can be composed completely — and, in 18 of them, the alderperson or trustee holding the seat. wi-alderpersons.json, rebuilt weekly by CI for the 18 municipalities with a verified route — Milwaukee's Legistar API (its GIS layer retired when the host was found to disallow all crawling), Madison's per-district council pages (the vacant seat named as vacant), Green Bay's staff directory, Kenosha's GIS witnessed against the county's certified April 2026 canvass (which caught and corrected one stale seat), the Racine and Waukesha council pages, and the twelve added 2026-09-05: Stevens Point, Menomonie, Manitowoc, Sheboygan, Superior, Portage, Viroqua, Menasha, Howard, Tomah, Eau Claire and Appleton — the last of those the day its geometry could first be drawn. The other 138 municipalities' councils are a recorded gap, never a guess.",
+      "url": "https://districtry.com/wi/sources.html#layer-aldermanic-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Derived ward unions — no publisher ships a statewide aldermanic layer, so no new line is drawn: LTSB's statewide ward layer carries each ward's district id (ALDERID), and wi/scripts/build_wi_aldermanic_districts.py dissolves the coded city/village wards on the statewide municipality key. Cross-witnessed against the state's own BAS pre-dissolve, a different filing edition agreeing on all 867 district keys; ten municipalities whose submissions are measurably incomplete (Appleton the flagship) are excluded on the record rather than drawn as fragments",
+          "url": "https://services1.arcgis.com/FDsAtKBk8Hy4cAH0/arcgis/rest/services/WI_Municipal_Wards_Current/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "LTSB BAS Live Collection — Alderpersons: the state's own pre-dissolved working set, the composition witness (never the source: no stated terms, mutates mid-collection)",
+          "url": "https://mapservices.legis.wisconsin.gov/arcgis/rest/services/BAS_Collection/BAS_Live_Collection_Alderpersons/FeatureServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — the 156 cities and villages that elect council members by district and whose ward-to-district assignment is complete (155 from the counties' own filings, plus Appleton from its city clerk's); everywhere else the card honestly reports no district"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-ward",
+      "identifier": "ward",
+      "name": "Municipal Ward",
+      "description": "The municipal ward containing the point — the unit Wisconsin elections are administered by and every supervisory and aldermanic district is composed from — plus which county board district and, in cities that elect alders by district, which aldermanic district it belongs to. A ward elects no officeholder of its own — it is the unit election administration assigns. The card DOES name your polling place, from three sources in preference order. STATEWIDE it is the Wisconsin Elections Commission's own list, which the Commission sent on request after its website's Cloudflare challenge had been recorded as a block — a challenge on a website is not a refusal by the agency behind it (wi/scripts/build_wi_polling_places.py, 3,623 reporting units, 2,475 places, shipped as 72 per-county files; 7,131 of LTSB's 7,161 wards paired, 99.58%). That list is PROVISIONAL until the Commission publishes its November edition, and the card says so in the reader's own sentence, names the election, dates the pull, and RETIRES the pairing once the election date has passed — a per-election list that outlives its election looks current and is not. The 29 wards in 12 municipalities the Commission's file omits fall back to the MyVote lookup and are the Data gaps panel's `ward-polling-places` record. THE TWO CITIES THAT PUBLISH THEIR OWN PAIRING STAY FIRST, because the municipality runs the election. INSIDE MILWAUKEE (phase 4 PR 3): the city publishes its own ward-to-polling-place dataset (CC-BY), whose ward numbers are gated equal to LTSB's Milwaukee wards and whose every pair is witnessed against the city's own REST layer (wi/scripts/build_mke_polling_places.py, mke-polling-places.json) — name, address, the city's entrance and parking guidance, and the dataset edition stated on the card, with MyVote linked as the confirmation route because polling places move between elections. MADISON is the second city: its open-data server publishes the pairing as ONE layer — a polling point per ward, 137 rows — whose ward keys are gated equal to LTSB's Madison wards AND the city's own ward layer (wi/scripts/build_madison_polling_places.py, madison-polling-places.json); the layer publishes no edition date, so each build dates the pairing as the day it was read.",
+      "url": "https://districtry.com/wi/sources.html#layer-ward",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Wisconsin Legislative Technology Services Bureau — WI Municipal Wards (Current): the statewide aggregate of every county's twice-yearly ward filing under Wis. Stat. 5.15(4)(br), queried live (the point query fetches one ward; the map overlay pages the statewide set server-generalized)",
+          "url": "https://services1.arcgis.com/FDsAtKBk8Hy4cAH0/arcgis/rest/services/WI_Municipal_Wards_Current/FeatureServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-milwaukee-neighborhoods",
+      "identifier": "milwaukee-neighborhoods",
+      "name": "Milwaukee Neighborhood",
+      "description": "The named Milwaukee neighborhood containing the point — the city's own neighborhood fabric, an identity answer with no officeholder because a neighborhood elects no one. Outside Milwaukee the layer hides; no statewide neighborhood publisher exists. A neighborhood elects no one — the card names the place and stops there.",
+      "url": "https://districtry.com/wi/sources.html#layer-milwaukee-neighborhoods",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "City of Milwaukee — Neighborhoods, the city's own ArcGIS layer (CC-BY), server-reprojected and pre-built by wi/scripts/build_milwaukee_city_layers.py; names ship title-cased from the city's all-caps values with the raw value kept on the feature, and the build-time shapefile witness caught the city's own two copies spelling one neighborhood apart",
+          "url": "https://milwaukeemaps.milwaukee.gov/arcgis/rest/services/planning/special_districts/MapServer/4"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Milwaukee open data — the same neighborhoods as a shapefile (CC-BY), the build-time witness",
+          "url": "https://data.milwaukee.gov/dataset/neighborhoods"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Milwaukee only — the layer hides everywhere else"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-madison-neighborhood-assoc",
+      "identifier": "madison-neighborhood-assoc",
+      "name": "Neighborhood Association (Madison)",
+      "description": "Every city-registered association whose boundary covers the point — Madison's official neighborhood fabric IS its registry, which also records condominium, resident, homeowners, business and property-owners associations in the same layer, so each row states its classification. Registrations genuinely nest (five condo/resident polygons sit wholly inside a neighborhood association's), which is why the card lists all of them rather than the first. None, deliberately: an association is not a unit of government and elects no public officeholder — the card links each association's profile on the city's own site instead.",
+      "url": "https://districtry.com/wi/sources.html#layer-madison-neighborhood-assoc",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "City of Madison — Neighborhood Associations, the city's own open-data layer (Data Policy reference-use disclaimer, attribution 'City of Madison, Wisconsin'), pre-built by wi/scripts/build_madison_city_layers.py; only the city's STATUS='Active' rows ship (116 of 141 — the 25 Inactive are lapsed registrations), names trimmed of the source's trailing whitespace",
+          "url": "https://maps.cityofmadison.com/arcgis/rest/services/Public/OPEN_DATA/MapServer/12"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Madison only — the layer hides everywhere else; inside the city a point outside every registered boundary gets the standard empty state"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-tid-district",
+      "identifier": "tid-district",
+      "name": "Tax Incremental District (TID)",
+      "description": "The active Tax Incremental District (Wis. Stat. 66.1105) containing the point, with its number and creation year — a municipal finance overlay that elects no one, the reference instance's tif-district concept under Wisconsin's own name. Two cities share the toggle, each with its own builder witness. Most of Milwaukee and Madison is in no TID, and the card's standard empty state says exactly that; outside the two cities the layer hides. None, deliberately: a TID elects no one — it is a finance overlay adopted by the Common Council, whose members the aldermanic layer already names.",
+      "url": "https://districtry.com/wi/sources.html#layer-tid-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "City of Milwaukee — Tax Incremental Districts, the city's own ArcGIS layer (CC-BY), server-reprojected and pre-built by wi/scripts/build_milwaukee_city_layers.py; the live layer serves only ACTIVE districts, and the builder drops any that gain a past dissolve date",
+          "url": "https://milwaukeemaps.milwaukee.gov/arcgis/rest/services/planning/special_districts/MapServer/8"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Milwaukee open data — the same districts as a shapefile (CC-BY), the build-time witness scoped to the city's own STATUS flag, because the shapefile keeps all 56 retired TIDs the live layer omits",
+          "url": "https://data.milwaukee.gov/dataset/tax-incremental-districts-tid"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Madison — TIF Districts, the city's own open-data layer (Data Policy reference-use disclaimer, attribution 'City of Madison, Wisconsin'), pre-built by wi/scripts/build_madison_city_layers.py; the layer mixes district polygons with half-mile planning buffers (its HALFMILERULE flag separates the concepts) and still draws two districts the state closed, so what ships is the layer intersected with DOR's certified active list",
+          "url": "https://maps.cityofmadison.com/arcgis/rest/services/Public/OPEN_DATA_PLANNING/MapServer/8"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Madison Economic Development — the TIF program page, whose 'Current TIF Plans and Maps' listing supplies each Madison district's display name and must agree with DOR's active list exactly before anything ships",
+          "url": "https://www.cityofmadison.com/dpced/economic-development/tif"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Wisconsin DOR — the certified annual Active Tax Incremental Districts workbook (tid100wi), the authority on which districts exist: it closed the layer's TID 39 and 47 and carries TID 55 (Voit Farm), which is active with no published geometry — gap madison-tid-undrawn",
+          "url": "https://www.revenue.wi.gov/Pages/Report/tid-active.aspx"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Cities of Milwaukee and Madison only — the layer hides everywhere else, and inside each city most points are honestly in no TID"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-police-station",
+      "identifier": "police-station",
+      "name": "Police Station",
+      "description": "The three nearest police stations by straight-line distance — a proximity fact, never a jurisdictional claim about which agency serves the point. Not an elected office — no officeholder is named. The dataset is the same national source the fleet's reference instance ships, ghost records and all: a station USGS has not yet retired can appear, which is why the card presents nearest stations rather than 'your' station.",
+      "url": "https://districtry.com/wi/sources.html#layer-police-station",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "USGS National Map — structures, layer 53 (Law Enforcement), live by state envelope; public domain. The envelope deliberately reaches past the state line, so a reader near the border sees the genuinely nearest stations",
+          "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/53"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — statewide (plus border-state stations the envelope catches, which is correct behaviour near the state line)"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-fire-station",
+      "identifier": "fire-station",
+      "name": "Fire Station",
+      "description": "The three nearest fire stations by straight-line distance — a proximity fact, never a claim about which department responds to the point. Not an elected office — no officeholder is named. One ghost record is on the measured record (a department defunct since 2020 still listed), which is why the card presents nearest stations rather than a service claim; the statewide who-responds-here boundary is a separately recorded concept.",
+      "url": "https://districtry.com/wi/sources.html#layer-fire-station",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "USGS National Map — structures, layer 51 (Fire Stations / EMS Stations), live by state envelope; public domain. Same envelope-past-the-border behaviour as the police layer",
+          "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/51"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — statewide (plus border-state stations the envelope catches)"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-school-site",
+      "identifier": "school-site",
+      "name": "School Location, incl. private",
+      "description": "The three schools nearest the point — public and private, each labeled with its kind and grade range — by straight-line distance. A proximity fact, never an enrollment claim: which school a child attends is the district's call (and the state's open-enrollment law reaches across districts), and no statewide attendance-zone publisher exists. Not an elected office — no officeholder is named. DPI's own licence terms ride with the data and are why the card claims proximity only: \"intended for your reference use only … no guarantee of accuracy is made … not to be used for any land transactions, financial decisions, taxation, surveying, or other similar uses.\"",
+      "url": "https://districtry.com/wi/sources.html#layer-school-site",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Wisconsin DPI — Public Schools layer (2,138 placed sites of 2,290 records; the 152 records DPI publishes with no location and no address are statewide virtual programs and don't ship on a proximity card), pre-built by wi/scripts/build_wi_school_sites.py",
+          "url": "https://services8.arcgis.com/o4NJgD3NfeHnWy06/arcgis/rest/services/Wisconsin_Public_Schools/FeatureServer/20"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Wisconsin DPI — Private Schools layer (828 sites), same builder",
+          "url": "https://services8.arcgis.com/o4NJgD3NfeHnWy06/arcgis/rest/services/WI_Private_Schools/FeatureServer/2"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-library",
+      "identifier": "library",
+      "name": "Library",
+      "description": "The three public library locations nearest the point — main libraries and branches both — by straight-line distance, with each outlet's address and phone. Statewide, where the fleet's reference instance answers this for one city only. Not an elected office — Wisconsin library boards are appointed (Wis. Stat. 43.54), which is why this concept ships as library locations rather than as a library-district card. DPI's reference-use licence rides with the data, as on the school layer.",
+      "url": "https://districtry.com/wi/sources.html#layer-library",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Wisconsin DPI — Public Libraries and Branches layer (482 outlets from the annual public library system data), pre-built by wi/scripts/build_wi_libraries.py",
+          "url": "https://services8.arcgis.com/o4NJgD3NfeHnWy06/arcgis/rest/services/WI_Public_Libraries_and_Branches/FeatureServer/6"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/wi/sources.html#dataset-post-office",
+      "identifier": "post-office",
+      "name": "Post Office",
+      "description": "The three post offices nearest the point, by straight-line distance. Not an elected office; the card lists the facilities.",
+      "url": "https://districtry.com/wi/sources.html#layer-post-office",
+      "isPartOf": {
+        "@id": "https://districtry.com/wi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "USGS The National Map — structures, layer 38 (post offices), live",
+          "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Wisconsin — statewide"
+      }
+    }
+  ]
+}
+      </script>
 <!-- ==== GENERATED:END layer-matrix ==== -->
   </section>
 
@@ -1395,7 +2220,8 @@ table.matrix code {
       <p class="footer-byline">Written and maintained by
       <a href="https://overberg.co" rel="author noopener" target="_blank">Adam Overberg</a>
       — <a href="mailto:hello@overberg.co">hello@overberg.co</a>.
-      Corrections are welcome; every one gets a reply.</p>
+      Corrections are welcome; every one gets a reply.
+      <a href="/about.html">About this project</a>.</p>
       <!-- ==== ENGINE:END footer-byline ==== -->
     </div>
   </div>

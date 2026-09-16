@@ -71,6 +71,15 @@ jobs:
       - name: Rebuild the circuit court roster
         run: python3 wi/scripts/build_wi_circuit_court_roster.py
 
+      # THE PAGE NAMES THESE PEOPLE AND COUNTS THEM IN ITS OWN PROSE, so it is
+      # regenerated in the same run. Both generators gate on it: skip this and
+      # the failure lands on THIS job's own pull request, where nobody wrote the
+      # change that broke it.
+      - name: Regenerate the circuit court page
+        run: |
+          python3 scripts/build_concept_pages.py
+          python3 scripts/build_officeholder_tables.py
+
       # The history page's stat tiles are MEASURED from this data — regenerate
       # it in the same run so the smoke gate's build_history_page --check stays
       # green on this PR (a tile that drifted from the data it counts fails CI)
@@ -90,7 +99,7 @@ jobs:
       - name: Check for changes
         id: diff
         run: |
-          if git diff --quiet -- wi/data/app/wi-circuit-judges.json wi/history.html; then
+          if git diff --quiet -- wi/data/app/wi-circuit-judges.json wi/circuit-court.html wi/history.html; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -117,7 +126,7 @@ jobs:
           # touched those same files errors instead of pushing, which is right.
           git fetch --depth=1 origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add wi/data/app/wi-circuit-judges.json wi/history.html
+          git add wi/data/app/wi-circuit-judges.json wi/circuit-court.html wi/history.html
           git commit -m "Update WI circuit court bench from wicourts.gov"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

@@ -4,23 +4,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- Google tag (gtag.js) — production host only; keeps local dev + CI out of analytics.
-     Same guard as index.html: hostname-gated and top-level-only. -->
-<script>
-  (function () {
-    if (location.hostname !== 'districtry.com') return;
-    if (window.top !== window.self) return;
-    var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-YPJ570LWJB';
-    document.head.appendChild(s);
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function () { dataLayer.push(arguments); };
-    gtag('js', new Date());
-    gtag('config', 'G-YPJ570LWJB');
-  })();
-</script>
-
 <title>Chicago district questions — districtry Illinois</title>
 <meta name="description" content="What district am I in, how many wards Chicago has, what a community area is, which school board district covers an address — and who represents you." />
 <meta name="robots" content="index, follow" />
@@ -515,6 +498,77 @@ main details p:first-of-type { margin-top: -2px; }
 .cta:hover, .cta:focus-visible { background: var(--accent); color: #fff; }
 .cta-note { font-size: 13px; color: var(--slate-soft); margin: 4px 0 0; }
 
+/* The address box a question page carries above its .cta link. It does not
+   geocode: it hands the typed text to the app as `./#q=<address>` and the app
+   runs its own bounded search. See the geocoder-search ENGINE block.
+
+   IT IS HIDDEN UNTIL ITS SCRIPT UNHIDES IT, so a reader with no JavaScript
+   gets the .cta link below and never an input that cannot submit.
+
+   THE BUTTON FACE FLIPS IN DARK and that is a measurement, not a preference:
+   white on --accent-deep reads 1.91:1 there (the shortfall validate_contrast
+   already records for .cta), against 9.64:1 for --paper on the same violet.
+   The landing page's search button made the same flip for the same reason.
+
+   THE STATUS LINE HAS NO ERROR COLOUR because the sub-page palette carries no
+   error token — the shell speaks --accent/--slate/--panel, and --error is not
+   among the eleven aliases build_brand_tokens.py emits. --accent-warm-deep is
+   this shell's caution hue (the .disclaimer rule below uses its lighter pair)
+   and measures 8.11:1 light / 8.64:1 dark on --panel, so the failure state is
+   painted with it rather than by adding a twelfth token. The message says what
+   went wrong in words either way. */
+.lookup { margin: 6px 0 14px; max-width: 34rem; }
+.lookup[hidden] { display: none; }
+.lookup-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.lookup-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate);
+  margin: 0 0 8px;
+}
+.lookup-row { display: flex; gap: 10px; align-items: stretch; flex-wrap: wrap; }
+.lookup-input {
+  flex: 1 1 15rem;
+  min-width: 0;
+  padding: 12px 14px;
+  font: 400 15px/1.3 var(--font-body);
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+}
+.lookup-input::placeholder { color: var(--slate); }
+.lookup-input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.lookup-go {
+  flex: 0 1 auto;
+  padding: 12px 22px;
+  font: 600 15px/1.3 var(--font-body);
+  color: #fff;
+  background: var(--accent-deep);
+  border: 1px solid var(--accent-deep);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.lookup-go:hover { background: var(--accent); border-color: var(--accent); }
+.lookup-go:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.lookup-go:disabled { opacity: .6; cursor: default; }
+:root[data-theme="dark"] .lookup-go { color: var(--paper); }
+.lookup-status {
+  margin: 10px 0 0;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--slate);
+}
+.lookup-status.err { color: var(--accent-warm-deep); }
+.lookup-or { font-size: 13px; color: var(--slate); margin: 14px 0 2px; }
+.lookup-or[hidden] { display: none; }
+
 .answer-card {
   background: var(--panel);
   border: 1px solid var(--line);
@@ -653,7 +707,7 @@ footer.site-footer a { color: var(--accent-deep); }
       <h1 class="title">
         <span class="title-row">
           <svg class="districtry-mark" viewBox="0 0 96 96" aria-hidden="true"><g style="mix-blend-mode:multiply"><polygon points="51.5,63.2 12.4,55.7 11.5,18.6 42.7,5.0 72.7,35.3" fill="#6d3fd1" fill-opacity="0.55"></polygon></g><g style="mix-blend-mode:multiply"><polygon points="54.1,81.9 34.6,47.9 56.5,19.3 87.5,28.1 83.8,71.0" fill="#1d5fd6" fill-opacity="0.5"></polygon></g><g style="mix-blend-mode:multiply"><polygon points="13.7,64.5 27.6,31.2 62.7,37.6 70.3,66.9 33.9,89.0" fill="#b0316e" fill-opacity="0.45"></polygon></g><circle cx="42" cy="60" r="17" fill="none" stroke="#17161c" stroke-width="11"></circle><line x1="59" y1="16" x2="59" y2="82.5" stroke="#17161c" stroke-width="11"></line></svg>
-          <span class="title-text">Common questions</span>
+          <span class="title-text">Illinois district questions</span>
         </span>
       </h1>
       <p class="title-sub">Plain answers to what this map is most often asked.</p>
@@ -785,7 +839,8 @@ footer.site-footer a { color: var(--accent-deep); }
       <p class="footer-byline">Written and maintained by
       <a href="https://overberg.co" rel="author noopener" target="_blank">Adam Overberg</a>
       — <a href="mailto:hello@overberg.co">hello@overberg.co</a>.
-      Corrections are welcome; every one gets a reply.</p>
+      Corrections are welcome; every one gets a reply.
+      <a href="/about.html">About this project</a>.</p>
       <!-- ==== ENGINE:END footer-byline ==== -->
     </div>
   </div>
