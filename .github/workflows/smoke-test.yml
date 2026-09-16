@@ -448,6 +448,13 @@ jobs:
       - name: Structured data parses, resolves and counts what it says
         run: python3 scripts/validate_structured_data.py
 
+      # The drafted Wikidata item. Its jurisdictions come from metros.json, so a
+      # new instance has to reach it; nothing here edits wikidata.org. The
+      # network re-check of its 20 verified ids is --verify and is deliberately
+      # not scheduled — see the file it writes.
+      - name: The Wikidata draft still matches the fleet manifest
+        run: python3 scripts/build_wikidata_draft.py --check
+
       # No app may ask an ArcGIS service for f=geojson. The export unnests a
       # feature's interior rings, so a publisher's cutout becomes ground the
       # layer claims — measured 2026-09-05 at 41 of 153 live polygon layers,

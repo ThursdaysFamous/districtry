@@ -742,10 +742,48 @@ being written: `org_per_seat` minted role ids with two `#` fragments, which is
 not a URL, and keying a role id on the seat alone gave seven of a township's
 officials the same `@id`, because four trustees share one seat label.
 
+### 5. Wikidata and outreach — drafted and planned, nothing sent
+
+**The Wikidata item is drafted and not created** (`docs/WIKIDATA.md`, generated
+by `scripts/build_wikidata_draft.py`). Creating it is an edit to a public
+database other editors build on, made under a declared conflict of interest, so
+it goes when a person decides it goes.
+
+Three things are recorded with it. **Every id was verified rather than
+remembered** — the first draft used Q193424 for "web application", which is the
+item for *web service* — and `--verify` re-fetches all twenty and fails on a
+label that has moved. **Which Wikidata URLs this project may read was measured**
+with the fleet's own robots reader: `/w/api.php` is disallowed and so is
+`query.wikidata.org/sparql`, while `/wiki/Special:EntityData/*.json` is
+explicitly allowed and is the only endpoint used. **The item carries no count**
+— not counties, not layers, not officeholders — because nobody re-edits a
+Wikidata item when a number moves.
+
+It also refuses to decide two things. Notability rests on first-party references
+today: 17 newsrooms contacted, one interested reply, nothing published. The draft
+states the risk and names both courses rather than picking one. And it says
+outright not to create an item for the person.
+
+**Outreach beyond the press list is planned and contains no contacts**
+(`docs/OUTREACH_BEYOND_PRESS.md`). Newsrooms are already done and running — 159
+verified outlets, 17 contacted, a ledger that records each send the day it goes.
+Of the other three audiences the file argues **against** the clerk campaign
+outright: this project already writes to county clerks asking for data, and a
+promotional e-mail into that relationship converts a correspondent into a lead
+and makes the next genuine question likelier to go unanswered. Civic-technology
+groups are the best fit and want the data rather than the map — `/llms.txt`, the
+layer matrix, `LICENSE-DATA.md`, the gap records. Libraries need no compiled list
+at all: a research guide carries its own contact route.
+
+It carries no addresses deliberately. The press list was compiled and then
+mechanically re-checked against the page cited for each address, and a list held
+to a lower standard produces sends nobody confirmed.
+
 ### Still open in phase 3
 
-- **Wikidata item and outreach** to clerks, civic-tech groups, libraries and
-  newsrooms. Outbound, so nothing here sends anything; it needs drafting and a
-  person to send it.
+- **Creating the Wikidata item and running the outreach.** Both are drafted
+  above and both are the operator's to do. The honest order the draft argues for
+  is: finish the press wave, wait for one published piece, then the Wikidata
+  item, then civic tech, then libraries — and the clerk campaign not at all.
 - Everything still open from phases 1 and 2 above: verified dates and
   `dateModified`, county-page uniqueness above 60%, and splitting the map script.
