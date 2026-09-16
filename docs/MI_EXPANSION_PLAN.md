@@ -313,29 +313,41 @@ Each opens its own refreshed plan PR with its own measured ledger when it begins
   audited.
   **NEXT: no third Michigan city has been researched.** Lansing, Ann Arbor and Sterling Heights are
   the obvious candidates by population; none has been checked for a published boundary.
-- **The other 500 commissioners** — gap `mi-commissioner-roster`. Tranche 1 shipped 2026-09-13
-  (six counties, 76 districts) and **tranche 2 on 2026-09-15** (five more — St. Clair 7, Monroe
-  8 of 9, Berrien 12, Jackson 9, Calhoun 7), so eleven counties and 119 of the 619 districts now
-  name a person, from each county's own board page, weekly and count-guarded
-  (`mi/scripts/mi_commissioner_scraper.py` + `build_mi_commissioner_roster.py`,
-  `update-mi-commissioner-roster.yml`). That is 4,714,023 of Michigan's 10,007,596 people (47.1%).
-  The earlier claim that "ten of the twelve counties sampled publish a readable one" was
-  optimistic: seven counties across the two tranches did not yield, and each carries a measured
-  reason in that scraper's `PROBES` table rather than a guess — two `Disallow: /`, two HTTP 202
-  on robots.txt itself, Oakland and Allegan refused at their own Akamai edges to every client
-  string tested, and Washtenaw answering 200 with its commissioners named only inside prose
-  biographies.
-  **TRANCHE 2 SHIPPED THE FLEET'S FIRST SHORT MICHIGAN COUNTY, and it is a parse decision rather
-  than a missing source.** Monroe's CivicPlus directory lists eleven rows for a nine-seat board and
-  one is malformed: `p-name` reads "District 2", `p-job-title` reads "Commissioner Vensel", and
-  Vensel holds District 6. So the row names no District 2 commissioner and the only name on it
-  belongs to another district. The builder records `unnamedDistricts: ["2"]`, ships the other
-  eight, and the card and the county page both state that district by number — the Alexander
-  precedent, where a board short a name says which seat rather than concealing one. The builder's
-  gate moved from "districts are exactly 1..N" to "every district the geometry draws is either
-  named or noted", which is not a loosened floor: a duplicate name, a district outside the drawn
-  set and an empty name all still refuse the county.
-  The next tranche picks up from Michigan's 18th county by population.
+- **The other 454 commissioners** — gap `mi-commissioner-roster`. Three tranches have
+  shipped, all on 2026-09-13/15: tranche 1 six counties and 76 districts, tranche 2 five
+  more (St. Clair 7, Monroe 8 of 9, Berrien 12, Jackson 9, Calhoun 7), tranche 3 five more
+  (Eaton 15, Grand Traverse 9, Lapeer 7, Lenawee 8 of 9, Midland 7). **Sixteen counties,
+  165 of the 619 districts, 5,186,875 of Michigan's 10,007,596 people — 51.8%, past half
+  the state** — weekly and count-guarded (`mi/scripts/mi_commissioner_scraper.py` +
+  `build_mi_commissioner_roster.py`, `update-mi-commissioner-roster.yml`). Eight counties
+  have been tried and refused, each with a measured reason in that scraper's `PROBES`
+  table: two `Disallow: /` (Genesee, Ingham), two HTTP 202 on robots.txt itself (Ottawa,
+  Livingston), two Akamai 403s to every client string tried (Oakland, Allegan), and two
+  that answer 200 and are still not keyable — Washtenaw, whose commissioners are named
+  only inside prose biographies, and Bay, whose board page names three OFFICERS with no
+  district for any of them on a seven-seat board.
+  **TRANCHE 3 SHIPPED THE FLEET'S FIRST SEAT WITHHELD BECAUSE A PUBLISHER CONTRADICTS
+  ITSELF.** Lenawee's commissioner directory lists Jim Daly in District 5; the same
+  county's News Flash of 10 September 2026 announces his death and says he represented
+  that district. Shipping the name would repeat exactly the error this instance criticises
+  the state column for — it still names the Wayne commissioner who died in June 2025 —
+  and calling the seat vacant would assert an appointment nothing published shows, since a
+  Michigan board vacancy is filled by appointment. So `CONTRADICTED` in the builder
+  withholds it, the card prints the reason and the source, and the entry RETIRES ITSELF:
+  it binds only while the roster still carries the recorded name, a county that updates
+  its page ships the new name with a printed line saying to delete the entry, and an entry
+  naming a county that has left the roster FAILS the build. Both branches were
+  negative-tested. `unnamedWhy` carries the per-district reason so Monroe's shortfall (a
+  row naming nobody) and Lenawee's (a row the county contradicts) do not share one false
+  sentence.
+  **THE POPULATION GRADIENT HAS FLATTENED AND THAT IS THE NEXT DECISION.** Tranche 1 spanned
+  1.79M down to 175K, tranche 2 160K to 134K, tranche 3 109K to 83K. The next six by
+  population start at 79K (Clinton) and each buys under 1% of the state, so the marginal
+  return per tranche is now small. Population is still the right order and is what the
+  three tranches used; whether tranche 4 keeps it, sweeps all remaining counties at once,
+  or orders by whether a county's site is readable at all, is an operator call worth
+  making before it is made by default.
+
 - **Michigan's full fleet bbox**, and with it the last four misroutes (Ironwood, Houghton, Iron
   Mountain, Menominee). Needs `validate_index`'s "a bbox must not contain a sibling's centre"
   rule relaxed AND the in-app `metro-portal` moved onto the same ring test — its `siblingMetroAt`

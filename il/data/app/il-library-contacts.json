@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-11T13:52:08Z",
+  "generated": "2026-09-15T20:09:12Z",
   "libraries": {
     "A. Herr Smith & E.E. Smith Loda Township Library": {
       "address": "105 East Adams Street",
@@ -32,6 +32,9 @@
       "url": "http://www.allintownshiplibrary.org"
     },
     "Alpha Park Public Library District": {
+      "address": "3527 South Airport Road",
+      "city": "Bartonville",
+      "phone": "(309) 697-3822",
       "url": "http://www.alphapark.org"
     },
     "Annawan-Alba Township Library": {
@@ -45,13 +48,19 @@
       "url": "https://www.annawanil.org/library.html"
     },
     "Anne West Lindsey District Library": {
+      "address": "600 North Division Street",
+      "city": "Carterville",
+      "phone": "(618) 985-3298",
       "url": "http://www.awlindsey.com"
     },
     "Arcola Public Library District": {
+      "address": "407 East Main Street",
       "admin": {
         "name": "Laura Robey",
         "role": "Director"
-      }
+      },
+      "city": "Arcola",
+      "phone": "(217) 268-4477"
     },
     "Argenta-Oreana Public Library District": {
       "address": "211 South Route 48",
@@ -60,6 +69,7 @@
         "role": "Director"
       },
       "city": "Oreana",
+      "phone": "(217) 468-2340",
       "url": "http://aopld.org"
     },
     "Arthur Public Library District": {
@@ -83,10 +93,13 @@
       "url": "http://ashleypubliclibrary.org"
     },
     "Assumption Public Library District": {
+      "address": "205 North Oak Street",
       "admin": {
         "name": "Anna Adermann",
         "role": "Library Staff"
-      }
+      },
+      "city": "Assumption",
+      "phone": "(217) 226-3915"
     },
     "Astoria Public Library District": {
       "address": "220 West Broadway Avenue",
@@ -95,6 +108,7 @@
         "role": "Director"
       },
       "city": "Astoria",
+      "phone": "(309) 329-2423",
       "url": "https://astoriapubliclibrary.weebly.com"
     },
     "Athens Municipal Library": {
@@ -108,20 +122,25 @@
       "url": "https://www.athens.lib.il.us"
     },
     "Atkinson Public Library District": {
+      "address": "109 South State Street",
       "admin": {
         "name": "Ninette Carton",
         "role": "Director"
       },
+      "city": "Atkinson",
+      "phone": "(309) 936-7606",
       "url": "http://www.atkinson-library.com"
     },
     "Atlanta Public Library District": {
       "address": "100 South East Race Street Post Office Box 68",
       "city": "Atlanta",
+      "phone": "(217) 648-2112",
       "url": "http://www.AtlantaPLD.org/"
     },
     "Atwood-Hammond Public Library District": {
       "address": "123 North Main Street Post Office Box 440",
       "city": "Atwood",
+      "phone": "(217) 578-2727",
       "url": "http://www.atwoodhammondlibrary.org/"
     },
     "Auburn Public Library District": {
@@ -135,17 +154,23 @@
       "url": "https://auburnpubliclibraryil.org/"
     },
     "Ayer Public Library District": {
+      "address": "208 Locust Street",
       "admin": {
         "name": "Julie Houston",
         "role": "Director"
       },
+      "city": "Delavan",
+      "phone": "(309) 244-8236",
       "url": "https://www.facebook.com/AyerPLD"
     },
     "Barclay Public Library District": {
+      "address": "220 South Main Street",
       "admin": {
         "name": "Lacey Wright",
         "role": "Director"
       },
+      "city": "Warrensburg",
+      "phone": "(217) 672-3621",
       "url": "http://barclay.lib.il.us"
     },
     "Barry Public Library": {
@@ -179,10 +204,13 @@
       "url": "https://www.belleville.net/350/Library"
     },
     "Benton Public Library District": {
+      "address": "502 South Main Street",
       "admin": {
         "name": "Susan Stickel",
         "role": "Director"
       },
+      "city": "Benton",
+      "phone": "(618) 438-7511",
       "url": "http://www.bentonlibrary.com"
     },
     "Bertolet Memorial Library District": {
@@ -198,6 +226,7 @@
         "role": "Director"
       },
       "city": "Blandinsville",
+      "phone": "(309) 652-3166",
       "url": "https://www.bhpubliclibrary.org/"
     },
     "Bloomington Public Library": {
@@ -255,29 +284,44 @@
       "url": "http://breeselibrary.org"
     },
     "Brighton Memorial Library District": {
+      "address": "110 North Main Street",
+      "city": "Brighton",
+      "phone": "(618) 372-8450",
       "url": "http://www.brightonpubliclibrary.org/"
     },
     "Brown County Public Library District": {
+      "address": "106 SW Cross Street",
       "admin": {
         "name": "Richard Young",
         "role": "Director"
       },
+      "city": "Mount Sterling",
+      "phone": "(217) 773-2013",
       "url": "http://www.bcpubliclibrary.org"
     },
     "Bunker Hill Public Library District": {
+      "address": "220 East Warren Street",
       "admin": {
         "name": "Natalee McWhorter",
         "role": "Head Librarian"
       },
+      "city": "Bunker Hill",
+      "phone": "(618) 585-4736",
       "url": "http://www.bunkerhilllibrary.org"
     },
     "Bushnell Public Library District": {
+      "address": "455 North Dean Street",
       "admin": {
         "name": "Jessica Starcevich",
         "role": "Library Director"
-      }
+      },
+      "city": "Bushnell",
+      "phone": "(309) 772-2060"
     },
     "Byron Public Library District": {
+      "address": "100 South Washington Street",
+      "city": "Byron",
+      "phone": "(815) 234-5107",
       "url": "http://www.byronlibrary.org"
     },
     "C.E. Brehm Memorial Public Library District": {
@@ -317,6 +361,7 @@
         "role": "Director"
       },
       "city": "Villa Grove",
+      "phone": "(217) 832-5211",
       "url": "http://camargotownship.org/"
     },
     "Cambridge Public Library District": {
@@ -330,10 +375,13 @@
       "url": "https://www.cambridgeillibrary.org/"
     },
     "Camp Point Public Library District": {
+      "address": "206 East State Street Post Office Box 377",
       "admin": {
         "name": "Bobbi Mock",
         "role": "President of the Board of Trustees"
       },
+      "city": "Camp Point",
+      "phone": "(217) 593-7021",
       "url": "http://camppointpubliclibrary.com"
     },
     "Carbondale Public Library": {
@@ -357,10 +405,13 @@
       "url": "http://carlinvillelibrary.org"
     },
     "Carlock Public Library District": {
+      "address": "202 East Washington Street Post Office Box 39",
       "admin": {
         "name": "Christie Lau",
         "role": "Library Director"
       },
+      "city": "Carlock",
+      "phone": "(309) 376-5651",
       "url": "http://www.carlocklibrary.com"
     },
     "Carmi Public Library": {
@@ -407,6 +458,7 @@
         "name": "Amy Gee",
         "role": "Director"
       },
+      "phone": "(217) 357-3232",
       "url": "http://www.carthagepubliclibrary.com"
     },
     "Case-Halstead Public Library": {
@@ -440,6 +492,9 @@
       "url": "http://www.caseyvillelibrary.org/"
     },
     "Catlin Public Library District": {
+      "address": "101 Mapleleaf Drive",
+      "city": "Catlin",
+      "phone": "(217) 427-2550",
       "url": "https://catlinlibrary03.wixsite.com"
     },
     "Central Citizens' Library District": {
@@ -500,13 +555,16 @@
       "url": "http://www.charlestonlibrary.org"
     },
     "Chatham Area Public Library District": {
+      "address": "600 East Spruce Street",
+      "city": "Chatham",
+      "phone": "(217) 483-2713",
       "url": "http://www.chathamlib.org"
     },
     "Cheney's Grove Township Library": {
       "address": "204 South State Street",
       "admin": {
         "name": "Barb Nunamaker",
-        "role": "Library Director"
+        "role": "Librarian"
       },
       "city": "Saybrook",
       "phone": "(309) 475-6131",
@@ -523,6 +581,9 @@
       "url": "http://chenoalibrary.org"
     },
     "Cherry Valley Public Library District": {
+      "address": "755 East State Street",
+      "city": "Cherry Valley",
+      "phone": "(815) 332-5161",
       "url": "http://www.cherryvalleylib.org"
     },
     "Chester Public Library": {
@@ -536,10 +597,13 @@
       "url": "http://www.chesterpubliclibrary.com"
     },
     "Chillicothe Public Library District": {
+      "address": "430 North Bradley Avenue",
       "admin": {
         "name": "Alyce Jackson",
         "role": "Director"
       },
+      "city": "Chillicothe",
+      "phone": "(309) 274-2719",
       "url": "http://www.chillicothepubliclibrary.org"
     },
     "Chrisman Public Library": {
@@ -562,6 +626,9 @@
       "phone": "(618) 724-7534"
     },
     "Cissna Park Community Library District": {
+      "address": "511 North Second Street",
+      "city": "Cissna Park",
+      "phone": "(815) 457-2452",
       "url": "http://www.cissnaparklibrary.com/"
     },
     "Clayton Public Library District": {
@@ -591,9 +658,15 @@
       "url": "http://www.cloverlibrarywoodhull.com"
     },
     "Colchester District Library": {
+      "address": "203 Macomb Street Post Office Box 237",
+      "city": "Colchester",
+      "phone": "(309) 776-4861",
       "url": "http://www.colchesterlibrary.com"
     },
     "Colona District Public Library": {
+      "address": "911 First Street",
+      "city": "Colona",
+      "phone": "(309) 792-0548",
       "url": "http://www.colonalibrary.com"
     },
     "Columbia Public Library": {
@@ -607,6 +680,9 @@
       "url": "http://www.columbialibrary.org"
     },
     "Cordova District Library": {
+      "address": "402 Main Avenue",
+      "city": "Cordova",
+      "phone": "(309) 654-2330",
       "url": "http://www.cordovalibrary.com"
     },
     "Coulterville Public Library": {
@@ -620,16 +696,23 @@
       "url": "https://www.coultervilledistrictlibrary.com"
     },
     "Crab Orchard Public Library District": {
+      "address": "20012 Crab Orchard Road",
+      "city": "Marion",
+      "phone": "(618) 982-2141",
       "url": "http://www.craborchardlibrary.com"
     },
     "Creston-Dement Public Library District": {
+      "phone": "(815) 384-3111",
       "url": "http://crestonlib.org"
     },
     "Creve Coeur Public Library District": {
+      "address": "311 North Highland Street",
       "admin": {
         "name": "Greg Weydert",
         "role": "Library Staff"
       },
+      "city": "Creve Coeur",
+      "phone": "(309) 699-7921",
       "url": "http://www.crevecoeurlibrary.com/"
     },
     "Cutler Public Library": {
@@ -662,6 +745,9 @@
       "url": "http://www.DanvillePublicLibrary.org"
     },
     "Daugherty Public Library District": {
+      "address": "220 South Fifth Street",
+      "city": "Dupo",
+      "phone": "(618) 286-4444",
       "url": "http://www.dupolibrary.org"
     },
     "Deer Creek District Library": {
@@ -719,13 +805,17 @@
         "name": "Beth Sisler",
         "role": "Library Director"
       },
-      "city": "Dongola"
+      "city": "Dongola",
+      "phone": "(618) 827-3622"
     },
     "Doyle Public Library District": {
+      "address": "109 South O'Bannon Street",
       "admin": {
         "name": "Darcy Weinheimer",
         "role": "Director"
       },
+      "city": "Raymond",
+      "phone": "(217) 229-4471",
       "url": "http://www.doylepubliclibrary.org"
     },
     "Dry Point Township Library": {
@@ -754,10 +844,13 @@
       "url": "http://www.earlvillelibrary.org"
     },
     "East Dubuque District Library": {
+      "address": "122 Wisconsin Avenue",
       "admin": {
         "name": "Brian Gomoll",
         "role": "Library Director"
       },
+      "city": "East Dubuque",
+      "phone": "(815) 747-3052",
       "url": "http://www.edlibrary.org"
     },
     "East Saint Louis Public Library": {
@@ -771,10 +864,13 @@
       "url": "https://eslpl.org/"
     },
     "Edwards River Public Library District": {
+      "address": "412 East Main Street",
       "admin": {
         "name": "Courtney Wright",
         "role": "Library Director"
       },
+      "city": "Aledo",
+      "phone": "(309) 582-2032",
       "url": "https://www.edwardsriverlibrary.com/"
     },
     "El Paso District Library": {
@@ -784,6 +880,9 @@
       "url": "https://www.elpasodistrictlibrary.org/"
     },
     "Eldorado Memorial Public Library District": {
+      "address": "1001 Grant Street",
+      "city": "Eldorado",
+      "phone": "(618) 273-7922",
       "url": "https://www.eldoradomemoriallibrary.com"
     },
     "Elizabeth Titus Memorial Library": {
@@ -807,12 +906,19 @@
       "url": "http://www.elizabethtownshiplibrary.org"
     },
     "Elkhart Public Library District": {
+      "address": "121 East Bohan Street",
       "admin": {
         "name": "Sarah Wilson",
         "role": "Library Director"
       },
+      "city": "Elkhart",
       "phone": "(217) 947-2313",
       "url": "http://www.elkhartlibrary.lib.il.us/"
+    },
+    "Elwood Library District": {
+      "address": "104 North State Street Post Office Box 105",
+      "city": "Ridge Farm",
+      "phone": "(217) 247-2820"
     },
     "Erie Public Library District": {
       "address": "802 8th Avenue Post Office Box 436",
@@ -821,9 +927,13 @@
         "role": "Library Director"
       },
       "city": "Erie",
+      "phone": "(309) 659-2707",
       "url": "http://eriepubliclibrary.com"
     },
     "Evans Public Library District": {
+      "address": "825 West Randolph Street",
+      "city": "Vandalia",
+      "phone": "(618) 283-2824",
       "url": "http://www.evanspubliclibrary.org"
     },
     "Evansville Public Library": {
@@ -867,19 +977,28 @@
       "url": "https://www.facebook.com/Farmer-City-Public-Library-113928318634632/"
     },
     "Farmersville-Waggoner Public Library District": {
+      "address": "210 South Cleveland Street",
       "admin": {
         "name": "Barbara Gentry",
         "role": "Library Staff"
-      }
+      },
+      "city": "Farmersville",
+      "phone": "(217) 227-3711"
     },
     "Farmington Area Library District": {
+      "address": "411 North Lightfoot Road",
       "admin": {
         "name": "Rebecca Seaborn",
         "role": "Director"
       },
+      "city": "Farmington",
+      "phone": "(309) 245-2175",
       "url": "http://www.farmingtonpublic.org"
     },
     "Flagg-Rochelle Public Library District": {
+      "address": "619 Fourth Avenue",
+      "city": "Rochelle",
+      "phone": "(815) 562-3431",
       "url": "https://rochellepubliclibrary.org"
     },
     "Flanagan Public Library District": {
@@ -889,6 +1008,7 @@
         "role": "Director"
       },
       "city": "Flanagan",
+      "phone": "(815) 796-2212",
       "url": "https://www.flanaganpld.com/"
     },
     "Flora Public Library": {
@@ -902,6 +1022,9 @@
       "url": "http://www.florapubliclibrary.org"
     },
     "Fondulac Public Library District": {
+      "address": "400 Richland Street",
+      "city": "East Peoria",
+      "phone": "(309) 699-3917",
       "url": "http://fondulaclibrary.org"
     },
     "Forman Valley Public Library District": {
@@ -915,6 +1038,9 @@
       "url": "http://www.formanvalleylibrary.com"
     },
     "Forrest Public Library District": {
+      "address": "301 West James Street Post Office Box 555",
+      "city": "Forrest",
+      "phone": "(815) 657-8805",
       "url": "https://www.forrestlibrary.com/"
     },
     "Forreston Public Library": {
@@ -983,10 +1109,13 @@
       "url": "http://www.galatiapubliclibrary.com"
     },
     "Galena Public Library District": {
+      "address": "601 South Bench Street",
       "admin": {
         "name": "Jenna Diedrich",
         "role": "Library Director"
       },
+      "city": "Galena",
+      "phone": "(815) 777-0200",
       "url": "http://www.galenalibrary.org"
     },
     "Galesburg Public Library": {
@@ -1006,6 +1135,9 @@
       "url": "http://www.galvalibrary.org"
     },
     "Geneseo Public Library District": {
+      "address": "805 North Chicago Street",
+      "city": "Geneseo",
+      "phone": "(309) 944-6452",
       "url": "https://geneseo.lib.il.us"
     },
     "Georgetown Public Library": {
@@ -1018,10 +1150,12 @@
       "phone": "(217) 662-2164"
     },
     "Germantown Public Library District": {
+      "address": "403 Munster Street",
       "admin": {
         "name": "Kami Komm",
         "role": "Director"
       },
+      "city": "Germantown",
       "url": "http://www.gtownlibrary.org"
     },
     "Gillespie Public Library": {
@@ -1055,13 +1189,23 @@
       "url": "https://www.girardtownshiplibrary.com/"
     },
     "Golden Prairie Public Library District": {
+      "address": "Bloomington Public Library 205 East Olive Street",
+      "city": "Bloomington",
       "url": "http://www.bloomingtonlibrary.org/gppld-board"
     },
+    "Goose Creek District Library": {
+      "address": "220 North Highway Avenue",
+      "city": "DeLand",
+      "phone": "(217) 664-3572"
+    },
     "Graves-Hume Public Library District": {
+      "address": "1401 West Main Street",
       "admin": {
         "name": "Emily Kofoid",
         "role": "Library Director"
       },
+      "city": "Mendota",
+      "phone": "(815) 538-5142",
       "url": "https://graveshume.org/"
     },
     "Greater West Central Public Library District": {
@@ -1071,6 +1215,7 @@
         "role": "Library Director"
       },
       "city": "Augusta",
+      "phone": "(217) 392-2211",
       "url": "http://greaterwestcentral.org/"
     },
     "Greenfield Public Library": {
@@ -1126,10 +1271,13 @@
       "url": "https://www.grofflibrary.org/"
     },
     "H.A. Peine District Library": {
+      "address": "202 North Main Avenue Post Office Box 19",
       "admin": {
         "name": "Barbara Tarbuck",
         "role": "Library Director"
       },
+      "city": "Minier",
+      "phone": "(309) 392-3220",
       "url": "https://www.minierlibrary.com"
     },
     "Hamilton Public Library": {
@@ -1153,16 +1301,24 @@
       "url": "http://www.hanover-lib.org"
     },
     "Harrisburg Public Library District": {
+      "address": "2 West Walnut Street",
+      "city": "Harrisburg",
+      "phone": "(618) 253-7455",
       "url": "http://www.harrisburglibrary.org"
     },
     "Havana Public Library District": {
+      "address": "201 West Adams Street",
       "admin": {
         "name": "Ellen Mibbs",
         "role": "Assistant Director"
       },
+      "city": "Havana",
+      "phone": "(309) 543-4701",
       "url": "https://www.havanalibrary.org/"
     },
     "Hayner Public Library District": {
+      "address": "401 State Street",
+      "city": "Alton",
       "url": "http://www.haynerlibrary.org"
     },
     "Henderson County Public Library District": {
@@ -1226,13 +1382,19 @@
       "url": "http://heyworthlibrary.com/"
     },
     "Hillsboro Area Public Library District": {
+      "address": "420 South Main Street",
       "admin": {
         "name": "Henry Treadway",
         "role": "Director"
       },
+      "city": "Hillsboro",
+      "phone": "(217) 532-3055",
       "url": "https://www.hillsborolibrary.com/"
     },
     "Hoopeston Public Library District": {
+      "address": "110 North Fourth Street",
+      "city": "Hoopeston",
+      "phone": "(217) 283-6711",
       "url": "http://hooplib.org"
     },
     "Hooppole Library District": {
@@ -1242,10 +1404,13 @@
       "url": "https://annawanil.org/library/"
     },
     "Hudson Area Public Library District": {
+      "address": "104 Pearl Street Post Office Box 461",
       "admin": {
         "name": "Jenny Losey",
         "role": "Director"
       },
+      "city": "Hudson",
+      "phone": "(309) 726-1103",
       "url": "https://hudsonarealibrary.com"
     },
     "Illinois Prairie District Public Library": {
@@ -1254,10 +1419,13 @@
       "url": "http://www.ipdpl.org"
     },
     "Illiopolis/Niantic Public Library District": {
+      "address": "401 6th Street",
       "admin": {
         "name": "Shelley Hopkins",
         "role": "Library Director"
       },
+      "city": "Illiopolis",
+      "phone": "(217) 486-5561",
       "url": "http://www.illiopolisniantic.lib.il.us/"
     },
     "Jacksonville Public Library": {
@@ -1281,10 +1449,13 @@
       "url": "http://jerseyvillelibrary.org"
     },
     "John Mosser Public Library District": {
+      "address": "106 West Meek Street",
       "admin": {
         "name": "Jamie Beil",
         "role": "Director"
       },
+      "city": "Abingdon",
+      "phone": "(309) 462-3129",
       "url": "https://johnmosserpubliclibrary.com/"
     },
     "Johnston City Public Library": {
@@ -1299,18 +1470,17 @@
     },
     "Jonesboro Public Library": {
       "address": "412 South Main Street",
-      "admin": {
-        "name": "Cassandra Weisgerber",
-        "role": "Library Director"
-      },
       "city": "Jonesboro",
       "phone": "(618) 833-8121"
     },
     "Julia Hull District Library": {
+      "address": "100 Library Lane",
       "admin": {
         "name": "Joanna Kluever",
         "role": "Library Staff"
       },
+      "city": "Stillman Valley",
+      "phone": "(815) 645-8611",
       "url": "http://www.juliahull.org"
     },
     "Kansas Community Memorial Library": {
@@ -1324,10 +1494,13 @@
       "url": "http://www.kansaslibrary.jigsy.com"
     },
     "Kewanee Public Library District": {
+      "address": "102 South Tremont Street",
       "admin": {
         "name": "David Eckert",
         "role": "Library Director"
       },
+      "city": "Kewanee",
+      "phone": "(309) 852-4505",
       "url": "http://www.kewaneelibrary.org/"
     },
     "Kitchell Memorial Library": {
@@ -1351,6 +1524,9 @@
       "url": "https://www.knoxvillepubliclibrary.org/"
     },
     "LaHarpe Carnegie Public Library District": {
+      "address": "209 East Main Street Post Office Box 506",
+      "city": "La Harpe",
+      "phone": "(217) 659-7729",
       "url": "http://www.laharpelibrary.com"
     },
     "LaMoille-Clarion Public Library District": {
@@ -1390,10 +1566,13 @@
       "url": "https://www.lanarkil.gov/public-library/"
     },
     "Lawrence Public Library District": {
+      "address": "814 12th Street",
       "admin": {
         "name": "Dianne Brumley",
         "role": "Director"
       },
+      "city": "Lawrenceville",
+      "phone": "(618) 943-3016",
       "url": "http://www.lawpubliclibrary.org/"
     },
     "Lebanon Public Library": {
@@ -1412,17 +1591,23 @@
       "url": "http://leepertown.lib.il.us"
     },
     "Lena Community District Library": {
+      "address": "300 West Mason Street Post Office Box 756",
       "admin": {
         "name": "Brittany Gaulrapp",
         "role": "Library Director"
       },
+      "city": "Lena",
+      "phone": "(815) 369-3180",
       "url": "https://www.lena-library.org"
     },
     "Lewistown Carnegie Public Library District": {
+      "address": "1126 North Main Street",
       "admin": {
         "name": "Jaime Grove",
         "role": "Library Director"
       },
+      "city": "Lewistown",
+      "phone": "(309) 547-2860",
       "url": "http://lewistowncarnegiepubliclibrary.com/"
     },
     "Lexington Public Library District": {
@@ -1436,10 +1621,13 @@
       "url": "http://www.lexington.lib.il.us/"
     },
     "Lillie M. Evans Library District": {
+      "address": "207 North Walnut Avenue Post Office Box 349",
       "admin": {
         "name": "Beth Duttlinger",
         "role": "Director"
       },
+      "city": "Princeville",
+      "phone": "(309) 385-4540",
       "url": "http://www.lmelibrary.org"
     },
     "Lincoln Library": {
@@ -1453,13 +1641,19 @@
       "url": "https://www.lincolnlibrary.info"
     },
     "Lincoln Public Library District": {
+      "address": "725 Pekin Street",
       "admin": {
         "name": "Mike Starasta",
         "role": "Library Director"
       },
+      "city": "Lincoln",
+      "phone": "(217) 732-8878",
       "url": "http://www.lincolnpubliclibrary.org"
     },
     "Litchfield Public Library District": {
+      "address": "1205 South State Street",
+      "city": "Litchfield",
+      "phone": "(217) 324-3866",
       "url": "http://www.litchfieldpubliclibrary.org/"
     },
     "Lostant Community Library": {
@@ -1473,10 +1667,13 @@
       "url": "https://www.facebook.com/Lostant-Community-Library-121890407823028/"
     },
     "Lovington Public Library District": {
+      "address": "110 West State Street",
       "admin": {
         "name": "Letitia Clough",
         "role": "Director"
       },
+      "city": "Lovington",
+      "phone": "(217) 873-4468",
       "url": "http://www.lovingtonpld.us/"
     },
     "M-C River Valley Public Library District": {
@@ -1485,9 +1682,13 @@
         "name": "Janet Wells",
         "role": "Director"
       },
-      "city": "Meredosia"
+      "city": "Meredosia",
+      "phone": "(217) 584-1571"
     },
     "Mackinaw District Public Library": {
+      "address": "117 South Main Street Post Office Box 560",
+      "city": "Mackinaw",
+      "phone": "(309) 359-8022",
       "url": "https://mackinawpubliclibrary.org/"
     },
     "Macomb Public Library District": {
@@ -1519,6 +1720,9 @@
       "url": "http://www.maltalibrary.org"
     },
     "Maquon Public Library District": {
+      "address": "210 Main Street Post Office Box 230",
+      "city": "Maquon",
+      "phone": "(309) 875-3573",
       "url": "https://www.facebook.com/profile.php?id=61558025620489"
     },
     "Marion Carnegie Library": {
@@ -1542,10 +1746,13 @@
       "url": "http://www.marissalibrary.org"
     },
     "Maroa Public Library District": {
+      "address": "305 East Garfield Street",
       "admin": {
         "name": "Becky Newton",
         "role": "Library Director"
       },
+      "city": "Maroa",
+      "phone": "(217) 794-5111",
       "url": "http://maroa.lib.il.us/"
     },
     "Marquette Heights Public Library": {
@@ -1559,10 +1766,13 @@
       "url": "http://www.mhlibrary.com"
     },
     "Marrowbone Public Library District": {
+      "address": "216 West Main Street",
       "admin": {
         "name": "Sally Ascenzo",
         "role": "Co-Director"
       },
+      "city": "Bethany",
+      "phone": "(217) 665-3014",
       "url": "http://marrowbonepld.com/"
     },
     "Marseilles Public Library": {
@@ -1605,6 +1815,11 @@
       "phone": "(309) 723-2541",
       "url": "http://martintpl.com"
     },
+    "Martinsville Public Library District": {
+      "address": "120 East Cumberland Street",
+      "city": "Martinsville",
+      "phone": "(217) 382-4113"
+    },
     "Mascoutah Public Library": {
       "address": "3 West Church Street",
       "admin": {
@@ -1622,6 +1837,7 @@
         "role": "Library Staff"
       },
       "city": "Mason City",
+      "phone": "(217) 482-3799",
       "url": "http://www.masoncitylibrary.org"
     },
     "Mattoon Public Library": {
@@ -1675,6 +1891,9 @@
       "url": "http://rockislandlibrary.org"
     },
     "Milford District Library": {
+      "address": "2 South Grant Avenue",
+      "city": "Milford",
+      "phone": "(815) 889-4722",
       "url": "http://www.milfordlib.org/index.php"
     },
     "Milledgeville Public Library": {
@@ -1698,6 +1917,9 @@
       "url": "https://ashtonil.com/mills-petrie-memorial-library-gymnasium/"
     },
     "Millstadt Library": {
+      "address": "115 West Laurel Street",
+      "city": "Millstadt",
+      "phone": "(618) 476-1887",
       "url": "http://millstadt-library.org"
     },
     "Mineral-Gold Public Library District": {
@@ -1711,6 +1933,9 @@
       "url": "https://www.facebook.com/minerallibrary"
     },
     "Mississippi Valley Library District": {
+      "address": "408 West Main Street",
+      "city": "Collinsville",
+      "phone": "(618) 344-1112",
       "url": "https://mvld.org/"
     },
     "Moore Memorial Library District": {
@@ -1720,9 +1945,13 @@
         "role": "Library Coordinator"
       },
       "city": "Hillsdale",
+      "phone": "(309) 658-2666",
       "url": "https://www.facebook.com/Moore-Memorial-Library-1807680929493013/"
     },
     "Morris Area Public Library District": {
+      "address": "604 Liberty Street",
+      "city": "Morris",
+      "phone": "(815) 942-6880",
       "url": "http://www.morrislibrary.com"
     },
     "Morrison & Mary Wiley Library": {
@@ -1746,10 +1975,13 @@
       "url": "http://www.waterloolibrary.org"
     },
     "Morton Public Library District": {
+      "address": "315 West Pershing Street",
       "admin": {
         "name": "Alissa Williams",
         "role": "Director"
       },
+      "city": "Morton",
+      "phone": "(309) 263-2200",
       "url": "http://www.mortonlibrary.org"
     },
     "Mounds Public Library": {
@@ -1802,17 +2034,22 @@
       "url": "http://www.mtolivepubliclibrary.org"
     },
     "Mount Pulaski Public Library District": {
+      "address": "320 North Washington Street",
       "admin": {
         "name": "Amanda Doherty",
         "role": "Library Staff"
       },
+      "city": "Mount Pulaski",
       "url": "http://www.mplibrary.org"
     },
     "Mount Zion District Library": {
+      "address": "115 West Main Street",
       "admin": {
         "name": "Ashley Batchelder",
         "role": "Director"
       },
+      "city": "Mount Zion",
+      "phone": "(217) 864-3622",
       "url": "http://www.mtzion.lib.il.us/"
     },
     "Moweaqua Public Library District": {
@@ -1868,6 +2105,9 @@
       "url": "http://neponsetlibrary.org"
     },
     "New Athens District Library": {
+      "address": "201 North Van Buren Street",
+      "city": "New Athens",
+      "phone": "(618) 475-3255",
       "url": "http://www.newathenslibrary.org"
     },
     "New Baden Public Library": {
@@ -1887,13 +2127,17 @@
         "role": "Library Director"
       },
       "city": "Windsor",
+      "phone": "(309) 667-2515",
       "url": "https://www.facebook.com/newwindsorpubliclibrary/"
     },
     "Newman Regional Library District": {
+      "address": "207 South Coffin Street Suite D",
       "admin": {
         "name": "Matthew Hales",
         "role": "Librarian"
       },
+      "city": "Newman",
+      "phone": "(217) 837-2412",
       "url": "http://www.newmanlibrary.org"
     },
     "Nokomis Public Library": {
@@ -1917,17 +2161,24 @@
       "url": "http://www.normalpl.org"
     },
     "Norris City Memorial Public Library District": {
+      "address": "603 South Division Street",
+      "city": "Norris City",
       "phone": "(618) 378-3713"
     },
     "North Pike Library District": {
+      "address": "119 South Corey Street Post Office Box 419",
       "admin": {
         "name": "Kimber Martin",
         "role": "Director of Library Services"
       },
+      "city": "Griggsville",
       "phone": "(217) 833-2633",
       "url": "http://www.northpikedistrictlibrary.weebly.com"
     },
     "North Suburban Public Library District": {
+      "address": "6340 North Second Street",
+      "city": "Loves Park",
+      "phone": "(815) 633-4247",
       "url": "https://www.northsuburbanlibrary.org"
     },
     "O`Fallon Public Library": {
@@ -1947,6 +2198,7 @@
         "role": "Library Director"
       },
       "city": "Oakwood",
+      "phone": "(217) 354-4777",
       "url": "http://www.oakwood.lib.il.us"
     },
     "Odell Public Library": {
@@ -1966,17 +2218,22 @@
       "url": "http://www.odelllibrary.com/"
     },
     "Oglesby Public Library District": {
+      "address": "111 South Woodland Avenue",
       "admin": {
         "name": "Anna Allison",
         "role": "Library Director"
       },
+      "city": "Oglesby",
+      "phone": "(815) 883-3619",
       "url": "http://oglesbylibrary.org"
     },
     "Ohio Public Library District": {
+      "address": "112 North Main Street Post Office Box 187",
       "admin": {
         "name": "Monica Bulfer",
         "role": "Library Director"
       },
+      "city": "Ohio",
       "phone": "(815) 376-5422",
       "url": "http://ohiolibrarybc.com/"
     },
@@ -2001,15 +2258,19 @@
       "url": "http://onargalibrary.com"
     },
     "Oregon Public Library District": {
+      "address": "300 Jefferson Street",
       "admin": {
         "name": "Elizabeth Green",
         "role": "Library Director"
       },
+      "city": "Oregon",
+      "phone": "(815) 732-2724",
       "url": "http://www.oregonpubliclibrary.com"
     },
     "Palestine Public Library District": {
       "address": "201 South Washington Street",
       "city": "Palestine",
+      "phone": "(618) 586-5317",
       "url": "http://www.palestinepubliclibrary.org"
     },
     "Pankhurst Memorial Library": {
@@ -2043,10 +2304,13 @@
       "url": "http://www.parliningersoll.org"
     },
     "Paw Paw Public Library District": {
+      "address": "362 Chicago Road Post Office Box 362",
       "admin": {
         "name": "Abigail Denault",
         "role": "Library Director"
       },
+      "city": "Paw Paw",
+      "phone": "(815) 627-9396",
       "url": "https://www.pawpawlibrary.org"
     },
     "Pawnee Public Library": {
@@ -2066,6 +2330,7 @@
         "role": "Library Director"
       },
       "city": "Pearl City",
+      "phone": "(815) 443-2832",
       "url": "https://pcpl.specialdistrict.org"
     },
     "Pecatonica Public Library District": {
@@ -2085,10 +2350,13 @@
       "url": "http://www.pekinpubliclibrary.org/"
     },
     "Pembroke Public Library District": {
+      "address": "13130 East Central Road Post Office Box 574",
       "admin": {
         "name": "Toni Jordan",
         "role": "Director"
-      }
+      },
+      "city": "Hopkins Park",
+      "phone": "(815) 944-8609"
     },
     "Peoria Public Library": {
       "address": "107 Northeast Monroe Street",
@@ -2101,6 +2369,9 @@
       "url": "http://www.peoriapubliclibrary.org"
     },
     "Peru Public Library": {
+      "address": "1409 Eleventh Street",
+      "city": "Peru",
+      "phone": "(815) 223-0229",
       "url": "http://www.perulibrary.org"
     },
     "Petersburg Public Library": {
@@ -2172,20 +2443,29 @@
       "city": "Potomac"
     },
     "Prairie Creek Public Library District": {
+      "address": "501 Carriage House Lane",
       "admin": {
         "name": "Kim Frauli",
         "role": "Director"
       },
+      "city": "Dwight",
+      "phone": "(815) 584-3061",
       "url": "http://www.prairiecreeklibrary.org/"
     },
     "Prairie Skies Public Library District": {
+      "address": "125 West Editor Street Post Office Box 498",
+      "city": "Ashland",
+      "phone": "(217) 476-3417",
       "url": "http://www.pspld.com"
     },
     "Putnam County Public Library District": {
+      "address": "214 North Fourth Street Post Office Box 199",
       "admin": {
         "name": "Jay Kalman",
         "role": "Executive Director"
       },
+      "city": "Hennepin",
+      "phone": "(815) 339-2038",
       "url": "http://putnamcountylibrary.org"
     },
     "Ransom Memorial Public Library": {
@@ -2209,10 +2489,12 @@
       "url": "http://www.redbudpubliclibrary.weebly.com"
     },
     "Reddick Public Library District": {
+      "address": "1010 Canal Street",
       "admin": {
         "name": "Laura Youngstrum",
         "role": "Director"
       },
+      "city": "Ottawa",
       "url": "https://www.reddicklibrary.org/"
     },
     "Richard A. Mautino Memorial Library": {
@@ -2236,10 +2518,13 @@
       "url": "http://www.rickwarren.lib.il.us"
     },
     "River Valley District Library": {
+      "address": "214 South Main Street Post Office Box 10",
       "admin": {
         "name": "Kathy Peschang",
         "role": "Library Director"
       },
+      "city": "Port Byron",
+      "phone": "(309) 523-3440",
       "url": "http://www.rivervalleylibrary.org"
     },
     "Riverton Village Library": {
@@ -2259,23 +2544,35 @@
       "url": "http://www.robertrjoneslibrary.org"
     },
     "Robert W. Rowe Public Library District": {
+      "address": "120 East Si Johnson Avenue Post Office Box 358",
+      "city": "Sheridan",
+      "phone": "(815) 496-2031",
       "url": "http://rwrlibrary.org"
     },
     "Robinson Public Library District": {
+      "address": "606 North Jefferson Street",
+      "city": "Robinson",
+      "phone": "(618) 544-2917",
       "url": "https://robinsonpubliclibrary.com/"
     },
     "Rochester Public Library District": {
+      "address": "1 Community Drive",
       "admin": {
         "name": "Janet McAllister",
         "role": "Director"
       },
+      "city": "Rochester",
+      "phone": "(217) 498-8454",
       "url": "http://www.rochesterlibrary.org"
     },
     "Rock Falls Public Library District": {
+      "address": "1007 Seventh Avenue",
       "admin": {
         "name": "Amy Lego",
         "role": "Library Staff"
       },
+      "city": "Rock Falls",
+      "phone": "(815) 626-3958",
       "url": "http://www.rockfallslibrary.com"
     },
     "Rock River Library District": {
@@ -2350,6 +2647,7 @@
         "role": "Library Director"
       },
       "city": "Yates City",
+      "phone": "(309) 358-1678",
       "url": "http://www.salemtownshiplibrary.com"
     },
     "Sallie Logan Public Library": {
@@ -2369,13 +2667,19 @@
       "url": "https://savannalibrary.com"
     },
     "Schmaling Memorial Public Library District": {
+      "address": "501 Tenth Avenue",
       "admin": {
         "name": "Britni Hartman",
         "role": "Library Director"
       },
+      "city": "Fulton",
+      "phone": "(815) 589-2045",
       "url": "http://schmaling.lib.il.us"
     },
     "Seneca Public Library District": {
+      "address": "210 North Main Street",
+      "city": "Seneca",
+      "phone": "(815) 357-6566",
       "url": "http://www.senecalibrary.net"
     },
     "Sesser Public Library": {
@@ -2408,26 +2712,38 @@
       "url": "http://shelbyvillelibrary.org"
     },
     "Sheldon Public Library District": {
+      "address": "125 North Fifth Street",
       "admin": {
         "name": "Tammy Rice",
         "role": "Director"
-      }
+      },
+      "city": "Sheldon",
+      "phone": "(815) 429-3521"
     },
     "Sherman Public Library District": {
+      "address": "2100 East Andrew Road",
       "admin": {
         "name": "Rachel Kocis",
         "role": "Library Director"
       },
+      "city": "Sherman",
+      "phone": "(217) 496-2496",
       "url": "http://www.shermanlibrary.net/"
     },
     "Sherrard Public Library District": {
+      "address": "501 3rd Street",
       "admin": {
         "name": "Tori Drews",
         "role": "Director"
       },
+      "city": "Sherrard",
+      "phone": "(309) 593-2178",
       "url": "http://www.sherrardlibrary.org"
     },
     "Sidell District Library": {
+      "address": "101 East Market Street",
+      "city": "Sidell",
+      "phone": "(217) 288-9031",
       "url": "https://www.sidelldistrictlibrary.org"
     },
     "Silvis Public Library": {
@@ -2441,9 +2757,15 @@
       "url": "http://www.silvislibrary.org"
     },
     "Smithton Public Library District": {
+      "address": "109 South Main Street",
+      "city": "Smithton",
+      "phone": "(618) 233-8057",
       "url": "http://www.smithtonpl.org/"
     },
     "Somonauk Public Library District": {
+      "address": "700 East LaSalle Street",
+      "city": "Somonauk",
+      "phone": "(815) 498-2440",
       "url": "http://www.somonauklibrary.org"
     },
     "South Beloit Public Library": {
@@ -2488,6 +2810,7 @@
         "role": "Library Director"
       },
       "city": "Cuba",
+      "phone": "(309) 785-5496",
       "url": "http://www.cubaspoonriverlibrary.org/"
     },
     "Staunton Public Library": {
@@ -2517,6 +2840,9 @@
       "url": "https://www.sterlingpubliclibrary.org/"
     },
     "Stinson Memorial Public Library District": {
+      "address": "409 South Main Street",
+      "city": "Anna",
+      "phone": "(618) 833-2521",
       "url": "http://www.stinsonlibrary.org"
     },
     "Stockton Township Public Library": {
@@ -2549,10 +2875,13 @@
       "phone": "(217) 849-2072"
     },
     "Talcott Free Library District": {
+      "address": "101 East Main Street",
       "admin": {
         "name": "Megan Gove",
         "role": "Library Director"
       },
+      "city": "Rockton",
+      "phone": "(815) 624-7511",
       "url": "https://talcottfreelibrary.com"
     },
     "Tilden Public Library": {
@@ -2571,27 +2900,37 @@
         "role": "Director"
       },
       "city": "Toluca",
+      "phone": "(815) 452-2211",
       "url": "https://tolucapld.agverso.com/home?cid=TOLUCAPLD&lid=TOLUCAPLD"
     },
     "Toulon Public Library District": {
+      "address": "617 East Jefferson Street",
       "admin": {
         "name": "Michael Baumann",
         "role": "Director"
       },
+      "city": "Toulon",
+      "phone": "(309) 286-5791",
       "url": "http://www.toulonpld.org"
     },
     "Towanda District Library": {
+      "address": "301 South Taylor Street",
       "admin": {
         "name": "Rachel Ballenger",
         "role": "Library Director"
       },
+      "city": "Towanda",
+      "phone": "(309) 728-2176",
       "url": "http://www.towandalibrary.org"
     },
     "Tremont District Library": {
+      "address": "215 South Sampson Street Post Office Box 123",
       "admin": {
         "name": "Angela Watson",
         "role": "Library Staff"
       },
+      "city": "Tremont",
+      "phone": "(309) 925-5432",
       "url": "http://www.tremontlibrary.com"
     },
     "Trenton Public Library": {
@@ -2605,9 +2944,15 @@
       "url": "http://www.trenton.lib.il.us"
     },
     "Tri-City Public Library District": {
+      "address": "600 South Main Street",
+      "city": "Buffalo",
+      "phone": "(217) 364-8181",
       "url": "http://tricitylibrary.org"
     },
     "Tri-Township Public Library District": {
+      "address": "209 South Main Street",
+      "city": "Troy",
+      "phone": "(618) 667-2133",
       "url": "http://www.troylibrary.org/"
     },
     "Tuscola Public Library": {
@@ -2621,10 +2966,13 @@
       "url": "http://www.tuscolalibrary.org"
     },
     "Utica Public Library District": {
+      "address": "224 Mill Street Post Office Box 367",
       "admin": {
         "name": "Marlene Ernat",
         "role": "Director"
       },
+      "city": "Utica",
+      "phone": "(815) 667-4509",
       "url": "http://www.uticalibrary.org"
     },
     "Valley District Library": {
@@ -2634,9 +2982,13 @@
         "role": "Library Director"
       },
       "city": "Fairview",
+      "phone": "(309) 778-2240",
       "url": "http://www.valleydistrictlibrary.weebly.com"
     },
     "Valmeyer Public Library District": {
+      "address": "300 South Cedar Bluff Drive",
+      "city": "Valmeyer",
+      "phone": "(618) 935-2626",
       "url": "https://valmeyerlibrary.com/"
     },
     "Vance Township Library": {
@@ -2660,10 +3012,13 @@
       "url": "https://www.vermontpubliclibrary.net/"
     },
     "Vespasian Warner Public Library District": {
+      "address": "310 North Quincy Street",
       "admin": {
         "name": "Bobbi Perryman",
         "role": "Library Director"
       },
+      "city": "Clinton",
+      "phone": "(217) 935-5174",
       "url": "http://www.vwarner.org"
     },
     "Victoria Public Library District": {
@@ -2696,10 +3051,13 @@
       "url": "https://alsi.sdp.sirsi.net/client/en_US/AvonPL/"
     },
     "Viola Public Library District": {
+      "address": "1701 17th Street Post Office Box 479",
       "admin": {
         "name": "Lill Batson",
         "role": "Director"
       },
+      "city": "Viola",
+      "phone": "(309) 596-2620",
       "url": "http://violapubliclibrarydistrict.com"
     },
     "Virginia Memorial Public Library": {
@@ -2719,6 +3077,9 @@
       "url": "http://www.walnutpubliclibrary.org"
     },
     "Warren County Public Library District": {
+      "address": "62 Public Square",
+      "city": "Monmouth",
+      "phone": "(309) 734-3166",
       "url": "http://www.wcplibrary.org"
     },
     "Warren Township Public Library": {
@@ -2742,6 +3103,7 @@
       "url": "http://www.warsawlib.org/"
     },
     "Washington District Library": {
+      "phone": "(309) 444-2241",
       "url": "https://washingtondl.org/"
     },
     "Watseka Public Library": {
@@ -2786,6 +3148,7 @@
     "Weldon Public Library District": {
       "address": "505 Maple Street",
       "city": "Weldon",
+      "phone": "(217) 736-2215",
       "url": "http://www.weldon.lib.il.us/"
     },
     "West Frankfort Public Library": {
@@ -2813,6 +3176,7 @@
         "role": "Library Director"
       },
       "city": "New Berlin",
+      "phone": "(217) 488-7733",
       "url": "http://www.wspld.com"
     },
     "West Union District Library": {
@@ -2822,13 +3186,17 @@
         "role": "Library Director"
       },
       "city": "West Union",
+      "phone": "(217) 279-3556",
       "url": "https://wudp.illshareit.com"
     },
     "Western District Library": {
+      "address": "1111 Fourth Street Post Office Box 70",
       "admin": {
         "name": "Michelle Bailey",
         "role": "Director"
       },
+      "city": "Orion",
+      "phone": "(309) 526-8375",
       "url": "http://westerndistrictlibrary.org"
     },
     "Westville Public Library District": {
@@ -2848,10 +3216,13 @@
       "url": "http://whitehalltownshiplibrary.com"
     },
     "Williamsfield Public Library District": {
+      "address": "407 Norman Drive",
       "admin": {
         "name": "Kelly Goodin",
         "role": "Library Director"
       },
+      "city": "Williamsfield",
+      "phone": "(309) 639-2630",
       "url": "https://www.wpld.org"
     },
     "Williamsville Public Library": {
@@ -2875,13 +3246,19 @@
       "url": "http://winchesterpubliclibrary.org"
     },
     "Windsor Storm Memorial Public Library District": {
+      "address": "102 South Maple Street",
+      "city": "Windsor",
+      "phone": "(217) 459-2498",
       "url": "http://www.windsor.lib.il.us/"
     },
     "Winnebago Public Library District": {
+      "address": "210 North Elida Street",
       "admin": {
         "name": "Emily Gundry",
         "role": "Director"
       },
+      "city": "Winnebago",
+      "phone": "(815) 335-7050",
       "url": "http://www.winnebagopubliclibrary.org"
     },
     "Witt Township Memorial Library": {
@@ -2894,6 +3271,8 @@
       "phone": "(217) 594-7333"
     },
     "Wyoming Public Library District": {
+      "address": "119 North Seventh Street",
+      "city": "Wyoming",
       "phone": "(309) 695-2241",
       "url": "http://www.wyomingpubliclibrary.com/"
     },

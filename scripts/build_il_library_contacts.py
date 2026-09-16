@@ -50,7 +50,7 @@ row gives no way to tell them apart. The AFR route ships an e-mail only where th
 filing witnesses it as the unit's.
 
 THE FLOORS SIT UNDER THE MEASURED VALUES because a library renamed in either
-publisher is a real event and must not freeze the other 249. Setting them at the
+publisher is a real event and must not freeze the other 364. Setting them at the
 measured figures would make one rename indistinguishable from the source
 breaking.
 
@@ -71,19 +71,26 @@ from scraper_common import substantive_changes, emit_changes_output  # noqa: E40
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_PATH = os.path.join(REPO_ROOT, "il", "data", "app", "il-library-contacts.json")
 
-# Measured 2026-09-11: 365 libraries / 244 addresses / 223 telephones / 331
-# websites / 286 administrators. Every floor sits about 14% under its measured
+# Measured 2026-09-11: 365 libraries / 331 websites / 286 administrators, and
+# re-measured 2026-09-15 for the two the scraper's merge rule moved: 364
+# addresses / 360 telephones. Every floor sits about 14% under its measured
 # value, which is the same margin the first three were set with: a library
 # renamed in either publisher is a real event and must not freeze the other 364.
 #
-# THE FIVE DENOMINATORS ARE NOT THE SAME and the two new ones are the widest.
-# An address or a telephone ships only where the filing leaves one out, so 244
-# and 223 count a residue. A website and an administrator come off the library's
-# own page in the directory, which the filings do not carry at all, so every
-# matched library can have one.
+# THE FIVE DENOMINATORS USED TO DIFFER AND NO LONGER DO. Until 2026-09-15 an
+# address or a telephone shipped only where the filing left one out, so 244 and
+# 223 counted a residue; the scraper now keeps the directory's copy wherever the
+# two publishers AGREE as well (a disagreement is still the filing's to win), so
+# all five count the same thing — every matched library can have one.
+#
+# THAT ALSO MAKES THESE TWO FLOORS STEADIER RATHER THAN TIGHTER. The count is
+# now driven by the directory alone: how many matched libraries publish an
+# address this scraper can split. It no longer moves when Sunday's
+# library-officials run changes how many filings carry an office block, which is
+# what put the old measured values 120 apart from these.
 MIN_LIBRARIES = 315
-MIN_WITH_ADDRESS = 210
-MIN_WITH_PHONE = 190
+MIN_WITH_ADDRESS = 313
+MIN_WITH_PHONE = 310
 MIN_WITH_URL = 290
 MIN_WITH_ADMIN = 245
 

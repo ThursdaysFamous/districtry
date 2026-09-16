@@ -5012,6 +5012,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 160085 bytes",
    "callers": {
+    "scripts/il_court_justices_scraper.py": "self",
     "scripts/validate_sources.py": "both"
    }
   },

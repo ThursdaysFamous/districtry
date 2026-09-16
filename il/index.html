@@ -18374,42 +18374,174 @@ function initChiExplorer() {
   /* ==== TEMPLATE:END thread-4-political ==== */
   /* ==== TEMPLATE:BEGIN starter-modules ==== */
   /* =========================================================================
-   * THREAD 6 — POLITICAL (judicial & county): IL Supreme Court district +
-   * Cook County Board of Review district.
+   * THREAD 6 — POLITICAL (judicial & county): IL judicial district (Supreme
+   * and Appellate Court) + Cook County Board of Review district.
    * Both boundary sets come from the 2021 redistricting public acts'
-   * official shapefiles (PA 102-0011 for the Supreme Court, PA 102-0012 for
-   * the Board of Review; originals kept in data/source/raw/), reprojected
+   * official shapefiles (PA 102-0011 for the judicial districts, PA 102-0012
+   * for the Board of Review; originals kept in data/source/raw/), reprojected
    * NAD83 -> WGS84 and topology-preserving-simplified — classification
    * agreement with the full-precision conversions (kept in data/) was 100%
    * across 2,000 random in-city test points. Served from the same-origin
    * data/app/il-supreme-court-districts.json / ccbr-districts.json and
    * fetched lazily on first toggle, the same as the school-board layer
-   * above. Neither shapefile's attribute table
-   * carries officeholder names and no live-verifiable roster source exists
-   * for either body in this build environment, so — per the playbook's
-   * "never guess" rule — both cards link to the official body instead of
-   * naming names. ---------- */
+   * above. Neither shapefile's attribute table carries officeholder names,
+   * so each card joins a roster the app builds separately — the Board of
+   * Review's from the Board's own commissioner pages, this one's from the
+   * courts' own site.
+   *
+   * THE APPELLATE COURT ANSWERS ON THIS SAME GEOMETRY, which is why there is
+   * no second polygon layer for it. Illinois Constitution art. VI, sec. 2:
+   * "The State is divided into five Judicial Districts for the selection of
+   * Supreme and Appellate Court Judges." 705 ILCS 25/1(a) establishes a
+   * branch of the appellate court "in each of the 5 judicial districts as
+   * such districts are determined by law", defining none of its own, and
+   * 705 ILCS 23 — the Judicial Districts Act of 2021, which is PA 102-0011,
+   * the act this shapefile comes from — is where they are determined county
+   * by county. Measured 2026-09-15: every one of the 101 counties whose
+   * outline this app ships lands in the district that statute names, Cook
+   * being the 102nd and the First District by the Constitution itself.
+   *
+   * This comment used to end "no live-verifiable roster source exists for
+   * either body in this build environment, so — per the playbook's 'never
+   * guess' rule — both cards link to the official body instead of naming
+   * names." That was true of the SHAPEFILE and was never true of the court.
+   * illinoiscourts.gov names all seven justices with the district each was
+   * elected from, and lists every appellate justice by district; the card
+   * has named nobody since it shipped for want of anyone looking.
+   * ---------- */
   var loadSupremeCourtDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/il-supreme-court-districts.json", {}, 2);
   });
 
-  registerPolygonLayer({
+  /* ---------- Supreme and Appellate Court justices, keyed by judicial
+   * district ("1".."5") — scraped weekly by CI from the courts' own site
+   * (scripts/il_court_justices_scraper.py + build_il_court_justices.py).
+   * The builder refuses to write unless the counties the court's own five
+   * district pages name are exactly the counties 705 ILCS 23 assigns, which
+   * is two independent publishers agreeing on the composition. A missing
+   * join simply drops the roster rows and the card falls back to the
+   * district number plus the court's own link. ---------- */
+  var loadCourtJustices = makeCached(function () {
+    return fetchJSONWithRetry("data/app/il-court-justices.json", {}, 2);
+  });
+
+  var JUDICIAL_DISTRICT_ORDINALS = {
+    "1": "First", "2": "Second", "3": "Third", "4": "Fourth", "5": "Fifth"
+  };
+
+  registerLayer({
     id: "il-supreme-court",
     group: "political",
     label: "IL Supreme Court District",
-    loader: loadSupremeCourtDistricts,
-    style: { color: "#8C6A2E", weight: 2, fillColor: "#8C6A2E", fillOpacity: 0.05, dashArray: "7 3" },
-    pill: true, // district identifier in the header pill
-    fields: [
-      { name: "district", label: "District", keys: ["districtn", "district"], primary: true },
-      // structural fact from the Illinois Constitution (art. VI), not
-      // officeholder data: District 1 is Cook County and elects three of the
-      // court's seven justices; districts 2-5 elect one each
-      { label: "Note", value: "District 1 is all of Cook County and elects three of the seven justices.",
-        when: function (r) { return String(r.district) === "1"; } }
-    ],
-    primaryLink: function () {
+    overlay: {
+      load: loadSupremeCourtDistricts,
+      style: { color: "#8C6A2E", weight: 2, fillColor: "#8C6A2E", fillOpacity: 0.05, dashArray: "7 3" }
+    },
+    hoverName: function (feature) {
+      var d = findPropCI(feature.properties || {}, ["districtn", "district"]);
+      return d != null ? "District " + String(d) : null;
+    },
+    query: function (point, seq) {
+      // same point-first shape as every other join card (queryFeatureAt)
+      return Promise.all([
+        queryFeatureAt(loadSupremeCourtDistricts, point),
+        loadCourtJustices().catch(function () { return null; })
+      ]).then(function (results) {
+        var feature = results[0], roster = results[1];
+        if (!feature) return null;
+        var district = findPropCI(feature.properties || {}, ["districtn", "district"]);
+        var key = district != null ? String(district) : null;
+        var entry = (roster && key) ? roster[key] : null;
+        return { seq: seq, district: key, entry: entry };
+      });
+    },
+    render: function (result) {
+      // Card convention: identifier (pill) -> officeholders -> office ->
+      // contact -> link.
+      var wrap = cardEl("div", "card-flush");
+      var entry = result.entry;
+      var ordinal = JUDICIAL_DISTRICT_ORDINALS[result.district] || null;
+      wrap.appendChild(renderBodyIntro({
+        title: "Illinois Supreme Court",
+        // structural fact from the Constitution (art. VI, secs. 2-3), not
+        // officeholder data
+        note: result.district === "1"
+          ? "Cook County is the First Judicial District and elects three of the seven justices."
+          : "Each judicial district outside Cook County elects one of the seven justices."
+      }));
+      if (entry && entry.supreme && entry.supreme.length) {
+        wrap.appendChild(renderPersonRows(entry.supreme.map(function (justice) {
+          return { name: String(justice.name), badge: String(justice.role || "Justice") };
+        })));
+      }
+      var branch = entry && entry.appellate;
+      if (branch) {
+        wrap.appendChild(renderSectionLabel("Appellate Court"));
+        var justices = branch.justices || [];
+        wrap.appendChild(renderBodyIntro({
+          title: (ordinal ? ordinal + " District Appellate Court" : "Appellate Court") +
+                 (branch.seat ? ", " + String(branch.seat) : ""),
+          // The directory lists everyone sitting in the district, which is
+          // more than the seats 705 ILCS 25/1(b)-(c) elects, because sec.
+          // 1(d) lets the Supreme Court assign additional judges. It does not
+          // say which is which, so neither does this line.
+          note: "Hears appeals from " +
+                (result.district === "1" ? "Cook County's circuit court"
+                                         : String(branch.counties) + " counties' circuit courts") +
+                ". The court lists " + justices.length +
+                " justices sitting here and does not say which are elected and which are assigned."
+        }));
+        if (justices.length) {
+          wrap.appendChild(renderPersonRows(justices.map(function (justice) {
+            var person = { name: String(justice.name) };
+            var page = safeHttpUrl(justice.url);
+            if (page) person.links = [{ label: "Profile", url: page }];
+            return person;
+          }), { tinted: true }));
+        }
+        var offices = [];
+        if (branch.addressLines && branch.addressLines.length) {
+          offices.push({
+            label: "Courthouse",
+            lines: branch.addressLines.map(String),
+            phone: branch.phone ? String(branch.phone) : undefined
+          });
+        }
+        if (branch.clerk) {
+          offices.push({ label: "Clerk of the court", lines: [String(branch.clerk)] });
+        }
+        if (offices.length) {
+          wrap.appendChild(renderOfficeGroup({ label: "Appellate Court office", offices: offices }));
+        }
+      }
+      return wrap;
+    },
+    cardIdentifier: function (result) {
+      return result.district != null ? "District " + String(result.district) : null;
+    },
+    primaryLink: function (result) {
+      var branch = result && result.entry && result.entry.appellate;
+      if (branch && branch.sourceUrl) {
+        var url = safeHttpUrl(branch.sourceUrl);
+        if (url) return { label: "Illinois Courts", url: url };
+      }
       return { label: "Illinois Supreme Court", url: "https://www.illinoiscourts.gov/courts/supreme-court/" };
+    },
+    // hover popup: name the district's Supreme Court justice from the
+    // prefetched roster (same district-number join as the query, run
+    // synchronously against the cache).
+    hoverOfficial: {
+      load: loadCourtJustices,
+      name: function (feature, roster) {
+        if (!roster) return null;
+        var d = findPropCI(feature.properties || {}, ["districtn", "district"]);
+        var entry = d != null ? roster[String(d)] : null;
+        var justices = entry && entry.supreme;
+        if (!justices || !justices.length) return null;
+        return justices.length === 1
+          ? String(justices[0].name)
+          : String(justices[0].name) + " +" + (justices.length - 1);
+      }
     }
   });
 

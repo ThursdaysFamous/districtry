@@ -31,8 +31,17 @@ name: Update statewide library contacts
 #
 # A LIBRARY RENAMED IN EITHER PUBLISHER IS A REAL EVENT, not a parse failure, and
 # the builder's floors sit under the measured 250 so one rename cannot freeze the
-# rest. Where both publishers answer, the filing ships, because it is the unit's
-# own return; every disagreement prints on the run.
+# rest.
+#
+# WHERE THE TWO DISAGREE THE FILING SHIPS, because it is the unit's own return,
+# and every disagreement prints on the run. WHERE THEY AGREE THE DIRECTORY SHIPS,
+# narrowed to that on 2026-09-15: an agreement is not a dispute about the address,
+# only about its spelling, and the filings are written in abbreviated capitals
+# ("3527 S Airport Rd", "Bartonville IL 61607") where the directory spells the
+# street out and gives the city its own name ("3527 South Airport Road",
+# "Bartonville"). Dropping the directory's copy was never neutral, because
+# il/index.html renders whichever copy this file carries in preference to the
+# filing's — so the discarded copy was the one that would have been read.
 
 on:
   schedule:

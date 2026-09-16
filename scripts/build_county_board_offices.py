@@ -27,10 +27,13 @@ cycle; a courthouse does not move. Two things are measured rather than assumed:
      county's page prints the same street and city — so what ships is a shared
      public building, never a home address, which is the line this repo does not
      cross (the Madison/Peoria rule). 72 of 102 counties clear that bar.
-  2. IT AGREES WITH EVERY COUNTY THAT PUBLISHES ITS OWN. Seven of the 13 counties
-     that ship a board address have an ISBE address to compare against, and all
-     seven name the same building — the differences are abbreviation ("200 South
-     Cherry" vs "200 South Cherry Street"), an added room, or an added PO box.
+  2. IT AGREES WITH EVERY COUNTY THAT PUBLISHES ITS OWN. Eight of the 11 counties
+     that ship a board address have an ISBE address to compare against; seven of
+     those eight are comparable and all seven name the same building — the
+     differences are abbreviation ("200 South Cherry" vs "200 South Cherry
+     Street"), an added room, or an added PO box. The eighth is White, which
+     publishes its PO box alone, so there is no street to compare and the
+     comparison declines to judge it rather than counting it either way.
      THAT COMPARISON IS A GATE HERE, not a note: if any county's own published
      address ever stops matching ISBE's, this refuses to write, because the
      column's reliability is exactly what the disagreement would disprove.

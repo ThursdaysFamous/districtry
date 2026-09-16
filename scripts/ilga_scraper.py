@@ -18,10 +18,31 @@ Notes on data honesty (per project conventions):
 - If a field can't be found on a page, it is stored as null / empty list,
   never guessed or fabricated.
 - Every record includes `source_url` and `scraped_at` for traceability.
+
+www.ilga.gov SERVES THE COLES PATTERN (measured 2026-09-15). It sends its leaf
+certificate without the Sectigo intermediate that signed it, so every plain
+client stops at "unable to get local issuer certificate" while a browser
+completes the chain from the certificate's own AIA extension and shows no
+problem at all. That is what broke this scraper: the weekly run failed on
+2026-09-14 with exactly that SSLError against /Senate/Members, having last
+succeeded a week earlier. Verification is NOT disabled to fix it — the
+intermediate is fetched from the AIA URI the leaf itself publishes and pinned
+by SHA-256 in scripts/aia_bundle.py, which already carried this exact
+certificate for Gallatin. Reproduced and fixed here the same day: the bare
+fetch raises the CI error, the same fetch with the bundle returns HTTP 200 and
+232,963 bytes naming 61 Senate detail ids.
+
+THE BUNDLE IS PASSED PER REQUEST, NEVER AS session.verify, and that is
+load-bearing rather than style. requests merges environment settings over the
+Session's own, so REQUESTS_CA_BUNDLE — which this project's sandbox sets and CI
+does not — silently WINS over `session.verify`. Setting it on the session
+therefore works in CI and fails locally, which is the worst arrangement: the
+one place a person would test it is the one place it breaks.
 """
 
 import argparse
 import json
+import os
 import re
 import sys
 import time
@@ -30,6 +51,7 @@ from datetime import datetime, timezone
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+import aia_bundle  # noqa: E402  (shared machinery — do not fork)
 from scraper_common import UA_CHROME_WIN_124  # noqa: E402  (shared machinery — do not fork)
 
 BASE = "https://www.ilga.gov"
@@ -45,11 +67,12 @@ CHAMBERS = {
 }
 
 
-def fetch(url, session, retries=3, timeout=20):
+def fetch(url, session, verify=None, retries=3, timeout=20):
     last_err = None
     for attempt in range(retries):
         try:
-            resp = session.get(url, headers=HEADERS, timeout=timeout)
+            # verify= per request, not session.verify — see the module docstring.
+            resp = session.get(url, headers=HEADERS, timeout=timeout, verify=verify)
             if resp.status_code == 200:
                 return resp.text
             last_err = f"HTTP {resp.status_code}"
@@ -59,10 +82,10 @@ def fetch(url, session, retries=3, timeout=20):
     raise RuntimeError(f"Failed to fetch {url}: {last_err}")
 
 
-def get_roster_ids(chamber, session):
+def get_roster_ids(chamber, session, verify=None):
     """Return sorted list of unique member IDs listed on the roster page."""
     cfg = CHAMBERS[chamber]
-    html = fetch(BASE + cfg["list_path"], session)
+    html = fetch(BASE + cfg["list_path"], session, verify)
     ids = sorted(set(re.findall(cfg["detail_prefix"].lstrip("/") + r"(\d+)", html)))
     return ids
 
@@ -215,9 +238,9 @@ def parse_member_detail(html, member_id, chamber, source_url):
     return record
 
 
-def scrape_chamber(chamber, session, limit=None, delay=0.5, verbose=True):
+def scrape_chamber(chamber, session, limit=None, delay=0.5, verbose=True, verify=None):
     cfg = CHAMBERS[chamber]
-    ids = get_roster_ids(chamber, session)
+    ids = get_roster_ids(chamber, session, verify)
     if limit:
         ids = ids[:limit]
     results = []
@@ -226,7 +249,7 @@ def scrape_chamber(chamber, session, limit=None, delay=0.5, verbose=True):
         if verbose:
             print(f"[{chamber}] {i}/{len(ids)} fetching {url}", file=sys.stderr)
         try:
-            html = fetch(url, session)
+            html = fetch(url, session, verify)
             record = parse_member_detail(html, member_id, chamber, url)
             results.append(record)
         except Exception as e:
@@ -253,8 +276,18 @@ def main():
     session = requests.Session()
     all_results = []
     chambers = ["senate", "house"] if args.chamber == "both" else [args.chamber]
-    for chamber in chambers:
-        all_results.extend(scrape_chamber(chamber, session, limit=args.limit, delay=args.delay))
+    # The site omits its intermediate; aia_bundle holds the pinned Sectigo
+    # certificate (the one copy) and never disables verification.
+    verify = aia_bundle.ca_bundle("ilga", "sectigo-ov-r40")
+    try:
+        for chamber in chambers:
+            all_results.extend(scrape_chamber(chamber, session, limit=args.limit,
+                                              delay=args.delay, verify=verify))
+    finally:
+        try:
+            os.unlink(verify)
+        except OSError:
+            pass
 
     with open(args.out, "w") as f:
         json.dump(all_results, f, indent=2)

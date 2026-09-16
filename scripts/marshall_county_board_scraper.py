@@ -40,9 +40,9 @@ Usage:
 import json
 import re
 import sys
+import time
 
-import requests
-from scraper_common import UA_CHROME_X11_128  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import UA_CHROME_X11_128, fetch  # noqa: E402  (shared machinery — do not fork)
 
 try:
     import pdfplumber
@@ -70,13 +70,32 @@ APPT_RE = re.compile(r"\s*Appt\.?\s*[\d/]+\)?\s*$", re.I)
 ROLE_RE = re.compile(r"^(Chairperson|Vice\s*Chairperson|Member)$", re.I)
 
 
-def fetch_pdf(url):
-    resp = requests.get(url, headers=UA, timeout=90)
-    resp.raise_for_status()
-    if not resp.content.startswith(b"%PDF"):
-        raise RuntimeError("%s did not return a PDF (got %d bytes of %s)"
-                           % (url, len(resp.content), resp.headers.get("content-type")))
-    return resp.content
+# THE WEEKLY RUN DIED ON 2026-09-14 FOR A REASON NO STATUS CODE NAMES: the
+# county's own URL answered HTTP 200 with 12,136 bytes of text/html where the
+# roster PDF lives. Re-probed 2026-09-15 the same URL serves the PDF normally
+# (200, 201,717 bytes, %PDF-), so the document did not move — the site briefly
+# returned a page instead of the file. The %PDF guard below was right to refuse
+# and is kept: a scraper that parsed that HTML would have shipped nothing or
+# nonsense. What was missing is a RETRY, and the shared fetch() could not
+# supply it, because its ladder retries 429 and 5xx and a 200 carrying the
+# wrong body is neither. So the non-PDF body is itself the retry condition
+# here, and the guard becomes the verdict only after the attempts are spent.
+PDF_ATTEMPTS = 3
+PDF_RETRY_GAP_S = 4.0
+
+
+def fetch_pdf(url, attempts=PDF_ATTEMPTS):
+    last = None
+    for attempt in range(attempts):
+        resp = fetch(url, UA, timeout=90)
+        if resp.content.startswith(b"%PDF"):
+            return resp.content
+        last = "%d bytes of %s" % (len(resp.content),
+                                   resp.headers.get("content-type"))
+        if attempt + 1 < attempts:
+            time.sleep(PDF_RETRY_GAP_S * (attempt + 1))
+    raise RuntimeError("%s did not return a PDF after %d attempts (last: %s)"
+                       % (url, attempts, last))
 
 
 # Words on one visual row are not perfectly aligned: the Vice Chairperson's

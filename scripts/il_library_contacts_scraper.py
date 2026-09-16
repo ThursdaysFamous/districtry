@@ -471,6 +471,7 @@ def main():
             unmatched.append(card)
 
     contacts, differences, unsplit, derived = {}, [], [], []
+    concurring = collections.Counter()
     unlinked, detail_errors = [], []
     for card, row in sorted(chosen.items()):
         name, contact_cell, address_cell, path = row
@@ -494,10 +495,29 @@ def main():
         filed = dict((afr.get(card) or {}).get("office") or {})
         if filed.get("address") and not has_street(filed["address"]):
             filed.pop("address")        # a box, so the directory's street ships
+        # THE FILING WINS A DISAGREEMENT. AN AGREEMENT IS NOT A DISAGREEMENT,
+        # and until 2026-09-15 this dropped the directory's copy of both alike.
+        # Dropping it is not neutral, because il/index.html's
+        # withLibraryOfficials stamps whatever ships here OVER the filing's
+        # office — so the copy discarded was the copy that would have rendered,
+        # and the card silently fell back to the filing's spelling. Macomb is
+        # the measured case: #861 gave the filing an office the directory
+        # already had, agrees() matched on ("235", "lafayette") for the first
+        # time, and the card went from "235 South Lafayette Street, Macomb" to
+        # "235 S LAFAYETTE, MACOMB IL 61455". Nothing about the address was in
+        # dispute; only its spelling was, and the filings are written in
+        # abbreviated capitals where the directory spells the street out.
+        #
+        # So the rule holds where it means something and no further. A genuine
+        # disagreement is still the filing's to win — that is a question about
+        # the FACT, and an Annual Financial Report is the unit's own return
+        # where a directory row is a third party's record of it. Where the two
+        # say the same thing there is no fact to adjudicate, so the card keeps
+        # the copy a reader can read.
         for field in ("address", "phone"):
             if filed.get(field) and entry.get(field):
                 if agrees(field, filed[field], entry[field]):
-                    entry.pop(field)
+                    concurring[field] += 1
                 else:
                     differences.append((card, field, filed[field],
                                         entry.pop(field)))
@@ -519,11 +539,17 @@ def main():
                 # and any other key means this repo chose the string and a dead
                 # link is a FAIL. A library's own site is the library's.
                 entry["url"] = page["website"]
-            # THE FILING WINS WHERE IT ANSWERS, the same rule the address and
-            # the telephone already follow: an Annual Financial Report is the
-            # unit's own return, where a directory row is a third party's
+            # THE FILING WINS WHERE IT ANSWERS: an Annual Financial Report is
+            # the unit's own return, where a directory row is a third party's
             # record of it. So an administrator ships only where the filing
             # names no administration at all.
+            #
+            # THE ADDRESS AND THE TELEPHONE FOLLOW THIS ONLY WHERE THE TWO
+            # DISAGREE, which is the narrower rule they were given on
+            # 2026-09-15 (see the merge above). A person is not a spelling: two
+            # publishers naming different administrators are naming different
+            # people, so there is no case where both are right and the better-
+            # written one can be preferred.
             if page.get("admin") and not (afr.get(card) or {}).get("heads"):
                 entry["admin"] = page["admin"]
         if any(entry.get(f) for f in ("address", "phone", "url", "admin")):
@@ -614,12 +640,13 @@ def main():
     site = sum(1 for v in contacts.values() if v.get("url"))
     adm = sum(1 for v in contacts.values() if v.get("admin"))
     print("matched %d of %d card name(s) — %d on the full name, %d on the agency "
-          "prefix, %d on a normalisation. %d ship something the filings do not "
-          "already give: %d an address, %d a telephone, %d a website, %d an "
-          "administrator -> %s"
+          "prefix, %d on a normalisation. %d carry a contact detail: %d an "
+          "address, %d a telephone, %d a website, %d an administrator. The "
+          "filing states the same address on %d of those and the same telephone "
+          "on %d, where the directory's spelling is what ships -> %s"
           % (len(chosen), len(kinds), len(chosen) - len(prefixed) - len(loose),
              len(prefixed), len(loose), len(contacts), addr, ph, site, adm,
-             args.out),
+             concurring["address"], concurring["phone"], args.out),
           file=sys.stderr)
 
 

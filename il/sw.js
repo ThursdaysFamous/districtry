@@ -391,6 +391,7 @@ const ROSTER_URLS = [
   "./data/app/mchenry-county-board-members.json",
   "./data/app/early-voting-sites.json",
   "./data/app/ccbr-roster.json",
+  "./data/app/il-court-justices.json",
   "./data/app/il-county-clerks.json",
   "./data/app/dupage-county-board-members.json",
   "./data/app/winnebago-county-board-members.json",
