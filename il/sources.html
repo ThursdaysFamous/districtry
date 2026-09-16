@@ -1519,6 +1519,1001 @@ table.matrix code {
           </table>
         </div>
       </section>
+
+      <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DataCatalog",
+  "@id": "https://districtry.com/il/sources.html#catalog",
+  "name": "districtry Illinois data layers",
+  "url": "https://districtry.com/il/sources.html",
+  "publisher": {
+    "@type": "Organization",
+    "@id": "https://districtry.com/#publisher",
+    "name": "Overberg",
+    "url": "https://overberg.co"
+  },
+  "dataset": [
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-il-supreme-court",
+      "identifier": "il-supreme-court",
+      "name": "IL Supreme Court District",
+      "description": "Which Illinois Supreme Court district elects the justices sitting over this address. No roster is joined; the card links the court itself rather than naming justices from an unverifiable list.",
+      "url": "https://districtry.com/il/sources.html#layer-il-supreme-court",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Illinois Supreme Court districts as enacted by PA 102-0011 — shapefile from illinoiscourts.gov, simplified and shipped with the app",
+          "url": "https://www.illinoiscourts.gov"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Illinois — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-congress",
+      "identifier": "congress",
+      "name": "U.S. House District",
+      "description": "The U.S. House district covering the point, and the representative holding it. congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.",
+      "url": "https://districtry.com/il/sources.html#layer-congress",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Legislative, layer 0 (congressional districts), pre-built for Illinois and shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Illinois — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-il-senate",
+      "identifier": "il-senate",
+      "name": "IL State Senate District",
+      "description": "The Illinois State Senate district covering the point, and the senator holding it. il-senate-members.json, rebuilt weekly by CI from the Illinois General Assembly's member pages.",
+      "url": "https://districtry.com/il/sources.html#layer-il-senate",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for Illinois and shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Illinois — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-il-house",
+      "identifier": "il-house",
+      "name": "IL State House District",
+      "description": "The Illinois State House district covering the point, and the representative holding it. il-house-members.json, rebuilt weekly by CI from the Illinois General Assembly's member pages.",
+      "url": "https://districtry.com/il/sources.html#layer-il-house",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber), pre-built for Illinois and shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Illinois — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-county",
+      "identifier": "county",
+      "name": "County",
+      "description": "Which Illinois county contains the point, who runs its elections, and — where the county elects its board countywide — the board members themselves. il-county-clerks.json, rebuilt weekly by CI from the Illinois State Board of Elections' election-authority directory, plus il-county-commissioners.json for the twelve counties that elect their board at large and so have no district geometry to show.",
+      "url": "https://districtry.com/il/sources.html#layer-county",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — State_County, layer 1",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Illinois — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-mwrd",
+      "identifier": "mwrd",
+      "name": "Water Reclamation District (MWRD)",
+      "description": "Whether the point sits inside the Metropolitan Water Reclamation District of Greater Chicago. Nobody is elected from a sub-area: MWRD's nine commissioners are all elected district-wide, so the card links the board instead of naming a representative for the point.",
+      "url": "https://districtry.com/il/sources.html#layer-mwrd",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Cook County GIS — political boundaries, layer 21 (the Clerk's tax-agency boundary)",
+          "url": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/21"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Cook County"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-school-district-secondary",
+      "identifier": "school-district-secondary",
+      "name": "High School District",
+      "description": "The high school district serving the point, where elementary and high school districts are separate. No roster is joined; the card names the district.",
+      "url": "https://districtry.com/il/sources.html#layer-school-district-secondary",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — School, layer 1",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Illinois outside Chicago — inside the city, CPS is a single unified district"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-school-district-unified",
+      "identifier": "school-district-unified",
+      "name": "Unified School District",
+      "description": "The unified (K-12) school district serving the point. No roster is joined; the card names the district.",
+      "url": "https://districtry.com/il/sources.html#layer-school-district-unified",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — School, layer 0",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Illinois — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-school-district-elementary",
+      "identifier": "school-district-elementary",
+      "name": "Elementary School District",
+      "description": "The elementary school district serving the point, where elementary and high school districts are separate. No roster is joined; the card names the district.",
+      "url": "https://districtry.com/il/sources.html#layer-school-district-elementary",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — School, layer 2",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Illinois outside Chicago — inside the city, CPS is a single unified district"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-township",
+      "identifier": "township",
+      "name": "Township / County Subdivision",
+      "description": "The township or county subdivision containing the point — and, in covered counties, the township's elected officers. township-officials.json, rebuilt weekly by CI from the Cook County Clerk's directory (29 townships — supervisor, trustees, clerk/assessor/collector/highway commissioner, hall contact), joined by county-subdivision GEOID. Townships in other counties keep the identity-only card.",
+      "url": "https://districtry.com/il/sources.html#layer-township",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Places / county subdivisions, layer 1",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Illinois — statewide for the boundary; officials are carried for Cook County"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-municipality",
+      "identifier": "municipality",
+      "name": "Municipality",
+      "description": "The city, village or town containing the point — or that it sits in unincorporated county — and the officials elected to run it. municipal-officials.json, rebuilt weekly by CI from county clerk directories across the covered counties, plus Chicago's own citywide officers.",
+      "url": "https://districtry.com/il/sources.html#layer-municipality",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Places, layer 4",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Illinois — statewide for the boundary; officials are carried for the covered counties"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-judicial-subcircuit",
+      "identifier": "judicial-subcircuit",
+      "name": "Judicial Subcircuit",
+      "description": "The judicial subcircuit that elects circuit judges for this address, in the counties divided into them. No roster is joined; each card links the circuit court that seats the judges.",
+      "url": "https://districtry.com/il/sources.html#layer-judicial-subcircuit",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Cook County GIS — political boundaries, layer 5 (subcircuits)",
+          "url": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/5"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Each county's own GIS or election service, county by county"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Pre-built from the county's published district map, for the counties that publish no vector data"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Which county feeds which entry, county by county (COUNTY_STATUS.md)",
+          "url": "https://github.com/ThursdaysFamous/districtry/blob/main/docs/COUNTY_STATUS.md"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The counties that divide their circuit into subcircuits"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-county-board",
+      "identifier": "county-board",
+      "name": "County Board District",
+      "description": "The county board district covering the point, and the commissioner or board member elected from it. Cook joins the county's own live elected-officials table on the same server. Every other county joins a roster rebuilt weekly by CI from that county's own board page — two counties whose boards publish nothing online ride a document their clerk sent, and the refresh says so out loud rather than implying it was re-read.",
+      "url": "https://districtry.com/il/sources.html#layer-county-board",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Cook County GIS — political boundaries, layer 9 (commissioner districts)",
+          "url": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/9"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Each county's own GIS or election service, county by county"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Pre-built from the county's published district map, for the counties that publish no vector data"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Which county feeds which entry, county by county (COUNTY_STATUS.md)",
+          "url": "https://github.com/ThursdaysFamous/districtry/blob/main/docs/COUNTY_STATUS.md"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The counties that publish board-district boundaries — county by county in COUNTY_STATUS.md"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-ccbr",
+      "identifier": "ccbr",
+      "name": "Cook County Board of Review District",
+      "description": "Which of the three Cook County Board of Review districts hears property-tax appeals from this address, and the commissioner elected to it. ccbr-roster.json, rebuilt weekly by CI from cookcountyboardofreview.com.",
+      "url": "https://districtry.com/il/sources.html#layer-ccbr",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Board of Review districts as enacted by PA 102-0012 — shapefile from cookcountyboardofreview.com, shipped with the app",
+          "url": "https://www.cookcountyboardofreview.com"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Cook County"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-fire-district",
+      "identifier": "fire-district",
+      "name": "Fire Protection District",
+      "description": "The fire protection district responsible for this address, where fire service is a special district rather than a municipal department. Most counties publish no trustee roster alongside the boundary, so most cards name the district only; where a county's GIS carries district contact details, the card shows them.",
+      "url": "https://districtry.com/il/sources.html#layer-fire-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Cook County GIS — the Clerk's fire tax-agency tiling, pre-built with road voids closed and shipped with the app",
+          "url": "https://gis.cookcountyil.gov/traditional/rest/services/"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Each county's own GIS or election service, county by county"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Pre-built from the county's published district map, for the counties that publish no vector data"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Which county feeds which entry, county by county (COUNTY_STATUS.md)",
+          "url": "https://github.com/ThursdaysFamous/districtry/blob/main/docs/COUNTY_STATUS.md"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The counties that publish a fire-district layer"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-dupage-county-special-police",
+      "identifier": "dupage-county-special-police",
+      "name": "DuPage Special Police District",
+      "description": "Whether the point sits in one of DuPage County's special police districts — the tax districts that fund sheriff's patrol in unincorporated areas. No district officeholder exists — policing is by the elected DuPage County Sheriff, whom the card links.",
+      "url": "https://districtry.com/il/sources.html#layer-dupage-county-special-police",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "DuPage County ArcGIS — Special_Police_Districts_ (real-estate tax code polygons)",
+          "url": "https://services.arcgis.com/neJvtQ4PXvnQ86MJ/arcgis/rest/services/Special_Police_Districts_/FeatureServer/13"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "DuPage County"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-park-district",
+      "identifier": "park-district",
+      "name": "Park District",
+      "description": "The park district serving the point, including the Chicago Park District. Name-only in most counties; where a county's GIS carries commissioners or a district office, the card shows them.",
+      "url": "https://districtry.com/il/sources.html#layer-park-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Cook County GIS — political boundaries, layer 23 (the Clerk's park tax-agency tiling)",
+          "url": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/23"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Each county's own GIS or election service, county by county"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Pre-built from the county's published district map, for the counties that publish no vector data"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Which county feeds which entry, county by county (COUNTY_STATUS.md)",
+          "url": "https://github.com/ThursdaysFamous/districtry/blob/main/docs/COUNTY_STATUS.md"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The counties that publish a park-district layer"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-library-district",
+      "identifier": "library-district",
+      "name": "Library District",
+      "description": "The public library district serving the point, and whether library service there comes from a district or a municipal fund. Three sources, all rebuilt weekly by CI. The district-governed libraries that file an Annual Financial Report with the Illinois Comptroller name their own board and administration on it (il-library-district-officials.json). Every library's own page in the Illinois library systems' shared directory names one administrator and links the library's site (il-library-contacts.json); it names no trustee, because that directory's staff lists and annual certifications are behind a sign-in. Where a county's GIS carries trustees or a district office the card shows them, and Cicero's library board comes from the Cook County Clerk's directory of elected officials (cook-library-trustees.json).",
+      "url": "https://districtry.com/il/sources.html#layer-library-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Cook County GIS — political boundaries, layer 20 (library tax district) and layer 19 (library fund)",
+          "url": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/20"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Each county's own GIS or election service, county by county"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Pre-built from the county's published district map, for the counties that publish no vector data"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Illinois Broadband Office / Connected Nation, IL_Boundary_Layers layer 11 — Carroll, Lee, Macoupin, Randolph, Sangamon, St. Clair and Stephenson ONLY. Not a county or library publication: every attribute besides the library name and type is a broadband service metric. Its licence (AGOL item 675906ae06b5460296154760b7fb1367) permits public use, disclaims warranty, says the data is NOT for legal boundary determinations, and requires both attribution and disclosure of any changes — so each of those cards names this publisher AND states that the boundary shown was clipped to the county and simplified to 5 m.",
+          "url": "https://services.arcgis.com/R0IGaIgf2sox9aCY/arcgis/rest/services/IL_Boundary_Layers/FeatureServer/11"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Which county feeds which entry, county by county (COUNTY_STATUS.md)",
+          "url": "https://github.com/ThursdaysFamous/districtry/blob/main/docs/COUNTY_STATUS.md"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The counties that publish a library-district layer, plus seven that publish none and are drawn from a statewide layer instead"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-school-board",
+      "identifier": "school-board",
+      "name": "Elected School Board District",
+      "description": "Which of Chicago's 20 elected school board districts covers the point, and who represents it. school-board-members.json — hand-curated and hand-verified, because no machine-readable roster is published for this board.",
+      "url": "https://districtry.com/il/sources.html#layer-school-board",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "ERSB 20-subdistrict map (SB 15) — shapefile from ilsenateredistricting.com, simplified and shipped with the app",
+          "url": "https://www.ilsenateredistricting.com"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Chicago"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-cps-hs-network",
+      "identifier": "cps-hs-network",
+      "name": "CPS Network (High School, admin office)",
+      "description": "The CPS high school network the point falls in, and the chief who runs it. The network chief, phone and address ride the dataset's own properties — no separate roster.",
+      "url": "https://districtry.com/il/sources.html#layer-cps-hs-network",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Chicago Data Portal — CPS high school network boundaries (aupu-jt2g)",
+          "url": "https://data.cityofchicago.org/d/aupu-jt2g"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Chicago"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-cps-network",
+      "identifier": "cps-network",
+      "name": "CPS Network (K-8, admin office)",
+      "description": "The CPS elementary (K-8) network the point falls in, and the chief who runs it. The network chief, phone and address ride the dataset's own properties — no separate roster.",
+      "url": "https://districtry.com/il/sources.html#layer-cps-network",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Chicago Data Portal — CPS elementary network boundaries (pnta-kuqa)",
+          "url": "https://data.cityofchicago.org/d/pnta-kuqa"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Chicago"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-ward",
+      "identifier": "ward",
+      "name": "City Ward",
+      "description": "The ward covering the point and the alderperson or council member elected to it — in Chicago, and in the suburbs that also elect by ward. Chicago's alderpersons come from a live join against the city's own roster dataset (htai-wnw4); each suburban ward's holder comes from municipal-officials.json.",
+      "url": "https://districtry.com/il/sources.html#layer-ward",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Chicago Data Portal — ward boundaries (p293-wvbd)",
+          "url": "https://data.cityofchicago.org/d/p293-wvbd"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Cook County GIS — political boundaries, layer 22 (suburban municipal wards)",
+          "url": "https://gis.cookcountyil.gov/traditional/rest/services/politicalBoundary/MapServer/22"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Peoria County GIS — DP/Elections, layer 13 (Elmwood's wards; the COUNTY publishes them, not the city)",
+          "url": "https://gis.peoriacounty.gov/arcgis/rest/services/DP/Elections/MapServer/13"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Each other ward-electing suburb's own GIS service, municipality by municipality"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Chicago, plus the suburban municipalities that elect by ward"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-ward-precinct",
+      "identifier": "ward-precinct",
+      "name": "Ward Precinct",
+      "description": "The Chicago ward precinct containing the point — the smallest unit the city runs elections in. Nobody is elected from a precinct; it is an election unit, not an office.",
+      "url": "https://districtry.com/il/sources.html#layer-ward-precinct",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Chicago Data Portal — ward precincts (i8fv-xe4b)",
+          "url": "https://data.cityofchicago.org/d/i8fv-xe4b"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Chicago"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-police-district",
+      "identifier": "police-district",
+      "name": "Police District",
+      "description": "The Chicago police district covering the point, and its station. cpd-district-info.json, rebuilt weekly by CI from chicagopolice.org, with the station's address and phone joined from CPD's own station layer.",
+      "url": "https://districtry.com/il/sources.html#layer-police-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Chicago Police Department ArcGIS — Police_District_Boundary_View",
+          "url": "https://services2.arcgis.com/t3tlzCPfmaQzSWAk/arcgis/rest/services/Police_District_Boundary_View/FeatureServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Chicago"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-police-beat",
+      "identifier": "police-beat",
+      "name": "Police Beat",
+      "description": "The Chicago police beat containing the point — the patrol unit inside a district. No officeholder — a beat is a patrol unit.",
+      "url": "https://districtry.com/il/sources.html#layer-police-beat",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Chicago Police Department ArcGIS — Police_Beat_Boundary",
+          "url": "https://services2.arcgis.com/t3tlzCPfmaQzSWAk/arcgis/rest/services/Police_Beat_Boundary/FeatureServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Chicago"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-ccpsa-district-council",
+      "identifier": "ccpsa-district-council",
+      "name": "CCPSA District Council",
+      "description": "The elected District Council for this police district, under the Community Commission for Public Safety and Accountability. ccpsa-district-councils.json, rebuilt weekly by CI.",
+      "url": "https://districtry.com/il/sources.html#layer-ccpsa-district-council",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "No boundary of its own — District Councils are drawn on the police districts, so this layer reuses that geometry",
+          "url": "https://services2.arcgis.com/t3tlzCPfmaQzSWAk/arcgis/rest/services/Police_District_Boundary_View/FeatureServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Chicago"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-community-area",
+      "identifier": "community-area",
+      "name": "Community Area",
+      "description": "Which of Chicago's 77 community areas contains the point. No officeholder — a community area is a statistical and planning boundary, not a district anyone is elected from.",
+      "url": "https://districtry.com/il/sources.html#layer-community-area",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Chicago Data Portal — community area boundaries (igwz-8jzy)",
+          "url": "https://data.cityofchicago.org/d/igwz-8jzy"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Chicago"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-zip-code",
+      "identifier": "zip-code",
+      "name": "ZIP Code",
+      "description": "The ZIP code area containing the point. No officeholder — a ZIP code is a postal delivery unit, not a government district.",
+      "url": "https://districtry.com/il/sources.html#layer-zip-code",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — ZCTA, layer 11 (ZIP Code Tabulation Areas)",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Illinois — statewide"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-cps-high",
+      "identifier": "cps-high",
+      "name": "CPS High School Zone",
+      "description": "The CPS high school this address is zoned to. No officeholder; the card drops a pin on the zoned school and links its CPS profile.",
+      "url": "https://districtry.com/il/sources.html#layer-cps-high",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Chicago Data Portal — CPS high school attendance boundaries (xg7c-d8rm, re-published each school year)",
+          "url": "https://data.cityofchicago.org/d/xg7c-d8rm"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Chicago"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-cps-middle",
+      "identifier": "cps-middle",
+      "name": "CPS Middle School Zone",
+      "description": "The CPS middle school this address is zoned to, where middle schools are zoned separately. No officeholder; the card drops a pin on the zoned school and links its CPS profile.",
+      "url": "https://districtry.com/il/sources.html#layer-cps-middle",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Chicago Data Portal — CPS middle school attendance boundaries (fyff-53xy, re-published each school year)",
+          "url": "https://data.cityofchicago.org/d/fyff-53xy"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Chicago"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-county-precinct",
+      "identifier": "county-precinct",
+      "name": "Voting Precinct",
+      "description": "The voting precinct containing the point outside Chicago, and — where the county publishes it — the polling place that serves it. No officeholder. Where the county publishes polling places, the card names the one serving the precinct; where it publishes a board-district join, the card names that too.",
+      "url": "https://districtry.com/il/sources.html#layer-county-precinct",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Cook County GIS — precinctHistorical, layer 0 (the Clerk's current suburban fabric)",
+          "url": "https://gis.cookcountyil.gov/traditional/rest/services/precinctHistorical/MapServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Each county's own GIS or election service, county by county"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Pre-built from the county's published district map, for the counties that publish no vector data"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Which county feeds which entry, county by county (COUNTY_STATUS.md)",
+          "url": "https://github.com/ThursdaysFamous/districtry/blob/main/docs/COUNTY_STATUS.md"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Suburban Cook County — city precincts belong to the Ward Precinct layer — plus the other counties that publish a precinct layer"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-ssa",
+      "identifier": "ssa",
+      "name": "Special Service Area",
+      "description": "Whether the point sits inside a Special Service Area — a local property-tax district funding street cleaning, landscaping, security, marketing and façade programs beyond the city's baseline service — and which one. No elected body — an SSA is created by City Council ordinance and overseen by a commission the Mayor appoints with Council consent, with a contracted service provider agency delivering the work. The city's boundary dataset names neither, so the card names nobody and links the city's SSA program page.",
+      "url": "https://districtry.com/il/sources.html#layer-ssa",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Chicago Data Portal — Boundaries: Special Service Areas (cmr6-dn8c)",
+          "url": "https://data.cityofchicago.org/d/cmr6-dn8c"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The City of Chicago — and most points in the city are in no SSA at all"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-tif-district",
+      "identifier": "tif-district",
+      "name": "TIF District",
+      "description": "Whether the point sits inside a tax increment financing district, and which one. No elected body — TIFs are created by municipal ordinance. The card shows the Clerk's agency number and links the Clerk's TIF reports.",
+      "url": "https://districtry.com/il/sources.html#layer-tif-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Cook County GIS — clerkTaxDistricts, layer 18 (the Clerk's current TIF tiling)",
+          "url": "https://gis.cookcountyil.gov/traditional/rest/services/clerkTaxDistricts/MapServer/18"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Cook County — and most points are in no TIF at all"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-cps-elementary",
+      "identifier": "cps-elementary",
+      "name": "CPS Elementary School Zone",
+      "description": "The CPS elementary school this address is zoned to. No officeholder; the card drops a pin on the zoned school and links its CPS profile.",
+      "url": "https://districtry.com/il/sources.html#layer-cps-elementary",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Chicago Data Portal — CPS elementary attendance boundaries (x72b-38qv, re-published each school year)",
+          "url": "https://data.cityofchicago.org/d/x72b-38qv"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Chicago"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-school-site",
+      "identifier": "school-site",
+      "name": "School Location (all, incl. private, nearest N)",
+      "description": "The school campuses nearest the point, filterable by type — not a zone, a proximity list. No officeholder; each row names the school.",
+      "url": "https://districtry.com/il/sources.html#layer-school-site",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Chicago Police Department ArcGIS — Schools (campus footprints)",
+          "url": "https://services2.arcgis.com/t3tlzCPfmaQzSWAk/arcgis/rest/services/Schools/FeatureServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Chicago"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-police-station",
+      "identifier": "police-station",
+      "name": "Police Station",
+      "description": "The three police stations nearest the point, by straight-line distance. No officeholder; each row names the station.",
+      "url": "https://districtry.com/il/sources.html#layer-police-station",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "USGS The National Map — structures, layer 53 (law enforcement)",
+          "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/53"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The whole covered area"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-fire-station",
+      "identifier": "fire-station",
+      "name": "Fire Station",
+      "description": "The three fire stations nearest the point, by straight-line distance. No officeholder; each row names the station.",
+      "url": "https://districtry.com/il/sources.html#layer-fire-station",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "USGS The National Map — structures, layer 51 (fire stations)",
+          "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/51"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The whole covered area"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-post-office",
+      "identifier": "post-office",
+      "name": "Post Office",
+      "description": "The three post offices nearest the point, by straight-line distance. No officeholder; each row names the office.",
+      "url": "https://districtry.com/il/sources.html#layer-post-office",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "USGS The National Map — structures, layer 38 (post offices)",
+          "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "The whole covered area"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-library",
+      "identifier": "library",
+      "name": "Library",
+      "description": "The three Chicago Public Library branches nearest the point. No officeholder; each row names the branch.",
+      "url": "https://districtry.com/il/sources.html#layer-library",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Chicago Data Portal — CPL library locations (x8fc-8rcq)",
+          "url": "https://data.cityofchicago.org/d/x8fc-8rcq"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Chicago"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/il/sources.html#dataset-early-voting",
+      "identifier": "early-voting",
+      "name": "Early Voting Site",
+      "description": "The early voting sites nearest the point — which double as the secured ballot drop boxes. No officeholder; each row names the site.",
+      "url": "https://districtry.com/il/sources.html#layer-early-voting",
+      "isPartOf": {
+        "@id": "https://districtry.com/il/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Chicago Board of Elections — hand-transcribed per election into early-voting-sites.json, because no open dataset is published",
+          "url": "https://chicagoelections.gov"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "City of Chicago, and only while early voting is running for an election"
+      }
+    }
+  ]
+}
+      </script>
     <!-- ==== GENERATED:END layer-matrix ==== -->
   </section>
 

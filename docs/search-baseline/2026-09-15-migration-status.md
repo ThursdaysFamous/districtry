@@ -692,12 +692,58 @@ Michigan's go-live, in those words. It is fixed by the regeneration, and the
 steward mirror above is the reason the subset problem is now measurable rather
 than a matter of remembering.
 
+### 4. Officeholders in structured data — done 2026-09-16
+
+The audit's high-severity schema finding: county `GovernmentOrganization` nodes
+carried only a name and an area, though the members were listed on the page.
+Measured on the day, the site published 2,869 county officeholders plus 1,765
+in question-page tables and described **eight** people in machine-readable form.
+
+Every one is now `member` -> `OrganizationRole` -> `Person` under the body they
+sit on, with an `ItemList` of that body's seats beside it. The counts after:
+238 pages carrying 270 ld+json blocks, 258 organisations, 4,872 person nodes,
+191 lists, 347 datasets.
+
+Four decisions are recorded rather than left implicit.
+
+**Nobody is described twice.** Each role node carries a stable `@id` under its
+own page's URL and the list references it, so a consumer reading either path
+reaches one object.
+
+**The organisation's name is stated, never the prose phrase.** A table section
+carries `body` for its own sentences, with the article attached and sometimes
+plural — "Cook County's townships", "Wisconsin's circuit courts" — and neither
+is the name of an organisation. A state's U.S. House delegation is named as a
+delegation with `parentOrganization` the chamber above it, rather than six nodes
+each claiming to be the House with seventeen members.
+
+**A section whose seats are themselves organisations sets `org_per_seat`.** The
+township table is 220 people across 29 governments; one node named for all of
+them would be a body that does not exist.
+
+**The graph is indented, and that was measured.** On the largest page (261
+judges) `indent=2` costs 158 KB against 101 KB compact, and 32.4 KB against
+32.0 KB gzipped, which is what a reader downloads.
+
+`sources.html` publishes a `DataCatalog`, generated into the layer-matrix region
+from the same `layers[]` that drives `EXPECT_LAYER_IDS`, so a layer cannot ship
+without a `Dataset` node and a node cannot outlive its layer. The upstream
+publisher goes in `isBasedOn` and never in `creator`: this project did not create
+those boundaries.
+
+`scripts/validate_structured_data.py` asks the question the generators' own
+`--check`s cannot. Each of those proves a page matches what its generator
+produces today, which is not whether the graph is coherent. It fails on a block
+that does not parse, an `@id` that is relative or foreign, an `@id` defined twice
+on one page with different content, a reference resolving to no node on its page,
+an `ItemList` whose `numberOfItems` disagrees with its elements or whose
+positions are not 1..n, and a `Person` with no name. It caught two defects while
+being written: `org_per_seat` minted role ids with two `#` fragments, which is
+not a URL, and keying a role id on the seat alone gave seven of a township's
+officials the same `@id`, because four trustees share one seat label.
+
 ### Still open in phase 3
 
-- **ItemList, DataCatalog and stable `@id`s in structured data.** Not started.
-  The county pages' `GovernmentOrganization` nodes still carry only a name and an
-  area while the members are listed on the page, which is the audit's own
-  high-severity schema finding.
 - **Wikidata item and outreach** to clerks, civic-tech groups, libraries and
   newsrooms. Outbound, so nothing here sends anything; it needs drafting and a
   person to send it.

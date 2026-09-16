@@ -77,6 +77,7 @@ python3 scripts/build_concept_pages.py --check           # circuit court, townsh
 python3 scripts/build_officeholder_tables.py --check      # the 20 officeholder tables vs their rosters, and the weekly workflows that rewrite one
 python3 scripts/validate_favicon.py
 python3 scripts/validate_steward_mirror.py                # this file runs the same battery smoke-test.yml does, compared both ways
+python3 scripts/validate_structured_data.py               # every ld+json block parses, every @id resolves on its own page, every ItemList counts its own elements
 python3 scripts/validate_shell_continuations.py
 python3 scripts/validate_workflow_deps.py
 python3 scripts/undeliverable.py                         # the shipped e-mail domains still resolve MX; the recorded dead ones are still dead

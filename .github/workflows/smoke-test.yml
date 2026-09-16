@@ -439,6 +439,15 @@ jobs:
       - name: The steward skill runs the same battery this job does
         run: python3 scripts/validate_steward_mirror.py
 
+      # The graph the generated pages publish: 183 county boards, 20 rostered
+      # question pages and six data catalogues. Each generator's --check proves
+      # its page matches what that generator produces today, which is a different
+      # question from whether the graph is coherent — a dangling @id, a list
+      # whose numberOfItems disagrees with its own elements, or a block that no
+      # longer parses passes every one of them.
+      - name: Structured data parses, resolves and counts what it says
+        run: python3 scripts/validate_structured_data.py
+
       # No app may ask an ArcGIS service for f=geojson. The export unnests a
       # feature's interior rings, so a publisher's cutout becomes ground the
       # layer claims — measured 2026-09-05 at 41 of 153 live polygon layers,

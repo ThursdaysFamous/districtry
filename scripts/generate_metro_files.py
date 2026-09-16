@@ -916,7 +916,73 @@ def render_layer_matrix(w):
         a('          </table>')
         a('        </div>')
         a('      </section>')
+    a('')
+    a(render_layer_catalog(w))
     return "\n".join(L)
+
+
+def render_layer_catalog(w):
+    """The same layers[] again, as a schema.org DataCatalog.
+
+    WHY HERE. This page is already the fleet's only enumeration of every layer
+    with the publisher each boundary comes from, which is what a data catalog
+    is; it simply said so only to a human. The audit's phase 3 asks for
+    DataCatalog, and the honest place for it is the page that already holds the
+    catalogue rather than a new file nobody maintains.
+
+    WHY INSIDE THIS REGION and not in the page's `<head>`. Each instance's
+    sources.html head is hand-authored, so a catalogue there would be six copies
+    drifting from six worksheets. This region is generated from layers[] — the
+    same list that drives EXPECT_LAYER_IDS and the smoke test's layer count — so
+    a layer cannot ship without a Dataset node and a node cannot outlive its
+    layer, which is the property the matrix above already has.
+
+    isBasedOn CARRIES THE UPSTREAM PUBLISHER, not `creator`: districtry did not
+    create these boundaries, it re-publishes a derived layer from somebody
+    else's. Saying otherwise in machine-readable form would be a provenance
+    claim this project spends most of its gates avoiding in prose.
+    """
+    base = w["domains"]["canonical"].rstrip("/") + "/sources.html"
+    datasets = []
+    for l in sorted(w["layers"], key=lambda x: x["area_rank"]):
+        src = l["source"]
+        # The layer IS the boundary and the roster together, which is what the
+        # matrix's two middle columns say, so the description is both sentences.
+        description = src["answers"]
+        if src.get("people"):
+            description += " " + src["people"]
+        node = {
+            "@type": "Dataset",
+            "@id": "%s#dataset-%s" % (base, l["id"]),
+            "identifier": l["id"],
+            "name": l["label"],
+            "description": description,
+            "url": "%s#layer-%s" % (base, l["id"]),
+            "isPartOf": {"@id": base + "#catalog"},
+            "isBasedOn": [
+                dict([("@type", "Dataset"), ("name", b["label"])]
+                     + ([("url", b["url"])] if b.get("url") else []))
+                for b in src["boundary"]
+            ],
+        }
+        if src.get("applies"):
+            node["spatialCoverage"] = {"@type": "Place",
+                                       "name": src["applies"].rstrip(".")}
+        datasets.append(node)
+    catalog = {
+        "@context": "https://schema.org",
+        "@type": "DataCatalog",
+        "@id": base + "#catalog",
+        "name": "%s data layers" % w["brand"]["app_name"],
+        "url": base,
+        "publisher": {"@type": "Organization",
+                      "@id": "https://districtry.com/#publisher",
+                      "name": "Overberg", "url": "https://overberg.co"},
+        "dataset": datasets,
+    }
+    payload = json.dumps(catalog, indent=2, ensure_ascii=False).replace("</", "<\\/")
+    return ('      <script type="application/ld+json">\n%s\n      </script>'
+            % payload)
 
 
 # Regions every fork has. Optional regions are appended by targets_for() only

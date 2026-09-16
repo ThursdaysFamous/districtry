@@ -159,7 +159,8 @@ INSTANCES = [
          phrase="county board", index_label="County boards",
          all_label="All Illinois county boards",
          app_name="districtry Illinois", app_url="https://districtry.com/il/",
-         district_word="District", adapters=("il_districted", "il_at_large"),
+         district_word="District", member_word="County Board Member",
+         adapters=("il_districted", "il_at_large"),
          contacts="il_clerk_contact"),
     dict(tag="wi", state="Wisconsin", concept="county-board",
          index_page="county-board.html",
@@ -168,7 +169,8 @@ INSTANCES = [
          phrase="county board", index_label="County boards",
          all_label="All Wisconsin county boards",
          app_name="districtry Wisconsin", app_url="https://districtry.com/wi/",
-         district_word="District", adapters=("wi_seats",),
+         district_word="District", member_word="Supervisor",
+         adapters=("wi_seats",),
          contacts="wi_clerk_contact"),
     dict(tag="ia", state="Iowa", concept="county-supervisor",
          index_page="county-supervisor.html",
@@ -177,7 +179,8 @@ INSTANCES = [
          phrase="board of supervisors", index_label="Boards of supervisors",
          all_label="All Iowa boards of supervisors",
          app_name="districtry Iowa", app_url="https://districtry.com/ia/",
-         district_word="District", adapters=("ia_supervisors",),
+         district_word="District", member_word="Supervisor",
+         adapters=("ia_supervisors",),
          contacts="ia_board_contact"),
     dict(tag="mi", state="Michigan", concept="county-commissioner",
          index_page="county-commissioner.html",
@@ -192,7 +195,8 @@ INSTANCES = [
          phrase="board of commissioners", index_label="Boards of commissioners",
          all_label="All Michigan boards of commissioners",
          app_name="districtry Michigan", app_url="https://districtry.com/mi/",
-         district_word="District", adapters=("mi_commissioners",)),
+         district_word="District", member_word="Commissioner",
+         adapters=("mi_commissioners",)),
 ]
 
 
@@ -706,6 +710,117 @@ def party_name(value):
     return PARTY_NAMES.get(v.lower(), v)
 
 
+def member_node(m):
+    """One officeholder as a schema.org Person, from the same fields
+    member_html renders. Every field is optional: a roster that does not publish
+    a telephone must not assert an empty one."""
+    person = {"@type": "Person", "name": (m.get("name") or "").strip()}
+    party = party_name(m.get("party"))
+    if party:
+        person["affiliation"] = party
+    email = (m.get("email") or "").strip()
+    if email:
+        person["email"] = email
+    phone = (m.get("phone") or "").strip()
+    if phone:
+        person["telephone"] = phone
+    # `url` and `profileUrl` are the same field under two names — Illinois's
+    # builders write the first, Wisconsin's the second. `documentUrl` is a
+    # different thing (a county directory, not the person's own page) and is
+    # deliberately not published as sameAs, which would claim it identifies them.
+    url = next((u for u in ((m.get("url") or "").strip(),
+                            (m.get("profileUrl") or "").strip()) if u), "")
+    if url.startswith("http"):
+        person["sameAs"] = url
+    return person
+
+
+def board_graph(rec, inst, canonical, head, name):
+    """The board as linked data: the organisation, who is in it and in what
+    seat, and the list of its districts.
+
+    WHY. Measured 2026-09-16 these 183 pages listed 2,869 named officeholders
+    in their HTML and described none of them in structured data — the
+    GovernmentOrganization carried a name and an area and nothing else, which is
+    the audit's own high-severity schema finding. A crawler could read the names
+    and had no statement that they hold seats on the body the page is about.
+
+    NOBODY IS DESCRIBED TWICE. Each seat is an OrganizationRole with a stable
+    `@id` under the page's own URL; the district ItemList REFERENCES those ids
+    rather than repeating the people, so the two paths reach one object.
+
+    A DISTRICT THE COUNTY NAMES NOBODY FOR STILL GETS A LIST POSITION, with the
+    reason the page prints: `vacancies` where the county reports the seat open,
+    the county's own `note` where somebody holds it and this project will not say
+    who, and neither where the source simply does not say. Dropping it would make
+    the list claim a smaller board than the county elects — the distinction the
+    page's own three states already make.
+    """
+    org_id = canonical + "#board"
+    roles, items = [], []
+    # AN AT-LARGE BOARD HAS NO DISTRICT LIST AND GETS NO ItemList, which is the
+    # statement its page already makes in words: every member is elected
+    # countywide, so there are no seats to enumerate. Its members are still
+    # roles on the organisation.
+    for n, m in enumerate(rec.get("members") or [], 1):
+        if not (m.get("name") or "").strip():
+            continue
+        roles.append({"@type": "OrganizationRole",
+                      "@id": "%s-at-large-%d" % (org_id, n),
+                      "roleName": (m.get("role") or "").strip()
+                                  or inst["member_word"],
+                      "member": member_node(m)})
+    position = 0
+    for d in rec.get("districts") or []:
+        position += 1
+        label = d["label"]
+        seat = "%s %s" % (inst["district_word"], label)
+        ids = []
+        for n, m in enumerate(d["members"], 1):
+            if not (m.get("name") or "").strip():
+                continue
+            role_id = "%s-%s-%d" % (org_id,
+                                    re.sub(r"[^a-z0-9]+", "-", label.lower()).strip("-"),
+                                    n)
+            roles.append({"@type": "OrganizationRole", "@id": role_id,
+                          "roleName": (m.get("role") or "").strip()
+                                      or inst["member_word"],
+                          "namedPosition": seat,
+                          "member": member_node(m)})
+            ids.append(role_id)
+        item = {"@type": "ListItem", "position": position, "name": seat}
+        if len(ids) == 1:
+            item["item"] = {"@id": ids[0]}
+        elif ids:
+            item["item"] = [{"@id": i} for i in ids]
+        items.append(item)
+    for anchor, heading, members in (rec.get("extras") or []):
+        for n, m in enumerate(members, 1):
+            if not (m.get("name") or "").strip():
+                continue
+            roles.append({"@type": "OrganizationRole",
+                          "@id": "%s-%s-%d" % (org_id, anchor, n),
+                          "roleName": (m.get("role") or "").strip() or heading,
+                          "member": member_node(m)})
+    org = {"@type": "GovernmentOrganization",
+           "@id": org_id,
+           "name": head,
+           "url": canonical,
+           "areaServed": {"@type": "AdministrativeArea",
+                          "name": "%s County, %s" % (name, inst["state"])}}
+    if roles:
+        org["member"] = roles
+    roster = None
+    if items:
+        roster = {"@type": "ItemList", "@id": canonical + "#districts",
+                  "name": "%s districts" % head,
+                  "itemListOrder": "https://schema.org/ItemListOrderAscending",
+                  "numberOfItems": len(items),
+                  "about": {"@id": org_id},
+                  "itemListElement": items}
+    return org, roster
+
+
 def member_html(m):
     """One member. Every field is optional and an absent one is absent from the
     markup — a roster that does not publish a phone must not render an empty
@@ -1186,11 +1301,7 @@ def build_page(inst, name, rec, at_large, shell, contact=None):
         "name": title,
         "description": desc,
         "inLanguage": "en-US",
-        "about": {"@type": "GovernmentOrganization",
-                  "name": head,
-                  "areaServed": {"@type": "AdministrativeArea",
-                                 "name": "%s County, %s"
-                                         % (name, inst["state"])}},
+        "about": board_graph(rec, inst, canonical, head, name)[0],
         "author": {
             "@type": "Person",
             "@id": "https://districtry.com/#author",
@@ -1212,6 +1323,9 @@ def build_page(inst, name, rec, at_large, shell, contact=None):
             ],
         },
     }
+    roster = board_graph(rec, inst, canonical, head, name)[1]
+    if roster:
+        graph["mainEntity"] = roster
     jsonld = json.dumps(graph, indent=2, ensure_ascii=False).replace("</", "<\\/")
 
     return PAGE % dict(

@@ -1180,6 +1180,359 @@ table.matrix code {
           </table>
         </div>
       </section>
+
+      <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DataCatalog",
+  "@id": "https://districtry.com/mi/sources.html#catalog",
+  "name": "districtry Michigan data layers",
+  "url": "https://districtry.com/mi/sources.html",
+  "publisher": {
+    "@type": "Organization",
+    "@id": "https://districtry.com/#publisher",
+    "name": "Overberg",
+    "url": "https://overberg.co"
+  },
+  "dataset": [
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-us-house",
+      "identifier": "us-house",
+      "name": "U.S. House",
+      "description": "The U.S. House district covering the point, and the representative holding it. congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.",
+      "url": "https://districtry.com/mi/sources.html#layer-us-house",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Legislative, layer 0 (120th Congressional Districts), pre-built for the state and shipped with the app. The layer's own district field is CD120: TIGERweb rolled from the 119th Congress to the 120th, and a query naming the retired CD119 field is rejected outright (HTTP 400, measured 2026-09-03).",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — statewide, all 13 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-mi-senate",
+      "identifier": "mi-senate",
+      "name": "Michigan Senate District",
+      "description": "The Michigan Senate district covering the point, and the senator holding it. mi-senate-members.json, rebuilt weekly by CI — the Open States current-people export (name, party, e-mail, personal site) merged with the Michigan Senate's own all-senators directory, which publishes a Capitol phone, e-mail, office building and contact page for all 38 seats. Open States carries no capitol address or phone for any Michigan legislator (measured 0 of 148), so that contact block comes entirely from the Senate's own directory.",
+      "url": "https://districtry.com/mi/sources.html#layer-mi-senate",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — statewide, all 38 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-county",
+      "identifier": "county",
+      "name": "County",
+      "description": "Which county contains the point. None yet — identity only. Michigan's county boards of commissioners are elected by district, and the state publishes every county's commissioner districts (with the commissioner's own name and party) as a single statutory filing under MCL 46.404/46.405; that is this instance's flagship layer and ships in its own change rather than being half-joined here. The card names the county and claims nothing about who runs it.",
+      "url": "https://districtry.com/mi/sources.html#layer-county",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — statewide, all 83 counties"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-mi-house",
+      "identifier": "mi-house",
+      "name": "Michigan House District",
+      "description": "The Michigan House district covering the point, and the representative holding it. mi-house-members.json, rebuilt weekly by CI from the Open States current-people export (name, party, e-mail, personal site) — all 110 seats. NO CAPITOL CONTACT BLOCK SHIPS FOR THE HOUSE, and that is a measurement rather than an omission: Open States carries no capitol phone or address for any Michigan legislator, and house.mi.gov could not be reached from this project's build environment (TLS: \"unable to get local issuer certificate\", with the egress proxy's CA bundle explicitly supplied, while senate.michigan.gov answers 200 on identical flags). Whether that is the House site's own incomplete certificate chain or an artifact of this sandbox is unresolved and carries one CI-side probe before it is recorded as anything more — see mi/WATCH.md.",
+      "url": "https://districtry.com/mi/sources.html#layer-mi-house",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber), pre-built for the state and shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — statewide, all 110 districts"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-school-district-unified",
+      "identifier": "school-district-unified",
+      "name": "School District (Unified)",
+      "description": "The unified (K-12) school district covering the point. NO OFFICEHOLDER, AND THE CARD NAMES THE DISTRICT ONLY. Michigan school boards are elected (MCL 380.11a et seq.), and no statewide roster of the ~540 boards' members was found in the research pass — recorded as gap mi-school-board-members rather than guessed at. Per-district rosters are later phase work.",
+      "url": "https://districtry.com/mi/sources.html#layer-school-district-unified",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — School, layer 0 (unified school districts), queried live at runtime (no builder script, no committed data/app file); 514 features for Michigan, measured 2026-09-04",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — statewide. Together with the 27 elementary districts this tiles the state; the two never overlap"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-school-district-elementary",
+      "identifier": "school-district-elementary",
+      "name": "School District (Elementary)",
+      "description": "The elementary school district covering the point, in the 27 places Michigan runs one. NO OFFICEHOLDER — the same gap as the unified layer (mi-school-board-members); the card names the district only.",
+      "url": "https://districtry.com/mi/sources.html#layer-school-district-elementary",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — School, layer 2 (elementary school districts), queried live at runtime (no builder script, no committed data/app file); 27 features for Michigan, measured 2026-09-04. Layer 1 (SECONDARY) returns ZERO features for Michigan and is a recorded drop, not an empty toggle — see docs/DATA_LAYER_GUIDEBOOK.md",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — the 27 districts that operate no high school of their own. These are GAP-FILLS, not overlays: measured 2026-09-04 at all 27 TIGER interior points, the unified layer returns nothing, and at every unified district's interior point this layer returns nothing. Shipping unified alone would answer 'no school district' to everyone living in one of the 27"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-county-commissioner",
+      "identifier": "county-commissioner",
+      "name": "County Commissioner District",
+      "description": "The county commissioner district covering the point, its county, the population it was apportioned on, and — where the county publishes a district-keyed roster — the commissioner who holds it. EACH COUNTY'S OWN BOARD PAGE, read weekly, and never the boundary layer's own Commissioner column. The state's layer carries a Commissioner and a Party on every one of its 619 polygons, which looks like a free roster and is not one: the item's own description says the values were \"derived from the canvased November 2024 election results\", so the column lists CERTIFIED ELECTION WINNERS rather than officeholders. That is why it is 100% filled — a district always has a winner — and the fill rate is evidence against maintenance, not for it. Measured 2026-09-03 across 12 counties (123 districts) plus ~40 more in a second pass, 93.5% named the right person and every miss ran the same direction. Re-measured 2026-09-15 across both tranches' eleven counties: 77 of 119 seats agree exactly, 42 differ, and 11 of those 42 name a different person — including Wayne District 5, whose named commissioner died on 10 June 2025, four of Muskegon's seven, and St. Clair District 5, where the county names Paul Zeller and the state layer still names Robert Fielitz. Both state columns are dropped at the build, the county's page wins every time, and build_mi_commissioner_roster.py prints every disagreement on each run. THE ROSTER ARRIVES IN TRANCHES: 119 of the 619 districts through tranche 2 — Berrien 12, Calhoun 7, Jackson 9, Kalamazoo 9, Kent 21, Macomb 13, Monroe 8 of 9, Muskegon 7, Saginaw 11, St. Clair 7, Wayne 15 — and a district in a county not yet done keeps a card row saying plainly that this app does not know. Monroe is the one short county: its directory row for District 2 names no commissioner, so that district's card says so by number rather than the county's count being quietly rounded down. Party ships for Monroe and Muskegon, the two counties of the eleven publishing it on the page the names come from. Recorded as gap mi-commissioner-roster; mi/scripts/mi_commissioner_scraper.py's PROBES table records every county tried and what stopped the seven that did not yield.",
+      "url": "https://districtry.com/mi/sources.html#layer-county-commissioner",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Michigan Department of State, Bureau of Elections — \"2021 County Commissioner Districts\", the statewide compilation of the plans county apportionment commissions file under MCL 46.401-46.405; all 83 counties in one service, pre-built and shipped with the app. Its AGO item states the licence outright: \"This dataset is a public record and ... there are no restrictions on the use, reproduction, or distribution of this dataset.\" (The Hub SITE item carries a separate CC-BY-SA; that is the site application, not this dataset, and its share-alike is not inherited.) The layer is named for its 2021 adoption year, labelled 2022 by the state's own viewer for the first election held under it, and backed by a feature class called CCD_2022_Edit — three names, one layer.",
+          "url": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — statewide, all 83 counties, 619 districts. Every Michigan county elects its commissioners by single-member district (MCL 46.401-46.405); none elects at large, so a polygon is the honest surface everywhere"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-county-subdivision",
+      "identifier": "county-subdivision",
+      "name": "Township or City",
+      "description": "The township covering the point, or the Census placeholder record for the city that stands in place of one — and which of the two it is. NO OFFICEHOLDER, AND THE CARD SAYS SO. Michigan townships elect a supervisor, clerk, treasurer and trustees (MCL 41.61; MCL 42.3 for charter townships), and no statewide roster of them was found in the research pass — recorded as gap mi-township-officers. The card names the office and states plainly that this app does not know who holds it. The 301 city records and the 40 water records are Census bookkeeping constructs, not governments, so no roster claim applies to them at all.",
+      "url": "https://districtry.com/mi/sources.html#layer-county-subdivision",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, queried live at runtime (no builder script, no committed data/app file); 1,581 features for Michigan, measured 2026-09-04",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — statewide, all 1,581 records. The charter/general-law distinction is read from TIGER's own NAME suffix rather than a second source, so it cannot go stale against the name printed above it: measured 2026-09-04, the four LSADC values yield exactly four suffixes across 1,581 of 1,581 records"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-zip-code",
+      "identifier": "zip-code",
+      "name": "ZIP Code",
+      "description": "The ZIP Code Tabulation Area covering the point — the Census Bureau's areal approximation of the USPS delivery routes sharing a ZIP code, not a postal boundary. NO OFFICEHOLDER, AND NONE IS MISSING: a ZIP code is a mail-routing convenience, not a unit of government, so nobody is elected from one. The card says what the boundary actually is rather than leaving a reader to assume it means more than it does.",
+      "url": "https://districtry.com/mi/sources.html#layer-zip-code",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — ZIP Code Tabulation Areas, layer 11 of the PUMA/TAD/TAZ/UGA/ZCTA service, queried live at runtime (no builder script, no committed data/app file). ZCTAs carry NO STATE FIELD because they cross state lines, so this is the one TIGERweb layer here fetched by a bounding ENVELOPE rather than STATE='26' — and the envelope must be Esri's own {xmin,ymin,xmax,ymax} shape, since passing this instance's {minLng,...} METRO_BBOX makes TIGERweb answer HTTP 200 with a JSON error envelope and zero features (measured 2026-09-04)",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — statewide. 1,010 ZCTAs sit east of longitude -87.60; the fetch envelope returns 2,000 because Michigan's bounding box runs west across Lake Michigan to the far end of the Upper Peninsula, and even a clipped box still catches Chicago's 60628 since its south-west corner is in Illinois. NO RECTANGLE ISOLATES MICHIGAN — the same interlocking-states fact metros.json records about the fleet hand-off box — so neighbouring states' ZIPs appear in the map overlay, exactly as they do in Iowa's and Wisconsin's. The CARD is unaffected: it answers from a point query, so a reader always gets the ZCTA they are standing in"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-city-ward",
+      "identifier": "city-ward",
+      "name": "City Council District",
+      "description": "Which city council or commission district you live in, in the two Michigan cities that publish their own boundaries — Detroit's seven council districts and Grand Rapids's three commission wards — and who represents you in it. The nine members of Detroit's City Council, from the council's own page at detroitmi.gov — seven by district and two at large, per the 2012 charter Art. 4 §4-101. THE LIVE PAGE REFUSES THIS CLIENT: detroitmi.gov sits behind a Cloudflare managed challenge on both the plain and the client-hints rungs, and this project does not defeat a challenge, so the roster is read from the Internet Archive's copy of that same page — the fleet's terminal fetch rung, in weekly use for Kendall and McHenry since 2026-07 — and the card states which day's copy it read. A snapshot older than 45 days is refused rather than served. NO PER-MEMBER phone or e-mail ships: neither the listing nor a member's own profile page carries a single mailto: or tel: link, measured on both, and that absence is the gap detroit-council-contact. The BODY's own office does ship — City Council Office, 2 Woodward Ave. Suite 1340, (313) 224-3443, published once for the whole Council — rendered for the body under the switchboard rule rather than attached to any member. mvic.sos.state.mi.us is challenged the same way; data.detroitmi.gov is NOT (it answers 200 with a readable robots.txt, and an earlier version of this note said otherwise on the strength of one substring match). Detroit's Legistar is abandoned since 2017 and never carried a district in OfficeRecordTitle even while maintained, where Milwaukee's carries \"3rd District\" in that same field — test a vendor by content per city, never by its name; its Persons table also flags all 45 records active, five of them system accounts. GRAND RAPIDS: the city's own City Commission pages, which are readable — www.grandrapidsmi.gov answers 200 and its robots.txt permits /government/ — so there is no archive hop here. The city states its own arithmetic (\"This legislative body consists of the Mayor and six Commissioners... The residents of each Ward directly elect two commissioners\"), and publishes SIX of those seven seats: one Ward 1 commissioner where Wards 2 and 3 each have two. THAT SEAT IS VACANT AND THE CITY SAYS SO OFF THE COMMISSION PAGE — its news post of 2026-04-17 states the vacancy \"was created following the resignation of former Commissioner Drew Robbins\"; an earlier version of this note said the city stated nothing, having measured only the commission page. No city source found states how the vacancy was resolved, so the card names the vacancy and its cause and stops there. The roster carries `seats` and `seatsPerWard` beside its members and a `vacancies` map KEYED BY WARD, so the card accounts for the seventh seat rather than concealing it or inventing a name — the Alexander County machinery, used here for the first time on a districted body. The cause is data, not prose: it was a ward-agnostic string literal in the card at first, on a row that fires for any ward short of its seats, so a later Ward 2 or 3 vacancy would have rendered Ward 1's predecessor by name on the wrong card. A ward that is short with no verified cause gets the neutral sentence instead, which stays true whatever caused it. Each member's own page supplies their ward, e-mail and direct phone; THE E-MAIL DOMAIN IS grcity.us AND NOT THE WEBSITE'S, so a scraper keyed to the site's own hostname finds none. 616.456.3000 is on every member's page and is the city switchboard, DETECTED as the number common to all of them and hoisted to the body rather than hardcoded.",
+      "url": "https://districtry.com/mi/sources.html#layer-city-ward",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "City of Detroit — \"Detroit City Council Districts 2026\", from the city's own ArcGIS org, pre-built and shipped with the app. THE CITY PUBLISHES FOUR COUNCIL-DISTRICT BOUNDARY SERVICES and their names do not settle which is in force: one titled \"Current\" dating from 2016, one named for 2026, one named for 2013 that was CREATED in December 2025, and NewDistrictBoundariesOption6, which reads like a rejected draft and is the same plan redigitised (99.575% point agreement, measured) — it is the one whose own description names the adoption. The plan was approved by the Council on 2024-02-06 and took effect on 2026-01-01, both stated in this service's own description. The builder decides it by measurement — \"Current\" carries geometry identical to the 2026 service and different from the 2013 one, and against Census 2020 blocks the shipped plan runs 87,393-94,820 against a 91,302 ideal (worst 4.28%) where the archived plan runs 78,966-100,623 (13.51%), which is what a plan drawn on the 2010 census looks like now. Both comparisons are gates in both directions. The seven districts sum to 639,111 — Detroit's Census 2020 population exactly — so they tile the city with no block double-counted or missed. The item carries no licenceInfo and is shared public by the city.",
+          "url": "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/city_council_districts_2026/FeatureServer/0"
+        },
+        {
+          "@type": "Dataset",
+          "name": "City of Grand Rapids — \"Boundaries - City of Grand Rapids Wards\" (CGR_Wards), from the city's own ArcGIS org, pre-built and shipped with the app. THE CITY PUBLISHES EIGHT WARD SERVICES AND NONE IS A NEWER PLAN, measured 2026-09-05 by sweeping all 681 of the org's feature services rather than the first 100 (which is how an earlier version of this note said two). Three are 100.000% identical to what ships, one differs only at the perimeter, and three are SINGLE wards rather than rival plans — each agreeing with its own shipped ward. The build gates on the one sibling that has tracked this service byte for byte. THE CURRENCY QUESTION WAS REAL AND IS ANSWERED BY MEASUREMENT: the geometry was last edited 2018-01-24, before the census it is checked against, while the item description claims it is \"maintained to reflect the most current adopted ward configuration\". Michigan's own 2026 voting-precinct layer assigns each of the city's 59 precincts to a ward (20/20/19), and dissolved by that column it agrees with these polygons on 99.575% of 4,000 points — two independent publishers drawing the same three lines, so 2018 means unchanged rather than stale. That comparison is a gate. Against Census 2020 the three wards run 64,400-68,716 on a 66,328 ideal (worst 3.60%). Unlike Detroit the population identity is NOT exact and is not claimed to be: 21 of 2,883 blocks fall on one side of the ward outline and the other side of the Census place outline, a +66 difference against 198,917, which is two digitisations of one city edge. The item's licence is a use agreement conditioning use on carrying the city's disclaimer; the card quotes the sentences of that agreement that describe the DATA, in the city's own words and order rather than paraphrasing them, with the one cut (its two acceptance sentences, addressed to whoever accesses the data rather than to a reader) marked by an ellipsis. The builder ASSERTS every segment of that quotation against the live licenceInfo on each run, so a reworded agreement fails the build rather than leaving the card quoting words the city has stopped saying.",
+          "url": "https://services2.arcgis.com/L81TiOwAPO1ZvU9b/arcgis/rest/services/CGR_Wards/FeatureServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Detroit and Grand Rapids only — the two Michigan cities that publish their own council boundaries. Outside both the layer hides itself"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-precinct",
+      "identifier": "precinct",
+      "name": "Precinct",
+      "description": "The voting precinct covering the point, its county, and how many voters were registered in it for the 2026 cycle. NO OFFICEHOLDER — a precinct elects nobody; it is the unit a ballot is counted in. AND NO POLLING PLACE, which here is a fact about the source rather than a decision: the layer carries no polling field at all, so unlike Iowa's precinct builder there is nothing to decline. The card names the state's own caveat instead — the Bureau collects this from local election officials and says validation was \"done by most, but not all\" jurisdictions — and points a reader at their clerk.",
+      "url": "https://districtry.com/mi/sources.html#layer-precinct",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Michigan Dept. of State, Bureau of Elections — \"2026 Voting Precincts\" (ArcGIS Online item c349bc2bb6c2468594d341a09f520ea8, the CURATED item: it carries the title, the licence, the validation caveat and the full field names). 3,895 features, pre-built by mi/scripts/build_mi_precincts.py (paged, Visvalingam-simplified, 2,000-point agreement gate). THE NEWEST MAP IS NOT ON THE MAPSERVER THAT CARRIES THE COMMISSIONER LAYER: that service publishes a precinct layer per cycle and stops at 2024, while the 2026 map lives on the state's ArcGIS Online org on a different host — and Michigan consolidated 4,340 precincts into 3,895 between the cycles, so building from the MapServer would have shipped a map 445 precincts wrong",
+          "url": "https://services3.arcgis.com/dxRQUfTDNtfqZ301/arcgis/rest/services/2026_Voting_Precincts/FeatureServer/0"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — statewide, all 3,895 precincts across all 83 counties, as drawn for the 2026 election cycle. Every precinct's county-subdivision key resolves against the Census MCD fabric this instance ships (1,530 of 1,530 distinct keys, measured 2026-09-04 — the same 1,530 on the 2024 map, because the consolidation happened WITHIN municipalities rather than between them), so the precinct and the Township or City card agree on which local government a point sits in. The state's voting-equipment column is deliberately not fetched: it changes on a different clock from the boundary"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-municipality",
+      "identifier": "municipality",
+      "name": "City or Village",
+      "description": "The incorporated city or village covering the point, if any — and which of the two it is, because in Michigan that changes what else governs the point. NO OFFICEHOLDER, AND THE CARD SAYS SO — no statewide source names Michigan's mayors, village presidents, council members or clerks; the Michigan Municipal League's directory is membership-facing and the state publishes no aggregate. Recorded as gap mi-municipal-officeholders. Per-municipality rosters are later phase work, the route every other instance took.",
+      "url": "https://districtry.com/mi/sources.html#layer-municipality",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file); 533 features for Michigan, measured 2026-09-04",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — statewide, all 533 incorporated places. A CITY is independent of any township; a VILLAGE remains part of one, so a village resident has two general-purpose local governments and each card names the other. Measured 2026-09-04: all 252 villages land inside a township at their TIGER interior point (235 general-law, 17 charter), zero exceptions, and the Census's own place class codes agree — every village is C1, 'does not serve as a county subdivision equivalent'"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-police-station",
+      "identifier": "police-station",
+      "name": "Police Station",
+      "description": "The three nearest police station BUILDINGS to the point, by straight-line distance, with each one's address. NO OFFICEHOLDER, AND NONE IS MISSING: a police station is a facility, not an elected district. Nobody is elected from one.",
+      "url": "https://districtry.com/mi/sources.html#layer-police-station",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "USGS The National Map — structures layer 53 (Police Stations), queried live at runtime by a bounding envelope through the same paged loader the post-office layer introduced (no builder script, no committed data/app file). Public domain. 1,290 points in Michigan's envelope, every one carrying name, address, city, state and ZIP, measured 2026-09-04 — under the service's 2,000-record cap today, and paged anyway so that stops being a fact anyone has to re-check",
+          "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/53"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — plus the border strip its envelope necessarily includes (608 of the 1,290 are in Michigan; the rest Wisconsin 396, Illinois 265, and a handful in Indiana, Ohio, Iowa and Minnesota). THIS IS A BUILDING, NOT A JURISDICTION: which agency answers a 911 call at a given point is a service-area question, a separate concept this instance has not been researched for, so the card says where the nearest stations are and never who polices you. The intro says so in the reader's own sentence"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-fire-station",
+      "identifier": "fire-station",
+      "name": "Fire & EMS Station",
+      "description": "The three nearest fire and EMS station BUILDINGS to the point, by straight-line distance, with each one's address. NO OFFICEHOLDER, AND NONE IS MISSING: a fire station is a facility, not an elected district. Nobody is elected from one.",
+      "url": "https://districtry.com/mi/sources.html#layer-fire-station",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "USGS The National Map — structures layer 51 (Fire Stations/EMS Stations), queried live at runtime by a bounding envelope through the paged loader the post-office layer introduced. Public domain. THIS IS THE LAYER THAT PAGING EXISTS FOR: 2,838 points in Michigan's envelope against the service's 2,000-record cap, and the cap is NOT an error — a single request returns HTTP 200 with exactly 2,000 rows and exceededTransferLimit set, silently dropping 838 real stations. Measured 2026-09-04: paged it is two requests and 2,838, every one carrying name, address, city, state and ZIP. Fire and EMS are one layer because USGS publishes them as one, named 'Fire Stations/EMS Stations'",
+          "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/51"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — plus the border strip its envelope necessarily includes (1,406 of the 2,838 are in Michigan; the rest Wisconsin 798, Illinois 578, and a handful in Indiana, Iowa, Ohio and Minnesota). A BUILDING, NOT A JURISDICTION: which department or ambulance service is dispatched to a point is a service-area question, a separate concept this instance has not been researched for, so the card says where the nearest stations are and never who responds. The intro says so in the reader's own sentence"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/mi/sources.html#dataset-post-office",
+      "identifier": "post-office",
+      "name": "Post Office",
+      "description": "The three nearest post offices to the point, by straight-line distance, with each one's address. NO OFFICEHOLDER, AND NONE IS MISSING: a post office is a federal facility, not an elected district. The card answers where the nearest ones are, not who runs them.",
+      "url": "https://districtry.com/mi/sources.html#layer-post-office",
+      "isPartOf": {
+        "@id": "https://districtry.com/mi/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "USGS The National Map — structures layer 38 (Post Offices), queried live at runtime by a bounding envelope (no builder script, no committed data/app file). Public domain. 1,799 points in Michigan's envelope, every one carrying name, address, city, state and ZIP, measured 2026-09-04. THE FETCH PAGES: the service caps a response at 2,000 records and returns HTTP 200 with exceededTransferLimit rather than an error, so a single request is safe only by margin — Michigan is at 1,799 and its fire-station sibling is at 2,838, already over",
+          "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Michigan — plus the border strip its envelope necessarily includes. Of the 1,799 points, 900 are in Michigan and the rest are in Wisconsin (535), Illinois (334) and a handful in Iowa, Ohio, Indiana and Minnesota. THAT IS DELIBERATE, NOT SPILL: nearest-3 is a proximity fact rather than a jurisdictional claim, so for a reader in Menominee the nearest post office really is across the river in Wisconsin, and the card's intro says these are straight-line distances"
+      }
+    }
+  ]
+}
+      </script>
 <!-- ==== GENERATED:END layer-matrix ==== -->
   </section>
 

@@ -32,6 +32,7 @@ noticed, and --check FAILS on an entry whose roster has since appeared.
 """
 
 import argparse
+import collections
 import difflib
 import html
 import json
@@ -167,19 +168,20 @@ CITY_TABLES = [
          sections=[dict(roster="data/source/ward-members.json",
                         seat="Ward", holder="Alderperson",
                         office_label="Ward office",
-                        body="the Chicago City Council",
+                        body="the Chicago City Council", org="Chicago City Council",
                         heading="Who represents each Chicago ward")]),
     dict(tag="ny", page="council-district.html", worksheet="ny/metro-worksheet.json",
          sections=[dict(roster="data/app/council-members.json",
                         seat="District", holder="Council Member",
                         office_label="District office",
-                        body="the New York City Council",
+                        body="the New York City Council", org="New York City Council",
                         heading="Who represents each Council district")]),
     dict(tag="ca", page="supervisor-district.html", worksheet="ca/metro-worksheet.json",
          sections=[dict(roster="data/app/sf-supervisor-members.json",
                         seat="District", holder="Supervisor",
                         office_label="District office",
                         body="the San Francisco Board of Supervisors",
+                        org="San Francisco Board of Supervisors",
                         heading="Who represents each supervisor district")]),
     # THE ONE SECTION WHOSE HOLDER IS NOT ELECTED. An NYPD precinct commander is
     # appointed, so `unit`/`prep` exist to keep the sentence from calling 78
@@ -194,6 +196,7 @@ CITY_TABLES = [
                         link_label="NYPD page",
                         unit="precincts", prep="in",
                         body="the New York City Police Department",
+                        org="New York City Police Department",
                         heading="Who commands each NYPD precinct")]),
     # THE FOUR PHASE-3 PAGES, whose rosters are the reason ADAPTERS exist.
     # Each one names people this site had shipped for months and served to
@@ -208,6 +211,9 @@ CITY_TABLES = [
                         office_label="Courthouse",
                         unit="judges", prep="in",
                         body="Wisconsin's circuit courts",
+                        # One court system, divided into circuits and branches —
+                        # which is what the seat cell names.
+                        org="Wisconsin Circuit Court",
                         heading="Which judges sit in each circuit")]),
     dict(tag="il", page="township.html", worksheet="metro-worksheet.json",
          sections=[dict(roster="data/app/township-officials.json",
@@ -216,6 +222,10 @@ CITY_TABLES = [
                         office_label="Township hall",
                         unit="elected officials", prep="in",
                         body="Cook County's townships",
+                        # 220 people across 29 governments: each township is its
+                        # own organisation and one node for all of them would be
+                        # a body that does not exist.
+                        org_per_seat=True,
                         heading="Who holds each township office")]),
     dict(tag="wi", page="school-board.html", worksheet="wi/metro-worksheet.json",
          sections=[dict(roster="data/app/mps-school-board-members.json",
@@ -223,12 +233,14 @@ CITY_TABLES = [
                         seat="Seat", holder="Director", role_label="Role",
                         office_label="Office",
                         body="the Milwaukee Board of School Directors",
+                        org="Milwaukee Board of School Directors",
                         heading="Who sits on the Milwaukee Board of School Directors"),
                    dict(roster="data/app/rusd-school-board-members.json",
                         adapter="school_board_members",
                         seat="Seat", holder="Board Member", role_label="Role",
                         office_label="Office",
                         body="the Racine Unified School District Board of Education",
+                        org="Racine Unified School District Board of Education",
                         heading="Who sits on the Racine Unified school board")]),
     dict(tag="il", page="school-board.html", worksheet="metro-worksheet.json",
          sections=[dict(roster="data/app/school-board-members.json",
@@ -237,6 +249,7 @@ CITY_TABLES = [
                         office_label="Office",
                         unit="elected district seats", prep="on",
                         body="the Chicago Board of Education",
+                        org="Chicago Board of Education",
                         heading="Who represents each Chicago school board district")]),
 ]
 
@@ -251,7 +264,7 @@ def legislator_tables():
             sections=[dict(roster="data/app/" + ch["roster"],
                            seat="District", holder=ch["holder"],
                            office_label="District office",
-                           body="the " + ch["name"],
+                           body="the " + ch["name"], org=ch["name"],
                            heading="Who represents each %s district" % ch["name"])
                       for ch in spec["chambers"]]))
         cong = inst["congress"]
@@ -262,6 +275,12 @@ def legislator_tables():
                            office_label="District office",
                            body="%s's delegation to the U.S. House of Representatives"
                                 % cong["state"],
+                           # A delegation is a real thing to name and is not the
+                           # House: six nodes each claiming to BE the House with
+                           # its own state's members would each be false.
+                           org="%s delegation to the U.S. House of Representatives"
+                               % cong["state"],
+                           parent_org="United States House of Representatives",
                            heading="Who represents each %s congressional district"
                                    % cong["state"])]))
     return out
@@ -508,14 +527,174 @@ def tel_link(value):
                                         html.escape(value))
 
 
+SITE = "https://districtry.com"
+
+
+def slug(text):
+    return re.sub(r"-+", "-", re.sub(r"[^a-z0-9]+", "-", text.lower())).strip("-")
+
+
+def person_node(rec, name_field, section):
+    who = rec.get(name_field)
+    person = {"@type": "Person", "name": who}
+    if rec.get("party"):
+        person["affiliation"] = party_name(rec["party"]) or rec["party"]
+    if rec.get("phone"):
+        person["telephone"] = rec["phone"]
+    office = next((rec[f] for f in ("office", "districtOffice")
+                   if isinstance(rec.get(f), str) and rec[f]), None)
+    if office:
+        person["workLocation"] = {"@type": "Place", "address": office}
+    if rec.get("source_url"):
+        person["sameAs"] = rec["source_url"]
+    return person
+
+
+def organization(section, org_id, name, roles):
+    node = {"@type": "GovernmentOrganization", "@id": org_id, "name": name,
+            "member": roles}
+    if section.get("parent_org"):
+        node["parentOrganization"] = {"@type": "GovernmentOrganization",
+                                      "name": section["parent_org"]}
+    return node
+
+
+def render_graph(entry, sections):
+    """The page's rosters as linked data, beside the table that renders them.
+
+    WHY IT IS HERE AND NOT IN THE HEAD. Four of these pages are hand-authored
+    (il/ward.html, ny/council-district.html, ca/supervisor-district.html,
+    ny/police-precinct.html) and the rest are written by two different page
+    generators, so a graph in the `<head>` would be four hand-edits that drift
+    and two generators that both have to learn the same roster shapes. JSON-LD
+    is valid anywhere in the document, so it ships inside the region this script
+    already owns — one mechanism, every page, nothing hand-kept.
+
+    WHY BOTH AN ORGANIZATION AND A LIST. The audit asks for two things and they
+    answer different questions: `member` -> `OrganizationRole` -> `Person` says
+    who belongs to the body and in what seat, and `ItemList` says these are the
+    body's seats in order. NOBODY IS DESCRIBED TWICE — each role node carries a
+    stable `@id` and the list REFERENCES it, so a consumer reading either path
+    reaches one object rather than two copies that can disagree.
+
+    THE ORGANISATION'S NAME IS STATED, NEVER THE BODY PHRASE. Each section
+    already carries `body` for its own prose, with the article attached and
+    sometimes in the plural — "Cook County's townships", "Wisconsin's circuit
+    courts" — and neither is the name of an organisation. Deriving the name from
+    it would have published a GovernmentOrganization called "Wisconsin's circuit
+    courts" whose 261 members are judges of a court system that has a real name.
+    `parent_org` exists for the same reason: a state's U.S. House delegation is
+    a real thing to name and is not the House itself, so the six congressional
+    pages each describe their delegation and point at the chamber above it
+    rather than six nodes claiming to be the whole House with 17 members.
+
+    A SECTION WHOSE SEATS ARE THEMSELVES ORGANISATIONS sets `org_per_seat`. The
+    township table is 220 people across 29 governments, and one node named for
+    all of them would be a body that does not exist; instead each township is
+    its own organisation holding its own officials, and the list is of the 29.
+
+    A SEAT THE ROSTER DOES NOT NAME IS A LIST POSITION WITH A NAME AND NO ITEM,
+    which is the same statement the table makes: the body has this seat and this
+    file does not say who holds it. Dropping it would make the list claim a
+    smaller body than the place elects.
+
+    THE GRAPH IS INDENTED, and that was measured rather than assumed. On the
+    largest of these pages (wi/circuit-court.html, 261 judges) indent=2 costs
+    158 KB against 101 KB compact — and 32.4 KB against 32.0 KB once gzipped,
+    which is what a reader actually downloads. 0.4 KB on the wire buys a diff a
+    person can review, on files whose whole point is that a roster change lands
+    as a reviewed pull request.
+    """
+    canonical = "%s/%s/%s" % (SITE, entry["tag"], entry["page"])
+    graph = []
+    for index, (section, rows) in enumerate(sections, 1):
+        if not section.get("org") and not section.get("org_per_seat"):
+            fail("%s/%s names no org — a schema.org organisation name cannot be "
+                 "derived from the section's body phrase, which carries an "
+                 "article and is sometimes plural"
+                 % (entry["tag"], section["roster"]))
+        name_field = section.get("name_field", "name")
+        items = []
+        if section.get("org_per_seat"):
+            groups = collections.OrderedDict()
+            for seat, rec in rows:
+                groups.setdefault(seat, []).append(rec)
+            for position, (seat, recs) in enumerate(groups.items(), 1):
+                org_id = "%s#body-%d-%s" % (canonical, index, slug(seat))
+                roles = []
+                for n, rec in enumerate(recs, 1):
+                    if not rec.get(name_field):
+                        continue
+                    roles.append({
+                        "@type": "OrganizationRole",
+                        # org_id already carries the fragment, so this
+                        # APPENDS to it. The first draft wrote "%s#role-%d" and
+                        # minted ids with two '#' in them, which is not a URL.
+                        "@id": "%s-role-%d" % (org_id, n),
+                        "roleName": rec.get("role") or section["holder"],
+                        "member": person_node(rec, name_field, section),
+                    })
+                graph.append(organization(section, org_id, seat, roles))
+                items.append({"@type": "ListItem", "position": position,
+                              "name": seat, "item": {"@id": org_id}})
+            graph.append({
+                "@type": "ItemList",
+                "@id": "%s#roster-%d" % (canonical, index),
+                "name": section["heading"],
+                "itemListOrder": "https://schema.org/ItemListOrderAscending",
+                "numberOfItems": len(items),
+                "itemListElement": items,
+            })
+            continue
+
+        org_id = "%s#body-%d" % (canonical, index)
+        roles = []
+        for position, (seat, rec) in enumerate(rows, 1):
+            if not rec.get(name_field):
+                items.append({"@type": "ListItem", "position": position,
+                              "name": seat})
+                continue
+            # THE POSITION IS IN THE ID, not the seat alone. A township lists
+            # four trustees under one seat label and a single-branch circuit can
+            # seat more than one judge, so a slug of the seat is not unique and
+            # the first draft minted the same @id for seven people.
+            role_id = "%s#role-%d-%d-%s" % (canonical, index, position,
+                                            slug(seat))
+            roles.append({
+                "@type": "OrganizationRole",
+                "@id": role_id,
+                "roleName": rec.get("role") or section["holder"],
+                "namedPosition": seat,
+                "member": person_node(rec, name_field, section),
+            })
+            items.append({"@type": "ListItem", "position": position,
+                          "name": seat, "item": {"@id": role_id}})
+        graph.append(organization(section, org_id, section["org"], roles))
+        graph.append({
+            "@type": "ItemList",
+            "@id": "%s#roster-%d" % (canonical, index),
+            "name": section["heading"],
+            "itemListOrder": "https://schema.org/ItemListOrderAscending",
+            "numberOfItems": len(items),
+            "about": {"@id": org_id},
+            "itemListElement": items,
+        })
+    payload = json.dumps({"@context": "https://schema.org", "@graph": graph},
+                         indent=2, ensure_ascii=False)
+    return ('  <script type="application/ld+json">\n%s\n  </script>\n\n'
+            % payload)
+
+
 def render(entry):
     worksheet = load(entry["worksheet"])
     verified = worksheet.get("verified_date")
     if not verified:
         fail("%s has no verified_date and the table is dated with it"
              % entry["worksheet"])
-    return "".join(render_section(entry["tag"], s, verified)
-                   for s in entry["sections"])
+    sections = [(s, section_rows(entry["tag"], s)) for s in entry["sections"]]
+    tables = "".join(render_section(entry["tag"], s, verified)
+                     for s in entry["sections"])
+    return tables + render_graph(entry, sections)
 
 
 def apply(entry, body, check):

@@ -1349,6 +1349,618 @@ table.matrix code {
           </table>
         </div>
       </section>
+
+      <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DataCatalog",
+  "@id": "https://districtry.com/ny/sources.html#catalog",
+  "name": "districtry New York City data layers",
+  "url": "https://districtry.com/ny/sources.html",
+  "publisher": {
+    "@type": "Organization",
+    "@id": "https://districtry.com/#publisher",
+    "name": "Overberg",
+    "url": "https://overberg.co"
+  },
+  "dataset": [
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-borough",
+      "identifier": "borough",
+      "name": "Borough / County",
+      "description": "Which borough — and therefore which county — this address is in. Borough-wide officeholders ship with the app and are surfaced on the Borough President and District Attorney cards rather than here.",
+      "url": "https://districtry.com/ny/sources.html#layer-borough",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Borough boundaries from NYC Open Data (gthc-hcne), shoreline-clipped, simplified and shipped with the app",
+          "url": "https://data.cityofnewyork.us/d/gthc-hcne"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-judicial-district",
+      "identifier": "judicial-district",
+      "name": "NY Supreme Court Judicial District",
+      "description": "Which New York Supreme Court judicial district covers this address. No roster is joined; the card links the court system rather than naming justices from an unverifiable list.",
+      "url": "https://districtry.com/ny/sources.html#layer-judicial-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "The five boroughs relabelled to their judicial districts (1, 2, 11, 12, 13), from the Census Bureau's TIGERweb State_County service — no live source publishes these directly",
+          "url": "https://tigerweb.geo.census.gov"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-borough-president",
+      "identifier": "borough-president",
+      "name": "Borough President",
+      "description": "Which Borough President's office covers this address. Borough Presidents ship with the app from the city's own directory.",
+      "url": "https://districtry.com/ny/sources.html#layer-borough-president",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "No boundary of its own: this layer draws the borough geometry above and differs only by the office it names",
+          "url": "https://data.cityofnewyork.us/d/gthc-hcne"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-district-attorney",
+      "identifier": "district-attorney",
+      "name": "District Attorney",
+      "description": "Which District Attorney's office covers this address. District Attorneys ship with the app from the city's own directory.",
+      "url": "https://districtry.com/ny/sources.html#layer-district-attorney",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "No boundary of its own: this layer draws the borough geometry above and differs only by the office it names",
+          "url": "https://data.cityofnewyork.us/d/gthc-hcne"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-congress",
+      "identifier": "congress",
+      "name": "U.S. House District",
+      "description": "Which U.S. House district covers this address, and who represents it. Members come from the unitedstates/congress-legislators dataset, refreshed weekly and reviewed before it ships.",
+      "url": "https://districtry.com/ny/sources.html#layer-congress",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Congressional districts from the Census Bureau's TIGERweb Legislative service, clipped to the city and shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-municipal-court",
+      "identifier": "municipal-court",
+      "name": "Civil Court (Municipal Court) District",
+      "description": "Which Civil (Municipal) Court district covers this address. No roster is joined; the card links the court rather than naming judges.",
+      "url": "https://districtry.com/ny/sources.html#layer-municipal-court",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "The 28 Civil Court districts from NYC Open Data (7vpq-4bh4), simplified and shipped with the app",
+          "url": "https://data.cityofnewyork.us/d/7vpq-4bh4"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-state-senate",
+      "identifier": "state-senate",
+      "name": "NY State Senate District",
+      "description": "Which New York State Senate district covers this address, and who holds the seat. Senators come from the NY Senate's Open Legislation API, refreshed weekly and reviewed before they ship; district offices are enriched from OpenStates where it publishes them.",
+      "url": "https://districtry.com/ny/sources.html#layer-state-senate",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "State Senate districts from the Census Bureau's TIGERweb Legislative service, clipped to the city and shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-school-district",
+      "identifier": "school-district",
+      "name": "Community School District",
+      "description": "Which community school district this address is in. Superintendents are appointed rather than elected; the card links the district rather than naming one from an unverifiable list.",
+      "url": "https://districtry.com/ny/sources.html#layer-school-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Community school districts from NYC Open Data (8ugf-3d8u)",
+          "url": "https://data.cityofnewyork.us/d/8ugf-3d8u"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-cec",
+      "identifier": "cec",
+      "name": "Community Education Council",
+      "description": "Which Community Education Council serves this address. No roster ships. No CEC membership list is published in a form this app can verify, so the card links the council rather than naming people it cannot check.",
+      "url": "https://districtry.com/ny/sources.html#layer-cec",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "The same community school district geometry from NYC Open Data (8ugf-3d8u) — a CEC serves one district",
+          "url": "https://data.cityofnewyork.us/d/8ugf-3d8u"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-fire-battalion",
+      "identifier": "fire-battalion",
+      "name": "FDNY Battalion",
+      "description": "Which FDNY battalion covers this address. No roster is joined; a battalion has no single officeholder to name.",
+      "url": "https://districtry.com/ny/sources.html#layer-fire-battalion",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "FDNY battalion boundaries as the city publishes them to ArcGIS Online",
+          "url": "https://services5.arcgis.com/GfwWNkhOj9bNBqoJ"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-council",
+      "identifier": "council",
+      "name": "City Council District",
+      "description": "Which City Council district covers this address, and who represents it. Council Members are re-scraped weekly from council.nyc.gov's own district directory and reviewed before they ship.",
+      "url": "https://districtry.com/ny/sources.html#layer-council",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "City Council districts from NYC Open Data (872g-cjhh)",
+          "url": "https://data.cityofnewyork.us/d/872g-cjhh"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-community-district",
+      "identifier": "community-district",
+      "name": "Community District / Board",
+      "description": "Which community district covers this address, and which community board advises on it. Board contact details come from the city's own community board dataset; individual members are not named.",
+      "url": "https://districtry.com/ny/sources.html#layer-community-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Community district boundaries from NYC Open Data (ruf7-3wgc), with board contact details from (5crt-au7u)",
+          "url": "https://data.cityofnewyork.us/d/ruf7-3wgc"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-election-district",
+      "identifier": "election-district",
+      "name": "Election District",
+      "description": "Which election district this address votes in. No roster: an election district has no officeholder.",
+      "url": "https://districtry.com/ny/sources.html#layer-election-district",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Election district boundaries as the city publishes them to ArcGIS Online",
+          "url": "https://services5.arcgis.com/GfwWNkhOj9bNBqoJ"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-state-assembly",
+      "identifier": "state-assembly",
+      "name": "NY State Assembly District",
+      "description": "Which New York State Assembly district covers this address, and who holds the seat. Assemblymembers come from the NY Senate's Open Legislation API, refreshed weekly and reviewed before they ship.",
+      "url": "https://districtry.com/ny/sources.html#layer-state-assembly",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "State Assembly districts from the Census Bureau's TIGERweb Legislative service, clipped to the city and shipped with the app",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-police-sector",
+      "identifier": "police-sector",
+      "name": "NYPD Sector",
+      "description": "Which NYPD sector — the patrol area inside a precinct — covers this address. No roster is joined; a sector has no separate commander to name.",
+      "url": "https://districtry.com/ny/sources.html#layer-police-sector",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Police sector boundaries from NYC Open Data (5rqd-h5ci)",
+          "url": "https://data.cityofnewyork.us/d/5rqd-h5ci"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-police-precinct",
+      "identifier": "police-precinct",
+      "name": "NYPD Precinct",
+      "description": "Which NYPD precinct covers this address, and who commands it. Commanding officers are re-scraped weekly from the NYPD's own precinct pages. Where the NYPD publishes no commander the card says so rather than guessing — about four of the 78 at any time.",
+      "url": "https://districtry.com/ny/sources.html#layer-police-precinct",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Police precinct boundaries from NYC Open Data (y76i-bdw7)",
+          "url": "https://data.cityofnewyork.us/d/y76i-bdw7"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-zip-code",
+      "identifier": "zip-code",
+      "name": "ZIP Code (MODZCTA)",
+      "description": "Which Modified ZIP Code Tabulation Area contains this address. No roster: a ZIP code has no officeholder.",
+      "url": "https://districtry.com/ny/sources.html#layer-zip-code",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "MODZCTA boundaries from NYC Open Data (pri4-ifjk)",
+          "url": "https://data.cityofnewyork.us/d/pri4-ifjk"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-neighborhood",
+      "identifier": "neighborhood",
+      "name": "Neighborhood (NTA)",
+      "description": "Which Neighborhood Tabulation Area contains this address. No roster: an NTA is a statistical area, and its name is not always the one a listing or a local would use.",
+      "url": "https://districtry.com/ny/sources.html#layer-neighborhood",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "2020 NTAs from NYC Open Data (9nt8-h7nd)",
+          "url": "https://data.cityofnewyork.us/d/9nt8-h7nd"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-hs-zone",
+      "identifier": "hs-zone",
+      "name": "High School Zone",
+      "description": "Which zoned high school serves this address, where one does. No roster; most NYC high schools admit by application citywide rather than by zone, and the card says so where no zone applies.",
+      "url": "https://districtry.com/ny/sources.html#layer-hs-zone",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "High school zones from NYC Open Data (ruu9-egea)",
+          "url": "https://data.cityofnewyork.us/d/ruu9-egea"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-ms-zone",
+      "identifier": "ms-zone",
+      "name": "Middle School Zone",
+      "description": "Which zoned middle school serves this address, where one does. No roster; the card links MySchools, which is what decides a placement.",
+      "url": "https://districtry.com/ny/sources.html#layer-ms-zone",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Middle school zones from NYC Open Data (t26j-jbq7)",
+          "url": "https://data.cityofnewyork.us/d/t26j-jbq7"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-es-zone",
+      "identifier": "es-zone",
+      "name": "Elementary School Zone",
+      "description": "Which zoned elementary school serves this address. No roster; the card links MySchools, which is what decides a placement.",
+      "url": "https://districtry.com/ny/sources.html#layer-es-zone",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Elementary school zones from NYC Open Data (cmjf-yawu)",
+          "url": "https://data.cityofnewyork.us/d/cmjf-yawu"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-school-site",
+      "identifier": "school-site",
+      "name": "School",
+      "description": "The nearest school sites to this point, by straight-line distance. No roster is joined; the card names the school and its address.",
+      "url": "https://districtry.com/ny/sources.html#layer-school-site",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "School locations from the NYS Education Department's ArcGIS service, public and private",
+          "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-police-station",
+      "identifier": "police-station",
+      "name": "Police Station",
+      "description": "The nearest police stations to this point, by straight-line distance. No roster is joined; the card gives the station and its address.",
+      "url": "https://districtry.com/ny/sources.html#layer-police-station",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Police station locations from NYC Open Data (ji82-xba5)",
+          "url": "https://data.cityofnewyork.us/d/ji82-xba5"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-fire-station",
+      "identifier": "fire-station",
+      "name": "Firehouse",
+      "description": "The nearest firehouses to this point, by straight-line distance. No roster is joined. The city's firehouse dataset carries no phone number, which is a gap at the source rather than something the card withholds.",
+      "url": "https://districtry.com/ny/sources.html#layer-fire-station",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Firehouse locations from NYC Open Data (hc8x-tcnd)",
+          "url": "https://data.cityofnewyork.us/d/hc8x-tcnd"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-post-office",
+      "identifier": "post-office",
+      "name": "Post Office",
+      "description": "The nearest post offices to this point, by straight-line distance. No roster is joined; the card names the facility and its address.",
+      "url": "https://districtry.com/ny/sources.html#layer-post-office",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "USGS National Map structures service, queried within the metro bounding box",
+          "url": "https://www.usgs.gov/programs/national-geospatial-program/national-map"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-library",
+      "identifier": "library",
+      "name": "Library",
+      "description": "The nearest public libraries to this point, by straight-line distance. No roster is joined. The dataset carries no phone number, which is a gap at the source rather than something the card withholds.",
+      "url": "https://districtry.com/ny/sources.html#layer-library",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Library locations from NYC Open Data (feuq-due4)",
+          "url": "https://data.cityofnewyork.us/d/feuq-due4"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-early-voting",
+      "identifier": "early-voting",
+      "name": "Early Voting Site",
+      "description": "The nearest early-voting sites to this point for the current election. No roster: a voting site has no officeholder. Hours change per election — confirm with the Board of Elections.",
+      "url": "https://districtry.com/ny/sources.html#layer-early-voting",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Early-voting sites from NYS ITS Geospatial Services' ArcGIS service, sourced from the state and city Boards of Elections",
+          "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York City"
+      }
+    }
+  ]
+}
+      </script>
 <!-- ==== GENERATED:END layer-matrix ==== -->
   </section>
 
