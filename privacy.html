@@ -553,8 +553,8 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
           <tr>
             <td class="who"><a href="https://www.goatcounter.com/help/privacy" target="_blank" rel="noopener">GoatCounter</a><small>analytics</small></td>
             <td>A page count and a few named events. See <a href="#analytics">Analytics, precisely</a>.</td>
-            <td>Every visit; events as you use the map.</td>
-            <td class="which">The front door, Illinois, New York City, San Francisco, Wisconsin, Iowa, Michigan.</td>
+            <td>Every visit to any page. The named events come from an app’s map only.</td>
+            <td class="which">Every page on this site — the apps, the front door, and every page they link. Two carry none: 404.html (served for a URL that does not exist) and coverage-map.html (the front door’s iframe body, counted by the page that embeds it).</td>
           </tr>
           <tr>
             <td class="who"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Analytics</a><small>analytics</small></td>
@@ -592,7 +592,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
 
     <h3>GoatCounter</h3>
 
-    <p><a href="https://www.goatcounter.com/help/privacy" target="_blank" rel="noopener">GoatCounter</a> is cookieless and does not build a profile across sites. The front door, Illinois, New York City, San Francisco, Wisconsin, Iowa and Michigan all report to a single GoatCounter site (<code class="k">districtry</code>); the page path is what distinguishes them. Besides the page view, each app sends named events for: address-search, geolocate, geolocate-success, layer/, metro-portal-go/, select, share-native, share-open. Exactly two of those — geolocate-success and select — carry coordinates, <strong>rounded to 2 decimal places</strong>. <strong>Nothing you type is ever sent to it.</strong></p>
+    <p><a href="https://www.goatcounter.com/help/privacy" target="_blank" rel="noopener">GoatCounter</a> is cookieless and does not build a profile across sites. Every page on this site reports to a single GoatCounter site (<code class="k">districtry</code>) — the apps, the front door, and the text pages that answer one question or list one county’s board; the page path is what distinguishes them. Besides the page view, each app sends named events for: address-search, geolocate, geolocate-success, layer/, metro-portal-go/, select, share-native, share-open. Exactly two of those — geolocate-success and select — carry coordinates, <strong>rounded to 2 decimal places</strong>. A page that is not an app — a county list, a question page, this one — sends the page view and nothing else. <strong>Nothing you type is ever sent to it.</strong></p>
 
     <h3>Google Analytics</h3>
 
