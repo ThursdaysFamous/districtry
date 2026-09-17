@@ -763,23 +763,6 @@ COUNTIES = {
             (40.5681, -88.5385, "Anchor — McLean County"),
         ],
     },
-    "knox": {
-        "fips": "095",
-        "name": "Knox County",
-        "inside": [
-            (40.8038, -90.4009, "Abingdon"),
-            (41.1151, -90.1648, "Altona"),
-            (40.9428, -90.3109, "East Galesburg"),
-            (40.9505, -90.3762, "Galesburg"),
-            (41.0239, -90.3536, "Henderson"),
-        ],
-        "outside": [
-            (41.1988, -90.7460, "Aledo — Mercer County"),
-            (41.0629, -90.5554, "Alexis — Warren County"),
-            (40.2279, -90.3565, "Astoria — Fulton County"),
-            (41.1917, -90.3805, "Alpha — Henry County"),
-        ],
-    },
     "macon": {
         "fips": "115",
         "name": "Macon County",

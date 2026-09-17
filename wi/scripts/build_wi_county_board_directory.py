@@ -183,12 +183,24 @@ COUNTY_SITES = {
     "55033": ("Dunn", "https://dunncountywi.gov/supervisors"),  # county page confirms 1..29
     "55035": ("Eau Claire", "https://eauclairecounty.gov/board_of_supervisors/district_representatives.php"),  # county page confirms 1..29
     "55037": ("Florence", "https://www.florencecountywi.com/government/boards_and_committees/"),  # its board list, which names all 12 with their districts; the county home page this table had names nobody
-    "55039": ("Fond Du Lac", "https://www.fdlco.wi.gov/government/county-board-supervisors"),  # county page confirms 1..25
     # http://fdlco.wi.gov/ answers 200 with a default "IIS Windows Server"
     # placeholder — 703 bytes, no county content — so the card footer linked
     # a blank page for as long as this row has existed. A 200 is not a page.
     # Measured 2026-08-29 while re-probing the counties this instance had
     # recorded as refusing browser headers.
+    #
+    # THIS ROW WAS WRITTEN TWICE and only ever shipped once. A second
+    # "55039" sat six lines above pointing at
+    # https://www.fdlco.wi.gov/government/county-board-supervisors and
+    # noting "county page confirms 1..25"; Python keeps the LAST key in a
+    # dict literal, so that row was dead from the day it was added and this
+    # one is what every build has written. The duplicate is removed here
+    # WITHOUT changing the shipped url, because deleting a dead line must
+    # not quietly change a reader's link. Which of the two Fond du Lac
+    # should link is a real question and is open: every neighbouring row
+    # here links a board page, and the members scrape reads the supervisors
+    # page for its own sourceUrl, so the directory and the roster currently
+    # cite different pages for one county.
     "55039": ("Fond Du Lac", "https://www.fdlco.wi.gov/"),
     "55041": ("Forest", "https://co.forest.wi.gov/county-board-supervisors"),  # its board page, which names all 21; the county HOME page this table had names nobody. Note the bare host answers and www. does not — the opposite of Barron
     "55043": ("Grant", "https://co.grant.wi.gov/"),  # county page confirms 1..17

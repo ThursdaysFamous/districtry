@@ -59,16 +59,21 @@ Chicago District Explorer: a single-file, dependency-light web app. Click a poin
 
 This list undercounts what actually runs, and **the figure is stated WITH ITS METHOD AND ITS
 DATE**, because successive counts disagreed and no reader could tell which counting rule any of
-them used. MEASURED 2026-09-16 on this branch: a static gate is
-one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **59**;
-counted instead as script invocations the whole battery is **84 — 74 that need no browser and
+them used. MEASURED 2026-09-17 on this branch, AFTER its last edit: a static gate is
+one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **60**;
+counted instead as script invocations the whole battery is **86 — 76 that need no browser and
 10 that boot Chromium** (a Playwright smoke test per instance `il`/`ca`/`ny`/`wi`/`ia`/`mi`,
 2 root-page tests, and the two fleet-wide probes for point transmission and contrast pairs), the
 per-instance `validate_index.py` runs included, and excluding the two `npx playwright install`
 setup lines and the `http.server` that serves the pages to the ten.
 
-**THE 52/77 THIS PARAGRAPH CARRIED BEFORE DOES NOT REPRODUCE, and the same method run against
-`origin/main` says why.** The rule above answers 49 and 74 on `origin/main` and 59 and 84 here,
+The 59/84 this paragraph carried on 2026-09-16 is one step and two invocations behind this
+one: `validate_python_hygiene.py` runs its `--selftest` and then the gate itself, which is one
+named step carrying two invocations — so the pair can move by different amounts in one change,
+and neither number can be derived from the other.
+
+**THE 52/77 THIS PARAGRAPH CARRIED BEFORE 2026-09-16 DOES NOT REPRODUCE, and the same method run
+against `origin/main` says why.** The rule above answers 49 and 74 on `origin/main` and 59 and 84 here,
 and this branch adds four of each — so it stood at 55/80 before them, not 52/77.
 The three-gate gap is the three wired on this branch the day that figure was written
 (`build_about_page.py --check`, `build_il_gis_board_rosters.py --check`,
@@ -101,8 +106,8 @@ each stale within the day.
 
 Treat the workflow file as the source of truth for the full battery and its order;
 `.claude/skills/steward/SKILL.md` mirrors it as locally-runnable commands with per-gate
-rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-16, **84
-invocations for 84**, diffed both ways with each side's trailing rationale comment stripped
+rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-17, **86
+invocations for 86**, diffed both ways with each side's trailing rationale comment stripped
 and `$BASE` resolved to the branch point the skill spells `origin/main`,
 after four gates were found missing from it on 2026-09-12 (`build_sitemap.py`,
 `undeliverable.py`, the circuit-court join self-test, and that change's own) and **four more on
