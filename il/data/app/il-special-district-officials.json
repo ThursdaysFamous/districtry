@@ -1900,7 +1900,7 @@
         },
         "LA GRANGE PARK DISTRICT": {
           "comptrollerCode": "016/390/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Jennifer Bechtold",
@@ -2023,7 +2023,7 @@
             }
           ],
           "comptrollerCode": "016/430/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Marcus Larson",
@@ -2131,7 +2131,7 @@
         },
         "NORRIDGE PARK DISTRICT": {
           "comptrollerCode": "016/490/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Nate Brown",
@@ -2143,7 +2143,7 @@
             }
           ],
           "office": {
-            "address": "4631 N. Overhill",
+            "address": "4631 N Overhill",
             "city": "Norridge IL 60706",
             "phone": "(708) 457-1244"
           }
@@ -5764,7 +5764,7 @@
             }
           ],
           "comptrollerCode": "049/050/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
             "address": "PO Box 237",
             "city": "Ingleside IL 60041",
@@ -5938,7 +5938,7 @@
             }
           ],
           "comptrollerCode": "049/100/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Mark Kirschhoffer",
@@ -6630,6 +6630,27 @@
           ],
           "office": {}
         },
+        "POLO FIRE": {
+          "board": [
+            {
+              "name": "John Hopkins",
+              "role": "President"
+            },
+            {
+              "name": "Charles Clothier",
+              "role": "Treasurer"
+            }
+          ],
+          "comptrollerCode": "071/080/06",
+          "filedFor": "2024",
+          "filesIn": "Ogle",
+          "office": {
+            "address": "PO Box 95",
+            "city": "Polo IL 61064",
+            "email": "charliepolofire@gmail.com",
+            "phone": "(815) 946-3313"
+          }
+        },
         "ROCK FALLS FIRE": {
           "board": [
             {
@@ -7255,7 +7276,7 @@
             }
           ],
           "comptrollerCode": "049/050/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Lake",
           "office": {
             "address": "PO Box 237",
@@ -9330,7 +9351,7 @@
       }
     }
   },
-  "generated": "2026-09-14T18:21:57Z",
+  "generated": "2026-09-17T04:15:59Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
