@@ -689,16 +689,17 @@ jobs:
       # tile that has drifted from the data it counts.
       - name: Regenerate the history page
         if: steps.build.outcome == 'success'
+        run: python3 scripts/build_history_page.py
+
       # THE PAGE NAMES THESE PEOPLE AND COUNTS THEM IN ITS OWN PROSE, so it is
       # regenerated in the same run. Both generators gate on it: skip this and
       # the failure lands on THIS job's own pull request, where nobody wrote the
       # change that broke it.
       - name: Regenerate the township page
+        if: steps.build.outcome == 'success'
         run: |
           python3 scripts/build_concept_pages.py
           python3 scripts/build_officeholder_tables.py
-
-        run: python3 scripts/build_history_page.py
 
       # The history page this job just rewrote is IN the sitemap, and the
       # sitemap's lastmod is that file's own last commit -- so regenerate it in
