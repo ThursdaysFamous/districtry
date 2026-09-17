@@ -429,6 +429,25 @@ jobs:
       - name: Skills point at things that exist
         run: python3 scripts/validate_skills.py
 
+      # Two defects that ship green in Python, both of them live in this repo
+      # the same week. A name used and imported nowhere raises NameError only
+      # when its line runs, and on 2026-09-17 that turned Logan County's
+      # robots.txt decline into a filed OUTAGE because the four lines writing
+      # `reason=robots` crashed on a missing `import os` — five days and an
+      # 84-invocation battery after it merged, because nothing takes a refusal
+      # branch until a host refuses. And a dict literal setting one key twice
+      # keeps the LAST silently, which is the PyYAML behaviour that killed three
+      # workflows on 2026-09-16 (#978) in a language where it is easier to
+      # miss: it found a superseded "knox" anchor block and two Fond du Lac
+      # rows whose urls differ. Deliberately NOT a linter — pyflakes reports 71
+      # further things on this tree and none of them change what the code does.
+      # Stdlib only; --selftest drives both checks against source carrying each
+      # defect and source carrying its near-miss.
+      - name: Every loaded name is bound and no dict key is set twice
+        run: |
+          python3 scripts/validate_python_hygiene.py --selftest
+          python3 scripts/validate_python_hygiene.py
+
       # The steward skill is the battery below, written out for a reader to run
       # locally, and CLAUDE.md has claimed since 2026-09-12 that the two agree
       # exactly. Nothing compared them until 2026-09-16, when the skill turned
