@@ -62,6 +62,41 @@ SOURCE_URL = "https://data.openstates.org/people/current/mi.csv"
 # fleet rule is that a personal address never ships.
 CAPITOL_BUILDINGS = ("Binsfeld Office Building", "Capitol Building")
 
+# A NAME THE EXPORT CONTRADICTS IN ITS OWN ROW, corrected per seat.
+#
+# Open States is the roster's source and is normally taken as it comes: it is
+# sourced and machine-maintained, and second-guessing a name is exactly what
+# the honesty rule forbids. This table is for the one shape where the export
+# is not a second opinion but a single row disagreeing with itself.
+#
+# ONE PUBLISHER CONTRADICTING ITSELF IS NOT TWO PUBLISHERS DISAGREEING, the
+# same distinction scripts/comptroller_afr.py's LOCALITY_CORRECTIONS turns on.
+# Where two bodies with standing spell a name differently, neither is
+# corrected here and the disagreement is recorded instead.
+#
+# Measured 2026-09-17, mi.csv row for lower/7:
+#     name        Tonya Phillips
+#     email       tonyamyersphillips@house.mi.gov
+#     links       https://housedems.com/tonya-myers-phillips/
+# Both of that row's other identity fields carry "Myers", and so does the page
+# they point at: housedems.com/tonya-myers-phillips/ answers 200 and prints
+# "Tonya Myers Phillips" 28 times and "Tonya Phillips" not once, under the
+# title "Tonya Myers Phillips - State Representative - Michigan House
+# Democrats". So the export's `name` column is the outlier against its own
+# row, and bot PR #970 would have replaced the name her chamber publishes with
+# one it uses nowhere.
+#
+# AN ENTRY CANNOT OUTLIVE THE DEFECT. Each names the exported value it
+# replaces, so the day Open States publishes the full name the entry stops
+# matching and the run prints a STALE line naming the entry to delete. A
+# warning rather than a failure on purpose: a source fixing its own row is a
+# good event, and failing the weekly refresh over it would withhold every
+# other seat's update to punish the source for improving.
+NAME_CORRECTIONS = {
+    # (chamber, district): (name as the export files it, name to ship)
+    ("lower", "7"): ("Tonya Phillips", "Tonya Myers Phillips"),
+}
+
 # Michigan seats 38 senators and 110 representatives. Floors catch a truncated
 # download or a schema change while tolerating transient vacancies.
 CHAMBERS = {
@@ -124,7 +159,28 @@ def capitol_lines(entry):
     return lines or None
 
 
-def build_roster(rows, chamber, directory):
+def corrected_name(chamber, district, filed, warnings):
+    """The exported name, with a row that contradicts itself corrected.
+
+    Returns the name to ship. Every consultation of the table is PRINTED —
+    the correction when it fires, and a STALE line when the export has moved
+    on — because a silent override is indistinguishable from a guess.
+    """
+    entry = NAME_CORRECTIONS.get((chamber, district))
+    if not entry:
+        return filed
+    if filed == entry[0]:
+        warnings.append("%s/%s: name corrected, export files %r -> shipped %r "
+                        "(NAME_CORRECTIONS)" % (chamber, district, entry[0], entry[1]))
+        return entry[1]
+    warnings.append("%s/%s: STALE NAME_CORRECTIONS entry — it expects the "
+                    "export to file %r and the export now files %r. Delete the "
+                    "entry." % (chamber, district, entry[0], filed))
+    return filed
+
+
+def build_roster(rows, chamber, directory, warnings=None):
+    warnings = warnings if warnings is not None else []
     roster = {}
     for row in rows:
         if (row.get("current_chamber") or "").strip() != chamber:
@@ -133,7 +189,7 @@ def build_roster(rows, chamber, directory):
         name = (row.get("name") or "").strip()
         if not district or not name:
             continue
-        member = {"name": name}
+        member = {"name": corrected_name(chamber, district, name, warnings)}
         party = (row.get("current_party") or "").strip()
         if party:
             member["party"] = party
@@ -176,8 +232,10 @@ def main():
     directory = load_senate_directory(cached)
 
     os.makedirs(out_dir, exist_ok=True)
+    warnings = []
     for chamber, cfg in CHAMBERS.items():
-        roster = build_roster(rows, chamber, directory if chamber == "upper" else {})
+        roster = build_roster(rows, chamber,
+                              directory if chamber == "upper" else {}, warnings)
         if len(roster) < cfg["expected"]:
             print("FAIL: resolved %d %s districts (expected >= %d) — refusing to "
                   "overwrite the roster with an incomplete chamber"
@@ -203,6 +261,18 @@ def main():
         emails = sum(1 for m in roster.values() if m.get("email"))
         print("Wrote %s (%d districts; %d with a Capitol office, %d with an e-mail)"
               % (out_path, len(roster), offices, emails), file=sys.stderr)
+
+    # Every NAME_CORRECTIONS consultation, printed. An entry that fired says so;
+    # one the export has overtaken says DELETE. Both belong in the run log and
+    # in the bot PR that reads it.
+    for line in warnings:
+        print(line, file=sys.stderr)
+    unseen = set(NAME_CORRECTIONS) - {
+        ((row.get("current_chamber") or "").strip(),
+         (row.get("current_district") or "").strip().lstrip("0")) for row in rows}
+    for key in sorted(unseen):
+        print("%s/%s: ORPHANED NAME_CORRECTIONS entry — the export carries no "
+              "such seat. Delete the entry." % key, file=sys.stderr)
 
 
 if __name__ == "__main__":
