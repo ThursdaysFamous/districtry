@@ -67,14 +67,12 @@
     "witnessUrl": "https://www.greendale.org/government/village_president/index.php"
   },
   "5531175": {
-    "email": "mayorneitzke@greenfieldwi.us",
     "municipality": "Greenfield",
-    "name": "Michael J. Neitzke",
     "office": "City of Greenfield Mayor",
-    "phone": "414-329-5200",
     "source": "Milwaukee County GIS & Land Information",
     "sourceUrl": "https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/Milwaukee_County_Municipal_Executives/FeatureServer/42",
-    "witnessUrl": "https://www.ci.greenfield.wi.us/335/Mayor-Biography"
+    "withheld": true,
+    "withheldWhy": "the municipality's own page could not be read from here, so no name is witnessed"
   },
   "5532075": {
     "municipality": "Hales Corners",
