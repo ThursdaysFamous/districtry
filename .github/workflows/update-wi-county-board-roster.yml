@@ -180,9 +180,19 @@ jobs:
           # smoke gate's `build_county_pages.py --check` fails on this PR with a
           # page naming last week's members. The sitemap follows, because those
           # pages are in it and its lastmod is each file's own last commit.
+          #
+          # about.html counts those same pages and the seats on them — it says
+          # "N per-county pages naming M county officeholders" and reads both at
+          # build time — so a run that seats or unseats anybody moves M and the
+          # smoke gate's `build_about_page.py --check` fails on this PR. Measured
+          # 2026-09-17 on the first roster run after that page shipped (#977,
+          # 2026-09-15): 2,915 -> 2,916, one net name across Buffalo, Green Lake
+          # and Marinette. THE OTHER 62 ROSTER WORKFLOWS STILL LACK THIS LINE and
+          # each will fail the same way on its own next PR that moves a count.
           python3 scripts/build_county_pages.py
+          python3 scripts/build_about_page.py
           python3 scripts/build_sitemap.py
-          git add wi/data/app/county-board-members.json wi/data/app/wi-county-officers.json wi/history.html wi/county-board wi/county-board.html sitemap.xml
+          git add wi/data/app/county-board-members.json wi/data/app/wi-county-officers.json wi/history.html wi/county-board wi/county-board.html about.html sitemap.xml
           git commit -m "Update WI county board supervisors from the counties' own pages"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
