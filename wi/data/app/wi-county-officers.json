@@ -4,9 +4,8 @@
   "asOf": "Wisconsin Blue Book 2025–26 (April 2025)",
   "sourceUrl": "https://docs.legis.wisconsin.gov/misc/lrb/blue_book/2025_2026/210_officials_and_employees.pdf",
   "chair": {
-   "name": "Rick Pease",
-   "source": "county-board-page",
-   "sourceUrl": "https://www.co.adams.wi.us/government/county-board",
+   "withheld": true,
+   "reason": "Not named: the Blue Book (April 2025) lists a chair who no longer appears on the county's own supervisor roster, and that roster does not mark a successor. The County Board District card names the sitting supervisors.",
    "seats": 20
   },
   "executive": {
@@ -55,7 +54,7 @@
    "checked": true
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 5
  },
  "55003": {
@@ -257,7 +256,7 @@
    "checked": true
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 7
  },
  "55011": {
@@ -275,7 +274,7 @@
    "title": "Administrative Coordinator",
    "appointed": true,
    "url": "https://www.buffalocountywi.gov/departments/county-administration/",
-   "phone": "(608) 685-6234",
+   "phone": "608-685-6234",
    "checked": true
   },
   "treasurer": {
@@ -298,10 +297,7 @@
   },
   "districtAttorney": {
    "name": "Tom Bilski",
-   "party": "Republican",
-   "url": "https://www.buffalocountywi.gov/departments/district-attorney-corporation-counsel/",
-   "phone": "(608) 685-6236",
-   "checked": true
+   "party": "Republican"
   },
   "sheriff": {
    "name": "Michael Osmond",
@@ -315,9 +311,9 @@
    "phone": "(608) 685-4433",
    "checked": true
   },
-  "contactChecked": 5,
-  "contactReadOn": "2026-09-11",
-  "contactCheckedWeekly": 5
+  "contactChecked": 4,
+  "contactReadOn": "2026-09-17",
+  "contactCheckedWeekly": 4
  },
  "55013": {
   "county": "Burnett",
@@ -369,7 +365,7 @@
    "checked": true
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 6
  },
  "55015": {
@@ -426,7 +422,7 @@
    "checked": true
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 7
  },
  "55017": {
@@ -484,7 +480,7 @@
    "checked": true
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 7
  },
  "55019": {
@@ -534,7 +530,7 @@
    "checked": true
   },
   "contactChecked": 4,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 4
  },
  "55021": {
@@ -583,7 +579,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 2,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 2
  },
  "55023": {
@@ -672,7 +668,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 4,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 4
  },
  "55027": {
@@ -803,7 +799,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 5
  },
  "55033": {
@@ -916,7 +912,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 5
  },
  "55037": {
@@ -976,7 +972,7 @@
    "checked": true
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 5
  },
  "55039": {
@@ -1118,7 +1114,7 @@
    "title": "Coroner"
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 6
  },
  "55045": {
@@ -1172,7 +1168,7 @@
    "checked": true
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 6
  },
  "55047": {
@@ -1233,7 +1229,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 5
  },
  "55049": {
@@ -1331,7 +1327,7 @@
    "checked": true
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 7
  },
  "55053": {
@@ -1429,7 +1425,7 @@
    "checked": true
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 6
  },
  "55057": {
@@ -1479,7 +1475,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 3,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 3
  },
  "55059": {
@@ -1535,7 +1531,7 @@
    "checked": true
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 7
  },
  "55061": {
@@ -1720,7 +1716,7 @@
    "checked": true
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 6
  },
  "55069": {
@@ -1813,7 +1809,7 @@
    "checked": true
   },
   "contactChecked": 4,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 4
  },
  "55073": {
@@ -1911,7 +1907,7 @@
    "checked": true
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 6
  },
  "55077": {
@@ -1971,7 +1967,7 @@
    "checked": true
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 5
  },
  "55078": {
@@ -2144,7 +2140,7 @@
    "checked": true
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 6
  },
  "55085": {
@@ -2198,7 +2194,7 @@
   },
   "coroner": null,
   "contactChecked": 4,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 4
  },
  "55087": {
@@ -2293,7 +2289,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 6
  },
  "55091": {
@@ -2503,7 +2499,7 @@
    "checked": true
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 7
  },
  "55099": {
@@ -2557,7 +2553,7 @@
    "checked": true
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 6
  },
  "55101": {
@@ -2770,7 +2766,7 @@
    "checked": true
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 7
  },
  "55111": {
@@ -2828,7 +2824,7 @@
    "checked": true
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 7
  },
  "55113": {
@@ -2879,7 +2875,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 5
  },
  "55115": {
@@ -2977,7 +2973,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 5
  },
  "55119": {
@@ -3074,7 +3070,7 @@
    "checked": true
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 5
  },
  "55123": {
@@ -3132,7 +3128,7 @@
    "checked": true
   },
   "contactChecked": 4,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 4
  },
  "55125": {
@@ -3226,7 +3222,7 @@
    "checked": true
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 7
  },
  "55129": {
@@ -3283,7 +3279,7 @@
    "title": "Coroner"
   },
   "contactChecked": 4,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 4
  },
  "55131": {
@@ -3341,7 +3337,7 @@
    "checked": true
   },
   "contactChecked": 7,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 7
  },
  "55133": {
@@ -3399,7 +3395,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 5
  },
  "55135": {
@@ -3458,7 +3454,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 5
  },
  "55137": {
@@ -3515,7 +3511,7 @@
    "checked": true
   },
   "contactChecked": 6,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 6
  },
  "55139": {
@@ -3567,7 +3563,7 @@
    "title": "Medical Examiner (appointed)"
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 5
  },
  "55141": {
@@ -3625,7 +3621,7 @@
    "checked": true
   },
   "contactChecked": 5,
-  "contactReadOn": "2026-09-11",
+  "contactReadOn": "2026-09-17",
   "contactCheckedWeekly": 5
  }
 }
