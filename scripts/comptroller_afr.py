@@ -107,6 +107,41 @@ TITLE_ALIASES = {
     "acting president": "president",
 }
 
+# A LOCALITY THE UNIT ITSELF MISFILED, corrected by unit CODE and never by name.
+#
+# The "record the disagreement and correct neither direction" rule that governs
+# unit NAMES (il_special_district_officials_scraper.py) does not reach this, and
+# the difference is the whole justification: that rule is for two publishers
+# spelling one place differently, where correcting either would be picking a
+# winner. Here there is one publisher and nothing disagrees with the filing
+# except the filing.
+#
+# Norridge Park District's 2026 report gives its locality as "Norrideg". Its own
+# unit name in the same table is NORRIDGE PARK DISTRICT, its 2025 report filed
+# "Norridge", and 60706 is the Norridge/Harwood Heights ZIP -- Norwood Park FPD
+# files "Harwood Heights IL 60706" in this very table. There is no Norrideg,
+# Illinois. Shipping it would print a wrong address on a real park district's
+# card, having previously printed the right one.
+#
+# NOT A GENERAL NAME-MATCHER, and that was measured before this was written. Of
+# the 486 units carrying an office, 74 file a locality sharing no word with
+# their own name, and essentially all of them are correct: a fire protection
+# district is routinely housed in a neighbouring village (Norwood Park FPD in
+# Harwood Heights, Central Stickney FPD in Chicago, Roberts Park FPD in
+# Justice). "The city does not match the name" is not evidence of anything, so
+# each entry here is one unit, stated, with its own reason.
+#
+# EACH ENTRY NAMES THE FILED VALUE IT REPLACES, so it cannot outlive the defect:
+# when the unit files the corrected spelling the entry stops matching and the
+# run prints a STALE line telling the next reader to delete it. That is a
+# warning rather than a failure on purpose -- a district fixing its own typo is
+# a good event, and failing the weekly refresh over it would block every other
+# unit's update to punish the source for improving.
+LOCALITY_CORRECTIONS = {
+    # unit code:  (locality as filed, locality to ship)
+    "016/490/12": ("Norrideg", "Norridge"),      # Norridge Park District, 2026 filing
+}
+
 SLOTS = 4                        # A Contact Person, B CEO, C CFO, D Purchasing Agent
 # B and C are the unit's PUBLISHED officers: the form captions them "Your name
 # will be listed with this responsibility on our website".
@@ -514,13 +549,119 @@ def contact_block(session, code, unit_label, warnings):
             continue
         officers.append(("board", {"name": name, "role": title}))
 
+    def locality():
+        """The filed locality and its state/ZIP, with a misfiling corrected.
+
+        The locality and the state/ZIP come from THE SAME SLOT as the street:
+        pairing a witnessed street with another filer's town would compose an
+        address no filer gave.
+        """
+        if not address:
+            return ""
+        filed = (address["city"] or "").strip()
+        entry = LOCALITY_CORRECTIONS.get(code)
+        if entry and filed == entry[0]:
+            warnings.append("%s: locality corrected, filed %r -> shipped %r "
+                            "(LOCALITY_CORRECTIONS)" % (code, entry[0], entry[1]))
+            filed = entry[1]
+        elif entry:
+            warnings.append("%s: STALE LOCALITY_CORRECTIONS entry — it expects "
+                            "the unit to file %r and the unit now files %r. "
+                            "Delete the entry." % (code, entry[0], filed))
+        return " ".join(x for x in (filed, address["region"]) if x).strip()
+
     return {"filedFor": year,
             "street": address["street"] if address else "",
-            # The locality and the state/ZIP come from THE SAME SLOT as the
-            # street: pairing a witnessed street with another filer's town
-            # would compose an address no filer gave.
-            "city": " ".join(x for x in (address["city"], address["region"])
-                             if x).strip() if address else "",
+            "city": locality(),
             "phone": telephone["phone"] if telephone else "",
             "email": unit_email(),
             "officers": officers}
+
+
+def _selftest():
+    """Drive contact_block through the real parser, three ways.
+
+    LOCALITY_CORRECTIONS is the one place this module overrides what a unit
+    filed, so its three branches are exercised rather than reasoned about: the
+    defect is corrected, a unit that fixes its own filing is passed through and
+    its entry reported stale, and a unit with no entry is left alone however
+    odd its locality looks. Run it after touching that table:
+
+        python3 scripts/comptroller_afr.py --selftest
+    """
+    global PACE, latest_fiscal_year
+    PACE = 0
+    latest_fiscal_year = lambda session, code: 2026
+
+    def markup(city):
+        def tr(cells):
+            return "<tr>" + "".join("<td>%s</td>" % c for c in cells) + "</tr>"
+        return "<table>" + "".join([
+            tr(["Contact Person", "Chief Executive Officer",
+                "Chief Financial Officer", "Purchasing Agent"]),
+            tr(["Ann", "Joyce", "Nate", "Brown", "Pat", "Reed", "Dee", "Fox"]),
+            tr(["Contact Person", "President", "Treasurer", "Purchasing Agent"]),
+            tr(["4631 N Overhill"] * SLOTS),
+            tr([city] * SLOTS),
+            tr(["IL 60706"] * SLOTS),
+            tr(["Phone: (708) 457-1244"] * SLOTS),
+            tr(["E-mail: x@example.org"] * SLOTS),
+        ]) + "</table>"
+
+    class _Session(object):
+        def __init__(self, city):
+            self.city = city
+
+        def post(self, *a, **k):
+            body = markup(self.city)
+
+            class _R(object):
+                text = body
+
+                def raise_for_status(self):
+                    pass
+            return _R()
+
+    def run(code, city):
+        warnings = []
+        block = contact_block(_Session(city), code, "SELFTEST UNIT", warnings)
+        return (block or {}).get("city"), warnings
+
+    failed = []
+
+    def check(label, got, want):
+        if got != want:
+            failed.append("%s / got %r / want %r" % (label, got, want))
+        print(("  ok   " if got == want else "  FAIL ") + label)
+
+    city, warned = run("016/490/12", "Norrideg")
+    check("corrects the misfiled locality", city, "Norridge IL 60706")
+    check("prints what it corrected",
+          any("locality corrected" in w for w in warned), True)
+
+    city, warned = run("016/490/12", "Norridge")
+    check("passes a corrected filing through", city, "Norridge IL 60706")
+    check("reports the entry stale", any("STALE" in w for w in warned), True)
+    check("does not also claim a correction",
+          any("locality corrected" in w for w in warned), False)
+
+    city, warned = run("016/999/99", "Harwood Heights")
+    check("leaves an unlisted unit alone", city, "Harwood Heights IL 60706")
+    check("says nothing about it", [w for w in warned if "LOCALITY" in w], [])
+
+    if failed:
+        print("")
+        print("%d CHECK(S) FAILED" % len(failed))
+        for f in failed:
+            print("  " + f)
+        return 1
+    print("")
+    print("OK - LOCALITY_CORRECTIONS behaves in all three directions")
+    return 0
+
+
+if __name__ == "__main__":
+    import sys
+    if "--selftest" in sys.argv:
+        sys.exit(_selftest())
+    sys.exit("usage: comptroller_afr.py --selftest   (this module is a library)")
