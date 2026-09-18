@@ -9128,27 +9128,45 @@ function initNycExplorer() {
     }
   });
 
-  /* ---------- Firehouse (nearest 3) — Socrata hc8x-tcnd (219) ---------- */
-  var loadFirehouses = makeSocrataPointLoader("hc8x-tcnd", null, "latitude", "longitude");
+  /* ---------- Fire Station (nearest 3) — statewide -------------------------
+   * THE STATE'S LAYER REPLACED THE CITY'S, rather than sitting beside it.
+   * This used to be Socrata hc8x-tcnd, FDNY's own 219 firehouses. Measured
+   * 2026-09-18 against the state's FireStations layer (2,966 points): 214 of
+   * FDNY's 219 match a state point within 60 metres, all five sampled
+   * addresses match exactly with the same company designations, and the state
+   * set ADDS six volunteer companies inside the city that FDNY's own dataset
+   * omits (Rockaway Point, Roxbury, Gerritsen Beach, Broad Channel, West
+   * Hamilton Beach, and City Island's). Two toggles for one concept is not
+   * this fleet's shape, so the city source is retired.
+   *
+   * Three measured caveats. Two FDNY borough-command offices are the only
+   * clean gaps, and whether an administrative office belongs on this card at
+   * all is a separate question. Rescue 2 appears in BOTH sets at addresses
+   * about 480 metres apart, which is a real currency disagreement between the
+   * two publishers rather than a missing station. And the Name field
+   * free-texts several companies per building, exactly as FDNY's own field
+   * did. ---------- */
+  var NYS_FIRE_STATIONS_LAYER = "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/FireStations/FeatureServer/0";
+  var loadFireStations = makeCached(function () { return loadArcGISPaged(NYS_FIRE_STATIONS_LAYER); });
   registerNearestPointLayer({
     id: "fire-station",
     group: "safety",
-    label: "Firehouse",
+    label: "Fire Station",
     color: "#B3261E", fill: "#E4572E",
-    loader: loadFirehouses,
-    intro: "Nearest FDNY firehouses, straight-line distance:",
+    loader: loadFireStations,
+    intro: "Nearest fire stations, straight-line distance:",
     line: function (p) {
-      var name = findPropCI(p, ["facilityname"]);
-      var addr = findPropCI(p, ["facilityaddress"]);
-      var boro = findPropCI(p, ["borough"]);
-      return (name ? String(name) : "Firehouse") + (addr ? " — " + toTitleCase(addr) : "") + (boro ? ", " + toTitleCase(boro) : "");
+      var name = findPropCI(p, ["name"]);
+      var addr = findPropCI(p, ["address"]);
+      var city = findPropCI(p, ["city"]);
+      return (name ? toTitleCase(String(name)) : "Fire station") + (addr ? " — " + toTitleCase(String(addr)) : "") + (city ? ", " + toTitleCase(String(city)) : "");
     },
     item: function (p) { // 4d two-line row: name over address
-      var name = findPropCI(p, ["facilityname"]);
-      var addr = findPropCI(p, ["facilityaddress"]);
-      var boro = findPropCI(p, ["borough"]);
-      var note = (addr ? toTitleCase(addr) : "") + (boro ? (addr ? ", " : "") + toTitleCase(boro) : "");
-      return { name: name ? String(name) : "Firehouse", note: note || undefined };
+      var name = findPropCI(p, ["name"]);
+      var addr = findPropCI(p, ["address"]);
+      var city = findPropCI(p, ["city"]);
+      var note = (addr ? toTitleCase(String(addr)) : "") + (city ? (addr ? ", " : "") + toTitleCase(String(city)) : "");
+      return { name: name ? toTitleCase(String(name)) : "Fire station", note: note || undefined };
     }
   });
 
@@ -9179,13 +9197,28 @@ function initNycExplorer() {
    * names (name/address/city/state/zipcode). CORS-open; public domain
    * ("USGS The National Map"). ---------- */
   var USGS_POST_OFFICE_LAYER = "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38";
+  /* STATEWIDE BY A STATE FILTER, NOT BY A WIDER BOX. This layer used to fetch
+   * an envelope around the city. Widening that envelope to New York State
+   * would have been the obvious move and is the wrong one, measured
+   * 2026-09-18: the state's bounding box catches 3,807 post offices of which
+   * only 1,832 are in New York, so more than half the download is
+   * Pennsylvania, New Jersey and New England, and it clears the service's
+   * 2,000-row transfer cap and needs paging. This layer carries a STATE
+   * field, so asking for New York returns those 1,832 in ONE request with no
+   * neighbouring-state noise at all. The cap leaves about 8% headroom at
+   * today's count, so a future refresh that adds 170 post offices will need
+   * paging even with the filter; the guard below is what will say so. */
   var loadPostOffices = makeCached(function () {
-    var url = USGS_POST_OFFICE_LAYER + "/query?geometry=" +
-      [METRO_BBOX.minLng, METRO_BBOX.minLat, METRO_BBOX.maxLng, METRO_BBOX.maxLat].join(",") +
-      "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects" +
-      "&where=1%3D1&outFields=NAME,ADDRESS,CITY,STATE,ZIPCODE&outSR=4326&f=json&geometryPrecision=6";
+    var url = USGS_POST_OFFICE_LAYER + "/query?where=" + encodeURIComponent("state='NY'") +
+      "&outFields=NAME,ADDRESS,CITY,STATE,ZIPCODE&outSR=4326&f=json&geometryPrecision=6";
     return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2).then(function (gj) {
       if (!hasUsableGeometry(gj)) throw new Error("no usable geometry from USGS structures layer 38");
+      // The service signals truncation with HTTP 200 and this flag rather than
+      // an error, so an unpaged query that silently lost rows would look
+      // exactly like a complete one. 1,832 of a 2,000 cap on 2026-09-18.
+      if (gj && gj.exceededTransferLimit) {
+        throw new Error("USGS structures layer 38 hit its transfer cap for New York - this loader needs paging now");
+      }
       return gj;
     });
   });
@@ -9426,11 +9459,17 @@ function initNycExplorer() {
    * outSR=4326 (native geometry is UTM 18N). Public (1591) exceeds the 1000-row
    * transfer cap, so it pages; private (809) and charter (431) fit in one call. */
   var NYSED_BASE = "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Schools/FeatureServer/";
-  var NYC_SCHOOL_WHERE = "COUNTY_DESC IN ('BRONX','KINGS','NEW YORK','QUEENS','RICHMOND')";
+  /* STATEWIDE since 2026-09-18. This was a five-county WHERE clause narrowing
+   * a service that always covered all of New York; deleting it is the whole
+   * of the widening. Measured that day: 6,749 schools statewide across the
+   * three layers (4,392 public, 1,810 private, 547 charter) against roughly
+   * 2,831 in the five boroughs, fetched by the paged loader below in 8
+   * requests. */
+  var NYSED_SCHOOL_WHERE = "1=1";
   function loadNysedLayerPaged(layerIndex, tagType) {
     var PAGE = 1000, fields = "LEGAL_NAME,PHYSADDRLINE1,PHYSCITY,PHYSZIPCD5";
     function page(offset, acc) {
-      var url = NYSED_BASE + layerIndex + "/query?where=" + encodeURIComponent(NYC_SCHOOL_WHERE) +
+      var url = NYSED_BASE + layerIndex + "/query?where=" + encodeURIComponent(NYSED_SCHOOL_WHERE) +
         "&outFields=" + encodeURIComponent(fields) + "&outSR=4326&f=json&resultRecordCount=" + PAGE + "&resultOffset=" + offset;
       return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2).then(function (gj) {
         var feats = (gj && gj.features) || [];

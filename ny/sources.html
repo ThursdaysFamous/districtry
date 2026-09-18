@@ -1186,11 +1186,11 @@ table.matrix code {
                 <td data-label="Where it applies">New York City.</td>
               </tr>
               <tr id="layer-fire-station">
-                <th scope="row"><span class="layer-name">Firehouse</span><code>fire-station</code></th>
-                <td data-label="What it answers">The nearest firehouses to this point, by straight-line distance.</td>
+                <th scope="row"><span class="layer-name">Fire Station</span><code>fire-station</code></th>
+                <td data-label="What it answers">The nearest fire stations to this point, by straight-line distance, anywhere in New York State.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://data.cityofnewyork.us/d/hc8x-tcnd" target="_blank" rel="noopener">Firehouse locations from NYC Open Data (hc8x-tcnd)</a></li>
+                    <li><a href="https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/FireStations/FeatureServer/0" target="_blank" rel="noopener">Fire station locations from the NYS Information Technology Services ArcGIS organisation, statewide, including the volunteer companies the city's own dataset omits</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">No roster is joined. The city's firehouse dataset carries no phone number, which is a gap at the source rather than something the card withholds.</td>
@@ -1278,10 +1278,10 @@ table.matrix code {
               </tr>
               <tr id="layer-school-site">
                 <th scope="row"><span class="layer-name">School</span><code>school-site</code></th>
-                <td data-label="What it answers">The nearest school sites to this point, by straight-line distance.</td>
+                <td data-label="What it answers">The nearest school sites to this point, by straight-line distance, anywhere in New York State.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://services6.arcgis.com/EbVsqZ18sv1kVJ3k" target="_blank" rel="noopener">School locations from the NYS Education Department's ArcGIS service, public and private</a></li>
+                    <li><a href="https://services6.arcgis.com/EbVsqZ18sv1kVJ3k" target="_blank" rel="noopener">School locations from the NYS Education Department's ArcGIS service, public, private and charter, statewide</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">No roster is joined; the card names the school and its address.</td>
@@ -1369,10 +1369,10 @@ table.matrix code {
               </tr>
               <tr id="layer-post-office">
                 <th scope="row"><span class="layer-name">Post Office</span><code>post-office</code></th>
-                <td data-label="What it answers">The nearest post offices to this point, by straight-line distance.</td>
+                <td data-label="What it answers">The nearest post offices to this point, by straight-line distance, anywhere in New York State.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://www.usgs.gov/programs/national-geospatial-program/national-map" target="_blank" rel="noopener">USGS National Map structures service, queried within the metro bounding box</a></li>
+                    <li><a href="https://www.usgs.gov/programs/national-geospatial-program/national-map" target="_blank" rel="noopener">USGS National Map structures service, filtered to New York on the layer's own state field rather than by a bounding box</a></li>
                   </ul>
                 </td>
                 <td data-label="Who it names">No roster is joined; the card names the facility and its address.</td>
@@ -1963,7 +1963,7 @@ table.matrix code {
       "@id": "https://districtry.com/ny/sources.html#dataset-school-site",
       "identifier": "school-site",
       "name": "School",
-      "description": "The nearest school sites to this point, by straight-line distance. No roster is joined; the card names the school and its address.",
+      "description": "The nearest school sites to this point, by straight-line distance, anywhere in New York State. No roster is joined; the card names the school and its address.",
       "url": "https://districtry.com/ny/sources.html#layer-school-site",
       "isPartOf": {
         "@id": "https://districtry.com/ny/sources.html#catalog"
@@ -1971,7 +1971,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "School locations from the NYS Education Department's ArcGIS service, public and private",
+          "name": "School locations from the NYS Education Department's ArcGIS service, public, private and charter, statewide",
           "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k"
         }
       ],
@@ -2006,8 +2006,8 @@ table.matrix code {
       "@type": "Dataset",
       "@id": "https://districtry.com/ny/sources.html#dataset-fire-station",
       "identifier": "fire-station",
-      "name": "Firehouse",
-      "description": "The nearest firehouses to this point, by straight-line distance. No roster is joined. The city's firehouse dataset carries no phone number, which is a gap at the source rather than something the card withholds.",
+      "name": "Fire Station",
+      "description": "The nearest fire stations to this point, by straight-line distance, anywhere in New York State. No roster is joined. The city's firehouse dataset carries no phone number, which is a gap at the source rather than something the card withholds.",
       "url": "https://districtry.com/ny/sources.html#layer-fire-station",
       "isPartOf": {
         "@id": "https://districtry.com/ny/sources.html#catalog"
@@ -2015,8 +2015,8 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "Firehouse locations from NYC Open Data (hc8x-tcnd)",
-          "url": "https://data.cityofnewyork.us/d/hc8x-tcnd"
+          "name": "Fire station locations from the NYS Information Technology Services ArcGIS organisation, statewide, including the volunteer companies the city's own dataset omits",
+          "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/FireStations/FeatureServer/0"
         }
       ],
       "spatialCoverage": {
@@ -2029,7 +2029,7 @@ table.matrix code {
       "@id": "https://districtry.com/ny/sources.html#dataset-post-office",
       "identifier": "post-office",
       "name": "Post Office",
-      "description": "The nearest post offices to this point, by straight-line distance. No roster is joined; the card names the facility and its address.",
+      "description": "The nearest post offices to this point, by straight-line distance, anywhere in New York State. No roster is joined; the card names the facility and its address.",
       "url": "https://districtry.com/ny/sources.html#layer-post-office",
       "isPartOf": {
         "@id": "https://districtry.com/ny/sources.html#catalog"
@@ -2037,7 +2037,7 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "USGS National Map structures service, queried within the metro bounding box",
+          "name": "USGS National Map structures service, filtered to New York on the layer's own state field rather than by a bounding box",
           "url": "https://www.usgs.gov/programs/national-geospatial-program/national-map"
         }
       ],
