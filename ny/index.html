@@ -3945,7 +3945,7 @@ function initNycExplorer() {
    * docs/ENGINE_SYNC.md and scripts/check_engine_parity.py. */
   var THIS_METRO = "nyc";               // key into METRO_EXPLORERS below
   var METRO_NAME = "New York City";     // used in user-facing strings
-  var METRO_BBOX = { minLng: -74.27, minLat: 40.48, maxLng: -73.68, maxLat: 40.93 };
+  var METRO_BBOX = { minLng: -74.27, minLat: 40.47, maxLng: -73.68, maxLat: 40.93 };
   var METRO_CENTER = [40.7128, -74.006];
   // Permalink sanity gate: the *greater* metro area (wider than METRO_BBOX).
   var PERMALINK_GATE = { minLat: 40.4, maxLat: 41.05, minLng: -74.3, maxLng: -73.6 };
@@ -3966,7 +3966,7 @@ function initNycExplorer() {
   // statewide layers still answer in; it also requires that instance's boot
   // to hand drawOutOfScopeMask() the region geometry, because the key names
   // only the bands that were actually drawn.
-  var COVERAGE_KEY = { outside: "Outside New York City" };
+  var COVERAGE_KEY = { outside: "Outside New York", region: { edge: "New York", label: "Statewide layers only", sub: "City districts and county legislatures not sourced here yet" } };
   /* Sibling District Explorer deployments — one canonical list shared by every
    * metro fork. When a new metro launches, add its entry to every fork's
    * worksheet and regenerate (Conversion 3 will source this list from the
@@ -8330,6 +8330,7 @@ function initNycExplorer() {
     id: "neighborhood",
     group: "geography",
     label: "Neighborhood (NTA)",
+    coverage: nycCoverage,
     loader: loadNeighborhoods,
     style: { color: "#2E7D5B", weight: 2, fillColor: "#2E7D5B", fillOpacity: 0.06 },
     compact: true, compactMetaField: "code", // 4b name-only card, NTA code as meta
@@ -8348,6 +8349,7 @@ function initNycExplorer() {
     id: "zip-code",
     group: "geography",
     label: "ZIP Code (MODZCTA)",
+    coverage: nycCoverage,
     loader: makeCachedLoader("pri4-ifjk"),
     style: { color: "#4E6E9C", weight: 2, fillColor: "#4E6E9C", fillOpacity: 0.05, dashArray: "1 3" },
     pill: true, // ZIP identifier in the header pill (Handoff 3 §5b, "60564" style)
@@ -8368,6 +8370,35 @@ function initNycExplorer() {
   var loadBoroughBoundaries = makeCached(function () {
     return fetchJSONWithRetry("data/app/borough-boundaries.json", {}, 2);
   });
+
+  /* ---------- the coverage wash's two rings, and the city-tier gate ----------
+   * metro-outline.json is the five boroughs dissolved to one outline and
+   * ny-state-outline.json is New York State; both are built by
+   * ny/scripts/build_metro_outline.py and shipped cache-first, so the wash
+   * costs no statewide fetch at boot. The wash takes both because New York is
+   * a three-band instance (docs/EXPANSION_GUIDE.md 2.5.1): the city layers
+   * answer inside the boroughs, the three legislative layers answer anywhere
+   * in the state, and nothing answers outside it.
+   *
+   * nycCoverage is the CITY TIER's location-relevance test. A layer that
+   * declares it hides outside the five boroughs — toggle block, card, overlay,
+   * hover row and query all suppressed — without touching state.layersOn, so a
+   * layers= permalink survives a click upstate and the layer returns when the
+   * point comes back. The ground is the borough fabric the app already ships
+   * and already caches for the borough card, so the gate adds no fetch. A
+   * throwing test fails open, which is the engine's rule: a layer whose
+   * coverage cannot be decided behaves as if it never declared one. ---------- */
+  var loadMetroOutline = makeCached(function () {
+    return fetchJSONWithRetry("data/app/metro-outline.json", {}, 2);
+  });
+  var loadStateOutline = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ny-state-outline.json", {}, 2);
+  });
+  function nycCoverage(point) {
+    return loadBoroughBoundaries().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
   /* Bespoke rather than factory so the card can join the County Clerk from
    * borough-officials.json (operator-verified; see the source's _verified
    * note). NYC County Clerks are APPOINTED by the Appellate Division, so the
@@ -8380,6 +8411,15 @@ function initNycExplorer() {
     id: "borough",
     group: "geography",
     label: "Borough / County",
+    // DELIBERATELY UNGATED, where the other city-tier layers declare
+    // nycCoverage. This layer's EMPTY state is its answer: the instance has a
+    // water-click honesty rule (ny/scripts/smoke_test.mjs asserts it) that a
+    // click in the Hudson resolves to "no borough" rather than to a card that
+    // is not there. A coverage test would hide the layer at exactly the point
+    // the rule exists to answer, because the boroughs are shoreline-clipped
+    // and the mid-river point is outside New York State as well as outside
+    // every borough. Whether it should hide far upstate once the bbox goes
+    // statewide is a PR 3 question, and a different one.
     overlay: {
       load: loadBoroughBoundaries,
       style: { color: "#8C6A2E", weight: 2.5, fillColor: "#8C6A2E", fillOpacity: 0.04 }
@@ -8455,6 +8495,7 @@ function initNycExplorer() {
     id: "judicial-district",
     group: "political",
     label: "NY Supreme Court Judicial District",
+    coverage: nycCoverage,
     loader: loadJudicialDistricts,
     style: { color: "#6B4E8C", weight: 2, fillColor: "#6B4E8C", fillOpacity: 0.05, dashArray: "7 3" },
     pill: true, // district identifier in the header pill (Handoff 3 §5b)
@@ -8481,6 +8522,7 @@ function initNycExplorer() {
     id: "municipal-court",
     group: "political",
     label: "Civil Court (Municipal Court) District",
+    coverage: nycCoverage,
     loader: loadMunicipalCourtDistricts,
     style: { color: "#1E7A8C", weight: 2, fillColor: "#1E7A8C", fillOpacity: 0.05, dashArray: "4 4" },
     fields: [
@@ -8733,6 +8775,7 @@ function initNycExplorer() {
     id: "police-precinct",
     group: "safety",
     label: "NYPD Precinct",
+    coverage: nycCoverage,
     // hover popup: same `precinct` property the card's query reads.
     hoverName: function (feature) {
       var pct = findPropCI(feature.properties || {}, ["precinct"]);
@@ -8842,6 +8885,7 @@ function initNycExplorer() {
     group: "safety",
     subOf: "police-precinct",
     label: "NYPD Sector",
+    coverage: nycCoverage,
     hoverName: function (feature) { return findPropCI(feature.properties || {}, ["sector"]) || null; },
     overlay: {
       load: loadPoliceSectors,
@@ -8886,6 +8930,7 @@ function initNycExplorer() {
     id: "police-station",
     group: "safety",
     label: "Police Station",
+    coverage: nycCoverage,
     color: "#0B5394", fill: "#41B6E6",
     loader: loadPoliceStationPoints,
     intro: "Nearest NYPD station houses, straight-line distance:",
@@ -8937,6 +8982,7 @@ function initNycExplorer() {
     id: "fire-battalion",
     group: "safety",
     label: "FDNY Battalion",
+    coverage: nycCoverage,
     loader: loadFireBattalions,
     style: { color: "#B3261E", weight: 2, fillColor: "#E4572E", fillOpacity: 0.05, dashArray: "6 3" },
     fields: [
@@ -8999,6 +9045,7 @@ function initNycExplorer() {
     id: "library",
     group: "geography",
     label: "Library",
+    coverage: nycCoverage,
     color: "#8A5A00", fill: "#F2B84B",
     loader: loadLibraries,
     intro: "Nearest public library branches (NYPL / BPL / QPL), straight-line distance:",
@@ -9090,6 +9137,9 @@ function initNycExplorer() {
     // If a future edition adds them, wire the keys and the pin lights up.
     opts.requireId = true;
     opts.profileLink = schoolProfileLink;
+    // All three DOE zone levels are city-tier: the datasets are NYC DOE's own
+    // and no statewide analogue exists, so one gate here covers the family.
+    opts.coverage = nycCoverage;
     registerSchoolZone(opts);
   }
 
@@ -9131,6 +9181,7 @@ function initNycExplorer() {
   });
   registerPolygonLayer({
     id: "school-district", group: "schools", label: "Community School District",
+    coverage: nycCoverage,
     loader: loadSchoolDistricts,
     style: { color: "#0B7285", weight: 2, fillColor: "#0B7285", fillOpacity: 0.05 },
     pill: true, // district identifier in the header pill (Handoff 3 §5b)
@@ -9154,6 +9205,7 @@ function initNycExplorer() {
   var loadCecMembers = makeCached(function () { return fetchJSONWithRetry("data/app/cec-members.json", {}, 2); });
   registerLayer({
     id: "cec", group: "schools", label: "Community Education Council",
+    coverage: nycCoverage,
     // hover popup: same "CEC n" identity the card's headline row shows.
     hoverName: function (feature) {
       var d = intField(findPropCI(feature.properties || {}, ["schooldist"]));
@@ -9502,6 +9554,7 @@ function initNycExplorer() {
   var loadCouncilMembers = makeCached(function () { return fetchJSONWithRetry("data/app/council-members.json", {}, 2); });
   registerLayer({
     id: "council", group: "political", label: "City Council District",
+    coverage: nycCoverage,
     // hover popup: same `coundist` property the card's query reads.
     hoverName: function (feature) {
       return intField(findPropCI(feature.properties || {}, ["coundist"]));
@@ -9598,6 +9651,7 @@ function initNycExplorer() {
   }
   registerLayer({
     id: "community-district", group: "political", label: "Community District / Board",
+    coverage: nycCoverage,
     // hover popup: same decoded "Borough CD n" identity the card headline shows.
     hoverName: function (feature) {
       var dec = decodeBoroCd(findPropCI(feature.properties || {}, ["boro_cd"]));
@@ -9777,6 +9831,7 @@ function initNycExplorer() {
   }
   registerLayer({
     id: "election-district", group: "political", subOf: "state-assembly", label: "Election District",
+    coverage: nycCoverage,
     hoverName: function (feature) {
       var s = splitElectDist(findPropCI(feature.properties || {}, ["electdist"]));
       return s ? ("AD " + s.ad + " · ED " + s.ed) : null;
@@ -9826,6 +9881,9 @@ function initNycExplorer() {
   function registerBoroughOfficeLayer(opts) {
     registerLayer({
       id: opts.id, group: "political", label: opts.label,
+      // Both offices are NYC charter offices drawn on the borough fabric:
+      // city-tier by concept, not only by source.
+      coverage: nycCoverage,
       // hover popup: the borough is the district identity here (same headline
       // the card shows) …
       hoverName: function (feature) {
@@ -10939,11 +10997,14 @@ function initNycExplorer() {
 
   buildGroupsUI();
   applyStateFromHash(); // restore a shared #point=…&layers=… link, if present
-  // Out-of-scope wash: the five shoreline-clipped boroughs (offline anchor)
-  // are the coverage holes. Passing applyBoroughMarker's cached loader — and
-  // calling after applyStateFromHash — means a restored point's marker
-  // upgrade and the wash share one borough-boundaries fetch.
-  drawOutOfScopeMask(loadBoroughBoundaries);
+  // Out-of-scope wash, three bands: the dissolved five boroughs are the full
+  // band, New York State is the region band where the three legislative
+  // layers still answer, and everything beyond is outside. Both rings are
+  // pre-built and cache-first, so this costs no statewide fetch at boot.
+  // COVERAGE_KEY names only the bands the draw actually produced, so the key
+  // and the map cannot disagree: drop the second argument and the middle band
+  // silently disappears from both.
+  drawOutOfScopeMask(loadMetroOutline, loadStateOutline);
 
 
   /* ==== ENGINE:BEGIN metro-links ==== */

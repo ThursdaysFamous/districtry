@@ -1,7 +1,7 @@
 {
   "this_metro": "nyc",
   "metro_name": "New York City",
-  "metro_bbox": { "minLng": -74.27, "minLat": 40.48, "maxLng": -73.68, "maxLat": 40.93 },
+  "metro_bbox": { "minLng": -74.27, "minLat": 40.47, "maxLng": -73.68, "maxLat": 40.93 },
   "metro_center": [40.7128, -74.006],
   "permalink_gate": { "minLat": 40.4, "maxLat": 41.05, "minLng": -74.3, "maxLng": -73.6 },
   "socrata_host": "https://data.cityofnewyork.us",
@@ -636,10 +636,27 @@
   ],
   "negative_point": { "lat": 40.72, "lng": -74.04, "note": "Hudson River, New Jersey waters — outside every anchor geometry (the East River is inside the county-derived judicial districts, so mid-river points there are only borough-negative)" },
   "coverage_key": {
-    "outside": "Outside New York City"
+    "outside": "Outside New York",
+    "region": {
+      "edge": "New York",
+      "label": "Statewide layers only",
+      "sub": "City districts and county legislatures not sourced here yet"
+    }
   },
   "data_files": {
     "geometry": [
+      {
+        "file": "metro-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "The dissolved outline of the five boroughs, the coverage wash's FULL band (ny/scripts/build_metro_outline.py, anchor-verified inside and outside). Three rings, not one: the borough cluster plus Liberty Island and Ellis Island, both New York County land detached by water."
+      },
+      {
+        "file": "ny-state-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "New York State, the coverage wash's REGION band, marking where the three statewide legislative layers answer although the city layers do not. Same builder, same simplification tolerance as the coverage ring so the two do not open slivers where they trace the same line."
+      },
       { "file": "borough-boundaries.json", "min_features": 5, "max_features": 5 },
       {
         "file": "bronx-county-outline.json",
@@ -698,7 +715,7 @@
     ]
   },
   "sw": {
-    "cache_name": "nyc-district-explorer-shell-v15",
+    "cache_name": "nyc-district-explorer-shell-v16",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",

@@ -92,6 +92,8 @@ EXPECT_LAYER_IDS = [
 
 # file -> (min features, max features) for the boundary layers fetched by the app.
 GEOMETRY_FILES = {
+    "metro-outline.json": (1, 1),  # The dissolved outline of the five boroughs, the coverage wash's FULL band (ny/scripts/build_metro_outline.py, anchor-verified inside and outside). Three rings, not one: the borough cluster plus Liberty Island and Ellis Island, both New York County land detached by water.
+    "ny-state-outline.json": (1, 1),  # New York State, the coverage wash's REGION band, marking where the three statewide legislative layers answer although the city layers do not. Same builder, same simplification tolerance as the coverage ring so the two do not open slivers where they trace the same line.
     "borough-boundaries.json": (5, 5),
     "bronx-county-outline.json": (1, 1),  # The Bronx containment outline (ny/scripts/build_ny_borough_outlines.py, sliced from borough-boundaries.json) — lets a Data gaps record name this borough so the panel leads with the gaps that apply here.
     "brooklyn-county-outline.json": (1, 1),  # Brooklyn containment outline (ny/scripts/build_ny_borough_outlines.py, sliced from borough-boundaries.json) — lets a Data gaps record name this borough so the panel leads with the gaps that apply here.
