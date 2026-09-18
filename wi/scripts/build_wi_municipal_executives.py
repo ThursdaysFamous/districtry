@@ -63,8 +63,24 @@ carried when, and only when, ALL of these hold:
   ASK. `refused` is an access control and a carried copy would be the site's
   data kept alive against its refusal; `missing` (404) and a page that READ and
   did not witness are both the source answering, and carrying either would hide
-  a real change in what the municipality publishes. The scraper's own comment
-  above `fetch` carries the split.
+  a real change in what the municipality publishes. `robots-refused` is the
+  site asking not to be read at all, and the Iowa chair rule is explicit that
+  it is never carried. The scraper's own comment above `fetch` carries the
+  split.
+
+WHY A ROBOTS REFUSAL DROPS A NAME HERE AND NOT ON THE COUNTY-BOARD CARD
+------------------------------------------------------------------------
+This looks like a contradiction with the seven Wisconsin counties whose board
+rosters SHIP under a `Disallow: /`, dated, with the card saying the county
+asked. It is not, and the difference is what the refused page was DOING. For
+those counties the county's own page IS the roster — drop it and the card names
+nobody, and what was already retrieved is public information robots.txt does
+not govern. Here the NAME comes from Milwaukee County's layer, which allows,
+and the municipality's page was only the WITNESS. Losing the witness does not
+lose a source; it loses the one thing that made the layer's name shippable at
+all, on a layer whose own edit date predates the April 2026 election. Shipping
+it unwitnessed is exactly what this file exists to refuse, and next April
+nothing would be able to check it.
 * THE COUNTY'S LAYER STILL NAMES THE SAME PERSON. The name in this file is the
   layer's; the municipality's page is what witnessed it. If the layer moves on,
   the carried name is contradicted by the county's own current data and is
@@ -207,6 +223,10 @@ def carry_forward(prior, roster, statuses, layer_names, today):
                 "missing": "the county layer's link to that page is dead, which "
                            "is the source answering rather than a failure to ask",
                 "no-url": "the county layer publishes no page for it",
+                "robots-refused": "the municipality's own site asks automated "
+                                  "clients not to read it, and a site that has "
+                                  "said no must not have its data kept alive "
+                                  "by us",
             }.get(status, "the scraper reported %r, which is not a carryable "
                           "verdict" % status))
             continue
@@ -365,6 +385,11 @@ CARRY_CASES = [
      NAMED, "missing", "Michael J. Neitzke", 0),
     ("the layer publishes no page for it",
      NAMED, "no-url", "Michael J. Neitzke", 0),
+    ("the municipality's site asks not to be crawled",
+     NAMED, "robots-refused", "Michael J. Neitzke", 0),
+    ("robots-refused and fresh and the layer agrees — still not carried",
+     dict(NAMED, carriedFrom=TODAY.isoformat()), "robots-refused",
+     "Michael J. Neitzke", 0),
     ("a verdict this builder does not know",
      NAMED, "something-new", "Michael J. Neitzke", 0),
     ("carriedFrom is not a date",

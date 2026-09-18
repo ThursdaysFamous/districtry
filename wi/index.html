@@ -8197,10 +8197,67 @@ function initWisconsinExplorer() {
   function registerNearestPointLayer(opts) {
     var count = opts.count || 3;
     var fullLabel = opts.label + " (nearest " + count + ")";
+    /* DISTANCE CEILING. A nearest-N query used to rank every point in the
+     * loader's set and return the closest N whatever their distance, so a click
+     * far outside a city instance's data (upstate New York against the NYC
+     * instance, Sacramento against San Francisco) returned that city's own
+     * facilities hundreds of miles away, each with a distance pill, as though
+     * they were an answer for that point. Measured 2026-09-18. Points past the
+     * ceiling are dropped before ranking; when nothing is left the query
+     * returns null and the card framework renders emptyNote.
+     *
+     * THE DEFAULT IS MEASURED, NOT GUESSED. On 2026-09-18 every
+     * registerNearestPointLayer registration in the six instances was sampled
+     * over a grid of that instance's own coverage (0.05 degree spacing on the
+     * statewide instances, 0.02 in the two cities and inside Chicago; land
+     * only, using the Census generalized state polygon, so open-water grid
+     * points in the Great Lakes are excluded), each grid point's nearest-1
+     * straight-line distance computed with haversineMiles over the point set
+     * the app's own loader fetches. Largest nearest-1 distance per layer, in
+     * miles, rounded to one decimal:
+     *
+     *   il  police-station 15.4  fire-station 10.7  post-office 10.2  library 6.6  early-voting 7.0
+     *   ny  police-station  4.0  fire-station  2.4  post-office  3.1  library 3.2  early-voting 2.8
+     *   ca  police-station  1.9  fire-station  1.5  post-office  1.4  library 1.5  early-voting 1.4
+     *   wi  police-station 24.3  fire-station 20.9  post-office 24.0  school-site 23.8  library 23.9
+     *   ia  police-station 21.3  fire-station 11.3  post-office 10.3  school-site 15.6
+     *   mi  police-station 44.0  fire-station 21.4  post-office 21.9
+     *
+     * The Michigan figures exclude Isle Royale National Park, which has no
+     * year-round residents and whose nearest facilities are across Lake
+     * Superior (55.0 miles to a post office, 53.1 to a police station, 51.8 to
+     * a fire station, measured the same day); a click there renders the empty
+     * sentence, which is a true statement about the place. The largest
+     * remaining value is Michigan's police-station layer at 44.0 miles, at
+     * Drummond Island in Chippewa County, whose nearest law-enforcement
+     * structure in the USGS set is the Kinross Township Police Department at
+     * Kincheloe.
+     *
+     * THE RULE: the default is the smallest multiple of 5 miles that exceeds
+     * every measured maximum by at least 25 percent, so no card that answers
+     * correctly today goes empty. The unrounded maximum is 43.97 miles, times
+     * 1.25 is 54.96, and 55 is the first multiple of 5 above it. The margin
+     * also covers the grid's own sampling gap, which is at most about 2.5
+     * miles at 0.05 degree spacing.
+     *
+     * opts.maxMiles narrows the ceiling for one layer. NEAREST_MAX_MILES, if an
+     * instance declares it in its METRO config block, replaces the default for
+     * every nearest layer in that instance; the typeof guard keeps this block
+     * byte-identical in an instance that declares nothing (no instance did on
+     * 2026-09-18). A value is never inlined here for one instance. */
+    var maxMiles = opts.maxMiles || (typeof NEAREST_MAX_MILES !== "undefined" ? NEAREST_MAX_MILES : 55);
+    // The layer label lower-cased for the empty sentence. A word written in
+    // capitals (EMS) is an abbreviation and stays as written.
+    var labelLower = String(opts.label).replace(/\S+/g, function (w) {
+      return /^[A-Z0-9&]{2,}$/.test(w) ? w : w.toLowerCase();
+    });
     registerLayer({
       id: opts.id,
       group: opts.group,
       label: fullLabel,
+      // The card framework's default empty sentence is about districts and is
+      // wrong for a nearest layer, so this names the ceiling instead.
+      emptyNote: opts.emptyNote || ("No " + labelLower + " within " + maxMiles + " miles of this point."),
       color: opts.color, // overlay has no flat style object for moduleColor() to read
       overlay: {
         load: opts.loader,
@@ -8262,11 +8319,14 @@ function initWisconsinExplorer() {
           for (var i = 0; i < features.length; i++) {
             var latLng = pointFeatureLatLng(features[i]);
             if (!latLng) continue;
+            var distanceMi = haversineMiles(point.lat, point.lng, latLng.lat, latLng.lng);
+            if (distanceMi > maxMiles) continue; // past the ceiling (see above)
             withDistance.push({
               props: features[i].properties || {},
-              distanceMi: haversineMiles(point.lat, point.lng, latLng.lat, latLng.lng)
+              distanceMi: distanceMi
             });
           }
+          // Nothing within maxMiles (or an empty set): null renders emptyNote.
           if (!withDistance.length) return null;
           withDistance.sort(function (a, b) { return a.distanceMi - b.distanceMi; });
           return { seq: seq, items: withDistance.slice(0, count) };

@@ -127,7 +127,7 @@ SUBPAGES = discover_subpages()
 # thirteen. Resolution stays deterministic — a shared name never also resolves
 # per-filename.
 SHARED_BLOCKS = {"styles-subpage", "tokens-brand", "footer-byline",
-                 "footer-independence", "goatcounter"}
+                 "footer-independence", "goatcounter", "theme-boot"}
 
 ENGINE_RE = re.compile(
     r"^[ \t]*(?:/\*|<!--|#|//)?[ \t]*==== ENGINE:(BEGIN|END) "

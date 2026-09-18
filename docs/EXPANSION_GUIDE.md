@@ -86,6 +86,43 @@ The one thing statewide-first must not do is **fake depth**. A statewide instanc
 county cards name nobody is honest; a statewide instance that invents a county board roster
 is not. Depth arrives per county, on evidence, exactly as in Part 3.
 
+### 0.2.1 A city instance growing into its state (decided 2026-09-18)
+
+NYC and SF arrived metro-first and the table above says they grow outward county by
+county. When one of them is taken statewide, the order is different from Illinois's and
+the reason is Cause 1 of `docs/WHY_WISCONSIN_WAS_FASTER.md`: build order is architecture.
+
+1. **In place.** The instance keeps its folder and tag; `metros.json` `id` stays (the
+   Illinois precedent: `id: chicago`, `label: Illinois`). There is no second instance and no
+   absorption.
+2. **The statewide tier first, as one dark change**, from the state's own publishers where
+   they exist and TIGERweb where they do not: county, municipality, school district, ZIP,
+   and whatever the state publishes statewide that the city layer only narrowed (NYC's
+   school-site and early-voting layers already read statewide state services through a
+   city-scoped WHERE clause or layer index). `metro_bbox` and `permalink_gate` stay
+   city-sized until go-live, so the change ships dark.
+3. **The existing city layers become the §3.0 city tier**, each gaining a `coverage(point)`
+   test against the city's own pre-built outline (the Madison pattern). Nothing is removed
+   and no permalink breaks; outside the city those cards hide.
+4. **The wash goes to three bands** (§2.5.1's Illinois row): the city is the full band, the
+   state the region band, with a built region ring simplified at the coverage tolerance.
+5. **The ring does not grow with the statewide tier.** The county-keyed honesty test
+   (§3.5.1) is unchanged: a county joins `METRO_COUNTY_FIPS` only when its BOARD or
+   PRECINCT layer answers there, never for a rich statewide answer. So after the statewide
+   tier ships the full band is still the city, and `metros.json` `scope` states the served
+   count, never "all N counties".
+6. **Go-live is its own change**: bbox, permalink gate, `metros.json` fields, `--sync-fleet`,
+   the coverage map's `CITY_TAGS` → `AREAS` move, every generated root page, the brand rename
+   (`explorer_name`, `label`, `landing_name`), re-chosen anchors. Then the county flagship
+   arrives by tranche through the §3.5 checklist, exactly as in Illinois.
+
+Two things must be settled before step 2 widens anything. The nearest-N factory has a
+distance ceiling (`engine/index.html/nearest-point-factory.txt`); without one, a click far
+from the city returned the city's own facilities as "nearest 3" with a distance pill. And the
+county-pages registry (`scripts/build_county_pages.py` `INSTANCES`) takes one member word per
+state, which cannot title a state whose counties elect Boards of Supervisors and County
+Legislatures under one concept honestly. The first worked plan is `docs/NY_EXPANSION_PLAN.md`.
+
 ### 0.3 The paths
 
 | Path | You are… | Part |

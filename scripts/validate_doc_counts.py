@@ -123,6 +123,7 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INSTANCE_NAMES = {
     "San Francisco": "ca",
     "New York City": "ny",
+    "California": "ca",
     "New York": "ny",
     "Chicago": "il",
     "Illinois": "il",

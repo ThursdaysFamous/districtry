@@ -208,22 +208,18 @@ const TARGETS_FN = () => {
   });
 };
 
-const TARGET_EXCEPTIONS = [
-  {
-    page: "/traffic.html", sel: "rect.hitcol", date: "2026-09-13",
-    exception: "Equivalent",
-    reason: "the daily chart's per-day hit columns, 13.2px wide at 1280 and " +
-            "4.7px at 390 and necessarily touching — a chart of a two-month " +
-            "window cannot give each day 24px without showing fewer days. The " +
-            "two widths are re-measured above and hold whatever the day count; " +
-            "the day count itself was in this reason and moved the first time " +
-            "the window did (51 to 62 on 2026-09-14), so it is not stated. " +
-            "2.5.8's Equivalent " +
-            "exception applies rather than Essential: the same numbers are on " +
-            "the same page in the `View as table` disclosure below the chart, " +
-            "whose rows are full-width.",
-  },
-];
+// EMPTY, and that is a measurement rather than an omission. It held one entry
+// until 2026-09-18: traffic.html's daily chart drew 62 per-day hit rectangles,
+// each carrying its own tabindex, so 62 undersized touching targets reached
+// this collector and were covered by 2.5.8's Equivalent exception (the same
+// numbers sit in that page's own "View as table" disclosure). That chart now
+// uses a roving tabindex — one tab stop, arrow keys between days — so 61 of
+// the 62 carry tabindex="-1" and SEL no longer selects them, and the one that
+// remains has no qualifying neighbour. Nothing on the page matches the entry,
+// so it goes; the reasoning it carried lives in traffic.html beside the code,
+// because those rectangles are still POINTER targets that this collector
+// cannot see.
+const TARGET_EXCEPTIONS = [];
 
 const failures = [];
 const exercised = new Set();
