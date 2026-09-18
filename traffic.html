@@ -197,6 +197,38 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(fonts/barlow-600-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(fonts/barlow-600-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(fonts/barlow-700-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(fonts/barlow-700-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
   font-family: 'Barlow Condensed';
   font-style: normal;
   font-weight: 400;
@@ -823,14 +855,15 @@ footer.site-footer a { color: var(--accent-deep); }
                             dataviz lightness band; the light value would read 2.0:1 there */
 }
 
-/* The root's font set (fonts/, build_fonts.py's `landing` target) carries
-   Barlow Condensed at 400 and 600 and Barlow at 400 and 500; the instance
-   folders carry 600 and 700 of both. The shell asks for Condensed 700 on the
-   page name and every h2, which the browser would synthesise from the 600
-   face; the token file's own heading weight is 600, and it is what every
-   other root page paints. Barlow 600 on this page — the tile values, the
-   engine buttons, the bold leads — is synthesised from 500, exactly as the
-   pills and labels on the landing, about and privacy pages already are. */
+/* The shell asks for Barlow Condensed 700 on the page name and every h2, and
+   the root's font set (fonts/, build_fonts.py's `landing` target) carries that
+   family at 400 and 600 only, so the browser would synthesise it. The token
+   file's own heading weight is 600, and it is what every other root page
+   paints, so this states it rather than leaning on a synthesised face.
+
+   Barlow 600 and 700 used to be missing from that set too, and this comment
+   used to say so; they ship since 2026-09-18, measured in a browser rather
+   than grepped for. */
 .masthead .title-text, main h2 { font-weight: 600; }
 main > section { margin-block: 0 30px; }
 main > section:last-child { margin-block-end: 0; }
