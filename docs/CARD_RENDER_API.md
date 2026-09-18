@@ -214,6 +214,34 @@ renderNearestRows([{
 }])
 ```
 
+### `registerNearestPointLayer(opts)`: the distance ceiling
+
+The factory that calls `renderNearestRows` drops every point farther than a
+ceiling before it ranks, and returns `null` when nothing is left, so the shell
+renders the empty state (4e) with the layer's own sentence instead of a
+distant facility with a distance pill. Added 2026-09-18, after a click far
+outside a city instance's data returned that city's own facilities hundreds of
+miles away.
+
+- **Ceiling.** `opts.maxMiles` for one layer; else the instance's
+  `NEAREST_MAX_MILES` from its METRO config block, read under a `typeof`
+  guard (no instance declared one on 2026-09-18); else the engine default of
+  **55 miles**. The default is the smallest multiple of 5 that exceeds every
+  nearest-1 distance measured on 2026-09-18 across the fleet's nearest
+  layers by at least 25 percent, so no card that answered correctly that day
+  goes empty. The per-layer maxima and the method are in the block's own
+  comment (`engine/index.html/nearest-point-factory.txt`); the largest,
+  Michigan's police-station layer at 43.97 miles on Drummond Island, set it.
+  `opts.maxMiles` narrows the ceiling; it is the place to tighten a city
+  instance whose points stop at the city line.
+- **Empty sentence.** `opts.emptyNote`; else
+  `"No <label> within <ceiling> miles of this point."` with the label
+  lower-cased, an all-capitals word such as EMS kept as written, so
+  Michigan's fire card reads "No fire & EMS station within 55 miles of this
+  point." The framework's default sentence is about districts and is wrong
+  for a nearest layer.
+- `distanceLabel` formatting, the `seq` guard and `coverage` are unchanged.
+
 ### `renderLinkRow(spec)`
 
 Handoff 2 §4c: a name + link line (link-only cards; also the migration target
