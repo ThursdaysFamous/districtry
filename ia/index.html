@@ -8337,7 +8337,13 @@ function initIowaExplorer() {
         })));
         return wrap;
       },
-      coverage: opts.coverage // optional location-relevance test (see overlay-cards)
+      coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
+      // Optional footer link, the same mod.primaryLink(result) every other card
+      // renders. A nearest-N card could not carry one until 2026-09-18, so a
+      // layer whose honest answer is "these are near you, yours is looked up
+      // elsewhere" had to put that URL in the intro as unclickable text. An
+      // instance that passes nothing is byte-identical to before.
+      primaryLink: opts.primaryLink
     });
   }
   /* ==== ENGINE:END nearest-point-factory ==== */

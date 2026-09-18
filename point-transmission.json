@@ -202,7 +202,6 @@
       "layers_holding_hook_but_silent": [
         "community-district",
         "council",
-        "library",
         "police-precinct",
         "police-sector"
       ],
@@ -236,6 +235,7 @@
         "police-precinct",
         "police-sector",
         "police-station",
+        "polling-place",
         "post-office",
         "school-district",
         "school-site",

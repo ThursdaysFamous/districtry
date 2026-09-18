@@ -88,7 +88,7 @@ EXPECT_LAYER_IDS = [
     "state-assembly", "police-sector", "police-precinct", "zip-code",
     "neighborhood", "hs-zone", "ms-zone", "es-zone", "school-site",
     "police-station", "fire-station", "post-office", "library",
-    "early-voting",
+    "early-voting", "polling-place",
 ]
 
 # file -> (min features, max features) for the boundary layers fetched by the app.

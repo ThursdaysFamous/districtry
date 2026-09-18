@@ -293,7 +293,7 @@
           }
         ],
         "people": "Members come from the unitedstates/congress-legislators dataset, refreshed weekly and reviewed before it ships.",
-        "applies": "New York City."
+        "applies": "All of New York State. The shipped file carries all 26 districts, not a city clip."
       }
     },
     {
@@ -329,7 +329,7 @@
           }
         ],
         "people": "Senators come from the NY Senate's Open Legislation API, refreshed weekly and reviewed before they ship; district offices are enriched from OpenStates where it publishes them.",
-        "applies": "New York City."
+        "applies": "All of New York State. The shipped file carries all 63 districts, not a city clip."
       }
     },
     {
@@ -460,7 +460,7 @@
           }
         ],
         "people": "Assemblymembers come from the NY Senate's Open Legislation API, refreshed weekly and reviewed before they ship.",
-        "applies": "New York City."
+        "applies": "All of New York State. The shipped file carries all 150 districts, not a city clip."
       }
     },
     {
@@ -604,7 +604,7 @@
           }
         ],
         "people": "No roster is joined; the card names the school and its address.",
-        "applies": "New York City."
+        "applies": "All of New York State."
       }
     },
     {
@@ -640,7 +640,7 @@
           }
         ],
         "people": "No roster is joined. The city's firehouse dataset carries no phone number, which is a gap at the source rather than something the card withholds.",
-        "applies": "New York City."
+        "applies": "All of New York State."
       }
     },
     {
@@ -658,7 +658,7 @@
           }
         ],
         "people": "No roster is joined; the card names the facility and its address.",
-        "applies": "New York City."
+        "applies": "All of New York State."
       }
     },
     {
@@ -670,31 +670,53 @@
       "source": {
         "answers": "The nearest public libraries to this point, by straight-line distance.",
         "boundary": [
-          {
-            "label": "Library locations from NYC Open Data (feuq-due4)",
-            "url": "https://data.cityofnewyork.us/d/feuq-due4"
-          }
-        ],
-        "people": "No roster is joined. The dataset carries no phone number, which is a gap at the source rather than something the card withholds.",
-        "applies": "New York City."
+        {
+          "label": "Branch locations for the three New York City systems (NYPL, BPL, QPL) from NYC Open Data (feuq-due4)",
+          "url": "https://data.cityofnewyork.us/d/feuq-due4"
+        },
+        {
+          "label": "Public library locations for the rest of the state from NYSED, via the NYS Information Technology Services map server; its three New York City rows are private special collections and are deliberately dropped so the city dataset answers alone there",
+          "url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Schools/FeatureServer/15"
+        }
+      ],
+        "people": "No roster is joined. A library has no elected officeholder, and neither publisher carries a telephone number, which is a gap at the source rather than something the card withholds.",
+        "applies": "All of New York State."
       }
     },
     {
-      "id": "early-voting",
-      "label": "Early Voting Site",
+        "id": "early-voting",
+        "label": "Early Voting Site",
+        "group": "political",
+        "area_rank": 31,
+        "rank_note": "point marker — always topmost",
+        "source": {
+          "answers": "The nearest early-voting sites to this point for the current election, anywhere in New York State. It does not say which one is yours.",
+          "boundary": [
+            {
+              "label": "Early-voting sites from the NYS Information Technology Services ArcGIS organisation, sourced from the state and city Boards of Elections and published as two tables — layer 1 for New York City and layer 0 for the other 57 counties — merged behind one toggle here",
+              "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer"
+            }
+          ],
+          "people": "No roster is joined: a voting site has no officeholder. Which site a voter may use is set by their registration rather than by distance, and hours change per election, so the card links the state Board of Elections' own lookup.",
+          "applies": "All of New York State."
+        }
+      },
+    {
+      "id": "polling-place",
+      "label": "Election Day Poll Site",
       "group": "political",
-      "area_rank": 31,
+      "area_rank": 32,
       "rank_note": "point marker — always topmost",
       "source": {
-        "answers": "The nearest early-voting sites to this point for the current election.",
+        "answers": "The Election Day poll sites nearest this point, by straight-line distance, anywhere in New York State. It does not say which one is yours.",
         "boundary": [
           {
-            "label": "Early-voting sites from NYS ITS Geospatial Services' ArcGIS service, sourced from the state and city Boards of Elections",
-            "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k"
+            "label": "Election Day poll sites from the NYS Information Technology Services ArcGIS organisation, published as two tables — layer 3 for New York City and layer 2 for the other 57 counties — and merged behind one toggle here",
+            "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer"
           }
         ],
-        "people": "No roster: a voting site has no officeholder. Hours change per election — confirm with the Board of Elections.",
-        "applies": "New York City."
+        "people": "No roster is joined. A poll site has no officeholder. Every New York voter is assigned one poll site by their election district, and nothing published joins an election district to a poll site, so the card links the state Board of Elections' own lookup instead of naming a site as yours.",
+        "applies": "All of New York State."
       }
     }
   ],

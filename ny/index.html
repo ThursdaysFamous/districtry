@@ -6312,7 +6312,8 @@ function initNycExplorer() {
     "fire-station",      // point marker — always topmost
     "post-office",       // point marker — always topmost
     "library",           // point marker — always topmost
-    "early-voting"       // point marker — always topmost
+    "early-voting",      // point marker — always topmost
+    "polling-place"      // point marker — always topmost
   ];
   /* ==== GENERATED:END layer-area-rank ==== */
 
@@ -8922,7 +8923,13 @@ function initNycExplorer() {
         })));
         return wrap;
       },
-      coverage: opts.coverage // optional location-relevance test (see overlay-cards)
+      coverage: opts.coverage, // optional location-relevance test (see overlay-cards)
+      // Optional footer link, the same mod.primaryLink(result) every other card
+      // renders. A nearest-N card could not carry one until 2026-09-18, so a
+      // layer whose honest answer is "these are near you, yours is looked up
+      // elsewhere" had to put that URL in the intro as unclickable text. An
+      // instance that passes nothing is byte-identical to before.
+      primaryLink: opts.primaryLink
     });
   }
   /* ==== ENGINE:END nearest-point-factory ==== */
@@ -9159,14 +9166,14 @@ function initNycExplorer() {
       var name = findPropCI(p, ["name"]);
       var addr = findPropCI(p, ["address"]);
       var city = findPropCI(p, ["city"]);
-      return (name ? toTitleCase(String(name)) : "Fire station") + (addr ? " — " + toTitleCase(String(addr)) : "") + (city ? ", " + toTitleCase(String(city)) : "");
+      return (name ? titleCaseFacility(String(name)) : "Fire station") + (addr ? " — " + titleCaseFacility(String(addr)) : "") + (city ? ", " + titleCaseFacility(String(city)) : "");
     },
     item: function (p) { // 4d two-line row: name over address
       var name = findPropCI(p, ["name"]);
       var addr = findPropCI(p, ["address"]);
       var city = findPropCI(p, ["city"]);
-      var note = (addr ? toTitleCase(String(addr)) : "") + (city ? (addr ? ", " : "") + toTitleCase(String(city)) : "");
-      return { name: name ? toTitleCase(String(name)) : "Fire station", note: note || undefined };
+      var note = (addr ? titleCaseFacility(String(addr)) : "") + (city ? (addr ? ", " : "") + titleCaseFacility(String(city)) : "");
+      return { name: name ? titleCaseFacility(String(name)) : "Fire station", note: note || undefined };
     }
   });
 
@@ -9246,82 +9253,313 @@ function initNycExplorer() {
     }
   });
 
-  /* ---------- Libraries (nearest 3) — Socrata feuq-due4 (216: NYPL/BPL/QPL).
-   * Branch rows are slow-moving (last bulk refresh ~2016) but locations are
-   * near-static; the per-system datasets are the fresher alternates if hours
-   * are ever wanted. ---------- */
-  var loadLibraries = makeCachedLoader("feuq-due4");
+  /* ---------- Libraries (nearest 3) — TWO PUBLISHERS, ONE TOGGLE ------------
+   * One concept gets one toggle, so this layer loads both of New York's
+   * library publishers and merges them rather than registering a city layer
+   * and a state layer that a reader would have to choose between.
+   *
+   * THE STATE'S LAYER IS A COMPLEMENT, NOT A SUPERSET, and that is what
+   * decides the shape. Measured 2026-09-18: NYS_Schools layer 15 "Libraries"
+   * holds 762 points, every one typed PUBLIC LIBRARIES, across 59 of the
+   * state's 62 counties. It lists no county named Kings, Queens or Richmond
+   * at all, and the three rows it does carry in the five boroughs are private
+   * special collections — the Frick Collection, the Huntington Free Library
+   * and the Kristine Mann Library. Not one branch of the three public systems
+   * a New Yorker actually borrows from appears in it. So the state layer
+   * cannot answer inside the city and the city dataset cannot answer outside
+   * it, and neither is redundant.
+   *
+   * THE THREE CITY ROWS ARE DROPPED rather than merged. They are real
+   * libraries at real addresses, but two of the three sit in Manhattan within
+   * a few blocks of an NYPL branch, and a reader asking for a library near
+   * them would be offered an appointment-only research collection ahead of the
+   * lending branch the city dataset already names. NYSED's institution type is
+   * a registration category, not a statement about walking in. The filter
+   * names all five borough counties even though three of them return nothing
+   * today, because a later edition adding a Brooklyn row should be dropped by
+   * the same rule rather than appearing unexamined.
+   *
+   * The city rows are Socrata feuq-due4 (216: NYPL / BPL / QPL). They are
+   * slow-moving (last bulk refresh ~2016) but locations are near-static; the
+   * per-system datasets are the fresher alternates if hours are ever wanted.
+   * The state rows are normalised into the city dataset's own field names at
+   * load time, so the card and the hover popup read one vocabulary. ------- */
+  var NYS_LIBRARIES_LAYER = "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Schools/FeatureServer/15";
+  var NYC_LIBRARY_COUNTIES = { BRONX: 1, KINGS: 1, "NEW YORK": 1, QUEENS: 1, RICHMOND: 1 };
+  var loadLibraries = makeCached(function () {
+    return Promise.all([
+      loadSocrataGeoJSON("feuq-due4"),
+      loadArcGISPaged(NYS_LIBRARIES_LAYER,
+        "LEGAL_NAME,POPULAR_NAME,PHYSADDRLINE1,PHYSCITY,PHYSZIPCD5,COUNTY_DESC")
+    ]).then(function (sets) {
+      var cityFeats = (sets[0] && sets[0].features) || [];
+      var stateFeats = [];
+      var raw = (sets[1] && sets[1].features) || [];
+      for (var i = 0; i < raw.length; i++) {
+        var props = raw[i].properties || {};
+        var county = findPropCI(props, ["county_desc"]);
+        if (county && NYC_LIBRARY_COUNTIES[String(county).toUpperCase()]) continue;
+        var name = findPropCI(props, ["popular_name"]) || findPropCI(props, ["legal_name"]);
+        var street = findPropCI(props, ["physaddrline1"]);
+        var town = findPropCI(props, ["physcity"]);
+        var zip = findPropCI(props, ["physzipcd5"]);
+        stateFeats.push({
+          type: "Feature",
+          geometry: raw[i].geometry,
+          // The state writes every string in capitals; the city dataset does
+          // not. Title-casing here is what lets one line() read both.
+          properties: {
+            name: name ? titleCaseFacility(String(name)) : null,
+            streetname: street ? titleCaseFacility(String(street)) : null,
+            city: town ? titleCaseFacility(String(town)) : null,
+            zip: zip ? String(zip) : null
+          }
+        });
+      }
+      return { type: "FeatureCollection", features: cityFeats.concat(stateFeats) };
+    });
+  });
+  function libraryAddress(p) {
+    var housenum = findPropCI(p, ["housenum"]);
+    var street = findPropCI(p, ["streetname"]);
+    var town = findPropCI(p, ["city"]);
+    var zip = findPropCI(p, ["zip"]);
+    var addr = (housenum && street) ? String(housenum) + " " + String(street) : (street ? String(street) : "");
+    if (town) addr += (addr ? ", " : "") + String(town);
+    if (zip) addr += (addr ? ", " : "") + String(zip);
+    return addr;
+  }
   registerNearestPointLayer({
     id: "library",
     group: "geography",
     label: "Library",
-    coverage: nycCoverage,
     color: "#8A5A00", fill: "#F2B84B",
     loader: loadLibraries,
-    intro: "Nearest public library branches (NYPL / BPL / QPL), straight-line distance:",
+    intro: "Nearest public libraries, straight-line distance:",
+    // One address reader for both publishers: the city dataset splits a street
+    // address into housenum + streetname and names no city (every row is in
+    // New York City); the state's rows arrive normalised to streetname + city.
     line: function (p) {
       var name = findPropCI(p, ["name"]);
       var system = findPropCI(p, ["system"]);
-      var housenum = findPropCI(p, ["housenum"]);
-      var street = findPropCI(p, ["streetname"]);
-      var zip = findPropCI(p, ["zip"]);
-      var addr = (housenum && street) ? String(housenum) + " " + String(street) : (street ? String(street) : "");
-      return (name ? String(name) : "Library") + (system ? " (" + String(system) + ")" : "") + (addr ? " — " + addr : "") + (zip ? ", " + String(zip) : "");
+      var addr = libraryAddress(p);
+      return (name ? String(name) : "Library") + (system ? " (" + String(system) + ")" : "") + (addr ? " — " + addr : "");
     },
     item: function (p) { // 4d two-line row: branch (system) over address
       var name = findPropCI(p, ["name"]);
       var system = findPropCI(p, ["system"]);
-      var housenum = findPropCI(p, ["housenum"]);
-      var street = findPropCI(p, ["streetname"]);
-      var zip = findPropCI(p, ["zip"]);
-      var addr = (housenum && street) ? String(housenum) + " " + String(street) : (street ? String(street) : "");
-      var note = addr + (zip ? (addr ? ", " : "") + String(zip) : "");
+      var addr = libraryAddress(p);
       return {
         name: (name ? String(name) : "Library") + (system ? " (" + String(system) + ")" : ""),
-        note: note || undefined
+        note: addr || undefined
       };
     }
   });
 
-  /* ---------- Early Voting Sites (nearest 3) — NYS GIS Program Office
-   * elections service (same EbVsqZ18sv1kVJ3k org as NYS_Schools), layer 1
-   * "Early Voting Polling Sites NYC" (158, kept current per election cycle
-   * by the NYS/NYC Boards of Elections). HONESTY NOTE: unlike the rest of
-   * NY State, NYC assigns each voter one specific early-voting site — the
-   * nearest site is NOT necessarily yours, and the card says so, pointing
-   * at findmypollsite.vote.nyc as the authoritative lookup (same reason
-   * election-day layer 3 is deliberately not used). Paged loader: one page
-   * today, robust if the list ever passes the 1000 cap. ---------- */
-  var NYS_EARLY_VOTING_LAYER = "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer/1";
-  var loadEarlyVotingSites = makeCached(function () {
-    return loadArcGISPaged(NYS_EARLY_VOTING_LAYER,
-      "USER_Poll_Site_Name,USER_Poll_Site_Address,USER_City,USER_ZipCode,USER_County");
-  });
-  registerNearestPointLayer({
+  /* ---------- POLL SITES (nearest 3) — TWO LAYERS, FOUR PUBLISHER TABLES ----
+   * `NYS_Elections_Districts_and_Polling_Locations` on the NYS ITS ArcGIS
+   * organisation splits both kinds of poll site in two, New York City and the
+   * rest of the state, with a different field name for the same thing in each
+   * half. That is a publishing decision, not two concepts, so each concept
+   * gets ONE toggle here and the two tables are merged behind it.
+   *
+   * THE SPLIT IS CLEAN, MEASURED 2026-09-18. Layer 0 (Early Voting Non NYC,
+   * 251) and layer 2 (Election Day Non NYC, 3,655) each name exactly 57
+   * counties — the state's 62 less the five boroughs — so nothing is carried
+   * twice and no row needs dropping. Layer 1 (Early Voting NYC) holds 158 and
+   * layer 3 (Election Day NYC) 1,214. Poll sites are refreshed per election;
+   * the service described its polling data as of June 2026.
+   *
+   * THE STRING "<Null>" IS A VALUE IN THESE TABLES, NOT A NULL. Counted the
+   * same day: it fills 3,117 of layer 2's 3,655 comment fields and 3,355 of
+   * its second address lines, 199 of layer 0's 251 town fields — and, which is
+   * what makes it worth a guard rather than a filter on one column, 5 CITY
+   * values and 2 ZIP values on layer 2. Every string these cards read goes
+   * through pollSiteText(), so the literal can never reach a reader; it would
+   * render as the visible characters "<Null>" rather than as markup, because
+   * the card framework sets text, but a reader does not care which.
+   *
+   * THE COMMENT AND TOWN COLUMNS ARE NOT READ AT ALL. USER_Town looked like it
+   * might say whether any site in the county may be used — 28 of 251 rows say
+   * "ALL" — but it holds four distinct values across the whole table (199
+   * "<Null>", 28 "ALL", 24 "NONE") and 24 blanks, so it answers for a handful
+   * of counties and is silent for the rest. A field that is right where it
+   * speaks and absent where it matters cannot carry a claim about a voter's
+   * rights, so no card here makes one.
+   *
+   * NEITHER CARD NAMES YOUR OWN POLL SITE AND BOTH SAY SO. A New York voter is
+   * assigned a poll site by their election district, so the nearest site is
+   * not necessarily theirs. Nothing published joins the two: layer 4's
+   * election-district polygons carry no poll-site column and these four
+   * tables carry no election district, verified against all five field lists.
+   * The authoritative lookup is the state Board of Elections', which asks for
+   * a name and date of birth this app never collects, so it is a footer link
+   * rather than something answered here. That host is behind a Cloudflare
+   * managed challenge to automated clients (measured 2026-09-18: a `managed`
+   * challenge on robots.txt and on the root alike, for every host in the
+   * estate) — an access control, never worked around and never fetched. A
+   * reader's own browser clears it; the link is for the reader. ---------- */
+  var NYS_ELECTIONS_SERVICE = "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer";
+  var NYS_VOTER_LOOKUP = { label: "Look up your own poll site (NYS Board of Elections)", url: "https://voterlookup.elections.ny.gov/" };
+
+  /* A PUBLISHER THAT SHOUTS, AND THE ACRONYMS THAT COSTS. New York's state
+   * tables write facility names in capitals and its city tables mostly do not,
+   * so a card that printed both verbatim would shout at a reader upstate and
+   * not in Brooklyn. Title-casing everything fixes that and breaks something
+   * else: an acronym becomes a word, and "PS 26" becomes "Ps 26".
+   *
+   * MEASURED 2026-09-18 over all 9,006 facility names these cards read (the
+   * four poll-site tables, the state library layer and the state fire-station
+   * layer). 753 carry a real acronym, and title-casing every string loses all
+   * 753. Two rules together lose 42.
+   *
+   * The first is that a name the publisher did NOT write in capitals is left
+   * exactly as published — it was cased deliberately, and 1,540 names are in
+   * that state, 381 of them in the city's own Election Day table where the
+   * "PS 26" pattern is commonest. The second is that inside a name that IS
+   * shouted, a token of two or three capitals immediately before a number
+   * stays as written, which is the school-naming convention (PS, IS, MS, JHS)
+   * and is structural rather than a list of words to keep adding to. The token
+   * is matched through surrounding punctuation, so the PS inside "MS 390
+   * (PS 26)" is kept too, and the length cap is three so that "VFW POST 7545"
+   * does not keep POST.
+   *
+   * The 42 that remain are an acronym in a shouted name with no number after
+   * it — BOE, VFW, SUNY, JCC, AME — and they render as words. That is the
+   * measurement rather than a claim of correctness: no rule can tell an
+   * acronym from a shouted word inside a string that is entirely capitals, so
+   * closing the last 42 would need a list of words, which is a list somebody
+   * has to keep adding to. A separate defect is visible in the same output and
+   * is NOT fixed here because it belongs to toTitleCase itself and shows up on
+   * every card in this instance: "ST. JOHN'S CHURCH" renders "St. John'S
+   * Church", because the letter after an apostrophe sits at a word boundary.
+   * O'Brien wants that capital and John's does not, so the rule is real but is
+   * not this change's.
+   *
+   * The same helper runs over the ADDRESS lines, where the number rule keeps a
+   * road designator as written — "5516 RTE 28", "19438 Nys RT 3" — which is how
+   * those are conventionally printed. The "Nys" in that second example is the
+   * 42-case again, an acronym with no number behind it. */
+  function titleCaseFacility(value) {
+    var s = String(value == null ? "" : value);
+    if (!s || s !== s.toUpperCase() || !/[A-Za-z]/.test(s)) return s;
+    var toks = s.split(/(\s+)/);
+    for (var i = 0; i < toks.length; i++) {
+      var next = toks[i + 2] || "";
+      if (/^[^A-Za-z0-9]*[A-Z]{2,3}[^A-Za-z0-9]*$/.test(toks[i]) &&
+          /^[^A-Za-z0-9]*#?\d/.test(next)) continue; // PS 26, MS 390, (PS 26)
+      toks[i] = toTitleCase(toks[i]);
+    }
+    return toks.join("");
+  }
+
+  // Reject the publisher's literal "<Null>" alongside real blanks.
+  function pollSiteText(value) {
+    if (value == null) return "";
+    var s = String(value).trim();
+    if (!s || s.toLowerCase() === "<null>" || s.toLowerCase() === "null") return "";
+    return s;
+  }
+
+  /* Merge one NYC table and one non-NYC table into a single point set whose
+   * properties use one vocabulary, so each card has one reading. `keys` names
+   * the fields to request and which of them is the site name, its street, its
+   * city and its ZIP, per half. */
+  function makePollSiteLoader(halves) {
+    return makeCached(function () {
+      return Promise.all(halves.map(function (half) {
+        return loadArcGISPaged(NYS_ELECTIONS_SERVICE + "/" + half.layer, half.fields.join(","));
+      })).then(function (sets) {
+        var out = [];
+        for (var h = 0; h < halves.length; h++) {
+          var feats = (sets[h] && sets[h].features) || [];
+          for (var i = 0; i < feats.length; i++) {
+            var props = feats[i].properties || {};
+            // The publisher writes non-NYC site names in capitals and NYC's in
+            // mixed case; toTitleCase normalises both to one look.
+            var name = pollSiteText(findPropCI(props, [halves[h].nameKey]));
+            out.push({
+              type: "Feature",
+              geometry: feats[i].geometry,
+              properties: {
+                name: name ? titleCaseFacility(name) : null,
+                street: titleCaseFacility(pollSiteText(findPropCI(props, [halves[h].streetKey]))) || null,
+                city: titleCaseFacility(pollSiteText(findPropCI(props, [halves[h].cityKey]))) || null,
+                zip: pollSiteText(findPropCI(props, [halves[h].zipKey])) || null
+              }
+            });
+          }
+        }
+        return { type: "FeatureCollection", features: out };
+      });
+    });
+  }
+
+  function pollSiteAddress(p) {
+    var street = findPropCI(p, ["street"]);
+    var city = findPropCI(p, ["city"]);
+    var zip = findPropCI(p, ["zip"]);
+    var addr = street ? String(street) : "";
+    if (city) addr += (addr ? ", " : "") + String(city);
+    if (zip) addr += (addr ? ", " : "") + String(zip);
+    return addr;
+  }
+
+  function registerPollSiteLayer(opts) {
+    registerNearestPointLayer({
+      id: opts.id,
+      group: "political",
+      label: opts.label,
+      color: opts.color, fill: opts.fill,
+      loader: opts.loader,
+      intro: opts.intro,
+      primaryLink: function () { return NYS_VOTER_LOOKUP; },
+      line: function (p) {
+        var name = findPropCI(p, ["name"]);
+        var addr = pollSiteAddress(p);
+        return (name ? String(name) : opts.fallbackName) + (addr ? " — " + addr : "");
+      },
+      item: function (p) { // 4d two-line row: site over address
+        var addr = pollSiteAddress(p);
+        var name = findPropCI(p, ["name"]);
+        return { name: name ? String(name) : opts.fallbackName, note: addr || undefined };
+      }
+    });
+  }
+
+  var loadEarlyVotingSites = makePollSiteLoader([
+    { layer: 1, nameKey: "user_poll_site_name", streetKey: "user_poll_site_address",
+      cityKey: "user_city", zipKey: "user_zipcode",
+      fields: ["USER_Poll_Site_Name", "USER_Poll_Site_Address", "USER_City", "USER_ZipCode"] },
+    { layer: 0, nameKey: "user_polling_place_name", streetKey: "user_polling_place_address_1",
+      cityKey: "user_city", zipKey: "user_zip",
+      fields: ["USER_Polling_Place_Name", "USER_Polling_Place_Address_1", "USER_City", "USER_Zip"] }
+  ]);
+  registerPollSiteLayer({
     id: "early-voting",
-    group: "political",
     label: "Early Voting Site",
+    fallbackName: "Early-voting site",
     color: "#7A1E5C", fill: "#E060A8",
     loader: loadEarlyVotingSites,
-    intro: "Nearest early-voting sites, for reference (NYS/NYC Boards of Elections data). NYC assigns each voter a specific early-voting site, which may not be the nearest one — find yours and its hours at findmypollsite.vote.nyc:",
-    line: function (p) {
-      var name = findPropCI(p, ["user_poll_site_name", "name"]);
-      var addr = findPropCI(p, ["user_poll_site_address", "address"]);
-      var city = findPropCI(p, ["user_city", "city"]);
-      var zip = findPropCI(p, ["user_zipcode", "zipcode", "zip"]);
-      return (name ? String(name) : "Early-voting site") + (addr ? " — " + String(addr) : "") + (city ? ", " + String(city) : "") + (zip ? " " + String(zip) : "");
-    },
-    item: function (p) { // 4d two-line row: site over address
-      var name = findPropCI(p, ["user_poll_site_name", "name"]);
-      var addr = findPropCI(p, ["user_poll_site_address", "address"]);
-      var city = findPropCI(p, ["user_city", "city"]);
-      var zip = findPropCI(p, ["user_zipcode", "zipcode", "zip"]);
-      var note = (addr ? String(addr) : "") + (city ? (addr ? ", " : "") + String(city) : "") + (zip ? " " + String(zip) : "");
-      return { name: name ? String(name) : "Early-voting site", note: note || undefined };
-    }
+    intro: "Early-voting sites near this point, for reference. Which one you may use is set by your registration rather than by distance, so the nearest may not be yours:"
   });
 
-
+  var loadElectionDayPollSites = makePollSiteLoader([
+    { layer: 3, nameKey: "user_poll_site_name", streetKey: "user_poll_site_address",
+      cityKey: "user_city", zipKey: "user_zipcode",
+      fields: ["USER_Poll_Site_Name", "USER_Poll_Site_Address", "USER_City", "USER_ZipCode"] },
+    { layer: 2, nameKey: "user_poll_site", streetKey: "user_address1",
+      cityKey: "user_city", zipKey: "user_zip",
+      fields: ["USER_Poll_Site", "USER_Address1", "USER_City", "USER_Zip"] }
+  ]);
+  registerPollSiteLayer({
+    id: "polling-place",
+    label: "Election Day Poll Site",
+    fallbackName: "Poll site",
+    color: "#1F5C3A", fill: "#4FA97A",
+    loader: loadElectionDayPollSites,
+    intro: "Election Day poll sites near this point. None of them is necessarily yours: every New York voter is assigned one poll site by their election district, and nothing published joins an election district to a poll site. Look yours up below:"
+  });
   /* =========================================================================
    * THREAD 3 — SCHOOLS (METRO_EXPANSION_PLAYBOOK §7 rows 9–14)
    * ES/MS/HS attendance zones (MS partial, HS sparse — honest choice-based
@@ -11277,14 +11515,15 @@ function initNycExplorer() {
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
   var DST_DARK_MAP_COLORS = { "#0B5394": "#4CA1FB", "#0B7285": "#49BED8", "#14181C": "#696F76",
     "#14532D": "#5AA872", "#155C4B": "#58AE96", "#1D3557": "#6689BA", "#1E7A8C": "#53C4DD",
-    "#1F6F5C": "#5ABEA3", "#2E7D5B": "#63C99B", "#3A0CA3": "#8178FE", "#4361EE": "#9BB4FD",
-    "#457B9D": "#7AC1EF", "#4B2E83": "#9C79EF", "#4CA98F": "#70EAC8", "#4E6E9C": "#89B4F3",
-    "#5A6B7C": "#9BB2CA", "#5B2A86": "#B172F0", "#5FB49C": "#81F2D2", "#6A3FA0": "#B886FE",
-    "#6B4E8C": "#B992E7", "#6B7280": "#ADB6C9", "#7048E8": "#B0A7FE", "#7A0A1C": "#E8595F",
-    "#7A1E5C": "#E063B2", "#7A5901": "#CDA040", "#7A6A55": "#C4AF92", "#7C2D12": "#E27451",
-    "#7CC49B": "#9EFDC7", "#8A5A00": "#E09E3C", "#8C6A2E": "#DBAD5E", "#8C6D3F": "#D9AF72",
-    "#A15C00": "#F99B38", "#B3261E": "#FE8171", "#B5179E": "#FE79E3", "#B8860B": "#FEC141",
-    "#C2410C": "#FF9776", "#C8102E": "#FE8B89", "#E4572E": "#FDB5A0", "#F72585": "#FDB1C7"};
+    "#1F5C3A": "#60AF7F", "#1F6F5C": "#5ABEA3", "#2E7D5B": "#63C99B", "#3A0CA3": "#8178FE",
+    "#4361EE": "#9BB4FD", "#457B9D": "#7AC1EF", "#4B2E83": "#9C79EF", "#4CA98F": "#70EAC8",
+    "#4E6E9C": "#89B4F3", "#5A6B7C": "#9BB2CA", "#5B2A86": "#B172F0", "#5FB49C": "#81F2D2",
+    "#6A3FA0": "#B886FE", "#6B4E8C": "#B992E7", "#6B7280": "#ADB6C9", "#7048E8": "#B0A7FE",
+    "#7A0A1C": "#E8595F", "#7A1E5C": "#E063B2", "#7A5901": "#CDA040", "#7A6A55": "#C4AF92",
+    "#7C2D12": "#E27451", "#7CC49B": "#9EFDC7", "#8A5A00": "#E09E3C", "#8C6A2E": "#DBAD5E",
+    "#8C6D3F": "#D9AF72", "#A15C00": "#F99B38", "#B3261E": "#FE8171", "#B5179E": "#FE79E3",
+    "#B8860B": "#FEC141", "#C2410C": "#FF9776", "#C8102E": "#FE8B89", "#E4572E": "#FDB5A0",
+    "#F72585": "#FDB1C7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same

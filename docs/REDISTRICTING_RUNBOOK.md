@@ -90,7 +90,7 @@ of 2021, and `scripts/build_il_court_justices.py` holds a transcription of its c
 weekly roster run refuses to write unless the counties the court's own district pages name still
 match it, so a redraw surfaces as a failing refresh rather than as silence.
 
-### NYC (31 layers)
+### NYC (32 layers)
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
@@ -102,6 +102,10 @@ match it, so a redraw surfaces as a failing refresh rather than as silence.
 | Borough | Never (geography) | geography | none |
 | School districts/zones | Annual | DOE | dataset rotation |
 | Election districts | Frequent (BOE) | NYC BOE | geometry |
+| Judicial districts (13) | Statute (rare) | Judiciary Law §140 | the county-to-district lookup the layer dissolves on |
+| Statewide civil boundaries (county, city/town, village) | Incorporation and annexation (occasional) | NYS GIS Program Office | geometry only; there is no roster to rejoin |
+| Statewide school districts | Annual | NYSED via NYS ITS | geometry refresh |
+| Poll sites (early voting and Election Day) | Every election | State and county Boards of Elections | locations, which is what the layer is; the card never claims one is yours |
 
 NY congressional is the cautionary example: three maps in three years — the 2022 legislature map
 was struck in Harkenrider v. Hochul and replaced by special-master (Cervas) lines for 2022, then

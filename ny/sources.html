@@ -989,7 +989,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">31 layers — 11 political and legislative, 5 public safety, 7 schools, 8 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">32 layers — 12 political and legislative, 5 public safety, 7 schools, 8 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -998,7 +998,7 @@ table.matrix code {
       </nav>
 
       <section class="matrix-group" id="political">
-        <h2>Political &amp; legislative <span class="matrix-count">11 layers</span></h2>
+        <h2>Political &amp; legislative <span class="matrix-count">12 layers</span></h2>
         <p class="matrix-blurb">Districts that elect somebody — from your ward to your seat in Congress.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1048,7 +1048,7 @@ table.matrix code {
                   </ul>
                 </td>
                 <td data-label="Who it names">Members come from the unitedstates/congress-legislators dataset, refreshed weekly and reviewed before it ships.</td>
-                <td data-label="Where it applies">New York City.</td>
+                <td data-label="Where it applies">All of New York State. The shipped file carries all 26 districts, not a city clip.</td>
               </tr>
               <tr id="layer-municipal-court">
                 <th scope="row"><span class="layer-name">Civil Court (Municipal Court) District</span><code>municipal-court</code></th>
@@ -1070,7 +1070,7 @@ table.matrix code {
                   </ul>
                 </td>
                 <td data-label="Who it names">Senators come from the NY Senate's Open Legislation API, refreshed weekly and reviewed before they ship; district offices are enriched from OpenStates where it publishes them.</td>
-                <td data-label="Where it applies">New York City.</td>
+                <td data-label="Where it applies">All of New York State. The shipped file carries all 63 districts, not a city clip.</td>
               </tr>
               <tr id="layer-council">
                 <th scope="row"><span class="layer-name">City Council District</span><code>council</code><a class="layer-guide" href="council-district.html">What Council district am I in?</a></th>
@@ -1114,18 +1114,29 @@ table.matrix code {
                   </ul>
                 </td>
                 <td data-label="Who it names">Assemblymembers come from the NY Senate's Open Legislation API, refreshed weekly and reviewed before they ship.</td>
-                <td data-label="Where it applies">New York City.</td>
+                <td data-label="Where it applies">All of New York State. The shipped file carries all 150 districts, not a city clip.</td>
               </tr>
               <tr id="layer-early-voting">
                 <th scope="row"><span class="layer-name">Early Voting Site</span><code>early-voting</code></th>
-                <td data-label="What it answers">The nearest early-voting sites to this point for the current election.</td>
+                <td data-label="What it answers">The nearest early-voting sites to this point for the current election, anywhere in New York State. It does not say which one is yours.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://services6.arcgis.com/EbVsqZ18sv1kVJ3k" target="_blank" rel="noopener">Early-voting sites from NYS ITS Geospatial Services' ArcGIS service, sourced from the state and city Boards of Elections</a></li>
+                    <li><a href="https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer" target="_blank" rel="noopener">Early-voting sites from the NYS Information Technology Services ArcGIS organisation, sourced from the state and city Boards of Elections and published as two tables — layer 1 for New York City and layer 0 for the other 57 counties — merged behind one toggle here</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">No roster: a voting site has no officeholder. Hours change per election — confirm with the Board of Elections.</td>
-                <td data-label="Where it applies">New York City.</td>
+                <td data-label="Who it names">No roster is joined: a voting site has no officeholder. Which site a voter may use is set by their registration rather than by distance, and hours change per election, so the card links the state Board of Elections' own lookup.</td>
+                <td data-label="Where it applies">All of New York State.</td>
+              </tr>
+              <tr id="layer-polling-place">
+                <th scope="row"><span class="layer-name">Election Day Poll Site</span><code>polling-place</code></th>
+                <td data-label="What it answers">The Election Day poll sites nearest this point, by straight-line distance, anywhere in New York State. It does not say which one is yours.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer" target="_blank" rel="noopener">Election Day poll sites from the NYS Information Technology Services ArcGIS organisation, published as two tables — layer 3 for New York City and layer 2 for the other 57 counties — and merged behind one toggle here</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">No roster is joined. A poll site has no officeholder. Every New York voter is assigned one poll site by their election district, and nothing published joins an election district to a poll site, so the card links the state Board of Elections' own lookup instead of naming a site as yours.</td>
+                <td data-label="Where it applies">All of New York State.</td>
               </tr>
             </tbody>
           </table>
@@ -1194,7 +1205,7 @@ table.matrix code {
                   </ul>
                 </td>
                 <td data-label="Who it names">No roster is joined. The city's firehouse dataset carries no phone number, which is a gap at the source rather than something the card withholds.</td>
-                <td data-label="Where it applies">New York City.</td>
+                <td data-label="Where it applies">All of New York State.</td>
               </tr>
             </tbody>
           </table>
@@ -1285,7 +1296,7 @@ table.matrix code {
                   </ul>
                 </td>
                 <td data-label="Who it names">No roster is joined; the card names the school and its address.</td>
-                <td data-label="Where it applies">New York City.</td>
+                <td data-label="Where it applies">All of New York State.</td>
               </tr>
             </tbody>
           </table>
@@ -1376,18 +1387,19 @@ table.matrix code {
                   </ul>
                 </td>
                 <td data-label="Who it names">No roster is joined; the card names the facility and its address.</td>
-                <td data-label="Where it applies">New York City.</td>
+                <td data-label="Where it applies">All of New York State.</td>
               </tr>
               <tr id="layer-library">
                 <th scope="row"><span class="layer-name">Library</span><code>library</code></th>
                 <td data-label="What it answers">The nearest public libraries to this point, by straight-line distance.</td>
                 <td data-label="Boundary source">
                   <ul class="src-list">
-                    <li><a href="https://data.cityofnewyork.us/d/feuq-due4" target="_blank" rel="noopener">Library locations from NYC Open Data (feuq-due4)</a></li>
+                    <li><a href="https://data.cityofnewyork.us/d/feuq-due4" target="_blank" rel="noopener">Branch locations for the three New York City systems (NYPL, BPL, QPL) from NYC Open Data (feuq-due4)</a></li>
+                    <li><a href="https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Schools/FeatureServer/15" target="_blank" rel="noopener">Public library locations for the rest of the state from NYSED, via the NYS Information Technology Services map server; its three New York City rows are private special collections and are deliberately dropped so the city dataset answers alone there</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">No roster is joined. The dataset carries no phone number, which is a gap at the source rather than something the card withholds.</td>
-                <td data-label="Where it applies">New York City.</td>
+                <td data-label="Who it names">No roster is joined. A library has no elected officeholder, and neither publisher carries a telephone number, which is a gap at the source rather than something the card withholds.</td>
+                <td data-label="Where it applies">All of New York State.</td>
               </tr>
             </tbody>
           </table>
@@ -1603,7 +1615,7 @@ table.matrix code {
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "New York City"
+        "name": "All of New York State. The shipped file carries all 26 districts, not a city clip"
       }
     },
     {
@@ -1647,7 +1659,7 @@ table.matrix code {
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "New York City"
+        "name": "All of New York State. The shipped file carries all 63 districts, not a city clip"
       }
     },
     {
@@ -1801,7 +1813,7 @@ table.matrix code {
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "New York City"
+        "name": "All of New York State. The shipped file carries all 150 districts, not a city clip"
       }
     },
     {
@@ -1977,7 +1989,7 @@ table.matrix code {
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "New York City"
+        "name": "All of New York State"
       }
     },
     {
@@ -2021,7 +2033,7 @@ table.matrix code {
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "New York City"
+        "name": "All of New York State"
       }
     },
     {
@@ -2043,7 +2055,7 @@ table.matrix code {
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "New York City"
+        "name": "All of New York State"
       }
     },
     {
@@ -2051,7 +2063,7 @@ table.matrix code {
       "@id": "https://districtry.com/ny/sources.html#dataset-library",
       "identifier": "library",
       "name": "Library",
-      "description": "The nearest public libraries to this point, by straight-line distance. No roster is joined. The dataset carries no phone number, which is a gap at the source rather than something the card withholds.",
+      "description": "The nearest public libraries to this point, by straight-line distance. No roster is joined. A library has no elected officeholder, and neither publisher carries a telephone number, which is a gap at the source rather than something the card withholds.",
       "url": "https://districtry.com/ny/sources.html#layer-library",
       "isPartOf": {
         "@id": "https://districtry.com/ny/sources.html#catalog"
@@ -2059,13 +2071,18 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "Library locations from NYC Open Data (feuq-due4)",
+          "name": "Branch locations for the three New York City systems (NYPL, BPL, QPL) from NYC Open Data (feuq-due4)",
           "url": "https://data.cityofnewyork.us/d/feuq-due4"
+        },
+        {
+          "@type": "Dataset",
+          "name": "Public library locations for the rest of the state from NYSED, via the NYS Information Technology Services map server; its three New York City rows are private special collections and are deliberately dropped so the city dataset answers alone there",
+          "url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Schools/FeatureServer/15"
         }
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "New York City"
+        "name": "All of New York State"
       }
     },
     {
@@ -2073,7 +2090,7 @@ table.matrix code {
       "@id": "https://districtry.com/ny/sources.html#dataset-early-voting",
       "identifier": "early-voting",
       "name": "Early Voting Site",
-      "description": "The nearest early-voting sites to this point for the current election. No roster: a voting site has no officeholder. Hours change per election — confirm with the Board of Elections.",
+      "description": "The nearest early-voting sites to this point for the current election, anywhere in New York State. It does not say which one is yours. No roster is joined: a voting site has no officeholder. Which site a voter may use is set by their registration rather than by distance, and hours change per election, so the card links the state Board of Elections' own lookup.",
       "url": "https://districtry.com/ny/sources.html#layer-early-voting",
       "isPartOf": {
         "@id": "https://districtry.com/ny/sources.html#catalog"
@@ -2081,13 +2098,35 @@ table.matrix code {
       "isBasedOn": [
         {
           "@type": "Dataset",
-          "name": "Early-voting sites from NYS ITS Geospatial Services' ArcGIS service, sourced from the state and city Boards of Elections",
-          "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k"
+          "name": "Early-voting sites from the NYS Information Technology Services ArcGIS organisation, sourced from the state and city Boards of Elections and published as two tables — layer 1 for New York City and layer 0 for the other 57 counties — merged behind one toggle here",
+          "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer"
         }
       ],
       "spatialCoverage": {
         "@type": "Place",
-        "name": "New York City"
+        "name": "All of New York State"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-polling-place",
+      "identifier": "polling-place",
+      "name": "Election Day Poll Site",
+      "description": "The Election Day poll sites nearest this point, by straight-line distance, anywhere in New York State. It does not say which one is yours. No roster is joined. A poll site has no officeholder. Every New York voter is assigned one poll site by their election district, and nothing published joins an election district to a poll site, so the card links the state Board of Elections' own lookup instead of naming a site as yours.",
+      "url": "https://districtry.com/ny/sources.html#layer-polling-place",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "Election Day poll sites from the NYS Information Technology Services ArcGIS organisation, published as two tables — layer 3 for New York City and layer 2 for the other 57 counties — and merged behind one toggle here",
+          "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "All of New York State"
       }
     }
   ]

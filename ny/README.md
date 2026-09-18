@@ -18,16 +18,18 @@ python3 -m http.server 8000
 # then open http://localhost:8000/
 ```
 
-## What it answers (27 NYC layers)
+## What it answers (32 layers)
 
-Pick a point. The app runs a point-in-district lookup across every layer you have toggled on and builds a "civic profile" for that location. The NYC roster is **31 layers** (`metro-worksheet.json` is the source of truth; the fleet-wide inventory is the Chicago repo's `docs/DATA_LAYER_GUIDEBOOK.md`):
+Pick a point. The app runs a point-in-district lookup across every layer you have toggled on and builds a "civic profile" for that location. The roster is **32 layers** (`metro-worksheet.json` is the source of truth; the fleet-wide inventory is `docs/DATA_LAYER_GUIDEBOOK.md` at the repo root):
 
 | Group | Layers |
 |---|---|
-| **Political** (11) | City Council District · Election District · Community District / Community Board · U.S. House District · NY State Senate · NY State Assembly · NY Supreme Court Judicial District · Civil Court (Municipal Court) District · Borough President · District Attorney · Early Voting Site (nearest 3) |
-| **Public Safety** (5) | NYPD Precinct · NYPD Sector · Police Station (nearest 3) · Firehouse (nearest 3) · FDNY Battalion |
-| **Schools** (6) | Elementary / Middle / High School Zone · Community School District · Community Education Council · School (nearest 3) |
-| **Geography** (5) | Neighborhood (NTA) · ZIP Code (MODZCTA) · Borough / County · Post Office (nearest 3) · Library (nearest 3) |
+| **Political** (12) | City Council District · Election District · Community District / Community Board · U.S. House District · NY State Senate · NY State Assembly · NY Supreme Court Judicial District · Civil Court (Municipal Court) District · Borough President · District Attorney · Early Voting Site (nearest 3) · Election Day Poll Site (nearest 3) |
+| **Public Safety** (5) | NYPD Precinct · NYPD Sector · Police Station (nearest 3) · Fire Station (nearest 3) · FDNY Battalion |
+| **Schools** (7) | Elementary / Middle / High School Zone · Community School District · Community Education Council · School District (statewide) · School (nearest 3) |
+| **Geography** (8) | County · City or Town · Village · Neighborhood (NTA) · ZIP Code (MODZCTA) · Borough · Post Office (nearest 3) · Library (nearest 3) |
+
+**Two tiers, and each layer declares which it is.** Some layers are New York City's own — the council districts, the community boards, the NYPD precincts, the DOE zones — and they hide outside the city rather than answering with nothing. Others answer anywhere in the state: the county, city/town and village fabric, the statewide school districts, the judicial districts, the U.S. House and both state chambers, and the four nearest-N point layers. The app's own map bounds are still the city's, so the statewide layers are built and cached but not yet reachable from the map; `docs/NY_EXPANSION_PLAN.md` at the repo root is the plan that lifts them.
 
 Every result card is independent: a layer whose data source is down shows an error with a Retry button in that card and never affects the others. Because NYC is water-heavy, many in-bounds clicks land in rivers or bays and honestly resolve to **no district** — the app never snaps to the nearest.
 

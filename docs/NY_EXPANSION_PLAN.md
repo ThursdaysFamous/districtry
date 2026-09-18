@@ -302,6 +302,48 @@ Also measured available and NOT in PR 2: BOCES districts (`NYS_Schools/17`, 38 p
   `early-voting`), layer 2 Election Day Non-NYC 3,655, layer 3 Election Day NYC 1,214; polling data
   as of June 2026. These are what no other instance gets free: Iowa and Michigan already ship
   statewide precincts (1,660 and 3,895 features) but neither carries polling places.
+- **SHIPPED IN PR 2 AS TWO LAYERS, NOT FOUR.** The publisher's NYC / non-NYC split is a publishing
+  decision rather than two concepts, so `early-voting` merges layers 1 and 0 and the new
+  `polling-place` merges layers 3 and 2, each behind one toggle. The split is clean and that was
+  measured rather than assumed: each non-NYC table names exactly 57 counties, the state's 62 less
+  the five boroughs, so nothing is carried twice and no row needs dropping. Total payload for the
+  Election Day pair is 1,146,385 bytes over six paged requests, lazy on first toggle.
+- **THE ELECTION DAY CARD IS THE HONESTY CALL OF THIS PR AND IT IS WORTH STATING PLAINLY.** Every
+  New York voter is assigned one poll site by their election district, so the nearest site is not
+  necessarily theirs — anywhere in the state, early voting included. Nothing published joins the
+  two: layer 4's election-district polygons carry no poll-site column and none of the four
+  poll-site tables carries an election district, verified against all five field lists. The
+  authoritative lookup is the state Board of Elections', which asks for a name and date of birth
+  this app never collects. **The argument against shipping it at all is real** — a card that looks
+  like an answer and is not is the exact failure this project's honesty rules exist to prevent —
+  and it was shipped anyway on three grounds: the locations and addresses are true and are what a
+  reader asking "where do people vote near me" actually wants; every other nearest-N layer in the
+  fleet has the same shape (the nearest post office is not "your" post office); and refusing to
+  ship means a reader gets nothing where the state publishes 4,869 verified locations. The
+  mitigations are structural rather than a sentence nobody reads: the LABEL is "Election Day Poll
+  Site (nearest 3)" rather than "Polling Place", the intro's SECOND clause is the limitation, and
+  the card carries the BOE lookup as a footer link. **That link needed an engine change**: the
+  nearest-point factory could not carry a `primaryLink` at all until 2026-09-18, so a layer whose
+  honest answer is "these are near you, yours is looked up elsewhere" had to put the URL in the
+  intro as unclickable text. One line in `engine/index.html/nearest-point-factory.txt`,
+  byte-identical for the five instances that pass nothing.
+- **The BOE estate is behind a Cloudflare managed challenge, not a plain 403**, and that matters
+  because the "API host, default-allow" reading does not apply to it. Measured 2026-09-18: a
+  `cType: 'managed'` challenge body on `/robots.txt` AND on the root, for `elections.ny.gov`,
+  `www.elections.ny.gov` and `voterlookup.elections.ny.gov` alike. That is an access control. It is
+  never worked around and the host is never fetched; the link is for a reader's own browser, which
+  clears it. The plan's earlier note that the estate "403s robots.txt" was right about the status
+  code and wrong about what produced it.
+- **THE STRING `<Null>` IS A VALUE IN THESE TABLES, NOT A NULL**, and a card that read the columns
+  verbatim would print it. Counted 2026-09-18: it fills 3,117 of layer 2's 3,655 comment fields,
+  3,355 of its second address lines and 199 of layer 0's 251 town fields — and, which is what makes
+  it a guard rather than a filter on one column, 5 CITY values and 2 ZIP values on layer 2. Every
+  string these cards read goes through one reject function.
+- **The comment and town columns are not read at all.** `USER_Town` looked like it might say
+  whether any site in the county may be used (28 of 251 rows say "ALL"), but it holds four distinct
+  values across the whole table — 199 `<Null>`, 28 "ALL", 24 "NONE" — plus 24 blanks. A field that
+  is right where it speaks and silent where it matters cannot carry a claim about a voter's rights,
+  so no card makes one, and no statute is cited that this project has not read.
 
 ### `judicial-district` (statewide, computed)
 
@@ -324,11 +366,30 @@ Also measured available and NOT in PR 2: BOCES districts (`NYS_Schools/17`, 38 p
 - Measured absence: no statewide fire-DISTRICT polygon layer and no library-system boundary layer
   on the 35-entry ITS directory, the 49-service AGOL org or the domain-scoped data.ny.gov catalogue.
   Fire districts are elected special districts; the absence is a recorded gap, not a search failure.
-- Decision recorded, not made: `ny/` already has `fire-station` (Socrata `hc8x-tcnd`, 219 FDNY
-  firehouses) and `library` (Socrata `feuq-due4`, 216 NYPL/BPL/QPL branches). PR 2 measures whether
-  the state points cover the city's facilities before deciding whether the city sources are
-  retired or kept as the city-tier variant under coverage. Two toggles for one concept is not the
-  fleet's shape.
+- **DECIDED IN PR 2, AND THE TWO WENT OPPOSITE WAYS BECAUSE THE MEASUREMENTS DID.** The question
+  was the same for both — does the state's point set cover the city's facilities — and the answer
+  was yes for fire stations and no for libraries.
+  - `fire-station`: the state layer REPLACED the city's. Measured 2026-09-18, 214 of FDNY's 219
+    firehouses match a state point within 60 metres, five sampled addresses match exactly with the
+    same company designations, and the state set ADDS six volunteer companies inside the city that
+    FDNY's own dataset omits (Rockaway Point, Roxbury, Gerritsen Beach, Broad Channel, West
+    Hamilton Beach and City Island's). Three caveats are recorded in the block's own comment: two
+    FDNY borough-command offices are the only clean gaps and may not belong on this card at all;
+    Rescue 2 appears in both sets about 480 metres apart, a currency disagreement between two
+    publishers rather than a missing station; and the Name field free-texts several companies per
+    building exactly as FDNY's own field did.
+  - `library`: the state layer is a COMPLEMENT, so BOTH ship behind ONE toggle. Measured the same
+    day, NYS_Schools layer 15 holds 762 points typed PUBLIC LIBRARIES across 59 of the 62 counties,
+    names no county Kings, Queens or Richmond at all, and its only three rows inside the five
+    boroughs are private special collections — the Frick Collection, the Huntington Free Library
+    and the Kristine Mann Library. Not one NYPL, BPL or QPL branch. So the city dataset answers
+    inside the city, the state points answer outside it, and those three city rows are DROPPED
+    rather than merged: two of the three sit within a few blocks of an NYPL branch, and offering a
+    reader an appointment-only research collection ahead of the lending branch would be a worse
+    answer than the one the city dataset already gives. The filter names all five borough counties
+    even though three return nothing today, so a later edition adding a Brooklyn row is dropped by
+    the same rule rather than appearing unexamined.
+  - Two toggles for one concept is still not the fleet's shape, and neither of these became one.
 
 ### `school-site` and `post-office` (widened)
 
