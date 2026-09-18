@@ -20,24 +20,24 @@
      7
     ],
     "mailto": 1,
-    "names_seen": 81,
+    "names_seen": 77,
     "near_pairs": 5,
     "seats": 7,
     "tel": 2,
-    "text_bytes": 3566
+    "text_bytes": 3593
    },
    "fips": "037",
    "host": "clinton-county.org",
    "notes": [
-    "clintoncounty.com answers 200 and never names Clinton \u2014 not taken as the county's own site",
-    "clintoncounty.net is a CATCH-ALL \u2014 an impossible path returns 3373 bytes against the root's 3398, so a 200 here proves nothing",
-    "clinton-county.net unreachable (ConnectionError)",
-    "www.clintoncounty.com answers 200 and never names Clinton \u2014 not taken as the county's own site",
-    "www.clintoncounty.net is a CATCH-ALL \u2014 an impossible path returns 3407 bytes against the root's 3402, so a 200 here proves nothing",
-    "www.clinton-county.net unreachable (ConnectionError)",
-    "clinton.org unreachable (SSLError)",
-    "clintonco.us unreachable (SSLError)",
-    "clintonco.net unreachable (SSLError)"
+    "clintoncounty.com answers HTTP 200 in 114 bytes and never names Clinton on any of 3 fetches \u2014 not taken as the county's own site",
+    "clintoncounty.net is a CATCH-ALL \u2014 an impossible path returns 3398 bytes against the root's 3348, so a 200 here proves nothing",
+    "clinton-county.net unreachable after 3 tries (SSLError)",
+    "www.clintoncounty.com answers HTTP 200 in 114 bytes and never names Clinton on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.clintoncounty.net is a CATCH-ALL \u2014 an impossible path returns 3392 bytes against the root's 3407, so a 200 here proves nothing",
+    "www.clinton-county.net unreachable after 3 tries (SSLError)",
+    "clinton.org unreachable after 3 tries (SSLError)",
+    "clintonco.us unreachable after 3 tries (SSLError)",
+    "clintonco.net unreachable after 3 tries (SSLError)"
    ],
    "pop": 79128,
    "rejected": [
@@ -52,7 +52,7 @@
      "why": "catch-all"
     },
     {
-     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "detail": "HTTPSConnectionPool(host='clinton-county.net', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVe",
      "host": "clinton-county.net",
      "why": "unreachable"
     },
@@ -67,7 +67,7 @@
      "why": "catch-all"
     },
     {
-     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "detail": "HTTPSConnectionPool(host='www.clinton-county.net', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLEO",
      "host": "www.clinton-county.net",
      "why": "unreachable"
     },
@@ -113,15 +113,15 @@
    "fips": "159",
    "host": "vanburencountymi.gov",
    "notes": [
-    "vanburencounty.com answers 200 and never names Van Buren \u2014 not taken as the county's own site",
-    "vanburencounty.org is a CATCH-ALL \u2014 an impossible path returns 1025 bytes against the root's 1025, so a 200 here proves nothing",
-    "www.vanburencounty.com unreachable (SSLError)",
+    "vanburencounty.com answers HTTP 200 in 114 bytes and never names Van Buren on any of 3 fetches \u2014 not taken as the county's own site",
+    "vanburencounty.org unreachable after 3 tries (ConnectionError)",
+    "www.vanburencounty.com answers HTTP 200 in 114 bytes and never names Van Buren on any of 3 fetches \u2014 not taken as the county's own site",
     "www.vanburencounty.net is a CATCH-ALL \u2014 an impossible path returns 8352 bytes against the root's 8352, so a 200 here proves nothing",
-    "www.vanburencounty.org is a CATCH-ALL \u2014 an impossible path returns 1025 bytes against the root's 1025, so a 200 here proves nothing",
-    "vb.org answers 200 and never names Van Buren \u2014 not taken as the county's own site",
-    "vbgov.com unreachable (ConnectionError)",
-    "vangov.com answers 200 and never names Van Buren \u2014 not taken as the county's own site",
-    "www.vb.org answers 200 and never names Van Buren \u2014 not taken as the county's own site",
+    "www.vanburencounty.org unreachable after 3 tries (ConnectionError)",
+    "vb.org answers HTTP 200 in 84029 bytes and never names Van Buren on any of 3 fetches \u2014 not taken as the county's own site",
+    "vbgov.com unreachable after 3 tries (ConnectionError)",
+    "vangov.com answers HTTP 200 in 178360 bytes and never names Van Buren on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.vb.org answers HTTP 200 in 84029 bytes and never names Van Buren on any of 3 fetches \u2014 not taken as the county's own site",
     "www.vanburencountymi.gov: neither its sitemap nor its front page names a board page",
     "vanburencounty.net: neither its sitemap nor its front page names a board page"
    ],
@@ -133,14 +133,14 @@
      "why": "names-another"
     },
     {
-     "detail": null,
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
      "host": "vanburencounty.org",
-     "why": "catch-all"
+     "why": "unreachable"
     },
     {
-     "detail": "HTTPSConnectionPool(host='www.vanburencounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLEr",
+     "detail": null,
      "host": "www.vanburencounty.com",
-     "why": "unreachable"
+     "why": "names-another"
     },
     {
      "detail": null,
@@ -148,9 +148,9 @@
      "why": "catch-all"
     },
     {
-     "detail": null,
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
      "host": "www.vanburencounty.org",
-     "why": "catch-all"
+     "why": "unreachable"
     },
     {
      "detail": null,
@@ -185,10 +185,10 @@
    "fips": "155",
    "host": null,
    "notes": [
-    "shiawasseecounty.com answers 200 and never names Shiawassee \u2014 not taken as the county's own site",
-    "www.shiawasseecounty.com answers 200 and never names Shiawassee \u2014 not taken as the county's own site",
-    "shiawassee.org answers 200 and never names Shiawassee \u2014 not taken as the county's own site",
-    "www.shiawassee.org answers 200 and never names Shiawassee \u2014 not taken as the county's own site"
+    "shiawasseecounty.com answers HTTP 200 in 114 bytes and never names Shiawassee on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.shiawasseecounty.com answers HTTP 200 in 114 bytes and never names Shiawassee on any of 3 fetches \u2014 not taken as the county's own site",
+    "shiawassee.org answers HTTP 200 in 114 bytes and never names Shiawassee on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.shiawassee.org answers HTTP 200 in 114 bytes and never names Shiawassee on any of 3 fetches \u2014 not taken as the county's own site"
    ],
    "pop": 68094,
    "rejected": [
@@ -219,7 +219,7 @@
    "verdict": "no-confirmed-host"
   },
   {
-   "board_url": "https://www.co.marquette.mi.us/county_government/board_of_commissioners/index.php",
+   "board_url": "https://co.marquette.mi.us/county_government/board_of_commissioners/index.php",
    "county": "Marquette",
    "evidence": {
     "cfemail": 0,
@@ -238,18 +238,16 @@
     "near_pairs": 5,
     "seats": 6,
     "tel": 1,
-    "text_bytes": 7211
+    "text_bytes": 7207
    },
    "fips": "103",
-   "host": "www.co.marquette.mi.us",
+   "host": "co.marquette.mi.us",
    "notes": [
-    "marquettecounty.com answers 200 and never names Marquette \u2014 not taken as the county's own site",
-    "www.marquettecounty.com answers 200 and never names Marquette \u2014 not taken as the county's own site",
-    "www.marquettecounty.org is a CATCH-ALL \u2014 an impossible path returns 524 bytes against the root's 485, so a 200 here proves nothing",
-    "margov.com unreachable (ConnectionError)",
-    "www.margov.com unreachable (ConnectionError)",
-    "marquetteco.com answers 200 and never names Marquette \u2014 not taken as the county's own site",
-    "www.marquetteco.com answers 200 and never names Marquette \u2014 not taken as the county's own site",
+    "marquettecounty.com answers HTTP 200 in 114 bytes and never names Marquette on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.marquettecounty.com answers HTTP 200 in 114 bytes and never names Marquette on any of 3 fetches \u2014 not taken as the county's own site",
+    "margov.com unreachable after 3 tries (ConnectionError)",
+    "www.margov.com unreachable after 3 tries (ConnectionError)",
+    "marquetteco.com answers HTTP 200 in 114 bytes and never names Marquette on any of 3 fetches \u2014 not taken as the county's own site",
     "crawl-delay honoured: {'marquette.org': 3.0}"
    ],
    "pop": 65144,
@@ -265,11 +263,6 @@
      "why": "names-another"
     },
     {
-     "detail": null,
-     "host": "www.marquettecounty.org",
-     "why": "catch-all"
-    },
-    {
      "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
      "host": "margov.com",
      "why": "unreachable"
@@ -283,14 +276,9 @@
      "detail": null,
      "host": "marquetteco.com",
      "why": "names-another"
-    },
-    {
-     "detail": null,
-     "host": "www.marquetteco.com",
-     "why": "names-another"
     }
    ],
-   "resolved": 11,
+   "resolved": 12,
    "score": 99.7,
    "seats": 6,
    "verdict": "candidate"
@@ -322,16 +310,16 @@
    "fips": "073",
    "host": "isabellacounty.org",
    "notes": [
-    "isabellacounty.com answers 200 and never names Isabella \u2014 not taken as the county's own site",
-    "www.isabellacounty.com answers 200 and never names Isabella \u2014 not taken as the county's own site",
-    "isagov.com unreachable (ConnectionError)",
-    "isagov.org answers 200 and never names Isabella \u2014 not taken as the county's own site",
-    "isabella.org unreachable (SSLError)",
-    "coisabella.com is a CATCH-ALL \u2014 an impossible path returns 32079 bytes against the root's 32079, so a 200 here proves nothing",
-    "isabellaco.com is a CATCH-ALL \u2014 an impossible path returns 70636 bytes against the root's 70636, so a 200 here proves nothing",
-    "www.isagov.com unreachable (ConnectionError)",
-    "www.isagov.org answers 200 and never names Isabella \u2014 not taken as the county's own site",
-    "www.isabella.org unreachable (SSLError)"
+    "isabellacounty.com answers HTTP 200 in 114 bytes and never names Isabella on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.isabellacounty.com answers HTTP 200 in 114 bytes and never names Isabella on any of 3 fetches \u2014 not taken as the county's own site",
+    "isagov.com answers HTTP 200 in 85185 bytes and never names Isabella on any of 3 fetches \u2014 not taken as the county's own site",
+    "isagov.org unreachable after 3 tries (SSLError)",
+    "isabella.org unreachable after 3 tries (SSLError)",
+    "coisabella.com answers HTTP 200 in 32079 bytes and never names Isabella on any of 3 fetches \u2014 not taken as the county's own site",
+    "isabellaco.com answers HTTP 200 in 70636 bytes and never names Isabella on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.isagov.com unreachable after 3 tries (ConnectionError)",
+    "www.isagov.org unreachable after 3 tries (SSLError)",
+    "www.isabella.org unreachable after 3 tries (SSLError)"
    ],
    "pop": 64394,
    "rejected": [
@@ -346,14 +334,14 @@
      "why": "names-another"
     },
     {
-     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "detail": null,
      "host": "isagov.com",
-     "why": "unreachable"
+     "why": "names-another"
     },
     {
-     "detail": null,
+     "detail": "HTTPSConnectionPool(host='isagov.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1, '[SSL",
      "host": "isagov.org",
-     "why": "names-another"
+     "why": "unreachable"
     },
     {
      "detail": "HTTPSConnectionPool(host='isabella.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1, '[S",
@@ -363,12 +351,12 @@
     {
      "detail": null,
      "host": "coisabella.com",
-     "why": "catch-all"
+     "why": "names-another"
     },
     {
      "detail": null,
      "host": "isabellaco.com",
-     "why": "catch-all"
+     "why": "names-another"
     },
     {
      "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
@@ -376,9 +364,9 @@
      "why": "unreachable"
     },
     {
-     "detail": null,
+     "detail": "HTTPSConnectionPool(host='www.isagov.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1, '",
      "host": "www.isagov.org",
-     "why": "names-another"
+     "why": "unreachable"
     },
     {
      "detail": "HTTPSConnectionPool(host='www.isabella.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1,",
@@ -419,21 +407,21 @@
    "fips": "015",
    "host": "www.barrycounty.org",
    "notes": [
-    "barrycounty.com unreachable (SSLError)",
-    "barrycountymi.org unreachable (ConnectionError)",
-    "www.barrycounty.com unreachable (SSLError)",
-    "www.barrycountymi.org unreachable (ConnectionError)",
-    "barry.org unreachable (SSLError)",
-    "bargov.com unreachable (SSLError)",
-    "barryco.com answers 200 and never names Barry \u2014 not taken as the county's own site",
-    "mibarry.org answers 200 and never names Barry \u2014 not taken as the county's own site"
+    "barrycounty.com is a CATCH-ALL \u2014 an impossible path returns 3356 bytes against the root's 3316, so a 200 here proves nothing",
+    "barrycountymi.org unreachable after 3 tries (ConnectionError)",
+    "www.barrycounty.com unreachable after 3 tries (SSLError)",
+    "www.barrycountymi.org unreachable after 3 tries (ConnectionError)",
+    "barry.org unreachable after 3 tries (SSLError)",
+    "bargov.com unreachable after 3 tries (SSLError)",
+    "barryco.com answers HTTP 200 in 114 bytes and never names Barry on any of 3 fetches \u2014 not taken as the county's own site",
+    "mibarry.org answers HTTP 200 in 114 bytes and never names Barry on any of 3 fetches \u2014 not taken as the county's own site"
    ],
    "pop": 62423,
    "rejected": [
     {
-     "detail": "HTTPSConnectionPool(host='barrycounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1, ",
+     "detail": null,
      "host": "barrycounty.com",
-     "why": "unreachable"
+     "why": "catch-all"
     },
     {
      "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
@@ -503,15 +491,16 @@
    "fips": "117",
    "host": "montcalmcountymi.gov",
    "notes": [
-    "co.montcalm.mi.us unreachable (ConnectionError)",
-    "www.co.montcalm.mi.us unreachable (ConnectionError)",
-    "moncounty.com answers 200 and never names Montcalm \u2014 not taken as the county's own site",
-    "www.moncounty.com answers 200 and never names Montcalm \u2014 not taken as the county's own site",
-    "montcalmcounty.com answers 200 and never names Montcalm \u2014 not taken as the county's own site",
-    "montcalmcounty.org unreachable (SSLError)",
-    "montcalmcountymi.com answers 200 and never names Montcalm \u2014 not taken as the county's own site",
-    "www.montcalmcounty.com answers 200 and never names Montcalm \u2014 not taken as the county's own site",
-    "www.montcalmcountymi.com unreachable (SSLError)"
+    "co.montcalm.mi.us unreachable after 3 tries (ConnectionError)",
+    "www.co.montcalm.mi.us unreachable after 3 tries (ConnectionError)",
+    "moncounty.com answers HTTP 200 in 114 bytes and never names Montcalm on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.moncounty.com answers HTTP 200 in 114 bytes and never names Montcalm on any of 3 fetches \u2014 not taken as the county's own site",
+    "montcalmcounty.com answers HTTP 200 in 114 bytes and never names Montcalm on any of 3 fetches \u2014 not taken as the county's own site",
+    "montcalmcounty.org unreachable after 3 tries (SSLError)",
+    "montcalmcountymi.com answers HTTP 200 in 114 bytes and never names Montcalm on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.montcalmcounty.com answers HTTP 200 in 114 bytes and never names Montcalm on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.montcalmcounty.org unreachable after 3 tries (ConnectionError)",
+    "www.montcalmcountymi.com answers HTTP 200 in 114 bytes and never names Montcalm on any of 3 fetches \u2014 not taken as the county's own site"
    ],
    "pop": 61648,
    "rejected": [
@@ -556,9 +545,14 @@
      "why": "names-another"
     },
     {
-     "detail": "HTTPSConnectionPool(host='www.montcalmcountymi.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSL",
-     "host": "www.montcalmcountymi.com",
+     "detail": "HTTPConnectionPool(host='cf.neat-slate.site', port=80): Max retries exceeded with url: /middle.html?impId=BvH0EtBmnlPg3y",
+     "host": "www.montcalmcounty.org",
      "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.montcalmcountymi.com",
+     "why": "names-another"
     }
    ],
    "resolved": 18,
@@ -585,14 +579,14 @@
    "fips": "149",
    "host": "stjosephcountymi.gov",
    "notes": [
-    "stjosephcounty.us answers 200 and never names St. Joseph \u2014 not taken as the county's own site",
-    "www.stjosephcounty.us answers 200 and never names St. Joseph \u2014 not taken as the county's own site",
-    "sj.org answers 200 and never names St. Joseph \u2014 not taken as the county's own site",
-    "sjgov.com answers 200 and never names St. Joseph \u2014 not taken as the county's own site",
-    "sjgov.org answers 200 and never names St. Joseph \u2014 not taken as the county's own site",
-    "www.sj.org answers 200 and never names St. Joseph \u2014 not taken as the county's own site",
-    "stjoseph.org unreachable (SSLError)",
-    "www.sjgov.com answers 200 and never names St. Joseph \u2014 not taken as the county's own site",
+    "stjosephcounty.us answers HTTP 200 in 114 bytes and never names St. Joseph on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.stjosephcounty.us answers HTTP 200 in 114 bytes and never names St. Joseph on any of 3 fetches \u2014 not taken as the county's own site",
+    "sj.org answers HTTP 200 in 248817 bytes and never names St. Joseph on any of 3 fetches \u2014 not taken as the county's own site",
+    "sjgov.com answers HTTP 200 in 122 bytes and never names St. Joseph on any of 3 fetches \u2014 not taken as the county's own site",
+    "sjgov.org answers HTTP 200 in 66101 bytes and never names St. Joseph on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.sj.org answers HTTP 200 in 248817 bytes and never names St. Joseph on any of 3 fetches \u2014 not taken as the county's own site",
+    "stjoseph.org unreachable after 3 tries (SSLError)",
+    "www.sjgov.com answers HTTP 200 in 122 bytes and never names St. Joseph on any of 3 fetches \u2014 not taken as the county's own site",
     "www.stjosephcountymi.gov: neither its sitemap nor its front page names a board page",
     "stjosephcountymi.org: neither its sitemap nor its front page names a board page",
     "www.stjosephcountymi.org: neither its sitemap nor its front page names a board page"
@@ -672,16 +666,16 @@
    "fips": "067",
    "host": "www.ioniacounty.org",
    "notes": [
-    "ioncounty.com answers 200 and never names Ionia \u2014 not taken as the county's own site",
-    "ioniacounty.com answers 200 and never names Ionia \u2014 not taken as the county's own site",
-    "ioniacounty.net unreachable (SSLError)",
-    "www.ioncounty.com answers 200 and never names Ionia \u2014 not taken as the county's own site",
-    "www.ioniacounty.com answers 200 and never names Ionia \u2014 not taken as the county's own site",
-    "www.ioniacounty.net unreachable (SSLError)",
-    "www.ionia-county.org unreachable (ConnectionError)",
-    "ionia.org answers 200 and never names Ionia \u2014 not taken as the county's own site",
-    "iongov.com is a CATCH-ALL \u2014 an impossible path returns 2998 bytes against the root's 2998, so a 200 here proves nothing",
-    "ionia-county.org: neither its sitemap nor its front page names a board page"
+    "ioncounty.com answers HTTP 200 in 114 bytes and never names Ionia on any of 3 fetches \u2014 not taken as the county's own site",
+    "ioniacounty.com answers HTTP 200 in 114 bytes and never names Ionia on any of 3 fetches \u2014 not taken as the county's own site",
+    "ioniacounty.net unreachable after 3 tries (SSLError)",
+    "ionia-county.org unreachable after 3 tries (ConnectionError)",
+    "www.ioncounty.com answers HTTP 200 in 114 bytes and never names Ionia on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.ioniacounty.com answers HTTP 200 in 114 bytes and never names Ionia on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.ioniacounty.net unreachable after 3 tries (SSLError)",
+    "www.ionia-county.org unreachable after 3 tries (ConnectionError)",
+    "ionia.org answers a HTTP 202, which is never a document \u2014 an access control, not read and not worked around",
+    "iongov.com answers a WAF challenge (server 'cloudflare') \u2014 an access control, not read and not worked around"
    ],
    "pop": 60094,
    "rejected": [
@@ -698,6 +692,11 @@
     {
      "detail": "HTTPSConnectionPool(host='ioniacounty.net', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerif",
      "host": "ioniacounty.net",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "ionia-county.org",
      "why": "unreachable"
     },
     {
@@ -721,14 +720,14 @@
      "why": "unreachable"
     },
     {
-     "detail": null,
+     "detail": "HTTP 202, which is never a document",
      "host": "ionia.org",
-     "why": "names-another"
+     "why": "challenge"
     },
     {
-     "detail": null,
+     "detail": "WAF challenge (server 'cloudflare')",
      "host": "iongov.com",
-     "why": "catch-all"
+     "why": "challenge"
     }
    ],
    "resolved": 16,
@@ -737,39 +736,38 @@
    "verdict": "candidate"
   },
   {
-   "board_url": "https://tuscolacounty.org/boc",
+   "board_url": null,
    "county": "Tuscola",
-   "evidence": {
-    "cfemail": 0,
-    "chrome_dropped": 0,
-    "distinct_near": 14,
-    "district_count": 5,
-    "districts_found": [
-     1,
-     2,
-     3,
-     4,
-     5
-    ],
-    "mailto": 6,
-    "names_seen": 415,
-    "near_pairs": 5,
-    "seats": 5,
-    "tel": 0,
-    "text_bytes": 64145
-   },
+   "evidence": null,
    "fips": "157",
-   "host": "tuscolacounty.org",
+   "host": "tuscolacounty.com",
    "notes": [
+    "tuscolacounty.org answers a Sucuri challenge (server 'Sucuri/Cloudproxy') \u2014 an access control, not read and not worked around",
+    "www.tuscolacounty.org answers a Sucuri challenge (server 'Sucuri/Cloudproxy') \u2014 an access control, not read and not worked around",
     "tuscolacounty.com: neither its sitemap nor its front page names a board page",
+    "www.tuscolacounty.com: neither its sitemap nor its front page names a board page",
+    "tuscola.org: neither its sitemap nor its front page names a board page",
+    "www.tuscola.org: neither its sitemap nor its front page names a board page",
+    "2 host(s) answered an access control and no other confirmed host carries a board page, so this is recorded as blocked rather than as the county publishing nothing",
     "crawl-delay honoured: {'tuscola.org': 10.0}"
    ],
    "pop": 53264,
-   "rejected": [],
+   "rejected": [
+    {
+     "detail": "Sucuri challenge (server 'Sucuri/Cloudproxy')",
+     "host": "tuscolacounty.org",
+     "why": "challenge"
+    },
+    {
+     "detail": "Sucuri challenge (server 'Sucuri/Cloudproxy')",
+     "host": "www.tuscolacounty.org",
+     "why": "challenge"
+    }
+   ],
    "resolved": 6,
-   "score": 115.0,
+   "score": -1,
    "seats": 5,
-   "verdict": "candidate"
+   "verdict": "challenge"
   },
   {
    "board_url": "https://casscountymi.org/1500/BOC-Committees",
@@ -799,13 +797,13 @@
    "fips": "027",
    "host": "casscountymi.org",
    "notes": [
-    "casscounty.net unreachable (ConnectionError)",
-    "casscounty.org unreachable (ConnectionError)",
-    "casscountymi.com answers 200 and never names Cass \u2014 not taken as the county's own site",
-    "www.casscounty.net unreachable (ConnectionError)",
-    "www.casscounty.org unreachable (ConnectionError)",
+    "casscounty.net unreachable after 3 tries (ConnectionError)",
+    "casscounty.org unreachable after 3 tries (ConnectionError)",
+    "casscountymi.com answers HTTP 200 in 114 bytes and never names Cass on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.casscounty.net unreachable after 3 tries (ConnectionError)",
+    "www.casscounty.org unreachable after 3 tries (ConnectionError)",
     "www.cass-county.com is a CATCH-ALL \u2014 an impossible path returns 8948 bytes against the root's 8948, so a 200 here proves nothing",
-    "www.casscountymi.com answers 200 and never names Cass \u2014 not taken as the county's own site",
+    "www.casscountymi.com answers HTTP 200 in 114 bytes and never names Cass on any of 3 fetches \u2014 not taken as the county's own site",
     "cass-county.com: neither its sitemap nor its front page names a board page"
    ],
    "pop": 51589,
@@ -878,13 +876,13 @@
    "fips": "123",
    "host": "newaygocountymi.gov",
    "notes": [
-    "co.newaygo.mi.us unreachable (ConnectionError)",
-    "newcounty.com is a CATCH-ALL \u2014 an impossible path returns 3326 bytes against the root's 3376, so a 200 here proves nothing",
-    "newaygocounty.com answers 200 and never names Newaygo \u2014 not taken as the county's own site",
-    "www.newcounty.com unreachable (SSLError)",
-    "www.newaygocounty.com answers 200 and never names Newaygo \u2014 not taken as the county's own site",
-    "newgov.org unreachable (ConnectionError)",
-    "www.newgov.org answers 200 and never names Newaygo \u2014 not taken as the county's own site",
+    "co.newaygo.mi.us unreachable after 3 tries (ConnectionError)",
+    "newcounty.com answers HTTP 200 in 3341 bytes and never names Newaygo on any of 3 fetches \u2014 not taken as the county's own site",
+    "newaygocounty.com answers HTTP 200 in 114 bytes and never names Newaygo on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.newcounty.com answers HTTP 200 in 3360 bytes and never names Newaygo on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.newaygocounty.com answers HTTP 200 in 114 bytes and never names Newaygo on any of 3 fetches \u2014 not taken as the county's own site",
+    "newgov.org unreachable after 3 tries (ConnectionError)",
+    "www.newgov.org answers HTTP 200 in 2963 bytes and never names Newaygo on any of 3 fetches \u2014 not taken as the county's own site",
     "newaygo.gov: neither its sitemap nor its front page names a board page",
     "www.newaygo.gov: neither its sitemap nor its front page names a board page",
     "newaygo.org: neither its sitemap nor its front page names a board page",
@@ -900,7 +898,7 @@
     {
      "detail": null,
      "host": "newcounty.com",
-     "why": "catch-all"
+     "why": "names-another"
     },
     {
      "detail": null,
@@ -908,9 +906,9 @@
      "why": "names-another"
     },
     {
-     "detail": "HTTPSConnectionPool(host='www.newcounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1",
+     "detail": null,
      "host": "www.newcounty.com",
-     "why": "unreachable"
+     "why": "names-another"
     },
     {
      "detail": null,
@@ -934,7 +932,7 @@
    "verdict": "not-keyable"
   },
   {
-   "board_url": "https://hillsdalecounty.gov/index.php/tm-gov/m-boc",
+   "board_url": "https://co.hillsdale.mi.us/index.php/tm-gov/m-boc",
    "county": "Hillsdale",
    "evidence": {
     "cfemail": 0,
@@ -956,32 +954,20 @@
     "text_bytes": 4154
    },
    "fips": "059",
-   "host": "hillsdalecounty.gov",
+   "host": "co.hillsdale.mi.us",
    "notes": [
-    "co.hillsdale.mi.us unreachable (ConnectionError)",
-    "www.hillsdale.mi.us unreachable (SSLError)",
-    "www.co.hillsdale.mi.us unreachable (ProxyError)",
-    "hillsdale.mi.us unreachable (SSLError)",
-    "hillsdalecounty.com unreachable (SSLError)",
-    "hillsdalecounty.org unreachable (ProxyError)",
-    "www.hillsdalecounty.com unreachable (SSLError)",
-    "www.hillsdalecounty.org unreachable (SSLError)"
+    "www.hillsdale.mi.us unreachable after 3 tries (SSLError)",
+    "hillsdale.mi.us unreachable after 3 tries (SSLError)",
+    "hillsdalecounty.com unreachable after 3 tries (SSLError)",
+    "hillsdalecounty.org unreachable after 3 tries (SSLError)",
+    "www.hillsdalecounty.com unreachable after 3 tries (SSLError)",
+    "www.hillsdalecounty.org unreachable after 3 tries (SSLError)"
    ],
    "pop": 45746,
    "rejected": [
     {
-     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
-     "host": "co.hillsdale.mi.us",
-     "why": "unreachable"
-    },
-    {
      "detail": "HTTPSConnectionPool(host='www.hillsdale.mi.us', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError",
      "host": "www.hillsdale.mi.us",
-     "why": "unreachable"
-    },
-    {
-     "detail": "HTTPSConnectionPool(host='www.co.hillsdale.mi.us', port=443): Max retries exceeded with url: / (Caused by ProxyError('Un",
-     "host": "www.co.hillsdale.mi.us",
      "why": "unreachable"
     },
     {
@@ -995,7 +981,7 @@
      "why": "unreachable"
     },
     {
-     "detail": "HTTPSConnectionPool(host='hillsdalecounty.org', port=443): Max retries exceeded with url: / (Caused by ProxyError('Unabl",
+     "detail": "HTTPSConnectionPool(host='hillsdalecounty.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError",
      "host": "hillsdalecounty.org",
      "why": "unreachable"
     },
@@ -1022,31 +1008,31 @@
    "fips": "023",
    "host": "branchco.com",
    "notes": [
-    "branchcounty.gov answers 200 and never names Branch \u2014 not taken as the county's own site",
-    "www.branchcounty.gov answers 200 and never names Branch \u2014 not taken as the county's own site",
-    "branchcounty.com answers 200 and never names Branch \u2014 not taken as the county's own site",
-    "www.branchcounty.com answers 200 and never names Branch \u2014 not taken as the county's own site",
-    "bragov.com answers 200 and never names Branch \u2014 not taken as the county's own site",
-    "cobranch.com unreachable (ConnectionError)",
+    "branchcounty.gov answers a HTTP 202, which is never a document \u2014 an access control, not read and not worked around",
+    "www.branchcounty.gov answers a HTTP 202, which is never a document \u2014 an access control, not read and not worked around",
+    "branchcounty.com answers HTTP 200 in 114 bytes and never names Branch on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.branchcounty.com answers HTTP 200 in 114 bytes and never names Branch on any of 3 fetches \u2014 not taken as the county's own site",
+    "bragov.com answers HTTP 200 in 20162 bytes and never names Branch on any of 3 fetches \u2014 not taken as the county's own site",
+    "cobranch.com unreachable after 3 tries (ConnectionError)",
     "mibranch.com HTTP 404 on /",
-    "www.bragov.com answers 200 and never names Branch \u2014 not taken as the county's own site",
+    "www.bragov.com answers HTTP 200 in 20162 bytes and never names Branch on any of 3 fetches \u2014 not taken as the county's own site",
     "branchco.com: neither its sitemap nor its front page names a board page",
     "branchco.org: neither its sitemap nor its front page names a board page",
     "www.branchco.com: neither its sitemap nor its front page names a board page",
     "www.branchco.org: neither its sitemap nor its front page names a board page",
-    "no confirmed host carries a board page this client can read"
+    "2 host(s) answered an access control and no other confirmed host carries a board page, so this is recorded as blocked rather than as the county publishing nothing"
    ],
    "pop": 43439,
    "rejected": [
     {
-     "detail": null,
+     "detail": "HTTP 202, which is never a document",
      "host": "branchcounty.gov",
-     "why": "names-another"
+     "why": "challenge"
     },
     {
-     "detail": null,
+     "detail": "HTTP 202, which is never a document",
      "host": "www.branchcounty.gov",
-     "why": "names-another"
+     "why": "challenge"
     },
     {
      "detail": null,
@@ -1082,7 +1068,7 @@
    "resolved": 14,
    "score": -1,
    "seats": 5,
-   "verdict": "no-board-page"
+   "verdict": "challenge"
   },
   {
    "board_url": "https://sanilaccounty.gov/government/commissioners/index.php",
@@ -1111,9 +1097,12 @@
    "fips": "151",
    "host": "sanilaccounty.gov",
    "notes": [
-    "sanilaccounty.com answers 200 and never names Sanilac \u2014 not taken as the county's own site",
-    "www.sanilaccounty.com answers 200 and never names Sanilac \u2014 not taken as the county's own site",
-    "sangov.com is a CATCH-ALL \u2014 an impossible path returns 3308 bytes against the root's 3258, so a 200 here proves nothing"
+    "sanilaccounty.com answers HTTP 200 in 114 bytes and never names Sanilac on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.sanilaccounty.com answers HTTP 200 in 114 bytes and never names Sanilac on any of 3 fetches \u2014 not taken as the county's own site",
+    "sangov.com answers HTTP 200 in 3293 bytes and never names Sanilac on any of 3 fetches \u2014 not taken as the county's own site",
+    "sanilac.org answers HTTP 200 in 122 bytes and never names Sanilac on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.sangov.com answers HTTP 200 in 3317 bytes and never names Sanilac on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.sanilac.org unreachable after 3 tries (SSLError)"
    ],
    "pop": 40611,
    "rejected": [
@@ -1130,7 +1119,22 @@
     {
      "detail": null,
      "host": "sangov.com",
-     "why": "catch-all"
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "sanilac.org",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.sangov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.sanilac.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1, ",
+     "host": "www.sanilac.org",
+     "why": "unreachable"
     }
    ],
    "resolved": 11,
@@ -1152,17 +1156,17 @@
     "near_pairs": 0,
     "seats": 7,
     "tel": 0,
-    "text_bytes": 29204
+    "text_bytes": 29248
    },
    "fips": "107",
    "host": "mecostacounty.org",
    "notes": [
     "mecostacounty.com HTTP 410 on /",
     "www.mecostacounty.com HTTP 410 on /",
-    "mecgov.com answers 200 and never names Mecosta \u2014 not taken as the county's own site",
-    "mecosta.org is a CATCH-ALL \u2014 an impossible path returns 1141 bytes against the root's 1141, so a 200 here proves nothing",
-    "www.mecgov.com answers 200 and never names Mecosta \u2014 not taken as the county's own site",
-    "www.mecosta.org is a CATCH-ALL \u2014 an impossible path returns 1141 bytes against the root's 1141, so a 200 here proves nothing"
+    "mecgov.com answers HTTP 200 in 114 bytes and never names Mecosta on any of 3 fetches \u2014 not taken as the county's own site",
+    "mecosta.org answers HTTP 200 in 1141 bytes and never names Mecosta on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.mecgov.com answers HTTP 200 in 114 bytes and never names Mecosta on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.mecosta.org answers HTTP 200 in 1141 bytes and never names Mecosta on any of 3 fetches \u2014 not taken as the county's own site"
    ],
    "pop": 39714,
    "rejected": [
@@ -1184,7 +1188,7 @@
     {
      "detail": null,
      "host": "mecosta.org",
-     "why": "catch-all"
+     "why": "names-another"
     },
     {
      "detail": null,
@@ -1194,7 +1198,7 @@
     {
      "detail": null,
      "host": "www.mecosta.org",
-     "why": "catch-all"
+     "why": "names-another"
     }
    ],
    "resolved": 8,
@@ -1209,10 +1213,10 @@
    "fips": "057",
    "host": "gratiot.org",
    "notes": [
-    "co.gratiot.mi.us unreachable (ConnectionError)",
-    "www.co.gratiot.mi.us unreachable (ConnectionError)",
-    "gratiotcounty.com answers 200 and never names Gratiot \u2014 not taken as the county's own site",
-    "www.gratiotcounty.com unreachable (SSLError)",
+    "co.gratiot.mi.us unreachable after 3 tries (ConnectionError)",
+    "www.co.gratiot.mi.us unreachable after 3 tries (ConnectionError)",
+    "gratiotcounty.com answers HTTP 200 in 114 bytes and never names Gratiot on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.gratiotcounty.com answers HTTP 200 in 114 bytes and never names Gratiot on any of 3 fetches \u2014 not taken as the county's own site",
     "gratiot.org: neither its sitemap nor its front page names a board page",
     "www.gratiot.org: neither its sitemap nor its front page names a board page",
     "no confirmed host carries a board page this client can read"
@@ -1235,9 +1239,9 @@
      "why": "names-another"
     },
     {
-     "detail": "HTTPSConnectionPool(host='www.gratiotcounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLErr",
+     "detail": null,
      "host": "www.gratiotcounty.com",
-     "why": "unreachable"
+     "why": "names-another"
     }
    ],
    "resolved": 6,
@@ -1265,13 +1269,13 @@
     "near_pairs": 5,
     "seats": 5,
     "tel": 0,
-    "text_bytes": 24942
+    "text_bytes": 24873
    },
    "fips": "061",
    "host": "houghtoncounty.gov",
    "notes": [
-    "houghtoncounty.com answers 200 and never names Houghton \u2014 not taken as the county's own site",
-    "www.houghtoncounty.com answers 200 and never names Houghton \u2014 not taken as the county's own site"
+    "houghtoncounty.com answers HTTP 200 in 114 bytes and never names Houghton on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.houghtoncounty.com unreachable after 3 tries (SSLError)"
    ],
    "pop": 37361,
    "rejected": [
@@ -1281,9 +1285,9 @@
      "why": "names-another"
     },
     {
-     "detail": null,
+     "detail": "HTTPSConnectionPool(host='www.houghtoncounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLEr",
      "host": "www.houghtoncounty.com",
-     "why": "names-another"
+     "why": "unreachable"
     }
    ],
    "resolved": 12,
@@ -1292,12 +1296,12 @@
    "verdict": "candidate"
   },
   {
-   "board_url": "https://deltacountymi.gov/board-of-commissioners/",
+   "board_url": "https://deltacountymi.gov/board-of-commissioners/district-4-kelli-vanginhoven/",
    "county": "Delta",
    "evidence": {
     "cfemail": 0,
-    "chrome_dropped": 0,
-    "distinct_near": 10,
+    "chrome_dropped": 1,
+    "distinct_near": 30,
     "district_count": 5,
     "districts_found": [
      1,
@@ -1307,17 +1311,17 @@
      5
     ],
     "mailto": 0,
-    "names_seen": 215,
-    "near_pairs": 4,
+    "names_seen": 103,
+    "near_pairs": 5,
     "seats": 5,
-    "tel": 1,
-    "text_bytes": 6076
+    "tel": 2,
+    "text_bytes": 3012
    },
    "fips": "041",
    "host": "deltacountymi.gov",
    "notes": [
-    "deltacounty.org answers 200 and never names Delta \u2014 not taken as the county's own site",
-    "www.deltacounty.org answers 200 and never names Delta \u2014 not taken as the county's own site"
+    "deltacounty.org answers HTTP 200 in 114 bytes and never names Delta on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.deltacounty.org answers HTTP 200 in 114 bytes and never names Delta on any of 3 fetches \u2014 not taken as the county's own site"
    ],
    "pop": 36903,
    "rejected": [
@@ -1333,7 +1337,7 @@
     }
    ],
    "resolved": 23,
-   "score": 111.0,
+   "score": 113.0,
    "seats": 5,
    "verdict": "candidate"
   },
@@ -1364,12 +1368,12 @@
    "fips": "047",
    "host": "emmetcounty.org",
    "notes": [
-    "co.emmet.mi.us unreachable (ConnectionError)",
-    "www.co.emmet.mi.us unreachable (ConnectionError)",
-    "emmetcounty.com answers 200 and never names Emmet \u2014 not taken as the county's own site",
-    "www.emmetcounty.com answers 200 and never names Emmet \u2014 not taken as the county's own site",
-    "emmet.org unreachable (ConnectionError)",
-    "www.emmet.org unreachable (ConnectionError)"
+    "co.emmet.mi.us unreachable after 3 tries (ConnectionError)",
+    "www.co.emmet.mi.us unreachable after 3 tries (ConnectionError)",
+    "emmetcounty.com answers HTTP 200 in 114 bytes and never names Emmet on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.emmetcounty.com answers HTTP 200 in 114 bytes and never names Emmet on any of 3 fetches \u2014 not taken as the county's own site",
+    "emmet.org unreachable after 3 tries (ConnectionError)",
+    "www.emmet.org unreachable after 3 tries (ConnectionError)"
    ],
    "pop": 34112,
    "rejected": [
@@ -1434,14 +1438,14 @@
    "fips": "033",
    "host": "chippewacountymi.gov",
    "notes": [
-    "chippewacounty.com unreachable (SSLError)",
-    "www.chippewacounty.com unreachable (SSLError)",
-    "chigov.com answers 200 and never names Chippewa \u2014 not taken as the county's own site",
-    "chigov.org unreachable (SSLError)",
-    "chippewa.org unreachable (ConnectionError)",
-    "www.chigov.com answers 200 and never names Chippewa \u2014 not taken as the county's own site",
-    "www.chigov.org unreachable (SSLError)",
-    "www.chippewa.org unreachable (ConnectionError)"
+    "chippewacounty.com unreachable after 3 tries (SSLError)",
+    "www.chippewacounty.com unreachable after 3 tries (SSLError)",
+    "chigov.com answers HTTP 200 in 25198 bytes and never names Chippewa on any of 3 fetches \u2014 not taken as the county's own site",
+    "chigov.org unreachable after 3 tries (SSLError)",
+    "chippewa.org unreachable after 3 tries (ConnectionError)",
+    "www.chigov.com answers HTTP 200 in 25222 bytes and never names Chippewa on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.chigov.org unreachable after 3 tries (SSLError)",
+    "www.chippewa.org unreachable after 3 tries (ConnectionError)"
    ],
    "pop": 32934,
    "rejected": [
@@ -1498,10 +1502,10 @@
    "fips": "165",
    "host": "wexfordcounty.org",
    "notes": [
-    "wexfordcounty.com answers 200 and never names Wexford \u2014 not taken as the county's own site",
-    "www.wexfordcounty.com unreachable (SSLError)",
-    "wexfordco.com answers 200 and never names Wexford \u2014 not taken as the county's own site",
-    "www.wexfordco.com answers 200 and never names Wexford \u2014 not taken as the county's own site",
+    "wexfordcounty.com answers HTTP 200 in 114 bytes and never names Wexford on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.wexfordcounty.com answers HTTP 200 in 114 bytes and never names Wexford on any of 3 fetches \u2014 not taken as the county's own site",
+    "wexfordco.com answers HTTP 200 in 114 bytes and never names Wexford on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.wexfordco.com answers HTTP 200 in 114 bytes and never names Wexford on any of 3 fetches \u2014 not taken as the county's own site",
     "wexfordcounty.org: neither its sitemap nor its front page names a board page",
     "www.wexfordcounty.org: neither its sitemap nor its front page names a board page",
     "wexford.org: neither its sitemap nor its front page names a board page",
@@ -1516,9 +1520,9 @@
      "why": "names-another"
     },
     {
-     "detail": "HTTPSConnectionPool(host='www.wexfordcounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLErr",
+     "detail": null,
      "host": "www.wexfordcounty.com",
-     "why": "unreachable"
+     "why": "names-another"
     },
     {
      "detail": null,
@@ -1543,12 +1547,12 @@
    "fips": "063",
    "host": "co.huron.mi.us",
    "notes": [
-    "huroncounty.us unreachable (ProxyError)",
-    "huroncounty.net unreachable (ConnectionError)",
-    "huroncountymi.com is a CATCH-ALL \u2014 an impossible path returns 114760 bytes against the root's 114760, so a 200 here proves nothing",
-    "www.huroncounty.net unreachable (ConnectionError)",
-    "www.huroncounty.org unreachable (SSLError)",
-    "www.huroncountymi.com is a CATCH-ALL \u2014 an impossible path returns 114760 bytes against the root's 114760, so a 200 here proves nothing",
+    "huroncounty.us unreachable after 3 tries (ProxyError)",
+    "huroncounty.net unreachable after 3 tries (ConnectionError)",
+    "huroncountymi.com is a CATCH-ALL \u2014 an impossible path returns 114774 bytes against the root's 114774, so a 200 here proves nothing",
+    "www.huroncounty.net unreachable after 3 tries (ConnectionError)",
+    "www.huroncounty.org unreachable after 3 tries (SSLError)",
+    "www.huroncountymi.com is a CATCH-ALL \u2014 an impossible path returns 114774 bytes against the root's 114774, so a 200 here proves nothing",
     "co.huron.mi.us: neither its sitemap nor its front page names a board page",
     "www.co.huron.mi.us: neither its sitemap nor its front page names a board page",
     "huroncounty.com: neither its sitemap nor its front page names a board page",
@@ -1619,13 +1623,13 @@
     "near_pairs": 8,
     "seats": 9,
     "tel": 0,
-    "text_bytes": 14353
+    "text_bytes": 14291
    },
    "fips": "035",
    "host": "clareco.net",
    "notes": [
-    "clarecounty.org answers 200 and never names Clare \u2014 not taken as the county's own site",
-    "clare.org answers 200 and never names Clare \u2014 not taken as the county's own site",
+    "clarecounty.org answers HTTP 200 in 114 bytes and never names Clare on any of 3 fetches \u2014 not taken as the county's own site",
+    "clare.org answers HTTP 200 in 114 bytes and never names Clare on any of 3 fetches \u2014 not taken as the county's own site",
     "clarecounty.com: neither its sitemap nor its front page names a board page",
     "clarecounty.net: neither its sitemap nor its front page names a board page",
     "www.clarecounty.com: neither its sitemap nor its front page names a board page",
@@ -1660,11 +1664,11 @@
     "district_count": 0,
     "districts_found": [],
     "mailto": 7,
-    "names_seen": 146,
+    "names_seen": 147,
     "near_pairs": 0,
     "seats": 7,
     "tel": 8,
-    "text_bytes": 6565
+    "text_bytes": 6563
    },
    "fips": "105",
    "host": "masoncountymi.gov",
@@ -1709,10 +1713,10 @@
    "fips": "007",
    "host": "alpenacounty.org",
    "notes": [
-    "alpenacounty.com answers 200 and never names Alpena \u2014 not taken as the county's own site",
-    "www.alpenacounty.com unreachable (SSLError)",
-    "alpena.org answers 200 and never names Alpena \u2014 not taken as the county's own site",
-    "www.alpena.org answers 200 and never names Alpena \u2014 not taken as the county's own site",
+    "alpenacounty.com answers HTTP 200 in 114 bytes and never names Alpena on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.alpenacounty.com answers HTTP 200 in 114 bytes and never names Alpena on any of 3 fetches \u2014 not taken as the county's own site",
+    "alpena.org answers HTTP 200 in 114 bytes and never names Alpena on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.alpena.org answers HTTP 200 in 114 bytes and never names Alpena on any of 3 fetches \u2014 not taken as the county's own site",
     "www.alpena.mi.us: neither its sitemap nor its front page names a board page",
     "alpena.mi.us: neither its sitemap nor its front page names a board page"
    ],
@@ -1724,9 +1728,9 @@
      "why": "names-another"
     },
     {
-     "detail": "HTTPSConnectionPool(host='www.alpenacounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLErro",
+     "detail": null,
      "host": "www.alpenacounty.com",
-     "why": "unreachable"
+     "why": "names-another"
     },
     {
      "detail": null,
@@ -1769,15 +1773,15 @@
    "fips": "127",
    "host": "oceana.mi.us",
    "notes": [
-    "co.oceana.mi.us unreachable (SSLError)",
-    "www.co.oceana.mi.us unreachable (SSLError)",
-    "oceanacounty.com answers 200 and never names Oceana \u2014 not taken as the county's own site",
-    "oceanacounty.net unreachable (ConnectionError)",
-    "oceanacounty.org unreachable (ConnectionError)",
-    "www.oceanacounty.com answers 200 and never names Oceana \u2014 not taken as the county's own site",
-    "www.oceanacounty.net unreachable (ConnectionError)",
-    "www.oceanacounty.org unreachable (ConnectionError)",
-    "oceanaco.com answers 200 and never names Oceana \u2014 not taken as the county's own site",
+    "co.oceana.mi.us unreachable after 3 tries (SSLError)",
+    "www.co.oceana.mi.us unreachable after 3 tries (SSLError)",
+    "oceanacounty.com answers HTTP 200 in 114 bytes and never names Oceana on any of 3 fetches \u2014 not taken as the county's own site",
+    "oceanacounty.net unreachable after 3 tries (ConnectionError)",
+    "oceanacounty.org unreachable after 3 tries (ConnectionError)",
+    "www.oceanacounty.com answers HTTP 200 in 114 bytes and never names Oceana on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.oceanacounty.net unreachable after 3 tries (ConnectionError)",
+    "www.oceanacounty.org unreachable after 3 tries (ConnectionError)",
+    "oceanaco.com answers HTTP 200 in 114 bytes and never names Oceana on any of 3 fetches \u2014 not taken as the county's own site",
     "www.oceana.mi.us: neither its sitemap nor its front page names a board page"
    ],
    "pop": 26659,
@@ -1858,14 +1862,14 @@
    "fips": "043",
    "host": "dickinsoncountymi.gov",
    "notes": [
-    "dickinsoncounty.com answers 200 and never names Dickinson \u2014 not taken as the county's own site",
-    "www.dickinsoncounty.com answers 200 and never names Dickinson \u2014 not taken as the county's own site",
-    "dicgov.com answers 200 and never names Dickinson \u2014 not taken as the county's own site",
-    "dickinson.org answers 200 and never names Dickinson \u2014 not taken as the county's own site",
-    "www.dicgov.com answers 200 and never names Dickinson \u2014 not taken as the county's own site",
-    "dickinsonco.com unreachable (SSLError)",
-    "www.dickinson.org answers 200 and never names Dickinson \u2014 not taken as the county's own site",
-    "www.dickinsonco.com unreachable (SSLError)",
+    "dickinsoncounty.com answers HTTP 200 in 114 bytes and never names Dickinson on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.dickinsoncounty.com answers HTTP 200 in 114 bytes and never names Dickinson on any of 3 fetches \u2014 not taken as the county's own site",
+    "dicgov.com answers HTTP 200 in 139667 bytes and never names Dickinson on any of 3 fetches \u2014 not taken as the county's own site",
+    "dickinson.org answers HTTP 200 in 114 bytes and never names Dickinson on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.dicgov.com answers HTTP 200 in 139667 bytes and never names Dickinson on any of 3 fetches \u2014 not taken as the county's own site",
+    "dickinsonco.com unreachable after 3 tries (SSLError)",
+    "www.dickinson.org answers HTTP 200 in 114 bytes and never names Dickinson on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.dickinsonco.com unreachable after 3 tries (SSLError)",
     "crawl-delay honoured: {'dicgov.com': 20.0}"
    ],
    "pop": 25947,
@@ -1923,9 +1927,9 @@
    "fips": "051",
    "host": "gladwin.org",
    "notes": [
-    "gladwincounty.org answers 200 and never names Gladwin \u2014 not taken as the county's own site",
-    "www.gladwincounty.org answers 200 and never names Gladwin \u2014 not taken as the county's own site",
-    "www.gladwinco.com unreachable (SSLError)",
+    "gladwincounty.org answers HTTP 200 in 114 bytes and never names Gladwin on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.gladwincounty.org answers HTTP 200 in 114 bytes and never names Gladwin on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.gladwinco.com unreachable after 3 tries (SSLError)",
     "gladwin.org: neither its sitemap nor its front page names a board page",
     "www.gladwin.org: neither its sitemap nor its front page names a board page",
     "no confirmed host carries a board page this client can read"
@@ -1960,10 +1964,10 @@
    "fips": "029",
    "host": "charlevoixcounty.org",
    "notes": [
-    "charlevoixcounty.com answers 200 and never names Charlevoix \u2014 not taken as the county's own site",
-    "www.charlevoixcounty.com answers 200 and never names Charlevoix \u2014 not taken as the county's own site",
-    "micharlevoix.org unreachable (SSLError)",
-    "www.micharlevoix.org unreachable (SSLError)",
+    "charlevoixcounty.com unreachable after 3 tries (SSLError)",
+    "www.charlevoixcounty.com answers HTTP 200 in 114 bytes and never names Charlevoix on any of 3 fetches \u2014 not taken as the county's own site",
+    "micharlevoix.org unreachable after 3 tries (SSLError)",
+    "www.micharlevoix.org unreachable after 3 tries (SSLError)",
     "charlevoixcounty.org: neither its sitemap nor its front page names a board page",
     "www.charlevoixcounty.org: neither its sitemap nor its front page names a board page",
     "charlevoix.org: neither its sitemap nor its front page names a board page",
@@ -1973,9 +1977,9 @@
    "pop": 25320,
    "rejected": [
     {
-     "detail": null,
+     "detail": "HTTPSConnectionPool(host='charlevoixcounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLErro",
      "host": "charlevoixcounty.com",
-     "why": "names-another"
+     "why": "unreachable"
     },
     {
      "detail": null,
@@ -2005,12 +2009,12 @@
    "fips": "069",
    "host": "www.iosco.org",
    "notes": [
-    "ioscocounty.com answers 200 and never names Iosco \u2014 not taken as the county's own site",
-    "ioscocounty.org unreachable (SSLError)",
-    "www.ioscocounty.com answers 200 and never names Iosco \u2014 not taken as the county's own site",
+    "ioscocounty.com answers HTTP 200 in 114 bytes and never names Iosco on any of 3 fetches \u2014 not taken as the county's own site",
+    "ioscocounty.org unreachable after 3 tries (SSLError)",
+    "www.ioscocounty.com answers HTTP 200 in 114 bytes and never names Iosco on any of 3 fetches \u2014 not taken as the county's own site",
     "iosco.org HTTP 403 on /",
-    "iosgov.com unreachable (SSLError)",
-    "www.iosgov.com unreachable (SSLError)",
+    "iosgov.com unreachable after 3 tries (SSLError)",
+    "www.iosgov.com unreachable after 3 tries (SSLError)",
     "www.iosco.org: neither its sitemap nor its front page names a board page",
     "no confirmed host carries a board page this client can read"
    ],
@@ -2081,10 +2085,10 @@
    "fips": "137",
    "host": "otsegocountymi.gov",
    "notes": [
-    "co.otsego.mi.us unreachable (ConnectionError)",
-    "www.co.otsego.mi.us unreachable (ConnectionError)",
-    "otsego.org unreachable (ConnectionError)",
-    "www.otsego.org unreachable (ConnectionError)"
+    "co.otsego.mi.us unreachable after 3 tries (ConnectionError)",
+    "www.co.otsego.mi.us unreachable after 3 tries (ConnectionError)",
+    "otsego.org unreachable after 3 tries (ConnectionError)",
+    "www.otsego.org unreachable after 3 tries (ConnectionError)"
    ],
    "pop": 25091,
    "rejected": [
@@ -2141,10 +2145,10 @@
    "fips": "101",
    "host": "manisteecountymi.gov",
    "notes": [
-    "mancounty.com unreachable (SSLError)",
-    "www.mancounty.com unreachable (SSLError)",
-    "mangov.com unreachable (ConnectionError)",
-    "www.mangov.com unreachable (ConnectionError)",
+    "mancounty.com unreachable after 3 tries (SSLError)",
+    "www.mancounty.com unreachable after 3 tries (SSLError)",
+    "mangov.com unreachable after 3 tries (ConnectionError)",
+    "www.mangov.com unreachable after 3 tries (ConnectionError)",
     "manisteecounty.net: neither its sitemap nor its front page names a board page",
     "www.manisteecounty.net: neither its sitemap nor its front page names a board page",
     "manistee.org: neither its sitemap nor its front page names a board page",
@@ -2207,14 +2211,14 @@
    "fips": "109",
    "host": "menomineecountymi.gov",
    "notes": [
-    "mencounty.com unreachable (SSLError)",
-    "www.mencounty.com unreachable (SSLError)",
-    "mengov.com unreachable (ConnectionError)",
-    "menominee.org answers 200 and never names Menominee \u2014 not taken as the county's own site",
-    "www.mengov.com unreachable (ConnectionError)",
-    "menomineeco.com answers 200 and never names Menominee \u2014 not taken as the county's own site",
-    "www.menominee.org answers 200 and never names Menominee \u2014 not taken as the county's own site",
-    "www.menomineeco.com answers 200 and never names Menominee \u2014 not taken as the county's own site"
+    "mencounty.com unreachable after 3 tries (SSLError)",
+    "www.mencounty.com unreachable after 3 tries (SSLError)",
+    "mengov.com unreachable after 3 tries (ConnectionError)",
+    "menominee.org answers HTTP 200 in 114 bytes and never names Menominee on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.mengov.com unreachable after 3 tries (ConnectionError)",
+    "menomineeco.com answers HTTP 200 in 2070 bytes and never names Menominee on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.menominee.org answers HTTP 200 in 114 bytes and never names Menominee on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.menomineeco.com answers HTTP 200 in 2070 bytes and never names Menominee on any of 3 fetches \u2014 not taken as the county's own site"
    ],
    "pop": 23499,
    "rejected": [
@@ -2289,14 +2293,14 @@
    "fips": "143",
    "host": "roscommoncounty.net",
    "notes": [
-    "roscommoncounty.us unreachable (SSLError)",
-    "roscommoncounty.com answers 200 and never names Roscommon \u2014 not taken as the county's own site",
-    "roscommoncounty.org unreachable (SSLError)",
-    "www.roscommoncounty.us unreachable (SSLError)",
-    "www.roscommoncounty.com answers 200 and never names Roscommon \u2014 not taken as the county's own site",
-    "www.roscommoncounty.org unreachable (SSLError)",
-    "roscommon.org unreachable (ConnectionError)",
-    "www.roscommon.org unreachable (ConnectionError)"
+    "roscommoncounty.us unreachable after 3 tries (SSLError)",
+    "roscommoncounty.com answers HTTP 200 in 114 bytes and never names Roscommon on any of 3 fetches \u2014 not taken as the county's own site",
+    "roscommoncounty.org unreachable after 3 tries (SSLError)",
+    "www.roscommoncounty.us unreachable after 3 tries (SSLError)",
+    "www.roscommoncounty.com answers HTTP 200 in 114 bytes and never names Roscommon on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.roscommoncounty.org unreachable after 3 tries (SSLError)",
+    "roscommon.org unreachable after 3 tries (ConnectionError)",
+    "www.roscommon.org unreachable after 3 tries (ConnectionError)"
    ],
    "pop": 23459,
    "rejected": [
@@ -2365,13 +2369,13 @@
    "fips": "009",
    "host": "antrimcountymi.gov",
    "notes": [
-    "antrimcounty.com unreachable (SSLError)",
-    "www.antrimcounty.com unreachable (SSLError)",
+    "antrimcounty.com unreachable after 3 tries (SSLError)",
+    "www.antrimcounty.com unreachable after 3 tries (SSLError)",
     "www.antrim-county.com HTTP 404 on /",
-    "antgov.com answers 200 and never names Antrim \u2014 not taken as the county's own site",
-    "antgov.org answers 200 and never names Antrim \u2014 not taken as the county's own site",
-    "antrim.org answers 200 and never names Antrim \u2014 not taken as the county's own site",
-    "www.antgov.com answers 200 and never names Antrim \u2014 not taken as the county's own site",
+    "antgov.com answers HTTP 200 in 114 bytes and never names Antrim on any of 3 fetches \u2014 not taken as the county's own site",
+    "antgov.org answers HTTP 200 in 114 bytes and never names Antrim on any of 3 fetches \u2014 not taken as the county's own site",
+    "antrim.org answers HTTP 200 in 114 bytes and never names Antrim on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.antgov.com answers HTTP 200 in 114 bytes and never names Antrim on any of 3 fetches \u2014 not taken as the county's own site",
     "antrim-county.com: neither its sitemap nor its front page names a board page"
    ],
    "pop": 23431,
@@ -2445,13 +2449,12 @@
    "host": "osceolacountymi.gov",
    "notes": [
     "osceolacounty.com is a CATCH-ALL \u2014 an impossible path returns 17057 bytes against the root's 17057, so a 200 here proves nothing",
-    "osceolacounty.net answers 200 and never names Osceola \u2014 not taken as the county's own site",
-    "osceolacounty.org unreachable (ConnectionError)",
-    "osceolacountymi.com unreachable (SSLError)",
+    "osceolacounty.net answers HTTP 200 in 114 bytes and never names Osceola on any of 3 fetches \u2014 not taken as the county's own site",
+    "osceolacountymi.com unreachable after 3 tries (SSLError)",
     "www.osceolacounty.com is a CATCH-ALL \u2014 an impossible path returns 17057 bytes against the root's 17057, so a 200 here proves nothing",
-    "www.osceolacounty.net answers 200 and never names Osceola \u2014 not taken as the county's own site",
+    "www.osceolacounty.net answers HTTP 200 in 114 bytes and never names Osceola on any of 3 fetches \u2014 not taken as the county's own site",
     "www.osceolacounty.org is a CATCH-ALL \u2014 an impossible path returns 1020 bytes against the root's 1020, so a 200 here proves nothing",
-    "www.osceolacountymi.com unreachable (SSLError)"
+    "www.osceolacountymi.com unreachable after 3 tries (SSLError)"
    ],
    "pop": 22891,
    "rejected": [
@@ -2464,11 +2467,6 @@
      "detail": null,
      "host": "osceolacounty.net",
      "why": "names-another"
-    },
-    {
-     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
-     "host": "osceolacounty.org",
-     "why": "unreachable"
     },
     {
      "detail": "HTTPSConnectionPool(host='osceolacountymi.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertV",
@@ -2528,15 +2526,15 @@
    "fips": "089",
    "host": "leelanau.gov",
    "notes": [
-    "co.leelanau.mi.us unreachable (ConnectionError)",
-    "www.co.leelanau.mi.us unreachable (ConnectionError)",
-    "leecounty.com answers 200 and never names Leelanau \u2014 not taken as the county's own site",
-    "leecounty.org HTTP 403 on /",
-    "www.leecounty.com answers 200 and never names Leelanau \u2014 not taken as the county's own site",
-    "www.leecounty.org HTTP 403 on /",
-    "leelanaucounty.com answers 200 and never names Leelanau \u2014 not taken as the county's own site",
-    "leelanaucounty.org unreachable (SSLError)",
-    "leelanau-county.com answers 200 and never names Leelanau \u2014 not taken as the county's own site",
+    "co.leelanau.mi.us unreachable after 3 tries (ConnectionError)",
+    "www.co.leelanau.mi.us unreachable after 3 tries (ConnectionError)",
+    "leecounty.com answers HTTP 200 in 171903 bytes and never names Leelanau on any of 3 fetches \u2014 not taken as the county's own site",
+    "leecounty.org answers a WAF challenge (server 'cloudflare') \u2014 an access control, not read and not worked around",
+    "www.leecounty.com answers HTTP 200 in 171903 bytes and never names Leelanau on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.leecounty.org answers a WAF challenge (server 'cloudflare') \u2014 an access control, not read and not worked around",
+    "leelanaucounty.com answers HTTP 200 in 114 bytes and never names Leelanau on any of 3 fetches \u2014 not taken as the county's own site",
+    "leelanaucounty.org unreachable after 3 tries (SSLError)",
+    "leelanau-county.com answers HTTP 200 in 114 bytes and never names Leelanau on any of 3 fetches \u2014 not taken as the county's own site",
     "crawl-delay honoured: {'leecounty.com': 30.0}"
    ],
    "pop": 22301,
@@ -2557,9 +2555,9 @@
      "why": "names-another"
     },
     {
-     "detail": null,
+     "detail": "WAF challenge (server 'cloudflare')",
      "host": "leecounty.org",
-     "why": "http-403"
+     "why": "challenge"
     },
     {
      "detail": null,
@@ -2567,9 +2565,9 @@
      "why": "names-another"
     },
     {
-     "detail": null,
+     "detail": "WAF challenge (server 'cloudflare')",
      "host": "www.leecounty.org",
-     "why": "http-403"
+     "why": "challenge"
     },
     {
      "detail": null,
@@ -2599,8 +2597,8 @@
    "fips": "129",
    "host": "ogemawcounty.net",
    "notes": [
-    "ogemawcounty.com answers 200 and never names Ogemaw \u2014 not taken as the county's own site",
-    "www.ogemawcounty.com answers 200 and never names Ogemaw \u2014 not taken as the county's own site",
+    "ogemawcounty.com answers HTTP 200 in 114 bytes and never names Ogemaw on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.ogemawcounty.com answers HTTP 200 in 114 bytes and never names Ogemaw on any of 3 fetches \u2014 not taken as the county's own site",
     "www.ogemawcounty.net is a CATCH-ALL \u2014 an impossible path returns 8016 bytes against the root's 8016, so a 200 here proves nothing",
     "ogemawcounty.net: neither its sitemap nor its front page names a board page",
     "no confirmed host carries a board page this client can read"
@@ -2647,15 +2645,15 @@
    "fips": "019",
    "host": "benzieco.gov",
    "notes": [
-    "benziecounty.com answers 200 and never names Benzie \u2014 not taken as the county's own site",
-    "benziecounty.net unreachable (SSLError)",
-    "benziecounty.org unreachable (SSLError)",
-    "benziecountymi.com answers 200 and never names Benzie \u2014 not taken as the county's own site",
-    "www.benziecounty.com unreachable (SSLError)",
-    "www.benziecounty.net unreachable (SSLError)",
-    "www.benziecounty.org unreachable (SSLError)",
-    "www.benziecountymi.com answers 200 and never names Benzie \u2014 not taken as the county's own site",
-    "bengov.com answers 200 and never names Benzie \u2014 not taken as the county's own site",
+    "benziecounty.com answers HTTP 200 in 114 bytes and never names Benzie on any of 3 fetches \u2014 not taken as the county's own site",
+    "benziecounty.net unreachable after 3 tries (SSLError)",
+    "benziecounty.org unreachable after 3 tries (SSLError)",
+    "benziecountymi.com answers HTTP 200 in 114 bytes and never names Benzie on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.benziecounty.com answers HTTP 200 in 114 bytes and never names Benzie on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.benziecounty.net unreachable after 3 tries (SSLError)",
+    "www.benziecounty.org unreachable after 3 tries (SSLError)",
+    "www.benziecountymi.com answers HTTP 200 in 114 bytes and never names Benzie on any of 3 fetches \u2014 not taken as the county's own site",
+    "bengov.com unreachable after 3 tries (ConnectionError)",
     "benzie.org: neither its sitemap nor its front page names a board page"
    ],
    "pop": 17970,
@@ -2681,9 +2679,9 @@
      "why": "names-another"
     },
     {
-     "detail": "HTTPSConnectionPool(host='www.benziecounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLErro",
+     "detail": null,
      "host": "www.benziecounty.com",
-     "why": "unreachable"
+     "why": "names-another"
     },
     {
      "detail": "HTTPSConnectionPool(host='www.benziecounty.net', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLEOFE",
@@ -2701,9 +2699,9 @@
      "why": "names-another"
     },
     {
-     "detail": null,
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
      "host": "bengov.com",
-     "why": "names-another"
+     "why": "unreachable"
     }
    ],
    "resolved": 18,
@@ -2738,16 +2736,16 @@
    "fips": "079",
    "host": "kalkaskacounty.net",
    "notes": [
-    "kalcounty.gov answers 200 and never names Kalkaska \u2014 not taken as the county's own site",
-    "www.kalcounty.gov answers 200 and never names Kalkaska \u2014 not taken as the county's own site",
-    "kalcounty.com answers 200 and never names Kalkaska \u2014 not taken as the county's own site",
-    "kalcounty.org answers 200 and never names Kalkaska \u2014 not taken as the county's own site",
-    "www.kalcounty.com answers 200 and never names Kalkaska \u2014 not taken as the county's own site",
-    "www.kalcounty.org answers 200 and never names Kalkaska \u2014 not taken as the county's own site",
-    "kalkaskacounty.com unreachable (SSLError)",
-    "www.kalkaskacounty.com unreachable (SSLError)",
-    "kalgov.com answers 200 and never names Kalkaska \u2014 not taken as the county's own site",
-    "kalgov.org answers 200 and never names Kalkaska \u2014 not taken as the county's own site"
+    "kalcounty.gov answers HTTP 200 in 274197 bytes and never names Kalkaska on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.kalcounty.gov answers a WAF challenge (server 'cloudflare') \u2014 an access control, not read and not worked around",
+    "kalcounty.com answers HTTP 200 in 274197 bytes and never names Kalkaska on any of 3 fetches \u2014 not taken as the county's own site",
+    "kalcounty.org answers a WAF challenge (server 'cloudflare') \u2014 an access control, not read and not worked around",
+    "www.kalcounty.com answers HTTP 200 in 274197 bytes and never names Kalkaska on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.kalcounty.org answers a WAF challenge (server 'cloudflare') \u2014 an access control, not read and not worked around",
+    "kalkaskacounty.com unreachable after 3 tries (SSLError)",
+    "www.kalkaskacounty.com unreachable after 3 tries (SSLError)",
+    "kalgov.com unreachable after 3 tries (ConnectionError)",
+    "kalgov.org answers HTTP 200 in 120613 bytes and never names Kalkaska on any of 3 fetches \u2014 not taken as the county's own site"
    ],
    "pop": 17939,
    "rejected": [
@@ -2757,9 +2755,9 @@
      "why": "names-another"
     },
     {
-     "detail": null,
+     "detail": "WAF challenge (server 'cloudflare')",
      "host": "www.kalcounty.gov",
-     "why": "names-another"
+     "why": "challenge"
     },
     {
      "detail": null,
@@ -2767,9 +2765,9 @@
      "why": "names-another"
     },
     {
-     "detail": null,
+     "detail": "WAF challenge (server 'cloudflare')",
      "host": "kalcounty.org",
-     "why": "names-another"
+     "why": "challenge"
     },
     {
      "detail": null,
@@ -2777,9 +2775,9 @@
      "why": "names-another"
     },
     {
-     "detail": null,
+     "detail": "WAF challenge (server 'cloudflare')",
      "host": "www.kalcounty.org",
-     "why": "names-another"
+     "why": "challenge"
     },
     {
      "detail": "HTTPSConnectionPool(host='kalkaskacounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVe",
@@ -2792,9 +2790,9 @@
      "why": "unreachable"
     },
     {
-     "detail": null,
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
      "host": "kalgov.com",
-     "why": "names-another"
+     "why": "unreachable"
     },
     {
      "detail": null,
@@ -2814,8 +2812,8 @@
    "fips": "113",
    "host": "missaukee.org",
    "notes": [
-    "missaukeecounty.com answers 200 and never names Missaukee \u2014 not taken as the county's own site",
-    "www.missaukeecounty.com unreachable (SSLError)",
+    "missaukeecounty.com answers HTTP 200 in 114 bytes and never names Missaukee on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.missaukeecounty.com answers HTTP 200 in 114 bytes and never names Missaukee on any of 3 fetches \u2014 not taken as the county's own site",
     "missaukee.org: neither its sitemap nor its front page names a board page",
     "www.missaukee.org: neither its sitemap nor its front page names a board page",
     "no confirmed host carries a board page this client can read"
@@ -2828,9 +2826,9 @@
      "why": "names-another"
     },
     {
-     "detail": "HTTPSConnectionPool(host='www.missaukeecounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLE",
+     "detail": null,
      "host": "www.missaukeecounty.com",
-     "why": "unreachable"
+     "why": "names-another"
     }
    ],
    "resolved": 4,
@@ -2863,12 +2861,12 @@
    "fips": "011",
    "host": "arenaccountymi.gov",
    "notes": [
-    "co.arenac.mi.us unreachable (SSLError)",
-    "www.co.arenac.mi.us unreachable (SSLError)",
-    "arenaccounty.com answers 200 and never names Arenac \u2014 not taken as the county's own site",
-    "www.arenaccounty.com unreachable (SSLError)",
-    "aregov.com is a CATCH-ALL \u2014 an impossible path returns 3329 bytes against the root's 3274, so a 200 here proves nothing",
-    "www.aregov.com is a CATCH-ALL \u2014 an impossible path returns 3338 bytes against the root's 3338, so a 200 here proves nothing",
+    "co.arenac.mi.us unreachable after 3 tries (SSLError)",
+    "www.co.arenac.mi.us unreachable after 3 tries (SSLError)",
+    "arenaccounty.com answers HTTP 200 in 114 bytes and never names Arenac on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.arenaccounty.com answers HTTP 200 in 114 bytes and never names Arenac on any of 3 fetches \u2014 not taken as the county's own site",
+    "aregov.com answers HTTP 200 in 3299 bytes and never names Arenac on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.aregov.com answers HTTP 200 in 3313 bytes and never names Arenac on any of 3 fetches \u2014 not taken as the county's own site",
     "www.arenac.org HTTP 404 on /"
    ],
    "pop": 15002,
@@ -2889,19 +2887,19 @@
      "why": "names-another"
     },
     {
-     "detail": "HTTPSConnectionPool(host='www.arenaccounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLErro",
+     "detail": null,
      "host": "www.arenaccounty.com",
-     "why": "unreachable"
+     "why": "names-another"
     },
     {
      "detail": null,
      "host": "aregov.com",
-     "why": "catch-all"
+     "why": "names-another"
     },
     {
      "detail": null,
      "host": "www.aregov.com",
-     "why": "catch-all"
+     "why": "names-another"
     },
     {
      "detail": null,
@@ -2941,8 +2939,8 @@
    "fips": "053",
    "host": "gogebiccountymi.gov",
    "notes": [
-    "gogebiccounty.com answers 200 and never names Gogebic \u2014 not taken as the county's own site",
-    "www.gogebiccounty.com unreachable (SSLError)"
+    "gogebiccounty.com answers HTTP 200 in 114 bytes and never names Gogebic on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.gogebiccounty.com answers HTTP 200 in 114 bytes and never names Gogebic on any of 3 fetches \u2014 not taken as the county's own site"
    ],
    "pop": 14380,
    "rejected": [
@@ -2952,9 +2950,9 @@
      "why": "names-another"
     },
     {
-     "detail": "HTTPSConnectionPool(host='www.gogebiccounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLErr",
+     "detail": null,
      "host": "www.gogebiccounty.com",
-     "why": "unreachable"
+     "why": "names-another"
     }
    ],
    "resolved": 8,
@@ -2981,14 +2979,14 @@
    "fips": "039",
    "host": "crawfordco.org",
    "notes": [
-    "crawfordcounty.com answers 200 and never names Crawford \u2014 not taken as the county's own site",
-    "www.crawfordcounty.com answers 200 and never names Crawford \u2014 not taken as the county's own site",
-    "crawford.org unreachable (SSLError)",
-    "crawfordco.com answers 200 and never names Crawford \u2014 not taken as the county's own site",
-    "micrawford.com unreachable (SSLError)",
-    "www.crawford.org unreachable (SSLError)",
-    "www.crawfordco.com answers 200 and never names Crawford \u2014 not taken as the county's own site",
-    "www.micrawford.com unreachable (SSLError)",
+    "crawfordcounty.com answers HTTP 200 in 114 bytes and never names Crawford on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.crawfordcounty.com answers HTTP 200 in 114 bytes and never names Crawford on any of 3 fetches \u2014 not taken as the county's own site",
+    "crawford.org unreachable after 3 tries (SSLError)",
+    "crawfordco.com answers HTTP 200 in 114 bytes and never names Crawford on any of 3 fetches \u2014 not taken as the county's own site",
+    "micrawford.com unreachable after 3 tries (SSLError)",
+    "www.crawford.org unreachable after 3 tries (SSLError)",
+    "www.crawfordco.com answers HTTP 200 in 114 bytes and never names Crawford on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.micrawford.com unreachable after 3 tries (SSLError)",
     "crawford-county.com: neither its sitemap nor its front page names a board page",
     "www.crawford-county.com: neither its sitemap nor its front page names a board page",
     "www.crawfordco.org: neither its sitemap nor its front page names a board page"
@@ -3066,14 +3064,14 @@
    "fips": "141",
    "host": "presqueislecounty.org",
    "notes": [
-    "presqueislecounty.com answers 200 and never names Presque Isle \u2014 not taken as the county's own site",
-    "www.presqueislecounty.com answers 200 and never names Presque Isle \u2014 not taken as the county's own site",
-    "pi.org answers 200 and never names Presque Isle \u2014 not taken as the county's own site",
-    "pigov.com answers 200 and never names Presque Isle \u2014 not taken as the county's own site",
-    "pregov.com answers 200 and never names Presque Isle \u2014 not taken as the county's own site",
-    "www.pi.org answers 200 and never names Presque Isle \u2014 not taken as the county's own site",
-    "www.pigov.com answers 200 and never names Presque Isle \u2014 not taken as the county's own site",
-    "www.pregov.com answers 200 and never names Presque Isle \u2014 not taken as the county's own site"
+    "presqueislecounty.com answers HTTP 200 in 114 bytes and never names Presque Isle on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.presqueislecounty.com answers HTTP 200 in 114 bytes and never names Presque Isle on any of 3 fetches \u2014 not taken as the county's own site",
+    "pi.org answers HTTP 200 in 83314 bytes and never names Presque Isle on any of 3 fetches \u2014 not taken as the county's own site",
+    "pigov.com answers HTTP 200 in 73 bytes and never names Presque Isle on any of 3 fetches \u2014 not taken as the county's own site",
+    "pregov.com answers HTTP 200 in 105358 bytes and never names Presque Isle on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.pi.org answers HTTP 200 in 83314 bytes and never names Presque Isle on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.pigov.com answers HTTP 200 in 73 bytes and never names Presque Isle on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.pregov.com answers HTTP 200 in 105358 bytes and never names Presque Isle on any of 3 fetches \u2014 not taken as the county's own site"
    ],
    "pop": 12982,
    "rejected": [
@@ -3130,15 +3128,12 @@
    "fips": "071",
    "host": "ironcounty.us",
    "notes": [
-    "ironcounty.com answers 200 and never names Iron \u2014 not taken as the county's own site",
-    "ironcounty.org is a CATCH-ALL \u2014 an impossible path returns 515 bytes against the root's 476, so a 200 here proves nothing",
-    "www.ironcounty.com answers 200 and never names Iron \u2014 not taken as the county's own site",
-    "www.ironcounty.org is a CATCH-ALL \u2014 an impossible path returns 519 bytes against the root's 480, so a 200 here proves nothing",
-    "ironco.us answers 200 and never names Iron \u2014 not taken as the county's own site",
-    "coiron.com HTTP 404 on /",
-    "ironco.com answers 200 and never names Iron \u2014 not taken as the county's own site",
+    "ironcounty.com answers HTTP 200 in 114 bytes and never names Iron on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.ironcounty.com answers HTTP 200 in 114 bytes and never names Iron on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.ironcounty.org unreachable after 3 tries (ConnectionError)",
     "ironcounty.us: neither its sitemap nor its front page names a board page",
     "ironcounty.net: neither its sitemap nor its front page names a board page",
+    "ironcounty.org: neither its sitemap nor its front page names a board page",
     "www.ironcounty.us: neither its sitemap nor its front page names a board page",
     "www.ironcounty.net: neither its sitemap nor its front page names a board page",
     "iron.org: neither its sitemap nor its front page names a board page",
@@ -3153,33 +3148,13 @@
     },
     {
      "detail": null,
-     "host": "ironcounty.org",
-     "why": "catch-all"
-    },
-    {
-     "detail": null,
      "host": "www.ironcounty.com",
      "why": "names-another"
     },
     {
-     "detail": null,
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
      "host": "www.ironcounty.org",
-     "why": "catch-all"
-    },
-    {
-     "detail": null,
-     "host": "ironco.us",
-     "why": "names-another"
-    },
-    {
-     "detail": null,
-     "host": "coiron.com",
-     "why": "http-404"
-    },
-    {
-     "detail": null,
-     "host": "ironco.com",
-     "why": "names-another"
+     "why": "unreachable"
     }
    ],
    "resolved": 18,
@@ -3214,14 +3189,14 @@
    "fips": "085",
    "host": "lakecountymi.gov",
    "notes": [
-    "co.lake.mi.us unreachable (ConnectionError)",
-    "www.co.lake.mi.us unreachable (ConnectionError)",
-    "lakecounty.us answers 200 and never names Lake \u2014 not taken as the county's own site",
-    "lakecounty.com answers 200 and never names Lake \u2014 not taken as the county's own site",
-    "lakecounty.net answers 200 and never names Lake \u2014 not taken as the county's own site",
-    "lakecounty.org unreachable (ConnectionError)",
-    "lake-county.org answers 200 and never names Lake \u2014 not taken as the county's own site",
-    "lakecountymi.com answers 200 and never names Lake \u2014 not taken as the county's own site",
+    "co.lake.mi.us unreachable after 3 tries (ConnectionError)",
+    "www.co.lake.mi.us unreachable after 3 tries (ConnectionError)",
+    "lakecounty.us HTTP 404 on /",
+    "lakecounty.com answers a HTTP 202, which is never a document \u2014 an access control, not read and not worked around",
+    "lakecounty.net answers HTTP 200 in 114 bytes and never names Lake on any of 3 fetches \u2014 not taken as the county's own site",
+    "lakecounty.org unreachable after 3 tries (ConnectionError)",
+    "lake-county.org answers HTTP 200 in 114 bytes and never names Lake on any of 3 fetches \u2014 not taken as the county's own site",
+    "lakecountymi.com answers HTTP 200 in 114 bytes and never names Lake on any of 3 fetches \u2014 not taken as the county's own site",
     "www.lakecounty.us HTTP 404 on /"
    ],
    "pop": 11029,
@@ -3239,12 +3214,12 @@
     {
      "detail": null,
      "host": "lakecounty.us",
-     "why": "names-another"
+     "why": "http-404"
     },
     {
-     "detail": null,
+     "detail": "HTTP 202, which is never a document",
      "host": "lakecounty.com",
-     "why": "names-another"
+     "why": "challenge"
     },
     {
      "detail": null,
@@ -3302,8 +3277,8 @@
    "fips": "097",
    "host": "mackinaccounty.net",
    "notes": [
-    "mackinaccounty.com answers 200 and never names Mackinac \u2014 not taken as the county's own site",
-    "www.mackinaccounty.com unreachable (SSLError)"
+    "mackinaccounty.com answers HTTP 200 in 114 bytes and never names Mackinac on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.mackinaccounty.com answers HTTP 200 in 114 bytes and never names Mackinac on any of 3 fetches \u2014 not taken as the county's own site"
    ],
    "pop": 10834,
    "rejected": [
@@ -3313,9 +3288,9 @@
      "why": "names-another"
     },
     {
-     "detail": "HTTPSConnectionPool(host='www.mackinaccounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLEr",
+     "detail": null,
      "host": "www.mackinaccounty.com",
-     "why": "unreachable"
+     "why": "names-another"
     }
    ],
    "resolved": 6,
@@ -3348,10 +3323,13 @@
    "fips": "001",
    "host": "alconacountymi.com",
    "notes": [
-    "alconacounty.com answers 200 and never names Alcona \u2014 not taken as the county's own site",
-    "alcona-county.com unreachable (SSLError)",
-    "www.alconacounty.com answers 200 and never names Alcona \u2014 not taken as the county's own site",
-    "www.alcona-county.com unreachable (SSLError)",
+    "alconacounty.com answers HTTP 200 in 114 bytes and never names Alcona on any of 3 fetches \u2014 not taken as the county's own site",
+    "alcona-county.com unreachable after 3 tries (SSLError)",
+    "www.alconacounty.com answers HTTP 200 in 114 bytes and never names Alcona on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.alcona-county.com unreachable after 3 tries (SSLError)",
+    "www.alcona-county.org unreachable after 3 tries (ConnectionError)",
+    "alcona.org HTTP 403 on /",
+    "www.alcona.org HTTP 403 on /",
     "alconacounty.gov: neither its sitemap nor its front page names a board page",
     "www.alconacounty.gov: neither its sitemap nor its front page names a board page",
     "alcona-county.org: neither its sitemap nor its front page names a board page"
@@ -3377,6 +3355,21 @@
      "detail": "HTTPSConnectionPool(host='www.alcona-county.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLEOF",
      "host": "www.alcona-county.com",
      "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.alcona-county.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "alcona.org",
+     "why": "http-403"
+    },
+    {
+     "detail": null,
+     "host": "www.alcona.org",
+     "why": "http-403"
     }
    ],
    "resolved": 12,
@@ -3391,16 +3384,16 @@
    "fips": "119",
    "host": null,
    "notes": [
-    "moncounty.com answers 200 and never names Montmorency \u2014 not taken as the county's own site",
-    "www.moncounty.com answers 200 and never names Montmorency \u2014 not taken as the county's own site",
-    "montmorencycounty.us answers 200 and never names Montmorency \u2014 not taken as the county's own site",
-    "montmorencycounty.com answers 200 and never names Montmorency \u2014 not taken as the county's own site",
-    "www.montmorencycounty.us unreachable (SSLError)",
-    "www.montmorencycounty.com unreachable (SSLError)",
-    "mongov.com answers 200 and never names Montmorency \u2014 not taken as the county's own site",
-    "www.mongov.com answers 200 and never names Montmorency \u2014 not taken as the county's own site",
-    "montmorency.org answers 200 and never names Montmorency \u2014 not taken as the county's own site",
-    "www.montmorency.org answers 200 and never names Montmorency \u2014 not taken as the county's own site"
+    "moncounty.com answers HTTP 200 in 114 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.moncounty.com answers HTTP 200 in 114 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site",
+    "montmorencycounty.us answers HTTP 200 in 114 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site",
+    "montmorencycounty.com answers HTTP 200 in 114 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.montmorencycounty.us answers HTTP 200 in 114 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.montmorencycounty.com answers HTTP 200 in 114 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site",
+    "mongov.com answers HTTP 200 in 159542 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.mongov.com answers HTTP 200 in 159542 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site",
+    "montmorency.org answers HTTP 200 in 114 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.montmorency.org answers HTTP 200 in 114 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site"
    ],
    "pop": 9153,
    "rejected": [
@@ -3425,14 +3418,14 @@
      "why": "names-another"
     },
     {
-     "detail": "HTTPSConnectionPool(host='www.montmorencycounty.us', port=443): Max retries exceeded with url: / (Caused by SSLError(SSL",
+     "detail": null,
      "host": "www.montmorencycounty.us",
-     "why": "unreachable"
+     "why": "names-another"
     },
     {
-     "detail": "HTTPSConnectionPool(host='www.montmorencycounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SS",
+     "detail": null,
      "host": "www.montmorencycounty.com",
-     "why": "unreachable"
+     "why": "names-another"
     },
     {
      "detail": null,
@@ -3485,11 +3478,9 @@
    "fips": "135",
    "host": "oscodacountymi.com",
    "notes": [
-    "oscodacounty.org unreachable (SSLError)",
+    "oscodacounty.org unreachable after 3 tries (SSLError)",
     "oscodacountymi.org HTTP 404 on /",
-    "www.oscodacountymi.org HTTP 404 on /",
-    "oscoda.org unreachable (ConnectionError)",
-    "www.oscoda.org unreachable (ConnectionError)"
+    "www.oscodacountymi.org HTTP 404 on /"
    ],
    "pop": 8219,
    "rejected": [
@@ -3507,16 +3498,6 @@
      "detail": null,
      "host": "www.oscodacountymi.org",
      "why": "http-404"
-    },
-    {
-     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
-     "host": "oscoda.org",
-     "why": "unreachable"
-    },
-    {
-     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
-     "host": "www.oscoda.org",
-     "why": "unreachable"
     }
    ],
    "resolved": 7,
@@ -3549,12 +3530,12 @@
    "fips": "153",
    "host": "schoolcraftcounty.net",
    "notes": [
-    "schoolcraftcounty.us answers 200 and never names Schoolcraft \u2014 not taken as the county's own site",
-    "schoolcraftcounty.com answers 200 and never names Schoolcraft \u2014 not taken as the county's own site",
-    "www.schoolcraftcounty.us answers 200 and never names Schoolcraft \u2014 not taken as the county's own site",
-    "www.schoolcraftcounty.com answers 200 and never names Schoolcraft \u2014 not taken as the county's own site",
-    "mischoolcraft.org unreachable (SSLError)",
-    "www.mischoolcraft.org unreachable (SSLError)"
+    "schoolcraftcounty.us answers HTTP 200 in 114 bytes and never names Schoolcraft on any of 3 fetches \u2014 not taken as the county's own site",
+    "schoolcraftcounty.com answers HTTP 200 in 114 bytes and never names Schoolcraft on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.schoolcraftcounty.us answers HTTP 200 in 114 bytes and never names Schoolcraft on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.schoolcraftcounty.com answers HTTP 200 in 114 bytes and never names Schoolcraft on any of 3 fetches \u2014 not taken as the county's own site",
+    "mischoolcraft.org unreachable after 3 tries (SSLError)",
+    "www.mischoolcraft.org unreachable after 3 tries (SSLError)"
    ],
    "pop": 8047,
    "rejected": [
@@ -3633,14 +3614,14 @@
    "fips": "013",
    "host": "baragacounty.org",
    "notes": [
-    "baragacounty.gov unreachable (SSLError)",
-    "www.baragacounty.gov unreachable (SSLError)",
-    "baragacounty.com answers 200 and never names Baraga \u2014 not taken as the county's own site",
-    "www.baragacounty.com answers 200 and never names Baraga \u2014 not taken as the county's own site",
-    "baraga.org answers 200 and never names Baraga \u2014 not taken as the county's own site",
-    "bargov.com unreachable (SSLError)",
-    "www.baraga.org answers 200 and never names Baraga \u2014 not taken as the county's own site",
-    "www.bargov.com unreachable (SSLError)",
+    "baragacounty.gov unreachable after 3 tries (SSLError)",
+    "www.baragacounty.gov unreachable after 3 tries (SSLError)",
+    "baragacounty.com answers HTTP 200 in 114 bytes and never names Baraga on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.baragacounty.com answers HTTP 200 in 114 bytes and never names Baraga on any of 3 fetches \u2014 not taken as the county's own site",
+    "baraga.org answers HTTP 200 in 114 bytes and never names Baraga on any of 3 fetches \u2014 not taken as the county's own site",
+    "bargov.com unreachable after 3 tries (SSLError)",
+    "www.baraga.org answers HTTP 200 in 114 bytes and never names Baraga on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.bargov.com unreachable after 3 tries (SSLError)",
     "baragacounty.org: neither its sitemap nor its front page names a board page",
     "www.baragacounty.org: neither its sitemap nor its front page names a board page",
     "no confirmed host carries a board page this client can read"
@@ -3718,12 +3699,12 @@
    "fips": "131",
    "host": "ontonagoncounty.org",
    "notes": [
-    "ontonagoncounty.com answers 200 and never names Ontonagon \u2014 not taken as the county's own site",
-    "www.ontonagoncounty.com answers 200 and never names Ontonagon \u2014 not taken as the county's own site",
-    "ontgov.com unreachable (ConnectionError)",
-    "ontonagon.org unreachable (ProxyError)",
-    "www.ontgov.com unreachable (ConnectionError)",
-    "www.ontonagon.org unreachable (ProxyError)"
+    "ontonagoncounty.com answers HTTP 200 in 114 bytes and never names Ontonagon on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.ontonagoncounty.com answers HTTP 200 in 114 bytes and never names Ontonagon on any of 3 fetches \u2014 not taken as the county's own site",
+    "ontgov.com unreachable after 3 tries (ConnectionError)",
+    "ontonagon.org unreachable after 3 tries (ProxyError)",
+    "www.ontgov.com unreachable after 3 tries (ConnectionError)",
+    "www.ontonagon.org unreachable after 3 tries (ProxyError)"
    ],
    "pop": 5816,
    "rejected": [
@@ -3788,15 +3769,15 @@
    "fips": "095",
    "host": "lucecountymi.com",
    "notes": [
-    "lucecounty.com answers 200 and never names Luce \u2014 not taken as the county's own site",
-    "lucecountymi.org unreachable (ConnectionError)",
-    "www.lucecounty.com answers 200 and never names Luce \u2014 not taken as the county's own site",
-    "www.lucecountymi.org unreachable (ConnectionError)",
-    "luce.org is a CATCH-ALL \u2014 an impossible path returns 13068 bytes against the root's 13029, so a 200 here proves nothing",
-    "luceco.us answers 200 and never names Luce \u2014 not taken as the county's own site",
-    "coluce.com unreachable (ConnectionError)",
+    "lucecounty.com answers HTTP 200 in 114 bytes and never names Luce on any of 3 fetches \u2014 not taken as the county's own site",
+    "lucecountymi.org unreachable after 3 tries (ConnectionError)",
+    "www.lucecounty.com answers HTTP 200 in 114 bytes and never names Luce on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.lucecountymi.org unreachable after 3 tries (ConnectionError)",
+    "luce.org is a CATCH-ALL \u2014 an impossible path returns 785952 bytes against the root's 785952, so a 200 here proves nothing",
+    "luceco.us answers HTTP 200 in 114 bytes and never names Luce on any of 3 fetches \u2014 not taken as the county's own site",
+    "coluce.com unreachable after 3 tries (ConnectionError)",
     "luceco.com is a CATCH-ALL \u2014 an impossible path returns 85852 bytes against the root's 85852, so a 200 here proves nothing",
-    "luceco.org answers 200 and never names Luce \u2014 not taken as the county's own site"
+    "luceco.org answers HTTP 200 in 114 bytes and never names Luce on any of 3 fetches \u2014 not taken as the county's own site"
    ],
    "pop": 5339,
    "rejected": [
@@ -3858,14 +3839,14 @@
    "fips": "083",
    "host": "keweenaw.org",
    "notes": [
-    "keweenawcounty.com answers 200 and never names Keweenaw \u2014 not taken as the county's own site",
-    "keweenawcounty.net is a CATCH-ALL \u2014 an impossible path returns 43848 bytes against the root's 43848, so a 200 here proves nothing",
-    "keweenawcounty.org is a CATCH-ALL \u2014 an impossible path returns 43848 bytes against the root's 43848, so a 200 here proves nothing",
-    "www.keweenawcounty.com answers 200 and never names Keweenaw \u2014 not taken as the county's own site",
-    "www.keweenawcounty.net is a CATCH-ALL \u2014 an impossible path returns 43848 bytes against the root's 43848, so a 200 here proves nothing",
-    "www.keweenawcounty.org is a CATCH-ALL \u2014 an impossible path returns 43848 bytes against the root's 43848, so a 200 here proves nothing",
-    "keweenawco.com answers 200 and never names Keweenaw \u2014 not taken as the county's own site",
-    "www.keweenawco.com answers 200 and never names Keweenaw \u2014 not taken as the county's own site",
+    "keweenawcounty.com answers HTTP 200 in 114 bytes and never names Keweenaw on any of 3 fetches \u2014 not taken as the county's own site",
+    "keweenawcounty.net is a CATCH-ALL \u2014 an impossible path returns 43803 bytes against the root's 43803, so a 200 here proves nothing",
+    "keweenawcounty.org is a CATCH-ALL \u2014 an impossible path returns 43803 bytes against the root's 43803, so a 200 here proves nothing",
+    "www.keweenawcounty.com answers HTTP 200 in 114 bytes and never names Keweenaw on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.keweenawcounty.net is a CATCH-ALL \u2014 an impossible path returns 43803 bytes against the root's 43803, so a 200 here proves nothing",
+    "www.keweenawcounty.org is a CATCH-ALL \u2014 an impossible path returns 43803 bytes against the root's 43803, so a 200 here proves nothing",
+    "keweenawco.com answers HTTP 200 in 114 bytes and never names Keweenaw on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.keweenawco.com answers HTTP 200 in 114 bytes and never names Keweenaw on any of 3 fetches \u2014 not taken as the county's own site",
     "keweenaw.org: neither its sitemap nor its front page names a board page",
     "www.keweenaw.org: neither its sitemap nor its front page names a board page",
     "no confirmed host carries a board page this client can read"
@@ -3945,15 +3926,15 @@
    "fips": "031",
    "host": "cheboygancounty.net",
    "notes": [
-    "cheboygancounty.us unreachable (ConnectionError)",
-    "cheboygancounty.com answers 200 and never names Cheboygan \u2014 not taken as the county's own site",
+    "cheboygancounty.us unreachable after 3 tries (ConnectionError)",
+    "cheboygancounty.com answers HTTP 200 in 114 bytes and never names Cheboygan on any of 3 fetches \u2014 not taken as the county's own site",
     "cheboygancounty.org HTTP 403 on /",
-    "www.cheboygancounty.us unreachable (ConnectionError)",
-    "www.cheboygancounty.com answers 200 and never names Cheboygan \u2014 not taken as the county's own site",
+    "www.cheboygancounty.us unreachable after 3 tries (ConnectionError)",
+    "www.cheboygancounty.com answers HTTP 200 in 114 bytes and never names Cheboygan on any of 3 fetches \u2014 not taken as the county's own site",
     "www.cheboygancounty.org HTTP 403 on /",
-    "chegov.com answers 200 and never names Cheboygan \u2014 not taken as the county's own site",
-    "www.chegov.com answers 200 and never names Cheboygan \u2014 not taken as the county's own site",
-    "micheboygan.com answers 200 and never names Cheboygan \u2014 not taken as the county's own site",
+    "chegov.com answers HTTP 200 in 114 bytes and never names Cheboygan on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.chegov.com answers HTTP 200 in 114 bytes and never names Cheboygan on any of 3 fetches \u2014 not taken as the county's own site",
+    "micheboygan.com answers HTTP 200 in 114 bytes and never names Cheboygan on any of 3 fetches \u2014 not taken as the county's own site",
     "crawl-delay honoured: {'cheboygancounty.net': 10.0, 'cheboygan.org': 10.0}"
    ],
    "pop": 0,
@@ -4010,5 +3991,5 @@
    "verdict": "candidate"
   }
  ],
- "measured": "2026-09-15"
+ "measured": "2026-09-18"
 }
