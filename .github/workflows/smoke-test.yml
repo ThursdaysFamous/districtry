@@ -458,6 +458,15 @@ jobs:
       - name: The steward skill runs the same battery this job does
         run: python3 scripts/validate_steward_mirror.py
 
+      # CLAUDE.md states this battery's size twice — as named steps and as
+      # invocations — and that pair moves whenever anything merges here. Its own
+      # paragraph records the figure going stale seven times in two days, and
+      # nothing measured it, so the pair was eventually re-derived by arithmetic
+      # on a figure that was itself wrong and described a state no commit ever
+      # had. Every one of those numbers was in git the whole time.
+      - name: CLAUDE.md states the size of the battery this job runs
+        run: python3 scripts/validate_gate_counts.py
+
       # The graph the generated pages publish: 183 county boards, 20 rostered
       # question pages and six data catalogues. Each generator's --check proves
       # its page matches what that generator produces today, which is a different
