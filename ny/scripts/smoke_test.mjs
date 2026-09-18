@@ -130,6 +130,28 @@ try {
       () => document.querySelectorAll('input[type=checkbox][id^="toggle-"]').length
     );
     check(`${EXPECT_LAYERS} layers registered`, n === EXPECT_LAYERS, `found ${n}`);
+
+    // THE APOSTROPHE RULE, asserted with no network call, because it is a pure
+    // string function whose two halves pull in opposite directions and a later
+    // edit can re-break one while the other still looks right. Measured across
+    // the fleet's shipped data 2026-09-18: a single letter before an apostrophe
+    // takes the capital (O'Brien, D'Arc, L'Anse), two or more do not (John's,
+    // Children's), a digit before it is a possessive (D2's), and a leading
+    // apostrophe opens a quote ('Tis). ST. JOHN'S CHURCH rendered
+    // "St. John'S Church" until this was fixed.
+    const tc = await page.evaluate(() => {
+      const f = window.NycExplorer.toTitleCase;
+      return [["ST. JOHN'S CHURCH", "St. John's Church"], ["O'BRIEN", "O'Brien"],
+              ["LAND O'LAKES", "Land O'Lakes"], ["D'ANGELO", "D'Angelo"],
+              ["VETERANS' HALL", "Veterans' Hall"], ["MCDONALD'S", "Mcdonald's"],
+              ["D2'S BLOCK", "D2's Block"], ["'TIS", "'Tis"],
+              ["J. LEO O'BRIEN SENIOR FACILITY", "J. Leo O'Brien Senior Facility"]]
+        .map(([input, want]) => ({ input, want, got: f(input) }))
+        .filter((r) => r.got !== r.want);
+    });
+    check("toTitleCase keeps O'Brien's capital and leaves John's alone",
+      tc.length === 0,
+      tc.length ? tc.map((r) => `${r.input} -> ${r.got} (want ${r.want})`).join("; ") : "9/9 cases");
     await context.close();
   }
 

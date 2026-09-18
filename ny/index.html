@@ -8822,9 +8822,109 @@ function initNycExplorer() {
    * scrape lands, and the precinct card degrades honestly without it.
    * ======================================================================= */
 
-  // Title-case an ALL-CAPS/loose string (FacDB names + addresses are uppercase).
+  /* Title-case an ALL-CAPS/loose string (FacDB names + addresses are uppercase).
+   *
+   * THE LETTER AFTER AN APOSTROPHE IS THE WHOLE DIFFICULTY. `\b` fires after an
+   * apostrophe exactly as it does after a space, so the plain
+   * `.replace(/\b([a-z])/g, uppercase)` this function used to be rendered
+   * ST. JOHN'S CHURCH as "St. John'S Church". Capitalising after every
+   * apostrophe and capitalising after none are both wrong: O'Brien, D'Arc and
+   * L'Anse want the capital and John's, Children's and Kids' do not.
+   *
+   * MEASURED 2026-09-18 ON THE DATA THAT REACHES THIS FUNCTION, which is not
+   * the same corpus as the app's shipped files: the poll sites, libraries and
+   * fire stations these nine calls title-case are fetched LIVE and never land
+   * in data/app. Across all 27,779 strings the six live tables publish
+   * (elections layers 0-3, FireStations, NYS_Schools 15), 98 carry an
+   * apostrophe and 65 of those are SHOUTING — which is the only input a
+   * title-caser judges, since titleCaseFacility returns a publisher-cased
+   * string untouched. At those 64 apostrophe positions:
+   *
+   *     the old function was wrong at 62 of 64.  This one is wrong at 2.
+   *
+   * The rule is: capitalise after the apostrophe only when exactly ONE letter
+   * precedes it. Two further characters decide the rest and both were found in
+   * the data rather than imagined — a DIGIT before means a possessive (`D2's`,
+   * `TID 55's`), and anything else means the apostrophe opens a QUOTE and the
+   * word starts there (`('Olney`, `'Tis`). Corroborated on a second corpus,
+   * the shipped data/app JSON of all six instances: 1,691 apostrophe-bearing
+   * tokens, judged at the 765 positions whose word the publisher had cased,
+   * old wrong at 690, this wrong at 1 — and that 1 is a truncated value in
+   * il/municipal-officials.json, not a casing question.
+   *
+   * THE THREE IT STILL GETS WRONG ARE ALL NAMED, because a single letter before
+   * an apostrophe is not always a name particle:
+   *   J'S WHITE ELEPHANT  -> "J'S White Elephant", wanting "J's"   (Oneida Co.)
+   *   TEMPLE B'RITH KODESH -> "Temple B'Rith Kodesh", wanting "B'rith"
+   *                                       (Monroe Co.; the congregation's own
+   *                                        spelling is Temple B'rith Kodesh)
+   *   E'VILLE-WARD 1..5   -> "E'Ville", wanting "E'ville" — Estherville's own
+   *                          abbreviation, in ia/data/app/ia-precincts.json.
+   *                          LATENT, not live: Iowa defines no title-caser, so
+   *                          those five ship as published. It is the sharpest
+   *                          argument against promoting this helper into
+   *                          engine/, because doing so would newly break them.
+   * The first is a single-letter possessive, the second a Hebrew proclitic, the
+   * third a place-name contraction. NO LETTER COUNT SEPARATES ANY OF THEM FROM
+   * O'Brien — the difference is lexical, not structural — so they are recorded
+   * here rather than papered over with a list of excluded letters, which would
+   * break N'Diaye and M'Bala the day one of those appears. The same reasoning excludes "i": I'm and I've are the
+   * pronoun contracted, measured 3 times in il/cpd-district-info.json, and
+   * excluding it costs the surname I'Anson, measured ABSENT from every
+   * instance and from all six live tables.
+   *
+   * Also deliberately wrong, and absent from every corpus checked: the Italian
+   * elided particles, where 3-4 letters precede and the capital is still
+   * wanted (Sant'Angelo -> "Sant'angelo", Dell'Aquila -> "Dell'aquila"). The
+   * old code got those right by accident while getting 62 of 64 live positions
+   * wrong. The day one appears it needs an explicit label, not a looser rule.
+   *
+   * IT STAYS IN THIS FILE RATHER THAN MOVING TO engine/. All 9 of its calls —
+   * on 6 lines, three of which call it twice — are in this file, and no sibling
+   * defines or calls anything of this name. engine/ exists to collapse a block
+   * that would otherwise be COPIED per instance, and there is exactly one copy
+   * either way, so promoting it buys no deduplication, splices a function none
+   * of the other five invokes, and would newly mis-render Iowa's five E'VILLE
+   * precincts.
+   *
+   * IT IS NOT, HOWEVER, THE ONLY TITLE-CASER — only the only one by this name,
+   * and the distinction was nearly missed. cardTitleCase lives in
+   * engine/index.html/card-helpers.txt, is spliced into all six instances, and
+   * carries the OPPOSITE defect: `charAt(0).toUpperCase() + slice(1)
+   * .toLowerCase()` renders O'FALLON as "O'fallon". It is live — il's
+   * registerCpsZone sets titleCaseData because the CPS feed is ALL-CAPS — but
+   * measured 2026-09-18 it is LATENT: none of the 712 name and address values
+   * in the CPS elementary feed contains an apostrophe at all. That is why this
+   * change does not widen into engine/ and all six instances: the defect there
+   * is real in code and unreachable in data, which is a different commit with
+   * a different blast radius. This project has already paid for uncalled code once:
+   * Michigan's inherited, never-called tigerStatewideLoader put a second
+   * loadArcGISPointGeoJSON call site in that file and made the generated
+   * privacy page claim a transmission the app does not make.
+   *
+   * THE PYTHON title_case() IN scripts/vtd_board_districts.py FAILS THE OTHER
+   * WAY and is deliberately not touched here: str.capitalize() lowercases the
+   * rest of the word, so O'FALLON becomes "O'fallon" while WRIGHT'S correctly
+   * becomes "Wright's". Its docstring says apostrophes are not special-cased
+   * because "no rule gets both". The measurement above shows a rule gets both
+   * in 62 of 64 live cases — but that function BAKES NAMES INTO SHIPPED DATA
+   * read by ~40 builders, so changing it is a data change with its own gates,
+   * not a render change, and it belongs in its own commit. */
   function toTitleCase(s) {
-    return String(s).toLowerCase().replace(/\b([a-z])/g, function (m, c) { return c.toUpperCase(); });
+    var lower = String(s).toLowerCase();
+    return lower.replace(/\b([a-z])/g, function (m, c, offset) {
+      if (offset > 0 && /['\u2019\u02bc]/.test(lower.charAt(offset - 1))) {
+        var prev = lower.charAt(offset - 2);
+        if (prev >= "0" && prev <= "9") return c;   // D2's, TID 55's, 1900's
+        var i = offset - 2, n = 0;
+        while (i >= 0 && lower.charAt(i) >= "a" && lower.charAt(i) <= "z") { n++; i--; }
+        if (n >= 2) return c;                       // John's, Children's, Kids'
+        if (n === 1 && prev === "i") return c;       // I'm, I've
+        // n === 0 leaves the apostrophe opening a quote, so the word starts
+        // here and takes its capital.
+      }
+      return c.toUpperCase();
+    });
   }
   /* ==== ENGINE:BEGIN int-field ==== */
   // Normalize a numeric-ish field to its integer string ("15.0" -> "15"); passes
@@ -11618,6 +11718,13 @@ function initNycExplorer() {
      dark mode at all. EXPLORER_EXPORTS is assigned OUTSIDE the exports fence
      (the window property is metro-branded), so extending it here touches no
      engine text. */
+  /* toTitleCase rides here rather than inside the exports fence above, for the
+     same reason setTheme does: the member list in that fence is ENGINE text and
+     this helper exists only in this instance. Exposed so the smoke test can
+     assert the apostrophe rule with no network call — it is a pure string
+     function whose two halves pull in opposite directions, which is exactly
+     what a later edit re-breaks while the card still looks right. */
+  EXPLORER_EXPORTS.toTitleCase = toTitleCase;
   EXPLORER_EXPORTS.setTheme = applyDistrictryTheme;
   EXPLORER_EXPORTS.getTheme = districtryTheme;
 
