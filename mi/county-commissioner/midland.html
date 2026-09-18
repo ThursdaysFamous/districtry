@@ -256,7 +256,12 @@ h1 {
 }
 .members { list-style: none; margin: 0; padding: 0; }
 .member { margin: 0 0 12px; }
-.m-name { display: block; font-weight: 650; }
+/* 700, not the 650 this was written with. 650 is a weight no face here
+   provides, so CSS font matching rounded it to the nearest face at or
+   above the request, which is 700 -- measured in Chromium, the rendered
+   advance width at 650 is identical to 700 and differs from 600. The
+   officeholder names have been drawing at 700 all along; this says so. */
+.m-name { display: block; font-weight: 700; }
 .m-role { display: block; font-size: 13px; color: var(--muted); }
 .m-party { display: block; font-size: 13px; color: var(--muted); }
 /* How old the name is. Small, and under the contact details rather than over

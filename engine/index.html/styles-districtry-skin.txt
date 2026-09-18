@@ -280,7 +280,12 @@
      unofficial, so a classifier had nothing to tell an independent civic
      reference from an impersonation of one. */
   .dpf-independence { color: var(--slate-soft); }
-  .dpf-independence strong { color: var(--ink); font-weight: 650; }
+  /* 700, not the 650 this was written with. No face anywhere in the fleet is
+     650, so CSS font matching rounds the request to the nearest face at or
+     above it — measured in Chromium, Barlow at 650 and at 700 render identical
+     advance widths where 600 differs, so this line has been drawing 700 since
+     it shipped. Saying 700 changes the stylesheet and not the page. */
+  .dpf-independence strong { color: var(--ink); font-weight: 700; }
   .dpf-independence a { color: var(--accent-deep); text-decoration: none; }
   .dpf-independence a:hover { text-decoration: underline; }
   /* The ROW gap is 10px rather than 2px because these links are 16.5px tall:

@@ -1583,7 +1583,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
     align-items: center;
     gap: 8px;
     font-family: var(--font-display);
-    font-weight: 800;
+    /* 700, not the 800 this was written with. Barlow Condensed ships here at
+       400/600/700, so an 800 request has no face at or above it and matching
+       falls back to 700 — measured in Chromium at 60px, the group heading
+       renders 395px wide and inks 9,165 pixels at 700, 800 and 900 alike,
+       against 600's 382px and 7,660. The panel headings have been drawing 700
+       since the rebrand; this says so. */
+    font-weight: 700;
     text-transform: uppercase;
     font-size: 19px;
     letter-spacing: 0.02em;
@@ -1982,7 +1988,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
     flex-wrap: wrap;
     gap: 4px 18px;
   }
-  .footer-meta strong { color: #fff; font-weight: 600; }
+  /* 500, not 600. This rule outlived the footer it was written for: the skin
+     hides `footer.site-footer` and moved the verified date into the results
+     panel, where this selector still reaches it — so it is the one .footer-meta
+     rule a reader actually meets. The app ships IBM Plex Mono at 400 and 500
+     only, so a 600 request has no face at or above it and Chromium EMBOLDENS
+     the 500 face. Measured on that date at 48px: 500 inks 6,285 pixels while
+     600 and 700 both ink 8,052 — the same number twice, which is the giveaway
+     that neither is a drawn face. 500 is the app's real mono emphasis weight. */
+  .footer-meta strong { color: #fff; font-weight: 500; }
   .footer-sources {
     margin-top: 18px;
     display: flex;
@@ -2856,7 +2870,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
      unofficial, so a classifier had nothing to tell an independent civic
      reference from an impersonation of one. */
   .dpf-independence { color: var(--slate-soft); }
-  .dpf-independence strong { color: var(--ink); font-weight: 650; }
+  /* 700, not the 650 this was written with. No face anywhere in the fleet is
+     650, so CSS font matching rounds the request to the nearest face at or
+     above it — measured in Chromium, Barlow at 650 and at 700 render identical
+     advance widths where 600 differs, so this line has been drawing 700 since
+     it shipped. Saying 700 changes the stylesheet and not the page. */
+  .dpf-independence strong { color: var(--ink); font-weight: 700; }
   .dpf-independence a { color: var(--accent-deep); text-decoration: none; }
   .dpf-independence a:hover { text-decoration: underline; }
   /* The ROW gap is 10px rather than 2px because these links are 16.5px tall:
