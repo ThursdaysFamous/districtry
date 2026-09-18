@@ -227,18 +227,37 @@ def _resolve(host, attempts=3):
     Marquette is the measured case. Sweep 1 read its board from
     co.marquette.mi.us; sweep 2 returned `no-board-page` and that host appears
     in neither the confirmed nor the rejected list, because its lookup failed
-    once and nothing retried it. The county was recorded as publishing no board
-    page on the strength of one dropped UDP packet.
+    once. validate_card_links.py already carries this rule for the same reason
+    -- a flaky parallel lookup there reported two live sites as having no DNS
+    record.
 
-    validate_card_links.py already carries this rule for the same reason -- a
-    flaky parallel lookup there reported two live sites as having no DNS record
-    -- and this file simply had not applied it."""
+    THE FIRST VERSION OF THIS RETRY COULD NOT RETRY, and the docstring claimed
+    it did. socket.gethostbyname raises gaierror for EVERY resolution failure,
+    both EAI_NONAME (-2, the name does not exist) and EAI_AGAIN (-3, a dropped
+    packet or a timeout), and the handler returned on the bare `except
+    socket.gaierror` under a comment calling it "a real NXDOMAIN". So the arm
+    that sleeps and loops was unreachable for the one failure mode the retry
+    was written for, `attempts` was dead, and every no-host verdict still
+    carried the flakiness the commit said it had removed. Driven with a stubbed
+    resolver on 2026-09-18: EAI_AGAIN gave 1 lookup and None in 0.00s, as did
+    EAI_NONAME. THE ERRNO IS WHAT SEPARATES THEM and it has to be read.
+
+    Nor was Marquette's sweep-3 recovery caused by this retry, since the retry
+    never ran: it came from the confirm cap going 3 to 6 in the same commit.
+
+    socket.setdefaulttimeout() is NOT set here, deliberately. It governs
+    socket operations and not gethostbyname, which goes through the system
+    resolver, so the 4-second bound an earlier version implied never existed.
+    The retry pause is the only timing this function actually controls."""
     for i in range(attempts):
         try:
-            socket.setdefaulttimeout(4)
             return host, socket.gethostbyname(host)
-        except socket.gaierror:
-            return host, None          # a real NXDOMAIN, not worth retrying
+        except socket.gaierror as exc:
+            if exc.errno == socket.EAI_NONAME:
+                return host, None          # the name genuinely does not exist
+            if i == attempts - 1:
+                return host, None
+            time.sleep(0.4 * (i + 1))
         except Exception:                                         # noqa: BLE001
             if i == attempts - 1:
                 return host, None
