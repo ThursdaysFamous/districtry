@@ -59,18 +59,20 @@ Chicago District Explorer: a single-file, dependency-light web app. Click a poin
 
 This list undercounts what actually runs, and **the figure is stated WITH ITS METHOD AND ITS
 DATE**, because successive counts disagreed and no reader could tell which counting rule any of
-them used. MEASURED 2026-09-17 on this branch, AFTER its last edit: a static gate is
-one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **60**;
-counted instead as script invocations the whole battery is **86 — 76 that need no browser and
+them used. MEASURED 2026-09-18 on this branch, AFTER its last edit: a static gate is
+one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **61**;
+counted instead as script invocations the whole battery is **87 — 77 that need no browser and
 10 that boot Chromium** (a Playwright smoke test per instance `il`/`ca`/`ny`/`wi`/`ia`/`mi`,
 2 root-page tests, and the two fleet-wide probes for point transmission and contrast pairs), the
 per-instance `validate_index.py` runs included, and excluding the two `npx playwright install`
 setup lines and the `http.server` that serves the pages to the ten.
 
-The 59/84 this paragraph carried on 2026-09-16 is one step and two invocations behind this
-one: `validate_python_hygiene.py` runs its `--selftest` and then the gate itself, which is one
-named step carrying two invocations — so the pair can move by different amounts in one change,
-and neither number can be derived from the other.
+The same method answers 60 and 86 on `origin/main`, so this branch adds exactly one of each:
+the one step this change wires, `ia_city_officials_scraper.py --selftest`. The 59/84 this
+paragraph carried on 2026-09-16 is two steps and three invocations behind this one, and the
+pair does not move together — `validate_python_hygiene.py` runs its `--selftest` and then the
+gate itself, which is one named step carrying two invocations, so neither number can be derived
+from the other.
 
 **THE 52/77 THIS PARAGRAPH CARRIED BEFORE 2026-09-16 DOES NOT REPRODUCE, and the same method run
 against `origin/main` says why.** The rule above answers 49 and 74 on `origin/main` and 59 and 84 here,
@@ -106,8 +108,8 @@ each stale within the day.
 
 Treat the workflow file as the source of truth for the full battery and its order;
 `.claude/skills/steward/SKILL.md` mirrors it as locally-runnable commands with per-gate
-rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-17, **86
-invocations for 86**, diffed both ways with each side's trailing rationale comment stripped
+rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-18, **87
+invocations for 87**, diffed both ways with each side's trailing rationale comment stripped
 and `$BASE` resolved to the branch point the skill spells `origin/main`,
 after four gates were found missing from it on 2026-09-12 (`build_sitemap.py`,
 `undeliverable.py`, the circuit-court join self-test, and that change's own) and **four more on

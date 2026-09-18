@@ -780,6 +780,20 @@ jobs:
           pip install -c ia/scripts/requirements.txt requests
           python3 ia/scripts/ia_supervisor_district_scraper.py --selftest
 
+      # THE BOUND ON THE LAST MEMBER OF A COUNCIL PAGE, which is the one no next
+      # member bounds. A fixed twelve-line window stood in for one and reached
+      # past the roster into riversideiowa.gov's `<div id="footer">`, shipping
+      # the city hall number (319) 648-3501 as council member Lois Schneider's
+      # phone -- her row publishes none, and text_lines() strips the <footer>
+      # ELEMENT rather than a div named for one. The bound is now the distance
+      # THAT PAGE puts between a name line and the field, per field because the
+      # two differ. Fourteen cases on synthetic pages, no network; each case
+      # expecting no phone also asserts the retired window WOULD have taken the
+      # footer's, so a fixture that stops reproducing the defect fails rather
+      # than passing quietly.
+      - name: Iowa city council pages bound the last member, so a footer cannot donate a phone
+        run: python3 ia/scripts/ia_city_officials_scraper.py --selftest
+
       # The parcel-fabric builder repairs invalid geometry before it writes, and
       # its repair had four branches nothing exercised. One of them was wrong
       # for as long as it existed: `dropped` was `len(parts) - len(polys)`,
