@@ -327,37 +327,67 @@ body {
 .notice.is-fading { animation: notice-out 900ms ease forwards; }
 @media (prefers-reduced-motion: reduce) { .notice.is-fading { animation-duration: 1ms; } }
 
-/* The logo lockup: the 5c mark beside the wordmark, at a size the mark is
-   actually drawn for. The brand spec's blend rule is a REAL rule, not
-   decoration — the three polygons read as overlapping translucent districts
-   only if they multiply on a light ground and screen on a dark one; keep
-   multiply on dark and they go muddy and near-black. */
-header.mast { display: flex; align-items: center; gap: 14px; }
-.logo-mark { width: 64px; height: 64px; flex: 0 0 auto; color: var(--ink); }
+/* The masthead: the mark beside the wordmark, at a size the mark is actually
+   drawn for, in a bar the sub-pages already wear. It was a 64px mark over a
+   52px wordmark until 2026-09-18, which pushed the page's actual promise — the
+   h1 — below the fold on a phone and left the brand saying it twice.
+
+   The brand spec's blend rule is a REAL rule, not decoration: the three
+   polygons read as overlapping translucent districts only if they multiply on
+   a light ground and screen on a dark one; keep multiply on dark and they go
+   muddy and near-black.
+
+   There is no theme toggle here. The sub-pages carry one because they read a
+   stored choice; this page follows the operating system and stores nothing,
+   and a control that looks like the sub-pages' but only lasts a page would be
+   worse than none. */
+header.mast {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding-bottom: 16px; margin-bottom: 32px; border-bottom: 1px solid var(--border);
+}
+.mast-brand { display: flex; align-items: center; gap: 10px; }
+.logo-mark { width: 34px; height: 34px; flex: 0 0 auto; color: var(--ink); }
 .logo-mark .mk-blend { mix-blend-mode: multiply; }
 @media (prefers-color-scheme: dark) {
   .logo-mark .mk-blend { mix-blend-mode: screen; }
 }
 .wordmark {
-  font: var(--font-heading-weight) 52px/1 var(--font-heading);
+  font: var(--font-heading-weight) 28px/1 var(--font-heading);
   letter-spacing: .005em; color: var(--ink);
 }
-
-h1 {
-  font: 400 26px/1.3 var(--font-heading);
-  color: var(--ink-3); margin: 22px 0 0; max-width: 34em;
+.mast-nav { margin-left: auto; display: flex; flex-wrap: wrap; gap: 2px; }
+.mast-nav a {
+  display: inline-flex; align-items: center; min-height: 32px; padding: 6px 11px;
+  border-radius: var(--radius-btn); text-decoration: none;
+  font-size: 14.5px; font-weight: 500; color: var(--ink-3);
+  transition: background .14s ease, color .14s ease;
 }
-.lede { color: var(--muted); margin: 14px 0 0; max-width: 40em; font-size: 15px; }
+.mast-nav a:hover, .mast-nav a:focus-visible { background: var(--brand-tint); color: var(--ink); }
+.mast-nav a:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
+
+/* The h1 is the promise, and it is now the largest thing on the page. It used
+   to be 26px grey under a 52px wordmark, so the biggest words on the fleet's
+   front door were its own coined name — which nobody searches for — while the
+   sentence that says what it does read as a caption. */
+h1 {
+  font: var(--font-heading-weight) 44px/1.08 var(--font-heading);
+  color: var(--ink); margin: 0; max-width: 17em;
+}
+.lede { color: var(--ink-3); margin: 14px 0 0; max-width: 40em; font-size: 16.5px; }
 
 .search-card {
-  margin: 26px 0 0; padding: 20px 22px 22px;
+  margin: 24px 0 0; padding: 18px 20px 20px;
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius-card); box-shadow: var(--shadow-card);
 }
-.search-eyebrow {
+/* A REAL label, not a span beside the box. The eyebrow said "Start with an
+   address" while the input's aria-label said "Street address or ZIP", so a
+   sighted reader and a screen-reader user were told two different things about
+   one field. The visible words are now the accessible name. */
+.search-label {
   display: block; font: var(--font-heading-weight) 13px/1 var(--font-heading);
-  letter-spacing: .09em; text-transform: uppercase; color: var(--faint);
-  margin-bottom: 11px;
+  letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3);
+  margin-bottom: 10px;
 }
 .search-row { display: flex; gap: 10px; align-items: stretch; }
 .search-input {
@@ -366,7 +396,7 @@ h1 {
   background: var(--paper); border: 1px solid var(--border);
   border-radius: var(--radius-btn);
 }
-.search-input::placeholder { color: var(--faint); }
+.search-input::placeholder { color: var(--muted); }
 .search-input:focus-visible {
   outline: 2px solid var(--brand-600); outline-offset: 1px;
   border-color: var(--brand-border);
@@ -381,12 +411,11 @@ h1 {
    it. .search-row is align-items:stretch, so in a ROW the button inherits the
    input's 46px and looks fine; at the mobile breakpoint the row becomes a
    COLUMN, stretch governs width instead, and the height collapsed to the
-   content box -- 15px of line plus 2px of border, measured at 308x17 against
-   the input's 308x46 directly above it. That is under the 24px WCAG 2.2 AA
-   floor, on the page's only conversion action, on the 62% of visits that are
-   mobile. Sized here to match the input exactly rather than merely to clear
-   the floor: same 12px block padding, same 1.3 line-height, so both boxes
-   compute to 46px and the pair cannot drift apart again. */
+   content box -- 15px of line plus 2px of border. That is under the 24px WCAG
+   2.2 AA floor, on the page's only conversion action, on the 59% of visits
+   that are phones. Sized here to match the input exactly rather than merely to
+   clear the floor: same 12px block padding, same 1.3 line-height, so both
+   boxes compute to 46px and the pair cannot drift apart again. */
 .search-button {
   flex: 0 0 auto; padding: 12px 22px;
   font: var(--font-heading-weight) 15px/1.3 var(--font-heading); color: #fff;
@@ -399,75 +428,141 @@ h1 {
 @media (prefers-color-scheme: dark) {
   .search-button { color: var(--paper); }
 }
-.search-help { margin: 12px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--muted); }
+.search-help { margin: 12px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--ink-3); }
 .search-status { margin: 10px 0 0; font-size: 13.5px; line-height: 1.4; min-height: 0; }
 .search-status.err { color: var(--error); }
 
+/* Stated plainly and early, never as a warning banner — it is a fact about who
+   this is, not an alarm. See INDEPENDENCE for why it is above the fold, and it
+   now actually is: it sat at 1,800px down the desktop page, under three other
+   sections, which is not above anything. */
+.independence {
+  margin: 18px 0 0; max-width: 52em; font-size: 13.5px; line-height: 1.55;
+  color: var(--ink-3);
+}
+
 h2 {
-  font: var(--font-heading-weight) 15px/1 var(--font-heading);
+  font: var(--font-heading-weight) 14px/1 var(--font-heading);
   letter-spacing: .09em; text-transform: uppercase;
-  color: var(--faint); margin: 40px 0 12px;
+  color: var(--ink-3); margin: 44px 0 12px;
+}
+.section-note {
+  margin: -2px 0 14px; font-size: 13.5px; line-height: 1.5;
+  color: var(--muted); max-width: 52em;
+}
+
+/* The coverage map and the place list are ONE section, because they answer one
+   question. They were two — a map under "Where it answers today", a pill row
+   under "Or choose a place" — which asked a reader to find their state twice.
+
+   The map keeps its iframe. It is a real Leaflet map: its areas are clickable,
+   its legend states how much of each place is covered, and it is generated and
+   drift-gated on its own (scripts/build_coverage_map.py).
+
+   THE MAP TAKES THE FULL WIDTH AND THE PLACES SIT UNDER IT. Side by side was
+   tried first and the map cannot afford it: the fleet's bounds run from San
+   Francisco to New York, so a narrower frame zooms the whole country down,
+   and the map's own legend is a fixed 236px that then covers 40% of it. The
+   places are a grid instead, so on a wide screen they take two rows of three
+   rather than a column six deep. */
+.coverage {
+  display: flex; flex-direction: column; gap: 14px;
+  padding: 14px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-card); box-shadow: var(--shadow-card);
 }
 .coverage-frame {
-  display: block; width: 100%; height: 430px;
-  border: 1px solid var(--border); border-radius: var(--radius-card);
+  display: block; width: 100%; height: 424px;
+  border: 1px solid var(--border); border-radius: var(--radius-btn);
   background: var(--paper);
 }
+.places {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(252px, 1fr));
+  gap: 0 16px;
+}
+/* Every row carries the rule, not just the ones after the first: in a grid a
+   `li + li` border leaves the top of each column open and the row reads as
+   ragged. */
+.places li { border-top: 1px solid var(--border); }
+.place {
+  display: flex; align-items: center; gap: 11px; padding: 9px 8px;
+  min-height: 52px; text-decoration: none; color: var(--ink);
+  border-radius: var(--radius-btn);
+  transition: background .14s ease;
+}
+.place:hover, .place:focus-visible { background: var(--brand-tint); }
+.place:focus-visible { outline: 2px solid var(--brand-600); outline-offset: -2px; }
+.place-tag {
+  flex: 0 0 auto; width: 24px;
+  font: 400 14px/1 var(--font-heading); color: var(--muted);
+}
+.place-id { display: flex; flex-direction: column; gap: 1px; flex: 1 1 auto; min-width: 0; }
+.place-name { font: var(--font-heading-weight) 18px/1.15 var(--font-heading); color: var(--ink); }
+.place-scope { font-size: 12.5px; line-height: 1.3; color: var(--muted); }
+.place-n, .place-n-unit {
+  flex: 0 0 auto; font-size: 12.5px; color: var(--muted);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.place-go { flex: 0 0 auto; font-size: 14px; color: var(--brand-600); }
 .coverage-caption {
   margin: 11px 0 0; font-size: 13px; line-height: 1.55; color: var(--muted);
   max-width: 52em;
 }
 
-.pills { display: flex; flex-wrap: wrap; gap: 8px; }
-.pill {
-  display: inline-flex; align-items: baseline; gap: 8px; padding: 7px 13px 8px;
-  background: var(--surface); border: 1px solid var(--border); border-radius: 999px;
-  text-decoration: none; color: var(--ink);
-  font: var(--font-heading-weight) 15px/1 var(--font-heading);
+/* THE QUESTION ROWS. One row per question, the places that answer it as chips.
+   The heading carries the question once where six place headings used to carry
+   it six times, and the chip carries the place AND its own topic — a link
+   reading only "Illinois" says nothing about where it goes, which is the test
+   Google's link guidance sets and the reason render_asks refuses to emit two
+   chips alike. They are a <ul> because they are a list of places: a screen
+   reader announces how many answer each question and can jump the lot. */
+.asks { display: flex; flex-direction: column; }
+.ask {
+  display: grid; grid-template-columns: 330px minmax(0, 1fr);
+  gap: 8px 18px; align-items: center; padding: 12px 0;
 }
-.pill:hover, .pill:focus-visible { border-color: var(--brand-border); background: var(--brand-tint); }
-.pill:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
-.pill-n { font: 400 12px/1 var(--font-body); color: var(--faint); font-variant-numeric: tabular-nums; }
+.ask + .ask { border-top: 1px solid var(--border); }
+.ask h3 {
+  margin: 0; font: var(--font-heading-weight) 19px/1.2 var(--font-heading);
+  color: var(--ink);
+}
+.ask-chips { display: flex; flex-wrap: wrap; gap: 7px; list-style: none; margin: 0; padding: 0; }
+.chip {
+  display: inline-flex; align-items: center; min-height: 36px; padding: 7px 13px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 999px;
+  text-decoration: none; font-size: 14px; line-height: 1.2; font-weight: 500;
+  color: var(--brand-600); white-space: nowrap;
+  transition: background .14s ease, border-color .14s ease;
+}
+.chip:hover, .chip:focus-visible { border-color: var(--brand-border); background: var(--brand-tint); }
+.chip:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
+.chip-topic { color: var(--ink-3); font-weight: 400; }
 
-.lookups { display: grid; gap: 14px 28px; margin: 10px 0 0;
-           grid-template-columns: repeat(auto-fit, minmax(15em, 1fr)); max-width: 62em; }
-.lookup-group h3 { font: 600 13px/1.3 var(--font); color: var(--muted);
-                   letter-spacing: .04em; text-transform: uppercase; margin: 0 0 4px; }
-.lookup-group ul { list-style: none; margin: 0; padding: 0; }
-.lookup-group li + li { margin-top: 2px; }
-/* 24px minimum target, WCAG 2.5.8: these are a LIST of links, which is the
-   shape that failed three surfaces when page_consistency_test.mjs began
-   sweeping for it, so the Inline exception does not apply. */
-.lookup-group a { display: block; padding: 4px 0; min-height: 24px; color: var(--brand-600);
-                  text-decoration: none; }
-.lookup-group a:hover, .lookup-group a:focus-visible { text-decoration: underline; }
 .not-yet { margin: 14px 0 0; max-width: 52em; }
 .not-yet > summary {
-  cursor: pointer; font-size: 13px; line-height: 1.55; color: var(--muted);
+  cursor: pointer; font-size: 13px; line-height: 1.55; color: var(--ink-3);
+  min-height: 28px;
 }
-.not-yet > summary:hover, .not-yet > summary:focus-visible { color: var(--ink-3); }
+.not-yet > summary:hover, .not-yet > summary:focus-visible { color: var(--ink); }
 .not-yet-list {
   margin: 10px 0 0; column-count: 3; column-gap: 22px;
   font-size: 12.5px; line-height: 1.9; color: var(--muted);
 }
 
-/* Stated plainly and early, never as a warning banner — it is a fact about who
-   this is, not an alarm. See INDEPENDENCE for why it is above the fold. */
-.independence {
-  margin: 18px 0 0; max-width: 52em; font-size: 13.5px; line-height: 1.55;
-  color: var(--muted);
-}
-
 .does { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 22px 26px; }
-.does b { display: block; font: var(--font-heading-weight) 17px/1.25 var(--font-heading); margin-bottom: 5px; }
+.does > div { padding-top: 13px; border-top: 2px solid var(--border); }
+/* These were <b> until 2026-09-18, so the three things the product claims to do
+   were not headings and appeared in no outline of the page. */
+.does h3 {
+  margin: 0 0 5px; font: var(--font-heading-weight) 18px/1.25 var(--font-heading);
+  color: var(--ink);
+}
 .does p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--ink-3); }
 
 /* Focus-only, and the pair validate_contrast.py already measures: --paper on
    --ink, 16.08:1 light and 15.36:1 dark. The app and the twelve sub-pages have
    carried one since the rebrand; these pages did not, so a keyboard reader met
-   a different site depending on which page they landed on. What it bypasses
-   here is short — that is the honest size of it — but the <main> landmark it
-   needs is the part a screen reader was missing outright. */
+   a different site depending on which page they landed on. */
 .skip-link {
   position: absolute; left: -9999px; top: 0;
   background: var(--ink); color: var(--paper);
@@ -475,35 +570,58 @@ h2 {
 }
 .skip-link:focus { left: 0; }
 
-footer { margin-top: 52px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13.5px; color: var(--muted); }
+/* The footer was five stacked paragraphs saying the disclaimer twice. Three
+   columns, each answering a different reader: what this is, how to keep it
+   running, and where else to go. */
+footer {
+  margin-top: 52px; padding-top: 24px; border-top: 1px solid var(--border);
+  font-size: 13.5px; color: var(--ink-3);
+}
+.foot-grid {
+  display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) 168px;
+  gap: 24px 34px; align-items: start;
+}
 footer a { color: var(--brand-600); }
 footer a:hover { color: var(--brand-700); }
-footer p { margin: 0 0 8px; max-width: 46em; }
-/* The front door had no links at all — no way to reach the privacy page
-   or the source from the page most visitors land on first. */
+footer p { margin: 0 0 10px; line-height: 1.55; }
+footer p:last-child { margin-bottom: 0; }
+.foot-name {
+  font: var(--font-heading-weight) 20px/1 var(--font-heading);
+  color: var(--ink); display: block; margin-bottom: 10px;
+}
 /* The support line is the one thing in this footer a reader is being ASKED to
-   act on, so it does not sit in the flat link row where it reads as a seventh
+   act on, so it does not sit in the link list where it reads as a seventh
    equal item. It was exactly that before: one of six links, in an app footer,
    on a page that never mentioned funding at all. */
 footer .support {
-  margin: 14px 0 0; padding: 12px 14px; max-width: 46em;
-  background: var(--brand-tint); border: 1px solid var(--brand-border);
+  padding: 13px 15px; background: var(--brand-tint); border: 1px solid var(--brand-border);
   border-radius: var(--radius-card); color: var(--ink-3);
 }
 footer .support b { color: var(--ink); }
-/* line-height 28px, not the body's 20.9: these links are 17px tall and wrap
-   at 390px, which put the next row's box 4px under this row's centre — inside
-   WCAG 2.5.8's 24px circle. 28 leaves 5.5px clear. Measured 2026-09-13. */
-footer .foot-links { margin-top: 12px; line-height: 28px; }
+.foot-links { list-style: none; margin: 0; padding: 0; }
+/* 24px minimum target, WCAG 2.5.8: these are a LIST of links, which is the
+   shape that failed three surfaces when page_consistency_test.mjs began
+   sweeping for it, so the Inline exception does not apply. A column gives each
+   one its own row and the wrapped-row collision the flat row had cannot
+   happen. */
+.foot-links a { display: block; padding: 5px 0; min-height: 24px; line-height: 1.4; text-decoration: none; }
+.foot-links a:hover, .foot-links a:focus-visible { text-decoration: underline; }
 
 @media (max-width: 560px) {
-  .wrap { padding: 36px 18px 56px; }
-  .wordmark { font-size: 38px; }
-  .logo-mark { width: 48px; height: 48px; }
-  h1 { font-size: 22px; }
+  .wrap { padding: 28px 18px 56px; }
+  header.mast { gap: 8px; margin-bottom: 26px; }
+  .wordmark { font-size: 25px; }
+  h1 { font-size: 31px; }
+  h2 { margin-top: 34px; }
   .search-row { flex-direction: column; }
   .notice { position: static; width: auto; max-width: none; margin: 0 0 26px; }
   .not-yet-list { column-count: 2; }
+  /* One column, and the chips grow: a row of links is the shape WCAG 2.5.8
+     catches, and 36px tall chips 7px apart are inside each other's 24px
+     circle once they wrap on a narrow screen. */
+  .ask { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 14px 0; }
+  .chip { min-height: 40px; padding: 9px 14px; }
+  .foot-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
   /* Taller, not shorter: at this breakpoint the map's legend stops floating
      and takes a strip along the bottom (see build_coverage_map.py), so the
      frame needs the extra room or the map area is what pays for the panel. */
@@ -521,8 +639,15 @@ footer .foot-links { margin-top: 12px; line-height: 28px; }
     </aside>
     <div class="wrap">
     <header class="mast">
-      <svg class="logo-mark" viewBox="0 0 96 96" aria-hidden="true"><g class="mk-blend"><polygon points="51.5,63.2 12.4,55.7 11.5,18.6 42.7,5.0 72.7,35.3" fill="#6d3fd1" fill-opacity="0.55"></polygon></g><g class="mk-blend"><polygon points="54.1,81.9 34.6,47.9 56.5,19.3 87.5,28.1 83.8,71.0" fill="#1d5fd6" fill-opacity="0.5"></polygon></g><g class="mk-blend"><polygon points="13.7,64.5 27.6,31.2 62.7,37.6 70.3,66.9 33.9,89.0" fill="#b0316e" fill-opacity="0.45"></polygon></g><circle cx="42" cy="60" r="17" fill="none" stroke="currentColor" stroke-width="11"></circle><line x1="59" y1="16" x2="59" y2="82.5" stroke="currentColor" stroke-width="11"></line></svg>
-      <span class="wordmark">districtry</span>
+      <div class="mast-brand">
+        <svg class="logo-mark" viewBox="0 0 96 96" aria-hidden="true"><g class="mk-blend"><polygon points="51.5,63.2 12.4,55.7 11.5,18.6 42.7,5.0 72.7,35.3" fill="#6d3fd1" fill-opacity="0.55"></polygon></g><g class="mk-blend"><polygon points="54.1,81.9 34.6,47.9 56.5,19.3 87.5,28.1 83.8,71.0" fill="#1d5fd6" fill-opacity="0.5"></polygon></g><g class="mk-blend"><polygon points="13.7,64.5 27.6,31.2 62.7,37.6 70.3,66.9 33.9,89.0" fill="#b0316e" fill-opacity="0.45"></polygon></g><circle cx="42" cy="60" r="17" fill="none" stroke="currentColor" stroke-width="11"></circle><line x1="59" y1="16" x2="59" y2="82.5" stroke="currentColor" stroke-width="11"></line></svg>
+        <span class="wordmark">districtry</span>
+      </div>
+      <nav class="mast-nav" aria-label="Site">
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">Source</a>
+      </nav>
     </header>
 
     <main id="page-main">
@@ -530,11 +655,10 @@ footer .foot-links { margin-top: 12px; line-height: 28px; }
     <p class="lede">Enter an address or ZIP — districtry shows every civic district that covers that point on the map, and the people who hold those seats. Free, no login.</p>
 
     <div class="search-card">
-      <span class="search-eyebrow">Start with an address</span>
+      <label class="search-label" for="search-input">Start with an address</label>
       <form id="search-form" class="search-row">
         <input type="text" id="search-input" class="search-input" name="q"
-               placeholder="Street address or ZIP" autocomplete="off"
-               aria-label="Street address or ZIP" />
+               placeholder="Street address or ZIP" autocomplete="off" />
         <button type="submit" id="search-button" class="search-button">Show districts</button>
       </form>
       <p class="search-help">districtry opens the map that covers the point. Illinois, New York City, San Francisco, Wisconsin, Iowa and Michigan answer
@@ -542,86 +666,26 @@ footer .foot-links { margin-top: 12px; line-height: 28px; }
       <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
     </div>
 
+    <p class="independence">districtry is an independent, unofficial project. It is not a government service and is not affiliated with, endorsed by, or operated by any government agency. It asks for an address only to place a point on the map — there is no account, no sign-in, and it never asks for personal or financial information.</p>
+
     <h2>Where it answers today</h2>
-    <iframe class="coverage-frame" src="coverage-map.html"
-            title="Map of the areas districtry covers today"
-            loading="lazy"></iframe>
+    <div class="coverage">
+      <iframe class="coverage-frame" src="coverage-map.html"
+              title="Map of the areas districtry covers today"
+              loading="lazy"></iframe>
+      <ul class="places">
+        <li><a class="place" href="https://districtry.com/il/" title="93 counties. Wards, county boards, police districts and beats, school zones, judicial subcircuits, and the people who hold those seats." aria-label="Illinois, 93 counties, 40 layers"><span class="place-tag">il</span><span class="place-id"><span class="place-name">Illinois</span><span class="place-scope">93 counties</span></span><span class="place-n">40</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
+        <li><a class="place" href="https://districtry.com/ny/" title="Boroughs, City Council and community districts, NYPD precincts and sectors, school zones, and the state and federal seats above them." aria-label="New York City, 5 boroughs, 27 layers"><span class="place-tag">ny</span><span class="place-id"><span class="place-name">New York City</span><span class="place-scope">5 boroughs</span></span><span class="place-n">27</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
+        <li><a class="place" href="https://districtry.com/ca/" title="Supervisor districts, neighborhoods, police districts, school attendance areas, and the state and federal seats above them." aria-label="San Francisco, 1 city, 16 layers"><span class="place-tag">ca</span><span class="place-id"><span class="place-name">San Francisco</span><span class="place-scope">1 city</span></span><span class="place-n">16</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
+        <li><a class="place" href="https://districtry.com/wi/" title="County boards, circuit courts, wards and aldermanic districts across all 72 counties — clerk to Court of Appeals — plus school districts, cities, villages and towns, and the Assembly, Senate and U.S. House seats, and who holds those." aria-label="Wisconsin, all 72 counties, 31 layers"><span class="place-tag">wi</span><span class="place-id"><span class="place-name">Wisconsin</span><span class="place-scope">all 72 counties</span></span><span class="place-n">31</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
+        <li><a class="place" href="https://districtry.com/ia/" title="All 99 counties: supervisor districts with each county&#x27;s own election plan, townships and cities, school districts, ZIP codes and post offices — and the Iowa Senate, House and U.S. House seats, and who holds those." aria-label="Iowa, all 99 counties, 20 layers"><span class="place-tag">ia</span><span class="place-id"><span class="place-name">Iowa</span><span class="place-scope">all 99 counties</span></span><span class="place-n">20</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
+        <li><a class="place" href="https://districtry.com/mi/" title="All 83 counties: commissioner districts, compiled by the state from the plan each county&#x27;s apportionment commission files — plus townships and charter townships, cities and villages, school districts, and the Michigan Senate, House and U.S. House seats, and who holds those." aria-label="Michigan, all 83 counties, 15 layers"><span class="place-tag">mi</span><span class="place-id"><span class="place-name">Michigan</span><span class="place-scope">all 83 counties</span></span><span class="place-n">15</span><span class="place-n-unit">&nbsp;layers</span><span class="place-go" aria-hidden="true">&#8599;</span></a></li>
+      </ul>
+    </div>
     <p class="coverage-caption">Two tiers, because coverage is not one thing: the pale dashed area
        is where the statewide layers answer — county, township, municipality, school district,
        ZIP — and the solid fill is where the county-level layers reach as well. The map's own
        legend states how much of each place that is; click an area to open its map.</p>
-
-    <h2>Or choose a place</h2>
-    <div class="pills">
-        <a class="pill" href="https://districtry.com/il/" title="93 counties. Wards, county boards, police districts and beats, school zones, judicial subcircuits, and the people who hold those seats." aria-label="Illinois, 40 layers">Illinois<span class="pill-n">40</span></a>
-        <a class="pill" href="https://districtry.com/ny/" title="Boroughs, City Council and community districts, NYPD precincts and sectors, school zones, and the state and federal seats above them." aria-label="New York City, 27 layers">New York City<span class="pill-n">27</span></a>
-        <a class="pill" href="https://districtry.com/ca/" title="Supervisor districts, neighborhoods, police districts, school attendance areas, and the state and federal seats above them." aria-label="San Francisco, 16 layers">San Francisco<span class="pill-n">16</span></a>
-        <a class="pill" href="https://districtry.com/wi/" title="County boards, circuit courts, wards and aldermanic districts across all 72 counties — clerk to Court of Appeals — plus school districts, cities, villages and towns, and the Assembly, Senate and U.S. House seats, and who holds those." aria-label="Wisconsin, 31 layers">Wisconsin<span class="pill-n">31</span></a>
-        <a class="pill" href="https://districtry.com/ia/" title="All 99 counties: supervisor districts with each county&#x27;s own election plan, townships and cities, school districts, ZIP codes and post offices — and the Iowa Senate, House and U.S. House seats, and who holds those." aria-label="Iowa, 20 layers">Iowa<span class="pill-n">20</span></a>
-        <a class="pill" href="https://districtry.com/mi/" title="All 83 counties: commissioner districts, compiled by the state from the plan each county&#x27;s apportionment commission files — plus townships and charter townships, cities and villages, school districts, and the Michigan Senate, House and U.S. House seats, and who holds those." aria-label="Michigan, 15 layers">Michigan<span class="pill-n">15</span></a>
-    </div>
-
-    <h2>Or start from a question</h2>
-    <div class="lookups">
-      <div class="lookup-group">
-        <h3>Illinois</h3>
-        <ul>
-          <li><a href="/il/congress.html">Who is my U.S. representative?</a></li>
-          <li><a href="/il/county-board.html">Who is my county commissioner?</a></li>
-          <li><a href="/il/judicial-subcircuit.html">What judicial subcircuit am I in?</a></li>
-          <li><a href="/il/police-district.html">What Chicago police district am I in?</a></li>
-          <li><a href="/il/precinct.html">What precinct am I in?</a></li>
-          <li><a href="/il/school-board.html">Which Chicago school board district am I in?</a></li>
-          <li><a href="/il/state-legislature.html">Who is my Illinois state legislator?</a></li>
-          <li><a href="/il/township.html">What township am I in?</a></li>
-          <li><a href="/il/ward.html">Who is my alderman?</a></li>
-        </ul>
-      </div>
-      <div class="lookup-group">
-        <h3>New York City</h3>
-        <ul>
-          <li><a href="/ny/community-board.html">What community board am I in?</a></li>
-          <li><a href="/ny/congress.html">Who is my U.S. representative?</a></li>
-          <li><a href="/ny/council-district.html">What Council district am I in?</a></li>
-          <li><a href="/ny/police-precinct.html">What NYPD precinct am I in?</a></li>
-          <li><a href="/ny/state-legislature.html">Who is my NY state legislator?</a></li>
-        </ul>
-      </div>
-      <div class="lookup-group">
-        <h3>San Francisco</h3>
-        <ul>
-          <li><a href="/ca/congress.html">Who is my U.S. representative?</a></li>
-          <li><a href="/ca/state-legislature.html">Who is my CA state legislator?</a></li>
-          <li><a href="/ca/supervisor-district.html">What supervisor district am I in?</a></li>
-        </ul>
-      </div>
-      <div class="lookup-group">
-        <h3>Wisconsin</h3>
-        <ul>
-          <li><a href="/wi/circuit-court.html">Who is my circuit court judge?</a></li>
-          <li><a href="/wi/congress.html">Who is my U.S. representative?</a></li>
-          <li><a href="/wi/county-board.html">Who is my county supervisor?</a></li>
-          <li><a href="/wi/school-board.html">Who is on my school board?</a></li>
-          <li><a href="/wi/state-legislature.html">Who is my Wisconsin legislator?</a></li>
-        </ul>
-      </div>
-      <div class="lookup-group">
-        <h3>Iowa</h3>
-        <ul>
-          <li><a href="/ia/congress.html">Who is my U.S. representative?</a></li>
-          <li><a href="/ia/county-supervisor.html">Who is my county supervisor?</a></li>
-          <li><a href="/ia/state-legislature.html">Who is my Iowa legislator?</a></li>
-        </ul>
-      </div>
-      <div class="lookup-group">
-        <h3>Michigan</h3>
-        <ul>
-          <li><a href="/mi/congress.html">Who is my U.S. representative?</a></li>
-          <li><a href="/mi/county-commissioner.html">County commissioner district lookup</a></li>
-          <li><a href="/mi/state-legislature.html">Who is my Michigan legislator?</a></li>
-        </ul>
-      </div>
-    </div>
     <details class="not-yet">
       <summary>Not yet: 46 states and DC — what nobody covers yet is listed here
         rather than quietly missing.</summary>
@@ -676,23 +740,95 @@ footer .foot-links { margin-top: 12px; line-height: 28px; }
       </div>
     </details>
 
-    <p class="independence">districtry is an independent, unofficial project. It is not a government service and is not affiliated with, endorsed by, or operated by any government agency. It asks for an address only to place a point on the map — there is no account, no sign-in, and it never asks for personal or financial information.</p>
+    <h2>Or start from a question</h2>
+    <p class="section-note">One page per question and place: the answer in prose, the roster as it
+       stood on the day it was checked, and a link that opens the map with the right layers on.</p>
+    <div class="asks">
+      <div class="ask">
+        <h3>Who is my U.S. representative?</h3>
+        <ul class="ask-chips">
+          <li><a class="chip" href="/il/congress.html">Illinois<span class="chip-topic"> &#183; U.S. House</span></a></li>
+          <li><a class="chip" href="/ny/congress.html">New York City<span class="chip-topic"> &#183; U.S. House</span></a></li>
+          <li><a class="chip" href="/ca/congress.html">San Francisco<span class="chip-topic"> &#183; U.S. House</span></a></li>
+          <li><a class="chip" href="/wi/congress.html">Wisconsin<span class="chip-topic"> &#183; U.S. House</span></a></li>
+          <li><a class="chip" href="/ia/congress.html">Iowa<span class="chip-topic"> &#183; U.S. House</span></a></li>
+          <li><a class="chip" href="/mi/congress.html">Michigan<span class="chip-topic"> &#183; U.S. House</span></a></li>
+        </ul>
+      </div>
+      <div class="ask">
+        <h3>Who is my state legislator?</h3>
+        <ul class="ask-chips">
+          <li><a class="chip" href="/il/state-legislature.html">Illinois<span class="chip-topic"> &#183; General Assembly</span></a></li>
+          <li><a class="chip" href="/ny/state-legislature.html">New York City<span class="chip-topic"> &#183; NY Legislature</span></a></li>
+          <li><a class="chip" href="/ca/state-legislature.html">San Francisco<span class="chip-topic"> &#183; CA Legislature</span></a></li>
+          <li><a class="chip" href="/wi/state-legislature.html">Wisconsin<span class="chip-topic"> &#183; Legislature</span></a></li>
+          <li><a class="chip" href="/ia/state-legislature.html">Iowa<span class="chip-topic"> &#183; Legislature</span></a></li>
+          <li><a class="chip" href="/mi/state-legislature.html">Michigan<span class="chip-topic"> &#183; Legislature</span></a></li>
+        </ul>
+      </div>
+      <div class="ask">
+        <h3>Who sits on my county board?</h3>
+        <ul class="ask-chips">
+          <li><a class="chip" href="/il/county-board.html">Illinois<span class="chip-topic"> &#183; commissioners</span></a></li>
+          <li><a class="chip" href="/wi/county-board.html">Wisconsin<span class="chip-topic"> &#183; supervisors</span></a></li>
+          <li><a class="chip" href="/ia/county-supervisor.html">Iowa<span class="chip-topic"> &#183; supervisors</span></a></li>
+          <li><a class="chip" href="/mi/county-commissioner.html">Michigan<span class="chip-topic"> &#183; commissioners</span></a></li>
+        </ul>
+      </div>
+      <div class="ask">
+        <h3>Who represents me on the city council?</h3>
+        <ul class="ask-chips">
+          <li><a class="chip" href="/il/ward.html">Chicago<span class="chip-topic"> &#183; alderman, by ward</span></a></li>
+          <li><a class="chip" href="/ny/council-district.html">New York City<span class="chip-topic"> &#183; Council district</span></a></li>
+          <li><a class="chip" href="/ca/supervisor-district.html">San Francisco<span class="chip-topic"> &#183; supervisor district</span></a></li>
+        </ul>
+      </div>
+      <div class="ask">
+        <h3>What police district am I in?</h3>
+        <ul class="ask-chips">
+          <li><a class="chip" href="/il/police-district.html">Chicago<span class="chip-topic"> &#183; police district</span></a></li>
+          <li><a class="chip" href="/ny/police-precinct.html">New York City<span class="chip-topic"> &#183; NYPD precinct</span></a></li>
+        </ul>
+      </div>
+      <div class="ask">
+        <h3>Which school board district am I in?</h3>
+        <ul class="ask-chips">
+          <li><a class="chip" href="/il/school-board.html">Chicago<span class="chip-topic"> &#183; Board of Education</span></a></li>
+          <li><a class="chip" href="/wi/school-board.html">Wisconsin<span class="chip-topic"> &#183; school board</span></a></li>
+        </ul>
+      </div>
+      <div class="ask">
+        <h3>Which court elects my judges?</h3>
+        <ul class="ask-chips">
+          <li><a class="chip" href="/il/judicial-subcircuit.html">Illinois<span class="chip-topic"> &#183; judicial subcircuit</span></a></li>
+          <li><a class="chip" href="/wi/circuit-court.html">Wisconsin<span class="chip-topic"> &#183; circuit court</span></a></li>
+        </ul>
+      </div>
+      <div class="ask">
+        <h3>Also answered in one place</h3>
+        <ul class="ask-chips">
+          <li><a class="chip" href="/il/precinct.html">Illinois<span class="chip-topic"> &#183; precinct</span></a></li>
+          <li><a class="chip" href="/il/township.html">Illinois<span class="chip-topic"> &#183; township</span></a></li>
+          <li><a class="chip" href="/ny/community-board.html">New York City<span class="chip-topic"> &#183; community board</span></a></li>
+        </ul>
+      </div>
+    </div>
 
     <h2>What it does</h2>
     <div class="does">
       <div>
-        <b>Every district, not the one you asked for</b>
+        <h3>Every district, not the one you asked for</h3>
         <p>Pick a point and it reports every civic boundary that contains it at once —
            legislative, judicial, policing, schools, and the local special districts most
            tools leave out.</p>
       </div>
       <div>
-        <b>The people, where they can be verified</b>
+        <h3>The people, where they can be verified</h3>
         <p>It names who holds each seat when a published roster says so, and links the
            official body when none does. It never guesses an officeholder.</p>
       </div>
       <div>
-        <b>It shows its work</b>
+        <h3>It shows its work</h3>
         <p>Every layer names the publisher its boundary came from and where its names come
            from. What nobody publishes is listed too, rather than quietly missing.</p>
       </div>
@@ -700,34 +836,38 @@ footer .foot-links { margin-top: 12px; line-height: 28px; }
     </main>
 
     <footer>
-      <p>districtry is a public civic reference built from official published
-         boundaries and rosters. It is not a legal record of any district line,
-         and it never guesses at who holds a seat — where no verifiable roster
-         exists, it links the official body instead.</p>
-      <p>It is an <b>independent, unofficial project</b> — not a government service, and
-         not affiliated with or endorsed by any government agency. Boundary data and
-         officeholder names come from the public sources each place names on its sources
-         page; seals and logos shown beside a county belong to that county and indicate
-         whose district you are looking at, not any endorsement of this site.</p>
-      <p>Built and run by <a href="https://overberg.co/" rel="author noopener" target="_blank">Adam
-         Overberg</a>. The whole thing is open source — every line that produced this page
-         is public, the code under
-         <a href="https://github.com/ThursdaysFamous/districtry/blob/main/LICENSE"
-            target="_blank" rel="noopener">Apache&nbsp;2.0</a> and the data under
-         <a href="https://github.com/ThursdaysFamous/districtry/blob/main/LICENSE-DATA.md"
-            target="_blank" rel="noopener">ODbL&nbsp;1.0</a>. Fork it for your own state.</p>
-      <p>Each place above names its own sources on its sources page. Corrections, questions and
-         anything that looks wrong: <a href="mailto:hello@overberg.co">hello@overberg.co</a>.</p>
-      <p class="support"><b>This project is unfunded and run at personal cost.</b> If it is useful
-         to you, <a href="https://github.com/sponsors/ThursdaysFamous" target="_blank" rel="noopener">sponsoring
-         it on GitHub</a> keeps the rosters current — that is where the ongoing work is. Sponsorship
-         buys no placement and no influence over any answer here; the
-         <a href="sponsorship.html">sponsorship policy</a> says so in detail.</p>
-      <p class="foot-links"><a href="privacy.html">Privacy</a> ·
-         <a href="sponsorship.html">Sponsorship</a> ·
-         <a href="traffic.html">Traffic</a> ·
-         <a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a> ·
-         <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">Source on GitHub</a></p>
+      <div class="foot-grid">
+        <div>
+          <span class="foot-name">districtry</span>
+          <p>An independent, unofficial civic reference built from official published
+             boundaries and rosters. It is not a government service, not affiliated with or
+             endorsed by any government agency, and not a legal record of any district line.
+             Where no verifiable roster exists it links the official body instead of guessing.
+             Seals shown beside a county belong to that county and say whose district you are
+             looking at, not who endorses this site.</p>
+          <p>Built and run by <a href="https://overberg.co/" rel="author noopener" target="_blank">Adam
+             Overberg</a>. Open source — the code under
+             <a href="https://github.com/ThursdaysFamous/districtry/blob/main/LICENSE"
+                target="_blank" rel="noopener">Apache&nbsp;2.0</a> and the data under
+             <a href="https://github.com/ThursdaysFamous/districtry/blob/main/LICENSE-DATA.md"
+                target="_blank" rel="noopener">ODbL&nbsp;1.0</a>. Fork it for your own state.
+             Each place names its own sources on its sources page; corrections and anything
+             that looks wrong: <a href="mailto:hello@overberg.co">hello@overberg.co</a>.</p>
+        </div>
+        <p class="support"><b>This project is unfunded and run at personal cost.</b> If it is useful
+           to you, <a href="https://github.com/sponsors/ThursdaysFamous" target="_blank" rel="noopener">sponsoring
+           it on GitHub</a> keeps the rosters current — that is where the ongoing work is. Sponsorship
+           buys no placement and no influence over any answer here; the
+           <a href="sponsorship.html">sponsorship policy</a> says so in detail.</p>
+        <ul class="foot-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="sponsorship.html">Sponsorship</a></li>
+          <li><a href="traffic.html">Traffic</a></li>
+          <li><a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a></li>
+          <li><a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">Source on GitHub</a></li>
+        </ul>
+      </div>
     </footer>
     </div>
   </div>
