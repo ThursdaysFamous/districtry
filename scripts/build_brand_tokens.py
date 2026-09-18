@@ -66,6 +66,7 @@ emits), then generate_metro_files.py. --check is order-independent.
 """
 
 import argparse
+import glob
 import json
 import os
 import re
@@ -272,6 +273,63 @@ def worksheets():
     return found
 
 
+def check_theme_colour_tags(light, dark):
+    """Every <meta name="theme-color"> on the site, against the token file.
+
+    WHY THIS EXISTS. That tag paints the BROWSER's chrome, and it is the one
+    brand value a reader sees that no stylesheet owns, so nothing here compared
+    it to anything. Four authored pages -- ny/council-district.html,
+    ny/police-precinct.html, ny/community-board.html and
+    ca/supervisor-district.html -- carried the pre-rebrand navy #0b3d91 from
+    before the rebrand until 2026-09-18, through a rebrand, a fleet-wide social
+    card fix and a theme-boot consolidation.
+
+    IT SURVIVED BEING FOUND, WHICH IS THE PART WORTH GATING. The four were
+    noticed and then blamed on `brand.theme_color` in the NY and SF worksheets;
+    both worksheets said #6d3fd1 the whole time. question_page.py DOES restate
+    the tag from the worksheet, so a generated page cannot drift -- but these
+    four are authored, that generator never reaches them, and checking the
+    worksheet returned a clean answer about the wrong file.
+
+    The worksheet key is checked here too, so both ends of that mistake are
+    held to one source rather than to each other.
+    """
+    want_light = resolve(light, "brand-600")
+    want_dark = resolve(dark, "paper")
+    if not want_light or not want_dark:
+        fail("--brand-600 or the dark --paper is missing from the token file")
+    tag_re = re.compile(r'<meta\s+name="theme-color"([^>]*)>')
+    attr_re = re.compile(r'content="(#[0-9a-fA-F]{3,8})"')
+    pages = 0
+    for path in sorted(glob.glob(os.path.join(REPO_ROOT, "**", "*.html"),
+                                 recursive=True)):
+        rel = os.path.relpath(path, REPO_ROOT)
+        if rel.startswith(("node_modules", "engine" + os.sep, "docs" + os.sep)):
+            continue
+        text = read(path)
+        for attrs in tag_re.findall(text):
+            got = attr_re.search(attrs)
+            if not got:
+                continue
+            pages += 1
+            # A media-qualified pair is the other way of doing this, used by
+            # the paste-in PWA snippet: the dark one names the dark ground
+            # rather than the accent.
+            is_dark = "prefers-color-scheme: dark" in attrs
+            want = want_dark if is_dark else want_light
+            if norm(got.group(1)) != norm(want):
+                problems.append(
+                    "%s: theme-color is %s, --%s is %s"
+                    % (rel, got.group(1), "paper (dark)" if is_dark else "brand-600", want))
+    for rel in worksheets():
+        brand = json.load(open(os.path.join(REPO_ROOT, rel),
+                               encoding="utf-8")).get("brand", {})
+        if "theme_color" in brand and norm(brand["theme_color"]) != norm(want_light):
+            problems.append("%s: brand.theme_color is %s, --brand-600 is %s"
+                            % (rel, brand["theme_color"], want_light))
+    return pages
+
+
 def check_worksheets(light):
     for rel in worksheets():
         path = os.path.join(REPO_ROOT, rel)
@@ -300,6 +358,7 @@ def main():
 
     check_app_skin(light, dark)
     check_worksheets(light)
+    tags = check_theme_colour_tags(light, dark)
     check_fallback_face()
 
     if args.check:
@@ -313,8 +372,9 @@ def main():
                  % len(problems))
         print("build-brand-tokens: OK — %d alias(es) agree across the shell, both "
               "tiers of the app skin and %d worksheet(s); the fallback face is "
-              "identical on %d surface(s)"
-              % (len(ALIASES), len(worksheets()), len(FACE_CARRIERS)))
+              "identical on %d surface(s); %d theme-colour tag(s) carry the "
+              "brand accent"
+              % (len(ALIASES), len(worksheets()), len(FACE_CARRIERS), tags))
         return
 
     if problems:
