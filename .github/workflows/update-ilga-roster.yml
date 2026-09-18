@@ -100,8 +100,9 @@ jobs:
           # table naming last week's members. The sitemap follows, because that
           # page is in it and its lastmod is the file's own last commit.
           python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
           python3 scripts/build_sitemap.py
-          git add il/data/app/il-senate-members.json il/data/app/il-house-members.json il/history.html il/state-legislature.html sitemap.xml
+          git add il/data/app/il-senate-members.json il/data/app/il-house-members.json il/history.html il/state-legislature.html about.html sitemap.xml
           git commit -m "Update IL Senate/House roster from ilga.gov"
           git push -u origin "$branch" --force
           # Only open a PR if one isn't already open for this branch; if it is,

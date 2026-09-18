@@ -74,8 +74,9 @@ jobs:
           # last week's members. The sitemap follows, because that page is in it
           # and its lastmod is the file's own last commit.
           python3 scripts/build_county_pages.py
+          python3 scripts/build_about_page.py
           python3 scripts/build_sitemap.py
-          git add il/data/source/cook-county-board-members.json il/county-board il/county-board.html sitemap.xml
+          git add il/data/source/cook-county-board-members.json il/county-board il/county-board.html about.html sitemap.xml
           git commit -m "Update Cook County Board roster from the county's GIS people table"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
