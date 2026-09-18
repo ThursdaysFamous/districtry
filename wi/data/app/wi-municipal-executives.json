@@ -20,11 +20,10 @@
   "5517975": {
     "municipality": "Cudahy",
     "office": "City of Cudahy Mayor",
-    "pageUrl": "https://www.cudahy-wi.gov/government/mayor.php",
     "source": "Milwaukee County GIS & Land Information",
     "sourceUrl": "https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/Milwaukee_County_Municipal_Executives/FeatureServer/42",
     "withheld": true,
-    "withheldWhy": "the municipality's own page does not name Pavlic — the layer's name predates the April 2026 election"
+    "withheldWhy": "the municipality's own site asks automated clients not to read it, so its page is not fetched and no name is witnessed"
   },
   "5527075": {
     "email": "csymchych@villageoffoxpoint.com",
@@ -90,7 +89,7 @@
     "source": "Milwaukee County GIS & Land Information",
     "sourceUrl": "https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/Milwaukee_County_Municipal_Executives/FeatureServer/42",
     "withheld": true,
-    "withheldWhy": "the municipality's own site refuses this client, so no name is witnessed"
+    "withheldWhy": "the municipality's own site asks automated clients not to read it, so its page is not fetched and no name is witnessed"
   },
   "5558800": {
     "municipality": "Oak Creek",
@@ -109,14 +108,12 @@
     "withheldWhy": "the municipality's own site refuses this client, so no name is witnessed"
   },
   "5570650": {
-    "email": "ken.tutaj@stfranwi.org",
     "municipality": "St. Francis",
-    "name": "Ken Tutaj",
     "office": "City of St. Francis Mayor",
-    "phone": "414-316-4323",
     "source": "Milwaukee County GIS & Land Information",
     "sourceUrl": "https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/Milwaukee_County_Municipal_Executives/FeatureServer/42",
-    "witnessUrl": "https://www.stfranciswi.org/mayor"
+    "withheld": true,
+    "withheldWhy": "the municipality's own site asks automated clients not to read it, so its page is not fetched and no name is witnessed"
   },
   "5573725": {
     "email": "PresidentMcKaig@villageofshorewood.org",
@@ -141,7 +138,7 @@
     "source": "Milwaukee County GIS & Land Information",
     "sourceUrl": "https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/Milwaukee_County_Municipal_Executives/FeatureServer/42",
     "withheld": true,
-    "withheldWhy": "the municipality's own site refuses this client, so no name is witnessed"
+    "withheldWhy": "the municipality's own site asks automated clients not to read it, so its page is not fetched and no name is witnessed"
   },
   "5585300": {
     "municipality": "West Allis",
