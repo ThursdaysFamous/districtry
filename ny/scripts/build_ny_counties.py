@@ -62,7 +62,6 @@ import tempfile
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
-SOURCE_DIR = os.path.join(REPO_ROOT, "data", "source")
 MAPSHAPER = "mapshaper@0.6.102"  # pinned for reproducible output (fleet convention)
 COUNTIES_LAYER = (
     "https://gisservices.its.ny.gov/arcgis/rest/services/"
@@ -71,7 +70,16 @@ COUNTIES_LAYER = (
 
 FIELDS = ["NAME", "FIPS_CODE", "NYC", "POP2020"]
 OUT_FILE = "ny-counties.json"
-SOURCE_SNAPSHOT = "ny-counties-source-2026-09-18.geojson"
+# NO RAW SOURCE SNAPSHOT IS WRITTEN, and that is a decision rather than an
+# omission. The first version of this builder wrote the whole 4.3 MB fetch to
+# data/source/ on every run. Measured 2026-09-18: this builder and
+# build_ny_judicial_districts.py fetch the SAME county layer, so the two
+# snapshots were 8.6 MB of near-identical geometry, against 1.5 MB for all of
+# Wisconsin's build inputs put together. Nothing read either file back. The
+# builder's guards are what make a run reproducible: it refuses to write
+# unless the source still returns exactly what it expects, and the source is a
+# public service this project can re-fetch. ny/scripts/build_ny_school_districts.py
+# and ny/scripts/build_ny_municipalities.py made the same call for the same reason.
 SIMPLIFY = "15%"  # matches ny/scripts/build_embedded_boundaries.py's boundary retain rate
 PRECISION = "0.000001"  # 6 decimals ~= 0.11 m, the precision the app requests live
 MIN_FEATURES = 62  # every New York county, measured 2026-09-18
@@ -243,9 +251,6 @@ def main():
             "- refusing to write: %s" % (len(bad_fips), bad_fips)
         )
 
-    os.makedirs(SOURCE_DIR, exist_ok=True)
-    with open(os.path.join(SOURCE_DIR, SOURCE_SNAPSHOT), "w") as f:
-        json.dump(source, f)
 
     with tempfile.TemporaryDirectory() as tmp:
         src_path = os.path.join(tmp, "counties-src.geojson")
