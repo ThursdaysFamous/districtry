@@ -22,8 +22,10 @@ Like build_embedded_boundaries.py / build_legislative_boundaries.py this is an
 occasional OPERATOR step, not weekly CI. Prerequisite: curl (through the proxy).
 
 Usage:
-    python3 scripts/build_fonts.py            # -> fonts/*.woff2 + @font-face on stdout
-    python3 scripts/build_fonts.py > /tmp/fontface.css
+    python3 scripts/build_fonts.py            # -> il/fonts/*.woff2 + @font-face on stdout
+    python3 scripts/build_fonts.py landing > fonts/barlow-fontface.css
+    python3 scripts/build_fonts.py traffic   # -> fonts/ibm-plex-mono-400-*.woff2,
+                                             #    block pasted into traffic.html
 """
 
 import argparse
@@ -105,6 +107,23 @@ TARGETS = {
         "families": ("?family=Barlow+Condensed:wght@400;600"
                      "&family=Barlow:wght@400;500;600;700"),
     },
+    "traffic": {
+        "fonts_dir": "fonts",
+        # traffic.html's mono, and ITS OWN TARGET rather than an addition to
+        # `landing` above, because the two write to the same directory and only
+        # one of them writes fonts/barlow-fontface.css. That file is read by
+        # build_landing_page, build_privacy_page, build_coverage_map,
+        # build_history_page and build_county_pages — about 195 pages — and
+        # exactly one of them paints mono through the design system's stack.
+        # Adding Plex there would declare a face 194 pages never ask for; a
+        # separate target fetches the same two files into the same fonts/ and
+        # prints a block that goes into traffic.html alone.
+        #
+        # 400 ONLY. The page paints one mono weight (the `code` cells holding
+        # path prefixes, measured in a browser), and the sources pages' 500 is
+        # for a <th> this page does not have.
+        "families": "?family=IBM+Plex+Mono:wght@400",
+    },
 }
 # A real browser UA so Google serves woff2 (not the legacy ttf it hands old UAs).
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -143,15 +162,24 @@ def parse_faces(css):
 
 
 def name_files(faces):
-    """One local filename per UNIQUE url. A family+subset served by a single url
-    is a variable font -> <slug>-<subset>.woff2; distinct urls per weight (static)
-    -> <slug>-<weight>-<subset>.woff2."""
-    urls_by_famsub = defaultdict(set)
+    """One local filename per UNIQUE url. A url serving SEVERAL weights is a
+    variable font and its weight is not in the name -> <slug>-<subset>.woff2;
+    a url serving one weight is a static face -> <slug>-<weight>-<subset>.woff2.
+
+    THE TEST IS THE URL'S OWN WEIGHTS, not how many urls the target asked for.
+    It used to read "this family+subset resolved to a single url, so it must be
+    variable", which is true only when the request covers more than one weight:
+    ask a STATIC family for one weight and it resolves to one url too, and the
+    file lands as `ibm-plex-mono-latin.woff2` — a name claiming the whole family
+    for one of its weights, which the next weight added would have to rename.
+    Found 2026-09-18 fetching Plex 400 for traffic.html, where every other Plex
+    file in the fleet is already `ibm-plex-mono-400-latin.woff2`."""
+    weights_by_url = defaultdict(set)
     for f in faces:
-        urls_by_famsub[(f["fam"], f["sub"])].add(f["url"])
+        weights_by_url[f["url"]].add(f["wght"])
     url_name = {}
     for f in faces:
-        variable = len(urls_by_famsub[(f["fam"], f["sub"])]) == 1
+        variable = len(weights_by_url[f["url"]]) > 1
         url_name[f["url"]] = (
             "%s-%s.woff2" % (slug(f["fam"]), f["sub"]) if variable
             else "%s-%s-%s.woff2" % (slug(f["fam"]), f["wght"], f["sub"])

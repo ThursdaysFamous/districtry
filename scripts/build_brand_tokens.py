@@ -338,12 +338,14 @@ def check_mono_stack(light):
     what every page carries once composed, which keeps this check independent
     of whether the tree has been recomposed yet.
 
-    traffic.html is the one surface that names Plex and defines no face: it
-    paints one `code` element and would need two font files at the repo root
-    for it, so it falls through to the system mono exactly as it does today.
-    That direction is not gated — 40 pages legitimately fall through — and the
-    Barlow Fallback check above is narrow for the opposite reason, since a
-    metric-override face that falls through defeats its own purpose.
+    THE OTHER DIRECTION IS STILL NOT GATED — a page naming Plex and defining
+    no face falls through to the system mono, which about 40 pages here do
+    legitimately, so failing on it would fail them. The Barlow Fallback check
+    above is narrow for the opposite reason: a metric-override face that falls
+    through defeats its own purpose, where a mono that falls through is merely
+    a different mono. traffic.html was the one root surface in that state and
+    ships the Plex 400 pair since 2026-09-18, so what remains is the pages that
+    paint no mono at all.
     """
     want = resolve(light, "font-mono")
     if want is None:
