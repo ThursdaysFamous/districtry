@@ -2893,7 +2893,7 @@ v1.0.6) · **CountyDispatch** `registerCountyLayer` (CHI fork-level dispatcher: 
 concept layer holding a per-county entry table — see
 `docs/EXPANSION_GUIDE.md` Part 2; adding a county is a table entry, not a layer).
 
-Fleet totals: **Chicago 40 · NYC 27 · SF 16 · Wisconsin 31 · Iowa 20 · Michigan 15** layers.
+Fleet totals: **Chicago 40 · NYC 31 · SF 16 · Wisconsin 31 · Iowa 20 · Michigan 15** layers.
 
 ---
 
@@ -11046,12 +11046,16 @@ matrix; when one is rejected, move the rationale into a NO HONEST ANALOG footnot
 | `library` | Library | geography | NearestPt | Socrata `x8fc-8rcq` | — | chicagoCoverage |
 | `early-voting` | Early Voting Site | political | NearestPt | hand-curated `early-voting-sites.json` (per election; sites double as the secured drop boxes; WATCH.md row) | — | chicagoCoverage |
 
-### NYC — 27 layers
+### NYC — 31 layers
 
 | id | label | group | pattern | source | roster / join |
 |---|---|---|---|---|---|
 | `borough` | Borough / County | geography | Bespoke | pre-built (offline anchor) | `borough-officials.json` clerk entries (operator-verified; appointed, labeled) |
-| `judicial-district` | NY Supreme Court Judicial District | political | Polygon | pre-built (counties → districts derivation) | link-only |
+| `judicial-district` | NY Supreme Court Judicial District | political | Polygon | pre-built, all 13 statewide, dissolved from the county fabric on the Judiciary Law §140 table | link-only |
+| `county` | County | geography | Polygon | pre-built from NYS Civil Boundaries layer 2 (62 statewide) | none — three county forms, no statewide roster found |
+| `nys-school-district` | School District | schools | Polygon | pre-built from NYS_Schools layer 18, 936 rows dissolved to 716 on SED_CODE_1 | none — boards elected locally, no statewide roster |
+| `municipality` | City or Town | geography | Polygon | pre-built from NYS Civil Boundaries layer 6 (995 statewide, tiling) | none |
+| `village` | Village | geography | Polygon | pre-built from NYS Civil Boundaries layer 7 (532, nested inside towns) | none |
 | `borough-president` | Borough President | political | BoroughOffice | shares `borough` geometry | `borough-officials.json` (operator-maintained) |
 | `district-attorney` | District Attorney | political | BoroughOffice | shares `borough` geometry | same roster |
 | `congress` | U.S. House District | political | Chamber | pre-built (TIGERweb L0, STATE=36) | `congress-roster.json` (weekly CI) |

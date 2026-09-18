@@ -6278,10 +6278,14 @@ function initNycExplorer() {
   // geometry library in this codebase to compute polygon area from data.
   // GENERATED from the worksheet's layers[] (area_rank order + rank notes).
   var LAYER_AREA_RANK = [
+    "judicial-district",
+    "county",            // 62 counties statewide. Inside the city a county IS a borough, which the borough layer already answers with the city's own names.
+    "nys-school-district", // 716 school districts statewide; the city's own 32 Community School Districts are a different concept and stay on their own layer
+    "municipality",      // 995 cities and towns, which tile the state; villages sit inside towns and are their own layer
+    "village",           // 532 villages, nested inside towns rather than beside them, so a point can be in both a village and its town
     // borough / judicial-district / BP / DA are the same 5 county polygons —
     // later = drawn on top (§7).
     "borough",           // 5 counties — largest
-    "judicial-district",
     "borough-president",
     "district-attorney",
     "congress",          // ~13 in-city U.S. House districts
@@ -8399,6 +8403,19 @@ function initNycExplorer() {
       return !!findFeatureContaining(geojson, point);
     });
   }
+
+  /* The inverse, for a statewide layer whose concept the city already answers
+   * with its own source. Illinois does the same thing with
+   * outsideChicagoSchoolCoverage: two toggles for one concept is not this
+   * fleet's shape, so the statewide layer stands down where the city's own
+   * layer speaks. Measured 2026-09-18: a Manhattan click had the statewide
+   * school layer answering "MANHATTAN 2" beside the Community School District
+   * layer's "2", which is the same district named twice. */
+  function outsideNycCoverage(point) {
+    return loadBoroughBoundaries().then(function (geojson) {
+      return !findFeatureContaining(geojson, point);
+    });
+  }
   /* Bespoke rather than factory so the card can join the County Clerk from
    * borough-officials.json (operator-verified; see the source's _verified
    * note). NYC County Clerks are APPOINTED by the Appellate Division, so the
@@ -8482,12 +8499,166 @@ function initNycExplorer() {
     }
   });
 
-  /* ---------- NY Supreme Court Judicial District (offline anchor) ----------
-   * The 5 NYC judicial districts are 1:1 with the counties (1 Manhattan, 2
-   * Brooklyn, 11 Queens, 12 Bronx, 13 Staten Island), so the layer is the
-   * TIGERweb county geometry relabeled — no live source exists; the derivation
-   * IS the layer. Justices are elected countywide to 14-year terms; there is no
-   * clean machine-readable roster, so the card links to the court (never guess). */
+  /* ---------- School District (statewide) -----------------------------------
+   * 716 districts, dissolved from the state's 936 polygon rows. The 936
+   * against the Census Bureau's 680 for New York reconciles exactly, measured
+   * 2026-09-18: 33 New York City rows (the state names all 32 Community School
+   * Districts where the Census carries one row for the whole city), 220
+   * multipart and duplicate-code rows, and 3 special-act districts the Census
+   * has no row for. The state layer is the one that ships because the Census
+   * version would answer "New York City" for every point in the five boroughs
+   * instead of naming a district.
+   *
+   * The city's own Community School District layer is a DIFFERENT concept and
+   * stays, gated to the boroughs: it is the 32 districts the city's schools
+   * are organised into, not one of these 716. ---------- */
+  var loadNysSchoolDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ny-school-districts.json", {}, 2);
+  });
+  registerPolygonLayer({
+    id: "nys-school-district",
+    group: "schools",
+    label: "School District",
+    // Stands down inside the five boroughs: the state's layer carries the
+    // city's 32 community school districts too (as "MANHATTAN 2" and the
+    // like), and the Community School District layer already answers there in
+    // the city's own words.
+    coverage: outsideNycCoverage,
+    loader: loadNysSchoolDistricts,
+    style: { color: "#0B7285", weight: 1.5, fillColor: "#0B7285", fillOpacity: 0.04, dashArray: "4 3" },
+    fields: [
+      { name: "name", label: "District", keys: ["schooldist"], primary: true },
+      { name: "sed", label: "State education code", keys: ["sed_code_1"] },
+      { label: "Who runs it", value: "New York school boards are elected locally. No statewide roster of their members has been found, so this card names nobody." }
+    ],
+    primaryLink: function () {
+      return { label: "NYSED district directory", url: "https://www.nysed.gov/" };
+    }
+  });
+
+  /* ---------- City or Town, and Village (statewide) --------------------------
+   * TWO LAYERS BECAUSE THEY ARE TWO SHAPES OF GOVERNMENT, NOT ONE FABRIC.
+   * New York's 62 cities and 933 towns TILE the state: every point is in
+   * exactly one. Its 532 villages sit INSIDE towns, so a village address is
+   * also a town address and a single layer could only ever answer one of the
+   * two. The village layer is registered under the city-and-town layer for
+   * that reason.
+   *
+   * A VILLAGE CAN SPAN TOWNS AND EVEN COUNTIES, measured 2026-09-18: 76 of the
+   * 532 carry more than one town in their TOWN field as a comma-joined string,
+   * and 8 of those cross a county line (Almond, Attica, Dolgeville, Earlville,
+   * Deposit, Gowanda, Saranac Lake, Rushville). Anything reading that field
+   * splits the string; it is never a single key.
+   *
+   * Inside New York City the city-and-town layer says "New York", because the
+   * whole city is one row in the state's data. The borough layer is the finer
+   * answer there, and says so in the city's own words. ---------- */
+  var loadNyCitiesTowns = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ny-cities-towns.json", {}, 2);
+  });
+  var loadNyVillages = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ny-villages.json", {}, 2);
+  });
+  registerPolygonLayer({
+    id: "municipality",
+    group: "geography",
+    label: "City or Town",
+    loader: loadNyCitiesTowns,
+    style: { color: "#7A6A55", weight: 1.5, fillColor: "#7A6A55", fillOpacity: 0.04 },
+    fields: [
+      { name: "name", label: "Name", keys: ["name"], primary: true },
+      { name: "type", label: "Kind", keys: ["muni_type"] },
+      { name: "county", label: "County", keys: ["county"] }
+    ]
+  });
+  registerPolygonLayer({
+    id: "village",
+    group: "geography",
+    label: "Village",
+    subOf: "municipality",
+    loader: loadNyVillages,
+    style: { color: "#8C6D3F", weight: 1.5, fillColor: "#8C6D3F", fillOpacity: 0.05, dashArray: "3 2" },
+    emptyNote: "This point is not in a village. Most of New York is not: a village is an extra layer of government inside a town.",
+    fields: [
+      { name: "name", label: "Village", keys: ["name"], primary: true },
+      // Comma-joined where a village spans more than one, which 76 of 532 do.
+      { name: "town", label: "Town", keys: ["town"] },
+      { name: "county", label: "County", keys: ["county"] }
+    ]
+  });
+
+  /* ---------- County (statewide) --------------------------------------------
+   * New York's 62 counties, from the state's own Civil Boundaries service.
+   * This is the identity layer the rest of the state gets, the way the borough
+   * layer is the identity layer inside the city: the two answer the same
+   * question on the same ground in the five boroughs, because there a county
+   * IS a borough, and the borough layer says it in the city's own words.
+   *
+   * THE CARD NAMES NOBODY, AND THAT IS THE HONEST ANSWER TODAY. New York
+   * counties are governed in three different forms (a county legislature, a
+   * board of supervisors made of the towns' own supervisors, and Otsego's
+   * board of representatives), and no statewide list of who holds those seats
+   * has been found; the county tier is later work. Inside New York City there
+   * is no county government at all, which the card states rather than leaving
+   * a reader to assume a board that does not exist. The state's layer carries
+   * an NYC flag on exactly those five counties, which is what the card reads.
+   *
+   * The geometry is shoreline-clipped, where data/app/metro-outline.json is
+   * water-inclusive TIGERweb, so the two disagree at the coast by design: the
+   * outline is the coverage wash and this is the county answer. ---------- */
+  var loadNyCounties = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ny-counties.json", {}, 2);
+  });
+  registerPolygonLayer({
+    id: "county",
+    group: "geography",
+    label: "County",
+    loader: loadNyCounties,
+    style: { color: "#5A6B7C", weight: 2, fillColor: "#5A6B7C", fillOpacity: 0.04 },
+    // findPropCI LOWERCASES THE PROPERTY KEY AND COMPARES IT TO THE CANDIDATE
+    // AS GIVEN, so every key below is lowercase even though the state's data
+    // ships them in capitals. Measured 2026-09-18: with ["NAME"] this card
+    // rendered "Unknown" on a Buffalo click while the file plainly carried
+    // NAME: "Erie". The same mistake is recorded at findPropCI for two
+    // Michigan layers, which is how it was recognised here.
+    fields: [
+      { name: "name", label: "County", keys: ["name"], primary: true },
+      { name: "pop", label: "Population (2020)", keys: ["pop2020"] },
+      // Only inside the city, where the county is not a unit of government.
+      // Tested on the county NAME rather than on the layer's own NYC flag,
+      // because a field exists to be RENDERED: carrying the flag as a field
+      // just so this row could read it put a bare "N" on all 57 other
+      // counties' cards, measured on a Buffalo click 2026-09-18. The five
+      // names are fixed by law and the flag still gates the future county
+      // tier, where it is read from the data rather than from a card.
+      { label: "County government", value: "New York City's five counties have no county government of their own. The City governs them, and the borough layer names the borough offices.",
+        when: function (result) {
+          return ["Bronx", "Kings", "New York", "Queens", "Richmond"]
+            .indexOf(String(result.name || "")) !== -1;
+        } }
+    ],
+    primaryLink: function () {
+      return { label: "New York State Association of Counties", url: "https://www.nysac.org/" };
+    }
+  });
+
+  /* ---------- NY Supreme Court Judicial District (statewide, computed) ------
+   * ALL THIRTEEN, not the five the city holds. New York Judiciary Law section
+   * 140 defines the judicial districts as unions of WHOLE counties, so the
+   * layer is computable: ny/scripts/build_ny_judicial_districts.py dissolves
+   * the state's own county fabric on a 62-row statute table, and every county
+   * lands in exactly one district. That replaces what shipped before, which
+   * was five county polygons relabelled 1, 2, 11, 12 and 13 by a crosswalk
+   * applied by hand — the same answer inside the city, with provenance the
+   * statute carries rather than a person's memory of it.
+   *
+   * UNGATED, unlike the rest of the city tier: a judicial district is one of
+   * the few things this instance can already answer for anywhere in New York
+   * State, which is what the middle band of the coverage wash is for.
+   *
+   * Justices are elected from a district and then sit on it, and no clean
+   * machine-readable roster of who holds those seats exists, so the card names
+   * the counties and links to the court. It never guesses a name. */
   var loadJudicialDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/judicial-districts.json", {}, 2);
   });
@@ -8495,7 +8666,6 @@ function initNycExplorer() {
     id: "judicial-district",
     group: "political",
     label: "NY Supreme Court Judicial District",
-    coverage: nycCoverage,
     loader: loadJudicialDistricts,
     style: { color: "#6B4E8C", weight: 2, fillColor: "#6B4E8C", fillOpacity: 0.05, dashArray: "7 3" },
     pill: true, // district identifier in the header pill (Handoff 3 §5b)
@@ -8503,8 +8673,15 @@ function initNycExplorer() {
       // label shortened so the pill reads "District 1" (the layer name above
       // already says Judicial District)
       { name: "district", label: "District", keys: ["district"], primary: true },
-      { name: "borough", label: "Borough / County", keys: ["borough"] },
-      { label: "How it's elected", value: "Justices are elected countywide to 14-year terms." }
+      // The counties the statute assigns to this district, in its own order.
+      // A district holds one county (New York) or as many as eleven, so the
+      // row is a list rather than a single name.
+      // The builder writes counties_label already joined, because the card
+      // factory's fields render a property as-is and a raw array would print
+      // "Albany,Columbia,Greene" with no spaces. The array itself stays on the
+      // feature under `counties` for anything that wants to read it.
+      { name: "counties", label: "Counties", keys: ["counties_label"] },
+      { label: "How it's elected", value: "Justices are elected from the district to 14-year terms." }
     ],
     primaryLink: function () {
       return { label: "NY State Supreme Court (Civil Term)", url: "https://www.nycourts.gov/courts/" };

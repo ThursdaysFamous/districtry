@@ -81,7 +81,8 @@ MIN_REGISTER_LAYER = 5
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "borough", "judicial-district", "borough-president", "district-attorney",
+    "judicial-district", "county", "nys-school-district", "municipality",
+    "village", "borough", "borough-president", "district-attorney",
     "congress", "municipal-court", "state-senate", "school-district", "cec",
     "fire-battalion", "council", "community-district", "election-district",
     "state-assembly", "police-sector", "police-precinct", "zip-code",
@@ -100,7 +101,11 @@ GEOMETRY_FILES = {
     "manhattan-county-outline.json": (1, 1),  # Manhattan containment outline (ny/scripts/build_ny_borough_outlines.py, sliced from borough-boundaries.json) — lets a Data gaps record name this borough so the panel leads with the gaps that apply here.
     "queens-county-outline.json": (1, 1),  # Queens containment outline (ny/scripts/build_ny_borough_outlines.py, sliced from borough-boundaries.json) — lets a Data gaps record name this borough so the panel leads with the gaps that apply here.
     "staten-island-county-outline.json": (1, 1),  # Staten Island containment outline (ny/scripts/build_ny_borough_outlines.py, sliced from borough-boundaries.json) — lets a Data gaps record name this borough so the panel leads with the gaps that apply here.
-    "judicial-districts.json": (5, 5),
+    "judicial-districts.json": (13, 13),  # All thirteen New York judicial districts, dissolved from the state county fabric on the Judiciary Law section 140 table by ny/scripts/build_ny_judicial_districts.py. Replaces the five-borough crosswalk file.
+    "ny-counties.json": (62, 62),  # New York's 62 counties from the state's own Civil Boundaries service, carrying the NYC flag that marks the five counties with no county government (ny/scripts/build_ny_counties.py). Shoreline-clipped, so it disagrees with the water-inclusive coverage ring at the coast by design.
+    "ny-school-districts.json": (716, 716),  # 716 school districts statewide, dissolved from the state's 936 polygon rows on SED_CODE_1 (ny/scripts/build_ny_school_districts.py). The 936 against the Census Bureau's 680 reconciles exactly: 33 New York City rows, 220 multipart and duplicate-code rows, 3 special-act districts.
+    "ny-cities-towns.json": (995, 995),  # New York's 62 cities and 933 towns, which together tile the state (ny/scripts/build_ny_municipalities.py).
+    "ny-villages.json": (532, 532),  # New York's 532 villages, which sit INSIDE towns rather than beside them, so this is a nested layer and not part of the tiling.
     "municipal-court-districts.json": (28, 28),
     "congress-districts.json": (26, 26),  # 26 NY U.S. House districts; pre-built from TIGERweb by scripts/build_legislative_boundaries.py (R2-2)
     "state-senate-districts.json": (63, 63),  # 63 NY State Senate districts; pre-built from TIGERweb layer 1

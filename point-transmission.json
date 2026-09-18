@@ -218,6 +218,7 @@
         "community-district",
         "congress",
         "council",
+        "county",
         "district-attorney",
         "early-voting",
         "election-district",
@@ -229,7 +230,9 @@
         "library",
         "ms-zone",
         "municipal-court",
+        "municipality",
         "neighborhood",
+        "nys-school-district",
         "police-precinct",
         "police-sector",
         "police-station",
@@ -238,6 +241,7 @@
         "school-site",
         "state-assembly",
         "state-senate",
+        "village",
         "zip-code"
       ]
     },

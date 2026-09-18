@@ -90,7 +90,7 @@ of 2021, and `scripts/build_il_court_justices.py` holds a transcription of its c
 weekly roster run refuses to write unless the counties the court's own district pages name still
 match it, so a redraw surfaces as a failing refresh rather than as silence.
 
-### NYC (27 layers)
+### NYC (31 layers)
 
 | Layer | Exposure class | Enacting authority | What breaks |
 |---|---|---|---|
