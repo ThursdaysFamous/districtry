@@ -159,6 +159,20 @@ def norm(s):
     return re.sub(r"[^a-z]", "", (s or "").lower())
 
 
+def digits_only(phone):
+    """A phone as comparable digits, or None when it is not a plain 10-digit US number.
+
+    Two publishers need not punctuate alike, and an extension suffix
+    ("ext 6", "opt 0") makes a number that is NOT the same line as the bare
+    one -- so those return None and are never matched against an office
+    number they only start with.
+    """
+    d = re.sub(r"\D", "", phone or "")
+    if len(d) == 11 and d.startswith("1"):
+        d = d[1:]
+    return d if len(d) == 10 else None
+
+
 def office_mailbox(city, email):
     """Is this the CITY's mailbox rather than a private one?"""
     local = email.split("@")[0]
@@ -264,6 +278,69 @@ def main():
         if "mayor" not in roles.lower() and "clerk" not in roles.lower():
             no_head.append(entry["city"])
 
+    # A CLERK'S PHONE IS OFTEN CITY HALL'S, AND THE CARD MUST NOT READ AS IF IT
+    # WERE A DIRECT LINE. Measured 2026-09-18 across the nine current counties:
+    # 29 of 116 member phones are byte-identical to the city office number
+    # shipped on their own record, every one of them a City Clerk, City
+    # Administrator or Library -- never a mayor or a council member. The
+    # counties are not wrong and neither is the scraper: each page prints the
+    # number in that official's own contact slot, and Ogden is its own control,
+    # giving its clerk and administrator `(515) 275-2917 admin@ogdeniowa.org`
+    # while its MAYOR's row on the same page carries a different number and a
+    # personal address. What a county page shows with the role beside it, this
+    # app was repeating with nothing to say whose number it is -- and the City
+    # card already prints that same number once, correctly labelled "City
+    # office", one block above.
+    #
+    # So the fact is flagged rather than dropped. The number reaches that
+    # person and a reader wanting a city clerk wants exactly it; what was
+    # missing is the label, which the card renders from this field. That is the
+    # same ruling `office_mailbox()` above already makes for e-mail, which
+    # KEEPS `clerk@ogdeniowa.org` on the clerk and drops a third party's
+    # address -- dropping the phone would be the opposite answer to the same
+    # question.
+    #
+    # THE COMPARAND IS THE SAME PAGE'S OWN CITY BLOCK, AND NOTHING ELSE. Digits
+    # because two sources need not punctuate alike; a second pass because a
+    # city listed by two counties takes `officePhone` from whichever county is
+    # read first, so a member added before that is set would otherwise never be
+    # compared.
+    #
+    # A SECOND COMPARAND WAS TRIED AND IS WRONG, which is why it is named here
+    # rather than left to look like an omission. Flagging a row whose phone
+    # matches the city's number in `ia-city-contact.json` -- the Iowa League of
+    # Cities' own per-city column -- adds exactly one row and that row is a
+    # false positive. Measured 2026-09-18 on Boone County's page: Beaver's city
+    # block prints `(515) 386-2536`, and its City Clerk Sarah Miller's own row
+    # prints `(515) 231-4819 sarahevans201@gmail.com`, as every other Beaver
+    # official's row prints a distinct number and a personal address. The
+    # League lists her number as the city's, which in a town that size is how
+    # it is reached -- but the COUNTY names a different number as the city's,
+    # so labelling her line the city office number would state something the
+    # page this row comes from contradicts. Two publishers can disagree about
+    # which number is the city's, so a match against the other one is not
+    # evidence about this one.
+    office_phones = 0
+    for entry in out.values():
+        own = digits_only(entry.get("officePhone"))
+        for m in entry["members"]:
+            if own and digits_only(m.get("phone")) == own:
+                m["phoneIsOffice"] = True
+                office_phones += 1
+
+    # The invariant, checked rather than trusted: a flagged row's phone must
+    # still equal its own record's office number, and no unflagged row's may.
+    for entry in out.values():
+        own = digits_only(entry.get("officePhone"))
+        for m in entry["members"]:
+            is_office = bool(own) and digits_only(m.get("phone")) == own
+            if bool(m.get("phoneIsOffice")) != is_office:
+                fail("%s / %s: phoneIsOffice is %r and the number %s the city "
+                     "office number -- the flag and the comparison have come "
+                     "apart" % (entry["city"], m["name"],
+                                m.get("phoneIsOffice"),
+                                "equals" if is_office else "does not equal"))
+
     cities = len(out)
     officials = sum(len(e["members"]) for e in out.values())
     mayors = sum(1 for e in out.values()
@@ -274,11 +351,13 @@ def main():
     seats = sum(1 for e in out.values() for m in e["members"] if m.get("seat"))
 
     print("cities %d  officials %d  mayors %d  clerks %d  seats named %d  "
-          "e-mails %d  phones %d" % (
+          "e-mails %d  phones %d (%d of them the city office number, flagged "
+          "phoneIsOffice)" % (
               cities, officials, mayors,
               sum(1 for e in out.values()
                   if any("clerk" in (m.get("role") or "").lower()
-                         for m in e["members"])), seats, emails, phones))
+                         for m in e["members"])), seats, emails, phones,
+              office_phones))
     if shadowed:
         print("  %d city/cities already named from their OWN page, so the "
               "county's copy is not used: %s"

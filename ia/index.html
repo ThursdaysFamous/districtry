@@ -9649,6 +9649,16 @@ function initIowaExplorer() {
           if (rec.phone) row.phone = String(rec.phone);
           if (rec.email) row.email = String(rec.email);
           var notes = [];
+          // A CITY CLERK'S PUBLISHED PHONE IS OFTEN CITY HALL'S, AND THE ROW
+          // MUST NOT READ AS A DIRECT LINE. 29 of these 116 phones are the
+          // number this same card already prints once, under "City office" —
+          // every one a clerk, administrator or library, never a mayor or a
+          // council member. The builder flags them by comparing each member's
+          // number with the city office number on their own record; the label
+          // is what was missing, not the number, so it stays on the row and
+          // stays dialable. A reader wanting a city clerk wants exactly this
+          // number.
+          if (rec.phoneIsOffice) notes.push("City office number");
           if (rec.status) notes.push(String(rec.status));
           if (rec.termEnds) notes.push("Term ends " + String(rec.termEnds));
           if (notes.length) row.note = notes.join(" \u00b7 ");

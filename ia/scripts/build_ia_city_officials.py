@@ -75,8 +75,22 @@ MIN_CITIES = 4                # measured 4 of the 5 in the scraper's table
 SEATS_PER_CITY = 6            # a mayor plus five council members, in all of them
 MIN_EMAILS = 24               # measured 24 of 24; the cities publish one for
                               # everyone. Was 30 when Palo's six shipped.
-MIN_PHONES = 18               # measured 18 of 24 -- unchanged by Palo leaving,
-                              # because Palo published no phone at all
+MIN_PHONES = 17               # measured 17 of 24 -- unchanged by Palo leaving,
+                              # because Palo published no phone at all.
+                              # WAS 18, AND THAT 18 COUNTED A NUMBER NO CITY
+                              # PUBLISHES. Riverside's council member Lois
+                              # Schneider carried (319) 648-3501, which is the
+                              # city hall number in that page's own
+                              # `<div id="footer">`: the scraper's last member
+                              # had no next member to bound them, and the fixed
+                              # twelve-line window that stood in for one reached
+                              # past the roster. Her row publishes no phone at
+                              # all. So this is the floor re-measured against
+                              # what the four cities actually publish, not a
+                              # floor lowered to let a real loss through -- the
+                              # count moved because a wrong value left, and the
+                              # bound that admitted it is gated by
+                              # `ia_city_officials_scraper.py --selftest`.
 
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[a-z]{2,}$", re.I)
 OFFICE_FORM = re.compile(r"^(mayor|clerk|council|city|admin|info|office)", re.I)
