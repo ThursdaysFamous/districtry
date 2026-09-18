@@ -90,6 +90,7 @@ from build_landing_page import (  # noqa: E402
 )
 from build_privacy_page import (  # noqa: E402
     DARK_EXTRA, DARK_TOKENS, LIGHT_TOKENS, esc, fail, shared_goatcounter,
+    shared_mono_faces,
 )
 # shared_goatcounter is re-exported deliberately: build_county_pages.py takes it
 # and shared_footer_byline from here together, and build_privacy_page is the
@@ -498,7 +499,7 @@ h2 {
 table { border-collapse: collapse; width: 100%%; margin-top: 12px; font-size: 14px; }
 th, td { text-align: left; padding: 7px 12px 7px 0; border-bottom: 1px solid var(--border); vertical-align: top; }
 th { font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
-code { font: 400 12.5px/1.4 ui-monospace, "SF Mono", Menlo, Consolas, monospace; color: var(--ink-2); }
+code { font: 400 12.5px/1.4 var(--font-mono); color: var(--ink-2); }
 /* line-height 28px for the same reason build_landing_page.py gives its own
    footer row: 17px links inheriting 1.6 wrap at 390px into rows 22.4px apart,
    under WCAG 2.5.8's 24. Measured 2026-09-13. */
@@ -553,7 +554,7 @@ at the diff.</p>
         "title": esc(title), "desc": esc(desc), "canonical": esc(canonical),
         "app_name": esc(app_name), "og_image": esc(app_url + "og-image.png"),
         "favicon": favicon_uri, "inst": inst,
-        "fontface": fontface,
+        "fontface": fontface + "\n" + shared_mono_faces(),
         "light": token_css(LIGHT_TOKENS, light, ":root"),
         "dark": token_css(DARK_TOKENS, dark, '[data-theme="dark"]', DARK_EXTRA,
                           indent="    "),
