@@ -192,11 +192,12 @@
       ]
     },
     "ny": {
-      "layers_sending_point": 4,
+      "layers_sending_point": 5,
       "layers": [
         "es-zone",
         "hs-zone",
         "ms-zone",
+        "nys-zip-code",
         "zip-code"
       ],
       "layers_holding_hook_but_silent": [
@@ -207,9 +208,10 @@
       ],
       "layers_unexercised": [],
       "atpoint_sites": [
-        "load"
+        "load",
+        "loadNysZipCodes"
       ],
-      "atpoint_hooks_fired": 1,
+      "atpoint_hooks_fired": 2,
       "layer_ids": [
         "borough",
         "borough-president",
@@ -232,6 +234,7 @@
         "municipality",
         "neighborhood",
         "nys-school-district",
+        "nys-zip-code",
         "police-precinct",
         "police-sector",
         "police-station",

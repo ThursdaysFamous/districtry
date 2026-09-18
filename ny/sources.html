@@ -1034,7 +1034,7 @@ table.matrix code {
   <section class="matrix-section">
     <h2>The layer matrix</h2>
     <!-- ==== GENERATED:BEGIN layer-matrix ==== -->
-      <p class="matrix-lede">32 layers — 12 political and legislative, 5 public safety, 7 schools, 8 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
+      <p class="matrix-lede">33 layers — 12 political and legislative, 5 public safety, 7 schools, 9 geography and amenities. Each row names the publisher the boundary comes from, where the names on the card come from, and the ground the layer actually answers on — outside that ground the layer hides itself rather than guessing.</p>
       <nav class="matrix-nav" aria-label="Jump to a layer group">
         <a href="#political">Political &amp; legislative</a>
         <a href="#safety">Public safety</a>
@@ -1349,7 +1349,7 @@ table.matrix code {
       </section>
 
       <section class="matrix-group" id="geography">
-        <h2>Geography &amp; amenities <span class="matrix-count">8 layers</span></h2>
+        <h2>Geography &amp; amenities <span class="matrix-count">9 layers</span></h2>
         <p class="matrix-blurb">The boundaries that place an address without electing anyone, plus the nearest public services.</p>
         <div class="matrix-wrap">
           <table class="matrix">
@@ -1400,6 +1400,17 @@ table.matrix code {
                 </td>
                 <td data-label="Who it names">Borough-wide officeholders ship with the app and are surfaced on the Borough President and District Attorney cards rather than here.</td>
                 <td data-label="Where it applies">New York City.</td>
+              </tr>
+              <tr id="layer-nys-zip-code">
+                <th scope="row"><span class="layer-name">ZIP Code</span><code>nys-zip-code</code></th>
+                <td data-label="What it answers">The Census Bureau's ZIP Code Tabulation Area covering this point, anywhere in New York State outside New York City.</td>
+                <td data-label="Boundary source">
+                  <ul class="src-list">
+                    <li><a href="https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" target="_blank" rel="noopener">ZIP Code Tabulation Areas from U.S. Census TIGERweb, fetched live by a bounding envelope because the layer carries no state field</a></li>
+                  </ul>
+                </td>
+                <td data-label="Who it names">No roster is joined, and none is missing: nobody is elected from a ZIP code. The card states what the boundary is — the Census Bureau's areal approximation of USPS delivery routes, not the postal boundary itself.</td>
+                <td data-label="Where it applies">New York State outside New York City. Inside the city the MODZCTA layer answers, because the two are different tilings of the same ground and both would answer one point.</td>
               </tr>
               <tr id="layer-zip-code">
                 <th scope="row"><span class="layer-name">ZIP Code (MODZCTA)</span><code>zip-code</code></th>
@@ -1903,6 +1914,28 @@ table.matrix code {
       "spatialCoverage": {
         "@type": "Place",
         "name": "New York City"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://districtry.com/ny/sources.html#dataset-nys-zip-code",
+      "identifier": "nys-zip-code",
+      "name": "ZIP Code",
+      "description": "The Census Bureau's ZIP Code Tabulation Area covering this point, anywhere in New York State outside New York City. No roster is joined, and none is missing: nobody is elected from a ZIP code. The card states what the boundary is — the Census Bureau's areal approximation of USPS delivery routes, not the postal boundary itself.",
+      "url": "https://districtry.com/ny/sources.html#layer-nys-zip-code",
+      "isPartOf": {
+        "@id": "https://districtry.com/ny/sources.html#catalog"
+      },
+      "isBasedOn": [
+        {
+          "@type": "Dataset",
+          "name": "ZIP Code Tabulation Areas from U.S. Census TIGERweb, fetched live by a bounding envelope because the layer carries no state field",
+          "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "New York State outside New York City. Inside the city the MODZCTA layer answers, because the two are different tilings of the same ground and both would answer one point"
       }
     },
     {

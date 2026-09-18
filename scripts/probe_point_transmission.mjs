@@ -187,6 +187,13 @@ function anchorOf(tag) {
 // as a no: this list is a way to reduce the unknowns, not to hide them.
 const EXTRA_POINTS = {
   il: [{ lat: 42.0451, lng: -87.6877, note: "Evanston — elementary D65 + high-school D202, outside Chicago" }],
+  // New York's statewide tier is the same shape as Illinois's school layers,
+  // in the opposite direction: `nys-zip-code` and `nys-school-district` declare
+  // `outsideNycCoverage` and are hidden inside the five boroughs, which is
+  // exactly where the worksheet anchor (City Hall) sits. Buffalo is in a ZCTA,
+  // a school district, a county, a city and a judicial district, so one point
+  // exercises the whole statewide tier.
+  ny: [{ lat: 42.88645, lng: -78.87837, note: "Buffalo — the statewide tier, outside New York City" }],
 };
 
 // An instance is a top-level directory with its own index.html and data/app —

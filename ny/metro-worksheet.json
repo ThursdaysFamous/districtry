@@ -503,7 +503,7 @@
       "id": "zip-code",
       "label": "ZIP Code (MODZCTA)",
       "group": "geography",
-      "area_rank": 21,
+      "area_rank": 22,
       "rank_note": "~178 MODZCTA",
       "source": {
         "answers": "Which Modified ZIP Code Tabulation Area contains this address.",
@@ -517,11 +517,29 @@
         "applies": "New York City."
       }
     },
+      {
+        "id": "nys-zip-code",
+        "label": "ZIP Code",
+        "group": "geography",
+        "area_rank": 21,
+        "rank_note": "ZIP Code Tabulation Areas statewide; stands down inside New York City, where the city's own MODZCTA layer answers",
+        "source": {
+          "answers": "The Census Bureau's ZIP Code Tabulation Area covering this point, anywhere in New York State outside New York City.",
+          "boundary": [
+            {
+              "label": "ZIP Code Tabulation Areas from U.S. Census TIGERweb, fetched live by a bounding envelope because the layer carries no state field",
+              "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
+            }
+          ],
+          "people": "No roster is joined, and none is missing: nobody is elected from a ZIP code. The card states what the boundary is — the Census Bureau's areal approximation of USPS delivery routes, not the postal boundary itself.",
+          "applies": "New York State outside New York City. Inside the city the MODZCTA layer answers, because the two are different tilings of the same ground and both would answer one point."
+        }
+      },
     {
       "id": "neighborhood",
       "label": "Neighborhood (NTA)",
       "group": "geography",
-      "area_rank": 22,
+      "area_rank": 23,
       "rank_note": "~262 NTAs",
       "source": {
         "answers": "Which Neighborhood Tabulation Area contains this address.",
@@ -539,7 +557,7 @@
       "id": "hs-zone",
       "label": "High School Zone",
       "group": "schools",
-      "area_rank": 23,
+      "area_rank": 24,
       "rank_note": "high-school zones (sparse)",
       "source": {
         "answers": "Which zoned high school serves this address, where one does.",
@@ -557,7 +575,7 @@
       "id": "ms-zone",
       "label": "Middle School Zone",
       "group": "schools",
-      "area_rank": 24,
+      "area_rank": 25,
       "rank_note": "middle-school zones (partial)",
       "source": {
         "answers": "Which zoned middle school serves this address, where one does.",
@@ -575,7 +593,7 @@
       "id": "es-zone",
       "label": "Elementary School Zone",
       "group": "schools",
-      "area_rank": 25,
+      "area_rank": 26,
       "rank_note": "elementary zones — smallest polygon layer",
       "source": {
         "answers": "Which zoned elementary school serves this address.",
@@ -593,7 +611,7 @@
       "id": "school-site",
       "label": "School",
       "group": "schools",
-      "area_rank": 26,
+      "area_rank": 27,
       "rank_note": "point marker — always topmost",
       "source": {
         "answers": "The nearest school sites to this point, by straight-line distance, anywhere in New York State.",
@@ -611,7 +629,7 @@
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 27,
+      "area_rank": 28,
       "rank_note": "point marker — always topmost",
       "source": {
         "answers": "The nearest police stations to this point, by straight-line distance.",
@@ -629,7 +647,7 @@
       "id": "fire-station",
       "label": "Fire Station",
       "group": "safety",
-      "area_rank": 28,
+      "area_rank": 29,
       "rank_note": "point marker — always topmost",
       "source": {
         "answers": "The nearest fire stations to this point, by straight-line distance, anywhere in New York State.",
@@ -647,7 +665,7 @@
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 29,
+      "area_rank": 30,
       "rank_note": "point marker — always topmost",
       "source": {
         "answers": "The nearest post offices to this point, by straight-line distance, anywhere in New York State.",
@@ -665,7 +683,7 @@
       "id": "library",
       "label": "Library",
       "group": "geography",
-      "area_rank": 30,
+      "area_rank": 31,
       "rank_note": "point marker — always topmost",
       "source": {
         "answers": "The nearest public libraries to this point, by straight-line distance.",
@@ -687,7 +705,7 @@
         "id": "early-voting",
         "label": "Early Voting Site",
         "group": "political",
-        "area_rank": 31,
+        "area_rank": 32,
         "rank_note": "point marker — always topmost",
         "source": {
           "answers": "The nearest early-voting sites to this point for the current election, anywhere in New York State. It does not say which one is yours.",
@@ -705,7 +723,7 @@
       "id": "polling-place",
       "label": "Election Day Poll Site",
       "group": "political",
-      "area_rank": 32,
+      "area_rank": 33,
       "rank_note": "point marker — always topmost",
       "source": {
         "answers": "The Election Day poll sites nearest this point, by straight-line distance, anywhere in New York State. It does not say which one is yours.",

@@ -6302,6 +6302,7 @@ function initNycExplorer() {
     "state-assembly",    // ~65 in-city
     "police-sector",     // 303 sectors — just before its parent precinct
     "police-precinct",   // 78 NYPD precincts
+    "nys-zip-code",      // ZIP Code Tabulation Areas statewide; stands down inside New York City, where the city's own MODZCTA layer answers
     "zip-code",          // ~178 MODZCTA
     "neighborhood",      // ~262 NTAs
     "hs-zone",           // high-school zones (sparse)
@@ -8367,6 +8368,78 @@ function initNycExplorer() {
     ]
   });
 
+  /* ---------- ZIP Code (statewide ZCTA) -------------------------------------
+   * THE SECOND ZIP LAYER, AND IT ANSWERS WHERE THE FIRST ONE DOES NOT. The
+   * city's MODZCTA above is New York City's own health-department merge of
+   * ZCTAs; this is the Census Bureau's unmerged national tiling. They are two
+   * tilings of the same ground, so a point inside the city would be answered
+   * by both, which is the duplicate `nys-school-district`'s gate exists to
+   * prevent. Same answer here: MODZCTA keeps the city (and keeps the
+   * `zip-code` id, which is in shipped `layers=` permalinks), and this one
+   * stands down inside it.
+   *
+   * NO `STATE` FILTER IS POSSIBLE. ZCTAs cross state lines and the layer
+   * carries no STATE field, so the fetch is by ENVELOPE — and the envelope
+   * must be Esri's own `{xmin, ymin, xmax, ymax}`. Passing this instance's
+   * `{minLng, ...}` METRO_BBOX shape makes TIGERweb answer **HTTP 200 with a
+   * JSON error envelope and zero features**, which is a bug `ia/` actually
+   * shipped: its overlay silently never drew while its card kept working,
+   * because a point query sends a point and not an envelope. Reproduced here
+   * on 2026-09-18 before this loader was written, and the status really is
+   * 200, which is why `hasUsableGeometry` is the guard rather than the status
+   * code.
+   *
+   * MEASURED 2026-09-18 against this exact query: 3,833 features, 6,166,698
+   * bytes, ONE request — the layer's maxRecordCount is 100,000 and
+   * exceededTransferLimit is absent, so it does not page. The envelope is the
+   * shipped state ring's own bounds, rounded out.
+   *
+   * MORE THAN HALF THE OVERLAY IS OUT OF STATE AND NO RECTANGLE FIXES IT:
+   * 1,826 of the 3,833 carry a New York ZCTA5 (005xx, 06390, or 100xx-149xx),
+   * so 2,007 are New Jersey, Connecticut, Pennsylvania, Massachusetts and
+   * Vermont ZIPs that any box containing New York also contains. Michigan's
+   * layer has the same shape and catches Chicago's 60628. The CARD is
+   * unaffected — a point-in-polygon test answers with the ZCTA the reader is
+   * actually in — and the point-first hook below means a first click does not
+   * wait for the 5.9 MB at all. ---------- */
+  var NY_ZCTA_ENVELOPE = { xmin: -79.77, ymin: 40.47, xmax: -71.77, ymax: 45.02 };
+  var NY_ZCTA_LAYER = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11";
+  var loadNysZipCodes = makeCached(function () {
+    var url = NY_ZCTA_LAYER + "/query?where=" + encodeURIComponent("1=1") +
+      "&geometry=" + encodeURIComponent(JSON.stringify(NY_ZCTA_ENVELOPE)) +
+      "&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects" +
+      "&outFields=ZCTA5&returnGeometry=true&outSR=4326&f=json" +
+      "&geometryPrecision=4&maxAllowableOffset=0.0005";
+    return fetchArcGISAsGeoJSON(url, { timeoutMs: REMOTE_GEOJSON_TIMEOUT_MS }, 2)
+      .then(function (geojson) {
+        if (!hasUsableGeometry(geojson)) throw new Error("TIGERweb ZCTA layer returned no usable geometry");
+        return geojson;
+      });
+  });
+  // Point-first companion (queryFeatureAt): one ZCTA instead of the 5.9 MB
+  // envelope set, so the card answers on a reader's first click while the
+  // overlay is still downloading. No STATE filter for the same reason the full
+  // load cannot use one; the point narrows harder than the envelope anyway.
+  loadNysZipCodes.atPoint = function (point) {
+    return loadArcGISPointGeoJSON(NY_ZCTA_LAYER, point, "ZCTA5");
+  };
+  registerPolygonLayer({
+    id: "nys-zip-code",
+    group: "geography",
+    label: "ZIP Code",
+    coverage: outsideNycCoverage,
+    loader: loadNysZipCodes,
+    style: { color: "#4E6E9C", weight: 1.5, fillColor: "#4E6E9C", fillOpacity: 0.05, dashArray: "1 4" },
+    pill: true,
+    fields: [
+      { name: "zip", label: "ZIP", keys: ["zcta5", "zcta5ce10", "zip"], primary: true },
+      // A ZCTA is not a ZIP code, and a reader who is not told that will assume
+      // it is. There is no officeholder to name and none is missing: nobody is
+      // elected from a ZIP code.
+      { label: "What this is", value: "A ZIP Code Tabulation Area — the Census Bureau's areal approximation of USPS delivery routes, not the postal boundary itself. Nobody is elected from one." }
+    ]
+  });
+
   /* ---------- Borough / County (offline anchor) ----------
    * 5 shoreline-clipped boroughs from Socrata gthc-hcne, county + FIPS added via
    * the §6d.1 crosswalk. One shared cached loader serves this layer and, from
@@ -9162,17 +9235,32 @@ function initNycExplorer() {
     color: "#B3261E", fill: "#E4572E",
     loader: loadFireStations,
     intro: "Nearest fire stations, straight-line distance:",
+    // THE PHONE IS ON THE CARD BECAUSE THE STATE'S LAYER CARRIES IT.
+    // Measured 2026-09-18: Phone is populated on 2,846 of the 2,966 points,
+    // where the city's own FDNY dataset this layer replaced had no phone field
+    // at all — which is why the instance's `nyc-amenity-phones` gap record was
+    // narrowed to libraries in the same change rather than left describing a
+    // source no longer read. The fleet's card-order convention is to surface
+    // contact data the source publishes rather than leave it in the dataset.
+    // It renders as TEXT and not a `tel:` link: renderNearestRows appends the
+    // note through createTextNode, so a link would mean an engine change to
+    // every instance's nearest-N card, which is a fleet decision and not this
+    // change's. The other three contact columns stay unread — EMAIL is on 118
+    // rows and Contact/ContactTitle on 359, and those name a PERSON at the
+    // firehouse rather than the firehouse.
     line: function (p) {
       var name = findPropCI(p, ["name"]);
       var addr = findPropCI(p, ["address"]);
       var city = findPropCI(p, ["city"]);
       return (name ? titleCaseFacility(String(name)) : "Fire station") + (addr ? " — " + titleCaseFacility(String(addr)) : "") + (city ? ", " + titleCaseFacility(String(city)) : "");
     },
-    item: function (p) { // 4d two-line row: name over address
+    item: function (p) { // 4d two-line row: name over address, then the phone
       var name = findPropCI(p, ["name"]);
       var addr = findPropCI(p, ["address"]);
       var city = findPropCI(p, ["city"]);
+      var phone = pollSiteText(findPropCI(p, ["phone"]));
       var note = (addr ? titleCaseFacility(String(addr)) : "") + (city ? (addr ? ", " : "") + titleCaseFacility(String(city)) : "");
+      if (phone) note += (note ? " · " : "") + phone;
       return { name: name ? titleCaseFacility(String(name)) : "Fire station", note: note || undefined };
     }
   });

@@ -85,9 +85,9 @@ EXPECT_LAYER_IDS = [
     "village", "borough", "borough-president", "district-attorney",
     "congress", "municipal-court", "state-senate", "school-district", "cec",
     "fire-battalion", "council", "community-district", "election-district",
-    "state-assembly", "police-sector", "police-precinct", "zip-code",
-    "neighborhood", "hs-zone", "ms-zone", "es-zone", "school-site",
-    "police-station", "fire-station", "post-office", "library",
+    "state-assembly", "police-sector", "police-precinct", "nys-zip-code",
+    "zip-code", "neighborhood", "hs-zone", "ms-zone", "es-zone",
+    "school-site", "police-station", "fire-station", "post-office", "library",
     "early-voting", "polling-place",
 ]
 

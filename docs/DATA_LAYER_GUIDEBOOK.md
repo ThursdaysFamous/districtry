@@ -52,7 +52,7 @@ in the researched-but-unbuilt backlog.
 ```json
 {
   "chicago": ["il-supreme-court", "congress", "il-senate", "il-house", "county", "mwrd", "school-district-secondary", "school-district-unified", "school-district-elementary", "township", "municipality", "judicial-subcircuit", "county-board", "ccbr", "fire-district", "dupage-county-special-police", "park-district", "library-district", "school-board", "cps-hs-network", "cps-network", "ward-precinct", "ward", "police-beat", "police-district", "ccpsa-district-council", "community-area", "zip-code", "cps-high", "cps-middle", "county-precinct", "ssa", "tif-district", "cps-elementary", "school-site", "police-station", "fire-station", "post-office", "library", "early-voting"],
-  "nyc": ["judicial-district", "county", "nys-school-district", "municipality", "village", "borough", "borough-president", "district-attorney", "congress", "municipal-court", "state-senate", "school-district", "cec", "fire-battalion", "council", "community-district", "election-district", "state-assembly", "police-sector", "police-precinct", "zip-code", "neighborhood", "hs-zone", "ms-zone", "es-zone", "school-site", "police-station", "fire-station", "post-office", "library", "early-voting", "polling-place"],
+  "nyc": ["judicial-district", "county", "nys-school-district", "municipality", "village", "borough", "borough-president", "district-attorney", "congress", "municipal-court", "state-senate", "school-district", "cec", "fire-battalion", "council", "community-district", "election-district", "state-assembly", "police-sector", "police-precinct", "zip-code", "neighborhood", "hs-zone", "ms-zone", "es-zone", "school-site", "police-station", "fire-station", "post-office", "library", "early-voting", "polling-place", "nys-zip-code"],
   "sf": ["congress", "ca-senate", "ca-assembly", "bart-director", "election-precinct", "supervisor-district", "police-district", "zip-code", "neighborhood", "elementary-attendance-area", "police-station", "fire-station", "school-site", "post-office", "library", "early-voting"],
   "wisconsin": ["madison-neighborhood-assoc", "wtcs-district", "us-house", "wi-senate", "wi-assembly", "wi-circuit-court", "wi-court-of-appeals", "county", "school-district-secondary", "school-district-unified", "school-district-elementary", "county-board", "mps-school-board", "aldermanic-district", "county-subdivision", "ward", "municipality", "mpd-district", "mpd-squad-area", "milwaukee-neighborhoods", "tid-district", "fire-service", "law-service", "ems-service", "psap-area", "zip-code", "school-site", "library", "police-station", "fire-station", "post-office"],
   "iowa": ["iowa-aea", "city-ward", "us-house", "ia-senate", "county", "ia-house", "county-supervisor", "school-district-unified", "school-director-district", "cc-director-district", "county-subdivision", "municipality", "zip-code", "post-office", "police-station", "fire-station", "school-site", "precinct", "ia-judicial-district", "community-college"],
@@ -1680,8 +1680,8 @@ detail into `blocker`.
     },
     {
       "id": "nyc-amenity-phones",
-      "concept": "Fire stations and libraries",
-      "area": "New York City",
+      "concept": "Libraries",
+      "area": "New York State",
       "counties": [
         "bronx",
         "brooklyn",
@@ -1690,11 +1690,23 @@ detail into `blocker`.
         "staten-island"
       ],
       "kind": "data-quality",
-      "layer": "fire-station",
-      "summary": "Fire-station and library cards carry no phone number.",
-      "why": "The city's firehouse and library datasets have no phone number in them — it's missing at the source, not undisplayed.",
-      "blocker": "Checked in the 2026-07 card audit: the upstream station and library datasets genuinely have no phone column — this is an absence in the source, not an unwired field.",
-      "wanted": "An FDNY firehouse or NYPL/BPL/QPL branch dataset that includes public phone numbers."
+      "layer": "library",
+      "summary": "Library cards carry no phone number.",
+      "why": "Neither of the two publishers this layer reads has a phone number in it \u2014 it's missing at the source, not undisplayed.",
+      "blocker": "NARROWED 2026-09-18, from an entry that also named fire stations. It was written in the 2026-07 card audit, when this instance read FDNY's own 219-firehouse Socrata set, which has no phone column. The statewide expansion replaced that source with the state's FireStations layer, which carries Phone populated on 2,846 of its 2,966 points (96%), so the fire-station half of this record stopped being true the day the source changed and the card now renders it. The library half is measured and still holds, in both directions: the state's NYS_Schools layer 15 carries LEGAL_NAME, POPULAR_NAME, PHYSADDRLINE1, PHYSCITY, PHYSZIPCD5 and COUNTY_DESC, and the city's Socrata feuq-due4 carries bbl, bin, borocode, city, housenum, name, streetname, system, url, x, y and zip. Neither has a telephone column. THE LESSON IS THE SHAPE OF THE ERROR: a gap record describes a SOURCE, so swapping the source is exactly when one goes stale, and nothing gates that.",
+      "wanted": "A public-library dataset for New York \u2014 either the city's three systems or the state's \u2014 that includes branch phone numbers."
+    },
+    {
+      "id": "ny-statewide-election-districts",
+      "concept": "Election district",
+      "area": "New York State outside New York City",
+      "counties": [],
+      "kind": "data-quality",
+      "layer": "election-district",
+      "summary": "Election districts are drawn for New York City only. Outside the city this layer does not answer.",
+      "why": "The state does publish a statewide layer, and it is a year behind at least one county's own and too slow to open. The city's own source is current, so it is the one that ships.",
+      "blocker": "MEASURED 2026-09-18 and deliberately not shipped. NYS ITS publishes NYS_Elections_Districts_and_Polling_Locations layer 4, 13,335 polygons covering the whole state, and it was built and timed before being rejected: 14 sequential requests, 55.9 MB and 49.5 s to light one toggle, against 5.0 MB for the NYC DCP source the city layer already reads. Three further findings, any one of which would be enough on its own. CURRENCY: the layer's own description dates its districts 2025-06-12, and Tompkins County's 64 there match that county's superseded ElectionDistricts2024 layer while the county's current ElectionDistricts2026 layer has 61 \u2014 so the state layer is a full cycle behind at least one county. AGREEMENT: inside the city it disagrees with the DCP source on 189 of 4,345 districts, and the DCP source carries the more recent edit date. INTEGRITY: 46 excess rows across 41 duplicated (County, Municipality, Election_District) tuples, Orange County's Monroe Town 1-21 almost all at n=2, plus 2 rows with null geometry (OBJECTID 1894 and 1895, Erie / Lancaster / Lancaster 28). The keys are free text with no FIPS or GEOID anywhere \u2014 County spelled 'St Lawrence' with no period, Municipality casing inconsistent ('STAMFORD', 'Town Of Ithaca', 'Middletown City'), Election_District formatted differently by county ('Cortland WARD 5 ED2 LD5', 'GED-06', 'City of Ithaca 1-1') \u2014 so joining it to any county board of elections' own results is untested and would have to be proved one county at a time. The POLL SITES on the same service are a different matter and DO ship, as the early-voting and polling-place layers. WHAT WOULD CLOSE THIS: the state refreshing layer 4 and the counties' own current editions agreeing with it, or a per-county route the way the county-board tier is built.",
+      "wanted": "A current statewide election-district layer, or a county's own published election districts for anywhere outside New York City."
     },
     {
       "id": "nyc-congress-district-offices",
@@ -2893,7 +2905,7 @@ v1.0.6) · **CountyDispatch** `registerCountyLayer` (CHI fork-level dispatcher: 
 concept layer holding a per-county entry table — see
 `docs/EXPANSION_GUIDE.md` Part 2; adding a county is a table entry, not a layer).
 
-Fleet totals: **Chicago 40 · NYC 32 · SF 16 · Wisconsin 31 · Iowa 20 · Michigan 15** layers.
+Fleet totals: **Chicago 40 · NYC 33 · SF 16 · Wisconsin 31 · Iowa 20 · Michigan 15** layers.
 
 ---
 
@@ -11047,7 +11059,7 @@ matrix; when one is rejected, move the rationale into a NO HONEST ANALOG footnot
 | `library` | Library | geography | NearestPt | Socrata `x8fc-8rcq` | — | chicagoCoverage |
 | `early-voting` | Early Voting Site | political | NearestPt | hand-curated `early-voting-sites.json` (per election; sites double as the secured drop boxes; WATCH.md row) | — | chicagoCoverage |
 
-### NYC — 32 layers
+### NYC — 33 layers
 
 | id | label | group | pattern | source | roster / join |
 |---|---|---|---|---|---|
@@ -11072,6 +11084,7 @@ matrix; when one is rejected, move the rationale into a NO HONEST ANALOG footnot
 | `police-sector` | NYPD Sector | safety | Bespoke | Socrata `5rqd-h5ci` | — (subOf `police-precinct`) |
 | `police-precinct` | NYPD Precinct | safety | Bespoke | Socrata `y76i-bdw7` | `nypd-precinct-info.json` (weekly CI) |
 | `zip-code` | ZIP Code (MODZCTA) | geography | Polygon | Socrata `pri4-ifjk` | — |
+| `nys-zip-code` | ZIP Code | geography | Polygon | live TIGERweb ZCTA (layer 11) by a New York bounding ENVELOPE — the layer carries no STATE field. 3,833 features / 6,166,698 bytes in one request, measured 2026-09-18; 1,826 carry a New York ZCTA5 and the rest are neighbouring states'. Gated `outsideNycCoverage` so it never doubles the city's MODZCTA | — (nobody is elected from a ZIP code) |
 | `neighborhood` | Neighborhood (NTA 2020) | geography | Polygon | Socrata `9nt8-h7nd` | — |
 | `hs-zone` / `ms-zone` / `es-zone` | School Zones | schools | SchoolZone | Socrata `ruu9-egea` / `t26j-jbq7` / `cmjf-yawu` (year-versioned) | zoned-school POI |
 | `school-site` | School (nearest 3) | schools | NearestPt | NYSED ArcGIS L2/3/4 (paged), statewide (the five-county WHERE clause was dropped) | — |
