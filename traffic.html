@@ -795,9 +795,15 @@ main > section { margin-block: 0 30px; }
 main > section:last-child { margin-block-end: 0; }
 main > section.ruled { padding-top: 26px; border-top: 1px solid var(--line); }
 
+/* Six of these are the section headings for the panels under .three and three
+   more head a panel's second bar group, so they are h2 and h3 rather than
+   spans: a reader navigating by heading found four headings on the page and
+   none of the six panels. The class outranks the shell's own h2 rules on
+   specificity, and carries the margin those elements bring with them. */
 .kicker {
   font: 600 13px/1 var(--font-display);
   letter-spacing: .09em; text-transform: uppercase; color: var(--slate);
+  margin: 0;
 }
 .window-row {
   display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline;
@@ -864,7 +870,16 @@ main details.tableview:last-of-type { border-bottom: 0; }
 .barrow .bar { height: 14px; border-radius: 0 4px 4px 0; background: var(--s1); flex: none; min-width: 2px; }
 .barrow .val { font-size: 13px; color: var(--slate); font-variant-numeric: tabular-nums; flex: none; }
 .empty { margin: 0; font-size: 13.5px; color: var(--slate); }
-.meter { height: 12px; border-radius: 6px; background: var(--s1-track); overflow: hidden; margin-top: 2px; }
+/* The track is a light step of the fill's own ramp, which reads against the
+   fill and NOT against the page: 1.01:1 on --paper in light, 1.60:1 in dark,
+   so the bar's full extent — the thing that makes a proportion readable — was
+   invisible. The 1px --slate boundary is what states it (6.76:1 light, 8.83:1
+   dark), and the track keeps carrying the state across the bar. The figure
+   itself is in the sentence above, which is why the meter is aria-hidden. */
+.meter {
+  height: 12px; border-radius: 6px; background: var(--s1-track);
+  border: 1px solid var(--slate); overflow: hidden; margin-top: 2px;
+}
 .meter .fill { height: 100%; background: var(--s1); border-radius: 6px 0 0 6px; }
 
 /* ---- one search table, two engines ---- */
@@ -927,7 +942,7 @@ code {
      the column allowed, which at 390px put its 11px labels at about 4px. It
      keeps a legible width and scrolls sideways inside its card instead; the
      five-column search table does the same rather than folding each query
-     onto three lines. Both cards already carry overflow-x: auto. */
+     onto three lines. The two rules below are what makes them scroll. */
   .chartcard { overflow-x: auto; }
   .chartbox { min-width: 720px; }
   #searchTable, #bingTable { min-width: 540px; }
@@ -1017,41 +1032,41 @@ code {
 
   <section class="ruled three">
     <div class="panel">
-      <span class="kicker">By instance<sup class="ref"><a href="#note-3" aria-label="Note 3">3</a></sup></span>
+      <h2 class="kicker">By instance<sup class="ref"><a href="#note-3" aria-label="Note 3">3</a></sup></h2>
       <p class="lead">Page visits by path prefix: which app people actually opened.<span data-day="Aug 24"> Illinois has the whole window; the rest begin at the cutover.</span></p>
       <div class="bars" data-bars="instances"></div>
     </div>
     <div class="panel">
-      <span class="kicker">Most-toggled layers<sup class="ref"><a href="#note-4" aria-label="Note 4">4</a></sup></span>
+      <h2 class="kicker">Most-toggled layers<sup class="ref"><a href="#note-4" aria-label="Note 4">4</a></sup></h2>
       <p class="lead">The classic Chicago question wins: <em>ward</em> leads, with the school board and the state and federal legislative layers behind it.</p>
       <div class="bars" data-bars="layers"></div>
     </div>
     <div class="panel">
-      <span class="kicker">How readers arrive<sup class="ref"><a href="#note-5" aria-label="Note 5">5</a></sup></span>
+      <h2 class="kicker">How readers arrive<sup class="ref"><a href="#note-5" aria-label="Note 5">5</a></sup></h2>
       <p class="lead"><span data-stat="ref3">DuckDuckGo</span> holds the #3 source spot and <span data-stat="ref4">LinkedIn</span> the #4. Search engines together (Google, DuckDuckGo and Bing) sent <span data-stat="searchVisits">709</span> visits.</p>
       <div class="bars" data-bars="refs"></div>
-      <span class="kicker subhead">Campaigns</span>
+      <h3 class="kicker subhead">Campaigns</h3>
       <div class="bars" data-bars="campaigns"></div>
     </div>
   </section>
 
   <section class="ruled three">
     <div class="panel">
-      <span class="kicker">Devices and browsers</span>
+      <h2 class="kicker">Devices and browsers</h2>
       <p class="lead"><span data-stat="mobilePct">61%</span> of visits are mobile, iOS and Android together, which is why the home-screen install matters. Chrome and Safari cover <span data-stat="topTwoBrowserPct">96%</span> between them.</p>
-      <span class="kicker subhead">Operating systems</span>
+      <h3 class="kicker subhead">Operating systems</h3>
       <div class="bars" data-bars="systems"></div>
-      <span class="kicker subhead">Browsers</span>
+      <h3 class="kicker subhead">Browsers</h3>
       <div class="bars" data-bars="browsers"></div>
     </div>
     <div class="panel">
-      <span class="kicker">What visitors do</span>
+      <h2 class="kicker">What visitors do</h2>
       <p class="lead">The three core actions, as unique daily users of each. Geolocation succeeds <span data-stat="geoPct">63%</span> of the time it is tried: <span data-stat="geoSuccess">55</span> of <span data-stat="geoAttempts">88</span>.</p>
       <div class="bars" data-bars="actions"></div>
-      <div class="meter" role="img" aria-label="Geolocation success rate"><div class="fill" id="geoFill" style="width:63%"></div></div>
+      <div class="meter" aria-hidden="true"><div class="fill" id="geoFill" style="width:63%"></div></div>
     </div>
     <div class="panel">
-      <span class="kicker">Where visits come from</span>
+      <h2 class="kicker">Where visits come from</h2>
       <p class="lead"><span data-stat="usCount">3,296</span> of <span data-stat="total">3,369</span> visits, <span data-stat="usPct">98%</span>, came from the United States.</p>
       <div class="bars" data-bars="geo"></div>
     </div>
@@ -1670,8 +1685,12 @@ code {
   var svgNS = "http://www.w3.org/2000/svg";
   var svg = document.createElementNS(svgNS, "svg");
   svg.setAttribute("viewBox", "0 0 " + W + " " + H);
-  svg.setAttribute("role", "img");
-  svg.setAttribute("aria-label", "Stacked daily column chart of page visits and feature interactions, " + STATS.range);
+  /* A GROUP, not an img: role="img" tells assistive technology to ignore the
+     subtree, and every one of the 62 day columns below carries its own label
+     and its own focus. The two claims cannot both be true, and the labels are
+     the useful half. */
+  svg.setAttribute("role", "group");
+  svg.setAttribute("aria-label", "Daily page visits and feature interactions, " + STATS.range);
 
   function el(tag, attrs) {
     var e = document.createElementNS(svgNS, tag);
@@ -1733,6 +1752,50 @@ code {
   tooltip.className = "tooltip";
   box.appendChild(tooltip);
 
+  /* PINNED is what makes the chart work on a touchscreen, where 61% of this
+     page's visits come from. A tap synthesises mouseenter, focus, click and
+     then mouseleave in one gesture, so a click handler alone opens the tooltip
+     and the trailing mouseleave closes it again in the same tick. Pinning on
+     click, and refusing to hide while pinned, leaves it open; a tap anywhere
+     else puts it away. */
+  var pinned = false;
+  /* The 62 day columns are ONE tab stop, not 62. The roving index is the
+     standard pattern for a set of peers: Tab enters the chart, the arrow keys
+     walk the days, Tab leaves. Each column keeps its own label, so the whole
+     series is still reachable without a mouse — which is what role="img" would
+     have thrown away.
+
+     THEIR SIZE IS RECORDED HERE BECAUSE NO GATE CAN SEE IT ANY MORE. These
+     rectangles are pointer targets — they open the tooltip on hover and on tap
+     — and they are 14.8px wide at 1280 and 11.1px at 390, measured
+     2026-09-18, necessarily touching: a chart of a two-month window cannot
+     give each day 24px without showing fewer days. WCAG 2.5.8's Equivalent
+     exception covers them, because the same numbers sit in the `View as
+     table` disclosure below the chart, whose rows are full width. That claim
+     used to live in page_consistency_test.mjs's TARGET_EXCEPTIONS, whose
+     collector finds a target by its tabindex; the roving index above leaves
+     61 of the 62 at -1, so the entry stopped matching anything and was
+     dropped. The obligation did not go with it. */
+  var hits = [];
+  var focusHit = function (i) {
+    if (i < 0 || i >= hits.length) return;
+    hits.forEach(function (h, j) { h.setAttribute("tabindex", j === i ? 0 : -1); });
+    pinned = false;
+    hits[i].focus();
+  };
+  var onKey = function (e) {
+    var i = hits.indexOf(e.currentTarget);
+    var to = e.key === "ArrowRight" ? i + 1 : e.key === "ArrowLeft" ? i - 1
+           : e.key === "Home" ? 0 : e.key === "End" ? hits.length - 1 : -1;
+    if (to === -1 || i === -1) return;
+    e.preventDefault();
+    focusHit(to);
+  };
+  document.addEventListener("click", function () {
+    pinned = false;
+    tooltip.style.display = "none";
+  });
+
   daily.forEach(function (d, i) {
     var pv = d[1], ev = d[2];
     var x = padL + band * i + (band - colW) / 2;
@@ -1756,7 +1819,7 @@ code {
     /* full-band hit target */
     var hit = el("rect", {
       x: padL + band * i, y: padT, width: band, height: plotH,
-      "class": "hitcol", tabindex: 0,
+      "class": "hitcol", tabindex: i === 0 ? 0 : -1,
       "aria-label": d[0] + ": " + pv + " page visits, " + ev + " interactions, " + (pv + ev) + " total"
     });
     var show = function () {
@@ -1775,11 +1838,20 @@ code {
          column's tooltip would lose its date row. */
       tooltip.style.top = Math.max(0, y(pv + ev) / H * box.clientHeight - tooltip.offsetHeight - 10) + "px";
     };
-    var hide = function () { tooltip.style.display = "none"; };
+    var hide = function () { if (!pinned) tooltip.style.display = "none"; };
     hit.addEventListener("mouseenter", show);
     hit.addEventListener("mouseleave", hide);
     hit.addEventListener("focus", show);
     hit.addEventListener("blur", hide);
+    hit.addEventListener("keydown", onKey);
+    /* stopPropagation so this tap does not reach the document handler above,
+       which is what dismisses a pinned tooltip. */
+    hit.addEventListener("click", function (e) {
+      pinned = true;
+      show();
+      e.stopPropagation();
+    });
+    hits.push(hit);
     svg.appendChild(hit);
   });
 

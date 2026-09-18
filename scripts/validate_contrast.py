@@ -460,7 +460,7 @@ TRAFFIC_PAIRS = [
     ("accent-warm", "paper",       "ui",   "the focus ring (--focus-ring) on everything focusable, and .notes li:target"),
     ("s1",          "panel",       "ui",   "the page-visit series: the daily chart's columns inside .chartcard, the .legend .swatch that names the series, .hitcol:focus-visible's 2px outline, .tooltip .dot"),
     ("s1",          "paper",       "ui",   ".barrow .bar in the six panels, which sit on the page ground, and .meter .fill"),
-    ("s1",          "s1-track",    "ui",   ".meter .fill against its own track — the meter has no number beside the bar, so the fill's edge is what states the value"),
+    ("s1",          "s1-track",    "ui",   ".meter .fill against its own track. The track reads against the fill and NOT against the page (1.01:1 on --paper light, 1.60:1 dark), so the bar's EXTENT is stated by a 1px --slate border rather than by the track itself — measured by the slate-on-paper row above"),
     ("s2",          "panel",       "ui",   "the interaction series: the chart's second column, its .legend .swatch and .tooltip .dot"),
     # Gridlines are the 1.4.11 exemption the criterion spells out: the marks
     # that carry the data are gated above, and a reader needs no gridline to
