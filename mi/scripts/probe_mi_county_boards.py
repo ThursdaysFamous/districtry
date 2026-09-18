@@ -713,8 +713,25 @@ def probe_county(row):
         out["verdict"] = verdict_for(best[1])
         out["score"] = score(best[1])
     else:
-        out["verdict"] = "no-board-page"
-        notes.append("no confirmed host carries a board page this client can read")
+        # AN ACCESS CONTROL OUTRANKS AN ABSENCE. Tuscola is the measured case:
+        # sweep 3 read its board from tuscolacounty.org, which now answers a
+        # Sucuri challenge, while tuscolacounty.com confirms as the county and
+        # carries no board page. Reporting `no-board-page` would say Tuscola
+        # publishes no board page, when it publishes one this client can no
+        # longer read — the same class of error as calling the challenge
+        # `names-another`. So a challenge anywhere among the rejected hosts
+        # wins when nothing else yielded a board page.
+        blocked = [r for r in rejected if r["why"] == "challenge"]
+        if blocked:
+            out["verdict"] = "challenge"
+            notes.append("%d host(s) answered an access control and no other "
+                         "confirmed host carries a board page, so this is "
+                         "recorded as blocked rather than as the county "
+                         "publishing nothing" % len(blocked))
+        else:
+            out["verdict"] = "no-board-page"
+            notes.append("no confirmed host carries a board page this client "
+                         "can read")
     delays = getattr(pacer, "honoured", None)
     if delays:
         notes.append("crawl-delay honoured: %s" % delays)
