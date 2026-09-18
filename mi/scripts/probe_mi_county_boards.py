@@ -10,8 +10,8 @@ counties. Three tranches got there by taking the next six counties BY
 POPULATION, writing a parser for each, and recording the ones that refused in
 mi_commissioner_scraper.py's PROBES table. That order has stopped doing any
 work: tranche 1 spanned 1.79M to 175K, tranche 3 only 109K to 83K, and the 59
-counties still untried hold 1,770,692 people between them -- 17.7% of the
-state, where each county buys under 1%.
+counties still untried hold 1,824,640 people between them -- 18.1% of
+Michigan's 10,077,331 (Census 2020), where each county buys under 1%.
 
 So the order changes to something that still discriminates: WHETHER THE COUNTY
 PUBLISHES A DISTRICT-KEYED ROSTER AT ALL. That cannot be read off a list, so
@@ -789,8 +789,15 @@ def main():
 
     n = check_generator()
     print("probe-mi-county-boards: generator finds %d of %d known hosts" % (n, n))
+    # THE LAYER'S OWN TOTAL, NOT MICHIGAN'S. frontier() sums the shipped
+    # district geometry's Population field, which comes to 10,007,596 because
+    # 24 counties' districts do not add up to their census population and
+    # Cheboygan's seven all read 0. Michigan's Census 2020 population is
+    # 10,077,331. Calling this figure Michigan's overstates every coverage
+    # share computed from it, which is what three documents did until
+    # 2026-09-18.
     print("frontier: %d counties untried (%d ship a roster, %d recorded shut), "
-          "%s of %s people\n"
+          "%s of the %s people the state's district layer accounts for\n"
           % (len(rows), built, probed,
              format(sum(r["pop"] for r in rows), ","), format(statepop, ",")))
 
