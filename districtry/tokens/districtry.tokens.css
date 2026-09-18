@@ -66,6 +66,17 @@
   --font-heading: 'Barlow Condensed', sans-serif;
   --font-heading-weight: 600;
   --font-body: 'Barlow', 'Barlow Fallback', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Mono was left out of this file on the reasoning that it is "a system list
+     with no webfont behind it, so there is nothing for a design system to
+     own". That was wrong about the product: every instance ships IBM Plex
+     Mono 400 and 500 in its own fonts/ directory, and the app's stack names
+     it — for the disambiguated zero, which is doing real work under
+     coordinates and dataset ids. The sub-pages' stack did not name it, so
+     sources.html defined two Plex faces that no rule could reach and the
+     layer matrix rendered in whatever mono the reader's OS supplies. Two
+     copies of one stack, disagreeing, which is the same shape as the
+     'Barlow Fallback' omission this comment block already records. */
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   /* — spacing (Industry) — */
   --space-1: 3.4px;

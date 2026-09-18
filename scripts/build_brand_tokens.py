@@ -141,10 +141,8 @@ WORKSHEET_PALETTE = [("accent", "brand"), ("accent_deep", "brand-700"),
 # The font stacks, stated once. The app's body stack names 'Barlow Fallback' —
 # a metric-matched local face that stops the layout shifting while the webfont
 # loads — and every other surface had quietly dropped it.
-FONTS = [("--font-display", "font-heading"), ("--font-body", "font-body")]
-# Mono is the one stack the token file does not carry: it is a system list with
-# no webfont behind it, so there is nothing for a design system to own.
-FONT_MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+FONTS = [("--font-display", "font-heading"), ("--font-body", "font-body"),
+         ("--font-mono", "font-mono")]
 
 problems = []
 
@@ -196,8 +194,7 @@ def render(light, dark):
         L.append("  %s: %s;" % (prop, resolve(light, tok)))
     for prop, tok in FONTS:
         L.append("  %s: %s;" % (prop, resolve(light, tok)))
-    L += ["  --font-mono: %s;" % FONT_MONO,
-          "  --focus-ring: 3px solid var(--accent-warm);",
+    L += ["  --focus-ring: 3px solid var(--accent-warm);",
           "}",
           "/* The dark tier is reached FROM the app, which has a theme toggle; the",
           "   boot script in <head> sets data-theme before first paint from the",
@@ -257,6 +254,118 @@ def check_fallback_face():
     if len(set(seen.values())) > 1:
         for rel, txt in sorted(seen.items()):
             problems.append("fallback face differs in %s: %s" % (rel, txt[:90]))
+
+
+def surfaces():
+    """Every shipped HTML page: the root's own and each instance folder's.
+    DISCOVERED for the reason worksheets() gives below — a hand-kept list is
+    how a new instance joins the fleet unmeasured."""
+    found = [n for n in sorted(os.listdir(REPO_ROOT)) if n.endswith(".html")]
+    for name in sorted(os.listdir(REPO_ROOT)):
+        d = os.path.join(REPO_ROOT, name)
+        if not os.path.isdir(d) or name.startswith("."):
+            continue
+        if not os.path.isfile(os.path.join(d, "index.html")):
+            continue
+        found += [os.path.join(name, n) for n in sorted(os.listdir(d))
+                  if n.endswith(".html")]
+    return found
+
+
+MONO_RE = re.compile(r"--font-mono:\s*([^;]+);")
+PLEX_FACE_RE = re.compile(r"@font-face\s*\{[^}]*font-family:\s*'IBM Plex Mono'[^}]*\}", re.S)
+FENCE_RE = re.compile(r"^[ \t]*/\* ==== ENGINE:BEGIN (\S+) ==== \*/[ \t]*$", re.M)
+
+
+def outside_fences(text):
+    """The text with every ENGINE fence's interior removed. A fence is a
+    SPLICED COPY whose source is a file under engine/ and which
+    compose_app.py --check already holds byte-identical, so reading it here
+    would count one written statement once per page that carries it — and
+    would make the write path below unreachable, since regenerating the fence
+    is the very thing that fixes a stale copy."""
+    out, pos = [], 0
+    for m in FENCE_RE.finditer(text):
+        e = re.search(r"^[ \t]*/\* ==== ENGINE:END %s ==== \*/[ \t]*$"
+                      % re.escape(m.group(1)), text[m.end():], re.M)
+        if not e:
+            continue
+        out.append(text[pos:m.start()])
+        pos = m.end() + e.end()
+    out.append(text[pos:])
+    return "".join(out)
+
+
+def engine_blocks():
+    """Every engine block file — where a person writes a fence's contents.
+    SHELL_BLOCK is left out because this script writes it: the `current !=
+    body` comparison in main() already holds it to the token file, and
+    reading it here would make the write path unreachable, since the file it
+    would complain about is the one about to be regenerated."""
+    root = os.path.join(REPO_ROOT, "engine")
+    found = []
+    for dirpath, _dirs, files in os.walk(root):
+        for name in sorted(files):
+            path = os.path.join(dirpath, name)
+            if name.endswith(".txt") and path != SHELL_BLOCK:
+                found.append(os.path.relpath(path, REPO_ROOT))
+    return sorted(found)
+
+
+def check_mono_stack(light):
+    """The mono stack, stated once, and no page defining a Plex face its own
+    stack cannot reach.
+
+    check_fallback_face() above guards one direction — a family NAMED by a
+    stack and DEFINED by nobody, which costs a reflow and no error. This is
+    the other direction, and it cost more: every sources.html defined two IBM
+    Plex Mono faces while the stack it inherited read `ui-monospace,
+    SFMono-Regular, Menlo, Consolas, monospace` and named no Plex at all, so
+    the layer matrix's dataset ids and urls rendered in whatever mono the
+    reader's OS supplies and the two faces were never fetched (measured
+    2026-09-18: status `unloaded` on all six). Nothing failed, because a font
+    stack has no error state in either direction.
+
+    The cause was two copies of one stack. The app declares its own inside
+    engine/index.html/styles-core.txt because it carries its own --font-*
+    names and cannot read the tokens-brand fence, and the two had drifted:
+    the app's named Plex, the sub-pages' did not. Both come from the token
+    file now.
+
+    WHAT IT READS is every place a person WRITES the stack — the engine block
+    files, plus any page declaring one outside a fence — never the spliced
+    copies. The reachability half then uses the token's value, because that is
+    what every page carries once composed, which keeps this check independent
+    of whether the tree has been recomposed yet.
+
+    traffic.html is the one surface that names Plex and defines no face: it
+    paints one `code` element and would need two font files at the repo root
+    for it, so it falls through to the system mono exactly as it does today.
+    That direction is not gated — 40 pages legitimately fall through — and the
+    Barlow Fallback check above is narrow for the opposite reason, since a
+    metric-override face that falls through defeats its own purpose.
+    """
+    want = resolve(light, "font-mono")
+    if want is None:
+        problems.append("--font-mono is missing from the token file's :root")
+        return 0
+    stated = 0
+    for rel in engine_blocks() + surfaces():
+        text = read(os.path.join(REPO_ROOT, rel))
+        written = text if rel.startswith("engine" + os.sep) else outside_fences(text)
+        for got in MONO_RE.findall(written):
+            stated += 1
+            if norm(got) != norm(want):
+                problems.append("%s: --font-mono is %s, the token file says %s"
+                                % (rel, got.strip(), want))
+        if not rel.endswith(".html"):
+            continue
+        if PLEX_FACE_RE.search(text) and "IBM Plex Mono" not in want:
+            problems.append(
+                "%s: defines an 'IBM Plex Mono' @font-face and the mono stack "
+                "names no Plex — the faces are unreachable and never fetched"
+                % rel)
+    return stated
 
 
 def worksheets():
@@ -360,6 +469,7 @@ def main():
     check_worksheets(light)
     tags = check_theme_colour_tags(light, dark)
     check_fallback_face()
+    mono = check_mono_stack(light)
 
     if args.check:
         if current != body:
@@ -373,8 +483,8 @@ def main():
         print("build-brand-tokens: OK — %d alias(es) agree across the shell, both "
               "tiers of the app skin and %d worksheet(s); the fallback face is "
               "identical on %d surface(s); %d theme-colour tag(s) carry the "
-              "brand accent"
-              % (len(ALIASES), len(worksheets()), len(FACE_CARRIERS), tags))
+              "brand accent; %d --font-mono declaration(s) state one stack"
+              % (len(ALIASES), len(worksheets()), len(FACE_CARRIERS), tags, mono))
         return
 
     if problems:
