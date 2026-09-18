@@ -284,6 +284,34 @@ def resolve_candidates(county):
 
 IMPOSSIBLE = "/districtry-probe-no-such-path-6f21e0a4/"
 
+# A WAF CHALLENGE IS AN ACCESS CONTROL AND MUST BE RECORDED AS ONE, never as a
+# fact about the county's content. Measured 2026-09-18: www.tuscolacounty.org
+# answers HTTP 307 in 1,303 bytes behind `Server: Sucuri/Cloudproxy` with
+# "Javascript is required. Please enable javascript before you are allowed to
+# see this page." The probe was right not to read it and WRONG about why --
+# it recorded `names-another`, "answers 200 and never names Tuscola", which
+# says the county publishes something it does not.
+CHALLENGE_SERVER = re.compile(r"sucuri|cloudproxy|cloudflare", re.I)
+CHALLENGE_BODY = re.compile(
+    r"javascript is required|enable javascript before|sucuri_cloudproxy"
+    r"|cf-browser-verification|challenge-platform|_cf_chl", re.I)
+
+
+def is_challenge(resp):
+    if resp.status_code == 202:
+        return "HTTP 202, which is never a document"
+    if resp.headers.get("X-Sucuri-ID") or CHALLENGE_SERVER.search(
+            resp.headers.get("Server", "")):
+        if CHALLENGE_BODY.search(resp.text[:4000]):
+            return "%s challenge (server %r)" % (
+                "Sucuri" if resp.headers.get("X-Sucuri-ID") else "WAF",
+                resp.headers.get("Server", "")[:40])
+    if resp.headers.get("cf-mitigated"):
+        return "Cloudflare managed challenge (cf-mitigated)"
+    if 300 <= resp.status_code < 400 and CHALLENGE_BODY.search(resp.text[:4000]):
+        return "HTTP %d carrying a JavaScript challenge" % resp.status_code
+    return None
+
 
 def confirm_host(session, gate, pacer, host, county, notes):
     """Is this host the county's own site, or somebody else's?
@@ -297,15 +325,41 @@ def confirm_host(session, gate, pacer, host, county, notes):
     if not verdict.allows(UA_ROSTER_BOT, root, refused_is_refusal=True):
         notes.append("%s robots %s — not fetched" % (host, verdict.status))
         return None, "robots-refused", verdict.status
-    try:
-        with pacer.hold(root):
-            r = session.get(root, timeout=TIMEOUT)
-    except Exception as exc:                                      # noqa: BLE001
-        notes.append("%s unreachable (%s)" % (host, type(exc).__name__))
-        return None, "unreachable", str(exc)[:120]
-    if r.status_code >= 400:
-        notes.append("%s HTTP %d on /" % (host, r.status_code))
-        return None, "http-%d" % r.status_code, None
+    # RETRY A TRANSPORT FAILURE AND A FAILED NAME TEST, BUT NEVER A CHALLENGE.
+    # Measured 2026-09-18: sweep 4 rejected isabellacounty.org as
+    # `names-another` while four consecutive fetches return 239,364 bytes that
+    # DO name Isabella, md5-identical — so a single body is not evidence that a
+    # county's site is somebody else's, and that rejection recorded Michigan's
+    # fifth-largest untried county as having no host at all. 135 of this run's
+    # rejections were transport failures and none was retried.
+    r = None
+    for attempt in range(3):
+        try:
+            with pacer.hold(root):
+                r = session.get(root, timeout=TIMEOUT)
+        except Exception as exc:                                  # noqa: BLE001
+            if attempt == 2:
+                notes.append("%s unreachable after 3 tries (%s)"
+                             % (host, type(exc).__name__))
+                return None, "unreachable", str(exc)[:120]
+            time.sleep(0.6 * (attempt + 1))
+            continue
+        why = is_challenge(r)
+        if why:
+            notes.append("%s answers a %s — an access control, not read and "
+                         "not worked around" % (host, why))
+            return None, "challenge", why
+        if r.status_code >= 400:
+            notes.append("%s HTTP %d on /" % (host, r.status_code))
+            return None, "http-%d" % r.status_code, None
+        if county.lower().replace(".", "") in r.text.lower().replace(".", ""):
+            break
+        if attempt == 2:
+            notes.append("%s answers HTTP %d in %d bytes and never names %s on "
+                         "any of 3 fetches — not taken as the county's own site"
+                         % (host, r.status_code, len(r.content), county))
+            return None, "names-another", None
+        time.sleep(0.6 * (attempt + 1))
     body = r.text
     try:
         with pacer.hold(root):
@@ -318,10 +372,6 @@ def confirm_host(session, gate, pacer, host, county, notes):
             return None, "catch-all", None
     except Exception:                                             # noqa: BLE001
         pass
-    if county.lower().replace(".", "") not in body.lower().replace(".", ""):
-        notes.append("%s answers 200 and never names %s — not taken as the "
-                     "county's own site" % (host, county))
-        return None, "names-another", None
     return (root, body), "confirmed", None
 
 
