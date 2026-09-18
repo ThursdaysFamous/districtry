@@ -102,7 +102,9 @@
   .hover-has-poi .hover-row-own .hover-row-label { color: #4b5563; }
   .hover-has-poi .hover-row-own .hover-row-who { font-size: 14px; font-weight: 700; color: #111827; }
 
-  /* ---- pin-parent relationships: "Pin as parent" control on each card ---- */
+  /* ---- pin-parent relationships: the "Compare to this district" control on
+     each card. The class name keeps the internal vocabulary; the label a
+     reader sees does not (see relationship-pinning.txt). ---- */
   .pin-parent-btn {
     margin-top: 8px;
     font-family: var(--font-body);

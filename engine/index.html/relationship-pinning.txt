@@ -1,6 +1,7 @@
   /* =========================================================================
-   * PIN-PARENT RELATIONSHIPS — pick a district as the "parent" from its sidebar
-   * card, then see how every OTHER active layer's districts relate to it:
+   * PIN-PARENT RELATIONSHIPS — pick a district to compare against from its
+   * sidebar card, then see how every OTHER active layer's districts relate to
+   * it:
    *   • solid outline = that district falls fully INSIDE the pinned one
    *   • dashed outline = it CROSSES the pinned one's edge (partly in, partly out)
    * Pinning lives on the result cards (not a map click) so click-to-select a
@@ -98,15 +99,33 @@
     }
     relLegendEl.hidden = false;
     relLegendEl.innerHTML =
-      '<div class="rel-legend-head"><span class="rel-sw rel-sw-parent"></span><b>Parent:</b>&nbsp;' + sanitize(parentName) + "</div>" +
+      '<div class="rel-legend-head"><span class="rel-sw rel-sw-parent"></span><b>Comparing to:</b>&nbsp;' + sanitize(parentName) + "</div>" +
       summary +
-      '<button type="button" class="rel-unpin-btn" id="rel-unpin">Unpin</button>';
+      '<button type="button" class="rel-unpin-btn" id="rel-unpin">Stop comparing</button>';
     var unpin = document.getElementById("rel-unpin");
     if (unpin) unpin.addEventListener("click", function () { setPinnedParent(null); });
   }
 
   function setPinnedParent(id) {
     pinnedParentId = (pinnedParentId === id) ? null : id;
+    // NOTHING COUNTED THIS UNTIL 2026-09-18, so "nobody uses the comparison"
+    // was an inference and never a measurement: the app has instrumented
+    // eleven actions since it shipped and this was not one of them, which
+    // left no way to tell a control readers never find from one they find
+    // and do not want. Those have opposite fixes. Same vocabulary as the
+    // layer toggles (layer/<id>), and the privacy page's event list is
+    // MEASURED off these call sites rather than hand-kept, so it picks this
+    // up on its own next build.
+    // WRITTEN AS TWO CALLS, NOT A TERNARY, AND THAT IS NOT A STYLE CHOICE.
+    // build_privacy_page.py MEASURES the published event list off these call
+    // sites, with a regex anchored on a quoted literal immediately inside the
+    // parentheses. A ternary argument is invisible to it, so the privacy page
+    // would have gone on naming eight events while the app sent ten, and on
+    // that page an undercount is a false statement exactly as an overcount is.
+    // The same regex reads COMMENTS as code, so this one deliberately does not
+    // spell the function name next to a quote.
+    if (pinnedParentId) trackEvent("compare/" + pinnedParentId);
+    else trackEvent("compare-stop");
     refreshAllPinButtons();
     refreshRelationshipOutlines();
     // The pin is part of the shared view, so pinning and unpinning both move
@@ -131,12 +150,20 @@
   }
   function stylePinButton(btn, id) {
     var pinned = pinnedParentId === id;
-    btn.textContent = pinned ? "★ Parent — click to unpin" : "☆ Pin as parent";
+    // THE LABEL IS THE FEATURE'S DISCOVERABILITY, and it used to name the data
+    // model rather than the question. "Pin as parent" is the internal shape of
+    // this code — a parent feature and its children — and a reader who wants to
+    // know whether their ward sits inside one congressional district would not
+    // read it as the control that answers that. The internal names stay
+    // (pinnedParentId, rel-sw-parent, .pin-parent-btn); only what a reader sees
+    // changed, on 2026-09-18.
+    btn.textContent = pinned ? "★ Comparing — click to stop" : "☆ Compare to this district";
     btn.setAttribute("aria-pressed", pinned ? "true" : "false");
     btn.classList.toggle("is-pinned", pinned);
   }
 
-  // Append a "Pin as parent" control to a layer's card — only for polygon layers
+  // Append the "Compare to this district" control to a layer's card — only for
+  // polygon layers
   // that actually have a district at the selected point. Called after each card
   // renders its result.
   function appendPinControl(mod) {
