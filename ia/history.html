@@ -245,11 +245,20 @@ h1 { font: var(--font-heading-weight, 700) clamp(26px, 5vw, 34px)/1.15 var(--fon
   border: 1px solid var(--border-soft, var(--border)); border-radius: var(--radius-card, 10px);
   padding: 14px 16px; background: var(--surface);
 }
-.tile-n { font: 700 28px/1.1 var(--font-heading); font-variant-numeric: tabular-nums; }
+.tile-n {
+  /* The heading weight comes from the token, not from a literal. These two
+     rules asked for 700 on a face set that stops at 600, so the browser has
+     always drawn them at 600 -- the same weight this page's own h1 asks for
+     through --font-heading-weight, and the same weight the sibling root
+     pages use. Measured in Chromium: at 700 the rendered advance width is
+     identical to 600, so this changes the CSS and not the page. */
+  font: var(--font-heading-weight) 28px/1.1 var(--font-heading);
+  font-variant-numeric: tabular-nums;
+}
 .tile-l { font-size: 13px; color: var(--ink-2); margin-top: 4px; }
 .tile-s { font-size: 12px; color: var(--muted); margin-top: 4px; }
 h2 {
-  font: 700 20px/1.3 var(--font-heading);
+  font: var(--font-heading-weight) 20px/1.3 var(--font-heading);
   margin: 36px 0 6px; padding-top: 20px; border-top: 1px solid var(--border);
 }
 .timeline { list-style: none; margin: 12px 0 0; padding: 0; }

@@ -85,7 +85,13 @@ TARGETS = {
         # The rule "shipping a weight the page never sets is dead bytes" still
         # holds; the mistake was reading "sets" as "names in a declaration".
         # Re-measure with a browser (computed fontFamily + fontWeight over every
-        # text-bearing element) before trimming this list.
+        # text-bearing element) before trimming this list. SINCE 2026-09-18 A GATE
+        # DOES THAT MEASURING: page_consistency_test.mjs boots every sitemap
+        # page and fails on a painted (family, weight) the page declares no
+        # face for. It found the other half of this defect the same day — the
+        # 40 instance sub-pages, the four history pages and all six apps were
+        # asking for weights nothing here ships — and it is what makes trimming
+        # safe, because the list can now be wrong in only one direction.
         #
         # AND THIS SET IS NOT THE ROOT'S ALONE. fonts/barlow-fontface.css is
         # read by build_landing_page, build_privacy_page (privacy + about),

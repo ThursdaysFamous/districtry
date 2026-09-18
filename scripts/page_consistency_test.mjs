@@ -26,6 +26,15 @@
 // audit that reported the first of them had sampled four pages, which is why
 // this sweeps every one.
 //
+// A CHECK ADDED 2026-09-18, the same shape again. Measured across the sitemap,
+// 50 pages painted a Barlow or IBM Plex Mono weight they declared no face for,
+// and every gate here was green: CSS font matching has no failure state, so a
+// page that asks for bold and ships no bold renders semibold, or a synthetic
+// bold smeared out of a lighter face, and looks fine. Nothing compared what a
+// page paints against what it loads, which is a question only a browser can
+// answer — the weight is set by the browser's own default bold for <strong>,
+// <b> and <th> on most of those pages, so it appears in no stylesheet to grep.
+//
 // IT DERIVES ITS SURFACE, IT DOES NOT CARRY A LIST. The pages come from
 // sitemap.xml and the expectations from the tree — a page is expected to link
 // its instance's sources page when that instance HAS one, and never to link
@@ -278,6 +287,57 @@ try {
 
       const info = await p.evaluate(() => ({
         font: getComputedStyle(document.body).fontFamily.split(",")[0].replace(/['"]/g, ""),
+        // EVERY PAINTED FACE IS A LOADED FACE. Measured 2026-09-18, 50 pages
+        // asked for a weight they ship no file for: the 40 instance sub-pages
+        // set bold on <strong>, <b> and <th> while declaring Barlow 400 and
+        // 600 only, the four history pages asked for a Barlow Condensed 700
+        // their font set stops at 600, and all six apps asked for IBM Plex
+        // Mono 600 against faces that stop at 500. Nothing failed, because CSS
+        // font matching never errors — it substitutes the nearest face at or
+        // above the request, or emboldens one below it, and the page renders
+        // something plausible at the wrong weight.
+        //
+        // Both outcomes were measured rather than reasoned about. Substitution
+        // is silent: Barlow Condensed at 700 and at 900 render identical
+        // advance widths where 600 differs, so a 900 literal was drawing 700.
+        // Synthesis is not: IBM Plex Mono at 600 and at 700 ink the same 8,052
+        // pixels against 500's 6,285 — the same number twice is the giveaway
+        // that neither is a drawn face.
+        //
+        // The comparison is by FAMILY THE PAGE DECLARES. A page painting
+        // ui-monospace or a system stack declares no face for it and is not
+        // asking this repo for anything; a page painting Barlow is.
+        faces: (() => {
+          const declared = {};
+          document.fonts.forEach((f) => {
+            const fam = f.family.replace(/['"]/g, "");
+            (declared[fam] = declared[fam] || []).push(String(f.weight));
+          });
+          const painted = new Map();
+          const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+          let n;
+          while ((n = walk.nextNode())) {
+            if (!n.nodeValue.trim()) continue;
+            const el = n.parentElement;
+            if (!el) continue;
+            // RECTS, NOT display:none. getComputedStyle on a DESCENDANT of a
+            // hidden element returns that descendant's own display, which is
+            // `block` for an h2 inside a display:none footer — so the first
+            // draft of this check reported Barlow Condensed 900 on all six
+            // apps, from the pre-rebrand `footer.site-footer` the skin hides.
+            // The same lesson the bar check above already records.
+            if (!el.getClientRects().length) continue;
+            const cs = getComputedStyle(el);
+            if (cs.visibility === "hidden") continue;
+            const fam = cs.fontFamily.split(",")[0].replace(/['"]/g, "").trim();
+            const key = fam + "|" + cs.fontWeight;
+            if (!painted.has(key)) {
+              painted.set(key, el.tagName.toLowerCase() + ": " +
+                               (el.textContent || "").trim().slice(0, 30));
+            }
+          }
+          return { declared, painted: [...painted.entries()] };
+        })(),
         bg: getComputedStyle(document.body).backgroundColor,
         mark: !!document.querySelector(".districtry-mark, .logo-mark"),
         // The bars, measured rather than assumed. This page's whole subject is
@@ -374,6 +434,20 @@ try {
       }));
 
       check(path, `brand typeface (${scheme})`, info.font === "Barlow", info.font);
+
+      // A weight with no face is not a rendering error anywhere — it is a
+      // different weight than the CSS asked for, drawn confidently. Reported
+      // per pair with the element that paints it, because the fix is either
+      // to ship the face or to ask for one the page has, and which of those is
+      // right depends on what the element is.
+      for (const [key, sample] of info.faces.painted) {
+        const [fam, weight] = key.split("|");
+        const have = info.faces.declared[fam];
+        if (!have) continue;                       // a system stack, not ours
+        check(path, `paints ${fam} ${weight} and ships it (${scheme})`,
+              have.includes(weight),
+              `declares ${fam} ${[...new Set(have)].sort().join("/")} — ${sample}`);
+      }
       check(path, `paints a ${scheme} ground`, (lum(info.bg) < 90) === (scheme === "dark"), info.bg);
       check(path, `carries the mark (${scheme})`, info.mark);
 
