@@ -129,25 +129,183 @@ def text_lines(page):
     return [re.sub(r"\s+", " ", line).strip() for line in t.split("\n") if line.strip()]
 
 
+def field_reach(lines, hits, pattern):
+    """How many lines past its own name line THIS PAGE puts this field.
+
+    Measured only on the members the NEXT member bounds, so the page states the
+    distance rather than the reader guessing one. Returns 0 where the page
+    publishes the field for nobody, which reads only a member's own name line --
+    the one line that is unambiguously theirs.
+    """
+    offsets = []
+    for n in range(len(hits) - 1):
+        start, stop = hits[n][0], hits[n + 1][0]
+        for k in range(start, stop):
+            if pattern.search(lines[k]):
+                offsets.append(k - start)
+                break
+    return max(offsets) if offsets else 0
+
+
 def parse(page, convention):
     lines = text_lines(page)
     rx = FWD if convention == "fwd" else REV
     hits = [(i, m) for i, line in enumerate(lines) for m in [rx.match(line)] if m]
+    # Every member's scan is bounded by the NEXT member, so nothing below the
+    # roster can donate a contact detail to somebody. THE LAST MEMBER HAS NO
+    # NEXT ONE, and the fixed twelve-line window that used to stand in for one
+    # is what shipped Riverside's city-hall number as council member Lois
+    # Schneider's phone. Her row publishes no phone at all: measured 2026-09-18
+    # her name is line 57 of riversideiowa.gov's 70, the page's `<div
+    # id="footer">` opens at 62, and `(319) 648-3501` sits at 65 -- eight lines
+    # below her, inside a twelve-line window and outside any bound this page
+    # states. text_lines() strips the <footer> ELEMENT and not a div named for
+    # one, so nothing else caught it either.
+    #
+    # So the last member is bounded by the distance THIS PAGE puts between a
+    # name line and that field, PER FIELD, because the two differ -- measured
+    # 2026-09-18, phone then e-mail: Moravia 1 and 2, Norwalk 3 and 1,
+    # Riverside 1 and 2, Tiffin 3 and 5. One window for both fields would have
+    # been wrong about one of them on three of the four pages.
+    #
+    # The bound is deliberately only applied where the page gives no next
+    # member, which is where the defect is. It can drop a real value if a page
+    # ever sets its LAST member's contact further out than any other member's,
+    # and that is the safe direction: an omission trips MIN_PHONES in the
+    # builder and is visible, where an invented number is not.
+    reach = {"email": field_reach(lines, hits, EMAIL),
+             "phone": field_reach(lines, hits, PHONE)}
     out = []
     for n, (i, m) in enumerate(hits):
-        # bound the scan at the NEXT record so a footer cannot donate a phone
-        # number to the last member
-        stop = hits[n + 1][0] if n + 1 < len(hits) else min(len(lines), i + 12)
-        blob = " ".join(lines[i:stop])
-        email = EMAIL.search(blob)
-        phone = PHONE.search(blob)
         rec = {"name": m.group("name").strip(), "role": m.group("role").strip()}
-        if email:
-            rec["email"] = email.group(0)
-        if phone:
-            rec["phone"] = phone.group(0)
+        for field, pattern in (("email", EMAIL), ("phone", PHONE)):
+            stop = (hits[n + 1][0] if n + 1 < len(hits)
+                    else min(len(lines), i + reach[field] + 1))
+            found = pattern.search(" ".join(lines[i:stop]))
+            if found:
+                rec[field] = found.group(0)
         out.append(rec)
     return out
+
+
+# ---------------------------------------------------------------- self-test
+# Fixtures are built from string parts rather than written as whole URLs: this
+# file's URL literals are the inventory `scripts/probe_user_agents.py` probes,
+# and an invented host in a test fixture reads there as a host nobody measured.
+_FOOTER = ('<div id="footer"><b>City of Example</b><br>1 Main St.<br>'
+           'Example, Iowa 50000<br>(319) 555-9999</div>')
+
+
+def _member(name, role, *rows):
+    return "<p>" + name + ", " + role + "<br>" + "<br>".join(rows) + "</p>"
+
+
+def _page(*members):
+    return "<div>" + "".join(members) + "</div>" + _FOOTER
+
+
+def _selftest():
+    """Offline checks on the bound parse() puts on the LAST member.
+
+    Every case is about that member, because they are the one no next member
+    bounds and the one the old fixed twelve-line window got wrong. Each case
+    that expects NO phone also asserts the old window WOULD have taken the
+    footer's -- a fixture that does not reproduce the defect proves nothing.
+    """
+    failures, ran = [], []
+
+    def check(cond, msg):
+        ran.append(msg)
+        print(("  ok   " if cond else "  FAIL ") + msg)
+        if not cond:
+            failures.append(msg)
+
+    def old_window_phone(page, convention):
+        """What the retired `i + 12` bound would have given the last member."""
+        lines = text_lines(page)
+        rx = FWD if convention == "fwd" else REV
+        hits = [i for i, ln in enumerate(lines) for m in [rx.match(ln)] if m]
+        i = hits[-1]
+        found = PHONE.search(" ".join(lines[i:min(len(lines), i + 12)]))
+        return found.group(0) if found else None
+
+    # 1. THE RIVERSIDE SHAPE. Only the mayor publishes a phone; the last member
+    #    publishes an e-mail and no phone, and a footer below carries the city
+    #    hall number. Measured on riversideiowa.gov 2026-09-18: phone reach 1,
+    #    e-mail reach 2.
+    riverside = _page(
+        _member("Pat Doe", "Mayor", "(319) 555-0101", "mayor@example.gov"),
+        _member("Ann Roe", "Council Person", "aroe@example.gov"),
+        _member("Bo Fay", "Council Person", "bfay@example.gov"),
+        _member("Cal Ives", "Council Person", "cives@example.gov"),
+        _member("Dee Jann", "Council Person", "djann@example.gov"),
+        _member("Lee Poe", "Council Person", "lpoe@example.gov"))
+    recs = parse(riverside, "fwd")
+    check(len(recs) == 6, "riverside shape: 6 members parsed (got %d)" % len(recs))
+    check(recs[-1]["name"] == "Lee Poe", "riverside shape: last member is Lee Poe")
+    check("phone" not in recs[-1],
+          "riverside shape: last member takes NO phone from the footer (got %r)"
+          % recs[-1].get("phone"))
+    check(recs[-1].get("email") == "lpoe@example.gov",
+          "riverside shape: last member keeps their own e-mail")
+    check(recs[0].get("phone") == "(319) 555-0101",
+          "riverside shape: the one published phone still reaches the mayor")
+    check(old_window_phone(riverside, "fwd") == "(319) 555-9999",
+          "riverside shape: the retired 12-line window DID take the footer number")
+
+    # 2. TWO FIELDS AT DIFFERENT OFFSETS -- the Tiffin shape, where the e-mail
+    #    sits further from the name than the phone. One window for both fields
+    #    is wrong about one of them.
+    tiffin = _page(*[
+        _member(n, "Council Member", "First Elected: 2020",
+                "Phone: 515-555-01%02d" % k, "Email: c%d@example.gov" % k)
+        for k, n in enumerate(["Pat Doe", "Ann Roe", "Bo Fay", "Cal Ives",
+                               "Dee Jann", "Lee Poe"])])
+    recs = parse(tiffin, "fwd")
+    check(recs[-1].get("phone") == "515-555-0105",
+          "split offsets: last member keeps their OWN phone (got %r)"
+          % recs[-1].get("phone"))
+    check(recs[-1].get("email") == "c5@example.gov",
+          "split offsets: last member keeps their own e-mail, further out than the phone")
+
+    # 3. A PAGE THAT PUBLISHES NO PHONE FOR ANYONE gives the last member none,
+    #    though a footer below carries one. Reach falls back to the member's own
+    #    name line, which is the only line unambiguously theirs.
+    nophones = _page(*[
+        _member(n, "Council Person", "%s@example.gov" % n.split()[0].lower())
+        for n in ["Pat Doe", "Ann Roe", "Bo Fay", "Cal Ives", "Dee Jann", "Lee Poe"]])
+    recs = parse(nophones, "fwd")
+    check(all("phone" not in r for r in recs),
+          "no phones published: nobody gets one, last member included")
+    check(recs[-1].get("email") == "lee@example.gov",
+          "no phones published: the last member's e-mail still reaches them")
+    check(old_window_phone(nophones, "fwd") == "(319) 555-9999",
+          "no phones published: the retired window DID take the footer number")
+
+    # 4. THE BOUND MUST NOT DROP A REAL VALUE. Where every member including the
+    #    last publishes a phone at the page's own offset, every one survives --
+    #    the Moravia and Norwalk shape, and the arm that fails if the bound is
+    #    made tighter than the page.
+    moravia = _page(*[
+        _member(n, "Councilman", "641-555-01%02d" % k, "m%d@example.gov" % k)
+        for k, n in enumerate(["Pat Doe", "Ann Roe", "Bo Fay", "Cal Ives",
+                               "Dee Jann", "Lee Poe"])])
+    recs = parse(moravia, "fwd")
+    check(sum(1 for r in recs if r.get("phone")) == 6,
+          "every member publishes one: all 6 phones survive (got %d)"
+          % sum(1 for r in recs if r.get("phone")))
+    check(recs[-1].get("phone") == "641-555-0105",
+          "every member publishes one: the last is their own, not the footer's")
+
+    # 5. ONE MEMBER ALONE states no spacing at all, so nothing past their own
+    #    name line is read.
+    single = _page(_member("Pat Doe", "Mayor", "(319) 555-0101", "mayor@example.gov"))
+    recs = parse(single, "fwd")
+    check(len(recs) == 1 and "phone" not in recs[0],
+          "single member: no spacing stated, so nothing below the name line is read")
+
+    print("%d checks, %d failed" % (len(ran), len(failures)))
+    return 1 if failures else 0
 
 
 def main():
@@ -211,4 +369,6 @@ def main():
 
 
 if __name__ == "__main__":
+    if "--selftest" in sys.argv:
+        sys.exit(_selftest())
     main()

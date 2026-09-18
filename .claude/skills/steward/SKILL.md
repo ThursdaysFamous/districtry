@@ -107,8 +107,10 @@ python3 wi/scripts/wi_county_board_scraper.py --selftest            # the county
 python3 scripts/isbe_precinct_fabric.py --selftest         # the five Jasper-test reconciliation causes
 python3 ia/scripts/ia_county_minutes_chair_scraper.py --selftest   # the four refusals that stand between a chair card and a wrong name
 python3 ia/scripts/build_ia_county_chair.py --selftest              # the carry-forward rules: only `unreachable`, never a refusal, never past 60 days or a January
+python3 wi/scripts/build_wi_municipal_executives.py --selftest      # the same, narrower: never a refusal, a dead link, a page that read without witnessing, 60 days, or an April election
 python3 ia/scripts/build_ia_county_officers.py --selftest           # display_name strips a salutation and keeps a Jr./Sr. suffix and a published credential; and the party name-join, which ships no party when no ISAC row matches the officer or when two do
 python3 ia/scripts/ia_supervisor_district_scraper.py --selftest     # the supervisor scrape's robots gate, both halves: a refused URL never reaches requests.get, and two fetches of a delay-stating host are actually spaced
+python3 ia/scripts/ia_city_officials_scraper.py --selftest           # the bound on a council page's LAST member, whom no next member bounds: a footer's city-hall number never becomes their phone, and a real one at the page's own offset survives
 python3 scripts/build_parcel_fabric_districts.py --selftest        # the geometry repair's three refusals and its drop count
 python3 scripts/scraper_common.py --selftest                # the nine AFR builders' what-moved line, both ways: silent on a stamp-only week, names the record on a real one
 python3 scripts/check_roster_retention.py --base origin/main

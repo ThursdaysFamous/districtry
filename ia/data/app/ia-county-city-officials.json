@@ -554,6 +554,7 @@
     "email": "oelmquist@booneiowa.gov",
     "name": "Ondrea Elmquist",
     "phone": "(515) 432-4211",
+    "phoneIsOffice": true,
     "role": "City Administrator"
    },
    {
@@ -695,6 +696,7 @@
     "email": "cityofboxholm@gmail.com",
     "name": "Leah Porter",
     "phone": "(515) 298-0720",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -819,6 +821,7 @@
     "email": "cityofbussey@iowatelecom.net",
     "name": "Nicole Beary",
     "phone": "(641) 944-5532",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -881,6 +884,7 @@
     "email": "cocityclerk@frontiernet.net",
     "name": "Kathryn Sassman",
     "phone": "(712) 678-3580",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -1170,6 +1174,7 @@
     "email": "cityofdeloit@frontier.com",
     "name": "Corrine Mehaffey",
     "phone": "(712) 263-3408",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -1289,6 +1294,7 @@
     "email": "cityclerk@denisonia.com",
     "name": "Jodie Flaherty",
     "phone": "(712) 263-3143",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -1426,6 +1432,7 @@
     "email": "dowcity@frontiernet.net",
     "name": "Kim Mueller",
     "phone": "(712) 674-3350",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -1490,6 +1497,7 @@
     "email": "cityoffraser@outlook.com",
     "name": "Leah Porter",
     "phone": "(515) 298-0720",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -1675,6 +1683,7 @@
     "email": "tfweldon@gmail.com",
     "name": "Tiffani Weldon",
     "phone": "(641) 891-2479",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -1789,6 +1798,7 @@
     "email": "jgeerycoh@gmail.com",
     "name": "Jennifer Geery",
     "phone": "(641) 949-6294",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -2260,6 +2270,7 @@
     "email": "jwyman@knoxvilleia.gov",
     "name": "Jodie Wyman",
     "phone": "(641) 828-0550",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -2503,6 +2514,7 @@
     "email": "lutherclerk@gmail.com",
     "name": "Deanna Sandegren",
     "phone": "(515) 517-0023",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -2637,6 +2649,7 @@
     "email": "cityclerk@madridiowa.org",
     "name": "Kristen Renslow",
     "phone": "(515) 795-3930",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -2714,6 +2727,7 @@
     "county": "Crawford",
     "name": "Lori Jahn",
     "phone": "(712) 654-2632",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -2972,6 +2986,7 @@
     "email": "tfweldon@gmail.com",
     "name": "Tiffani Weldon",
     "phone": "(641) 891-2479",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -3160,6 +3175,7 @@
     "email": "mdcityhall@windstream.net",
     "name": "Stephanie Ripperger",
     "phone": "(641) 947-6501",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -3546,6 +3562,7 @@
     "email": "monroecityhall@mchsi.com",
     "name": "Kim Thomas",
     "phone": "(641) 259-2319",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -3702,6 +3719,7 @@
     "email": "katrinad@newtongov.org",
     "name": "Katrina Davis",
     "phone": "(641) 792-2787",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -3709,6 +3727,7 @@
     "email": "matt@newtongov.org",
     "name": "Matt Muckler",
     "phone": "(641) 792-2787",
+    "phoneIsOffice": true,
     "role": "City Administrator"
    },
    {
@@ -3962,6 +3981,7 @@
     "email": "admin@ogdeniowa.org",
     "name": "Emily Clausen",
     "phone": "(515) 275-2917",
+    "phoneIsOffice": true,
     "role": "City Administrator"
    },
    {
@@ -3969,6 +3989,7 @@
     "email": "clerk@ogdeniowa.org",
     "name": "Allison Frazier",
     "phone": "(515) 275-2917",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -4152,6 +4173,7 @@
     "email": "msmith@cityofpella.com",
     "name": "Mandy Smith",
     "phone": "(641) 628-4173",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -4226,6 +4248,7 @@
     "county": "Boone",
     "name": "Leah Porter",
     "phone": "(515) 298-0720",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -4297,6 +4320,7 @@
     "email": "cityhall@discoverpleasantville.com",
     "name": "Rachel Reed",
     "phone": "(515) 848-3316",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -4971,6 +4995,7 @@
     "email": "schleswigclerk@iowatelecom.net",
     "name": "Kris Kluender",
     "phone": "(712) 676-3361",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -5342,6 +5367,7 @@
     "email": "sullycty@netins.net",
     "name": "Barbara Maasdam",
     "phone": "(641) 594-3493",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -5651,6 +5677,7 @@
     "email": "cityofvaleria@yahoo.com",
     "name": "Angie Craft",
     "phone": "(515) 689-0201",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -5960,6 +5987,7 @@
     "email": "cityhall@cityofwestside.com",
     "name": "Sandy Koch",
     "phone": "(712) 663-4493",
+    "phoneIsOffice": true,
     "role": "City Clerk"
    },
    {
@@ -6008,6 +6036,7 @@
     "county": "Crawford",
     "name": "Cathy Meyer",
     "phone": "(712) 663-4493",
+    "phoneIsOffice": true,
     "role": "Library"
    }
   ],
