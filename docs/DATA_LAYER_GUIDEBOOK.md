@@ -672,6 +672,20 @@ detail into `blocker`.
       "wanted": "A council list the city is willing to publish in a form a program can read."
     },
     {
+      "id": "will-municipal-directory-freeze",
+      "concept": "Municipal officials",
+      "area": "Will County, and every Illinois town card with it",
+      "counties": [
+        "will"
+      ],
+      "kind": "blocked",
+      "layer": "municipality",
+      "summary": "Town officials across Illinois have not refreshed here since 8 September 2026. Will County's directory is one of two the rebuild requires, and it cannot be read automatically, so no county's list updates until that is solved.",
+      "why": "The county clerk publishes the directory through a document viewer that now asks every visitor to pass a browser check first, and an automated reader cannot pass it.",
+      "blocker": "MEASURED 2026-09-17 (issue #982) and DECIDED 2026-09-18. scripts/will_municipal_officials_scraper.py reads the County Clerk's directory as a FlipHTML5 flipbook and fetches its plain-text view. GET https://fliphtml5.com/hbvu/bbmp/basic on 2026-09-17 answered HTTP 403 to all FOUR clients tried - the scraper's own Chrome/124 string, Chrome/126 with full client hints, the districtry-roster/1.0 token, and stdlib urllib with a Chrome string - every one carrying `Cf-Mitigated: challenge`, `Server: cloudflare`, a challenges.cloudflare.com CSP and \"Just a moment... Enable JavaScript and cookies to continue.\" So it is neither a user-agent question nor the runner's address: it is a managed challenge, an access control, and this project does not solve or work around one. robots.txt ALLOWS the path (no rule in the one binding group matches /hbvu/bbmp/basic), which is why the challenge is the whole of the block. ROUTES TESTED THE SAME DAY: online.fliphtml5.com/hbvu/bbmp/ answers 200 with no challenge and is the right book (title '2025 Will County Directory'), but /basic 404s there and the only text on that host is javascript/config.js, 522 KB of an encoded bookConfig blob containing no page text (Mayor x0, Trustee x0) - extracting it means reverse-engineering the viewer, which is the same block from another angle rather than a different route. The LEOHANDBOOK.pdf linked from the Clerk's own page is fully reachable (200, 984 KB, no challenge) and is NOT a directory: it is ISBE's 2027 Local Election Officials Handbook, 74 pages of procedural guidance naming nobody. www.willcountyclerk.gov/local-election-officials/ is reachable, robots-allowed, and still links only the flipbook. WHAT IT COSTS: REQUIRED_COUNTIES = (\"Cook\", \"Will\") in the builder, so a failed Will scrape skips the rebuild step and every other county's turnover with it. The shipped file last changed 8 Sep 2026 (d5ee6f1, #809) and the last weekly-refresh commit was 4 Sep 2026; 629 municipalities across 34 counties are frozen behind Will's block. THE GATE IS NOT RELAXED. Building without Will would silently ship mayors where full councils are shipped today, which is the trade this project refuses. WHY THIS RECORD IS TAGGED TO WILL ALONE though the freeze is statewide: the block is Will's and the consequence is the whole file's, so the summary states the scope rather than tagging 33 counties whose own sources are fine and whose cards would then blame them for somebody else's vendor. ASK: NOT YET ASKED - DRAFTED (Ask 28 in docs/ASK_DRAFTS.md), to the Will County Clerk, for the directory as a document. Adam sends; nothing here sends mail. fliphtml5.com is now a permanent block by measurement in the same sense Joliet's Akamai deny is, so it belongs in validate_sources.py's `blocked` inversion the day a course is chosen - reachable-again becomes the signal instead of a monthly no-op WARN.",
+      "wanted": "The directory as a file or a page a program can read, or another source naming every town's full governing body in Will County."
+    },
+    {
       "id": "kankakee-city-wards",
       "concept": "City council district",
       "area": "City of Kankakee",

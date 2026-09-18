@@ -2150,3 +2150,91 @@ nobody.
 > <YOUR NAME>
 > <YOUR E-MAIL>
 > https://districtry.com/il/
+
+---
+
+## Ask 28 — Will County Clerk: the 2025 directory as a document
+
+> **NOT YET ASKED — DRAFTED 2026-09-18.** One note to the Will County Clerk. Adam sends;
+> nothing here sends mail.
+
+**Why this one is worth sending.** Will is one of two counties the Illinois municipal
+roster's builder REQUIRES (`REQUIRED_COUNTIES = ("Cook", "Will")`), so when the Will scrape
+fails the rebuild step is skipped and every other county's turnover is skipped with it. The
+shipped file last changed 8 Sep 2026 and 629 municipalities across 34 counties are frozen
+behind it. This is the one ask in the queue whose answer unblocks other counties' data
+rather than its own.
+
+**What is actually blocking it, and what is not.** The Clerk publishes the directory
+through FlipHTML5, a third-party flipbook viewer, and that viewer has switched on a
+Cloudflare managed challenge: measured 2026-09-17, `https://fliphtml5.com/hbvu/bbmp/basic`
+answers HTTP 403 to four different clients, each with `Cf-Mitigated: challenge` and the
+"Just a moment…" body. **The county is not blocking us — a vendor is**, the county's own
+`willcountyclerk.gov` is perfectly reachable, and the flipbook's robots.txt allows the
+path. A challenge is an access control and is never solved or worked around here, so the
+only routes left are a document from the Clerk or another full-governing-body source, and
+the Clerk's page offers none today. The ISBE handbook linked from that page is procedural
+guidance and names nobody.
+
+**Do not mention the vendor's block as a complaint.** The office chose a viewer that works
+fine for people with browsers, which is most of its readers. The ask is for a second form
+of the same document, not a change to how they publish.
+
+### Recipient
+
+Annette Parker, Will County Clerk — `electionsmgmt@willcounty.gov` · (815) 740-4615 ·
+302 North Chicago Street, Joliet, IL 60432. (Taken from this project's own
+`il-county-clerks.json`; re-check it against the county's page on the day it is sent.)
+
+### Draft
+
+> Subject: Will County municipal officials directory — a machine-readable copy?
+>
+> Dear Ms Parker,
+>
+> I run districtry, a free public map that shows anyone in Illinois which civic districts
+> cover an address and who represents them there. It is not commercial and carries no
+> advertising. Every boundary and every name comes from a government publisher and is cited
+> back to it.
+>
+> Your office's 2025 Will County Directory is the source I use for the mayors, presidents,
+> trustees and council members of Will County's cities and villages. Until recently I could
+> read it automatically once a week, so the names stayed current without anyone re-typing
+> them.
+>
+> That stopped working this month. The directory is published through FlipHTML5, and the
+> viewer now asks every visitor to pass a browser check before serving the page. It opens
+> normally for a person in a browser; an automated reader cannot get past it, and I do not
+> attempt to work around checks of that kind.
+>
+> **Would your office be willing to send or publish the same directory as a document — a
+> PDF, a spreadsheet or a plain web page?** Anything that lists each municipality with its
+> current officials would do. A one-off copy is genuinely useful; a stable link I could
+> re-read each week is better still, and I would cite the county as the source either way.
+>
+> If there is another county source that names each municipality's full governing body, I
+> would be glad to be pointed at it instead.
+>
+> **A reply saying the county would rather not is a genuinely useful answer** — I will
+> record it and stop asking.
+>
+> I do not publish home addresses or personal contact details for officeholders: office
+> contact only, or nothing.
+>
+> With thanks for your time,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+### What each answer means
+
+- **A document or a link** — the Will scraper reads that instead of the flipbook, the
+  builder's required-county gate is satisfied again, and all 34 counties resume refreshing.
+  Retire `will-municipal-directory-freeze` and record the source in the scraper's header.
+- **Another county source** — same outcome, measure it the usual way before wiring it.
+- **No, or no reply after the follow-up cadence** — the freeze stands and the gap record is
+  already honest about it. The next question then becomes whether Will should stay a
+  REQUIRED county or whether the builder should ship the other 33 with Will's own
+  municipalities explicitly marked as not refreshing, which is a design decision for Adam,
+  not a threshold to quietly relax.
