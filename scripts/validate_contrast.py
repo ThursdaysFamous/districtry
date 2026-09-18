@@ -121,7 +121,7 @@ records "#8b93a1 measures 3.09:1 and fails AA" as the reason its labels are
 #6b7280 — by hand, once, for one file.
 
 TWO PALETTES, AND WHY THE SECOND ONE EARNS ITS CODE. The brand tokens are one
-palette; traffic.html declares a second, fifteen colours of its own in its own
+palette; traffic.html was a second, fifteen colours of its own in its own
 <style> block, using not one brand token. It is a districtry page in the
 sitemap, so its text is held to the same floors — and nothing measured it. On
 2026-09-12 a browser sweep of every text node on all 36 pages found nine
@@ -131,16 +131,27 @@ DARKENED in the same change rather than recorded: the decision the brand
 --faint and --muted entries are still waiting on does not arise where one page
 owns the value and one page reads it.
 
+SINCE 2026-09-18 THAT PAGE WEARS THE SUB-PAGE SHELL. Its redesign put the
+tokens-brand and styles-subpage fences into it, so its palette is now the
+eleven aliases the fence emits (--accent, --slate, --panel and the rest, all
+brand values through build_brand_tokens.py's ALIASES table) plus THREE tokens
+of its own for the chart — --s1, --s1-track, --s2, on a `.report` block — because
+the token file's data tier stops at the map and a chart on paper is not the
+map. The second palette below reads the fence's :root for its base table and
+folds the chart block in (traffic_chart), so the completeness check still
+holds: every colour the fence declares must be named by a row or recorded as
+painted nowhere on this page, and so must every chart token. The dark tier is
+now stated ONCE, under the attribute, because the shell's boot script sets it
+from the OS preference when nothing is stored; the media-query copy that used
+to have to agree with it is gone.
+
 A second palette also buys the check the first cannot have. The brand tokens
 are painted across five CSS files, so "is this colour measured?" is argued in
-prose above, surface by surface. traffic.html's are all in one block, so the
-question has a mechanical answer: every colour it declares must be named by a
-pair row or listed with a reason, and its first run named --brand and
---mark-ink, declared in all three of the page's blocks and referenced by no
-rule. That page also states its dark tier TWICE — once under the attribute and
-once under the media query — so every copy after the first must declare the
-same tokens with the same values; two hand-kept copies of one value is the
-drift class this repo generates files to avoid.
+prose above, surface by surface. traffic.html's are in two blocks the caller
+names, so the question has a mechanical answer: every colour they declare must
+be named by a pair row or listed with a reason, and the first run of the old
+table named --brand and --mark-ink, declared in all three of the page's blocks
+and referenced by no rule.
 
 WHAT IT DOES WITH A SHORTFALL. A pair under its floor FAILS, unless it is
 recorded in ACCEPTED_SHORTFALLS with the MEASURED ratio, a reason and a date
@@ -418,54 +429,56 @@ ACCEPTED_SHORTFALLS = {
                "reads 1.11:1 against the masthead, so neither edge is perceivable"),
 }
 
-# ——— traffic.html's own palette ———
+# ——— traffic.html's palette: the shell's eleven aliases plus its chart ———
 #
-# The traffic report declares fifteen colour tokens of its own in its <style>
-# block and uses not one brand token. It is a districtry page in the sitemap,
-# so its text is held to the same floors; it is not the brand surface, so it
-# gets its own table rather than rows in the one above. What a second palette
-# buys is the completeness check the brand table cannot have: this page's
-# tokens are all in one block, so every one of them must be NAMED by a row
-# below or listed in TRAFFIC_NOT_PAINTED with a reason, and adding a token
-# without a row fails.
+# The traffic report used to declare fifteen colour tokens of its own and use
+# not one brand token; since 2026-09-18 it carries the tokens-brand fence like
+# every other sub-page and declares only three of its own, for the chart. It
+# is a districtry page in the sitemap, so its text is held to the same floors;
+# it is not the brand surface, so it gets its own table rather than rows in
+# the one above. What a second palette buys is the completeness check the
+# brand table cannot have: this page's tokens are in two blocks this gate
+# names, so every one of them must be NAMED by a row below or listed in
+# TRAFFIC_NOT_PAINTED with a reason, and adding a token without a row fails.
 #
 # Measured 2026-09-12, which is how this page got into the gate: a browser
 # sweep of every text node on all 36 pages found nine selectors here between
 # 12 and 13px at 2.93:1 and 3.04:1 in light and 4.49:1 in dark, against a
-# 4.5:1 floor, with nothing measuring them. The cause was --muted #8a949b /
-# #77828a. That token is this page's alone, so it was DARKENED to #6b737b /
-# #7b868e in the same change rather than recorded as a shortfall — the
-# decision the brand --faint and --muted entries above are still waiting on
-# does not arise where one page owns the value.
+# 4.5:1 floor, with nothing measuring them. The cause was the page's own
+# --muted #8a949b / #77828a, darkened in the same change. The redesign retired
+# that token with the rest: small text on this page is --slate now, the
+# shell's own secondary ink, which the rows below measure on both grounds.
 TRAFFIC_PAIRS = [
-    ("ink",         "plane",       "text", "body, and .backlink a:hover — .wrap paints nothing, so the page ground is --plane. Also the .skip-link, which paints the pair the other way round (--plane on --ink); contrast is symmetric, so one row measures both"),
-    ("ink",         "surface",     "text", ".caveat strong, .note strong, .meter-label b, .barrow .name 13px, td:first-child — all inside .card or .caveat, which paint --surface"),
-    ("ink-2",       "plane",       "text", ".eyebrow 11px, .period 14px, .backlink a 13px, footer .standing a 12.5px"),
-    ("ink-2",       "surface",     "text", ".caveat 13.5px, .tile .sub 12.5px, .card .sub 13px, .legend 13px, .bar value 12.5px, .note 13px, .empty code 12px, .meter-label 13px, summary 13px, td"),
-    ("muted",       "plane",       "text", "footer 12.5px"),
-    ("muted",       "surface",     "text", ".tile .label 12px, th 12px, .muted-note, .empty 13px — the nine selectors the browser sweep found short"),
-    ("tooltip-ink", "tooltip-bg",  "text", ".tooltip 12.5px, which inverts the tiers: the light tier's tooltip is the dark ink ground"),
-    ("s1",          "surface",     "ui",   "the page-visit series: .barrow .bar and the daily chart's columns on a --surface card, the .legend .swatch that names the series, and .hitcol:focus-visible's 2px outline"),
+    ("ink",         "paper",       "text", "body text on the page ground: .barrow .name 14px and .panel .lead 15px in the six panels, .notes li strong, .take em"),
+    ("ink",         "panel",       "text", ".tile .value 36px and table.q td:first-child 14px, inside a --panel card; the .tooltip and the shell's .skip-link paint the pair the other way round (--paper on --ink), and contrast is symmetric"),
+    ("slate",       "paper",       "text", ".kicker 13px, .window-row 14px, .take 15px, .legend 13.5px, .barrow .val 13px, .notes li 14px, .empty 13.5px"),
+    ("slate",       "panel",       "text", ".tile .label 13.5px, .tile .sub 13px, table.q th 12px and td 14px, the chart's 11px axis labels (svg text fill), .engines button 13.5px, the masthead's .title-sub and .masthead-actions a, footer.site-footer 14px"),
+    ("accent-deep", "paper",       "text", "links on the page ground: sup.ref a, and the shell's a { color: var(--accent-deep) }"),
+    ("accent-deep", "panel",       "text", "footer.site-footer a and .footer-links a on the footer's --panel band; .masthead-actions a:hover"),
+    ("paper",       "accent-deep", "text", ".engines button[aria-pressed=true], the active engine's face — --paper on --accent-deep in BOTH tiers, where the shell's .is-primary paints #fff and records 1.91:1 in dark; this page does not paint that pair"),
+    ("accent",      "panel",       "ui",   "the masthead's 3px inset rule; main summary::after, the accordion's + and –; .masthead-actions a:hover border"),
+    ("accent-warm", "paper",       "ui",   "the focus ring (--focus-ring) on everything focusable, and .notes li:target"),
+    ("s1",          "panel",       "ui",   "the page-visit series: the daily chart's columns inside .chartcard, the .legend .swatch that names the series, .hitcol:focus-visible's 2px outline, .tooltip .dot"),
+    ("s1",          "paper",       "ui",   ".barrow .bar in the six panels, which sit on the page ground, and .meter .fill"),
     ("s1",          "s1-track",    "ui",   ".meter .fill against its own track — the meter has no number beside the bar, so the fill's edge is what states the value"),
-    ("s2",          "surface",     "ui",   "the interaction series: the chart's second column and its .legend .swatch and .tooltip .dot"),
+    ("s2",          "panel",       "ui",   "the interaction series: the chart's second column, its .legend .swatch and .tooltip .dot"),
     # Gridlines are the 1.4.11 exemption the criterion spells out: the marks
     # that carry the data are gated above, and a reader needs no gridline to
-    # read a bar's length or a column's height. --baseline is the t === 0
-    # line, the darkest member of the same set (1.58:1 light, 1.70:1 dark).
-    ("baseline",    "surface",     "decorative", "the chart's zero line, drawn by the same gridline loop at t === 0"),
-    ("grid",        "surface",     "decorative", "chart gridlines; th/td rules; .subpanel's top rule"),
-    ("ring@plane",  "surface",     "decorative", "the 1px box-shadow outline round .caveat, .tile and .card, composited over the --plane it is drawn on and seen against the card it encloses"),
+    # read a bar's length or a column's height.
+    ("line",        "paper",       "decorative", "the section rules (.ruled), the .tile and .tablecard and .chartcard 1px borders"),
+    ("line",        "panel",       "decorative", "chart gridlines (svg stroke) and table.q td rules inside a card"),
+    ("line-strong", "panel",       "decorative", "the chart's zero line, table.q th rule, and the .engines control's border — the active segment is a filled shape, so the outer border is not what states its state; the shell's .masthead-actions a border"),
 ]
 
-# Declared and painted nowhere. Empty, and that is the measurement: --brand
-# #6d3fd1 / #8b63e0 and --mark-ink #ffffff / #16191c were declared in all
-# three of this page's blocks and referenced by no rule, so this check's first
-# run named them and they were deleted. The theme-color meta tag carries the
-# brand hex as its own literal, which is where that value is actually used.
-TRAFFIC_NOT_PAINTED = {}
+# Declared by the fence and painted by no rule this page has an element for:
+# each names the shell selector that would paint it.
+TRAFFIC_NOT_PAINTED = {
+    "slate-soft": "the shell paints it on .cta-note and .updated, neither of which this page carries",
+    "accent-warm-deep": "the shell paints it on .lookup-status.err; this page has no address box",
+}
 
-# Empty after the --muted darkening above. An entry here takes the same shape
-# as ACCEPTED_SHORTFALLS and is audited the same way.
+# Empty. An entry here takes the same shape as ACCEPTED_SHORTFALLS and is
+# audited the same way.
 TRAFFIC_SHORTFALLS = {}
 
 problems = []
@@ -820,6 +833,24 @@ def traffic_css():
     return m.group(1)
 
 
+def traffic_chart(table, tier):
+    """The page's three chart tokens, folded into the fence's table. They live
+    on a `.report` block rather than :root because the fence's :root is
+    GENERATED and this page may not add to it; the dark block redefines all
+    three, and is laid over the light one the way the cascade does it."""
+    css = traffic_css()
+    block = dict(token_block(css, ".report", TRAFFIC))
+    if tier == "dark":
+        block.update(token_block(css, ':root[data-theme="dark"] .report', TRAFFIC))
+    out = dict(table)
+    for k, v in block.items():
+        if k in out:
+            fail("traffic.html's .report block declares %s, which the tokens-brand "
+                 "fence on the same page also declares — one name, two values" % k)
+        out[k] = v
+    return out
+
+
 # Each palette: its label, the CSS it is read from, the selectors for its two
 # tiers, the token a translucent value with no `@` sits on, its pair table,
 # its accepted shortfalls, and — where every colour it declares lives in one
@@ -835,13 +866,18 @@ PALETTES = [
          # and a name-by-name check would demand a row for every ramp step,
          # spacing value and map-layer colour.
          complete=None, not_painted=None),
+    # The fence's :root and its one dark block are the base table — the same
+    # eleven aliases every sub-page carries — and traffic_chart folds in the
+    # page's own three. The old page stated its dark tier twice (once under
+    # the attribute, once under a media query) and this list held the two
+    # copies to each other; the shell's boot script now reads the OS
+    # preference, so there is one copy to read.
     dict(label="traffic", css=traffic_css, path=TRAFFIC,
-         light=":root", dark=[':root[data-theme="dark"]',
-                              ':root:not([data-theme="light"])'],
-         body="plane",
+         light=":root", dark=[':root[data-theme="dark"]'],
+         body="paper",
          pairs=TRAFFIC_PAIRS, accepted=TRAFFIC_SHORTFALLS,
          accepted_name="TRAFFIC_SHORTFALLS",
-         extra=None,
+         extra=traffic_chart,
          complete=True, not_painted=TRAFFIC_NOT_PAINTED),
 ]
 
@@ -852,10 +888,10 @@ def check_complete(table, pairs, not_painted, label, path):
     the palette's not-painted table with a reason.
 
     This is the check the brand table cannot have and the reason a second
-    palette is worth its code: traffic.html's fifteen tokens are all in one
-    block, so "is this colour measured?" has a mechanical answer. Its first run
-    named --brand and --mark-ink, declared in all three of the page's blocks
-    and referenced by no rule."""
+    palette is worth its code: traffic.html's tokens are in the two blocks
+    traffic_chart names, so "is this colour measured?" has a mechanical answer.
+    Its first run named --brand and --mark-ink, declared in all three of the
+    page's then-blocks and referenced by no rule."""
     named = set()
     for fg, bg, _role, _where in pairs:
         for spec in (fg, bg):
