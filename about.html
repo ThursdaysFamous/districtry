@@ -125,10 +125,18 @@ async src="//gc.zgo.at/count.js"></script>
    ONLY THE DARK VALUE IS STATED HERE. #15131b is --paper in the dark tier and
    is the value every app's own theme handler sets, so the map and the pages
    around it agree about what dark means in browser chrome. The LIGHT value is
-   left exactly as each page declares it, because four question pages still
-   declare the pre-rebrand navy #0b3d91 out of their worksheet's
-   brand.theme_color, and which colour those two instances brand with is a
-   question this script has no business settling.
+   left exactly as each page declares it, which is the light tier's own accent
+   on every page in the fleet.
+
+   THE SENTENCE HERE BEFORE 2026-09-18 BLAMED THE WORKSHEETS AND WAS WRONG. It
+   said four NY and SF question pages declared the pre-rebrand navy #0b3d91
+   "out of their worksheet's brand.theme_color"; both worksheets said #6d3fd1
+   the whole time. Those four are AUTHORED pages, not generated ones, so
+   question_page.py's head -- which does restate the tag from the worksheet --
+   never reached them, and a tag written before the rebrand sat there through
+   every regeneration. Naming the wrong owner is how a stale value survives
+   being found: the worksheet was checked, read correct, and the page went on
+   saying navy.
 
    A `media="(prefers-color-scheme: dark)"` meta variant would be shorter and
    is the wrong mechanism here: it reads the OS and cannot see the stored
