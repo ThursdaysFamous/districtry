@@ -759,6 +759,21 @@ jobs:
       - name: Iowa board-chair carry-forward rules still hold
         run: python3 ia/scripts/build_ia_county_chair.py --selftest
 
+      # The same mechanism, one file down: Milwaukee County's 19 municipal
+      # executives ship a name only where the municipality's own page witnessed
+      # it, so a page that does not answer used to delete the name and ship a
+      # withholding that reads exactly like an election. Nothing in the fleet
+      # catches that -- this file's 19 sources are one record each, below
+      # check_roster_retention's MIN_GROUP_RECORDS, so its per-source pass
+      # cannot fire here at all. The carry is narrower than Iowa's because the
+      # scraper splits a failed fetch three ways: carry only `unreachable`,
+      # never a refusal, never a dead link, never a page that read and did not
+      # witness, never past sixty days, never across an April spring election,
+      # and never when the county's own layer has stopped naming that person.
+      # Twenty-two literal cases, no network and no capture.
+      - name: WI municipal-executive carry-forward rules still hold
+        run: python3 wi/scripts/build_wi_municipal_executives.py --selftest
+
       # Two tables. display_name strips a leading honorific from an officer's
       # name, and a name in that file is also the key
       # ia-county-board-chairs.json joins on; the cases that matter are the

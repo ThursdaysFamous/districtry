@@ -9890,6 +9890,21 @@ function initWisconsinExplorer() {
           if (ex.phone) person.phone = String(ex.phone);
           if (ex.email) person.email = String(ex.email);
           wrap.appendChild(renderPersonRows([person]));
+          // A CARRIED NAME SAYS SO. build_wi_municipal_executives.py writes
+          // carriedFrom when the municipality's own page could not be read on a
+          // run and the last witnessed name was kept rather than deleted. The
+          // whole value of the witness is that a shown name was corroborated
+          // this week; without this row a carried one reads in exactly the same
+          // voice. Same posture, and the same wording, as the alderperson
+          // card's carry note.
+          if (ex.carriedFrom) {
+            wrap.appendChild(renderFieldStack([
+              { label: "Last re-read",
+                value: "The municipality's own page could not be read since "
+                       + String(ex.carriedFrom) + "; this name is carried from "
+                       + "the last refresh that could read it." }
+            ]));
+          }
         } else {
           // WITHHELD IS AN ANSWER, and the card says which one. The office is
           // known and named; the person is not, and the reason is the
