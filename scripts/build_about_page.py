@@ -378,12 +378,96 @@ def build():
         len(fleet), pages, seats, tabled, gaps, jobs)
 
 
+WORKFLOW_DIR = os.path.join(REPO_ROOT, ".github", "workflows")
+
+
+def feeding_files():
+    """Every file whose CONTENT moves a number on this page.
+
+    Derived from the generators that count them rather than listed here, for
+    the reason build_county_pages.check_workflows already gives about filename
+    patterns: a list would go stale at the speed the frontier moves, and a
+    pattern cannot tell which instance a file belongs to.
+
+    `weekly_jobs()` is deliberately not represented. It counts workflow FILES
+    carrying a `schedule:`, so it moves when a workflow is ADDED and never when
+    one runs — no refresh can change it, so no refresh owes this page a step
+    for it.
+    """
+    from build_county_pages import INSTANCES, load_instance  # noqa: E402
+    from build_officeholder_tables import TABLES, roster_path  # noqa: E402
+    feeds = set()
+    for inst in INSTANCES:
+        for path in load_instance(inst)[3]:
+            feeds.add(os.path.relpath(path, REPO_ROOT))
+    for entry in TABLES:
+        for section in entry["sections"]:
+            feeds.add(roster_path(entry["tag"], section["roster"]))
+    for path in glob.glob(os.path.join(REPO_ROOT, "*", "data", "app",
+                                       "coverage-gaps.json")):
+        feeds.add(os.path.relpath(path, REPO_ROOT))
+    if len(feeds) < 2:
+        fail("feeding_files() found %d input(s), which cannot be right — the "
+             "generators it reads have moved and this check is now vacuous"
+             % len(feeds))
+    return feeds
+
+
+def check_workflows():
+    """A weekly job that rewrites one of those files must regenerate this page.
+
+    THIS PAGE SHIPPED WITHOUT THAT WIRING AND #991 IS WHERE IT SURFACED. The
+    page counts the per-county pages and the seats on them, so any run that
+    seats or unseats anybody moves a number on it — and on 2026-09-17 the first
+    roster PR after the page shipped (#977, two days earlier) went red on
+    `--check` for one net name across Buffalo, Green Lake and Marinette. That
+    failure lands on a bot's own pull request, which is the worst place to
+    discover a convention: nobody wrote the branch, and the number it is wrong
+    about is not the number the PR is for.
+
+    Measured on introduction: 102 inputs, and 79 workflows rewriting one of
+    them with no step here. The same shape as build_county_pages.py's and
+    build_officeholder_tables.py's own checks, and named separately from both
+    because this page counts gap records as well as people, so a workflow can
+    owe this page a step while owing neither of those one.
+
+    A workflow that stages nothing is a watcher and is not asked to build.
+    """
+    problems = []
+    feeds = feeding_files()
+    for path in sorted(glob.glob(os.path.join(WORKFLOW_DIR, "*.yml"))):
+        text = open(path, encoding="utf-8").read()
+        if "git add " not in text:
+            continue                      # a watcher: reads, commits nothing
+        rel = os.path.relpath(path, REPO_ROOT)
+        hits = sorted(f for f in feeds if f in text)
+        if not hits:
+            continue
+        if "scripts/build_about_page.py" not in text:
+            problems.append(
+                "%s rewrites %s and never runs scripts/build_about_page.py — "
+                "its bot PR would fail this page's own --check on a number the "
+                "PR is not about" % (rel, ", ".join(hits[:3])))
+        elif "about.html" not in text.split("git add ", 1)[1].split("\n")[0]:
+            problems.append(
+                "%s regenerates about.html and never stages it — add "
+                "`about.html` to its `git add` line" % rel)
+    return problems
+
+
 def main():
     ap = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--check", action="store_true",
                     help="fail on drift rather than writing")
     args = ap.parse_args()
+
+    problems = check_workflows()
+    if problems:
+        for line in problems:
+            print("  - " + line)
+        fail("%d weekly workflow(s) rewrite a file this page counts and do not "
+             "regenerate it." % len(problems))
 
     page, (n, pages, seats, tabled, gaps, jobs) = build()
     summary = ("%d place(s), %d county page(s) naming %d, %d more in tables, "

@@ -126,7 +126,8 @@ jobs:
           # touched those same files errors instead of pushing, which is right.
           git fetch --depth=1 origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add wi/data/app/wi-circuit-judges.json wi/circuit-court.html wi/history.html
+          python3 scripts/build_about_page.py
+          git add wi/data/app/wi-circuit-judges.json wi/circuit-court.html wi/history.html about.html
           git commit -m "Update WI circuit court bench from wicourts.gov"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

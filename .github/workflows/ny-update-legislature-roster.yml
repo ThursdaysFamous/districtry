@@ -86,8 +86,9 @@ jobs:
           # table naming last week's members. The sitemap follows, because that
           # page is in it and its lastmod is the file's own last commit.
           python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
           python3 scripts/build_sitemap.py
-          git add ny/data/app/ny-senate-members.json ny/data/app/ny-assembly-members.json ny/state-legislature.html sitemap.xml
+          git add ny/data/app/ny-senate-members.json ny/data/app/ny-assembly-members.json ny/state-legislature.html about.html sitemap.xml
           git commit -m "Update NY Senate/Assembly roster from Open Legislation"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
