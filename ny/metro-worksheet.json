@@ -1,7 +1,7 @@
 {
   "this_metro": "nyc",
   "metro_name": "New York City",
-  "metro_bbox": { "minLng": -74.27, "minLat": 40.48, "maxLng": -73.68, "maxLat": 40.93 },
+  "metro_bbox": { "minLng": -74.27, "minLat": 40.47, "maxLng": -73.68, "maxLat": 40.93 },
   "metro_center": [40.7128, -74.006],
   "permalink_gate": { "minLat": 40.4, "maxLat": 41.05, "minLng": -74.3, "maxLng": -73.6 },
   "socrata_host": "https://data.cityofnewyork.us",
@@ -133,11 +133,83 @@
     ]
   },
   "layers": [
+        {
+      "id": "county",
+      "label": "County",
+      "group": "geography",
+      "area_rank": 2,
+      "rank_note": "62 counties statewide. Inside the city a county IS a borough, which the borough layer already answers with the city's own names.",
+      "source": {
+        "answers": "Which of New York's 62 counties contains the point, and its population. Inside New York City the five counties are the boroughs and have no county government of their own, which the card says rather than implying a county board that does not exist.",
+        "boundary": [
+          {
+            "label": "New York State Civil Boundaries, the counties layer published by NYS Information Technology Services Geospatial Services, pre-built and shipped with the app",
+            "url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Civil_Boundaries/FeatureServer/2"
+          }
+        ],
+        "people": "No roster is joined. New York's counties are governed in three different forms and no statewide list of who holds those seats has been found, so the card names nobody; the county tier is later work.",
+        "applies": "All of New York State."
+      }
+    },
     {
+      "id": "nys-school-district",
+      "label": "School District",
+      "group": "schools",
+      "area_rank": 3,
+      "rank_note": "716 school districts statewide; the city's own 32 Community School Districts are a different concept and stay on their own layer",
+      "source": {
+        "answers": "Which New York school district contains the point. Outside New York City this is the district that runs the public schools and elects a board; inside the city the Community School District layer answers instead.",
+        "boundary": [
+          {
+            "label": "New York State Education Department school district boundaries, published through NYS Information Technology Services, dissolved to one polygon per district and shipped with the app",
+            "url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Schools/FeatureServer/18"
+          }
+        ],
+        "people": "No roster is joined. New York's school boards are elected locally and no statewide list of their members has been found, so the card names nobody.",
+        "applies": "All of New York State."
+      }
+    },
+    {
+      "id": "municipality",
+      "label": "City or Town",
+      "group": "geography",
+      "area_rank": 4,
+      "rank_note": "995 cities and towns, which tile the state; villages sit inside towns and are their own layer",
+      "source": {
+        "answers": "Which city or town contains the point. Cities and towns together cover every part of New York with no gaps and no overlaps.",
+        "boundary": [
+          {
+            "label": "New York State Civil Boundaries, the combined cities and towns layer published by NYS Information Technology Services Geospatial Services, pre-built and shipped with the app",
+            "url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Civil_Boundaries/FeatureServer/6"
+          }
+        ],
+        "people": "No roster is joined. New York has 62 cities and 933 towns and no statewide roster of their officials has been found; naming some and not others would read as a claim about the rest.",
+        "applies": "All of New York State. Inside New York City this layer says New York, because the city is one row; the borough layer is the finer answer there."
+      }
+    },
+    {
+      "id": "village",
+      "label": "Village",
+      "group": "geography",
+      "area_rank": 5,
+      "rank_note": "532 villages, nested inside towns rather than beside them, so a point can be in both a village and its town",
+      "source": {
+        "answers": "Which village, if any, contains the point. A village is a government inside one or more towns, so a village address is also a town address.",
+        "boundary": [
+          {
+            "label": "New York State Civil Boundaries, the villages layer published by NYS Information Technology Services Geospatial Services, pre-built and shipped with the app",
+            "url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Civil_Boundaries/FeatureServer/7"
+          }
+        ],
+        "people": "No roster is joined, for the same reason as the city and town layer.",
+        "applies": "All of New York State."
+      }
+    },
+{
       "id": "borough",
       "label": "Borough / County",
       "group": "geography",
-      "area_rank": 1,
+      "area_rank": 6,
       "rank_note": "5 counties — largest",
       "rank_comment": [
         "borough / judicial-district / BP / DA are the same 5 county polygons —",
@@ -159,24 +231,24 @@
       "id": "judicial-district",
       "label": "NY Supreme Court Judicial District",
       "group": "political",
-      "area_rank": 2,
+      "area_rank": 1,
       "source": {
-        "answers": "Which New York Supreme Court judicial district covers this address.",
+        "answers": "Which of New York's thirteen Supreme Court judicial districts covers this address, and which counties make it up.",
         "boundary": [
           {
-            "label": "The five boroughs relabelled to their judicial districts (1, 2, 11, 12, 13), from the Census Bureau's TIGERweb State_County service — no live source publishes these directly",
-            "url": "https://tigerweb.geo.census.gov"
+            "label": "Computed from New York Judiciary Law section 140, which defines the thirteen judicial districts as unions of whole counties, dissolved from the state's own county boundaries",
+            "url": "https://newyork.public.law/laws/n.y._judiciary_law_section_140"
           }
         ],
         "people": "No roster is joined; the card links the court system rather than naming justices from an unverifiable list.",
-        "applies": "New York City."
+        "applies": "All of New York State."
       }
     },
     {
       "id": "borough-president",
       "label": "Borough President",
       "group": "political",
-      "area_rank": 3,
+      "area_rank": 7,
       "source": {
         "answers": "Which Borough President's office covers this address.",
         "boundary": [
@@ -193,7 +265,7 @@
       "id": "district-attorney",
       "label": "District Attorney",
       "group": "political",
-      "area_rank": 4,
+      "area_rank": 8,
       "source": {
         "answers": "Which District Attorney's office covers this address.",
         "boundary": [
@@ -210,25 +282,25 @@
       "id": "congress",
       "label": "U.S. House District",
       "group": "political",
-      "area_rank": 5,
+      "area_rank": 9,
       "rank_note": "~13 in-city U.S. House districts",
       "source": {
         "answers": "Which U.S. House district covers this address, and who represents it.",
         "boundary": [
           {
-            "label": "Congressional districts from the Census Bureau's TIGERweb Legislative service, clipped to the city and shipped with the app",
+            "label": "Congressional districts from the Census Bureau's TIGERweb Legislative service, statewide and shipped with the app",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer"
           }
         ],
         "people": "Members come from the unitedstates/congress-legislators dataset, refreshed weekly and reviewed before it ships.",
-        "applies": "New York City."
+        "applies": "All of New York State. The shipped file carries all 26 districts, not a city clip."
       }
     },
     {
       "id": "municipal-court",
       "label": "Civil Court (Municipal Court) District",
       "group": "political",
-      "area_rank": 6,
+      "area_rank": 10,
       "rank_note": "28 Civil Court districts",
       "source": {
         "answers": "Which Civil (Municipal) Court district covers this address.",
@@ -246,25 +318,25 @@
       "id": "state-senate",
       "label": "NY State Senate District",
       "group": "political",
-      "area_rank": 7,
+      "area_rank": 11,
       "rank_note": "~26 in-city",
       "source": {
         "answers": "Which New York State Senate district covers this address, and who holds the seat.",
         "boundary": [
           {
-            "label": "State Senate districts from the Census Bureau's TIGERweb Legislative service, clipped to the city and shipped with the app",
+            "label": "State Senate districts from the Census Bureau's TIGERweb Legislative service, statewide and shipped with the app",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer"
           }
         ],
         "people": "Senators come from the NY Senate's Open Legislation API, refreshed weekly and reviewed before they ship; district offices are enriched from OpenStates where it publishes them.",
-        "applies": "New York City."
+        "applies": "All of New York State. The shipped file carries all 63 districts, not a city clip."
       }
     },
     {
       "id": "school-district",
       "label": "Community School District",
       "group": "schools",
-      "area_rank": 8,
+      "area_rank": 12,
       "rank_note": "32 community school districts",
       "source": {
         "answers": "Which community school district this address is in.",
@@ -282,7 +354,7 @@
       "id": "cec",
       "label": "Community Education Council",
       "group": "schools",
-      "area_rank": 9,
+      "area_rank": 13,
       "rank_note": "same 32, drawn just after school-district",
       "source": {
         "answers": "Which Community Education Council serves this address.",
@@ -300,7 +372,7 @@
       "id": "fire-battalion",
       "label": "FDNY Battalion",
       "group": "safety",
-      "area_rank": 10,
+      "area_rank": 14,
       "rank_note": "49 FDNY battalions",
       "source": {
         "answers": "Which FDNY battalion covers this address.",
@@ -319,7 +391,7 @@
       "guide": { "href": "council-district.html", "text": "What Council district am I in?" },
       "label": "City Council District",
       "group": "political",
-      "area_rank": 11,
+      "area_rank": 15,
       "rank_note": "51 City Council districts",
       "source": {
         "answers": "Which City Council district covers this address, and who represents it.",
@@ -338,7 +410,7 @@
       "guide": { "href": "community-board.html", "text": "What community board am I in?" },
       "label": "Community District / Board",
       "group": "political",
-      "area_rank": 12,
+      "area_rank": 16,
       "rank_note": "59 community districts",
       "source": {
         "answers": "Which community district covers this address, and which community board advises on it.",
@@ -356,7 +428,7 @@
       "id": "election-district",
       "label": "Election District",
       "group": "political",
-      "area_rank": 13,
+      "area_rank": 17,
       "rank_comment": [
         "election-district (~4,200) sits just BEFORE its parent Assembly so the",
         "Assembly outline frames its fills (same rule as police-sector below)"
@@ -377,25 +449,25 @@
       "id": "state-assembly",
       "label": "NY State Assembly District",
       "group": "political",
-      "area_rank": 14,
+      "area_rank": 18,
       "rank_note": "~65 in-city",
       "source": {
         "answers": "Which New York State Assembly district covers this address, and who holds the seat.",
         "boundary": [
           {
-            "label": "State Assembly districts from the Census Bureau's TIGERweb Legislative service, clipped to the city and shipped with the app",
+            "label": "State Assembly districts from the Census Bureau's TIGERweb Legislative service, statewide and shipped with the app",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer"
           }
         ],
         "people": "Assemblymembers come from the NY Senate's Open Legislation API, refreshed weekly and reviewed before they ship.",
-        "applies": "New York City."
+        "applies": "All of New York State. The shipped file carries all 150 districts, not a city clip."
       }
     },
     {
       "id": "police-sector",
       "label": "NYPD Sector",
       "group": "safety",
-      "area_rank": 15,
+      "area_rank": 19,
       "rank_note": "303 sectors — just before its parent precinct",
       "source": {
         "answers": "Which NYPD sector — the patrol area inside a precinct — covers this address.",
@@ -413,7 +485,7 @@
       "id": "police-precinct",
       "label": "NYPD Precinct",
       "group": "safety",
-      "area_rank": 16,
+      "area_rank": 20,
       "rank_note": "78 NYPD precincts",
       "source": {
         "answers": "Which NYPD precinct covers this address, and who commands it.",
@@ -431,7 +503,7 @@
       "id": "zip-code",
       "label": "ZIP Code (MODZCTA)",
       "group": "geography",
-      "area_rank": 17,
+      "area_rank": 22,
       "rank_note": "~178 MODZCTA",
       "source": {
         "answers": "Which Modified ZIP Code Tabulation Area contains this address.",
@@ -445,11 +517,29 @@
         "applies": "New York City."
       }
     },
+      {
+        "id": "nys-zip-code",
+        "label": "ZIP Code",
+        "group": "geography",
+        "area_rank": 21,
+        "rank_note": "ZIP Code Tabulation Areas statewide; stands down inside New York City, where the city's own MODZCTA layer answers",
+        "source": {
+          "answers": "The Census Bureau's ZIP Code Tabulation Area covering this point, anywhere in New York State outside New York City.",
+          "boundary": [
+            {
+              "label": "ZIP Code Tabulation Areas from U.S. Census TIGERweb, fetched live by a bounding envelope because the layer carries no state field",
+              "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
+            }
+          ],
+          "people": "No roster is joined, and none is missing: nobody is elected from a ZIP code. The card states what the boundary is — the Census Bureau's areal approximation of USPS delivery routes, not the postal boundary itself.",
+          "applies": "New York State outside New York City. Inside the city the MODZCTA layer answers, because the two are different tilings of the same ground and both would answer one point."
+        }
+      },
     {
       "id": "neighborhood",
       "label": "Neighborhood (NTA)",
       "group": "geography",
-      "area_rank": 18,
+      "area_rank": 23,
       "rank_note": "~262 NTAs",
       "source": {
         "answers": "Which Neighborhood Tabulation Area contains this address.",
@@ -467,7 +557,7 @@
       "id": "hs-zone",
       "label": "High School Zone",
       "group": "schools",
-      "area_rank": 19,
+      "area_rank": 24,
       "rank_note": "high-school zones (sparse)",
       "source": {
         "answers": "Which zoned high school serves this address, where one does.",
@@ -485,7 +575,7 @@
       "id": "ms-zone",
       "label": "Middle School Zone",
       "group": "schools",
-      "area_rank": 20,
+      "area_rank": 25,
       "rank_note": "middle-school zones (partial)",
       "source": {
         "answers": "Which zoned middle school serves this address, where one does.",
@@ -503,7 +593,7 @@
       "id": "es-zone",
       "label": "Elementary School Zone",
       "group": "schools",
-      "area_rank": 21,
+      "area_rank": 26,
       "rank_note": "elementary zones — smallest polygon layer",
       "source": {
         "answers": "Which zoned elementary school serves this address.",
@@ -521,25 +611,25 @@
       "id": "school-site",
       "label": "School",
       "group": "schools",
-      "area_rank": 22,
+      "area_rank": 27,
       "rank_note": "point marker — always topmost",
       "source": {
-        "answers": "The nearest school sites to this point, by straight-line distance.",
+        "answers": "The nearest school sites to this point, by straight-line distance, anywhere in New York State.",
         "boundary": [
           {
-            "label": "School locations from the NYS Education Department's ArcGIS service, public and private",
+            "label": "School locations from the NYS Education Department's ArcGIS service, public, private and charter, statewide",
             "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k"
           }
         ],
         "people": "No roster is joined; the card names the school and its address.",
-        "applies": "New York City."
+        "applies": "All of New York State."
       }
     },
     {
       "id": "police-station",
       "label": "Police Station",
       "group": "safety",
-      "area_rank": 23,
+      "area_rank": 28,
       "rank_note": "point marker — always topmost",
       "source": {
         "answers": "The nearest police stations to this point, by straight-line distance.",
@@ -555,74 +645,96 @@
     },
     {
       "id": "fire-station",
-      "label": "Firehouse",
+      "label": "Fire Station",
       "group": "safety",
-      "area_rank": 24,
+      "area_rank": 29,
       "rank_note": "point marker — always topmost",
       "source": {
-        "answers": "The nearest firehouses to this point, by straight-line distance.",
+        "answers": "The nearest fire stations to this point, by straight-line distance, anywhere in New York State.",
         "boundary": [
           {
-            "label": "Firehouse locations from NYC Open Data (hc8x-tcnd)",
-            "url": "https://data.cityofnewyork.us/d/hc8x-tcnd"
+            "label": "Fire station locations from the NYS Information Technology Services ArcGIS organisation, statewide, including the volunteer companies the city's own dataset omits",
+            "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/FireStations/FeatureServer/0"
           }
         ],
         "people": "No roster is joined. The city's firehouse dataset carries no phone number, which is a gap at the source rather than something the card withholds.",
-        "applies": "New York City."
+        "applies": "All of New York State."
       }
     },
     {
       "id": "post-office",
       "label": "Post Office",
       "group": "geography",
-      "area_rank": 25,
+      "area_rank": 30,
       "rank_note": "point marker — always topmost",
       "source": {
-        "answers": "The nearest post offices to this point, by straight-line distance.",
+        "answers": "The nearest post offices to this point, by straight-line distance, anywhere in New York State.",
         "boundary": [
           {
-            "label": "USGS National Map structures service, queried within the metro bounding box",
+            "label": "USGS National Map structures service, filtered to New York on the layer's own state field rather than by a bounding box",
             "url": "https://www.usgs.gov/programs/national-geospatial-program/national-map"
           }
         ],
         "people": "No roster is joined; the card names the facility and its address.",
-        "applies": "New York City."
+        "applies": "All of New York State."
       }
     },
     {
       "id": "library",
       "label": "Library",
       "group": "geography",
-      "area_rank": 26,
+      "area_rank": 31,
       "rank_note": "point marker — always topmost",
       "source": {
         "answers": "The nearest public libraries to this point, by straight-line distance.",
         "boundary": [
-          {
-            "label": "Library locations from NYC Open Data (feuq-due4)",
-            "url": "https://data.cityofnewyork.us/d/feuq-due4"
-          }
-        ],
-        "people": "No roster is joined. The dataset carries no phone number, which is a gap at the source rather than something the card withholds.",
-        "applies": "New York City."
+        {
+          "label": "Branch locations for the three New York City systems (NYPL, BPL, QPL) from NYC Open Data (feuq-due4)",
+          "url": "https://data.cityofnewyork.us/d/feuq-due4"
+        },
+        {
+          "label": "Public library locations for the rest of the state from NYSED, via the NYS Information Technology Services map server; its three New York City rows are private special collections and are deliberately dropped so the city dataset answers alone there",
+          "url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Schools/FeatureServer/15"
+        }
+      ],
+        "people": "No roster is joined. A library has no elected officeholder, and neither publisher carries a telephone number, which is a gap at the source rather than something the card withholds.",
+        "applies": "All of New York State."
       }
     },
     {
-      "id": "early-voting",
-      "label": "Early Voting Site",
+        "id": "early-voting",
+        "label": "Early Voting Site",
+        "group": "political",
+        "area_rank": 32,
+        "rank_note": "point marker — always topmost",
+        "source": {
+          "answers": "The nearest early-voting sites to this point for the current election, anywhere in New York State. It does not say which one is yours.",
+          "boundary": [
+            {
+              "label": "Early-voting sites from the NYS Information Technology Services ArcGIS organisation, sourced from the state and city Boards of Elections and published as two tables — layer 1 for New York City and layer 0 for the other 57 counties — merged behind one toggle here",
+              "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer"
+            }
+          ],
+          "people": "No roster is joined: a voting site has no officeholder. Which site a voter may use is set by their registration rather than by distance, and hours change per election, so the card links the state Board of Elections' own lookup.",
+          "applies": "All of New York State."
+        }
+      },
+    {
+      "id": "polling-place",
+      "label": "Election Day Poll Site",
       "group": "political",
-      "area_rank": 27,
+      "area_rank": 33,
       "rank_note": "point marker — always topmost",
       "source": {
-        "answers": "The nearest early-voting sites to this point for the current election.",
+        "answers": "The Election Day poll sites nearest this point, by straight-line distance, anywhere in New York State. It does not say which one is yours.",
         "boundary": [
           {
-            "label": "Early-voting sites from NYS ITS Geospatial Services' ArcGIS service, sourced from the state and city Boards of Elections",
-            "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k"
+            "label": "Election Day poll sites from the NYS Information Technology Services ArcGIS organisation, published as two tables — layer 3 for New York City and layer 2 for the other 57 counties — and merged behind one toggle here",
+            "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer"
           }
         ],
-        "people": "No roster: a voting site has no officeholder. Hours change per election — confirm with the Board of Elections.",
-        "applies": "New York City."
+        "people": "No roster is joined. A poll site has no officeholder. Every New York voter is assigned one poll site by their election district, and nothing published joins an election district to a poll site, so the card links the state Board of Elections' own lookup instead of naming a site as yours.",
+        "applies": "All of New York State."
       }
     }
   ],
@@ -636,10 +748,27 @@
   ],
   "negative_point": { "lat": 40.72, "lng": -74.04, "note": "Hudson River, New Jersey waters — outside every anchor geometry (the East River is inside the county-derived judicial districts, so mid-river points there are only borough-negative)" },
   "coverage_key": {
-    "outside": "Outside New York City"
+    "outside": "Outside New York",
+    "region": {
+      "edge": "New York",
+      "label": "Statewide layers only",
+      "sub": "City districts and county legislatures not sourced here yet"
+    }
   },
   "data_files": {
     "geometry": [
+      {
+        "file": "metro-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "The dissolved outline of the five boroughs, the coverage wash's FULL band (ny/scripts/build_metro_outline.py, anchor-verified inside and outside). Three rings, not one: the borough cluster plus Liberty Island and Ellis Island, both New York County land detached by water."
+      },
+      {
+        "file": "ny-state-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "New York State, the coverage wash's REGION band, marking where the three statewide legislative layers answer although the city layers do not. Same builder, same simplification tolerance as the coverage ring so the two do not open slivers where they trace the same line."
+      },
       { "file": "borough-boundaries.json", "min_features": 5, "max_features": 5 },
       {
         "file": "bronx-county-outline.json",
@@ -676,7 +805,11 @@
         "note": "Staten Island containment outline (ny/scripts/build_ny_borough_outlines.py, sliced from borough-boundaries.json) — lets a Data gaps record name this borough so the panel leads with the gaps that apply here.",
         "dynamic_reference": true
       },
-      { "file": "judicial-districts.json", "min_features": 5, "max_features": 5 },
+      { "file": "judicial-districts.json", "min_features": 13, "max_features": 13, "note": "All thirteen New York judicial districts, dissolved from the state county fabric on the Judiciary Law section 140 table by ny/scripts/build_ny_judicial_districts.py. Replaces the five-borough crosswalk file." },
+      { "file": "ny-counties.json", "min_features": 62, "max_features": 62, "note": "New York's 62 counties from the state's own Civil Boundaries service, carrying the NYC flag that marks the five counties with no county government (ny/scripts/build_ny_counties.py). Shoreline-clipped, so it disagrees with the water-inclusive coverage ring at the coast by design." },
+      { "file": "ny-school-districts.json", "min_features": 716, "max_features": 716, "note": "716 school districts statewide, dissolved from the state's 936 polygon rows on SED_CODE_1 (ny/scripts/build_ny_school_districts.py). The 936 against the Census Bureau's 680 reconciles exactly: 33 New York City rows, 220 multipart and duplicate-code rows, 3 special-act districts." },
+      { "file": "ny-cities-towns.json", "min_features": 995, "max_features": 995, "note": "New York's 62 cities and 933 towns, which together tile the state (ny/scripts/build_ny_municipalities.py)." },
+      { "file": "ny-villages.json", "min_features": 532, "max_features": 532, "note": "New York's 532 villages, which sit INSIDE towns rather than beside them, so this is a nested layer and not part of the tiling." },
       { "file": "municipal-court-districts.json", "min_features": 28, "max_features": 28 },
       { "file": "congress-districts.json", "min_features": 26, "max_features": 26, "note": "26 NY U.S. House districts; pre-built from TIGERweb by scripts/build_legislative_boundaries.py (R2-2)" },
       { "file": "state-senate-districts.json", "min_features": 63, "max_features": 63, "note": "63 NY State Senate districts; pre-built from TIGERweb layer 1" },
@@ -698,7 +831,7 @@
     ]
   },
   "sw": {
-    "cache_name": "nyc-district-explorer-shell-v15",
+    "cache_name": "nyc-district-explorer-shell-v16",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",

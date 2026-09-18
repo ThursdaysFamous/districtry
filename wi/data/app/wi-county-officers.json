@@ -13,8 +13,7 @@
    "title": "County Administrator",
    "appointed": true,
    "url": "https://www.co.adams.wi.us/departments/county-administrator",
-   "phone": "(608) 339-4579",
-   "checked": true
+   "phone": "(608) 339-4579"
   },
   "treasurer": {
    "name": "Kara Dolezal",
@@ -24,23 +23,20 @@
    "name": "Miranda Christensen",
    "note": "Appointed to fill a vacancy",
    "url": "https://www.co.adams.wi.us/departments/clerk-of-circuit-court",
-   "phone": "(608) 339-4208",
-   "checked": true
+   "phone": "(608) 339-4208"
   },
   "registerOfDeeds": {
    "name": "Julie Schnolis",
    "party": "Republican",
    "url": "https://www.co.adams.wi.us/departments/register-of-deeds",
    "phone": "(608) 339-4206",
-   "email": "adamsrod@co.adams.wi.us",
-   "checked": true
+   "email": "adamsrod@co.adams.wi.us"
   },
   "districtAttorney": {
    "name": "Rebecca Maki-Wallander",
    "party": "Independent",
    "url": "https://www.co.adams.wi.us/departments/district-attorney",
-   "phone": "(608) 339-4217",
-   "checked": true
+   "phone": "(608) 339-4217"
   },
   "sheriff": {
    "name": "Brent R York",
@@ -50,8 +46,7 @@
    "name": "Bethany Spaw",
    "title": "Medical Examiner (appointed)",
    "url": "https://www.co.adams.wi.us/departments/medical-examiner",
-   "phone": "608) 339-3304",
-   "checked": true
+   "phone": "608) 339-3304"
   },
   "contactChecked": 5,
   "contactReadOn": "2026-09-17",
@@ -72,24 +67,21 @@
    "name": "Dan Grady",
    "title": "County Administrator",
    "appointed": true,
-   "url": "https://ashlandcountywi.gov/administration",
-   "checked": true
+   "url": "https://ashlandcountywi.gov/administration"
   },
   "treasurer": {
    "name": "Tracey Hoglund",
    "party": "Democrat",
    "url": "https://ashlandcountywi.gov/treasurer",
    "phone": "715-682-7012",
-   "email": "tracey.hoglund@ashlandcountywi.gov",
-   "checked": true
+   "email": "tracey.hoglund@ashlandcountywi.gov"
   },
   "clerkOfCircuitCourt": {
    "name": "Lexi Pierce",
    "party": "Independent",
    "url": "https://ashlandcountywi.gov/circuit_court",
    "phone": "715-682-7016",
-   "email": "lexi.pierce@wicourts.gov",
-   "checked": true
+   "email": "lexi.pierce@wicourts.gov"
   },
   "registerOfDeeds": {
    "name": "Julie Gleeson",
@@ -99,8 +91,7 @@
    "name": "Blake Gross",
    "party": "Democrat",
    "url": "https://ashlandcountywi.gov/district_attorney",
-   "phone": "715-682-7019",
-   "checked": true
+   "phone": "715-682-7019"
   },
   "sheriff": {
    "name": "Brian Zupke",
@@ -211,49 +202,42 @@
    "name": "Troy J Streckenbach",
    "title": "County Executive",
    "url": "https://www.browncountywi.gov/government/county-executive/",
-   "phone": "920-448-4001",
-   "checked": true
+   "phone": "920-448-4001"
   },
   "treasurer": {
    "name": "Raymond Suennen",
    "party": "Republican",
    "url": "https://www.browncountywi.gov/departments/treasurer/general-information/",
-   "phone": "920-448-4074",
-   "checked": true
+   "phone": "920-448-4074"
   },
   "clerkOfCircuitCourt": {
    "name": "John A Vander Leest",
    "party": "Republican",
    "url": "https://www.browncountywi.gov/departments/clerk-of-circuit-court/general-information/",
-   "phone": "(920) 448-4155",
-   "checked": true
+   "phone": "(920) 448-4155"
   },
   "registerOfDeeds": {
    "name": "Cheryl A Berken",
    "party": "Republican",
    "url": "https://www.browncountywi.gov/departments/register-of-deeds/general-information/",
-   "phone": "920-448-4470",
-   "checked": true
+   "phone": "920-448-4470"
   },
   "districtAttorney": {
    "name": "David L Lasee",
    "party": "Republican",
    "url": "https://www.browncountywi.gov/government/district-attorney/",
-   "phone": "(920) 448-4190",
-   "checked": true
+   "phone": "(920) 448-4190"
   },
   "sheriff": {
    "name": "Todd J Delain",
    "party": "Republican",
-   "url": "https://www.browncountywi.gov/government/sheriffs-office/",
-   "checked": true
+   "url": "https://www.browncountywi.gov/government/sheriffs-office/"
   },
   "coroner": {
    "name": "Dr Elizabeth Douglas",
    "title": "Medical Examiner (appointed)",
    "url": "https://www.browncountywi.gov/departments/medical-examiner/",
-   "phone": "920-448-4185",
-   "checked": true
+   "phone": "920-448-4185"
   },
   "contactChecked": 7,
   "contactReadOn": "2026-09-17",
@@ -274,8 +258,7 @@
    "title": "Administrative Coordinator",
    "appointed": true,
    "url": "https://www.buffalocountywi.gov/departments/county-administration/",
-   "phone": "608-685-6234",
-   "checked": true
+   "phone": "608-685-6234"
   },
   "treasurer": {
    "name": "Tina Anibas",
@@ -285,15 +268,13 @@
    "name": "Julie Vollmer",
    "party": "Republican",
    "url": "https://www.buffalocountywi.gov/departments/clerk-of-courts/",
-   "phone": "(608) 685-6212",
-   "checked": true
+   "phone": "(608) 685-6212"
   },
   "registerOfDeeds": {
    "name": "Leslie Sendelbach",
    "party": "Republican",
    "url": "https://www.buffalocountywi.gov/departments/register-of-deeds/",
-   "phone": "(608) 685-6230",
-   "checked": true
+   "phone": "(608) 685-6230"
   },
   "districtAttorney": {
    "name": "Tom Bilski",
@@ -308,8 +289,7 @@
    "party": "Republican",
    "title": "Coroner",
    "url": "https://www.buffalocountywi.gov/departments/coroner/",
-   "phone": "(608) 685-4433",
-   "checked": true
+   "phone": "(608) 685-4433"
   },
   "contactChecked": 4,
   "contactReadOn": "2026-09-17",
@@ -327,14 +307,12 @@
    "name": "Nathan Ehalt",
    "title": "County Administrator",
    "appointed": true,
-   "url": "https://burnettcountywi.gov/directory.aspx",
-   "checked": true
+   "url": "https://burnettcountywi.gov/directory.aspx"
   },
   "treasurer": {
    "name": "Bobbi Jo Wickman",
    "party": "Independent",
-   "url": "https://burnettcountywi.gov/directory.aspx",
-   "checked": true
+   "url": "https://burnettcountywi.gov/directory.aspx"
   },
   "clerkOfCircuitCourt": {
    "name": "Jacqueline O Baasch",
@@ -343,26 +321,22 @@
   "registerOfDeeds": {
    "name": "Jeanne Taylor",
    "party": "Independent",
-   "url": "https://burnettcountywi.gov/directory.aspx",
-   "checked": true
+   "url": "https://burnettcountywi.gov/directory.aspx"
   },
   "districtAttorney": {
    "name": "Kevin Schmidt",
    "party": "Independent",
-   "url": "https://burnettcountywi.gov/directory.aspx",
-   "checked": true
+   "url": "https://burnettcountywi.gov/directory.aspx"
   },
   "sheriff": {
    "name": "Tracy Finch",
    "party": "Independent",
-   "url": "https://burnettcountywi.gov/directory.aspx",
-   "checked": true
+   "url": "https://burnettcountywi.gov/directory.aspx"
   },
   "coroner": {
    "name": "Jalene Scovell",
    "title": "Medical Examiner (appointed)",
-   "url": "https://burnettcountywi.gov/directory.aspx",
-   "checked": true
+   "url": "https://burnettcountywi.gov/directory.aspx"
   },
   "contactChecked": 6,
   "contactReadOn": "2026-09-17",
@@ -382,44 +356,37 @@
    "name": "Todd Romenesko",
    "title": "County Administrator",
    "appointed": true,
-   "url": "https://calumetcounty.org/Directory",
-   "checked": true
+   "url": "https://calumetcounty.org/Directory"
   },
   "treasurer": {
    "name": "Mike Schlaak",
    "party": "Republican",
-   "url": "https://calumetcounty.org/Directory",
-   "checked": true
+   "url": "https://calumetcounty.org/Directory"
   },
   "clerkOfCircuitCourt": {
    "name": "Kayla Bembenek",
    "source": "county-page",
-   "url": "https://calumetcounty.org/Directory",
-   "checked": true
+   "url": "https://calumetcounty.org/Directory"
   },
   "registerOfDeeds": {
    "name": "Tami Alten",
    "party": "Republican",
-   "url": "https://calumetcounty.org/Directory",
-   "checked": true
+   "url": "https://calumetcounty.org/Directory"
   },
   "districtAttorney": {
    "name": "Nathan F. Haberman",
    "party": "Republican",
-   "url": "https://calumetcounty.org/Directory",
-   "checked": true
+   "url": "https://calumetcounty.org/Directory"
   },
   "sheriff": {
    "name": "Brett Bowe",
    "party": "Republican",
-   "url": "https://calumetcounty.org/Directory",
-   "checked": true
+   "url": "https://calumetcounty.org/Directory"
   },
   "coroner": {
    "name": "Mike Klaeser",
    "title": "Medical Examiner (appointed)",
-   "url": "https://calumetcounty.org/Directory",
-   "checked": true
+   "url": "https://calumetcounty.org/Directory"
   },
   "contactChecked": 7,
   "contactReadOn": "2026-09-17",
@@ -439,45 +406,38 @@
    "name": "Andy Albarado",
    "title": "County Administrator",
    "appointed": true,
-   "url": "https://chippewacountywi.gov/Directory",
-   "checked": true
+   "url": "https://chippewacountywi.gov/Directory"
   },
   "treasurer": {
    "name": "Patricia Schimmel",
    "party": "Democrat",
-   "url": "https://chippewacountywi.gov/Directory",
-   "checked": true
+   "url": "https://chippewacountywi.gov/Directory"
   },
   "clerkOfCircuitCourt": {
    "name": "Nathan A. Liedl",
    "party": "Republican",
-   "url": "https://chippewacountywi.gov/Directory",
-   "checked": true
+   "url": "https://chippewacountywi.gov/Directory"
   },
   "registerOfDeeds": {
    "name": "Melanie K. McManus",
    "party": "Democrat",
-   "url": "https://chippewacountywi.gov/Directory",
-   "checked": true
+   "url": "https://chippewacountywi.gov/Directory"
   },
   "districtAttorney": {
    "name": "Wade C. Newell",
    "party": "Republican",
-   "url": "https://chippewacountywi.gov/Directory",
-   "checked": true
+   "url": "https://chippewacountywi.gov/Directory"
   },
   "sheriff": {
    "name": "Travis Hakes",
    "party": "Republican",
-   "url": "https://chippewacountywi.gov/Directory",
-   "checked": true
+   "url": "https://chippewacountywi.gov/Directory"
   },
   "coroner": {
    "name": "Ronald Patten",
    "party": "Democrat",
    "title": "Coroner",
-   "url": "https://chippewacountywi.gov/Directory",
-   "checked": true
+   "url": "https://chippewacountywi.gov/Directory"
   },
   "contactChecked": 7,
   "contactReadOn": "2026-09-17",
@@ -503,20 +463,17 @@
    "party": "Democrat",
    "url": "https://www.clarkcountywi.gov/clerk-of-courts",
    "phone": "800-362-9082",
-   "email": "heather.bravener@wicourts.gov",
-   "checked": true
+   "email": "heather.bravener@wicourts.gov"
   },
   "registerOfDeeds": {
    "name": "Mary Denk",
    "party": "Republican",
-   "url": "https://www.clarkcountywi.gov/register-of-deeds",
-   "checked": true
+   "url": "https://www.clarkcountywi.gov/register-of-deeds"
   },
   "districtAttorney": {
    "name": "Melissa Inlow",
    "party": "Democrat",
-   "url": "https://www.clarkcountywi.gov/da",
-   "checked": true
+   "url": "https://www.clarkcountywi.gov/da"
   },
   "sheriff": {
    "name": "Kerry Kirn",
@@ -526,8 +483,7 @@
    "name": "Clarissa Rochester",
    "party": "Independent",
    "title": "Coroner",
-   "url": "https://www.clarkcountywi.gov/corner",
-   "checked": true
+   "url": "https://www.clarkcountywi.gov/corner"
   },
   "contactChecked": 4,
   "contactReadOn": "2026-09-17",
@@ -560,8 +516,7 @@
    "name": "Christine Clark",
    "party": "Republican",
    "url": "https://www.co.columbia.wi.us/ColumbiaCounty/registerofdeeds/VitalRecords/tabid/375/Default.aspx",
-   "phone": "(608) 742-9677",
-   "checked": true
+   "phone": "(608) 742-9677"
   },
   "districtAttorney": {
    "name": "Brenda Yaskal",
@@ -571,8 +526,7 @@
    "name": "Roger Brandner",
    "party": "Republican",
    "url": "https://www.co.columbia.wi.us/columbiacounty/sheriff/SheriffsOfficeHomePage/tabid/551/Default.aspx",
-   "phone": "(608) 742-4166",
-   "checked": true
+   "phone": "(608) 742-4166"
   },
   "coroner": {
    "name": "Pamela Stock",
@@ -632,8 +586,7 @@
   "executive": {
    "name": "Melissa Agard",
    "title": "County Executive",
-   "url": "https://exec.danecounty.gov/",
-   "checked": true
+   "url": "https://exec.danecounty.gov/"
   },
   "treasurer": {
    "name": "Adam Gallagher",
@@ -648,20 +601,17 @@
    "party": "Democrat",
    "url": "https://rod.danecounty.gov/",
    "phone": "(608) 267-8814",
-   "email": "chlebowski@danecounty.gov",
-   "checked": true
+   "email": "chlebowski@danecounty.gov"
   },
   "districtAttorney": {
    "name": "Ismael R Ozanne",
    "party": "Democrat",
-   "url": "https://da.danecounty.gov/",
-   "checked": true
+   "url": "https://da.danecounty.gov/"
   },
   "sheriff": {
    "name": "Kalvin Barrett",
    "party": "Democrat",
-   "url": "https://danesheriff.com/",
-   "checked": true
+   "url": "https://danesheriff.com/"
   },
   "coroner": {
    "name": "Cristina Figueroa Soto",
@@ -767,32 +717,27 @@
   "treasurer": {
    "name": "Amy Tyson",
    "party": "Democrat",
-   "url": "https://douglascountywi.gov/Directory",
-   "checked": true
+   "url": "https://douglascountywi.gov/Directory"
   },
   "clerkOfCircuitCourt": {
    "name": "Michele Wick",
    "party": "Democrat",
-   "url": "https://douglascountywi.gov/Directory",
-   "checked": true
+   "url": "https://douglascountywi.gov/Directory"
   },
   "registerOfDeeds": {
    "name": "Darcie J. Burbul",
    "party": "Democrat",
-   "url": "https://douglascountywi.gov/Directory",
-   "checked": true
+   "url": "https://douglascountywi.gov/Directory"
   },
   "districtAttorney": {
    "name": "Mark Fruehauf",
    "party": "Democrat",
-   "url": "https://douglascountywi.gov/Directory",
-   "checked": true
+   "url": "https://douglascountywi.gov/Directory"
   },
   "sheriff": {
    "name": "Matt Izzard",
    "party": "Democrat",
-   "url": "https://douglascountywi.gov/Directory",
-   "checked": true
+   "url": "https://douglascountywi.gov/Directory"
   },
   "coroner": {
    "name": "Sheila Keup",
@@ -823,16 +768,14 @@
    "party": "Republican",
    "url": "https://dunncountywi.gov/treasurer",
    "phone": "(715) 232-3789",
-   "email": "trs@dunncountywi.gov",
-   "checked": true
+   "email": "trs@dunncountywi.gov"
   },
   "clerkOfCircuitCourt": {
    "name": "Katie Schalley",
    "party": "Republican",
    "url": "https://dunncountywi.gov/clerkofcourts",
    "phone": "(715) 232-2611",
-   "email": "dunn.clerk@wicourts.gov",
-   "checked": true
+   "email": "dunn.clerk@wicourts.gov"
   },
   "registerOfDeeds": {
    "name": "Heather Kuhn",
@@ -875,37 +818,32 @@
    "party": "Democrat",
    "url": "https://eauclairecounty.gov/departments/treasurer/index.php",
    "phone": "715-839-4805",
-   "email": "treasurer@eauclairecounty.gov",
-   "checked": true
+   "email": "treasurer@eauclairecounty.gov"
   },
   "clerkOfCircuitCourt": {
    "name": "Cherie Norberg",
    "note": "Appointed to fill a vacancy",
    "url": "https://eauclairecounty.gov/departments/clerk_of_courts/index.php",
    "phone": "715-839-4816",
-   "email": "eauclaire.info@wicourts.gov",
-   "checked": true
+   "email": "eauclaire.info@wicourts.gov"
   },
   "registerOfDeeds": {
    "name": "Tina Pommier",
    "party": "Democrat",
    "url": "https://eauclairecounty.gov/departments/register_of_deeds/index.php",
    "phone": "715-839-4745",
-   "email": "rod@eauclairecounty.gov",
-   "checked": true
+   "email": "rod@eauclairecounty.gov"
   },
   "districtAttorney": {
    "name": "Peter J Rindal",
    "party": "Democrat",
    "url": "https://eauclairecounty.gov/departments/district_attorney/index.php",
-   "phone": "715-839-4828",
-   "checked": true
+   "phone": "715-839-4828"
   },
   "sheriff": {
    "name": "Dave Riewestahl",
    "party": "Democrat",
-   "url": "https://eauclairecounty.gov/departments/sheriff/index.php",
-   "checked": true
+   "url": "https://eauclairecounty.gov/departments/sheriff/index.php"
   },
   "coroner": {
    "name": "Marcie Rosas",
@@ -934,23 +872,20 @@
    "name": "Donna Liebergen",
    "party": "Republican",
    "url": "https://www.florencecountywi.com/departments/treasurer/",
-   "phone": "715-528-3204",
-   "checked": true
+   "phone": "715-528-3204"
   },
   "clerkOfCircuitCourt": {
    "name": "Jessica McCoy",
    "party": "Republican",
    "url": "https://www.florencecountywi.com/departments/clerk-of-courts/",
-   "phone": "877-392-2455",
-   "checked": true
+   "phone": "877-392-2455"
   },
   "registerOfDeeds": {
    "name": "Carol Demko",
    "party": "Republican",
    "url": "https://www.florencecountywi.com/departments/register-of-deeds/",
    "phone": "715-528-4252",
-   "email": "sjerue@florencecountywi.gov",
-   "checked": true
+   "email": "sjerue@florencecountywi.gov"
   },
   "districtAttorney": {
    "name": "Michael Scholke",
@@ -960,16 +895,14 @@
    "name": "Teresa Chrisman",
    "note": "Appointed to fill a vacancy",
    "url": "https://www.florencecountywi.com/departments/sheriff/",
-   "phone": "715-528-3346",
-   "checked": true
+   "phone": "715-528-3346"
   },
   "coroner": {
    "name": "Jeff Rickaby",
    "party": "Republican",
    "title": "Coroner",
    "url": "https://www.florencecountywi.com/departments/coroner/",
-   "phone": "715.528.3346",
-   "checked": true
+   "phone": "715.528.3346"
   },
   "contactChecked": 5,
   "contactReadOn": "2026-09-17",
@@ -1067,46 +1000,40 @@
    "appointed": true,
    "url": "https://www.co.grant.wi.gov/county-administrator/",
    "phone": "(608) 723-6071",
-   "email": "ndreckman@co.grant.wi.gov",
-   "checked": true
+   "email": "ndreckman@co.grant.wi.gov"
   },
   "treasurer": {
    "name": "Carrie Eastlick",
    "party": "Republican",
    "url": "https://www.co.grant.wi.gov/county-treasurer/",
    "phone": "(608) 723-2604",
-   "email": "treasurer@co.grant.wi.gov",
-   "checked": true
+   "email": "treasurer@co.grant.wi.gov"
   },
   "clerkOfCircuitCourt": {
    "name": "Tina McDonald",
    "party": "Republican",
    "url": "https://www.co.grant.wi.gov/clerk-of-court/",
    "phone": "(608) 723-2752",
-   "email": "Tina.McDonald@wicourts.gov",
-   "checked": true
+   "email": "Tina.McDonald@wicourts.gov"
   },
   "registerOfDeeds": {
    "name": "Andrea Noethe",
    "party": "Republican",
    "url": "https://www.co.grant.wi.gov/register-of-deeds/",
    "phone": "(608) 723-2727",
-   "email": "anoethe@co.grant.wi.gov",
-   "checked": true
+   "email": "anoethe@co.grant.wi.gov"
   },
   "districtAttorney": {
    "name": "Ryan Kieler",
    "party": "Republican",
    "url": "https://www.co.grant.wi.gov/district-attorney/",
    "phone": "(608) 723-4237",
-   "email": "ryan.kieler@da.wi.gov",
-   "checked": true
+   "email": "ryan.kieler@da.wi.gov"
   },
   "sheriff": {
    "name": "Craig Reukauf",
    "note": "Appointed to fill a vacancy",
-   "url": "https://www.co.grant.wi.gov/grant-county-sheriffs-office/",
-   "checked": true
+   "url": "https://www.co.grant.wi.gov/grant-county-sheriffs-office/"
   },
   "coroner": {
    "name": "Phyllis Fuerstenberg",
@@ -1133,39 +1060,33 @@
   "treasurer": {
    "name": "Jayne Butts",
    "party": "Republican",
-   "url": "https://greencountywi.org/directory.aspx",
-   "checked": true
+   "url": "https://greencountywi.org/directory.aspx"
   },
   "clerkOfCircuitCourt": {
    "name": "Melanie Leutenegger",
    "party": "Democrat",
-   "url": "https://greencountywi.org/directory.aspx",
-   "checked": true
+   "url": "https://greencountywi.org/directory.aspx"
   },
   "registerOfDeeds": {
    "name": "Deanna Miller",
    "party": "Republican",
-   "url": "https://greencountywi.org/directory.aspx",
-   "checked": true
+   "url": "https://greencountywi.org/directory.aspx"
   },
   "districtAttorney": {
    "name": "Craig Nolen",
    "party": "Republican",
-   "url": "https://greencountywi.org/directory.aspx",
-   "checked": true
+   "url": "https://greencountywi.org/directory.aspx"
   },
   "sheriff": {
    "name": "Cody Kanable",
    "note": "Appointed to fill a vacancy",
-   "url": "https://greencountywi.org/directory.aspx",
-   "checked": true
+   "url": "https://greencountywi.org/directory.aspx"
   },
   "coroner": {
    "name": "Monica Hack",
    "party": "Democrat",
    "title": "Coroner",
-   "url": "https://greencountywi.org/directory.aspx",
-   "checked": true
+   "url": "https://greencountywi.org/directory.aspx"
   },
   "contactChecked": 6,
   "contactReadOn": "2026-09-17",
@@ -1191,38 +1112,33 @@
    "party": "Republican",
    "url": "https://www.greenlakecountywi.gov/officials_type/elected-officials/",
    "phone": "920-294-4018",
-   "email": "treasurer@greenlakecountywi.gov",
-   "checked": true
+   "email": "treasurer@greenlakecountywi.gov"
   },
   "clerkOfCircuitCourt": {
    "name": "Amy S Thoma",
    "party": "Republican",
    "url": "https://www.greenlakecountywi.gov/officials_type/elected-officials/",
-   "phone": "920-294-4142",
-   "checked": true
+   "phone": "920-294-4142"
   },
   "registerOfDeeds": {
    "name": "Renee Thiem-Korth",
    "party": "Republican",
    "url": "https://www.greenlakecountywi.gov/officials_type/elected-officials/",
    "phone": "920-294-4021",
-   "email": "rod@greenlakecountywi.gov",
-   "checked": true
+   "email": "rod@greenlakecountywi.gov"
   },
   "districtAttorney": {
    "name": "Gerise Laspisa",
    "party": "Republican",
    "url": "https://www.greenlakecountywi.gov/officials_type/elected-officials/",
-   "phone": "920-294-4046",
-   "checked": true
+   "phone": "920-294-4046"
   },
   "sheriff": {
    "name": "Mark Podoll",
    "party": "Republican",
    "url": "https://www.greenlakecountywi.gov/officials_type/elected-officials/",
    "phone": "920-294-4134",
-   "email": "sheriff@greenlakecountywi.gov",
-   "checked": true
+   "email": "sheriff@greenlakecountywi.gov"
   },
   "coroner": {
    "name": "Thomas Wastart II",
@@ -1286,45 +1202,38 @@
    "source": "county-page",
    "title": "County Manager",
    "appointed": true,
-   "url": "https://www.co.iron.wi.gov/Directory",
-   "checked": true
+   "url": "https://www.co.iron.wi.gov/Directory"
   },
   "treasurer": {
    "name": "Clara Maki",
    "party": "Democrat",
-   "url": "https://www.co.iron.wi.gov/Directory",
-   "checked": true
+   "url": "https://www.co.iron.wi.gov/Directory"
   },
   "clerkOfCircuitCourt": {
    "name": "Karen Ransanici",
    "party": "Democrat",
-   "url": "https://www.co.iron.wi.gov/Directory",
-   "checked": true
+   "url": "https://www.co.iron.wi.gov/Directory"
   },
   "registerOfDeeds": {
    "name": "Candice Krall",
    "source": "county-page",
-   "url": "https://www.co.iron.wi.gov/Directory",
-   "checked": true
+   "url": "https://www.co.iron.wi.gov/Directory"
   },
   "districtAttorney": {
    "name": "Matthew Tingstad",
    "party": "Republican",
-   "url": "https://www.co.iron.wi.gov/Directory",
-   "checked": true
+   "url": "https://www.co.iron.wi.gov/Directory"
   },
   "sheriff": {
    "name": "Paul Samardich",
    "party": "Republican",
-   "url": "https://www.co.iron.wi.gov/Directory",
-   "checked": true
+   "url": "https://www.co.iron.wi.gov/Directory"
   },
   "coroner": {
    "name": "Robert Barnabo",
    "party": "Republican",
    "title": "Coroner",
-   "url": "https://www.co.iron.wi.gov/Directory",
-   "checked": true
+   "url": "https://www.co.iron.wi.gov/Directory"
   },
   "contactChecked": 7,
   "contactReadOn": "2026-09-17",
@@ -1382,36 +1291,31 @@
    "title": "County Administrator",
    "appointed": true,
    "url": "https://www.jeffersoncountywi.gov/administration/index.php",
-   "phone": "920-674-7101",
-   "checked": true
+   "phone": "920-674-7101"
   },
   "treasurer": {
    "name": "Kelly M Stade",
    "party": "Republican",
    "url": "https://www.jeffersoncountywi.gov/county_treasurer/index.php",
-   "phone": "920-674-7250",
-   "checked": true
+   "phone": "920-674-7250"
   },
   "clerkOfCircuitCourt": {
    "name": "Cindy Hamre Incha",
    "party": "Republican",
    "url": "https://www.jeffersoncountywi.gov/courts___legal_services/clerk_of_courts/index.php",
-   "phone": "920-674-7156",
-   "checked": true
+   "phone": "920-674-7156"
   },
   "registerOfDeeds": {
    "name": "Staci M Hoffman",
    "party": "Republican",
    "url": "https://www.jeffersoncountywi.gov/register_of_deeds/index.php",
-   "phone": "920-674-7235",
-   "checked": true
+   "phone": "920-674-7235"
   },
   "districtAttorney": {
    "name": "Monica J Hall",
    "party": "Democrat",
    "url": "https://www.jeffersoncountywi.gov/courts___legal_services/district_attorney/index.php",
-   "phone": "920-674-7220",
-   "checked": true
+   "phone": "920-674-7220"
   },
   "sheriff": {
    "name": "Travis Maze",
@@ -1421,8 +1325,7 @@
    "name": "Nichol Donovan",
    "title": "Medical Examiner (appointed)",
    "url": "https://www.jeffersoncountywi.gov/medical_examiner/index.php",
-   "phone": "920-674-7119",
-   "checked": true
+   "phone": "920-674-7119"
   },
   "contactChecked": 6,
   "contactReadOn": "2026-09-17",
@@ -1448,8 +1351,7 @@
    "party": "Republican",
    "url": "https://www.co.juneau.wi.gov/departments/clerk_of_court/index.php",
    "phone": "608-847-9356",
-   "email": "juneau.county@wicourts.gov",
-   "checked": true
+   "email": "juneau.county@wicourts.gov"
   },
   "registerOfDeeds": {
    "name": "Stacy Havill",
@@ -1460,15 +1362,13 @@
    "party": "Republican",
    "url": "https://www.co.juneau.wi.gov/departments/district_attorney/staff_directory.php",
    "phone": "(608) 847-9314",
-   "email": "Rebecca.Hutchins@da.wi.gov",
-   "checked": true
+   "email": "Rebecca.Hutchins@da.wi.gov"
   },
   "sheriff": {
    "name": "Andrew Zobal",
    "party": "Republican",
    "url": "https://www.co.juneau.wi.gov/departments/sheriff_s_office/index.php",
-   "phone": "608-847-5649",
-   "checked": true
+   "phone": "608-847-5649"
   },
   "coroner": {
    "name": "Myron Oestreich",
@@ -1491,44 +1391,37 @@
   "executive": {
    "name": "Samantha Kerkman",
    "title": "County Executive",
-   "url": "https://www.kenoshacountywi.gov/Directory",
-   "checked": true
+   "url": "https://www.kenoshacountywi.gov/Directory"
   },
   "treasurer": {
    "name": "Teri Jacobson",
    "party": "Democrat",
-   "url": "https://www.kenoshacountywi.gov/Directory",
-   "checked": true
+   "url": "https://www.kenoshacountywi.gov/Directory"
   },
   "clerkOfCircuitCourt": {
    "name": "Rebecca Matoska-Mentink",
    "party": "Democrat",
-   "url": "https://www.kenoshacountywi.gov/Directory",
-   "checked": true
+   "url": "https://www.kenoshacountywi.gov/Directory"
   },
   "registerOfDeeds": {
    "name": "Jennifer Mack",
    "party": "Democrat",
-   "url": "https://www.kenoshacountywi.gov/Directory",
-   "checked": true
+   "url": "https://www.kenoshacountywi.gov/Directory"
   },
   "districtAttorney": {
    "name": "Xavier Solis",
    "party": "Republican",
-   "url": "https://www.kenoshacountywi.gov/Directory",
-   "checked": true
+   "url": "https://www.kenoshacountywi.gov/Directory"
   },
   "sheriff": {
    "name": "David W. Zoerner",
    "party": "Republican",
-   "url": "https://www.kenoshacountywi.gov/Directory",
-   "checked": true
+   "url": "https://www.kenoshacountywi.gov/Directory"
   },
   "coroner": {
    "name": "Patrice Hall",
    "title": "Medical Examiner (appointed)",
-   "url": "https://www.kenoshacountywi.gov/Directory",
-   "checked": true
+   "url": "https://www.kenoshacountywi.gov/Directory"
   },
   "contactChecked": 7,
   "contactReadOn": "2026-09-17",
@@ -1677,43 +1570,37 @@
    "party": "Democrat",
    "url": "https://www.co.langlade.wi.us/departments/county-treasurer/",
    "phone": "(608) 238-3448",
-   "email": "wrh@wisconsinruralhousing.org",
-   "checked": true
+   "email": "wrh@wisconsinruralhousing.org"
   },
   "clerkOfCircuitCourt": {
    "name": "Tina M Wild",
    "party": "Republican",
    "url": "https://www.co.langlade.wi.us/departments/clerk-of-circuit-court/",
-   "phone": "715-627-6215",
-   "checked": true
+   "phone": "715-627-6215"
   },
   "registerOfDeeds": {
    "name": "Brenda Sue Mayr",
    "party": "Republican",
    "url": "https://www.co.langlade.wi.us/departments/register-of-deeds/",
-   "phone": "715-627-6209",
-   "checked": true
+   "phone": "715-627-6209"
   },
   "districtAttorney": {
    "name": "Kelly Hays",
    "party": "Independent",
    "url": "https://www.co.langlade.wi.us/departments/district-attorney/",
-   "phone": "(715) 627-6269",
-   "checked": true
+   "phone": "(715) 627-6269"
   },
   "sheriff": {
    "name": "Mark Westen",
    "party": "Republican",
    "url": "https://www.co.langlade.wi.us/departments/sheriffs-office/",
-   "phone": "715-627-6411",
-   "checked": true
+   "phone": "715-627-6411"
   },
   "coroner": {
    "name": "Larry Shadick",
    "party": "Republican",
    "title": "Coroner",
-   "url": "https://www.co.langlade.wi.us/departments/coroner/",
-   "checked": true
+   "url": "https://www.co.langlade.wi.us/departments/coroner/"
   },
   "contactChecked": 6,
   "contactReadOn": "2026-09-17",
@@ -1783,30 +1670,26 @@
    "name": "Kristi L Tuesburg",
    "party": "Republican",
    "url": "https://manitowoccountywi.gov/departments/register-of-deeds/",
-   "phone": "920-683-4012",
-   "checked": true
+   "phone": "920-683-4012"
   },
   "districtAttorney": {
    "name": "Jacalyn LaBre",
    "party": "Republican",
    "url": "https://manitowoccountywi.gov/departments/district-attorney/",
-   "phone": "920-683-4070",
-   "checked": true
+   "phone": "920-683-4070"
   },
   "sheriff": {
    "name": "Daniel Hartwig",
    "party": "Republican",
    "url": "https://manitowoccountywi.gov/departments/sheriff/",
-   "phone": "920-683-4200",
-   "checked": true
+   "phone": "920-683-4200"
   },
   "coroner": {
    "name": "Curtis Green",
    "party": "Democrat",
    "title": "Coroner",
    "url": "https://manitowoccountywi.gov/departments/coroner/",
-   "phone": "920-683-4008",
-   "checked": true
+   "phone": "920-683-4008"
   },
   "contactChecked": 4,
   "contactReadOn": "2026-09-17",
@@ -1868,43 +1751,37 @@
    "party": "Republican",
    "url": "https://www.marinettecountywi.gov/departments/treasurer/",
    "phone": "715-732-7430",
-   "email": "liberty.timmer@marinettecountywi.gov",
-   "checked": true
+   "email": "liberty.timmer@marinettecountywi.gov"
   },
   "clerkOfCircuitCourt": {
    "name": "Carrie Brazeau",
    "party": "Republican",
    "url": "https://www.marinettecountywi.gov/departments/clerk-of-circuit-court/",
-   "phone": "715-732-7450",
-   "checked": true
+   "phone": "715-732-7450"
   },
   "registerOfDeeds": {
    "name": "Renee Miller",
    "party": "Republican",
    "url": "https://www.marinettecountywi.gov/departments/register-of-deeds/",
-   "phone": "715-732-7551",
-   "checked": true
+   "phone": "715-732-7551"
   },
   "districtAttorney": {
    "name": "DeShea D Morrow",
    "party": "Republican",
    "url": "https://www.marinettecountywi.gov/departments/district-attorney/",
-   "phone": "715-732-7490",
-   "checked": true
+   "phone": "715-732-7490"
   },
   "sheriff": {
    "name": "Randy Miller",
    "party": "Republican",
    "url": "https://www.marinettecountywi.gov/departments/office-of-sheriff/",
-   "phone": "888-868-4631",
-   "checked": true
+   "phone": "888-868-4631"
   },
   "coroner": {
    "name": "Kalynn Van Ermen",
    "title": "Medical Examiner (appointed)",
    "url": "https://www.marinettecountywi.gov/departments/medical-examiner/",
-   "phone": "715-732-7421",
-   "checked": true
+   "phone": "715-732-7421"
   },
   "contactChecked": 6,
   "contactReadOn": "2026-09-17",
@@ -1923,8 +1800,7 @@
    "title": "County Administrator",
    "appointed": true,
    "url": "https://www.marquettecountywi.gov/administration/",
-   "email": "rbarger@marquettecountywi.gov",
-   "checked": true
+   "email": "rbarger@marquettecountywi.gov"
   },
   "treasurer": {
    "name": "Jody Myers",
@@ -1935,16 +1811,14 @@
    "party": "Republican",
    "url": "https://www.marquettecountywi.gov/clerk-of-courts/",
    "phone": "608-297-3005",
-   "email": "Shari.Rudolph@wicourts.gov",
-   "checked": true
+   "email": "Shari.Rudolph@wicourts.gov"
   },
   "registerOfDeeds": {
    "name": "Nicole Ziebell",
    "party": "Republican",
    "url": "https://www.marquettecountywi.gov/register-of-deeds/",
    "phone": "(608) 297-3025",
-   "email": "nziebell@marquettecountywi.gov",
-   "checked": true
+   "email": "nziebell@marquettecountywi.gov"
   },
   "districtAttorney": {
    "name": "Clifford Burdon",
@@ -1955,16 +1829,14 @@
    "party": "Republican",
    "url": "https://www.marquettecountywi.gov/sheriff/",
    "phone": "608-297-2115",
-   "email": "swarren@marquettecountywi.gov",
-   "checked": true
+   "email": "swarren@marquettecountywi.gov"
   },
   "coroner": {
    "name": "Amanda Thoma",
    "title": "Medical Examiner (appointed)",
    "url": "https://www.marquettecountywi.gov/medical-examiner/",
    "phone": "(920) 787-7685",
-   "email": "athoma@marquettecountywi.gov",
-   "checked": true
+   "email": "athoma@marquettecountywi.gov"
   },
   "contactChecked": 5,
   "contactReadOn": "2026-09-17",
@@ -2102,26 +1974,22 @@
    "name": "Richard Heath",
    "title": "County Administrator",
    "appointed": true,
-   "url": "https://www.ocontocountywi.gov/Directory",
-   "checked": true
+   "url": "https://www.ocontocountywi.gov/Directory"
   },
   "treasurer": {
    "name": "Nikki Tolzman",
    "source": "county-page",
-   "url": "https://www.ocontocountywi.gov/Directory",
-   "checked": true
+   "url": "https://www.ocontocountywi.gov/Directory"
   },
   "clerkOfCircuitCourt": {
    "name": "Trisha L. LeFebre",
    "party": "Republican",
-   "url": "https://www.ocontocountywi.gov/Directory",
-   "checked": true
+   "url": "https://www.ocontocountywi.gov/Directory"
   },
   "registerOfDeeds": {
    "name": "Laurie Wusterbarth",
    "party": "Republican",
-   "url": "https://www.ocontocountywi.gov/Directory",
-   "checked": true
+   "url": "https://www.ocontocountywi.gov/Directory"
   },
   "districtAttorney": {
    "name": "Hannah N Schuchart",
@@ -2130,14 +1998,12 @@
   "sheriff": {
    "name": "Todd Skarban",
    "party": "Republican",
-   "url": "https://www.ocontocountywi.gov/Directory",
-   "checked": true
+   "url": "https://www.ocontocountywi.gov/Directory"
   },
   "coroner": {
    "name": "Dr. Elizabeth Douglas",
    "title": "Medical Examiner (appointed)",
-   "url": "https://www.ocontocountywi.gov/Directory",
-   "checked": true
+   "url": "https://www.ocontocountywi.gov/Directory"
   },
   "contactChecked": 6,
   "contactReadOn": "2026-09-17",
@@ -2163,8 +2029,7 @@
    "party": "Republican",
    "url": "https://www.oneidacountywi.gov/departments/tr/",
    "phone": "715-369-6137",
-   "email": "octreas@oneidacountywi.gov",
-   "checked": true
+   "email": "octreas@oneidacountywi.gov"
   },
   "clerkOfCircuitCourt": {
    "name": "Brenda Behrle",
@@ -2174,23 +2039,20 @@
    "name": "Kyle Franson",
    "party": "Republican",
    "url": "https://www.oneidacountywi.gov/departments/rd/",
-   "phone": "715-369-6150",
-   "checked": true
+   "phone": "715-369-6150"
   },
   "districtAttorney": {
    "name": "Jillian Pfeifer",
    "party": "Democrat",
    "url": "https://www.oneidacountywi.gov/departments/da/",
-   "phone": "715-369-6133",
-   "checked": true
+   "phone": "715-369-6133"
   },
   "sheriff": {
    "name": "Grady Hartman",
    "party": "Republican",
    "url": "https://www.oneidacountywi.gov/departments/sd/",
    "phone": "715-361-5100",
-   "email": "ghartman@oneidacountywi.gov",
-   "checked": true
+   "email": "ghartman@oneidacountywi.gov"
   },
   "coroner": null,
   "contactChecked": 4,
@@ -2251,38 +2113,32 @@
    "name": "Jason Dzwinel",
    "title": "County Administrator",
    "appointed": true,
-   "url": "https://ozaukeecounty.gov/Directory",
-   "checked": true
+   "url": "https://ozaukeecounty.gov/Directory"
   },
   "treasurer": {
    "name": "Sandra Tretow",
    "note": "Appointed to fill a vacancy",
-   "url": "https://ozaukeecounty.gov/Directory",
-   "checked": true
+   "url": "https://ozaukeecounty.gov/Directory"
   },
   "clerkOfCircuitCourt": {
    "name": "Connie Mueller",
    "party": "Republican",
-   "url": "https://ozaukeecounty.gov/Directory",
-   "checked": true
+   "url": "https://ozaukeecounty.gov/Directory"
   },
   "registerOfDeeds": {
    "name": "Jennifer J. Laurin",
    "party": "Republican",
-   "url": "https://ozaukeecounty.gov/Directory",
-   "checked": true
+   "url": "https://ozaukeecounty.gov/Directory"
   },
   "districtAttorney": {
    "name": "Benjamin Lindsay",
    "party": "Republican",
-   "url": "https://ozaukeecounty.gov/Directory",
-   "checked": true
+   "url": "https://ozaukeecounty.gov/Directory"
   },
   "sheriff": {
    "name": "Christy Knowles",
    "party": "Republican",
-   "url": "https://ozaukeecounty.gov/Directory",
-   "checked": true
+   "url": "https://ozaukeecounty.gov/Directory"
   },
   "coroner": {
    "name": "Whitney Feiertag",
@@ -2312,8 +2168,7 @@
    "name": "Patricia Scharr",
    "party": "Republican",
    "url": "https://www.co.pepin.wi.us/treasurer",
-   "phone": "715-672-8850",
-   "checked": true
+   "phone": "715-672-8850"
   },
   "clerkOfCircuitCourt": {
    "name": "Audrey Lieffring",
@@ -2331,16 +2186,14 @@
    "name": "Joel D Wener",
    "party": "Republican",
    "url": "https://www.co.pepin.wi.us/sheriff",
-   "phone": "888 944 8463",
-   "checked": true
+   "phone": "888 944 8463"
   },
   "coroner": {
    "name": "Jeff Doughty",
    "note": "Appointed to fill a vacancy",
    "title": "Coroner",
    "url": "https://www.co.pepin.wi.us/coroner",
-   "phone": "715-672-7242",
-   "checked": true
+   "phone": "715-672-7242"
   },
   "contactChecked": 3,
   "contactReadOn": "2026-08-31",
@@ -2408,34 +2261,29 @@
    "party": "Democrat",
    "url": "https://www.polkcountywi.gov/government/elected_officials/treasurer/index.php",
    "phone": "715-485-8633",
-   "email": "amanda.nissen@polkcountywi.gov",
-   "checked": true
+   "email": "amanda.nissen@polkcountywi.gov"
   },
   "clerkOfCircuitCourt": {
    "name": "Sharon Jorgenson",
    "party": "Republican",
-   "url": "https://www.polkcountywi.gov/government/elected_officials/clerk_of_courts/index.php",
-   "checked": true
+   "url": "https://www.polkcountywi.gov/government/elected_officials/clerk_of_courts/index.php"
   },
   "registerOfDeeds": {
    "name": "Sally Spanel",
    "party": "Democrat",
    "url": "https://www.polkcountywi.gov/government/elected_officials/register_of_deeds/index.php",
    "phone": "715-485-9240",
-   "email": "sally.spanel@polkcountywi.gov",
-   "checked": true
+   "email": "sally.spanel@polkcountywi.gov"
   },
   "districtAttorney": {
    "name": "Jeffrey L Kemp",
    "party": "Independent",
-   "url": "https://www.polkcountywi.gov/government/divisions_and_departments/public_safety_public_works/district_attorney/index.php",
-   "checked": true
+   "url": "https://www.polkcountywi.gov/government/divisions_and_departments/public_safety_public_works/district_attorney/index.php"
   },
   "sheriff": {
    "name": "Brent A Waak",
    "party": "Republican",
-   "url": "https://www.polkcountywi.gov/government/elected_officials/sheriff/index.php",
-   "checked": true
+   "url": "https://www.polkcountywi.gov/government/elected_officials/sheriff/index.php"
   },
   "coroner": {
    "name": "Jamie Holscher",
@@ -2459,44 +2307,37 @@
    "name": "Eric Olson",
    "source": "county-page",
    "title": "County Executive",
-   "url": "https://www.co.portage.wi.gov/Directory",
-   "checked": true
+   "url": "https://www.co.portage.wi.gov/Directory"
   },
   "treasurer": {
    "name": "Pamela R. Przybelski",
    "party": "Democrat",
-   "url": "https://www.co.portage.wi.gov/Directory",
-   "checked": true
+   "url": "https://www.co.portage.wi.gov/Directory"
   },
   "clerkOfCircuitCourt": {
    "name": "Lisa M. Roth",
    "party": "Democrat",
-   "url": "https://www.co.portage.wi.gov/Directory",
-   "checked": true
+   "url": "https://www.co.portage.wi.gov/Directory"
   },
   "registerOfDeeds": {
    "name": "Cynthia A Wisinski",
    "party": "Democrat",
-   "url": "https://www.co.portage.wi.gov/Directory",
-   "checked": true
+   "url": "https://www.co.portage.wi.gov/Directory"
   },
   "districtAttorney": {
    "name": "Cass Cousins",
    "party": "Democrat",
-   "url": "https://www.co.portage.wi.gov/Directory",
-   "checked": true
+   "url": "https://www.co.portage.wi.gov/Directory"
   },
   "sheriff": {
    "name": "Mike Lukas",
    "party": "Democrat",
-   "url": "https://www.co.portage.wi.gov/Directory",
-   "checked": true
+   "url": "https://www.co.portage.wi.gov/Directory"
   },
   "coroner": {
    "name": "Heather Schultz",
    "title": "Medical Examiner (appointed)",
-   "url": "https://www.co.portage.wi.gov/Directory",
-   "checked": true
+   "url": "https://www.co.portage.wi.gov/Directory"
   },
   "contactChecked": 7,
   "contactReadOn": "2026-09-17",
@@ -2514,14 +2355,12 @@
    "name": "Nick Trimner",
    "title": "County Administrator",
    "appointed": true,
-   "url": "https://co.price.wi.us/Directory",
-   "checked": true
+   "url": "https://co.price.wi.us/Directory"
   },
   "treasurer": {
    "name": "Renée Leinfelder",
    "party": "Republican",
-   "url": "https://co.price.wi.us/Directory",
-   "checked": true
+   "url": "https://co.price.wi.us/Directory"
   },
   "clerkOfCircuitCourt": {
    "name": "Lisa Walcisak",
@@ -2530,27 +2369,23 @@
   "registerOfDeeds": {
    "name": "Sylvia Kerner",
    "party": "Democrat",
-   "url": "https://co.price.wi.us/Directory",
-   "checked": true
+   "url": "https://co.price.wi.us/Directory"
   },
   "districtAttorney": {
    "name": "Alexis N. Nash",
    "source": "county-page",
-   "url": "https://co.price.wi.us/Directory",
-   "checked": true
+   "url": "https://co.price.wi.us/Directory"
   },
   "sheriff": {
    "name": "Brian Schmidt",
    "party": "Republican",
-   "url": "https://co.price.wi.us/Directory",
-   "checked": true
+   "url": "https://co.price.wi.us/Directory"
   },
   "coroner": {
    "name": "Amy Casey",
    "source": "county-page",
    "title": "Coroner",
-   "url": "https://co.price.wi.us/Directory",
-   "checked": true
+   "url": "https://co.price.wi.us/Directory"
   },
   "contactChecked": 6,
   "contactReadOn": "2026-09-17",
@@ -2726,44 +2561,37 @@
    "name": "Ken Witt",
    "title": "County Administrator",
    "appointed": true,
-   "url": "https://sccwi.gov/Directory",
-   "checked": true
+   "url": "https://sccwi.gov/Directory"
   },
   "treasurer": {
    "name": "Denise Anderson",
    "party": "Republican",
-   "url": "https://sccwi.gov/Directory",
-   "checked": true
+   "url": "https://sccwi.gov/Directory"
   },
   "clerkOfCircuitCourt": {
    "name": "Melissa Warrick",
    "source": "county-page",
-   "url": "https://sccwi.gov/Directory",
-   "checked": true
+   "url": "https://sccwi.gov/Directory"
   },
   "registerOfDeeds": {
    "name": "Beth Pabst",
    "party": "Democrat",
-   "url": "https://sccwi.gov/Directory",
-   "checked": true
+   "url": "https://sccwi.gov/Directory"
   },
   "districtAttorney": {
    "name": "Karl Anderson",
    "party": "Republican",
-   "url": "https://sccwi.gov/Directory",
-   "checked": true
+   "url": "https://sccwi.gov/Directory"
   },
   "sheriff": {
    "name": "Scott Knudson",
    "party": "Republican",
-   "url": "https://sccwi.gov/Directory",
-   "checked": true
+   "url": "https://sccwi.gov/Directory"
   },
   "coroner": {
    "name": "Tina Forrest",
    "title": "Medical Examiner (appointed)",
-   "url": "https://sccwi.gov/Directory",
-   "checked": true
+   "url": "https://sccwi.gov/Directory"
   },
   "contactChecked": 7,
   "contactReadOn": "2026-09-17",
@@ -2781,47 +2609,40 @@
    "name": "Lisa Wilson",
    "title": "County Administrator",
    "appointed": true,
-   "url": "https://www.co.sauk.wi.us/countyadministration",
-   "checked": true
+   "url": "https://www.co.sauk.wi.us/countyadministration"
   },
   "treasurer": {
    "name": "Jessica Machovec",
    "party": "Republican",
-   "url": "https://www.co.sauk.wi.us/treasurer",
-   "checked": true
+   "url": "https://www.co.sauk.wi.us/treasurer"
   },
   "clerkOfCircuitCourt": {
    "name": "Carrie Wastlick",
    "party": "Republican",
    "url": "https://www.co.sauk.wi.us/clerkofcourts",
-   "phone": "(608) 355-3287",
-   "checked": true
+   "phone": "(608) 355-3287"
   },
   "registerOfDeeds": {
    "name": "Brent Bailey",
    "party": "Republican",
-   "url": "https://www.co.sauk.wi.us/registerofdeeds",
-   "checked": true
+   "url": "https://www.co.sauk.wi.us/registerofdeeds"
   },
   "districtAttorney": {
    "name": "Michael X Albrecht",
    "party": "Independent",
    "url": "https://www.co.sauk.wi.us/districtattorney",
-   "phone": "608-355-3280",
-   "checked": true
+   "phone": "608-355-3280"
   },
   "sheriff": {
    "name": "Chip Meister",
    "party": "Republican",
-   "url": "https://www.co.sauk.wi.us/sheriffsoffice",
-   "checked": true
+   "url": "https://www.co.sauk.wi.us/sheriffsoffice"
   },
   "coroner": {
    "name": "Greg L Hahn",
    "party": "Republican",
    "title": "Coroner",
-   "url": "https://www.co.sauk.wi.us/coroner",
-   "checked": true
+   "url": "https://www.co.sauk.wi.us/coroner"
   },
   "contactChecked": 7,
   "contactReadOn": "2026-09-17",
@@ -2845,8 +2666,7 @@
   "treasurer": {
    "name": "Brian Lehner",
    "party": "Republican",
-   "url": "https://www.sawyercounty.gov/Directory",
-   "checked": true
+   "url": "https://www.sawyercounty.gov/Directory"
   },
   "clerkOfCircuitCourt": {
    "name": "Marge Kelsey",
@@ -2855,20 +2675,17 @@
   "registerOfDeeds": {
    "name": "Rachel Thompson",
    "party": "Republican",
-   "url": "https://www.sawyercounty.gov/Directory",
-   "checked": true
+   "url": "https://www.sawyercounty.gov/Directory"
   },
   "districtAttorney": {
    "name": "Bruce R. Poquette",
    "party": "Republican",
-   "url": "https://www.sawyercounty.gov/Directory",
-   "checked": true
+   "url": "https://www.sawyercounty.gov/Directory"
   },
   "sheriff": {
    "name": "Doug Mrotek",
    "party": "Republican",
-   "url": "https://www.sawyercounty.gov/Directory",
-   "checked": true
+   "url": "https://www.sawyercounty.gov/Directory"
   },
   "coroner": {
    "name": "John Froemel",
@@ -2937,36 +2754,31 @@
    "name": "Laura Henning-Lorenz",
    "party": "Democrat",
    "url": "https://www.sheboygancounty.com/government/elected-officials",
-   "phone": "920-459-3015",
-   "checked": true
+   "phone": "920-459-3015"
   },
   "clerkOfCircuitCourt": {
    "name": "Christine Koenig",
    "party": "Republican",
    "url": "https://www.sheboygancounty.com/government/elected-officials",
-   "phone": "920-459-3068",
-   "checked": true
+   "phone": "920-459-3068"
   },
   "registerOfDeeds": {
    "name": "Ellen Schleicher",
    "party": "Democrat",
    "url": "https://www.sheboygancounty.com/government/elected-officials",
-   "phone": "920-459-3023",
-   "checked": true
+   "phone": "920-459-3023"
   },
   "districtAttorney": {
    "name": "Joel Urmanski",
    "party": "Republican",
    "url": "https://www.sheboygancounty.com/government/elected-officials",
-   "phone": "920-459-3040",
-   "checked": true
+   "phone": "920-459-3040"
   },
   "sheriff": {
    "name": "Matt Spence",
    "party": "Republican",
    "url": "https://www.sheboygancounty.com/government/elected-officials",
-   "phone": "920-459-3111",
-   "checked": true
+   "phone": "920-459-3111"
   },
   "coroner": {
    "name": "Desarae Rohde",
@@ -3034,27 +2846,23 @@
    "party": "Republican",
    "url": "https://co.trempealeau.wi.us/departments/administrative_departments/treasurer/index.php",
    "phone": "715-538-2311",
-   "email": "treasurer@co.trempealeau.wi.us",
-   "checked": true
+   "email": "treasurer@co.trempealeau.wi.us"
   },
   "clerkOfCircuitCourt": {
    "name": "Mary Lee",
    "party": "Republican",
-   "url": "https://co.trempealeau.wi.us/departments/administrative_departments/clerk_of_court/index.php",
-   "checked": true
+   "url": "https://co.trempealeau.wi.us/departments/administrative_departments/clerk_of_court/index.php"
   },
   "registerOfDeeds": {
    "name": "Susan Ackerman",
    "url": "https://co.trempealeau.wi.us/departments/court___legal_departments/register_of_deeds/index.php",
    "phone": "715-538-2311",
-   "email": "registerofdeeds@co.trempealeau.wi.us",
-   "checked": true
+   "email": "registerofdeeds@co.trempealeau.wi.us"
   },
   "districtAttorney": {
    "name": "John Sacia",
    "party": "Democrat",
-   "url": "https://co.trempealeau.wi.us/departments/court___legal_departments/district_attorney/index.php",
-   "checked": true
+   "url": "https://co.trempealeau.wi.us/departments/court___legal_departments/district_attorney/index.php"
   },
   "sheriff": {
    "name": "Brett Semingson",
@@ -3066,8 +2874,7 @@
    "title": "Coroner",
    "url": "https://co.trempealeau.wi.us/departments/court___legal_departments/county_coroner.php",
    "phone": "715-538-4351",
-   "email": "kindscb@co.trempealeau.wi.us",
-   "checked": true
+   "email": "kindscb@co.trempealeau.wi.us"
   },
   "contactChecked": 5,
   "contactReadOn": "2026-09-17",
@@ -3091,8 +2898,7 @@
    "party": "Republican",
    "url": "https://www.vernoncountywi.gov/departments/county_treasurer/index.php",
    "phone": "608-637-5365",
-   "email": "vcto@vernoncountywi.gov",
-   "checked": true
+   "email": "vcto@vernoncountywi.gov"
   },
   "clerkOfCircuitCourt": {
    "name": "Sheila Olson",
@@ -3103,8 +2909,7 @@
    "party": "Republican",
    "url": "https://www.vernoncountywi.gov/departments/register_of_deeds/index.php",
    "phone": "608-637-5371",
-   "email": "deeds@vernoncountywi.gov",
-   "checked": true
+   "email": "deeds@vernoncountywi.gov"
   },
   "districtAttorney": {
    "name": "Timothy Gaskell",
@@ -3115,8 +2920,7 @@
    "party": "Republican",
    "url": "https://www.vernoncountywi.gov/departments/sheriff_s_office/index.php",
    "phone": "608-637-2123",
-   "email": "vcso@vernoncountywi.gov",
-   "checked": true
+   "email": "vcso@vernoncountywi.gov"
   },
   "coroner": {
    "name": "Betty Nigh",
@@ -3124,8 +2928,7 @@
    "title": "Coroner",
    "url": "https://www.vernoncountywi.gov/departments/county_coroner/index.php",
    "phone": "608-637-2124",
-   "email": "bnigh@vernoncountywi.gov",
-   "checked": true
+   "email": "bnigh@vernoncountywi.gov"
   },
   "contactChecked": 4,
   "contactReadOn": "2026-09-17",
@@ -3181,45 +2984,38 @@
    "name": "Mark Luberda",
    "title": "County Administrator",
    "appointed": true,
-   "url": "https://co.walworth.wi.us/directory.aspx",
-   "checked": true
+   "url": "https://co.walworth.wi.us/directory.aspx"
   },
   "treasurer": {
    "name": "Valerie Etzel",
    "party": "Republican",
-   "url": "https://co.walworth.wi.us/directory.aspx",
-   "checked": true
+   "url": "https://co.walworth.wi.us/directory.aspx"
   },
   "clerkOfCircuitCourt": {
    "name": "Michele Jacobs",
    "party": "Republican",
-   "url": "https://co.walworth.wi.us/directory.aspx",
-   "checked": true
+   "url": "https://co.walworth.wi.us/directory.aspx"
   },
   "registerOfDeeds": {
    "name": "Kathy Kostock",
    "party": "Republican",
-   "url": "https://co.walworth.wi.us/directory.aspx",
-   "checked": true
+   "url": "https://co.walworth.wi.us/directory.aspx"
   },
   "districtAttorney": {
    "name": "Zeke Wiedenfeld",
    "party": "Republican",
-   "url": "https://co.walworth.wi.us/directory.aspx",
-   "checked": true
+   "url": "https://co.walworth.wi.us/directory.aspx"
   },
   "sheriff": {
    "name": "Dave Gerber",
    "party": "Republican",
-   "url": "https://co.walworth.wi.us/directory.aspx",
-   "checked": true
+   "url": "https://co.walworth.wi.us/directory.aspx"
   },
   "coroner": {
    "name": "Kimberly Rossi",
    "source": "county-page",
    "title": "Medical Examiner (appointed)",
-   "url": "https://co.walworth.wi.us/directory.aspx",
-   "checked": true
+   "url": "https://co.walworth.wi.us/directory.aspx"
   },
   "contactChecked": 7,
   "contactReadOn": "2026-09-17",
@@ -3239,16 +3035,14 @@
    "appointed": true,
    "url": "https://co.washburn.wi.us/departments/administration-personnel/",
    "phone": "(715) 468-4624",
-   "email": "adminper@co.washburn.wi.us",
-   "checked": true
+   "email": "adminper@co.washburn.wi.us"
   },
   "treasurer": {
    "name": "Nicole Tims",
    "party": "Republican",
    "url": "https://co.washburn.wi.us/departments/county-treasurer/",
    "phone": "(715) 468-4650",
-   "email": "cotreas@co.washburn.wi.us",
-   "checked": true
+   "email": "cotreas@co.washburn.wi.us"
   },
   "clerkOfCircuitCourt": {
    "name": "Shannon Anderson",
@@ -3259,15 +3053,13 @@
    "party": "Republican",
    "url": "https://co.washburn.wi.us/departments/register-of-deeds/",
    "phone": "(715) 468-4616",
-   "email": "regdeeds@co.washburn.wi.us",
-   "checked": true
+   "email": "regdeeds@co.washburn.wi.us"
   },
   "districtAttorney": {
    "name": "Aaron Marcoux",
    "party": "Independent",
    "url": "https://co.washburn.wi.us/departments/district-attorney/",
-   "phone": "(715) 468-4670",
-   "checked": true
+   "phone": "(715) 468-4670"
   },
   "sheriff": {
    "name": "Dennis Stuart",
@@ -3293,48 +3085,41 @@
   "executive": {
    "name": "Joshua Schoemann",
    "title": "County Executive",
-   "url": "https://www.washcowisco.gov/departments/county_executive",
-   "checked": true
+   "url": "https://www.washcowisco.gov/departments/county_executive"
   },
   "treasurer": {
    "name": "Scott M Henke",
    "party": "Republican",
-   "url": "https://www.washcowisco.gov/departments/county_treasurer",
-   "checked": true
+   "url": "https://www.washcowisco.gov/departments/county_treasurer"
   },
   "clerkOfCircuitCourt": {
    "name": "Sherry Coykendall",
    "party": "Republican",
    "url": "https://www.washcowisco.gov/departments/clerk_of_circuit_court",
-   "phone": "(262) 365-5133",
-   "checked": true
+   "phone": "(262) 365-5133"
   },
   "registerOfDeeds": {
    "name": "Lisa Budish",
    "party": "Republican",
-   "url": "https://www.washcowisco.gov/departments/register_of_deeds",
-   "checked": true
+   "url": "https://www.washcowisco.gov/departments/register_of_deeds"
   },
   "districtAttorney": {
    "name": "Barry Braatz",
    "party": "Republican",
    "url": "https://www.washcowisco.gov/departments/district_attorney",
-   "phone": "262-335-4311",
-   "checked": true
+   "phone": "262-335-4311"
   },
   "sheriff": {
    "name": "Martin Schulteis",
    "party": "Republican",
    "url": "https://www.washcowisco.gov/elected_officials/sheriff_s_office",
-   "phone": "262-335-4378",
-   "checked": true
+   "phone": "262-335-4378"
   },
   "coroner": {
    "name": "Debbie Stodola",
    "title": "Medical Examiner (appointed)",
    "url": "https://www.washcowisco.gov/departments/medical_examiner",
-   "phone": "414-516-4300",
-   "checked": true
+   "phone": "414-516-4300"
   },
   "contactChecked": 7,
   "contactReadOn": "2026-09-17",
@@ -3361,8 +3146,7 @@
    "name": "Jennifer Grant",
    "party": "Republican",
    "url": "https://www.waukeshacounty.gov/treasurer/",
-   "phone": "262-548-7029",
-   "checked": true
+   "phone": "262-548-7029"
   },
   "clerkOfCircuitCourt": {
    "name": "Monica Paz",
@@ -3373,22 +3157,19 @@
    "party": "Republican",
    "url": "https://www.waukeshacounty.gov/register-of-deeds/",
    "phone": "262-548-7589",
-   "email": "wclandrecords@waukeshacounty.gov",
-   "checked": true
+   "email": "wclandrecords@waukeshacounty.gov"
   },
   "districtAttorney": {
    "name": "Lesli Boese",
    "party": "Republican",
    "url": "https://www.waukeshacounty.gov/district-attorney/",
    "phone": "262-548-7076",
-   "email": "WaukDA@da.wi.gov",
-   "checked": true
+   "email": "WaukDA@da.wi.gov"
   },
   "sheriff": {
    "name": "Eric J Severson",
    "party": "Republican",
-   "url": "https://www.waukeshacounty.gov/sheriff/",
-   "checked": true
+   "url": "https://www.waukeshacounty.gov/sheriff/"
   },
   "coroner": {
    "name": "Lynda Biedrzycki",
@@ -3418,36 +3199,31 @@
    "party": "Republican",
    "url": "https://www.waupacacounty-wi.gov/departments/government_departments/county_treasurer/index.php",
    "phone": "888-576-5494",
-   "email": "mark.sether@co.waupaca.wi.us",
-   "checked": true
+   "email": "mark.sether@co.waupaca.wi.us"
   },
   "clerkOfCircuitCourt": {
    "name": "Yvette Kienert",
    "party": "Republican",
    "url": "https://www.waupacacounty-wi.gov/departments/government_departments/clerk_of_courts/clerk_of_circuit_courts.php",
-   "email": "Waupaca.Clerk@wicourts.gov",
-   "checked": true
+   "email": "Waupaca.Clerk@wicourts.gov"
   },
   "registerOfDeeds": {
    "name": "Jeremy Schoenike",
    "party": "Republican",
    "url": "https://www.waupacacounty-wi.gov/departments/register_of_deeds/index.php",
    "phone": "(715) 258-6250",
-   "email": "jeremy.schoenike@co.waupaca.wi.us",
-   "checked": true
+   "email": "jeremy.schoenike@co.waupaca.wi.us"
   },
   "districtAttorney": {
    "name": "Kat Turner",
    "note": "Appointed to fill a vacancy",
    "url": "https://www.waupacacounty-wi.gov/departments/government_departments/district_attorney/index.php",
-   "phone": "(715) 258-6444",
-   "checked": true
+   "phone": "(715) 258-6444"
   },
   "sheriff": {
    "name": "Timothy R Wilz",
    "party": "Republican",
-   "url": "https://www.waupacacounty-wi.gov/departments/sheriff_s_office/index2.php",
-   "checked": true
+   "url": "https://www.waupacacounty-wi.gov/departments/sheriff_s_office/index2.php"
   },
   "coroner": {
    "name": "Catherine Wegener",
@@ -3470,14 +3246,12 @@
    "title": "County Administrator",
    "appointed": true,
    "url": "https://www.wausharacountywi.gov/12681/administration",
-   "phone": "(920) 787-0431",
-   "checked": true
+   "phone": "(920) 787-0431"
   },
   "treasurer": {
    "name": "Jessica Jaeger",
    "party": "Republican",
-   "url": "https://www.wausharacountywi.gov/12730/treasurer",
-   "checked": true
+   "url": "https://www.wausharacountywi.gov/12730/treasurer"
   },
   "clerkOfCircuitCourt": {
    "name": "Katrina Rasmussen",
@@ -3487,28 +3261,24 @@
    "name": "Heather Schwersenska",
    "party": "Republican",
    "url": "https://www.wausharacountywi.gov/12726/register-of-deeds",
-   "phone": "(920) 787-0444",
-   "checked": true
+   "phone": "(920) 787-0444"
   },
   "districtAttorney": {
    "name": "Matthew Leusink",
    "party": "Republican",
-   "url": "https://www.wausharacountywi.gov/12718/district-attorney",
-   "checked": true
+   "url": "https://www.wausharacountywi.gov/12718/district-attorney"
   },
   "sheriff": {
    "name": "Walter Zuehlke",
    "party": "Republican",
    "url": "https://www.wausharacountywi.gov/12727/sheriffs-office",
-   "phone": "920-787-3321",
-   "checked": true
+   "phone": "920-787-3321"
   },
   "coroner": {
    "name": "Amanda Thoma",
    "title": "Medical Examiner (appointed)",
    "url": "https://www.wausharacountywi.gov/41436/medical-examiner",
-   "phone": "920-787-6612",
-   "checked": true
+   "phone": "920-787-6612"
   },
   "contactChecked": 6,
   "contactReadOn": "2026-09-17",
@@ -3527,8 +3297,7 @@
   "executive": {
    "name": "Gordon Hintz",
    "title": "County Executive",
-   "url": "https://www.winnebagocountywi.gov/directory.aspx",
-   "checked": true
+   "url": "https://www.winnebagocountywi.gov/directory.aspx"
   },
   "treasurer": {
    "name": "Amber Hoppa",
@@ -3537,26 +3306,22 @@
   "clerkOfCircuitCourt": {
    "name": "Desiree M. Bongers",
    "note": "Appointed to fill a vacancy",
-   "url": "https://www.winnebagocountywi.gov/directory.aspx",
-   "checked": true
+   "url": "https://www.winnebagocountywi.gov/directory.aspx"
   },
   "registerOfDeeds": {
    "name": "Susan Snyder",
    "note": "Appointed to fill a vacancy",
-   "url": "https://www.winnebagocountywi.gov/directory.aspx",
-   "checked": true
+   "url": "https://www.winnebagocountywi.gov/directory.aspx"
   },
   "districtAttorney": {
    "name": "Eric D. Sparr",
    "party": "Independent",
-   "url": "https://www.winnebagocountywi.gov/directory.aspx",
-   "checked": true
+   "url": "https://www.winnebagocountywi.gov/directory.aspx"
   },
   "sheriff": {
    "name": "John Matz",
    "party": "Republican",
-   "url": "https://www.winnebagocountywi.gov/directory.aspx",
-   "checked": true
+   "url": "https://www.winnebagocountywi.gov/directory.aspx"
   },
   "coroner": {
    "name": "Cheryl Brehmer",
@@ -3586,21 +3351,18 @@
    "party": "Democrat",
    "url": "https://woodcountywi.gov/Departments/Treasurer/",
    "phone": "(715) 421-8484",
-   "email": "treasurer@woodcountywi.gov",
-   "checked": true
+   "email": "treasurer@woodcountywi.gov"
   },
   "clerkOfCircuitCourt": {
    "name": "Kimberly A Stimac",
    "party": "Republican",
    "url": "https://woodcountywi.gov/Departments/Courts/",
-   "phone": "715-421-8490",
-   "checked": true
+   "phone": "715-421-8490"
   },
   "registerOfDeeds": {
    "name": "Tiffany Ringer",
    "party": "Republican",
-   "url": "https://woodcountywi.gov/Departments/ROD/",
-   "checked": true
+   "url": "https://woodcountywi.gov/Departments/ROD/"
   },
   "districtAttorney": {
    "name": "Jonathan Barnett",
@@ -3609,16 +3371,14 @@
   "sheriff": {
    "name": "Shawn Becker",
    "party": "Republican",
-   "url": "https://woodcountywi.gov/Departments/Sheriff/",
-   "checked": true
+   "url": "https://woodcountywi.gov/Departments/Sheriff/"
   },
   "coroner": {
    "name": "Dave Patton",
    "party": "Democrat",
    "title": "Coroner",
    "url": "https://woodcountywi.gov/Departments/Coroner/",
-   "phone": "715-421-8702",
-   "checked": true
+   "phone": "715-421-8702"
   },
   "contactChecked": 5,
   "contactReadOn": "2026-09-17",

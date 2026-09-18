@@ -86,6 +86,15 @@ The audit's staged title plan follows the same logic: place-first titles on `/ca
 `/ia/` and `/mi/` now, `/il/` after the migration settles, and `/ny/` last because it earns
 8 of the site's 13 clicks.
 
+**Lifted for `/ny/` on 2026-09-18 (operator decision).** The condition above is met by
+measurement: on the districtry.com property `/ny/` carried 697 impressions and 22 clicks
+between 2026-08-23 and 2026-09-15, and the five `/ny/` pages together 863 and 22, more clicks
+than any other path prefix (`data/search-performance.json`, read 2026-09-18). The lift
+permits the go-live change in `docs/NY_EXPANSION_PLAN.md` to retitle `/ny/` for New York
+State. The retitle itself waits for that change, because a title naming the state over a map
+that answers only inside the city would be a false claim. `/il/` and the two Illinois question
+pages stay held.
+
 ## What watches this now
 
 `scripts/check_legacy_redirects.py`, monthly, inside

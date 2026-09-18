@@ -1939,6 +1939,7 @@
   }
  },
  "19087": {
+  "boardPhone": "(319) 385-0760",
   "county": "Henry",
   "countyAttorneyWithheld": "the county directory names Darin Stater and the county attorney's own statewide directory names BECKY WILSON",
   "recorder": {
@@ -1953,7 +1954,22 @@
    "party": "Republican",
    "phone": "(319) 385-2712"
   },
-  "supervisorsWithheld": "the county directory lists 4, and Iowa Code 331.201 allows only 3 or 5",
+  "supervisorPlan": "PLAN 1",
+  "supervisorSeats": 3,
+  "supervisors": [
+   {
+    "name": "Steven Detrick",
+    "party": "Republican"
+   },
+   {
+    "name": "Marc Lindeen",
+    "party": "Republican"
+   },
+   {
+    "name": "Chad White",
+    "party": "Republican"
+   }
+  ],
   "treasurer": {
    "email": "ksloan@henrycountyiowa.us",
    "name": "Kellie Sloan",
@@ -2087,7 +2103,6 @@
   "sheriff": {
    "email": "rrotter@iowacosheriff.org",
    "name": "Robert Rotter",
-   "party": "Republican",
    "phone": "(319) 642-7307"
   },
   "supervisorPlan": "PLAN 1",

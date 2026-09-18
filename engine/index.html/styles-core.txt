@@ -28,7 +28,14 @@
 
     --font-display: 'Big Shoulders Display', sans-serif;
     --font-body: 'Inter', 'Inter Fallback', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+    /* The stack is the design system's, stated once in
+       districtry/tokens/districtry.tokens.css and held to it by
+       build_brand_tokens.py. The app cannot read the tokens-brand fence
+       (it carries its own --font-* names), so this is a second copy of
+       one fact and the gate is what keeps it one. It used to stop at
+       `ui-monospace, monospace` while the sub-pages' copy named no Plex
+       at all — two copies, already disagreeing. */
+    --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
     --radius: 8px;
     --focus-ring: 3px solid var(--accent-warm);

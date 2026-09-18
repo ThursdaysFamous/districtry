@@ -200,8 +200,9 @@ jobs:
           # page naming last week's members. The sitemap follows, because those
           # pages are in it and its lastmod is each file's own last commit.
           python3 scripts/build_county_pages.py
+          python3 scripts/build_about_page.py
           python3 scripts/build_sitemap.py
-          git add ia/data/app/ia-county-board-chairs.json ia/county-supervisor ia/county-supervisor.html sitemap.xml
+          git add ia/data/app/ia-county-board-chairs.json ia/county-supervisor ia/county-supervisor.html about.html sitemap.xml
           git commit -m "Update the Iowa county board chair roster from the counties' own board pages"
           git push -u origin "$branch" --force
           # Only open a PR if one isn't already open for this branch; if it is,

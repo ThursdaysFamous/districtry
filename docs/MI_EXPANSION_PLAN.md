@@ -317,7 +317,7 @@ Each opens its own refreshed plan PR with its own measured ledger when it begins
   shipped, all on 2026-09-13/15: tranche 1 six counties and 76 districts, tranche 2 five
   more (St. Clair 7, Monroe 8 of 9, Berrien 12, Jackson 9, Calhoun 7), tranche 3 five more
   (Eaton 15, Grand Traverse 9, Lapeer 7, Lenawee 8 of 9, Midland 7). **Sixteen counties,
-  165 of the 619 districts, 5,186,875 of Michigan's 10,007,596 people — 51.8%, past half
+  165 of the 619 districts, 5,200,503 of Michigan's 10,077,331 people — 51.6%, past half
   the state** — weekly and count-guarded (`mi/scripts/mi_commissioner_scraper.py` +
   `build_mi_commissioner_roster.py`, `update-mi-commissioner-roster.yml`). Eight counties
   have been tried and refused, each with a measured reason in that scraper's `PROBES`

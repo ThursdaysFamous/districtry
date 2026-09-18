@@ -34,7 +34,15 @@
     flex-wrap: wrap;
     gap: 4px 18px;
   }
-  .footer-meta strong { color: #fff; font-weight: 600; }
+  /* 500, not 600. This rule outlived the footer it was written for: the skin
+     hides `footer.site-footer` and moved the verified date into the results
+     panel, where this selector still reaches it — so it is the one .footer-meta
+     rule a reader actually meets. The app ships IBM Plex Mono at 400 and 500
+     only, so a 600 request has no face at or above it and Chromium EMBOLDENS
+     the 500 face. Measured on that date at 48px: 500 inks 6,285 pixels while
+     600 and 700 both ink 8,052 — the same number twice, which is the giveaway
+     that neither is a drawn face. 500 is the app's real mono emphasis weight. */
+  .footer-meta strong { color: #fff; font-weight: 500; }
   .footer-sources {
     margin-top: 18px;
     display: flex;

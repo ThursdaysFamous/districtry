@@ -504,7 +504,30 @@ def main():
                 rec["phone"] = c["phone"]
             if c.get("email"):
                 rec["email"] = c["email"]
-            rec["checked"] = True
+            # THE PER-RECORD FLAG IS GONE (2026-09-18) and the COUNTER STAYS.
+            # `rec["checked"] = True` shipped 240 booleans that nothing read:
+            # measured across all ten readers of wi-county-officers.json plus
+            # this builder, which wrote it here and never looked at it again.
+            # The card reads the county-level `contactChecked`, and
+            # history.html's two tiles read `contactCheckedWeekly`; both are
+            # computed from this counter and are unaffected.
+            #
+            # IT WAS WORSE THAN DEAD WEIGHT. The flag is written only on a
+            # SUCCESSFUL read, so a county whose pages did not resolve dropped
+            # it from every one of its records while the preservation path
+            # correctly kept the contacts themselves — and
+            # check_roster_retention, measuring per source, read that as the
+            # field VANISHING for that county. Any single county's failed week
+            # therefore turned a roster PR red that changed nobody (#1008,
+            # Waushara). The gate was right about what it saw; the field should
+            # not have existed for it to see.
+            #
+            # TEACHING THE GATE A PRESERVATION CASE WAS THE ALTERNATIVE AND IS
+            # WORSE. Its value is that it is builder-agnostic and needs no
+            # configuration — "the shipped file is the baseline, so a field is
+            # protected the moment it first ships, with nothing to configure".
+            # A per-builder exception there costs that property for all 385
+            # roster files in order to protect a field nothing reads.
             checked += 1
             n_contact += 1
             if carried:

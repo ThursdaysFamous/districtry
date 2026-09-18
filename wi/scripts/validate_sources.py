@@ -206,6 +206,24 @@ PROVENANCE = [
             "disappearance fails the supervisory build's provenance too."
         ),
     },
+    # THE FOUR www.wicourts.gov ROWS BELOW CARRY NO `blocked` FLAG, DELIBERATELY,
+    # and this note is here because this is where somebody would go to add one.
+    # Both weekly wicourts scrapers fail intermittently from CI, six of twelve
+    # runs, and the cause is measured: the drop is PER RUNNER EGRESS IP, not a
+    # refusal by the host. On 2026-09-16 the circuit-court job reached it in
+    # 78 ms from 172.202.78.13 and the appeals job, 36 minutes later from
+    # 4.246.135.37, never opened a socket (curl `host_ip=` empty, 20 s timeout).
+    # Both scrapers' headers carry the full reading.
+    #
+    # `blocked` is the wrong instrument for that. It is for a host that REFUSES
+    # us, where the request is how we learn the refusal still stands, so it
+    # inverts the reading: unreachable becomes OK and reachable-again becomes the
+    # WARN a human acts on. Here the host serves us perfectly well and whether
+    # THIS job reaches it is a coin toss on the runner it draws — so the flag
+    # would report "unreachable AS EXPECTED" one month and "REACHABLE again, drop
+    # the flag" the next, which is precisely the monthly noise it was introduced
+    # to end. An ordinary WARN on a failed fetch is the honest reading, and a
+    # re-run is the remedy.
     {
         "layer": "wi-circuit-court",
         "app_file": "wi-circuit-courts.json",

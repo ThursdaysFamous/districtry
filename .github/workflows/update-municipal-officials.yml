@@ -749,7 +749,8 @@ jobs:
           # touched those same files errors instead of pushing, which is right.
           git fetch --depth=1 origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add il/data/app/municipal-officials.json il/data/app/cook-library-trustees.json il/data/app/township-officials.json il/township.html il/history.html
+          python3 scripts/build_about_page.py
+          git add il/data/app/municipal-officials.json il/data/app/cook-library-trustees.json il/data/app/township-officials.json il/township.html il/history.html about.html
           git commit -m "Update municipal and township officials rosters from the county clerk directories"
           git push -u origin "$branch" --force
           # Only open a PR if one isn't already open for this branch; if it is,

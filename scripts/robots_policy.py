@@ -373,10 +373,16 @@ class RobotsGate(object):
     many workers ask at the same moment.
     """
 
-    def __init__(self, session, user_agent, timeout=30):
+    def __init__(self, session, user_agent, timeout=30, headers=None):
         self._session = session
         self._ua = user_agent
         self._timeout = timeout
+        # The caller's OWN header set, forwarded to fetch_verdict so the policy
+        # is read with the client that will crawl -- see its docstring for the
+        # five county hosts that answer a two-header read and a full one
+        # differently. Optional and additive: a caller that passes nothing
+        # keeps the two-header behaviour every existing caller has.
+        self._headers = headers
         self._cache = {}
         self._lock = threading.Lock()
 
@@ -387,7 +393,8 @@ class RobotsGate(object):
             return self._cache[root]
         with self._lock:
             if root not in self._cache:
-                self._cache[root] = fetch_verdict(root, self._ua, self._timeout, self._session)
+                self._cache[root] = fetch_verdict(root, self._ua, self._timeout,
+                                                  self._session, self._headers)
             return self._cache[root]
 
     def allows(self, url):

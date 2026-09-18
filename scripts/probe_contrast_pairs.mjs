@@ -7,8 +7,10 @@
 // that a pair with no row reads as covered, and twice now it has been:
 //
 //   traffic.html          nine selectors at 12-13px, 2.93:1 and 3.04:1 light,
-//                         4.49:1 dark. The page declares fifteen colours of its
-//                         own and the gate read only the brand token file.
+//                         4.49:1 dark. The page then declared fifteen colours
+//                         of its own and the gate read only the brand token
+//                         file; since 2026-09-18 it wears the sub-page shell
+//                         and declares three, for its chart.
 //   sources.html          the layer matrix's row-header band was
 //                         rgba(244,247,249,0.6) with no dark counterpart, which
 //                         over --panel is a light grey block under light text:

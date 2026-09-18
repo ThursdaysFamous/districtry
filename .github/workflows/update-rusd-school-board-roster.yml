@@ -84,7 +84,8 @@ jobs:
           # touched those same files errors instead of pushing, which is right.
           git fetch --depth=1 origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add wi/data/app/rusd-school-board-members.json wi/school-board.html
+          python3 scripts/build_about_page.py
+          git add wi/data/app/rusd-school-board-members.json wi/school-board.html about.html
           git commit -m "Update RUSD school board roster from the district's board page"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

@@ -31,6 +31,34 @@ committees table beneath the roster has a CHAIRMAN column, but that is the
 chair OF EACH COMMITTEE and reading it as the board's chair would be a
 fabrication. None of those ship.
 
+A 200 WITHOUT THE ROSTER IS A FAILED FETCH, NOT AN EMPTY BOARD, and that
+distinction is why this file was rewritten on 2026-09-18. The 17 September run
+came back with zero members, the builder refused, and the roster froze for a
+week under the reading that the page had been rebuilt and the parse had broken.
+Measured on the 18th: the page was unchanged, the then-current pattern read all
+seven off it, and a dispatch of the untouched workflow went green — so the
+runner had been served a body that was not the board page, at HTTP 200, where
+raise_for_status() sees nothing wrong. The scraper believed it and wrote an
+empty payload.
+
+Three things follow, and none of them is a browser string or a new engine rung.
+The transport goes through scraper_common.fetch(), the fleet's ladder, rather
+than the hand-rolled requests.get() this file used alone among its siblings.
+The ROSTER BLOCK is the positive control: the body must carry the page's own
+"Board Members" heading, and a body that does not is refetched rather than
+parsed. And a scrape that still finds nothing REFUSES, naming which case it is
+— no block means we were not served this page, a block with no member line
+means the markup really did change and this pattern needs rewriting. The
+builder's floor already stopped the bad data; what was missing was any way to
+read the cause out of the run.
+
+THE PATTERN READS THE BLOCK'S VISIBLE TEXT, not its markup. The old one
+required a literal </strong> between the district label and the name, which is
+how the page is written today and is incidental to it; scoping to the block
+first means the surrounding tags can move without costing a run, and the
+committees table below cannot contribute a false member (measured: zero
+matches outside the block).
+
 Usage:
     python3 scripts/edgar_county_board_scraper.py [-o raw.json]
 """
@@ -40,18 +68,24 @@ import html
 import json
 import re
 import sys
+import time
 
-import requests
-from scraper_common import make_fail, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import fetch, make_fail, UA_ROSTER_BOT  # noqa: E402  (shared machinery — do not fork)
 
 BOARD_URL = "https://edgarcountyillinois.com/county-board/"
 RESULTS_URL = "https://il-edgar.pollresults.net/"
 TIMEOUT = 60
 HEADERS = {"User-Agent": UA_ROSTER_BOT}
 
-# One member per line: "<strong>District #3: </strong>Andy Patrick (R)".
+# The page's own "Board Members" heading and the block under it, ending at the
+# next heading ("Committees"). This is the positive control as much as the
+# scope: a body that does not carry it is not the board page.
+BOARD_BLOCK_RE = re.compile(
+    r"<h[1-3][^>]*>\s*Board\s+Members\s*</h[1-3]>(.{0,4000}?)(?:<h[1-3]\b|\Z)",
+    re.S | re.I)
+# One member per line in the block's VISIBLE text: "District #3: Andy Patrick (R)".
 MEMBER_RE = re.compile(
-    r"District\s*#?\s*(\d+)\s*:?\s*</strong>\s*([^<(]+?)\s*\((R|D|I|G|L)\)",
+    r"District\s*#?\s*(\d+)\s*:\s*([^()<>]{2,60}?)\s*\((R|D|I|G|L)\)",
     re.I)
 # A street address would carry a number then a street word. The page prints
 # bare names today; this is the tripwire if that ever changes, because home
@@ -64,20 +98,45 @@ STREET_RE = re.compile(
 fail = make_fail("edgar-board-scraper")
 
 
-def get(url):
-    resp = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
-    resp.raise_for_status()
-    return resp.text
-
-
 def clean(fragment):
     return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", fragment))).strip()
 
 
-def scrape_members(page):
+def get(url):
+    """Through the fleet's ladder: 429/5xx retried honouring Retry-After,
+    401/403/404 raised at once. Edgar hand-rolled this until 2026-09-18."""
+    return fetch(url, HEADERS, timeout=TIMEOUT).text
+
+
+def get_board_page(attempts=3):
+    """The board page's roster block, refetched while the body lacks it.
+
+    See the module docstring: raise_for_status() cannot tell a 200 carrying the
+    board from a 200 carrying something else, and the second is what froze this
+    roster for a week. The heading is the county's own, so asking for it costs
+    nothing and answers the question the run log could not.
+    """
+    last = None
+    for attempt in range(attempts):
+        resp = fetch(BOARD_URL, HEADERS, timeout=TIMEOUT)
+        match = BOARD_BLOCK_RE.search(resp.text)
+        if match:
+            return clean(match.group(1))
+        last = "HTTP %d, %d bytes, no 'Board Members' heading" % (
+            resp.status_code, len(resp.content))
+        if attempt + 1 < attempts:
+            time.sleep(2.0 * (attempt + 1))
+    fail("%s answered %d time(s) without the board roster on it (last: %s) — "
+         "that is a body this client was not meant to get rather than a board "
+         "with no members, so nothing is parsed from it. Check what the page "
+         "serves before touching this parser." % (BOARD_URL, attempts, last))
+
+
+def scrape_members(block):
+    """[{name, district, party}] from the roster block's visible text."""
     records = []
     seen = set()
-    for match in MEMBER_RE.finditer(page):
+    for match in MEMBER_RE.finditer(block):
         district, name, party = match.group(1), clean(match.group(2)), match.group(3).upper()
         if not name or district in seen:
             continue
@@ -87,6 +146,11 @@ def scrape_members(page):
                  "rule" % name)
         seen.add(district)
         records.append({"name": name, "district": district, "party": party})
+    if not records:
+        fail("the roster block is on the page and no member line parsed from "
+             "it — the county has changed how it writes them, so rewrite "
+             "MEMBER_RE against the block rather than assuming a bad fetch. "
+             "The block reads: %r" % block[:300])
     records.sort(key=lambda r: int(r["district"]))
     return records
 
@@ -123,7 +187,7 @@ def main():
     ap.add_argument("-o", "--output", help="write raw JSON here (default: stdout)")
     args = ap.parse_args()
 
-    members = scrape_members(get(BOARD_URL))
+    members = scrape_members(get_board_page())
     composition, election = scrape_composition(get(RESULTS_URL))
     payload = {"source": BOARD_URL, "resultsUrl": RESULTS_URL,
                "election": election, "composition": composition,

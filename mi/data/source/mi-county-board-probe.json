@@ -1,0 +1,3995 @@
+{
+ "candidates_per_county": "about 61, gated on 24 known hosts",
+ "client": "districtry.com roster bot (civic data; contact via site)",
+ "counties": [
+  {
+   "board_url": "https://clinton-county.org/413/Board-of-Commissioners",
+   "county": "Clinton",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 15,
+    "district_count": 7,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "mailto": 1,
+    "names_seen": 77,
+    "near_pairs": 5,
+    "seats": 7,
+    "tel": 2,
+    "text_bytes": 3593
+   },
+   "fips": "037",
+   "host": "clinton-county.org",
+   "notes": [
+    "clintoncounty.com answers HTTP 200 in 114 bytes and never names Clinton on any of 3 fetches \u2014 not taken as the county's own site",
+    "clintoncounty.net is a CATCH-ALL \u2014 an impossible path returns 3398 bytes against the root's 3348, so a 200 here proves nothing",
+    "clinton-county.net unreachable after 3 tries (SSLError)",
+    "www.clintoncounty.com answers HTTP 200 in 114 bytes and never names Clinton on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.clintoncounty.net is a CATCH-ALL \u2014 an impossible path returns 3392 bytes against the root's 3407, so a 200 here proves nothing",
+    "www.clinton-county.net unreachable after 3 tries (SSLError)",
+    "clinton.org unreachable after 3 tries (SSLError)",
+    "clintonco.us unreachable after 3 tries (SSLError)",
+    "clintonco.net unreachable after 3 tries (SSLError)"
+   ],
+   "pop": 79128,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "clintoncounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "clintoncounty.net",
+     "why": "catch-all"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='clinton-county.net', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVe",
+     "host": "clinton-county.net",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.clintoncounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.clintoncounty.net",
+     "why": "catch-all"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.clinton-county.net', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLEO",
+     "host": "www.clinton-county.net",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='clinton.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificat",
+     "host": "clinton.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='clintonco.us', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerifica",
+     "host": "clintonco.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='clintonco.net', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerific",
+     "host": "clintonco.net",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 18,
+   "score": 115.1,
+   "seats": 7,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://vanburencountymi.gov/government/board-of-commissioners/",
+   "county": "Van Buren",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 2,
+    "district_count": 1,
+    "districts_found": [
+     5
+    ],
+    "mailto": 0,
+    "names_seen": 188,
+    "near_pairs": 1,
+    "seats": 7,
+    "tel": 1,
+    "text_bytes": 9263
+   },
+   "fips": "159",
+   "host": "vanburencountymi.gov",
+   "notes": [
+    "vanburencounty.com answers HTTP 200 in 114 bytes and never names Van Buren on any of 3 fetches \u2014 not taken as the county's own site",
+    "vanburencounty.org unreachable after 3 tries (ConnectionError)",
+    "www.vanburencounty.com answers HTTP 200 in 114 bytes and never names Van Buren on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.vanburencounty.net is a CATCH-ALL \u2014 an impossible path returns 8352 bytes against the root's 8352, so a 200 here proves nothing",
+    "www.vanburencounty.org unreachable after 3 tries (ConnectionError)",
+    "vb.org answers HTTP 200 in 84029 bytes and never names Van Buren on any of 3 fetches \u2014 not taken as the county's own site",
+    "vbgov.com unreachable after 3 tries (ConnectionError)",
+    "vangov.com answers HTTP 200 in 178360 bytes and never names Van Buren on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.vb.org answers HTTP 200 in 84029 bytes and never names Van Buren on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.vanburencountymi.gov: neither its sitemap nor its front page names a board page",
+    "vanburencounty.net: neither its sitemap nor its front page names a board page"
+   ],
+   "pop": 75587,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "vanburencounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "vanburencounty.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.vanburencounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.vanburencounty.net",
+     "why": "catch-all"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.vanburencounty.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "vb.org",
+     "why": "names-another"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "vbgov.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "vangov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.vb.org",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 18,
+   "score": 18.7,
+   "seats": 7,
+   "verdict": "not-keyable"
+  },
+  {
+   "board_url": null,
+   "county": "Shiawassee",
+   "evidence": null,
+   "fips": "155",
+   "host": null,
+   "notes": [
+    "shiawasseecounty.com answers HTTP 200 in 114 bytes and never names Shiawassee on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.shiawasseecounty.com answers HTTP 200 in 114 bytes and never names Shiawassee on any of 3 fetches \u2014 not taken as the county's own site",
+    "shiawassee.org answers HTTP 200 in 114 bytes and never names Shiawassee on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.shiawassee.org answers HTTP 200 in 114 bytes and never names Shiawassee on any of 3 fetches \u2014 not taken as the county's own site"
+   ],
+   "pop": 68094,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "shiawasseecounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.shiawasseecounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "shiawassee.org",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.shiawassee.org",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 4,
+   "score": -1,
+   "seats": 7,
+   "verdict": "no-confirmed-host"
+  },
+  {
+   "board_url": "https://co.marquette.mi.us/county_government/board_of_commissioners/index.php",
+   "county": "Marquette",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 1,
+    "distinct_near": 49,
+    "district_count": 5,
+    "districts_found": [
+     1,
+     2,
+     4,
+     5,
+     6
+    ],
+    "mailto": 3,
+    "names_seen": 291,
+    "near_pairs": 5,
+    "seats": 6,
+    "tel": 1,
+    "text_bytes": 7207
+   },
+   "fips": "103",
+   "host": "co.marquette.mi.us",
+   "notes": [
+    "marquettecounty.com answers HTTP 200 in 114 bytes and never names Marquette on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.marquettecounty.com answers HTTP 200 in 114 bytes and never names Marquette on any of 3 fetches \u2014 not taken as the county's own site",
+    "margov.com unreachable after 3 tries (ConnectionError)",
+    "www.margov.com unreachable after 3 tries (ConnectionError)",
+    "marquetteco.com answers HTTP 200 in 114 bytes and never names Marquette on any of 3 fetches \u2014 not taken as the county's own site",
+    "crawl-delay honoured: {'marquette.org': 3.0}"
+   ],
+   "pop": 65144,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "marquettecounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.marquettecounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "margov.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.margov.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "marquetteco.com",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 12,
+   "score": 99.7,
+   "seats": 6,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://www.isabellacounty.org/boards-commissions-committees/board-of-commissioners/",
+   "county": "Isabella",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 7,
+    "district_count": 7,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "mailto": 7,
+    "names_seen": 201,
+    "near_pairs": 7,
+    "seats": 7,
+    "tel": 8,
+    "text_bytes": 8976
+   },
+   "fips": "073",
+   "host": "isabellacounty.org",
+   "notes": [
+    "isabellacounty.com answers HTTP 200 in 114 bytes and never names Isabella on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.isabellacounty.com answers HTTP 200 in 114 bytes and never names Isabella on any of 3 fetches \u2014 not taken as the county's own site",
+    "isagov.com answers HTTP 200 in 85185 bytes and never names Isabella on any of 3 fetches \u2014 not taken as the county's own site",
+    "isagov.org unreachable after 3 tries (SSLError)",
+    "isabella.org unreachable after 3 tries (SSLError)",
+    "coisabella.com answers HTTP 200 in 32079 bytes and never names Isabella on any of 3 fetches \u2014 not taken as the county's own site",
+    "isabellaco.com answers HTTP 200 in 70636 bytes and never names Isabella on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.isagov.com unreachable after 3 tries (ConnectionError)",
+    "www.isagov.org unreachable after 3 tries (SSLError)",
+    "www.isabella.org unreachable after 3 tries (SSLError)"
+   ],
+   "pop": 64394,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "isabellacounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.isabellacounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "isagov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='isagov.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1, '[SSL",
+     "host": "isagov.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='isabella.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1, '[S",
+     "host": "isabella.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "coisabella.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "isabellaco.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.isagov.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.isagov.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1, '",
+     "host": "www.isagov.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.isabella.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1,",
+     "host": "www.isabella.org",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 14,
+   "score": 118.0,
+   "seats": 7,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://www.barrycounty.org/departments_and_officials/officials/board_of_commissioners/index.php",
+   "county": "Barry",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 7,
+    "distinct_near": 47,
+    "district_count": 8,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "mailto": 8,
+    "names_seen": 201,
+    "near_pairs": 8,
+    "seats": 8,
+    "tel": 1,
+    "text_bytes": 5716
+   },
+   "fips": "015",
+   "host": "www.barrycounty.org",
+   "notes": [
+    "barrycounty.com is a CATCH-ALL \u2014 an impossible path returns 3356 bytes against the root's 3316, so a 200 here proves nothing",
+    "barrycountymi.org unreachable after 3 tries (ConnectionError)",
+    "www.barrycounty.com unreachable after 3 tries (SSLError)",
+    "www.barrycountymi.org unreachable after 3 tries (ConnectionError)",
+    "barry.org unreachable after 3 tries (SSLError)",
+    "bargov.com unreachable after 3 tries (SSLError)",
+    "barryco.com answers HTTP 200 in 114 bytes and never names Barry on any of 3 fetches \u2014 not taken as the county's own site",
+    "mibarry.org answers HTTP 200 in 114 bytes and never names Barry on any of 3 fetches \u2014 not taken as the county's own site"
+   ],
+   "pop": 62423,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "barrycounty.com",
+     "why": "catch-all"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "barrycountymi.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.barrycounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError",
+     "host": "www.barrycounty.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.barrycountymi.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='barry.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificatio",
+     "host": "barry.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='bargov.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificati",
+     "host": "bargov.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "barryco.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "mibarry.org",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 19,
+   "score": 118.0,
+   "seats": 8,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://montcalmcountymi.gov/270/Board-of-Commissioners",
+   "county": "Montcalm",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 1,
+    "distinct_near": 11,
+    "district_count": 7,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "mailto": 1,
+    "names_seen": 76,
+    "near_pairs": 7,
+    "seats": 7,
+    "tel": 2,
+    "text_bytes": 2708
+   },
+   "fips": "117",
+   "host": "montcalmcountymi.gov",
+   "notes": [
+    "co.montcalm.mi.us unreachable after 3 tries (ConnectionError)",
+    "www.co.montcalm.mi.us unreachable after 3 tries (ConnectionError)",
+    "moncounty.com answers HTTP 200 in 114 bytes and never names Montcalm on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.moncounty.com answers HTTP 200 in 114 bytes and never names Montcalm on any of 3 fetches \u2014 not taken as the county's own site",
+    "montcalmcounty.com answers HTTP 200 in 114 bytes and never names Montcalm on any of 3 fetches \u2014 not taken as the county's own site",
+    "montcalmcounty.org unreachable after 3 tries (SSLError)",
+    "montcalmcountymi.com answers HTTP 200 in 114 bytes and never names Montcalm on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.montcalmcounty.com answers HTTP 200 in 114 bytes and never names Montcalm on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.montcalmcounty.org unreachable after 3 tries (ConnectionError)",
+    "www.montcalmcountymi.com answers HTTP 200 in 114 bytes and never names Montcalm on any of 3 fetches \u2014 not taken as the county's own site"
+   ],
+   "pop": 61648,
+   "rejected": [
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "co.montcalm.mi.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.co.montcalm.mi.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "moncounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.moncounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "montcalmcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='montcalmcounty.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVe",
+     "host": "montcalmcounty.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "montcalmcountymi.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.montcalmcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPConnectionPool(host='cf.neat-slate.site', port=80): Max retries exceeded with url: /middle.html?impId=BvH0EtBmnlPg3y",
+     "host": "www.montcalmcounty.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.montcalmcountymi.com",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 18,
+   "score": 118.0,
+   "seats": 7,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://stjosephcountymi.gov/government/county-commissioners/",
+   "county": "St. Joseph",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 0,
+    "district_count": 0,
+    "districts_found": [],
+    "mailto": 0,
+    "names_seen": 144,
+    "near_pairs": 0,
+    "seats": 7,
+    "tel": 2,
+    "text_bytes": 6205
+   },
+   "fips": "149",
+   "host": "stjosephcountymi.gov",
+   "notes": [
+    "stjosephcounty.us answers HTTP 200 in 114 bytes and never names St. Joseph on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.stjosephcounty.us answers HTTP 200 in 114 bytes and never names St. Joseph on any of 3 fetches \u2014 not taken as the county's own site",
+    "sj.org answers HTTP 200 in 248817 bytes and never names St. Joseph on any of 3 fetches \u2014 not taken as the county's own site",
+    "sjgov.com answers HTTP 200 in 122 bytes and never names St. Joseph on any of 3 fetches \u2014 not taken as the county's own site",
+    "sjgov.org answers HTTP 200 in 66101 bytes and never names St. Joseph on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.sj.org answers HTTP 200 in 248817 bytes and never names St. Joseph on any of 3 fetches \u2014 not taken as the county's own site",
+    "stjoseph.org unreachable after 3 tries (SSLError)",
+    "www.sjgov.com answers HTTP 200 in 122 bytes and never names St. Joseph on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.stjosephcountymi.gov: neither its sitemap nor its front page names a board page",
+    "stjosephcountymi.org: neither its sitemap nor its front page names a board page",
+    "www.stjosephcountymi.org: neither its sitemap nor its front page names a board page"
+   ],
+   "pop": 60939,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "stjosephcounty.us",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.stjosephcounty.us",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "sj.org",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "sjgov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "sjgov.org",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.sj.org",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='stjoseph.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerifica",
+     "host": "stjoseph.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.sjgov.com",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 16,
+   "score": 3.0,
+   "seats": 7,
+   "verdict": "no-districts"
+  },
+  {
+   "board_url": "https://www.ioniacounty.org/departments-officials/board-of-commissioners/",
+   "county": "Ionia",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 19,
+    "district_count": 7,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "mailto": 7,
+    "names_seen": 136,
+    "near_pairs": 7,
+    "seats": 7,
+    "tel": 0,
+    "text_bytes": 5762
+   },
+   "fips": "067",
+   "host": "www.ioniacounty.org",
+   "notes": [
+    "ioncounty.com answers HTTP 200 in 114 bytes and never names Ionia on any of 3 fetches \u2014 not taken as the county's own site",
+    "ioniacounty.com answers HTTP 200 in 114 bytes and never names Ionia on any of 3 fetches \u2014 not taken as the county's own site",
+    "ioniacounty.net unreachable after 3 tries (SSLError)",
+    "ionia-county.org unreachable after 3 tries (ConnectionError)",
+    "www.ioncounty.com answers HTTP 200 in 114 bytes and never names Ionia on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.ioniacounty.com answers HTTP 200 in 114 bytes and never names Ionia on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.ioniacounty.net unreachable after 3 tries (SSLError)",
+    "www.ionia-county.org unreachable after 3 tries (ConnectionError)",
+    "ionia.org answers a HTTP 202, which is never a document \u2014 an access control, not read and not worked around",
+    "iongov.com answers a WAF challenge (server 'cloudflare') \u2014 an access control, not read and not worked around"
+   ],
+   "pop": 60094,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "ioncounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "ioniacounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='ioniacounty.net', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerif",
+     "host": "ioniacounty.net",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "ionia-county.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.ioncounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.ioniacounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.ioniacounty.net', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertV",
+     "host": "www.ioniacounty.net",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.ionia-county.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTP 202, which is never a document",
+     "host": "ionia.org",
+     "why": "challenge"
+    },
+    {
+     "detail": "WAF challenge (server 'cloudflare')",
+     "host": "iongov.com",
+     "why": "challenge"
+    }
+   ],
+   "resolved": 16,
+   "score": 115.0,
+   "seats": 7,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": null,
+   "county": "Tuscola",
+   "evidence": null,
+   "fips": "157",
+   "host": "tuscolacounty.com",
+   "notes": [
+    "tuscolacounty.org answers a Sucuri challenge (server 'Sucuri/Cloudproxy') \u2014 an access control, not read and not worked around",
+    "www.tuscolacounty.org answers a Sucuri challenge (server 'Sucuri/Cloudproxy') \u2014 an access control, not read and not worked around",
+    "tuscolacounty.com: neither its sitemap nor its front page names a board page",
+    "www.tuscolacounty.com: neither its sitemap nor its front page names a board page",
+    "tuscola.org: neither its sitemap nor its front page names a board page",
+    "www.tuscola.org: neither its sitemap nor its front page names a board page",
+    "2 host(s) answered an access control and no other confirmed host carries a board page, so this is recorded as blocked rather than as the county publishing nothing",
+    "crawl-delay honoured: {'tuscola.org': 10.0}"
+   ],
+   "pop": 53264,
+   "rejected": [
+    {
+     "detail": "Sucuri challenge (server 'Sucuri/Cloudproxy')",
+     "host": "tuscolacounty.org",
+     "why": "challenge"
+    },
+    {
+     "detail": "Sucuri challenge (server 'Sucuri/Cloudproxy')",
+     "host": "www.tuscolacounty.org",
+     "why": "challenge"
+    }
+   ],
+   "resolved": 6,
+   "score": -1,
+   "seats": 5,
+   "verdict": "challenge"
+  },
+  {
+   "board_url": "https://casscountymi.org/1500/BOC-Committees",
+   "county": "Cass",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 11,
+    "distinct_near": 24,
+    "district_count": 8,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "mailto": 9,
+    "names_seen": 69,
+    "near_pairs": 6,
+    "seats": 8,
+    "tel": 1,
+    "text_bytes": 4204
+   },
+   "fips": "027",
+   "host": "casscountymi.org",
+   "notes": [
+    "casscounty.net unreachable after 3 tries (ConnectionError)",
+    "casscounty.org unreachable after 3 tries (ConnectionError)",
+    "casscountymi.com answers HTTP 200 in 114 bytes and never names Cass on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.casscounty.net unreachable after 3 tries (ConnectionError)",
+    "www.casscounty.org unreachable after 3 tries (ConnectionError)",
+    "www.cass-county.com is a CATCH-ALL \u2014 an impossible path returns 8948 bytes against the root's 8948, so a 200 here proves nothing",
+    "www.casscountymi.com answers HTTP 200 in 114 bytes and never names Cass on any of 3 fetches \u2014 not taken as the county's own site",
+    "cass-county.com: neither its sitemap nor its front page names a board page"
+   ],
+   "pop": 51589,
+   "rejected": [
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "casscounty.net",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "casscounty.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "casscountymi.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.casscounty.net",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.casscounty.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.cass-county.com",
+     "why": "catch-all"
+    },
+    {
+     "detail": null,
+     "host": "www.casscountymi.com",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 23,
+   "score": 115.5,
+   "seats": 8,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://www.newaygocountymi.gov/board_of_commissione/board-of-commissioners/",
+   "county": "Newaygo",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 0,
+    "district_count": 7,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "mailto": 0,
+    "names_seen": 120,
+    "near_pairs": 0,
+    "seats": 7,
+    "tel": 0,
+    "text_bytes": 6515
+   },
+   "fips": "123",
+   "host": "newaygocountymi.gov",
+   "notes": [
+    "co.newaygo.mi.us unreachable after 3 tries (ConnectionError)",
+    "newcounty.com answers HTTP 200 in 3341 bytes and never names Newaygo on any of 3 fetches \u2014 not taken as the county's own site",
+    "newaygocounty.com answers HTTP 200 in 114 bytes and never names Newaygo on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.newcounty.com answers HTTP 200 in 3360 bytes and never names Newaygo on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.newaygocounty.com answers HTTP 200 in 114 bytes and never names Newaygo on any of 3 fetches \u2014 not taken as the county's own site",
+    "newgov.org unreachable after 3 tries (ConnectionError)",
+    "www.newgov.org answers HTTP 200 in 2963 bytes and never names Newaygo on any of 3 fetches \u2014 not taken as the county's own site",
+    "newaygo.gov: neither its sitemap nor its front page names a board page",
+    "www.newaygo.gov: neither its sitemap nor its front page names a board page",
+    "newaygo.org: neither its sitemap nor its front page names a board page",
+    "crawl-delay honoured: {'newaygo.gov': 20.0}"
+   ],
+   "pop": 49978,
+   "rejected": [
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "co.newaygo.mi.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "newcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "newaygocounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.newcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.newaygocounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "newgov.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.newgov.org",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 13,
+   "score": 100.0,
+   "seats": 7,
+   "verdict": "not-keyable"
+  },
+  {
+   "board_url": "https://co.hillsdale.mi.us/index.php/tm-gov/m-boc",
+   "county": "Hillsdale",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 11,
+    "district_count": 5,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "mailto": 0,
+    "names_seen": 73,
+    "near_pairs": 5,
+    "seats": 5,
+    "tel": 0,
+    "text_bytes": 4154
+   },
+   "fips": "059",
+   "host": "co.hillsdale.mi.us",
+   "notes": [
+    "www.hillsdale.mi.us unreachable after 3 tries (SSLError)",
+    "hillsdale.mi.us unreachable after 3 tries (SSLError)",
+    "hillsdalecounty.com unreachable after 3 tries (SSLError)",
+    "hillsdalecounty.org unreachable after 3 tries (SSLError)",
+    "www.hillsdalecounty.com unreachable after 3 tries (SSLError)",
+    "www.hillsdalecounty.org unreachable after 3 tries (SSLError)"
+   ],
+   "pop": 45746,
+   "rejected": [
+    {
+     "detail": "HTTPSConnectionPool(host='www.hillsdale.mi.us', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError",
+     "host": "www.hillsdale.mi.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='hillsdale.mi.us', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1, ",
+     "host": "hillsdale.mi.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='hillsdalecounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertV",
+     "host": "hillsdalecounty.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='hillsdalecounty.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError",
+     "host": "hillsdalecounty.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.hillsdalecounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLC",
+     "host": "www.hillsdalecounty.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.hillsdalecounty.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLE",
+     "host": "www.hillsdalecounty.org",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 13,
+   "score": 110.0,
+   "seats": 5,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": null,
+   "county": "Branch",
+   "evidence": null,
+   "fips": "023",
+   "host": "branchco.com",
+   "notes": [
+    "branchcounty.gov answers a HTTP 202, which is never a document \u2014 an access control, not read and not worked around",
+    "www.branchcounty.gov answers a HTTP 202, which is never a document \u2014 an access control, not read and not worked around",
+    "branchcounty.com answers HTTP 200 in 114 bytes and never names Branch on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.branchcounty.com answers HTTP 200 in 114 bytes and never names Branch on any of 3 fetches \u2014 not taken as the county's own site",
+    "bragov.com answers HTTP 200 in 20162 bytes and never names Branch on any of 3 fetches \u2014 not taken as the county's own site",
+    "cobranch.com unreachable after 3 tries (ConnectionError)",
+    "mibranch.com HTTP 404 on /",
+    "www.bragov.com answers HTTP 200 in 20162 bytes and never names Branch on any of 3 fetches \u2014 not taken as the county's own site",
+    "branchco.com: neither its sitemap nor its front page names a board page",
+    "branchco.org: neither its sitemap nor its front page names a board page",
+    "www.branchco.com: neither its sitemap nor its front page names a board page",
+    "www.branchco.org: neither its sitemap nor its front page names a board page",
+    "2 host(s) answered an access control and no other confirmed host carries a board page, so this is recorded as blocked rather than as the county publishing nothing"
+   ],
+   "pop": 43439,
+   "rejected": [
+    {
+     "detail": "HTTP 202, which is never a document",
+     "host": "branchcounty.gov",
+     "why": "challenge"
+    },
+    {
+     "detail": "HTTP 202, which is never a document",
+     "host": "www.branchcounty.gov",
+     "why": "challenge"
+    },
+    {
+     "detail": null,
+     "host": "branchcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.branchcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "bragov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "cobranch.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "mibranch.com",
+     "why": "http-404"
+    },
+    {
+     "detail": null,
+     "host": "www.bragov.com",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 14,
+   "score": -1,
+   "seats": 5,
+   "verdict": "challenge"
+  },
+  {
+   "board_url": "https://sanilaccounty.gov/government/commissioners/index.php",
+   "county": "Sanilac",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 25,
+    "district_count": 7,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "mailto": 0,
+    "names_seen": 241,
+    "near_pairs": 7,
+    "seats": 7,
+    "tel": 0,
+    "text_bytes": 5689
+   },
+   "fips": "151",
+   "host": "sanilaccounty.gov",
+   "notes": [
+    "sanilaccounty.com answers HTTP 200 in 114 bytes and never names Sanilac on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.sanilaccounty.com answers HTTP 200 in 114 bytes and never names Sanilac on any of 3 fetches \u2014 not taken as the county's own site",
+    "sangov.com answers HTTP 200 in 3293 bytes and never names Sanilac on any of 3 fetches \u2014 not taken as the county's own site",
+    "sanilac.org answers HTTP 200 in 122 bytes and never names Sanilac on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.sangov.com answers HTTP 200 in 3317 bytes and never names Sanilac on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.sanilac.org unreachable after 3 tries (SSLError)"
+   ],
+   "pop": 40611,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "sanilaccounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.sanilaccounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "sangov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "sanilac.org",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.sangov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.sanilac.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1, ",
+     "host": "www.sanilac.org",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 11,
+   "score": 110.0,
+   "seats": 7,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://mecostacounty.org/government/boc.php",
+   "county": "Mecosta",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 0,
+    "district_count": 0,
+    "districts_found": [],
+    "mailto": 7,
+    "names_seen": 239,
+    "near_pairs": 0,
+    "seats": 7,
+    "tel": 0,
+    "text_bytes": 29248
+   },
+   "fips": "107",
+   "host": "mecostacounty.org",
+   "notes": [
+    "mecostacounty.com HTTP 410 on /",
+    "www.mecostacounty.com HTTP 410 on /",
+    "mecgov.com answers HTTP 200 in 114 bytes and never names Mecosta on any of 3 fetches \u2014 not taken as the county's own site",
+    "mecosta.org answers HTTP 200 in 1141 bytes and never names Mecosta on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.mecgov.com answers HTTP 200 in 114 bytes and never names Mecosta on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.mecosta.org answers HTTP 200 in 1141 bytes and never names Mecosta on any of 3 fetches \u2014 not taken as the county's own site"
+   ],
+   "pop": 39714,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "mecostacounty.com",
+     "why": "http-410"
+    },
+    {
+     "detail": null,
+     "host": "www.mecostacounty.com",
+     "why": "http-410"
+    },
+    {
+     "detail": null,
+     "host": "mecgov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "mecosta.org",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.mecgov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.mecosta.org",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 8,
+   "score": 5.0,
+   "seats": 7,
+   "verdict": "no-districts"
+  },
+  {
+   "board_url": null,
+   "county": "Gratiot",
+   "evidence": null,
+   "fips": "057",
+   "host": "gratiot.org",
+   "notes": [
+    "co.gratiot.mi.us unreachable after 3 tries (ConnectionError)",
+    "www.co.gratiot.mi.us unreachable after 3 tries (ConnectionError)",
+    "gratiotcounty.com answers HTTP 200 in 114 bytes and never names Gratiot on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.gratiotcounty.com answers HTTP 200 in 114 bytes and never names Gratiot on any of 3 fetches \u2014 not taken as the county's own site",
+    "gratiot.org: neither its sitemap nor its front page names a board page",
+    "www.gratiot.org: neither its sitemap nor its front page names a board page",
+    "no confirmed host carries a board page this client can read"
+   ],
+   "pop": 38113,
+   "rejected": [
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "co.gratiot.mi.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.co.gratiot.mi.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "gratiotcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.gratiotcounty.com",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 6,
+   "score": -1,
+   "seats": 5,
+   "verdict": "no-board-page"
+  },
+  {
+   "board_url": "https://houghtoncounty.gov/commissions-board.php",
+   "county": "Houghton",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 1,
+    "distinct_near": 19,
+    "district_count": 5,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "mailto": 6,
+    "names_seen": 178,
+    "near_pairs": 5,
+    "seats": 5,
+    "tel": 0,
+    "text_bytes": 24873
+   },
+   "fips": "061",
+   "host": "houghtoncounty.gov",
+   "notes": [
+    "houghtoncounty.com answers HTTP 200 in 114 bytes and never names Houghton on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.houghtoncounty.com unreachable after 3 tries (SSLError)"
+   ],
+   "pop": 37361,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "houghtoncounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.houghtoncounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLEr",
+     "host": "www.houghtoncounty.com",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 12,
+   "score": 115.0,
+   "seats": 5,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://deltacountymi.gov/board-of-commissioners/district-4-kelli-vanginhoven/",
+   "county": "Delta",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 1,
+    "distinct_near": 30,
+    "district_count": 5,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "mailto": 0,
+    "names_seen": 103,
+    "near_pairs": 5,
+    "seats": 5,
+    "tel": 2,
+    "text_bytes": 3012
+   },
+   "fips": "041",
+   "host": "deltacountymi.gov",
+   "notes": [
+    "deltacounty.org answers HTTP 200 in 114 bytes and never names Delta on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.deltacounty.org answers HTTP 200 in 114 bytes and never names Delta on any of 3 fetches \u2014 not taken as the county's own site"
+   ],
+   "pop": 36903,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "deltacounty.org",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.deltacounty.org",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 23,
+   "score": 113.0,
+   "seats": 5,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://emmetcounty.org/government/board_of_commissioners/index.php",
+   "county": "Emmet",
+   "evidence": {
+    "cfemail": 10,
+    "chrome_dropped": 0,
+    "distinct_near": 17,
+    "district_count": 7,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "mailto": 0,
+    "names_seen": 108,
+    "near_pairs": 7,
+    "seats": 7,
+    "tel": 2,
+    "text_bytes": 11330
+   },
+   "fips": "047",
+   "host": "emmetcounty.org",
+   "notes": [
+    "co.emmet.mi.us unreachable after 3 tries (ConnectionError)",
+    "www.co.emmet.mi.us unreachable after 3 tries (ConnectionError)",
+    "emmetcounty.com answers HTTP 200 in 114 bytes and never names Emmet on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.emmetcounty.com answers HTTP 200 in 114 bytes and never names Emmet on any of 3 fetches \u2014 not taken as the county's own site",
+    "emmet.org unreachable after 3 tries (ConnectionError)",
+    "www.emmet.org unreachable after 3 tries (ConnectionError)"
+   ],
+   "pop": 34112,
+   "rejected": [
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "co.emmet.mi.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.co.emmet.mi.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "emmetcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.emmetcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "emmet.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.emmet.org",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 8,
+   "score": 118.0,
+   "seats": 7,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://www.chippewacountymi.gov/board-of-commissioners",
+   "county": "Chippewa",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 2,
+    "distinct_near": 5,
+    "district_count": 5,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "mailto": 1,
+    "names_seen": 24,
+    "near_pairs": 5,
+    "seats": 5,
+    "tel": 0,
+    "text_bytes": 6927
+   },
+   "fips": "033",
+   "host": "chippewacountymi.gov",
+   "notes": [
+    "chippewacounty.com unreachable after 3 tries (SSLError)",
+    "www.chippewacounty.com unreachable after 3 tries (SSLError)",
+    "chigov.com answers HTTP 200 in 25198 bytes and never names Chippewa on any of 3 fetches \u2014 not taken as the county's own site",
+    "chigov.org unreachable after 3 tries (SSLError)",
+    "chippewa.org unreachable after 3 tries (ConnectionError)",
+    "www.chigov.com answers HTTP 200 in 25222 bytes and never names Chippewa on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.chigov.org unreachable after 3 tries (SSLError)",
+    "www.chippewa.org unreachable after 3 tries (ConnectionError)"
+   ],
+   "pop": 32934,
+   "rejected": [
+    {
+     "detail": "HTTPSConnectionPool(host='chippewacounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVe",
+     "host": "chippewacounty.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.chippewacounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCe",
+     "host": "www.chippewacounty.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "chigov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='chigov.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificati",
+     "host": "chigov.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "chippewa.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.chigov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.chigov.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerifi",
+     "host": "www.chigov.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.chippewa.org",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 10,
+   "score": 115.0,
+   "seats": 5,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": null,
+   "county": "Wexford",
+   "evidence": null,
+   "fips": "165",
+   "host": "wexfordcounty.org",
+   "notes": [
+    "wexfordcounty.com answers HTTP 200 in 114 bytes and never names Wexford on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.wexfordcounty.com answers HTTP 200 in 114 bytes and never names Wexford on any of 3 fetches \u2014 not taken as the county's own site",
+    "wexfordco.com answers HTTP 200 in 114 bytes and never names Wexford on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.wexfordco.com answers HTTP 200 in 114 bytes and never names Wexford on any of 3 fetches \u2014 not taken as the county's own site",
+    "wexfordcounty.org: neither its sitemap nor its front page names a board page",
+    "www.wexfordcounty.org: neither its sitemap nor its front page names a board page",
+    "wexford.org: neither its sitemap nor its front page names a board page",
+    "www.wexford.org: neither its sitemap nor its front page names a board page",
+    "no confirmed host carries a board page this client can read"
+   ],
+   "pop": 32735,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "wexfordcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.wexfordcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "wexfordco.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.wexfordco.com",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 8,
+   "score": -1,
+   "seats": 9,
+   "verdict": "no-board-page"
+  },
+  {
+   "board_url": null,
+   "county": "Huron",
+   "evidence": null,
+   "fips": "063",
+   "host": "co.huron.mi.us",
+   "notes": [
+    "huroncounty.us unreachable after 3 tries (ProxyError)",
+    "huroncounty.net unreachable after 3 tries (ConnectionError)",
+    "huroncountymi.com is a CATCH-ALL \u2014 an impossible path returns 114774 bytes against the root's 114774, so a 200 here proves nothing",
+    "www.huroncounty.net unreachable after 3 tries (ConnectionError)",
+    "www.huroncounty.org unreachable after 3 tries (SSLError)",
+    "www.huroncountymi.com is a CATCH-ALL \u2014 an impossible path returns 114774 bytes against the root's 114774, so a 200 here proves nothing",
+    "co.huron.mi.us: neither its sitemap nor its front page names a board page",
+    "www.co.huron.mi.us: neither its sitemap nor its front page names a board page",
+    "huroncounty.com: neither its sitemap nor its front page names a board page",
+    "huroncounty.org: neither its sitemap nor its front page names a board page",
+    "www.huroncounty.com: neither its sitemap nor its front page names a board page",
+    "huron.org: neither its sitemap nor its front page names a board page",
+    "no confirmed host carries a board page this client can read"
+   ],
+   "pop": 31407,
+   "rejected": [
+    {
+     "detail": "HTTPSConnectionPool(host='huroncounty.us', port=443): Max retries exceeded with url: / (Caused by ProxyError('Unable to ",
+     "host": "huroncounty.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "huroncounty.net",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "huroncountymi.com",
+     "why": "catch-all"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.huroncounty.net",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.huroncounty.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLEOFEr",
+     "host": "www.huroncounty.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.huroncountymi.com",
+     "why": "catch-all"
+    }
+   ],
+   "resolved": 17,
+   "score": -1,
+   "seats": 7,
+   "verdict": "no-board-page"
+  },
+  {
+   "board_url": "https://clareco.net/department/board-of-commissioners/",
+   "county": "Clare",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 14,
+    "district_count": 9,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "mailto": 0,
+    "names_seen": 160,
+    "near_pairs": 8,
+    "seats": 9,
+    "tel": 0,
+    "text_bytes": 14291
+   },
+   "fips": "035",
+   "host": "clareco.net",
+   "notes": [
+    "clarecounty.org answers HTTP 200 in 114 bytes and never names Clare on any of 3 fetches \u2014 not taken as the county's own site",
+    "clare.org answers HTTP 200 in 114 bytes and never names Clare on any of 3 fetches \u2014 not taken as the county's own site",
+    "clarecounty.com: neither its sitemap nor its front page names a board page",
+    "clarecounty.net: neither its sitemap nor its front page names a board page",
+    "www.clarecounty.com: neither its sitemap nor its front page names a board page",
+    "www.clarecounty.net: neither its sitemap nor its front page names a board page",
+    "clareco.com: neither its sitemap nor its front page names a board page"
+   ],
+   "pop": 30856,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "clarecounty.org",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "clare.org",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 11,
+   "score": 108.9,
+   "seats": 9,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://masoncountymi.gov/government/board_of_commissioners/index.php",
+   "county": "Mason",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 0,
+    "district_count": 0,
+    "districts_found": [],
+    "mailto": 7,
+    "names_seen": 147,
+    "near_pairs": 0,
+    "seats": 7,
+    "tel": 8,
+    "text_bytes": 6563
+   },
+   "fips": "105",
+   "host": "masoncountymi.gov",
+   "notes": [
+    "www.mason.mi.us: neither its sitemap nor its front page names a board page",
+    "mason.mi.us: neither its sitemap nor its front page names a board page",
+    "masoncounty.com: neither its sitemap nor its front page names a board page",
+    "crawl-delay honoured: {'masoncounty.com': 10.0}"
+   ],
+   "pop": 29052,
+   "rejected": [],
+   "resolved": 25,
+   "score": 8.0,
+   "seats": 7,
+   "verdict": "no-districts"
+  },
+  {
+   "board_url": "https://alpenacounty.org/577/Commissioners-By-District",
+   "county": "Alpena",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 3,
+    "distinct_near": 21,
+    "district_count": 8,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "mailto": 9,
+    "names_seen": 86,
+    "near_pairs": 8,
+    "seats": 8,
+    "tel": 2,
+    "text_bytes": 4668
+   },
+   "fips": "007",
+   "host": "alpenacounty.org",
+   "notes": [
+    "alpenacounty.com answers HTTP 200 in 114 bytes and never names Alpena on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.alpenacounty.com answers HTTP 200 in 114 bytes and never names Alpena on any of 3 fetches \u2014 not taken as the county's own site",
+    "alpena.org answers HTTP 200 in 114 bytes and never names Alpena on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.alpena.org answers HTTP 200 in 114 bytes and never names Alpena on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.alpena.mi.us: neither its sitemap nor its front page names a board page",
+    "alpena.mi.us: neither its sitemap nor its front page names a board page"
+   ],
+   "pop": 28907,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "alpenacounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.alpenacounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "alpena.org",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.alpena.org",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 8,
+   "score": 118.0,
+   "seats": 8,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://oceana.mi.us/government/board-of-commissioners/",
+   "county": "Oceana",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 8,
+    "district_count": 5,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "mailto": 5,
+    "names_seen": 250,
+    "near_pairs": 4,
+    "seats": 5,
+    "tel": 1,
+    "text_bytes": 8284
+   },
+   "fips": "127",
+   "host": "oceana.mi.us",
+   "notes": [
+    "co.oceana.mi.us unreachable after 3 tries (SSLError)",
+    "www.co.oceana.mi.us unreachable after 3 tries (SSLError)",
+    "oceanacounty.com answers HTTP 200 in 114 bytes and never names Oceana on any of 3 fetches \u2014 not taken as the county's own site",
+    "oceanacounty.net unreachable after 3 tries (ConnectionError)",
+    "oceanacounty.org unreachable after 3 tries (ConnectionError)",
+    "www.oceanacounty.com answers HTTP 200 in 114 bytes and never names Oceana on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.oceanacounty.net unreachable after 3 tries (ConnectionError)",
+    "www.oceanacounty.org unreachable after 3 tries (ConnectionError)",
+    "oceanaco.com answers HTTP 200 in 114 bytes and never names Oceana on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.oceana.mi.us: neither its sitemap nor its front page names a board page"
+   ],
+   "pop": 26659,
+   "rejected": [
+    {
+     "detail": "HTTPSConnectionPool(host='co.oceana.mi.us', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerif",
+     "host": "co.oceana.mi.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.co.oceana.mi.us', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertV",
+     "host": "www.co.oceana.mi.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "oceanacounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "oceanacounty.net",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "oceanacounty.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.oceanacounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.oceanacounty.net",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.oceanacounty.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "oceanaco.com",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 14,
+   "score": 116.0,
+   "seats": 5,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://dickinsoncountymi.gov/government/county_departments/board_of_commissioners/index.php",
+   "county": "Dickinson",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 6,
+    "district_count": 5,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "mailto": 1,
+    "names_seen": 102,
+    "near_pairs": 5,
+    "seats": 5,
+    "tel": 0,
+    "text_bytes": 4281
+   },
+   "fips": "043",
+   "host": "dickinsoncountymi.gov",
+   "notes": [
+    "dickinsoncounty.com answers HTTP 200 in 114 bytes and never names Dickinson on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.dickinsoncounty.com answers HTTP 200 in 114 bytes and never names Dickinson on any of 3 fetches \u2014 not taken as the county's own site",
+    "dicgov.com answers HTTP 200 in 139667 bytes and never names Dickinson on any of 3 fetches \u2014 not taken as the county's own site",
+    "dickinson.org answers HTTP 200 in 114 bytes and never names Dickinson on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.dicgov.com answers HTTP 200 in 139667 bytes and never names Dickinson on any of 3 fetches \u2014 not taken as the county's own site",
+    "dickinsonco.com unreachable after 3 tries (SSLError)",
+    "www.dickinson.org answers HTTP 200 in 114 bytes and never names Dickinson on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.dickinsonco.com unreachable after 3 tries (SSLError)",
+    "crawl-delay honoured: {'dicgov.com': 20.0}"
+   ],
+   "pop": 25947,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "dickinsoncounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.dickinsoncounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "dicgov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "dickinson.org",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.dicgov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='dickinsonco.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1, ",
+     "host": "dickinsonco.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.dickinson.org",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.dickinsonco.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError",
+     "host": "www.dickinsonco.com",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 10,
+   "score": 115.0,
+   "seats": 5,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": null,
+   "county": "Gladwin",
+   "evidence": null,
+   "fips": "051",
+   "host": "gladwin.org",
+   "notes": [
+    "gladwincounty.org answers HTTP 200 in 114 bytes and never names Gladwin on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.gladwincounty.org answers HTTP 200 in 114 bytes and never names Gladwin on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.gladwinco.com unreachable after 3 tries (SSLError)",
+    "gladwin.org: neither its sitemap nor its front page names a board page",
+    "www.gladwin.org: neither its sitemap nor its front page names a board page",
+    "no confirmed host carries a board page this client can read"
+   ],
+   "pop": 25386,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "gladwincounty.org",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.gladwincounty.org",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.gladwinco.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVer",
+     "host": "www.gladwinco.com",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 5,
+   "score": -1,
+   "seats": 5,
+   "verdict": "no-board-page"
+  },
+  {
+   "board_url": null,
+   "county": "Charlevoix",
+   "evidence": null,
+   "fips": "029",
+   "host": "charlevoixcounty.org",
+   "notes": [
+    "charlevoixcounty.com unreachable after 3 tries (SSLError)",
+    "www.charlevoixcounty.com answers HTTP 200 in 114 bytes and never names Charlevoix on any of 3 fetches \u2014 not taken as the county's own site",
+    "micharlevoix.org unreachable after 3 tries (SSLError)",
+    "www.micharlevoix.org unreachable after 3 tries (SSLError)",
+    "charlevoixcounty.org: neither its sitemap nor its front page names a board page",
+    "www.charlevoixcounty.org: neither its sitemap nor its front page names a board page",
+    "charlevoix.org: neither its sitemap nor its front page names a board page",
+    "www.charlevoix.org: neither its sitemap nor its front page names a board page",
+    "no confirmed host carries a board page this client can read"
+   ],
+   "pop": 25320,
+   "rejected": [
+    {
+     "detail": "HTTPSConnectionPool(host='charlevoixcounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLErro",
+     "host": "charlevoixcounty.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.charlevoixcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='micharlevoix.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVeri",
+     "host": "micharlevoix.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.micharlevoix.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCert",
+     "host": "www.micharlevoix.org",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 8,
+   "score": -1,
+   "seats": 6,
+   "verdict": "no-board-page"
+  },
+  {
+   "board_url": null,
+   "county": "Iosco",
+   "evidence": null,
+   "fips": "069",
+   "host": "www.iosco.org",
+   "notes": [
+    "ioscocounty.com answers HTTP 200 in 114 bytes and never names Iosco on any of 3 fetches \u2014 not taken as the county's own site",
+    "ioscocounty.org unreachable after 3 tries (SSLError)",
+    "www.ioscocounty.com answers HTTP 200 in 114 bytes and never names Iosco on any of 3 fetches \u2014 not taken as the county's own site",
+    "iosco.org HTTP 403 on /",
+    "iosgov.com unreachable after 3 tries (SSLError)",
+    "www.iosgov.com unreachable after 3 tries (SSLError)",
+    "www.iosco.org: neither its sitemap nor its front page names a board page",
+    "no confirmed host carries a board page this client can read"
+   ],
+   "pop": 25237,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "ioscocounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='ioscocounty.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerif",
+     "host": "ioscocounty.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.ioscocounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "iosco.org",
+     "why": "http-403"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='iosgov.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificati",
+     "host": "iosgov.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.iosgov.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerifi",
+     "host": "www.iosgov.com",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 7,
+   "score": -1,
+   "seats": 5,
+   "verdict": "no-board-page"
+  },
+  {
+   "board_url": "https://otsegocountymi.gov/277/Board-of-Commissioners",
+   "county": "Otsego",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 11,
+    "district_count": 9,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "mailto": 0,
+    "names_seen": 116,
+    "near_pairs": 8,
+    "seats": 9,
+    "tel": 1,
+    "text_bytes": 6062
+   },
+   "fips": "137",
+   "host": "otsegocountymi.gov",
+   "notes": [
+    "co.otsego.mi.us unreachable after 3 tries (ConnectionError)",
+    "www.co.otsego.mi.us unreachable after 3 tries (ConnectionError)",
+    "otsego.org unreachable after 3 tries (ConnectionError)",
+    "www.otsego.org unreachable after 3 tries (ConnectionError)"
+   ],
+   "pop": 25091,
+   "rejected": [
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "co.otsego.mi.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.co.otsego.mi.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "otsego.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.otsego.org",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 8,
+   "score": 111.9,
+   "seats": 9,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://manisteecountymi.gov/263/Board-of-Commissioners",
+   "county": "Manistee",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 5,
+    "distinct_near": 18,
+    "district_count": 7,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "mailto": 3,
+    "names_seen": 76,
+    "near_pairs": 3,
+    "seats": 7,
+    "tel": 0,
+    "text_bytes": 5909
+   },
+   "fips": "101",
+   "host": "manisteecountymi.gov",
+   "notes": [
+    "mancounty.com unreachable after 3 tries (SSLError)",
+    "www.mancounty.com unreachable after 3 tries (SSLError)",
+    "mangov.com unreachable after 3 tries (ConnectionError)",
+    "www.mangov.com unreachable after 3 tries (ConnectionError)",
+    "manisteecounty.net: neither its sitemap nor its front page names a board page",
+    "www.manisteecounty.net: neither its sitemap nor its front page names a board page",
+    "manistee.org: neither its sitemap nor its front page names a board page",
+    "www.manistee.org: neither its sitemap nor its front page names a board page"
+   ],
+   "pop": 24009,
+   "rejected": [
+    {
+     "detail": "HTTPSConnectionPool(host='mancounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerific",
+     "host": "mancounty.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.mancounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVer",
+     "host": "www.mancounty.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "mangov.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.mangov.com",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 10,
+   "score": 109.3,
+   "seats": 7,
+   "verdict": "not-keyable"
+  },
+  {
+   "board_url": "https://www.menomineecountymi.gov/departments/county-board-of-commissioners/general-information/staff/",
+   "county": "Menominee",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 2,
+    "distinct_near": 16,
+    "district_count": 9,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "mailto": 0,
+    "names_seen": 69,
+    "near_pairs": 9,
+    "seats": 9,
+    "tel": 0,
+    "text_bytes": 3231
+   },
+   "fips": "109",
+   "host": "menomineecountymi.gov",
+   "notes": [
+    "mencounty.com unreachable after 3 tries (SSLError)",
+    "www.mencounty.com unreachable after 3 tries (SSLError)",
+    "mengov.com unreachable after 3 tries (ConnectionError)",
+    "menominee.org answers HTTP 200 in 114 bytes and never names Menominee on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.mengov.com unreachable after 3 tries (ConnectionError)",
+    "menomineeco.com answers HTTP 200 in 2070 bytes and never names Menominee on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.menominee.org answers HTTP 200 in 114 bytes and never names Menominee on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.menomineeco.com answers HTTP 200 in 2070 bytes and never names Menominee on any of 3 fetches \u2014 not taken as the county's own site"
+   ],
+   "pop": 23499,
+   "rejected": [
+    {
+     "detail": "HTTPSConnectionPool(host='mencounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1, '[",
+     "host": "mencounty.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.mencounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1",
+     "host": "www.mencounty.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "mengov.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "menominee.org",
+     "why": "names-another"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.mengov.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "menomineeco.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.menominee.org",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.menomineeco.com",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 12,
+   "score": 110.0,
+   "seats": 9,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://roscommoncounty.net/202/Board-of-Commissioners",
+   "county": "Roscommon",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 17,
+    "district_count": 5,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "mailto": 5,
+    "names_seen": 78,
+    "near_pairs": 5,
+    "seats": 5,
+    "tel": 1,
+    "text_bytes": 3722
+   },
+   "fips": "143",
+   "host": "roscommoncounty.net",
+   "notes": [
+    "roscommoncounty.us unreachable after 3 tries (SSLError)",
+    "roscommoncounty.com answers HTTP 200 in 114 bytes and never names Roscommon on any of 3 fetches \u2014 not taken as the county's own site",
+    "roscommoncounty.org unreachable after 3 tries (SSLError)",
+    "www.roscommoncounty.us unreachable after 3 tries (SSLError)",
+    "www.roscommoncounty.com answers HTTP 200 in 114 bytes and never names Roscommon on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.roscommoncounty.org unreachable after 3 tries (SSLError)",
+    "roscommon.org unreachable after 3 tries (ConnectionError)",
+    "www.roscommon.org unreachable after 3 tries (ConnectionError)"
+   ],
+   "pop": 23459,
+   "rejected": [
+    {
+     "detail": "HTTPSConnectionPool(host='roscommoncounty.us', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVe",
+     "host": "roscommoncounty.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "roscommoncounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='roscommoncounty.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertV",
+     "host": "roscommoncounty.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.roscommoncounty.us', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCe",
+     "host": "www.roscommoncounty.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.roscommoncounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.roscommoncounty.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLC",
+     "host": "www.roscommoncounty.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "roscommon.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.roscommon.org",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 10,
+   "score": 118.0,
+   "seats": 5,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://antrimcountymi.gov/government/boards_commissions___committees/board_of_commissioners/index.php",
+   "county": "Antrim",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 0,
+    "district_count": 0,
+    "districts_found": [],
+    "mailto": 2,
+    "names_seen": 261,
+    "near_pairs": 0,
+    "seats": 5,
+    "tel": 0,
+    "text_bytes": 13515
+   },
+   "fips": "009",
+   "host": "antrimcountymi.gov",
+   "notes": [
+    "antrimcounty.com unreachable after 3 tries (SSLError)",
+    "www.antrimcounty.com unreachable after 3 tries (SSLError)",
+    "www.antrim-county.com HTTP 404 on /",
+    "antgov.com answers HTTP 200 in 114 bytes and never names Antrim on any of 3 fetches \u2014 not taken as the county's own site",
+    "antgov.org answers HTTP 200 in 114 bytes and never names Antrim on any of 3 fetches \u2014 not taken as the county's own site",
+    "antrim.org answers HTTP 200 in 114 bytes and never names Antrim on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.antgov.com answers HTTP 200 in 114 bytes and never names Antrim on any of 3 fetches \u2014 not taken as the county's own site",
+    "antrim-county.com: neither its sitemap nor its front page names a board page"
+   ],
+   "pop": 23431,
+   "rejected": [
+    {
+     "detail": "HTTPSConnectionPool(host='antrimcounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVeri",
+     "host": "antrimcounty.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.antrimcounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCert",
+     "host": "www.antrimcounty.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.antrim-county.com",
+     "why": "http-404"
+    },
+    {
+     "detail": null,
+     "host": "antgov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "antgov.org",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "antrim.org",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.antgov.com",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 14,
+   "score": 5.0,
+   "seats": 5,
+   "verdict": "no-districts"
+  },
+  {
+   "board_url": "https://osceolacountymi.gov/residents/county_commissioners/index.php",
+   "county": "Osceola",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 5,
+    "distinct_near": 27,
+    "district_count": 7,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "mailto": 8,
+    "names_seen": 177,
+    "near_pairs": 7,
+    "seats": 7,
+    "tel": 0,
+    "text_bytes": 5646
+   },
+   "fips": "133",
+   "host": "osceolacountymi.gov",
+   "notes": [
+    "osceolacounty.com is a CATCH-ALL \u2014 an impossible path returns 17057 bytes against the root's 17057, so a 200 here proves nothing",
+    "osceolacounty.net answers HTTP 200 in 114 bytes and never names Osceola on any of 3 fetches \u2014 not taken as the county's own site",
+    "osceolacountymi.com unreachable after 3 tries (SSLError)",
+    "www.osceolacounty.com is a CATCH-ALL \u2014 an impossible path returns 17057 bytes against the root's 17057, so a 200 here proves nothing",
+    "www.osceolacounty.net answers HTTP 200 in 114 bytes and never names Osceola on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.osceolacounty.org is a CATCH-ALL \u2014 an impossible path returns 1020 bytes against the root's 1020, so a 200 here proves nothing",
+    "www.osceolacountymi.com unreachable after 3 tries (SSLError)"
+   ],
+   "pop": 22891,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "osceolacounty.com",
+     "why": "catch-all"
+    },
+    {
+     "detail": null,
+     "host": "osceolacounty.net",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='osceolacountymi.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertV",
+     "host": "osceolacountymi.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.osceolacounty.com",
+     "why": "catch-all"
+    },
+    {
+     "detail": null,
+     "host": "www.osceolacounty.net",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.osceolacounty.org",
+     "why": "catch-all"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.osceolacountymi.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLC",
+     "host": "www.osceolacountymi.com",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 14,
+   "score": 115.0,
+   "seats": 7,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://leelanau.gov/leelanau_county/board_of_commissioners/index.php",
+   "county": "Leelanau",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 11,
+    "district_count": 7,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "mailto": 1,
+    "names_seen": 270,
+    "near_pairs": 7,
+    "seats": 7,
+    "tel": 0,
+    "text_bytes": 7635
+   },
+   "fips": "089",
+   "host": "leelanau.gov",
+   "notes": [
+    "co.leelanau.mi.us unreachable after 3 tries (ConnectionError)",
+    "www.co.leelanau.mi.us unreachable after 3 tries (ConnectionError)",
+    "leecounty.com answers HTTP 200 in 171903 bytes and never names Leelanau on any of 3 fetches \u2014 not taken as the county's own site",
+    "leecounty.org answers a WAF challenge (server 'cloudflare') \u2014 an access control, not read and not worked around",
+    "www.leecounty.com answers HTTP 200 in 171903 bytes and never names Leelanau on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.leecounty.org answers a WAF challenge (server 'cloudflare') \u2014 an access control, not read and not worked around",
+    "leelanaucounty.com answers HTTP 200 in 114 bytes and never names Leelanau on any of 3 fetches \u2014 not taken as the county's own site",
+    "leelanaucounty.org unreachable after 3 tries (SSLError)",
+    "leelanau-county.com answers HTTP 200 in 114 bytes and never names Leelanau on any of 3 fetches \u2014 not taken as the county's own site",
+    "crawl-delay honoured: {'leecounty.com': 30.0}"
+   ],
+   "pop": 22301,
+   "rejected": [
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "co.leelanau.mi.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.co.leelanau.mi.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "leecounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "WAF challenge (server 'cloudflare')",
+     "host": "leecounty.org",
+     "why": "challenge"
+    },
+    {
+     "detail": null,
+     "host": "www.leecounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "WAF challenge (server 'cloudflare')",
+     "host": "www.leecounty.org",
+     "why": "challenge"
+    },
+    {
+     "detail": null,
+     "host": "leelanaucounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='leelanaucounty.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVe",
+     "host": "leelanaucounty.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "leelanau-county.com",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 26,
+   "score": 115.0,
+   "seats": 7,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": null,
+   "county": "Ogemaw",
+   "evidence": null,
+   "fips": "129",
+   "host": "ogemawcounty.net",
+   "notes": [
+    "ogemawcounty.com answers HTTP 200 in 114 bytes and never names Ogemaw on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.ogemawcounty.com answers HTTP 200 in 114 bytes and never names Ogemaw on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.ogemawcounty.net is a CATCH-ALL \u2014 an impossible path returns 8016 bytes against the root's 8016, so a 200 here proves nothing",
+    "ogemawcounty.net: neither its sitemap nor its front page names a board page",
+    "no confirmed host carries a board page this client can read"
+   ],
+   "pop": 20770,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "ogemawcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.ogemawcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.ogemawcounty.net",
+     "why": "catch-all"
+    }
+   ],
+   "resolved": 4,
+   "score": -1,
+   "seats": 5,
+   "verdict": "no-board-page"
+  },
+  {
+   "board_url": "https://benzieco.gov/government/board_of_commissioners/index.php",
+   "county": "Benzie",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 0,
+    "district_count": 0,
+    "districts_found": [],
+    "mailto": 6,
+    "names_seen": 186,
+    "near_pairs": 0,
+    "seats": 7,
+    "tel": 0,
+    "text_bytes": 6390
+   },
+   "fips": "019",
+   "host": "benzieco.gov",
+   "notes": [
+    "benziecounty.com answers HTTP 200 in 114 bytes and never names Benzie on any of 3 fetches \u2014 not taken as the county's own site",
+    "benziecounty.net unreachable after 3 tries (SSLError)",
+    "benziecounty.org unreachable after 3 tries (SSLError)",
+    "benziecountymi.com answers HTTP 200 in 114 bytes and never names Benzie on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.benziecounty.com answers HTTP 200 in 114 bytes and never names Benzie on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.benziecounty.net unreachable after 3 tries (SSLError)",
+    "www.benziecounty.org unreachable after 3 tries (SSLError)",
+    "www.benziecountymi.com answers HTTP 200 in 114 bytes and never names Benzie on any of 3 fetches \u2014 not taken as the county's own site",
+    "bengov.com unreachable after 3 tries (ConnectionError)",
+    "benzie.org: neither its sitemap nor its front page names a board page"
+   ],
+   "pop": 17970,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "benziecounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='benziecounty.net', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLEOFError",
+     "host": "benziecounty.net",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='benziecounty.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLEOFError",
+     "host": "benziecounty.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "benziecountymi.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.benziecounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.benziecounty.net', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLEOFE",
+     "host": "www.benziecounty.net",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.benziecounty.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLEOFE",
+     "host": "www.benziecounty.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.benziecountymi.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "bengov.com",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 18,
+   "score": 5.0,
+   "seats": 7,
+   "verdict": "no-districts"
+  },
+  {
+   "board_url": "https://kalkaskacounty.net/government/board_of_commissioners/index.php",
+   "county": "Kalkaska",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 11,
+    "district_count": 7,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "mailto": 0,
+    "names_seen": 141,
+    "near_pairs": 7,
+    "seats": 7,
+    "tel": 1,
+    "text_bytes": 4020
+   },
+   "fips": "079",
+   "host": "kalkaskacounty.net",
+   "notes": [
+    "kalcounty.gov answers HTTP 200 in 274197 bytes and never names Kalkaska on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.kalcounty.gov answers a WAF challenge (server 'cloudflare') \u2014 an access control, not read and not worked around",
+    "kalcounty.com answers HTTP 200 in 274197 bytes and never names Kalkaska on any of 3 fetches \u2014 not taken as the county's own site",
+    "kalcounty.org answers a WAF challenge (server 'cloudflare') \u2014 an access control, not read and not worked around",
+    "www.kalcounty.com answers HTTP 200 in 274197 bytes and never names Kalkaska on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.kalcounty.org answers a WAF challenge (server 'cloudflare') \u2014 an access control, not read and not worked around",
+    "kalkaskacounty.com unreachable after 3 tries (SSLError)",
+    "www.kalkaskacounty.com unreachable after 3 tries (SSLError)",
+    "kalgov.com unreachable after 3 tries (ConnectionError)",
+    "kalgov.org answers HTTP 200 in 120613 bytes and never names Kalkaska on any of 3 fetches \u2014 not taken as the county's own site"
+   ],
+   "pop": 17939,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "kalcounty.gov",
+     "why": "names-another"
+    },
+    {
+     "detail": "WAF challenge (server 'cloudflare')",
+     "host": "www.kalcounty.gov",
+     "why": "challenge"
+    },
+    {
+     "detail": null,
+     "host": "kalcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "WAF challenge (server 'cloudflare')",
+     "host": "kalcounty.org",
+     "why": "challenge"
+    },
+    {
+     "detail": null,
+     "host": "www.kalcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "WAF challenge (server 'cloudflare')",
+     "host": "www.kalcounty.org",
+     "why": "challenge"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='kalkaskacounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVe",
+     "host": "kalkaskacounty.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.kalkaskacounty.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCe",
+     "host": "www.kalkaskacounty.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "kalgov.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "kalgov.org",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 14,
+   "score": 113.0,
+   "seats": 7,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": null,
+   "county": "Missaukee",
+   "evidence": null,
+   "fips": "113",
+   "host": "missaukee.org",
+   "notes": [
+    "missaukeecounty.com answers HTTP 200 in 114 bytes and never names Missaukee on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.missaukeecounty.com answers HTTP 200 in 114 bytes and never names Missaukee on any of 3 fetches \u2014 not taken as the county's own site",
+    "missaukee.org: neither its sitemap nor its front page names a board page",
+    "www.missaukee.org: neither its sitemap nor its front page names a board page",
+    "no confirmed host carries a board page this client can read"
+   ],
+   "pop": 15052,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "missaukeecounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.missaukeecounty.com",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 4,
+   "score": -1,
+   "seats": 7,
+   "verdict": "no-board-page"
+  },
+  {
+   "board_url": "https://arenaccountymi.gov/BOC/",
+   "county": "Arenac",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 4,
+    "distinct_near": 52,
+    "district_count": 5,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "mailto": 6,
+    "names_seen": 186,
+    "near_pairs": 5,
+    "seats": 5,
+    "tel": 0,
+    "text_bytes": 8139
+   },
+   "fips": "011",
+   "host": "arenaccountymi.gov",
+   "notes": [
+    "co.arenac.mi.us unreachable after 3 tries (SSLError)",
+    "www.co.arenac.mi.us unreachable after 3 tries (SSLError)",
+    "arenaccounty.com answers HTTP 200 in 114 bytes and never names Arenac on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.arenaccounty.com answers HTTP 200 in 114 bytes and never names Arenac on any of 3 fetches \u2014 not taken as the county's own site",
+    "aregov.com answers HTTP 200 in 3299 bytes and never names Arenac on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.aregov.com answers HTTP 200 in 3313 bytes and never names Arenac on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.arenac.org HTTP 404 on /"
+   ],
+   "pop": 15002,
+   "rejected": [
+    {
+     "detail": "HTTPSConnectionPool(host='co.arenac.mi.us', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLEOFError(",
+     "host": "co.arenac.mi.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.co.arenac.mi.us', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError",
+     "host": "www.co.arenac.mi.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "arenaccounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.arenaccounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "aregov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.aregov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.arenac.org",
+     "why": "http-404"
+    }
+   ],
+   "resolved": 10,
+   "score": 115.0,
+   "seats": 5,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://gogebiccountymi.gov/government/county_board/commissioners.php",
+   "county": "Gogebic",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 13,
+    "district_count": 7,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "mailto": 0,
+    "names_seen": 132,
+    "near_pairs": 7,
+    "seats": 7,
+    "tel": 0,
+    "text_bytes": 3388
+   },
+   "fips": "053",
+   "host": "gogebiccountymi.gov",
+   "notes": [
+    "gogebiccounty.com answers HTTP 200 in 114 bytes and never names Gogebic on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.gogebiccounty.com answers HTTP 200 in 114 bytes and never names Gogebic on any of 3 fetches \u2014 not taken as the county's own site"
+   ],
+   "pop": 14380,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "gogebiccounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.gogebiccounty.com",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 8,
+   "score": 110.0,
+   "seats": 7,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://crawfordco.org/offices-departments/board-of-commissioners/",
+   "county": "Crawford",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 0,
+    "district_count": 0,
+    "districts_found": [],
+    "mailto": 0,
+    "names_seen": 149,
+    "near_pairs": 0,
+    "seats": 7,
+    "tel": 0,
+    "text_bytes": 5548
+   },
+   "fips": "039",
+   "host": "crawfordco.org",
+   "notes": [
+    "crawfordcounty.com answers HTTP 200 in 114 bytes and never names Crawford on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.crawfordcounty.com answers HTTP 200 in 114 bytes and never names Crawford on any of 3 fetches \u2014 not taken as the county's own site",
+    "crawford.org unreachable after 3 tries (SSLError)",
+    "crawfordco.com answers HTTP 200 in 114 bytes and never names Crawford on any of 3 fetches \u2014 not taken as the county's own site",
+    "micrawford.com unreachable after 3 tries (SSLError)",
+    "www.crawford.org unreachable after 3 tries (SSLError)",
+    "www.crawfordco.com answers HTTP 200 in 114 bytes and never names Crawford on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.micrawford.com unreachable after 3 tries (SSLError)",
+    "crawford-county.com: neither its sitemap nor its front page names a board page",
+    "www.crawford-county.com: neither its sitemap nor its front page names a board page",
+    "www.crawfordco.org: neither its sitemap nor its front page names a board page"
+   ],
+   "pop": 12988,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "crawfordcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.crawfordcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='crawford.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerifica",
+     "host": "crawford.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "crawfordco.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='micrawford.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLEOFError(8",
+     "host": "micrawford.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.crawford.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVeri",
+     "host": "www.crawford.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.crawfordco.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.micrawford.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLEOFErr",
+     "host": "www.micrawford.com",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 12,
+   "score": 0.0,
+   "seats": 7,
+   "verdict": "no-districts"
+  },
+  {
+   "board_url": "https://presqueislecounty.org/board-of-commissioners/",
+   "county": "Presque Isle",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 1,
+    "distinct_near": 40,
+    "district_count": 5,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "mailto": 6,
+    "names_seen": 182,
+    "near_pairs": 5,
+    "seats": 5,
+    "tel": 0,
+    "text_bytes": 7681
+   },
+   "fips": "141",
+   "host": "presqueislecounty.org",
+   "notes": [
+    "presqueislecounty.com answers HTTP 200 in 114 bytes and never names Presque Isle on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.presqueislecounty.com answers HTTP 200 in 114 bytes and never names Presque Isle on any of 3 fetches \u2014 not taken as the county's own site",
+    "pi.org answers HTTP 200 in 83314 bytes and never names Presque Isle on any of 3 fetches \u2014 not taken as the county's own site",
+    "pigov.com answers HTTP 200 in 73 bytes and never names Presque Isle on any of 3 fetches \u2014 not taken as the county's own site",
+    "pregov.com answers HTTP 200 in 105358 bytes and never names Presque Isle on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.pi.org answers HTTP 200 in 83314 bytes and never names Presque Isle on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.pigov.com answers HTTP 200 in 73 bytes and never names Presque Isle on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.pregov.com answers HTTP 200 in 105358 bytes and never names Presque Isle on any of 3 fetches \u2014 not taken as the county's own site"
+   ],
+   "pop": 12982,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "presqueislecounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.presqueislecounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "pi.org",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "pigov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "pregov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.pi.org",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.pigov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.pregov.com",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 10,
+   "score": 115.0,
+   "seats": 5,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": null,
+   "county": "Iron",
+   "evidence": null,
+   "fips": "071",
+   "host": "ironcounty.us",
+   "notes": [
+    "ironcounty.com answers HTTP 200 in 114 bytes and never names Iron on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.ironcounty.com answers HTTP 200 in 114 bytes and never names Iron on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.ironcounty.org unreachable after 3 tries (ConnectionError)",
+    "ironcounty.us: neither its sitemap nor its front page names a board page",
+    "ironcounty.net: neither its sitemap nor its front page names a board page",
+    "ironcounty.org: neither its sitemap nor its front page names a board page",
+    "www.ironcounty.us: neither its sitemap nor its front page names a board page",
+    "www.ironcounty.net: neither its sitemap nor its front page names a board page",
+    "iron.org: neither its sitemap nor its front page names a board page",
+    "no confirmed host carries a board page this client can read"
+   ],
+   "pop": 11631,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "ironcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.ironcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.ironcounty.org",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 18,
+   "score": -1,
+   "seats": 5,
+   "verdict": "no-board-page"
+  },
+  {
+   "board_url": "https://lakecountymi.gov/board-of-commissioners/",
+   "county": "Lake",
+   "evidence": {
+    "cfemail": 14,
+    "chrome_dropped": 4,
+    "distinct_near": 28,
+    "district_count": 7,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "mailto": 0,
+    "names_seen": 118,
+    "near_pairs": 7,
+    "seats": 7,
+    "tel": 0,
+    "text_bytes": 11666
+   },
+   "fips": "085",
+   "host": "lakecountymi.gov",
+   "notes": [
+    "co.lake.mi.us unreachable after 3 tries (ConnectionError)",
+    "www.co.lake.mi.us unreachable after 3 tries (ConnectionError)",
+    "lakecounty.us HTTP 404 on /",
+    "lakecounty.com answers a HTTP 202, which is never a document \u2014 an access control, not read and not worked around",
+    "lakecounty.net answers HTTP 200 in 114 bytes and never names Lake on any of 3 fetches \u2014 not taken as the county's own site",
+    "lakecounty.org unreachable after 3 tries (ConnectionError)",
+    "lake-county.org answers HTTP 200 in 114 bytes and never names Lake on any of 3 fetches \u2014 not taken as the county's own site",
+    "lakecountymi.com answers HTTP 200 in 114 bytes and never names Lake on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.lakecounty.us HTTP 404 on /"
+   ],
+   "pop": 11029,
+   "rejected": [
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "co.lake.mi.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.co.lake.mi.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "lakecounty.us",
+     "why": "http-404"
+    },
+    {
+     "detail": "HTTP 202, which is never a document",
+     "host": "lakecounty.com",
+     "why": "challenge"
+    },
+    {
+     "detail": null,
+     "host": "lakecounty.net",
+     "why": "names-another"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "lakecounty.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "lake-county.org",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "lakecountymi.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.lakecounty.us",
+     "why": "http-404"
+    }
+   ],
+   "resolved": 32,
+   "score": 115.0,
+   "seats": 7,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://www.mackinaccounty.net/departments/commissioners/",
+   "county": "Mackinac",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 7,
+    "district_count": 5,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "mailto": 0,
+    "names_seen": 67,
+    "near_pairs": 5,
+    "seats": 5,
+    "tel": 0,
+    "text_bytes": 2723
+   },
+   "fips": "097",
+   "host": "mackinaccounty.net",
+   "notes": [
+    "mackinaccounty.com answers HTTP 200 in 114 bytes and never names Mackinac on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.mackinaccounty.com answers HTTP 200 in 114 bytes and never names Mackinac on any of 3 fetches \u2014 not taken as the county's own site"
+   ],
+   "pop": 10834,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "mackinaccounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.mackinaccounty.com",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 6,
+   "score": 110.0,
+   "seats": 5,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://alconacountymi.com/home/county-commissioners/",
+   "county": "Alcona",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 7,
+    "district_count": 5,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "mailto": 0,
+    "names_seen": 91,
+    "near_pairs": 5,
+    "seats": 5,
+    "tel": 5,
+    "text_bytes": 3600
+   },
+   "fips": "001",
+   "host": "alconacountymi.com",
+   "notes": [
+    "alconacounty.com answers HTTP 200 in 114 bytes and never names Alcona on any of 3 fetches \u2014 not taken as the county's own site",
+    "alcona-county.com unreachable after 3 tries (SSLError)",
+    "www.alconacounty.com answers HTTP 200 in 114 bytes and never names Alcona on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.alcona-county.com unreachable after 3 tries (SSLError)",
+    "www.alcona-county.org unreachable after 3 tries (ConnectionError)",
+    "alcona.org HTTP 403 on /",
+    "www.alcona.org HTTP 403 on /",
+    "alconacounty.gov: neither its sitemap nor its front page names a board page",
+    "www.alconacounty.gov: neither its sitemap nor its front page names a board page",
+    "alcona-county.org: neither its sitemap nor its front page names a board page"
+   ],
+   "pop": 10167,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "alconacounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='alcona-county.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVer",
+     "host": "alcona-county.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.alconacounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.alcona-county.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLEOF",
+     "host": "www.alcona-county.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.alcona-county.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "alcona.org",
+     "why": "http-403"
+    },
+    {
+     "detail": null,
+     "host": "www.alcona.org",
+     "why": "http-403"
+    }
+   ],
+   "resolved": 12,
+   "score": 113.0,
+   "seats": 5,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": null,
+   "county": "Montmorency",
+   "evidence": null,
+   "fips": "119",
+   "host": null,
+   "notes": [
+    "moncounty.com answers HTTP 200 in 114 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.moncounty.com answers HTTP 200 in 114 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site",
+    "montmorencycounty.us answers HTTP 200 in 114 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site",
+    "montmorencycounty.com answers HTTP 200 in 114 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.montmorencycounty.us answers HTTP 200 in 114 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.montmorencycounty.com answers HTTP 200 in 114 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site",
+    "mongov.com answers HTTP 200 in 159542 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.mongov.com answers HTTP 200 in 159542 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site",
+    "montmorency.org answers HTTP 200 in 114 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.montmorency.org answers HTTP 200 in 114 bytes and never names Montmorency on any of 3 fetches \u2014 not taken as the county's own site"
+   ],
+   "pop": 9153,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "moncounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.moncounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "montmorencycounty.us",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "montmorencycounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.montmorencycounty.us",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.montmorencycounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "mongov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.mongov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "montmorency.org",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.montmorency.org",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 10,
+   "score": -1,
+   "seats": 5,
+   "verdict": "no-confirmed-host"
+  },
+  {
+   "board_url": "https://www.oscodacountymi.com/board-of-commissioners/",
+   "county": "Oscoda",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 9,
+    "district_count": 5,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "mailto": 4,
+    "names_seen": 97,
+    "near_pairs": 5,
+    "seats": 5,
+    "tel": 0,
+    "text_bytes": 4037
+   },
+   "fips": "135",
+   "host": "oscodacountymi.com",
+   "notes": [
+    "oscodacounty.org unreachable after 3 tries (SSLError)",
+    "oscodacountymi.org HTTP 404 on /",
+    "www.oscodacountymi.org HTTP 404 on /"
+   ],
+   "pop": 8219,
+   "rejected": [
+    {
+     "detail": "HTTPSConnectionPool(host='oscodacounty.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLError(1,",
+     "host": "oscodacounty.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "oscodacountymi.org",
+     "why": "http-404"
+    },
+    {
+     "detail": null,
+     "host": "www.oscodacountymi.org",
+     "why": "http-404"
+    }
+   ],
+   "resolved": 7,
+   "score": 115.0,
+   "seats": 5,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://schoolcraftcounty.net/government/elected-officials/commissioners",
+   "county": "Schoolcraft",
+   "evidence": {
+    "cfemail": 5,
+    "chrome_dropped": 2,
+    "distinct_near": 8,
+    "district_count": 5,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "mailto": 0,
+    "names_seen": 151,
+    "near_pairs": 5,
+    "seats": 5,
+    "tel": 0,
+    "text_bytes": 5452
+   },
+   "fips": "153",
+   "host": "schoolcraftcounty.net",
+   "notes": [
+    "schoolcraftcounty.us answers HTTP 200 in 114 bytes and never names Schoolcraft on any of 3 fetches \u2014 not taken as the county's own site",
+    "schoolcraftcounty.com answers HTTP 200 in 114 bytes and never names Schoolcraft on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.schoolcraftcounty.us answers HTTP 200 in 114 bytes and never names Schoolcraft on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.schoolcraftcounty.com answers HTTP 200 in 114 bytes and never names Schoolcraft on any of 3 fetches \u2014 not taken as the county's own site",
+    "mischoolcraft.org unreachable after 3 tries (SSLError)",
+    "www.mischoolcraft.org unreachable after 3 tries (SSLError)"
+   ],
+   "pop": 8047,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "schoolcraftcounty.us",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "schoolcraftcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.schoolcraftcounty.us",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.schoolcraftcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='mischoolcraft.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVer",
+     "host": "mischoolcraft.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.mischoolcraft.org', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCer",
+     "host": "www.mischoolcraft.org",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 10,
+   "score": 115.0,
+   "seats": 5,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://algercounty.gov/government/board-of-commissioners/",
+   "county": "Alger",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 0,
+    "district_count": 0,
+    "districts_found": [],
+    "mailto": 0,
+    "names_seen": 122,
+    "near_pairs": 0,
+    "seats": 5,
+    "tel": 0,
+    "text_bytes": 5402
+   },
+   "fips": "003",
+   "host": "algercounty.gov",
+   "notes": [
+    "www.algercounty.gov: neither its sitemap nor its front page names a board page",
+    "algercounty.com: neither its sitemap nor its front page names a board page",
+    "algercounty.net: neither its sitemap nor its front page names a board page",
+    "algercounty.org: neither its sitemap nor its front page names a board page",
+    "www.algercounty.com: neither its sitemap nor its front page names a board page"
+   ],
+   "pop": 7980,
+   "rejected": [],
+   "resolved": 12,
+   "score": 0.0,
+   "seats": 5,
+   "verdict": "no-districts"
+  },
+  {
+   "board_url": null,
+   "county": "Baraga",
+   "evidence": null,
+   "fips": "013",
+   "host": "baragacounty.org",
+   "notes": [
+    "baragacounty.gov unreachable after 3 tries (SSLError)",
+    "www.baragacounty.gov unreachable after 3 tries (SSLError)",
+    "baragacounty.com answers HTTP 200 in 114 bytes and never names Baraga on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.baragacounty.com answers HTTP 200 in 114 bytes and never names Baraga on any of 3 fetches \u2014 not taken as the county's own site",
+    "baraga.org answers HTTP 200 in 114 bytes and never names Baraga on any of 3 fetches \u2014 not taken as the county's own site",
+    "bargov.com unreachable after 3 tries (SSLError)",
+    "www.baraga.org answers HTTP 200 in 114 bytes and never names Baraga on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.bargov.com unreachable after 3 tries (SSLError)",
+    "baragacounty.org: neither its sitemap nor its front page names a board page",
+    "www.baragacounty.org: neither its sitemap nor its front page names a board page",
+    "no confirmed host carries a board page this client can read"
+   ],
+   "pop": 5946,
+   "rejected": [
+    {
+     "detail": "HTTPSConnectionPool(host='baragacounty.gov', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVeri",
+     "host": "baragacounty.gov",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.baragacounty.gov', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCert",
+     "host": "www.baragacounty.gov",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "baragacounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.baragacounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "baraga.org",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='bargov.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificati",
+     "host": "bargov.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.baraga.org",
+     "why": "names-another"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='www.bargov.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerifi",
+     "host": "www.bargov.com",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 10,
+   "score": -1,
+   "seats": 5,
+   "verdict": "no-board-page"
+  },
+  {
+   "board_url": "https://ontonagoncounty.org/county-offices/board-of-commissioners/",
+   "county": "Ontonagon",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 14,
+    "district_count": 5,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "mailto": 0,
+    "names_seen": 86,
+    "near_pairs": 5,
+    "seats": 5,
+    "tel": 0,
+    "text_bytes": 4610
+   },
+   "fips": "131",
+   "host": "ontonagoncounty.org",
+   "notes": [
+    "ontonagoncounty.com answers HTTP 200 in 114 bytes and never names Ontonagon on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.ontonagoncounty.com answers HTTP 200 in 114 bytes and never names Ontonagon on any of 3 fetches \u2014 not taken as the county's own site",
+    "ontgov.com unreachable after 3 tries (ConnectionError)",
+    "ontonagon.org unreachable after 3 tries (ProxyError)",
+    "www.ontgov.com unreachable after 3 tries (ConnectionError)",
+    "www.ontonagon.org unreachable after 3 tries (ProxyError)"
+   ],
+   "pop": 5816,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "ontonagoncounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.ontonagoncounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "ontgov.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='ontonagon.com', port=443): Max retries exceeded with url: / (Caused by ProxyError('Unable to c",
+     "host": "ontonagon.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.ontgov.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": "HTTPSConnectionPool(host='ontonagon.com', port=443): Max retries exceeded with url: / (Caused by ProxyError('Unable to c",
+     "host": "www.ontonagon.org",
+     "why": "unreachable"
+    }
+   ],
+   "resolved": 8,
+   "score": 110.0,
+   "seats": 5,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": "https://www.lucecountymi.com/commissioners",
+   "county": "Luce",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 7,
+    "district_count": 5,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "mailto": 0,
+    "names_seen": 33,
+    "near_pairs": 5,
+    "seats": 5,
+    "tel": 0,
+    "text_bytes": 1427
+   },
+   "fips": "095",
+   "host": "lucecountymi.com",
+   "notes": [
+    "lucecounty.com answers HTTP 200 in 114 bytes and never names Luce on any of 3 fetches \u2014 not taken as the county's own site",
+    "lucecountymi.org unreachable after 3 tries (ConnectionError)",
+    "www.lucecounty.com answers HTTP 200 in 114 bytes and never names Luce on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.lucecountymi.org unreachable after 3 tries (ConnectionError)",
+    "luce.org is a CATCH-ALL \u2014 an impossible path returns 785952 bytes against the root's 785952, so a 200 here proves nothing",
+    "luceco.us answers HTTP 200 in 114 bytes and never names Luce on any of 3 fetches \u2014 not taken as the county's own site",
+    "coluce.com unreachable after 3 tries (ConnectionError)",
+    "luceco.com is a CATCH-ALL \u2014 an impossible path returns 85852 bytes against the root's 85852, so a 200 here proves nothing",
+    "luceco.org answers HTTP 200 in 114 bytes and never names Luce on any of 3 fetches \u2014 not taken as the county's own site"
+   ],
+   "pop": 5339,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "lucecounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "lucecountymi.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.lucecounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.lucecountymi.org",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "luce.org",
+     "why": "catch-all"
+    },
+    {
+     "detail": null,
+     "host": "luceco.us",
+     "why": "names-another"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "coluce.com",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "luceco.com",
+     "why": "catch-all"
+    },
+    {
+     "detail": null,
+     "host": "luceco.org",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 22,
+   "score": 110.0,
+   "seats": 5,
+   "verdict": "candidate"
+  },
+  {
+   "board_url": null,
+   "county": "Keweenaw",
+   "evidence": null,
+   "fips": "083",
+   "host": "keweenaw.org",
+   "notes": [
+    "keweenawcounty.com answers HTTP 200 in 114 bytes and never names Keweenaw on any of 3 fetches \u2014 not taken as the county's own site",
+    "keweenawcounty.net is a CATCH-ALL \u2014 an impossible path returns 43803 bytes against the root's 43803, so a 200 here proves nothing",
+    "keweenawcounty.org is a CATCH-ALL \u2014 an impossible path returns 43803 bytes against the root's 43803, so a 200 here proves nothing",
+    "www.keweenawcounty.com answers HTTP 200 in 114 bytes and never names Keweenaw on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.keweenawcounty.net is a CATCH-ALL \u2014 an impossible path returns 43803 bytes against the root's 43803, so a 200 here proves nothing",
+    "www.keweenawcounty.org is a CATCH-ALL \u2014 an impossible path returns 43803 bytes against the root's 43803, so a 200 here proves nothing",
+    "keweenawco.com answers HTTP 200 in 114 bytes and never names Keweenaw on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.keweenawco.com answers HTTP 200 in 114 bytes and never names Keweenaw on any of 3 fetches \u2014 not taken as the county's own site",
+    "keweenaw.org: neither its sitemap nor its front page names a board page",
+    "www.keweenaw.org: neither its sitemap nor its front page names a board page",
+    "no confirmed host carries a board page this client can read"
+   ],
+   "pop": 2046,
+   "rejected": [
+    {
+     "detail": null,
+     "host": "keweenawcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "keweenawcounty.net",
+     "why": "catch-all"
+    },
+    {
+     "detail": null,
+     "host": "keweenawcounty.org",
+     "why": "catch-all"
+    },
+    {
+     "detail": null,
+     "host": "www.keweenawcounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.keweenawcounty.net",
+     "why": "catch-all"
+    },
+    {
+     "detail": null,
+     "host": "www.keweenawcounty.org",
+     "why": "catch-all"
+    },
+    {
+     "detail": null,
+     "host": "keweenawco.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.keweenawco.com",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 10,
+   "score": -1,
+   "seats": 5,
+   "verdict": "no-board-page"
+  },
+  {
+   "board_url": "https://www.cheboygancounty.net/government/board-of-commissioners-boc/",
+   "county": "Cheboygan",
+   "evidence": {
+    "cfemail": 0,
+    "chrome_dropped": 0,
+    "distinct_near": 15,
+    "district_count": 7,
+    "districts_found": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "mailto": 8,
+    "names_seen": 215,
+    "near_pairs": 7,
+    "seats": 7,
+    "tel": 0,
+    "text_bytes": 11371
+   },
+   "fips": "031",
+   "host": "cheboygancounty.net",
+   "notes": [
+    "cheboygancounty.us unreachable after 3 tries (ConnectionError)",
+    "cheboygancounty.com answers HTTP 200 in 114 bytes and never names Cheboygan on any of 3 fetches \u2014 not taken as the county's own site",
+    "cheboygancounty.org HTTP 403 on /",
+    "www.cheboygancounty.us unreachable after 3 tries (ConnectionError)",
+    "www.cheboygancounty.com answers HTTP 200 in 114 bytes and never names Cheboygan on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.cheboygancounty.org HTTP 403 on /",
+    "chegov.com answers HTTP 200 in 114 bytes and never names Cheboygan on any of 3 fetches \u2014 not taken as the county's own site",
+    "www.chegov.com answers HTTP 200 in 114 bytes and never names Cheboygan on any of 3 fetches \u2014 not taken as the county's own site",
+    "micheboygan.com answers HTTP 200 in 114 bytes and never names Cheboygan on any of 3 fetches \u2014 not taken as the county's own site",
+    "crawl-delay honoured: {'cheboygancounty.net': 10.0, 'cheboygan.org': 10.0}"
+   ],
+   "pop": 0,
+   "rejected": [
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "cheboygancounty.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "cheboygancounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "cheboygancounty.org",
+     "why": "http-403"
+    },
+    {
+     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "host": "www.cheboygancounty.us",
+     "why": "unreachable"
+    },
+    {
+     "detail": null,
+     "host": "www.cheboygancounty.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.cheboygancounty.org",
+     "why": "http-403"
+    },
+    {
+     "detail": null,
+     "host": "chegov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "www.chegov.com",
+     "why": "names-another"
+    },
+    {
+     "detail": null,
+     "host": "micheboygan.com",
+     "why": "names-another"
+    }
+   ],
+   "resolved": 14,
+   "score": 115.0,
+   "seats": 7,
+   "verdict": "candidate"
+  }
+ ],
+ "measured": "2026-09-18"
+}

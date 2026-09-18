@@ -150,6 +150,34 @@ ACCEPTED_DROPS = {
     # The number still ships, once, county-level, as `boardPhone`. The builder
     # now REFUSES to write if a member row arrives carrying a phone at all, so
     # this is a field that cannot silently come back wrong.
+    # Removed on purpose, 2026-09-18, and it is the only entry here for a field
+    # that was read by NOBODY. `checked` was written on each officer record by
+    # build_wi_county_officer_roster.py and consumed nowhere: measured across
+    # all ten readers of wi-county-officers.json and the builder itself, which
+    # wrote it and never looked at it again. 240 booleans shipped to every
+    # reader. The card reads the county-level `contactChecked` and
+    # history.html's two tiles read `contactCheckedWeekly`; both survive.
+    #
+    # IT WAS ALSO A FALSE ALARM GENERATOR, which is how it was found. The flag
+    # is written only on a SUCCESSFUL read, so a county whose pages did not
+    # resolve lost it from every record while the preservation path correctly
+    # kept that county's contacts -- and this gate, measuring per source, read
+    # it as the field vanishing for that county. Any one county's failed week
+    # reddened a roster PR that changed nobody (#1008, Waushara). This gate was
+    # right about what it saw; the field should not have existed to be seen.
+    #
+    # THE ENTRY CANNOT GO STALE, which is what makes it the correct instrument
+    # here and the WRONG one for the Waushara drop it replaces: that field came
+    # back the next successful week, so an entry excusing it would have been
+    # stale on the next run, which audit_accepted() fails on by design. This one
+    # names a field the builder no longer writes at all.
+    "wi/data/app/wi-county-officers.json:checked":
+        "2026-09-18 -- a per-record flag nothing read, written only on a "
+        "successful read so a county's failed week read as the field "
+        "vanishing. build_wi_county_officer_roster.py no longer writes it; "
+        "the county-level contactChecked and contactCheckedWeekly, which the "
+        "card and the history tiles do read, are unchanged.",
+
     "ia/data/app/ia-supervisor-members.json:phone":
         "2026-08-28 -- the board switchboard, hoisted to county-level "
         "`boardPhone` and rendered as \"Board office\". It was never a "
