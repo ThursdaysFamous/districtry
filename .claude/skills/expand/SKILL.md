@@ -16,6 +16,7 @@ point here instead of each restating it.
 ## 1. Route the task (§0.3)
 
 - A new state → **new-state-instance**.
+- A CITY instance growing into its STATE (NYC → New York) → in place, in the order `docs/EXPANSION_GUIDE.md` §0.2.1 gives: the statewide tier as one dark change, the city layers as the §3.0 city tier, go-live as its own change, then **county-n-plus-1** per county. The worked plan is `docs/NY_EXPANSION_PLAN.md`.
 - One more county or roster inside an instance → **county-n-plus-1**; its roster mechanics → **roster-pipeline** for Illinois, or county-n-plus-1 §9 for Wisconsin and Iowa (one statewide workflow per concept, never a per-county triple); an Illinois county's villages → **municipal-officials**.
 - A new concept or toggle → **new-layer**, gated by §1.6.
 - A boundary that moved → **boundary-change**.
