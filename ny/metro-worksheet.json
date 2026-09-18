@@ -216,7 +216,7 @@
         "answers": "Which U.S. House district covers this address, and who represents it.",
         "boundary": [
           {
-            "label": "Congressional districts from the Census Bureau's TIGERweb Legislative service, clipped to the city and shipped with the app",
+            "label": "Congressional districts from the Census Bureau's TIGERweb Legislative service, statewide and shipped with the app",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer"
           }
         ],
@@ -252,7 +252,7 @@
         "answers": "Which New York State Senate district covers this address, and who holds the seat.",
         "boundary": [
           {
-            "label": "State Senate districts from the Census Bureau's TIGERweb Legislative service, clipped to the city and shipped with the app",
+            "label": "State Senate districts from the Census Bureau's TIGERweb Legislative service, statewide and shipped with the app",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer"
           }
         ],
@@ -383,7 +383,7 @@
         "answers": "Which New York State Assembly district covers this address, and who holds the seat.",
         "boundary": [
           {
-            "label": "State Assembly districts from the Census Bureau's TIGERweb Legislative service, clipped to the city and shipped with the app",
+            "label": "State Assembly districts from the Census Bureau's TIGERweb Legislative service, statewide and shipped with the app",
             "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer"
           }
         ],
