@@ -50,6 +50,16 @@ for a while. Record it in ACCEPTED_DROPS with a reason and a date rather than
 loosening a threshold for everyone — same posture as validate_sources.py's
 `blocked` flag.
 
+ONE ENTRY COVERS ONE EVENT AT BOTH GRAINS. A file is checked twice, once whole
+and once per source, and a big enough source can trip BOTH on the same drop: a
+county holding 20 of a field's 39 records fails per-source for vanishing and
+file-wide for taking half the file with it. Accepting the per-source drop used
+to leave the file-wide finding standing, and the only key that pass offers is a
+blanket `<file>:<field>` — which would stop watching every OTHER source for
+that field. So the file-wide pass now sets aside whatever the per-source pass
+has already accepted (excused_group_drops) and reports only the rest. The
+thresholds read the reduced number; the messages keep the real one.
+
 AND EVERY ACCEPTED ENTRY IS AUDITED AGAINST THE SHIPPED TREE, not only against
 the diff. This docstring used to claim an entry "prints a line every run so an
 entry cannot rot quietly", and that was false the day after the drop merged:
@@ -160,6 +170,38 @@ ACCEPTED_DROPS = {
         "2026-09-05 -- cityofpalo.com's robots.txt refuses `districtry` on "
         "every path, so the scraper asks before it fetches and never requests "
         "the page. The city still publishes; this project declines to read it.",
+
+    # Adams County, Wisconsin. All three land in one change, 2026-09-17, and
+    # all three have ONE cause: the county was re-sourced off the Clerk's
+    # directory PDF and onto the county's own per-district pages, because
+    # drive.google.com and drive.usercontent.google.com each disallow the
+    # download route independently (#944). The pages are the county's own and
+    # publish less. The full reasoning, including what was measured on which
+    # surface, is in wi/scripts/wi_county_board_scraper.py's
+    # DISTRICT_PAGE_COUNTIES header; what is here is what the gate needs.
+    #
+    # The 20 e-mails and 20 names survive intact and each seat GAINS a
+    # `profileUrl` to the page naming that supervisor, so the reader is not
+    # left with less to check a name against.
+    "wi/data/app/county-board-members.json:55001:phone":
+        "2026-09-17 -- the Clerk's directory printed a number per seat; the "
+        "county's own district pages print none, measured 0 of 20 rather than "
+        "'none found'. Carrying the directory's numbers frozen beside "
+        "weekly-refreshed fields would age them silently, so they are dropped.",
+    "wi/data/app/county-board-members.json:55001:role":
+        "2026-09-17 -- the county's website does not name its board chair. "
+        "Every district page gives the same heading, 'County Board Supervisor', "
+        "and the word 'chair' is absent from the raw HTML of the board page, "
+        "the districts listing and every district page. wi-county-officers.json "
+        "consequently WITHHOLDS Adams's chair rather than falling back to the "
+        "Blue Book's April 2025 name, who no longer sits. Ask 25 is what would "
+        "recover it.",
+    "wi/data/app/county-board-members.json:55001:documentUrl":
+        "2026-09-17 -- not a loss but a workaround whose cause is gone. It "
+        "shipped because Adams's board page named none of its supervisors, so "
+        "the directory was the only surface a reader could check a name "
+        "against; the per-district pages name them, so each seat cites its own "
+        "page instead. Jackson still carries this field and is still watched.",
 }
 
 
@@ -541,6 +583,44 @@ def git_show(ref, name, rel_dir_first=None):
     return None
 
 
+def excused_group_drops(name, old_groups, new_groups):
+    """(label, field) -> how many records an ACCEPTED_DROPS entry excuses.
+
+    THE TWO PASSES BELOW HAVE TO AGREE ABOUT WHAT IS EXCUSED. The per-source
+    pass accepts a named source dropping a field; the file-wide pass knows
+    nothing about sources and re-reported the same event at a coarser grain,
+    as a share of the file's total. Wisconsin's county board roster hit that
+    on 2026-09-17: Adams moved onto its county's own per-district pages, which
+    publish no `documentUrl`, and its 20 records were 20 of the file's 39 — so
+    an accepted per-source drop still failed the gate file-wide, and the only
+    key that shape offers is a blanket `<file>:<field>` that would also stop
+    watching JACKSON, the one other county carrying the field and the one
+    whose supervisors have no other citation.
+
+    So the excusal is computed ONCE, here, and read by both passes. The
+    conditions mirror the per-source pass exactly — same MIN_GROUP_RECORDS,
+    same MIN_PRESENT, same full-vanish requirement, same key lookup — because
+    a group this excuses that the per-source pass would still report, or the
+    reverse, is the disagreement it exists to prevent.
+    """
+    excused = {}
+    for label, old_sub in old_groups.items():
+        new_sub = new_groups.get(label)
+        if new_sub is None:
+            continue                      # a whole source leaving is its own finding
+        sub_old, sub_old_recs = coverage(old_sub)
+        sub_new, _ = coverage(new_sub)
+        if sub_old_recs < MIN_GROUP_RECORDS:
+            continue
+        for field, was in sub_old.items():
+            if sub_new.get(field, 0) or was < MIN_PRESENT:
+                continue                  # still published, or too few to judge
+            if ACCEPTED_DROPS.get("%s:%s:%s" % (name, label, field)) \
+                    or ACCEPTED_DROPS.get("%s:%s" % (name, field)):
+                excused[(label, field)] = was
+    return excused
+
+
 def compare(name, old, new):
     """Findings for one file. Each is (severity, message)."""
     out = []
@@ -552,29 +632,45 @@ def compare(name, old, new):
                             "builder's own count guard should have caught this — "
                             "check that it ran." % (old_recs, new_recs)))
 
+    # Grouped FIRST, because the file-wide pass has to know what the per-source
+    # pass already excuses — see excused_group_drops.
+    old_groups, new_groups = groups_of(old, name), groups_of(new, name)
+    excused = excused_group_drops(name, old_groups, new_groups)
+    excused_recs = {}
+    for (_, field), n in excused.items():
+        excused_recs[field] = excused_recs.get(field, 0) + n
+
     for field, was in sorted(old_counts.items()):
         now = new_counts.get(field, 0)
         if now >= was:
             continue
         accepted = ACCEPTED_DROPS.get("%s:%s" % (name, field))
-        lost = was - now
-        if now == 0 and was >= MIN_PRESENT:
+        spared = excused_recs.get(field, 0)
+        # What is left once the accepted per-source drops are set aside. The
+        # THRESHOLDS read this and the MESSAGES read the real counts, so a
+        # finding never quotes a number the file does not have.
+        held = now + spared
+        if held >= was:
+            continue                      # the whole loss is already accounted for
+        note = (" %d of the %d lost are an accepted per-source drop, so this is "
+                "the rest." % (spared, was - now)) if spared else ""
+        lost = was - held
+        if held == 0 and was >= MIN_PRESENT:
             msg = ("`%s` VANISHED — was on %d of %d records, now on none. This is "
                    "the shape of a source that changed how it publishes the field, "
                    "not of people leaving. Check the page before accepting it."
                    % (field, was, old_recs))
             out.append(("OK-accepted" if accepted else "FAIL",
-                        msg + (" ACCEPTED: %s" % accepted if accepted else "")))
-        elif lost >= MIN_ABSOLUTE_DROP and now <= was * 0.5:
+                        msg + note + (" ACCEPTED: %s" % accepted if accepted else "")))
+        elif lost >= MIN_ABSOLUTE_DROP and held <= was * 0.5:
             msg = ("`%s` lost %d of %d records (now %d) — at least half. Turnover "
-                   "moves these by ones and twos." % (field, lost, was, now))
+                   "moves these by ones and twos." % (field, was - now, was, now))
             out.append(("OK-accepted" if accepted else "FAIL",
-                        msg + (" ACCEPTED: %s" % accepted if accepted else "")))
+                        msg + note + (" ACCEPTED: %s" % accepted if accepted else "")))
 
     # Per-source pass: one broken county inside a shared file is invisible in
     # the totals above, which is exactly how the first draft of this script
     # waved Brown through.
-    old_groups, new_groups = groups_of(old, name), groups_of(new, name)
     for label, old_sub in sorted(old_groups.items()):
         new_sub = new_groups.get(label)
         if new_sub is None:

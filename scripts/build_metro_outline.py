@@ -96,8 +96,14 @@ import math
 import os
 import sys
 
-import requests
-
+# `requests` is imported INSIDE fetch_counties() and fetch_state() rather than
+# here. Those two are the only uses in this file and both are the TIGERweb
+# build path; the --check path never calls either, and `import requests` at
+# module scope puts the package in the import closure of every generator that
+# reaches this module — about.html's among them — so a workflow that only
+# CHECKS would have to pip-install a package it never runs. Measured 2026-09-17
+# by validate_workflow_deps.py on update-wi-county-board-roster.yml, which is
+# the seam that rule exists for.
 TIGERWEB = ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/"
             "State_County/MapServer/1/query")
 # Layer 0 of the SAME MapServer is states where layer 1 is counties, so the
@@ -1563,6 +1569,7 @@ OUTSIDE = {
 
 
 def fetch_counties():
+    import requests
     where = "STATE='%s' AND COUNTY IN (%s)" % (
         STATE_FIPS, ",".join("'%s'" % c for c in METRO_COUNTY_FIPS))
     resp = requests.get(TIGERWEB, headers=HEADERS, timeout=REQUEST_TIMEOUT, params={
@@ -1587,6 +1594,7 @@ def fetch_state():
     STATE_FIPS rather than STUSAB so the query keys on the same field the
     county half already uses; one feature is expected and anything else means
     the service moved."""
+    import requests
     resp = requests.get(TIGERWEB_STATE, headers=HEADERS, timeout=REQUEST_TIMEOUT, params={
         "where": "STATE='%s'" % STATE_FIPS,
         "outFields": "NAME",

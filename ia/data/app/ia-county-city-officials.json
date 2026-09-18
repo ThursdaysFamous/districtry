@@ -879,7 +879,7 @@
    {
     "county": "Crawford",
     "email": "cocityclerk@frontiernet.net",
-    "name": "Sara Bohlmann",
+    "name": "Kathryn Sassman",
     "phone": "(712) 678-3580",
     "role": "City Clerk"
    },
@@ -899,13 +899,6 @@
    },
    {
     "county": "Crawford",
-    "name": "Wayne Copeland",
-    "role": "City Council",
-    "termEnds": "2029",
-    "termLength": "4 Years"
-   },
-   {
-    "county": "Crawford",
     "name": "Chaise Hampton",
     "role": "City Council",
     "status": "Elected to Fill Vacancy for Term Remainder",
@@ -917,6 +910,14 @@
     "name": "Russ Maack",
     "role": "City Council",
     "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Crawford",
+    "name": "Haven Reese",
+    "role": "City Council",
+    "status": "Appointed to Fill Vacancy until Election",
+    "termEnds": "2029",
     "termLength": "4 Years"
    },
    {
@@ -5417,15 +5418,6 @@
    },
    {
     "county": "Cerro Gordo",
-    "name": "Mackenna Hambly",
-    "role": "City Council",
-    "seat": "At Large",
-    "status": "Appointed to Fill Vacancy until Election",
-    "termEnds": "2027",
-    "termLength": "4 Years"
-   },
-   {
-    "county": "Cerro Gordo",
     "name": "Darwin Johnson",
     "role": "City Council",
     "seat": "At Large",
@@ -5453,7 +5445,17 @@
     "name": "Makia Miller",
     "role": "City Council",
     "seat": "At Large",
-    "status": "Appointed to Fill Vacancy until Election",
+    "status": "Elected to Fill Vacancy for Term Remainder",
+    "termEnds": "2027",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Cerro Gordo",
+    "email": "reba.struchen4@gmail.com",
+    "name": "Reba Sparks",
+    "role": "City Council",
+    "seat": "At Large",
+    "status": "Elected to Fill Vacancy for Term Remainder",
     "termEnds": "2027",
     "termLength": "4 Years"
    }
