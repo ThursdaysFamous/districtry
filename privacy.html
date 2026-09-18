@@ -69,18 +69,52 @@ async src="//gc.zgo.at/count.js"></script>
      fails the build, and a hand-edit would be a claim about code that nothing
      verified. Change the app, then regenerate. -->
 <script>
-/* The theme a reader chose in an app carries to this page, and is applied
-   before first paint so there is no white flash on the way into dark. Only the
-   Illinois app writes this key today; for the others the media query below is
-   what decides, and a blocked localStorage (private mode) falls through to the
-   same place. */
+/* THE THEME BOOT, in ONE copy, for every page that is not the app.
+
+   It runs before first paint, so a reader who chose dark in an app never sees
+   a white flash on the way into it. PRECEDENCE IS THE READER'S CHOICE, THEN
+   THE OPERATING SYSTEM: the key is the one the app writes, so a choice made on
+   the map carries to every page on the site.
+
+   IT ALSO SETS THE THEME-COLOUR TAG, which is why this became one copy on
+   2026-09-18. That tag paints the BROWSER's own chrome — the address-bar tint,
+   the task-switcher card of an installed app — and it was a single static
+   value on all 52 pages that carry one, so a reader in dark mode got a
+   light-mode browser bar above a dark page. Every app has updated its own tag
+   at runtime since the rebrand; not one page around them did.
+
+   ONLY THE DARK VALUE IS STATED HERE. #15131b is --paper in the dark tier and
+   is the value every app's own theme handler sets, so the map and the pages
+   around it agree about what dark means in browser chrome. The LIGHT value is
+   left exactly as each page declares it, because four question pages still
+   declare the pre-rebrand navy #0b3d91 out of their worksheet's
+   brand.theme_color, and which colour those two instances brand with is a
+   question this script has no business settling.
+
+   A `media="(prefers-color-scheme: dark)"` meta variant would be shorter and
+   is the wrong mechanism here: it reads the OS and cannot see the stored
+   choice, so it would contradict the attribute this script has just set for
+   any reader whose choice differs from their system.
+
+   THE OS PREFERENCE IS READ OUTSIDE THE try, which the copies this replaces
+   did not do. They read the key and the media query in one block, so a reader
+   in private mode — where the read THROWS — was served light on a dark system,
+   while the comment beside the catch said the OS preference decided. */
 (function () {
+  var t = null;
   try {
     var stored = localStorage.getItem("districtry-theme");
-    if (stored === "dark" || stored === "light") {
-      document.documentElement.setAttribute("data-theme", stored);
-    }
-  } catch (e) { /* blocked storage — prefers-color-scheme decides */ }
+    if (stored === "dark" || stored === "light") t = stored;
+  } catch (e) { /* blocked storage (private mode): the OS preference decides */ }
+  if (t === null) {
+    t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark" : "light";
+  }
+  document.documentElement.setAttribute("data-theme", t);
+  if (t === "dark") {
+    var tc = document.querySelector('meta[name="theme-color"]');
+    if (tc) tc.setAttribute("content", "#15131b");
+  }
 })();
 </script>
 <style>
@@ -422,7 +456,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
             <th scope="row"><a href="/">The front door</a><small>/</small></th>
             <td><em>None.</em></td>
             <td><code class="k">https://districtry.goatcounter.com/count</code></td>
-            <td><em>Nothing.</em></td>
+            <td><code class="k">districtry-theme</code><small>read only</small></td>
             <td>Photon / Komoot</td>
             <td><em>None.</em></td>
           </tr>
@@ -483,7 +517,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
     <h2>What stays on your device</h2>
     <p>All of it is yours to clear at any time through your browser's &#34;clear site data&#34;.</p>
     <div class="card">
-      <p><strong>Light or dark.</strong> If you use the theme toggle, the choice is kept in <code class="k">localStorage</code> under <code class="k">districtry-theme</code> on Illinois, New York City, San Francisco, Wisconsin, Iowa and Michigan, so the site does not flash white on your next visit. It is one word, and it never leaves your browser.</p>
+      <p><strong>Light or dark.</strong> If you use the theme toggle, the choice is kept in <code class="k">localStorage</code> under <code class="k">districtry-theme</code> on Illinois, New York City, San Francisco, Wisconsin, Iowa and Michigan, so the site does not flash white on your next visit. It is one word, and it never leaves your browser. The front door reads it and never writes it, which is how the choice follows you off the map.</p>
       <p><strong>One display preference, per app.</strong> The school layer's type filter is remembered in <code class="k">sessionStorage</code> under <code class="k">chi-school-type-filter</code> on Illinois. It is a handful of true/false switches, it is erased when you close the tab, and it never leaves your browser.</p>
       <p><strong>One display preference, per app.</strong> The school layer's type filter is remembered in <code class="k">sessionStorage</code> under <code class="k">nyc-school-type-filter</code> on New York City. It is a handful of true/false switches, it is erased when you close the tab, and it never leaves your browser.</p>
       <p><strong>One display preference, per app.</strong> The school layer's type filter is remembered in <code class="k">sessionStorage</code> under <code class="k">sf-school-type-filter</code> on San Francisco. It is a handful of true/false switches, it is erased when you close the tab, and it never leaves your browser.</p>

@@ -122,6 +122,24 @@ INSTANCE_WORKSHEET = {
     "mi": "mi/metro-worksheet.json",
 }
 FONTFACE = os.path.join(REPO_ROOT, "fonts", "barlow-fontface.css")
+THEME_BOOT = os.path.join(REPO_ROOT, "engine", "shared", "theme-boot.txt")
+
+
+def shared_theme_boot():
+    """The theme boot, read from its ONE source.
+
+    engine/shared/theme-boot.txt is shared with the 42 authored pages that take
+    it as an ENGINE fence spliced by compose_app.py, and with the root-page
+    shell in build_privacy_page.py, which reads the same file for the same
+    reason: a fence in a GENERATED page would have to agree with whatever the
+    builder emits inside it, which means reading the file anyway. One source,
+    three consumers.
+
+    Returned verbatim, because this block is JavaScript and its indentation is
+    part of what ships.
+    """
+    with open(THEME_BOOT, encoding="utf-8") as fh:
+        return fh.read().rstrip("\n")
 OUT = os.path.join(REPO_ROOT, "index.html")
 
 # The canonical host TODAY. R5 moves this to districtry.com along with
@@ -668,6 +686,9 @@ def build():
   }
 })();
 </script>
+<script>
+%(themeboot)s
+</script>
 <style>
 %(fontface)s
 
@@ -675,10 +696,23 @@ def build():
   color-scheme: light dark;
 %(light)s
 }
+/* THE ATTRIBUTE TIER, and the guard on the media query beside it. Until
+   2026-09-18 this page had NEITHER: it read the OS preference and nothing
+   else, so it was the one page in the fleet that ignored a theme a reader had
+   chosen inside an app — every instance sub-page, every county page, privacy,
+   about, sponsorship and traffic have honoured that choice for weeks. It was
+   also why the front door could not have its theme-colour fixed: a tag keyed
+   on the stored choice would have contradicted a page painted from the OS.
+   The `:not([data-theme="light"])` guard is what lets an explicit light choice
+   win on a dark system; the attribute block is what lets an explicit dark
+   choice win on a light one. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
 %(dark)s
   }
+}
+:root[data-theme="dark"] {
+%(dark)s
 }
 
 * { box-sizing: border-box; }
@@ -731,8 +765,9 @@ header.mast { display: flex; align-items: center; gap: 14px; }
 .logo-mark { width: 64px; height: 64px; flex: 0 0 auto; color: var(--ink); }
 .logo-mark .mk-blend { mix-blend-mode: multiply; }
 @media (prefers-color-scheme: dark) {
-  .logo-mark .mk-blend { mix-blend-mode: screen; }
+  :root:not([data-theme="light"]) .logo-mark .mk-blend { mix-blend-mode: screen; }
 }
+:root[data-theme="dark"] .logo-mark .mk-blend { mix-blend-mode: screen; }
 .wordmark {
   font: var(--font-heading-weight) 52px/1 var(--font-heading);
   letter-spacing: .005em; color: var(--ink);
@@ -792,8 +827,9 @@ h1 {
 .search-button:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
 .search-button:disabled { opacity: .6; cursor: default; }
 @media (prefers-color-scheme: dark) {
-  .search-button { color: var(--paper); }
+  :root:not([data-theme="light"]) .search-button { color: var(--paper); }
 }
+:root[data-theme="dark"] .search-button { color: var(--paper); }
 .search-help { margin: 12px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--muted); }
 .search-status { margin: 10px 0 0; font-size: 13.5px; line-height: 1.4; min-height: 0; }
 .search-status.err { color: var(--error); }
@@ -1254,6 +1290,7 @@ footer .foot-links { margin-top: 12px; line-height: 28px; }
         "brand": light["brand-600"].strip(),
         "favicon": html.escape(favicon_uri, quote=True),
         "fontface": fontface + "\n" + FALLBACK_FACE,
+        "themeboot": shared_theme_boot(),
         "light": token_css(LIGHT_TOKENS, light, ":root"),
         "dark": token_css(DARK_TOKENS, dark, '[data-theme="dark"]', DARK_EXTRA,
                           indent="    "),
