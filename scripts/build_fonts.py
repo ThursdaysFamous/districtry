@@ -66,12 +66,38 @@ TARGETS = {
     },
     "landing": {
         "fonts_dir": "fonts",
-        # Exactly the four faces the landing page uses: Barlow Condensed 600
-        # (wordmark + headings) and 400 (the instance tag, per the brand spec),
-        # Barlow 400 (body) and 500 (small labels). Shipping a weight the page
-        # never sets is dead bytes in the published tree.
+        # The faces the ROOT PAGES paint, measured in a browser rather than read
+        # off their stylesheets -- which is the whole reason this list was wrong.
+        # Barlow Condensed 600 (wordmark + headings) and 400 (the instance tag,
+        # per the brand spec); Barlow 400 (body), 500 (small labels), 600 and
+        # 700.
+        #
+        # 600 AND 700 WERE MISSING UNTIL 2026-09-18 and the pages painted them
+        # anyway, synthesised from 500 by the browser. Neither is visible in a
+        # `font-weight:` grep of those files, which is how a list written from
+        # the CSS came to say "exactly the four faces the landing page uses":
+        # 600 arrives through the shell's `font: 600 13.5px/1 var(--font-body)`
+        # on the masthead pills, and 700 through no rule at all -- it is the
+        # browser's default bold for <strong>, <b> and <th>, of which
+        # about.html alone paints fifteen. A synthesised bold is smeared rather
+        # than drawn, at the weight a reader meets most often in prose.
+        #
+        # The rule "shipping a weight the page never sets is dead bytes" still
+        # holds; the mistake was reading "sets" as "names in a declaration".
+        # Re-measure with a browser (computed fontFamily + fontWeight over every
+        # text-bearing element) before trimming this list.
+        #
+        # AND THIS SET IS NOT THE ROOT'S ALONE. fonts/barlow-fontface.css is
+        # read by build_landing_page, build_privacy_page (privacy + about),
+        # build_coverage_map, build_history_page and build_county_pages -- so a
+        # weight added here also reaches the four instance history pages and the
+        # 188 per-county pages, which resolve `url(fonts/...)` against their own
+        # instance's directory (the county pages rewrite it to `../fonts/`).
+        # Every instance already carries Barlow 600 and 700, so those 192 pages
+        # stopped synthesising their <strong> on the same change. Regenerate
+        # them when this list moves; their --checks fail if you do not.
         "families": ("?family=Barlow+Condensed:wght@400;600"
-                     "&family=Barlow:wght@400;500"),
+                     "&family=Barlow:wght@400;500;600;700"),
     },
 }
 # A real browser UA so Google serves woff2 (not the legacy ttf it hands old UAs).

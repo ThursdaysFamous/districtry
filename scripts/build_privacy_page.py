@@ -92,6 +92,23 @@ def shared_goatcounter(indent=""):
     return "\n".join(indent + ln.strip() for ln in markup.splitlines())
 
 
+def shared_theme_boot():
+    """The theme boot, read from its ONE source.
+
+    Same contract again, with one difference: this block is JAVASCRIPT rather
+    than markup, so its leading comment is part of the block a reader of the
+    published page is served, and its indentation is load-bearing. It is
+    returned verbatim -- the authored pages take engine/shared/theme-boot.txt
+    as an ENGINE fence and get the same bytes from compose_app.py.
+
+    The copy this replaced applied a stored choice and left the OS preference
+    to the media query, and set no theme-colour at all.
+    """
+    path = os.path.join(REPO_ROOT, "engine", "shared", "theme-boot.txt")
+    with open(path, encoding="utf-8") as fh:
+        return fh.read().rstrip("\n")
+
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 # The token file, the mark and the self-hosted font CSS are the LANDING page's
@@ -309,15 +326,31 @@ def measure(rel, name, url, tag):
     m = re.search(r'data-goatcounter="(https://([a-z0-9-]+)\.goatcounter\.com/count)"', src)
     app["goatcounter"] = {"url": m.group(1), "site": m.group(2)} if m else None
 
+    # WRITES AND READS ARE MEASURED APART, and that distinction is the whole
+    # accuracy of the sentence this feeds. The pattern used to match
+    # get|set|removeItem together, which was right while the only surfaces
+    # touching a key were the ones that wrote it: every app has a theme toggle,
+    # so every app both set and read `districtry-theme`. The front door gained
+    # the shared theme boot on 2026-09-18 and READS that key without ever
+    # writing one — it has no toggle — and a measurement that could not tell
+    # the two apart published "the choice is kept ... on The front door",
+    # which claims a store this site does not make there.
     storage = {}
+    reads = {}
     for store in ("sessionStorage", "localStorage"):
-        found = set()
-        for mm in re.finditer(
-                store + r"\.(?:get|set|remove)Item\(\s*([A-Za-z_$][\w$]*|\"[^\"]*\"|'[^']*')",
-                src):
-            found.add(resolve_key(src, mm.group(1)))
-        storage[store] = sorted(found)
+        key_re = r"\(\s*([A-Za-z_$][\w$]*|\"[^\"]*\"|'[^']*')"
+        # NOT named `read`: this module already has a read() helper and this
+        # function calls it, so a local of that name makes the earlier call an
+        # unbound local.
+        wrote, read_only = set(), set()
+        for mm in re.finditer(store + r"\.(?:set|remove)Item" + key_re, src):
+            wrote.add(resolve_key(src, mm.group(1)))
+        for mm in re.finditer(store + r"\.getItem" + key_re, src):
+            read_only.add(resolve_key(src, mm.group(1)))
+        storage[store] = sorted(wrote)
+        reads[store] = sorted(read_only - wrote)
     app["storage"] = storage
+    app["storage_read"] = reads
 
     app["geocoders"] = [h for h in GEOCODERS if h in src_all]
     # WHAT has_map GATES: the fleet-wide parity claims (identical analytics
@@ -626,6 +659,13 @@ def render_app_rows(apps):
         for label, store in (("session", "sessionStorage"), ("kept", "localStorage")):
             for k in a["storage"][store]:
                 stored.append("%s<small>%s</small>" % (code(k), label))
+        # A key this surface only READS is named too, because a reader asking
+        # what a page does with their browser storage is owed the read as well
+        # as the write — but it is never labelled "kept", which would claim a
+        # store that does not happen here.
+        for store in ("sessionStorage", "localStorage"):
+            for k in a["storage_read"][store]:
+                stored.append("%s<small>read only</small>" % code(k))
         search = ", ".join(GEOCODERS[h][0] for h in a["geocoders"]) or "<em>No search box.</em>"
         point = ("%d layer%s" % (a["point_query_layers"], "" if a["point_query_layers"] == 1 else "s")
                  if a["point_query_layers"] else "<em>None.</em>")
@@ -736,11 +776,25 @@ def render_storage_paragraphs(apps):
                 "switches, it is erased when you close the tab, and it never leaves your "
                 "browser.</p>" % (code(store), code(key), esc(joined(users))))
         elif key == "districtry-theme":
+            # `users` is the surfaces that WRITE the key, which is what "kept"
+            # means; the surfaces that only read it are named separately,
+            # because that is how the choice follows a reader off the map.
+            readers = sorted(a["name"] for a in apps
+                             if key in a["storage_read"].get(store, []))
+            # NAMES THE MEASURED SURFACES, never "every other page": this
+            # generator reads the seven surfaces in metros.json plus the root,
+            # and the site's other pages are outside what it measures. A
+            # sentence claiming all of them would be a claim this page cannot
+            # check, on the page whose whole standard is that it checks.
+            carried = (" %s read%s it and never write%s it, which is how the choice "
+                       "follows you off the map."
+                       % (esc(joined(readers)), "" if len(readers) > 1 else "s",
+                          "" if len(readers) > 1 else "s")) if readers else ""
             out.append(
                 "<p><strong>Light or dark.</strong> If you use the theme toggle, the choice is "
                 "kept in %s under %s on %s, so the site does not flash white on your next "
-                "visit. It is one word, and it never leaves your browser.</p>"
-                % (code(store), code(key), esc(joined(users))))
+                "visit. It is one word, and it never leaves your browser.%s</p>"
+                % (code(store), code(key), esc(joined(users)), carried))
         else:
             out.append(
                 "<p><strong>%s.</strong> Stored in %s on %s. It never leaves your browser.</p>"
@@ -907,19 +961,7 @@ SHELL_HEAD = """<!DOCTYPE html>
 </script>
 %(generator)s
 <script>
-/* The theme a reader chose in an app carries to this page, and is applied
-   before first paint so there is no white flash on the way into dark. Only the
-   Illinois app writes this key today; for the others the media query below is
-   what decides, and a blocked localStorage (private mode) falls through to the
-   same place. */
-(function () {
-  try {
-    var stored = localStorage.getItem("districtry-theme");
-    if (stored === "dark" || stored === "light") {
-      document.documentElement.setAttribute("data-theme", stored);
-    }
-  } catch (e) { /* blocked storage — prefers-color-scheme decides */ }
-})();
+%(themeboot)s
 </script>
 <style>
 %(fontface)s
@@ -1300,6 +1342,7 @@ def render_page(pagetitle, pagesub, generator, body, title, desc, jsonld,
         "brand": light["brand-600"].strip(),
         "favicon": esc(favicon_uri),
         "fontface": fontface + "\n" + FALLBACK_FACE,
+        "themeboot": shared_theme_boot(),
         "light": token_css(LIGHT_TOKENS, light, ":root"),
         "dark": token_css(DARK_TOKENS, dark, '[data-theme="dark"]', DARK_EXTRA,
                           indent="    "),

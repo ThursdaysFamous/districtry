@@ -1,0 +1,55 @@
+/* THE THEME BOOT, in ONE copy, for every page that is not the app.
+
+   It runs before first paint, so a reader who chose dark in an app never sees
+   a white flash on the way into it. PRECEDENCE IS THE READER'S CHOICE, THEN
+   THE OPERATING SYSTEM: the key is the one the app writes, so a choice made on
+   the map carries to every page on the site.
+
+   IT ALSO SETS THE THEME-COLOUR TAG, which is why this became one copy on
+   2026-09-18. That tag paints the BROWSER's own chrome — the address-bar tint,
+   the task-switcher card of an installed app — and it was a single static
+   value on all 52 pages that carry one, so a reader in dark mode got a
+   light-mode browser bar above a dark page. Every app has updated its own tag
+   at runtime since the rebrand; not one page around them did.
+
+   ONLY THE DARK VALUE IS STATED HERE. #15131b is --paper in the dark tier and
+   is the value every app's own theme handler sets, so the map and the pages
+   around it agree about what dark means in browser chrome. The LIGHT value is
+   left exactly as each page declares it, which is the light tier's own accent
+   on every page in the fleet.
+
+   THE SENTENCE HERE BEFORE 2026-09-18 BLAMED THE WORKSHEETS AND WAS WRONG. It
+   said four NY and SF question pages declared the pre-rebrand navy #0b3d91
+   "out of their worksheet's brand.theme_color"; both worksheets said #6d3fd1
+   the whole time. Those four are AUTHORED pages, not generated ones, so
+   question_page.py's head -- which does restate the tag from the worksheet --
+   never reached them, and a tag written before the rebrand sat there through
+   every regeneration. Naming the wrong owner is how a stale value survives
+   being found: the worksheet was checked, read correct, and the page went on
+   saying navy.
+
+   A `media="(prefers-color-scheme: dark)"` meta variant would be shorter and
+   is the wrong mechanism here: it reads the OS and cannot see the stored
+   choice, so it would contradict the attribute this script has just set for
+   any reader whose choice differs from their system.
+
+   THE OS PREFERENCE IS READ OUTSIDE THE try, which the copies this replaces
+   did not do. They read the key and the media query in one block, so a reader
+   in private mode — where the read THROWS — was served light on a dark system,
+   while the comment beside the catch said the OS preference decided. */
+(function () {
+  var t = null;
+  try {
+    var stored = localStorage.getItem("districtry-theme");
+    if (stored === "dark" || stored === "light") t = stored;
+  } catch (e) { /* blocked storage (private mode): the OS preference decides */ }
+  if (t === null) {
+    t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark" : "light";
+  }
+  document.documentElement.setAttribute("data-theme", t);
+  if (t === "dark") {
+    var tc = document.querySelector('meta[name="theme-color"]');
+    if (tc) tc.setAttribute("content", "#15131b");
+  }
+})();

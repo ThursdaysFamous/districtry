@@ -122,6 +122,24 @@ INSTANCE_WORKSHEET = {
     "mi": "mi/metro-worksheet.json",
 }
 FONTFACE = os.path.join(REPO_ROOT, "fonts", "barlow-fontface.css")
+THEME_BOOT = os.path.join(REPO_ROOT, "engine", "shared", "theme-boot.txt")
+
+
+def shared_theme_boot():
+    """The theme boot, read from its ONE source.
+
+    engine/shared/theme-boot.txt is shared with the 42 authored pages that take
+    it as an ENGINE fence spliced by compose_app.py, and with the root-page
+    shell in build_privacy_page.py, which reads the same file for the same
+    reason: a fence in a GENERATED page would have to agree with whatever the
+    builder emits inside it, which means reading the file anyway. One source,
+    three consumers.
+
+    Returned verbatim, because this block is JavaScript and its indentation is
+    part of what ships.
+    """
+    with open(THEME_BOOT, encoding="utf-8") as fh:
+        return fh.read().rstrip("\n")
 OUT = os.path.join(REPO_ROOT, "index.html")
 
 # The canonical host TODAY. R5 moves this to districtry.com along with
@@ -142,6 +160,87 @@ IS_SHELL = re.compile(r'http-equiv=["\']?refresh|name=["\']?robots["\']?[^>]*noi
                       re.I)
 
 CANONICAL = "https://districtry.com/"
+
+# ---------------------------------------------------------------------------
+# THE QUESTION ROWS: the front door groups the question pages BY QUESTION, not
+# by place. It grouped by place until 2026-09-18, which put the page's own
+# question in the link text — good anchor text, but it printed "Who is my U.S.
+# representative?" six times and stacked six place headings down the page. The
+# row carries the question once, as a heading, and each link names the place it
+# answers for.
+#
+# THE TRADE IS ANCHOR TEXT, so the chip carries a TOPIC as well as a place: a
+# bare "Illinois" says nothing about where it points when read out of context,
+# which is the test Google's own link guidance sets. Every chip's text is
+# therefore "<place> · <topic>", and build() FAILS if any two come out alike.
+#
+# STILL DISCOVERED, NEVER LISTED: the pages themselves come from the tree
+# exactly as before (a .html in an instance folder that is not the app, a
+# sub-page or a shell). These tables say only how a discovered page is GROUPED
+# and LABELLED, and the audit below fails on a page no row claims, a row no
+# page fills, and an override naming a page that is not there. A new state
+# needs no edit here at all — its congress.html and state-legislature.html take
+# the defaults; a new KIND of page is what has to be filed.
+QUESTION_ROWS = [
+    ("Who is my U.S. representative?", ("congress.html",)),
+    ("Who is my state legislator?", ("state-legislature.html",)),
+    ("Who sits on my county board?", ("county-board.html", "county-supervisor.html",
+                                      "county-commissioner.html")),
+    ("Who represents me on the city council?", ("ward.html", "council-district.html",
+                                                "supervisor-district.html")),
+    ("What police district am I in?", ("police-district.html", "police-precinct.html")),
+    ("Which school board district am I in?", ("school-board.html",)),
+    ("Which court elects my judges?", ("judicial-subcircuit.html", "circuit-court.html")),
+    # The tail row, for a concept only one place answers. A row of its own per
+    # page would be three headings each naming a single link, which is the
+    # shape the regrouping exists to retire.
+    ("Also answered in one place", ("precinct.html", "township.html",
+                                    "community-board.html")),
+]
+
+# The topic each page's chip names, by page basename — the default for every
+# instance that carries that page.
+CHIP_TOPIC = {
+    "congress.html": "U.S. House",
+    "state-legislature.html": "Legislature",
+    "county-board.html": "county board",
+    "county-supervisor.html": "supervisors",
+    "county-commissioner.html": "commissioners",
+    "ward.html": "alderman, by ward",
+    "council-district.html": "Council district",
+    "supervisor-district.html": "supervisor district",
+    "police-district.html": "police district",
+    "police-precinct.html": "NYPD precinct",
+    "school-board.html": "school board",
+    "judicial-subcircuit.html": "judicial subcircuit",
+    "circuit-court.html": "circuit court",
+    "precinct.html": "precinct",
+    "township.html": "township",
+    "community-board.html": "community board",
+}
+
+# Where an instance's own word for the same page differs. The body a reader
+# would name is the informative one, and it is what makes six otherwise
+# identical legislature chips say six different things.
+CHIP_TOPIC_BY_INSTANCE = {
+    ("il", "state-legislature.html"): "General Assembly",
+    ("ny", "state-legislature.html"): "NY Legislature",
+    ("ca", "state-legislature.html"): "CA Legislature",
+    ("il", "county-board.html"): "commissioners",
+    ("wi", "county-board.html"): "supervisors",
+    ("il", "school-board.html"): "Board of Education",
+}
+
+# Where the page answers for a CITY inside the instance rather than the whole
+# of it. Illinois serves 93 counties; its ward, police-district and
+# school-board pages answer for Chicago alone, and a chip reading "Illinois"
+# on those three would claim ground the page does not cover.
+CHIP_PLACE = {
+    ("il", "ward.html"): "Chicago",
+    ("il", "police-district.html"): "Chicago",
+    ("il", "school-board.html"): "Chicago",
+}
+
 
 # The one external profile that carries the name "districtry" and that this
 # project can point at as itself. It goes in the WebSite node's sameAs (below)
@@ -358,58 +457,54 @@ def render_independence():
     return ('    <p class="independence">%s</p>\n' % html.escape(INDEPENDENCE))
 
 
-def render_pills(metros):
-    """One pill per place: name, and the layer count as a quiet trailing number.
+def render_places(metros):
+    """One row per place: its tag, its name, how much of it is covered, and the
+    layer count read from its own worksheet.
 
-    The number is bare on screen because that is the design, and bare is
-    meaningless read aloud — "Illinois 39" — so the anchor carries an
-    aria-label that says what the number counts. `title` keeps the blurb as a
-    sighted hover hint; it is deliberately not the accessible name, since a
-    two-line blurb is a poor thing to hear in place of a link's text.
+    This was a pill row until 2026-09-18. A pill could carry the name and a bare
+    number and nothing else, so the SCOPE — the one fact that says whether a
+    reader's county is in or out — sat in a `title` attribute no phone shows.
+    The row has room for it, and sits beside the coverage map rather than under
+    a heading of its own, which is the section this merges into one.
+
+    The count is bare in `.place-n` because the browser test reads that span as
+    an integer; the word it counts is its own span beside it, so the visible
+    text still reads "40 layers". The anchor's aria-label says the whole row in
+    one breath, since a screen reader otherwise gets four disconnected spans.
     """
     rows = []
     for m in metros:
         n = instance_layer_count(m["tag"])
         rows.append(
-            '        <a class="pill" href="%s" title="%s" aria-label="%s, %d layers">%s'
-            '<span class="pill-n">%d</span></a>'
+            '        <li><a class="place" href="%s" title="%s" aria-label="%s, %s, %d layers">'
+            '<span class="place-tag">%s</span>'
+            '<span class="place-id"><span class="place-name">%s</span>'
+            '<span class="place-scope">%s</span></span>'
+            '<span class="place-n">%d</span><span class="place-n-unit">&nbsp;layers</span>'
+            '<span class="place-go" aria-hidden="true">&#8599;</span></a></li>'
             % (html.escape(m["url"], quote=True),
                html.escape(m["blurb"], quote=True),
-               html.escape(m["landing_name"], quote=True), n,
+               html.escape(m["landing_name"], quote=True),
+               html.escape(m["scope"], quote=True), n,
+               html.escape(m["tag"]),
                html.escape(m["landing_name"]),
+               html.escape(m["scope"]),
                n)
         )
     return "\n".join(rows)
 
 
-def render_lookups(metros):
-    """The question pages, grouped by place, discovered from the tree.
+def question_pages(metros):
+    """Every question page in the tree, as (tag, basename, label) per instance.
 
-    WHY THIS BLOCK EXISTS. The 2026-09-15 search audit found the front door
-    linking NONE of the eleven pages that answer a question in words — the
-    pages a search for "who is my alderman" should land on — while
-    /il/ward.html sat in the sitemap uncrawled, "URL is unknown" to Google.
-    Everything about that page was already right: 200, self-canonical,
-    index/follow, sitemapped, linked from seven Illinois pages. What it did not
-    have was a link from the site's most-linked page.
-
-    DISCOVERED, NEVER LISTED. A question page is any .html directly inside an
-    instance folder that is not the app, the FAQ, the sources page or the
-    history page. So a new topic page joins this block the day it ships and
-    leaves it the day it goes, which is the same rule build_sitemap.py uses to
-    decide what is a topic page at all.
-
-    THE LABEL IS THE PAGE'S OWN <title>, first clause, cut at the question mark
-    — il/ward.html titles itself "Who is my alderman? Chicago wards" and only
-    the question belongs in a link. Two instances legitimately ask the SAME
-    question (Wisconsin and Iowa both "Who is my county supervisor?"), which is
-    why the block groups by place rather than presenting one flat list.
+    A question page is any .html directly inside an instance folder that is not
+    the app, one of the three sub-pages, or a redirect shell — the same rule
+    build_sitemap.py uses to decide what is a topic page at all. So a new page
+    joins the front door the day it ships and leaves it the day it goes.
     """
-    groups = []
+    found = []
     for m in metros:
-        tag = m["tag"]
-        folder = os.path.join(REPO_ROOT, tag)
-        rows = []
+        folder = os.path.join(REPO_ROOT, m["tag"])
         for path in sorted(glob.glob(os.path.join(folder, "*.html"))):
             base = os.path.basename(path)
             if base in NOT_A_LOOKUP:
@@ -418,28 +513,92 @@ def render_lookups(metros):
                 head = f.read(8192)
             if IS_SHELL.search(head):
                 continue
-            found = re.search(r"<title>([^<]*)</title>", head)
-            if not found:
+            if not re.search(r"<title>([^<]*)</title>", head):
                 fail("%s/%s has no <title> in its first 8KB, so the front "
-                     "door cannot label a link to it." % (tag, base))
-            label = html.unescape(found.group(1)).split(" — ")[0].strip()
-            if "?" in label:
-                label = label.split("?")[0].strip() + "?"
-            rows.append((base, label))
-        if not rows:
-            continue
-        links = "\n".join(
-            '          <li><a href="/%s/%s">%s</a></li>' % (
-                tag, base, html.escape(label)) for base, label in rows)
-        groups.append(
-            '      <div class="lookup-group">\n'
-            '        <h3>%s</h3>\n'
-            '        <ul>\n%s\n        </ul>\n'
-            '      </div>' % (html.escape(m["landing_name"]), links))
-    if not groups:
+                     "door cannot label a link to it." % (m["tag"], base))
+            found.append((m["tag"], base))
+    return found
+
+
+def render_asks(metros):
+    """The question rows, and the audit that keeps the tables honest.
+
+    WHY THIS BLOCK EXISTS AT ALL. The 2026-09-15 search audit found the front
+    door linking NONE of the pages that answer a question in words, while
+    /il/ward.html sat in the sitemap uncrawled, "URL is unknown" to Google.
+    Everything about that page was already right: 200, self-canonical,
+    index/follow, sitemapped, linked from seven Illinois pages. What it did not
+    have was a link from the site's most-linked page. That is still what this
+    block is for; only its shape changed.
+
+    FOUR THINGS FAIL THE BUILD, and each is a way the tables could drift from
+    the tree without anybody noticing: a discovered page no row claims, a row
+    whose pages are all gone, an override naming a page that is not there, and
+    two chips that come out with the same words. The last is the one this
+    grouping exists to avoid — a chip's text is all the link says about where
+    it points, so two alike means one of them is unlabelled.
+    """
+    pages = question_pages(metros)
+    if not pages:
         fail("no question pages found in any instance folder — this block "
              "cannot be empty, and an empty one would ship silently.")
-    return "\n".join(groups)
+    order = {m["tag"]: i for i, m in enumerate(metros)}
+    names = {m["tag"]: m["landing_name"] for m in metros}
+
+    claimed, groups = set(), []
+    for question, bases in QUESTION_ROWS:
+        chips = []
+        for tag, base in sorted(pages, key=lambda tb: (order[tb[0]], bases.index(tb[1])
+                                                       if tb[1] in bases else 0)):
+            if base not in bases:
+                continue
+            claimed.add((tag, base))
+            topic = CHIP_TOPIC_BY_INSTANCE.get((tag, base)) or CHIP_TOPIC.get(base)
+            if not topic:
+                fail("%s/%s has no CHIP_TOPIC, so its link would read as a bare "
+                     "place name. Add one in build_landing_page.py." % (tag, base))
+            place = CHIP_PLACE.get((tag, base), names[tag])
+            chips.append((place, topic, "/%s/%s" % (tag, base)))
+        if not chips:
+            fail("the question row %r matches no page in any instance — every "
+                 "page it names has gone. Retire the row." % question)
+        groups.append((question, chips))
+
+    unclaimed = sorted(set(pages) - claimed)
+    if unclaimed:
+        fail("no question row claims %s. Every question page needs a row in "
+             "QUESTION_ROWS, or the front door links it nowhere."
+             % ", ".join("%s/%s" % tb for tb in unclaimed))
+    for table, label in ((CHIP_TOPIC_BY_INSTANCE, "CHIP_TOPIC_BY_INSTANCE"),
+                         (CHIP_PLACE, "CHIP_PLACE")):
+        stale = sorted(k for k in table if k not in claimed)
+        if stale:
+            fail("%s names %s, which is not a question page in this tree."
+                 % (label, ", ".join("%s/%s" % tb for tb in stale)))
+
+    seen = {}
+    for question, chips in groups:
+        for place, topic, href in chips:
+            text = "%s \u00b7 %s" % (place, topic)
+            if text in seen:
+                fail("two question links would both read %r (%s and %s). A "
+                     "chip's text is the whole of what the link says about "
+                     "where it points, so give one of them its own topic."
+                     % (text, seen[text], href))
+            seen[text] = href
+
+    out = []
+    for question, chips in groups:
+        links = "\n".join(
+            '          <li><a class="chip" href="%s">%s<span class="chip-topic">'
+            ' &#183; %s</span></a></li>' % (html.escape(href, quote=True),
+                                            html.escape(place), html.escape(topic))
+            for place, topic, href in chips)
+        out.append('      <div class="ask">\n'
+                   '        <h3>%s</h3>\n'
+                   '        <ul class="ask-chips">\n%s\n        </ul>\n'
+                   '      </div>' % (html.escape(question), links))
+    return "\n".join(out)
 
 
 DC = "District of Columbia"
@@ -668,6 +827,9 @@ def build():
   }
 })();
 </script>
+<script>
+%(themeboot)s
+</script>
 <style>
 %(fontface)s
 
@@ -675,10 +837,23 @@ def build():
   color-scheme: light dark;
 %(light)s
 }
+/* THE ATTRIBUTE TIER, and the guard on the media query beside it. Until
+   2026-09-18 this page had NEITHER: it read the OS preference and nothing
+   else, so it was the one page in the fleet that ignored a theme a reader had
+   chosen inside an app — every instance sub-page, every county page, privacy,
+   about, sponsorship and traffic have honoured that choice for weeks. It was
+   also why the front door could not have its theme-colour fixed: a tag keyed
+   on the stored choice would have contradicted a page painted from the OS.
+   The `:not([data-theme="light"])` guard is what lets an explicit light choice
+   win on a dark system; the attribute block is what lets an explicit dark
+   choice win on a light one. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
 %(dark)s
   }
+}
+:root[data-theme="dark"] {
+%(dark)s
 }
 
 * { box-sizing: border-box; }
@@ -722,37 +897,68 @@ body {
 .notice.is-fading { animation: notice-out 900ms ease forwards; }
 @media (prefers-reduced-motion: reduce) { .notice.is-fading { animation-duration: 1ms; } }
 
-/* The logo lockup: the 5c mark beside the wordmark, at a size the mark is
-   actually drawn for. The brand spec's blend rule is a REAL rule, not
-   decoration — the three polygons read as overlapping translucent districts
-   only if they multiply on a light ground and screen on a dark one; keep
-   multiply on dark and they go muddy and near-black. */
-header.mast { display: flex; align-items: center; gap: 14px; }
-.logo-mark { width: 64px; height: 64px; flex: 0 0 auto; color: var(--ink); }
+/* The masthead: the mark beside the wordmark, at a size the mark is actually
+   drawn for, in a bar the sub-pages already wear. It was a 64px mark over a
+   52px wordmark until 2026-09-18, which pushed the page's actual promise — the
+   h1 — below the fold on a phone and left the brand saying it twice.
+
+   The brand spec's blend rule is a REAL rule, not decoration: the three
+   polygons read as overlapping translucent districts only if they multiply on
+   a light ground and screen on a dark one; keep multiply on dark and they go
+   muddy and near-black.
+
+   There is no theme toggle here. The sub-pages carry one because they read a
+   stored choice; this page follows the operating system and stores nothing,
+   and a control that looks like the sub-pages' but only lasts a page would be
+   worse than none. */
+header.mast {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding-bottom: 16px; margin-bottom: 32px; border-bottom: 1px solid var(--border);
+}
+.mast-brand { display: flex; align-items: center; gap: 10px; }
+.logo-mark { width: 34px; height: 34px; flex: 0 0 auto; color: var(--ink); }
 .logo-mark .mk-blend { mix-blend-mode: multiply; }
 @media (prefers-color-scheme: dark) {
-  .logo-mark .mk-blend { mix-blend-mode: screen; }
+  :root:not([data-theme="light"]) .logo-mark .mk-blend { mix-blend-mode: screen; }
 }
+:root[data-theme="dark"] .logo-mark .mk-blend { mix-blend-mode: screen; }
 .wordmark {
-  font: var(--font-heading-weight) 52px/1 var(--font-heading);
+  font: var(--font-heading-weight) 28px/1 var(--font-heading);
   letter-spacing: .005em; color: var(--ink);
 }
-
-h1 {
-  font: 400 26px/1.3 var(--font-heading);
-  color: var(--ink-3); margin: 22px 0 0; max-width: 34em;
+.mast-nav { margin-left: auto; display: flex; flex-wrap: wrap; gap: 2px; }
+.mast-nav a {
+  display: inline-flex; align-items: center; min-height: 32px; padding: 6px 11px;
+  border-radius: var(--radius-btn); text-decoration: none;
+  font-size: 14.5px; font-weight: 500; color: var(--ink-3);
+  transition: background .14s ease, color .14s ease;
 }
-.lede { color: var(--muted); margin: 14px 0 0; max-width: 40em; font-size: 15px; }
+.mast-nav a:hover, .mast-nav a:focus-visible { background: var(--brand-tint); color: var(--ink); }
+.mast-nav a:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
+
+/* The h1 is the promise, and it is now the largest thing on the page. It used
+   to be 26px grey under a 52px wordmark, so the biggest words on the fleet's
+   front door were its own coined name — which nobody searches for — while the
+   sentence that says what it does read as a caption. */
+h1 {
+  font: var(--font-heading-weight) 44px/1.08 var(--font-heading);
+  color: var(--ink); margin: 0; max-width: 17em;
+}
+.lede { color: var(--ink-3); margin: 14px 0 0; max-width: 40em; font-size: 16.5px; }
 
 .search-card {
-  margin: 26px 0 0; padding: 20px 22px 22px;
+  margin: 24px 0 0; padding: 18px 20px 20px;
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius-card); box-shadow: var(--shadow-card);
 }
-.search-eyebrow {
+/* A REAL label, not a span beside the box. The eyebrow said "Start with an
+   address" while the input's aria-label said "Street address or ZIP", so a
+   sighted reader and a screen-reader user were told two different things about
+   one field. The visible words are now the accessible name. */
+.search-label {
   display: block; font: var(--font-heading-weight) 13px/1 var(--font-heading);
-  letter-spacing: .09em; text-transform: uppercase; color: var(--faint);
-  margin-bottom: 11px;
+  letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3);
+  margin-bottom: 10px;
 }
 .search-row { display: flex; gap: 10px; align-items: stretch; }
 .search-input {
@@ -761,7 +967,7 @@ h1 {
   background: var(--paper); border: 1px solid var(--border);
   border-radius: var(--radius-btn);
 }
-.search-input::placeholder { color: var(--faint); }
+.search-input::placeholder { color: var(--muted); }
 .search-input:focus-visible {
   outline: 2px solid var(--brand-600); outline-offset: 1px;
   border-color: var(--brand-border);
@@ -776,12 +982,11 @@ h1 {
    it. .search-row is align-items:stretch, so in a ROW the button inherits the
    input's 46px and looks fine; at the mobile breakpoint the row becomes a
    COLUMN, stretch governs width instead, and the height collapsed to the
-   content box -- 15px of line plus 2px of border, measured at 308x17 against
-   the input's 308x46 directly above it. That is under the 24px WCAG 2.2 AA
-   floor, on the page's only conversion action, on the 62%% of visits that are
-   mobile. Sized here to match the input exactly rather than merely to clear
-   the floor: same 12px block padding, same 1.3 line-height, so both boxes
-   compute to 46px and the pair cannot drift apart again. */
+   content box -- 15px of line plus 2px of border. That is under the 24px WCAG
+   2.2 AA floor, on the page's only conversion action, on the 59%% of visits
+   that are phones. Sized here to match the input exactly rather than merely to
+   clear the floor: same 12px block padding, same 1.3 line-height, so both
+   boxes compute to 46px and the pair cannot drift apart again. */
 .search-button {
   flex: 0 0 auto; padding: 12px 22px;
   font: var(--font-heading-weight) 15px/1.3 var(--font-heading); color: #fff;
@@ -792,77 +997,144 @@ h1 {
 .search-button:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
 .search-button:disabled { opacity: .6; cursor: default; }
 @media (prefers-color-scheme: dark) {
-  .search-button { color: var(--paper); }
+  :root:not([data-theme="light"]) .search-button { color: var(--paper); }
 }
-.search-help { margin: 12px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--muted); }
+:root[data-theme="dark"] .search-button { color: var(--paper); }
+.search-help { margin: 12px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--ink-3); }
 .search-status { margin: 10px 0 0; font-size: 13.5px; line-height: 1.4; min-height: 0; }
 .search-status.err { color: var(--error); }
 
+/* Stated plainly and early, never as a warning banner — it is a fact about who
+   this is, not an alarm. See INDEPENDENCE for why it is above the fold, and it
+   now actually is: it sat at 1,800px down the desktop page, under three other
+   sections, which is not above anything. */
+.independence {
+  margin: 18px 0 0; max-width: 52em; font-size: 13.5px; line-height: 1.55;
+  color: var(--ink-3);
+}
+
 h2 {
-  font: var(--font-heading-weight) 15px/1 var(--font-heading);
+  font: var(--font-heading-weight) 14px/1 var(--font-heading);
   letter-spacing: .09em; text-transform: uppercase;
-  color: var(--faint); margin: 40px 0 12px;
+  color: var(--ink-3); margin: 44px 0 12px;
+}
+.section-note {
+  margin: -2px 0 14px; font-size: 13.5px; line-height: 1.5;
+  color: var(--muted); max-width: 52em;
+}
+
+/* The coverage map and the place list are ONE section, because they answer one
+   question. They were two — a map under "Where it answers today", a pill row
+   under "Or choose a place" — which asked a reader to find their state twice.
+
+   The map keeps its iframe. It is a real Leaflet map: its areas are clickable,
+   its legend states how much of each place is covered, and it is generated and
+   drift-gated on its own (scripts/build_coverage_map.py).
+
+   THE MAP TAKES THE FULL WIDTH AND THE PLACES SIT UNDER IT. Side by side was
+   tried first and the map cannot afford it: the fleet's bounds run from San
+   Francisco to New York, so a narrower frame zooms the whole country down,
+   and the map's own legend is a fixed 236px that then covers 40%% of it. The
+   places are a grid instead, so on a wide screen they take two rows of three
+   rather than a column six deep. */
+.coverage {
+  display: flex; flex-direction: column; gap: 14px;
+  padding: 14px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-card); box-shadow: var(--shadow-card);
 }
 .coverage-frame {
-  display: block; width: 100%%; height: 430px;
-  border: 1px solid var(--border); border-radius: var(--radius-card);
+  display: block; width: 100%%; height: 424px;
+  border: 1px solid var(--border); border-radius: var(--radius-btn);
   background: var(--paper);
 }
+.places {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(252px, 1fr));
+  gap: 0 16px;
+}
+/* Every row carries the rule, not just the ones after the first: in a grid a
+   `li + li` border leaves the top of each column open and the row reads as
+   ragged. */
+.places li { border-top: 1px solid var(--border); }
+.place {
+  display: flex; align-items: center; gap: 11px; padding: 9px 8px;
+  min-height: 52px; text-decoration: none; color: var(--ink);
+  border-radius: var(--radius-btn);
+  transition: background .14s ease;
+}
+.place:hover, .place:focus-visible { background: var(--brand-tint); }
+.place:focus-visible { outline: 2px solid var(--brand-600); outline-offset: -2px; }
+.place-tag {
+  flex: 0 0 auto; width: 24px;
+  font: 400 14px/1 var(--font-heading); color: var(--muted);
+}
+.place-id { display: flex; flex-direction: column; gap: 1px; flex: 1 1 auto; min-width: 0; }
+.place-name { font: var(--font-heading-weight) 18px/1.15 var(--font-heading); color: var(--ink); }
+.place-scope { font-size: 12.5px; line-height: 1.3; color: var(--muted); }
+.place-n, .place-n-unit {
+  flex: 0 0 auto; font-size: 12.5px; color: var(--muted);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.place-go { flex: 0 0 auto; font-size: 14px; color: var(--brand-600); }
 .coverage-caption {
   margin: 11px 0 0; font-size: 13px; line-height: 1.55; color: var(--muted);
   max-width: 52em;
 }
 
-.pills { display: flex; flex-wrap: wrap; gap: 8px; }
-.pill {
-  display: inline-flex; align-items: baseline; gap: 8px; padding: 7px 13px 8px;
-  background: var(--surface); border: 1px solid var(--border); border-radius: 999px;
-  text-decoration: none; color: var(--ink);
-  font: var(--font-heading-weight) 15px/1 var(--font-heading);
+/* THE QUESTION ROWS. One row per question, the places that answer it as chips.
+   The heading carries the question once where six place headings used to carry
+   it six times, and the chip carries the place AND its own topic — a link
+   reading only "Illinois" says nothing about where it goes, which is the test
+   Google's link guidance sets and the reason render_asks refuses to emit two
+   chips alike. They are a <ul> because they are a list of places: a screen
+   reader announces how many answer each question and can jump the lot. */
+.asks { display: flex; flex-direction: column; }
+.ask {
+  display: grid; grid-template-columns: 330px minmax(0, 1fr);
+  gap: 8px 18px; align-items: center; padding: 12px 0;
 }
-.pill:hover, .pill:focus-visible { border-color: var(--brand-border); background: var(--brand-tint); }
-.pill:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
-.pill-n { font: 400 12px/1 var(--font-body); color: var(--faint); font-variant-numeric: tabular-nums; }
+.ask + .ask { border-top: 1px solid var(--border); }
+.ask h3 {
+  margin: 0; font: var(--font-heading-weight) 19px/1.2 var(--font-heading);
+  color: var(--ink);
+}
+.ask-chips { display: flex; flex-wrap: wrap; gap: 7px; list-style: none; margin: 0; padding: 0; }
+.chip {
+  display: inline-flex; align-items: center; min-height: 36px; padding: 7px 13px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 999px;
+  text-decoration: none; font-size: 14px; line-height: 1.2; font-weight: 500;
+  color: var(--brand-600); white-space: nowrap;
+  transition: background .14s ease, border-color .14s ease;
+}
+.chip:hover, .chip:focus-visible { border-color: var(--brand-border); background: var(--brand-tint); }
+.chip:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
+.chip-topic { color: var(--ink-3); font-weight: 400; }
 
-.lookups { display: grid; gap: 14px 28px; margin: 10px 0 0;
-           grid-template-columns: repeat(auto-fit, minmax(15em, 1fr)); max-width: 62em; }
-.lookup-group h3 { font: 600 13px/1.3 var(--font); color: var(--muted);
-                   letter-spacing: .04em; text-transform: uppercase; margin: 0 0 4px; }
-.lookup-group ul { list-style: none; margin: 0; padding: 0; }
-.lookup-group li + li { margin-top: 2px; }
-/* 24px minimum target, WCAG 2.5.8: these are a LIST of links, which is the
-   shape that failed three surfaces when page_consistency_test.mjs began
-   sweeping for it, so the Inline exception does not apply. */
-.lookup-group a { display: block; padding: 4px 0; min-height: 24px; color: var(--brand-600);
-                  text-decoration: none; }
-.lookup-group a:hover, .lookup-group a:focus-visible { text-decoration: underline; }
 .not-yet { margin: 14px 0 0; max-width: 52em; }
 .not-yet > summary {
-  cursor: pointer; font-size: 13px; line-height: 1.55; color: var(--muted);
+  cursor: pointer; font-size: 13px; line-height: 1.55; color: var(--ink-3);
+  min-height: 28px;
 }
-.not-yet > summary:hover, .not-yet > summary:focus-visible { color: var(--ink-3); }
+.not-yet > summary:hover, .not-yet > summary:focus-visible { color: var(--ink); }
 .not-yet-list {
   margin: 10px 0 0; column-count: 3; column-gap: 22px;
   font-size: 12.5px; line-height: 1.9; color: var(--muted);
 }
 
-/* Stated plainly and early, never as a warning banner — it is a fact about who
-   this is, not an alarm. See INDEPENDENCE for why it is above the fold. */
-.independence {
-  margin: 18px 0 0; max-width: 52em; font-size: 13.5px; line-height: 1.55;
-  color: var(--muted);
-}
-
 .does { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 22px 26px; }
-.does b { display: block; font: var(--font-heading-weight) 17px/1.25 var(--font-heading); margin-bottom: 5px; }
+.does > div { padding-top: 13px; border-top: 2px solid var(--border); }
+/* These were <b> until 2026-09-18, so the three things the product claims to do
+   were not headings and appeared in no outline of the page. */
+.does h3 {
+  margin: 0 0 5px; font: var(--font-heading-weight) 18px/1.25 var(--font-heading);
+  color: var(--ink);
+}
 .does p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--ink-3); }
 
 /* Focus-only, and the pair validate_contrast.py already measures: --paper on
    --ink, 16.08:1 light and 15.36:1 dark. The app and the twelve sub-pages have
    carried one since the rebrand; these pages did not, so a keyboard reader met
-   a different site depending on which page they landed on. What it bypasses
-   here is short — that is the honest size of it — but the <main> landmark it
-   needs is the part a screen reader was missing outright. */
+   a different site depending on which page they landed on. */
 .skip-link {
   position: absolute; left: -9999px; top: 0;
   background: var(--ink); color: var(--paper);
@@ -870,35 +1142,58 @@ h2 {
 }
 .skip-link:focus { left: 0; }
 
-footer { margin-top: 52px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13.5px; color: var(--muted); }
+/* The footer was five stacked paragraphs saying the disclaimer twice. Three
+   columns, each answering a different reader: what this is, how to keep it
+   running, and where else to go. */
+footer {
+  margin-top: 52px; padding-top: 24px; border-top: 1px solid var(--border);
+  font-size: 13.5px; color: var(--ink-3);
+}
+.foot-grid {
+  display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) 168px;
+  gap: 24px 34px; align-items: start;
+}
 footer a { color: var(--brand-600); }
 footer a:hover { color: var(--brand-700); }
-footer p { margin: 0 0 8px; max-width: 46em; }
-/* The front door had no links at all — no way to reach the privacy page
-   or the source from the page most visitors land on first. */
+footer p { margin: 0 0 10px; line-height: 1.55; }
+footer p:last-child { margin-bottom: 0; }
+.foot-name {
+  font: var(--font-heading-weight) 20px/1 var(--font-heading);
+  color: var(--ink); display: block; margin-bottom: 10px;
+}
 /* The support line is the one thing in this footer a reader is being ASKED to
-   act on, so it does not sit in the flat link row where it reads as a seventh
+   act on, so it does not sit in the link list where it reads as a seventh
    equal item. It was exactly that before: one of six links, in an app footer,
    on a page that never mentioned funding at all. */
 footer .support {
-  margin: 14px 0 0; padding: 12px 14px; max-width: 46em;
-  background: var(--brand-tint); border: 1px solid var(--brand-border);
+  padding: 13px 15px; background: var(--brand-tint); border: 1px solid var(--brand-border);
   border-radius: var(--radius-card); color: var(--ink-3);
 }
 footer .support b { color: var(--ink); }
-/* line-height 28px, not the body's 20.9: these links are 17px tall and wrap
-   at 390px, which put the next row's box 4px under this row's centre — inside
-   WCAG 2.5.8's 24px circle. 28 leaves 5.5px clear. Measured 2026-09-13. */
-footer .foot-links { margin-top: 12px; line-height: 28px; }
+.foot-links { list-style: none; margin: 0; padding: 0; }
+/* 24px minimum target, WCAG 2.5.8: these are a LIST of links, which is the
+   shape that failed three surfaces when page_consistency_test.mjs began
+   sweeping for it, so the Inline exception does not apply. A column gives each
+   one its own row and the wrapped-row collision the flat row had cannot
+   happen. */
+.foot-links a { display: block; padding: 5px 0; min-height: 24px; line-height: 1.4; text-decoration: none; }
+.foot-links a:hover, .foot-links a:focus-visible { text-decoration: underline; }
 
 @media (max-width: 560px) {
-  .wrap { padding: 36px 18px 56px; }
-  .wordmark { font-size: 38px; }
-  .logo-mark { width: 48px; height: 48px; }
-  h1 { font-size: 22px; }
+  .wrap { padding: 28px 18px 56px; }
+  header.mast { gap: 8px; margin-bottom: 26px; }
+  .wordmark { font-size: 25px; }
+  h1 { font-size: 31px; }
+  h2 { margin-top: 34px; }
   .search-row { flex-direction: column; }
   .notice { position: static; width: auto; max-width: none; margin: 0 0 26px; }
   .not-yet-list { column-count: 2; }
+  /* One column, and the chips grow: a row of links is the shape WCAG 2.5.8
+     catches, and 36px tall chips 7px apart are inside each other's 24px
+     circle once they wrap on a narrow screen. */
+  .ask { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 14px 0; }
+  .chip { min-height: 40px; padding: 9px 14px; }
+  .foot-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
   /* Taller, not shorter: at this breakpoint the map's legend stops floating
      and takes a strip along the bottom (see build_coverage_map.py), so the
      frame needs the extra room or the map area is what pays for the panel. */
@@ -911,8 +1206,15 @@ footer .foot-links { margin-top: 12px; line-height: 28px; }
   <div class="shell">
 %(notice)s    <div class="wrap">
     <header class="mast">
-      %(mark)s
-      <span class="wordmark">districtry</span>
+      <div class="mast-brand">
+        %(mark)s
+        <span class="wordmark">districtry</span>
+      </div>
+      <nav class="mast-nav" aria-label="Site">
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">Source</a>
+      </nav>
     </header>
 
     <main id="page-main">
@@ -920,11 +1222,10 @@ footer .foot-links { margin-top: 12px; line-height: 28px; }
     <p class="lede">%(desc)s</p>
 
     <div class="search-card">
-      <span class="search-eyebrow">Start with an address</span>
+      <label class="search-label" for="search-input">Start with an address</label>
       <form id="search-form" class="search-row">
         <input type="text" id="search-input" class="search-input" name="q"
-               placeholder="Street address or ZIP" autocomplete="off"
-               aria-label="Street address or ZIP" />
+               placeholder="Street address or ZIP" autocomplete="off" />
         <button type="submit" id="search-button" class="search-button">Show districts</button>
       </form>
       <p class="search-help">districtry opens the map that covers the point. %(live_names)s answer
@@ -932,24 +1233,20 @@ footer .foot-links { margin-top: 12px; line-height: 28px; }
       <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
     </div>
 
+%(independence)s
     <h2>Where it answers today</h2>
-    <iframe class="coverage-frame" src="coverage-map.html"
-            title="Map of the areas districtry covers today"
-            loading="lazy"></iframe>
+    <div class="coverage">
+      <iframe class="coverage-frame" src="coverage-map.html"
+              title="Map of the areas districtry covers today"
+              loading="lazy"></iframe>
+      <ul class="places">
+%(places)s
+      </ul>
+    </div>
     <p class="coverage-caption">Two tiers, because coverage is not one thing: the pale dashed area
        is where the statewide layers answer — county, township, municipality, school district,
        ZIP — and the solid fill is where the county-level layers reach as well. The map's own
        legend states how much of each place that is; click an area to open its map.</p>
-
-    <h2>Or choose a place</h2>
-    <div class="pills">
-%(pills)s
-    </div>
-
-    <h2>Or start from a question</h2>
-    <div class="lookups">
-%(lookups)s
-    </div>
     <details class="not-yet">
       <summary>Not yet: %(not_yet_summary)s — what nobody covers yet is listed here
         rather than quietly missing.</summary>
@@ -958,22 +1255,28 @@ footer .foot-links { margin-top: 12px; line-height: 28px; }
       </div>
     </details>
 
-%(independence)s
+    <h2>Or start from a question</h2>
+    <p class="section-note">One page per question and place: the answer in prose, the roster as it
+       stood on the day it was checked, and a link that opens the map with the right layers on.</p>
+    <div class="asks">
+%(asks)s
+    </div>
+
     <h2>What it does</h2>
     <div class="does">
       <div>
-        <b>Every district, not the one you asked for</b>
+        <h3>Every district, not the one you asked for</h3>
         <p>Pick a point and it reports every civic boundary that contains it at once —
            legislative, judicial, policing, schools, and the local special districts most
            tools leave out.</p>
       </div>
       <div>
-        <b>The people, where they can be verified</b>
+        <h3>The people, where they can be verified</h3>
         <p>It names who holds each seat when a published roster says so, and links the
            official body when none does. It never guesses an officeholder.</p>
       </div>
       <div>
-        <b>It shows its work</b>
+        <h3>It shows its work</h3>
         <p>Every layer names the publisher its boundary came from and where its names come
            from. What nobody publishes is listed too, rather than quietly missing.</p>
       </div>
@@ -981,34 +1284,38 @@ footer .foot-links { margin-top: 12px; line-height: 28px; }
     </main>
 
     <footer>
-      <p>districtry is a public civic reference built from official published
-         boundaries and rosters. It is not a legal record of any district line,
-         and it never guesses at who holds a seat — where no verifiable roster
-         exists, it links the official body instead.</p>
-      <p>It is an <b>independent, unofficial project</b> — not a government service, and
-         not affiliated with or endorsed by any government agency. Boundary data and
-         officeholder names come from the public sources each place names on its sources
-         page; seals and logos shown beside a county belong to that county and indicate
-         whose district you are looking at, not any endorsement of this site.</p>
-      <p>Built and run by <a href="https://overberg.co/" rel="author noopener" target="_blank">Adam
-         Overberg</a>. The whole thing is open source — every line that produced this page
-         is public, the code under
-         <a href="https://github.com/ThursdaysFamous/districtry/blob/main/LICENSE"
-            target="_blank" rel="noopener">Apache&nbsp;2.0</a> and the data under
-         <a href="https://github.com/ThursdaysFamous/districtry/blob/main/LICENSE-DATA.md"
-            target="_blank" rel="noopener">ODbL&nbsp;1.0</a>. Fork it for your own state.</p>
-      <p>Each place above names its own sources on its sources page. Corrections, questions and
-         anything that looks wrong: <a href="mailto:hello@overberg.co">hello@overberg.co</a>.</p>
-      <p class="support"><b>This project is unfunded and run at personal cost.</b> If it is useful
-         to you, <a href="https://github.com/sponsors/ThursdaysFamous" target="_blank" rel="noopener">sponsoring
-         it on GitHub</a> keeps the rosters current — that is where the ongoing work is. Sponsorship
-         buys no placement and no influence over any answer here; the
-         <a href="sponsorship.html">sponsorship policy</a> says so in detail.</p>
-      <p class="foot-links"><a href="privacy.html">Privacy</a> ·
-         <a href="sponsorship.html">Sponsorship</a> ·
-         <a href="traffic.html">Traffic</a> ·
-         <a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a> ·
-         <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">Source on GitHub</a></p>
+      <div class="foot-grid">
+        <div>
+          <span class="foot-name">districtry</span>
+          <p>An independent, unofficial civic reference built from official published
+             boundaries and rosters. It is not a government service, not affiliated with or
+             endorsed by any government agency, and not a legal record of any district line.
+             Where no verifiable roster exists it links the official body instead of guessing.
+             Seals shown beside a county belong to that county and say whose district you are
+             looking at, not who endorses this site.</p>
+          <p>Built and run by <a href="https://overberg.co/" rel="author noopener" target="_blank">Adam
+             Overberg</a>. Open source — the code under
+             <a href="https://github.com/ThursdaysFamous/districtry/blob/main/LICENSE"
+                target="_blank" rel="noopener">Apache&nbsp;2.0</a> and the data under
+             <a href="https://github.com/ThursdaysFamous/districtry/blob/main/LICENSE-DATA.md"
+                target="_blank" rel="noopener">ODbL&nbsp;1.0</a>. Fork it for your own state.
+             Each place names its own sources on its sources page; corrections and anything
+             that looks wrong: <a href="mailto:hello@overberg.co">hello@overberg.co</a>.</p>
+        </div>
+        <p class="support"><b>This project is unfunded and run at personal cost.</b> If it is useful
+           to you, <a href="https://github.com/sponsors/ThursdaysFamous" target="_blank" rel="noopener">sponsoring
+           it on GitHub</a> keeps the rosters current — that is where the ongoing work is. Sponsorship
+           buys no placement and no influence over any answer here; the
+           <a href="sponsorship.html">sponsorship policy</a> says so in detail.</p>
+        <ul class="foot-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="sponsorship.html">Sponsorship</a></li>
+          <li><a href="traffic.html">Traffic</a></li>
+          <li><a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a></li>
+          <li><a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">Source on GitHub</a></li>
+        </ul>
+      </div>
     </footer>
     </div>
   </div>
@@ -1254,11 +1561,12 @@ footer .foot-links { margin-top: 12px; line-height: 28px; }
         "brand": light["brand-600"].strip(),
         "favicon": html.escape(favicon_uri, quote=True),
         "fontface": fontface + "\n" + FALLBACK_FACE,
+        "themeboot": shared_theme_boot(),
         "light": token_css(LIGHT_TOKENS, light, ":root"),
         "dark": token_css(DARK_TOKENS, dark, '[data-theme="dark"]', DARK_EXTRA,
                           indent="    "),
-        "pills": render_pills(metros),
-        "lookups": render_lookups(metros),
+        "places": render_places(metros),
+        "asks": render_asks(metros),
         "mark": load_mark(),
         "notice": render_notice(),
         "independence": render_independence(),
