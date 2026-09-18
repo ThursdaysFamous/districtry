@@ -68,11 +68,36 @@ DEFAULT_OUT = os.path.join(os.path.dirname(__file__), ".cache", "wi_circuit_judg
 # day every URL below answered HTTP 200 to this exact token in under a second.
 # robots.txt is a 404, so allow-all.
 #
-# THIS IS NOT THE FIX FOR THIS WORKFLOW'S FAILURES. Four of the six runs of the
+# THIS IS NOT THE FIX FOR THIS WORKFLOW'S FAILURES, AND THE CAUSE IS NOW
+# MEASURED: THE BLOCK IS PER RUNNER EGRESS IP. Six of the twelve runs of the
 # two wicourts.gov workflows die in `sock.connect` with a TCP connect timeout,
-# on schedule and on dispatch, across four hours of the day and on both
-# scrapers — no HTTP byte leaves the runner, so the host never sees any header
-# this file sends. Issue #387 carries the run table.
+# on schedule and on dispatch — no HTTP byte leaves the runner, so the host
+# never sees any header this file sends.
+#
+# 2026-09-16 settles what varies, from the two workflows' OWN probe steps,
+# 36 minutes apart, same host, same day:
+#
+#   19:01  circuit court  egress 172.202.78.13  http=200  host_ip=165.219.245.77
+#                                               connect=0.078s  total=0.186s
+#   19:37  appeals        egress 4.246.135.37   http=000  host_ip= (empty)
+#                                               connect=0.000s  total=20.003s
+#
+# `host_ip` EMPTY on the failing side means curl never opened a socket: packets
+# DROPPED, not refused. So www.wicourts.gov IS reachable from GitHub's runners,
+# just not from every one of them, and which runner a job draws is the whole
+# variable — not the token, not the path, not the hour, and not a standing block
+# on GitHub's ranges. It also explains the split that looks like two different
+# problems and is one: appeals is 2 green of 7 and circuit court 4 of 5, and on
+# both 2026-09-09 and 2026-09-16 circuit court passed and appeals failed half an
+# hour later. Issue #387 carries the run table.
+#
+# WHAT THIS RULES OUT, so nobody builds it: an Internet Archive rung (its
+# snapshots of these two pages are dated 2026-08-08 and 2026-08-19, both OLDER
+# than the shipped roster, so it would move the data backwards), a second
+# publisher (the Blue Book's bench is April 2025, older still), and a `blocked`
+# entry in validate_sources.py (the source is reachable from CI, so the flag's
+# inversion would flap month to month on the luck of the draw). The remedy for a
+# failed run is to RE-RUN it and draw another runner.
 UA = {
     "User-Agent": "districtry-wisconsin/1.0 (+https://districtry.com/wi/)",
     "Accept": "text/html,application/xhtml+xml,*/*;q=0.8",

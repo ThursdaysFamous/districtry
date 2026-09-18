@@ -60,27 +60,44 @@ Chicago District Explorer: a single-file, dependency-light web app. Click a poin
 This list undercounts what actually runs, and **the figure is stated WITH ITS METHOD AND ITS
 DATE**, because successive counts disagreed and no reader could tell which counting rule any of
 them used. MEASURED 2026-09-18 on this branch, AFTER its last edit: a static gate is
-one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **61**;
-counted instead as script invocations the whole battery is **87 — 77 that need no browser and
+one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **63**;
+counted instead as script invocations the whole battery is **89 — 79 that need no browser and
 10 that boot Chromium** (a Playwright smoke test per instance `il`/`ca`/`ny`/`wi`/`ia`/`mi`,
 2 root-page tests, and the two fleet-wide probes for point transmission and contrast pairs), the
 per-instance `validate_index.py` runs included, and excluding the two `npx playwright install`
 setup lines and the `http.server` that serves the pages to the ten.
 
-The same method answers 60 and 86 on `origin/main`, so this branch adds exactly one of each:
-the one step this change wires, `ia_city_officials_scraper.py --selftest`. The 59/84 this
-paragraph carried on 2026-09-16 is two steps and three invocations behind this one, and the
-pair does not move together — `validate_python_hygiene.py` runs its `--selftest` and then the
-gate itself, which is one named step carrying two invocations, so neither number can be derived
-from the other.
+**THE PAIR IS NO LONGER KEPT BY HAND.** `scripts/validate_gate_counts.py` measures both figures
+off `smoke-test.yml` by exactly the rule above and FAILS naming the current values, so a change
+that adds a gate without restating them cannot merge. It was written because the figures below
+were not merely stale: the 52/77 was taken before the change it claimed to include, and the
+55/80 written to correct it was derived by ARITHMETIC rather than measured — so neither
+describes a state any commit ever had, while every real value sat in this repository's own
+history the whole time. It cannot pass vacuously — this section deliberately records
+SUPERSEDED figures, so each live figure is matched by an anchor naming the claim it belongs to,
+and a reworded anchor FAILS rather than quietly stopping being checked. And it asserts its own
+invocation total against `validate_steward_mirror.py`'s, because that module already reads the
+same commands for a different question, and two readers of one question is where this fleet's
+recurring defect starts.
 
-**THE 52/77 THIS PARAGRAPH CARRIED BEFORE 2026-09-16 DOES NOT REPRODUCE, and the same method run
-against `origin/main` says why.** The rule above answers 49 and 74 on `origin/main` and 59 and 84 here,
-and this branch adds four of each — so it stood at 55/80 before them, not 52/77.
-The three-gate gap is the three wired on this branch the day that figure was written
+The 59/84 this paragraph carried on 2026-09-16 was one step and two invocations behind the 60/86
+that replaced it: `validate_python_hygiene.py` runs its `--selftest` and then the gate itself,
+which is one named step carrying two invocations — so the pair can move by different amounts in
+one change, and neither number can be derived from the other.
+
+**THE 52/77 THIS PARAGRAPH CARRIED BEFORE 2026-09-16 DOES NOT REPRODUCE, AND NEITHER DOES THE
+55/80 THAT WAS WRITTEN TO CORRECT IT** — settled 2026-09-18 by running the rule over every commit
+that has ever touched `smoke-test.yml`, which is where these numbers were available all along
+(`git show <sha>:.github/workflows/smoke-test.yml` hands you any of them). The tree went 48/73 at
+#951, 49/74 at the redirect-shells commit, 59/84 at #977 and 60/86 at #985. **52/77 and 55/80 are
+values no commit ever had.** The 55/80 came of taking 59/84 and subtracting four, on the belief
+that #977 added four gates: it added TEN, and the branch point was the 49/74 above, which the
+paragraph making the subtraction had already stated correctly and then contradicted three words
+later. **A CORRECTION DERIVED BY ARITHMETIC IS A SECOND GUESS, NOT A
+MEASUREMENT**, and it is the harder one to catch, because it arrives with the confidence of a fix.
+The 52/77 under it was taken before the three gates the sentence around it claimed were included
 (`build_about_page.py --check`, `build_il_gis_board_rosters.py --check`,
-`validate_analytics.py`): the number was taken before they were added and the sentence around it
-claimed they were included. **A FIGURE MEASURED BEFORE THE CHANGE IT CLAIMS TO INCLUDE IS STALE
+`validate_analytics.py`). **A FIGURE MEASURED BEFORE THE CHANGE IT CLAIMS TO INCLUDE IS STALE
 THE MOMENT IT IS WRITTEN**, which is worse than one that goes stale later, because nothing about
 it looks old. Measure after the last edit, or say which edits the count precedes.
 
@@ -100,22 +117,24 @@ then 43/68 when #927 added a tenth Chromium run an hour later, then 45/70, then 
 47/72 when #944's robots self-test merged while #947 was in review, and then 48/73, which
 was the first of those where the change being measured was the one adding the gate. The
 46/71 it replaced was two hours old and had been independently verified in between; a verified
-figure goes stale exactly as fast as an unverified one. This 52/77 is four gates past that
-one, all four added on the branch it is measured on: the redirect shells, the question pages'
-address box, the city officeholder tables, and the twelve legislator pages.
+figure goes stale exactly as fast as an unverified one. The 52/77 was offered as four gates past
+that one, naming the redirect shells, the question pages' address box, the city officeholder
+tables and the twelve legislator pages; measured, those landed across two commits that took the
+tree 48/73 to 49/74 to 59/84, which is eleven.
 The figure before the 2026-09-04 count was 19, and the two counts after it (24, then 31) were
 each stale within the day.
 
 Treat the workflow file as the source of truth for the full battery and its order;
 `.claude/skills/steward/SKILL.md` mirrors it as locally-runnable commands with per-gate
-rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-18, **87
-invocations for 87**, diffed both ways with each side's trailing rationale comment stripped
+rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-18, **89
+invocations for 89**, diffed both ways with each side's trailing rationale comment stripped
 and `$BASE` resolved to the branch point the skill spells `origin/main`,
 after four gates were found missing from it on 2026-09-12 (`build_sitemap.py`,
-`undeliverable.py`, the circuit-court join self-test, and that change's own) and **four more on
-2026-09-16** — `build_about_page.py --check`, `validate_analytics.py`,
-`build_il_gis_board_rosters.py --check` and the three this branch added. **THE FIRST THREE WERE WIRED INTO
-CI ON THE SAME DAY THE EXACT-MIRROR CLAIM WAS WRITTEN AND NEVER ADDED HERE**, so an agent
+`undeliverable.py`, the circuit-court join self-test, and that change's own) and **three more on
+2026-09-16** — `build_about_page.py --check`, `validate_analytics.py` and
+`build_il_gis_board_rosters.py --check`, which #977 added to the skill beside eight gates of its
+own. **THOSE THREE WERE WIRED INTO CI ON THE SAME DAY THE EXACT-MIRROR CLAIM WAS WRITTEN AND
+NEVER ADDED HERE**, so an agent
 following the skill ran a green battery and pushed a branch the merge gate failed, which is the
 one thing the skill exists to prevent. `scripts/validate_steward_mirror.py` compares them now,
 both ways as multisets, with the trailing rationale comment, a `|| status=1`, a leading

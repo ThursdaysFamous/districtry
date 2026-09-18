@@ -5,7 +5,7 @@
     "source": "Milwaukee County GIS & Land Information",
     "sourceUrl": "https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/Milwaukee_County_Municipal_Executives/FeatureServer/42",
     "withheld": true,
-    "withheldWhy": "the municipality's own page could not be read from here, so no name is witnessed"
+    "withheldWhy": "the county layer's link to the municipality's page is dead, so no name is witnessed"
   },
   "5510375": {
     "email": "wmontgomery@browndeerwi.org",
@@ -82,7 +82,7 @@
     "source": "Milwaukee County GIS & Land Information",
     "sourceUrl": "https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/Milwaukee_County_Municipal_Executives/FeatureServer/42",
     "withheld": true,
-    "withheldWhy": "the municipality's own page could not be read from here, so no name is witnessed"
+    "withheldWhy": "the county layer's link to the municipality's page is dead, so no name is witnessed"
   },
   "5553000": {
     "municipality": "Milwaukee",
@@ -90,7 +90,7 @@
     "source": "Milwaukee County GIS & Land Information",
     "sourceUrl": "https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/Milwaukee_County_Municipal_Executives/FeatureServer/42",
     "withheld": true,
-    "withheldWhy": "the municipality's own page could not be read from here, so no name is witnessed"
+    "withheldWhy": "the municipality's own site refuses this client, so no name is witnessed"
   },
   "5558800": {
     "municipality": "Oak Creek",
@@ -98,7 +98,7 @@
     "source": "Milwaukee County GIS & Land Information",
     "sourceUrl": "https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/Milwaukee_County_Municipal_Executives/FeatureServer/42",
     "withheld": true,
-    "withheldWhy": "the municipality's own page could not be read from here, so no name is witnessed"
+    "withheldWhy": "the county layer's link to the municipality's page is dead, so no name is witnessed"
   },
   "5568325": {
     "municipality": "River Hills",
@@ -106,7 +106,7 @@
     "source": "Milwaukee County GIS & Land Information",
     "sourceUrl": "https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/Milwaukee_County_Municipal_Executives/FeatureServer/42",
     "withheld": true,
-    "withheldWhy": "the municipality's own page could not be read from here, so no name is witnessed"
+    "withheldWhy": "the municipality's own site refuses this client, so no name is witnessed"
   },
   "5570650": {
     "email": "ken.tutaj@stfranwi.org",
@@ -133,7 +133,7 @@
     "source": "Milwaukee County GIS & Land Information",
     "sourceUrl": "https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/Milwaukee_County_Municipal_Executives/FeatureServer/42",
     "withheld": true,
-    "withheldWhy": "the municipality's own page could not be read from here, so no name is witnessed"
+    "withheldWhy": "the county layer's link to the municipality's page is dead, so no name is witnessed"
   },
   "5584675": {
     "municipality": "Wauwatosa",
@@ -141,7 +141,7 @@
     "source": "Milwaukee County GIS & Land Information",
     "sourceUrl": "https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/Milwaukee_County_Municipal_Executives/FeatureServer/42",
     "withheld": true,
-    "withheldWhy": "the municipality's own page could not be read from here, so no name is witnessed"
+    "withheldWhy": "the municipality's own site refuses this client, so no name is witnessed"
   },
   "5585300": {
     "municipality": "West Allis",
@@ -149,7 +149,7 @@
     "source": "Milwaukee County GIS & Land Information",
     "sourceUrl": "https://services2.arcgis.com/s1wgJQKbKJihhhaT/arcgis/rest/services/Milwaukee_County_Municipal_Executives/FeatureServer/42",
     "withheld": true,
-    "withheldWhy": "the municipality's own page could not be read from here, so no name is witnessed"
+    "withheldWhy": "the county layer's link to the municipality's page is dead, so no name is witnessed"
   },
   "5585875": {
     "municipality": "West Milwaukee",

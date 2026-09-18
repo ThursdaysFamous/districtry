@@ -93,13 +93,14 @@ jobs:
           # page naming last week's commissioners. The sitemap follows, because
           # those pages are in it and its lastmod is each file's own last commit.
           python3 scripts/build_county_pages.py
+          python3 scripts/build_about_page.py
           python3 scripts/build_sitemap.py
           # llms.txt COUNTS the per-county pages, so a county dropping out of
           # the roster moves that number — and the builder tolerates two going
           # dark, so it can happen on an ordinary weekly run. Without this the
           # bot PR fails build_llms_txt.py --check on a change nobody wrote.
           python3 scripts/build_llms_txt.py
-          git add mi/data/app/mi-commissioner-members.json mi/county-commissioner mi/county-commissioner.html sitemap.xml llms.txt
+          git add mi/data/app/mi-commissioner-members.json mi/county-commissioner mi/county-commissioner.html about.html sitemap.xml llms.txt
           git commit -m "Update Michigan county commissioner roster"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

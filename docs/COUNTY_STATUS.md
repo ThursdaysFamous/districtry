@@ -112,7 +112,7 @@
 | Wayne | 17191 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | White | 17193 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `statewide-library-officials` (no-source); `white-special-districts` (no-source) |
 | Whiteside | 17195 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 5 — `statewide-library-officials` (no-source); `whiteside-municipal-officials` (no-source); `whiteside-precinct-polling` (data-quality); `whiteside-special-district-boards` (no-source); `whiteside-special-districts` (blocked) |
-| Will | 17197 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 3 — `aurora-council-contact` (blocked); `crete-municipal-clerk` (no-source); `joliet-municipal-contact` (blocked) |
+| Will | 17197 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 4 — `aurora-council-contact` (blocked); `crete-municipal-clerk` (no-source); `joliet-municipal-contact` (blocked); `will-municipal-directory-freeze` (blocked) |
 | Williamson | 17199 | dispatch | at-large — County card | `library-district` | 3 — `captcha-county-commissioner-contact` (blocked); `statewide-library-officials` (no-source); `williamson-precinct-geometry` (no-source) |
 | Winnebago | 17201 | dispatch | districted | `county-board`, `county-precinct`, `judicial-subcircuit`, `library-district` | 3 — `rockford-city-precincts` (no-source); `statewide-library-officials` (no-source); `winnebago-special-districts` (no-source) |
 | Woodford | 17203 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 1 — `woodford-special-district-boards` (data-quality) |
@@ -139,4 +139,4 @@ Counties outside the coverage ring that a research pass has already measured; ea
 
 ## Gap records not tagged to a county (2)
 
-City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 103 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.
+City- or app-scoped records with no `counties` tag, listed so the table reconciles with the 104 records in the Data gaps panel: `chicago-amenity-phones`, `chicago-ssa-service-providers`.

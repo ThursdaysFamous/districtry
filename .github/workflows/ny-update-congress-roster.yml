@@ -73,8 +73,9 @@ jobs:
           # table naming last week's members. The sitemap follows, because that
           # page is in it and its lastmod is the file's own last commit.
           python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
           python3 scripts/build_sitemap.py
-          git add ny/data/app/congress-roster.json ny/congress.html sitemap.xml
+          git add ny/data/app/congress-roster.json ny/congress.html about.html sitemap.xml
           git commit -m "Update NY congressional roster from congress-legislators"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

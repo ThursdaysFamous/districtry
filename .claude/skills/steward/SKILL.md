@@ -77,6 +77,7 @@ python3 scripts/build_concept_pages.py --check           # circuit court, townsh
 python3 scripts/build_officeholder_tables.py --check      # the 20 officeholder tables vs their rosters, and the weekly workflows that rewrite one
 python3 scripts/validate_favicon.py
 python3 scripts/validate_steward_mirror.py                # this file runs the same battery smoke-test.yml does, compared both ways
+python3 scripts/validate_gate_counts.py                   # CLAUDE.md's stated battery size vs smoke-test.yml's own steps and invocations
 python3 scripts/validate_structured_data.py               # every ld+json block parses, every @id resolves on its own page, every ItemList counts its own elements
 python3 scripts/build_wikidata_draft.py --check           # docs/WIKIDATA.md vs metros.json; --verify re-fetches the 20 ids and is network, not CI
 python3 scripts/validate_shell_continuations.py
@@ -106,6 +107,7 @@ python3 wi/scripts/wi_county_board_scraper.py --selftest            # the county
 python3 scripts/isbe_precinct_fabric.py --selftest         # the five Jasper-test reconciliation causes
 python3 ia/scripts/ia_county_minutes_chair_scraper.py --selftest   # the four refusals that stand between a chair card and a wrong name
 python3 ia/scripts/build_ia_county_chair.py --selftest              # the carry-forward rules: only `unreachable`, never a refusal, never past 60 days or a January
+python3 wi/scripts/build_wi_municipal_executives.py --selftest      # the same, narrower: never a refusal, a dead link, a page that read without witnessing, 60 days, or an April election
 python3 ia/scripts/build_ia_county_officers.py --selftest           # display_name strips a salutation and keeps a Jr./Sr. suffix and a published credential; and the party name-join, which ships no party when no ISAC row matches the officer or when two do
 python3 ia/scripts/ia_supervisor_district_scraper.py --selftest     # the supervisor scrape's robots gate, both halves: a refused URL never reaches requests.get, and two fetches of a delay-stating host are actually spaced
 python3 ia/scripts/ia_city_officials_scraper.py --selftest           # the bound on a council page's LAST member, whom no next member bounds: a footer's city-hall number never becomes their phone, and a real one at the page's own offset survives
