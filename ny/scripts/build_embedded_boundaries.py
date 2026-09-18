@@ -62,15 +62,16 @@ LAYERS = {
         "precision": "0.000001",
         "key_prop": "borocode",
     },
-    # 5 NY Supreme Court judicial districts = the 5 counties relabeled
-    # (1/2/11/12/13), from TIGERweb State_County. No live source exists.
-    "judicial-districts": {
-        "source": "data/judicial-districts.geojson",
-        "out": "judicial-districts.json",
-        "simplify": "15%",
-        "precision": "0.000001",
-        "key_prop": "district",
-    },
+    # judicial-districts is DELIBERATELY NOT HERE ANY MORE. It used to be the
+    # five NYC counties relabelled 1, 2, 11, 12 and 13 from a hand-applied
+    # crosswalk in data/judicial-districts.geojson. Since 2026-09-18 the layer
+    # is all thirteen New York judicial districts, computed from the Judiciary
+    # Law section 140 table by ny/scripts/build_ny_judicial_districts.py, and
+    # it writes the same output path. Leaving the entry here would let a
+    # routine run of this script silently overwrite the statewide file with
+    # the five-borough one, which is the kind of quiet regression nothing in
+    # CI would catch: the file would still parse, still have a district
+    # property, and simply stop answering upstate.
     # 28 Civil (Municipal) Court districts, from Socrata 7vpq-4bh4. Map-type:
     # /resource/ serves null geometry; the v3 view route serves it (the geospatial
     # export route returns empty — playbook §6 note corrected).

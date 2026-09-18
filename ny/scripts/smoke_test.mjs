@@ -58,7 +58,7 @@ const OFFLINE = ["borough", "judicial-district", "municipal-court"];
 const EXPECT_DISTRICT = { "borough": "Manhattan", "judicial-district": "1", "municipal-court": "1" };
 const NEGATIVE_POINT = "40.72000,-74.04000"; // Hudson River, New Jersey waters — outside every anchor geometry (the East River is inside the county-derived judicial districts, so mid-river points there are only borough-negative)
 const APP_NAME = "districtry New York City";
-const EXPECT_LAYERS = 27; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
+const EXPECT_LAYERS = 33; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
 // ==== GENERATED:END smoke-config ====
 const POINT2 = "40.69354,-73.98963"; // Brooklyn Borough Hall (Brooklyn) — the re-classify hop stays fork test code
 const BOOT_TIMEOUT = 45000; // Leaflet CDN + first paint on a cold CI runner
@@ -183,14 +183,33 @@ try {
         /template=source-submission\.yml/.test(h) && /[?&]gap_id=/.test(h)),
       `${cold.hrefs.length} links -> ${repoIssues}`);
 
-    // This fork ships no county outlines, so no gap can be location-matched.
-    // Selecting a point must therefore leave the list WHOLE and single-sectioned —
-    // that is the correct degradation, and the thing a naive filter would break.
+    // SELECTING A POINT MUST NOT DROP A GAP. That is the invariant, and the
+    // thing a naive filter would break: the panel REGROUPS — the gaps naming
+    // the clicked point's county lift into a "Where you clicked" section and
+    // the rest stay grouped by kind — so the section COUNT is a function of
+    // the data and never a property worth asserting.
+    //
+    // It was asserted anyway until 2026-09-18, as `sections.length === 1`,
+    // under a comment reading "this fork ships no county outlines, so no gap
+    // can be location-matched". That was false when it was written: `ny/`
+    // ships five borough outlines, and all three gaps of the day named all
+    // five boroughs, so every one matched City Hall and landed in a single
+    // section. The check passed for a reason its own comment denied, and it
+    // went red the moment a fourth gap arrived that correctly does NOT apply
+    // at City Hall — the statewide election-district record, which is about
+    // New York State outside the city.
+    //
+    // So this asserts what the panel actually owes a reader: every gap still
+    // rendered, the clicked-point section present and holding the gaps that
+    // name that borough, and the statewide-only gap NOT filed under where
+    // they clicked.
     await page.evaluate((p) => window.NycExplorer.setSelectedPoint(p[0], p[1]),
       POINT.split(",").map(Number));
     const warm = await openGaps();
-    check("selecting a point leaves the gap list whole (no outlines to match on)",
-      warm.items === expected && warm.sections.length === 1,
+    const clicked = warm.sections.filter((t) => /^Where you clicked/.test(t));
+    check("selecting a point regroups the gaps without dropping one",
+      warm.items === expected && clicked.length === 1 &&
+      warm.sections.length > 1 && /Where you clicked3$/.test(clicked[0]),
       `${warm.items}/${expected} items, sections=${JSON.stringify(warm.sections)}`);
 
     await context.close();

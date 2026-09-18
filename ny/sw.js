@@ -27,7 +27,7 @@
 // geometry anchors (borough / judicial-district / municipal-court) to
 // GEOMETRY_URLS below; the Thread 5 pipeline filled ROSTER_URLS.
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "nyc-district-explorer-shell-v15";
+const CACHE_NAME = "nyc-district-explorer-shell-v16";
 
 const SHELL_URLS = [
   "./",
@@ -46,6 +46,8 @@ const SHELL_URLS = [
 // works offline) and refresh in the background. Precached at install so
 // those layers work offline.
 const GEOMETRY_URLS = [
+  "./data/app/metro-outline.json",
+  "./data/app/ny-state-outline.json",
   "./data/app/borough-boundaries.json",
   "./data/app/bronx-county-outline.json",
   "./data/app/brooklyn-county-outline.json",
@@ -53,6 +55,10 @@ const GEOMETRY_URLS = [
   "./data/app/queens-county-outline.json",
   "./data/app/staten-island-county-outline.json",
   "./data/app/judicial-districts.json",
+  "./data/app/ny-counties.json",
+  "./data/app/ny-school-districts.json",
+  "./data/app/ny-cities-towns.json",
+  "./data/app/ny-villages.json",
   "./data/app/municipal-court-districts.json",
   "./data/app/congress-districts.json",
   "./data/app/state-senate-districts.json",

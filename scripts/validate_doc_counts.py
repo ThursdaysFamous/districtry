@@ -151,6 +151,19 @@ HISTORICAL_COUNTS = [
                "suburban Cook's 25. All three figures were measured together, so the "
                "39 cannot be updated alone.",
      "recorded": "2026-09-12"},
+    # 2026-09-18, when the New York instance grew its first statewide layers and
+    # went 27 -> 31. This sentence RECORDS WHAT SHIPPED ON ITS DAY: it says NYC's
+    # sources page followed San Francisco's "once its 27 layers had been through
+    # the same extraction", and names the three matrices built then as 39, 27 and
+    # 16 rows. All three figures were counted together at that moment, so raising
+    # the 27 alone would leave a row count nobody ever built, and raising all
+    # three would claim a change that had not happened yet when the sentence was
+    # written. A past-tense record is left as it was.
+    {"path": "docs/DEV_PROCESS_ASSESSMENT.md", "name": "NYC", "count": 27,
+     "reason": "Dated record of the sources-page extraction: NYC's page was built "
+               "from its then-27 layers, alongside matrices of 39 and 16 rows for "
+               "Illinois and San Francisco, all counted in that one change.",
+     "recorded": "2026-09-18"},
 ]
 
 # How far to look either side of a bare "N layers" for the instance it belongs

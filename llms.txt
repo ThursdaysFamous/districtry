@@ -34,7 +34,7 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 
 Boroughs, City Council and community districts, NYPD precincts and sectors, school zones, and the state and federal seats above them.
 
-- [New York City district lookup](https://districtry.com/ny/): 27 layers, 5 boroughs.
+- [New York City district lookup](https://districtry.com/ny/): 33 layers, 5 boroughs.
 - [What community board am I in?](https://districtry.com/ny/community-board.html)
 - [Who is my U.S. representative?](https://districtry.com/ny/congress.html)
 - [What Council district am I in?](https://districtry.com/ny/council-district.html)

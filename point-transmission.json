@@ -192,25 +192,26 @@
       ]
     },
     "ny": {
-      "layers_sending_point": 4,
+      "layers_sending_point": 5,
       "layers": [
         "es-zone",
         "hs-zone",
         "ms-zone",
+        "nys-zip-code",
         "zip-code"
       ],
       "layers_holding_hook_but_silent": [
         "community-district",
         "council",
-        "library",
         "police-precinct",
         "police-sector"
       ],
       "layers_unexercised": [],
       "atpoint_sites": [
-        "load"
+        "load",
+        "loadNysZipCodes"
       ],
-      "atpoint_hooks_fired": 1,
+      "atpoint_hooks_fired": 2,
       "layer_ids": [
         "borough",
         "borough-president",
@@ -218,6 +219,7 @@
         "community-district",
         "congress",
         "council",
+        "county",
         "district-attorney",
         "early-voting",
         "election-district",
@@ -229,15 +231,20 @@
         "library",
         "ms-zone",
         "municipal-court",
+        "municipality",
         "neighborhood",
+        "nys-school-district",
+        "nys-zip-code",
         "police-precinct",
         "police-sector",
         "police-station",
+        "polling-place",
         "post-office",
         "school-district",
         "school-site",
         "state-assembly",
         "state-senate",
+        "village",
         "zip-code"
       ]
     },
