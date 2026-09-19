@@ -255,13 +255,54 @@ PROVENANCE = [
      "vintage": "boroughs are fixed geography (downloaded once, shoreline-clipped)",
      "expected_successor": "none expected",
      "note": "Also serves Borough President + District Attorney (same 5 polygons)."},
+    # THE STATEWIDE TIER, added at the 2026-09-19 go-live. PR 2 shipped these
+    # five files and gave them no manifest entry, so nothing watched the two
+    # services the whole statewide tier rests on — and this file's app-to-
+    # manifest check is ONE-DIRECTIONAL, so it could never have reported the
+    # absence. ny-state-outline.json and metro-outline.json are dissolved from
+    # the county fabric by the same builders, so watching the county service
+    # covers them too.
+    {"layer": "NY counties (offline anchor)",
+     "app_file": "ny-counties.json",
+     "source_url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Civil_Boundaries/FeatureServer/2?f=json",
+     "builder": os.path.join(REPO_ROOT, "scripts", "build_ny_counties.py"),
+     "builder_ref": "NYS_Civil_Boundaries/FeatureServer/2",
+     "vintage": "62 counties, NYS ITS Civil Boundaries, publication date March 2026",
+     "expected_successor": "updated in place; a service rename surfaces as unreachable",
+     "note": "Also the input for ny-state-outline.json and metro-outline.json, so this one entry covers all three."},
+    {"layer": "NY cities, towns and villages (offline anchor)",
+     "app_file": "ny-cities-towns.json",
+     "source_url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Civil_Boundaries/FeatureServer?f=json",
+     "builder": os.path.join(REPO_ROOT, "scripts", "build_ny_municipalities.py"),
+     "builder_ref": "NYS_Civil_Boundaries/FeatureServer",
+     "vintage": "995 cities and towns (layer 6) and 532 villages (layer 7)",
+     "expected_successor": "updated in place; a service rename surfaces as unreachable",
+     "note": "One builder writes both files; ny-villages.json rides this entry."},
+    {"layer": "NY school districts (offline anchor)",
+     "app_file": "ny-school-districts.json",
+     "source_url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Schools/FeatureServer/18?f=json",
+     "builder": os.path.join(REPO_ROOT, "scripts", "build_ny_school_districts.py"),
+     "builder_ref": "NYS_Schools/FeatureServer/18",
+     "vintage": "716 districts, dissolved from the state's 936 polygon rows on SED_CODE_1",
+     "expected_successor": "updated in place; an index reshuffle surfaces as unreachable",
+     "note": "The 936-to-680 reconciliation against TIGERweb is recorded in the builder's docstring."},
+    # REWRITTEN at the 2026-09-19 go-live, and it had been describing a layer
+    # that stopped shipping the day before. It said "5 NYC counties relabeled as
+    # judicial districts 1/2/11/12/13", built from TIGERweb's State_County by
+    # Illinois's scripts/build_embedded_boundaries.py — a clone leftover. The
+    # tree ships 13 STATEWIDE districts, dissolved from the state's own county
+    # fabric on the Judiciary Law §140 table by ny/scripts/
+    # build_ny_judicial_districts.py. So the one gate watching this source was
+    # watching the wrong source, and said so by failing rather than by drifting
+    # quietly, which is the gate working.
     {"layer": "NY Supreme Court Judicial Districts (offline anchor)",
      "app_file": "judicial-districts.json",
-     "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer?f=json",
-     "builder_ref": "State_County",
-     "vintage": "5 NYC counties relabeled as judicial districts 1/2/11/12/13",
+     "source_url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Civil_Boundaries/FeatureServer/2?f=json",
+     "builder": os.path.join(REPO_ROOT, "scripts", "build_ny_judicial_districts.py"),
+     "builder_ref": "NYS_Civil_Boundaries",
+     "vintage": "13 statewide judicial districts, dissolved from the state county fabric on the Judiciary Law section 140 table",
      "expected_successor": "statutory change only — almost never",
-     "note": "No live per-district source exists; county-derived from TIGERweb."},
+     "note": "No per-district source exists; the districts are a statutory grouping of counties, so the county layer is what is watched."},
     {"layer": "Civil (Municipal) Court districts (offline anchor)",
      "app_file": "municipal-court-districts.json",
      "socrata_id": "7vpq-4bh4", "name_contains": "Municipal Court Districts",
@@ -311,7 +352,11 @@ ENDPOINTS = [
      "vintage": "national NGDA structures layer, METRO_BBOX envelope-queried at runtime",
      "expected_successor": "updated in place (USGS; successor to the retired HIFLD Open layer)"},
     {"layer": "Early-voting poll sites (NYS GIS elections service layer 1)",
-     "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer/1",
+     # THE LAYER INDEX IS APPENDED AT RUNTIME. index.html carries the service
+     # as one constant (NYS_ELECTIONS_SERVICE) and builds "/0".."/3" from it, so
+     # a URL with the index in it is not a literal this file can find and the
+     # entry reported drift that was not there. Watch the constant.
+     "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer",
      "vintage": "NYS/NYC BOE early-voting sites, refreshed per election cycle in place",
      "expected_successor": "updated in place; a service rename surfaces as unreachable"},
 ]
@@ -384,10 +429,16 @@ def check_manifest_matches_app(html, builder_src, findings):
             findings.add(FAIL, p["layer"],
                          "index.html no longer references data/app/%s — manifest drift"
                          % p["app_file"])
-        if p["builder_ref"] not in builder_src:
+        # An entry may name its OWN builder: this instance's layers are not all
+        # built by the one file this manifest was cloned pointing at.
+        this_builder = p.get("builder", BOUNDARIES_BUILDER)
+        this_src = (builder_src if this_builder == BOUNDARIES_BUILDER
+                    else (open(this_builder, encoding="utf-8").read()
+                          if os.path.exists(this_builder) else ""))
+        if p["builder_ref"] not in this_src:
             findings.add(FAIL, p["layer"],
-                         "provenance ref %r not found in scripts/build_embedded_boundaries.py "
-                         "— manifest drift" % p["builder_ref"])
+                         "provenance ref %r not found in %s — manifest drift"
+                         % (p["builder_ref"], os.path.relpath(this_builder, REPO_ROOT)))
 
 
 # ---- check 2: Socrata datasets resolve, keep their name, aren't superseded ---
