@@ -313,7 +313,7 @@ Each opens its own refreshed plan PR with its own measured ledger when it begins
   audited.
   **NEXT: no third Michigan city has been researched.** Lansing, Ann Arbor and Sterling Heights are
   the obvious candidates by population; none has been checked for a published boundary.
-- **The other 261 commissioners** — gap `mi-commissioner-roster`. Five tranches have
+- **The other 253 commissioners** — gap `mi-commissioner-roster`. Six tranches have
   shipped: tranche 1 six counties and 76 districts, tranche 2 five more (St. Clair 7,
   Monroe 8 of 9, Berrien 12, Jackson 9, Calhoun 7), tranche 3 five more (Eaton 15, Grand
   Traverse 9, Lapeer 7, Lenawee 8 of 9, Midland 7), and tranche 5 on 2026-09-19 ten more
@@ -321,8 +321,10 @@ Each opens its own refreshed plan PR with its own measured ledger when it begins
   Oceana 5, Osceola 7, Sanilac 7), and tranche 6 the same day twenty-one more (Alcona 5,
   Alpena 8, Arenac 5, Chippewa 5, Clare 9, Clinton 6 of 7, Delta 5, Emmet 7, Houghton 5,
   Isabella 7, Lake 7, Luce 5, Mackinac 5, Menominee 9, Montcalm 7, Ontonagon 5, Oscoda 5,
-  Otsego 9, Presque Isle 5, Roscommon 5, Schoolcraft 5). **Forty-seven counties, 358 of the
-  619 districts, 6,133,017 of Michigan's 10,077,331 people — 60.9%** — weekly and count-guarded
+  Otsego 9, Presque Isle 5, Roscommon 5, Schoolcraft 5), and tranche 7 the same day one
+  more (Cass 8), the last name on the probe's candidate list. **Forty-eight counties, 366
+  of the 619 districts, 6,184,606 of Michigan's 10,077,331 people — 61.4%** — weekly and
+  count-guarded
   (`mi/scripts/mi_commissioner_scraper.py` + `build_mi_commissioner_roster.py`,
   `update-mi-commissioner-roster.yml`). Ten counties have been tried and refused, each
   with a measured reason in that scraper's `PROBES` table: four `Disallow: /` (Genesee,
@@ -367,12 +369,34 @@ Each opens its own refreshed plan PR with its own measured ledger when it begins
   published as 24 and was wrong: 34 minus the ten that shipped, which forgot that
   Gogebic and Marquette left the candidate pool the same day by being recorded shut.
   22 is the artifact's own count after `--prune`, which is where a count belongs.
-  **CASS IS THE ONE LEFT**, and it is a wrong-page case rather than a hard one: the
-  URL the probe scored is the board's COMMITTEES page, which lists five committee
-  rosters. All eight districts do appear across them, so a parser could assemble a
-  whole board and would lose any commissioner who sits on no committee. The county's
-  own board page is a different URL and was not among the saved pages, so Cass waits
-  for one fetch rather than being read off the wrong page.
+  **TRANCHE 7 WAS CASS ALONE AND CLOSED THE CANDIDATE LIST**, and it is a wrong-page
+  case rather than a hard one: the URL the probe scored is the board's COMMITTEES page,
+  which lists five committee rosters. All eight districts do appear across them, so a
+  parser built on it assembles a whole board and loses any commissioner who sits on no
+  committee — and the probe's own evidence (8 districts, 8 seats, 24 near pairs) cannot
+  tell that page from the real one. The county's board page is a different URL, linked
+  from the committees page itself, and names all eight; it cost one robots read and one
+  page. **SO CASS IS THE ONLY COUNTY HERE THAT READS TWO PAGES**, and the split decides
+  what each is for: the board page carries the people and the districts and no contact at
+  all, the committees page carries a mailto and the member's own district on one line and
+  is not a roster. The board page decides who is on the board; the committees page only
+  adds an address to a district it has already named; a district the two disagree on gets
+  no address and keeps its name; and a committees page that fetches and joins fewer than
+  five addresses REFUSES, because a member leaving a committee moves that by one while a
+  page whose shape has moved answers zero. A committees page that does not fetch at all
+  costs only its own column, and `check_roster_retention.py` is what notices, since it
+  measures each county in this file as its own source. Seven of the eight have an address.
+  The pairing has two witnesses and neither is the state column: each button's href slug
+  and its printed caption name the district separately, and the committees page keys the
+  same eight people to the same eight districts on its own. **`--county` NOW MERGES** into
+  the scraper's cache rather than replacing it, so proving one new parser against its live
+  page costs that county's fetches instead of a sweep of forty-seven hosts nobody needed
+  to ask again; a full run still replaces, because there a county that has stopped
+  yielding must leave the file.
+  **ZERO CANDIDATES REMAIN.** What is left on the probe's record is 25 counties measured
+  shut — 11 no-board-page, 7 no-districts, 3 not-keyable, 2 no-confirmed-host, 2
+  challenge — which is a re-examination rather than a re-probe, plus the probe's own gap
+  above.
   **THE TRAP WORTH CARRYING FORWARD IS HOUGHTON'S**, because it produced a clean
   four-of-five that was entirely wrong: its page is one div per member holding the
   name, the role, the contacts and THEN the district, so read as flat text it

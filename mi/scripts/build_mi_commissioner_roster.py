@@ -75,13 +75,13 @@ CACHE = os.path.join(HERE, ".cache", "mi_commissioner_roster.json")
 DISTRICTS = os.path.join(APP_DATA_DIR, "mi-commissioner-districts.json")
 OUT = os.path.join(APP_DATA_DIR, "mi-commissioner-members.json")
 
-# Floors. Measured 2026-09-19 after tranche 6: 47 counties, 358 seats shipped.
-# The basis is "any two counties may go dark": 47 - 2 = 45 counties, and 358
-# less the two biggest boards (Kent 21 + Eaton 15) = 322 seats, which is the
+# Floors. Measured 2026-09-19 after tranche 7: 48 counties, 366 seats shipped.
+# The basis is "any two counties may go dark": 48 - 2 = 46 counties, and 366
+# less the two biggest boards (Kent 21 + Eaton 15) = 330 seats, which is the
 # tightest figure that basis allows. Raise them when a tranche lands, never
 # lower one to get past a failure.
-MIN_COUNTIES = 45
-MIN_DISTRICTS = 322
+MIN_COUNTIES = 46
+MIN_DISTRICTS = 330
 
 # Fields a district row may carry, in card order. Anything else the scraper
 # learns is dropped here rather than shipped unreviewed.
