@@ -244,6 +244,21 @@ recurring.
 
 ## Open questions for Adam
 
+- **Neither of my two open findings should jump the queue, and here is the
+  ranking anyway.** Asked whether either should, my answer is no — but if one
+  moves first it should be the SUSPENDED-HOST excuse path, and the reason is the
+  failure's shape rather than its likelihood. When a county's host is suspended
+  the supervisor build does not drop that one county; it refuses to write at
+  all, so a single dead host freezes the roster for all 99. Mitchell froze it
+  for a week and would have frozen it indefinitely had the hosting account not
+  been restored on its own. The only escape is `--allow-drop`, which is the
+  lowered-guard rule in another costume. It is dormant today, which is why it
+  does not jump.
+  The AUDITOR LABELLING is the lower-consequence of the two: 17 counties where a
+  reader sees a real, working office number presented beside one person's name.
+  Misleading in emphasis, not wrong in fact — the auditor does answer it, under
+  Iowa Code 331.504. Worth doing, worth doing after almost anything else.
+
 - **Mitchell County** — re-read the page and fix the parser, or pass
   `--allow-drop` and let the county go? I would re-read it: five named
   supervisors is a real loss and the page changing shape is the likelier cause.
