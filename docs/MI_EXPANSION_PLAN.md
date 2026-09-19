@@ -313,19 +313,21 @@ Each opens its own refreshed plan PR with its own measured ledger when it begins
   audited.
   **NEXT: no third Michigan city has been researched.** Lansing, Ann Arbor and Sterling Heights are
   the obvious candidates by population; none has been checked for a published boundary.
-- **The other 454 commissioners** — gap `mi-commissioner-roster`. Three tranches have
-  shipped, all on 2026-09-13/15: tranche 1 six counties and 76 districts, tranche 2 five
-  more (St. Clair 7, Monroe 8 of 9, Berrien 12, Jackson 9, Calhoun 7), tranche 3 five more
-  (Eaton 15, Grand Traverse 9, Lapeer 7, Lenawee 8 of 9, Midland 7). **Sixteen counties,
-  165 of the 619 districts, 5,200,503 of Michigan's 10,077,331 people — 51.6%, past half
-  the state** — weekly and count-guarded (`mi/scripts/mi_commissioner_scraper.py` +
-  `build_mi_commissioner_roster.py`, `update-mi-commissioner-roster.yml`). Eight counties
-  have been tried and refused, each with a measured reason in that scraper's `PROBES`
-  table: two `Disallow: /` (Genesee, Ingham), two HTTP 202 on robots.txt itself (Ottawa,
-  Livingston), two Akamai 403s to every client string tried (Oakland, Allegan), and two
-  that answer 200 and are still not keyable — Washtenaw, whose commissioners are named
-  only inside prose biographies, and Bay, whose board page names three OFFICERS with no
-  district for any of them on a seven-seat board.
+- **The other 390 commissioners** — gap `mi-commissioner-roster`. Four tranches have
+  shipped: tranche 1 six counties and 76 districts, tranche 2 five more (St. Clair 7,
+  Monroe 8 of 9, Berrien 12, Jackson 9, Calhoun 7), tranche 3 five more (Eaton 15, Grand
+  Traverse 9, Lapeer 7, Lenawee 8 of 9, Midland 7), and tranche 5 on 2026-09-19 ten more
+  (Barry 8, Cheboygan 7, Dickinson 5, Hillsdale 5, Ionia 6 of 7, Kalkaska 7, Leelanau 7,
+  Oceana 5, Osceola 7, Sanilac 7). **Twenty-six counties, 229 of the 619 districts,
+  5,557,403 of Michigan's 10,077,331 people — 55.1%** — weekly and count-guarded
+  (`mi/scripts/mi_commissioner_scraper.py` + `build_mi_commissioner_roster.py`,
+  `update-mi-commissioner-roster.yml`). Ten counties have been tried and refused, each
+  with a measured reason in that scraper's `PROBES` table: four `Disallow: /` (Genesee,
+  Ingham, and — added 2026-09-19 — Gogebic and Marquette), two HTTP 202 on robots.txt
+  itself (Ottawa, Livingston), two Akamai 403s to every client string tried (Oakland,
+  Allegan), and two that answer 200 and are still not keyable — Washtenaw, whose
+  commissioners are named only inside prose biographies, and Bay, whose board page names
+  three OFFICERS with no district for any of them on a seven-seat board.
   **TRANCHE 3 SHIPPED THE FLEET'S FIRST SEAT WITHHELD BECAUSE A PUBLISHER CONTRADICTS
   ITSELF.** Lenawee's commissioner directory lists Jim Daly in District 5; the same
   county's News Flash of 10 September 2026 announces his death and says he represented
@@ -340,13 +342,34 @@ Each opens its own refreshed plan PR with its own measured ledger when it begins
   negative-tested. `unnamedWhy` carries the per-district reason so Monroe's shortfall (a
   row naming nobody) and Lenawee's (a row the county contradicts) do not share one false
   sentence.
-  **THE POPULATION GRADIENT HAS FLATTENED AND THAT IS THE NEXT DECISION.** Tranche 1 spanned
-  1.79M down to 175K, tranche 2 160K to 134K, tranche 3 109K to 83K. The next six by
-  population start at 79K (Clinton) and each buys under 1% of the state, so the marginal
-  return per tranche is now small. Population is still the right order and is what the
-  three tranches used; whether tranche 4 keeps it, sweeps all remaining counties at once,
-  or orders by whether a county's site is readable at all, is an operator call worth
-  making before it is made by default.
+  **THE POPULATION GRADIENT FLATTENED AND THE ORDER CHANGED.** Tranche 1 spanned 1.79M
+  down to 175K, tranche 2 160K to 134K, tranche 3 109K to 83K; the next by population was
+  Clinton at 79K and each remaining county buys under 1% of the state. So **tranche 4 was
+  a measurement and shipped no county**: `mi/scripts/probe_mi_county_boards.py` asked all
+  59 untried counties at once whether they publish a district-keyed board page, without
+  writing a parser, and wrote `mi/data/source/mi-county-board-probe.json` — 34 candidate,
+  11 no-board-page, 7 no-districts, 3 not-keyable, 2 no-confirmed-host, 2 challenge.
+  Tranche 5 is the first taken off that list, and it proved the verdict is not a promise
+  in either direction: ten of the 34 parsed on the first attempt, and two — **Gogebic and
+  Marquette** — cannot be fetched at all, each serving a 210-byte robots.txt that allows
+  five named crawlers and then disallows `*` on line 18, read three times in a row and
+  identical each time. Both had been recorded as candidates the day before, so either
+  those files changed inside a day or the probe's read differed, and **which is not
+  established**: the Internet Archive holds no snapshot of either host's robots.txt since
+  2026-09-01, and the probe records a robots status only for the hosts it REJECTS, never
+  for the one it ACCEPTS. Closing that is the probe's own next change.
+  **THE 24 REMAINING CANDIDATES ARE THE RUNWAY** and need no new discovery. The ten this
+  tranche took were the ones whose shape read cleanly from a single saved copy of the
+  page; the rest were not measured as unreadable, only left. Three counties are worth
+  naming as already-understood work: Sanilac's shape turned out to be its own district
+  links and shipped here, Lake and Schoolcraft carry Cloudflare-obfuscated addresses the
+  Kent parser already decodes, and Clare, Menominee and Otsego are the largest boards left
+  at nine seats each.
+  **ONE FETCH PER HOST, EVER.** The 34 candidates were each read once into a saved copy
+  and every parser was written offline against it, so these hosts saw two requests apiece
+  (robots.txt and the page) across the whole tranche. That is deliberate: six sweeps in
+  four days tripped Sucuri on Tuscola during the probe work, and repeatedly returning to a
+  county's site is how a county that would have answered stops answering.
 
 - **Michigan's full fleet bbox**, and with it the last four misroutes (Ironwood, Houghton, Iron
   Mountain, Menominee). Needs `validate_index`'s "a bbox must not contain a sibling's centre"

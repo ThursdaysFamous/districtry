@@ -165,7 +165,7 @@
   </url>
   <url>
     <loc>https://districtry.com/mi/county-commissioner.html</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -872,6 +872,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/mi/county-commissioner/barry.html</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/mi/county-commissioner/berrien.html</loc>
     <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -880,6 +886,18 @@
   <url>
     <loc>https://districtry.com/mi/county-commissioner/calhoun.html</loc>
     <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/mi/county-commissioner/cheboygan.html</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/mi/county-commissioner/dickinson.html</loc>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -896,6 +914,18 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/mi/county-commissioner/hillsdale.html</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/mi/county-commissioner/ionia.html</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/mi/county-commissioner/jackson.html</loc>
     <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -908,6 +938,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/mi/county-commissioner/kalkaska.html</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/mi/county-commissioner/kent.html</loc>
     <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -916,6 +952,12 @@
   <url>
     <loc>https://districtry.com/mi/county-commissioner/lapeer.html</loc>
     <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/mi/county-commissioner/leelanau.html</loc>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -950,8 +992,26 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/mi/county-commissioner/oceana.html</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/mi/county-commissioner/osceola.html</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/mi/county-commissioner/saginaw.html</loc>
     <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://districtry.com/mi/county-commissioner/sanilac.html</loc>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -1443,7 +1503,7 @@
   </url>
   <url>
     <loc>https://districtry.com/about.html</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

@@ -1052,6 +1052,41 @@ try {
       await page.close();
     }
 
+    // A SEAT THE COUNTY ITSELF CALLS VACANT IS A FIFTH STATE. Ionia District 3
+    // is the case: its board page prints "Vacant" where the other six print a
+    // name, with the PREVIOUS commissioner's whole entry still on the page
+    // commented out. The card must (a) still be District 3, (b) name nobody,
+    // (c) NOT name Lawrence Stewart Tiejema, which is what a parser that
+    // leaves HTML comments in would ship, (d) say the county calls the seat
+    // vacant rather than the county's-row-names-nobody sentence, which is a
+    // different fact, and (e) not read as a county the roster has not reached.
+    {
+      const page = await booted(context,
+        `${BASE}#point=42.86746,-85.27675&layers=county-commissioner`);
+      const card = await cardText(page, "county-commissioner");
+      const pill = await page.evaluate(() => {
+        const el = document.getElementById("card-county-commissioner");
+        const p2 = el && el.parentElement ? el.parentElement.querySelector(".card-id-pill") : null;
+        return p2 ? p2.textContent.trim() : null;
+      });
+      const people = await page.evaluate(() => {
+        const el = document.getElementById("card-county-commissioner");
+        return el ? el.querySelectorAll(".card-person").length : -1;
+      });
+      const text = card.text || "";
+      check("Ionia District 3 still resolves to its own district",
+        pill === "District 3", `pill=${JSON.stringify(pill)}`);
+      check("Ionia District 3 names nobody",
+        people === 0, `personRows=${people} :: ${text.slice(0, 200)}`);
+      check("Ionia District 3 does not name the commented-out predecessor",
+        !/Tiejema/i.test(text), text.slice(0, 240));
+      check("Ionia District 3 says the county calls the seat vacant",
+        /lists this district as vacant/.test(text), text.slice(0, 260));
+      check("Ionia District 3 is not told the county is unreached",
+        !/naming commissioners county by county/.test(text), text.slice(0, 240));
+      await page.close();
+    }
+
     // A COUNTY THE ROSTER HAS NOT REACHED MUST SAY SO AND NAME NOBODY. Ingham
     // is the worksheet's own anchor point and its site refuses this client
     // (robots.txt, one `*` group, Disallow: /), so it is in no tranche. The

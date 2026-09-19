@@ -43,11 +43,18 @@ card falls back to what it already said. The floors below are floors, not
 targets: one county changing CMS is ordinary and must not stop the other five
 refreshing, a collapse must stop everything.
 
-NO HOME ADDRESS AND NO PARTY FROM THE STATE. None of these six counties
-publishes a member's home address and no parser reads an address field.
-Muskegon is the only one publishing party on its own page, so party ships for
-Muskegon and for nobody else; taking it from the state column would attach a
-2024 fact to a 2026 person.
+NO HOME ADDRESS AND NO PARTY FROM THE STATE. Eight of the counties added in
+tranche 5 print members' HOME addresses — Barry, Cheboygan, Hillsdale, Ionia
+and Osceola in full, street and city — and no parser reads an address field,
+so none of it is in the cache and none can reach the card. Party ships only
+where a county prints it on its own page (Muskegon and Barry); taking it from
+the state column would attach a 2024 fact to a 2026 person.
+
+THREE WAYS A DISTRICT CAN BE UNNAMED, and each gets its own sentence on the
+card, because they are not the same statement to a reader:
+  * the county's own row names no person (Monroe 2, a malformed directory row);
+  * the county calls the seat VACANT in its own words (Ionia 3);
+  * the county contradicts itself about who holds it (Lenawee 5, CONTRADICTED).
 
 Usage:
     python3 mi/scripts/mi_commissioner_scraper.py      # refresh the cache
@@ -67,13 +74,13 @@ CACHE = os.path.join(HERE, ".cache", "mi_commissioner_roster.json")
 DISTRICTS = os.path.join(APP_DATA_DIR, "mi-commissioner-districts.json")
 OUT = os.path.join(APP_DATA_DIR, "mi-commissioner-members.json")
 
-# Floors. Measured 2026-09-15 after tranche 3: 16 counties, 165 seats shipped.
-# The basis is "any two counties may go dark": 16 - 2 = 14 counties, and 165
-# less the two biggest boards (Kent 21 + Eaton 15) = 129 seats, which is the
+# Floors. Measured 2026-09-19 after tranche 5: 26 counties, 229 seats shipped.
+# The basis is "any two counties may go dark": 26 - 2 = 24 counties, and 229
+# less the two biggest boards (Kent 21 + Eaton 15) = 193 seats, which is the
 # tightest figure that basis allows. Raise them when a tranche lands, never
 # lower one to get past a failure.
-MIN_COUNTIES = 14
-MIN_DISTRICTS = 129
+MIN_COUNTIES = 24
+MIN_DISTRICTS = 193
 
 # Fields a district row may carry, in card order. Anything else the scraper
 # learns is dropped here rather than shipped unreviewed.
@@ -138,7 +145,7 @@ def main():
     geometry = seats_from_geometry()
 
     directory, skipped, short = {}, [], []
-    withheld, retire = {}, []
+    withheld, retire, vacant = {}, [], {}
     agree, differ = 0, 0
     for fips in sorted(cache.get("counties", {})):
         entry = cache["counties"][fips]
@@ -175,6 +182,18 @@ def main():
                 withheld[(cf, cd)] = note
             else:
                 retire.append((county, cd, note["name"], got))
+        # A DISTRICT THE COUNTY ITSELF CALLS VACANT. This is a third case and
+        # not either of the other two: the row is not malformed (Monroe) and no
+        # second county surface contradicts it (Lenawee) — the county's own
+        # board page states in its own words that nobody holds the seat. Ionia
+        # District 3 is the first, and its page carries the previous
+        # commissioner's whole entry commented out beneath the word, which is
+        # why the parser strips comments before reading anything.
+        for district in sorted(keyed, key=lambda k: (not k.isdigit(), k)):
+            if keyed[district].get("vacant"):
+                del keyed[district]
+                vacant[(fips, district)] = county
+
         missing = sorted(want - set(keyed), key=int)
         if entry.get("seats") != len(drawn):
             skipped.append((county, "scraper table says %s seats, geometry draws %d"
@@ -225,6 +244,12 @@ def main():
             directory[fips]["unnamedDistricts"] = missing
             why = dict((cd, note["why"]) for (cf, cd), note in withheld.items()
                        if cf == fips and cd in missing)
+            for (cf, cd), name in sorted(vacant.items()):
+                if cf == fips and cd in missing:
+                    why[cd] = ("%s County's own board page lists this district as "
+                               "vacant. A Michigan board vacancy is filled by "
+                               "appointment, and the county's page names no "
+                               "appointee." % name)
             if why:
                 # A per-district reason, because the two cases a reader meets
                 # are not the same fact: Monroe's row carries no name, and
@@ -241,11 +266,16 @@ def main():
         held = sorted(cd for (cf, cd), _n in withheld.items()
                       if cd in missing
                       and directory.get(cf, {}).get("county") == county)
-        bare = [d for d in missing if d not in held]
+        empty = sorted(cd for (cf, cd), nm in vacant.items()
+                       if cd in missing and nm == county)
+        bare = [d for d in missing if d not in held and d not in empty]
         parts = []
         if bare:
             parts.append("district(s) %s named by nobody on the county's own page"
                          % ", ".join(bare))
+        if empty:
+            parts.append("district(s) %s the county's own page calls vacant"
+                         % ", ".join(empty))
         if held:
             parts.append("district(s) %s withheld, the county contradicting its "
                          "own roster" % ", ".join(held))

@@ -1,4 +1,58 @@
 {
+ "015": {
+  "county": "Barry",
+  "districts": {
+   "1": {
+    "email": "bteunessen@barrycounty.org",
+    "name": "Bob Teunessen",
+    "party": "Republican"
+   },
+   "2": {
+    "email": "cgetty@barrycounty.org",
+    "name": "Catherine Getty",
+    "party": "Republican",
+    "phone": "269-953-3151"
+   },
+   "3": {
+    "email": "djackson@barrycounty.org",
+    "name": "David W. Jackson",
+    "party": "Republican",
+    "phone": "616-437-0296",
+    "role": "Chair"
+   },
+   "4": {
+    "email": "jsmelker@barrycounty.org",
+    "name": "Jon Smelker",
+    "party": "Republican",
+    "phone": "616-765-8481"
+   },
+   "5": {
+    "email": "MCallton@barrycounty.org",
+    "name": "Mike Callton",
+    "party": "Republican"
+   },
+   "6": {
+    "email": "MABassett@barrycounty.org",
+    "name": "Marsha A. Bassett",
+    "party": "Republican"
+   },
+   "7": {
+    "email": "bcampbell@barrycounty.org",
+    "name": "Bruce Campbell",
+    "party": "Republican",
+    "phone": "269-838-7350"
+   },
+   "8": {
+    "email": "dhatfield@barrycounty.org",
+    "name": "David Hatfield",
+    "party": "Republican",
+    "phone": "269-945-1400",
+    "role": "Vice Chair"
+   }
+  },
+  "seats": 8,
+  "sourceUrl": "https://www.barrycounty.org/departments_and_officials/officials/board_of_commissioners/index.php"
+ },
  "021": {
   "county": "Berrien",
   "districts": {
@@ -70,6 +124,75 @@
   },
   "seats": 7,
   "sourceUrl": "https://www.calhouncountymi.gov/departments/board_of_commissioners/index.php"
+ },
+ "031": {
+  "county": "Cheboygan",
+  "districts": {
+   "1": {
+    "email": "jostman@cheboygancounty.net",
+    "name": "Jeff Ostman",
+    "phone": "231-818-9305"
+   },
+   "2": {
+    "email": "rbsangster@cheboygancounty.net",
+    "name": "Richard B. Sangster",
+    "phone": "231-290-1751"
+   },
+   "3": {
+    "email": "mnewman@cheboygancounty.net",
+    "name": "Michael Newman",
+    "phone": "231-445-1886"
+   },
+   "4": {
+    "email": "teustice@cheboygancounty.net",
+    "name": "Thomas E. Eustice"
+   },
+   "5": {
+    "email": "dclarmont@cheboygancounty.net",
+    "name": "Dale Clarmont",
+    "phone": "231-445-1884"
+   },
+   "6": {
+    "email": "jwallace@cheboygancounty.net",
+    "name": "John Wallace",
+    "phone": "231-238-7663"
+   },
+   "7": {
+    "email": "swarfield@cheboygancounty.net",
+    "name": "Steve Warfield",
+    "phone": "231-330-7949"
+   }
+  },
+  "seats": 7,
+  "sourceUrl": "https://www.cheboygancounty.net/government/board-of-commissioners-boc/"
+ },
+ "043": {
+  "county": "Dickinson",
+  "districts": {
+   "1": {
+    "name": "Joe Stevens",
+    "phone": "906-774-0325"
+   },
+   "2": {
+    "name": "Kevin Sullivan",
+    "phone": "906-774-8239"
+   },
+   "3": {
+    "name": "Dan Harrington",
+    "phone": "906-282-7555",
+    "role": "Chairperson"
+   },
+   "4": {
+    "name": "Peter Swanson",
+    "phone": "906-779-1870"
+   },
+   "5": {
+    "name": "Victoria Jakel",
+    "phone": "906-396-1447"
+   }
+  },
+  "seats": 5,
+  "sourceUrl": "https://dickinsoncountymi.gov/government/county_departments/board_of_commissioners/index.php"
  },
  "045": {
   "county": "Eaton",
@@ -169,6 +292,81 @@
   "seats": 9,
   "sourceUrl": "https://www.gtcountymi.gov/184/Board-of-Commissioners"
  },
+ "059": {
+  "county": "Hillsdale",
+  "districts": {
+   "1": {
+    "email": "d.ingles@hillsdalecounty.gov",
+    "name": "Doug Ingles"
+   },
+   "2": {
+    "email": "k.collins@hillsdalecounty.gov",
+    "name": "Kevin Collins"
+   },
+   "3": {
+    "email": "m.wiley@hillsdalecounty.gov",
+    "name": "Mark Wiley",
+    "phone": "517-869-2715"
+   },
+   "4": {
+    "email": "b.benzing@hillsdalecounty.gov",
+    "name": "Brad Benzing",
+    "phone": "517-254-4311"
+   },
+   "5": {
+    "email": "b.leininger@hillsdalecounty.gov",
+    "name": "Brent Leininger",
+    "phone": "517-320-2410"
+   }
+  },
+  "seats": 5,
+  "sourceUrl": "https://co.hillsdale.mi.us/index.php/tm-gov/m-boc"
+ },
+ "067": {
+  "county": "Ionia",
+  "districts": {
+   "1": {
+    "email": "davidhodges4833@gmail.com",
+    "name": "David Hodges",
+    "phone": "616-240-0624"
+   },
+   "2": {
+    "email": "wirtzse@gmail.com",
+    "name": "Scott Wirtz",
+    "phone": "616-375-0332"
+   },
+   "4": {
+    "email": "pinkneyhill1995@gmail.com",
+    "name": "Phillip Lee Hesche",
+    "phone": "616-897-4921"
+   },
+   "5": {
+    "email": "gkelley@ioniacounty.org",
+    "name": "Gordon L. Kelley",
+    "phone": "616-893-0637",
+    "role": "Vice-Chair"
+   },
+   "6": {
+    "email": "cmmjck@gmail.com",
+    "name": "Jack Leroy Shattuck",
+    "phone": "517-256-2870"
+   },
+   "7": {
+    "email": "tfrewen.ioniacountycommissioner@gmail.com",
+    "name": "Terence Michael Frewen",
+    "phone": "517-256-4321",
+    "role": "Chairperson"
+   }
+  },
+  "seats": 7,
+  "sourceUrl": "https://www.ioniacounty.org/departments-officials/board-of-commissioners/",
+  "unnamedDistricts": [
+   "3"
+  ],
+  "unnamedWhy": {
+   "3": "Ionia County's own board page lists this district as vacant. A Michigan board vacancy is filled by appointment, and the county's page names no appointee."
+  }
+ },
  "075": {
   "county": "Jackson",
   "districts": {
@@ -258,6 +456,34 @@
   },
   "seats": 9,
   "sourceUrl": "https://www.kalcounty.gov/479/Board-of-Commissioners"
+ },
+ "079": {
+  "county": "Kalkaska",
+  "districts": {
+   "1": {
+    "name": "Truman Bicum"
+   },
+   "2": {
+    "name": "Bob Baldwin"
+   },
+   "3": {
+    "name": "Kohn Fisher"
+   },
+   "4": {
+    "name": "David Persons"
+   },
+   "5": {
+    "name": "David Comai"
+   },
+   "6": {
+    "name": "Scott Matley"
+   },
+   "7": {
+    "name": "Jeff Sieting"
+   }
+  },
+  "seats": 7,
+  "sourceUrl": "https://kalkaskacounty.net/government/board_of_commissioners/index.php"
  },
  "081": {
   "county": "Kent",
@@ -416,6 +642,34 @@
   },
   "seats": 7,
   "sourceUrl": "https://lapeercountymi.gov/government/board_of_commissioners/index.php"
+ },
+ "089": {
+  "county": "Leelanau",
+  "districts": {
+   "1": {
+    "name": "Rick Robbins"
+   },
+   "2": {
+    "name": "Mark Walter"
+   },
+   "3": {
+    "name": "Will Bunek"
+   },
+   "4": {
+    "name": "Ty Wessell"
+   },
+   "5": {
+    "name": "Alan Campbell"
+   },
+   "6": {
+    "name": "Gwenne Allgaier"
+   },
+   "7": {
+    "name": "Steve Yoder"
+   }
+  },
+  "seats": 7,
+  "sourceUrl": "https://leelanau.gov/leelanau_county/board_of_commissioners/index.php"
  },
  "091": {
   "county": "Lenawee",
@@ -659,6 +913,77 @@
   "seats": 7,
   "sourceUrl": "https://co.muskegon.mi.us/1965/Your-Muskegon-County-Commissioners"
  },
+ "127": {
+  "county": "Oceana",
+  "districts": {
+   "1": {
+    "email": "tbeggs@oceana.mi.us",
+    "name": "Tim Beggs"
+   },
+   "2": {
+    "email": "jmccormick@oceana.mi.us",
+    "name": "Joel McCormick"
+   },
+   "3": {
+    "email": "chardy@oceana.mi.us",
+    "name": "Craig Hardy"
+   },
+   "4": {
+    "email": "perickson@oceana.mi.us",
+    "name": "Paul Erickson"
+   },
+   "5": {
+    "email": "rwalker@oceana.mi.us",
+    "name": "Robert Walker",
+    "phone": "231-894-9541"
+   }
+  },
+  "seats": 5,
+  "sourceUrl": "https://oceana.mi.us/government/board-of-commissioners/"
+ },
+ "133": {
+  "county": "Osceola",
+  "districts": {
+   "1": {
+    "email": "district1@osceolacountymi.gov",
+    "name": "Gregory Gydesen",
+    "phone": "231-287-2880"
+   },
+   "2": {
+    "email": "district2@osceolacountymi.gov",
+    "name": "Mark Gregory",
+    "phone": "231-768-4530",
+    "role": "Chairman"
+   },
+   "3": {
+    "name": "David Turner",
+    "phone": "231-908-0501"
+   },
+   "4": {
+    "email": "district4@osceolacountymi.gov",
+    "name": "Timothy Michell",
+    "phone": "231-942-6781"
+   },
+   "5": {
+    "email": "district5@osceolacountymi.gov",
+    "name": "James Custer",
+    "phone": "231-872-9410",
+    "role": "Vice Chairman"
+   },
+   "6": {
+    "email": "district6@osceolacountymi.gov",
+    "name": "Scott Stieg",
+    "phone": "231-250-4924"
+   },
+   "7": {
+    "email": "district7@osceolacountymi.gov",
+    "name": "Russ Nehmer",
+    "phone": "231-667-0555"
+   }
+  },
+  "seats": 7,
+  "sourceUrl": "https://osceolacountymi.gov/residents/county_commissioners/index.php"
+ },
  "145": {
   "county": "Saginaw",
   "districts": {
@@ -744,6 +1069,34 @@
   },
   "seats": 7,
   "sourceUrl": "https://www.stclaircounty.org/SubHome/Index/620"
+ },
+ "151": {
+  "county": "Sanilac",
+  "districts": {
+   "1": {
+    "name": "Jon Block"
+   },
+   "2": {
+    "name": "Roger C. Ballard"
+   },
+   "3": {
+    "name": "Gary Heberling"
+   },
+   "4": {
+    "name": "Bill Sarkella"
+   },
+   "5": {
+    "name": "Christine Lee"
+   },
+   "6": {
+    "name": "Evans Ehardt"
+   },
+   "7": {
+    "name": "John Moody"
+   }
+  },
+  "seats": 7,
+  "sourceUrl": "https://sanilaccounty.gov/government/commissioners/index.php"
  },
  "163": {
   "county": "Wayne",
