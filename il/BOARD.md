@@ -32,6 +32,29 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-19, end of the evening.** Pausing here. Main is `8506c8c`. Three
+Illinois changes merged tonight — #1024 (Rock Island's 112 fabricated names),
+#1028 (Bartonville's phantom Clerk) and #1030 (the six workflows) — alongside
+#1031, #1025 and #1023.
+
+**No reader is seeing Hancock's corrupted name.** Checked on main: the shipped
+`hancock-county-board-members.json` names all fifteen members correctly,
+`Josh Turner` and `Alex Blythe` among them. The corruption exists only in the
+held bot PR #1018, which is the hold working.
+
+**Next thing I would pick up: the cause behind #1018.** The merged name gate
+answers `digits in it` for `Jo0n Mason`, so rebasing that PR turns it red, which
+is the gate doing its job and not the question. The question is what
+`hancockcounty-il.gov` is serving now. Two simultaneous name changes on a
+fifteen-seat board, one of them with a zero where an `h` belongs, reads like the
+page moved under the parser rather than like two members being replaced — so
+`Alex Blythe` → `Billy Cramer` is suspect for the same reason, and `Billy Cramer`
+passes every gate we have. The builder's only drift guard is the member count,
+five districts of three, which a mis-associated parse satisfies exactly. This is
+the Rock Island shape again and it wants the parser diagnosed, never `Jo0n`
+hand-corrected to `John`: if the parse slipped, the surname is as suspect as the
+given name, and repairing a guess produces a more convincing guess.
+
 **2026-09-19, later still.** #1030 merged (`5338913`), so both Illinois PRs are
 in and nothing from this session is in review. Verified on main: all six roster
 workflows now run **zero** shared-page generators before the branch cut and run
