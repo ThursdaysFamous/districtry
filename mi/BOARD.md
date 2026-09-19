@@ -27,6 +27,14 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-19, tranche 6 merged.** #1035 is in. **47 of Michigan's 83 counties
+name your commissioner — 358 of the 619 seats, 60.9% of the state by
+population.** This morning it was 16 counties and 51.6%.
+
+Picking up Cass, the last candidate. Its probe URL is the board's committees
+page, so this one costs a fetch: robots.txt and the county's own board page,
+and nothing more.
+
 **2026-09-19, tranche 6 open.** #1035. Twenty-one more counties name your
 commissioner: Alcona, Alpena, Arenac, Chippewa, Clare, Clinton, Delta, Emmet,
 Houghton, Isabella, Lake, Luce, Mackinac, Menominee, Montcalm, Ontonagon,
