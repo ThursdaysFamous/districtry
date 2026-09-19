@@ -73,8 +73,16 @@ Verdicts: OK, FINDINGS, BLOCKED, ESCALATED.
   agent. Adam sends.
 - Sessions do not merge their own PRs unless Adam says to. "Merge when ready"
   on one PR is for that PR only. The manager merges another session's PR
-  after independent verification and green CI, and holds a PR that ships
-  officeholder data for Adam's word unless he has already given it.
+  after independent verification and green CI.
+- **The manager has STANDING authority to review and merge the state sessions'
+  PRs**, granted by Adam on 2026-09-19 in those words. It is standing, so it
+  does not lapse between conversations and does not need re-asking per PR — and
+  it replaces, for the state sessions, the older rule here that a PR shipping
+  officeholder data waits for Adam's word. What it does not do is lower the bar:
+  every merge still needs independent verification on the MERGED tree, not a
+  reading of the PR body, and a PR this session cannot verify is held and
+  reported rather than merged on trust. Adam's own SEO and branding session is
+  outside it, as it always was.
 - robots.txt is read through `scripts/robots_policy.py` before the first fetch
   of a host, as the client that fetches. RFC 9309: every group naming the
   client, merged, governs; else every `*` group, merged; longest match wins.
