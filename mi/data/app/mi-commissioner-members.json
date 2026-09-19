@@ -431,28 +431,6 @@
    "4": "Clinton County's own board page lists this district as vacant. A Michigan board vacancy is filled by appointment, and the county's page names no appointee."
   }
  },
- "041": {
-  "county": "Delta",
-  "districts": {
-   "1": {
-    "name": "John Malnar"
-   },
-   "2": {
-    "name": "Patrick Johnson"
-   },
-   "3": {
-    "name": "Christine Williams"
-   },
-   "4": {
-    "name": "Kelli vanGinhoven"
-   },
-   "5": {
-    "name": "Matthew Jensen"
-   }
-  },
-  "seats": 5,
-  "sourceUrl": "https://deltacountymi.gov/board-of-commissioners/district-4-kelli-vanginhoven/"
- },
  "043": {
   "county": "Dickinson",
   "districts": {
@@ -1618,51 +1596,6 @@
   },
   "seats": 5,
   "sourceUrl": "https://www.oscodacountymi.com/board-of-commissioners/"
- },
- "137": {
-  "county": "Otsego",
-  "districts": {
-   "1": {
-    "name": "Terra Deming",
-    "party": "Republican"
-   },
-   "2": {
-    "name": "Henry Mason",
-    "party": "Republican"
-   },
-   "3": {
-    "name": "Jonathan Turnbull",
-    "party": "Republican"
-   },
-   "4": {
-    "name": "Brett McVannel",
-    "party": "Republican",
-    "role": "Chairperson"
-   },
-   "5": {
-    "name": "Jason Clement",
-    "party": "Republican"
-   },
-   "6": {
-    "name": "Christi Sortor",
-    "party": "Republican"
-   },
-   "7": {
-    "name": "Neil Drzewiecki",
-    "party": "Republican"
-   },
-   "8": {
-    "name": "Dana Wingo",
-    "party": "Republican",
-    "role": "Vice Chairperson"
-   },
-   "9": {
-    "name": "Rob Weaver",
-    "party": "Republican"
-   }
-  },
-  "seats": 9,
-  "sourceUrl": "https://otsegocountymi.gov/277/Board-of-Commissioners"
  },
  "141": {
   "county": "Presque Isle",
