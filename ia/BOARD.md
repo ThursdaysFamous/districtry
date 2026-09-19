@@ -42,6 +42,44 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-19, 22:39 UTC — the preserve ruling is live, and the weekly run proves
+it end to end.** #1051 merged at 22:25. Rather than leave #1048 carrying a
+roster that deletes two counties' supervisors until next Saturday, I dispatched
+`update-ia-supervisor-roster.yml` on main — the fix is only real once a run that
+actually reads the counties writes the file, because a cache fixture's dates
+would assert reads that never happened.
+
+**The run rebuilt #1048 and every check passes.**
+
+| | deleting run, 19:30 | preserving run, 22:25 |
+|---|---|---|
+| counties / districts | 15 / 61 | **17 / 67** |
+| diff | 44 insertions, **1,000 deletions**, two county pages deleted | 25 insertions, **4 deletions**, nobody unpublished |
+| `check_roster_retention` | FAIL, two sources VANISHED | **OK, quiet on its own** |
+| #1048 CI | red | **green** |
+
+Bremer (017) and Hamilton (079) each keep three supervisors, carrying
+`readOn` and `asOf` of 2026-08-28 and the reader-facing reason. Mitchell, read
+this run, carries `readOn` 2026-09-19 and NO `asOf` — the distinction is in the
+data rather than asserted. Both county pages exist again and say "last read
+2026-08-28 and no longer re-read ... These names will go out of date"; Mitchell
+keeps "re-read on a schedule". Iowa's llms.txt line stays at 17.
+
+**THE ACCEPTANCE TEST WAS THE RULING'S OWN AND IT PASSED WITHOUT AN EXCEPTION:**
+the retention gate reports six accepted drops and neither county is among them.
+That is the difference between fixing a cause and excusing a symptom, and it is
+the test to reach for the next time a gate objects to a builder.
+
+**A correction to how I described this all evening.** I repeatedly wrote that
+the two counties "left" and that their pages "were deleted". That describes
+#1048's DIFF and never the site: #1048 was never merged, and main carried
+Bremer and Hamilton with all six names throughout. A weekly run PROPOSED a
+deletion and the retention gate refused it. The distinction matters — one is a
+loss to go and fix, the other is a guard working — and I was loose about it.
+
+#1048 is green and waiting on human review. Not mine to merge: officeholder
+data.
+
 **2026-09-19, 21:20 UTC — Adam ruled PRESERVE, and my accepted-drop fix was the
 wrong one.** The ruling is fleet policy: preserve data we have already fetched.
 A robots refusal stops us READING a county; it does not require us to unpublish
