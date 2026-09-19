@@ -763,7 +763,7 @@
           setCardResult(mod, mod.render(result));
         }
         setCardExtras(mod, result); // identifier pill / compact value + footer link
-        appendPinControl(mod); // "Pin as parent" control on the card
+        appendPinControl(mod); // "Compare to this district" control on the card
         pruneEmptyCardFooter(mod); // a footer that gained neither link nor pin goes away
         updateLayerPoi(mod, result, seq);
         refreshRelationshipOutlines(); // this layer may be a pinned parent's child, or the parent itself

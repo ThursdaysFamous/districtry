@@ -2481,7 +2481,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .hover-has-poi .hover-row-own .hover-row-label { color: #4b5563; }
   .hover-has-poi .hover-row-own .hover-row-who { font-size: 14px; font-weight: 700; color: #111827; }
 
-  /* ---- pin-parent relationships: "Pin as parent" control on each card ---- */
+  /* ---- pin-parent relationships: the "Compare to this district" control on
+     each card. The class name keeps the internal vocabulary; the label a
+     reader sees does not (see relationship-pinning.txt). ---- */
   .pin-parent-btn {
     margin-top: 8px;
     font-family: var(--font-body);
@@ -3750,6 +3752,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <h2>No point selected</h2>
       <p>Search an address or click anywhere on the map to build a civic profile for that location.</p>
       <p class="empty-state-lede">See every civic district that covers your location — and who represents you there.</p>
+      <p class="empty-state-lede">Turn on as many layers as you like. Once you pick a point, you can compare any district with the others and see which sit inside it.</p>
     </div>
     <div id="groups-root" hidden></div>
     <!-- The results-panel foot: the document footer below is hidden by the
@@ -7358,7 +7361,7 @@ function initSFExplorer() {
           setCardResult(mod, mod.render(result));
         }
         setCardExtras(mod, result); // identifier pill / compact value + footer link
-        appendPinControl(mod); // "Pin as parent" control on the card
+        appendPinControl(mod); // "Compare to this district" control on the card
         pruneEmptyCardFooter(mod); // a footer that gained neither link nor pin goes away
         updateLayerPoi(mod, result, seq);
         refreshRelationshipOutlines(); // this layer may be a pinned parent's child, or the parent itself
@@ -10121,8 +10124,9 @@ function initSFExplorer() {
 
   /* ==== ENGINE:BEGIN relationship-pinning ==== */
   /* =========================================================================
-   * PIN-PARENT RELATIONSHIPS — pick a district as the "parent" from its sidebar
-   * card, then see how every OTHER active layer's districts relate to it:
+   * PIN-PARENT RELATIONSHIPS — pick a district to compare against from its
+   * sidebar card, then see how every OTHER active layer's districts relate to
+   * it:
    *   • solid outline = that district falls fully INSIDE the pinned one
    *   • dashed outline = it CROSSES the pinned one's edge (partly in, partly out)
    * Pinning lives on the result cards (not a map click) so click-to-select a
@@ -10220,15 +10224,33 @@ function initSFExplorer() {
     }
     relLegendEl.hidden = false;
     relLegendEl.innerHTML =
-      '<div class="rel-legend-head"><span class="rel-sw rel-sw-parent"></span><b>Parent:</b>&nbsp;' + sanitize(parentName) + "</div>" +
+      '<div class="rel-legend-head"><span class="rel-sw rel-sw-parent"></span><b>Comparing to:</b>&nbsp;' + sanitize(parentName) + "</div>" +
       summary +
-      '<button type="button" class="rel-unpin-btn" id="rel-unpin">Unpin</button>';
+      '<button type="button" class="rel-unpin-btn" id="rel-unpin">Stop comparing</button>';
     var unpin = document.getElementById("rel-unpin");
     if (unpin) unpin.addEventListener("click", function () { setPinnedParent(null); });
   }
 
   function setPinnedParent(id) {
     pinnedParentId = (pinnedParentId === id) ? null : id;
+    // NOTHING COUNTED THIS UNTIL 2026-09-18, so "nobody uses the comparison"
+    // was an inference and never a measurement: the app has instrumented
+    // eleven actions since it shipped and this was not one of them, which
+    // left no way to tell a control readers never find from one they find
+    // and do not want. Those have opposite fixes. Same vocabulary as the
+    // layer toggles (layer/<id>), and the privacy page's event list is
+    // MEASURED off these call sites rather than hand-kept, so it picks this
+    // up on its own next build.
+    // WRITTEN AS TWO CALLS, NOT A TERNARY, AND THAT IS NOT A STYLE CHOICE.
+    // build_privacy_page.py MEASURES the published event list off these call
+    // sites, with a regex anchored on a quoted literal immediately inside the
+    // parentheses. A ternary argument is invisible to it, so the privacy page
+    // would have gone on naming eight events while the app sent ten, and on
+    // that page an undercount is a false statement exactly as an overcount is.
+    // The same regex reads COMMENTS as code, so this one deliberately does not
+    // spell the function name next to a quote.
+    if (pinnedParentId) trackEvent("compare/" + pinnedParentId);
+    else trackEvent("compare-stop");
     refreshAllPinButtons();
     refreshRelationshipOutlines();
     // The pin is part of the shared view, so pinning and unpinning both move
@@ -10253,12 +10275,20 @@ function initSFExplorer() {
   }
   function stylePinButton(btn, id) {
     var pinned = pinnedParentId === id;
-    btn.textContent = pinned ? "★ Parent — click to unpin" : "☆ Pin as parent";
+    // THE LABEL IS THE FEATURE'S DISCOVERABILITY, and it used to name the data
+    // model rather than the question. "Pin as parent" is the internal shape of
+    // this code — a parent feature and its children — and a reader who wants to
+    // know whether their ward sits inside one congressional district would not
+    // read it as the control that answers that. The internal names stay
+    // (pinnedParentId, rel-sw-parent, .pin-parent-btn); only what a reader sees
+    // changed, on 2026-09-18.
+    btn.textContent = pinned ? "★ Comparing — click to stop" : "☆ Compare to this district";
     btn.setAttribute("aria-pressed", pinned ? "true" : "false");
     btn.classList.toggle("is-pinned", pinned);
   }
 
-  // Append a "Pin as parent" control to a layer's card — only for polygon layers
+  // Append the "Compare to this district" control to a layer's card — only for
+  // polygon layers
   // that actually have a district at the selected point. Called after each card
   // renders its result.
   function appendPinControl(mod) {

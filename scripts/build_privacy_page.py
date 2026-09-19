@@ -256,9 +256,13 @@ def measure_address_list(src, name):
 # `metro-portal/` (the sibling-metro CARD was shown) left the vocabulary on
 # 2026-08-25 when the card did: the handoff is a silent redirect now, so the
 # only portal event an app can send is the departure itself.
-EXPECTED_EVENTS = ["address-search", "geolocate", "geolocate-success", "layer/",
-                   "metro-portal-go/", "select", "share-native",
-                   "share-open"]
+# `compare/` and `compare-stop` joined on 2026-09-18, when the district
+# comparison control was finally counted: the app had instrumented eleven
+# actions since it shipped and that was not one of them, so whether readers
+# used the feature was an inference rather than a measurement.
+EXPECTED_EVENTS = ["address-search", "compare-stop", "compare/", "geolocate",
+                   "geolocate-success", "layer/", "metro-portal-go/", "select",
+                   "share-native", "share-open"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select"]
 COORD_DECIMALS = 2
 
