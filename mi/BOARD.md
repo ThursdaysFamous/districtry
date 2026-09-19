@@ -29,6 +29,36 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-19, the Detroit PR-body task, and what it turned up.** #1047 open. The weekly
+Detroit roster PR now writes its own title and body from the diff. The measurement that
+justified it: across every commit that has ever touched that roster — three — the two that are
+refreshes moved `archivedAt` and nothing else, while the body said "this changes data about
+real officeholders. Please review the diff before merging." False on two of two.
+
+**The bigger find was not the body.** `archivedAt` is null when the scraper's DIRECT rung
+served and a timestamp when the Archive did, so the file records which rung answered each
+week: archive on 2026-09-05, **null on 2026-09-09 — detroitmi.gov served this client
+directly** — archive again on 2026-09-16. The Cloudflare challenge is intermittent, and four
+places stated it as permanent: the workflow header, `mi/WATCH.md`, the builder's docstring and
+`EXPECTED_UNREACHABLE` in `scripts/validate_card_links.py`, whose own comment says "the day
+this answers is the day that scraper's direct rung serves and the archive hop can go". That
+day came and went unremarked, because that inversion runs monthly and the PR body was static.
+All four now state what was measured with its date. The entry STAYS — one success in three is
+not a lifted block — and nothing here claims the block's current state; the next weekly run
+says so in its own title.
+
+Two defects caught in the writing, both worth the space. The selftest's OK line read
+`"OK — %d checks" % 0 if not failures else "FAIL"`, which binds before the conditional and
+could only ever print "0 checks" — a gate reporting itself vacuous. And the test fixtures used
+real `detroitmi.gov` paths, so `probe_user_agents.py`, which reads URL literals out of Python
+files, had started recording this script as a caller of a host it never contacts.
+
+Battery 85 static all pass, 9 of 10 browser, `page_consistency_test.mjs` 0 non-cert. Gate
+pair restated to 68/95, measured after the last edit.
+
+**Michigan now has nothing left that needs neither a fetch budget nor an operator answer.**
+Both board questions below are open and unanswered.
+
 **2026-09-19, the probe's robots gap merged.** #1045 is in as `1619003e`, verified on the
 merged tree rather than on my own PR body: `probe_mi_county_boards.py --check` passes there,
 the CI step sits at `smoke-test.yml` line 81, and `validate_gate_counts.py` and
