@@ -29,6 +29,45 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-19, later.** Tranche 5 is open as #1033. Ten more counties name your
+commissioner: Barry, Cheboygan, Dickinson, Hillsdale, Ionia, Kalkaska,
+Leelanau, Oceana, Osceola and Sanilac. That takes the card from 16 counties to
+26, from 165 named seats to 229, and from 51.6% of Michigan's people to 55.1%.
+Each of the ten also gets its own page under `mi/county-commissioner/`, where
+the names are in the served bytes rather than behind a fetch.
+
+**The weekly refresh has now run.** I dispatched it by hand rather than waiting
+for the cron: run 35415178348, every step green, and no change — so the
+sixteen counties shipped before this tranche still name the same people. The
+job works end to end and that is now measured rather than assumed.
+
+Three things worth knowing from the work:
+
+- **Two of the probe's candidates cannot be fetched at all.** Gogebic and
+  Marquette each serve a robots.txt that disallows this client, read three
+  times in a row, byte-identical to each other and to Genesee's and Ingham's.
+  Both were recorded as candidates the day before. Either those files changed
+  inside a day or the probe's read differed, and I cannot tell which: no
+  archive holds either file, and the probe writes a robots status only for the
+  hosts it rejects. That is the probe's own gap and it is recorded in its
+  docstring.
+- **Hillsdale is the opposite case.** Its robots.txt failed twice with a
+  connection reset — which is disallow-all — and served a file allowing this
+  path on the third try. A single transport failure is not a measurement. The
+  scraper retries the transport now; it still takes a refusal and an HTTP
+  status as answers.
+- **Ionia District 3 is a seat the county itself calls vacant**, which is a
+  third kind of unnamed seat beside Monroe's malformed row and Lenawee's
+  self-contradiction, and gets its own sentence on the card. Its page carries
+  the previous commissioner's whole entry commented out beneath the word, so a
+  parser that reads comments would name a man the county has removed.
+
+Every host in the tranche saw two requests, robots.txt and the page. Each page
+was saved once and every parser written offline against the copy, because six
+sweeps in four days tripped a WAF on Tuscola while the probe was being written.
+
+Next: the 24 candidates this tranche did not take. They need no new discovery.
+
 **2026-09-19.** Picking up tranche 5: more county commissioner names, from the
 34 counties the probe in #989 measured as publishing a district-keyed board
 page.
