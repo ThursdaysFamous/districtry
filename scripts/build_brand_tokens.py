@@ -257,9 +257,11 @@ def check_fallback_face():
 
 
 def surfaces():
-    """Every shipped HTML page: the root's own and each instance folder's.
-    DISCOVERED for the reason worksheets() gives below — a hand-kept list is
-    how a new instance joins the fleet unmeasured."""
+    """Every shipped HTML page: the root's own and everything under each
+    instance folder, the 188 per-county pages included. DISCOVERED for the
+    reason worksheets() gives below — a hand-kept list is how a new instance
+    joins the fleet unmeasured — and RECURSIVE because "every served page
+    except the ones in a subdirectory" is a boundary nothing justifies."""
     found = [n for n in sorted(os.listdir(REPO_ROOT)) if n.endswith(".html")]
     for name in sorted(os.listdir(REPO_ROOT)):
         d = os.path.join(REPO_ROOT, name)
@@ -267,9 +269,11 @@ def surfaces():
             continue
         if not os.path.isfile(os.path.join(d, "index.html")):
             continue
-        found += [os.path.join(name, n) for n in sorted(os.listdir(d))
-                  if n.endswith(".html")]
-    return found
+        for dirpath, dirs, files in os.walk(d):
+            dirs[:] = sorted(x for x in dirs if not x.startswith("."))
+            found += [os.path.relpath(os.path.join(dirpath, n), REPO_ROOT)
+                      for n in sorted(files) if n.endswith(".html")]
+    return sorted(found)
 
 
 MONO_RE = re.compile(r"--font-mono:\s*([^;]+);")
@@ -343,9 +347,11 @@ def check_mono_stack(light):
     legitimately, so failing on it would fail them. The Barlow Fallback check
     above is narrow for the opposite reason: a metric-override face that falls
     through defeats its own purpose, where a mono that falls through is merely
-    a different mono. traffic.html was the one root surface in that state and
-    ships the Plex 400 pair since 2026-09-18, so what remains is the pages that
-    paint no mono at all.
+    a different mono. Measured 2026-09-18, EVERY surface that paints mono now
+    defines the face: the six apps and six sources pages, traffic.html,
+    privacy.html, about.html and the four history pages. What is left naming
+    it and falling through are pages that paint no mono at all, where the
+    declaration costs a reader nothing because nothing asks for the file.
     """
     want = resolve(light, "font-mono")
     if want is None:

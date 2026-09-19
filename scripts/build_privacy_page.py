@@ -109,6 +109,21 @@ def shared_theme_boot():
         return fh.read().rstrip("\n")
 
 
+def shared_mono_faces():
+    """The self-hosted IBM Plex Mono face, read from its ONE source.
+
+    Same contract as the two above. The design system's --font-mono names
+    Plex for its disambiguated zero, which is doing real work under the
+    dataset ids, urls and workflow filenames these pages set in it; a page
+    that names the family and defines no face falls through to whatever mono
+    the reader's OS supplies, which is the state every root page was in until
+    2026-09-18.
+    """
+    path = os.path.join(REPO_ROOT, "engine", "shared", "mono-faces.txt")
+    with open(path, encoding="utf-8") as fh:
+        return fh.read().rstrip("\n")
+
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 # The token file, the mark and the self-hosted font CSS are the LANDING page's
@@ -136,7 +151,7 @@ LIGHT_TOKENS = [
     "brand-600", "brand-700", "brand-warm", "brand-tint", "brand-border",
     "paper", "surface", "surface-2", "ink", "ink-2", "ink-3", "muted", "faint",
     "border", "border-soft",
-    "font-heading", "font-heading-weight", "font-body",
+    "font-heading", "font-heading-weight", "font-body", "font-mono",
     "radius-card", "shadow-card",
 ]
 DARK_TOKENS = [
@@ -1062,8 +1077,9 @@ h2 {
 h3 { margin: 22px 0 6px; font-size: 16px; }
 p { margin: 0 0 14px; max-width: 76ch; }
 .updated { color: var(--muted); font-size: 14px; margin-top: 22px; }
+code { font-family: var(--font-mono); }
 .k {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.9em;
+  font-family: var(--font-mono); font-size: 0.9em;
   background: var(--brand-tint); border: 1px solid var(--brand-border);
   border-radius: 4px; padding: 1px 5px; white-space: nowrap;
 }
@@ -1345,7 +1361,7 @@ def render_page(pagetitle, pagesub, generator, body, title, desc, jsonld,
         "site": SITE,
         "brand": light["brand-600"].strip(),
         "favicon": esc(favicon_uri),
-        "fontface": fontface + "\n" + FALLBACK_FACE,
+        "fontface": fontface + "\n" + FALLBACK_FACE + "\n" + shared_mono_faces(),
         "themeboot": shared_theme_boot(),
         "light": token_css(LIGHT_TOKENS, light, ":root"),
         "dark": token_css(DARK_TOKENS, dark, '[data-theme="dark"]', DARK_EXTRA,
