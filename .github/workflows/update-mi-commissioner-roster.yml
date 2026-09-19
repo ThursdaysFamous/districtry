@@ -11,14 +11,14 @@ name: Update Michigan county commissioner roster
 # who died on 10 June 2025. So the names come from each county's own board
 # page, county by county, in tranches.
 #
-# Tranche 1 is six counties and 76 districts: Kalamazoo, Kent, Macomb,
-# Muskegon, Saginaw and Wayne. mi/scripts/mi_commissioner_scraper.py's PROBES
-# table records the six counties tried and refused with the reason for each —
-# two disallow this client in robots.txt, two answer HTTP 202 on robots.txt
-# itself, one is refused at its edge to every client string tested, and one
-# publishes its roster only as free prose. The refused counties stay in the
-# table so this run re-asks every week and a county that changes its file
-# re-enters by itself.
+# THE COUNTY LIST IS COUNTIES IN mi/scripts/mi_commissioner_scraper.py AND IS
+# NOT RESTATED HERE, because a count in a comment goes stale on the tranche
+# that moves it and nothing compares the two. That file's PROBES table records
+# every county tried and refused with the reason for each — robots.txt
+# disallowing this client, HTTP 202 on robots.txt itself, an edge refusing
+# every client string tested, a roster published only as free prose. The
+# refused counties stay in the table so this run re-asks every week and a
+# county that changes its file re-enters by itself.
 #
 # The builder refuses to write unless each county's districts are exactly 1..N
 # for the seat count the shipped geometry draws, so a redistricting or a board
@@ -106,7 +106,7 @@ jobs:
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
             gh pr create \
               --title "Update Michigan county commissioner roster" \
-              --body "Automated weekly refresh of the \`county-commissioner\` card's names, read from each county's own board page. Tranche 1 covers six counties and 76 of Michigan's 619 districts: Kalamazoo, Kent, Macomb, Muskegon, Saginaw and Wayne. The builder refuses to write unless each county's districts are exactly 1..N for the seat count the shipped geometry draws, so a redistricting fails the run instead of reshaping the card. The state's own Commissioner column ships nowhere — it lists the November 2024 election winners — and the run prints every seat where it disagrees with the county. Please review the diff before merging — this changes data about real officeholders." \
+              --body "Automated weekly refresh of the \`county-commissioner\` card's names, read from each county's own board page. The counties covered are the COUNTIES table in \`mi/scripts/mi_commissioner_scraper.py\`; the run's own log names each one and its district count, so read the checks rather than this paragraph for what this week's refresh touched. The builder refuses to write unless each county's districts are exactly 1..N for the seat count the shipped geometry draws, so a redistricting fails the run instead of reshaping the card. The state's own Commissioner column ships nowhere — it lists the November 2024 election winners — and the run prints every seat where it disagrees with the county. Please review the diff before merging — this changes data about real officeholders." \
               --base main \
               --head "$branch"
           else

@@ -34,12 +34,25 @@ WHAT A TRANCHE IS
 ------------------
 Michigan has 83 counties and no statewide roster, so the names arrive a
 TRANCHE at a time: the counties whose own board page yields a district-keyed
-roster to the client this scraper sends, taken in order of population among
-those not yet tried. Sixteen counties yield today across three tranches, and
-eight more are recorded in PROBES below as tried and not yielded — host,
-robots reading, what it answered, the date — so the next tranche starts from
-measurements instead of guesses, and a county that changes its file re-enters
-by itself on the weekly run.
+roster to the client this scraper sends. Twenty-six counties yield today across
+four shipping tranches, and ten more are recorded in PROBES below as tried and
+not yielded — host, robots reading, what it answered, the date — so the next
+tranche starts from measurements instead of guesses, and a county that changes
+its file re-enters by itself on the weekly run.
+
+THE ORDER CHANGED AFTER TRANCHE 3. The first three took the next counties by
+POPULATION, and by tranche 3 that had stopped discriminating: the span ran
+109K to 83K and the 59 untried counties held 18.1% of the state between them,
+each buying under 1%. So tranche 4 measured WHETHER A COUNTY PUBLISHES A
+DISTRICT-KEYED BOARD PAGE AT ALL, for all 59 at once and without writing a
+parser (mi/scripts/probe_mi_county_boards.py,
+mi/data/source/mi-county-board-probe.json), and shipped no county itself.
+Tranche 5 is the first taken off that list.
+
+A `candidate` VERDICT IS NOT A PROMISE, in either direction. Ten of the
+probe's 34 candidates parsed on the first attempt; two of them — Gogebic and
+Marquette — cannot be fetched at all, each serving a robots.txt that disallows
+this client, both recorded below.
 
 THE CLIENT, AND WHAT IT ASKS FIRST
 -----------------------------------
@@ -55,10 +68,16 @@ the DuPage and Logan pattern): on a website that status is a firewall refusing
 this client, where on an ArcGIS service it is the RFC's allow, so the state
 service keeps the default.
 
-No county here needs a browser user-agent: every one of the sixteen serves
-this token a full page. A county that refuses is skipped with its reason printed and its page
-never requested; it stays in PROBES so the weekly run re-asks and a county
-that changes its file re-enters by itself.
+No county here needs a browser user-agent: every one of the twenty-six serves
+this token a full page. A county that refuses is skipped with its reason
+printed and its page never requested; it stays in PROBES so the weekly run
+re-asks and a county that changes its file re-enters by itself.
+
+A TRANSPORT FAILURE IS RETRIED AND AN ANSWER IS NOT. co.hillsdale.mi.us resets
+the connection on roughly one request in three from this project's sandbox and
+serves the same file on the next try — its robots.txt read `unreachable` twice
+and `served` on the third go — so the page fetch retries three times. A robots
+refusal and an HTTP status are answers and are taken as given.
 
 A captcha is an access control. Livingston and Ottawa answer HTTP 202 on
 robots.txt itself — 202 is never a document — and nothing here tries to get
@@ -68,9 +87,11 @@ than its name and a browser string buys nothing.
 
 WHAT EACH PARSER READS, AND THE TRAP IN IT
 --------------------------------------------
-Six counties, five page shapes. Each parser pairs a district with a name
-INSIDE ONE BLOCK rather than by document order, because three of the six print
-the name before the district and one prints the role before the name:
+Twenty-six counties and as many page shapes; each parser's own docstring
+carries the trap it was written around. Every one pairs a district with a name
+INSIDE ONE BLOCK rather than by document order, because several print the name
+before the district and some print the role before the name. Tranche 1's six,
+which set the pattern:
 
   Kalamazoo  CivicPlus staff directory. District is in the JOB TITLE field
              ("District 2 – Chair"), so the district and the role arrive
@@ -125,11 +146,13 @@ Usage:
 """
 
 import argparse
+import base64
 import html as _html
 import json
 import os
 import re
 import sys
+import time
 from datetime import datetime, timezone
 
 try:
@@ -679,6 +702,396 @@ def parse_midland(page):
     return out
 
 
+# ---------------------------------------------------- tranche 5 parsers ---
+# Ten counties from the 2026-09-18 probe's candidate list
+# (mi/data/source/mi-county-board-probe.json). The probe measured which
+# counties publish a district-keyed board page at all; it never promised one
+# would parse, and Gogebic and Marquette are the standing reminder — both
+# scored `candidate` and neither can be fetched at all, each serving a
+# robots.txt that disallows this client. They are in PROBES, not here.
+
+def first_mailto(blk):
+    """The FIRST mailto in a block. Cheboygan is why it is the first and not
+    the last: District 4's visible address ends in a one-character anchor
+    pointing at somebody else's address."""
+    m = re.search(r'href="mailto:([^"?]+)', blk, re.I)
+    return _html.unescape(m.group(1)).strip() if m else None
+
+
+def first_phone(text):
+    """The first 10-digit number in a run of text, as ###-###-####."""
+    m = re.search(r"\(?\d{3}\)?[\s.-]\s*\d{3}[\s.-]\d{4}", text or "")
+    return phone(m.group(0)) if m else None
+
+
+# ------------------------------------------------------------------ 015 ---
+
+def parse_barry(page):
+    """A table, one <tr> per member. The LEFT cell carries a heading name and
+    the district; the RIGHT cell carries "Commissioner <Name> (<party>)" and
+    the mailto.
+
+    THE COUNTY PRINTS TWO SPELLINGS OF ONE PERSON IN ONE ROW. District 6's
+    left cell reads "Marcia A. Bassett" and its right cell "Commissioner Marsha
+    A. Bassett (R)". Neither is a different person and neither cell is more
+    recently edited than the other, so the parse takes the name from the cell
+    that also carries the party and the address — the structured one — and the
+    run PRINTS the disagreement rather than resolving it silently. The state's
+    own canvassed column says Marsha, which is corroboration and not the
+    reason.
+
+    Home addresses are printed for four members and no address field is read.
+    """
+    out, disagree = {}, []
+    for row in re.split(r"<tr[ >]", page)[1:]:
+        keyed = re.search(r"District\s*#?\s*(\d{1,2})\b", txt(row))
+        named = re.search(r"Commissioner\s+([^<(]{3,60}?)\s*(?:\(([A-Za-z]{1,12})\))?\s*<",
+                          row)
+        if not (keyed and named):
+            continue
+        name = txt(named.group(1)).strip(" ,")
+        if not name:
+            continue
+        rec = {"name": name}
+        party = named.group(2)
+        if party:
+            rec["party"] = {"R": "Republican", "D": "Democratic"}.get(party.upper(), party)
+        head = re.search(r"font-size:\s*18pt;?[^>]*>\s*([^<]{3,60})", row)
+        if head:
+            heading = txt(head.group(1)).strip(" ,")
+            role = re.search(r"\s*[-–]\s*(Chair(?:person|man)?|Vice[- ]Chair(?:person|man)?)\s*$",
+                             heading, re.I)
+            if role:
+                rec["role"] = role.group(1)
+                heading = heading[:role.start()].strip()
+            if heading and heading != name:
+                disagree.append((keyed.group(1), heading, name))
+        addr = first_mailto(row)
+        if addr:
+            rec["email"] = addr
+        tel = first_phone(txt(row))
+        if tel:
+            rec["phone"] = tel
+        out.setdefault(keyed.group(1), rec)
+    for district, heading, shipped in disagree:
+        print("    Barry district %s: the row's heading reads %r and its "
+              "commissioner line %r; %r ships" % (district, heading, shipped, shipped))
+    return out
+
+
+# ------------------------------------------------------------------ 031 ---
+
+def parse_cheboygan(page):
+    """<p><strong>District N - Name</strong><br />address<br />phone<br />
+    <a mailto></p>, one paragraph per member.
+
+    ONLY THE FIRST MAILTO IN A BLOCK IS READ. District 4's markup is
+    <a href="mailto:teustice@...">teustice@cheboygancounty.ne</a><a
+    href="mailto:cgouine@...">t</a> — the final letter of the visible address
+    is its own anchor pointing at a DIFFERENT person. A parser taking the last
+    mailto ships the wrong address for a commissioner, and the page looks
+    correct to a reader. District 6 likewise prints two telephone numbers, and
+    the first is the one under the name.
+
+    Every member's HOME address is printed and no address field is read.
+    """
+    out = {}
+    for blk in re.split(r"<p[ >]", page)[1:]:
+        m = re.search(r"District\s*(\d{1,2})\s*(?:&#8211;|&ndash;|[–—-])\s*"
+                      r"([^<]{3,60})</strong>", blk)
+        if not m:
+            continue
+        rec = {"name": txt(m.group(2)).strip(" ,")}
+        addr = first_mailto(blk)
+        if addr:
+            rec["email"] = addr
+        tel = first_phone(txt(blk[m.end():]))
+        if tel:
+            rec["phone"] = tel
+        out.setdefault(m.group(1), rec)
+    return out
+
+
+# ------------------------------------------------------------------ 043 ---
+
+def parse_dickinson(page):
+    """One <br />-separated line per member inside a single paragraph:
+    "District #N   Name 906-774-0325[    Chairperson]".
+
+    THE BLOCK IS BOUNDED AT ITS OWN <br />. The Controller/Administrator and
+    his e-mail address follow District 5 in the same paragraph, so a block that
+    runs to the paragraph's end gives District 5 a telephone and an address
+    belonging to a member of staff who is not a commissioner.
+    """
+    out = {}
+    flat = _html.unescape(re.sub(r"<(?!br|/p)[^>]*>", "", page))
+    for line in re.split(r"<br\s*/?>|</p>", flat, flags=re.I):
+        line = re.sub(r"\s+", " ", line).strip()
+        m = re.match(r"District\s*#?\s*(\d{1,2})\s+(.+)$", line)
+        if not m:
+            continue
+        rest = m.group(2)
+        tel = first_phone(rest)
+        name = re.split(r"\(?\d{3}\)?[\s.-]\s*\d{3}[\s.-]\d{4}", rest)[0].strip(" ,")
+        if not name:
+            continue
+        rec = {"name": name}
+        if tel:
+            rec["phone"] = tel
+        role = re.search(r"(Chair(?:person|man)?|Vice[- ]Chair(?:person|man)?)\s*$",
+                         rest.strip(), re.I)
+        if role:
+            rec["role"] = role.group(1)
+        out.setdefault(m.group(1), rec)
+    return out
+
+
+# ------------------------------------------------------------------ 059 ---
+
+def parse_hillsdale(page):
+    """<h2>District N</h2> then a paragraph of <span class="field-value">
+    lines: name, home address, telephone, e-mail, photo.
+
+    THE E-MAIL IS BASE64 INSIDE A <joomla-hidden-mail> ELEMENT, the Brown
+    County shape in a third encoding after Cloudflare's hex: the address is in
+    the `text` attribute. Markup present and nothing decoded is a hard failure,
+    the same rule the Kent and Lapeer parsers already take, because a silently
+    contactless roster is what that trap produces.
+    """
+    out, hidden, decoded = {}, 0, 0
+    blocks = re.split(r"<h2>", page)[1:]
+    for blk in blocks:
+        head = re.match(r"\s*([^<]{1,40})</h2>", blk)
+        if not head:
+            continue
+        keyed = re.match(r"\s*District\s*#?\s*(\d{1,2})\s*$", txt(head.group(1)))
+        if not keyed:
+            continue
+        body = blk[head.end():]
+        values = re.findall(r'class="field-value\s*"\s*>(.*?)</span>', body, re.S)
+        if not values:
+            continue
+        name = txt(values[0]).strip(" ,")
+        if not name:
+            continue
+        rec = {"name": name}
+        # DISTRICTS 1 AND 2 PRINT THE COUNTY SWITCHBOARD WITH AN EXTENSION
+        # ("(517) 437-7758 Ext: 861", "517-437-7758 x864") and the other three
+        # print a direct line. The card builds its tel: href from the digits,
+        # so an extension either breaks the dialled number or is dropped and
+        # leaves a switchboard number standing as the commissioner's own. Both
+        # are worse than no number, so a number carrying an extension is not
+        # read and the e-mail is the contact for those two.
+        for value in values[1:]:
+            line = txt(value)
+            if not first_phone(line):
+                continue
+            if re.search(r"\b(?:ext\.?|extension|x)\s*:?\s*\d{1,5}\b", line, re.I):
+                break
+            rec["phone"] = first_phone(line)
+            break
+        for enc in re.findall(r'<joomla-hidden-mail\b[^>]*\btext="([^"]+)"', body):
+            hidden += 1
+            try:
+                addr = base64.b64decode(enc + "===").decode("utf-8", "strict")
+            except Exception:                                     # noqa: BLE001
+                continue
+            if "@" in addr:
+                decoded += 1
+                rec.setdefault("email", addr.strip())
+        out.setdefault(keyed.group(1), rec)
+    if hidden and not decoded:
+        raise ValueError("Hillsdale: %d joomla-hidden-mail elements and none "
+                         "decoded — the encoding moved" % hidden)
+    return out
+
+
+# ------------------------------------------------------------------ 067 ---
+
+def parse_ionia(page):
+    """<h4>District #N</h4> then <p><a mailto>Name</a><br />home address<br />
+    telephone</p>, three members per row.
+
+    DISTRICT 3 READS "Vacant" AND THE PREVIOUS COMMISSIONER'S WHOLE BLOCK IS
+    STILL THERE, COMMENTED OUT — name, e-mail, address and telephone. Comments
+    are stripped before parsing (the Muskegon rule), so the seat reads vacant;
+    a parser that leaves them in ships Lawrence Stewart Tiejema for a seat the
+    county says nobody holds.
+
+    The e-mail addresses are HTML-entity-encoded and three of them are personal
+    accounts, which is what the county publishes as the way to reach those
+    commissioners. Home addresses are printed for every member and no address
+    field is read.
+    """
+    out = {}
+    for blk in re.split(r"<h4>", page)[1:]:
+        head = re.match(r"\s*District\s*#?\s*(\d{1,2})\s*</h4>", blk)
+        if not head:
+            continue
+        body = blk[head.end():blk.find("</p>") + 1 if "</p>" in blk else len(blk)]
+        if re.search(r"\bVacant\b", txt(body), re.I) and not re.search(r"mailto:", body):
+            out.setdefault(head.group(1), {"vacant": True})
+            continue
+        named = re.search(r'href="mailto:[^"]*"[^>]*>\s*(?:<strong>)?\s*([^<]{3,60})', body)
+        if not named:
+            continue
+        rec = {"name": txt(named.group(1)).strip(" ,")}
+        addr = first_mailto(body)
+        if addr:
+            rec["email"] = addr
+        role = re.search(r"<em>\s*([^<]{3,30})\s*</em>", body)
+        if role and re.search(r"chair", role.group(1), re.I):
+            rec["role"] = txt(role.group(1))
+        tel = first_phone(txt(body))
+        if tel:
+            rec["phone"] = tel
+        out.setdefault(head.group(1), rec)
+    return out
+
+
+# ------------------------------------------------------------------ 079 ---
+
+def parse_kalkaska(page):
+    """The board's own section menu, one <a> per district reading
+    "District #N <Name>".
+
+    THE SLUG IS NOT THE NAME. District 4's href is
+    .../james_sweet_4.php and its link text is "District #4 David Persons" —
+    the Eaton trap in a different place, a live page still slugged for the
+    member before this one. So the text is the roster and the slug is read for
+    nothing, and no profile link ships for this county: a URL carrying one
+    person's name under another person's card is the kind of quiet wrongness
+    this pipeline exists to avoid.
+    """
+    out = {}
+    for href, label in re.findall(r'<a [^>]*href="([^"]+)"[^>]*>\s*(District[^<]{3,70})</a>',
+                                  page, re.I):
+        m = re.match(r"District\s*#?\s*(\d{1,2})\s+(.{3,50})$", txt(label))
+        if not m:
+            continue
+        out.setdefault(m.group(1), {"name": m.group(2).strip(" ,")})
+    return out
+
+
+# ------------------------------------------------------------------ 089 ---
+
+def parse_leelanau(page):
+    """<li>District #N, Name</li>, seven list items.
+
+    THE ONLY E-MAIL ON THE PAGE IS COLLECTIVE — boc@leelanau.gov reaches all
+    seven commissioners and the county administrator — so no address is
+    attached to a person. Per-member contact lives in the county's separate
+    staff directory, which this parser does not read.
+    """
+    out = {}
+    for item in re.findall(r"<li>(.*?)</li>", page, re.S):
+        m = re.match(r"District\s*#?\s*(\d{1,2})\s*,\s*(.{3,50})$", txt(item))
+        if not m:
+            continue
+        out.setdefault(m.group(1), {"name": m.group(2).strip(" ,")})
+    return out
+
+
+# ------------------------------------------------------------------ 127 ---
+
+def parse_oceana(page):
+    """<li class="boc-member"> with the district in a <span class="district">
+    and the name in the <h3> beneath it."""
+    out = {}
+    for blk in re.split(r'<li class="boc-member', page)[1:]:
+        keyed = re.search(r'class="district[^"]*"[^>]*>\s*District\s*#?\s*(\d{1,2})\s*<', blk)
+        named = re.search(r"<h3>\s*([^<]{3,60})\s*</h3>", blk)
+        if not (keyed and named):
+            continue
+        rec = {"name": txt(named.group(1)).strip(" ,")}
+        addr = first_mailto(blk)
+        if addr:
+            rec["email"] = addr
+        tel = re.search(r'href="tel:([^"]+)"', blk)
+        if tel and phone(tel.group(1)):
+            rec["phone"] = phone(tel.group(1))
+        out.setdefault(keyed.group(1), rec)
+    return out
+
+
+# ------------------------------------------------------------------ 133 ---
+
+def parse_osceola(page):
+    """Hand-written editor HTML, each member between <hr /> rules:
+    District #N / Name[, Role] / mailto / telephone / home address /
+    "Represents ..." .
+
+    THE BOLD RUNS ARE THE KEY, NOT THE SPAN ORDER. Districts 1 and 2 are
+    written <strong><span>District #N</span></strong> and districts 3 to 7
+    <span><strong>District #N</strong></span>, so a parse keyed on one nesting
+    reads three of the seven and looks like a page that only publishes three.
+
+    DISTRICT 3's MAILTO CONTRADICTS ITS OWN LINK TEXT — the href is
+    3district@osceolacountymi.com and the visible text is
+    districtthree@osceolacountymi.com, on a .com domain where the other six
+    members use .gov. Two addresses for one person on one line, neither
+    checkable, so this district ships with no e-mail rather than with a guess.
+
+    Every member's home address is printed and no address field is read.
+    """
+    out = {}
+    for blk in re.split(r"<hr\s*/?>", page, flags=re.I):
+        bolds = [txt(b) for b in re.findall(r"<strong>(.*?)</strong>", blk, re.S)]
+        bolds = [b for b in bolds if b]
+        keyed = None
+        for i, b in enumerate(bolds):
+            m = re.match(r"District\s*#?\s*(\d{1,2})\s*$", b)
+            if m and i + 1 < len(bolds):
+                keyed, label = m.group(1), bolds[i + 1]
+                break
+        if not keyed:
+            continue
+        rec = {}
+        role = re.search(r",\s*(Chair(?:person|man)?|Vice[- ]Chair(?:person|man)?)\s*$",
+                         label, re.I)
+        if role:
+            rec["role"] = role.group(1)
+            label = label[:role.start()].strip(" ,")
+        if not label:
+            continue
+        rec["name"] = label
+        href = re.search(r'href="mailto:([^"?]+)"[^>]*>\s*([^<]*)', blk, re.I)
+        if href:
+            linked = _html.unescape(href.group(1)).strip()
+            shown = txt(href.group(2)).strip()
+            if shown and "@" in shown and shown.lower() != linked.lower():
+                print("    Osceola district %s: the mailto is %r and the link text "
+                      "%r; neither ships" % (keyed, linked, shown))
+            else:
+                rec["email"] = linked
+        tel = first_phone(txt(blk))
+        if tel:
+            rec["phone"] = tel
+        out.setdefault(keyed, rec)
+    return out
+
+
+# ------------------------------------------------------------------ 151 ---
+
+def parse_sanilac(page):
+    """The page's own button list, one <a> per district reading
+    "District N <Name>" and linking to district_N_commissioner.php.
+
+    THE SLUG IS A SECOND WITNESS HERE, unlike Kalkaska's: the number in the
+    href and the number in the link text must agree or the pair is dropped,
+    which is a free check on a page whose names sit two to a line.
+    """
+    out = {}
+    for m in re.finditer(r'<a href=\s*"([^"]*?district_(\d{1,2})_commissioner\.php)"[^>]*>\s*'
+                         r"([^<]{5,70})</a>", page, re.I):
+        slug_district = m.group(2)
+        label = txt(m.group(3))
+        keyed = re.match(r"District\s*#?\s*(\d{1,2})\s+(.{3,50})$", label)
+        if not keyed or keyed.group(1) != slug_district:
+            continue
+        out.setdefault(slug_district, {"name": keyed.group(2).strip(" ,")})
+    return out
+
 COUNTIES = (
     {"fips": "077", "county": "Kalamazoo", "seats": 9, "parse": parse_kalamazoo,
      "url": "https://www.kalcounty.gov/479/Board-of-Commissioners"},
@@ -714,6 +1127,29 @@ COUNTIES = (
      "url": "https://www.lenawee.mi.us/896/Commissioners"},
     {"fips": "111", "county": "Midland", "seats": 7, "parse": parse_midland,
      "url": "https://midlandcountymi.gov/boc-people"},
+    # --- tranche 5, 2026-09-19: ten counties off the probe's candidate list ---
+    {"fips": "015", "county": "Barry", "seats": 8, "parse": parse_barry,
+     "url": "https://www.barrycounty.org/departments_and_officials/officials/"
+            "board_of_commissioners/index.php"},
+    {"fips": "031", "county": "Cheboygan", "seats": 7, "parse": parse_cheboygan,
+     "url": "https://www.cheboygancounty.net/government/board-of-commissioners-boc/"},
+    {"fips": "043", "county": "Dickinson", "seats": 5, "parse": parse_dickinson,
+     "url": "https://dickinsoncountymi.gov/government/county_departments/"
+            "board_of_commissioners/index.php"},
+    {"fips": "059", "county": "Hillsdale", "seats": 5, "parse": parse_hillsdale,
+     "url": "https://co.hillsdale.mi.us/index.php/tm-gov/m-boc"},
+    {"fips": "067", "county": "Ionia", "seats": 7, "parse": parse_ionia,
+     "url": "https://www.ioniacounty.org/departments-officials/board-of-commissioners/"},
+    {"fips": "079", "county": "Kalkaska", "seats": 7, "parse": parse_kalkaska,
+     "url": "https://kalkaskacounty.net/government/board_of_commissioners/index.php"},
+    {"fips": "089", "county": "Leelanau", "seats": 7, "parse": parse_leelanau,
+     "url": "https://leelanau.gov/leelanau_county/board_of_commissioners/index.php"},
+    {"fips": "127", "county": "Oceana", "seats": 5, "parse": parse_oceana,
+     "url": "https://oceana.mi.us/government/board-of-commissioners/"},
+    {"fips": "133", "county": "Osceola", "seats": 7, "parse": parse_osceola,
+     "url": "https://osceolacountymi.gov/residents/county_commissioners/index.php"},
+    {"fips": "151", "county": "Sanilac", "seats": 7, "parse": parse_sanilac,
+     "url": "https://sanilaccounty.gov/government/commissioners/index.php"},
 )
 
 # Every county tried in tranche 1, measured 2026-09-13 from this project's
@@ -785,6 +1221,32 @@ PROBES = (
                  "district key cannot go on a district card (the Christian "
                  "County shape)",
      "date": "2026-09-15"},
+    # --- measured 2026-09-19, while promoting the probe's candidates ---
+    {"county": "Gogebic", "fips": "053", "seats": 7,
+     "host": "gogebiccountymi.gov",
+     "robots": "refused \u2014 served, 210 bytes, five named crawlers allowed "
+               "(Googlebot, Bingbot, FacebookBot, LinkedInBot/1.0, Twitterbot) "
+               "and then `User-agent: *` / `Disallow: /` on line 18. Read three "
+               "times in a row, identical each time",
+     "answered": "not fetched. THE PROBE RECORDED THIS COUNTY AS A CANDIDATE ON "
+                 "2026-09-18 having read robots first, so either the file changed "
+                 "inside a day or that read differed, and which is not established "
+                 "\u2014 the Internet Archive holds no snapshot of either host's "
+                 "robots.txt since 2026-09-01. The probe records a robots status "
+                 "only for the hosts it REJECTS, never for the one it accepts, "
+                 "which is why the two readings cannot be compared. Byte-identical "
+                 "to Genesee's and Ingham's files, `Disallow: /` on line 18 in all "
+                 "three",
+     "date": "2026-09-19"},
+    {"county": "Marquette", "fips": "103", "seats": 6,
+     "host": "co.marquette.mi.us",
+     "robots": "refused \u2014 the same 210-byte file as Gogebic's, byte for byte, "
+               "read three times in a row",
+     "answered": "not fetched. Recorded `candidate` by the probe on 2026-09-18 on "
+                 "the same day as Gogebic and unreadable on the same day as "
+                 "Gogebic, which is what makes a file change the likelier of the "
+                 "two explanations without settling it",
+     "date": "2026-09-19"},
     {"county": "Washtenaw", "fips": "161", "seats": 9,
      "host": "www.washtenaw.org",
      "robots": "served — no rule in the binding `*` group matches, Crawl-delay 20",
@@ -875,11 +1337,24 @@ def main():
             refused.append((county, why))
             print("  %-10s SKIPPED — robots %s: %s" % (county, verdict.status, why))
             continue
-        try:
-            with pacer.hold(url):
-                resp = session.get(url, timeout=TIMEOUT)
-        except Exception as exc:                              # noqa: BLE001
-            print("  %-10s FETCH FAILED — %s" % (county, exc))
+        resp, last = None, None
+        # A TRANSPORT FAILURE IS NOT A MEASUREMENT. co.hillsdale.mi.us resets
+        # the connection on roughly one request in three from this project's
+        # sandbox and serves the same page on the next try; a single failure
+        # recorded as "county did not yield" is how a county that publishes its
+        # board stays unread. Only the transport is retried — a robots refusal
+        # and an HTTP status are answers and are taken as given.
+        for attempt in range(3):
+            try:
+                with pacer.hold(url):
+                    resp = session.get(url, timeout=TIMEOUT)
+                break
+            except Exception as exc:                          # noqa: BLE001
+                last = exc
+                if attempt < 2:
+                    time.sleep(2 * (attempt + 1))
+        if resp is None:
+            print("  %-10s FETCH FAILED after 3 tries — %s" % (county, last))
             continue
         if resp.status_code != 200:
             print("  %-10s HTTP %s (%d bytes)" % (county, resp.status_code, len(resp.content)))

@@ -18,6 +18,18 @@ PUBLISHES A DISTRICT-KEYED ROSTER AT ALL. That cannot be read off a list, so
 this file measures it for all 59 at once, without writing a single parser, and
 prints them ranked by what it found.
 
+WHAT THIS FILE DOES NOT RECORD, MEASURED 2026-09-19
+----------------------------------------------------
+It writes a robots status for every host it REJECTS and none for the host it
+ACCEPTS. Tranche 5 found Gogebic and Marquette serving a robots.txt that
+disallows this client, one day after this probe recorded both as `candidate`
+having read robots first, and the two readings could not be compared because
+only one of them was written down. The Internet Archive holds no snapshot of
+either host's robots.txt since 2026-09-01, so whether the files changed is not
+established and cannot be. Record the accepted host's verdict too before the
+next sweep; a measurement nobody can diff is a measurement that has to be
+taken again.
+
 WHAT A VERDICT MEANS, AND WHAT IT DOES NOT
 -------------------------------------------
 The strongest verdict here is `candidate`, and it means A PARSER IS WORTH
@@ -779,6 +791,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     ap.add_argument("--check", action="store_true",
                     help="offline re-audit of the written artifact")
+    ap.add_argument("--prune", action="store_true",
+                    help="offline: drop counties that have left the frontier")
     ap.add_argument("--county", help="probe one county by name")
     ap.add_argument("--limit", type=int, help="probe only the first N")
     args = ap.parse_args()
@@ -786,6 +800,8 @@ def main():
     rows, built, probed, statepop = frontier()
     if args.check:
         return check(rows)
+    if args.prune:
+        return prune(rows)
 
     n = check_generator()
     print("probe-mi-county-boards: generator finds %d of %d known hosts" % (n, n))
@@ -825,6 +841,51 @@ def main():
     return 0
 
 
+def prune(rows):
+    """Offline: drop the counties that have LEFT the frontier since the sweep.
+
+    A county leaves by shipping a roster or by being recorded in the scraper's
+    PROBES table, and neither makes its measurement wrong — it makes the
+    measurement redundant, because the scraper's own tables are the record for
+    a county that has been decided. Re-sweeping 59 hosts to write that down
+    would be traffic for nothing, and traffic is not free: six sweeps in four
+    days tripped Sucuri on Tuscola while this file was being written.
+
+    A county ARRIVING on the frontier is the opposite case and this refuses it
+    — nothing has measured that county, and only a sweep can.
+    """
+    if not os.path.exists(ARTIFACT):
+        print("probe-mi-county-boards: no artifact to prune (%s)"
+              % os.path.relpath(ARTIFACT, _ROOT))
+        return 0
+    data = json.load(open(ARTIFACT))
+    want = {r["fips"] for r in rows}
+    have = {r["fips"] for r in data["counties"]}
+    new = sorted(want - have)
+    if new:
+        print("probe-mi-county-boards: FAIL — %d untried counties are absent from "
+              "the artifact (%s). Nothing has measured them, so this is a sweep "
+              "and not a prune." % (len(new), ", ".join(new)))
+        return 1
+    gone = sorted(have - want)
+    if not gone:
+        print("probe-mi-county-boards: nothing to prune — the artifact already "
+              "describes the %d untried counties" % len(want))
+        return 0
+    names = {r["fips"]: r["county"] for r in data["counties"]}
+    data["counties"] = [r for r in data["counties"] if r["fips"] in want]
+    data["pruned"] = sorted(set(data.get("pruned", []))
+                            | {"%s %s" % (f, names[f]) for f in gone})
+    with open(ARTIFACT, "w") as fh:
+        json.dump(data, fh, indent=1, sort_keys=True)
+        fh.write("\n")
+    print("probe-mi-county-boards: pruned %d county(ies) that have shipped or "
+          "been recorded shut (%s) — %d untried counties remain, still measured %s"
+          % (len(gone), ", ".join("%s %s" % (f, names[f]) for f in gone),
+             len(data["counties"]), data["measured"]))
+    return 0
+
+
 def check(rows):
     """Offline: the artifact must still describe the tree it was measured on."""
     if not os.path.exists(ARTIFACT):
@@ -839,7 +900,8 @@ def check(rows):
     bad = []
     if gone:
         bad.append("%d counties in the artifact have since shipped or been "
-                   "recorded shut (%s) — re-run the sweep" % (len(gone), ", ".join(gone)))
+                   "recorded shut (%s) — run --prune, which drops them without "
+                   "re-fetching anything" % (len(gone), ", ".join(gone)))
     if new:
         bad.append("%d untried counties are absent from the artifact (%s) — "
                    "re-run the sweep" % (len(new), ", ".join(new)))
@@ -849,9 +911,11 @@ def check(rows):
         for b in bad:
             print("  " + b)
         return 1
-    print("probe-mi-county-boards: OK — %d counties measured %s, generator "
+    print("probe-mi-county-boards: OK — %d counties measured %s%s, generator "
           "still finds all %d known hosts"
-          % (len(have), data["measured"], len(KNOWN_HOSTS)))
+          % (len(have), data["measured"],
+             ", %d since pruned" % len(data["pruned"]) if data.get("pruned") else "",
+             len(KNOWN_HOSTS)))
     return 0
 
 
