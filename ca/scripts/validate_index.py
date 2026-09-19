@@ -104,7 +104,7 @@ GEOMETRY_FILES = {
 
 # file -> minimum key count (officeholder rosters).
 ROSTER_FILES = {
-    "coverage-gaps.json": 3,  # Known data gaps keyed by gap id, driving the Data gaps panel — emitted from the fleet guidebook's GUIDEBOOK:BEGIN gaps block by scripts/build_coverage_gaps.py, which reads this fork's this_metro key (--check is the drift gate). Network-first like the rosters: a closed gap should stop being advertised on the next visit.
+    "coverage-gaps.json": 2,  # Known data gaps keyed by gap id, driving the Data gaps panel — emitted from the fleet guidebook's GUIDEBOOK:BEGIN gaps block by scripts/build_coverage_gaps.py, which reads this fork's this_metro key (--check is the drift gate). Network-first like the rosters: a closed gap should stop being advertised on the next visit. WENT 3 TO 2 ON 2026-09-19 when `sf-congress-district-offices` was RETIRED as false — the card renders the district office and 50 of 52 records carry one, measured in Chromium. That is the only reason this number ever moves down: a gap CLOSED on a measurement, which is what the sentence above anticipates. It is never lowered to get past a build that emptied the file, which is the collapse this floor exists to catch — if it fails and no gap was deliberately retired, fix the build.
     "congress-roster.json": 45,  # CA U.S. House reps (52 seats; vacancies allowed) - unitedstates/congress-legislators
     "ca-senate-members.json": 38,  # CA State Senate (40) - OpenStates
     "ca-assembly-members.json": 76,  # CA State Assembly (80) - OpenStates
