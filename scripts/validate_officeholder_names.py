@@ -13,13 +13,14 @@ THAT COUNTY WAS FIXED BY #1024, WHICH IS NOT THIS. That change repaired the
 parser and rebuilt the data, and added a refusal inside
 build_municipal_officials_roster.py so the same builder cannot write such a
 value again. This gate is the other half, and the difference is measurable
-rather than argued: run against the tree #1024 merged into, it still finds TWO
+rather than argued: run against the tree #1024 merged into, it still found TWO
 records — Plattville's "Beth Fals 56" and Bartonville's "'s Email:
-clerk@bartonville.org". A refusal at WRITE time cannot see a defect that is
+clerk@bartonville.org", the second of which #1028 then fixed at source. A
+refusal at WRITE time cannot see a defect that is
 already on the base branch when the writer does not run, and the municipal
 build has produced no file since 2026-09-08 because Will County is in
 REQUIRED_COUNTIES and its source sits behind a vendor managed challenge (#996,
-#1026). Those two have been shipping since 2026-08-01 and 2026-08-24.
+#1026). Those two had been shipping since 2026-08-01 and 2026-08-24.
 
 The two predicates are also different sizes, and the survivors are in the gap:
 #1024's fabricated_name() refuses three shapes (a phone number, a party label,
@@ -134,15 +135,22 @@ FIELD_LABEL_RE = re.compile(r"(?:e-?mail|phone|fax|website|address)\s*:", re.I)
 
 # (instance-relative path, exact value) -> {"reason": ..., "date": "YYYY-MM-DD"}
 #
-# These two are the only entries, and each is a KNOWN-BAD VALUE ALREADY IN THE
-# SHIPPED TREE that this gate found and that fixing belongs to somebody else —
-# they are Illinois parser defects, older than and unrelated to the Rock Island
-# break #1024 repaired. Recording them is what lets the gate land now rather
-# than waiting; it does not hide them, because audit_accepted() prints both on
-# every run and FAILS the moment either value leaves the tree, so the entry
-# cannot outlive the fix that retires it.
+# ONE ENTRY, and it is a KNOWN-BAD VALUE ALREADY IN THE SHIPPED TREE that this
+# gate found and that fixing belongs to somebody else — an Illinois parser
+# defect, older than and unrelated to the Rock Island break #1024 repaired.
+# Recording it is what lets the gate land now rather than waiting; it does not
+# hide it, because audit_accepted() prints it on every run and FAILS the moment
+# the value leaves the tree, so the entry cannot outlive the fix that retires
+# it.
 #
-# NEITHER REASON IS "the source publishes it that way". Both are this repo
+# THE SECOND ENTRY LASTED ABOUT AN HOUR AND ITS RETIREMENT IS THE PROPERTY
+# WORKING. Bartonville's phantom second Clerk was excused here on 2026-09-19 and
+# #1028 fixed it at source the same evening, at which point audit_accepted()
+# failed this file with "stale, remove it" and the entry was deleted. That is
+# the better outcome and the one this comment argues for: an exception is a
+# placeholder for a fix, not a substitute for one.
+#
+# THE REASON IS NEVER "the source publishes it that way". It is this repo
 # reading a document wrongly:
 ACCEPTED_NAMES = {
     ("il/data/app/municipal-officials.json", "Beth Fals 56"): dict(
@@ -153,15 +161,6 @@ ACCEPTED_NAMES = {
                "and a Department of Revenue URL on that municipality. The name must "
                "be DROPPED rather than repaired to 'Beth Fals' — the Douglas County "
                "rule — which is a change to an Illinois scraper, not to this gate.",
-    ),
-    ("il/data/app/municipal-officials.json", "’s Email: clerk@bartonville.org"): dict(
-        date="2026-09-19",
-        reason="Bartonville's phantom second Clerk, shipping since 2026-08-24. "
-               "Peoria's bare seat patterns end in `\\s*:?\\s*(.*)$` with the colon "
-               "optional, so the line 'Clerk's Email: ...' matches the Clerk pattern "
-               "and yields a clerk named from the rest of it. A seat label followed "
-               "by an apostrophe is a possessive, not a seat; the fix is one guard "
-               "in that Illinois scraper.",
     ),
 }
 
