@@ -313,13 +313,16 @@ Each opens its own refreshed plan PR with its own measured ledger when it begins
   audited.
   **NEXT: no third Michigan city has been researched.** Lansing, Ann Arbor and Sterling Heights are
   the obvious candidates by population; none has been checked for a published boundary.
-- **The other 390 commissioners** — gap `mi-commissioner-roster`. Four tranches have
+- **The other 261 commissioners** — gap `mi-commissioner-roster`. Five tranches have
   shipped: tranche 1 six counties and 76 districts, tranche 2 five more (St. Clair 7,
   Monroe 8 of 9, Berrien 12, Jackson 9, Calhoun 7), tranche 3 five more (Eaton 15, Grand
   Traverse 9, Lapeer 7, Lenawee 8 of 9, Midland 7), and tranche 5 on 2026-09-19 ten more
   (Barry 8, Cheboygan 7, Dickinson 5, Hillsdale 5, Ionia 6 of 7, Kalkaska 7, Leelanau 7,
-  Oceana 5, Osceola 7, Sanilac 7). **Twenty-six counties, 229 of the 619 districts,
-  5,557,403 of Michigan's 10,077,331 people — 55.1%** — weekly and count-guarded
+  Oceana 5, Osceola 7, Sanilac 7), and tranche 6 the same day twenty-one more (Alcona 5,
+  Alpena 8, Arenac 5, Chippewa 5, Clare 9, Clinton 6 of 7, Delta 5, Emmet 7, Houghton 5,
+  Isabella 7, Lake 7, Luce 5, Mackinac 5, Menominee 9, Montcalm 7, Ontonagon 5, Oscoda 5,
+  Otsego 9, Presque Isle 5, Roscommon 5, Schoolcraft 5). **Forty-seven counties, 358 of the
+  619 districts, 6,133,017 of Michigan's 10,077,331 people — 60.9%** — weekly and count-guarded
   (`mi/scripts/mi_commissioner_scraper.py` + `build_mi_commissioner_roster.py`,
   `update-mi-commissioner-roster.yml`). Ten counties have been tried and refused, each
   with a measured reason in that scraper's `PROBES` table: four `Disallow: /` (Genesee,
@@ -358,7 +361,26 @@ Each opens its own refreshed plan PR with its own measured ledger when it begins
   established**: the Internet Archive holds no snapshot of either host's robots.txt since
   2026-09-01, and the probe records a robots status only for the hosts it REJECTS, never
   for the one it ACCEPTS. Closing that is the probe's own next change.
-  **THE 24 REMAINING CANDIDATES ARE THE RUNWAY** and need no new discovery. The ten this
+  **TRANCHE 6 TOOK TWENTY-ONE OF THE TWENTY-TWO REMAINING CANDIDATES AND FETCHED
+  NOTHING.** Every page it parsed was saved during tranche 5's single sweep, so the
+  hosts saw the two requests they had already seen and no more. That figure was
+  published as 24 and was wrong: 34 minus the ten that shipped, which forgot that
+  Gogebic and Marquette left the candidate pool the same day by being recorded shut.
+  22 is the artifact's own count after `--prune`, which is where a count belongs.
+  **CASS IS THE ONE LEFT**, and it is a wrong-page case rather than a hard one: the
+  URL the probe scored is the board's COMMITTEES page, which lists five committee
+  rosters. All eight districts do appear across them, so a parser could assemble a
+  whole board and would lose any commissioner who sits on no committee. The county's
+  own board page is a different URL and was not among the saved pages, so Cass waits
+  for one fetch rather than being read off the wrong page.
+  **THE TRAP WORTH CARRYING FORWARD IS HOUGHTON'S**, because it produced a clean
+  four-of-five that was entirely wrong: its page is one div per member holding the
+  name, the role, the contacts and THEN the district, so read as flat text it
+  alternates name, district, name, district, and taking the name that follows a
+  district line pairs all five with the wrong person while leaving District 4
+  unnamed. Nothing in the output says so. Mackinac is the same question with the
+  opposite answer, which is why every parser in this tranche states its side in its
+  own docstring. The ten this
   tranche took were the ones whose shape read cleanly from a single saved copy of the
   page; the rest were not measured as unreadable, only left. Three counties are worth
   naming as already-understood work: Sanilac's shape turned out to be its own district

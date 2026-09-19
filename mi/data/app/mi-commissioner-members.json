@@ -1,4 +1,119 @@
 {
+ "001": {
+  "county": "Alcona",
+  "districts": {
+   "1": {
+    "name": "Dave Jagst",
+    "phone": "989-724-9585"
+   },
+   "2": {
+    "name": "Craig Johnston",
+    "phone": "989-724-9584"
+   },
+   "3": {
+    "name": "Carolyn Brummund",
+    "phone": "989-724-9581"
+   },
+   "4": {
+    "name": "Adam Brege",
+    "phone": "989-724-9582"
+   },
+   "5": {
+    "name": "Terry Small",
+    "phone": "989-590-0364"
+   }
+  },
+  "seats": 5,
+  "sourceUrl": "https://alconacountymi.com/home/county-commissioners/"
+ },
+ "007": {
+  "county": "Alpena",
+  "districts": {
+   "1": {
+    "email": "williamlahaie@alpenacounty.org",
+    "name": "William LaHaie",
+    "party": "Republican",
+    "phone": "989-657-9079"
+   },
+   "2": {
+    "email": "danludlow@alpenacounty.org",
+    "name": "Dan Ludlow",
+    "party": "Democratic",
+    "phone": "989-464-2522"
+   },
+   "3": {
+    "email": "lucillebray@alpenacounty.org",
+    "name": "Lucille Bray",
+    "party": "Republican",
+    "phone": "989-590-0057"
+   },
+   "4": {
+    "email": "billpeterson@alpenacounty.org",
+    "name": "Bill Peterson",
+    "party": "Republican",
+    "phone": "989-916-5351"
+   },
+   "5": {
+    "email": "brendafournier@alpenacounty.org",
+    "name": "Brenda Fournier",
+    "party": "Republican",
+    "phone": "989-255-8524"
+   },
+   "6": {
+    "email": "toddbritton@alpenacounty.org",
+    "name": "Todd Britton",
+    "party": "Republican"
+   },
+   "7": {
+    "email": "traviskonarzewski@alpenacounty.org",
+    "name": "Travis Konarzewski",
+    "party": "Republican",
+    "phone": "989-464-2611"
+   },
+   "8": {
+    "email": "johnkozlowski@alpenacounty.org",
+    "name": "John Kozlowski",
+    "party": "Republican",
+    "role": "Chairman"
+   }
+  },
+  "seats": 8,
+  "sourceUrl": "https://alpenacounty.org/577/Commissioners-By-District"
+ },
+ "011": {
+  "county": "Arenac",
+  "districts": {
+   "1": {
+    "email": "smrozinski@arenaccountymi.gov",
+    "name": "Sally Mrozinski",
+    "phone": "989-941-5173",
+    "role": "Vice-Chair"
+   },
+   "2": {
+    "email": "lsalgat@arenaccountymi.gov",
+    "name": "Lisa Salgat",
+    "phone": "989-876-8756"
+   },
+   "3": {
+    "email": "bburke@arenaccountymi.gov",
+    "name": "Bobbe Burke",
+    "phone": "989-820-6148"
+   },
+   "4": {
+    "email": "hwoolhiser@arenaccountymi.gov",
+    "name": "Harold Woolhiser",
+    "phone": "989-529-4295",
+    "role": "Chairman"
+   },
+   "5": {
+    "email": "rvallad@arenaccountymi.gov",
+    "name": "Rachel Vallad",
+    "phone": "989-846-4421"
+   }
+  },
+  "seats": 5,
+  "sourceUrl": "https://arenaccountymi.gov/BOC/"
+ },
  "015": {
   "county": "Barry",
   "districts": {
@@ -166,6 +281,138 @@
   "seats": 7,
   "sourceUrl": "https://www.cheboygancounty.net/government/board-of-commissioners-boc/"
  },
+ "033": {
+  "county": "Chippewa",
+  "districts": {
+   "1": {
+    "name": "Justin Knepper",
+    "phone": "906-630-0579"
+   },
+   "2": {
+    "name": "Jim Martin",
+    "phone": "906-632-8222"
+   },
+   "3": {
+    "name": "Damon Lieurance",
+    "phone": "906-440-4674"
+   },
+   "4": {
+    "name": "James Traynor",
+    "phone": "906-297-6881"
+   },
+   "5": {
+    "name": "Scott Shackleton",
+    "phone": "906-635-1232"
+   }
+  },
+  "seats": 5,
+  "sourceUrl": "https://www.chippewacountymi.gov/board-of-commissioners"
+ },
+ "035": {
+  "county": "Clare",
+  "districts": {
+   "1": {
+    "email": "houslerm@clareco.net",
+    "name": "Marlene M. Housler",
+    "phone": "989-802-3978"
+   },
+   "2": {
+    "email": "keaseyr@clareco.net",
+    "name": "Robert P. Keasey",
+    "phone": "989-487-5432"
+   },
+   "3": {
+    "email": "grossj@clareco.net",
+    "name": "Jacob Gross",
+    "phone": "989-506-2163"
+   },
+   "4": {
+    "email": "haskellj@clareco.net",
+    "name": "Jeffery Haskell",
+    "phone": "989-429-1201"
+   },
+   "5": {
+    "email": "hoeflingd@clareco.net",
+    "name": "David A.Hoefling",
+    "phone": "989-424-1997"
+   },
+   "6": {
+    "email": "jackkleinhardt@gmail.com",
+    "name": "Jack Kleinhardt",
+    "phone": "989-339-7257"
+   },
+   "7": {
+    "email": "ambrozaitisg@clareco.net",
+    "name": "Gabe Ambrozaitis",
+    "phone": "989-329-0865"
+   },
+   "8": {
+    "email": "gilmoreg@clareco.net",
+    "name": "George Gilmore",
+    "phone": "989-329-5776"
+   },
+   "9": {
+    "email": "rickieglenn2014@gmail.com",
+    "name": "Rickie Fancon",
+    "phone": "989-240-0142"
+   }
+  },
+  "seats": 9,
+  "sourceUrl": "https://clareco.net/department/board-of-commissioners/"
+ },
+ "037": {
+  "county": "Clinton",
+  "districts": {
+   "1": {
+    "name": "Nicole Fickes"
+   },
+   "2": {
+    "name": "Zach Rudat"
+   },
+   "3": {
+    "name": "Bruce DeLong"
+   },
+   "5": {
+    "name": "Robert Showers"
+   },
+   "6": {
+    "name": "John Andrews"
+   },
+   "7": {
+    "name": "Dr. Dwight Washington"
+   }
+  },
+  "seats": 7,
+  "sourceUrl": "https://clinton-county.org/413/Board-of-Commissioners",
+  "unnamedDistricts": [
+   "4"
+  ],
+  "unnamedWhy": {
+   "4": "Clinton County's own board page lists this district as vacant. A Michigan board vacancy is filled by appointment, and the county's page names no appointee."
+  }
+ },
+ "041": {
+  "county": "Delta",
+  "districts": {
+   "1": {
+    "name": "John Malnar"
+   },
+   "2": {
+    "name": "Patrick Johnson"
+   },
+   "3": {
+    "name": "Christine Williams"
+   },
+   "4": {
+    "name": "Kelli vanGinhoven"
+   },
+   "5": {
+    "name": "Matthew Jensen"
+   }
+  },
+  "seats": 5,
+  "sourceUrl": "https://deltacountymi.gov/board-of-commissioners/district-4-kelli-vanginhoven/"
+ },
  "043": {
   "county": "Dickinson",
   "districts": {
@@ -248,6 +495,48 @@
   "seats": 15,
   "sourceUrl": "https://www.eatoncounty.org/295/Board-of-Commissioners"
  },
+ "047": {
+  "county": "Emmet",
+  "districts": {
+   "1": {
+    "email": "claughbaum@emmetcounty.org",
+    "name": "Charles Laughbaum",
+    "phone": "231-539-8906"
+   },
+   "2": {
+    "email": "bgooding@emmetcounty.org",
+    "name": "Brett Gooding",
+    "phone": "231-330-6339"
+   },
+   "3": {
+    "email": "dmapes@emmetcounty.org",
+    "name": "Don Mapes",
+    "phone": "231-373-8844"
+   },
+   "4": {
+    "email": "rginop@emmetcounty.org",
+    "name": "Rich Ginop",
+    "phone": "231-838-9991"
+   },
+   "5": {
+    "email": "bgutowski@emmetcounty.org",
+    "name": "Brian Gutowski",
+    "phone": "231-348-7662"
+   },
+   "6": {
+    "email": "dmwhite@emmetcounty.org",
+    "name": "David White",
+    "phone": "231-499-5296"
+   },
+   "7": {
+    "email": "mkoontz@emmetcounty.org",
+    "name": "Matt Koontz",
+    "phone": "231-439-5181"
+   }
+  },
+  "seats": 7,
+  "sourceUrl": "https://emmetcounty.org/government/board_of_commissioners/index.php"
+ },
  "055": {
   "county": "Grand Traverse",
   "districts": {
@@ -322,6 +611,39 @@
   "seats": 5,
   "sourceUrl": "https://co.hillsdale.mi.us/index.php/tm-gov/m-boc"
  },
+ "061": {
+  "county": "Houghton",
+  "districts": {
+   "1": {
+    "email": "tom.tikkanen@houghtoncounty.net",
+    "name": "Tom Tikkanen",
+    "phone": "906-369-0022",
+    "role": "Chairman"
+   },
+   "2": {
+    "email": "joel.keranen@houghtoncounty.net",
+    "name": "Joel Keranen",
+    "phone": "906-370-4600"
+   },
+   "3": {
+    "email": "glenn.anderson@houghtoncounty.net",
+    "name": "Glenn Anderson",
+    "phone": "906-281-2659"
+   },
+   "4": {
+    "email": "gretchen.janssen@houghtoncounty.net",
+    "name": "Gretchen Janssen",
+    "phone": "906-370-4738"
+   },
+   "5": {
+    "email": "roy.britz@houghtoncounty.net",
+    "name": "Roy Britz",
+    "phone": "906-281-1031"
+   }
+  },
+  "seats": 5,
+  "sourceUrl": "https://houghtoncounty.gov/commissions-board.php"
+ },
  "067": {
   "county": "Ionia",
   "districts": {
@@ -366,6 +688,48 @@
   "unnamedWhy": {
    "3": "Ionia County's own board page lists this district as vacant. A Michigan board vacancy is filled by appointment, and the county's page names no appointee."
   }
+ },
+ "073": {
+  "county": "Isabella",
+  "districts": {
+   "1": {
+    "email": "sweber@isabellacounty.org",
+    "name": "Steven G. Weber",
+    "phone": "989-330-3075"
+   },
+   "2": {
+    "email": "bcampbell@isabellacounty.org",
+    "name": "Bob Campbell",
+    "phone": "989-289-6937"
+   },
+   "3": {
+    "email": "jjaloszynski@isabellacounty.org",
+    "name": "Jerry Jaloszynski",
+    "phone": "989-330-4890"
+   },
+   "4": {
+    "email": "fengler@isabellacounty.org",
+    "name": "Frank Engler",
+    "phone": "989-330-4501"
+   },
+   "5": {
+    "email": "jmoreno@isabellacounty.org",
+    "name": "James S. Moreno",
+    "phone": "989-954-5144"
+   },
+   "6": {
+    "email": "sswaney@isabellacounty.org",
+    "name": "Steve Swaney",
+    "phone": "734-276-8009"
+   },
+   "7": {
+    "email": "thope@isabellacounty.org",
+    "name": "Tobin Hope",
+    "phone": "989-330-3792"
+   }
+  },
+  "seats": 7,
+  "sourceUrl": "https://www.isabellacounty.org/boards-commissions-committees/board-of-commissioners/"
  },
  "075": {
   "county": "Jackson",
@@ -599,6 +963,53 @@
   "seats": 21,
   "sourceUrl": "https://www.kentcountymi.gov/1464/Meet-the-Commissioners"
  },
+ "085": {
+  "county": "Lake",
+  "districts": {
+   "1": {
+    "email": "district1rs@co.lake.mi.us",
+    "name": "Robert Sanders",
+    "phone": "231-233-7897",
+    "role": "Vice-Chair"
+   },
+   "2": {
+    "email": "district2hl@co.lake.mi.us",
+    "name": "Howard Lodholtz",
+    "phone": "231-250-7770",
+    "role": "Chair"
+   },
+   "3": {
+    "email": "kraymond@co.lake.mi.us",
+    "name": "Kristine Raymond",
+    "phone": "231-250-0977",
+    "role": "Vice-Chair Pro Temp"
+   },
+   "4": {
+    "email": "district4dm@co.lake.mi.us",
+    "name": "Dawn Fuller",
+    "phone": "231-396-9274",
+    "role": "Vice-Chair Pro Temp"
+   },
+   "5": {
+    "email": "district5ms@co.lake.mi.us",
+    "name": "Mike Seroczynski",
+    "phone": "231-923-6117",
+    "role": "Vice-Chair Pro Temp"
+   },
+   "6": {
+    "email": "jrussell@co.lake.mi.us",
+    "name": "Jamie Russell",
+    "phone": "508-688-9890"
+   },
+   "7": {
+    "email": "cwelford@co.lake.mi.us",
+    "name": "Clyde Welford",
+    "phone": "231-408-1183"
+   }
+  },
+  "seats": 7,
+  "sourceUrl": "https://lakecountymi.gov/board-of-commissioners/"
+ },
  "087": {
   "county": "Lapeer",
   "districts": {
@@ -723,6 +1134,63 @@
    "5": "Lenawee's own News Flash of 10 September 2026 announces the death of Commissioner James \u201cJim\u201d Daly and says he represented District 5; the county's commissioner directory still lists him here. The two county surfaces disagree, so this app names nobody for this seat."
   }
  },
+ "095": {
+  "county": "Luce",
+  "districts": {
+   "1": {
+    "name": "Nancy Morrison",
+    "phone": "906-440-1569",
+    "role": "Vice Chairperson"
+   },
+   "2": {
+    "name": "Angela Harris",
+    "phone": "906-420-2254"
+   },
+   "3": {
+    "name": "Christine Rathje",
+    "phone": "906-293-9434"
+   },
+   "4": {
+    "name": "Anthony Kitzman",
+    "phone": "906-361-1018",
+    "role": "Chairperson"
+   },
+   "5": {
+    "name": "Tony Immel",
+    "phone": "906-235-5519"
+   }
+  },
+  "seats": 5,
+  "sourceUrl": "https://www.lucecountymi.com/commissioners"
+ },
+ "097": {
+  "county": "Mackinac",
+  "districts": {
+   "1": {
+    "name": "Daryl Schroeder",
+    "phone": "937-241-6563"
+   },
+   "2": {
+    "name": "Austin Kimberling",
+    "phone": "906-207-2755"
+   },
+   "3": {
+    "name": "John Kling",
+    "phone": "906-430-5747"
+   },
+   "4": {
+    "name": "Mike Patrick",
+    "phone": "906-430-2171",
+    "role": "Chair"
+   },
+   "5": {
+    "name": "Judy St. Louis-Scott",
+    "phone": "906-643-7064"
+   }
+  },
+  "seats": 5,
+  "sourceUrl": "https://www.mackinaccounty.net/departments/commissioners/"
+ },
  "099": {
   "county": "Macomb",
   "districts": {
@@ -784,6 +1252,51 @@
   },
   "seats": 13,
   "sourceUrl": "https://bocmacomb.org/find-your-commissioner/"
+ },
+ "109": {
+  "county": "Menominee",
+  "districts": {
+   "1": {
+    "name": "Steven Gromala",
+    "phone": "715-587-6735"
+   },
+   "2": {
+    "name": "Patricia Mueller",
+    "phone": "715-938-0026"
+   },
+   "3": {
+    "name": "Larry Phelps",
+    "phone": "906-863-5962",
+    "role": "Chairman of the Board"
+   },
+   "4": {
+    "name": "Donald Park",
+    "phone": "715-923-0281"
+   },
+   "5": {
+    "name": "Zak Aubert",
+    "phone": "906-424-1012"
+   },
+   "6": {
+    "name": "Connie Westrich",
+    "phone": "906-280-2870"
+   },
+   "7": {
+    "name": "Jeff Carlson"
+   },
+   "8": {
+    "name": "Nick Hanchek",
+    "phone": "906-368-0027",
+    "role": "Vice Chairman"
+   },
+   "9": {
+    "name": "Larry Johnson Jr.",
+    "phone": "906-399-5654",
+    "role": "Vice Chairman - Pro Tempore"
+   }
+  },
+  "seats": 9,
+  "sourceUrl": "https://www.menomineecountymi.gov/departments/county-board-of-commissioners/general-information/staff/"
  },
  "111": {
   "county": "Midland",
@@ -865,6 +1378,34 @@
    "2"
   ]
  },
+ "117": {
+  "county": "Montcalm",
+  "districts": {
+   "1": {
+    "name": "Nathan Alexander"
+   },
+   "2": {
+    "name": "Chris Johnston"
+   },
+   "3": {
+    "name": "Adam Petersen"
+   },
+   "4": {
+    "name": "Jack Johnson"
+   },
+   "5": {
+    "name": "Charlie Mahar"
+   },
+   "6": {
+    "name": "Patrick Q Carr"
+   },
+   "7": {
+    "name": "Matt Murray"
+   }
+  },
+  "seats": 7,
+  "sourceUrl": "https://montcalmcountymi.gov/270/Board-of-Commissioners"
+ },
  "121": {
   "county": "Muskegon",
   "districts": {
@@ -941,6 +1482,33 @@
   "seats": 5,
   "sourceUrl": "https://oceana.mi.us/government/board-of-commissioners/"
  },
+ "131": {
+  "county": "Ontonagon",
+  "districts": {
+   "1": {
+    "name": "John Cane",
+    "phone": "906-458-0916"
+   },
+   "2": {
+    "name": "Richard Bourdeau",
+    "phone": "906-883-3701"
+   },
+   "3": {
+    "name": "Robert Nousiainen",
+    "phone": "906-827-3560"
+   },
+   "4": {
+    "name": "Carl R. Nykanen",
+    "phone": "906-988-2274"
+   },
+   "5": {
+    "name": "Ron Store",
+    "phone": "906-884-2063"
+   }
+  },
+  "seats": 5,
+  "sourceUrl": "https://ontonagoncounty.org/county-offices/board-of-commissioners/"
+ },
  "133": {
   "county": "Osceola",
   "districts": {
@@ -983,6 +1551,138 @@
   },
   "seats": 7,
   "sourceUrl": "https://osceolacountymi.gov/residents/county_commissioners/index.php"
+ },
+ "135": {
+  "county": "Oscoda",
+  "districts": {
+   "1": {
+    "email": "cvarner@oscodacountymi.com",
+    "name": "Charles E. Varner, Jr."
+   },
+   "2": {
+    "email": "tmccauley@oscodacountymi.com",
+    "name": "Tom McCauley"
+   },
+   "3": {
+    "email": "ljagiello@oscodacountymi.com",
+    "name": "Linda Jagiello"
+   },
+   "4": {
+    "email": "thandrich@oscodacountymi.com",
+    "name": "Ted Handrich"
+   },
+   "5": {
+    "email": "j.breaugh@oscodacountymi.com",
+    "name": "Joe Breaugh"
+   }
+  },
+  "seats": 5,
+  "sourceUrl": "https://www.oscodacountymi.com/board-of-commissioners/"
+ },
+ "137": {
+  "county": "Otsego",
+  "districts": {
+   "1": {
+    "name": "Terra Deming",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Henry Mason",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Jonathan Turnbull",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Brett McVannel",
+    "party": "Republican",
+    "role": "Chairperson"
+   },
+   "5": {
+    "name": "Jason Clement",
+    "party": "Republican"
+   },
+   "6": {
+    "name": "Christi Sortor",
+    "party": "Republican"
+   },
+   "7": {
+    "name": "Neil Drzewiecki",
+    "party": "Republican"
+   },
+   "8": {
+    "name": "Dana Wingo",
+    "party": "Republican",
+    "role": "Vice Chairperson"
+   },
+   "9": {
+    "name": "Rob Weaver",
+    "party": "Republican"
+   }
+  },
+  "seats": 9,
+  "sourceUrl": "https://otsegocountymi.gov/277/Board-of-Commissioners"
+ },
+ "141": {
+  "county": "Presque Isle",
+  "districts": {
+   "1": {
+    "email": "tollinic@picounty.org",
+    "name": "Clifford Tollini",
+    "party": "Republican"
+   },
+   "2": {
+    "email": "brietzker@picounty.org",
+    "name": "Robert Brietzke",
+    "party": "Republican"
+   },
+   "3": {
+    "email": "hughesr@picounty.org",
+    "name": "Robin Hughes",
+    "party": "No party affiliation"
+   },
+   "4": {
+    "email": "libbyj@picounty.org",
+    "name": "Joseph Libby",
+    "party": "Republican"
+   },
+   "5": {
+    "email": "crookr@picounty.org",
+    "name": "Robert Crook",
+    "party": "Republican"
+   }
+  },
+  "seats": 5,
+  "sourceUrl": "https://presqueislecounty.org/board-of-commissioners/"
+ },
+ "143": {
+  "county": "Roscommon",
+  "districts": {
+   "1": {
+    "name": "David Russo"
+   },
+   "2": {
+    "email": "morleyk@roscommoncounty.net",
+    "name": "Kim Morley"
+   },
+   "3": {
+    "email": "wolfsenr@roscommoncounty.net",
+    "name": "Rex Wolfsen",
+    "role": "Vice-Chairperson"
+   },
+   "4": {
+    "email": "milburnm@roscommoncounty.net",
+    "name": "Marc J. Milburn"
+   },
+   "5": {
+    "email": "sensord@roscommoncounty.net",
+    "name": "Darlene Sensor",
+    "role": "Chairperson"
+   }
+  },
+  "seats": 5,
+  "sourceUrl": "https://roscommoncounty.net/202/Board-of-Commissioners"
  },
  "145": {
   "county": "Saginaw",
@@ -1097,6 +1797,45 @@
   },
   "seats": 7,
   "sourceUrl": "https://sanilaccounty.gov/government/commissioners/index.php"
+ },
+ "153": {
+  "county": "Schoolcraft",
+  "districts": {
+   "1": {
+    "email": "gullivercraig@gmail.com",
+    "name": "CRAIG REITER",
+    "party": "Republican",
+    "phone": "906-450-3822",
+    "role": "Vice-Chairman"
+   },
+   "2": {
+    "email": "bbirr@centurytel.net",
+    "name": "BRUCE BIRR",
+    "party": "Republican",
+    "phone": "906-341-8562"
+   },
+   "3": {
+    "email": "scramblinman@live.com",
+    "name": "TROY BASSETT",
+    "party": "Republican",
+    "phone": "906-450-0346"
+   },
+   "4": {
+    "email": "district4@schoolcraftcounty.us",
+    "name": "SARA MACGREGOR",
+    "party": "Republican",
+    "phone": "906-450-0628"
+   },
+   "5": {
+    "email": "dhoholik@scmh.org",
+    "name": "DAN P. HOHOLIK",
+    "party": "Republican",
+    "phone": "906-286-3182",
+    "role": "Chairman"
+   }
+  },
+  "seats": 5,
+  "sourceUrl": "https://schoolcraftcounty.net/government/elected-officials/commissioners"
  },
  "163": {
   "county": "Wayne",
