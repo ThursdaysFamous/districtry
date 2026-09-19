@@ -29,6 +29,36 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-19, the probe's robots gap closed.** #1045 open. Every county row in
+`mi-county-board-probe.json` now carries the robots reading for the host the probe ACCEPTED,
+not only for the ones it rejected, and `--check` fails a record that names a URL without one.
+The reading keeps the verdict's own `why` — "robots.txt served (N bytes): <the deciding
+rule>" — because a status alone cannot settle a disagreement: both of the contradictory
+Gogebic readings would have said `served`. Host and board page are recorded separately, since
+one file can allow `/` and disallow the path a board page sits under.
+
+Backfilling the 25 recorded counties cost 33 readings and 24 fetches — robots.txt only, no
+page, no verdict touched — and found two counties whose recorded reason is no longer the one
+that governs. `www.iosco.org` now answers HTTP 403 on robots.txt, which the strict reading a
+county website gets makes a refusal; read three times on both spellings, identical each time,
+carrying `server: cloudflare` and the site's own `cf-ray`, so it is the host and not this
+sandbox's proxy, which answered 200 to the CONNECT. `tuscolacounty.com` serves a 26-byte
+robots.txt that disallows this client, where its recorded `challenge` came from its other
+host. So **two of the 25 shut counties are shut by policy rather than by an absent page**,
+which is what a re-examination should now expect.
+
+Wiring `--check` into CI is what asked a second question the probe had never been asked: it
+had reached across trees for `scripts/scraper_common.py`'s UA token since the day it was
+written, and `validate_workflow_deps.py` had never looked, because that gate only reads the
+scripts a workflow runs. A rule enforced only where a gate happens to look is a rule three
+files were keeping by hand. The token is in-tree now with the note its siblings carry, and
+`import requests` sits inside the one function that builds a session — proved by running
+`--check` with an `ImportError`-raising `requests.py` on the path.
+
+Battery: 84 static invocations pass, 9 of 10 browser gates pass, and
+`page_consistency_test.mjs` reports 72 findings with 0 non-cert — all of them the GoatCounter
+beacon's `ERR_CERT_AUTHORITY_INVALID` in this sandbox.
+
 **2026-09-19, tranche 7 merged.** #1041 is in as `cb07f95e`, verified on the merged tree
 rather than on my own PR body: `mi-commissioner-members.json` carries 48 counties and 366
 districts, Cass holds 8 of 8 with District 1 reading Thomas Langley and
