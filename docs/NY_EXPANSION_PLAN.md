@@ -1,9 +1,17 @@
 # districtry New York: growing `ny/` from the city into the state, in place
 
-> **Status, 2026-09-18.** PR 1 shipped today on branch `claude/nyc-sf-statewide-expansion-lxbbig`
-> (this document, three false source labels fixed, the engine nearest-point ceiling, the lifted
-> `/ny/` hold, two gate fixes). PR 2 (the statewide tier, dark) and PR 3 (go-live) are NOT started;
-> each gets its own branch and review. California is HELD; the last section says what reopens it.
+> **Status, 2026-09-19.** ALL THREE PRs HAVE SHIPPED. PR 1 (`2548fec`, #1005) and PR 2
+> (`8765e9b`, #1007) both merged 2026-09-18; PR 3, the go-live, is this change. California is
+> still HELD; the last section says what reopens it.
+>
+> **THIS BLOCK WAS STALE FOR A DAY AND COST A SESSION AN HOUR.** It read "PR 2 ... and PR 3 ...
+> are NOT started" while PR 2 had merged the same afternoon — that PR edited this very file,
+> appending to its own section six lines below, and left the status block alone. A session
+> reading top-down then reported to the operator that PR 2 was the next change. The file's own
+> preamble says it "is appended to when a PR ships", and appending without updating the first
+> thing a reader sees is how a document lies while every sentence in it is true. READ THE GIT
+> LOG, NOT THIS BLOCK — `git log --oneline origin/main -- ny/metro-worksheet.json` answers in
+> one line.
 >
 > Every fact here traces to a measurement made on 2026-09-18 by the assessment recorded in
 > `/root/.claude/plans/what-is-the-viability-dreamy-turtle.md` (six repo readers, two external
@@ -535,6 +543,23 @@ The exact list, from the approved plan:
     is evaluated at it, so a statewide anchor means either moving `anchor_point` off City Hall
     (which retires the three NYC anchors) or a generator change; decide in PR 3. The new negative
     point is chosen outside New York State and measured to miss every anchor layer.
+13. **SUPERSEDED 2026-09-19 — the swap below was measured and REJECTED, and what shipped is a
+    two-provider fall-through instead.** GeoSearch stays first: it is PAD-backed, keyless, and
+    answered every city string correctly. The state service resolves `20 W 34th St, New York, NY`
+    ten miles away in Bensonhurst at score 98.7, consuming the directional `W` as part of the
+    street name, and never returns the right address at all for `350 5th Ave, Manhattan, NY`,
+    consuming `Manhattan` as a street name — on an app that names an officeholder from a point,
+    a silently wrong borough is worse than no answer. It also cannot drive a type-ahead in one
+    call (`findAddressCandidates` returns zero for partial input), so a swap needed either seven
+    requests per keystroke or an edit inside the `geocoder-search` ENGINE fence all six instances
+    carry. What shipped: a zero-result GeoSearch falls through to Photon hard-bounded to
+    `METRO_BBOX` and biased to `METRO_CENTER` — the same provider and shape the four statewide
+    instances already use — so the city keeps its authoritative answers and upstate gets one at
+    all. THE FALL-THROUGH IS NOT OPTIONAL: `siblingMetroAt()` excludes THIS metro, so after the
+    bbox widened, an upstate hit from the sibling lookup landed inside our own box and was
+    dropped, leaving the reader told nothing matched while the map beneath classified that point
+    on fifteen layers. The original proposal, for the record:
+
 13. The geocoder (§2.6: a state-authoritative keyless geocoder with real autocomplete wins).
     `https://nysgeohub.ny.gov/arcgis/rest/services/Geocoder/NYS_Geocoder/GeocodeServer`, measured
     2026-09-18: capabilities `Geocode,ReverseGeocode,Suggest`, currentVersion 11.5, no token, CORS

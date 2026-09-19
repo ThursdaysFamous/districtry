@@ -67,16 +67,32 @@ IDS = {
     "Q1537": "Wisconsin",
     "Q1546": "Iowa",
     "Q1166": "Michigan",
-    "Q60": "New York City",
+    "Q1384": "New York",
     "Q62": "San Francisco",
 }
 
 # metros.json tag -> the jurisdiction item that instance answers for. STATED,
 # because nothing in a tag or a landing name yields a Q-number, and a wrong one
 # is a statement about a different place.
+#
+# NOTHING HERE CATCHES A WRONG ID, which is why each is derived rather than
+# recalled. render() checks only that every metros.json tag HAS an entry, and
+# --verify only re-fetches each id's label and fails when the label has MOVED —
+# so a wrong-but-correctly-labelled id passes both. Reproduced 2026-09-19 by
+# setting "ny" to Illinois's own Q1204: the page rendered "Q1204 (Illinois) |
+# the /ny/ instance" and --check went green.
+#
+# ny moved from Q60 (New York City) to Q1384 at the 2026-09-19 go-live, when
+# the instance began answering for the whole state. Q1384 was NOT searched for:
+# it is the value of Q60's own P131 (located in the administrative territorial
+# entity), so it was derived from the id already here. Confirmed the state and
+# not the metro area by three properties — P31 = Q35657 ("U.S. state", the same
+# class Q1204, Q1537, Q1546 and Q1166 instantiate), P300 = "US-NY", P131 = Q30
+# (United States). Its English label is the bare string "New York"; writing
+# "New York State" would fail --verify character for character.
 JURISDICTION = {
     "il": "Q1204", "wi": "Q1537", "ia": "Q1546", "mi": "Q1166",
-    "ny": "Q60", "ca": "Q62",
+    "ny": "Q1384", "ca": "Q62",
 }
 
 

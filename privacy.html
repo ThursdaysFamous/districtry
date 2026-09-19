@@ -478,7 +478,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
     <div class="masthead-actions">
       <a href="/">&larr; districtry</a>
       <a href="/il/">Illinois</a>
-      <a href="/ny/">New York City</a>
+      <a href="/ny/">New York</a>
       <a href="/ca/">San Francisco</a>
       <a href="/wi/">Wisconsin</a>
       <a href="/ia/">Iowa</a>
@@ -514,7 +514,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
   <section>
     <h2>Which app you are on</h2>
     <p>districtry is one project serving several apps from one address, and they do not all
-      behave identically — Illinois and New York City run Google Analytics; every one of them carries the same counter. Rather than flatten that into a vague sentence, here is
+      behave identically — Illinois and New York run Google Analytics; every one of them carries the same counter. Rather than flatten that into a vague sentence, here is
       each app's own row. <strong>Every cell is read out of the page that app actually
       serves</strong>, by the script that builds this one.</p>
     <div class="table-wrap">
@@ -547,7 +547,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
             <td>19 layers</td>
           </tr>
           <tr>
-            <th scope="row"><a href="/ny/">New York City</a><small>/ny/</small></th>
+            <th scope="row"><a href="/ny/">New York</a><small>/ny/</small></th>
             <td>Google Analytics <code class="k">G-YPJ570LWJB</code><small>live host only (<code class="k">districtry.com</code>), never in an embed</small></td>
             <td><code class="k">https://districtry.goatcounter.com/count</code></td>
             <td><code class="k">nyc-school-type-filter</code><small>session</small> <code class="k">districtry-theme</code><small>kept</small></td>
@@ -595,9 +595,9 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
     <h2>What stays on your device</h2>
     <p>All of it is yours to clear at any time through your browser's &#34;clear site data&#34;.</p>
     <div class="card">
-      <p><strong>Light or dark.</strong> If you use the theme toggle, the choice is kept in <code class="k">localStorage</code> under <code class="k">districtry-theme</code> on Illinois, New York City, San Francisco, Wisconsin, Iowa and Michigan, so the site does not flash white on your next visit. It is one word, and it never leaves your browser. The front door reads it and never writes it, which is how the choice follows you off the map.</p>
+      <p><strong>Light or dark.</strong> If you use the theme toggle, the choice is kept in <code class="k">localStorage</code> under <code class="k">districtry-theme</code> on Illinois, New York, San Francisco, Wisconsin, Iowa and Michigan, so the site does not flash white on your next visit. It is one word, and it never leaves your browser. The front door reads it and never writes it, which is how the choice follows you off the map.</p>
       <p><strong>One display preference, per app.</strong> The school layer's type filter is remembered in <code class="k">sessionStorage</code> under <code class="k">chi-school-type-filter</code> on Illinois. It is a handful of true/false switches, it is erased when you close the tab, and it never leaves your browser.</p>
-      <p><strong>One display preference, per app.</strong> The school layer's type filter is remembered in <code class="k">sessionStorage</code> under <code class="k">nyc-school-type-filter</code> on New York City. It is a handful of true/false switches, it is erased when you close the tab, and it never leaves your browser.</p>
+      <p><strong>One display preference, per app.</strong> The school layer's type filter is remembered in <code class="k">sessionStorage</code> under <code class="k">nyc-school-type-filter</code> on New York. It is a handful of true/false switches, it is erased when you close the tab, and it never leaves your browser.</p>
       <p><strong>One display preference, per app.</strong> The school layer's type filter is remembered in <code class="k">sessionStorage</code> under <code class="k">sf-school-type-filter</code> on San Francisco. It is a handful of true/false switches, it is erased when you close the tab, and it never leaves your browser.</p>
       <p><strong>A cache of each app's own files.</strong> A service worker stores the app shell,
         boundary files and officeholder rosters locally so the map loads fast and works offline.
@@ -624,25 +624,25 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
             <td class="who"><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub Pages</a><small>hosting</small></td>
             <td>The ordinary web-server request for each file — your IP address, browser, and the page you asked for. GitHub, not this project, keeps those logs.</td>
             <td>Every visit.</td>
-            <td class="which">The front door, Illinois, New York City, San Francisco, Wisconsin, Iowa, Michigan.</td>
+            <td class="which">The front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan.</td>
           </tr>
           <tr>
             <td class="who"><a href="https://carto.com/privacy/" target="_blank" rel="noopener">CARTO</a><small>basemap tiles</small></td>
             <td>The map tiles you request — which, taken together, describe the area you are looking at and how far you zoomed in.</td>
             <td>Whenever the map draws or moves.</td>
-            <td class="which">The front door, Illinois, New York City, San Francisco, Wisconsin, Iowa, Michigan.</td>
+            <td class="which">The front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan.</td>
           </tr>
           <tr>
             <td class="who"><a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare (cdnjs)</a><small>mapping library</small></td>
             <td>A request for one JavaScript file, Leaflet 1.9.4, pinned by hash.</td>
             <td>Every visit to a map.</td>
-            <td class="which">The front door, Illinois, New York City, San Francisco, Wisconsin, Iowa, Michigan.</td>
+            <td class="which">The front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan.</td>
           </tr>
           <tr>
             <td class="who"><a href="https://www.nyc.gov/home/privacy-policy.page" target="_blank" rel="noopener">GeoSearch / NYC Planning</a><small>address search</small></td>
             <td><strong>The text you type into the search box</strong>, sent as you type so suggestions can appear.</td>
             <td>Only while you are searching for an address, or when a card places an office pin.</td>
-            <td class="which">New York City.</td>
+            <td class="which">New York.</td>
           </tr>
           <tr>
             <td class="who"><a href="https://osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener">Nominatim / OpenStreetMap</a><small>address search, office pins</small></td>
@@ -654,7 +654,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
             <td class="who"><a href="https://www.komoot.com/privacy" target="_blank" rel="noopener">Photon / Komoot</a><small>address search</small></td>
             <td><strong>The text you type into the search box</strong> — sent as you type on the apps' type-ahead boxes, and only when you press the button on the front door. <strong>Illinois</strong> also offers a batch check for people working from a list — a petition sheet, a canvass list. That sends <strong>every address in the list you paste</strong>, one lookup a second until it is done. Those are usually other people&#39;s addresses rather than your own, and the list itself is never uploaded anywhere: it stays in your browser, and only the address text goes to this geocoder.</td>
             <td>Only while you are searching for an address, or when a card places an office pin. A batch check sends its whole list, one address a second.</td>
-            <td class="which">The front door, Illinois, New York City, San Francisco, Wisconsin, Iowa, Michigan.</td>
+            <td class="which">The front door, Illinois, New York, San Francisco, Wisconsin, Iowa, Michigan.</td>
           </tr>
           <tr>
             <td class="who">Public GIS services<small>the district data itself</small></td>
@@ -672,7 +672,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
             <td class="who"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Analytics</a><small>analytics</small></td>
             <td>A standard GA4 page view, including the page URL. Loaded <strong>only</strong> on the live site and <strong>never inside an embed</strong>.</td>
             <td>Every visit to the live site.</td>
-            <td class="which">Illinois, New York City.</td>
+            <td class="which">Illinois, New York.</td>
           </tr>
         </tbody>
       </table>
@@ -708,7 +708,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
 
     <h3>Google Analytics</h3>
 
-    <p>GA4 (<code class="k">G-YPJ570LWJB</code>) runs on Illinois and New York City — and <strong>only there</strong>: never on a local copy, never inside an iframe embed, and not at all on The front door, San Francisco, Wisconsin, Iowa and Michigan. It sets its own cookies and records the standard GA4 page view, which <strong>includes the page URL</strong> — so if you arrived on a shared permalink, the point encoded in that link is part of what Google sees. Google's handling is governed by <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">its own privacy policy</a>.</p>
+    <p>GA4 (<code class="k">G-YPJ570LWJB</code>) runs on Illinois and New York — and <strong>only there</strong>: never on a local copy, never inside an iframe embed, and not at all on The front door, San Francisco, Wisconsin, Iowa and Michigan. It sets its own cookies and records the standard GA4 page view, which <strong>includes the page URL</strong> — so if you arrived on a shared permalink, the point encoded in that link is part of what Google sees. Google's handling is governed by <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">its own privacy policy</a>.</p>
 
     <p class="cta-note">Blocking either one is fine. The analytics calls are written so that a blocked or failed counter is a no-op — nothing about the map changes.</p>
   </section>
@@ -784,7 +784,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
     <div class="footer-links">
       <a href="/">&larr; districtry</a>
       <a href="/il/">Illinois</a>
-      <a href="/ny/">New York City</a>
+      <a href="/ny/">New York</a>
       <a href="/ca/">San Francisco</a>
       <a href="/wi/">Wisconsin</a>
       <a href="/ia/">Iowa</a>

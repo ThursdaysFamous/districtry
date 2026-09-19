@@ -2521,84 +2521,18 @@
     ]
   },
   "metro_explorers": [
-    {
-      "id": "chicago",
-      "label": "Illinois",
-      "url": "https://districtry.com/il/",
-      "emoji": "🌭",
-      "explorer_name": "districtry Illinois",
-      "bbox": {
-        "minLng": -91.52,
-        "minLat": 36.96,
-        "maxLng": -87.01,
-        "maxLat": 42.51
-      }
-    },
-    {
-      "id": "nyc",
-      "label": "New York City",
-      "url": "https://districtry.com/ny/",
-      "emoji": "🗽",
-      "explorer_name": "districtry New York City",
-      "bbox": {
-        "minLng": -74.3,
-        "minLat": 40.45,
-        "maxLng": -73.6,
-        "maxLat": 41.0
-      }
-    },
-    {
-      "id": "sf",
-      "label": "San Francisco",
-      "url": "https://districtry.com/ca/",
-      "emoji": "🌉",
-      "explorer_name": "districtry San Francisco",
-      "bbox": {
-        "minLng": -122.6,
-        "minLat": 37.6,
-        "maxLng": -122.3,
-        "maxLat": 37.95
-      }
-    },
-    {
-      "id": "wisconsin",
-      "label": "Wisconsin",
-      "url": "https://districtry.com/wi/",
-      "emoji": "🧀",
-      "explorer_name": "districtry Wisconsin",
-      "bbox": {
-        "minLng": -92.89,
-        "minLat": 42.49,
-        "maxLng": -86.25,
-        "maxLat": 47.31
-      }
-    },
-    {
-      "id": "iowa",
-      "label": "Iowa",
-      "url": "https://districtry.com/ia/",
-      "emoji": "🌽",
-      "explorer_name": "districtry Iowa",
-      "bbox": {
-        "minLng": -96.64,
-        "minLat": 40.37,
-        "maxLng": -90.14,
-        "maxLat": 43.5
-      }
-    },
-    {
-      "id": "michigan",
-      "label": "Michigan",
-      "url": "https://districtry.com/mi/",
-      "emoji": "🚗",
-      "explorer_name": "districtry Michigan",
-      "bbox": {
-        "minLng": -87.6,
-        "minLat": 41.7,
-        "maxLng": -82.11,
-        "maxLat": 48.01
-      }
-    }
+    { "id": "chicago", "label": "Illinois", "url": "https://districtry.com/il/", "emoji": "🌭", "explorer_name": "districtry Illinois",
+      "bbox": { "minLng": -91.52, "minLat": 36.96, "maxLng": -87.01, "maxLat": 42.51 } },
+    { "id": "nyc", "label": "New York", "url": "https://districtry.com/ny/", "emoji": "🗽", "explorer_name": "districtry New York",
+      "bbox": { "minLng": -79.82, "minLat": 40.43, "maxLng": -71.62, "maxLat": 45.07 } },
+    { "id": "sf", "label": "San Francisco", "url": "https://districtry.com/ca/", "emoji": "🌉", "explorer_name": "districtry San Francisco",
+      "bbox": { "minLng": -122.6, "minLat": 37.6, "maxLng": -122.3, "maxLat": 37.95 } },
+    { "id": "wisconsin", "label": "Wisconsin", "url": "https://districtry.com/wi/", "emoji": "🧀", "explorer_name": "districtry Wisconsin",
+      "bbox": { "minLng": -92.89, "minLat": 42.49, "maxLng": -86.25, "maxLat": 47.31 } },
+    { "id": "iowa", "label": "Iowa", "url": "https://districtry.com/ia/", "emoji": "🌽", "explorer_name": "districtry Iowa",
+      "bbox": { "minLng": -96.64, "minLat": 40.37, "maxLng": -90.14, "maxLat": 43.5 } },
+    { "id": "michigan", "label": "Michigan", "url": "https://districtry.com/mi/", "emoji": "🚗", "explorer_name": "districtry Michigan",
+      "bbox": { "minLng": -87.6, "minLat": 41.7, "maxLng": -82.11, "maxLat": 48.01 } }
   ],
   "history_page": {
     "file": "history.html",
