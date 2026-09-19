@@ -27,10 +27,65 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
-*(Illinois: replace this line. Say what you are working on, what you finished,
-and what you found. Date every entry. Newest first.)*
+**2026-09-19.** Nothing in progress. Both Illinois PRs are in review and green,
+and I am not opening a third until they land or Adam picks the next item.
+
+**#1025 and #1028 collide, and git shows no conflict because they touch
+different files.** #1025 records Bartonville's `’s Email: clerk@bartonville.org`
+in `ACCEPTED_NAMES`, and its `audit_accepted()` fails when an excused value is
+no longer in the file — "stale, remove it". #1028 removes exactly that value.
+So merging both, in either order, leaves main failing
+`validate_officeholder_names.py` until that one entry is deleted. Simplest
+order is #1028 first, then drop the Bartonville entry from #1025 before it
+merges. I can make that edit on #1025's branch if the NYC/SF session would
+rather not.
+
+**Correction to the Tasks table:** `ACCEPTED_NAMES` is not on main — it arrives
+with #1025. Plattville's `Beth Fals 56` is held nowhere today; it is simply
+shipping, and has been since 2026-08-01.
+
+**What a reader is missing right now**, in order of how many people it reaches:
+
+- **Municipal officials are eleven days old.** The roster naming the mayors,
+  presidents and council members of 37 counties' cities and villages last
+  rebuilt on 2026-09-08. Will County is one of two counties the builder refuses
+  to build without, and its directory sits behind a vendor managed challenge we
+  do not work around. Every weekly run scrapes the other sources, refuses the
+  build, and reports success, so nothing goes red. Ask 28 is the only route and
+  it is drafted, unsent.
+- **Logan County's 11 municipalities and 65 officials are frozen** by that
+  county's own robots.txt, which disallows the directory the Clerk's yearbook
+  sits in (#1027). Compliance, not an outage — the check re-runs weekly and
+  resumes on its own if the policy changes. Ask 23 is drafted, unsent.
+- **The General Assembly roster has not refreshed since 2026-09-08** (House) or
+  **2026-09-01** (Senate). `update-ilga-roster.yml` failed on 09-14 and its code
+  was fixed on 09-18, so its next scheduled run is the first thing to test it.
+  Not chasing it before then.
+
+Nothing else on the Illinois map is known to be wrong. The coverage ring checks
+out at five rings with all 93 inside and 10 outside anchors correct; 62 of the
+64 districted board cards name an office; 83 county pages name 1,108 board
+members; 55 counties have their precincts drawn.
+
+**Stale record found, not yet fixed.** `docs/ASK_DRAFTS.md` Ask 12 still lists
+Christian County as owing a second follow-up about which precinct Taylorville 9
+was carved from. That question was answered on 2026-09-15 by the county's own
+registration counts and Christian has shipped, so the row should read OVERTAKEN
+the way Knox's already does. The same file and the Christian gap record also
+disagree on the clerk's first name — Jodie in the drafts, Kandi in the
+guidebook — and neither is guessed at.
 
 ## Open questions for Adam
 
-*(Illinois: anything you need a decision on. Nothing here is sent to anyone —
-the manager relays it.)*
+- **Thirteen Illinois asks are drafted and waiting on you to send them** — Asks
+  2, 9, 10, 11, 13, 16, 18, 19, 21, 23, 26, 27 and 28 in `docs/ASK_DRAFTS.md`,
+  of which 18 and 19 you deliberately held. **Ask 28, to the Will County Clerk,
+  is the one with a consequence today**: it is the only route to unfreezing the
+  municipal roster above.
+- **Two second follow-ups are past due** (Ask 12): Ford and Piatt, each asked
+  3 August with one follow-up spent on 16 August. Christian's row in that table
+  is overtaken and Knox's already says do not send.
+- **Bureau County wants $150 and a licence whose terms forbid republishing what
+  we would build with it.** Ask 9 asks for modified permission and offers the
+  free fallback in the same note. Purchases are yours alone; nothing has been
+  spent and nothing is queued.
