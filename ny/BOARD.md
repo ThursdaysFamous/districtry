@@ -34,6 +34,41 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-19, go-live.** PR 3 is open as #1042. New York is a statewide
+instance from the reader's side, not just underneath.
+
+What changes for a reader, which is the only reason this PR exists. Typing an
+upstate address at the front door used to return "outside every place districtry
+covers today"; it now routes to the app with the point selected. The map opens
+on the state instead of the harbour. A shared upstate permalink resolves instead
+of being silently dropped. The search box finds an Albany address. And the app
+stops calling itself New York City.
+
+**The plan's geocoder swap was measured and rejected**, and what shipped is
+better than the swap or the status quo. The state's own geocoder resolves
+"20 W 34th St, New York, NY" ten miles away in Bensonhurst — it eats the
+directional W as a street name — and never returns the right address for
+"350 5th Ave, Manhattan, NY", eating Manhattan the same way. So GeoSearch keeps
+the city, where it is authoritative, and a zero-result city search falls through
+to a state-bounded provider. That fall-through is NOT a nicety: the existing
+sibling-metro lookup excludes this instance by construction, so the moment the
+bbox widened, an upstate hit landed inside our own box and was dropped.
+
+**Two measurements caught things that would have shipped wrong.** The probe that
+measures what the app sends to a server reported New York at ONE layer instead
+of five, because moving the ground-truth anchor upstate hid the city tier from
+it — the privacy page would have published that number. And the plan's own
+proposed bounding box would have clipped the state's eastern edge, because it
+was derived from the legislative extent while the plan's own text says to take
+it from the county fabric.
+
+**The plan's status block is corrected here too.** It claimed PR 2 was unstarted
+for a day after PR 2 merged, and that is what cost this session an hour
+yesterday.
+
+Item 9, the press list, is deliberately not done — it is an outbound file and
+Adam owns it.
+
 **2026-09-19, later.** PR 3 is started. Two of the three card defects from the
 entry below are fixed and a third was found while proving the first.
 
@@ -145,23 +180,32 @@ live defects above as a shorter change first.
 
 ## Open questions for Adam
 
-*Nothing open. All three questions this section carried are answered, and the
-channel worked: the answer came off this board, not out of the session chat.*
+**1. Is "5 boroughs" still the right scope line for New York?** Not blocking —
+#1042 ships it unchanged, because the plan says it stays until a county joins
+the ring and I would rather raise a disagreement than deviate quietly.
 
-**Settled 2026-09-19.** Board edits for this instance commit straight to
-`main`, in their own commit — granted directly, which is what this session was
-waiting on rather than a manager instruction to do so.
+Measured: the landing page now reads **New York · 5 boroughs** beside
+**Wisconsin · all 72 counties**, while 15 of New York's 33 layers answer
+everywhere in the state and a click in Buffalo returns seven cards. A reader
+comparing those two rows would reasonably conclude New York is a city app, which
+stopped being true yesterday. The coverage map does tell the two-tier story
+correctly — a dashed state wash and a solid five-borough fill — so the map and
+the scope line now say different things.
 
-**Answered 2026-09-19 — "Ny phase 3".** Start the go-live. Started; see Status.
+The options, and what each costs. Leave it: consistent with the plan, and
+understates the instance on the one line most readers see. Change it to
+something like "statewide, 5 boroughs in depth": honest about both tiers, but it
+is the only scope string in the fleet that is not a count, so it may read as
+special pleading. Change it to "all 62 counties": matches the other statewide
+instances and overstates, because no county tier exists yet — the county card
+names nobody.
 
-**Answered by implication, and the reading is recorded rather than assumed.**
-The two small live defects were not deferred behind PR 3; they are a
-PREREQUISITE, because the go-live is what makes them matter — wrong today in
-front of a mostly-in-the-city audience, wrong after it in front of every
-upstate reader the front door starts sending here. They shipped as #1036, which
-also carries the third defect found while proving the first.
+**I would take the middle one.** The rule the plan is protecting is "never claim
+a county tier you do not have", and a phrase naming both tiers keeps that while
+telling a reader what the app actually does.
 
-*Questions raised here from now on rather than in the session chat, which
-nobody reads. Each will carry what was measured, the options, what each costs,
-and a recommendation, and will say the word blocking if nothing else can
-proceed without it.*
+**2. The county tier is the real remaining work, and it has no owner.** Not
+blocking. Of 57 non-city counties, 26 have an unverified form in the plan's own
+table, and the plan is explicit that each is settled from a certified election
+document when that county is built. Nothing is assigned. Worth knowing whether
+you want this session to start it, or whether New York rests here for now.
