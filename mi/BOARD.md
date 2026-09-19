@@ -29,6 +29,42 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-19, tranche 6 open.** #1035. Twenty-one more counties name your
+commissioner: Alcona, Alpena, Arenac, Chippewa, Clare, Clinton, Delta, Emmet,
+Houghton, Isabella, Lake, Luce, Mackinac, Menominee, Montcalm, Ontonagon,
+Oscoda, Otsego, Presque Isle, Roscommon and Schoolcraft. That is **47 of
+Michigan's 83 counties, 358 of the 619 seats, 60.9% of the state by
+population** — up from 26 and 55.1% this morning. Each has its own page with
+the names in the served bytes.
+
+**No host was fetched to write any of it.** Every page came from the copy saved
+during tranche 5's sweep, so those counties have seen two requests each in
+total across both tranches.
+
+**The catch that justified the pass is Houghton.** Its page puts the district
+AFTER its own member, so the obvious reading gives a clean four of five with
+every one paired to the wrong person and District 4 unnamed — and nothing in
+the output says so. Mackinac is the same question with the opposite answer, so
+every parser now states its side. Seven more traps are recorded at their
+parsers, including a zero-width space in front of a Luce commissioner's name
+and a shared county inbox that Chippewa would have handed to District 5 as
+their own.
+
+**It also found a defect in yesterday's work.** co.hillsdale.mi.us drops about
+one connection in three from here and the drop lands on robots.txt, which is
+read before the page — so the retry I added yesterday never covered it. Three
+consecutive failures in one run dropped a county that had shipped that morning.
+The robots read now retries five times.
+
+**Cass is the one candidate left and I did not build it.** The URL the probe
+scored is the board's committees page. All eight districts do appear across its
+five committee lists, so a parser could assemble a whole board from them and
+would silently lose any commissioner who sits on no committee. It waits for one
+fetch of the real board page.
+
+Next: Cass, then the 25 counties the probe recorded shut, then the probe's own
+gap — it records a robots verdict only for the hosts it rejects.
+
 **2026-09-19, merged.** Tranche 5 is in (#1033, merged 13:45 UTC as `3fb98206`).
 Click a point in Barry, Cheboygan, Dickinson, Hillsdale, Ionia, Kalkaska,
 Leelanau, Oceana, Osceola or Sanilac and the County Commissioner District card
