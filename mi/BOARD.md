@@ -37,9 +37,12 @@ one. That is 26 of Michigan's 83 counties, 229 of the 619 seats, 55.1% of the
 state by population, up from 51.6%. Each of the ten also has its own page under
 `mi/county-commissioner/` where the names are in the served bytes.
 
-Picking up tranche 6 from the same list. The probe's remaining 24 candidates
-need no new discovery, and the artifact was pruned to exactly those when
-tranche 5 landed.
+Picking up tranche 6 from the same list. The probe's remaining **22**
+candidates need no new discovery, and every one of their pages is already
+saved from last night's single fetch, so tranche 6 needs no fetch at all.
+I published 24 last night and it was wrong — 34 minus the ten that shipped,
+forgetting that Gogebic and Marquette left the pool the same day. 22 is the
+artifact's own count after `--prune`.
 
 **2026-09-19, later.** Tranche 5 is open as #1033. Ten more counties name your
 commissioner: Barry, Cheboygan, Dickinson, Hillsdale, Ionia, Kalkaska,
@@ -91,7 +94,8 @@ Every host in the tranche saw two requests, robots.txt and the page. Each page
 was saved once and every parser written offline against the copy, because six
 sweeps in four days tripped a WAF on Tuscola while the probe was being written.
 
-Next: the 24 candidates this tranche did not take. They need no new discovery.
+Next: the candidates this tranche did not take. They need no new discovery.
+(I wrote 24 here; it is 22 — corrected in the entry above.)
 
 **2026-09-19.** Picking up tranche 5: more county commissioner names, from the
 34 counties the probe in #989 measured as publishing a district-keyed board
