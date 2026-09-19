@@ -33,6 +33,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # FULL history. This job does not regenerate sitemap.xml, so nothing in
+          # it reads git history today; the depth is set so the six Wisconsin
+          # roster workflows share one shape and a sitemap step added here later
+          # cannot silently stamp every page with today's date. Measured
+          # 2026-09-19: a depth-1 clone moves 243 of 243 lastmods, a full clone 0.
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -73,7 +79,11 @@ jobs:
           # Re-cutting leaves this branch differing from main in its data file(s)
           # alone; the rebuilt files are carried across, and a run where main
           # touched those same files errors instead of pushing, which is right.
-          git fetch --depth=1 origin main
+          # Full history, for the same reason as fetch-depth: 0 on the checkout
+          # above. The two must move together: a `--depth=1` fetch RE-SHALLOWS an
+          # already-complete clone (measured on this repo, 512 commits down to
+          # 13), so deepening the checkout alone would be undone right here.
+          git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
           # REGENERATED HERE, AFTER THE CUT, AND NOT BEFORE IT. These files are
           # generated from the roster this job just rewrote, so they must be rebuilt

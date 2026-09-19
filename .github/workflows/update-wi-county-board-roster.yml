@@ -72,6 +72,16 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # FULL history, because this job regenerates sitemap.xml and
+          # build_sitemap.py reads each page's lastmod from that file's own last
+          # commit. Under the default depth-1 checkout git reports the single
+          # fetched commit as the last commit of EVERY file, so all 243 entries
+          # take today's date. Measured 2026-09-19 in a depth-1 clone of this
+          # repo: 243 of 243 lastmods moved, against 0 of 243 in a full clone.
+          # `build_sitemap.py --check` PASSED on that shallow result, and always
+          # will: it computes `behind = true_date - shipped_date` and fires only
+          # at `behind >= 2`, so a date forward-dated to today is never tested.
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -160,7 +170,11 @@ jobs:
           # Re-cutting leaves this branch differing from main in its data file(s)
           # alone; the rebuilt files are carried across, and a run where main
           # touched those same files errors instead of pushing, which is right.
-          git fetch --depth=1 origin main
+          # Full history, for the same reason as fetch-depth: 0 on the checkout
+          # above. The two must move together: a `--depth=1` fetch RE-SHALLOWS an
+          # already-complete clone (measured on this repo, 512 commits down to
+          # 13), so deepening the checkout alone would be undone right here.
+          git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
           # REGENERATED HERE, AFTER THE CUT, AND NOT BEFORE IT. These files are
           # generated from the roster this job just rewrote, so they must be rebuilt
