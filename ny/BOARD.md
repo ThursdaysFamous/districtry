@@ -34,6 +34,39 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-19, MERGED. New York is a statewide instance for a reader.** #1042
+landed as `3416c6b` (squash). New York's three planned PRs are all shipped.
+
+Verified on `main` after the merge, not on the PR head:
+
+* the worksheet carries the widened box (-79.82,40.43 to -71.62,45.07), centre
+  42.75/-75.77, `metro_name` and `brand.app_name` both "New York", cache `v17`,
+  33 layers;
+* New York's own browser smoke test is **22 of 22** against `main` — the four
+  Albany anchors, the preserved City Hall ground truth and the Manhattan to
+  Brooklyn re-classify hop, the three search assertions with both providers
+  stubbed, the Hudson water-click and the Hartford negative;
+* **the front door actually routes.** `metros.json` carries the new box, so
+  Albany's own coordinates land inside `ny` and resolve to `/ny/`. That is the
+  headline reader benefit and it depends on a file the app itself never reads,
+  so it was checked rather than assumed.
+
+The merger verified independently on a tree with `524a303` merged in and
+recorded two re-measurements in the merge commit: that the bbox is wider than
+the widest shipped geometry on all four sides (-71.6688 against -71.62, so
+nothing is clipped, where the plan's proposed -71.73 would have cut the eastern
+end off the state), and that the four sibling instances' tables learned the new
+box — without which an upstate address typed into Wisconsin, Iowa, Michigan or
+Illinois would not have been offered New York.
+
+**Scope question 1 is now visible on the live front door**, which is where it
+was always going to become concrete: it renders "New York · 5 boroughs" beside
+"Wisconsin · all 72 counties" while 15 of New York's 33 layers answer statewide.
+The merge commit records that raising it on this board rather than deviating
+from the plan quietly was the right call, so it stays open here rather than
+being fixed unilaterally. Both open questions below stand; nothing is started
+on either.
+
 **2026-09-19, #1042 verified and waiting.** CI is green on the head
 (`372e7d7`), there is no merge conflict, and the only comments on the PR are
 mine. Nothing on it is waiting on this session.
