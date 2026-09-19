@@ -1,14 +1,22 @@
-# WATCH.md — redistricting watch calendar (New York City)
+# WATCH.md — redistricting watch calendar (New York)
 
-The one place the dates live. `docs/REDISTRICTING_RUNBOOK.md` (master in the Chicago repo;
-pointer stub here) is *what to do* when a boundary changes; this file is *when to look*.
-Keep it at repo root so it's the first thing seen. Update the "Last done" column each time
-you complete a row — a checkpoint with a stale date is a checkpoint that didn't happen.
+The one place the dates live. `docs/REDISTRICTING_RUNBOOK.md` is *what to do* when a
+boundary changes; this file is *when to look*. It sits at `ny/`, beside the instance it
+describes. Update the "Last done" column each time you complete a row — a checkpoint with
+a stale date is a checkpoint that didn't happen.
 
 Rule of thumb: **detection runs itself monthly; you run the school-zone drill yearly; you
-open the runbook per-layer whenever a map is enacted.** NYC adds one twist the siblings
-don't have: its congressional map is the most litigated in the fleet (three maps in three
-years, 2022–2024), so the off-cycle triggers below are not hypothetical here.
+open the runbook per-layer whenever a map is enacted.** New York adds one twist the other
+instances do not have: its congressional map is the most litigated in the fleet (three
+maps in three years, 2022–2024), so the off-cycle triggers below are not hypothetical
+here.
+
+**Corrected at the 2026-09-19 go-live**, where this file had gone stale in three ways at
+once. It called the runbook a "master in the Chicago repo; pointer stub here" and told the
+reader to keep this file "at repo root" — both true of the per-metro FORKS, which were
+retired at R2.1; there is one repository now and this file has never been at its root. And
+the instance it describes is no longer New York City: since 2026-09-18 fifteen of its
+thirty-three layers answer anywhere in the state.
 
 ---
 
@@ -75,7 +83,15 @@ through the runbook. Don't touch layers that didn't change.
 
 ## Per-metro note
 
-**This file is NYC's.** Each sibling fork carries its own `WATCH.md` with its own bodies
-and enactment history (Chicago: wards/ERSB/CPS + collar counties; SF: Redistricting Task
-Force, election precincts, BART, SFUSD). The decennial and off-cycle framing is shared;
-the layer rows are per-city.
+**This file is New York's.** Each instance in this repository carries its own `WATCH.md`
+with its own bodies and enactment history (Illinois: wards/ERSB/CPS plus the collar
+counties; San Francisco: Redistricting Task Force, election precincts, BART, SFUSD). The
+decennial and off-cycle framing is shared; the layer rows are per-instance.
+
+**The statewide tier is not yet in the rows below, and that is the open item.** PR 2
+shipped the county, municipality, village, school-district and judicial-district layers on
+2026-09-18; the go-live added their freshness entries to
+`ny/scripts/validate_sources.py`, which is what notices a service that moves. What is
+missing here is the other half — when to LOOK for a redraw of the bodies those layers
+draw. County and municipal boundaries change by annexation rather than on a cycle, so the
+row is not simply decennial, and writing it needs a decision about what triggers a check.

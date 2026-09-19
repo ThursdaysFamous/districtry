@@ -12,9 +12,9 @@ NYC District Explorer: a single-file, dependency-light web app. Click a point in
 **Metro facts** (generated from `metro-worksheet.json` — edit the worksheet and run
 `python3 scripts/generate_metro_files.py`; hand-edits here fail CI):
 
-- Metro: New York City (`nyc`) — https://districtry.com/ny/
-- Geocoders: address GeoSearch (NYC-bounded type-ahead, geosearch.planninglabs.nyc); unbounded Photon (whole-coverage, sibling-metro lookup); POI GeoSearch (office-address pin lookup)
-- Ground truth: 40.71274,-74.00602 (New York City Hall (Manhattan)) → borough Manhattan; judicial-district 1; municipal-court 1. Negative point 40.72000,-74.04000 (Hudson River, New Jersey waters — outside every anchor geometry (the East River is inside the county-derived judicial districts, so mid-river points there are only borough-negative)).
+- Metro: New York (`nyc`) — https://districtry.com/ny/
+- Geocoders: address GeoSearch (city type-ahead, geosearch.planninglabs.nyc) then Photon bounded to the state when the city search finds nothing; unbounded Photon (whole-coverage, sibling-metro lookup); POI GeoSearch (office-address pin lookup; every layer that drops a pin is city-only)
+- Ground truth: 42.65203,-73.75731 (Downtown Albany — measured inside the City of Albany, Albany County) → judicial-district 3; county Albany; nys-school-district ALBANY; municipality Albany. Negative point 41.76370,-72.68510 (Downtown Hartford, Connecticut — outside New York State and 66 km from the nearest geometry this instance ships. NOT a water point: the county, school-district, cities-towns, villages and three legislative files are all water-inclusive off Long Island and in Lake Ontario, so a mid-Sound or mid-lake click is positive, not negative).
 - Layers: 33 registered (political 12, safety 5, schools 7, geography 9); `registerLayer(` floor 5. Debug namespace `window.NycExplorer`.
 - Scheduled workflows: `ny-update-legislature-roster.yml` (Mon 13:00 UTC); `ny-update-congress-roster.yml` (Mon 13:30 UTC); `ny-update-nypd-roster.yml` (Tue 13:00 UTC); `ny-update-cec-roster.yml` (Wed 13:00 UTC); `ny-update-council-roster.yml` (Thu 13:00 UTC); `ny-validate-sources.yml` (1st of month 12:00 UTC).
 - Source registry: `scripts/validate_sources.py` (machine-checked monthly)

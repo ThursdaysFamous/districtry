@@ -21,20 +21,20 @@
     },
     {
       "id": "nyc",
-      "explorer_name": "districtry New York City",
-      "label": "New York City",
+      "explorer_name": "districtry New York",
+      "label": "New York",
       "url": "https://districtry.com/ny/",
       "emoji": "🗽",
       "repo": "ThursdaysFamous/districtry",
       "bbox": {
-        "minLng": -74.3,
-        "minLat": 40.45,
-        "maxLng": -73.6,
-        "maxLat": 41.0
+        "minLng": -79.82,
+        "minLat": 40.43,
+        "maxLng": -71.62,
+        "maxLat": 45.07
       },
       "tag": "ny",
-      "landing_name": "New York City",
-      "blurb": "Boroughs, City Council and community districts, NYPD precincts and sectors, school zones, and the state and federal seats above them.",
+      "landing_name": "New York",
+      "blurb": "Counties, towns and villages, school and judicial districts across the state, plus the city's boroughs, Council and community districts, NYPD precincts and school zones.",
       "scope": "5 boroughs"
     },
     {

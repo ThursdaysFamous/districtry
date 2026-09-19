@@ -74,11 +74,19 @@ AREAS = {
     "wi": {"outline": "wi/data/app/metro-outline.json", "state_outline": "wi/data/app/wi-state-outline.json"},
     "ia": {"outline": "ia/data/app/metro-outline.json", "state_outline": None},
     "mi": {"outline": "mi/data/app/metro-outline.json", "state_outline": None},
+    # New York joined at the 2026-09-19 go-live. It is a TWO-TIER area and the
+    # two geometries are genuinely different: the dashed wash is the whole
+    # state, where the county, municipality, village, school-district,
+    # judicial-district and ZIP layers answer, and the solid fill is the five
+    # boroughs, which is where the city tier (Council, community districts,
+    # NYPD precincts, school zones) reaches. Drawing only one would overstate
+    # the city or understate the state.
+    "ny": {"outline": "ny/data/app/metro-outline.json", "state_outline": "ny/data/app/ny-state-outline.json"},
 }
 # tag -> point marker (bbox center — no new hand-typed coordinate, derived
 # from the same bbox METRO_EXPLORERS already carries for the sibling-metro
 # handoff, so a city's marker moves automatically if its bbox is ever tuned).
-CITY_TAGS = ["ny", "ca"]
+CITY_TAGS = ["ca"]
 
 DATA_COLOR = "#1d5fd6"
 BRAND_COLOR = "#6d3fd1"
