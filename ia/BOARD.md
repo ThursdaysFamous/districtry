@@ -40,9 +40,105 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
-*(Iowa: replace this line. Say what you are working on, what you finished, and
-what you found. Date every entry, newest first.)*
+**2026-09-19 — board commits go straight to main.** Adam answered the question
+this section carried: the board rule wins, and board edits from this session
+push directly rather than riding a pull request. This entry is the first one
+that did. PR #1032, which held the two entries below while the question was
+open, is closed as superseded rather than merged.
+
+**2026-09-19, later — paused for the night.** Nothing of mine is in flight.
+The Status below was written against main at `881d3f0`; main is `8506c8c` now
+and none of tonight's merges change any figure in it. Iowa's own reading of the
+fleet-wide name gate that arrived with them (`validate_officeholder_names.py`,
+which discovers every instance rather than listing them): **2,181 Iowa person
+records, every one a name, nothing accepted or flagged.** Its whole-fleet total
+reads 12,446 across 757 files on this tree — the 10,985 in circulation is the
+figure that file's own docstring quotes as its SUPERSEDED OK line, so it is a
+relay of a corrected number rather than a disagreement with the gate.
+
+**What I would pick up first, in this order.** (1) Mitchell County's supervisors
+page, because the weekly supervisor job has been red on its guard since
+2026-09-12 and ran red again today, which is why the 17-of-99 headline has not
+moved since 2026-08-28. (2) The 43/56 in the `ia-board-chair` record and in
+`ia/WATCH.md` line 39 — 38 and 61 — since that one is wrong on a page a reader
+opens. (3) The `len(chairs) - len(out)` line in `build_county_pages.py`, a
+one-line fix for a build-log figure that is 21 where the answer is 30.
+
+**2026-09-19 — in flight: nothing.** Last work merged as #1000 (Iowa city
+phones say whose number they are) and #1016 (the weekly chair refresh). What
+follows is a read of Iowa taken against main at `881d3f0` this morning, newest
+first.
+
+**The chair count fell from 43 to 38 yesterday and a reader sees it.** #1016
+merged the weekly refresh and five counties left the file. Four — O'Brien,
+Osceola, Palo Alto and Plymouth — now answer HTTP 202 on robots.txt, an access
+control, where they resolved normally a week earlier; the fifth, Union, timed
+out. A sixth, Dallas, left for a different and real reason: its minutes stopped
+yielding extractable text. Henry joined. So the reader-facing pair is **38 and
+61**, which is the manager's top task and is correct as written.
+
+The good news underneath it: every one of the 38 records now carries a
+`confirmedOn` date, so the carry-forward built in #897 is armed for all of them
+rather than for Clayton alone. Clayton itself was the test — it went unreachable
+again on the 18th and was **carried** rather than dropped, exactly as predicted.
+A county that goes dark next week keeps its chair for up to 60 days instead of
+vanishing.
+
+**The blocked-counties note on this board is one measurement behind, and the
+rule it states still stands.** That paragraph was measured 2026-09-06 from this
+sandbox: 20 unreachable, nine 403s, eight Cloudflare, seven managed challenges.
+The 2026-09-18 GitHub Actions run — the vantage the weekly refresh actually uses
+— reports a different shape: **15 unreachable**, of which 5 are a plain 403
+(Clayton, Decatur, Guthrie, Hardin, Polk), **8 answer HTTP 202 on robots.txt**
+(Dickinson, Emmet, Jefferson, O'Brien, Osceola, Palo Alto, Plymouth, Sioux), 1
+is a connect timeout (Union) and 1 is robots.txt answering HTTP 500 (Bremer),
+with Cherokee and Hamilton separately refusing by robots.txt. Do not re-probe
+any of them — the point of the correction is that the 202 group is **new**, not
+that anything should be retried. Four of those eight were readable on
+2026-09-11.
+
+**Polk answers 403 from the Actions runner.** This board calls Polk *withdrawn*
+because review could not reproduce the block. That reading is still right about
+review's vantage — but the client that runs the weekly refresh got 403 on
+2026-09-18, so Polk is not going to resolve on its own and should not be
+expected to.
+
+**"26 counties have a chair and no board list" is 30, and no source of that
+number was measured.** Three figures are in circulation: 26 (`CLAUDE.md`, from
+the 43-chair era), 21 (printed by `build_county_pages.py` on every run) and 30
+(the actual set difference). The builder computes it as `len(chairs) -
+len(out)`, which is only correct if every county with a board list also has a
+chair — nine do not (Bremer, Franklin, Hamilton, Lyon, Mitchell, Pocahontas,
+Polk, Sac, Webster). Measured: 38 chairs, 17 board lists, 8 counties with both,
+so **30 counties have a chair and no page**. It is a build-log line rather than
+anything a reader sees, and the one-line fix belongs in its own change because
+board commits are prose only.
+
+**The supervisor roster has been frozen since 2026-08-28 because its weekly
+refresh is red, and that is why the headline gap has not moved.** The
+2026-09-12 run stopped itself:
+
+> Mitchell (5 districts) shipped last time and keyed nothing this time — that
+> is a page to re-read, not a diff to merge.
+
+That is the guard working: Mitchell's page stopped naming its districts in a way
+the scraper reads, and rather than silently dropping five real supervisors the
+builder refused to write. But nobody has read that page since, the job runs
+again today at 17:30 UTC, and it will fail again until someone does.
+
+**One red job that costs a reader nothing, recorded so nobody chases it.** The
+legislature refresh shows failure on 2026-09-15. It scraped, built, validated
+and pushed fine, then died at `gh pr create` on the account's GraphQL rate
+limit. The pull request was opened by hand and merged the same day as #974, so
+the Senate and House rosters are current. Nothing has changed to stop it
+recurring.
 
 ## Open questions for Adam
 
-*(Iowa: anything you need a decision on.)*
+- **Mitchell County** — re-read the page and fix the parser, or pass
+  `--allow-drop` and let the county go? I would re-read it: five named
+  supervisors is a real loss and the page changing shape is the likelier cause.
+- **`ia-county-officers.json`'s phone numbers have never been measured** for the
+  problem #1000 fixed on the city rosters — a single switchboard number repeated
+  across several named people. It carries roughly 305 numbers across 99
+  counties. Worth the measurement, or leave it?
