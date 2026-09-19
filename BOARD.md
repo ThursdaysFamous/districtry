@@ -103,6 +103,14 @@ tree with `origin/main` merged rather than from a PR body.
   raises on import. The gate-count pair is the merged tree's own measurement,
   67/94, not either branch's.
 - **#1018 is held and the hold is now Adam's to clear.** See question 2.
+- **The Detroit roster PR now says what its run moved (#1047).** Its weekly PR opened with the
+  same sentence every week — "this changes data about real officeholders" — and on both of the
+  two refreshes that have ever happened, the only thing that moved was an Archive timestamp. A
+  body that cries officeholder every week is how a reviewer learns to skim the week it matters.
+  The summariser refuses to claim nothing moved about a document it has not fully accounted for,
+  which I negative-tested: an unrecognised field produced "fields this summary cannot name"
+  rather than a clean bill. It also found that detroitmi.gov served this client directly on
+  2026-09-09, so the block is intermittent where four places called it standing.
 - **The queue being empty is why #1046 exists.** With nothing left to review I took the one open
   unassigned task: the privacy page named ten analytics events while every app sends thirteen.
 
@@ -114,7 +122,7 @@ records the standing merge authority. Michigan's "a workflow that has never run
 is invisible to every gate" was swept across all six instances: of 128
 scheduled workflows only two have never run, both explained by the calendar.
 
-Main is at `66f2976`. One open PR: #1018, held.
+Main is at `08277b1`. One open PR: #1018, held.
 
 ## Open questions for Adam
 
