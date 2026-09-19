@@ -59,17 +59,37 @@ belongs on that instance's board instead.
 | Absolute gate on every shipped officeholder name | New York | **merged** #1025 `a3d11c0` | 2026-09-19 |
 | #1025 and #1028 collided with no git conflict. | New York | **closed** — New York merged main in first and measured all four states rather than dropping the entry blind, so the branch was correct in either merge order | 2026-09-19 |
 | `privacy.html` understates three events sent through `shareCopyButton` | unassigned | open | 2026-09-18 |
+| Shallow checkout makes every roster PR rewrite all 243 sitemap dates | manager | **in review** — 73 workflows deepened, plus a gate, after #1030 and #1031 did twelve | 2026-09-19 |
+| A scheduled workflow that has NEVER run is invisible to every gate here | manager | measuring | 2026-09-19 |
 
 ## Status — manager writes here
 
-**2026-09-19.** Boards created. Main is at `820338c`.
+**2026-09-19, second pass.** Adam read the boards and gave three instructions:
+add Will County to the municipal builder's exception list, start New York's
+phase 3, and use judgement on the rest. All five sessions are working.
 
-Merged today that a reader would notice: Rock Island County's 15 municipalities
-stopped naming 112 officeholders after strings that are not people (#1024). It
-had been live 15 days.
+- **Illinois** — Will joins `PRESERVABLE`, which unfreezes 37 counties' mayors
+  and council members. Frozen since 2026-09-08 because one blocked county is
+  `REQUIRED`. #1018 stays held behind it.
+- **New York** — PR 3, the go-live. Its two live defects (a gap record that is
+  false, and an empty CEC roster with no record at all) ship no later than it
+  does, because the go-live is what starts sending upstate readers to them.
+- **Wisconsin** — the Court of Appeals job: one bounded look for the four judges
+  on a host that answers, and if there is none, a recorded expected condition
+  plus a staleness ceiling rather than dropping the job. Then the alderperson
+  gap, measured whole before any tranche.
+- **Iowa** — the 38/61 correction first because it is false on a page a reader
+  opens, then Mitchell, re-read rather than `--allow-drop`.
+- **Michigan** — tranche 6, the 22 remaining probe candidates, no fetch needed.
 
-Open PRs: #1030, #1031 (CI plumbing), #1028 (Bartonville phantom Clerk), #1025
-(name gate), #1018 and #1023 (weekly roster refreshes, Hancock and Grundy).
+**Manager's own work.** The shallow-checkout defect Wisconsin recorded as
+fleet-wide was 73 workflows wide, not twelve; every one is deepened and
+`validate_workflow_checkout.py` now fails a workflow that commits `sitemap.xml`
+without full history or that re-shallows it afterwards. `docs/MANAGER.md`
+records the standing merge authority. Michigan's "a workflow that has never run
+is invisible to every gate" is being measured across all six instances.
+
+Main is at `ff9ba6e`. One open PR: #1018, held.
 
 ## Open questions for Adam
 

@@ -18,7 +18,11 @@ dated table rather than only inside a JavaScript-rendered card.
 
 | task | state | opened | notes |
 |---|---|---|---|
-| Absolute gate on every shipped officeholder name (#1025) | in review | 2026-09-19 | Fleet-wide, not NY-specific — it reads the shipped tree for names that are not names, across 10,986 person records in 757 files. Tracked on the fleet board too. |
+| Absolute gate on every shipped officeholder name (#1025) | **merged** `a3d11c0` | 2026-09-19 | Fleet-wide, not NY-specific. Your fifth record shape, keyed on `party`, is what made it see New York's own 239 records at all — the gate's "6 instance(s)" line had been reading as coverage it did not have. |
+| **PR 3, the go-live** | **assigned** | 2026-09-19 | Adam's ruling, 2026-09-19: "Ny phase 3". `docs/NY_EXPANSION_PLAN.md` §PR 3. What makes the working statewide tier reachable through the front door, the address box and shared links. |
+| **The false congress-offices gap record and the empty CEC roster** | **assigned — ships no later than PR 3** | 2026-09-19 | Not deferred, and not a separate priority: the go-live is what starts sending upstate readers to both. The CEC record says what you corrected — the DOE decentralised the listings across 32 council sites, so the members are published and not reachable by one scraper. "The source is gone" would have been a false blocker. |
+| Six statewide layers have no `validate_sources.py` row and no `ny/WATCH.md` row | open, inside PR 3 | 2026-09-19 | The plan's own rules required them in the same change as PR 2. After go-live a renamed New York State service breaks a live tier with nothing watching. |
+| The layer count is written four ways across the tree | open, inside PR 3 | 2026-09-19 | 27, 31, 32 and 33; two of those match no commit this repository ever had. The unsent press pitch at 27 is Adam's file — flag it, do not edit it. |
 
 **Scope, 2026-09-19 (from Adam).** This session covers New York and nothing
 else. It was briefed earlier as owning San Francisco too; it does not.

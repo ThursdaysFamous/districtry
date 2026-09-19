@@ -16,8 +16,11 @@ Milwaukee and Racine school boards all name people.
 
 | task | state | opened | notes |
 |---|---|---|---|
-| Six roster workflows: shared pages after the branch cut (#1031) | in review | 2026-09-19 | The defect was measured here: run 35391214303 died on `wi/history.html` being dirty when #1014 merged mid-crawl. The ~40-minute county-clerk crawl is what makes the window wide, and the `Crawl-delay: 10` it honours is correct and untouched. |
+| Six roster workflows: shared pages after the branch cut (#1031) | **merged** `f2a0d88` | 2026-09-19 | The defect was measured here: run 35391214303 died on `wi/history.html` being dirty when #1014 merged mid-crawl. The ~40-minute county-clerk crawl is what makes the window wide, and the `Crawl-delay: 10` it honours is correct and untouched. |
 | Lincoln District 21 boundary withheld | open | — | The county's map and the state's filing put the boundary in different places. The card says so rather than picking one. Correct as it stands; listed so it is not forgotten. |
+| **Court of Appeals: one look for another host, then tolerate-and-ceiling** | **assigned, do first** | 2026-09-19 | Manager's call on your open question, reasoning sent in full. Not option (c). Spend one bounded pass on whether the four judges are published on a host that answers; failing that, make the wicourts.gov connect timeout a recorded expected condition so the run goes green and opens nothing, and add a staleness ceiling that goes RED when the last successful verification ages out. Keeps the signal, drops the weekly red that trains the eye to skim. Not a loosened guard — the ceiling is stricter than what exists today. |
+| **The alderperson gap — measure the whole pool before any tranche** | **assigned, after the above** | 2026-09-19 | Your own board calls this Wisconsin's biggest reader-facing hole and I agree. In most of the 156 municipalities with council districts drawn the card names the district and nobody in it; 24 cities name theirs. Michigan's #989 probe is the shape: measure every candidate once, report, then ship tranches against the artifact with no discovery per tranche. |
+| MPS and RUSD school-board jobs: Monday 21 September is the first test | open | 2026-09-19 | Both had a duplicate `run:` key that stopped GitHub starting them at all; fixed 2026-09-16 in #978 and no Monday has passed since. A zero-job run means the fix did not take. Check-in already armed. |
 
 ## Status — this session owns this section
 

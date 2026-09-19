@@ -17,11 +17,9 @@ twenty are city council wards.
 
 | task | state | opened | notes |
 |---|---|---|---|
-| **Commissioner roster covers 16 of 83 counties** | open | — | The headline gap and the layer the instance was built around. The runway already exists: the probe in #989 measured 59 counties. Next is tranche 5 onward against that list, not more discovery. |
+| **Commissioner roster covers 26 of 83 counties** | **assigned — tranche 6** | — | The headline gap and the layer the instance was built around. Tranche 5 merged `3fb9820`: 229 of 619 seats, 55.1% of the state by population. The 22 remaining probe candidates need no new discovery and their pages are already saved, so tranche 6 costs no fetch. |
+| Detroit PR-body proposal | open, below tranche work | — | The weekly Detroit PR body is one static paragraph, identical every week whatever changed, so it cannot tell a reviewer that a run moved a snapshot stamp rather than a person's name. Real, unwritten anywhere in the repo, and worth less than the roster — Michigan's own measurement. |
 | City council wards — 18 of the 20 gaps | open | — | Ann Arbor and Jackson blocked; Bay City data-quality; Dearborn, Detroit, Flint, Holland, Kentwood no-source. **Run the state's WARD column first** (`mi/WATCH.md` line 30) — one query settled 23 cities on 2026-09-06. `WARD='00'` means stop. |
-| Tranche parser candidates | open | — | Carried from this session's last report. |
-| Detroit PR-body proposal | open | — | Carried from this session's last report. |
-| PR #979 | open | — | Carried from this session's last report; state unverified by the manager. |
 | Michigan's full bbox vs. the clipped one | open | 2026-09-04 | The county fabric is water-inclusive and runs west across Lake Michigan to -90.42, containing Chicago's and Wisconsin's centres. Shipped clipped to `lng >= -87.60`. Four western-UP places still misroute at the front door. Recorded in `mi/WATCH.md`; no fix proposed. |
 
 **Wyoming (MI) is off limits.** Its own robots.txt names ClaudeBot and disallows

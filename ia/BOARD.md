@@ -24,12 +24,14 @@ auditors (99 of 99).
 
 | task | state | opened | notes |
 |---|---|---|---|
-| **The chair gap record states a number the file no longer carries** | open | 2026-09-19 | `ia-board-chair`'s reader text says "in 43 of Iowa's 99 counties… In the other 56 it cannot". The file holds **38**, so it is 38 and 61. This ships to the Data gaps panel, so it is wrong on the page a reader opens. `ia/WATCH.md` line 39 carries the same 43. This session already has it — its own last summary names it. |
+| **The chair gap record states a number the file no longer carries** | **assigned, do FIRST** | 2026-09-19 | `ia-board-chair`'s reader text says "in 43 of Iowa's 99 counties… In the other 56 it cannot". The file holds **38**, so it is 38 and 61. This ships to the Data gaps panel, so it is wrong on the page a reader opens. `ia/WATCH.md` line 39 carries the same 43. This session already has it — its own last summary names it. |
 | **Supervisor roster covers 17 of 99 counties** | open | — | The headline gap. It also caps the per-county pages: 26 counties have a chair and no board list, so they get no page at all. |
 | City card names nobody | open | — | `ia-city-contact.json` covers 939 cities with contact details and no officeholder names; 834 have no website at all. |
 | Precinct card cannot say where to vote | open | — | no-source. The polling-place precinct column was dropped upstream. |
 | Johnson County districts pending; Jones County absent from the state layer | open | — | Two county-level data-quality holes. Johnson's minutes host refuses `districtry` in robots.txt — that is the host's answer, not a bug. |
 | Marion ward card blocked | blocked | — | Access control. Never worked around. |
+| **Mitchell County: re-read the page and fix the parser** | **assigned, second** | 2026-09-19 | Manager's answer to your open question, and it is agreement rather than an override: do NOT pass `--allow-drop`. The guard refused to write rather than drop five real supervisors, which is correct, and is why the supervisor roster has been frozen since 2026-08-28. Fix the cause. |
+| `ia-county-officers.json` phone numbers have never been measured | **assigned, third** | 2026-09-19 | Yes to your question, with one condition: measure and report before building anything. ~305 numbers across 99 counties, same defect class #1000 fixed on the city rosters — a switchboard number rendered as a named person's direct line. A clean result is a result worth recording. |
 
 **Do not re-probe the blocked counties with different headers.** Measured
 2026-09-06: of the 20 counties the gated run calls unreachable, nine answer 403
