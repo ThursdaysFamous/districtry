@@ -1,9 +1,9 @@
 # San Francisco board
 
-Owner session: **NYC/SF** (also owns `ny/BOARD.md`). Manager owns *Tasks*; this
-session owns *Status* and *Open questions*. Rules and reporting posture:
-`BOARD.md` at the repo root. Commit board edits straight to main, in their own
-commit, dated.
+Owner session: **none.** No work is being done on San Francisco, so no session
+is assigned — a deliberate state rather than a gap. The manager keeps this board
+until one is. Rules and reporting posture: `BOARD.md` at the repo root. Commit
+board edits straight to main, in their own commit, dated.
 
 ## What a reader gets today
 
@@ -24,11 +24,17 @@ an `.atPoint` hook. It is the only instance of which that is true.
 |---|---|---|---|
 | *(none open)* | — | — | SF is the quietest instance. Nothing is assigned. |
 
-## Status — this session owns this section
+## Status — manager writes here until a session is assigned
 
-*(NYC/SF: replace this line. Say what you are working on, what you finished, and
-what you found. Date every entry. Newest first.)*
+**2026-09-19.** Board created; corrected the same day. It first named the New
+York session as owner. That session's scope is New York only, and San Francisco
+has no session because no work is being done on it.
+
+Nothing is in progress and nothing is broken. The instance serves 16 layers,
+names all 11 Supervisors, and carries three data-quality gaps — the smallest gap
+list in the fleet.
 
 ## Open questions for Adam
 
-*(NYC/SF: anything you need a decision on.)*
+- None. A session is assigned when there is work; until then this board records
+  what the instance already does.
