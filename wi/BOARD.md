@@ -24,6 +24,28 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-19. #1040 is MERGED (`a2a7e41`).** The Court of Appeals job now
+forgives one failure and has a ceiling on that forgiveness.
+
+What a reader gets: still nothing directly — this is entirely about whether the
+sixteen appellate judges on the card stay true. What changed is that the weekly
+job stops going red on a condition nobody here can fix, and starts going red on
+one that matters. Measured on the day it shipped: the last successful run was
+2026-09-04, so the bench had been unverified for over two weeks and nothing was
+saying so.
+
+**Verified on the merged main rather than assumed**: the battery gate answers
+66/93, the steward mirror 93 for 93, the skills gate 768 pointers. The merge
+landed after four other commits reached main, none of which touched
+`smoke-test.yml`, which is why the figure survived — checked rather than hoped.
+
+**Next in this queue is the alderperson gap, measured whole before any tranche.
+It has not been started.** Wisconsin's biggest reader-facing hole: in most of
+the 156 municipalities with council districts drawn, the card names the district
+and nobody in it; 24 cities name theirs. The shape to follow is Michigan's #989
+probe — measure every candidate once, report, then ship tranches against the
+artifact with no discovery per tranche.
+
 **2026-09-19, later. #1040 merged main in and the battery figure is 66/93, which
 is neither branch's number.** Nothing about the Court of Appeals work changed;
 this is the count collision.
