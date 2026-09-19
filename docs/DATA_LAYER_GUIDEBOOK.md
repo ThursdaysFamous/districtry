@@ -1709,8 +1709,8 @@ detail into `blocker`.
       "wanted": "A current statewide election-district layer, or a county's own published election districts for anywhere outside New York City."
     },
     {
-      "id": "nyc-congress-district-offices",
-      "concept": "U.S. House district",
+      "id": "nyc-community-education-councils",
+      "concept": "Community Education Council",
       "area": "New York City",
       "counties": [
         "bronx",
@@ -1719,12 +1719,12 @@ detail into `blocker`.
         "queens",
         "staten-island"
       ],
-      "kind": "data-quality",
-      "layer": "congress",
-      "summary": "Congressional cards show the Washington D.C. office only, not the local district office.",
-      "why": "The roster this card is built from publishes the Washington office and not the local district ones.",
-      "blocker": "The roster builder's source publishes the D.C. office; district-office addresses are not in it. Recorded as a builder-scope enrichment candidate rather than a missing source. Noted in the 2026-07-31 validation pass: the wanted source exists and is already consumed by the Chicago fork (the congress-legislators district-offices file), so what remains is this fork's builder enrichment and factory migration — build work, not a missing source.",
-      "wanted": "Nothing new from readers — the enrichment is a recorded builder-scope follow-up; the entry stays only until the card shows the district office."
+      "kind": "no-source",
+      "layer": "cec",
+      "summary": "The Community Education Council card names your council and district but no members.",
+      "why": "Each council publishes its own members on its own site, and there is no single list covering all thirty-two, so this app has nothing it can read for every district.",
+      "blocker": "MEASURED 2026-09-19 from the shipped tree and the scraper. ny/data/app/cec-members.json is the literal empty object and has never held a record; the card degrades to the council page and names nobody, which is the honest behaviour and is why no gate fired. The scraper (ny/scripts/cec_scraper.py) records the cause: the Department of Education DECENTRALISED the member listings across thirty-two independent council sites — cec3.org, cec14.org, several Department of Education Google Sites — with no uniform URL pattern and no dataset on the city's open-data portal, so its discovery walk finds nothing and build_cec_roster.py keeps the placeholder. THE PRECISE WORDING MATTERS AND WAS GOT WRONG FIRST: an earlier note in this repository said the source \"is gone\". It is not. The members ARE published, on thirty-two sites, and are simply not reachable by one scraper — which is a different blocker with a different fix, and \"gone\" would have justified deleting the weekly job rather than pointing it somewhere. ny-update-cec-roster.yml still installs Playwright and Chromium every Wednesday to run that walk. NOT YET ASKED.",
+      "wanted": "One list of Community Education Council members covering all thirty-two districts, or the thirty-two council sites named in one place so each can be read."
     }
   ],
   "sf": [
@@ -2392,6 +2392,68 @@ detail into `blocker`.
     }]
 }
 ```
+
+## Closed record — New York's congressional district offices (opened 2026-07-31, closed 2026-09-19)
+
+This was the `nyc-congress-district-offices` gap in the New York block above,
+and it is closed: every one of the state's 26 congressional cards names the
+member's LOCAL district office — street, city and a dialable number — above the
+Washington one.
+
+**It was closed by work that shipped and by a record nobody retired.** The
+entry's own `wanted` set the retirement condition: "the entry stays only until
+the card shows the district office". Its blocker named the exact route: "the
+wanted source exists and is already consumed by the Chicago fork (the
+congress-legislators district-offices file), so what remains is this fork's
+builder enrichment". That enrichment was done.
+`ny/scripts/build_congress_roster.py` reads `legislators-district-offices.json`
+beside `legislators-current.json` and writes `districtOffice` for every member
+the source carries one for. Measured 2026-09-19: **26 of 26** New York records
+carry it. WHEN that landed is NOT established here — this checkout is shallow
+from 2026-09-15 and the change predates it — so the closing date is the date it
+was measured, not the date it became true, and the record was live and false
+for some unmeasured span before that.
+
+**How it was caught, which is the part worth keeping.** Not by a gate; no gate
+can compare a sentence about a card against the card. It was caught by reading
+the card in a browser during an unrelated status sweep — boot the app, switch
+on the congress toggle, select a point, open the disclosure. The card renders
+`District Office` as its FIRST office block. Two cheaper checks had already
+agreed and neither would have been decisive alone: the roster carries the field
+on every record, and `ny/index.html` labels and pushes it. A field present in
+data and referenced in code is still not proof that a reader sees it.
+
+**The same browser read found a second defect the record never mentioned**, in
+the office block below: the D.C. line rendered the BUILDING ADDRESS as the
+telephone number, linked `tel:245205153210`, while the line that actually said
+`Phone: 202-225-7944` was demoted to plain text. That is the
+`splitOfficeLines` defect fixed in `engine/index.html/chamber-factory.txt` the
+same day — 84 of 1,454 office blocks fleet-wide. So the gap record was wrong
+about the card in one direction while the card was wrong in another, and one
+reading found both.
+
+**The same text ships for San Francisco** as `sf-congress-district-offices`,
+where 50 of 52 records carry a district office. That record was NOT touched
+here and is NOT measured: this change is New York's, and whether the San
+Francisco card renders what its roster carries needs the same browser read
+before anyone edits it.
+
+The retired entry's blocker, verbatim, as the measurement record:
+
+> The roster builder's source publishes the D.C. office; district-office
+> addresses are not in it. Recorded as a builder-scope enrichment candidate
+> rather than a missing source. Noted in the 2026-07-31 validation pass: the
+> wanted source exists and is already consumed by the Chicago fork (the
+> congress-legislators district-offices file), so what remains is this fork's
+> builder enrichment and factory migration — build work, not a missing source.
+
+**THE LESSON IS THE ONE `nyc-amenity-phones` ALREADY CARRIES, from the other
+direction.** That record went stale when its SOURCE was swapped and gained a
+field. This one went stale when the BUILDER was extended to read a field the
+source already had. Both are a gap record describing a pipeline that moved
+underneath it, and nothing gates either — so a record whose `wanted` states a
+condition should be re-read against the product whenever that part of the
+pipeline is touched.
 
 ## Closed record - Racine Unified's board districts (opened 2026-08-25, closed 2026-09-03)
 
