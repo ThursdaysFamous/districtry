@@ -269,6 +269,52 @@ Two corrections to my own last report:
 
 ## Open questions for Adam
 
+**2026-09-19 — may the state's precinct fabric be the SOURCE for a city's wards,
+or only the check?** This is the decision under most of the remaining ward gaps, it is
+recorded twice in this repo as the operator's call, and nobody has been asked. It costs no
+fetches to answer.
+
+**Correcting my own note above.** I wrote that I was starting on (2) because
+`mi/WATCH.md` line 30's WARD query "needs no answer". That query is already spent — it was
+run on 2026-09-06 and settled 23 cities in one go. Nothing on the ward front is one cheap
+query away any more, and the four unshipped cities I checked (Kentwood, Midland, Holland,
+Muskegon) each carry a measured record saying neither the city nor its county publishes a
+ward boundary this app can read. The remaining ward work is either per-city discovery, which
+costs fetches exactly like option (1) above, or this posture question.
+
+What is true today. Michigan's own 2026 precinct layer carries a WARD column. Six cities
+ship a ward polygon — Detroit, Warren, Grand Rapids, Flint, Rochester Hills, Battle Creek —
+and every one of them takes its boundary from the CITY's own publisher, with the state's
+column used as an INDEPENDENT currency check. That check is what separated Flint's plan in
+force from two superseded ones by twenty-three points, and what refused Bay City.
+
+Of the ten cities the state's column calls districted, eight have no ward polygon here:
+Wyoming, Pontiac, Kentwood, Midland, Muskegon, Jackson, Bay City, Holland. The state's
+fabric could draw wards for all eight without fetching any of those cities. Wyoming's is
+already measured — it dissolves to 6/6/6 across three wards — and the other seven are one
+query away.
+
+What it costs, stated plainly. The currency check stops being independent: today the city
+draws the boundary and the state checks it, and under this posture the state is both, so a
+ward this app draws could never again be shown to disagree with the city that elects by it.
+Two cities make that concrete. Bay City publishes its own nine-ward layer and it scores
+97.608% against the state fabric with the disagreement spread across twelve ward pairs —
+two plans, not one bad edge — so drawing from the state means overriding a city's own map
+rather than filling a silence. Muskegon's only published map leaves parts of the city
+uncovered, so there the state route fills a real hole. Those are different situations and I
+would not answer them the same way.
+
+One more consequence worth knowing before deciding: it would sidestep Lansing's licence
+block. Lansing's wards are built and unshipped because the only clean copy states no licence
+while the same plan one item away states CC BY-NC 4.0, and the operative reading is NC. The
+state's fabric is a different publisher under different terms, and Lansing already measures
+99.893% against its WARD column. That is a reason to be careful rather than pleased —
+routing around a licence by changing publishers is a decision, not a workaround, and it
+should be made on purpose.
+
+Nothing ships either way without the usual per-city build and its gates. The question is
+only whether the state may be the source.
+
 **2026-09-19, update — (3) is done and it changed what (1) costs.** #1045
 records the accepted host's robots reading and gates on it. The backfill read
 33 robots.txt across 24 hosts and found **two of the 25 shut counties shut by
