@@ -84,6 +84,22 @@
     }
    ],
    "resolved": 18,
+   "robots": {
+    "board": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "served",
+     "url": "https://vanburencountymi.gov/government/board-of-commissioners/",
+     "why": "robots.txt served (178 bytes)"
+    },
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "served",
+     "url": "https://vanburencountymi.gov/",
+     "why": "robots.txt served (178 bytes)"
+    }
+   },
    "score": 18.7,
    "seats": 7,
    "verdict": "not-keyable"
@@ -203,6 +219,22 @@
     }
    ],
    "resolved": 16,
+   "robots": {
+    "board": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "served",
+     "url": "https://stjosephcountymi.gov/government/county-commissioners/",
+     "why": "robots.txt served (178 bytes)"
+    },
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "served",
+     "url": "https://stjosephcountymi.gov/",
+     "why": "robots.txt served (178 bytes)"
+    }
+   },
    "score": 3.0,
    "seats": 7,
    "verdict": "no-districts"
@@ -237,6 +269,15 @@
     }
    ],
    "resolved": 6,
+   "robots": {
+    "host": {
+     "allowed": false,
+     "read": "2026-09-19",
+     "status": "served",
+     "url": "https://tuscolacounty.com/",
+     "why": "robots.txt served (26 bytes)"
+    }
+   },
    "score": -1,
    "seats": 5,
    "verdict": "challenge"
@@ -319,6 +360,22 @@
     }
    ],
    "resolved": 13,
+   "robots": {
+    "board": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "served",
+     "url": "https://www.newaygocountymi.gov/board_of_commissione/board-of-commissioners/",
+     "why": "robots.txt served (179 bytes)"
+    },
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "served",
+     "url": "https://newaygocountymi.gov/",
+     "why": "robots.txt served (179 bytes)"
+    }
+   },
    "score": 100.0,
    "seats": 7,
    "verdict": "not-keyable"
@@ -388,6 +445,15 @@
     }
    ],
    "resolved": 14,
+   "robots": {
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "absent",
+     "url": "https://branchco.com/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   },
    "score": -1,
    "seats": 5,
    "verdict": "challenge"
@@ -452,6 +518,22 @@
     }
    ],
    "resolved": 8,
+   "robots": {
+    "board": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "absent",
+     "url": "https://mecostacounty.org/government/boc.php",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    },
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "absent",
+     "url": "https://mecostacounty.org/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   },
    "score": 5.0,
    "seats": 7,
    "verdict": "no-districts"
@@ -495,6 +577,15 @@
     }
    ],
    "resolved": 6,
+   "robots": {
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "served",
+     "url": "https://gratiot.org/",
+     "why": "robots.txt served (256 bytes)"
+    }
+   },
    "score": -1,
    "seats": 5,
    "verdict": "no-board-page"
@@ -540,6 +631,15 @@
     }
    ],
    "resolved": 8,
+   "robots": {
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "served",
+     "url": "https://wexfordcounty.org/",
+     "why": "robots.txt served (35 bytes)"
+    }
+   },
    "score": -1,
    "seats": 9,
    "verdict": "no-board-page"
@@ -599,6 +699,15 @@
     }
    ],
    "resolved": 17,
+   "robots": {
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "served",
+     "url": "https://co.huron.mi.us/",
+     "why": "robots.txt served (488 bytes)"
+    }
+   },
    "score": -1,
    "seats": 7,
    "verdict": "no-board-page"
@@ -630,6 +739,22 @@
    "pop": 29052,
    "rejected": [],
    "resolved": 25,
+   "robots": {
+    "board": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "absent",
+     "url": "https://masoncountymi.gov/government/board_of_commissioners/index.php",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    },
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "absent",
+     "url": "https://masoncountymi.gov/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   },
    "score": 8.0,
    "seats": 7,
    "verdict": "no-districts"
@@ -667,6 +792,15 @@
     }
    ],
    "resolved": 5,
+   "robots": {
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "absent",
+     "url": "https://gladwin.org/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   },
    "score": -1,
    "seats": 5,
    "verdict": "no-board-page"
@@ -712,6 +846,15 @@
     }
    ],
    "resolved": 8,
+   "robots": {
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "absent",
+     "url": "https://charlevoixcounty.org/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   },
    "score": -1,
    "seats": 6,
    "verdict": "no-board-page"
@@ -766,6 +909,15 @@
     }
    ],
    "resolved": 7,
+   "robots": {
+    "host": {
+     "allowed": false,
+     "read": "2026-09-19",
+     "status": "refused",
+     "url": "https://www.iosco.org/",
+     "why": "robots.txt refused to this client (HTTP 403) \u2014 no readable policy"
+    }
+   },
    "score": -1,
    "seats": 5,
    "verdict": "no-board-page"
@@ -830,6 +982,22 @@
     }
    ],
    "resolved": 10,
+   "robots": {
+    "board": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "served",
+     "url": "https://manisteecountymi.gov/263/Board-of-Commissioners",
+     "why": "robots.txt served (816 bytes)"
+    },
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "served",
+     "url": "https://manisteecountymi.gov/",
+     "why": "robots.txt served (816 bytes)"
+    }
+   },
    "score": 109.3,
    "seats": 7,
    "verdict": "not-keyable"
@@ -901,6 +1069,22 @@
     }
    ],
    "resolved": 14,
+   "robots": {
+    "board": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "absent",
+     "url": "https://antrimcountymi.gov/government/boards_commissions___committees/board_of_commissioners/index.php",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    },
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "absent",
+     "url": "https://antrimcountymi.gov/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   },
    "score": 5.0,
    "seats": 5,
    "verdict": "no-districts"
@@ -937,6 +1121,15 @@
     }
    ],
    "resolved": 4,
+   "robots": {
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "absent",
+     "url": "https://ogemawcounty.net/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   },
    "score": -1,
    "seats": 5,
    "verdict": "no-board-page"
@@ -1020,6 +1213,22 @@
     }
    ],
    "resolved": 18,
+   "robots": {
+    "board": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "absent",
+     "url": "https://benzieco.gov/government/board_of_commissioners/index.php",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    },
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "absent",
+     "url": "https://benzieco.gov/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   },
    "score": 5.0,
    "seats": 7,
    "verdict": "no-districts"
@@ -1051,6 +1260,15 @@
     }
    ],
    "resolved": 4,
+   "robots": {
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "absent",
+     "url": "https://missaukee.org/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   },
    "score": -1,
    "seats": 7,
    "verdict": "no-board-page"
@@ -1130,6 +1348,22 @@
     }
    ],
    "resolved": 12,
+   "robots": {
+    "board": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "served",
+     "url": "https://crawfordco.org/offices-departments/board-of-commissioners/",
+     "why": "robots.txt served (159 bytes)"
+    },
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "served",
+     "url": "https://crawfordco.org/",
+     "why": "robots.txt served (159 bytes)"
+    }
+   },
    "score": 0.0,
    "seats": 7,
    "verdict": "no-districts"
@@ -1171,6 +1405,15 @@
     }
    ],
    "resolved": 18,
+   "robots": {
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "absent",
+     "url": "https://ironcounty.us/",
+     "why": "no robots.txt (HTTP 404, allow all)"
+    }
+   },
    "score": -1,
    "seats": 5,
    "verdict": "no-board-page"
@@ -1279,6 +1522,22 @@
    "pop": 7980,
    "rejected": [],
    "resolved": 12,
+   "robots": {
+    "board": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "served",
+     "url": "https://algercounty.gov/government/board-of-commissioners/",
+     "why": "robots.txt served (8617 bytes)"
+    },
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "served",
+     "url": "https://algercounty.gov/",
+     "why": "robots.txt served (8617 bytes)"
+    }
+   },
    "score": 0.0,
    "seats": 5,
    "verdict": "no-districts"
@@ -1346,6 +1605,15 @@
     }
    ],
    "resolved": 10,
+   "robots": {
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "served",
+     "url": "https://baragacounty.org/",
+     "why": "robots.txt served (116 bytes)"
+    }
+   },
    "score": -1,
    "seats": 5,
    "verdict": "no-board-page"
@@ -1413,6 +1681,15 @@
     }
    ],
    "resolved": 10,
+   "robots": {
+    "host": {
+     "allowed": true,
+     "read": "2026-09-19",
+     "status": "served",
+     "url": "https://keweenaw.org/",
+     "why": "robots.txt served (220 bytes)"
+    }
+   },
    "score": -1,
    "seats": 5,
    "verdict": "no-board-page"

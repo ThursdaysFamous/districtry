@@ -18,17 +18,62 @@ PUBLISHES A DISTRICT-KEYED ROSTER AT ALL. That cannot be read off a list, so
 this file measures it for all 59 at once, without writing a single parser, and
 prints them ranked by what it found.
 
-WHAT THIS FILE DOES NOT RECORD, MEASURED 2026-09-19
-----------------------------------------------------
-It writes a robots status for every host it REJECTS and none for the host it
-ACCEPTS. Tranche 5 found Gogebic and Marquette serving a robots.txt that
-disallows this client, one day after this probe recorded both as `candidate`
-having read robots first, and the two readings could not be compared because
-only one of them was written down. The Internet Archive holds no snapshot of
-either host's robots.txt since 2026-09-01, so whether the files changed is not
-established and cannot be. Record the accepted host's verdict too before the
-next sweep; a measurement nobody can diff is a measurement that has to be
-taken again.
+WHAT IT RECORDS ABOUT ROBOTS, AND WHY (closed 2026-09-19)
+----------------------------------------------------------
+Until this date it wrote a robots status for every host it REJECTED and none
+for the host it ACCEPTED. Tranche 5 found Gogebic and Marquette serving a
+robots.txt that disallows this client, one day after this probe recorded both
+as `candidate` having read robots first, and the two readings could not be
+compared because only one of them was written down. The Internet Archive holds
+no snapshot of either host's robots.txt since 2026-09-01, so whether those
+files changed is not established and never will be — that pair is lost, and
+closing this only stops the next one.
+
+Every county row now carries `robots`, with a record for the accepted `host`
+and one for the accepted `board` page, each holding the URL, the status, the
+allow/deny answer, the verdict's own `why` and the date it was READ. Rejected
+hosts carry the same record beside their existing reason.
+
+TWO THINGS MAKE IT DIFFABLE RATHER THAN DECORATIVE. The `why` is kept because
+the STATUS ALONE CANNOT SETTLE A DISAGREEMENT: both of the contradictory
+Gogebic readings would have said `served`, while robots_policy builds `why` as
+"robots.txt served (N bytes): <the rule that decided>" — a byte count and a
+rule, both of which move when a file does. And the date is per RECORD rather
+than taken from the artifact's top-level `measured`, because `--county` and
+`--limit` write one county into a file whose other rows were read on another
+day.
+
+THE HOST AND THE BOARD PAGE ARE SEPARATE READINGS on purpose: one file can
+allow `/` and disallow the path a board page sits under, so a single answer per
+county would be true of one URL and asserted of another.
+
+`--refresh-robots` fills the field for the counties already recorded, reading
+robots.txt and no page: 33 readings across the 25 counties on 2026-09-19, which
+cost 24 FETCHES, because RobotsGate reads each host's file once and nine of the
+ten board pages sit on the host already read. It is unpaced by construction and
+that is not an oversight: the gate fetches robots.txt on its own session, and a
+Crawl-delay stated inside a file cannot govern the fetch that reads it.
+
+THE FIRST FILL ALREADY FOUND TWO COUNTIES WHOSE RECORDED REASON IS NO LONGER
+THE ONE THAT GOVERNS, which is what the field is for.
+
+  IOSCO   www.iosco.org now answers HTTP 403 on robots.txt, which the strict
+          reading this file takes for a county WEBSITE makes a refusal. Its
+          record says `no-board-page`, and the 2026-09-18 sweep could only
+          have reached that verdict by being ALLOWED, so the policy has moved
+          since. Read three times on both host spellings, identical each time,
+          and the 403 carries `server: cloudflare` and the site's own
+          `cf-ray` — it is the host refusing this client and not this
+          sandbox's egress proxy, which answered 200 to the CONNECT.
+  TUSCOLA tuscolacounty.com serves a 26-byte robots.txt that disallows this
+          client. Its record says `challenge`, which came from its OTHER host,
+          so the recorded reason was true and incomplete.
+
+Neither is a re-probe and neither changes a verdict here: a robots reading and
+a roster verdict are different questions, and the refresh deliberately touches
+no verdict, evidence, score or board_url. What it changes is what a
+re-examination of the 25 should expect — two of them are shut by policy, not
+by an absent page.
 
 WHAT A VERDICT MEANS, AND WHAT IT DOES NOT
 -------------------------------------------
@@ -113,14 +158,26 @@ import sys
 import time
 from concurrent.futures import ThreadPoolExecutor
 
-import requests
-
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from robots_gate import RobotsGate, HostPacer                      # noqa: E402
 
 _ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.insert(0, os.path.join(_ROOT, "scripts"))
-from scraper_common import UA_ROSTER_BOT                           # noqa: E402
+
+# The fleet's own roster token (scripts/scraper_common.py's UA_ROSTER_BOT).
+# Copied rather than imported, the same way mi_commissioner_scraper.py,
+# mi_detroit_council_scraper.py, wi/scripts/wi_wec_probe.py and
+# ia/scripts/ia_supervisor_district_scraper.py each carry their own copy with
+# this note: instance scripts resolve imports inside their own tree, and
+# scripts/validate_workflow_deps.py fails a sys.path reach across trees.
+# robots_gate.py is the one sanctioned exception, because that gate lists
+# robots_policy in FLEET_SHARED.
+#
+# THIS FILE DID REACH ACROSS, from the day it was written until 2026-09-19, and
+# nothing caught it: the gate only reads the scripts a WORKFLOW runs, and no
+# workflow ran this one. Wiring `--check` into smoke-test.yml is what asked the
+# question. A rule enforced only where a gate happens to look is a rule three
+# files were keeping by hand.
+UA_ROSTER_BOT = "districtry.com roster bot (civic data; contact via site)"
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 INSTANCE = os.path.dirname(HERE)
@@ -325,6 +382,26 @@ def is_challenge(resp):
     return None
 
 
+def robots_record(url, verdict, allowed):
+    """What this client read at one host's robots.txt, in a form a later run can
+    DIFF against.
+
+    `status` alone cannot settle a disagreement: Gogebic and Marquette served
+    `served` on the day this probe called them candidates AND on the day the
+    scraper found `Disallow: /` in the same files, so two runs recording only
+    the status would agree while contradicting each other. What separates them
+    is `why`, which robots_policy.Verdict builds as "robots.txt served (N
+    bytes): <the rule that decided>" — a byte count and a rule, both of which
+    move when a file does.
+
+    `read` is per RECORD and not taken from the artifact's top-level `measured`,
+    because --county and --limit write one county into a file whose other rows
+    were measured on another day.
+    """
+    return {"url": url, "status": verdict.status, "allowed": bool(allowed),
+            "why": (verdict.why or "")[:300], "read": time.strftime("%Y-%m-%d")}
+
+
 def confirm_host(session, gate, pacer, host, county, notes):
     """Is this host the county's own site, or somebody else's?
 
@@ -334,9 +411,14 @@ def confirm_host(session, gate, pacer, host, county, notes):
     names the county."""
     root = "https://%s/" % host
     verdict = gate.verdict(root)
-    if not verdict.allows(UA_ROSTER_BOT, root, refused_is_refusal=True):
+    allowed, _why = verdict.allows(UA_ROSTER_BOT, root, refused_is_refusal=True)
+    # THE VERDICT IS RETURNED ON EVERY PATH, including the ones that reject the
+    # host, so the caller can record what was read rather than only what was
+    # decided. See robots_record() for why the status alone is not enough.
+    robots = robots_record(root, verdict, allowed)
+    if not allowed:
         notes.append("%s robots %s — not fetched" % (host, verdict.status))
-        return None, "robots-refused", verdict.status
+        return None, "robots-refused", verdict.status, robots
     # RETRY A TRANSPORT FAILURE AND A FAILED NAME TEST, BUT NEVER A CHALLENGE.
     # Measured 2026-09-18: sweep 4 rejected isabellacounty.org as
     # `names-another` while four consecutive fetches return 239,364 bytes that
@@ -353,24 +435,24 @@ def confirm_host(session, gate, pacer, host, county, notes):
             if attempt == 2:
                 notes.append("%s unreachable after 3 tries (%s)"
                              % (host, type(exc).__name__))
-                return None, "unreachable", str(exc)[:120]
+                return None, "unreachable", str(exc)[:120], robots
             time.sleep(0.6 * (attempt + 1))
             continue
         why = is_challenge(r)
         if why:
             notes.append("%s answers a %s — an access control, not read and "
                          "not worked around" % (host, why))
-            return None, "challenge", why
+            return None, "challenge", why, robots
         if r.status_code >= 400:
             notes.append("%s HTTP %d on /" % (host, r.status_code))
-            return None, "http-%d" % r.status_code, None
+            return None, "http-%d" % r.status_code, None, robots
         if county.lower().replace(".", "") in r.text.lower().replace(".", ""):
             break
         if attempt == 2:
             notes.append("%s answers HTTP %d in %d bytes and never names %s on "
                          "any of 3 fetches — not taken as the county's own site"
                          % (host, r.status_code, len(r.content), county))
-            return None, "names-another", None
+            return None, "names-another", None, robots
         time.sleep(0.6 * (attempt + 1))
     body = r.text
     try:
@@ -381,10 +463,10 @@ def confirm_host(session, gate, pacer, host, county, notes):
             notes.append("%s is a CATCH-ALL — an impossible path returns "
                          "%d bytes against the root's %d, so a 200 here proves "
                          "nothing" % (host, len(bad.content), len(r.content)))
-            return None, "catch-all", None
+            return None, "catch-all", None, robots
     except Exception:                                             # noqa: BLE001
         pass
-    return (root, body), "confirmed", None
+    return (root, body), "confirmed", None, robots
 
 
 # ----------------------------------------------------------------- stage three
@@ -647,6 +729,13 @@ def score(ev):
 # ----------------------------------------------------------------- the sweep
 
 def ua_session():
+    # Module-scope in this file until 2026-09-19. --check, --prune and
+    # --refresh-robots never build a session, and --check is what CI runs, so
+    # the import belongs in the one function that needs it: the CI step then
+    # needs no pip line at all, rather than one the step before it happens to
+    # have run.
+    import requests
+
     s = requests.Session()
     s.headers["User-Agent"] = UA_ROSTER_BOT
     s.headers["Accept"] = "text/html,application/xhtml+xml,*/*;q=0.8"
@@ -659,7 +748,8 @@ def probe_county(row):
     pacer = HostPacer(gate)
     notes, rejected = [], []
     out = dict(row, host=None, board_url=None, verdict="no-host",
-               evidence=None, score=-1, notes=notes, rejected=rejected)
+               evidence=None, score=-1, notes=notes, rejected=rejected,
+               robots={})
 
     resolved = resolve_candidates(row["county"])
     out["resolved"] = len(resolved)
@@ -676,11 +766,13 @@ def probe_county(row):
     # Measured 2026-09-15.
     confirmed, best = [], None
     for host, _ip in resolved[:12]:
-        page, why, detail = confirm_host(session, gate, pacer, host, row["county"], notes)
+        page, why, detail, robots = confirm_host(
+            session, gate, pacer, host, row["county"], notes)
         if page:
-            confirmed.append((host, page))
+            confirmed.append((host, page, robots))
         else:
-            rejected.append({"host": host, "why": why, "detail": detail})
+            rejected.append({"host": host, "why": why, "detail": detail,
+                             "robots": robots})
         # NO CAP ON CONFIRMED HOSTS UNTIL A BOARD PAGE IS FOUND. Capping at
         # three meant a county's real host could be crowded out by other
         # spellings that also confirm and carry nothing, which is the second
@@ -695,8 +787,12 @@ def probe_county(row):
                           else "no-confirmed-host")
         return out
     out["host"] = confirmed[0][0]
+    # THE HOST THIS PROBE ACCEPTED, recorded at last. Until 2026-09-19 only the
+    # REJECTED hosts carried a robots reading, so the one host a later run would
+    # want to compare against was the one nothing was written down about.
+    out["robots"]["host"] = confirmed[0][2]
 
-    for host, (root, body) in confirmed:
+    for host, (root, body), _robots in confirmed:
         pages = rank_pages(sitemap_pages(session, gate, pacer, root)
                            + board_links(root, body))
         if not pages:
@@ -704,9 +800,14 @@ def probe_county(row):
                          "a board page" % host)
         for url in pages:
             v = gate.verdict(url)
-            if not v.allows(UA_ROSTER_BOT, url, refused_is_refusal=True):
+            page_ok, _why = v.allows(UA_ROSTER_BOT, url, refused_is_refusal=True)
+            if not page_ok:
                 notes.append("%s robots %s — not fetched" % (url, v.status))
                 continue
+            # The BOARD page is a second reading and is kept separately: a host
+            # can serve robots.txt that allows / and disallows the path a board
+            # page sits under, and the two answers then differ for one county.
+            board_robots = robots_record(url, v, page_ok)
             try:
                 with pacer.hold(url):
                     r = session.get(url, timeout=TIMEOUT)
@@ -717,11 +818,19 @@ def probe_county(row):
                 continue
             ev = classify(r.text, row["seats"])
             if best is None or score(ev) > score(best[1]):
-                best = (url, ev, host)
+                best = (url, ev, host, board_robots)
         if best and verdict_for(best[1]) == "candidate":
             break
     if best:
         out["board_url"], out["evidence"], out["host"] = best[0], best[1], best[2]
+        out["robots"]["board"] = best[3]
+        # The accepted BOARD page can sit on a different host from confirmed[0],
+        # which is the Washtenaw case, so the host reading is re-taken from the
+        # host that actually supplied it rather than left pointing elsewhere.
+        for host, _page, robots in confirmed:
+            if host == best[2]:
+                out["robots"]["host"] = robots
+                break
         out["verdict"] = verdict_for(best[1])
         out["score"] = score(best[1])
     else:
@@ -787,12 +896,76 @@ def report(results, meta):
           "with no field to read them from.")
 
 
+def refresh_robots(rows):
+    """Re-read robots.txt for every host already in the artifact, and nothing else.
+
+    THE FIELD IS USELESS EMPTY. `robots` was added on 2026-09-19 and the 25
+    recorded counties predate it, so `--check` could only require it of rows
+    written afterwards — which is a gate that passes on the file it exists to
+    guard. This fills them, at the cheapest request there is: robots.txt and no
+    page, one file per host, which is the request every client in this project
+    makes first anyway.
+
+    IT DOES NOT RE-PROBE. No verdict, evidence, score or board_url is touched,
+    because a robots reading is not a reason to re-decide whether a county
+    publishes a roster; the two are separate questions and merging them here
+    would turn a 24-fetch refresh into a full sweep.
+
+    A reading that DISAGREES with the recorded one is printed rather than
+    swallowed, since that is the whole point of writing it down.
+    """
+    if not os.path.exists(ARTIFACT):
+        print("probe-mi-county-boards: FAIL — no artifact to refresh", file=sys.stderr)
+        return 1
+    with open(ARTIFACT) as fh:
+        data = json.load(fh)
+    session = ua_session()
+    gate = RobotsGate(session, UA_ROSTER_BOT)
+    read = changed = filled = 0
+    for rec in data["counties"]:
+        for kind, url in (("host", "https://%s/" % rec["host"] if rec.get("host") else None),
+                          ("board", rec.get("board_url"))):
+            if not url:
+                continue
+            verdict = gate.verdict(url)
+            allowed, _why = verdict.allows(UA_ROSTER_BOT, url, refused_is_refusal=True)
+            fresh = robots_record(url, verdict, allowed)
+            read += 1
+            was = (rec.get("robots") or {}).get(kind)
+            if not was:
+                filled += 1
+            elif (was["status"] != fresh["status"]
+                  or was["allowed"] != fresh["allowed"]
+                  or was["why"] != fresh["why"]):
+                changed += 1
+                print("  %-14s %-6s CHANGED since %s\n      was: %s %s %s\n      now: %s %s %s"
+                      % (rec["county"], kind, was["read"],
+                         was["status"], was["allowed"], was["why"][:90],
+                         fresh["status"], fresh["allowed"], fresh["why"][:90]))
+            rec.setdefault("robots", {})[kind] = fresh
+        print("  %-14s %s" % (rec["county"], (rec.get("robots") or {}).get(
+            "host", {}).get("status", "no host")), flush=True)
+    with open(ARTIFACT, "w") as fh:
+        json.dump(data, fh, indent=1, sort_keys=True)
+        fh.write("\n")
+    # A FILL IS NOT A COMPARISON. On the first run every record is new, so
+    # "0 disagreed" would be true and would mean nothing; the two are counted
+    # apart so the line cannot read as a clean bill of health it did not earn.
+    print("probe-mi-county-boards: %d robots.txt read across %d counties — "
+          "%d recorded for the first time, %d compared against a previous "
+          "reading, %d of those disagreed"
+          % (read, len(data["counties"]), filled, read - filled, changed))
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     ap.add_argument("--check", action="store_true",
                     help="offline re-audit of the written artifact")
     ap.add_argument("--prune", action="store_true",
                     help="offline: drop counties that have left the frontier")
+    ap.add_argument("--refresh-robots", action="store_true",
+                    help="re-read robots.txt for the recorded hosts, nothing else")
     ap.add_argument("--county", help="probe one county by name")
     ap.add_argument("--limit", type=int, help="probe only the first N")
     args = ap.parse_args()
@@ -802,6 +975,8 @@ def main():
         return check(rows)
     if args.prune:
         return prune(rows)
+    if args.refresh_robots:
+        return refresh_robots(rows)
 
     n = check_generator()
     print("probe-mi-county-boards: generator finds %d of %d known hosts" % (n, n))
@@ -905,14 +1080,29 @@ def check(rows):
     if new:
         bad.append("%d untried counties are absent from the artifact (%s) — "
                    "re-run the sweep" % (len(new), ", ".join(new)))
+    # THE FIELD IS REQUIRED WHERE IT IS MEANINGFUL, or the gate passes on the
+    # very file it was written to guard. A record naming a host must carry that
+    # host's robots reading and a record naming a board page must carry the
+    # page's; --refresh-robots fills both without re-probing anything.
+    missing = []
+    for rec in data["counties"]:
+        got = rec.get("robots") or {}
+        if rec.get("host") and not got.get("host"):
+            missing.append("%s (host)" % rec["county"])
+        if rec.get("board_url") and not got.get("board"):
+            missing.append("%s (board)" % rec["county"])
+    if missing:
+        bad.append("%d record(s) name a URL and carry no robots reading (%s) — "
+                   "run --refresh-robots, which reads robots.txt and no page"
+                   % (len(missing), ", ".join(missing[:6])))
     check_generator()
     if bad:
         print("probe-mi-county-boards: FAIL")
         for b in bad:
             print("  " + b)
         return 1
-    print("probe-mi-county-boards: OK — %d counties measured %s%s, generator "
-          "still finds all %d known hosts"
+    print("probe-mi-county-boards: OK — %d counties measured %s%s, every named "
+          "URL carries a robots reading, generator still finds all %d known hosts"
           % (len(have), data["measured"],
              ", %d since pruned" % len(data["pruned"]) if data.get("pruned") else "",
              len(KNOWN_HOSTS)))
