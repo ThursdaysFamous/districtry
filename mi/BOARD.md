@@ -29,6 +29,25 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-19, tranche 7 merged.** #1041 is in as `cb07f95e`, verified on the merged tree
+rather than on my own PR body: `mi-commissioner-members.json` carries 48 counties and 366
+districts, Cass holds 8 of 8 with District 1 reading Thomas Langley and
+thomasl@cassco.org, and `mi/county-commissioner/cass.html` names both in the served bytes.
+`validate_index.py`, `build_county_pages.py --check` and `validate_gate_counts.py` all pass
+on that tree.
+
+**The PR took three base merges and two of them were substantive**, which is the part worth
+carrying. Main added a gate the branch's CI had never run — `validate_workflow_checkout.py`,
+which exists because a sitemap-committing workflow in a shallow clone dates every entry to
+the run day, and this change rewrites `sitemap.xml` — and then a Court of Appeals staleness
+step. The battery went 80 → 81 → 83 no-browser invocations, and each time it was re-extracted
+from the merged `smoke-test.yml` rather than from a saved list, because the gate list is the
+thing that changes. A PR that sits for two hours on a fast-moving main is not idle; the
+question is whether what landed is gated, and only a merge-base diff answers it.
+
+Picking up the probe's own robots gap next — it needs no answer to the board's open question
+and is the recorded prerequisite for any further sweep.
+
 **2026-09-19, tranche 7 open.** #1041. Cass names its eight commissioners,
 seven of them with an e-mail address. **48 of Michigan's 83 counties, 366 of
 the 619 seats, 61.4% of the state by population** — and the probe's candidate
