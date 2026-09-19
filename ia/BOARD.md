@@ -40,6 +40,36 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-19 — Mitchell needed no parser fix, and the reason is on the record
+already.** I was told to re-read the page and fix the parser, and that premise
+does not hold: `mitchellcounty.iowa.gov`'s hosting account was SUSPENDED, so the
+host answered every path with one 7,640-byte cPanel page. The repo measured that
+on 2026-09-13 (#943, `serves_one_document`) — one day AFTER the 2026-09-12 run
+that failed, and this job runs Saturdays, so today is the first run to exercise
+it. **The suspension has since been lifted.** Asked through the scraper's own
+gated path this morning, robots served and allowing, Mitchell keys 5 of 5 off
+`/board-of-supervisors/`. There was never a parser to fix and `--allow-drop`
+would have dropped a county whose page was coming back.
+
+**The full rebuild passes, and it is not a no-op.** 15 Plan 3 counties, 61
+districts. Against the shipped file that is Mitchell staying and **Bremer (3) and
+Hamilton (3) leaving** — six named supervisors — both on robots refusals already
+recorded on 2026-09-13, Bremer's a 500 on its robots.txt and Hamilton's a `*`
+Disallow through its CMS vendor. No name changed and no seat moved. I did NOT
+ship it: the weekly job at 17:30 UTC produces exactly this diff as a bot PR, its
+workflow already regenerates the county pages the roster feeds (verified — the
+gate names `bremer.html` and `hamilton.html` for deletion), and officeholder data
+belongs in that reviewed PR rather than in one of mine racing it.
+
+**One latent gap found, reported rather than built.** A measured robots refusal
+has a recorded excuse path (`ROBOTS_REFUSED_DROPS`, one entry per county with a
+reason and a date, added by a person). A measured SUSPENDED HOST has none — it
+can only be cleared by `--allow-drop`, which the weekly workflow does not pass
+and should not. Mitchell recovering makes that moot today; the next suspended
+county freezes the whole roster again with no recorded way out. The fix is to let
+that same recorded table carry a non-robots standing condition, and it is a
+decision about a guard rather than a bug, so it waits for a yes.
+
 **2026-09-19 — the 38/61 correction is in review as #1034.** The
 `ia-board-chair` record said 43 of 99 and the other 56; the shipped file holds
 38, so the Data gaps panel was making a false statement to a reader. It reads 38
