@@ -275,9 +275,19 @@ def measure_address_list(src, name):
 # comparison control was finally counted: the app had instrumented eleven
 # actions since it shipped and that was not one of them, so whether readers
 # used the feature was an inference rather than a measurement.
-EXPECTED_EVENTS = ["address-search", "compare-stop", "compare/", "geolocate",
+# `copy-coordinates`, `embed-iframe` and `share-permalink` joined on 2026-09-19,
+# and had been sent by every app since the share popover shipped. They reach
+# `trackEvent` through `shareCopyButton(label, getText, eventName)`, so the name
+# is a PARAMETER at the point of the call and the old literal-matching
+# measurement could not see them — this page published ten events while every
+# app sent thirteen. Note what did NOT change: `EXPECTED_COORD_EVENTS` is still
+# two. `shareCopyButton` calls `trackEvent` with ONE argument, so these three
+# send a name and nothing else. The text a reader copies contains their point;
+# the event recording that they copied it does not.
+EXPECTED_EVENTS = ["address-search", "compare-stop", "compare/",
+                   "copy-coordinates", "embed-iframe", "geolocate",
                    "geolocate-success", "layer/", "metro-portal-go/", "select",
-                   "share-native", "share-open"]
+                   "share-native", "share-open", "share-permalink"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select"]
 COORD_DECIMALS = 2
 
@@ -428,13 +438,169 @@ def measure(rel, name, url, tag):
     # gate_point_transmission()).
     app["fingerprint"] = fingerprint(src)
 
-    app["events"] = sorted({mm.group(1) for mm in
-                            re.finditer(r"trackEvent\(\s*[\"']([^\"']+)[\"']", src)})
+    app["events"], app["indirect"] = collect_events(src, app["file"])
     app["coord_events"] = sorted({mm.group(1) for mm in re.finditer(
         r"trackEvent\(\s*[\"']([^\"']+)[\"']\s*,\s*\w+\.toFixed\((\d)\)", src)})
     app["coord_decimals"] = sorted({int(mm.group(1)) for mm in re.finditer(
         r"trackEvent\(\s*[\"'][^\"']+[\"']\s*,\s*\w+\.toFixed\((\d)\)", src)})
     return app
+
+
+# ---------------------------------------------------------------------------
+# Reading the event vocabulary out of an app
+#
+# THE FIRST VERSION OF THIS MATCHED A STRING LITERAL AFTER `trackEvent(` AND
+# PUBLISHED WHAT IT FOUND, which meant a call it could not read was a call it
+# did not count. Measured 2026-09-19, every app sends THIRTEEN named events and
+# this page published TEN: `share-permalink`, `embed-iframe` and
+# `copy-coordinates` reach `trackEvent` through `shareCopyButton(label, getText,
+# eventName)`, so the name at the call site is a PARAMETER and the literal sits
+# one frame away. The page whose whole standard is naming what leaves a reader's
+# browser was understating its own app by three events.
+#
+# This is the `registerCountyLayer` shape a third time — a helper that receives
+# or closes over the thing a regex is looking for — and the lesson those two
+# already paid for is that the DANGEROUS failure is the silent one. So the rule
+# here is not "read one more level"; it is that an unreadable call is an ERROR.
+# Resolution handles exactly one hop, because that is what the app does; a
+# second hop, a computed name, or a helper whose call sites disagree FAILS and
+# names the line, which is the state a person can act on. An indirect call that
+# quietly resolved to nothing is the state nobody can see.
+#
+# What is deliberately NOT done: following `"prefix/" + expr`. Those already
+# work, because the published vocabulary names the PREFIX (`layer/`,
+# `compare/`, `metro-portal-go/`) rather than the per-layer suffix, and the
+# literal is right there at the call site.
+
+def split_args(text):
+    """Top-level comma split of a call's argument text. Depth-aware, string-aware."""
+    out, buf, depth, quote = [], [], 0, None
+    i = 0
+    while i < len(text):
+        c = text[i]
+        if quote:
+            if c == "\\":
+                buf.append(c)
+                i += 1
+                if i < len(text):
+                    buf.append(text[i])
+                i += 1
+                continue
+            if c == quote:
+                quote = None
+        elif c in "\"'":
+            quote = c
+        elif c in "([{":
+            depth += 1
+        elif c in ")]}":
+            depth -= 1
+        elif c == "," and depth == 0:
+            out.append("".join(buf))
+            buf = []
+            i += 1
+            continue
+        buf.append(c)
+        i += 1
+    out.append("".join(buf))
+    return [a.strip() for a in out]
+
+
+def call_args(src, open_paren):
+    """Argument text of the call whose '(' is at open_paren, or None if unbalanced."""
+    depth, quote, i = 0, None, open_paren
+    while i < len(src):
+        c = src[i]
+        if quote:
+            if c == "\\":
+                i += 2
+                continue
+            if c == quote:
+                quote = None
+        elif c in "\"'":
+            quote = c
+        elif c == "(":
+            depth += 1
+        elif c == ")":
+            depth -= 1
+            if depth == 0:
+                return src[open_paren + 1:i]
+        i += 1
+    return None
+
+
+LITERAL_RE = re.compile(r"""^["']([^"']+)["']""")
+IDENT_RE = re.compile(r"^[A-Za-z_$][\w$]*$")
+
+
+def enclosing_function(src, pos):
+    """The nearest `function NAME(params)` textually before pos, as (name, [params])."""
+    best = None
+    for m in re.finditer(r"\bfunction\s+([A-Za-z_$][\w$]*)\s*\(([^)]*)\)", src):
+        if m.start() < pos:
+            best = m
+        else:
+            break
+    if not best:
+        return None
+    params = [p.strip() for p in best.group(2).split(",") if p.strip()]
+    return best.group(1), params
+
+
+def collect_events(src, where):
+    """Every event name an app can send, with indirect calls RESOLVED not skipped.
+
+    Returns (sorted names, [(helper, param, [names]) ...]). Fails the build on a
+    `trackEvent(` call whose name it cannot establish.
+    """
+    names, indirect = set(), []
+    for m in re.finditer(r"\btrackEvent\s*\(", src):
+        # the definition itself is not a call
+        if re.search(r"function\s+trackEvent\s*$", src[:m.end() - 1].rstrip()):
+            continue
+        args = call_args(src, m.end() - 1)
+        line = src.count("\n", 0, m.start()) + 1
+        if args is None:
+            fail("%s line %d: cannot read the arguments of a trackEvent call. "
+                 "This page names every event an app sends, so a call it cannot "
+                 "read is not one it may skip." % (where, line))
+        first = split_args(args)[0]
+        lit = LITERAL_RE.match(first)
+        if lit:
+            names.add(lit.group(1))
+            continue
+        if not IDENT_RE.match(first):
+            fail("%s line %d: trackEvent is called with %r, which is neither a "
+                 "string literal nor a plain parameter name, so the event it "
+                 "sends cannot be established statically. Either name the event "
+                 "with a literal or measure this page's event list in a browser."
+                 % (where, line, first))
+        fn = enclosing_function(src, m.start())
+        if not fn or first not in fn[1]:
+            fail("%s line %d: trackEvent is called with the identifier %r, and "
+                 "it is not a parameter of the function it sits in, so the "
+                 "event name cannot be followed to its call sites."
+                 % (where, line, first))
+        helper, params = fn
+        idx = params.index(first)
+        found = set()
+        for c in re.finditer(r"\b%s\s*\(" % re.escape(helper), src):
+            call = call_args(src, c.end() - 1)
+            if call is None:
+                continue
+            parts = split_args(call)
+            if len(parts) <= idx:
+                continue
+            cl = LITERAL_RE.match(parts[idx])
+            if cl:
+                found.add(cl.group(1))
+        if not found:
+            fail("%s line %d: trackEvent takes its name from %s()'s parameter "
+                 "%r and no call to %s() passes a string literal there, so no "
+                 "event name can be established."
+                 % (where, line, helper, first, helper))
+        names |= found
+        indirect.append((helper, first, sorted(found)))
+    return sorted(names), indirect
 
 
 def fingerprint(src):
