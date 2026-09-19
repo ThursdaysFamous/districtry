@@ -119,7 +119,7 @@
         }
       ],
       "comptrollerCode": "046/030/06",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "kind": "fire",
       "office": {
         "address": "c/o Johnson & Taylor PO Box 497",
@@ -243,7 +243,7 @@
         }
       ],
       "comptrollerCode": "046/070/06",
-      "filedFor": "2024",
+      "filedFor": "2025",
       "kind": "fire",
       "office": {}
     },
@@ -309,7 +309,7 @@
     },
     "MANTENO LIBRARY": {
       "comptrollerCode": "046/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "heads": [
         {
           "name": "Jamie Lockwood",
@@ -416,27 +416,17 @@
       "office": {}
     },
     "REDDICK FIRE": {
-      "board": [
-        {
-          "name": "SUE BERGAN",
-          "role": "Treasurer"
-        }
-      ],
       "comptrollerCode": "053/085/06",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Livingston",
       "heads": [
         {
-          "name": "ROBERT LOWERY",
+          "name": "SUE BERGAN",
           "role": "C.E.O."
         }
       ],
       "kind": "fire",
-      "office": {
-        "address": "210 E MAIN ST",
-        "city": "REDDICK IL 60921",
-        "phone": "(815) 365-4911"
-      }
+      "office": {}
     },
     "SALINA FIRE": {
       "board": [
@@ -472,12 +462,12 @@
         }
       ],
       "comptrollerCode": "046/140/06",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "kind": "fire",
       "office": {}
     }
   },
-  "generated": "2026-09-12T23:28:56Z",
+  "generated": "2026-09-19T23:41:11Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
