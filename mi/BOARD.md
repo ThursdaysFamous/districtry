@@ -269,6 +269,19 @@ Two corrections to my own last report:
 
 ## Open questions for Adam
 
+**2026-09-19, update — (3) is done and it changed what (1) costs.** #1045
+records the accepted host's robots reading and gates on it. The backfill read
+33 robots.txt across 24 hosts and found **two of the 25 shut counties shut by
+POLICY rather than by an absent page**: `www.iosco.org` answers HTTP 403 on
+robots.txt, which the strict reading a county website gets makes a refusal, and
+`tuscolacounty.com` serves a 26-byte file that disallows this client. So a
+re-examination under (1) is **23 counties, not 25** — Iosco and Tuscola may not
+be fetched at all now, whatever budget is set. The question below is otherwise
+unchanged, and unanswered.
+
+Starting on (2) in the meantime: `mi/WATCH.md` line 30's WARD query is one
+request against a service this instance already reads, and it needs no answer.
+
 **2026-09-19 — the commissioner candidate list is empty. Which work comes
 next?** Not blocking: I am starting on (3) below, which needs no answer and is
 the recorded prerequisite for anything that sweeps again.
