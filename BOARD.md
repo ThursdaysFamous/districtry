@@ -104,6 +104,17 @@ tree with `origin/main` merged rather than from a PR body.
   raises on import. The gate-count pair is the merged tree's own measurement,
   67/94, not either branch's.
 - **#1018 is held and the hold is now Adam's to clear.** See question 2.
+- **The preserve ruling is live for a reader, and the same guard caught a second case an hour later.**
+  Iowa's weekly run re-ran through the new builder (#1048, `bb1676e`): all 17 counties ship, Bremer and
+  Hamilton carried forward with their three supervisors each, and **not one of the 67 names changed** —
+  checked rather than assumed. Their two pages now tell a reader plainly: *"last read 2026-08-28 and no
+  longer re-read… These names will go out of date."* Every still-read county keeps the scheduled sentence.
+- **Michigan's weekly run then proposed deleting Delta and Otsego — 14 commissioners — and is HELD (#1052).**
+  Not the Iowa case: I read both counties' robots.txt with this repo's own reader as the scraper's client,
+  and **neither refuses us**; both board pages answer HTTP 200 at ~109 KB and still name their
+  commissioners. Nothing at either source changed. That makes it a scraper defect, routed to Michigan with
+  the evidence and with three things not to do — no `ACCEPTED_DROPS` entry, no merge on a re-run that
+  happens to come back green, no lowering the guard.
 - **The Detroit roster PR now says what its run moved (#1047).** Its weekly PR opened with the
   same sentence every week — "this changes data about real officeholders" — and on both of the
   two refreshes that have ever happened, the only thing that moved was an Archive timestamp. A
@@ -123,7 +134,7 @@ records the standing merge authority. Michigan's "a workflow that has never run
 is invisible to every gate" was swept across all six instances: of 128
 scheduled workflows only two have never run, both explained by the calendar.
 
-Main is at `61a3b48`. Open: #1018 held (Hancock), #1048 held (see question 4). #1049 merged.
+Main is at `bb1676e`. Open: #1018 held (Hancock), #1048 held (see question 4). #1049 merged.
 
 **#1048 is no longer red for the reason its own PR body gives.** That body names
 `build_llms_txt.py --check`, which was true when it opened; Iowa's own regeneration commit
