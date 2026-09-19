@@ -103,6 +103,8 @@ python3 scripts/robots_policy.py --selftest                # the one robots.txt 
 python3 scripts/probe_user_agents.py --selftest           # read_robots() over stub responses: the robots-read path --probe depends on
 python3 scripts/probe_user_agents.py --check              # user-agent measurements vs the tree; retired brands; unmeasured browser-string files; the figures CLAUDE.md, the guidebook and scraper_common.py quote
 python3 wi/scripts/build_wi_circuit_court_roster.py --selftest      # the circuit-court name join: three recoveries, and the collisions it must refuse
+python3 wi/scripts/wi_coa_scraper.py --selftest                    # the Court of Appeals scrape forgives ONE failure: 7 shapes forgiven as exit 75, 10 kept red
+python3 wi/scripts/wi_coa_staleness.py --selftest                  # and not forever: the 60-day ceiling's decision, against fixed dates
 python3 wi/scripts/wi_county_board_scraper.py --selftest            # the county board scrape's robots decision: a site-wide disallow refuses, an API host's 403 does not, 5xx and 202 refuse, and the Archive rung never routes round a disallow
 python3 scripts/isbe_precinct_fabric.py --selftest         # the five Jasper-test reconciliation causes
 python3 ia/scripts/ia_county_minutes_chair_scraper.py --selftest   # the four refusals that stand between a chair card and a wrong name

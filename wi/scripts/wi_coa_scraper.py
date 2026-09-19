@@ -22,12 +22,15 @@ one-per-district-per-year election cycle over 16 judgeships); a vacancy would
 show as a count drop and deserves a human read, not a silent ship.
 """
 
+import errno
 import json
 import os
 import re
+import socket
 import ssl
 import time
 import sys
+import urllib.error
 import urllib.request
 
 DEFAULT_OUT = os.path.join(os.path.dirname(__file__), ".cache", "wi_coa_raw.json")
@@ -119,6 +122,67 @@ def fetch(url, tries=3, timeout=45):
     raise last
 
 
+# EXIT 75 MEANS "COULD NOT ASK", AND NOTHING ELSE DOES.
+# The header above measures why this job fails: the runner's egress address
+# decides whether a socket opens at all, so a failing run never sends a byte and
+# the host never sees it. That is not the same event as the contact page moving
+# or the bench changing shape, and until 2026-09-19 this file reported both the
+# same way — a traceback and exit 1 — so the workflow could not tell a court
+# that answered something unexpected from a court it never reached.
+#
+# 75 is EX_TEMPFAIL. The workflow forgives it, subject to the staleness ceiling
+# in wi_coa_staleness.py; every other failure stays red, which is the direction
+# that costs nothing if this classifier is wrong.
+#
+# AN AUTOMATIC RE-RUN WAS CONSIDERED AND DELIBERATELY NOT BUILT. Clearing this
+# failure needs a DIFFERENT RUNNER, which is a thing no in-process retry can
+# ask for — the `fetch()` docstring below is the measurement that proves it,
+# three attempts from one dropped egress address being three failures. Getting
+# another runner means dispatching the workflow again, and a workflow that
+# dispatches itself is the loop this repo has already run into once:
+# update-bing-performance.yml committed on every run, and a commit pushed as a
+# PAT triggers the next run, so it was looping two runs in (CLAUDE.md, the
+# traffic-data workflows). The weekly schedule gives about eight draws inside
+# the 60-day ceiling against a host this job reaches on roughly two runs in
+# seven, so the schedule IS the retry and the ceiling is what makes its failure
+# visible. An operator re-running the job by hand is still the fastest fix and
+# the staleness message says so. An HTTPError is DELIBERATELY
+# not forgiven: a 404 or a 500 is the host answering, and a page that has moved
+# is a finding a reader needs, not a network condition to wait out.
+UNREACHABLE_EXIT = 75
+
+# WHY THIS UNWRAPS RATHER THAN MATCHING urllib.error.URLError. Measured
+# 2026-09-19 on loopback: urllib funnels EVERY transport failure into URLError
+# and puts the real one in `.reason` — a refused connection arrives as
+# URLError(ConnectionRefusedError), a DNS miss as URLError(gaierror), and AN
+# UNTRUSTED CERTIFICATE AS URLError(SSLCertVerificationError). A first draft
+# matched URLError itself and therefore forgave that third one, which is wrong
+# in the expensive direction: a TLS failure means the socket opened and the host
+# spoke, so it is the incomplete-chain case this fleet already knows how to fix
+# (pin the intermediate by AIA — scripts/coles_county_board_scraper.py), not a
+# condition to wait sixty days out. Same for a URLError whose reason is a plain
+# string ("unknown url type"), which is a defect in the URL above, not a network.
+#
+# ENETUNREACH and EHOSTUNREACH raise a bare OSError rather than a ConnectionError,
+# so they are named by errno; they are genuinely before-the-host failures.
+_NET_ERRNOS = {errno.ENETUNREACH, errno.EHOSTUNREACH, errno.ENETDOWN, errno.EHOSTDOWN}
+
+
+def unreachable(exc):
+    """True only for a failure that happened BEFORE the host answered."""
+    if isinstance(exc, urllib.error.HTTPError):
+        return False
+    if isinstance(exc, urllib.error.URLError):
+        if not isinstance(exc.reason, BaseException):
+            return False
+        exc = exc.reason
+    if isinstance(exc, ssl.SSLError):
+        return False
+    if isinstance(exc, (TimeoutError, ConnectionError, socket.gaierror, socket.herror)):
+        return True
+    return isinstance(exc, OSError) and exc.errno in _NET_ERRNOS
+
+
 def strip_tags(html):
     return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html)).strip()
 
@@ -183,12 +247,78 @@ def assert_composition(html):
                              % (did, sorted(got), sorted(expect)))
 
 
+def selftest():
+    """The classifier's table, offline and deterministic — no socket is opened.
+
+    A classifier that is wrong in the forgiving direction is SILENT: the job
+    goes green, the roster stops being verified, and the only thing that ever
+    says so is the staleness ceiling sixty days later. So every kind of failure
+    this scraper can meet is named here, on the side it belongs on.
+
+    The URLError shapes are not guesses. Measured 2026-09-19 on loopback: a
+    refused connection arrives as URLError(ConnectionRefusedError), a DNS miss
+    as URLError(gaierror), and an untrusted certificate as
+    URLError(SSLCertVerificationError) — which is why unwrapping `.reason` is
+    the whole point of the function and matching URLError alone is not enough.
+    """
+    cases = [
+        # Forgiven: the failure happened BEFORE www.wicourts.gov answered.
+        ("URLError(socket.timeout)", urllib.error.URLError(socket.timeout("timed out")), True),
+        ("URLError(ConnectionRefused)", urllib.error.URLError(ConnectionRefusedError(111, "refused")), True),
+        ("URLError(gaierror)", urllib.error.URLError(socket.gaierror(-2, "Name or service not known")), True),
+        ("URLError(ENETUNREACH)", urllib.error.URLError(OSError(errno.ENETUNREACH, "Network is unreachable")), True),
+        ("URLError(EHOSTUNREACH)", urllib.error.URLError(OSError(errno.EHOSTUNREACH, "No route to host")), True),
+        ("bare TimeoutError", TimeoutError("timed out"), True),
+        ("bare ConnectionResetError", ConnectionResetError(104, "reset"), True),
+        # Not forgiven: the host answered, or the fault is on this side.
+        ("URLError(SSLCertVerification)", urllib.error.URLError(ssl.SSLCertVerificationError("no local issuer")), False),
+        ("URLError(SSLError)", urllib.error.URLError(ssl.SSLError("handshake failure")), False),
+        ("URLError('unknown url type')", urllib.error.URLError("unknown url type: htps"), False),
+        ("bare ssl.SSLError", ssl.SSLError("handshake"), False),
+        ("HTTPError 404", urllib.error.HTTPError("u", 404, "Not Found", {}, None), False),
+        ("HTTPError 500", urllib.error.HTTPError("u", 500, "Server Error", {}, None), False),
+        ("HTTPError 403", urllib.error.HTTPError("u", 403, "Forbidden", {}, None), False),
+        ("OSError(ENOENT)", OSError(errno.ENOENT, "No such file"), False),
+        ("SystemExit (a seat gate)", SystemExit("District 1 parsed 3 judges, expected 4"), False),
+        ("ValueError", ValueError("nonsense"), False),
+    ]
+    bad = 0
+    for label, exc, want in cases:
+        got = unreachable(exc)
+        ok = got == want
+        bad += 0 if ok else 1
+        print("  %-32s forgiven=%-5s expected=%-5s %s"
+              % (label, got, want, "ok" if ok else "MISMATCH"))
+    if bad:
+        raise SystemExit("wi-coa: --selftest FAILED on %d case(s)" % bad)
+    forgiven = sum(1 for _, _, w in cases if w)
+    print("wi-coa: --selftest OK — %d case(s), %d forgiven as exit %d and %d "
+          "kept red" % (len(cases), forgiven, UNREACHABLE_EXIT, len(cases) - forgiven))
+
+
 def main():
     argv = sys.argv[1:]
+    if "--selftest" in argv:
+        return selftest()
     out_path = argv[argv.index("--out") + 1] if "--out" in argv else DEFAULT_OUT
 
-    assert_composition(fetch(INDEX_URL))
-    districts = parse_contact(fetch(CONTACT_URL))
+    try:
+        index_html = fetch(INDEX_URL)
+        contact_html = fetch(CONTACT_URL)
+    except Exception as e:                                     # noqa: BLE001
+        if unreachable(e):
+            sys.stderr.write(
+                "wi-coa: COULD NOT REACH www.wicourts.gov from this runner "
+                "(%s: %s). No HTTP byte left the machine, so this is the "
+                "per-runner drop issue #387 records, not a change at the "
+                "court. Exiting %d; the workflow decides whether the shipped "
+                "roster is now too old to leave alone.\n"
+                % (type(e).__name__, str(e)[:120], UNREACHABLE_EXIT))
+            raise SystemExit(UNREACHABLE_EXIT)
+        raise
+
+    assert_composition(index_html)
+    districts = parse_contact(contact_html)
 
     if sorted(districts) != ["1", "2", "3", "4"]:
         raise SystemExit("contact page parsed districts %s" % sorted(districts))
