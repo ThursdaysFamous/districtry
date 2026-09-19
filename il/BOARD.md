@@ -32,6 +32,45 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-19, 16:45. #1018: THE PARSER IS NOT AT FAULT, AND THE PREMISE IN THE
+TASK ROW IS WRONG.** The row reads "the page moved under the parser". It did
+not. Measured, with robots read first through `robots_policy.py` as the
+scraper's own client (allowed, no crawl delay, no Content-Signal):
+
+- Running `hancock_county_board_scraper.py` against the live page reproduces
+  the bot PR **exactly** — 5 districts, 15 members, twelve names unchanged.
+- The page itself prints **`Jo0n Mason (R)`**, one occurrence. The zero is the
+  COUNTY'S OWN TYPO, not a corruption this repo introduced.
+- `Josh Turner` and `Alex Blythe` appear **zero times** on the page. So these
+  are two genuine roster changes, not a mis-association.
+- The parser reads one `<li>` per member. There is no column association to
+  slip, which is what makes this NOT the Rock Island shape.
+
+**`ACCEPTED_NAMES` IS RULED OUT BY ITS OWN RULE.** That table's docstring says
+in terms: "NEITHER REASON IS 'the source publishes it that way'." This is
+exactly that, so an entry there would be the one thing it forbids.
+
+**THE CERTIFIED RETURNS DEEPEN IT RATHER THAN SETTLING IT.** Hancock's own
+results database (`electionstats.hancockcounty-il.gov`, `/candidates/search/`,
+param `name`) says: Billy Cramer has **no county board contest ever** — he is a
+Pilot Grove Township trustee, 2021 and 2025. No Mason has run in District 4;
+Kelly Mason ran in District **1** in 2024. And **Joshua L. Turner won the 2026
+District 4 Republican primary**, so the man the page just dropped is its
+nominee for November.
+
+That is consistent with two mid-term APPOINTMENTS, which no election record
+would ever show — and it is equally consistent with the county having edited
+its page wrongly. **The returns cannot distinguish those two**, which is
+precisely why this needs the county rather than more inference.
+
+**So nothing ships and #1018 stays held.** Shipping `John Mason` guesses at a
+real person's name; `Jo0n Mason` is refused by the merged name gate and is a
+typo either way; `Josh Turner` would name someone the county no longer lists.
+The route is an ask to `elections@hancockcounty-il.gov` — the address the
+county publishes — on two questions: the District 4 member's correct name, and
+whether Billy Cramer holds District 2. **Drafted next; Adam sends, never this
+session.**
+
 **2026-09-19, 16:20.** THE FREEZE IS OVER, PROVED BY A RUN RATHER THAN BY THE
 DIFF. #1043 is green, and the municipal workflow dispatched by hand against its
 branch (run 35453832897) succeeded at 16:15 — but success is what that workflow
