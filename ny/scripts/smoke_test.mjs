@@ -53,14 +53,27 @@ const INSTANCE_DIR = dirname(dirname(fileURLToPath(import.meta.url)));
 
 const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
-const POINT = "40.71274,-74.00602"; // New York City Hall (Manhattan)
-const OFFLINE = ["borough", "judicial-district", "municipal-court"];
-const EXPECT_DISTRICT = { "borough": "Manhattan", "judicial-district": "1", "municipal-court": "1" };
-const NEGATIVE_POINT = "40.72000,-74.04000"; // Hudson River, New Jersey waters — outside every anchor geometry (the East River is inside the county-derived judicial districts, so mid-river points there are only borough-negative)
-const APP_NAME = "districtry New York City";
+const POINT = "42.65203,-73.75731"; // Downtown Albany — measured inside the City of Albany, Albany County
+const OFFLINE = ["judicial-district", "county", "nys-school-district", "municipality"];
+const EXPECT_DISTRICT = { "judicial-district": "3", "county": "Albany", "nys-school-district": "ALBANY", "municipality": "Albany" };
+const NEGATIVE_POINT = "41.76370,-72.68510"; // Downtown Hartford, Connecticut — outside New York State and 66 km from the nearest geometry this instance ships. NOT a water point: the county, school-district, cities-towns, villages and three legislative files are all water-inclusive off Long Island and in Lake Ontario, so a mid-Sound or mid-lake click is positive, not negative
+const APP_NAME = "districtry New York";
 const EXPECT_LAYERS = 33; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
 // ==== GENERATED:END smoke-config ====
 const POINT2 = "40.69354,-73.98963"; // Brooklyn Borough Hall (Brooklyn) — the re-classify hop stays fork test code
+// THE CITY GROUND TRUTH SURVIVES THE GO-LIVE AS FORK TEST CODE. The worksheet's
+// anchor_point moved upstate to Albany, because every statewide layer has to be
+// ground-truthed somewhere the city-only layers are coverage-hidden, and the
+// generator emits ONE anchor_point evaluated against every anchors[] row. That
+// retires borough, municipal-court and the Manhattan/1 -> Brooklyn/2 hop from
+// the GENERATED block — it does not retire the checks, which keep their own
+// literals here exactly as POINT2 already did.
+const NYC_POINT = "40.71274,-74.00602"; // New York City Hall (Manhattan)
+// The water-click honesty rule is about a point INSIDE the map's reach that is
+// in no district, so it keeps the Hudson literal. NEGATIVE_POINT is now
+// Hartford, Connecticut — 66 km outside the state, which proves something else
+// and is asserted separately below.
+const HUDSON_POINT = "40.72000,-74.04000"; // Hudson River, New Jersey waters
 const BOOT_TIMEOUT = 45000; // Leaflet CDN + first paint on a cold CI runner
 const QUERY_TIMEOUT = 25000;
 
@@ -236,8 +249,11 @@ try {
     // rendered, the clicked-point section present and holding the gaps that
     // name that borough, and the statewide-only gap NOT filed under where
     // they clicked.
+    // NYC_POINT, not POINT: all three location-keyed gap records name the five
+    // boroughs, so at the Albany anchor none is matched and the "Where you
+    // clicked" section this asserts would not exist at all.
     await page.evaluate((p) => window.NycExplorer.setSelectedPoint(p[0], p[1]),
-      POINT.split(",").map(Number));
+      NYC_POINT.split(",").map(Number));
     const warm = await openGaps();
     const clicked = warm.sections.filter((t) => /^Where you clicked/.test(t));
     check("selecting a point regroups the gaps without dropping one",
@@ -248,23 +264,55 @@ try {
     await context.close();
   }
 
-  // 2. The three offline anchors classify New York City Hall against known
-  //    ground truth, fetched from data/app/*.json (no third-party API).
+  // 2. The four offline anchors classify the UPSTATE anchor point against known
+  //    ground truth, fetched from data/app/*.json (no third-party API). This is
+  //    the go-live's executable proof that the statewide tier answers outside
+  //    New York City: judicial-district is the one city-era anchor that survived
+  //    (it is 13 statewide districts now, not five boroughs), county and
+  //    municipality are the statewide identity and tiling layers, and
+  //    nys-school-district is the only check that the INVERSE coverage gate
+  //    (outsideNycCoverage) actually un-hides a layer upstate.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
     const page = await booted(context, `${BASE}#point=${POINT}&layers=${OFFLINE.join(",")}`);
 
-    const boro = await cardText(page, "borough");
-    check(`borough classifies City Hall (${EXPECT_DISTRICT["borough"]})`, !boro.error && new RegExp(EXPECT_DISTRICT["borough"]).test(boro.text) && /New York/.test(boro.text), boro.text.slice(0, 70));
-
     const jud = await cardText(page, "judicial-district");
     // pill-aware since the fork's card pass: the identifier lives in the header
-    // pill ("District 1"), which cardText prepends — the body no longer
+    // pill ("District 3"), which cardText prepends — the body no longer
     // repeats it (Handoff 3 §5b).
-    check(`judicial-district classifies City Hall (District ${EXPECT_DISTRICT["judicial-district"]})`, !jud.error && new RegExp("District\\s*" + EXPECT_DISTRICT["judicial-district"] + "\\b").test(jud.text), jud.text.slice(0, 70));
+    check(`judicial-district classifies the anchor (District ${EXPECT_DISTRICT["judicial-district"]})`, !jud.error && new RegExp("District\\s*" + EXPECT_DISTRICT["judicial-district"] + "\\b").test(jud.text), jud.text.slice(0, 70));
+
+    // Three of the four expectations contain the string "Albany", so each also
+    // asserts a SECOND token from its own card. Cards are read by element id so
+    // cross-card confusion is not possible, but a card that rendered only the
+    // county name would otherwise satisfy the municipality check too.
+    const county = await cardText(page, "county");
+    check(`county classifies the anchor (${EXPECT_DISTRICT["county"]})`, !county.error && new RegExp(EXPECT_DISTRICT["county"]).test(county.text) && /Population/i.test(county.text), county.text.slice(0, 70));
+
+    const sch = await cardText(page, "nys-school-district");
+    check(`nys-school-district classifies the anchor (${EXPECT_DISTRICT["nys-school-district"]}) — the inverse coverage gate opens upstate`, !sch.error && new RegExp(EXPECT_DISTRICT["nys-school-district"]).test(sch.text), sch.text.slice(0, 70));
+
+    const muniLayer = await cardText(page, "municipality");
+    check(`municipality classifies the anchor (${EXPECT_DISTRICT["municipality"]})`, !muniLayer.error && new RegExp(EXPECT_DISTRICT["municipality"]).test(muniLayer.text) && /city/i.test(muniLayer.text), muniLayer.text.slice(0, 70));
+    await context.close();
+  }
+
+  // 2b. THE CITY GROUND TRUTH, kept as fork test code at its own literal. These
+  //     three layers are coverage-hidden at the upstate anchor, so they can only
+  //     be asserted here — and they must still be asserted, because the go-live
+  //     widens the app's reach and must not quietly cost the city its cards.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${NYC_POINT}&layers=borough,judicial-district,municipal-court`);
+
+    const boro = await cardText(page, "borough");
+    check("borough classifies City Hall (Manhattan)", !boro.error && /Manhattan/.test(boro.text) && /New York/.test(boro.text), boro.text.slice(0, 70));
+
+    const judCity = await cardText(page, "judicial-district");
+    check("judicial-district classifies City Hall (District 1)", !judCity.error && /District\s*1\b/.test(judCity.text), judCity.text.slice(0, 70));
 
     const muni = await cardText(page, "municipal-court");
-    check(`municipal-court classifies City Hall (${EXPECT_DISTRICT["borough"]} District ${EXPECT_DISTRICT["municipal-court"]})`, !muni.error && new RegExp(EXPECT_DISTRICT["borough"] + " Municipal Court District " + EXPECT_DISTRICT["municipal-court"] + "\\b").test(muni.text), muni.text.slice(0, 80));
+    check("municipal-court classifies City Hall (Manhattan District 1)", !muni.error && /Manhattan Municipal Court District 1\b/.test(muni.text), muni.text.slice(0, 80));
 
     // Moving the selection re-classifies (P7 incremental-restyle fast path):
     // City Hall -> Brooklyn Borough Hall flips borough Manhattan->Brooklyn and
@@ -295,16 +343,92 @@ try {
     await context.close();
   }
 
-  // 3. The NYC water-click honesty rule, made executable: the worksheet's
-  //    negative point (Hudson River, NJ waters) is inside the map bounds but in
-  //    no borough — the card must show the honest no-result state, never snap
-  //    to nearest. (validate_index's negative-point-ground-truth check asserts
-  //    the same point misses EVERY anchor geometry, not just the borough file.)
+  // 2c. THE SEARCH BOX REACHES THE WHOLE STATE, which is the half of go-live a
+  //     reader touches. Both providers are STUBBED: this asserts our own
+  //     fall-through logic, and it also means the test makes no request to
+  //     either third party — photon.komoot.io publishes `User-agent: * /
+  //     Disallow: /`, which binds this project's own clients.
+  //
+  //     The order is the assertion. GeoSearch is authoritative inside the city
+  //     and must answer alone there; Photon is bounded to METRO_BBOX and only
+  //     runs when the city search finds nothing. Before go-live there was no
+  //     second call at all, so an upstate address returned "nothing matched"
+  //     while the map beneath it classified that point on fifteen layers.
+  {
+    const EMPTY = { features: [] };
+    const ALBANY = { features: [{ geometry: { type: "Point", coordinates: [-73.75731, 42.65203] },
+                                  properties: { housenumber: "24", street: "Eagle St", city: "Albany", state: "New York" } }] };
+    const CITY = { features: [{ geometry: { type: "Point", coordinates: [-74.00602, 40.71274] },
+                                properties: { name: "City Hall", housenumber: "1", street: "Centre St", borough: "Manhattan", locality: "New York" } }] };
+
+    async function search(geoBody, photonBody) {
+      const context = await browser.newContext({ serviceWorkers: "block" });
+      const calls = [];
+      const page = await booted(context, BASE, async (p) => {
+        await p.route("**/geosearch.planninglabs.nyc/**", (r) => {
+          calls.push("geosearch");
+          r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(geoBody) });
+        });
+        await p.route("**/photon.komoot.io/**", (r) => {
+          calls.push("photon:" + new URL(r.request().url()).searchParams.get("bbox"));
+          r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(photonBody) });
+        });
+      });
+      await page.fill("#geocode-input", "24 Eagle St Albany");
+      await page.waitForFunction(() => document.querySelectorAll("#geocode-results li").length > 0,
+        null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+      const rows = await page.evaluate(() =>
+        [...document.querySelectorAll("#geocode-results li")].map((li) => li.innerText.replace(/\s+/g, " ").trim()));
+      await context.close();
+      return { calls, rows };
+    }
+
+    const upstate = await search(EMPTY, ALBANY);
+    check("an upstate address falls through to the state-bounded provider",
+      upstate.calls[0] === "geosearch" &&
+      upstate.calls.some((c) => c.startsWith("photon:")) &&
+      upstate.rows.some((r) => /Albany/.test(r)),
+      `${upstate.calls.join(" -> ")} | ${upstate.rows[0] || "(no rows)"}`);
+
+    // The bbox is what keeps a result inside the ground this app answers for.
+    check("the state-bounded provider is bounded to METRO_BBOX",
+      upstate.calls.some((c) => c === "photon:-79.82,40.43,-71.62,45.07"),
+      upstate.calls.filter((c) => c.startsWith("photon:")).join(",") || "(no photon call)");
+
+    const city = await search(CITY, ALBANY);
+    check("a city address is answered by the city provider alone",
+      city.calls.length === 1 && city.calls[0] === "geosearch" &&
+      city.rows.some((r) => /Centre St/.test(r)),
+      `${city.calls.join(" -> ")} | ${city.rows[0] || "(no rows)"}`);
+    await Promise.resolve();
+  }
+
+  // 3. The NYC water-click honesty rule, made executable: a point inside the
+  //    map's reach but in no borough must show the honest no-result state,
+  //    never snap to nearest. It keeps the HUDSON literal rather than following
+  //    NEGATIVE_POINT, which at go-live moved 66 km outside the state — that is
+  //    a different claim and is asserted separately below. The rule is about a
+  //    point a reader can actually click on this map.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
-    const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=borough`);
+    const page = await booted(context, `${BASE}#point=${HUDSON_POINT}&layers=borough`);
     const boro = await cardText(page, "borough");
     check("mid-river click resolves to no borough (honest empty state)", !boro.error && boro.empty, boro.text.slice(0, 70));
+    await context.close();
+  }
+
+  // 3b. THE STATEWIDE NEGATIVE. The worksheet's negative point is outside New
+  //     York State, and the layer it is asserted against is `county` rather than
+  //     `borough`: the claim worth making after go-live is that the 62-county
+  //     statewide fabric answers NOTHING outside the state, which a five-borough
+  //     file could never have shown. validate_index's own negative-point check
+  //     asserts the same point misses every shipped geometry file, not just this
+  //     one.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${NEGATIVE_POINT}&layers=county`);
+    const county = await cardText(page, "county");
+    check("a point outside New York State resolves to no county (honest empty state)", !county.error && county.empty, county.text.slice(0, 70));
     await context.close();
   }
 
@@ -315,7 +439,7 @@ try {
     const context = await browser.newContext({ serviceWorkers: "block" });
     const page = await booted(
       context,
-      `${BASE}#point=${POINT}&layers=borough,judicial-district`,
+      `${BASE}#point=${NYC_POINT}&layers=borough,judicial-district`,
       (p) => p.route("**/data/app/borough-boundaries.json", (r) => r.fulfill({ status: 503, body: "down" }))
     );
     await page

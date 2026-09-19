@@ -57,7 +57,7 @@ the audit asked for an item about the project.
 | P275 (copyright license) | Q13785927 (Apache Software License 2.0) | The CODE licence, from this repository's own `LICENSE`. |
 | P275 (copyright license) | Q1224853 (Open Database License) | The DATA licence, from `LICENSE-DATA.md`, which covers the compiled databases and explicitly not the public records underneath them. Enter both or neither — one alone states half of what this project publishes. |
 | P1001 (applies to jurisdiction) | Q1204 (Illinois) | the `/il/` instance |
-| P1001 (applies to jurisdiction) | Q60 (New York City) | the `/ny/` instance |
+| P1001 (applies to jurisdiction) | Q1384 (New York) | the `/ny/` instance |
 | P1001 (applies to jurisdiction) | Q62 (San Francisco) | the `/ca/` instance |
 | P1001 (applies to jurisdiction) | Q1537 (Wisconsin) | the `/wi/` instance |
 | P1001 (applies to jurisdiction) | Q1546 (Iowa) | the `/ia/` instance |
@@ -111,11 +111,11 @@ endpoint used.
 | `Q1204` | Illinois |
 | `Q1224853` | Open Database License |
 | `Q13785927` | Apache Software License 2.0 |
+| `Q1384` | New York |
 | `Q1537` | Wisconsin |
 | `Q1546` | Iowa |
 | `Q1860` | English |
 | `Q189210` | web application |
 | `Q30` | United States |
 | `Q35127` | website |
-| `Q60` | New York City |
 | `Q62` | San Francisco |

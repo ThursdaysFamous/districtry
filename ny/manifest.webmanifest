@@ -1,7 +1,7 @@
 {
-  "name": "districtry New York City",
+  "name": "districtry New York",
   "short_name": "districtry",
-  "description": "Tap the map or search a New York City address: Council district, community board, NYPD precinct, school, state — and who represents you. Free, no login.",
+  "description": "Tap the map or search a New York address: county, town, school and judicial district, and in the city Council district and community board. Free, no login.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

@@ -1,5 +1,5 @@
 <!-- ==== GENERATED:BEGIN metro-header ==== -->
-# districtry New York City
+# districtry New York
 
 **Click the map for every district you're in, and who represents you.**
 <!-- ==== GENERATED:END metro-header ==== -->
