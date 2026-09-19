@@ -388,19 +388,42 @@ def uninvert_name(name):
 # merge_contact, so it can still only FILL fields the county left empty and can
 # never resurrect a seat-holder the county has since replaced.
 #
-# Cook and Will are not preservable: they are the only two full-governing-body
-# sources, so building without either would silently ship a roster of mayors
-# where councils used to be. If one of them is down, the run must fail.
-REQUIRED_COUNTIES = ("Cook", "Will")
+# Cook is not preservable: building without it would silently ship a roster of
+# mayors where councils used to be. If Cook is down, the run must fail.
+#
+# WILL WAS REQUIRED TOO AND IS NOT ANY MORE (2026-09-19). The old comment gave
+# the failure mode of building WITHOUT a full-body county, which is real, and
+# applied it to PRESERVING one, which is a different thing. A preserved county's
+# entries go through the same absorb() -> pick_entry as a fresh scrape, and
+# pick_entry is deterministic on depth first and COUNTY_PRECEDENCE second, so
+# absorption ORDER cannot demote anything. Measured on the shipped roster: all
+# 31 Will entries are "full governing body", the maximum depth, and Will ranks
+# second in COUNTY_PRECEDENCE behind Cook, so on each of its 28 straddles with
+# another scraped county a preserved Will entry wins or loses exactly as the
+# fresh one does — the six it loses to Cook (Lemont, Orland Park, Park Forest,
+# Steger, Tinley Park, University Park) it already loses today. absorb()
+# additionally exits 1 if a board is ever dropped for a head, so the failure
+# mode the old comment named is guarded, not assumed.
+#
+# WHAT IT COSTS, and it is not nothing: a preserved FULL-BODY county is a worse
+# exposure than a preserved mayor-only one. A Will council member who changes
+# stays stale here indefinitely, and no count floor notices, because all 31
+# municipalities remain. That is stated for a reader in the
+# `will-municipal-directory-freeze` gap record rather than left in this comment.
+# It is still better than what it replaces, which froze Will AND the other 36
+# counties together: from 2026-09-08 every weekly run scraped every source,
+# refused the build on Will alone, and reported success.
+REQUIRED_COUNTIES = ("Cook",)
 PRESERVABLE = {
-    # LaSalle is a full-governing-body source like Cook and Will, but unlike them
-    # it is NOT in REQUIRED_COUNTIES: Cook and Will are required because losing
-    # either would silently replace councils that are already shipped with
-    # mayors. LaSalle carries its own 26 municipalities and nothing else depends
-    # on it, so a fetch failure should carry its last-good entries forward, not
-    # fail every other county's turnover.
+    # LaSalle is a full-governing-body source like Cook, but it is not in
+    # REQUIRED_COUNTIES: Cook is required because losing it would silently
+    # replace councils that are already shipped with mayors. LaSalle carries its
+    # own 26 municipalities and nothing else depends on it, so a fetch failure
+    # should carry its last-good entries forward, not fail every other county's
+    # turnover. Will joined this table on the same reasoning, recorded above.
     "boone": {"kind": "county", "county": "Boone"},
     "lasalle": {"kind": "county", "county": "LaSalle"},
+    "will": {"kind": "county", "county": "Will"},
     "winnebago": {"kind": "county", "county": "Winnebago"},
     "dupage": {"kind": "county", "county": "DuPage"},
     "kane": {"kind": "county", "county": "Kane"},
@@ -1134,15 +1157,16 @@ def main():
         for geoid, entry in entries.items():
             absorb(geoid, entry)
 
-    # A full-body county is never preserved (see PRESERVABLE) — losing one would
-    # turn councils into mayors across a third of the metro without any single
-    # count floor noticing, since the municipalities all remain.
+    # Cook is never preserved (see PRESERVABLE) — losing it would turn councils
+    # into mayors across a third of the metro without any single count floor
+    # noticing, since the municipalities all remain. Will was held to this too
+    # until 2026-09-19; the reasoning that moved it is above PRESERVABLE.
     for county in REQUIRED_COUNTIES:
         if county not in supplied_counties:
-            print("FATAL: %s County is required and was not supplied — it is one "
-                  "of the two full-governing-body sources, so building without it "
-                  "would ship heads of government where councils belong"
-                  % county, file=sys.stderr)
+            print("FATAL: %s County is required and was not supplied — it is a "
+                  "full-governing-body source that nothing carries forward, so "
+                  "building without it would ship heads of government where "
+                  "councils belong" % county, file=sys.stderr)
             sys.exit(1)
 
     # Carry forward a blocked county BEFORE the city payloads run, so the

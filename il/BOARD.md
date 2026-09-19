@@ -32,6 +32,35 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-19, 16:20.** THE FREEZE IS OVER, PROVED BY A RUN RATHER THAN BY THE
+DIFF. #1043 is green, and the municipal workflow dispatched by hand against its
+branch (run 35453832897) succeeded at 16:15 — but success is what that workflow
+reported for eleven days while refusing to build, so the log is the evidence
+and not the conclusion. It shows the build step running, the roster changing,
+and a bot PR opening:
+[#1044](https://github.com/ThursdaysFamous/districtry/pull/1044), 328
+insertions and 155 deletions.
+
+Its body carries the line this change existed to produce:
+
+    PRESERVED (blocked this run, carried forward from the shipped roster):
+    joliet 1, kendall 6, logan 11, mchenry 27, will 31
+
+**`will 31` — the exact count measured before the change.** Diffed entry by
+entry against main: 629 municipalities before and after, none dropped, **48
+changed across five counties** — DuPage 17, Rock Island 15, Livingston 14,
+Mason 1, Kendall 1. Will, McHenry and Logan each show **0 changed**, which is
+preservation doing precisely what was claimed for it.
+
+**The one entry that looked like a counter-example is not.** Kendall is
+preserved and yet one of its six municipalities moved: Plano's `board` went
+from `null` to eight named aldermen with a city e-mail each. That is the
+`--enrich` path, not the county path — Plano's own city payload runs fresh and
+can only FILL a field the county left empty. Kendall's six county entries were
+carried forward untouched. A preserved county's data was never rewritten;
+checking that specifically is what turns the safety argument into a
+measurement.
+
 **2026-09-19, afternoon.** [#1043](https://github.com/ThursdaysFamous/districtry/pull/1043)
 opens: Will moves from `REQUIRED_COUNTIES` to `PRESERVABLE`, so the municipal
 roster refreshes again for the first time since 8 September. Adam approved it
