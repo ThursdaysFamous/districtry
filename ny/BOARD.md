@@ -62,8 +62,16 @@ Three defects found and not fixed, all reader-facing:
   `ny/index.html:11060` renders it labelled "District Office". The one panel
   whose job is being accurate about absence is inaccurate.
 * `ny/data/app/cec-members.json` ships as `{}` — zero of 32 Community
-  Education Councils — with no gap record, while a weekly workflow installs
-  Chromium to run a scraper whose own docstring says the source is gone.
+  Education Councils — with no gap record, while `ny-update-cec-roster.yml`
+  installs Playwright and Chromium every Wednesday to run a discovery walk that
+  finds nothing. **Corrected the same evening:** this entry first said the
+  scraper's docstring reports the source "is gone". It does not, and the
+  difference decides what to do about it — the DOE DECENTRALISED the listings
+  across 32 independent council sites (cec3.org, cec14.org, DOE Google Sites)
+  with no uniform URL and no NYC Open Data dataset, so the members are
+  published and simply not reachable by one scraper. The card degrades to the
+  council page and names nobody, which is correct; what is missing is a gap
+  record saying so.
 * The six statewide layers PR 2 shipped have no `validate_sources.py` row and
   no `ny/WATCH.md` row, both of which the plan's own rules require in the same
   change. If New York State renames one of those services, nothing notices.
