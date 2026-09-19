@@ -908,6 +908,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://districtry.com/mi/county-commissioner/cass.html</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/mi/county-commissioner/cheboygan.html</loc>
     <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -1155,7 +1161,7 @@
   </url>
   <url>
     <loc>https://districtry.com/mi/sources.html</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

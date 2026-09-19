@@ -240,6 +240,46 @@
   "seats": 7,
   "sourceUrl": "https://www.calhouncountymi.gov/departments/board_of_commissioners/index.php"
  },
+ "027": {
+  "county": "Cass",
+  "districts": {
+   "1": {
+    "email": "thomasl@cassco.org",
+    "name": "Thomas Langley"
+   },
+   "2": {
+    "email": "jamesl@cassco.org",
+    "name": "James Lawrence",
+    "role": "Vice Chair"
+   },
+   "3": {
+    "email": "alann@cassco.org",
+    "name": "Alan Northrop"
+   },
+   "4": {
+    "name": "Jeremiah Jones",
+    "role": "Chair"
+   },
+   "5": {
+    "email": "mikeg@cassco.org",
+    "name": "Michael Grice"
+   },
+   "6": {
+    "email": "samuelb@cassco.org",
+    "name": "Sam Barrera"
+   },
+   "7": {
+    "email": "roseannm@cassco.org",
+    "name": "Roseann Marchetti"
+   },
+   "8": {
+    "email": "rjlee@cassco.org",
+    "name": "RJ Lee"
+   }
+  },
+  "seats": 8,
+  "sourceUrl": "https://casscountymi.org/1289/Board-of-Commissioners"
+ },
  "031": {
   "county": "Cheboygan",
   "districts": {
