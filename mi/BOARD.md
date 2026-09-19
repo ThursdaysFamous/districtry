@@ -36,10 +36,23 @@ Leelanau, Oceana, Osceola and Sanilac. That takes the card from 16 counties to
 Each of the ten also gets its own page under `mi/county-commissioner/`, where
 the names are in the served bytes rather than behind a fetch.
 
-**The weekly refresh has now run.** I dispatched it by hand rather than waiting
-for the cron: run 35415178348, every step green, and no change — so the
-sixteen counties shipped before this tranche still name the same people. The
-job works end to end and that is now measured rather than assumed.
+**The weekly refresh has now run, and it moved nothing.** I dispatched it by
+hand rather than waiting for the cron: run 35415178348, every step green, and
+the change check came back empty, so the "open a pull request" step was skipped.
+That is a result rather than a non-event. Those sixteen counties' names had
+never been re-read since the day they shipped, and now they have been, and all
+165 seats still name the same people. It is also the first evidence the roster
+is stable rather than merely unchecked, and the job is proven end to end.
+
+**A workflow that has never run is invisible to every gate here**, because
+nothing in this repo measures the absence of a run. Michigan's was correctly
+wired the whole time. Worth a sweep across the fleet at some point: which other
+scheduled jobs have zero runs?
+
+**On timing.** The instruction to update the board and pause reached me at
+02:43 UTC, and tranche 5 was already built and under test by then; it opened as
+#1033 eight minutes later. I have not started anything since. #1033 is watched
+and I will drive it to green if CI goes red, but no new county work tonight.
 
 Three things worth knowing from the work:
 
