@@ -42,6 +42,49 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-19, 21:20 UTC — Adam ruled PRESERVE, and my accepted-drop fix was the
+wrong one.** The ruling is fleet policy: preserve data we have already fetched.
+A robots refusal stops us READING a county; it does not require us to unpublish
+three supervisors we fetched legitimately while the county was serving. My
+`ACCEPTED_DROPS` entries excused the symptom — they taught the gate to accept a
+deletion — where the cause was that `build_ia_supervisor_roster.py` deletes.
+Reverted on the bot branch, so #1048 is correctly held red by the gate again.
+
+**Iowa was the outlier and that is the argument for the change.** Illinois
+preserves (`PRESERVABLE`), Wisconsin re-asks an `unreachable` verdict before
+believing it, and this was the builder that deleted. Shipped as **#1051**:
+`ROBOTS_REFUSED_DROPS` → `ROBOTS_REFUSED_PRESERVED` with both audits intact, the
+previous roster read in full and carried forward, and `readOn` stamped by the
+SCRAPER rather than the builder — a builder run against a week-old cache would
+otherwise date every county today.
+
+**THE RULING'S OWN RISK IS THE PART WORTH REMEMBERING.** A preserved county
+ships officeholders nothing re-verifies, and the instance-wide "Data last
+verified" date would then assert a verification we did not perform. So `asOf`
+and `asOfWhy` ride the record and BOTH reader surfaces say so. The county PAGE
+was the one nobody had looked at: it said the roster is *"re-read on a
+schedule"*, which is false for these two counties, in served bytes a crawler
+reads. It now says last read 2026-08-28 and no longer re-read, with the reason,
+and a still-read county keeps the scheduled sentence.
+
+**The acceptance test was the ruling's own**: `check_roster_retention` goes
+quiet on its own, exit 0, six accepted drops and none of them these counties.
+That is the difference between fixing the cause and excusing the symptom, and
+it is the test to reach for the next time a gate objects.
+
+*Measured, not assumed:* both refusals re-verified on both host spellings
+(Bremer HTTP 500, Hamilton `Disallow: /` in its own per-tenant file at its CMS
+vendor); the seed dates come from commit `bce3108`, 2026-08-28, the last weekly
+run that wrote either county. No roster data ships in #1051 — the builder was
+exercised against a cache fixture rather than by re-scraping 39 county sites,
+and a fixture's dates would assert reads that did not happen, so the next
+weekly run writes the real file.
+
+*Corrected:* #1049's body said 61 of 63 workflows lack the llms.txt step.
+Counting only workflows that REGENERATE county pages it is 60 of 62 — the
+denominator included `smoke-test.yml`, which runs `--check` and regenerates
+nothing. The conclusion is unchanged, and the proposed gate is still unbuilt.
+
 **2026-09-19, later — the workflow fix merged, and the roster PR's SECOND red
 was a different gate doing its job.** #1049 merged at 20:29 UTC, so
 `update-ia-supervisor-roster.yml` now regenerates llms.txt and next week's run
