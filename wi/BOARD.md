@@ -24,6 +24,118 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-19. #1040 is MERGED (`a2a7e41`).** The Court of Appeals job now
+forgives one failure and has a ceiling on that forgiveness.
+
+What a reader gets: still nothing directly — this is entirely about whether the
+sixteen appellate judges on the card stay true. What changed is that the weekly
+job stops going red on a condition nobody here can fix, and starts going red on
+one that matters. Measured on the day it shipped: the last successful run was
+2026-09-04, so the bench had been unverified for over two weeks and nothing was
+saying so.
+
+**Verified on the merged main rather than assumed**: the battery gate answers
+66/93, the steward mirror 93 for 93, the skills gate 768 pointers. The merge
+landed after four other commits reached main, none of which touched
+`smoke-test.yml`, which is why the figure survived — checked rather than hoped.
+
+**Next in this queue is the alderperson gap, measured whole before any tranche.
+It has not been started.** Wisconsin's biggest reader-facing hole: in most of
+the 156 municipalities with council districts drawn, the card names the district
+and nobody in it; 24 cities name theirs. The shape to follow is Michigan's #989
+probe — measure every candidate once, report, then ship tranches against the
+artifact with no discovery per tranche.
+
+**2026-09-19, later. #1040 merged main in and the battery figure is 66/93, which
+is neither branch's number.** Nothing about the Court of Appeals work changed;
+this is the count collision.
+
+#1037 took the tree to 65/91 and #1040 to 65/92, each measured correctly
+against a base that predated the other. **Git conflicted on the INVOCATION
+line and merged the NAMED-STEP line silently at 65**, because both sides had
+written 65 there and the merged truth is 66. So a textual conflict is not what
+protects that pair — the gate is, and it is the only reason the silent half was
+caught. Measured on the merged tree rather than taken on trust; the whole static
+battery is green at 83 invocations, the six per-instance `validate_index` runs
+included.
+
+**This is the second collision of its kind in one day and it is not Wisconsin's
+alone.** Two changes can each be right against their own base and both wrong
+once merged, whenever they touch a stated count. This morning's pair had NO git
+conflict at all and had to be caught by hand. The difference is that this number
+lives in one sentence in one file with a gate reading it, and that one did not.
+The rule is recorded in `CLAUDE.md`'s own Running & testing section, beside the
+other superseded figures: run `validate_gate_counts.py` after every merge into a
+branch that touches the battery, not only after an edit that adds a gate. **The
+wider question — which other stated counts in this repo have no gate reading
+them — is a root-board item rather than Wisconsin's**, and is not measured here.
+
+**2026-09-19, night. The Court of Appeals task is built and opened as
+[#1040](https://github.com/ThursdaysFamous/districtry/pull/1040) — with one
+step skipped and one declined, both for reasons that were already written
+down in this repo.**
+
+What a reader gets: nothing yet. This is entirely about whether the sixteen
+appellate judges on the card stay true, and about a weekly red that had
+stopped meaning anything.
+
+**The bounded source hunt was not run, because it was already run.** The
+scraper's own header, dated 2026-09-16, records the search and its answer:
+the Internet Archive's snapshots of both pages are 2026-08-08 and 2026-08-19,
+both OLDER than the shipped roster, so that rung would move the data
+backwards; the Blue Book's bench is April 2025, older still. Repeating it
+would have cost a pass and found the same thing. The header ends "WHAT THIS
+RULES OUT, so nobody builds it", which is a record doing its job.
+
+**The expected-condition flag was declined, for the reason the same header
+gives.** A `blocked` entry in `validate_sources.py` inverts that gate so
+unreachable reads OK — but www.wicourts.gov IS reachable from CI, just not
+from every runner, so the flag would flap month to month on the luck of the
+draw. What shipped instead is the same idea one level in, where it is precise:
+the SCRAPER exits 75 when the fetch died before the host answered, and the
+WORKFLOW forgives that exit code alone. A 404, a 500, a seat count that moved
+or a district composition that moved all stay red, because those are the court
+saying something.
+
+**The staleness ceiling is built and is the stricter half.** Forgiving the
+unreachable case opens a hole nothing else here would see: the roster file
+does not change when a fetch fails, so every content guard in the tree keeps
+passing on a bench nobody has checked. `wi_coa_staleness.py` reads this
+workflow's own run history — not a stamp in the data, which would open a pull
+request every week with no judge moved, and not the file's commit date, which
+moves when the bench CHANGES rather than when it is VERIFIED — and fails the
+job once 60 days pass with no success.
+
+**The measurement that matters to a reader: the last successful run was
+2026-09-04.** Both weekly runs since then failed, so the shipped bench is 14.7
+days unverified. That is the number this guard exists to make visible, and
+nothing was reporting it before.
+
+**The automatic re-run was NOT built, and I would argue against it.** Clearing
+this failure needs a DIFFERENT runner, which no in-process retry can ask for —
+the scraper's own measurement proves it, three attempts from one dropped
+address being three failures. Getting another runner means dispatching the
+workflow again, and a workflow that dispatches itself is a loop this repo has
+already run into once, when `update-bing-performance.yml` was looping two runs
+in. The weekly schedule gives about eight draws inside the 60-day ceiling
+against a host this job reaches on roughly two runs in seven. The schedule is
+the retry; the ceiling is what makes its failure visible. An operator
+re-running the job by hand is still the fastest fix, and the failure message
+says so.
+
+**One thing found while building it, worth more than the task.** The first
+classifier matched `urllib.error.URLError`, which looks right and is wrong.
+Measured on loopback: urllib funnels every transport failure into `URLError`
+and puts the real one in `.reason`, so a refused connection, a DNS miss AND AN
+UNTRUSTED CERTIFICATE are indistinguishable at the outer type. That draft
+would have forgiven a TLS failure — which means the socket opened and the host
+spoke, so it is the incomplete-chain case this fleet already knows how to fix
+by pinning the intermediate, not something to wait sixty days out. It is
+caught now by a `--selftest` naming all seventeen failure shapes on the side
+each belongs on, which runs in CI.
+
+**Next, unchanged: the alderperson gap, measured whole before any tranche.**
+
 **2026-09-19, close of evening.** Wisconsin passes the new fleet-wide name gate
 from #1025 — 1,492 person records, every one a name. Nothing to fix here; the
 two records it found are Illinois's.

@@ -1755,20 +1755,6 @@ detail into `blocker`.
       "why": "The city's fire station and library datasets have no phone number in them — it's missing at the source, not undisplayed.",
       "blocker": "Checked in the 2026-07 card audit: the upstream SFFD station and SFPL branch datasets have no phone column.",
       "wanted": "An SFFD station or SFPL branch dataset that includes public phone numbers."
-    },
-    {
-      "id": "sf-congress-district-offices",
-      "concept": "U.S. House district",
-      "area": "San Francisco",
-      "counties": [
-        "san-francisco"
-      ],
-      "kind": "data-quality",
-      "layer": "congress",
-      "summary": "Congressional cards show the Washington D.C. office only, not the local district office.",
-      "why": "The roster this card is built from publishes the Washington office and not the local district ones.",
-      "blocker": "The roster builder's source publishes the D.C. office; district-office addresses are not in it. Noted in the 2026-07-31 validation pass: the wanted source exists and is already consumed by the Chicago fork (the congress-legislators district-offices file), so what remains is this fork's builder enrichment and factory migration — build work, not a missing source.",
-      "wanted": "Nothing new from readers — the enrichment is a recorded builder-scope follow-up; the entry stays only until the card shows the district office."
     }
   ],
   "wisconsin": [
@@ -2392,6 +2378,57 @@ detail into `blocker`.
     }]
 }
 ```
+
+## Closed record — San Francisco's congressional district offices (opened 2026-07-31, closed 2026-09-19)
+
+This was the `sf-congress-district-offices` gap, the same text New York
+carried and closed the same day. It is closed for the same reason and on a
+measurement taken here rather than inherited from that one.
+
+**What the record said, and why it is false.** "Congressional cards show the
+Washington D.C. office only, not the local district office." `ca/index.html`
+renders `member.districtOffice` labelled "District Office", and 50 of the 52
+records in `ca/data/app/congress-roster.json` carry one.
+
+**Measured in a browser, because a render path read statically can be wrong.**
+Booted San Francisco in Chromium at the instance's own anchor point (SF City
+Hall) with the congress layer on. The card's Offices disclosure carries two
+`tel:` links — `tel:4155564862`, a San Francisco district number, alongside the
+Washington one. Both offices render. New York's #1036 explicitly declined to
+touch this record without that read, which was the right call: the two
+instances share an engine fence but not a roster, and the static agreement
+proves neither.
+
+**The two districts that genuinely lack one are unreachable from this
+instance.** CA-1 and CA-14 carry no `districtOffice`, because the upstream
+`legislators-district-offices` file has none for them. Neither district covers
+any point a reader of `/ca/` can select — San Francisco sits in CA-11, and
+CA-15 is the only other district the instance's own bbox reaches. Both of those
+carry one. So the record was false for every point a reader can click, which is
+why it is retired rather than narrowed.
+
+**One thing checked and NOT found, recorded because the check nearly went the
+other way.** Two of the shipped names — CA-1 James Gallagher and CA-14 Aisha
+Wahab — read as state legislators to a reader working from older knowledge, and
+CA-3 Kevin Kiley ships as Independent. All three looked like a corrupted
+roster. They are not: rebuilding from the builder's own canonical source
+(`unitedstates/congress-legislators`, robots.txt read first and 404, so allow)
+produced a file BYTE-IDENTICAL to the shipped one across all 52 districts.
+**A roster that disagrees with what you remember is not evidence of a defect**,
+and the honesty rule that officeholder data is never guessed cuts both ways: it
+forbids guessing that shipped data is wrong as much as guessing what it should
+say. The rebuild is the measurement; recollection is not.
+
+The retired entry's blocker, verbatim, as the measurement record:
+
+> The roster builder's source publishes the D.C. office; district-office
+> addresses are not in it. Noted in the 2026-07-31 validation pass: the wanted
+> source exists and is already consumed by the Chicago fork (the
+> congress-legislators district-offices file), so what remains is this fork's
+> builder enrichment and factory migration — build work, not a missing source.
+
+That was true when written and the builder enrichment has since shipped; what
+outlived it was the record, which nobody retired.
 
 ## Closed record — New York's congressional district offices (opened 2026-07-31, closed 2026-09-19)
 

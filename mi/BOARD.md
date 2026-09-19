@@ -8,7 +8,9 @@ Commit board edits straight to main, in their own commit, dated.
 
 Click any point in Michigan and the app answers from **15 layers** — the fewest
 in the fleet, because Michigan is the newest instance (live 2026-09-03). The
-state House and Senate rosters are complete at 110 and 38.
+state House and Senate rosters are complete at 110 and 38. **48 of the 83
+counties name your commissioner** — 366 of the 619 seats, 61.4% of the state by
+population.
 
 **20 recorded gaps** — 13 no-source, 5 blocked, 2 data-quality. Eighteen of the
 twenty are city council wards.
@@ -27,13 +29,41 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
-**2026-09-19, tranche 6 merged.** #1035 is in. **47 of Michigan's 83 counties
-name your commissioner — 358 of the 619 seats, 60.9% of the state by
-population.** This morning it was 16 counties and 51.6%.
+**2026-09-19, tranche 7 open.** #1041. Cass names its eight commissioners,
+seven of them with an e-mail address. **48 of Michigan's 83 counties, 366 of
+the 619 seats, 61.4% of the state by population** — and the probe's candidate
+list is now EMPTY.
 
-Picking up Cass, the last candidate. Its probe URL is the board's committees
-page, so this one costs a fetch: robots.txt and the county's own board page,
-and nothing more.
+Cass cost two requests: its robots.txt and its board page, and it widens the
+weekly run by one page from now on, which is the trade stated rather than made
+quietly — seven addresses for one more request a week to a host already read. It was the last
+candidate because the probe had scored the wrong page — the URL on its record
+is the board's COMMITTEES page, which names all eight districts across five
+committee rosters and is not a roster. A parser built on it would have shipped
+a whole board and lost any commissioner who sits on no committee, and the
+probe's own evidence cannot tell that page from the real one. The board page is
+a different URL, linked from the committees page itself.
+
+So Cass is the only county here that reads two pages, and each does one job.
+The board page carries the people and the districts and no contact at all; the
+committees page carries an address and the member's own district on one line.
+The board page decides who is on the board. The committees page only adds an
+address to a district already named, a district the two disagree on gets no
+address and keeps its name, and a committees page whose shape has moved —
+fewer than five addresses joining — refuses rather than shipping a thinner
+card quietly. A committees page that simply does not fetch costs its own column
+and nothing else.
+
+Two stale things were corrected on the way past. The scraper's own docstring
+still said twenty-six counties across four tranches, in three places, two
+tranches after that stopped being true. And the sources page's comparison
+against the state's own commissioner column was tranche 3's: re-measured across
+all 48 counties, 234 of 366 seats agree exactly, 132 differ, and 18 of those
+132 name a different person.
+
+What is left on the probe's record is 25 counties measured shut, which is a
+re-examination rather than a re-probe, and the probe's own gap: it records a
+robots verdict only for the hosts it rejects, never for the one it accepts.
 
 **2026-09-19, tranche 6 open.** #1035. Twenty-one more counties name your
 commissioner: Alcona, Alpena, Arenac, Chippewa, Clare, Clinton, Delta, Emmet,
@@ -190,4 +220,44 @@ Two corrections to my own last report:
 
 ## Open questions for Adam
 
-- Nothing outstanding.
+**2026-09-19 — the commissioner candidate list is empty. Which work comes
+next?** Not blocking: I am starting on (3) below, which needs no answer and is
+the recorded prerequisite for anything that sweeps again.
+
+What I measured. 48 of Michigan's 83 counties name their commissioners. The
+probe's record now holds ZERO candidates and 25 counties measured shut: 11
+no-board-page, 7 no-districts, 3 not-keyable, 2 no-confirmed-host, 2 challenge.
+23 of the 25 carry a confirmed host; Shiawassee and Montmorency carry none.
+
+Three things could come next and they cost very different amounts.
+
+1. **Re-examine the 25 shut counties.** The largest bucket is the 11 with a
+   confirmed host and no board page found from the sitemap or the front page,
+   which is the shape Washtenaw turned out to be (the real board page sat on a
+   different host spelling) and the shape Illinois's Vermilion turned out to be
+   (the county's GIS was a different publisher from the county's website). So
+   this is the one most likely to yield. It is also the most expensive: these
+   hosts have been swept three to six times already, and that is what tripped
+   a WAF on Tuscola. **The question I would want settled before starting is
+   what a re-examination may fetch** — my own proposal is at most one request
+   per county, to a URL the existing record does not already name, and nothing
+   at all to a host recorded as a challenge.
+
+2. **City council wards, 18 of the 20 recorded Michigan gaps.** Already on the
+   manager's Tasks table. `mi/WATCH.md` line 30 says to run the state's WARD
+   column first, which is ONE query against a service this instance already
+   reads, and it settled 23 cities on 2026-09-06. So it is the cheapest of the
+   three by traffic and the largest by gap count.
+
+3. **The probe's own robots gap.** `probe_mi_county_boards.py` records a robots
+   verdict for every host it REJECTS and none for the one it ACCEPTS, which is
+   why the Gogebic/Marquette disagreement (candidate on 09-18, `Disallow: /` on
+   09-19) could not be settled. Writing the field costs no fetches. Backfilling
+   the 23 recorded hosts costs one robots.txt read each and nothing else —
+   robots.txt is the request every client makes first — and it only makes
+   FUTURE readings comparable, since the 09-18 readings are already lost.
+
+**What I would pick, in order: 3, then 2, then 1.** 3 costs nothing and every
+further sweep is worth less without it. 2 is one query for the biggest gap
+count. 1 is the most likely to yield a county and the only one whose budget I
+would want stated rather than assumed.
