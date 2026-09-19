@@ -123,7 +123,13 @@ records the standing merge authority. Michigan's "a workflow that has never run
 is invisible to every gate" was swept across all six instances: of 128
 scheduled workflows only two have never run, both explained by the calendar.
 
-Main is at `0e829be`. Open: #1018 held (Hancock), #1048 held (see question 4), #1049 in review.
+Main is at `39a6a67`. Open: #1018 held (Hancock), #1048 held (see question 4). #1049 merged.
+
+**#1048 is no longer red for the reason its own PR body gives.** That body names
+`build_llms_txt.py --check`, which was true when it opened; Iowa's own regeneration commit
+fixed that half, and the run's log ends in `check_roster_retention.py` and exit 1. So the
+gate now refusing the merge is the one that objects to two counties vanishing — which is
+question 4 exactly, and is the gate working rather than an obstacle to clear.
 
 ## Open questions for Adam
 
