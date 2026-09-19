@@ -82,26 +82,36 @@ NON_PERSON = ("vacant", "vacancy", "(vacancy)", "n/a", "tbd", "")
 
 # Ordered: the first pattern that matches a line wins, so the more specific
 # seat labels must precede the bare ones.
+# THE OFFICE WORD MUST BE A COMPLETE TOKEN. Each pattern separates the label
+# from the name with `\s*:?\s*` — an OPTIONAL colon and whitespace that may match
+# ZERO characters — so the label matched as a PREFIX of a longer word. Measured
+# across this 75-page directory (3,139 lines) that fired on exactly one line,
+# "Clerk’s Email: ... clerk@bartonville.org", which shipped as a Village of
+# Bartonville Clerk NAMED "’s Email: ... clerk@bartonville.org" from
+# 2026-09-01 until 2026-09-19. The guard is a negative lookahead for a word
+# character or an apostrophe; requiring a colon instead was measured and
+# REJECTED, because 16 real rows use dot leaders and no colon
+# ("Treasurer ....... Andrea Bredeman").
 FIELD_PATTERNS = [
-    (re.compile(r"(?i)^Alder(?:man|woman|person)\s*[-–]\s*Ward\s*(\d+)\s*:?\s*(.*)$"),
+    (re.compile(r"(?i)^Alder(?:man|woman|person)\s*[-–]\s*Ward\s*(\d+)(?![\\w’'‘])\s*:?\s*(.*)$"),
      "board", "Alderperson", "Ward %s"),
-    (re.compile(r"(?i)^District\s*(\d+)\s*Council\s*Member\s*:?\s*(.*)$"),
+    (re.compile(r"(?i)^District\s*(\d+)\s*Council\s*Member(?![\\w’'‘])\s*:?\s*(.*)$"),
      "board", "Council Member", "District %s"),
-    (re.compile(r"(?i)^At[-\s]*Large\s*Council\s*Member\s*:?\s*()(.*)$"),
+    (re.compile(r"(?i)^At[-\s]*Large\s*Council\s*Member(?![\\w’'‘])\s*:?\s*()(.*)$"),
      "board", "Council Member", "At-Large"),
-    (re.compile(r"(?i)^Trustee\s*:?\s*()(.*)$"), "board", "Trustee", None),
-    (re.compile(r"(?i)^Mayor\s*/\s*President\s*:?\s*()(.*)$"), "head", "Mayor", None),
-    (re.compile(r"(?i)^Mayor\s*:?\s*()(.*)$"), "head", "Mayor", None),
-    (re.compile(r"(?i)^President\s*:?\s*()(.*)$"), "head", "President", None),
-    (re.compile(r"(?i)^Clerk\s*/\s*Treasurer\s*:?\s*()(.*)$"), "officer", "Clerk/Treasurer", None),
-    (re.compile(r"(?i)^Clerk\s*:?\s*()(.*)$"), "officer", "Clerk", None),
-    (re.compile(r"(?i)^Treasurer\s*:?\s*()(.*)$"), "officer", "Treasurer", None),
-    (re.compile(r"(?i)^Collector\s*:?\s*()(.*)$"), "officer", "Collector", None),
-    (re.compile(r"(?i)^City\s*Manager\s*:?\s*()(.*)$"), "appointed", "City Manager", None),
-    (re.compile(r"(?i)^City\s*Administrator\s*:?\s*()(.*)$"), "appointed", "City Administrator", None),
-    (re.compile(r"(?i)^Village\s*Administrator\s*:?\s*()(.*)$"), "appointed", "Village Administrator", None),
+    (re.compile(r"(?i)^Trustee(?![\\w’'‘])\s*:?\s*()(.*)$"), "board", "Trustee", None),
+    (re.compile(r"(?i)^Mayor\s*/\s*President(?![\\w’'‘])\s*:?\s*()(.*)$"), "head", "Mayor", None),
+    (re.compile(r"(?i)^Mayor(?![\\w’'‘])\s*:?\s*()(.*)$"), "head", "Mayor", None),
+    (re.compile(r"(?i)^President(?![\\w’'‘])\s*:?\s*()(.*)$"), "head", "President", None),
+    (re.compile(r"(?i)^Clerk\s*/\s*Treasurer(?![\\w’'‘])\s*:?\s*()(.*)$"), "officer", "Clerk/Treasurer", None),
+    (re.compile(r"(?i)^Clerk(?![\\w’'‘])\s*:?\s*()(.*)$"), "officer", "Clerk", None),
+    (re.compile(r"(?i)^Treasurer(?![\\w’'‘])\s*:?\s*()(.*)$"), "officer", "Treasurer", None),
+    (re.compile(r"(?i)^Collector(?![\\w’'‘])\s*:?\s*()(.*)$"), "officer", "Collector", None),
+    (re.compile(r"(?i)^City\s*Manager(?![\\w’'‘])\s*:?\s*()(.*)$"), "appointed", "City Manager", None),
+    (re.compile(r"(?i)^City\s*Administrator(?![\\w’'‘])\s*:?\s*()(.*)$"), "appointed", "City Administrator", None),
+    (re.compile(r"(?i)^Village\s*Administrator(?![\\w’'‘])\s*:?\s*()(.*)$"), "appointed", "Village Administrator", None),
     # Department heads: matched so they are consumed, then dropped by rule.
-    (re.compile(r"(?i)^(?:Fire|Police)\s*Chief\s*:?\s*()(.*)$"), "skip", None, None),
+    (re.compile(r"(?i)^(?:Fire|Police)\s*Chief(?![\\w’'‘])\s*:?\s*()(.*)$"), "skip", None, None),
 ]
 CONTACT_PATTERNS = [
     (re.compile(r"(?i)^Phone\s*:?\s*(.*)$"), "phone"),
