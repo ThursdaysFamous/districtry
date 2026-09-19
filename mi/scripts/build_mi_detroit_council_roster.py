@@ -25,9 +25,20 @@ sentence was built out of five measurements, and two of them were wrong:
 
 So the roster was not unavailable; it was unattempted. The measurements that
 survived are the ones about the live site (detroitmi.gov and
-mvic.sos.state.mi.us both sit behind a genuine Cloudflare managed challenge,
-on both the requests and the client-hints rungs) and about Legistar, which is
-abandoned and could not place a member on a district even when it was not.
+mvic.sos.state.mi.us both sat behind a genuine Cloudflare managed challenge on
+2026-09-05, on both the requests and the client-hints rungs) and about
+Legistar, which is abandoned and could not place a member on a district even
+when it was not.
+
+CORRECTED 2026-09-19: that 2026-09-05 measurement was right on its day and was
+written here as a standing property, which it is not. Across the three commits
+that have ever written this file, `archivedAt` reads 20260831152830
+(2026-09-05, archive), null (2026-09-09 — THE DIRECT RUNG SERVED) and
+20260912152333 (2026-09-16, archive). Detroit's challenge is INTERMITTENT. The
+scraper already did the right thing, trying the direct rung first every run;
+what failed was the reporting, because the weekly PR body was one static
+paragraph and nobody saw the 2026-09-09 success for ten days. See
+mi/scripts/summarize_detroit_roster_change.py.
 
 WHAT THIS REFUSES TO WRITE
 ---------------------------
