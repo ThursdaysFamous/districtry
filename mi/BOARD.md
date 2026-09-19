@@ -29,6 +29,22 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-19, the Detroit summariser merged, and Michigan is out of unblocked work.** #1047
+is in as `08277b1f`, verified on the merged tree: the selftest passes there at 25 checks, the
+CI step sits at `smoke-test.yml` line 95, and `validate_gate_counts.py` and
+`validate_steward_mirror.py` agree at 68 named static steps and 95 invocations.
+
+**Two rows in the Tasks table above are discharged and are the manager's to update.** The
+commissioner row still reads "26 of 83 counties — assigned, tranche 6"; it is 48 of 83, 366 of
+619 seats, tranche 7 merged, and the probe's candidate list is empty. The Detroit PR-body row
+is #1047.
+
+**What is left, and why none of it starts on its own.** The wards row waits on the
+state-fabric-as-source question below. The 23 remaining shut counties wait on the request
+budget below. The bbox row is now a question too, for a reason worth stating: that row says
+"no fix proposed", and `mi/WATCH.md` proposes one — it is the scope that stops it, not the
+absence of a route.
+
 **2026-09-19, the Detroit PR-body task, and what it turned up.** #1047 open. The weekly
 Detroit roster PR now writes its own title and body from the diff. The measurement that
 justified it: across every commit that has ever touched that roster — three — the two that are
@@ -315,6 +331,33 @@ Two corrections to my own last report:
   share above has the census on both sides.
 
 ## Open questions for Adam
+
+**2026-09-19 — the western-UP bbox: is this worth a six-app change?** The Tasks table calls
+it "no fix proposed" and `mi/WATCH.md` does propose one, so the row understates where this
+stands. I have not started it, because the fix is larger than the symptom.
+
+The symptom is four places — Ironwood, Houghton, Iron Mountain, Menominee — that the front door
+hands to Wisconsin. They are not a tie-break failure: they sit WEST of Michigan's shipped bbox,
+which is the county fabric clipped to `lng >= -87.60`, so Michigan is never offered them and no
+coverage ring is ever consulted. Michigan's own app still answers there; `metro_bbox` is
+untouched and full-state.
+
+The clip exists because Michigan's county fabric is water-inclusive and the honest state bbox
+runs to -90.42, containing Chicago's centre and Wisconsin's — which `validate_index.py`
+hard-fails, by a rule that guards the nearest-centre tie-break the front door stopped using on
+2026-09-04.
+
+So the fix is two changes the WATCH row says to make together: relax that rule, and move the
+IN-APP `metro-portal` ENGINE block onto the same coverage-ring test the front door now uses.
+**That block is one copy spliced into all six instances**, and its `siblingMetroAt` is called
+from `moveend`, so making it consult a ring means keeping the bbox pre-filter, resolving the
+ring only for a contested point, and never letting a fetch block a pan. That is a design change
+across six live apps to fix four places, and it is the kind of thing I put to you rather than
+decide.
+
+What is already measured: ring-based resolution answers all 37 probe places correctly, so the
+ceiling is 0 misroutes. A smallest-bbox-AREA tie-break was measured and is NOT the fix — 7
+wrong of 37, the same count as nearest-centre and wrong in different places.
 
 **2026-09-19 — may the state's precinct fabric be the SOURCE for a city's wards,
 or only the check?** This is the decision under most of the remaining ward gaps, it is
