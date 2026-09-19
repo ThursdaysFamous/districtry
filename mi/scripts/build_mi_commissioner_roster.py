@@ -76,12 +76,27 @@ DISTRICTS = os.path.join(APP_DATA_DIR, "mi-commissioner-districts.json")
 OUT = os.path.join(APP_DATA_DIR, "mi-commissioner-members.json")
 
 # Floors. Measured 2026-09-19 after tranche 7: 48 counties, 366 seats shipped.
-# The basis is "any two counties may go dark": 48 - 2 = 46 counties, and 366
-# less the two biggest boards (Kent 21 + Eaton 15) = 330 seats, which is the
-# tightest figure that basis allows. Raise them when a tranche lands, never
-# lower one to get past a failure.
+# These are a COLLAPSE guard and nothing finer. Raise them when a tranche
+# lands, never lower one to get past a failure.
+#
+# THE BASIS USED TO BE "any two counties may go dark" — 48 - 2 = 46 — AND THAT
+# WAS THE DEFECT, not a cushion around it. On 2026-09-19 a transport failure
+# left Delta and Otsego unread, the run produced exactly 46 counties, the test
+# is `< MIN_COUNTIES`, and so a floor written to tolerate two dark counties
+# passed the one event it should have stopped: #1052 proposed deleting both
+# counties, fourteen named commissioners and two county pages, off pages that
+# were serving normally. A GLOBAL COUNT CANNOT PROTECT A NAMED COUNTY; only
+# the per-county carry-forward below can, and that is now what does it.
 MIN_COUNTIES = 46
 MIN_DISTRICTS = 330
+
+# How long a county may ride its last-good record before this run refuses.
+# Preserving is what stops a flaky fetch deleting real people; a ceiling is
+# what stops preserving turning into a roster frozen for as long as nobody
+# looks. 45 days is this instance's own precedent — the Detroit council
+# scraper refuses an Archive snapshot older than the same figure, for the same
+# reason, and a run that fails loudly is a human's cue to look at the source.
+PRESERVE_MAX_AGE_DAYS = 45
 
 # Fields a district row may carry, in card order. Anything else the scraper
 # learns is dropped here rather than shipped unreviewed.
@@ -122,6 +137,20 @@ def fail(msg):
     raise SystemExit(1)
 
 
+def days_since(stamp):
+    """Whole days from an ISO date to today, or None if it cannot be read.
+
+    Unreadable returns None rather than 0 so a malformed stamp cannot silently
+    read as "fetched today" and keep a stale county alive past the ceiling;
+    the caller treats None as "no age known" and the stamp itself prints.
+    """
+    try:
+        then = datetime.strptime(stamp[:10], "%Y-%m-%d").replace(tzinfo=timezone.utc)
+    except (ValueError, TypeError):
+        return None
+    return (datetime.now(timezone.utc) - then).days
+
+
 def load(path, what):
     try:
         with open(path) as handle:
@@ -144,6 +173,12 @@ def main():
 
     cache = load(CACHE, "commissioner cache — run mi_commissioner_scraper.py first")
     geometry = seats_from_geometry()
+    # The roster as it stands, read once: both the zero-district check and the
+    # carry-forward below ask what we already have for a county.
+    shipped_pre = {}
+    if os.path.exists(OUT):
+        with open(OUT) as handle:
+            shipped_pre = json.load(handle)
 
     directory, skipped, short = {}, [], []
     withheld, retire, vacant = {}, [], {}
@@ -238,7 +273,21 @@ def main():
             "seats": len(drawn),
             "sourceUrl": entry.get("sourceUrl"),
             "districts": districts,
+            # WHEN THIS COUNTY'S PAGE WAS ACTUALLY READ, which is the scraper's
+            # per-county stamp and not this run's clock: a county carried
+            # forward keeps the older date, and that difference is the whole
+            # point. CLAUDE.md's rule is that a card must never print a
+            # verification date for a source it did not verify, and no card
+            # prints this yet — it is here so the ceiling above has something
+            # true to measure.
+            # Only ever the scraper's own per-county stamp. A cache entry
+            # written before that field existed carries none, and none is
+            # written here rather than the run's clock standing in for it.
+            "readAt": entry.get("readAt"),
         }
+        if directory[fips]["readAt"] is None:
+            del directory[fips]["readAt"]
+        # Read again, so it is no longer riding a preserved record.
         if missing:
             # Named so the card can say which district, rather than only that
             # the count is short.
@@ -296,6 +345,100 @@ def main():
     if orphans:
         fail("CONTRADICTED names %s, absent from the roster \u2014 retire the "
              "entry" % ", ".join("%s/%s" % k for k in orphans))
+
+    # A COUNTY READ THAT PARSED TO NOTHING IS A FAILED READ, NOT AN EMPTY BOARD.
+    #
+    # MCL 46.401(1) puts every Michigan board at 5..21 seats, so zero is never
+    # the county's own answer. Left alone, such a county reaches here with no
+    # districts and every gate above passes it — the county count does not
+    # move and the total falls by one board — and the card then states
+    # "0 of 5 — named by nobody on the county's own page" about a county whose
+    # page names all five. That is an affirmative false claim about a public
+    # body, and it is the worse half of the defect #1052 exposed.
+    #
+    # THE FIRST FIX HERE FAILED THE RUN, AND THAT WAS WRONG (measured the same
+    # hour). The full run of 2026-09-19 had Midland parse to zero from a page
+    # that answered; re-read on its own it gave 7 of 7 in 120,480 bytes, so the
+    # zero was a bad read and not a broken parser. Failing would have turned
+    # the weekly job red on a flake, and a job that cries wolf weekly is one a
+    # reviewer learns to skim — the same reasoning the Detroit PR body was
+    # rewritten on. So these join the carry-forward below and are printed every
+    # run; a parser that is genuinely broken stops being read for good, and the
+    # staleness ceiling is what turns that into a failure.
+    emptied = [fips for fips, entry in directory.items()
+               if not entry.get("districts")]
+    for fips in emptied:
+        county = directory[fips].get("county") or fips
+        del directory[fips]
+        if fips in shipped_pre:
+            cache.setdefault("unread", []).append(
+                {"fips": fips, "county": county, "kind": "parsed-zero",
+                 "why": "the page answered and the parser matched no district"})
+        else:
+            # Nothing to carry forward: a county new to the table whose parser
+            # has never worked. Silence would ship the roster without it and
+            # let the floors decide, which is how a county stays unnoticed.
+            fail("%s parsed to ZERO districts from a page that answered and has "
+                 "no shipped record to fall back on — fix its parser" % county)
+
+    # ---------------------------------------------------------------- PRESERVE
+    # A COUNTY THE SCRAPER COULD NOT READ KEEPS ITS LAST-GOOD RECORD.
+    #
+    # Adam's ruling, 2026-09-19: "Preserve data we have already fetched." A
+    # host that refuses us, or a connection that drops, is not telling us to
+    # delete officeholders we fetched legitimately while it was serving —
+    # and deleting them costs a reader the answer while gaining the publisher
+    # nothing. Michigan was the last of the three statewide instances to still
+    # delete: Illinois has carried PRESERVABLE since Will, Wisconsin re-asks an
+    # unreachable verdict, and Iowa's builder was fixed the same day after it
+    # dropped Bremer and Hamilton.
+    #
+    # THE SCRAPER'S `unread` LIST IS WHAT MAKES THIS SAFE. Carrying a county
+    # forward because it is missing from the cache would also carry one that
+    # was deliberately retired from the COUNTIES table, forever. A county is
+    # preserved only where the scraper says it TRIED and did not get an answer,
+    # so a county removed from that table still leaves the roster normally.
+    #
+    # A county READ that parsed to nothing is deliberately NOT here: it is in
+    # neither `unread` nor `directory`, so it trips the floors below and the
+    # run fails. That is the parser-break case, and preserving it quietly is
+    # exactly how a county's names would freeze unnoticed.
+    shipped = shipped_pre
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    preserved, stale = [], []
+    for row in cache.get("unread", []):
+        fips = row.get("fips")
+        if fips in directory or fips not in shipped:
+            continue
+        entry = dict(shipped[fips])
+        # `readAt` IS NEVER INVENTED. It means "this page was read on this
+        # date", so a county that was not read keeps whatever it had, and a
+        # county carried forward before this field existed carries none at all.
+        # The first draft fell back to the run's own clock, which stamped three
+        # challenged counties with today — the precise false claim the field
+        # was added to prevent.
+        #
+        # THE CEILING THEREFORE MEASURES `preservedSince`, not `readAt`: how
+        # long this county has been riding its last-good record is both the
+        # thing that matters and the thing that is knowable, and it is set the
+        # first run a county is carried and cleared the moment one is read.
+        entry["preservedSince"] = entry.get("preservedSince") or today
+        directory[fips] = entry
+        since = entry["preservedSince"]
+        preserved.append((entry.get("county") or fips, row.get("why") or "",
+                          entry.get("readAt"), since))
+        age = days_since(since)
+        if age is not None and age > PRESERVE_MAX_AGE_DAYS:
+            stale.append((entry.get("county") or fips, since, age))
+    for county, why, read_at, since in sorted(preserved):
+        print("  %s PRESERVED — not read this run (%s); carried since %s, last "
+              "actually read %s"
+              % (county, why, since, read_at or "before this field existed"))
+    if stale:
+        fail("%s — carried forward for more than %d days, so the source needs a "
+             "human rather than another week of last-good data"
+             % ("; ".join("%s carried since %s (%d days)" % r
+                          for r in sorted(stale)), PRESERVE_MAX_AGE_DAYS))
 
     total = sum(len(e["districts"]) for e in directory.values())
     if len(directory) < MIN_COUNTIES:

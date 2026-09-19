@@ -2059,8 +2059,23 @@ def read_page(url, session, gate, pacer):
     if resp is None:
         return None, "FETCH FAILED after 3 tries — %s" % last, "fetch", gate, pacer
     if resp.status_code != 200:
-        return (None, "HTTP %s (%d bytes)" % (resp.status_code, len(resp.content)),
-                "fetch", gate, pacer)
+        # A MANAGED CHALLENGE IS NOT AN OUTAGE and the record should not read
+        # like one. Cloudflare says so in its own headers, so this asks them
+        # rather than sniffing the body for the word "captcha" — the mistake
+        # scripts/probe_user_agents.py already records, where searching bodies
+        # for that word reported sixteen real pages as challenges. Measured
+        # 2026-09-19: kalcounty.gov, kentcountymi.gov and berriencounty.org all
+        # began answering `Cf-Mitigated: challenge` with a 5.7 KB "Just a
+        # moment..." body. It is an access control and is never worked around;
+        # the builder carries those counties forward on their last good read.
+        marker = (resp.headers.get("Cf-Mitigated")
+                  or ("cloudflare" if resp.headers.get("Server", "").lower()
+                      == "cloudflare" and resp.status_code == 403 else ""))
+        how = (" — Cloudflare managed challenge (%s), an access control" % marker
+               if marker else "")
+        return (None, "HTTP %s (%d bytes)%s"
+                % (resp.status_code, len(resp.content), how),
+                "challenge" if marker else "fetch", gate, pacer)
     return resp, None, None, gate, pacer
 
 
@@ -2080,11 +2095,22 @@ def main():
     gate = RobotsGate(session, UA_ROSTER_BOT)
     pacer = HostPacer(gate)
 
-    entries, refused = {}, []
+    entries, refused, unread = {}, [], []
+    read_date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     for spec in wanted:
         url, county = spec["url"], spec["county"]
         resp, why, kind, gate, pacer = read_page(url, session, gate, pacer)
         if resp is None:
+            # A COUNTY THAT WAS NOT READ IS RECORDED, NOT DROPPED. Until
+            # 2026-09-19 this branch printed and continued, so the county was
+            # simply absent from the cache and the builder could not tell a
+            # transport failure from a county nobody tracks — which is how
+            # #1052 proposed deleting Delta and Otsego, fourteen named
+            # commissioners, off two pages that were serving normally the
+            # whole time. The builder carries these forward from the shipped
+            # roster; see build_mi_commissioner_roster.py's PRESERVE section.
+            unread.append({"fips": spec["fips"], "county": county,
+                           "why": why, "kind": kind or "fetch"})
             if kind == "robots":
                 refused.append((county, why))
                 print("  %-10s SKIPPED — %s" % (county, why))
@@ -2109,6 +2135,8 @@ def main():
             body = strip_comments(resp.text)
             keyed = spec["parse"](body, also) if spec.get("also") else spec["parse"](body)
         except ValueError as exc:
+            unread.append({"fips": spec["fips"], "county": county,
+                           "why": "PARSE REFUSED — %s" % exc, "kind": "parse"})
             print("  %-10s PARSE REFUSED — %s" % (county, exc))
             continue
         entries[spec["fips"]] = {
@@ -2117,6 +2145,11 @@ def main():
             "sourceUrl": url,
             "finalUrl": resp.url,
             "districts": keyed,
+            # PER COUNTY, never the run's own timestamp. `--county` merges, so
+            # one global stamp would date all forty-eight to a run that read
+            # one of them, and the builder's staleness ceiling would then be
+            # measuring nothing.
+            "readAt": read_date,
         }
         if spec.get("also"):
             # Provenance for whoever reads this cache — the shipped roster
@@ -2124,6 +2157,15 @@ def main():
             entries[spec["fips"]]["alsoUrl"] = spec["also"]
         print("  %-10s %2d/%2d districts (%s, %d bytes)"
               % (county, len(keyed), spec["seats"], url, len(resp.content)))
+        if not keyed:
+            # READ FINE AND PARSED NOTHING is a parser that no longer matches
+            # the county's markup, not a board that ceased to exist, and it is
+            # NOT the preserve case: carrying it forward quietly would freeze
+            # that county's names for as long as nobody looked. It is said
+            # loudly here and the builder refuses the run.
+            print("  %-10s YIELDED NOTHING from a page that answered %d bytes "
+                  "— the parser no longer matches this county's markup"
+                  % (county, len(resp.content)))
 
     if not entries:
         print("mi-commissioner-scraper: FAIL — no county yielded a roster", file=sys.stderr)
@@ -2142,20 +2184,47 @@ def main():
         # --county MERGES; a full run REPLACES. Re-reading one county is how a
         # new parser is proved against the live page, and a flag that wipes the
         # other forty-seven to do it makes the next step a full sweep of hosts
-        # nobody needed to ask again. A full run replaces because there a
-        # county that has stopped yielding must leave the file rather than
-        # linger on last week's answer.
+        # nobody needed to ask again.
+        #
+        # CORRECTED 2026-09-19. This comment used to finish "a full run
+        # replaces because there a county that has stopped yielding must leave
+        # the file rather than linger on last week's answer", which states the
+        # defect as the design: it reads a county that was NOT READ as a county
+        # that has STOPPED YIELDING. check_roster_retention.py has been
+        # arguing the other side the whole time — "a source that stops
+        # publishing is a real event; a source that failed to fetch once is
+        # not" — and Adam ruled on 2026-09-19 that we preserve data we have
+        # already fetched. A full run still replaces the cache, and the
+        # `unread` list below is what lets the builder tell the two apart.
         with open(CACHE) as handle:
-            held = json.load(handle).get("counties") or {}
+            prior = json.load(handle)
+        held = prior.get("counties") or {}
         for fips, entry in held.items():
             if fips not in entries:
                 entries[fips] = entry
                 kept += 1
+        # THE UNREAD LIST MERGES TOO, and leaving it out was a defect in this
+        # change's own first draft (caught 2026-09-19 by the build that
+        # followed it). A full run recorded Kalamazoo, Kent and Berrien unread;
+        # a `--county Midland` run then rewrote the cache with its own empty
+        # list, so the builder saw three counties absent with no row saying
+        # they had been tried, refused to carry them forward, and failed on the
+        # county floor. A county keeps its unread row until a run actually
+        # reads it.
+        for row in prior.get("unread") or []:
+            if row.get("fips") not in entries and \
+                    row.get("fips") not in {u["fips"] for u in unread}:
+                unread.append(row)
     payload = {
         "scrapedAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "userAgent": UA_ROSTER_BOT,
         "counties": entries,
         "refused": [{"county": c, "why": w} for c, w in refused],
+        # EVERY WANTED COUNTY THAT DID NOT YIELD, with why and of what kind.
+        # `refused` carries only the robots subset and is kept as it was;
+        # this is the full set the builder needs in order to carry a county
+        # forward rather than delete it.
+        "unread": sorted(unread, key=lambda u: u["fips"]),
     }
     with open(CACHE, "w") as handle:
         json.dump(payload, handle, indent=1, sort_keys=True)
@@ -2164,6 +2233,11 @@ def main():
     # A delay honoured without saying so cannot be told from one ignored.
     for line in pacer.report():
         print(line)
+    if unread:
+        print("  %d county(ies) not read this run, recorded for the builder to "
+              "carry forward: %s"
+              % (len(unread), ", ".join("%s (%s)" % (u["county"], u["kind"])
+                                        for u in unread)))
     print("mi-commissioner-scraper: %d counties, %d districts%s -> %s"
           % (len(entries), total,
              " (%d kept from the previous run)" % kept if kept else "",
