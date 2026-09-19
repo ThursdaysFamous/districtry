@@ -32,6 +32,44 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-19, afternoon.** [#1043](https://github.com/ThursdaysFamous/districtry/pull/1043)
+opens: Will moves from `REQUIRED_COUNTIES` to `PRESERVABLE`, so the municipal
+roster refreshes again for the first time since 8 September. Adam approved it
+directly. 14 gates pass.
+
+**What a reader gets back:** 36 counties' mayors, presidents and council
+members start being rechecked weekly again. They had been eleven days stale
+because Will's Clerk moved its directory behind a managed challenge and Will
+was one of two counties the builder refused to build without — so every weekly
+run scraped all 37 sources, skipped the build on Will alone, and reported
+success. Nothing went red for eleven days.
+
+**What a reader loses, and it is said on the card's own gap record rather than
+here:** Will's own 31 towns now carry forward indefinitely. A trustee who
+changes will not change here, and no count floor will notice, because all 31
+municipalities remain. The gap's `area` narrows from "every Illinois town card"
+to Will County alone, because the wider claim stopped being true.
+
+**The measurement, in case it is questioned later:** the comment that held Will
+in `REQUIRED_COUNTIES` described building WITHOUT a full-body county and was
+applied to PRESERVING one. Preserved entries re-enter through the same
+`absorb()` -> `pick_entry`, which sorts on depth then `COUNTY_PRECEDENCE`, so
+order cannot demote anything. All 31 Will entries are at maximum depth and Will
+ranks second behind Cook, so its 28 straddles resolve exactly as they do today
+— the six it loses to Cook it already loses.
+
+**Owed and not paid:** `.claude/skills/municipal-officials/SKILL.md` still says
+`REQUIRED_COUNTIES` is "Cook and Will only", in the body and in its Nevers.
+Every edit to that file was refused by this environment's permission
+classifier, so it is stale and flagged rather than quietly skipped.
+`validate_skills.py` cannot catch it — it checks that a named path or
+identifier exists, not that the prose is true. It needs one line from a session
+that can write the file.
+
+**Next:** #1018's cause (Hancock's `Jo0n Mason`, never hand-corrected), then
+Marshall's weekly job, whose fix merged in #968 after its last failing run, so
+the honest state is "fixed, unproven" until it next fires.
+
 **2026-09-19, end of the evening.** Pausing here. Main is `8506c8c`. Three
 Illinois changes merged tonight — #1024 (Rock Island's 112 fabricated names),
 #1028 (Bartonville's phantom Clerk) and #1030 (the six workflows) — alongside

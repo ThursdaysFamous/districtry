@@ -13,6 +13,16 @@ name: Update WI Court of Appeals roster
 # this run loudly; rebuild the geometry in the same change that updates the
 # table. A seat-count drop (4/4/3/5) also fails — a vacancy deserves a human
 # read, not a silent ship.
+#
+# ONE FAILURE IS FORGIVEN AND IT HAS A CEILING. Runs of this job die in
+# sock.connect from some of GitHub's runners and not others — measured, issue
+# #387, and nothing in the request explains it — so the scraper now exits 75
+# when it could not reach the host at all, and this job treats that as "come
+# back next week" instead of red. That would be a hole on its own, because a
+# job that is green whenever it cannot ask stays green forever if it stops
+# asking, so wi_coa_staleness.py reads this workflow's own run history and
+# fails the job once 60 days pass with no successful verification. Everything
+# else the scraper can fail on stays red.
 
 on:
   schedule:
@@ -22,6 +32,12 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  # For wi_coa_staleness.py, which reads THIS workflow's own run history when
+  # the scrape could not reach the host. Without it the default token cannot
+  # list runs and the guard reports the age as unmeasured — which it handles by
+  # passing loudly rather than failing on something it could not see, so the
+  # missing scope would be invisible.
+  actions: read
 
 jobs:
   update-roster:
@@ -57,17 +73,65 @@ jobs:
             -w 'wicourts.gov http=%{http_code} host_ip=%{remote_ip} connect=%{time_connect}s total=%{time_total}s\n' \
             https://www.wicourts.gov/ || true
 
+      # EXIT 75 IS THE ONE FAILURE THIS JOB FORGIVES, AND ONLY THIS ONE.
+      # wi_coa_scraper.py exits 75 when the fetch died before www.wicourts.gov
+      # answered — the per-runner packet drop issue #387 measures, where no HTTP
+      # byte leaves the machine and the host never sees the request. The remedy
+      # the scraper's own header names is drawing another runner, which is next
+      # week's run; failing red on it trains the eye to skim a job that is red
+      # most weeks for a reason nothing here can fix.
+      #
+      # Every other non-zero exit stays red. A 404, a 500, a seat count that
+      # moved, a district composition that moved — those are the court saying
+      # something, and they are the findings this job exists to surface.
+      #
+      # continue-on-error carries the step's real outcome into the run's UI (it
+      # renders as a warning, not a pass) while letting the next step decide.
       - name: Scrape the wicourts.gov Court of Appeals bench
-        run: python3 wi/scripts/wi_coa_scraper.py
+        id: scrape
+        continue-on-error: true
+        run: |
+          set +e
+          python3 wi/scripts/wi_coa_scraper.py
+          code=$?
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          exit $code
+
+      # THE HOLE THAT FORGIVING IT OPENS, AND THE ONLY THING THAT CLOSES IT.
+      # A job that is green whenever it could not ask stays green forever if it
+      # never asks again, and nothing else here would notice: the roster file
+      # does not change when a fetch fails, so every content guard in the tree
+      # keeps passing on a bench nobody has checked in months. This measures the
+      # one thing none of them do — how long since this workflow last actually
+      # succeeded — from its own run history, and turns the job red past 60 days.
+      - name: Decide whether an unreachable host is forgivable
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          code="${{ steps.scrape.outputs.code }}"
+          if [ "$code" = "0" ]; then
+            echo "wi-coa: the scrape reached the court and passed its own gates."
+            exit 0
+          fi
+          if [ "$code" != "75" ]; then
+            echo "wi-coa: the scrape failed with exit $code, which is NOT the" \
+                 "unreachable-host case. Read the step above — the court" \
+                 "answered something this job is not willing to ship."
+            exit 1
+          fi
+          python3 wi/scripts/wi_coa_staleness.py --ceiling-days 60
 
       - name: Rebuild the Court of Appeals roster
+        if: steps.scrape.outputs.code == '0'
         run: python3 wi/scripts/build_wi_coa_roster.py
 
       - name: Validate app + data files
+        if: steps.scrape.outputs.code == '0'
         run: python3 wi/scripts/validate_index.py wi/index.html
 
       - name: Check for changes
         id: diff
+        if: steps.scrape.outputs.code == '0'
         run: |
           if git diff --quiet -- wi/data/app/wi-court-of-appeals-roster.json; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
@@ -76,7 +140,7 @@ jobs:
           fi
 
       - name: Open or update pull request
-        if: steps.diff.outputs.changed == 'true'
+        if: steps.scrape.outputs.code == '0' && steps.diff.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
         run: |

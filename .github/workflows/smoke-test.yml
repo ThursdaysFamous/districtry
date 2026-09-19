@@ -701,6 +701,27 @@ jobs:
       - name: The circuit-court name join still joins only what it should
         run: python3 wi/scripts/build_wi_circuit_court_roster.py --selftest
 
+      # THE COURT OF APPEALS JOB FORGIVES ONE FAILURE, SO BOTH HALVES OF THAT
+      # DECISION ARE GATED HERE. Runs of that job die in sock.connect from some
+      # of GitHub's runners and not others (issue #387), so the scraper exits 75
+      # when it could not reach www.wicourts.gov at all and the workflow treats
+      # that as "come back next week". A classifier that is wrong in the
+      # forgiving direction is SILENT — the job goes green, the bench stops
+      # being verified, and nothing says so — so --selftest names every failure
+      # the scraper can meet on the side it belongs on: seven forgiven, ten kept
+      # red, including a TLS failure, which arrives as URLError exactly like a
+      # dropped packet and is the host answering badly rather than not answering.
+      #
+      # The second half is the ceiling that stops the forgiveness becoming a
+      # hole: the staleness guard reads that workflow's own run history and
+      # fails once 60 days pass with no success. Its --selftest is the decision
+      # alone, against fixed dates — the API is never called here. Stdlib only,
+      # no network on either.
+      - name: The Court of Appeals job forgives only an unreachable host, and not forever
+        run: |
+          python3 wi/scripts/wi_coa_scraper.py --selftest
+          python3 wi/scripts/wi_coa_staleness.py --selftest
+
       # THE COUNTY BOARD SCRAPE ASKS EACH HOST'S ROBOTS.TXT BEFORE ITS FIRST
       # FETCH (2026-09-13), and this runs that decision against doctored
       # robots.txt text: a site-wide disallow refuses, an admin-only file allows
