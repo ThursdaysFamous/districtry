@@ -305,6 +305,36 @@ NAME_TEXT_RE = re.compile("^[A-Za-z][A-Za-z .'’‘-]*$")
 ONE_COMMA_RE = re.compile(r"^([^,]+),([^,]+)$")
 
 
+# The three shapes that shipped out of Rock Island in September 2026. See the
+# refusal in main() for the whole story; these are kept next to the other name
+# machinery because that is where a reader looks for what counts as a name.
+# PARTY_LABELS carries no word that is also a plausible surname — "Green" is
+# deliberately absent — and was checked against every name in the last good
+# roster before being made a refusal.
+# Held DOTLESS, because the label is abbreviated with internal full stops as
+# often as trailing ones — "Indep. Cand." normalises to "indep cand", and a
+# key that only strips the trailing dot leaves "indep. cand" and lets the
+# value through. That was one live value of the 112.
+PARTY_LABELS = {"np", "appointed", "citizens", "conservative", "progressive",
+                "republican", "democratic", "democrat", "nonpartisan",
+                "independent", "libertarian", "indep party", "indep cand"}
+PHONE_IN_NAME_RE = re.compile(r"\d{3}[)\s.-]*\d{3}[\s.-]?\d{4}")
+
+
+def fabricated_name(name):
+    """Why this value is not a person's name, or None if it looks like one."""
+    text = str(name or "").strip()
+    if not text:
+        return None                      # an absent name is handled elsewhere
+    if PHONE_IN_NAME_RE.search(text):
+        return "carries a phone number"
+    if re.sub(r"\s+", " ", text.replace(".", "")).strip().lower() in PARTY_LABELS:
+        return "is a party label, not a person"
+    if text[0].isdigit():
+        return "starts with a digit (a page footer or an address)"
+    return None
+
+
 def uninvert_name(name):
     """"Holste, McKenzie" -> "McKenzie Holste"; "Roy Williams, Jr." -> None.
 
@@ -1199,6 +1229,71 @@ def main():
 
     for warning in warnings:
         print("WARNING: %s" % warning, file=sys.stderr)
+
+    # A NAME THAT IS NOT A NAME IS NEVER SHIPPED, and this REFUSES rather than
+    # dropping. CLAUDE.md's honesty rule is that officeholder data is never
+    # guessed and that a card with no verifiable name links the body instead —
+    # so a village President rendered as "(309) 372-8292 Citizens" is the worst
+    # defect this project recognises, and it ran live for fifteen days.
+    #
+    # WHAT HAPPENED. Rock Island's clerk republished its Elected Officials PDF
+    # with the name in a different position, and that county's parser took the
+    # line after the two value rows — which is the line that OPENS THE NEXT
+    # RECORD. From the 2026-09-04 refresh all 112 of the county's officials
+    # shipped named after their successor's party line, and the last official on
+    # each page took the page footer, whose page number fuses onto the edition
+    # date. Nothing caught it: the per-county floor counts ROWS and 112 rows
+    # cleared a floor of 100, and check_roster_retention.py measures this file
+    # FILE-WIDE because it pools more than 200 sources, so one county turning
+    # entirely to rubbish is invisible in a fleet total of 4,322.
+    #
+    # WHY A REFUSAL AND NOT A DROP. A value of this shape is not one bad row; it
+    # is evidence that a parser has desynchronised from its document, and every
+    # other row from that source is then suspect. Dropping would ship the
+    # survivors as though they had been verified. The floors cannot be relied on
+    # to catch it either — they are what did not catch it.
+    #
+    # WHY IT SWEEPS THE ASSEMBLED ROSTER, like the withhold sweep below: a
+    # person reaches this file by three routes (`head`, an `officers` row, a
+    # `board` row), and a walk of the finished structure covers all three and
+    # any fourth added later. A person is exactly a dict carrying both `name`
+    # and `role`; a municipality carries `name` with `county` and no `role`, and
+    # an `office` block carries no `name`, so neither can be mistaken for one.
+    #
+    # THE THREE SHAPES ARE MEASURED, not imagined — they are what actually
+    # shipped. Each was tested against all 4,327 person names in the last good
+    # roster (2026-09-01) and matches none of them: no real name starts with a
+    # digit, none contains a phone number, and none is equal to a party label.
+    fabricated = []
+
+    def _check_names(node, where):
+        if isinstance(node, dict):
+            if isinstance(node.get("name"), str) and "role" in node:
+                why = fabricated_name(node["name"])
+                if why:
+                    fabricated.append((where, node.get("role") or "?",
+                                       node["name"], why))
+            for value in node.values():
+                _check_names(value, where)
+        elif isinstance(node, list):
+            for item in node:
+                _check_names(item, where)
+
+    for geoid, entry in roster.items():
+        _check_names(entry, "%s %s" % (geoid, entry.get("name") or ""))
+
+    if fabricated:
+        print("FATAL: %d officeholder name(s) are not names — refusing to write. "
+              "A value of this shape means a source's parser has desynchronised "
+              "from its document, so every row from that source is suspect; fix "
+              "the parser rather than dropping these."
+              % len(fabricated), file=sys.stderr)
+        for where, role, name, why in fabricated[:40]:
+            print("    %-34s %-12s %-30r %s" % (where, role, name, why),
+                  file=sys.stderr)
+        if len(fabricated) > 40:
+            print("    ... and %d more" % (len(fabricated) - 40), file=sys.stderr)
+        sys.exit(1)
 
     # THE WITHHOLD SWEEP RUNS ONCE, OVER THE ASSEMBLED ROSTER. An address
     # reaches this file by three different routes — a village hall's `office`
