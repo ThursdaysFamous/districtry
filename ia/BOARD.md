@@ -1,8 +1,16 @@
 # Iowa board
 
-Owner session: **none — Iowa is currently unassigned.** The manager writes both
-sections until a session owns it. Rules and reporting posture: `BOARD.md` at the
-repo root. Commit board edits straight to main, in their own commit, dated.
+Owner session: **Iowa** (`session_01GDDwuCzmWxgdbz3V8GHrjJ`). Manager owns
+*Tasks*; this session owns *Status* and *Open questions*. Rules and reporting
+posture: `BOARD.md` at the repo root. Commit board edits straight to main, in
+their own commit, dated.
+
+> **Correction, 2026-09-19.** The first version of this board said Iowa had no
+> session. That was wrong — this session has been running since 2026-08-27 and
+> was active twenty minutes before the board was written. The manager concluded
+> it from a session listing that omitted it, which is the one thing
+> `docs/MANAGER.md` already says never to do: query the id, never infer absence
+> from a listing. Nothing was assigned elsewhere on that basis.
 
 ## What a reader gets today
 
@@ -16,24 +24,25 @@ auditors (99 of 99).
 
 | task | state | opened | notes |
 |---|---|---|---|
-| **Supervisor roster covers 17 of 99 counties** | open | — | The headline gap. It also caps the per-county pages: 26 counties have a board chair and no board list, so they get no page at all. |
-| Board chair roster is 38 of 99, and two files still say 43 | **stale record** | 2026-09-19 | #1016 dropped carried records with no `confirmedOn` and moved the file 43 → 38. The gap record and `ia/WATCH.md` both still read "43 of Iowa's 99". The gap record **ships to the Data gaps panel**, so this is a wrong number a reader can see. Fix both in one change. |
-| City card names nobody | open | — | `ia-city-contact.json` covers 939 cities with contact details; no officeholder names. |
-| Precinct card cannot say where to vote | open | — | no-source. |
-| Johnson County districts pending; Jones County absent from the state layer | open | — | Two county-level data-quality holes. |
+| **The chair gap record states a number the file no longer carries** | open | 2026-09-19 | `ia-board-chair`'s reader text says "in 43 of Iowa's 99 counties… In the other 56 it cannot". The file holds **38**, so it is 38 and 61. This ships to the Data gaps panel, so it is wrong on the page a reader opens. `ia/WATCH.md` line 39 carries the same 43. This session already has it — its own last summary names it. |
+| **Supervisor roster covers 17 of 99 counties** | open | — | The headline gap. It also caps the per-county pages: 26 counties have a chair and no board list, so they get no page at all. |
+| City card names nobody | open | — | `ia-city-contact.json` covers 939 cities with contact details and no officeholder names; 834 have no website at all. |
+| Precinct card cannot say where to vote | open | — | no-source. The polling-place precinct column was dropped upstream. |
+| Johnson County districts pending; Jones County absent from the state layer | open | — | Two county-level data-quality holes. Johnson's minutes host refuses `districtry` in robots.txt — that is the host's answer, not a bug. |
 | Marion ward card blocked | blocked | — | Access control. Never worked around. |
 
-**Do not re-probe the blocked counties with different headers.** Of 28
-unreachable county sites: 9 Cloudflare, 5 TLS name mismatch, 4 connection reset,
-2 TLS handshake, 1 Akamai, 7 this sandbox's proxy. Osceola is a captcha. A
-browser user-agent is not an option for any of them.
+**Do not re-probe the blocked counties with different headers.** Measured
+2026-09-06: of the 20 counties the gated run calls unreachable, nine answer 403
+and eight of those are Cloudflare, seven serving a managed challenge. A complete
+header set with this project's own user-agent moved none of them, and a browser
+user-agent is not an option. Polk is **withdrawn** rather than blocked — review
+could not reproduce it, so it is client-dependent.
 
-## Status — manager writes here until Iowa is assigned
+## Status — this session owns this section
 
-**2026-09-19.** Board created. No session is working Iowa. The stale 43/99 above
-is the one item with a reader-visible consequence.
+*(Iowa: replace this line. Say what you are working on, what you finished, and
+what you found. Date every entry, newest first.)*
 
 ## Open questions for Adam
 
-- Iowa has no session. Do you want one started, or should the supervisor-roster
-  work be picked up by an existing session?
+*(Iowa: anything you need a decision on.)*

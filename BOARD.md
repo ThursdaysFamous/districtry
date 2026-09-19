@@ -29,12 +29,18 @@ they are blocking something.
 |---|---|---|
 | `il/BOARD.md` | Illinois | Illinois |
 | `wi/BOARD.md` | Wisconsin | Wisconsin |
-| `ia/BOARD.md` | Iowa | **none — unassigned** |
+| `ia/BOARD.md` | Iowa | Iowa |
 | `mi/BOARD.md` | Michigan | Michigan |
 | `ny/BOARD.md` | New York City | NYC/SF |
 | `ca/BOARD.md` | San Francisco | NYC/SF |
 
-Six instances, four sessions. NYC/SF owns two boards; Iowa has no session.
+Six instances, five sessions. NYC/SF owns two boards.
+
+**Corrected 2026-09-19.** This table first said Iowa had no session. It does
+(`session_01GDDwuCzmWxgdbz3V8GHrjJ`, running since 2026-08-27). The manager
+inferred its absence from a session listing that omitted it — the one thing
+`docs/MANAGER.md` already says never to do. Query the id; a listing that does
+not show a session is not evidence the session is gone.
 
 ---
 
