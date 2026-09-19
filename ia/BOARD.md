@@ -42,6 +42,51 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-19, later — the workflow fix merged, and the roster PR's SECOND red
+was a different gate doing its job.** #1049 merged at 20:29 UTC, so
+`update-ia-supervisor-roster.yml` now regenerates llms.txt and next week's run
+will not repeat tonight's first failure.
+
+With llms.txt fixed, #1048's run got further and failed on
+`check_roster_retention.py` — Bremer (017) and Hamilton (079) VANISHED, three
+records each, with the gate's own instruction: *GO AND LOOK AT THE PAGE before
+accepting this.* **TWO GATES FAILED ON ONE PR FOR TWO UNRELATED REASONS, and
+assuming the second was the first would have been wrong twice in one evening.**
+
+*Went and looked*, with `robots_policy.fetch_verdict`, reading robots.txt only
+and never the refused pages, on both host spellings of each. Bremer answers
+HTTP 500 on /robots.txt — disallow-all under RFC 9309 and this project's own
+rule. Hamilton's /robots.txt redirects to
+`cms2.revize.com/revize/hamiltonia/robots.txt`, a PER-TENANT path and so
+Hamilton's own file rather than its CMS vendor's, whose `Disallow: /` at line 18
+is the longest match for /. Neither county stopped publishing; this project
+declines to read them. That is the Palo case already in `ACCEPTED_DROPS`, and
+the builder already carries both in `ROBOTS_REFUSED_DROPS`, which is why the run
+SUCCEEDED while dropping them.
+
+**Carrying the last-known supervisors forward is ruled out elsewhere rather than
+decided here**: `build_ia_county_chair.py`'s carry-forward takes `unreachable`
+and never a refusal, asserted by its own `--selftest`. Bremer's 500 is a robots
+file that could not be read, not a page that could not be fetched; either way
+the decision is to decline, so nothing may be carried.
+
+**AN ORDERING TRAP, MEASURED BEFORE IT COST ANYTHING.** The obvious move was a
+separate PR putting those entries on main. It would have been red by
+construction: on main the roster still carries both counties, and the gate's own
+stale-audit reads that and fails — "is STALE — the source `017` is back with 3
+record(s)". An accepted drop is only valid on the tree that already lost the
+source, which is why the Palo and Adams entries each landed in the change that
+caused their drop. The entries ride #1048 (`e859550`) and must not be ported.
+
+**#1048 is still NOT merged and is not mine to merge** — officeholder data,
+human review. Two commits of mine are on its branch to clear the two failures;
+if a re-run force-pushes that branch both are discarded and both failures
+return.
+
+*Unchanged and still proposed:* the `build_llms_txt.py --check` gate that would
+catch the other 60 workflows, and the two `SyntaxWarning`s in
+`build_county_pages.py`. Neither is started.
+
 **2026-09-19 — the supervisor run passed, the prediction held exactly, and its
 bot PR went red for a reason nobody was watching for.** The weekly job started
 19:30 UTC and SUCCEEDED: 15 Plan 3 counties, 61 districts. Mitchell keyed 5 of 5
