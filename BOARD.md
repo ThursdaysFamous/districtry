@@ -53,6 +53,7 @@ belongs on that instance's board instead.
 |---|---|---|---|
 | Roster workflows: regenerate shared pages after the branch cut (#1030 IL, #1031 WI) | IL + WI | in review | 2026-09-19 |
 | Absolute gate on every shipped officeholder name (#1025) | NYC/SF | in review | 2026-09-19 |
+| **#1025 and #1028 collide with no git conflict.** Merge #1028 first, then drop the Bartonville entry from #1025's `ACCEPTED_NAMES` before it merges, or main goes red on `validate_officeholder_names.py`. | NYC/SF | **blocking** | 2026-09-19 |
 | `privacy.html` understates three events sent through `shareCopyButton` | unassigned | open | 2026-09-18 |
 
 ## Status — manager writes here
