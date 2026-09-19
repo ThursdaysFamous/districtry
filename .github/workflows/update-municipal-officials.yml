@@ -86,6 +86,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # FULL history, because this job regenerates sitemap.xml and
+          # build_sitemap.py reads each page's lastmod from that file's own last
+          # commit. Under the default depth-1 checkout git reports the single
+          # fetched commit as the last commit of EVERY file, so every one of the
+          # 243 entries takes today's date. Measured 2026-09-19 by building the
+          # sitemap in a depth-1 clone: 243 of 243 lastmods moved, against 0 in a
+          # full clone, where `build_sitemap.py --check` passes.
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -683,33 +691,6 @@ jobs:
             gh issue create --title "$title" --body "$body"
           fi
 
-      # The history page's stat tiles are MEASURED from the roster file(s)
-      # this job rewrites, so regenerate it in the same run — otherwise the
-      # smoke gate's `build_history_page.py --check` fails on this PR with a
-      # tile that has drifted from the data it counts.
-      - name: Regenerate the history page
-        if: steps.build.outcome == 'success'
-        run: python3 scripts/build_history_page.py
-
-      # THE PAGE NAMES THESE PEOPLE AND COUNTS THEM IN ITS OWN PROSE, so it is
-      # regenerated in the same run. Both generators gate on it: skip this and
-      # the failure lands on THIS job's own pull request, where nobody wrote the
-      # change that broke it.
-      - name: Regenerate the township page
-        if: steps.build.outcome == 'success'
-        run: |
-          python3 scripts/build_concept_pages.py
-          python3 scripts/build_officeholder_tables.py
-
-      # The history page this job just rewrote is IN the sitemap, and the
-      # sitemap's lastmod is that file's own last commit -- so regenerate it in
-      # the same run, or the smoke gate's `build_sitemap.py --check` fails on
-      # this PR for a date nobody typed. Same guard as the step above: if the
-      # build did not run, the page did not change and neither did its date.
-      - name: Regenerate the sitemap
-        if: steps.build.outcome == 'success'
-        run: python3 scripts/build_sitemap.py
-
       # Gate the regenerated data before it can reach a PR: the app must still
       # parse and carry every layer, and every data/app file must be present
       # and well formed. node is preinstalled on ubuntu-latest.
@@ -721,7 +702,7 @@ jobs:
         id: diff
         if: steps.build.outcome == 'success'
         run: |
-          if git diff --quiet -- il/data/app/ il/township.html il/history.html; then
+          if git diff --quiet -- il/data/app/; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -747,10 +728,37 @@ jobs:
           # Re-cutting leaves this branch differing from main in its data file(s)
           # alone; the rebuilt files are carried across, and a run where main
           # touched those same files errors instead of pushing, which is right.
-          git fetch --depth=1 origin main
+          # Full history for the same reason as fetch-depth: 0 above — the
+          # sitemap's lastmods come from per-file git history, which a shallow
+          # fetch does not carry.
+          git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
+          # EVERY shared page is regenerated AFTER the cut, on top of main's
+          # current tree. Before 2026-09-19 the history page, the township page
+          # and the sitemap ran before it, which left them dirty at the
+          # checkout — and `git checkout -B` ABORTS when a dirty file differs
+          # between HEAD and FETCH_HEAD, so any other workflow merging a shared
+          # page mid-crawl killed this run. Measured on run 35391214303, where
+          # wi/history.html was dirty when #1014 merged. These jobs take tens of
+          # minutes, which is what makes the window wide.
+          #
+          # build_township_officials.py stays BEFORE the cut: it writes
+          # il/data/app/township-officials.json, a roster this job owns, and the
+          # change check has to see it.
+          #
+          # The township page names these people and counts them in its own
+          # prose, and the history page's stat tiles are MEASURED from the
+          # rosters, so both are regenerated here or their own --check fails on
+          # this job's pull request, where nobody wrote the change that broke it.
+          python3 scripts/build_history_page.py
+          python3 scripts/build_concept_pages.py
+          python3 scripts/build_officeholder_tables.py
           python3 scripts/build_about_page.py
-          git add il/data/app/municipal-officials.json il/data/app/cook-library-trustees.json il/data/app/township-officials.json il/township.html il/history.html about.html
+          # The sitemap runs LAST, after every page it dates, and sitemap.xml is
+          # added — it was regenerated before the cut and never added, so the
+          # dates this job moves went uncommitted.
+          python3 scripts/build_sitemap.py
+          git add il/data/app/municipal-officials.json il/data/app/cook-library-trustees.json il/data/app/township-officials.json il/township.html il/history.html about.html sitemap.xml
           git commit -m "Update municipal and township officials rosters from the county clerk directories"
           git push -u origin "$branch" --force
           # Only open a PR if one isn't already open for this branch; if it is,
