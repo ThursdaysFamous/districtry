@@ -40,6 +40,28 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-19 — the 38/61 correction is in review as #1034.** The
+`ia-board-chair` record said 43 of 99 and the other 56; the shipped file holds
+38, so the Data gaps panel was making a false statement to a reader. It reads 38
+and 61 now. `ia/WATCH.md` carried the same 43 and two figures that had moved with
+it — the per-route split is a weekly measurement (33 board pages, 4 minutes, 1
+carried on 2026-09-18, against 38 and 5 a week earlier), and **the floors stay at
+30 and 3** rather than following it down.
+
+The blocker log now carries the vantage correction I had only written on this
+board, appended with the superseded 2026-09-06 sandbox measurement left above it.
+The Actions runner reports **15** unreachable rather than 20, in a different
+shape, and **the eight answering HTTP 202 are new**: four of them resolved on
+2026-09-11 and were behind a challenge a week later. Nothing was re-probed. Polk
+now carries both readings with whose vantage each is.
+
+**Next: Mitchell County.** Re-read the page and fix the parser — not
+`--allow-drop`. The guard refused to write rather than drop five named
+supervisors, which is why the supervisor roster has been frozen since 2026-08-28,
+and talking a working guard out of its answer is not a fix. Then the
+`ia-county-officers.json` phone measurement, reported before anything is built,
+then the `len(chairs) - len(out)` one-liner.
+
 **2026-09-19 — board commits go straight to main.** Adam answered the question
 this section carried: the board rule wins, and board edits from this session
 push directly rather than riding a pull request. This entry is the first one
