@@ -68,7 +68,36 @@ data. Measured 2026-09-18 across 757 files, the three shapes below select
   * a flat record carrying a `title` plus a party, e-mail or phone, or one
     carrying both a phone and an e-mail — the shape Lake County writes every
     district in, and the shape of il/data/source/ward-members.json (Chicago's
-    50 alderpeople) and isbe-county-board-chairs.json (102 chairs).
+    50 alderpeople) and isbe-county-board-chairs.json (102 chairs);
+  * a flat record carrying a `party` — added 2026-09-19, see below.
+
+WHAT THE FIRST FOUR SHAPES COULD NOT SEE, and how that was found. The gate's
+own OK line said "10,986 person records ... in 6 instance(s)", which reads as
+fleet coverage and was not: measured per instance, New York contributed ZERO
+while shipping 380 published officeholders, San Francisco 2 and Michigan 60.
+Those three write rosters keyed district -> person — {"1": {"name": "Nick
+LaLota", "party": "Republican", ...}} — with no `role`, no person container and
+no `title`, so not one of the four shapes reached them.
+
+A PARTY IS THE ONE FIELD ONLY A PERSON CARRIES, so that is the fifth shape. A
+boundary, a building and a polling place all have a name and an address; none
+has a political party. Measured across the fleet it reaches 1,462 more records,
+239 of them New York's, and introduces ZERO new findings.
+
+KEYING ON `office` WAS THE OBVIOUS NEXT STEP AND IS MEASURED AND REJECTED. It
+would reach New York's council members, and it would also sweep in 549 Illinois
+municipality records, 29 township records and {"name": "Cicero Public Library",
+"office": {...}} — none of them people. All of them pass why_not_a_name(),
+because a village's name and a library's name are perfectly good names, so the
+gate would have gone green over a predicate that had stopped meaning what it
+says. The rejection is in SHAPE_SELFTEST beside the shapes that were adopted.
+
+SO NEW YORK'S 51 COUNCIL MEMBERS ARE STILL NOT EXAMINED, and the gate says so
+out loud rather than burying it in a total: every run prints the per-instance
+split, and an instance whose rosters it can see NOTHING in is named on a BLIND
+line. That is not a failure — an instance can legitimately ship geometry before
+it ships a roster, which is how Michigan arrived — but it can no longer be
+invisible.
 
 WHAT IS AND IS NOT A FINDING. A vacancy a county publishes is data, not a
 defect: "Vacant", "Not listed", "TBD" and their spellings pass, because
@@ -229,12 +258,51 @@ SELFTEST = [
 ]
 
 
+# THE SHAPE PREDICATE GETS ITS OWN TABLE, because it is the half that was
+# wrong. why_not_a_name() was tested from the first commit and is_person_record()
+# was not, and the untested half is the one that silently examined none of New
+# York's 380 published officeholders. (record, container) -> is it a person.
+SHAPE_SELFTEST = [
+    # The four original arms.
+    ({"name": "Jane Doe", "role": "Clerk"}, None, True),
+    ({"name": "Jane Doe"}, "members", True),
+    ({"name": "Jane Doe", "title": "Chair", "email": "j@x.gov"}, None, True),
+    ({"name": "Jane Doe", "phone": "555", "email": "j@x.gov"}, None, True),
+    # The arm added 2026-09-19. A party is the one field only a person has.
+    ({"name": "Nick LaLota", "party": "Republican"}, None, True),
+    # ...and it must not reach through a party attribute on a POLYGON.
+    ({"name": "District 5", "party": "R", "geometry": {}}, None, False),
+    # Places carry a name and an address exactly as a person does. Every one of
+    # these was a real false positive from a wider predicate that was measured
+    # and rejected: keying on `office` swept in 549 Illinois municipality
+    # records, 29 townships and one public library, all of which passed
+    # why_not_a_name() because their names are perfectly good names.
+    ({"name": "Cicero Public Library", "office": {"address": "5225 W. Cermak"}},
+     None, False),
+    ({"name": "ASHWAUBENON FIRE STATION NO. 2", "address": "x"}, None, False),
+    # A district is not a person, which is why this is a shape and not a field.
+    ({"name": "Precinct 3"}, None, False),
+    ({"name": "Harter V"}, None, False),
+    # KNOWN BLIND, and recorded rather than asserted away: New York's council
+    # roster is {district: {name, office}}, which is structurally identical to
+    # the library above. 51 real people this gate does not examine. Widening to
+    # reach them needs a signal that separates a person's office from a place's
+    # address, and no field in the fleet carries one today.
+    ({"name": "Christopher Marte", "office": "65 East Broadway"}, None, False),
+]
+
+
 def selftest():
     bad = []
     for value, want in SELFTEST:
         got = why_not_a_name(value)
         if got != want:
             bad.append("%r -> %r, expected %r" % (value, got, want))
+    for record, container, want in SHAPE_SELFTEST:
+        got = is_person_record(record, container)
+        if got != want:
+            bad.append("is_person_record(%r, %r) -> %r, expected %r"
+                       % (record, container, got, want))
     return bad
 
 
@@ -248,6 +316,12 @@ def is_person_record(node, container):
     if "title" in node and any(k in node for k in ("party", "email", "phone")):
         return True
     if "phone" in node and "email" in node and "geometry" not in node:
+        return True
+    # A political party is the one field in this fleet that ONLY a person
+    # carries. A boundary, a building and a polling place all have a name and
+    # an address; none of them has a party. This arm is what reaches the
+    # rosters keyed district -> person, which the four above miss entirely.
+    if "party" in node and "geometry" not in node:
         return True
     return False
 
@@ -298,7 +372,10 @@ def person_records(payload):
 
 def scan(root=REPO_ROOT):
     findings, examined, files = [], 0, 0
+    per_instance = {}
     for rel in roster_files(root):
+        tag = rel.split(os.sep)[0]
+        per_instance.setdefault(tag, 0)
         try:
             with open(os.path.join(root, rel), encoding="utf-8") as handle:
                 payload = json.load(handle)
@@ -308,10 +385,11 @@ def scan(root=REPO_ROOT):
         files += 1
         for path, record in person_records(payload):
             examined += 1
+            per_instance[tag] += 1
             reason = why_not_a_name(record["name"])
             if reason and (rel, record["name"]) not in ACCEPTED_NAMES:
                 findings.append((rel, path, record["name"], reason))
-    return findings, examined, files
+    return findings, examined, files, per_instance
 
 
 def audit_accepted(root=REPO_ROOT):
@@ -359,7 +437,7 @@ def main():
               % (len(tags), ", ".join(tags) or "none"), file=sys.stderr)
         sys.exit(1)
 
-    findings, examined, files = scan()
+    findings, examined, files, per_instance = scan()
     problems = audit_accepted()
 
     if args.report:
@@ -390,9 +468,27 @@ def main():
               "repo is reading wrongly.", file=sys.stderr)
         sys.exit(1)
 
+    # PRINT THE SPLIT, NEVER THE TOTAL ALONE. "in N instance(s)" counts
+    # instances DISCOVERED, not instances covered, and the two are different
+    # numbers: it read "6 instance(s)" while New York contributed 0 records of
+    # its own. A total plus an instance count reads as fleet coverage; the
+    # split is what shows where this gate can and cannot see.
+    split = "  ".join("%s %d" % (tag, per_instance.get(tag, 0))
+                      for tag in sorted(per_instance))
+    blind = [tag for tag in sorted(per_instance) if not per_instance.get(tag, 0)]
     print("validate_officeholder_names: OK — %d person record(s) across %d roster "
           "file(s) in %d instance(s), every name a name"
           % (examined, files, len(tags)))
+    print("  per instance: %s" % split)
+    if blind:
+        # NOT a failure: an instance can legitimately ship geometry before it
+        # ships a roster, which is how Michigan arrived. It is printed loudly
+        # because the alternative is that it stays invisible, which is the
+        # state New York was in — 380 named people, none of them examined.
+        print("  BLIND: %s ship roster files and this gate examines NO record in "
+              "them. Their names are not checked. Either their records match "
+              "none of is_person_record()'s shapes, or they carry no people yet."
+              % ", ".join(blind))
 
 
 if __name__ == "__main__":
