@@ -579,9 +579,17 @@ def ia_supervisors(inst):
         out[name] = {"districts": districts, "sourceUrl": rec.get("sourceUrl"),
                      "extras": [], "skipped": [], "slug": county_slug(name),
                      "at_large": False, "source_file": path}
+    # THE SET DIFFERENCE, NEVER len(chairs) - len(out). Subtracting the counts
+    # is only right if every county with a member list also has a chair, and
+    # nine do not (measured 2026-09-19: 38 chairs, 17 member lists, 8 counties
+    # with both, so 30 have a chair and no page). The subtraction printed 21.
+    # Both dicts are keyed by county name, and a county that named nobody is
+    # absent from `out` too, which is correct -- it has a chair and no page for
+    # a different reason but no page either way.
+    chairless = sorted(set(chairs) - set(out))
     note = ("%d of %d chair(s) joined; %d Iowa county board(s) have a published "
             "chair and no member list, so no page"
-            % (chaired, len(out), max(0, len(chairs) - len(out))))
+            % (chaired, len(out), len(chairless)))
     return out, problems, nameless, [path] + ([chair_path] if chairs else []), note
 
 
