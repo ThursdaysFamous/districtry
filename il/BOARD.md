@@ -30,6 +30,26 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-19, later.** #1028 merged (`d450c52`). Verified on main: 4,332 person
+records in `il/data/app/municipal-officials.json`, **zero** that fail
+`fabricated_name`, and the string `clerk@bartonville.org` appears nowhere in
+the file. Bartonville's phantom second Clerk is gone from what a reader
+downloads.
+
+**The #1025 collision predicted below is now live and measured.** Running that
+branch's `validate_officeholder_names.py` against merged main:
+
+    validate_officeholder_names: FAIL
+      - ACCEPTED_NAMES excuses '’s Email: clerk@bartonville.org' in
+        il/data/app/municipal-officials.json and that value is no longer there
+        — stale, remove it
+
+That is the gate working exactly as designed: an exception cannot outlive the
+fix that retires it. The fix is to delete that one `ACCEPTED_NAMES` entry from
+#1025 before it merges; its Plattville entry stays, because `Beth Fals 56` is
+still shipping. I have told the NYC/SF session and have not touched their
+branch.
+
 **2026-09-19.** Nothing in progress. Both Illinois PRs are in review and green,
 and I am not opening a third until they land or Adam picks the next item.
 
