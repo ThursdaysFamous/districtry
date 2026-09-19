@@ -81,6 +81,20 @@ jobs:
       - name: The Michigan board probe's artifact still describes the tree
         run: python3 mi/scripts/probe_mi_county_boards.py --check
 
+      # The weekly Detroit roster PR's title and body are written by this
+      # script, and a reviewer acts on "no officeholder changed" by NOT reading
+      # the diff — so a wrong summary is worse than the static paragraph it
+      # replaced. The selftest holds it to the stamp-only, rung-changed,
+      # seat-changed, at-large, link-only, unknown-field, new-roster and
+      # identical cases, and to the shipped roster carrying no field the
+      # summariser cannot classify. That last one is why it belongs in CI
+      # rather than only in the weekly job: a field added to the builder makes
+      # this fail HERE, on the PR that adds it, instead of silently widening
+      # what a Wednesday summary quietly leaves out.
+      # Stdlib only, no network.
+      - name: The Detroit roster summariser still describes that roster
+        run: python3 mi/scripts/summarize_detroit_roster_change.py --selftest
+
       # Wisconsin's county-board-directory.json carries each county's board
       # SIZE, and it reads that number back from the shipped supervisory
       # geometry rather than restating it — so the only way the two can

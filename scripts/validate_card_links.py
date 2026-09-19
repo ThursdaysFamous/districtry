@@ -439,9 +439,23 @@ EXPECTED_UNREACHABLE = {
     # NOTE the sibling that is NOT listed: data.detroitmi.gov answers 200 with a
     # readable robots.txt and never belonged in this class, which an earlier
     # record got wrong.
+    #
+    # THE BLOCK IS INTERMITTENT, AND THIS MONTHLY INVERSION DID NOT CATCH IT
+    # (measured 2026-09-19). mi/data/app/mi-detroit-council-members.json records
+    # which rung answered each week in `archivedAt`, and across the three
+    # commits that have ever written it the values are 20260831152830
+    # (2026-09-05, archive), null (2026-09-09 — THE DIRECT RUNG SERVED) and
+    # 20260912152333 (2026-09-16, archive). So "the day this answers" already
+    # arrived and passed unremarked: this check runs monthly and the weekly
+    # scraper is the faster witness. The entry STAYS — one success in three is
+    # not a lifted block, and the archive rung is still what makes the roster
+    # reliable — but the reason no longer states a one-day measurement as a
+    # standing property.
     "detroitmi.gov":
-        "Cloudflare managed challenge — the city refuses non-browser clients on every "
-        "path; the council roster rides the Internet Archive instead",
+        "Cloudflare managed challenge, intermittent — measured refusing the requests "
+        "and client-hints rungs on 2026-09-05 and serving the roster scraper's direct "
+        "rung on 2026-09-09; the council roster rides the Internet Archive when it "
+        "refuses",
     "chicagoelections.gov":
         "Cloudflare managed challenge — the Board of Election Commissioners' site "
         "refuses non-browser clients; the early-voting file is hand-transcribed",

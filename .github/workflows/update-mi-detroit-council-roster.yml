@@ -7,13 +7,22 @@ name: Update Detroit council roster
 # the district member so the card does not answer seven ninths of the question
 # and look complete doing it.
 #
-# THE SOURCE IS UNREACHABLE AND THE ROSTER IS STILL WEEKLY. detroitmi.gov sits
-# behind a Cloudflare managed challenge on every path and every rung this
-# project is willing to use, so the scraper's terminal rung reads the Internet
-# Archive's copy of the city's own council page — the same rung Kendall and
-# McHenry have used since 2026-07. A snapshot older than 45 days is REFUSED
-# rather than served, so this cannot go quietly stale: the run fails loudly and
-# a human looks, which is the whole point of the ceiling.
+# THE SOURCE IS INTERMITTENT AND THE ROSTER IS WEEKLY. detroitmi.gov usually
+# answers this client with a Cloudflare managed challenge, which this project
+# never defeats, so the scraper's fallback rung reads the Internet Archive's
+# copy of the city's own council page — the same rung Kendall and McHenry have
+# used since 2026-07. A snapshot older than 45 days is REFUSED rather than
+# served, so this cannot go quietly stale: the run fails loudly and a human
+# looks, which is the whole point of the ceiling.
+#
+# CORRECTED 2026-09-19: this comment, mi/WATCH.md, the builder's docstring and
+# scripts/validate_card_links.py all said the city refuses on EVERY path and
+# every rung, and this file's own committed history disproves it. Across the
+# three commits that have ever written the roster, `archivedAt` reads
+# 20260831152830 (2026-09-05, archive), null (2026-09-09, THE DIRECT RUNG
+# SERVED) and 20260912152333 (2026-09-16, archive). The block is intermittent.
+# Nobody noticed for ten days because the PR body was one static paragraph —
+# which is what the summariser wired in below exists to fix.
 
 on:
   schedule:
@@ -68,6 +77,38 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
+      # SAY WHAT THIS RUN ACTUALLY MOVED. Both refreshes this workflow had ever
+      # opened (#831 and #979) changed `archivedAt` and nothing else, while the
+      # body said "this changes data about real officeholders. Please review the
+      # diff before merging" — false on two of two, which is how a reviewer
+      # learns to skim the one week it matters.
+      #
+      # This runs BEFORE the branch checkout below, because it needs the copy on
+      # main, which is still what HEAD points at here; the scraper and builder
+      # have already overwritten the working-tree file.
+      #
+      # WHY THAT IS SAFE EVEN THOUGH THE STEP BELOW RE-BASES ON main's CURRENT
+      # TIP: the summary is computed against this checkout's HEAD, and the only
+      # way FETCH_HEAD's copy of the roster can differ from it is if main
+      # changed that same file mid-run — in which case `git checkout -B` refuses
+      # outright ("Your local changes to the following files would be
+      # overwritten by checkout", exit 1, verified 2026-09-19) and the job fails
+      # rather than shipping a summary written against the wrong base. Where the
+      # checkout succeeds, the two copies are identical by construction.
+      - name: Summarise what changed, for the PR
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git show HEAD:mi/data/app/mi-detroit-council-members.json > /tmp/roster-on-main.json
+          python3 mi/scripts/summarize_detroit_roster_change.py \
+            --old /tmp/roster-on-main.json \
+            --new mi/data/app/mi-detroit-council-members.json \
+            --title > /tmp/pr-title.txt
+          python3 mi/scripts/summarize_detroit_roster_change.py \
+            --old /tmp/roster-on-main.json \
+            --new mi/data/app/mi-detroit-council-members.json > /tmp/pr-body.md
+          echo "--- title ---"; cat /tmp/pr-title.txt
+          echo "--- body ---";  cat /tmp/pr-body.md
+
       - name: Open or update pull request
         if: steps.diff.outputs.changed == 'true'
         env:
@@ -86,16 +127,30 @@ jobs:
           git fetch --depth=1 origin main
           git checkout -B "$branch" FETCH_HEAD
           git add mi/data/app/mi-detroit-council-members.json
-          git commit -m "Update Detroit council roster"
+          # The commit message carries the same verdict as the PR title, so
+          # `git log` on main reads as what each week actually did rather than
+          # as a column of identical lines.
+          git commit -m "$(cat /tmp/pr-title.txt)"
           git push -u origin "$branch" --force
-          # Only open a PR if one isn't already open for this branch; if it is,
-          # the force-push above already updated it.
+          # --body-file, never an inline multi-line --body: a `run: |` block
+          # scalar ends at the first line indented less than the block, so a
+          # multi-paragraph --body written the obvious way truncates the script
+          # mid-string and GitHub rejects the whole file (the measured failure
+          # scripts/validate_workflow_deps.py's check_parseable() exists for).
+          #
+          # An open PR gets its TITLE AND BODY refreshed too. The branch is
+          # fixed and force-pushed, so without this an unmerged PR would carry
+          # last week's verdict over this week's diff — which is the same
+          # defect as a static body, one week deep.
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
             gh pr create \
-              --title "Update Detroit council roster" \
-              --body "Automated weekly refresh of the \`detroit-council\` card's roster — Detroit's nine City Council members, seven by district and two at large. Generated by \`mi/scripts/mi_detroit_council_scraper.py\` into \`mi/scripts/build_mi_detroit_council_roster.py\`. THE SOURCE IS THE CITY'S OWN COUNCIL PAGE READ THROUGH THE INTERNET ARCHIVE: detroitmi.gov refuses this client with a Cloudflare managed challenge, which this project does not defeat, so the terminal rung reads a public archive of that same page and the card prints which day's copy it used. A snapshot older than 45 days is refused rather than served. No phone or e-mail is carried because the city publishes none on either surface (gap \`detroit-council-contact\`). Please review the diff before merging — this changes data about real officeholders." \
+              --title "$(cat /tmp/pr-title.txt)" \
+              --body-file /tmp/pr-body.md \
               --base main \
               --head "$branch"
           else
             echo "PR already open for $branch; force-push refreshed it."
+            gh pr edit "$branch" \
+              --title "$(cat /tmp/pr-title.txt)" \
+              --body-file /tmp/pr-body.md
           fi
