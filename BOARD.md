@@ -20,6 +20,25 @@ rather than in a session's head.
 - **No generator and no CI gate**, deliberately. This is hand-written markdown
   until it earns machinery. The manager reports a stale board to Adam rather
   than failing anyone's merge over it.
+- **A question goes in Open questions, never into a session's own chat.**
+  Adam's instruction, 2026-09-19: questions are "sent to their boards for you to
+  invest and bring to my attention here". Adam does not read the state sessions;
+  he reads the manager session. A question asked in a session's own turn is a
+  question nobody answers, and it stalls that session while looking like
+  progress. Write it dated, with what was measured, what the options are, what
+  each costs, and which the session would pick — a question carrying a
+  recommendation is far easier to answer than an open one. The manager settles
+  what it can and puts the rest to Adam. A question that blocks everything says
+  the word **blocking**, and is escalated rather than waiting for the next board
+  pass.
+- **The manager merges the state sessions' PRs.** Standing authority from Adam,
+  2026-09-19, and his instruction to the sessions to accept it. No session waits
+  on him for a pull request and none asks per PR. It lowers no bar: every merge
+  is verified on the MERGED tree rather than from a PR body, and a PR that
+  cannot be verified is held and reported. Holds are the mechanism working —
+  #1018 is held because a bot shipped a name with a zero in it. It is not
+  authority for a session to merge its own PR. Adam's own SEO and branding
+  session is outside all of this, as it always was.
 
 **Reporting.** The manager reports to Adam what changed **for a reader of the
 site**. CI plumbing, gate counts and session bookkeeping are not reported unless
