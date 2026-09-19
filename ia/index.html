@@ -9292,6 +9292,11 @@ function initIowaExplorer() {
           member: member || null,
           memberSourceUrl: keyed ? keyed.sourceUrl : null,
           boardPhone: keyed ? keyed.boardPhone : null,
+          // A PRESERVED COUNTY carries the day it was last actually read and
+          // why it is no longer re-read. Both are absent on a county keyed
+          // this week, which is what makes the card's silence meaningful.
+          asOf: keyed ? keyed.asOf : null,
+          asOfWhy: keyed ? keyed.asOfWhy : null,
           county: findPropCI(props, ["county"]),
           district: district,
           plantype: findPropCI(props, ["plantype"]),
@@ -9362,6 +9367,21 @@ function initIowaExplorer() {
       }
       if (result.population != null) {
         rows.push({ label: "2020 population", value: Number(result.population).toLocaleString() });
+      }
+      // THE PAGE'S OWN "Data last verified" DATE IS INSTANCE-WIDE AND WOULD
+      // BE A FALSE CLAIM HERE. This county's board page is no longer read —
+      // its robots.txt refuses this client — so the supervisor named above is
+      // a capture from a date, kept because it was fetched legitimately while
+      // the county was serving, and dated because nothing re-confirms it. The
+      // Wisconsin precedent is the county-clerk card's own "As of" row.
+      if (result.member && result.asOf) {
+        rows.push({
+          label: "As of",
+          value: "This county's supervisors were last read from its own board page on "
+            + String(result.asOf) + " and are not re-read. "
+            + (result.asOfWhy ? String(result.asOfWhy) + " " : "")
+            + "They will go out of date."
+        });
       }
       wrap.appendChild(renderFieldStack(rows));
       return wrap;

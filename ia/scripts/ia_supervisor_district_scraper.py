@@ -88,6 +88,7 @@ Usage:
 """
 
 import html
+import datetime as dt
 import json
 import os
 import re
@@ -648,8 +649,15 @@ def main():
                             % (len(names), seats[county])))
             continue
 
+        # `readOn` IS THE DATE THE PAGE WAS ACTUALLY READ, and it is stamped
+        # HERE rather than in the builder because the builder's clock is not
+        # the scrape's: a builder run against a week-old cache would otherwise
+        # date every county today. It is what a preserved county's card shows
+        # a reader, so it has to mean the read and nothing else. (The Wisconsin
+        # precedent, build_wi_county_officer_roster.py's `contactReadOn`.)
         out[county] = {"districts": {str(v): k for k, v in keyed.items()},
-                       "sourceUrl": page, "maxGap": widest}
+                       "sourceUrl": page, "maxGap": widest,
+                       "readOn": dt.date.today().isoformat()}
         flag = "  <-- WIDE" if widest > MAX_OBSERVED_GAP else ""
         print("%-14s %d district(s) keyed, widest gap %2d%s  %s"
               % (county, len(keyed), widest, flag, page), file=sys.stderr)

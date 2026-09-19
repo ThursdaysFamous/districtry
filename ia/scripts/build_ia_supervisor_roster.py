@@ -53,7 +53,7 @@ before its first fetch and caches {"robotsRefused": <why>} for a county whose
 own file says this client may not read it. That is the site's answer and it
 does not heal by next Saturday, so the drop guard below would otherwise fail
 this job every week for ever. It is excused -- but only where the refusal is
-BOTH reported by this run and recorded in ROBOTS_REFUSED_DROPS with what was
+BOTH reported by this run and recorded in ROBOTS_REFUSED_PRESERVED with what was
 measured, because a county newly reported refused is also what a bug in the
 robots read looks like, and the floors cannot see two counties leave.
 
@@ -63,6 +63,7 @@ Usage:
     python3 ia/scripts/build_ia_supervisor_roster.py --check
 """
 
+import datetime as dt
 import json
 import os
 import sys
@@ -78,6 +79,8 @@ OUT = os.path.join(APP_DATA_DIR, "ia-supervisor-members.json")
 
 # Floor, not a target: 20 of the 39 plan 3 counties published a keyable page on
 # 2026-08-28 (the rest 403, sit behind a captcha, or name no district at all).
+TODAY = dt.date.today().isoformat()
+
 MIN_COUNTIES = 12
 MIN_DISTRICTS = 40
 
@@ -101,21 +104,46 @@ MIN_DISTRICTS = 40
 # run; an entry whose county keys again is STALE and FAILS, and one naming a
 # county that is not a plan 3 county any more is ORPHANED and FAILS. Neither
 # can sit here quietly after it stops being true.
-ROBOTS_REFUSED_DROPS = {
-    "Bremer": (
-        "2026-09-13: bremercounty.iowa.gov and www.bremercounty.iowa.gov both "
-        "answer HTTP 500 on /robots.txt -- five reads over 40 s -- while the "
-        "site's own home page serves 178 KB. RFC 9309 and this project file a "
-        "5xx on robots.txt as disallow-all, so a broken endpoint on a working "
-        "site costs the county until it is fixed. Retires itself on the run "
-        "that URL answers."),
-    "Hamilton": (
-        "2026-09-13: hamiltoncounty.iowa.gov redirects /robots.txt to its CMS "
-        "vendor's per-tenant path, cms2.revize.com/revize/hamiltonia/robots.txt "
-        "-- Hamilton's own file rather than Revize's -- which gives five named "
-        "search-engine tokens Allow: / and `*` Disallow: /. No token this repo "
-        "sends is a vendor crawler token, so `*` binds us."),
+ROBOTS_REFUSED_PRESERVED = {
+    "Bremer": {
+        "why": (
+            "2026-09-13: bremercounty.iowa.gov and www.bremercounty.iowa.gov "
+            "both answer HTTP 500 on /robots.txt -- five reads over 40 s -- "
+            "while the site's own home page serves 178 KB. RFC 9309 and this "
+            "project file a 5xx on robots.txt as disallow-all, so a broken "
+            "endpoint on a working site costs the county until it is fixed. "
+            "Re-verified 2026-09-19 on both spellings, still 500. Retires "
+            "itself on the run that URL answers."),
+        "cardNote": (
+            "Bremer County's robots.txt has not been readable since 13 "
+            "September 2026, which this app reads as a refusal, so it no "
+            "longer re-reads the county's board page."),
+        "seedReadOn": "2026-08-28",
+    },
+    "Hamilton": {
+        "why": (
+            "2026-09-13: hamiltoncounty.iowa.gov redirects /robots.txt to its "
+            "CMS vendor's per-tenant path, "
+            "cms2.revize.com/revize/hamiltonia/robots.txt -- Hamilton's own "
+            "file rather than Revize's -- which gives five named search-engine "
+            "tokens Allow: / and `*` Disallow: /. No token this repo sends is "
+            "a vendor crawler token, so `*` binds us. Re-verified 2026-09-19 "
+            "on both spellings, still Disallow."),
+        "cardNote": (
+            "Hamilton County's robots.txt asks automated clients not to read "
+            "the site, so this app no longer re-reads the county's board "
+            "page."),
+        "seedReadOn": "2026-08-28",
+    },
 }
+
+# THE SEED DATES ARE MEASURED, NOT ASSUMED. Both counties' records were last
+# written to ia-supervisor-members.json by commit bce3108 on 2026-08-28 -- the
+# last weekly run that read them before the refusals were recorded -- so that
+# is the day the shipped names were last confirmed against the county's own
+# page, and it is what a preserved card shows a reader. After the first run
+# under this change the date rides the file itself as `readOn` and these seeds
+# are never consulted again.
 
 
 def load(path, what):
@@ -146,6 +174,19 @@ def main():
             board_phone_by_county[rec["county"]] = rec["boardPhone"]
 
     cache = load(CACHE, "supervisor district cache -- run the scraper first")
+
+    # THE ROSTER THIS RUN IS ABOUT TO OVERWRITE, read in FULL rather than as
+    # district counts. It is two things at once: the Grundy guard below still
+    # asks whether a county that shipped last week keyed nothing this week,
+    # and the preservation pass needs the county's actual records to carry
+    # forward. Reading it once, here, is what lets both happen before the
+    # floors are measured -- a preserved county ships, so it counts.
+    try:
+        with open(OUT) as f:
+            prev = {rec["county"]: rec for rec in json.load(f).values()}
+    except (OSError, ValueError):
+        prev = {}
+    was = {c: len(r["districts"]) for c, r in prev.items()}
 
     directory, skipped, refused_now = {}, [], {}
     for county in sorted(cache):
@@ -209,12 +250,53 @@ def main():
             "county": county,
             "districts": members,
             "sourceUrl": entry.get("sourceUrl"),
+            # The date the SCRAPE read this page, never this process's clock.
+            # It is present on every county, read or preserved, because a
+            # field that appears only on successfully-read counties is one
+            # check_roster_retention reads as VANISHING the week a county
+            # fails -- the defect Wisconsin removed on 2026-09-18 after it
+            # turned a roster PR red that changed nobody.
+            "readOn": entry.get("readOn") or (prev.get(county) or {}).get("readOn") or TODAY,
         }
         # The board office's own number, county-level and labelled as such on
         # the card. One number shared by every supervisor is a switchboard.
         if board_phone_by_county.get(county):
             rec["boardPhone"] = board_phone_by_county[county]
         directory[fips_by_county[county]] = rec
+
+    # PRESERVATION. Fleet policy, ruled by Adam on 2026-09-19: PRESERVE DATA WE
+    # HAVE ALREADY FETCHED. A robots refusal stops this project READING a
+    # county; it does not require it to unpublish supervisors it fetched
+    # legitimately while the county was serving. Iowa was the outlier --
+    # Illinois preserves (PRESERVABLE in build_municipal_officials_roster.py)
+    # and Wisconsin re-asks an unreachable verdict before believing it -- and
+    # this is the file that deleted.
+    #
+    # WHAT IS PRESERVED IS THE RECORD, AND WHAT IS NOT PRESERVED IS THE CLAIM
+    # THAT IT IS CURRENT. A carried county keeps its members and gains `asOf`
+    # and `asOfWhy`, which the card renders instead of the instance-wide
+    # "Data last verified" date -- that date would otherwise assert a
+    # verification this run did not perform on this county.
+    preserved = []
+    for county in sorted(refused_now):
+        recorded = ROBOTS_REFUSED_PRESERVED.get(county)
+        if not recorded:
+            # Not recorded: the drop guard below stops the build, which is the
+            # point. A newly refused county is indistinguishable from a bug in
+            # the robots read until somebody looks at the host.
+            continue
+        carried = prev.get(county)
+        if not carried:
+            # Nothing was ever fetched, so there is nothing to preserve. The
+            # county simply does not ship, and says so in the skip list above.
+            continue
+        rec = dict(carried)
+        read_on = carried.get("readOn") or recorded["seedReadOn"]
+        rec["readOn"] = read_on
+        rec["asOf"] = read_on
+        rec["asOfWhy"] = recorded["cardNote"]
+        directory[fips_by_county[county]] = rec
+        preserved.append((county, read_on, len(rec["districts"])))
 
     # The scraper caps the name-to-district gap at PROXIMITY_CHARS, so this is
     # a tripwire rather than a second gate: counties publish this pairing
@@ -243,38 +325,41 @@ def main():
     # --allow-drop <County>, in the run that makes it.
     argv = sys.argv[1:]
     allowed_drops = {argv[i + 1] for i, a in enumerate(argv) if a == "--allow-drop"}
-    try:
-        with open(OUT) as f:
-            was = {rec["county"]: len(rec["districts"]) for rec in json.load(f).values()}
-    except (OSError, ValueError):
-        was = {}
 
-    # ROBOTS_REFUSED_DROPS, re-audited against THIS run before it is allowed to
-    # excuse anything. An entry that has stopped being true is a hole in the
-    # guard with nothing saying so, which is the failure mode every recorded
-    # exception in this repo is written to avoid.
+
+    # ROBOTS_REFUSED_PRESERVED, re-audited against THIS run before it is
+    # allowed to carry anything forward. An entry that has stopped being true
+    # is a hole in the guard with nothing saying so, which is the failure mode
+    # every recorded exception in this repo is written to avoid. BOTH AUDITS
+    # SURVIVE THE RENAME UNCHANGED: they are what make the table trustworthy,
+    # and preserving rather than dropping does not weaken either.
     plan3 = {c for c, plan in plan_by_county.items() if plan == "PLAN 3"}
-    for county in sorted(ROBOTS_REFUSED_DROPS):
-        why = ROBOTS_REFUSED_DROPS[county]
+    for county in sorted(ROBOTS_REFUSED_PRESERVED):
+        why = ROBOTS_REFUSED_PRESERVED[county]["why"]
         if county not in plan3:
             raise RuntimeError(
-                "ROBOTS_REFUSED_DROPS names %s, which is not a plan 3 county in "
+                "ROBOTS_REFUSED_PRESERVED names %s, which is not a plan 3 county "
                 "the shipped geometry -- the entry is orphaned and should go"
                 % county)
         if county in cache and county not in refused_now:
             raise RuntimeError(
-                "ROBOTS_REFUSED_DROPS names %s, but this run read its site "
+                "ROBOTS_REFUSED_PRESERVED names %s, but this run read its site "
                 "without being refused -- the entry is stale. Retire it; the "
                 "county keys again like any other." % county)
         state = "refused this run" if county in refused_now else "not read this run"
-        print("  robots-refused %-12s %s | %s" % (county, state, why),
+        held = next((p for p in preserved if p[0] == county), None)
+        print("  robots-refused %-12s %s | %s | %s"
+              % (county, state,
+                 "PRESERVED %d district(s), last read %s" % (held[2], held[1])
+                 if held else "nothing preserved -- never fetched",
+                 why),
               file=sys.stderr)
 
     # A refusal excuses a drop only where it is BOTH reported by this run and
     # recorded above. A county newly refused and not recorded stops the build,
     # which is the point: that is indistinguishable from a bug in the robots
     # read until somebody looks at the host.
-    excused = {c for c in refused_now if c in ROBOTS_REFUSED_DROPS}
+    excused = {c for c in refused_now if c in ROBOTS_REFUSED_PRESERVED}
     gone = sorted(set(was) - {r["county"] for r in directory.values()}
                   - allowed_drops - excused)
     if gone:
@@ -285,7 +370,7 @@ def main():
             % (", ".join("%s (%d districts)" % (c, was[c]) for c in gone),
                "" if not (set(gone) & set(refused_now)) else
                ". Refused by its own robots.txt: %s -- record each in "
-               "ROBOTS_REFUSED_DROPS with what was measured, rather than "
+               "ROBOTS_REFUSED_PRESERVED with what was measured, rather than "
                "dropping it by hand"
                % ", ".join(sorted(set(gone) & set(refused_now)))))
 
@@ -300,9 +385,20 @@ def main():
                                    "name/party may ship on a supervisor"
                                    % (fips, dist, sorted(extra)))
 
-    print("ia-supervisor-members: %d plan 3 counties, %d districts keyed, %d "
-          "skipped | widest name-to-district gap %d chars"
-          % (len(directory), total_districts, len(skipped), widest), file=sys.stderr)
+    # A PRESERVED COUNTY IS NOT SKIPPED AND MUST NOT PRINT AS ONE. It ships
+    # its supervisors; what it does not get is a fresh read. The loop above
+    # files it under `skipped` before the preservation pass exists, so it is
+    # filtered out here rather than being counted twice in one run's log.
+    held_counties = {c for c, _, _ in preserved}
+    skipped = [(c, why) for c, why in skipped if c not in held_counties]
+    print("ia-supervisor-members: %d plan 3 counties, %d districts keyed, "
+          "%d preserved, %d skipped | widest name-to-district gap %d chars"
+          % (len(directory) - len(preserved), total_districts, len(preserved),
+             len(skipped), widest), file=sys.stderr)
+    for county, read_on, n in preserved:
+        print("  preserved %-13s %d district(s), last read %s -- robots.txt "
+              "refuses this client, so the county is not re-read"
+              % (county, n, read_on), file=sys.stderr)
     for county, why in skipped:
         print("  skipped %-14s %s" % (county, why), file=sys.stderr)
 

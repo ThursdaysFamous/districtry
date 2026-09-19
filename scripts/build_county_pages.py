@@ -578,7 +578,11 @@ def ia_supervisors(inst):
             continue
         out[name] = {"districts": districts, "sourceUrl": rec.get("sourceUrl"),
                      "extras": [], "skipped": [], "slug": county_slug(name),
-                     "at_large": False, "source_file": path}
+                     "at_large": False, "source_file": path,
+                     # Present only on a county this project no longer reads.
+                     # Their absence is what lets every other county keep the
+                     # "re-read on a schedule" sentence, which is true of it.
+                     "asOf": rec.get("asOf"), "asOfWhy": rec.get("asOfWhy")}
     # THE SET DIFFERENCE, NEVER len(chairs) - len(out). Subtracting the counts
     # is only right if every county with a member list also has a chair, and
     # nine do not (measured 2026-09-19: 38 chairs, 17 member lists, 8 counties
@@ -1082,6 +1086,18 @@ def source_note(rec, at_large):
                         "county's own published roster</a>." % esc(rec["sourceUrl"]))
         if rec.get("verified"):
             bits.append("Verified %s." % esc(rec["verified"]))
+    elif rec.get("sourceUrl") and rec.get("asOf"):
+        # A PRESERVED COUNTY IS NOT RE-READ ON A SCHEDULE, so it must not say
+        # it is. Its roster was fetched legitimately while the county was
+        # serving and is kept (fleet policy, 2026-09-19: preserve data we have
+        # already fetched), but nothing re-confirms it, and the sentence below
+        # would assert a verification this project no longer performs on this
+        # county. The date is what tells a reader how much to trust the names.
+        bits.append('Source: <a href="%s" rel="noopener" target="_blank">the '
+                    "county's own published roster</a>, last read %s and no "
+                    "longer re-read. %s These names will go out of date."
+                    % (esc(rec["sourceUrl"]), esc(rec["asOf"]),
+                       esc(rec.get("asOfWhy") or "").strip()))
     elif rec.get("sourceUrl"):
         bits.append('Source: <a href="%s" rel="noopener" target="_blank">the '
                     "county's own published roster</a>, re-read on a schedule "
