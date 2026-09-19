@@ -29,6 +29,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # FULL history, because this job regenerates sitemap.xml and
+          # build_sitemap.py reads each page's lastmod from that file's own last
+          # commit. Under the default depth-1 checkout git reports the single
+          # fetched commit as the last commit of EVERY file, so every one of the
+          # 243 entries takes today's date. Measured 2026-09-19 by building the
+          # sitemap in a depth-1 clone: 243 of 243 lastmods moved, against 0 in a
+          # full clone, where `build_sitemap.py --check` passes.
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
@@ -41,14 +49,12 @@ jobs:
         # with no name, on a missing Board President, or on a field that drops
         # below its floor.
         run: python3 scripts/build_cook_county_board.py cook_board.json
-      - name: Regenerate the page that names them
-        run: python3 scripts/build_county_pages.py
       - name: Validate app + data files
         run: python3 scripts/validate_index.py il/index.html
       - name: Check for changes
         id: diff
         run: |
-          git diff --quiet -- il/data/source/cook-county-board-members.json il/county-board \
+          git diff --quiet -- il/data/source/cook-county-board-members.json \
             && echo "changed=false" >> "$GITHUB_OUTPUT" \
             || echo "changed=true" >> "$GITHUB_OUTPUT"
       - name: Open or update pull request
@@ -64,7 +70,10 @@ jobs:
           # that also differs from main in .github/workflows/ reads to GitHub as
           # a workflow update and is refused for a token without `workflow`
           # scope.
-          git fetch --depth=1 origin main
+          # Full history for the same reason as fetch-depth: 0 above — the
+          # sitemap's lastmods come from per-file git history, which a shallow
+          # fetch does not carry.
+          git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
           python3 scripts/cook_county_board_scraper.py --out cook_board.json
           python3 scripts/build_cook_county_board.py cook_board.json

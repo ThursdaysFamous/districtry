@@ -19,13 +19,50 @@ instance rather than the worst-maintained one.
 
 | task | state | opened | notes |
 |---|---|---|---|
-| Bartonville's phantom Clerk (#1028) | in review | 2026-09-19 | Fixes the parse first, then widens the guard. Removes one fabricated name a reader can see today. |
-| Six roster workflows: shared pages after the branch cut (#1030) | in review | 2026-09-19 | Stops weekly jobs dying when another workflow merges mid-crawl. Also deepens the checkout so sitemap dates are real. |
-| Will County municipal directory is blocked (#982, #996, #1026) | blocked | 2026-09-08 | The county's directory sits behind a vendor managed challenge. Will is in `REQUIRED_COUNTIES`, so the **whole** municipal roster has not rebuilt since 2026-09-08. Never worked around. |
-| Plattville's Clerk ships as `Beth Fals 56` | open | 2026-08-01 | Kendall's yearbook parser reads past the end of its section. The name must be **dropped, not repaired** to `Beth Fals` — the Douglas County rule. Currently held in `ACCEPTED_NAMES`. |
+| **Hancock's weekly roster PR ships a corrupted name (#1018) — HELD, not merged** | **open** | 2026-09-19 | `Jo0n Mason` carries a zero where an `h` belongs. `Alex Blythe` → `Billy Cramer` lands in the same run and is suspect for that reason alone. The builder's only drift guard is the member COUNT — fifteen in, fifteen out — which is the Rock Island shape. Find the cause: read what the county is serving now, establish whether one name is wrong or both, fix the parser. **Do not hand-correct `Jo0n` to `John`** — a slipped parser makes the surname as suspect as the given name, and repairing a guess produces a more convincing guess. #1025's gate now refuses it (`digits in it`), so a rebase should turn that PR red. |
+| Reddick Fire lost its office address and phone (#1023, merged) | open | 2026-09-19 | Merged because the filing moved `filedFor` 2025 → 2026, so it is a NEW Annual Financial Report rather than a re-parse of the same one, and a sparser form is what that source legitimately produces. But a reader who clicked Reddick Fire yesterday saw an address and a phone and today sees neither, and SUE BERGAN moved Treasurer → C.E.O. while ROBERT LOWERY left entirely. Worth one look at the actual filing to confirm the district filed it that way. |
+| **#1025 and #1028 collide with no git conflict — merge order matters** | **blocking** | 2026-09-19 | Found by this session and verified by the manager on both branches. #1025's `ACCEPTED_NAMES` excuses Bartonville's `’s Email: clerk@bartonville.org`; #1028 deletes exactly that value; different files, so git reports nothing. Either order leaves main failing `validate_officeholder_names.py` on "stale, remove it". Order: **#1028 first, then drop the Bartonville entry from #1025 before it merges.** The edit is NYC/SF's to make — routed to them 2026-09-19. Illinois offered and correctly did not touch another session's branch. |
+| Bartonville's phantom Clerk (#1028) | in review | 2026-09-19 | Fixes the parse first, then widens the guard. Removes one fabricated name a reader can see today. Merge this before #1025. |
+| Six roster workflows: shared pages after the branch cut (#1030) | in review | 2026-09-19 | Stops weekly jobs dying when another workflow merges mid-crawl, and deepens the checkout so sitemap dates are real. |
+| Will County municipal directory is blocked (#982, #996, #1026) | blocked | 2026-09-08 | The county's directory sits behind a vendor managed challenge. Will is in `REQUIRED_COUNTIES`, so the **whole** municipal roster has not rebuilt since 2026-09-08 — 37 counties' mayors and council members are eleven days old, and every weekly run refuses the build and reports success, so nothing goes red. Ask 28 is the only route and is drafted, unsent. Never worked around. |
+| Plattville's Clerk ships as `Beth Fals 56` | open | 2026-08-01 | **Corrected 2026-09-19:** this board first said the value was held in `ACCEPTED_NAMES`. It is not — that table arrives with #1025 and is not on main, so the name is simply shipping and has been since 2026-08-01. Must be **dropped, not repaired** to `Beth Fals` — the Douglas County rule. |
+| General Assembly roster is stale | open | 2026-09-19 | Raised by this session; the manager had it nowhere. Measured on main: `il-house-members.json` last moved 2026-09-08, `il-senate-members.json` 2026-09-02. Its workflow failed on 09-14 and was fixed on 09-18, so the next scheduled run is the first test. Reader-facing — these are the people on the state House and Senate cards. |
+| Logan County's 11 municipalities and 65 officials are frozen | blocked | — | The county's own robots.txt disallows the directory the Clerk's yearbook sits under. That is the host's answer. |
 | 2 of 64 districted board cards name no office | open | 2026-09-15 | Down from 50 on 2026-09-06. The long tail. |
 
 ## Status — this session owns this section
+
+**2026-09-19, later still.** #1030 merged (`5338913`), so both Illinois PRs are
+in and nothing from this session is in review. Verified on main: all six roster
+workflows now run **zero** shared-page generators before the branch cut and run
+them after, every checkout carries `fetch-depth: 0`, and all 131 workflow files
+parse. Wisconsin's equivalent (#1031) landed straight after.
+
+What this fixes for a reader is indirect but real: those six weekly jobs were
+dying whenever another workflow merged a shared page mid-crawl, and a job that
+dies opens no pull request, so the roster it refreshes silently stayed frozen.
+It also stops every bot roster PR rewriting all 243 sitemap dates — the shallow
+checkout made every page claim it changed that day.
+
+**2026-09-19, later.** #1028 merged (`d450c52`). Verified on main: 4,332 person
+records in `il/data/app/municipal-officials.json`, **zero** that fail
+`fabricated_name`, and the string `clerk@bartonville.org` appears nowhere in
+the file. Bartonville's phantom second Clerk is gone from what a reader
+downloads.
+
+**The #1025 collision predicted below is now live and measured.** Running that
+branch's `validate_officeholder_names.py` against merged main:
+
+    validate_officeholder_names: FAIL
+      - ACCEPTED_NAMES excuses '’s Email: clerk@bartonville.org' in
+        il/data/app/municipal-officials.json and that value is no longer there
+        — stale, remove it
+
+That is the gate working exactly as designed: an exception cannot outlive the
+fix that retires it. The fix is to delete that one `ACCEPTED_NAMES` entry from
+#1025 before it merges; its Plattville entry stays, because `Beth Fals 56` is
+still shipping. I have told the NYC/SF session and have not touched their
+branch.
 
 **2026-09-19.** Nothing in progress. Both Illinois PRs are in review and green,
 and I am not opening a third until they land or Adam picks the next item.

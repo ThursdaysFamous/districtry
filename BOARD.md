@@ -31,16 +31,20 @@ they are blocking something.
 | `wi/BOARD.md` | Wisconsin | Wisconsin |
 | `ia/BOARD.md` | Iowa | Iowa |
 | `mi/BOARD.md` | Michigan | Michigan |
-| `ny/BOARD.md` | New York City | NYC/SF |
-| `ca/BOARD.md` | San Francisco | NYC/SF |
+| `ny/BOARD.md` | New York City | New York |
+| `ca/BOARD.md` | San Francisco | **none — no work in progress** |
 
-Six instances, five sessions. NYC/SF owns two boards.
+Six instances, five sessions, one instance each. **San Francisco has no session
+because no work is being done on it** — that is a deliberate state, not a gap,
+and its board says so. A session gets assigned when there is work.
 
-**Corrected 2026-09-19.** This table first said Iowa had no session. It does
-(`session_01GDDwuCzmWxgdbz3V8GHrjJ`, running since 2026-08-27). The manager
-inferred its absence from a session listing that omitted it — the one thing
-`docs/MANAGER.md` already says never to do. Query the id; a listing that does
-not show a session is not evidence the session is gone.
+**Two corrections, both 2026-09-19, both from Adam.** This table first said Iowa
+had no session; it does (`session_01GDDwuCzmWxgdbz3V8GHrjJ`, running since
+2026-08-27), and the manager inferred its absence from a session listing that
+omitted it — the one thing `docs/MANAGER.md` already says never to do. Query the
+id; a listing that does not show a session is not evidence the session is gone.
+The table then paired one session with both `ny/` and `ca/`; that session's
+scope is **New York only**.
 
 ---
 
@@ -51,8 +55,9 @@ belongs on that instance's board instead.
 
 | task | owner | state | opened |
 |---|---|---|---|
-| Roster workflows: regenerate shared pages after the branch cut (#1030 IL, #1031 WI) | IL + WI | in review | 2026-09-19 |
-| Absolute gate on every shipped officeholder name (#1025) | NYC/SF | in review | 2026-09-19 |
+| Roster workflows: regenerate shared pages after the branch cut | IL + WI | **merged** #1030 `5338913`, #1031 `f2a0d88` | 2026-09-19 |
+| Absolute gate on every shipped officeholder name | New York | **merged** #1025 `a3d11c0` | 2026-09-19 |
+| #1025 and #1028 collided with no git conflict. | New York | **closed** — New York merged main in first and measured all four states rather than dropping the entry blind, so the branch was correct in either merge order | 2026-09-19 |
 | `privacy.html` understates three events sent through `shareCopyButton` | unassigned | open | 2026-09-18 |
 
 ## Status — manager writes here

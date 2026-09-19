@@ -853,6 +853,20 @@ jobs:
       - name: The what-moved line still says nothing when nothing moved
         run: python3 scripts/scraper_common.py --selftest
 
+      # The retention gate below asks whether a field is still PUBLISHED. This
+      # one asks whether the value in it is still a person. On 2026-09-04 the
+      # weekly municipal refresh replaced all 122 of Rock Island County's
+      # officeholder names with telephone numbers, party labels and fragments of
+      # the source PDF's page footer — a reader in Reynolds was shown a Village
+      # President named "(309) 372-8292 Citizens" — and every guard passed: the
+      # scraper's floors count records rather than read them, retention saw
+      # `name` present on every record, and build_county_pages.py's person
+      # enumerators list that file in NOT_COUNTY_BOARDS and never look at it. It
+      # stood for fourteen days. Absolute rather than diff-based, so it keeps
+      # answering after the defect reaches the base branch. Stdlib only.
+      - name: Every shipped officeholder name is a name
+        run: python3 scripts/validate_officeholder_names.py
+
       # A roster's count guard proves it still has twelve members; it proves
       # nothing about whether those twelve still carry an e-mail. On 2026-08-08
       # Cloudflare's e-mail obfuscation quietly emptied all seven of Brown

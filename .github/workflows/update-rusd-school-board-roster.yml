@@ -33,6 +33,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # FULL history. This job does not regenerate sitemap.xml, so nothing in
+          # it reads git history today; the depth is set so the six Wisconsin
+          # roster workflows share one shape and a sitemap step added here later
+          # cannot silently stamp every page with today's date. Measured
+          # 2026-09-19: a depth-1 clone moves 243 of 243 lastmods, a full clone 0.
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -47,19 +53,10 @@ jobs:
       - name: Validate app + data files
         run: python3 wi/scripts/validate_index.py wi/index.html
 
-      # THE PAGE NAMES THESE PEOPLE AND COUNTS THEM IN ITS OWN PROSE, so it is
-      # regenerated in the same run. Both generators gate on it: skip this and
-      # the failure lands on THIS job's own pull request, where nobody wrote the
-      # change that broke it.
-      - name: Regenerate the school board page
-        run: |
-          python3 scripts/build_concept_pages.py
-          python3 scripts/build_officeholder_tables.py
-
       - name: Check for changes
         id: diff
         run: |
-          if git diff --quiet -- wi/data/app/rusd-school-board-members.json wi/school-board.html; then
+          if git diff --quiet -- wi/data/app/rusd-school-board-members.json; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -82,8 +79,25 @@ jobs:
           # Re-cutting leaves this branch differing from main in its data file(s)
           # alone; the rebuilt files are carried across, and a run where main
           # touched those same files errors instead of pushing, which is right.
-          git fetch --depth=1 origin main
+          # Full history, for the same reason as fetch-depth: 0 on the checkout
+          # above. The two must move together: a `--depth=1` fetch RE-SHALLOWS an
+          # already-complete clone (measured on this repo, 512 commits down to
+          # 13), so deepening the checkout alone would be undone right here.
+          git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
+          # REGENERATED HERE, AFTER THE CUT, AND NOT BEFORE IT. These files are
+          # generated from the roster this job just rewrote, so they must be rebuilt
+          # in the same run or the smoke gate fails on this job's own pull request.
+          # They are also SHARED and high-churn, and building them before the cut
+          # left them dirty in the working tree, where `git checkout -B` refuses to
+          # move onto main's new tip if a dirty file differs between the two trees.
+          # That killed run 35391214303 (2026-09-18): wi/history.html was dirty when
+          # #1014 merged mid-crawl, after the scrape, both builders and
+          # validate_index had already passed. Only this job's own roster data is
+          # dirty at the cut now, so the checkout aborts only when main touched THIS
+          # roster, which is the failure that should stay one. Do not move back.
+          python3 scripts/build_concept_pages.py
+          python3 scripts/build_officeholder_tables.py
           python3 scripts/build_about_page.py
           git add wi/data/app/rusd-school-board-members.json wi/school-board.html about.html
           git commit -m "Update RUSD school board roster from the district's board page"

@@ -36,6 +36,16 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # FULL history, because this job regenerates sitemap.xml and
+          # build_sitemap.py reads each page's lastmod from that file's own last
+          # commit. Under the default depth-1 checkout git reports the single
+          # fetched commit as the last commit of EVERY file, so all 243 entries
+          # take today's date. Measured 2026-09-19 in a depth-1 clone of this
+          # repo: 243 of 243 lastmods moved, against 0 of 243 in a full clone.
+          # `build_sitemap.py --check` PASSED on that shallow result, and always
+          # will: it computes `behind = true_date - shipped_date` and fires only
+          # at `behind >= 2`, so a date forward-dated to today is never tested.
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -65,26 +75,13 @@ jobs:
         # whichever runs after a change ships it)
         run: python3 wi/scripts/build_wi_county_officer_roster.py
 
-      # The history page's stat tiles are MEASURED from this data — regenerate
-      # it in the same run so the smoke gate's build_history_page --check stays
-      # green on this PR (a tile that drifted from the data it counts fails CI)
-      - name: Regenerate the history page
-        run: python3 scripts/build_history_page.py
-
-      # The history page this job just rewrote is IN the sitemap, and the
-      # sitemap's lastmod is that file's own last commit -- so regenerate it in
-      # the same run, or the smoke gate's `build_sitemap.py --check` fails on
-      # this PR for a date nobody typed. Stdlib only.
-      - name: Regenerate the sitemap
-        run: python3 scripts/build_sitemap.py
-
       - name: Validate app + data files
         run: python3 wi/scripts/validate_index.py wi/index.html
 
       - name: Check for changes
         id: diff
         run: |
-          if git diff --quiet -- wi/data/app/wi-county-clerks.json wi/data/app/wi-county-officers.json wi/history.html; then
+          if git diff --quiet -- wi/data/app/wi-county-clerks.json wi/data/app/wi-county-officers.json; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -107,9 +104,29 @@ jobs:
           # Re-cutting leaves this branch differing from main in its data file(s)
           # alone; the rebuilt files are carried across, and a run where main
           # touched those same files errors instead of pushing, which is right.
-          git fetch --depth=1 origin main
+          # Full history, for the same reason as fetch-depth: 0 on the checkout
+          # above. The two must move together: a `--depth=1` fetch RE-SHALLOWS an
+          # already-complete clone (measured on this repo, 512 commits down to
+          # 13), so deepening the checkout alone would be undone right here.
+          git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add wi/data/app/wi-county-clerks.json wi/data/app/wi-county-officers.json wi/history.html
+          # REGENERATED HERE, AFTER THE CUT, AND NOT BEFORE IT. These files are
+          # generated from the roster this job just rewrote, so they must be rebuilt
+          # in the same run or the smoke gate fails on this job's own pull request.
+          # They are also SHARED and high-churn, and building them before the cut
+          # left them dirty in the working tree, where `git checkout -B` refuses to
+          # move onto main's new tip if a dirty file differs between the two trees.
+          # That killed run 35391214303 (2026-09-18): wi/history.html was dirty when
+          # #1014 merged mid-crawl, after the scrape, both builders and
+          # validate_index had already passed. Only this job's own roster data is
+          # dirty at the cut now, so the checkout aborts only when main touched THIS
+          # roster, which is the failure that should stay one. Do not move back.
+          python3 scripts/build_history_page.py
+          python3 scripts/build_sitemap.py
+          # sitemap.xml is added: this job regenerates it, and before 2026-09-19
+          # it never added it, so the one file whose dates it moves went
+          # uncommitted every week.
+          git add wi/data/app/wi-county-clerks.json wi/data/app/wi-county-officers.json wi/history.html sitemap.xml
           git commit -m "Update WI county clerks from the Blue Book and the clerks' association"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
