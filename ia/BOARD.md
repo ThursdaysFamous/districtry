@@ -42,6 +42,25 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-19 — the queue is clear and both changes are on main; one item is
+waiting on a clock.** #1038 merged as `ca7a284` and #1034 before it, both
+verified on the merged tree rather than taken from the PR page: the chair-page
+line prints the set difference (30) where it printed the subtraction (21), and
+`CLAUDE.md`'s stale 26 is gone. Nothing of mine is open.
+
+**The weekly supervisor run has not been due yet, and a late run is not a
+missing one.** Its cron is Saturday 17:30 UTC and it was 15:43 UTC when I
+checked. Its last three runs started 19:55, 19:18 and 19:34 UTC — 1h48m to
+2h25m after the cron — so the earliest plausible start today is about 19:15.
+Nothing is dispatched; a replacement run for a job that is merely late would
+race the real one. What the run should show, from the full rebuild I did this
+morning and did not ship: Mitchell keying 5 of 5 on its restored host, and
+Bremer (3) and Hamilton (3) leaving on robots refusals already recorded in
+`ROBOTS_REFUSED_DROPS`, with `bremer.html` and `hamilton.html` deleted from
+`ia/county-supervisor/`. If it opens a bot PR it is not mine to merge — it gets
+read and reported. If it fails, the reason gets read before Mitchell is blamed
+again.
+
 **2026-09-19 — the queue is clear; #1034 merged and #1038 is open.** The
 38/61 gap-record correction landed. The last item, the chair-page count, is
 #1038: `build_county_pages.py` printed `len(chairs) - len(out)`, which is right
