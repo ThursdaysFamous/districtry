@@ -42,6 +42,27 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-19 — the queue is clear; #1034 merged and #1038 is open.** The
+38/61 gap-record correction landed. The last item, the chair-page count, is
+#1038: `build_county_pages.py` printed `len(chairs) - len(out)`, which is right
+only if every county with a member list also has a chair, and nine do not
+(Bremer, Franklin, Hamilton, Lyon, Mitchell, Pocahontas, Polk, Sac, Webster).
+It is the set difference now — 21 printed where the answer is 30. `CLAUDE.md`
+carried the same figure as 26 and is corrected with it, quoting no live value,
+because all three counts move weekly and the line prints them. No page content
+changes; `--check` reads all 198 pages back and names every one of the 2,980
+people on them.
+
+**Where the four items ended.** 38/61 shipped. Mitchell needed no fix — its
+host's suspension had lifted and it keys 5 of 5, so the roster unfreezes on its
+own at the weekly run. The phone measurement came back clean on
+`ia-county-officers.json` and found the shape one file over, in the auditors.
+The count fix is #1038.
+
+**Two things are waiting on a yes, neither built:** labelling the 17 auditors
+whose phone is their county's board line, and giving the supervisor builder a
+recorded excuse path for a measured suspended host.
+
 **2026-09-19 — the phone measurement: `ia-county-officers.json` is clean, and
 the finding is one file over.** Measured this morning, numbers normalised to
 digits so the two published formats compare. That file carries **391 named
