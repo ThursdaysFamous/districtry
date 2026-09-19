@@ -60,8 +60,8 @@ Chicago District Explorer: a single-file, dependency-light web app. Click a poin
 This list undercounts what actually runs, and **the figure is stated WITH ITS METHOD AND ITS
 DATE**, because successive counts disagreed and no reader could tell which counting rule any of
 them used. MEASURED 2026-09-19 on this branch, AFTER its last edit: a static gate is
-one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **65**;
-counted instead as script invocations the whole battery is **91 — 81 that need no browser and
+one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **66**;
+counted instead as script invocations the whole battery is **93 — 83 that need no browser and
 10 that boot Chromium** (a Playwright smoke test per instance `il`/`ca`/`ny`/`wi`/`ia`/`mi`,
 2 root-page tests, and the two fleet-wide probes for point transmission and contrast pairs), the
 per-instance `validate_index.py` runs included, and excluding the two `npx playwright install`
@@ -79,6 +79,16 @@ and a reworded anchor FAILS rather than quietly stopping being checked. And it a
 invocation total against `validate_steward_mirror.py`'s, because that module already reads the
 same commands for a different question, and two readers of one question is where this fleet's
 recurring defect starts.
+
+**TWO BRANCHES CAN EACH BE RIGHT AGAINST THEIR OWN BASE AND BOTH WRONG ONCE MERGED, and the
+half that CONFLICTS is the lucky half** (2026-09-19). #1037 took the tree to 65/91 and #1040 to
+65/92, each measured correctly against a base that predated the other; merged they are 66/93.
+Git conflicted on the INVOCATION line, because the two sides wrote different numbers there — and
+merged the NAMED-STEP line SILENTLY at 65, because both sides wrote 65 and the merged truth is
+66. A textual conflict is not what protects this pair; the gate is, and it is why the silent half
+was caught at all. So run `validate_gate_counts.py` after every merge or rebase into a branch
+that touches the battery, not only after an edit that adds a gate — the pair moves when two
+correct changes meet, with nothing in either diff to look at.
 
 The 59/84 this paragraph carried on 2026-09-16 was one step and two invocations behind the 60/86
 that replaced it: `validate_python_hygiene.py` runs its `--selftest` and then the gate itself,
@@ -126,8 +136,8 @@ each stale within the day.
 
 Treat the workflow file as the source of truth for the full battery and its order;
 `.claude/skills/steward/SKILL.md` mirrors it as locally-runnable commands with per-gate
-rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-19, **91
-invocations for 91**, diffed both ways with each side's trailing rationale comment stripped
+rationale, for driving a PR to green — and mirrors it EXACTLY as of 2026-09-19, **93
+invocations for 93**, diffed both ways with each side's trailing rationale comment stripped
 and `$BASE` resolved to the branch point the skill spells `origin/main`,
 after four gates were found missing from it on 2026-09-12 (`build_sitemap.py`,
 `undeliverable.py`, the circuit-court join self-test, and that change's own) and **three more on
