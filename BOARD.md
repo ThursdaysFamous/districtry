@@ -83,33 +83,72 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
-**2026-09-19, second pass.** Adam read the boards and gave three instructions:
-add Will County to the municipal builder's exception list, start New York's
-phase 3, and use judgement on the rest. All five sessions are working.
+**2026-09-19, third pass. The open-PR queue is empty but for one hold.** Adam
+asked for the open PRs to be merged; two of the three went in, verified on a
+tree with `origin/main` merged rather than from a PR body.
 
-- **Illinois** — Will joins `PRESERVABLE`, which unfreezes 37 counties' mayors
-  and council members. Frozen since 2026-09-08 because one blocked county is
-  `REQUIRED`. #1018 stays held behind it.
-- **New York** — PR 3, the go-live. Its two live defects (a gap record that is
-  false, and an empty CEC roster with no record at all) ship no later than it
-  does, because the go-live is what starts sending upstate readers to them.
-- **Wisconsin** — the Court of Appeals job: one bounded look for the four judges
-  on a host that answers, and if there is none, a recorded expected condition
-  plus a staleness ceiling rather than dropping the job. Then the alderperson
-  gap, measured whole before any tranche.
-- **Iowa** — the 38/61 correction first because it is false on a page a reader
-  opens, then Mitchell, re-read rather than `--allow-drop`.
-- **Michigan** — tranche 6, the 22 remaining probe candidates, no fetch needed.
+- **New York is statewide (#1042).** A reader in Albany or Buffalo typing their
+  address at the front door is now routed to `/ny/` with the point selected,
+  instead of being told they are outside everywhere districtry covers. The app
+  opens on the state rather than the harbour, an upstate `#point=` link
+  resolves, and it calls itself districtry New York. Re-measured here: the
+  shipped bbox is wider than the widest shipped geometry on all four sides, so
+  nothing is clipped, and every sibling instance's `METRO_EXPLORERS` table
+  learned the new box — without that, an upstate address typed into the
+  Wisconsin app would not have been offered New York at all.
+- **Michigan's board probe records the robots reading for the host it accepts
+  (#1045).** Both of its load-bearing claims were negative-tested here rather
+  than read: deleting one record's robots reading makes `--check` name the
+  affected records and exit 1, and `--check` runs clean with a `requests` that
+  raises on import. The gate-count pair is the merged tree's own measurement,
+  67/94, not either branch's.
+- **#1018 is held and the hold is now Adam's to clear.** See question 2.
 
 **Manager's own work.** The shallow-checkout defect Wisconsin recorded as
 fleet-wide was 73 workflows wide, not twelve; every one is deepened and
 `validate_workflow_checkout.py` now fails a workflow that commits `sitemap.xml`
 without full history or that re-shallows it afterwards. `docs/MANAGER.md`
 records the standing merge authority. Michigan's "a workflow that has never run
-is invisible to every gate" is being measured across all six instances.
+is invisible to every gate" was swept across all six instances: of 128
+scheduled workflows only two have never run, both explained by the calendar.
 
-Main is at `ff9ba6e`. One open PR: #1018, held.
+Main is at `66f2976`. One open PR: #1018, held.
 
 ## Open questions for Adam
 
-- Nothing outstanding.
+**1. Is "5 boroughs" still the right scope line for New York?** Not blocking.
+Raised by the New York session on its own board and carried here unchanged,
+because it is now visible on the live front door: the landing page renders
+**New York · 5 boroughs** beside **Wisconsin · all 72 counties**, while 15 of
+New York's 33 layers answer everywhere in the state and a click in Buffalo
+returns seven cards naming real officeholders. The coverage map tells the
+two-tier story correctly — a dashed state wash over a solid five-borough fill —
+so the map and the scope line now say different things. Three options: leave
+it, which understates the instance on the one line most readers see; "statewide,
+5 boroughs in depth", honest about both tiers but the only scope string in the
+fleet that is not a count; or "all 62 counties", which matches the other
+statewide instances and overstates, because no county tier exists yet and the
+county card names nobody. **The session would take the middle one and so would
+I** — the rule being protected is "never claim a county tier you do not have",
+and naming both tiers keeps that.
+
+**2. Hancock needs an e-mail, and only you can send it.** Not blocking anything
+else. #1018 is a weekly roster PR that would ship `Jo0n Mason` — a zero where an
+`h` belongs — and replace `Alex Blythe` with `Billy Cramer` in the same run. The
+Illinois session measured it properly and my first reading of it was wrong: the
+parser is fine, the county's own page prints the zero, and the two replaced
+names appear on that page zero times, so these are real edits by the county.
+The certified returns make it stranger rather than clearer — Billy Cramer has
+never run for county board, and Joshua L. Turner, the man the page just dropped,
+won the 2026 District 4 Republican primary. That fits two mid-term appointments
+and it fits a county page edited wrongly, and nothing published can tell them
+apart. Every repair available to us is a guess at a real person's name, so
+nothing ships. The ask is two questions to `elections@hancockcounty-il.gov`:
+the District 4 member's correct name, and whether Billy Cramer holds District 2.
+Illinois drafts it. **Meanwhile main names all fifteen Hancock members
+correctly, so no reader sees any of this.**
+
+**3. New York's county tier has no owner.** Not blocking. Of 57 non-city
+counties, 26 have an unverified board form in the plan's own table, and each is
+settled from a certified election document when that county is built. Worth
+knowing whether the New York session starts it or whether New York rests here.
