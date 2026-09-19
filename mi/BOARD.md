@@ -29,6 +29,18 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-19, merged.** Tranche 5 is in (#1033, merged 13:45 UTC as `3fb98206`).
+Click a point in Barry, Cheboygan, Dickinson, Hillsdale, Ionia, Kalkaska,
+Leelanau, Oceana, Osceola or Sanilac and the County Commissioner District card
+now names the person, with a phone or an e-mail wherever the county publishes
+one. That is 26 of Michigan's 83 counties, 229 of the 619 seats, 55.1% of the
+state by population, up from 51.6%. Each of the ten also has its own page under
+`mi/county-commissioner/` where the names are in the served bytes.
+
+Picking up tranche 6 from the same list. The probe's remaining 24 candidates
+need no new discovery, and the artifact was pruned to exactly those when
+tranche 5 landed.
+
 **2026-09-19, later.** Tranche 5 is open as #1033. Ten more counties name your
 commissioner: Barry, Cheboygan, Dickinson, Hillsdale, Ionia, Kalkaska,
 Leelanau, Oceana, Osceola and Sanilac. That takes the card from 16 counties to
