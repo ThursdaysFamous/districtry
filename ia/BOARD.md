@@ -40,6 +40,40 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-19 — the phone measurement: `ia-county-officers.json` is clean, and
+the finding is one file over.** Measured this morning, numbers normalised to
+digits so the two published formats compare. That file carries **391 named
+people, all 391 with a phone**, and on the switchboard question it comes back
+clean four ways: **zero** numbers held by two or more named people in one
+county, **zero** row officers carrying their own county's `boardPhone` across
+91 testable counties, **zero** numbers shared by named people in different
+counties, and **345 supervisors carrying no phone at all** — the officer builder
+already hoists a board-wide number into `boardPhone` and strips it from the
+member rows, and the roster builder raises rather than letting one back in. A
+clean result, recorded as one.
+
+**`ia-county-auditors.json` is where the shape shows up: 17 of 89 testable
+auditors carry the same number as their county's board line.** It is not a
+pipeline agreeing with itself — the auditors come from their own association's
+directory and `boardPhone` is derived from ISAC's supervisor rows, so two
+independent publishers land on one number. And it is not a wrong number: Iowa
+Code 331.504 makes the auditor clerk to the board, so the board's line IS the
+auditor's office. What makes it worth reporting is the RENDERING — `ia/index.html`
+puts that number in the person row beside the name and the County Auditor badge,
+while the office group below it carries only a label and an address, so a reader
+sees a general office line presented as one person's.
+
+**Why no existing guard sees it.** The switchboard rule this project already
+wrote down (EXPANSION_GUIDE Part 5) fires when ONE number covers EVERY member of
+a body. An auditor is one person in a different file, so a test that looks for a
+number repeated across a board can never fire on them. The test that does catch
+it is the cross-file one — auditor's phone against the board's hoisted
+switchboard — and nothing runs it.
+
+**Proposed, not built:** the #1000 treatment, which is a label rather than a
+data change — mark those 17 as the board's office line the way the Iowa city
+rows say "City office number", and keep the number dialable. Waiting for a yes.
+
 **2026-09-19 — Mitchell needed no parser fix, and the reason is on the record
 already.** I was told to re-read the page and fix the parser, and that premise
 does not hold: `mitchellcounty.iowa.gov`'s hosting account was SUSPENDED, so the
