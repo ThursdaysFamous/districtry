@@ -80,6 +80,7 @@ belongs on that instance's board instead.
 | `privacy.html` understated three events sent through `shareCopyButton` | manager | **merged** #1046 `dd5ce05` — the page named ten events while every app sends thirteen. An unreadable `trackEvent` call is now an ERROR rather than a skip; resolution follows one hop and fails naming the line otherwise. Coordinate events stay at two: these three send a name and nothing else | 2026-09-18 |
 | Shallow checkout makes every roster PR rewrite all 243 sitemap dates | manager | **in review** — 73 workflows deepened, plus a gate, after #1030 and #1031 did twelve | 2026-09-19 |
 | A scheduled workflow that has NEVER run is invisible to every gate here | manager | measuring | 2026-09-19 |
+| `llms.txt` counts the per-county pages and 60 of 62 refresh workflows do not regenerate it | manager | open | 2026-09-19 | Found by Iowa when its own weekly run went red on a file it never touched. `llms.txt` states the page count, a county dropping out moves it, and only Michigan's and Iowa's workflows rebuild it. Iowa fixed its own and boarded the general case rather than editing four instances' workflows unasked, which was right. The recurrence-proof fix is a GATE — `build_county_pages.py --check` already fails a workflow that does not regenerate its own pages, and nothing does the same for `llms.txt`. Counted here as 60 of 62 rather than Iowa's 61 of 63: their denominator included `smoke-test.yml`, which runs `--check` and regenerates nothing. |
 
 ## Status — manager writes here
 
@@ -122,7 +123,7 @@ records the standing merge authority. Michigan's "a workflow that has never run
 is invisible to every gate" was swept across all six instances: of 128
 scheduled workflows only two have never run, both explained by the calendar.
 
-Main is at `08277b1`. One open PR: #1018, held.
+Main is at `0e829be`. Open: #1018 held (Hancock), #1048 held (see question 4), #1049 in review.
 
 ## Open questions for Adam
 
@@ -157,6 +158,12 @@ nothing ships. The ask is two questions to `elections@hancockcounty-il.gov`:
 the District 4 member's correct name, and whether Billy Cramer holds District 2.
 Illinois drafts it. **Meanwhile main names all fifteen Hancock members
 correctly, so no reader sees any of this.**
+
+**4. When a county's robots.txt shuts us out, do we delete what we already published?** Not blocking; #1048 is held pending your answer. Iowa's weekly supervisor run dropped **Bremer and Hamilton** — six named supervisors and two county pages off the site. I re-read both counties' robots.txt myself and Iowa's record is exactly right, so the decision to stop FETCHING is correct and I would not change it. The question is only whether a fetch-time refusal should also unpublish. **You answered the same question the other way this morning**: Will County blocks us, and the fix was to PRESERVE its shipped entries rather than drop them. Illinois preserves; Iowa deletes.
+
+The two Iowa counties are also not the same case, which is what makes me want your ruling rather than a default. **Hamilton's robots.txt genuinely says `*` Disallow** — that is the county telling us not to crawl, and respecting it is not in question. **Bremer's robots.txt returns HTTP 500** while the county's own site serves fine. RFC 9309 says treat a 5xx as disallow-all and the project rightly follows that for fetching, but nobody at Bremer has expressed any wish; a broken endpoint is being read as a policy, and three named supervisors come off the site because of it. Our own retention gate objects in those words — "a source that stops publishing is a real event; a source that failed to fetch once is not. GO AND LOOK AT THE PAGE." The builder and that gate now encode opposite policies, which is why the bot PR is red.
+
+**I would preserve on a 5xx and delete on an explicit Disallow**, and say on the card when a roster was last confirmed. But this is a judgment about what we owe a publisher versus a reader, so it is yours.
 
 **3. New York's county tier has no owner.** Not blocking. Of 57 non-city
 counties, 26 have an unverified board form in the plan's own table, and each is
