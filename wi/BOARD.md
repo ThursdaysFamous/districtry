@@ -97,6 +97,44 @@ and neither job has run since its repair. Worth a row until Monday proves them.
 
 ## Open questions for Adam
 
+**2026-09-19 — the Court of Appeals job. Mostly answered, by the repo itself.**
+I asked whether to re-route this, accept it as unautomatable, or drop the
+weekly job. Reading `wi/scripts/wi_coa_scraper.py`'s own header, dated
+2026-09-16, two of those were already settled and written down:
+
+- **A second publisher was already looked for and rejected.** The Blue Book's
+  bench is April 2025, older than what ships, and the Internet Archive's
+  snapshots of both pages (8 and 19 August) are also older than the shipped
+  roster. Either would move the data backwards.
+- **Recording it as an expected block was already rejected, with a reason that
+  still holds.** The cause is measured as per-runner packet DROPS, not a
+  refusal: on 2026-09-16, 36 minutes apart, one runner reached the host in
+  0.078s and another never opened a socket at all. So the host IS reachable
+  from CI, just not from every runner, and an "expected unreachable" flag would
+  flap month to month on the luck of the draw. Appeals is 2 green of 7 runs,
+  circuit court 4 of 5, against the same host.
+
+I confirmed the two facts that reasoning rests on rather than taking the file
+for them: `wicourts.gov/robots.txt` is a 404, so allow-all, and both pages
+answer HTTP 200 to the scraper's own `districtry-wisconsin/1.0` token. That
+second check is from this sandbox through its proxy, so it says nothing about
+runner routing either way.
+
+**What is genuinely unsolved is smaller and different.** The file's stated
+remedy is "re-run it and draw another runner" — but nothing re-runs it, and
+nothing notices the roster ageing. Two additive guards would close that, and
+neither loosens anything:
+
+1. A staleness ceiling that turns the job RED when the last SUCCESSFUL
+   verification passes a stated age. Sixty days is the number Iowa's chair
+   carry-forward uses.
+2. An automatic single re-run on a connect timeout, which is what a human would
+   do and what the file already says the remedy is.
+
+**The question for you is whether that is worth building at all**, given the
+roster is four judges who change rarely and the job already succeeds about a
+third of the time. I have not built it.
+
 **2026-09-19 — the Court of Appeals job.** Two weeks of failure, diagnosed as
 wicourts.gov refusing some GitHub runner addresses rather than anything in our
 code. Three ways out, and it needs a decision rather than another retry: fetch
