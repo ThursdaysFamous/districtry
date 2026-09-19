@@ -42,6 +42,54 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-19 — the supervisor run passed, the prediction held exactly, and its
+bot PR went red for a reason nobody was watching for.** The weekly job started
+19:30 UTC and SUCCEEDED: 15 Plan 3 counties, 61 districts. Mitchell keyed 5 of 5
+off its restored host, Bremer (3) and Hamilton (3) left on the robots refusals
+already recorded in `ROBOTS_REFUSED_DROPS`, and `bremer.html` and
+`hamilton.html` were deleted. No name changed and no seat moved. That is the
+full rebuild I did this morning, produced by the job rather than by me, and the
+roster is unfrozen for the first time since 2026-08-28. It is **PR #1048 and I
+have not merged it** — officeholder data, human review.
+
+**The red was `build_llms_txt.py --check`, and reading it rather than assuming
+Mitchell is what found a real hole.** `llms.txt` COUNTS the per-county board
+pages; dropping two took the fleet from 220 to 218 and Iowa's own line from 17
+to 15, and `update-ia-supervisor-roster.yml` regenerates the county pages,
+about.html and the sitemap but not the file that states the count. Measured
+rather than inferred: main at `0e829be` is green at 220, so the failure is the
+change's own and not inherited; on the bot branch `--check` FAILs, the builder
+fixes it, `--check` passes. Fixed in **#1049** (Iowa's workflow, mirroring
+Michigan's), and #1048 carries a separate commit regenerating the file so this
+week's roster is reviewable green.
+
+**The wider finding, and it is the same shape this repo keeps hitting.**
+`update-mi-commissioner-roster.yml` has carried this exact step and this exact
+reason since Michigan hit it — "the builder tolerates two going dark, so it can
+happen on an ordinary weekly run" — and it was fixed in that one workflow and
+recorded nowhere else. **61 of the 63 workflows that regenerate county pages
+still lack the step, and no gate asks them to**: `build_county_pages.py --check`
+fails a workflow that does not regenerate ITS pages, and nothing does the same
+for llms.txt. Not every one of the 61 can move the count — only a workflow whose
+roster can gain or lose a whole county can — so the number at risk is smaller
+than 61 and was not measured per workflow.
+
+*Proposed, not built:* the recurrence-proof fix is a GATE in
+`build_llms_txt.py --check` of the shape `build_county_pages.py --check`
+already has, which catches all 61 without 61 edits and cannot go stale as
+workflows are added. Cost: one gate, plus whatever workflows it flags on its
+first run — an unknown number of one-line YAML edits across four instances.
+The alternative is to keep fixing them one at a time as each goes red, which is
+what produced tonight. Recommendation: write the gate. Not started; it edits
+other instances' workflows and nothing asked for it.
+
+*Also found, smaller, not fixed:* `scripts/build_county_pages.py` emits two
+`SyntaxWarning`s on the runner's CPython 3.14 — `\.` and `\s` in docstrings at
+lines 1465 and 1693 (Python 3.11 files the same two as silent
+`DeprecationWarning`s, which is why they surfaced only when the runner moved).
+Cosmetic, and printed twice per run in 63 workflows plus every CI run. The fix
+is two `r` prefixes.
+
 **2026-09-19 — the queue is clear and both changes are on main; one item is
 waiting on a clock.** #1038 merged as `ca7a284` and #1034 before it, both
 verified on the merged tree rather than taken from the PR page: the chair-page
