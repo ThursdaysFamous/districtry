@@ -1092,6 +1092,552 @@ def parse_sanilac(page):
         out.setdefault(slug_district, {"name": keyed.group(2).strip(" ,")})
     return out
 
+# ---------------------------------------------------- tranche 6 parsers ---
+# The twenty-one counties left on the probe's candidate list that publish a
+# readable roster. NOT ONE HOST WAS FETCHED FOR THIS TRANCHE: every page was
+# saved during tranche 5's single sweep and every parser below was written
+# and corrected offline against that copy.
+#
+# CASS IS THE TWENTY-SECOND AND IS NOT HERE. The probe's URL for it is the
+# board's COMMITTEES page, which lists committee memberships; all eight
+# districts do appear across them, so a parser could assemble a whole board
+# out of five committee rosters and would lose any commissioner who sits on
+# no committee. The county's own board page is a different URL and is not
+# among the saved pages, so Cass waits rather than being read off the wrong
+# one.
+
+def lines(page):
+    """Flatten a page to its visible lines, keeping mailto: and tel: targets
+    and every Cloudflare-obfuscated address as inline [..] markers.
+
+    ONE HELPER FOR TWENTY-ONE COUNTIES, and each parser still states its own
+    pairing rule and its own block boundary. The flattening is deterministic:
+    <br> and <hr> and the close of a block element end a line, everything else
+    is stripped, entities are unescaped and runs of space collapse. It was
+    checked against all 32 saved pages before any parser was written.
+    """
+    h = re.sub(r"<script.*?</script>", " ", page, flags=re.S)
+    h = re.sub(r"<style.*?</style>", " ", h, flags=re.S)
+    h = re.sub(r"<!--.*?-->", " ", h, flags=re.S)
+    h = re.sub(r'<a [^>]*href="mailto:([^"?]+)"[^>]*>', lambda m: " [mail:%s] " % _html.unescape(m.group(1)), h, flags=re.I)
+    h = re.sub(r'<a [^>]*href="tel:([^"]+)"[^>]*>', lambda m: " [tel:%s] " % m.group(1), h, flags=re.I)
+    # CLOUDFLARE HIDES AN ADDRESS TWO WAYS and both appear in this tranche:
+    # the hex as a fragment on the href, and the hex in data-cfemail on the
+    # element itself. Emmet and Lake use the second, and a reader of the
+    # first alone ships fourteen members with no contact at all.
+    h = re.sub(r'href="/cdn-cgi/l/email-protection#([0-9a-fA-F]+)"',
+               lambda m: ' data-cfemail="%s"' % m.group(1), h)
+    h = re.sub(r'<[a-z]+[^>]*\bdata-cfemail="([0-9a-fA-F]+)"[^>]*>',
+               lambda m: " [cf:%s] " % m.group(1), h, flags=re.I)
+    h = re.sub(r"<(br|hr)\s*/?>", "\n", h, flags=re.I)
+    h = re.sub(r"</(p|div|li|h\d|tr|td|ol|ul|section|article)>", "\n", h, flags=re.I)
+    h = re.sub(r"<[^>]+>", " ", h)
+    h = _html.unescape(h).replace(u" ", " ")
+    # LUCE DISTRICT 5 IS "\u200bTony Immel". A zero-width space in front
+    # of a name defeats every capitalised-initial test while the page
+    # looks perfectly ordinary.
+    h = re.sub(u"[\u200b\u200c\u200d\ufeff]", "", h)
+    h = re.sub(r"[ \t]+", " ", h)
+    return [l.strip() for l in h.splitlines() if l.strip()]
+
+
+# A NAME TOKEN CAN START LOWERCASE, and a suffix can carry its own comma.
+# Delta District 4 is Kelli vanGinhoven and Oscoda District 1 is
+# "Charles E. Varner, Jr." — a capitalised-initial test drops exactly the
+# people whose county spells their name the way they spell it.
+# A NAME TOKEN CAN START LOWERCASE, and a suffix can carry its own comma.
+# Delta District 4 is Kelli vanGinhoven and Oscoda District 1 is
+# 'Charles E. Varner, Jr.' -- a capitalised-initial test drops exactly the
+# people whose county spells their name the way they spell it.
+_T = r"(?:[a-z]{2,4}[A-Z][A-Za-z.'\u2019-]*|[A-Z][A-Za-z.'\u2019-]*|Jr\.?|Sr\.?|II|III|IV)"
+NAME = re.compile(r"^%s(?:,?\s+%s)+$" % (_T, _T))
+ROLE = re.compile(r"(Chair(?:person|man|woman)?|Vice[- ]Chair(?:person|man|woman)?)", re.I)
+
+
+def take_mail(seg):
+    m = re.search(r"\[mail:([^\]]+)\]", seg)
+    if m:
+        return m.group(1).strip()
+    m = re.search(r"\[cf:([0-9a-fA-F]+)\]", seg)
+    if m:
+        return cf_decode(m.group(1))
+    m = re.search(r"\b([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})\b", seg)
+    return m.group(1) if m else None
+
+
+def take_tel(seg):
+    m = re.search(r"\[tel:([^\]]+)\]", seg)
+    if m and phone(m.group(1)):
+        return phone(m.group(1))
+    m = re.search(r"\(?\d{3}\)?[\s.-]\s*\d{3}[\s.-]\d{4}", seg)
+    return phone(m.group(0)) if m else None
+
+
+def split_role(label):
+    """Strip a role off a name, returning (name, role).
+
+    TWO SHAPES BEYOND A BARE CHAIR. Arenac prefixes three of its five with the
+    plain title "Commissioner Lisa Salgat", which is not a role to print and is
+    certainly not part of her name; and Lake writes "Kristine Raymond,
+    Vice-Chair Pro Temp", where the role carries a modifier after it, so a
+    pattern anchored on the role word ending the string splits neither.
+    """
+    label = label.strip(" ,-\u2013")
+    m = re.search(r"[,\-\u2013]\s*(" + ROLE.pattern + r"(?:\s+(?:Pro\s+Temp\w*|of the Board))?)\s*$",
+                  label, re.I)
+    if m:
+        return label[:m.start()].strip(" ,-\u2013"), m.group(1)
+    m = re.match(r"^(" + ROLE.pattern + r"(?:\s+(?:Pro\s+Temp\w*|of the Board))?)[:\s]+(.+)$",
+                 label, re.I)
+    if m:
+        return m.group(3).strip(), m.group(1)
+    m = re.match(r"^Commissioner[:\s]+(.+)$", label)
+    if m:
+        return m.group(1).strip(), None
+    return label, None
+
+
+def blocks_by_district(ls, pattern, window):
+    """Cut the flattened lines into one segment per District marker.
+
+    THE SEGMENT ENDS AT THE NEXT MARKER, never at a fixed offset: a fixed
+    window is how a parser reaches into the next member's block and pairs a
+    district with the wrong person, which is the Ionia/Eaton trap in a
+    line-based form.
+    """
+    marks = [(i, m) for i, l in enumerate(ls) for m in [pattern.match(l)] if m]
+    out = []
+    for n, (i, m) in enumerate(marks):
+        end = marks[n + 1][0] if n + 1 < len(marks) else min(len(ls), i + window)
+        out.append((m.group(1), i, ls[i:end]))
+    return out
+
+
+# ---------------------------------------------------------------- parsers ---
+# EVERY PARSER STATES WHICH SIDE OF THE DISTRICT MARKER ITS NAME SITS ON,
+# because the counties differ and nothing on the page says which. Chippewa,
+# Clare, Lake, Luce, Ontonagon and Oscoda put the name AFTER the marker;
+# Alcona, Arenac, Emmet, Isabella, Mackinac and Menominee put it BEFORE.
+# Reading Mackinac the way Chippewa reads pairs District 1 with District 2's
+# commissioner and looks entirely correct.
+
+def _named_after(page, marker, window=8, party=None):
+    out = {}
+    for d, _i, seg in blocks_by_district(lines(page), marker, window):
+        body = seg[1:]
+        if not body:
+            continue
+        label, role = split_role(body[0])
+        if party:
+            m = re.match(r"(.+?)\s*\((%s)\)\s*$" % party, label)
+            if m:
+                label = m.group(1).strip()
+        if not label or not NAME.match(label):
+            continue
+        rec = {"name": label}
+        if role:
+            rec["role"] = role
+        blob = " ".join(body)
+        tel, mail = take_tel(blob), take_mail(blob)
+        if tel:
+            rec["phone"] = tel
+        if mail:
+            rec["email"] = mail
+        out.setdefault(d, rec)
+    return out
+
+
+def _named_before(page, marker, window=8, party=None):
+    ls = lines(page)
+    out = {}
+    marks = [(i, m) for i, l in enumerate(ls) for m in [marker.match(l)] if m]
+    for n, (i, m) in enumerate(marks):
+        if i == 0:
+            continue
+        label, role = split_role(ls[i - 1])
+        if party:
+            pm = re.match(r"(.+?)\s*\((%s)\)\s*$" % party, label)
+            if pm:
+                label = pm.group(1).strip()
+        if not label or not NAME.match(label):
+            continue
+        rec = {"name": label}
+        if role:
+            rec["role"] = role
+        end = marks[n + 1][0] - 1 if n + 1 < len(marks) else min(len(ls), i + window)
+        blob = " ".join(ls[i:end])
+        tel, mail = take_tel(blob), take_mail(blob)
+        if tel:
+            rec["phone"] = tel
+        if mail:
+            rec["email"] = mail
+        out.setdefault(m.group(1), rec)
+    return out
+
+
+def parse_alcona(page):
+    """Name, then "Commissioner District N", then a tel: link. NAME BEFORE."""
+    return _named_before(page, re.compile(r"^Commissioner District (\d{1,2})\s*$"))
+
+
+def parse_alpena(page):
+    """One block per member. Some are a single line ("District 1 Precincts 5 & 6
+    William LaHaie (R) Phone: ... Email: ...") and some are split over four, so
+    the block runs from one district marker to the next and the name is read
+    BACKWARDS FROM THE PARTY MARK: a forward read has to guess where the
+    precinct list ends, and that list is different on every row.
+
+    TWO MARKER TRAPS. Every member is followed by a PROSE line beginning
+    "District N serves" or "District N covers", which is not a marker; and
+    District 8's marker carries its role, "District 8 & Chairman of the Board".
+    """
+    ls = lines(page)
+    marks = []
+    for i, l in enumerate(ls):
+        m = re.match(r"^District (\d{1,2})\b", l)
+        if not m or re.match(r"^District \d{1,2}[^.]{0,40}?\b(?:serves|covers)\b", l):
+            continue
+        marks.append((i, m.group(1), l))
+    out = {}
+    for n, (i, d, head) in enumerate(marks):
+        end = marks[n + 1][0] if n + 1 < len(marks) else min(len(ls), i + 6)
+        seg = ls[i:end]
+        blob = " ".join(seg)
+        # THE NAME IS READ PER LINE, NOT OUT OF THE WHOLE BLOCK. District 8's
+        # marker is "District 8 & Chairman of the Board", and a pattern let
+        # loose on the joined block happily returns "Chairman of the Board John
+        # Kozlowski" as the name. Each line is tried in turn with its own
+        # "District N" header and any "Precincts 5 & 6" run stripped first, and
+        # the first capture NAME accepts wins.
+        p = None
+        for line in seg:
+            body = re.sub(r"^District \d{1,2}\b[^A-Za-z]*", "", line)
+            body = re.sub(r"^Precincts?\b[\d\s&,]*", "", body)
+            cand = re.match(r"([A-Z][A-Za-z.'\u2019 -]{3,40}?)\s*\(([A-Z]{1,3})\)", body)
+            if cand and NAME.match(cand.group(1).strip()):
+                p = cand
+                break
+        if not p:
+            continue
+        rec = {"name": p.group(1).strip(),
+               "party": {"R": "Republican", "D": "Democratic"}.get(p.group(2), p.group(2))}
+        role = ROLE.search(head)
+        if role:
+            rec["role"] = role.group(1)
+        tel, mail = take_tel(blob), take_mail(blob)
+        if tel:
+            rec["phone"] = tel
+        if mail:
+            rec["email"] = mail
+        out.setdefault(d, rec)
+    return out
+
+
+def parse_arenac(page):
+    """Role and name, then "District N - Party", then the contacts and a home
+    address. NAME BEFORE, and the role is a PREFIX ("Vice-Chair Sally
+    Mrozinski") rather than a suffix."""
+    return _named_before(page, re.compile(r"^District (\d{1,2})\s*[-–]\s*[A-Za-z]+\s*$"))
+
+
+def parse_chippewa(page):
+    """"District N", then the name. NAME AFTER.
+
+    THE PARTY MOVES BETWEEN THE TWO LINES: districts 3 and 5 read
+    "District 3 (R)" and the rest carry the party on the name line or not at
+    all, so a marker anchored on a bare "District N" reads three of five.
+
+    NO E-MAIL SHIPS. The only address on the page is a shared county inbox at
+    the foot of the list, and a segment that runs to the end of the page hands
+    it to District 5 as that member's own.
+    """
+    out = {}
+    marker = re.compile(r"^District (\d{1,2})(?:\s*\([A-Z]{1,3}\))?\s*$")
+    for d, _i, seg in blocks_by_district(lines(page), marker, 8):
+        if len(seg) < 2:
+            continue
+        label, role = split_role(seg[1])
+        m = re.match(r"(.+?)\s*\([A-Z]{1,3}\)\s*$", label)
+        if m:
+            label = m.group(1).strip()
+        if not NAME.match(label):
+            continue
+        rec = {"name": label}
+        if role:
+            rec["role"] = role
+        tel = take_tel(" ".join(seg))
+        if tel:
+            rec["phone"] = tel
+        out.setdefault(d, rec)
+    return out
+
+
+def parse_clare(page):
+    """"District N:", then the name, then a PLAIN-TEXT e-mail and a phone.
+    NAME AFTER. The addresses are not links, which is why the probe counted no
+    mailto here at all."""
+    return _named_after(page, re.compile(r"^District (\d{1,2}):\s*$"))
+
+
+def parse_clinton(page):
+    """One line per member: "Name - Commissioner, District N Term expires: ...".
+
+    DISTRICT 4 READS "Vacant" and the county carries its own Notice of Vacancy
+    for that seat at the top of the same page. TWO DIFFERENT DASHES: districts
+    1, 2, 3 and 5 use an en dash and the vacant row uses a hyphen, so a parser
+    keyed on one separator ships four of five and calls the fifth missing."""
+    out = {}
+    for l in lines(page):
+        m = re.match(r"^(.{2,50}?)\s*[–-]\s*Commissioner,\s*District (\d{1,2})\b", l)
+        if not m:
+            continue
+        label = m.group(1).strip()
+        if label.lower() == "vacant":
+            out.setdefault(m.group(2), {"vacant": True})
+            continue
+        label, role = split_role(label)
+        if not NAME.match(label):
+            continue
+        rec = {"name": label}
+        if role:
+            rec["role"] = role
+        out.setdefault(m.group(2), rec)
+    return out
+
+
+def parse_delta(page):
+    """"District #N - Name", five lines in the section menu. The page saved is
+    one member's own page, so its title repeats District 4 three times before
+    the list; the FIRST occurrence per district is taken and the repeats agree."""
+    out = {}
+    for l in lines(page):
+        m = re.match(r"^District #(\d{1,2})\s*[–-]\s*([^–-]{3,40})$", l)
+        if m and NAME.match(m.group(2).strip()):
+            out.setdefault(m.group(1), {"name": m.group(2).strip()})
+    return out
+
+
+def parse_emmet(page):
+    """Name, then "District N", then a home address, a phone and a
+    Cloudflare-obfuscated e-mail. NAME BEFORE."""
+    return _named_before(page, re.compile(r"^District (\d{1,2})\s*$"))
+
+
+def parse_houghton(page):
+    """One <div class="w3-container w3-third"> per member, holding the photo,
+    <strong>Name</strong>, <em>Role</em>, the mailto, the phone, then
+    <strong>District N:</strong> and the townships.
+
+    THE DISTRICT LINE COMES AFTER ITS OWN MEMBER, NOT BEFORE. Read as flat text
+    the page alternates name, district, name, district, and taking the name
+    that FOLLOWS a district line pairs every one of the five with the wrong
+    person and leaves District 4 unnamed \u2014 four of five, each row looking
+    exactly like a row. The div is the block, so the pairing is made inside it
+    and the order on the page cannot decide it.
+    """
+    out = {}
+    for blk in re.split(r'<div class="w3-container w3-third"', page)[1:]:
+        name = re.search(r"<strong>\s*([^<]{3,40})\s*</strong>", blk)
+        keyed = re.search(r"<strong>\s*District (\d{1,2}):\s*</strong>", blk)
+        if not (name and keyed):
+            continue
+        label = txt(name.group(1))
+        if not NAME.match(label):
+            continue
+        rec = {"name": label}
+        role = re.search(r"<em>\s*([^<]{3,40})\s*</em>", blk)
+        if role and ROLE.search(role.group(1)):
+            rec["role"] = txt(role.group(1))
+        mail = re.search(r'href="mailto:([^"?]+)"', blk)
+        if mail:
+            rec["email"] = _html.unescape(mail.group(1)).strip()
+        tel = take_tel(txt(blk))
+        if tel:
+            rec["phone"] = tel
+        out.setdefault(keyed.group(1), rec)
+    return out
+
+
+def parse_isabella(page):
+    """Name with its party, then "DISTRICT N" in capitals, then a tel: and a
+    mailto:. NAME BEFORE."""
+    return _named_before(page, re.compile(r"^DISTRICT (\d{1,2})\s*$"), party="D|R|I")
+
+
+def parse_lake(page):
+    """"District N Commissioner", then "Name, Role", then the district's area
+    and the member's home address and a Cloudflare-obfuscated e-mail.
+    NAME AFTER."""
+    return _named_after(page, re.compile(r"^District (\d{1,2}) Commissioner\s*$"), 10)
+
+
+def parse_luce(page):
+    """"District N", then "Name-Role", then a PO box and a phone. NAME AFTER,
+    and the role is joined to the name by a bare hyphen with no space."""
+    return _named_after(page, re.compile(r"^District (\d{1,2})\s*$"))
+
+
+def parse_mackinac(page):
+    """Name, then "District N", then a phone. NAME BEFORE.
+
+    This is the county that settles why every parser here states its side:
+    read the Chippewa way it pairs District 1 with District 2's commissioner
+    and every row still looks like a row."""
+    return _named_before(page, re.compile(r"^District (\d{1,2})\s*$"))
+
+
+def parse_menominee(page):
+    """Name, then "<Role> - District N", then a home address and "Phone: ...".
+    NAME BEFORE.
+
+    THE ROLE IS THE WHOLE PREFIX and only six of the nine read "Commissioner":
+    the others are "Chairman of the Board - District 3", "Vice Chairman -
+    District 8" and "Vice Chairman - Pro Tempore - District 9", whose own role
+    contains the separator. A marker anchored on "Commissioner" ships six of
+    nine and drops all three officers.
+    """
+    ls = lines(page)
+    marker = re.compile(r"^(.+)\s*[-\u2013]\s*District (\d{1,2})\s*$")
+    out = {}
+    marks = [(i, m) for i, l in enumerate(ls) for m in [marker.match(l)] if m]
+    for n, (i, m) in enumerate(marks):
+        if i == 0:
+            continue
+        label = ls[i - 1].strip()
+        if not NAME.match(label):
+            continue
+        rec = {"name": label}
+        role = m.group(1).strip(" -\u2013")
+        if role and role.lower() != "commissioner":
+            rec["role"] = role
+        end = marks[n + 1][0] - 1 if n + 1 < len(marks) else min(len(ls), i + 8)
+        tel = take_tel(" ".join(ls[i:end]))
+        if tel:
+            rec["phone"] = tel
+        out.setdefault(m.group(2), rec)
+    return out
+
+
+def parse_montcalm(page):
+    """A CivicPlus staff directory, the Kalamazoo shape with one difference:
+    the job title reads "District N Commissioner" where Kalamazoo's reads
+    "District N" or "District N - Role", so Kalamazoo's own anchored pattern
+    matches none of these seven."""
+    out = {}
+    for blk in re.split(r'<li class="widgetItem h-card">', page)[1:]:
+        name = re.search(r'class="widgetTitle field p-name">\s*(.*?)\s*</h4>', blk, re.S)
+        job = re.search(r'class="field p-job-title">(.*?)</div>', blk, re.S)
+        if not (name and job):
+            continue
+        keyed = re.match(r"District\s+(\d{1,2})\s+Commissioner\s*(?:[-–]\s*(.+))?$",
+                         txt(job.group(1)))
+        if not keyed:
+            continue
+        rec = {"name": txt(name.group(1))}
+        if keyed.group(2):
+            rec["role"] = keyed.group(2).strip()
+        out.setdefault(keyed.group(1), rec)
+    return out
+
+
+def parse_ontonagon(page):
+    """"District N:", then "Name (Party)", then a home address and a phone.
+    NAME AFTER, and the party is spelled out rather than lettered."""
+    return _named_after(page, re.compile(r"^District (\d{1,2}):\s*$"),
+                        party="Democrat|Republican|Independent")
+
+
+def parse_oscoda(page):
+    """"District #N Commissioner", then the name, then the role on its own
+    line, then a mailto:. NAME AFTER."""
+    return _named_after(page, re.compile(r"^District #(\d{1,2}) Commissioner\s*$"))
+
+
+def parse_otsego(page):
+    """One line per member under Members: "Name (R) , District N[, Role]"."""
+    out = {}
+    for l in lines(page):
+        m = re.match(r"^(.{3,40}?)\s*\(([RDI])\)\s*,\s*District (\d{1,2})\s*(?:,\s*(.+))?$", l)
+        if not m or not NAME.match(m.group(1).strip()):
+            continue
+        rec = {"name": m.group(1).strip(),
+               "party": {"R": "Republican", "D": "Democratic"}.get(m.group(2), m.group(2))}
+        if m.group(4) and ROLE.search(m.group(4)):
+            rec["role"] = m.group(4).strip()
+        out.setdefault(m.group(3), rec)
+    return out
+
+
+def parse_presqueisle(page):
+    """"District N : <townships>", then a mailto: whose link text is
+    "Name (R)", then a home address. NAME AFTER, inside the mail line."""
+    out = {}
+    for d, _i, seg in blocks_by_district(
+            lines(page), re.compile(r"^District (\d{1,2})\s*:"), 8):
+        for l in seg[1:]:
+            # DISTRICT 3 IS "(NPA)" where the other four are one letter.
+            m = re.search(r"\[mail:[^\]]+\]\s*(.{3,40}?)\s*\(([A-Z]{1,3})\)", l)
+            if not m or not NAME.match(m.group(1).strip()):
+                continue
+            rec = {"name": m.group(1).strip(),
+                   "party": {"R": "Republican", "D": "Democratic",
+                             "NPA": "No party affiliation"}.get(m.group(2), m.group(2))}
+            mail = take_mail(l)
+            if mail:
+                rec["email"] = mail
+            out.setdefault(d, rec)
+            break
+    return out
+
+
+def parse_roscommon(page):
+    """One line per member under MEMBERS: "Name , District N" or
+    "Name , Role, District N", followed by a mailto: for most."""
+    out = {}
+    for l in lines(page):
+        m = re.match(r"^(.{3,40}?)\s*,\s*(?:(.{3,25}?)\s*,\s*)?District (\d{1,2})\b", l)
+        if not m or not NAME.match(m.group(1).strip()):
+            continue
+        rec = {"name": m.group(1).strip()}
+        if m.group(2) and ROLE.search(m.group(2)):
+            rec["role"] = m.group(2).strip()
+        mail = take_mail(l)
+        if mail:
+            rec["email"] = mail
+        out.setdefault(m.group(3), rec)
+    return out
+
+
+def parse_schoolcraft(page):
+    """"DISTRICT #N:", then the townships, then "NAME, ROLE - Party", then the
+    election and expiry dates and a Cloudflare-obfuscated e-mail.
+
+    THE NAME SHIPS IN CAPITALS because that is how the county publishes it.
+    Title-casing it here would be this project deciding how somebody's name is
+    written, which is the Vermilion and Berrien rule."""
+    out = {}
+    for d, _i, seg in blocks_by_district(
+            lines(page), re.compile(r"^DISTRICT #(\d{1,2}):\s*$"), 12):
+        for l in seg[1:]:
+            m = re.match(r"^([A-Z][A-Z.'’ -]{3,40}?)\s*(?:,\s*([A-Z-]{4,20}))?\s*[-–]\s*"
+                         r"(Republican|Democrat\w*|Independent)\s*$", l)
+            if not m:
+                continue
+            rec = {"name": m.group(1).strip(),
+                   "party": "Democratic" if m.group(3).startswith("Democrat") else m.group(3)}
+            if m.group(2) and ROLE.search(m.group(2)):
+                rec["role"] = m.group(2).strip().title()
+            blob = " ".join(seg)
+            tel, mail = take_tel(blob), take_mail(blob)
+            if tel:
+                rec["phone"] = tel
+            if mail:
+                rec["email"] = mail
+            out.setdefault(d, rec)
+            break
+    return out
+
+
 COUNTIES = (
     {"fips": "077", "county": "Kalamazoo", "seats": 9, "parse": parse_kalamazoo,
      "url": "https://www.kalcounty.gov/479/Board-of-Commissioners"},
@@ -1150,6 +1696,53 @@ COUNTIES = (
      "url": "https://osceolacountymi.gov/residents/county_commissioners/index.php"},
     {"fips": "151", "county": "Sanilac", "seats": 7, "parse": parse_sanilac,
      "url": "https://sanilaccounty.gov/government/commissioners/index.php"},
+    # --- tranche 6, 2026-09-19: the probe's remaining readable candidates ---
+    {"fips": "001", "county": "Alcona", "seats": 5, "parse": parse_alcona,
+     "url": "https://alconacountymi.com/home/county-commissioners/"},
+    {"fips": "007", "county": "Alpena", "seats": 8, "parse": parse_alpena,
+     "url": "https://alpenacounty.org/577/Commissioners-By-District"},
+    {"fips": "011", "county": "Arenac", "seats": 5, "parse": parse_arenac,
+     "url": "https://arenaccountymi.gov/BOC/"},
+    {"fips": "033", "county": "Chippewa", "seats": 5, "parse": parse_chippewa,
+     "url": "https://www.chippewacountymi.gov/board-of-commissioners"},
+    {"fips": "035", "county": "Clare", "seats": 9, "parse": parse_clare,
+     "url": "https://clareco.net/department/board-of-commissioners/"},
+    {"fips": "037", "county": "Clinton", "seats": 7, "parse": parse_clinton,
+     "url": "https://clinton-county.org/413/Board-of-Commissioners"},
+    {"fips": "041", "county": "Delta", "seats": 5, "parse": parse_delta,
+     "url": "https://deltacountymi.gov/board-of-commissioners/"
+            "district-4-kelli-vanginhoven/"},
+    {"fips": "047", "county": "Emmet", "seats": 7, "parse": parse_emmet,
+     "url": "https://emmetcounty.org/government/board_of_commissioners/index.php"},
+    {"fips": "061", "county": "Houghton", "seats": 5, "parse": parse_houghton,
+     "url": "https://houghtoncounty.gov/commissions-board.php"},
+    {"fips": "073", "county": "Isabella", "seats": 7, "parse": parse_isabella,
+     "url": "https://www.isabellacounty.org/boards-commissions-committees/"
+            "board-of-commissioners/"},
+    {"fips": "085", "county": "Lake", "seats": 7, "parse": parse_lake,
+     "url": "https://lakecountymi.gov/board-of-commissioners/"},
+    {"fips": "095", "county": "Luce", "seats": 5, "parse": parse_luce,
+     "url": "https://www.lucecountymi.com/commissioners"},
+    {"fips": "097", "county": "Mackinac", "seats": 5, "parse": parse_mackinac,
+     "url": "https://www.mackinaccounty.net/departments/commissioners/"},
+    {"fips": "109", "county": "Menominee", "seats": 9, "parse": parse_menominee,
+     "url": "https://www.menomineecountymi.gov/departments/"
+            "county-board-of-commissioners/general-information/staff/"},
+    {"fips": "117", "county": "Montcalm", "seats": 7, "parse": parse_montcalm,
+     "url": "https://montcalmcountymi.gov/270/Board-of-Commissioners"},
+    {"fips": "131", "county": "Ontonagon", "seats": 5, "parse": parse_ontonagon,
+     "url": "https://ontonagoncounty.org/county-offices/board-of-commissioners/"},
+    {"fips": "135", "county": "Oscoda", "seats": 5, "parse": parse_oscoda,
+     "url": "https://www.oscodacountymi.com/board-of-commissioners/"},
+    {"fips": "137", "county": "Otsego", "seats": 9, "parse": parse_otsego,
+     "url": "https://otsegocountymi.gov/277/Board-of-Commissioners"},
+    {"fips": "141", "county": "Presque Isle", "seats": 5, "parse": parse_presqueisle,
+     "url": "https://presqueislecounty.org/board-of-commissioners/"},
+    {"fips": "143", "county": "Roscommon", "seats": 5, "parse": parse_roscommon,
+     "url": "https://roscommoncounty.net/202/Board-of-Commissioners"},
+    {"fips": "153", "county": "Schoolcraft", "seats": 5, "parse": parse_schoolcraft,
+     "url": "https://schoolcraftcounty.net/government/elected-officials/"
+            "commissioners"},
 )
 
 # Every county tried in tranche 1, measured 2026-09-13 from this project's
@@ -1323,7 +1916,27 @@ def main():
     entries, refused = {}, []
     for spec in wanted:
         url, county = spec["url"], spec["county"]
+        # THE ROBOTS READ IS RETRIED THE SAME WAY THE PAGE IS, and for the same
+        # host. co.hillsdale.mi.us drops roughly one connection in three from
+        # this project's sandbox, and the drop lands on robots.txt because that
+        # is the first request made; measured 2026-09-19, the retry added for
+        # the PAGE did not cover it and Hillsdale fell out of a full run with
+        # "robots unreachable" while serving its file on the next attempt. A
+        # gate caches its verdict per site, so each retry needs a fresh one.
+        # Only `unreachable` is retried: a served refusal and a challenge are
+        # answers. FIVE TRIES RATHER THAN THREE, measured 2026-09-19: three
+        # consecutive reads of that host failed inside one run and the county
+        # dropped out of the roster it had been in since the morning, which the
+        # builder's two-counties-may-go-dark floor is meant to survive rather
+        # than to hide.
         verdict = gate.verdict(url)
+        for attempt in range(5):
+            if verdict.status != "unreachable":
+                break
+            time.sleep(2 * (attempt + 1))
+            gate = RobotsGate(session, UA_ROSTER_BOT)
+            pacer = HostPacer(gate)
+            verdict = gate.verdict(url)
         # THE STRICT READING, opted into by argument the way the DuPage and
         # Logan municipal scrapers do. RFC 9309 files a 401/403 on robots.txt
         # with a 404 and allows, which is right for the APIs that answer that

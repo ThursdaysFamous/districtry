@@ -53,7 +53,8 @@ the state column would attach a 2024 fact to a 2026 person.
 THREE WAYS A DISTRICT CAN BE UNNAMED, and each gets its own sentence on the
 card, because they are not the same statement to a reader:
   * the county's own row names no person (Monroe 2, a malformed directory row);
-  * the county calls the seat VACANT in its own words (Ionia 3);
+  * the county calls the seat VACANT in its own words (Ionia 3, Clinton 4 —
+    Clinton carries its own Notice of Vacancy for that seat on the same page);
   * the county contradicts itself about who holds it (Lenawee 5, CONTRADICTED).
 
 Usage:
@@ -74,13 +75,13 @@ CACHE = os.path.join(HERE, ".cache", "mi_commissioner_roster.json")
 DISTRICTS = os.path.join(APP_DATA_DIR, "mi-commissioner-districts.json")
 OUT = os.path.join(APP_DATA_DIR, "mi-commissioner-members.json")
 
-# Floors. Measured 2026-09-19 after tranche 5: 26 counties, 229 seats shipped.
-# The basis is "any two counties may go dark": 26 - 2 = 24 counties, and 229
-# less the two biggest boards (Kent 21 + Eaton 15) = 193 seats, which is the
+# Floors. Measured 2026-09-19 after tranche 6: 47 counties, 358 seats shipped.
+# The basis is "any two counties may go dark": 47 - 2 = 45 counties, and 358
+# less the two biggest boards (Kent 21 + Eaton 15) = 322 seats, which is the
 # tightest figure that basis allows. Raise them when a tranche lands, never
 # lower one to get past a failure.
-MIN_COUNTIES = 24
-MIN_DISTRICTS = 193
+MIN_COUNTIES = 45
+MIN_DISTRICTS = 322
 
 # Fields a district row may carry, in card order. Anything else the scraper
 # learns is dropped here rather than shipped unreviewed.
