@@ -69,6 +69,26 @@ yesterday.
 Item 9, the press list, is deliberately not done — it is an outbound file and
 Adam owns it.
 
+**The three things this board asked PR 3 to carry are in it** (`87ee4fe`), and
+one was worse than the board recorded. `ny/scripts/validate_sources.py` was not
+merely missing rows for the statewide layers — it was FAILING, and had been
+since PR 2, because its judicial-districts entry still described five boroughs
+relabelled, built from a Census service by Illinois's builder. That layer has
+been 13 statewide districts from the state's own county fabric since 2026-09-18.
+So the one gate watching these sources was watching the wrong source, and it
+said so by exiting 1 rather than by drifting quietly, which is the gate working.
+
+The statewide tier now has freshness entries; it did not before, and that check
+is one-directional, so it can see a manifest entry the app dropped but never an
+app file the manifest never had. `ny/WATCH.md` is corrected too — it described
+per-metro forks retired at R2.1 and told a reader to keep the file at the repo
+root, where it has never been.
+
+What is still missing is stated on that file rather than implied: the statewide
+layers have freshness entries but no redistricting-watch ROW, because county and
+municipal boundaries move by annexation rather than on a cycle, and the trigger
+needs deciding rather than inventing.
+
 **2026-09-19, later.** PR 3 is started. Two of the three card defects from the
 entry below are fixed and a third was found while proving the first.
 
