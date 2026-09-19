@@ -29,6 +29,52 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-19, #1052's cause, and it was mine.** #1054 open. Delta and Otsego were serving
+normally — re-read here at 5 of 5 in 110,308 bytes and 9 of 9 in 108,745 — so nothing at
+either county had changed. The cause is in `mi_commissioner_scraper.py`, and the floor that
+should have caught it is one I wrote during the Cass tranche.
+
+`read_page` returns a fetch failure, and the loop PRINTED IT AND CONTINUED, so the county was
+simply absent from the cache; only robots refusals reached `refused`. The builder then could
+not tell a dropped connection from a county nobody tracks. And the floor permitted exactly
+this event by construction: its basis was "any two counties may go dark", 48 − 2 = 46, tested
+with `< MIN_COUNTIES`, and the run produced exactly 46. **A global count cannot protect a named
+county.** The cache-write comment stated it as intent — "a county that has stopped yielding
+must leave the file rather than linger on last week's answer" — which reads *was not read* as
+*stopped yielding*, the distinction `check_roster_retention` has been drawing all along.
+
+Michigan was the last statewide instance still deleting. It now carries a county forward per
+Adam's ruling, only where the scraper says it TRIED, so a county retired from the table still
+leaves normally.
+
+**The second half was worse than the deletion, and I had not seen it.** A county read whose
+parser matches nothing reached the roster with zero districts, passed every gate, and the card
+then said "0 of 5 — named by nobody on the county's own page" about a county whose page names
+all five. That is an affirmative false claim about a public body.
+
+**I also got the fix wrong once.** My first version failed the run on a parsed-zero county.
+The full run then had Midland parse to zero from a page that answered, and re-read alone it
+gave 7 of 7 in 120,480 bytes — so that version would have turned the weekly job red on a flake,
+which is how a reviewer learns to skim. Parsed-zero is now carried forward and printed, and the
+ceiling is what turns a genuinely broken parser into a failure. The ceiling measures
+`preservedSince` rather than `readAt`, because my first draft invented a `readAt` from the run's
+own clock and stamped three counties as read today when they had not been read at all.
+
+**On the manager's suggestion.** It proposed failing the run when a county that returned members
+last week returns none this week. I did not take that shape: failing blocks the other 47
+counties' real changes, and the Midland flake showed it would fire on transport noise. Preserve
+plus a ceiling keeps the reader's answer, lets the rest of the state refresh, and still goes red
+when a source is genuinely gone.
+
+**A REAL FINDING WHILE TESTING: Kalamazoo, Kent and Berrien went behind a Cloudflare managed
+challenge today.** `Cf-Mitigated: challenge`, a 5.7 KB "Just a moment..." body, on three
+unrelated domains, with the egress proxy's own CONNECT returning 200 — so it is the sites and
+not this sandbox. An access control, never worked around. Their 42 seats are carried forward and
+the ceiling fires around 2026-11-03 if it has not lifted; `mi/WATCH.md` carries the row.
+
+#1052 should be CLOSED rather than merged: a fresh weekly run on this code produces the roster
+without the deletions. Roster content is unchanged at 48 counties and 366 districts.
+
 **2026-09-19, the Detroit summariser merged, and Michigan is out of unblocked work.** #1047
 is in as `08277b1f`, verified on the merged tree: the selftest passes there at 25 checks, the
 CI step sits at `smoke-test.yml` line 95, and `validate_gate_counts.py` and
