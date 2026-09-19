@@ -34,7 +34,9 @@ seven of them with an e-mail address. **48 of Michigan's 83 counties, 366 of
 the 619 seats, 61.4% of the state by population** — and the probe's candidate
 list is now EMPTY.
 
-Cass cost two requests: its robots.txt and its board page. It was the last
+Cass cost two requests: its robots.txt and its board page, and it widens the
+weekly run by one page from now on, which is the trade stated rather than made
+quietly — seven addresses for one more request a week to a host already read. It was the last
 candidate because the probe had scored the wrong page — the URL on its record
 is the board's COMMITTEES page, which names all eight districts across five
 committee rosters and is not a roster. A parser built on it would have shipped
@@ -218,4 +220,44 @@ Two corrections to my own last report:
 
 ## Open questions for Adam
 
-- Nothing outstanding.
+**2026-09-19 — the commissioner candidate list is empty. Which work comes
+next?** Not blocking: I am starting on (3) below, which needs no answer and is
+the recorded prerequisite for anything that sweeps again.
+
+What I measured. 48 of Michigan's 83 counties name their commissioners. The
+probe's record now holds ZERO candidates and 25 counties measured shut: 11
+no-board-page, 7 no-districts, 3 not-keyable, 2 no-confirmed-host, 2 challenge.
+23 of the 25 carry a confirmed host; Shiawassee and Montmorency carry none.
+
+Three things could come next and they cost very different amounts.
+
+1. **Re-examine the 25 shut counties.** The largest bucket is the 11 with a
+   confirmed host and no board page found from the sitemap or the front page,
+   which is the shape Washtenaw turned out to be (the real board page sat on a
+   different host spelling) and the shape Illinois's Vermilion turned out to be
+   (the county's GIS was a different publisher from the county's website). So
+   this is the one most likely to yield. It is also the most expensive: these
+   hosts have been swept three to six times already, and that is what tripped
+   a WAF on Tuscola. **The question I would want settled before starting is
+   what a re-examination may fetch** — my own proposal is at most one request
+   per county, to a URL the existing record does not already name, and nothing
+   at all to a host recorded as a challenge.
+
+2. **City council wards, 18 of the 20 recorded Michigan gaps.** Already on the
+   manager's Tasks table. `mi/WATCH.md` line 30 says to run the state's WARD
+   column first, which is ONE query against a service this instance already
+   reads, and it settled 23 cities on 2026-09-06. So it is the cheapest of the
+   three by traffic and the largest by gap count.
+
+3. **The probe's own robots gap.** `probe_mi_county_boards.py` records a robots
+   verdict for every host it REJECTS and none for the one it ACCEPTS, which is
+   why the Gogebic/Marquette disagreement (candidate on 09-18, `Disallow: /` on
+   09-19) could not be settled. Writing the field costs no fetches. Backfilling
+   the 23 recorded hosts costs one robots.txt read each and nothing else —
+   robots.txt is the request every client makes first — and it only makes
+   FUTURE readings comparable, since the 09-18 readings are already lost.
+
+**What I would pick, in order: 3, then 2, then 1.** 3 costs nothing and every
+further sweep is worth less without it. 2 is one query for the biggest gap
+count. 1 is the most likely to yield a county and the only one whose budget I
+would want stated rather than assumed.
