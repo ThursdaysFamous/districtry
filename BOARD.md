@@ -55,9 +55,9 @@ belongs on that instance's board instead.
 
 | task | owner | state | opened |
 |---|---|---|---|
-| Roster workflows: regenerate shared pages after the branch cut (#1030 IL, #1031 WI) | IL + WI | in review | 2026-09-19 |
-| Absolute gate on every shipped officeholder name (#1025) | NYC/SF | in review | 2026-09-19 |
-| **#1025 and #1028 collide with no git conflict.** Merge #1028 first, then drop the Bartonville entry from #1025's `ACCEPTED_NAMES` before it merges, or main goes red on `validate_officeholder_names.py`. | NYC/SF | **blocking** | 2026-09-19 |
+| Roster workflows: regenerate shared pages after the branch cut | IL + WI | **merged** #1030 `5338913`, #1031 `f2a0d88` | 2026-09-19 |
+| Absolute gate on every shipped officeholder name | New York | **merged** #1025 `a3d11c0` | 2026-09-19 |
+| #1025 and #1028 collided with no git conflict. | New York | **closed** — New York merged main in first and measured all four states rather than dropping the entry blind, so the branch was correct in either merge order | 2026-09-19 |
 | `privacy.html` understates three events sent through `shareCopyButton` | unassigned | open | 2026-09-18 |
 
 ## Status — manager writes here
