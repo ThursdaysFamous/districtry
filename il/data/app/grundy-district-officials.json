@@ -40,7 +40,7 @@
     "BRAIDWOOD FIRE": {
       "board": [
         {
-          "name": "Mike Dillon",
+          "name": "Charles Boyd",
           "role": "President"
         },
         {
@@ -49,7 +49,7 @@
         }
       ],
       "comptrollerCode": "099/160/06",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Will",
       "kind": "fire",
       "office": {
@@ -286,27 +286,17 @@
       }
     },
     "REDDICK FIRE": {
-      "board": [
-        {
-          "name": "SUE BERGAN",
-          "role": "Treasurer"
-        }
-      ],
       "comptrollerCode": "053/085/06",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Livingston",
       "heads": [
         {
-          "name": "ROBERT LOWERY",
+          "name": "SUE BERGAN",
           "role": "C.E.O."
         }
       ],
       "kind": "fire",
-      "office": {
-        "address": "210 E MAIN ST",
-        "city": "REDDICK IL 60921",
-        "phone": "(815) 365-4911"
-      }
+      "office": {}
     },
     "S WILMINGTON FIRE": {
       "board": [
@@ -422,7 +412,7 @@
       }
     }
   },
-  "generated": "2026-09-12T00:02:48Z",
+  "generated": "2026-09-19T00:05:15Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
