@@ -134,11 +134,3 @@ neither loosens anything:
 **The question for you is whether that is worth building at all**, given the
 roster is four judges who change rarely and the job already succeeds about a
 third of the time. I have not built it.
-
-**2026-09-19 — the Court of Appeals job.** Two weeks of failure, diagnosed as
-wicourts.gov refusing some GitHub runner addresses rather than anything in our
-code. Three ways out, and it needs a decision rather than another retry: fetch
-it by a different route, accept that this one roster cannot be checked
-automatically and say so on the record, or drop the weekly job and re-verify by
-hand when the court's bench changes. Four judges change rarely, so the third is
-cheaper than it sounds.
