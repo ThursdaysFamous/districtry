@@ -15,13 +15,25 @@ depth as Cook's DOEO API, from a PDF.
 FETCH POSTURE: open. Plain `requests` with a browser UA gets the PDF at a
 stable DocumentCenter URL.
 
-RECORD SHAPE (one official): a party line (optionally led by a phone, and
-reading "Appointed" in the party position for appointed officers), the
-official's HOME address (never collected), an office caption that PERSISTS
-across the following records (trustee blocks print it once), the
-Appointed:/Elected/Term Up: label rows, two value rows (elected date + term
-year, or "Appointed" twice), and finally the NAME. The parser is a state
-machine over that stream; a jurisdiction caption ("Andalusia Village",
+RECORD SHAPE (one official), in the order the clerk's PDF actually prints it:
+a party line (optionally led by a phone, and reading "Appointed" in the party
+position for appointed officers), the official's HOME address (never
+collected), a blank, THE NAME, an office caption that PERSISTS across the
+following records (trustee blocks print it once), the Appointed:/Elected/
+Term Up: label rows, and two value rows (elected date + term year, or
+"Appointed" twice) which close the record.
+
+THE NAME'S POSITION IS THE WHOLE OF THIS PARSER'S HISTORY. It was read as the
+line AFTER the two value rows until 2026-09-19, which is the line that opens
+the NEXT record — so from the 2026-09-04 refresh, when the clerk republished
+with this layout, every one of Rock Island's 112 officials shipped named after
+their successor's party line ("(309) 798-5353 Appointed", "NP", "Democratic"),
+and the last official on each page took the page footer, whose page number
+fuses onto the edition date ("78/28/2026"). It was live for fifteen days. The
+name is now taken where it is printed, and build_municipal_officials_roster.py
+refuses any value of those three shapes for every county, so a future layout
+change fails the build instead of inventing officeholders. The parser is a
+state machine over that stream; a jurisdiction caption ("Andalusia Village",
 "East Moline City") switches municipalities, and any OTHER jurisdiction
 caption (township, school board…) closes the municipal context so nothing
 downstream is misattributed.
@@ -75,6 +87,22 @@ OFFICE_RE = re.compile(r"^(President|Mayor|Clerk/Treasurer\*?|Clerk\*?|Treasurer
 PARTY_RE = re.compile(r"^(?:\(?(\d{3})\)?[ .-]+(\d{3})[ .-]+(\d{4})\s+)?"
                       r"([A-Z][A-Za-z.'&-]*(?:\s+[A-Z][A-Za-z.'&-]*){0,2})$")
 LABEL_RE = re.compile(r"^(Appointed:|Elected|Term Up:)\s*$")
+# A VACANT seat prints no address and no separate value rows: its term year is
+# FUSED onto its own label ("Term Up: 2027"), so the record never reaches the
+# two values that close one. Left unhandled it stays open and swallows the next
+# official outright — Silvis's Ald Ward 1 vacancy ate Chad J. Vroman, and Oak
+# Grove's Trustee vacancy ate two trustees. The fused row closes the record.
+TERM_UP_INLINE_RE = re.compile(r"^Term Up:\s*(20\d{2})$")
+# The home address sits between the party line and the name and is NEVER
+# collected. It is matched on a street number OR the state abbreviation,
+# because the clerk prints partial addresses too — Hampton's Clerk carries
+# "  Hampton  IL  " with no number and no ZIP, and a rule keyed on either of
+# those reads it as a person and then discards the real name on the next line.
+# Measured against all 4,327 names in the pre-break roster fleet-wide: none
+# starts with a digit and none contains IL as a word, so this cannot eat a name.
+ADDRESS_RE = re.compile(r"^\d|\bIL\b")   # applied with .search(), not .match():
+# the state abbreviation sits at the END of the line, so an anchored read sees
+# only the street-number alternative and lets "Hampton IL" through as a person.
 # Real months only: the page footer fuses the page number onto the edition
 # date ("75/13/2026" = page 7 + 5/13/2026) and must never read as a value.
 VALUE_RE = re.compile(r"^((0[1-9]|1[0-2])/([0-2]\d|3[01])/\d{4}|"
@@ -143,7 +171,6 @@ def parse(pdf_bytes, warnings):
         officials.append(rec)
         record = None
 
-    pending_name_next = False
     for raw in lines:
         line = clean(raw)
         if not line or BANNER_RE.match(line):
@@ -159,19 +186,13 @@ def parse(pdf_bytes, warnings):
                     municipalities.append(name)
             office = None
             record = None
-            pending_name_next = False
             continue
         if OTHER_JURISDICTION_RE.match(line):
             muni = None
             office = None
             record = None
-            pending_name_next = False
             continue
         if muni is None:
-            continue
-        if pending_name_next:
-            pending_name_next = False
-            close_record(line)
             continue
         om = OFFICE_RE.match(line)
         if om:
@@ -183,6 +204,11 @@ def parse(pdf_bytes, warnings):
                 base = "Alderman"
             office = (base, ("Ward %d" % int(ward)) if ward else None, office_appointed)
             continue
+        tm = TERM_UP_INLINE_RE.match(line) if record is not None else None
+        if tm:
+            record["values"].append(tm.group(1))
+            close_record(record["name"])
+            continue
         if LABEL_RE.match(line):
             continue
         # Order matters: an open record's value rows can read "Appointed",
@@ -192,7 +218,18 @@ def parse(pdf_bytes, warnings):
         if record is not None and VALUE_RE.match(line):
             record["values"].append(line)
             if len(record["values"]) == 2:
-                pending_name_next = True
+                # The record closes on its second value row. The name was read
+                # four lines back, where the clerk prints it; a record that
+                # reached here without one is a layout this parser does not
+                # understand, and close_record drops it rather than reaching
+                # for whatever line comes next.
+                close_record(record["name"])
+            continue
+        if record is not None and record["name"] is None and not ADDRESS_RE.search(line):
+            # Party line, home address, blank, NAME. Anything inside an open
+            # record that is not the address and not one of the structural rows
+            # above is the name, and only the FIRST such line is taken.
+            record["name"] = line
             continue
         pm = PARTY_RE.match(line) if record is None else None
         if pm:
@@ -200,6 +237,7 @@ def parse(pdf_bytes, warnings):
                      if pm.group(1) else None)
             record = {"phone": phone,
                       "party_appointed": pm.group(4) == "Appointed",
+                      "name": None,
                       "values": []}
             continue
         # everything else (home addresses, blanks) is deliberately ignored

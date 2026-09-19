@@ -377,42 +377,45 @@
   "1701426": {
     "board": [
       {
-        "name": "(309) 236-3006 NP",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Alexander Melody",
+        "phone": "309-756-8179",
+        "role": "Trustee"
       },
       {
-        "name": "(309) 756-8179 NP",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Chad Kelly",
+        "phone": "309-236-3006",
+        "role": "Trustee"
       },
       {
-        "name": "(309) 798-9687 NP",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Gary N. Lueker",
+        "role": "Trustee"
       },
       {
-        "name": "NP",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Martin Yakovich",
+        "role": "Trustee"
       },
       {
-        "name": "NP",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Michael Kensinger",
+        "phone": "309-798-9687",
+        "role": "Trustee"
+      },
+      {
+        "name": "Ronald Finley",
+        "phone": "309-737-4494",
+        "role": "Trustee"
       }
     ],
     "county": "Rock Island",
     "head": {
-      "name": "(309) 798-5353 Appointed",
-      "role": "President",
-      "termExpires": "2029"
+      "name": "Andrew Pittard",
+      "role": "President"
     },
     "name": "Village of Andalusia",
     "officers": [
       {
         "appointed": true,
-        "name": "(309) 737-4494 NP",
+        "name": "Shelly Hoffman",
+        "phone": "309-798-5353",
         "role": "Clerk"
       }
     ],
@@ -4061,48 +4064,46 @@
   "1711150": {
     "board": [
       {
-        "name": "(309) 235-1241 NP",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Alma Neels",
+        "phone": "309-235-1241",
+        "role": "Trustee"
       },
       {
-        "name": "(309) 792-1602 NP",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Leevon Harris",
+        "phone": "309-948-0174",
+        "role": "Trustee"
       },
       {
-        "name": "(309) 792-5909 NP",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Robert Dreher",
+        "phone": "309-792-1602",
+        "role": "Trustee"
       },
       {
-        "name": "(309) 792-9551 NP",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Susan Allison",
+        "phone": "309-792-9551",
+        "role": "Trustee"
       },
       {
-        "name": "(309) 948-0174 NP",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Todd Cantrell",
+        "phone": "309-792-5909",
+        "role": "Trustee"
       },
       {
-        "name": "58/28/2026",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Wendi Alonzo",
+        "role": "Trustee"
       }
     ],
     "county": "Rock Island",
     "head": {
-      "name": "Appointed",
+      "name": "Bill Hintz",
       "phone": "309-796-4221",
-      "role": "President",
-      "termExpires": "2029"
+      "role": "President"
     },
     "name": "Village of Carbon Cliff",
     "officers": [
       {
         "appointed": true,
-        "name": "NP",
+        "name": "Carly Neblung",
         "role": "Clerk"
       }
     ],
@@ -5583,43 +5584,46 @@
   "1715235": {
     "board": [
       {
-        "name": "(309) 787-0970 Conservative",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "James Mountain",
+        "role": "Trustee"
       },
       {
-        "name": "(309) 799-5705 Conservative",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Janice McBride",
+        "role": "Trustee"
       },
       {
-        "name": "(309) 799-5786 Conservative",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Laura Rigg",
+        "phone": "309-799-5705",
+        "role": "Trustee"
       },
       {
-        "name": "(309) 799-5872 Conservative",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "R. Graeme Jewell",
+        "phone": "309-799-5786",
+        "role": "Trustee"
       },
       {
-        "name": "Conservative",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Stanley Engstrom",
+        "phone": "309-799-5872",
+        "role": "Trustee"
+      },
+      {
+        "name": "Thomas House, Sr.",
+        "phone": "309-787-0970",
+        "role": "Trustee"
       }
     ],
     "county": "Rock Island",
     "head": {
-      "name": "(309) 799-3604 Appointed",
+      "name": "Michael T. Bartels",
       "phone": "309-235-5463",
-      "role": "President",
-      "termExpires": "2029"
+      "role": "President"
     },
     "name": "Village of Coal Valley",
     "officers": [
       {
         "appointed": true,
-        "name": "Conservative",
+        "name": "Deanna Hulliger",
+        "phone": "309-799-3604",
         "role": "Clerk"
       }
     ],
@@ -5760,44 +5764,43 @@
   "1716366": {
     "board": [
       {
-        "name": "(309) 654-2064 Citizens",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Ben Roush",
+        "role": "Trustee"
       },
       {
-        "name": "68/28/2026",
+        "name": "Harvey Sothmann",
         "phone": "309-654-2552",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "role": "Trustee"
       },
       {
-        "name": "Citizens",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Jeff Claus",
+        "role": "Trustee"
       },
       {
-        "name": "Citizens",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Justin DePorter",
+        "role": "Trustee"
       },
       {
-        "name": "Citizens",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Mark Townsend",
+        "role": "Trustee"
+      },
+      {
+        "name": "Ronald (Ron) A. Willhite",
+        "phone": "309-654-2064",
+        "role": "Trustee"
       }
     ],
     "county": "Rock Island",
     "head": {
-      "name": "Appointed",
+      "name": "James Boone",
       "phone": "309-373-5585",
-      "role": "President",
-      "termExpires": "2029"
+      "role": "President"
     },
     "name": "Village of Cordova",
     "officers": [
       {
         "appointed": true,
-        "name": "Citizens",
+        "name": "Melissa Bowman",
         "role": "Clerk"
       }
     ],
@@ -8104,60 +8107,59 @@
     "board": [
       {
         "district": "Ward 1",
-        "name": "(309) 738-6549 NP",
-        "role": "Alderman",
-        "termExpires": "2029"
+        "name": "Olivia Dorothy",
+        "phone": "217-390-3658",
+        "role": "Alderman"
       },
       {
         "district": "Ward 2",
-        "name": "NP",
-        "role": "Alderman",
-        "termExpires": "2027"
+        "name": "Jeffrey D. Deppe",
+        "phone": "309-738-6549",
+        "role": "Alderman"
       },
       {
         "district": "Ward 3",
-        "name": "(309) 912-3151 NP",
-        "role": "Alderman",
-        "termExpires": "2029"
+        "name": "Larry Jones",
+        "role": "Alderman"
       },
       {
         "district": "Ward 4",
-        "name": "NP",
-        "role": "Alderman",
-        "termExpires": "2027"
+        "name": "Adam Guthrie",
+        "phone": "309-912-3151",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 5",
+        "name": "Rhea Oakes",
+        "role": "Alderman"
       },
       {
         "district": "Ward 6",
-        "name": "NP",
-        "role": "Alderman",
-        "termExpires": "2027"
+        "name": "Lynn Segura",
+        "role": "Alderman"
       },
       {
         "district": "Ward 7",
-        "name": "78/28/2026",
-        "role": "Alderman",
-        "termExpires": "2029"
+        "name": "Jose Roberto Rico",
+        "role": "Alderman"
       }
     ],
     "county": "Rock Island",
     "head": {
-      "name": "NP",
+      "name": "Reggie Freeman",
       "phone": "309-755-6721",
-      "role": "Mayor",
-      "termExpires": "2029"
+      "role": "Mayor"
     },
     "name": "City of East Moline",
     "officers": [
       {
-        "name": "NP",
-        "role": "Clerk",
-        "termExpires": "2029"
+        "name": "Wanda L. Roberts-Bontz",
+        "role": "Clerk"
       },
       {
         "appointed": true,
-        "name": "(217) 390-3658 NP",
-        "role": "Treasurer",
-        "termExpires": "2029"
+        "name": "Glynis Cummings-Lowery",
+        "role": "Treasurer"
       }
     ],
     "sourceUrl": "https://rockislandcountyil.gov/DocumentCenter/View/291/Elected-Officials-Listing-PDF"
@@ -11376,42 +11378,42 @@
   "1732564": {
     "board": [
       {
-        "name": "(309) 269-2812 Indep. Party",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Mark White",
+        "role": "Trustee"
       },
       {
-        "name": "(309) 755-4101 Indep. Party",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Marty Johnson",
+        "role": "Trustee"
       },
       {
-        "name": "Indep. Party",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Michael Klouser",
+        "role": "Trustee"
       },
       {
-        "name": "Indep. Party",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Rich Smice",
+        "role": "Trustee"
       },
       {
-        "name": "Indep. Party",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Ryan Gonzalez",
+        "phone": "309-755-4101",
+        "role": "Trustee"
+      },
+      {
+        "name": "Steffanie Adams",
+        "phone": "309-269-2812",
+        "role": "Trustee"
       }
     ],
     "county": "Rock Island",
     "head": {
-      "name": "Appointed",
-      "role": "President",
-      "termExpires": "2029"
+      "name": "Christopher Bornhoeft",
+      "role": "President"
     },
     "name": "Village of Hampton",
     "officers": [
       {
         "appointed": true,
-        "name": "Indep. Party",
+        "name": "Michelle Reyes",
         "role": "Clerk"
       }
     ],
@@ -12236,49 +12238,46 @@
   "1735073": {
     "board": [
       {
-        "name": "(309) 314-3488 Republican",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Chancie Noel",
+        "role": "Trustee"
       },
       {
-        "name": "(309) 658-2472 Republican",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Joni Reiss",
+        "phone": "309-658-2649",
+        "role": "Trustee"
+      },
+      {
+        "name": "Lisa Nicholson",
+        "role": "Trustee"
       },
       {
         "appointed": true,
-        "name": "(309) 658-2649 Republican",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Russ Dunn",
+        "role": "Trustee"
       },
       {
-        "name": "88/28/2026",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Theresa Brooks",
+        "phone": "309-314-3488",
+        "role": "Trustee"
       },
       {
-        "name": "Republican",
-        "role": "Trustee",
-        "termExpires": "2027"
-      },
-      {
-        "name": "Republican",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Tonya Hanrahan",
+        "phone": "309-658-2472",
+        "role": "Trustee"
       }
     ],
     "county": "Rock Island",
     "head": {
-      "name": "(309) 658-2471 Appointed",
+      "name": "Thomas Francis",
       "phone": "309-658-2573",
-      "role": "President",
-      "termExpires": "2027"
+      "role": "President"
     },
     "name": "Village of Hillsdale",
     "officers": [
       {
         "appointed": true,
-        "name": "Republican",
+        "name": "Jane E. Lundquist",
+        "phone": "309-658-2471",
         "role": "Clerk"
       }
     ],
@@ -17474,45 +17473,45 @@
   "1749009": {
     "board": [
       {
+        "name": "Bruce Stickell",
+        "phone": "309-787-2605",
+        "role": "Trustee"
+      },
+      {
         "appointed": true,
-        "name": "(309) 787-2605 Democratic",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Dan Verbecke",
+        "phone": "309-737-9141",
+        "role": "Trustee"
       },
       {
-        "name": "(309) 787-3007 Democratic",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Danny Schomer",
+        "role": "Trustee"
       },
       {
-        "name": "Democratic",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Doug Humphrey",
+        "phone": "309-787-3007",
+        "role": "Trustee"
       },
       {
-        "name": "Democratic",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Jodie Lee",
+        "role": "Trustee"
       },
       {
-        "name": "Democratic",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Karen Wilson",
+        "role": "Trustee"
       }
     ],
     "county": "Rock Island",
     "head": {
-      "name": "Democratic",
+      "name": "Duane Dawson",
       "phone": "309-787-2869",
-      "role": "President",
-      "termExpires": "2029"
+      "role": "President"
     },
     "name": "Village of Milan",
     "officers": [
       {
-        "name": "(309) 737-9141 Indep. Cand.",
-        "role": "Clerk",
-        "termExpires": "2029"
+        "name": "Michelle Hubbard",
+        "role": "Clerk"
       }
     ],
     "sourceUrl": "https://rockislandcountyil.gov/DocumentCenter/View/291/Elected-Officials-Listing-PDF"
@@ -17874,59 +17873,57 @@
     "board": [
       {
         "district": "Ward 1",
-        "name": "NP",
-        "role": "Alderman",
-        "termExpires": "2027"
+        "name": "Debbie Murphy",
+        "role": "Alderman"
       },
       {
         "district": "Ward 2",
-        "name": "NP",
-        "role": "Alderman",
-        "termExpires": "2029"
+        "name": "Alvaro Macias",
+        "role": "Alderman"
       },
       {
         "district": "Ward 3",
-        "name": "NP",
-        "role": "Alderman",
-        "termExpires": "2027"
+        "name": "Abdur Razzaque",
+        "role": "Alderman"
       },
       {
         "district": "Ward 4",
-        "name": "NP",
-        "role": "Alderman",
-        "termExpires": "2029"
+        "name": "Matt Timion",
+        "role": "Alderman"
       },
       {
         "district": "Ward 5",
-        "name": "98/28/2026",
-        "role": "Alderman",
-        "termExpires": "2027"
+        "name": "Jessica Finch",
+        "role": "Alderman"
       },
       {
         "district": "Ward 6",
-        "name": "(309) 797-1586 NP",
-        "role": "Alderman",
-        "termExpires": "2029"
+        "name": "Daniel McNeil",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 7",
+        "name": "Anna Castro",
+        "phone": "309-797-1586",
+        "role": "Alderman"
       }
     ],
     "county": "Rock Island",
     "head": {
-      "name": "Appointed",
-      "role": "Mayor",
-      "termExpires": "2029"
+      "name": "Sangeetha Rayapati",
+      "role": "Mayor"
     },
     "name": "City of Moline",
     "officers": [
       {
         "appointed": true,
-        "name": "NP",
+        "name": "James Patrick Schmidt",
         "role": "Clerk"
       },
       {
         "appointed": true,
-        "name": "NP",
-        "role": "Clerk",
-        "termExpires": "2029"
+        "name": "Stephanie Murphy",
+        "role": "Clerk"
       }
     ],
     "sourceUrl": "https://rockislandcountyil.gov/DocumentCenter/View/291/Elected-Officials-Listing-PDF"
@@ -19974,38 +19971,38 @@
   "1754703": {
     "board": [
       {
-        "name": "(309) 787-4803 NP",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Fred A. Seynaeve",
+        "phone": "309-787-4803",
+        "role": "Trustee"
       },
       {
-        "name": "108/28/2026",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Kenneth E. Hoffman",
+        "phone": "309-787-2073",
+        "role": "Trustee"
       },
       {
-        "name": "NP",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Nancy Endres",
+        "phone": "309-787-4589",
+        "role": "Trustee"
       },
       {
-        "name": "NP",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Robert \"Mike\" Stewart",
+        "phone": "309-787-0148",
+        "role": "Trustee"
       }
     ],
     "county": "Rock Island",
     "head": {
-      "name": "(309) 787-1991 Appointed",
+      "name": "Michael M. Nowack",
       "phone": "309-200-5524",
-      "role": "President",
-      "termExpires": "2029"
+      "role": "President"
     },
     "name": "Village of Oak Grove",
     "officers": [
       {
         "appointed": true,
-        "name": "(309) 787-4589 NP",
+        "name": "Susan K. Carey",
+        "phone": "309-787-1991",
         "role": "Clerk/Treasurer"
       }
     ],
@@ -22281,42 +22278,42 @@
   "1761223": {
     "board": [
       {
-        "name": "(309) 523-2892 NP",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Brian Bitler",
+        "phone": "309-523-2892",
+        "role": "Trustee"
       },
       {
-        "name": "(309) 523-9904 NP",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Bruce A. Peterson",
+        "role": "Trustee"
       },
       {
-        "name": "NP",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Jacob Hobbs",
+        "role": "Trustee"
       },
       {
-        "name": "NP",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Roger Oliver",
+        "phone": "309-523-9904",
+        "role": "Trustee"
       },
       {
-        "name": "NP",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Tami Marsden",
+        "role": "Trustee"
+      },
+      {
+        "name": "Wayne Oney",
+        "role": "Trustee"
       }
     ],
     "county": "Rock Island",
     "head": {
-      "name": "Appointed",
-      "role": "President",
-      "termExpires": "2029"
+      "name": "Barb Cray",
+      "role": "President"
     },
     "name": "Village of Port Byron",
     "officers": [
       {
         "appointed": true,
-        "name": "NP",
+        "name": "Jamie Engels",
         "role": "Clerk"
       }
     ],
@@ -22627,47 +22624,44 @@
   "1762822": {
     "board": [
       {
-        "name": "(309) 496-1951 NP",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Carolyn A. Fowler",
+        "phone": "309-912-1885",
+        "role": "Trustee"
       },
       {
-        "name": "(309) 496-9653 NP",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Kristy Polenske",
+        "role": "Trustee"
       },
       {
-        "name": "(309) 912-1885 NP",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Michael J. DeMarlie",
+        "phone": "563-940-9024",
+        "role": "Trustee"
       },
       {
-        "name": "(563) 940-9024 NP",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Nicholas John Peschang",
+        "role": "Trustee"
       },
       {
-        "name": "118/28/2026",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Richard P. Fiems",
+        "phone": "309-496-1951",
+        "role": "Trustee"
       },
       {
-        "name": "NP",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Richard Robertson",
+        "phone": "309-496-9653",
+        "role": "Trustee"
       }
     ],
     "county": "Rock Island",
     "head": {
-      "name": "Appointed",
-      "role": "President",
-      "termExpires": "2029"
+      "name": "Harold J. Mire Jr.",
+      "role": "President"
     },
     "name": "Village of Rapids City",
     "officers": [
       {
         "appointed": true,
-        "name": "NP",
+        "name": "Missy Housenga",
         "role": "Clerk"
       }
     ],
@@ -22722,44 +22716,48 @@
   "1763420": {
     "board": [
       {
-        "name": "(309) 314-4305 Citizens",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Chris Rowe",
+        "phone": "309-372-4459",
+        "role": "Trustee"
       },
       {
-        "name": "(309) 372-4432 Progressive",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Jennifer Ziemer",
+        "phone": "309-372-4432",
+        "role": "Trustee"
       },
       {
-        "name": "(309) 372-4459 Citizens",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Justin Tyler Fuhr",
+        "phone": "309-314-4305",
+        "role": "Trustee"
       },
       {
-        "name": "(309) 372-8419 Progressive",
-        "role": "Trustee",
-        "termExpires": "2027"
+        "name": "Marcus Bolt",
+        "phone": "309-373-2027",
+        "role": "Trustee"
       },
       {
-        "name": "(309) 373-2027 Progressive",
-        "role": "Trustee",
-        "termExpires": "2029"
+        "name": "Merrill E. Allen",
+        "phone": "309-372-8419",
+        "role": "Trustee"
+      },
+      {
+        "name": "Robert B. Frieden",
+        "phone": "309-737-7680",
+        "role": "Trustee"
       }
     ],
     "county": "Rock Island",
     "head": {
-      "name": "(309) 372-8292 Citizens",
+      "name": "Joseph DeMarlie",
       "phone": "309-372-4458",
-      "role": "President",
-      "termExpires": "2029"
+      "role": "President"
     },
     "name": "Village of Reynolds",
     "officers": [
       {
-        "name": "(309) 737-7680 Progressive",
-        "role": "Clerk",
-        "termExpires": "2029"
+        "name": "Shirley Roth",
+        "phone": "309-372-8292",
+        "role": "Clerk"
       }
     ],
     "sourceUrl": "https://rockislandcountyil.gov/DocumentCenter/View/291/Elected-Officials-Listing-PDF"
@@ -23635,52 +23633,55 @@
     "board": [
       {
         "district": "Ward 1",
-        "name": "(309) 787-0677 NP",
-        "role": "Alderman",
-        "termExpires": "2029"
+        "name": "Glen Evans",
+        "role": "Alderman"
       },
       {
         "district": "Ward 2",
-        "name": "NP",
-        "role": "Alderman",
-        "termExpires": "2027"
+        "name": "Randall Hurt",
+        "phone": "309-787-0677",
+        "role": "Alderman"
       },
       {
         "district": "Ward 3",
-        "name": "(563) 340-9303 NP",
-        "role": "Alderman",
-        "termExpires": "2029"
+        "name": "Linda Barnes",
+        "role": "Alderman"
       },
       {
         "district": "Ward 4",
-        "name": "(309) 738-3416 NP",
-        "role": "Alderman",
-        "termExpires": "2027"
+        "name": "Jenni Swanson",
+        "phone": "563-340-9303",
+        "role": "Alderman"
       },
       {
         "district": "Ward 5",
-        "name": "(309) 788-2678 NP",
-        "role": "Alderman",
-        "termExpires": "2029"
+        "name": "Dylan Parker",
+        "phone": "309-738-3416",
+        "role": "Alderman"
       },
       {
         "district": "Ward 6",
-        "name": "128/28/2026",
-        "role": "Alderman",
-        "termExpires": "2027"
+        "name": "Mark B. Poulos",
+        "phone": "309-788-2678",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 7",
+        "name": "William Healy",
+        "phone": "309-269-7499",
+        "role": "Alderman"
       }
     ],
     "county": "Rock Island",
     "head": {
-      "name": "Appointed",
-      "role": "Mayor",
-      "termExpires": "2029"
+      "name": "Ashley Harris",
+      "role": "Mayor"
     },
     "name": "City of Rock Island",
     "officers": [
       {
         "appointed": true,
-        "name": "NP",
+        "name": "Samantha Gange",
         "role": "Clerk"
       }
     ],
@@ -25224,48 +25225,49 @@
     "board": [
       {
         "district": "Ward 1",
-        "name": "Indep. Cand.",
-        "role": "Alderman",
-        "termExpires": "2029"
+        "name": "Chad J. Vroman",
+        "role": "Alderman"
       },
       {
         "district": "Ward 2",
-        "name": "(309) 755-2350 Democratic",
-        "role": "Alderman",
-        "termExpires": "2029"
+        "name": "Craig Pirmann",
+        "phone": "309-755-2350",
+        "role": "Alderman"
       },
       {
         "district": "Ward 2",
-        "name": "(309) 796-0802 Democratic",
-        "role": "Alderman",
-        "termExpires": "2027"
+        "name": "Doug Greer",
+        "role": "Alderman"
       },
       {
         "district": "Ward 3",
-        "name": "Democratic",
+        "name": "David A. Rice",
         "phone": "309-792-5766",
-        "role": "Alderman",
-        "termExpires": "2027"
+        "role": "Alderman"
       },
       {
         "district": "Ward 4",
-        "name": "(309) 796-3589 Democratic",
-        "role": "Alderman",
-        "termExpires": "2027"
+        "name": "Christine Winters",
+        "phone": "309-796-3589",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 4",
+        "name": "Joshua M. Dyer",
+        "role": "Alderman"
       }
     ],
     "county": "Rock Island",
     "head": {
-      "name": "(309) 737-9086 Democratic",
-      "role": "Mayor",
-      "termExpires": "2029"
+      "name": "Robert Cervantes",
+      "role": "Mayor"
     },
     "name": "City of Silvis",
     "officers": [
       {
-        "name": "Democratic",
-        "role": "Clerk",
-        "termExpires": "2029"
+        "name": "Amy Malmstrom",
+        "phone": "309-737-9086",
+        "role": "Clerk"
       }
     ],
     "sourceUrl": "https://rockislandcountyil.gov/DocumentCenter/View/291/Elected-Officials-Listing-PDF"
