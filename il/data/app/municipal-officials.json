@@ -61,7 +61,8 @@
     },
     "name": "Village of Addison",
     "office": {
-      "address": "1 Friendship Plaza, Addison IL 60101"
+      "address": "1 Friendship Plaza, Addison IL 60101",
+      "phone": "630-543-4100"
     },
     "sourceUrl": "https://dmmc-cog.org/wp-content/uploads/2026/05/Membership-Directory-25-26-5.12.2026.pdf",
     "url": "https://www.addisonadvantage.org"
@@ -379,36 +380,43 @@
       {
         "name": "Alexander Melody",
         "phone": "309-756-8179",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Chad Kelly",
         "phone": "309-236-3006",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Gary N. Lueker",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Martin Yakovich",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Michael Kensinger",
         "phone": "309-798-9687",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Ronald Finley",
         "phone": "309-737-4494",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       }
     ],
     "county": "Rock Island",
     "head": {
       "name": "Andrew Pittard",
-      "role": "President"
+      "role": "President",
+      "termExpires": "2029"
     },
     "name": "Village of Andalusia",
     "officers": [
@@ -2064,7 +2072,8 @@
     },
     "name": "Village of Bensenville",
     "office": {
-      "address": "12 S. Center Street, Bensenville IL 60106"
+      "address": "12 S. Center Street, Bensenville IL 60106",
+      "phone": "630-766-8200"
     },
     "sourceUrl": "https://dmmc-cog.org/wp-content/uploads/2026/05/Membership-Directory-25-26-5.12.2026.pdf",
     "url": "https://www.bensenville.il.us"
@@ -2382,7 +2391,8 @@
     },
     "name": "Village of Bloomingdale",
     "office": {
-      "address": "201 S. Bloomingdale Road, Bloomingdale IL 60108"
+      "address": "201 S. Bloomingdale Road, Bloomingdale IL 60108",
+      "phone": "630-893-7000"
     },
     "sourceUrl": "https://dmmc-cog.org/wp-content/uploads/2026/05/Membership-Directory-25-26-5.12.2026.pdf",
     "url": "https://www.villageofbloomingdale.org"
@@ -3938,7 +3948,7 @@
         "role": "Treasurer"
       }
     ],
-    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008-2026.pdf"
+    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008%20-2026.pdf"
   },
   "1711033": {
     "board": [
@@ -4062,38 +4072,45 @@
       {
         "name": "Alma Neels",
         "phone": "309-235-1241",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Leevon Harris",
         "phone": "309-948-0174",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Robert Dreher",
         "phone": "309-792-1602",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Susan Allison",
         "phone": "309-792-9551",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Todd Cantrell",
         "phone": "309-792-5909",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Wendi Alonzo",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       }
     ],
     "county": "Rock Island",
     "head": {
       "name": "Bill Hintz",
       "phone": "309-796-4221",
-      "role": "President"
+      "role": "President",
+      "termExpires": "2029"
     },
     "name": "Village of Carbon Cliff",
     "officers": [
@@ -4734,7 +4751,7 @@
         "role": "Treasurer"
       }
     ],
-    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008-2026.pdf",
+    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008%20-2026.pdf",
     "url": "https://www.chatsworthil.gov"
   },
   "1713074": {
@@ -5417,7 +5434,8 @@
     },
     "name": "Village of Clarendon Hills",
     "office": {
-      "address": "One N. Prospect Avenue, Clarendon Hills IL 60514"
+      "address": "One N. Prospect Avenue, Clarendon Hills IL 60514",
+      "phone": "630-286-5400"
     },
     "sourceUrl": "https://dmmc-cog.org/wp-content/uploads/2026/05/Membership-Directory-25-26-5.12.2026.pdf",
     "url": "https://www.clarendonhills.us"
@@ -5581,38 +5599,45 @@
     "board": [
       {
         "name": "James Mountain",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Janice McBride",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Laura Rigg",
         "phone": "309-799-5705",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "R. Graeme Jewell",
         "phone": "309-799-5786",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Stanley Engstrom",
         "phone": "309-799-5872",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Thomas House, Sr.",
         "phone": "309-787-0970",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       }
     ],
     "county": "Rock Island",
     "head": {
       "name": "Michael T. Bartels",
       "phone": "309-235-5463",
-      "role": "President"
+      "role": "President",
+      "termExpires": "2029"
     },
     "name": "Village of Coal Valley",
     "officers": [
@@ -5761,36 +5786,43 @@
     "board": [
       {
         "name": "Ben Roush",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Harvey Sothmann",
         "phone": "309-654-2552",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Jeff Claus",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Justin DePorter",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Mark Townsend",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Ronald (Ron) A. Willhite",
         "phone": "309-654-2064",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       }
     ],
     "county": "Rock Island",
     "head": {
       "name": "James Boone",
       "phone": "309-373-5585",
-      "role": "President"
+      "role": "President",
+      "termExpires": "2029"
     },
     "name": "Village of Cordova",
     "officers": [
@@ -5850,7 +5882,7 @@
         "role": "Treasurer"
       }
     ],
-    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008-2026.pdf",
+    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008%20-2026.pdf",
     "url": "https://www.villageofcornell.com"
   },
   "1716470": {
@@ -6387,7 +6419,7 @@
         "role": "Treasurer"
       }
     ],
-    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008-2026.pdf",
+    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008%20-2026.pdf",
     "url": "https://www.villageofcullomillinois.com"
   },
   "1718147": {
@@ -7436,7 +7468,8 @@
     },
     "name": "Village of Downers Grove",
     "office": {
-      "address": "850 Curtiss Street, Downers Grove IL 60515"
+      "address": "850 Curtiss Street, Downers Grove IL 60515",
+      "phone": "630-434-5500"
     },
     "sourceUrl": "https://dmmc-cog.org/wp-content/uploads/2026/05/Membership-Directory-25-26-5.12.2026.pdf",
     "url": "https://www.downers.us"
@@ -8105,57 +8138,67 @@
         "district": "Ward 1",
         "name": "Olivia Dorothy",
         "phone": "217-390-3658",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2029"
       },
       {
         "district": "Ward 2",
         "name": "Jeffrey D. Deppe",
         "phone": "309-738-6549",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2027"
       },
       {
         "district": "Ward 3",
         "name": "Larry Jones",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2029"
       },
       {
         "district": "Ward 4",
         "name": "Adam Guthrie",
         "phone": "309-912-3151",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2027"
       },
       {
         "district": "Ward 5",
         "name": "Rhea Oakes",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2029"
       },
       {
         "district": "Ward 6",
         "name": "Lynn Segura",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2027"
       },
       {
         "district": "Ward 7",
         "name": "Jose Roberto Rico",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2029"
       }
     ],
     "county": "Rock Island",
     "head": {
       "name": "Reggie Freeman",
       "phone": "309-755-6721",
-      "role": "Mayor"
+      "role": "Mayor",
+      "termExpires": "2029"
     },
     "name": "City of East Moline",
     "officers": [
       {
         "name": "Wanda L. Roberts-Bontz",
-        "role": "Clerk"
+        "role": "Clerk",
+        "termExpires": "2029"
       },
       {
         "appointed": true,
         "name": "Glynis Cummings-Lowery",
-        "role": "Treasurer"
+        "role": "Treasurer",
+        "termExpires": "2029"
       }
     ],
     "sourceUrl": "https://rockislandcountyil.gov/DocumentCenter/View/291/Elected-Officials-Listing-PDF"
@@ -8563,7 +8606,8 @@
     },
     "name": "City of Elmhurst",
     "office": {
-      "address": "209 N. York Street, Elmhurst IL 60126"
+      "address": "209 N. York Street, Elmhurst IL 60126",
+      "phone": "630-530-3000"
     },
     "sourceUrl": "https://dmmc-cog.org/wp-content/uploads/2026/05/Membership-Directory-25-26-5.12.2026.pdf",
     "url": "https://www.elmhurst.org"
@@ -8831,7 +8875,7 @@
         "role": "Treasurer"
       }
     ],
-    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008-2026.pdf"
+    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008%20-2026.pdf"
   },
   "1724374": {
     "county": "Whiteside",
@@ -9055,7 +9099,7 @@
         "role": "Treasurer"
       }
     ],
-    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008-2026.pdf",
+    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008%20-2026.pdf",
     "url": "https://www.fairburyil.gov"
   },
   "1724933": {
@@ -9319,7 +9363,7 @@
         "role": "Treasurer"
       }
     ],
-    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008-2026.pdf",
+    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008%20-2026.pdf",
     "url": "https://www.flanaganil.org"
   },
   "1726571": {
@@ -9622,7 +9666,7 @@
         "role": "Treasurer"
       }
     ],
-    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008-2026.pdf",
+    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008%20-2026.pdf",
     "url": "https://www.forrestil.org"
   },
   "1727065": {
@@ -10669,7 +10713,8 @@
     },
     "name": "Village of Glendale Heights",
     "office": {
-      "address": "300 Civic Center Plaza, Glendale Heights IL 60139"
+      "address": "300 Civic Center Plaza, Glendale Heights IL 60139",
+      "phone": "630-260-6000"
     },
     "sourceUrl": "https://dmmc-cog.org/wp-content/uploads/2026/05/Membership-Directory-25-26-5.12.2026.pdf",
     "url": "https://www.glendaleheights.org"
@@ -10682,7 +10727,8 @@
     },
     "name": "Village of Glen Ellyn",
     "office": {
-      "address": "535 Duane Street, Glen Ellyn IL 60137"
+      "address": "535 Duane Street, Glen Ellyn IL 60137",
+      "phone": "630-469-5000"
     },
     "sourceUrl": "https://dmmc-cog.org/wp-content/uploads/2026/05/Membership-Directory-25-26-5.12.2026.pdf",
     "url": "https://www.glenellyn.org"
@@ -11375,35 +11421,42 @@
     "board": [
       {
         "name": "Mark White",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Marty Johnson",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Michael Klouser",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Rich Smice",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Ryan Gonzalez",
         "phone": "309-755-4101",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Steffanie Adams",
         "phone": "309-269-2812",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       }
     ],
     "county": "Rock Island",
     "head": {
       "name": "Christopher Bornhoeft",
-      "role": "President"
+      "role": "President",
+      "termExpires": "2029"
     },
     "name": "Village of Hampton",
     "officers": [
@@ -12235,38 +12288,45 @@
     "board": [
       {
         "name": "Chancie Noel",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Joni Reiss",
         "phone": "309-658-2649",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Lisa Nicholson",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "appointed": true,
         "name": "Russ Dunn",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Theresa Brooks",
         "phone": "309-314-3488",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Tonya Hanrahan",
         "phone": "309-658-2472",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       }
     ],
     "county": "Rock Island",
     "head": {
       "name": "Thomas Francis",
       "phone": "309-658-2573",
-      "role": "President"
+      "role": "President",
+      "termExpires": "2027"
     },
     "name": "Village of Hillsdale",
     "officers": [
@@ -13289,7 +13349,8 @@
     },
     "name": "Village of Itasca",
     "office": {
-      "address": "550 W. Irving Park Road, Itasca IL 60143"
+      "address": "550 W. Irving Park Road, Itasca IL 60143",
+      "phone": "630-773-0835"
     },
     "sourceUrl": "https://dmmc-cog.org/wp-content/uploads/2026/05/Membership-Directory-25-26-5.12.2026.pdf",
     "url": "https://www.itasca.com"
@@ -13741,12 +13802,6 @@
   },
   "1739857": {
     "board": [
-      {
-        "name": "David L Atwater",
-        "phone": "309-303-0500",
-        "role": "Trustee",
-        "termExpires": "2029"
-      },
       {
         "name": "Michael Case",
         "role": "Trustee",
@@ -15416,7 +15471,8 @@
     },
     "name": "Village of Lisle",
     "office": {
-      "address": "925 Burlington Avenue, Lisle IL 60532"
+      "address": "925 Burlington Avenue, Lisle IL 60532",
+      "phone": "630-271-4100"
     },
     "sourceUrl": "https://dmmc-cog.org/wp-content/uploads/2026/05/Membership-Directory-25-26-5.12.2026.pdf",
     "url": "https://www.villageoflisle.org"
@@ -15613,7 +15669,8 @@
     },
     "name": "Village of Lombard",
     "office": {
-      "address": "255 E. Wilson Avenue, Lombard IL 60148"
+      "address": "255 E. Wilson Avenue, Lombard IL 60148",
+      "phone": "630-620-5700"
     },
     "sourceUrl": "https://dmmc-cog.org/wp-content/uploads/2026/05/Membership-Directory-25-26-5.12.2026.pdf",
     "url": "https://www.villageoflombard.org"
@@ -15676,7 +15733,7 @@
         "role": "Treasurer"
       }
     ],
-    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008-2026.pdf"
+    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008%20-2026.pdf"
   },
   "1744823": {
     "board": [
@@ -17471,43 +17528,51 @@
       {
         "name": "Bruce Stickell",
         "phone": "309-787-2605",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "appointed": true,
         "name": "Dan Verbecke",
         "phone": "309-737-9141",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Danny Schomer",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Doug Humphrey",
         "phone": "309-787-3007",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Jodie Lee",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Karen Wilson",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       }
     ],
     "county": "Rock Island",
     "head": {
       "name": "Duane Dawson",
       "phone": "309-787-2869",
-      "role": "President"
+      "role": "President",
+      "termExpires": "2029"
     },
     "name": "Village of Milan",
     "officers": [
       {
         "name": "Michelle Hubbard",
-        "role": "Clerk"
+        "role": "Clerk",
+        "termExpires": "2029"
       }
     ],
     "sourceUrl": "https://rockislandcountyil.gov/DocumentCenter/View/291/Elected-Officials-Listing-PDF"
@@ -17870,51 +17935,60 @@
       {
         "district": "Ward 1",
         "name": "Debbie Murphy",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2027"
       },
       {
         "district": "Ward 2",
         "name": "Alvaro Macias",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2029"
       },
       {
         "district": "Ward 3",
         "name": "Abdur Razzaque",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2027"
       },
       {
         "district": "Ward 4",
         "name": "Matt Timion",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2029"
       },
       {
         "district": "Ward 5",
         "name": "Jessica Finch",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2027"
       },
       {
         "district": "Ward 6",
         "name": "Daniel McNeil",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2029"
       },
       {
         "district": "Ward 7",
         "name": "Anna Castro",
         "phone": "309-797-1586",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2027"
       }
     ],
     "county": "Rock Island",
     "head": {
       "name": "Sangeetha Rayapati",
-      "role": "Mayor"
+      "role": "Mayor",
+      "termExpires": "2029"
     },
     "name": "City of Moline",
     "officers": [
       {
         "appointed": true,
         "name": "James Patrick Schmidt",
-        "role": "Clerk"
+        "role": "Clerk",
+        "termExpires": "2029"
       },
       {
         "appointed": true,
@@ -19814,7 +19888,8 @@
     },
     "name": "City of Oakbrook Terrace",
     "office": {
-      "address": "17W275 Butterfield Road, Oakbrook Terrace IL 60181"
+      "address": "17W275 Butterfield Road, Oakbrook Terrace IL 60181",
+      "phone": "630-941-8300"
     },
     "sourceUrl": "https://dmmc-cog.org/wp-content/uploads/2026/05/Membership-Directory-25-26-5.12.2026.pdf",
     "url": "https://www.oakbrookterrace.net"
@@ -19969,29 +20044,34 @@
       {
         "name": "Fred A. Seynaeve",
         "phone": "309-787-4803",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Kenneth E. Hoffman",
         "phone": "309-787-2073",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Nancy Endres",
         "phone": "309-787-4589",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Robert \"Mike\" Stewart",
         "phone": "309-787-0148",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       }
     ],
     "county": "Rock Island",
     "head": {
       "name": "Michael M. Nowack",
       "phone": "309-200-5524",
-      "role": "President"
+      "role": "President",
+      "termExpires": "2029"
     },
     "name": "Village of Oak Grove",
     "officers": [
@@ -20184,7 +20264,7 @@
         "role": "Treasurer"
       }
     ],
-    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008-2026.pdf",
+    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008%20-2026.pdf",
     "url": "https://odell-il.com"
   },
   "1755249": {
@@ -21892,6 +21972,56 @@
     "url": "https://plainfieldil.gov"
   },
   "1760352": {
+    "board": [
+      {
+        "district": "Ward 1",
+        "email": "bnadeau@cityofplanoil.gov",
+        "name": "Barbara Nadeau",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 1",
+        "email": "mswoboda@cityofplanoil.gov",
+        "name": "Mark Swoboda",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 2",
+        "email": "nveen@cityofplanoil.gov",
+        "name": "Cornealius (Neal) Veen",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 2",
+        "email": "jfawver@cityofplanoil.gov",
+        "name": "John Fawver",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 3",
+        "email": "kwickens@cityofplanoil.gov",
+        "name": "Katherine Wickens",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 3",
+        "email": "sdebolt@cityofplanoil.gov",
+        "name": "Stephen DeBolt",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 4",
+        "email": "smulliner@cityofplanoil.gov",
+        "name": "Scott Mulliner",
+        "role": "Alderman"
+      },
+      {
+        "district": "Ward 4",
+        "email": "tjohns@cityofplanoil.gov",
+        "name": "Thomas Johns",
+        "role": "Alderman"
+      }
+    ],
     "county": "Kendall",
     "head": {
       "lastElected": "2025",
@@ -22125,7 +22255,7 @@
         "role": "Treasurer"
       }
     ],
-    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008-2026.pdf",
+    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008%20-2026.pdf",
     "url": "https://www.pontiac.org"
   },
   "1761067": {
@@ -22276,34 +22406,41 @@
       {
         "name": "Brian Bitler",
         "phone": "309-523-2892",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Bruce A. Peterson",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Jacob Hobbs",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Roger Oliver",
         "phone": "309-523-9904",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Tami Marsden",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Wayne Oney",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       }
     ],
     "county": "Rock Island",
     "head": {
       "name": "Barb Cray",
-      "role": "President"
+      "role": "President",
+      "termExpires": "2029"
     },
     "name": "Village of Port Byron",
     "officers": [
@@ -22622,36 +22759,43 @@
       {
         "name": "Carolyn A. Fowler",
         "phone": "309-912-1885",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Kristy Polenske",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Michael J. DeMarlie",
         "phone": "563-940-9024",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Nicholas John Peschang",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Richard P. Fiems",
         "phone": "309-496-1951",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Richard Robertson",
         "phone": "309-496-9653",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       }
     ],
     "county": "Rock Island",
     "head": {
       "name": "Harold J. Mire Jr.",
-      "role": "President"
+      "role": "President",
+      "termExpires": "2029"
     },
     "name": "Village of Rapids City",
     "officers": [
@@ -22707,53 +22851,61 @@
         "role": "Treasurer"
       }
     ],
-    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008-2026.pdf"
+    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008%20-2026.pdf"
   },
   "1763420": {
     "board": [
       {
         "name": "Chris Rowe",
         "phone": "309-372-4459",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Jennifer Ziemer",
         "phone": "309-372-4432",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Justin Tyler Fuhr",
         "phone": "309-314-4305",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Marcus Bolt",
         "phone": "309-373-2027",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2029"
       },
       {
         "name": "Merrill E. Allen",
         "phone": "309-372-8419",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       },
       {
         "name": "Robert B. Frieden",
         "phone": "309-737-7680",
-        "role": "Trustee"
+        "role": "Trustee",
+        "termExpires": "2027"
       }
     ],
     "county": "Rock Island",
     "head": {
       "name": "Joseph DeMarlie",
       "phone": "309-372-4458",
-      "role": "President"
+      "role": "President",
+      "termExpires": "2029"
     },
     "name": "Village of Reynolds",
     "officers": [
       {
         "name": "Shirley Roth",
         "phone": "309-372-8292",
-        "role": "Clerk"
+        "role": "Clerk",
+        "termExpires": "2029"
       }
     ],
     "sourceUrl": "https://rockislandcountyil.gov/DocumentCenter/View/291/Elected-Officials-Listing-PDF"
@@ -23630,48 +23782,56 @@
       {
         "district": "Ward 1",
         "name": "Glen Evans",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2029"
       },
       {
         "district": "Ward 2",
         "name": "Randall Hurt",
         "phone": "309-787-0677",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2027"
       },
       {
         "district": "Ward 3",
         "name": "Linda Barnes",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2029"
       },
       {
         "district": "Ward 4",
         "name": "Jenni Swanson",
         "phone": "563-340-9303",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2027"
       },
       {
         "district": "Ward 5",
         "name": "Dylan Parker",
         "phone": "309-738-3416",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2029"
       },
       {
         "district": "Ward 6",
         "name": "Mark B. Poulos",
         "phone": "309-788-2678",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2027"
       },
       {
         "district": "Ward 7",
         "name": "William Healy",
         "phone": "309-269-7499",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2029"
       }
     ],
     "county": "Rock Island",
     "head": {
       "name": "Ashley Harris",
-      "role": "Mayor"
+      "role": "Mayor",
+      "termExpires": "2029"
     },
     "name": "City of Rock Island",
     "officers": [
@@ -24567,7 +24727,7 @@
         "role": "Treasurer"
       }
     ],
-    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008-2026.pdf",
+    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008%20-2026.pdf",
     "url": "https://www.sauneminillinois.org"
   },
   "1767821": {
@@ -25222,48 +25382,56 @@
       {
         "district": "Ward 1",
         "name": "Chad J. Vroman",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2029"
       },
       {
         "district": "Ward 2",
         "name": "Craig Pirmann",
         "phone": "309-755-2350",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2027"
       },
       {
         "district": "Ward 2",
         "name": "Doug Greer",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2029"
       },
       {
         "district": "Ward 3",
         "name": "David A. Rice",
         "phone": "309-792-5766",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2027"
       },
       {
         "district": "Ward 4",
         "name": "Christine Winters",
         "phone": "309-796-3589",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2029"
       },
       {
         "district": "Ward 4",
         "name": "Joshua M. Dyer",
-        "role": "Alderman"
+        "role": "Alderman",
+        "termExpires": "2027"
       }
     ],
     "county": "Rock Island",
     "head": {
       "name": "Robert Cervantes",
-      "role": "Mayor"
+      "role": "Mayor",
+      "termExpires": "2029"
     },
     "name": "City of Silvis",
     "officers": [
       {
         "name": "Amy Malmstrom",
         "phone": "309-737-9086",
-        "role": "Clerk"
+        "role": "Clerk",
+        "termExpires": "2029"
       }
     ],
     "sourceUrl": "https://rockislandcountyil.gov/DocumentCenter/View/291/Elected-Officials-Listing-PDF"
@@ -26508,7 +26676,7 @@
         "role": "Treasurer"
       }
     ],
-    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008-2026.pdf"
+    "sourceUrl": "https://www.livingstoncountyil.gov/Documents/Government/Yearbook%20updated%2008%20-2026.pdf"
   },
   "1773157": {
     "board": [
@@ -27903,7 +28071,8 @@
     },
     "name": "Village of Villa Park",
     "office": {
-      "address": "20 S. Ardmore Avenue, Villa Park IL 60181"
+      "address": "20 S. Ardmore Avenue, Villa Park IL 60181",
+      "phone": "630-834-8500"
     },
     "sourceUrl": "https://dmmc-cog.org/wp-content/uploads/2026/05/Membership-Directory-25-26-5.12.2026.pdf",
     "url": "https://www.invillapark.com"
@@ -28211,7 +28380,8 @@
     },
     "name": "City of Warrenville",
     "office": {
-      "address": "3S258 Manning Avenue, Warrenville IL 60555"
+      "address": "3S258 Manning Avenue, Warrenville IL 60555",
+      "phone": "630-836-3050"
     },
     "sourceUrl": "https://dmmc-cog.org/wp-content/uploads/2026/05/Membership-Directory-25-26-5.12.2026.pdf",
     "url": "https://www.warrenville.il.us"
@@ -28770,7 +28940,8 @@
     },
     "name": "Village of Westmont",
     "office": {
-      "address": "31 W. Quincy Street, Westmont IL 60559"
+      "address": "31 W. Quincy Street, Westmont IL 60559",
+      "phone": "630-981-6200"
     },
     "sourceUrl": "https://dmmc-cog.org/wp-content/uploads/2026/05/Membership-Directory-25-26-5.12.2026.pdf",
     "url": "https://www.westmont.il.gov"
@@ -28855,7 +29026,8 @@
     },
     "name": "City of Wheaton",
     "office": {
-      "address": "303 W. Wesley Street, Wheaton IL 60187"
+      "address": "303 W. Wesley Street, Wheaton IL 60187",
+      "phone": "630-260-2000"
     },
     "sourceUrl": "https://dmmc-cog.org/wp-content/uploads/2026/05/Membership-Directory-25-26-5.12.2026.pdf",
     "url": "https://www.wheaton.il.us"
@@ -29325,7 +29497,8 @@
     },
     "name": "Village of Winfield",
     "office": {
-      "address": "27W465 Jewell Road, Winfield IL 60190"
+      "address": "27W465 Jewell Road, Winfield IL 60190",
+      "phone": "630-933-7100"
     },
     "sourceUrl": "https://dmmc-cog.org/wp-content/uploads/2026/05/Membership-Directory-25-26-5.12.2026.pdf",
     "url": "https://www.villageofwinfield.com"
