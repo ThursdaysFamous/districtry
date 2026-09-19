@@ -242,86 +242,6 @@
    "verdict": "challenge"
   },
   {
-   "board_url": "https://casscountymi.org/1500/BOC-Committees",
-   "county": "Cass",
-   "evidence": {
-    "cfemail": 0,
-    "chrome_dropped": 11,
-    "distinct_near": 24,
-    "district_count": 8,
-    "districts_found": [
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8
-    ],
-    "mailto": 9,
-    "names_seen": 69,
-    "near_pairs": 6,
-    "seats": 8,
-    "tel": 1,
-    "text_bytes": 4204
-   },
-   "fips": "027",
-   "host": "casscountymi.org",
-   "notes": [
-    "casscounty.net unreachable after 3 tries (ConnectionError)",
-    "casscounty.org unreachable after 3 tries (ConnectionError)",
-    "casscountymi.com answers HTTP 200 in 114 bytes and never names Cass on any of 3 fetches \u2014 not taken as the county's own site",
-    "www.casscounty.net unreachable after 3 tries (ConnectionError)",
-    "www.casscounty.org unreachable after 3 tries (ConnectionError)",
-    "www.cass-county.com is a CATCH-ALL \u2014 an impossible path returns 8948 bytes against the root's 8948, so a 200 here proves nothing",
-    "www.casscountymi.com answers HTTP 200 in 114 bytes and never names Cass on any of 3 fetches \u2014 not taken as the county's own site",
-    "cass-county.com: neither its sitemap nor its front page names a board page"
-   ],
-   "pop": 51589,
-   "rejected": [
-    {
-     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
-     "host": "casscounty.net",
-     "why": "unreachable"
-    },
-    {
-     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
-     "host": "casscounty.org",
-     "why": "unreachable"
-    },
-    {
-     "detail": null,
-     "host": "casscountymi.com",
-     "why": "names-another"
-    },
-    {
-     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
-     "host": "www.casscounty.net",
-     "why": "unreachable"
-    },
-    {
-     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
-     "host": "www.casscounty.org",
-     "why": "unreachable"
-    },
-    {
-     "detail": null,
-     "host": "www.cass-county.com",
-     "why": "catch-all"
-    },
-    {
-     "detail": null,
-     "host": "www.casscountymi.com",
-     "why": "names-another"
-    }
-   ],
-   "resolved": 23,
-   "score": 115.5,
-   "seats": 8,
-   "verdict": "candidate"
-  },
-  {
    "board_url": "https://www.newaygocountymi.gov/board_of_commissione/board-of-commissioners/",
    "county": "Newaygo",
    "evidence": {
@@ -1504,6 +1424,7 @@
   "007 Alpena",
   "011 Arenac",
   "015 Barry",
+  "027 Cass",
   "031 Cheboygan",
   "033 Chippewa",
   "035 Clare",

@@ -34,9 +34,9 @@ WHAT A TRANCHE IS
 ------------------
 Michigan has 83 counties and no statewide roster, so the names arrive a
 TRANCHE at a time: the counties whose own board page yields a district-keyed
-roster to the client this scraper sends. Twenty-six counties yield today across
-four shipping tranches, and ten more are recorded in PROBES below as tried and
-not yielded — host, robots reading, what it answered, the date — so the next
+roster to the client this scraper sends. Forty-eight counties yield today
+across six shipping tranches, and ten more are recorded in PROBES below as
+tried and not yielded — host, robots reading, what it answered, the date — so the next
 tranche starts from measurements instead of guesses, and a county that changes
 its file re-enters by itself on the weekly run.
 
@@ -47,7 +47,10 @@ each buying under 1%. So tranche 4 measured WHETHER A COUNTY PUBLISHES A
 DISTRICT-KEYED BOARD PAGE AT ALL, for all 59 at once and without writing a
 parser (mi/scripts/probe_mi_county_boards.py,
 mi/data/source/mi-county-board-probe.json), and shipped no county itself.
-Tranche 5 is the first taken off that list.
+Tranche 5 is the first taken off that list, and tranche 7 exhausted it:
+measured 2026-09-19 against the pruned probe record, ZERO candidates remain
+unbuilt. What is left there is 25 counties recorded shut, each with the reason
+it was shut for.
 
 A `candidate` VERDICT IS NOT A PROMISE, in either direction. Ten of the
 probe's 34 candidates parsed on the first attempt; two of them — Gogebic and
@@ -68,8 +71,8 @@ the DuPage and Logan pattern): on a website that status is a firewall refusing
 this client, where on an ArcGIS service it is the RFC's allow, so the state
 service keeps the default.
 
-No county here needs a browser user-agent: every one of the twenty-six serves
-this token a full page. A county that refuses is skipped with its reason
+No county here needs a browser user-agent: every one of the forty-eight
+serves this token a full page. A county that refuses is skipped with its reason
 printed and its page never requested; it stays in PROBES so the weekly run
 re-asks and a county that changes its file re-enters by itself.
 
@@ -87,7 +90,7 @@ than its name and a browser string buys nothing.
 
 WHAT EACH PARSER READS, AND THE TRAP IN IT
 --------------------------------------------
-Twenty-six counties and as many page shapes; each parser's own docstring
+Forty-eight counties and as many page shapes; each parser's own docstring
 carries the trap it was written around. Every one pairs a district with a name
 INSIDE ONE BLOCK rather than by document order, because several print the name
 before the district and some print the role before the name. Tranche 1's six,
@@ -1098,13 +1101,15 @@ def parse_sanilac(page):
 # saved during tranche 5's single sweep and every parser below was written
 # and corrected offline against that copy.
 #
-# CASS IS THE TWENTY-SECOND AND IS NOT HERE. The probe's URL for it is the
+# CASS IS THE TWENTY-SECOND AND WAS NOT HERE. The probe's URL for it is the
 # board's COMMITTEES page, which lists committee memberships; all eight
-# districts do appear across them, so a parser could assemble a whole board
-# out of five committee rosters and would lose any commissioner who sits on
-# no committee. The county's own board page is a different URL and is not
-# among the saved pages, so Cass waits rather than being read off the wrong
-# one.
+# districts do appear across them, so a parser could have assembled a whole
+# board out of five committee rosters and would have lost any commissioner
+# who sits on no committee. The county's own board page is a different URL
+# and was not among the saved pages, so Cass waited rather than being read
+# off the wrong one. It shipped as tranche 7 the same day, off that board
+# page, with the committees page kept for the addresses it carries and
+# nothing else — parse_cass() states the split.
 
 def lines(page):
     """Flatten a page to its visible lines, keeping mailto: and tel: targets
@@ -1638,6 +1643,92 @@ def parse_schoolcraft(page):
     return out
 
 
+
+def parse_cass(page, also=None):
+    """Two of the county's own pages, and NEITHER IS A ROSTER ON ITS OWN.
+
+    The board page is eight photo buttons, each an <a> to /NNNN/District-N
+    holding a <span class="textStyle1">Name</span> and a
+    <span class="textStyle2">District N Commissioner</span> caption: the people
+    and the districts, and no way to contact any of them. The committees page,
+    which is the URL the probe scored, puts a mailto and the member's own
+    district on one line ("Thomas Langley (District 1, Committee Chair)"): the
+    addresses, and no roster. It lists five standing committees, so a
+    commissioner who sits on none appears nowhere on it, and it names two
+    people who are not on the board at all — the County Administrator and the
+    HR/Payroll Director, each captioned with a job title where a member carries
+    a district.
+
+    SO THE BOARD PAGE DECIDES WHO IS ON THE BOARD, and the committees page only
+    adds an address to a district the board page has already named. The two
+    agree on all eight districts today, which is a second witness on the
+    pairing; a district where they disagree gets no address and keeps its name,
+    because the board page is the roster and a committee list going stale is
+    not evidence against it.
+
+    THE BOARD PAGE IS ALSO ITS OWN WITNESS: each button's href slug and its
+    printed caption name the district separately, and a button whose two halves
+    disagree is not read.
+
+    Seven of the eight have an address. Jeremiah Jones, the Chair, is named on
+    both pages with no mailto on either.
+
+    The committees page is OPTIONAL — when it does not fetch, the county ships
+    names without addresses and the run says so, and check_roster_retention.py
+    is what notices, since it measures each county in this file as its own
+    source. A committees page that fetches and yields fewer than five joinable
+    addresses is a DIFFERENT failure — the page's shape has moved under this
+    parser rather than the network having dropped — and refuses.
+    """
+    out = {}
+    button = re.compile(
+        r'<a href="[^"]*?/District-(\d{1,2})"[^>]*class="fancyButton[^>]*>.*?'
+        r'<span class="textStyle1">([^<]+)</span>\s*(?:<br\s*/?>)?\s*'
+        r'<span class="textStyle2">([^<]*)</span>', re.S | re.I)
+    for m in button.finditer(page):
+        label, caption = txt(m.group(2)), txt(m.group(3))
+        said = re.search(r"District (\d{1,2})", caption)
+        if not (said and said.group(1) == m.group(1) and NAME.match(label)):
+            continue
+        rec = {"name": label}
+        role = ROLE.search(caption)
+        if role:
+            rec["role"] = role.group(1)
+        out.setdefault(m.group(1), rec)
+    if not also:
+        return out
+
+    # (District N, ...) OR (Some Role, District N) — Jones's line puts the role
+    # first — and the name is whatever precedes the bracket. A line whose
+    # bracket holds no district belongs to a member of staff, not to the board.
+    mails = {}
+    for l in lines(also):
+        m = re.match(r"^(?:\[mail:([^\]]+)\]\s*)?(.+?)\s*\(([^)]*)\)\s*$", l)
+        if not m:
+            continue
+        keyed = re.search(r"District (\d{1,2})", m.group(3))
+        label = txt(m.group(2))
+        if not (keyed and NAME.match(label)):
+            continue
+        rec = mails.setdefault(keyed.group(1), {"name": label, "email": None})
+        if rec["name"] == label and m.group(1) and not rec["email"]:
+            rec["email"] = m.group(1).strip()
+    joined = 0
+    for d, rec in out.items():
+        seen = mails.get(d)
+        if seen and seen["name"] == rec["name"] and seen["email"]:
+            rec["email"] = seen["email"]
+            joined += 1
+    if joined < 5:
+        raise ValueError(
+            "the committees page joined %d addresses to the board page's %d "
+            "districts; it named %d district-keyed people. Five is the floor: "
+            "a member leaving a committee moves this by one, a page whose "
+            "shape has moved answers zero."
+            % (joined, len(out), len(mails)))
+    return out
+
+
 COUNTIES = (
     {"fips": "077", "county": "Kalamazoo", "seats": 9, "parse": parse_kalamazoo,
      "url": "https://www.kalcounty.gov/479/Board-of-Commissioners"},
@@ -1743,14 +1834,22 @@ COUNTIES = (
     {"fips": "153", "county": "Schoolcraft", "seats": 5, "parse": parse_schoolcraft,
      "url": "https://schoolcraftcounty.net/government/elected-officials/"
             "commissioners"},
+    # --- tranche 7, 2026-09-19: Cass, the last county on the probe's list ---
+    # THE ONLY ENTRY HERE WITH AN `also`, and parse_cass() says why: the board
+    # page names the eight districts and carries no contact, the committees
+    # page carries the addresses and is not a roster. The second page is read
+    # through the same gate, pacer and retries as the first.
+    {"fips": "027", "county": "Cass", "seats": 8, "parse": parse_cass,
+     "url": "https://casscountymi.org/1289/Board-of-Commissioners",
+     "also": "https://casscountymi.org/1500/BOC-Committees"},
 )
 
-# Every county tried in tranche 1, measured 2026-09-13 from this project's
-# sandbox with UA_ROSTER_BOT, robots.txt read first in every case. The six
-# above are the ones that yielded; these six are the ones that did not, and
-# each says what stopped it rather than "no page found". Re-measure before
-# writing any of them off again — a robots file changes, an edge rule is
-# lifted, a county moves CMS.
+# The counties tried and not yielded, measured from this project's sandbox
+# with UA_ROSTER_BOT, robots.txt read first in every case — six on
+# 2026-09-13, Allegan and Bay on 2026-09-15, Gogebic and Marquette on
+# 2026-09-19. Each says what stopped it rather than "no page found".
+# Re-measure before writing any of them off again — a robots file changes, an
+# edge rule is lifted, a county moves CMS.
 PROBES = (
     {"county": "Oakland", "fips": "125", "seats": 19,
      "host": "www.oakgov.com",
@@ -1866,7 +1965,7 @@ def state_commissioners(session, gate, pacer, fips_list):
     prints. Never shipped — see the module docstring.
 
     ROBOTS IS READ HERE TOO. The rule is every host before its first fetch,
-    and this is a different host from the six county sites. It is an ArcGIS
+    and this is a different host from every county site. It is an ArcGIS
     service rather than a website, so it takes the RFC's default reading of a
     401/403 (allow) rather than the strict one the county pages opt into;
     measured 2026-09-13, gisagocss.state.mi.us answers 404 on robots.txt, so
@@ -1897,6 +1996,74 @@ def state_commissioners(session, gate, pacer, fips_list):
     return out
 
 
+def read_page(url, session, gate, pacer):
+    """Robots verdict, then the page. -> (response, why, kind, gate, pacer).
+
+    `response` is None when the page was not read and `why` says so; `kind` is
+    "robots" for a refusal, which the caller records as a refusal, or "fetch"
+    for one that says nothing about the county's policy. The gate and pacer
+    come back because an unreachable robots read rebuilds both.
+
+    ONE COPY, because a county reading two pages reads both this way: a second
+    page fetched without the robots read, or without the retries, is the shape
+    every defect in this file has taken.
+
+    THE ROBOTS READ IS RETRIED THE SAME WAY THE PAGE IS, and for the same host.
+    co.hillsdale.mi.us drops roughly one connection in three from this
+    project's sandbox, and the drop lands on robots.txt because that is the
+    first request made; measured 2026-09-19, the retry added for the PAGE did
+    not cover it and Hillsdale fell out of a full run with "robots
+    unreachable" while serving its file on the next attempt. A gate caches its
+    verdict per site, so each retry needs a fresh one. Only `unreachable` is
+    retried: a served refusal and a challenge are answers. FIVE TRIES RATHER
+    THAN THREE, measured 2026-09-19: three consecutive reads of that host
+    failed inside one run and the county dropped out of the roster it had been
+    in since the morning, which the builder's two-counties-may-go-dark floor is
+    meant to survive rather than to hide.
+
+    THE STRICT READING, opted into by argument the way the DuPage and Logan
+    municipal scrapers do. RFC 9309 files a 401/403 on robots.txt with a 404
+    and allows, which is right for the APIs that answer that way (every ArcGIS
+    FeatureServer); these are county WEBSITES, where a 403 on robots.txt is a
+    firewall refusing this client and fetching the page anyway is walking past
+    a no.
+
+    A TRANSPORT FAILURE IS NOT A MEASUREMENT — the same host resets the
+    connection on roughly one request in three from this sandbox and serves the
+    same page on the next try; a single failure recorded as "county did not
+    yield" is how a county that publishes its board stays unread. Only the
+    transport is retried: a robots refusal and an HTTP status are answers and
+    are taken as given.
+    """
+    verdict = gate.verdict(url)
+    for attempt in range(5):
+        if verdict.status != "unreachable":
+            break
+        time.sleep(2 * (attempt + 1))
+        gate = RobotsGate(session, UA_ROSTER_BOT)
+        pacer = HostPacer(gate)
+        verdict = gate.verdict(url)
+    allowed, why = verdict.allows(UA_ROSTER_BOT, url, refused_is_refusal=True)
+    if not allowed:
+        return None, "robots %s: %s" % (verdict.status, why), "robots", gate, pacer
+    resp, last = None, None
+    for attempt in range(3):
+        try:
+            with pacer.hold(url):
+                resp = session.get(url, timeout=TIMEOUT)
+            break
+        except Exception as exc:                              # noqa: BLE001
+            last = exc
+            if attempt < 2:
+                time.sleep(2 * (attempt + 1))
+    if resp is None:
+        return None, "FETCH FAILED after 3 tries — %s" % last, "fetch", gate, pacer
+    if resp.status_code != 200:
+        return (None, "HTTP %s (%d bytes)" % (resp.status_code, len(resp.content)),
+                "fetch", gate, pacer)
+    return resp, None, None, gate, pacer
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     ap.add_argument("--county", help="scrape one county by name")
@@ -1916,64 +2083,31 @@ def main():
     entries, refused = {}, []
     for spec in wanted:
         url, county = spec["url"], spec["county"]
-        # THE ROBOTS READ IS RETRIED THE SAME WAY THE PAGE IS, and for the same
-        # host. co.hillsdale.mi.us drops roughly one connection in three from
-        # this project's sandbox, and the drop lands on robots.txt because that
-        # is the first request made; measured 2026-09-19, the retry added for
-        # the PAGE did not cover it and Hillsdale fell out of a full run with
-        # "robots unreachable" while serving its file on the next attempt. A
-        # gate caches its verdict per site, so each retry needs a fresh one.
-        # Only `unreachable` is retried: a served refusal and a challenge are
-        # answers. FIVE TRIES RATHER THAN THREE, measured 2026-09-19: three
-        # consecutive reads of that host failed inside one run and the county
-        # dropped out of the roster it had been in since the morning, which the
-        # builder's two-counties-may-go-dark floor is meant to survive rather
-        # than to hide.
-        verdict = gate.verdict(url)
-        for attempt in range(5):
-            if verdict.status != "unreachable":
-                break
-            time.sleep(2 * (attempt + 1))
-            gate = RobotsGate(session, UA_ROSTER_BOT)
-            pacer = HostPacer(gate)
-            verdict = gate.verdict(url)
-        # THE STRICT READING, opted into by argument the way the DuPage and
-        # Logan municipal scrapers do. RFC 9309 files a 401/403 on robots.txt
-        # with a 404 and allows, which is right for the APIs that answer that
-        # way (every ArcGIS FeatureServer); these are county WEBSITES, where a
-        # 403 on robots.txt is a firewall refusing this client and fetching the
-        # page anyway is walking past a no. Moot on all six counties today —
-        # every one serves its file — and it decides what happens the day a
-        # county now in PROBES is promoted into COUNTIES.
-        allowed, why = verdict.allows(UA_ROSTER_BOT, url, refused_is_refusal=True)
-        if not allowed:
-            refused.append((county, why))
-            print("  %-10s SKIPPED — robots %s: %s" % (county, verdict.status, why))
-            continue
-        resp, last = None, None
-        # A TRANSPORT FAILURE IS NOT A MEASUREMENT. co.hillsdale.mi.us resets
-        # the connection on roughly one request in three from this project's
-        # sandbox and serves the same page on the next try; a single failure
-        # recorded as "county did not yield" is how a county that publishes its
-        # board stays unread. Only the transport is retried — a robots refusal
-        # and an HTTP status are answers and are taken as given.
-        for attempt in range(3):
-            try:
-                with pacer.hold(url):
-                    resp = session.get(url, timeout=TIMEOUT)
-                break
-            except Exception as exc:                          # noqa: BLE001
-                last = exc
-                if attempt < 2:
-                    time.sleep(2 * (attempt + 1))
+        resp, why, kind, gate, pacer = read_page(url, session, gate, pacer)
         if resp is None:
-            print("  %-10s FETCH FAILED after 3 tries — %s" % (county, last))
+            if kind == "robots":
+                refused.append((county, why))
+                print("  %-10s SKIPPED — %s" % (county, why))
+            else:
+                print("  %-10s %s" % (county, why))
             continue
-        if resp.status_code != 200:
-            print("  %-10s HTTP %s (%d bytes)" % (county, resp.status_code, len(resp.content)))
-            continue
+        # A SECOND PAGE THAT DOES NOT ANSWER COSTS ITS OWN COLUMN AND NOTHING
+        # ELSE. Cass is the one county here that reads two — its board page
+        # names the districts and its committees page carries the addresses —
+        # and a network failure on the second is not a reason to withhold the
+        # eight names the first one gave. The run says so, and
+        # check_roster_retention.py is what fails the weekly PR, since it
+        # measures each county in this file as its own source.
+        also = None
+        if spec.get("also"):
+            extra, why2, _kind, gate, pacer = read_page(spec["also"], session, gate, pacer)
+            if extra is None:
+                print("  %-10s second page not read — %s" % (county, why2))
+            else:
+                also = strip_comments(extra.text)
         try:
-            keyed = spec["parse"](strip_comments(resp.text))
+            body = strip_comments(resp.text)
+            keyed = spec["parse"](body, also) if spec.get("also") else spec["parse"](body)
         except ValueError as exc:
             print("  %-10s PARSE REFUSED — %s" % (county, exc))
             continue
@@ -1984,6 +2118,10 @@ def main():
             "finalUrl": resp.url,
             "districts": keyed,
         }
+        if spec.get("also"):
+            # Provenance for whoever reads this cache — the shipped roster
+            # names the page the ROSTER came from, which is `sourceUrl`.
+            entries[spec["fips"]]["alsoUrl"] = spec["also"]
         print("  %-10s %2d/%2d districts (%s, %d bytes)"
               % (county, len(keyed), spec["seats"], url, len(resp.content)))
 
@@ -1999,6 +2137,20 @@ def main():
                 rec["stateColumnName"] = named
 
     os.makedirs(os.path.dirname(CACHE), exist_ok=True)
+    kept = 0
+    if args.county and os.path.exists(CACHE):
+        # --county MERGES; a full run REPLACES. Re-reading one county is how a
+        # new parser is proved against the live page, and a flag that wipes the
+        # other forty-seven to do it makes the next step a full sweep of hosts
+        # nobody needed to ask again. A full run replaces because there a
+        # county that has stopped yielding must leave the file rather than
+        # linger on last week's answer.
+        with open(CACHE) as handle:
+            held = json.load(handle).get("counties") or {}
+        for fips, entry in held.items():
+            if fips not in entries:
+                entries[fips] = entry
+                kept += 1
     payload = {
         "scrapedAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "userAgent": UA_ROSTER_BOT,
@@ -2012,8 +2164,10 @@ def main():
     # A delay honoured without saying so cannot be told from one ignored.
     for line in pacer.report():
         print(line)
-    print("mi-commissioner-scraper: %d counties, %d districts -> %s"
-          % (len(entries), total, os.path.relpath(CACHE, os.path.dirname(HERE))))
+    print("mi-commissioner-scraper: %d counties, %d districts%s -> %s"
+          % (len(entries), total,
+             " (%d kept from the previous run)" % kept if kept else "",
+             os.path.relpath(CACHE, os.path.dirname(HERE))))
     return 0
 
 

@@ -1087,6 +1087,40 @@ try {
       await page.close();
     }
 
+    // CASS IS THE ONLY COUNTY WHOSE ROSTER IS READ FROM TWO PAGES, and this
+    // asserts the join rather than the name. The county's board page carries
+    // the eight districts and NO contact at all; its committees page carries a
+    // mailto and the member's own district on one line and is not a roster. So
+    // an e-mail on this card is the second page having been read, joined to the
+    // district the first page named, and a break in that plumbing empties the
+    // contact line while every count guard still passes.
+    {
+      const page = await booted(context,
+        `${BASE}#point=41.93675,-86.21731&layers=county-commissioner`);
+      const card = await cardText(page, "county-commissioner");
+      const pill = await page.evaluate(() => {
+        const el = document.getElementById("card-county-commissioner");
+        const p2 = el && el.parentElement ? el.parentElement.querySelector(".card-id-pill") : null;
+        return p2 ? p2.textContent.trim() : null;
+      });
+      // THE ADDRESS IS A LINK, NOT TEXT — the card labels it "Email", so the
+      // card's own textContent never carries it and a regex over the text
+      // passes on a card with no address at all.
+      const mailtos = await page.evaluate(() => {
+        const el = document.getElementById("card-county-commissioner");
+        return el ? Array.from(el.querySelectorAll('a[href^="mailto:"]'))
+          .map(function (a) { return a.getAttribute("href"); }) : [];
+      });
+      const text = card.text || "";
+      check("Cass District 1 resolves to its own district",
+        pill === "District 1", `pill=${JSON.stringify(pill)}`);
+      check("Cass District 1 names the commissioner its board page names",
+        /Thomas Langley/.test(text), text.slice(0, 200));
+      check("Cass District 1 carries the address only its committees page publishes",
+        mailtos.indexOf("mailto:thomasl@cassco.org") !== -1, JSON.stringify(mailtos));
+      await page.close();
+    }
+
     // A COUNTY THE ROSTER HAS NOT REACHED MUST SAY SO AND NAME NOBODY. Ingham
     // is the worksheet's own anchor point and its site refuses this client
     // (robots.txt, one `*` group, Disallow: /), so it is in no tranche. The
