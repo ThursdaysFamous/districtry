@@ -30,6 +30,18 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-19, later still.** #1030 merged (`5338913`), so both Illinois PRs are
+in and nothing from this session is in review. Verified on main: all six roster
+workflows now run **zero** shared-page generators before the branch cut and run
+them after, every checkout carries `fetch-depth: 0`, and all 131 workflow files
+parse. Wisconsin's equivalent (#1031) landed straight after.
+
+What this fixes for a reader is indirect but real: those six weekly jobs were
+dying whenever another workflow merged a shared page mid-crawl, and a job that
+dies opens no pull request, so the roster it refreshes silently stayed frozen.
+It also stops every bot roster PR rewriting all 243 sitemap dates — the shallow
+checkout made every page claim it changed that day.
+
 **2026-09-19, later.** #1028 merged (`d450c52`). Verified on main: 4,332 person
 records in `il/data/app/municipal-officials.json`, **zero** that fail
 `fabricated_name`, and the string `clerk@bartonville.org` appears nowhere in
