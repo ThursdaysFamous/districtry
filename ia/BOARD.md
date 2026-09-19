@@ -40,6 +40,24 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-19, later — paused for the night.** Nothing of mine is in flight.
+The Status below was written against main at `881d3f0`; main is `8506c8c` now
+and none of tonight's merges change any figure in it. Iowa's own reading of the
+fleet-wide name gate that arrived with them (`validate_officeholder_names.py`,
+which discovers every instance rather than listing them): **2,181 Iowa person
+records, every one a name, nothing accepted or flagged.** Its whole-fleet total
+reads 12,446 across 757 files on this tree — the 10,985 in circulation is the
+figure that file's own docstring quotes as its SUPERSEDED OK line, so it is a
+relay of a corrected number rather than a disagreement with the gate.
+
+**What I would pick up first, in this order.** (1) Mitchell County's supervisors
+page, because the weekly supervisor job has been red on its guard since
+2026-09-12 and ran red again today, which is why the 17-of-99 headline has not
+moved since 2026-08-28. (2) The 43/56 in the `ia-board-chair` record and in
+`ia/WATCH.md` line 39 — 38 and 61 — since that one is wrong on a page a reader
+opens. (3) The `len(chairs) - len(out)` line in `build_county_pages.py`, a
+one-line fix for a build-log figure that is 21 where the answer is 30.
+
 **2026-09-19 — in flight: nothing.** Last work merged as #1000 (Iowa city
 phones say whose number they are) and #1016 (the weekly chair refresh). What
 follows is a read of Iowa taken against main at `881d3f0` this morning, newest
