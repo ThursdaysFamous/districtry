@@ -60,8 +60,9 @@ name: Update municipal officials roster
 # Each county scrapes independently and a failure is isolated: one county's
 # outage never withdraws another county's roster. A blocked source carries
 # forward its shipped entries (--preserved) while every other source refreshes;
-# only Cook and Will are required, because they are the two full-governing-body
-# sources and building without either would ship mayors where councils belong.
+# only Cook is required, because it is the one full-governing-body source
+# nothing carries forward and building without it would ship mayors where
+# councils belong. Will was required too until 2026-09-19.
 # A failure raises that county's standing issue instead of reddening the run.
 
 on:
@@ -160,9 +161,9 @@ jobs:
       # LaSalle: the third FULL-governing-body source, and the first county
       # outside the metro. Its clerk publishes one PDF carrying every
       # municipality's whole board with ward numbers, so this county needs no
-      # per-city exception. Preservable, not required: unlike Cook and Will,
-      # nothing already shipped degrades if it is missing (see PRESERVABLE in
-      # the builder).
+      # per-city exception. Preservable, not required: unlike Cook, nothing
+      # already shipped degrades if it is missing (see PRESERVABLE in the
+      # builder).
       - name: Scrape the LaSalle County Clerk municipality officials PDF
         id: scrape_lasalle
         continue-on-error: true
@@ -505,7 +506,23 @@ jobs:
           # last command of an AND-list fails the step, which would turn "one
           # county is blocked" into a red run instead of a filed issue.
           if [ "$COOK_OUTCOME" = "failure" ]; then raise_issue "Cook"; fi
-          if [ "$WILL_OUTCOME" = "failure" ]; then raise_issue "Will"; fi
+          # WILL GETS ITS OWN WORDING, for the reason Logan's note below gives
+          # about compliance and for one more: raise_issue() says "the shipped
+          # roster is unchanged", which was true while Will was required and
+          # stopped being true on 2026-09-19. Will preserves now, so the other
+          # 36 counties DO refresh and only Will's own 31 municipalities carry
+          # forward — an issue that keeps saying the whole file is frozen would
+          # have a reader chasing a freeze that no longer exists.
+          if [ "$WILL_OUTCOME" = "failure" ]; then
+            title="Municipal officials: Will County source unavailable"
+            existing="$(gh issue list --search "$title in:title" --state open --json number --jq '.[0].number')"
+            body="The weekly municipal-officials refresh could not scrape the Will County source on $(date -u +%Y-%m-%d). The County Clerk's directory is published as a FlipHTML5 flipbook behind a Cloudflare managed challenge (\`Cf-Mitigated: challenge\`, measured against four clients on 2026-09-17, issue #982) — an access control, which this project does not solve or work around. Will's 31 municipalities and their full village boards and city councils carry forward from the shipped roster (\`--preserved will\`); every other county in this run refreshed normally. The cost of that is real and is recorded for readers in the \`will-municipal-directory-freeze\` gap: a Will council member who changes stays stale here until the source is readable again, and no count floor will notice, because all 31 municipalities remain. The check runs every week and resumes on its own if the challenge lifts. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            if [ -n "$existing" ]; then
+              gh issue comment "$existing" --body "$body"
+            else
+              gh issue create --title "$title" --body "$body"
+            fi
+          fi
           if [ "$DUPAGE_OUTCOME" = "failure" ]; then raise_issue "DuPage"; fi
           if [ "$KANE_OUTCOME" = "failure" ]; then raise_issue "Kane"; fi
           if [ "$MCHENRY_OUTCOME" = "failure" ]; then raise_issue "McHenry"; fi
@@ -563,22 +580,31 @@ jobs:
           if [ "$MACOUPIN_OUTCOME" = "failure" ]; then raise_issue "Macoupin"; fi
           if [ "$KANKAKEE_OUTCOME" = "failure" ]; then raise_issue "Kankakee"; fi
 
-      # Build on what came back. Cook and Will are required — they are the only
-      # two full-governing-body sources, so building without either would ship
-      # mayors where councils belong, and the builder refuses. Every OTHER
-      # source is preservable: it hands the builder --preserved <id> and the
-      # shipped roster, and that source's entries carry forward untouched.
+      # Build on what came back. COOK alone is required — it is the one
+      # full-governing-body source nothing carries forward, so building without
+      # it would ship mayors where councils belong and the builder refuses.
+      # Every OTHER source is preservable: it hands the builder --preserved <id>
+      # and the shipped roster, and that source's entries carry forward
+      # untouched.
       #
       # This replaces an all-ten gate that could never pass. McHenry and Kendall
       # block every fetch rung including the Archive's crawler, and DuPage and
       # Joliet 403 GitHub's runner IPs while answering a developer machine — so
       # one permanently blocked source used to withhold every other county's
       # turnover as well, freezing the whole roster indefinitely.
+      #
+      # WILL LEFT THIS GATE ON 2026-09-19 because it had reproduced exactly that
+      # failure one county further in: its Clerk's directory moved behind a
+      # vendor managed challenge, which this project does not work around, so
+      # from 2026-09-08 every weekly run scraped all 37 sources, refused the
+      # build on Will alone, and reported success. Will now preserves like any
+      # other county; the reasoning and its measured cost are above PRESERVABLE
+      # in scripts/build_municipal_officials_roster.py.
       - name: Rebuild roster data file
         id: build
-        if: steps.scrape_cook.outcome == 'success' && steps.scrape_will.outcome == 'success'
+        if: steps.scrape_cook.outcome == 'success'
         run: |
-          inputs=(/tmp/cook_municipal_officials.json /tmp/will_municipal_officials.json)
+          inputs=(/tmp/cook_municipal_officials.json)
           enrich=()
           preserved=()
           add() { # add <step-outcome> <preserve-id> <kind> <path>
@@ -588,6 +614,7 @@ jobs:
               preserved+=("$2")
             fi
           }
+          add "${{ steps.scrape_will.outcome }}"        will        county /tmp/will_municipal_officials.json
           add "${{ steps.scrape_dupage.outcome }}"      dupage      county /tmp/dupage_municipal_officials.json
           add "${{ steps.scrape_kane.outcome }}"        kane        county /tmp/kane_municipal_officials.json
           add "${{ steps.scrape_mchenry.outcome }}"     mchenry     county /tmp/mchenry_municipal_officials.json

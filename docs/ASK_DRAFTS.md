@@ -2158,12 +2158,18 @@ nobody.
 > **NOT YET ASKED — DRAFTED 2026-09-18.** One note to the Will County Clerk. Adam sends;
 > nothing here sends mail.
 
-**Why this one is worth sending.** Will is one of two counties the Illinois municipal
-roster's builder REQUIRES (`REQUIRED_COUNTIES = ("Cook", "Will")`), so when the Will scrape
-fails the rebuild step is skipped and every other county's turnover is skipped with it. The
-shipped file last changed 8 Sep 2026 and 629 municipalities across 34 counties are frozen
-behind it. This is the one ask in the queue whose answer unblocks other counties' data
-rather than its own.
+**Why this one is worth sending.** Will's 31 municipalities name their whole village board
+or city council, and those names stopped being rechecked on 8 Sep 2026. The directory is
+the only source that carries them, so nothing else can confirm a trustee who has since
+changed.
+
+**NARROWED 2026-09-19, and the ask is smaller than it was.** Until that date Will sat in
+`REQUIRED_COUNTIES` alongside Cook, so a failed Will scrape skipped the rebuild and every
+other county's turnover with it — 629 municipalities across 34 counties frozen behind one
+vendor's challenge. Will now preserves like any other blocked source, so the other counties
+refresh weekly and this ask no longer unblocks anybody else's data. What it still buys is
+Will's own: 31 towns whose councils are carried forward indefinitely, with no count floor
+able to notice a name going stale, because the number of towns and seats never changes.
 
 **What is actually blocking it, and what is not.** The Clerk publishes the directory
 through FlipHTML5, a third-party flipbook viewer, and that viewer has switched on a
