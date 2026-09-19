@@ -21,6 +21,34 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-19, close of evening.** Wisconsin passes the new fleet-wide name gate
+from #1025 — 1,492 person records, every one a name. Nothing to fix here; the
+two records it found are Illinois's.
+
+**What I would pick up next, in this order.**
+
+1. **Monday 21 September.** The Milwaukee and Racine school-board jobs run for
+   the first time since their repair. A check-in is armed for 23:00 UTC that
+   day, late enough to allow for this repo's scheduled jobs starting 3 to 5
+   hours behind their cron time. A zero-job run means the #978 fix did not take;
+   a run that starts and then fails is a different problem and belongs here.
+2. **The Court of Appeals decision**, in Open questions below. It is not work
+   until it is answered.
+3. **The county clerk refresh.** Unblocked by #1031 but not re-run. Friday
+   14:30 UTC on its own, or dispatched sooner at the cost noted above.
+4. **The alderperson gap is Wisconsin's biggest reader-facing hole** and is the
+   place to spend effort if anyone wants new ground rather than repairs. In most
+   of the 156 municipalities with council districts drawn, the card names your
+   district and not the person in it; 24 cities name theirs. That is the gap a
+   reader notices.
+
+**One finding here is fleet-wide and is not Wisconsin's to close.** The shallow
+checkout that made the sitemap stamp every page with the run date affects every
+roster workflow, not only these six. #1030 and #1031 fixed twelve of them. The
+rest of the fleet's weekly jobs still check out one commit deep, so any of them
+that regenerates and commits the sitemap has the same defect. Recorded for the
+root board rather than acted on.
+
 **2026-09-19, later.** #1031 merged. Two things a reader gets from it. The six
 Wisconsin roster jobs can now finish instead of dying at the last step whenever
 an unrelated change lands on main mid-scrape, which is what stopped last week's
@@ -66,34 +94,6 @@ Sources last verified 11 September.
 **Correction for the Tasks table.** The summary above says the Milwaukee and
 Racine school boards "name people", which is true, but both rosters are ageing
 and neither job has run since its repair. Worth a row until Monday proves them.
-
-**2026-09-19, close of evening.** Wisconsin passes the new fleet-wide name gate
-from #1025 — 1,492 person records, every one a name. Nothing to fix here; the
-two records it found are Illinois's.
-
-**What I would pick up next, in this order.**
-
-1. **Monday 21 September.** The Milwaukee and Racine school-board jobs run for
-   the first time since their repair. A check-in is armed for 23:00 UTC that
-   day, late enough to allow for this repo's scheduled jobs starting 3 to 5
-   hours behind their cron time. A zero-job run means the #978 fix did not take;
-   a run that starts and then fails is a different problem and belongs here.
-2. **The Court of Appeals decision**, in Open questions below. It is not work
-   until it is answered.
-3. **The county clerk refresh.** Unblocked by #1031 but not re-run. Friday
-   14:30 UTC on its own, or dispatched sooner at the cost noted above.
-4. **The alderperson gap is Wisconsin's biggest reader-facing hole** and is the
-   place to spend effort if anyone wants new ground rather than repairs. In most
-   of the 156 municipalities with council districts drawn, the card names your
-   district and not the person in it; 24 cities name theirs. That is the gap a
-   reader notices.
-
-**One finding here is fleet-wide and is not Wisconsin's to close.** The shallow
-checkout that made the sitemap stamp every page with the run date affects every
-roster workflow, not only these six. #1030 and #1031 fixed twelve of them. The
-rest of the fleet's weekly jobs still check out one commit deep, so any of them
-that regenerates and commits the sitemap has the same defect. Recorded for the
-root board rather than acted on.
 
 ## Open questions for Adam
 
