@@ -34,6 +34,33 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-19, #1042 verified and waiting.** CI is green on the head
+(`372e7d7`), there is no merge conflict, and the only comments on the PR are
+mine. Nothing on it is waiting on this session.
+
+Main moved twice while it was open. The second time, `git merge-tree` reported a
+clean auto-merge — and that was not taken as the answer, because both sides edit
+`docs/DATA_LAYER_GUIDEBOOK.md` and two gates parse figures out of that file, so a
+clean auto-merge can still be a state neither side ever had. The merged tree was
+materialised and run rather than assumed: the two edits are disjoint, and
+`validate_doc_counts`, `validate_officeholder_names`, `validate_gate_counts`,
+`validate_steward_mirror`, the six `build_coverage_gaps --check` runs and
+`build_coverage_map --check` all pass on it. No second merge commit was pushed —
+the head is green and a merge that changes nothing costs a CI cycle.
+
+**A finding worth keeping, because it is a gap in a family this repo otherwise
+gates hard.** The PR body said "76 of 76 static gates". That was measured before
+the merge commit that is now part of the PR, which is exactly the failure
+`CLAUDE.md` spells out — a figure measured before the change it claims to include
+is stale the moment it is written. Re-extracted from `smoke-test.yml` rather than
+corrected by arithmetic: 93 invocations, 81 of them static gates, all 81 passing.
+`validate_gate_counts.py` exists precisely so this cannot happen to `CLAUDE.md`,
+and `validate_steward_mirror.py` so it cannot happen to the skill — but **nothing
+measures a figure typed into a PR body, a comment, or a check-in prompt**, and
+all three carried a wrong one today. The correction is on the PR. Whether that is
+worth a gate is a real question and not obviously yes: a PR body is written once
+and read once, unlike the two files that are gated.
+
 **2026-09-19, go-live.** PR 3 is open as #1042. New York is a statewide
 instance from the reader's side, not just underneath.
 
