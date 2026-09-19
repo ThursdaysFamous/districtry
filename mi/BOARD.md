@@ -29,6 +29,23 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-19, the probe's robots gap merged.** #1045 is in as `1619003e`, verified on the
+merged tree rather than on my own PR body: `probe_mi_county_boards.py --check` passes there,
+the CI step sits at `smoke-test.yml` line 81, and `validate_gate_counts.py` and
+`validate_steward_mirror.py` both agree at 67 named static steps and 94 invocations.
+
+**New York's statewide go-live merged between my branch point and this one** (#1042,
+`3416c6b5`) and moved none of the battery — it touches neither `smoke-test.yml` nor
+`CLAUDE.md` nor the steward skill — so the pair above is the merged tree's own figure and not
+one carried across a merge unchecked. That is the case `CLAUDE.md` warns about, where two
+branches are each right against their own base and the silently-merged half is the dangerous
+one; it was checked rather than assumed.
+
+Michigan has no tranche work left that needs neither a fetch budget nor an operator answer.
+The candidate list is empty, the 23 remaining shut counties wait on the request budget asked
+for below, and the ward front waits on the state-fabric-as-source question. The next item
+needing neither is the Detroit PR-body task on the Tasks table.
+
 **2026-09-19, the probe's robots gap closed.** #1045 open. Every county row in
 `mi-county-board-probe.json` now carries the robots reading for the host the probe ACCEPTED,
 not only for the ones it rejected, and `--check` fails a record that names a URL without one.
