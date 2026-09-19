@@ -10989,17 +10989,54 @@ function initNycExplorer() {
     // phone-looking non-fax line becomes the tel:-linked phone (a leading
     // "Phone:" prefix dropped); fax and every other line stay as text lines
     // in scraped order, so no scraped detail is silently discarded.
+    // A LABELLED LINE WINS OVER A LINE THAT MERELY CONTAINS DIGITS, and that
+    // ordering is the whole of the 2026-09-19 fix. The previous single pass
+    // tested `\d{3}[-.\s]\d{4}`, which a ZIP+4 satisfies — "245 Cannon House
+    // Office Building Washington DC 20515-3210" contains "515-3210" — and the
+    // first match won, so the ADDRESS became the phone, got a tel: link built
+    // from its own digits (tel:245205153210), and the "Phone: 202-225-7944"
+    // line below it was demoted to a plain text line. Measured across the
+    // fleet's shipped rosters that day: 84 of 1,454 office blocks rendered an
+    // address as a dialable number — every New York congressional D.C. office
+    // (30 blocks), 53 in San Francisco, 1 in Wisconsin.
+    //
+    // The two passes are ordered by how much the line PROVES, not by where it
+    // sits, because the defect was entirely one of position. Measured on the
+    // same 1,454 blocks: 1,198 lines carry an explicit label and ALL 1,198
+    // have a bare number after it; 354 more are a bare number with no label.
+    // So a labelled line is required to leave a number behind, and a line that
+    // is a number and nothing else is the only unlabelled candidate — a street
+    // address satisfies neither.
     function splitOfficeLines(lines) {
       if (!lines || !lines.length) return null;
+      var LABEL = /^\s*(?:phone|telephone|tel)\b[:.\s-]*/i;
+      var FAX = /fax/i;
+      var NUMBER_ONLY = /^\+?1?[\s.\-()]*\d{3}[\s.\-()]*\d{3}[\s.\-]*\d{4}(?:\s*(?:x|ext\.?|extension)[\s.]*\d+)?$/i;
       var office = { lines: [], phone: null };
-      lines.forEach(function (raw) {
+      var phoneIndex = -1;
+      // Pass 1: an explicitly labelled line, wherever in the block it sits.
+      lines.forEach(function (raw, i) {
+        if (phoneIndex >= 0) return;
         var line = String(raw);
-        var phoneLike = /(?:phone|tel|\(\d{3}\)|\d{3}[-.\s]\d{4})/i.test(line) && !/fax/i.test(line);
-        if (phoneLike && !office.phone) {
-          office.phone = line.replace(/^\s*(?:phone|tel)[:.\s]*/i, "");
-        } else {
-          office.lines.push(line);
-        }
+        if (FAX.test(line) || !LABEL.test(line)) return;
+        var rest = line.replace(LABEL, "").trim();
+        if (!NUMBER_ONLY.test(rest)) return;
+        office.phone = rest;
+        phoneIndex = i;
+      });
+      // Pass 2: only when nothing was labelled, a line that is a number and
+      // nothing else. Never a line that merely contains one.
+      if (phoneIndex < 0) {
+        lines.forEach(function (raw, i) {
+          if (phoneIndex >= 0) return;
+          var line = String(raw).trim();
+          if (FAX.test(line) || !NUMBER_ONLY.test(line)) return;
+          office.phone = line;
+          phoneIndex = i;
+        });
+      }
+      lines.forEach(function (raw, i) {
+        if (i !== phoneIndex) office.lines.push(String(raw));
       });
       if (!office.lines.length && !office.phone) return null;
       return office;

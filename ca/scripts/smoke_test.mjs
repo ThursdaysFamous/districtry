@@ -198,6 +198,15 @@ try {
     await page.waitForFunction(() => !!window.SFExplorer, null, { timeout: BOOT_TIMEOUT });
     const shipped = JSON.parse(readFileSync(join(INSTANCE_DIR, "data/app/coverage-gaps.json"), "utf8"));
     const expected = Object.keys(shipped).length;
+    // The COLD panel groups by kind, so its section count is the number of
+    // distinct kinds in the shipped file — derived, never a constant. San
+    // Francisco records three gaps and all three are `data-quality`, so a
+    // hardcoded 1 passes here BY ACCIDENT and would go red the first time this
+    // instance records a `blocked` or `no-source` gap — a failure with no
+    // defect behind it. New York's warm check carried the same constant until
+    // 2026-09-18 and its cold check until 2026-09-19; both went red exactly
+    // that way. Fixed here before it fires, not after.
+    const expectedKinds = new Set(Object.values(shipped).map((g) => g.kind)).size;
 
     // The button lives in the masthead, not the footer (ported from the CHI
     // reference fork). Pinned here because nothing else can see it: the fence
@@ -230,8 +239,8 @@ try {
 
     const cold = await openGaps();
     check("data gaps panel renders every recorded gap",
-      cold.items === expected && cold.sections.length === 1,
-      `${cold.items}/${expected} items, ${cold.sections.length} section(s)`);
+      cold.items === expected && cold.sections.length === expectedKinds,
+      `${cold.items}/${expected} items, ${cold.sections.length}/${expectedKinds} section(s)`);
     check("every gap offers a prefilled submission to THIS fork's repo",
       cold.hrefs.length === expected &&
       cold.hrefs.every((h) => h.startsWith(repoIssues) &&
