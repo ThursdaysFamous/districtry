@@ -24,6 +24,30 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-19, later. #1040 merged main in and the battery figure is 66/93, which
+is neither branch's number.** Nothing about the Court of Appeals work changed;
+this is the count collision.
+
+#1037 took the tree to 65/91 and #1040 to 65/92, each measured correctly
+against a base that predated the other. **Git conflicted on the INVOCATION
+line and merged the NAMED-STEP line silently at 65**, because both sides had
+written 65 there and the merged truth is 66. So a textual conflict is not what
+protects that pair — the gate is, and it is the only reason the silent half was
+caught. Measured on the merged tree rather than taken on trust; the whole static
+battery is green at 83 invocations, the six per-instance `validate_index` runs
+included.
+
+**This is the second collision of its kind in one day and it is not Wisconsin's
+alone.** Two changes can each be right against their own base and both wrong
+once merged, whenever they touch a stated count. This morning's pair had NO git
+conflict at all and had to be caught by hand. The difference is that this number
+lives in one sentence in one file with a gate reading it, and that one did not.
+The rule is recorded in `CLAUDE.md`'s own Running & testing section, beside the
+other superseded figures: run `validate_gate_counts.py` after every merge into a
+branch that touches the battery, not only after an edit that adds a gate. **The
+wider question — which other stated counts in this repo have no gate reading
+them — is a root-board item rather than Wisconsin's**, and is not measured here.
+
 **2026-09-19, night. The Court of Appeals task is built and opened as
 [#1040](https://github.com/ThursdaysFamous/districtry/pull/1040) — with one
 step skipped and one declined, both for reasons that were already written
