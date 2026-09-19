@@ -403,6 +403,16 @@ jobs:
       - name: Workflow scripts import under their declared dependencies
         run: python3 scripts/validate_workflow_deps.py
 
+      # A workflow that regenerates and commits sitemap.xml must check out FULL
+      # history and must not re-shallow it. build_sitemap.py takes each page's
+      # lastmod from that file's own last commit, and in a depth-1 clone there is
+      # one commit, so all 243 entries take the run date. A bot run on
+      # 2026-09-17 shipped 241 wrong dates that way. build_sitemap.py --check is
+      # structurally blind to it: it fails on a date that is BEHIND, and this
+      # moves every date forward to today. Stdlib only, no network.
+      - name: Sitemap-committing workflows check out full history
+        run: python3 scripts/validate_workflow_checkout.py
+
       # scripts/undeliverable.py withholds addresses that cannot receive mail
       # from every card. Its risk is the one every exception list has: an entry
       # outliving its reason, silently. The first draft printed a RETIRE line

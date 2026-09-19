@@ -34,6 +34,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # FULL history, because this job regenerates sitemap.xml and
+          # build_sitemap.py reads each page's lastmod from that file's own last
+          # commit. Under the default depth-1 checkout git reports the single
+          # fetched commit as the last commit of EVERY file, so every one of the
+          # 243 entries takes today's date. Measured 2026-09-19 by building the
+          # sitemap in a depth-1 clone: 243 of 243 lastmods moved, against 0 in a
+          # full clone, where `build_sitemap.py --check` passes. A bot run on
+          # 2026-09-17 shipped 241 wrong dates this way.
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -83,7 +92,11 @@ jobs:
           # Re-cutting leaves this branch differing from main in its data file(s)
           # alone; the rebuilt files are carried across, and a run where main
           # touched those same files errors instead of pushing, which is right.
-          git fetch --depth=1 origin main
+          # Full history, for the same reason as fetch-depth: 0 above. `git fetch
+          # --depth=1` RE-SHALLOWS a clone that was fetched complete (measured:
+          # 512 commits down to 13), so the two have to move together — deepening
+          # the checkout alone would be undone here.
+          git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
           # The per-county board pages (il/county-board/) are GENERATED from
           # the roster this job just rewrote, so regenerate them here or the

@@ -82,6 +82,7 @@ python3 scripts/validate_structured_data.py               # every ld+json block 
 python3 scripts/build_wikidata_draft.py --check           # docs/WIKIDATA.md vs metros.json; --verify re-fetches the 20 ids and is network, not CI
 python3 scripts/validate_shell_continuations.py
 python3 scripts/validate_workflow_deps.py
+python3 scripts/validate_workflow_checkout.py             # a workflow that commits sitemap.xml checks out full history and does not re-shallow it
 python3 scripts/undeliverable.py                         # the shipped e-mail domains still resolve MX; the recorded dead ones are still dead
 python3 scripts/validate_skills.py                       # every skill's pointers resolve
 python3 scripts/validate_python_hygiene.py --selftest     # proves both checks below catch their defect AND pass its near-miss
