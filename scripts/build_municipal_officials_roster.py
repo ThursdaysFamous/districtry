@@ -319,6 +319,14 @@ PARTY_LABELS = {"np", "appointed", "citizens", "conservative", "progressive",
                 "republican", "democratic", "democrat", "nonpartisan",
                 "independent", "libertarian", "indep party", "indep cand"}
 PHONE_IN_NAME_RE = re.compile(r"\d{3}[)\s.-]*\d{3}[\s.-]?\d{4}")
+# A name carrying a FIELD LABEL is a fragment of the surrounding page, not a
+# person. Added 2026-09-19 after the first version of this guard — written from
+# the three shapes Rock Island happened to produce — missed the one fabricated
+# name left in the fleet: Village of Bartonville shipped a Clerk called
+# "’s Email: clerk@bartonville.org" from 2026-09-01, because that county's
+# parser matched "Clerk" as a PREFIX of "Clerk’s Email:". The lesson is that a
+# guard shaped like its examples is narrower than the class it is for.
+FIELD_LABEL_RE = re.compile(r"(?i)\b(e-?mail|phone|fax|website|address)\s*:")
 
 
 def fabricated_name(name):
@@ -332,6 +340,16 @@ def fabricated_name(name):
         return "is a party label, not a person"
     if text[0].isdigit():
         return "starts with a digit (a page footer or an address)"
+    if "@" in text:
+        return "is an e-mail address, not a person"
+    if FIELD_LABEL_RE.search(text):
+        return "carries a field label, so it is a fragment of the page"
+    # A LEADING NON-LETTER IS NOT A TEST, and was measured before being
+    # rejected: across all 12,254 person names in the fleet it flags three,
+    # and two are real people whose published name opens with a bracket or a
+    # quotation mark — "(Matthew) Mason Strumpell" and
+    # "“Bud” Harry Kreutzberg". A guard that refuses the build over a real
+    # officeholder's own name is worse than the defect it would catch.
     return None
 
 
