@@ -61,8 +61,9 @@ sitemap stamped all 243 pages with the run date, and a bot run on 17 September
 had already shipped 241 wrong dates. The site's own drift check could never
 catch that — it only tests whether a date is too OLD.
 
-**2026-09-19.** Three of Wisconsin's eleven weekly refresh jobs are not
-working. Nothing a reader sees is wrong today; the risk is that these rosters
+**2026-09-19.** ONE of Wisconsin's eleven weekly refresh jobs is not working
+(the Court of Appeals), and a second failed once and is fixed. An earlier
+version of this entry said three; see the corrected school-board bullet below. Nothing a reader sees is wrong today; the risk is that these rosters
 quietly stop being checked and go stale without anyone noticing.
 
 - **Court of Appeals — dead two weeks.** Last successful run 4 September;
@@ -72,13 +73,31 @@ quietly stop being checked and go stale without anyone noticing.
   addresses. A retry does not fix that. The roster is four judges and last
   changed 27 August, so the card still reads correctly — it is simply no longer
   being verified.
-- **Milwaukee and Racine school boards — repaired but never yet run.** Both had
-  a duplicate `run:` key that stopped GitHub starting them at all: every push to
-  any branch created a failed run with zero jobs. Fixed 16 September in #978.
-  Both are scheduled for Mondays and no Monday has passed since, so **Monday 21
-  September is the first real test.** A failure then is a different problem from
-  the one that was fixed. MPS's roster last changed 27 August, RUSD's 3
-  September.
+- **Milwaukee and Racine school boards — CORRECTED 2026-09-19, and the earlier
+  entry here was wrong.** This board said both jobs "had a duplicate `run:` key
+  that stopped GitHub starting them at all" and had "never yet run". Measured
+  against the API filtered by event, that is false. MPS has three scheduled runs
+  and all three succeeded — 31 August, 7 and 14 September. RUSD has two and both
+  succeeded — 7 and 14 September. **Neither has missed a weekly refresh.**
+
+  What really happened is a 14-hour window. #977 merged 2026-09-15 23:00 and
+  introduced the duplicate key; from 2026-09-16 13:46 to 2026-09-17 00:22 every
+  push to any branch produced a zero-job run, which is what an unparseable
+  workflow file looks like. #978 merged 2026-09-17 03:34 and fixed it, and the
+  last failure predates that fix — confirmed by ancestry, not by reading dates.
+  **No scheduled run fell inside the window**: the crons are Mondays and 16
+  September was a Wednesday.
+
+  So MPS's roster last changing 27 August and RUSD's 3 September means those
+  district pages have not changed, not that anything stopped checking. Monday 21
+  September is still the first scheduled run since the fix and is worth reading,
+  but as confirmation rather than as a first test.
+
+  **How I got it wrong**, because the method is the lesson: I listed runs
+  filtered by branch and by page size, saw a wall of failures, and never asked
+  whether there were successful runs of a different EVENT type. The scheduled
+  successes were in the same data the whole time, one query parameter away.
+
 - **County clerk — fixed and merged.** Run 35391214303 died at the branch cut on
   18 September after a 40-minute scrape; #1008 was closed unmerged rather than
   ship a roster built by a superseded builder. #1031 merged 02:38 UTC today
