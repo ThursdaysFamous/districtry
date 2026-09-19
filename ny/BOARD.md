@@ -34,6 +34,49 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-19, later.** PR 3 is started. Two of the three card defects from the
+entry below are fixed and a third was found while proving the first.
+
+**#1036 is open** — "Three things New York's cards said that were not true". It
+is the prerequisite for the go-live, because all three are wrong in front of a
+mostly-in-the-city audience today and would be wrong in front of every upstate
+reader the front door starts sending here.
+
+1. `nyc-congress-district-offices` is RETIRED. Read in Chromium: the card
+   renders District Office FIRST, with street, city and a dialable number. All
+   26 records carry it, because the builder already reads the district-offices
+   file the record itself named as the outstanding enrichment. A Closed record
+   section carries the story and the verbatim blocker. When that enrichment
+   landed is NOT established — this checkout is shallow from 2026-09-15 — so
+   the closing date is when it was measured, not when it became true.
+2. The CEC gap is RECORDED, in the decentralised wording rather than the
+   "source is gone" wording corrected in the entry below.
+3. **The same browser read found the card wrong the other way.** The D.C.
+   office rendered the BUILDING ADDRESS as the telephone number, linked
+   `tel:245205153210`, while the line that said `Phone: 202-225-7944` sat
+   beneath it as plain text. The phone test matched a ZIP+4. Fleet-wide that is
+   84 of 1,454 office blocks — 30 in New York (every congressional D.C.
+   office), 53 in San Francisco, 1 in Wisconsin. It is ENGINE code, so the fix
+   reaches all six instances. After: 84 to 0, exactly 84 changed, nothing
+   dropped, verified in a browser on both affected instances.
+
+So the gap record was wrong about the card in one direction while the card was
+wrong in another, and one reading found both. Neither is catchable by any gate
+here: both are claims about what a reader sees.
+
+**A smoke assertion went red and was not weakened.** New York's cold
+gaps-panel check asserted a section count of one; the panel groups by kind, so
+that is data, not an invariant — which the comment fifteen lines below it
+already says, having fixed the identical constant in the warm check the day
+before. It now derives the count from the shipped kinds, negative-tested both
+ways. San Francisco carried the same constant and passes BY ACCIDENT, all three
+of its gaps being one kind, so it was fixed there too rather than left armed
+for an instance with no session to find it.
+
+Go-live research is running on the three items that need measuring before code:
+the Wikidata item for the STATE (its gate fails only on a missing entry, so a
+wrong id would ship), the new anchor set, and the state geocoder.
+
 **2026-09-19.** New York is further along than its own plan says, and the
 statewide tier is reachable today rather than only built.
 
@@ -102,13 +145,23 @@ live defects above as a shorter change first.
 
 ## Open questions for Adam
 
-**Settled 2026-09-19:** board edits for this instance commit straight to
-`main`, in their own commit — Adam granted it directly, which is what this
-session was waiting on rather than a manager instruction to do so.
+*Nothing open. All three questions this section carried are answered, and the
+channel worked: the answer came off this board, not out of the session chat.*
 
-**1. Start PR 3, the go-live?** Twelve real edits, scoped in
-`docs/NY_EXPANSION_PLAN.md`. It is what makes the working statewide tier
-reachable through the front door, the address box and shared links.
+**Settled 2026-09-19.** Board edits for this instance commit straight to
+`main`, in their own commit — granted directly, which is what this session was
+waiting on rather than a manager instruction to do so.
 
-**2. Fix the false gap record and the empty CEC roster first?** Both are live,
-both are small, and neither is part of PR 3.
+**Answered 2026-09-19 — "Ny phase 3".** Start the go-live. Started; see Status.
+
+**Answered by implication, and the reading is recorded rather than assumed.**
+The two small live defects were not deferred behind PR 3; they are a
+PREREQUISITE, because the go-live is what makes them matter — wrong today in
+front of a mostly-in-the-city audience, wrong after it in front of every
+upstate reader the front door starts sending here. They shipped as #1036, which
+also carries the third defect found while proving the first.
+
+*Questions raised here from now on rather than in the session chat, which
+nobody reads. Each will carry what was measured, the options, what each costs,
+and a recommendation, and will say the word blocking if nothing else can
+proceed without it.*
