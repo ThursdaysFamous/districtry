@@ -123,7 +123,7 @@ records the standing merge authority. Michigan's "a workflow that has never run
 is invisible to every gate" was swept across all six instances: of 128
 scheduled workflows only two have never run, both explained by the calendar.
 
-Main is at `8a206df`. Open: #1018 held (Hancock), #1048 held (see question 4). #1049 merged.
+Main is at `61a3b48`. Open: #1018 held (Hancock), #1048 held (see question 4). #1049 merged.
 
 **#1048 is no longer red for the reason its own PR body gives.** That body names
 `build_llms_txt.py --check`, which was true when it opened; Iowa's own regeneration commit
@@ -165,7 +165,13 @@ the District 4 member's correct name, and whether Billy Cramer holds District 2.
 Illinois drafts it. **Meanwhile main names all fifteen Hancock members
 correctly, so no reader sees any of this.**
 
-**4. ANSWERED 2026-09-19 — a refusal stops the fetch and never unpublishes.** Adam's words: "Preserve data we have already fetched." Recorded in `CLAUDE.md`'s robots section as standing fleet policy (#1050) and routed to Iowa to implement. Obeying a refusal and deleting what it gave us earlier are different acts; the first is not in question and the second costs a reader the answer while gaining the publisher nothing. Illinois and Wisconsin had already landed here independently, which is what made Iowa visible as the outlier. #1048 stays held until `build_ia_supervisor_roster.py` carries a refused-and-recorded county forward rather than dropping it — and a preserved county needs a per-source last-read stamp, because the card prints one instance-wide verified date that would otherwise assert a verification nobody performed.
+**4. CLOSED 2026-09-19 — a refusal stops the fetch and never unpublishes, and Iowa's builder now does it.**
+
+**A correction to what I told Adam about this, twice.** I reported that two Iowa counties "came off the site" and that six named supervisors and two county pages were lost. **They were not.** #1048 is a bot PR that has never been merged; main has carried Bremer and Hamilton with all six names and both county pages throughout, verified against the shipped roster and the file's own git log. What happened is that a weekly run PROPOSED the deletion, `check_roster_retention` refused it, and the PR was held. Nothing reached a reader. The episode is the guard working, not a loss — and it matters which, because one of those is a reason to look harder at the guards and the other is a reason to trust them.
+
+Original ruling below.
+
+**4a. ANSWERED 2026-09-19 — a refusal stops the fetch and never unpublishes.** Adam's words: "Preserve data we have already fetched." Recorded in `CLAUDE.md`'s robots section as standing fleet policy (#1050) and routed to Iowa to implement. Obeying a refusal and deleting what it gave us earlier are different acts; the first is not in question and the second costs a reader the answer while gaining the publisher nothing. Illinois and Wisconsin had already landed here independently, which is what made Iowa visible as the outlier. Iowa shipped that builder change as #1051 (`61a3b48`). #1048 stays held until the next weekly run writes real `readOn` dates — and a preserved county needs a per-source last-read stamp, because the card prints one instance-wide verified date that would otherwise assert a verification nobody performed.
 
 **3. New York's county tier has no owner.** Not blocking. Of 57 non-city
 counties, 26 have an unverified board form in the plan's own table, and each is
