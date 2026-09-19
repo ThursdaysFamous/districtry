@@ -1099,10 +1099,17 @@ The fix is per-source preservation, not a looser gate: a blocked source carries
 forward its currently shipped entries (`--preserve` + `--preserved <id>`) while
 every other source refreshes. Three properties make that safe to automate —
 copy them:
-1. **Some sources are not preservable.** Cook and Will are the only
-   full-governing-body sources here, so building without either would silently
-   ship mayors where councils belong — no count floor would notice, because the
-   municipalities all remain. The builder refuses rather than degrade.
+1. **Some sources are not preservable.** Cook is the one whose absence would
+   silently ship mayors where councils belong — no count floor would notice,
+   because the municipalities all remain. The builder refuses rather than
+   degrade. **Keep that set as small as the evidence allows.** Will was in it
+   until 2026-09-19 on the reasoning above, and the reasoning was wrong by one
+   step: it is the failure mode of building WITHOUT a full-body county, not of
+   PRESERVING one, and preserved entries re-enter through the same
+   `pick_entry`, which sorts on depth before county order. Requiring Will meant
+   its Clerk's managed challenge froze every other county's turnover for eleven
+   days while each run reported success. A required source turns one publisher's
+   outage into the whole file's.
 2. **Preserved data re-enters through the ordinary merge paths**, so it cannot
    take a shortcut the fresh path doesn't have: a preserved county goes through
    the same cross-county precedence, and a preserved city payload through the

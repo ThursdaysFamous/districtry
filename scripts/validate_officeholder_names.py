@@ -18,9 +18,13 @@ records — Plattville's "Beth Fals 56" and Bartonville's "'s Email:
 clerk@bartonville.org", the second of which #1028 then fixed at source. A
 refusal at WRITE time cannot see a defect that is
 already on the base branch when the writer does not run, and the municipal
-build has produced no file since 2026-09-08 because Will County is in
-REQUIRED_COUNTIES and its source sits behind a vendor managed challenge (#996,
-#1026). Those two had been shipping since 2026-08-01 and 2026-08-24.
+build produced no file between 2026-09-08 and 2026-09-19 because Will County
+was in REQUIRED_COUNTIES while its source sat behind a vendor managed challenge
+(#996, #1026). Those two had been shipping since 2026-08-01 and 2026-08-24.
+Will moved to PRESERVABLE on 2026-09-19, so that particular freeze is over —
+the point this gate makes does not depend on it, because any required source
+can stop the writer and a write-time refusal still cannot see what is already
+shipped.
 
 The two predicates are also different sizes, and the survivors are in the gap:
 #1024's fabricated_name() refuses three shapes (a phone number, a party label,
