@@ -69,6 +69,18 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro nyc --out ny/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro sf --out ca/data/app/coverage-gaps.json
 
+      # mi/data/source/mi-county-board-probe.json records which unserved Michigan
+      # counties publish a district-keyed board page, and its --check re-audits
+      # that file against the tree offline: a county that has since shipped or
+      # been recorded shut must be pruned, an untried one must be present, every
+      # named URL must carry the robots reading a later run can diff against,
+      # and the host generator must still find all its known hosts. IT HAD
+      # EXISTED SINCE 2026-09-18 AND RUN IN NO WORKFLOW, which is how the
+      # artifact it guards went a tranche out of date in the first place.
+      # Stdlib only, no network.
+      - name: The Michigan board probe's artifact still describes the tree
+        run: python3 mi/scripts/probe_mi_county_boards.py --check
+
       # Wisconsin's county-board-directory.json carries each county's board
       # SIZE, and it reads that number back from the shipped supervisory
       # geometry rather than restating it — so the only way the two can

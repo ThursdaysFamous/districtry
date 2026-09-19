@@ -49,6 +49,7 @@ python3 scripts/build_coverage_gaps.py --check --metro iowa      --out ia/data/a
 python3 scripts/build_coverage_gaps.py --check --metro michigan  --out mi/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro nyc       --out ny/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro sf        --out ca/data/app/coverage-gaps.json
+python3 mi/scripts/probe_mi_county_boards.py --check      # the MI board probe's artifact vs the tree
 python3 wi/scripts/build_wi_county_board_directory.py --check
 python3 wi/scripts/build_wi_county_outlines.py --check
 python3 scripts/build_brand_tokens.py --check
