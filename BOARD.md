@@ -77,7 +77,7 @@ belongs on that instance's board instead.
 | Roster workflows: regenerate shared pages after the branch cut | IL + WI | **merged** #1030 `5338913`, #1031 `f2a0d88` | 2026-09-19 |
 | Absolute gate on every shipped officeholder name | New York | **merged** #1025 `a3d11c0` | 2026-09-19 |
 | #1025 and #1028 collided with no git conflict. | New York | **closed** — New York merged main in first and measured all four states rather than dropping the entry blind, so the branch was correct in either merge order | 2026-09-19 |
-| `privacy.html` understates three events sent through `shareCopyButton` | unassigned | open | 2026-09-18 |
+| `privacy.html` understates three events sent through `shareCopyButton` | manager | **in review** #1046 — the fix is that an unreadable `trackEvent` call is now an ERROR rather than a skip, which is the `registerCountyLayer` shape a third time; resolution follows one hop and fails naming the line otherwise. Coordinate events stay at two: these three send a name and nothing else | 2026-09-18 |
 | Shallow checkout makes every roster PR rewrite all 243 sitemap dates | manager | **in review** — 73 workflows deepened, plus a gate, after #1030 and #1031 did twelve | 2026-09-19 |
 | A scheduled workflow that has NEVER run is invisible to every gate here | manager | measuring | 2026-09-19 |
 
@@ -103,6 +103,8 @@ tree with `origin/main` merged rather than from a PR body.
   raises on import. The gate-count pair is the merged tree's own measurement,
   67/94, not either branch's.
 - **#1018 is held and the hold is now Adam's to clear.** See question 2.
+- **The queue being empty is why #1046 exists.** With nothing left to review I took the one open
+  unassigned task: the privacy page named ten analytics events while every app sends thirteen.
 
 **Manager's own work.** The shallow-checkout defect Wisconsin recorded as
 fleet-wide was 73 workflows wide, not twelve; every one is deepened and
