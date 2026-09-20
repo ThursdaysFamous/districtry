@@ -4002,24 +4002,24 @@ function initIowaExplorer() {
   }
   /* ==== ENGINE:END brand-names ==== */
 
-  /* ---------- six-pointed star geometry (used for marker + decorative icons) ---------- */
-  function starPath(cx, cy, outerR, innerR) {
-    var pts = [];
-    for (var i = 0; i < 12; i++) {
-      var angle = (Math.PI / 6) * i - Math.PI / 2;
-      var r = (i % 2 === 0) ? outerR : innerR;
-      pts.push([cx + r * Math.cos(angle), cy + r * Math.sin(angle)]);
-    }
-    return "M" + pts.map(function (p) { return p[0].toFixed(2) + "," + p[1].toFixed(2); }).join(" L") + " Z";
-  }
-  document.getElementById("star-path-header").setAttribute("d", starPath(50, 52, 46, 19));
-  document.getElementById("star-path-empty").setAttribute("d", starPath(50, 50, 40, 16));
+  /* ---------- map-pin geometry (the wordmark + empty-state motif). The
+   * six-pointed star this used to draw is CHICAGO'S FLAG EMBLEM and means
+   * nothing here, so the motif is a "drop a pin" location marker instead — a
+   * teardrop with a hole (two subpaths, even-odd fill so the hole reads
+   * through). Fixed path in a 0 0 100 100 box. */
+  var PIN_PATH =
+    "M50 4 C30.7 4 15 19.7 15 39 C15 65 50 96 50 96 C50 96 85 65 85 39 " +
+    "C85 19.7 69.3 4 50 4 Z M50 27 A13 13 0 1 0 50.01 27 Z";
+  document.getElementById("star-path-header").setAttribute("d", PIN_PATH);
+  document.getElementById("star-path-header").setAttribute("fill-rule", "evenodd");
+  document.getElementById("star-path-empty").setAttribute("d", PIN_PATH);
+  document.getElementById("star-path-empty").setAttribute("fill-rule", "evenodd");
 
   // The selection marker is the fleet's circle, not a star: a six-pointed star
-  // is Chicago's flag emblem and means nothing in Wisconsin, and the shared
-  // dark-map rule (`.chi-star-marker circle`) only reaches a <circle>, so the
-  // star also stayed orange in dark mode. Same class name as the reference for
-  // exactly that reason.
+  // is Chicago's flag emblem and is reserved for that city, and the shared
+  // dark-map rule (`.chi-star-marker circle`) only reaches a <circle>, so a
+  // star also stayed one colour in dark mode. Same class name as the reference
+  // for exactly that reason.
   var starDivIcon = L.divIcon({
     className: "chi-star-marker",
     html: '<svg viewBox="0 0 100 100" width="34" height="34" style="filter:drop-shadow(0 2px 3px rgba(0,0,0,0.45))">' +
