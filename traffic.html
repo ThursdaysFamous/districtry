@@ -1096,17 +1096,17 @@ code {
   <section>
     <div class="window-row">
       <span class="kicker">Rolling two months</span>
-      <span><span data-stat="range">July 19 – September 18, 2026</span> &middot; <span data-stat="days">62</span> days &middot; read on <span data-stat="exportDate">September 19, 2026</span></span>
+      <span><span data-stat="range">July 20 – September 19, 2026</span> &middot; <span data-stat="days">62</span> days &middot; read on <span data-stat="exportDate">September 20, 2026</span></span>
     </div>
     <div class="tiles">
       <div class="tile">
         <span class="label">Page visits</span>
-        <span class="value"><span data-stat="pageviews">1,362</span></span>
+        <span class="value"><span data-stat="pageviews">1,388</span></span>
         <span class="sub">&asymp;<span data-stat="perDay">22</span> per day</span>
       </div>
       <div class="tile">
         <span class="label">Total activity<sup class="ref"><a href="#note-1" aria-label="Note 1">1</a></sup></span>
-        <span class="value"><span data-stat="total">3,400</span></span>
+        <span class="value"><span data-stat="total">3,471</span></span>
         <span class="sub">page visits + feature events</span>
       </div>
       <div class="tile">
@@ -1130,7 +1130,7 @@ code {
         <span class="key"><span class="swatch" style="background:var(--s2)"></span>Feature interactions</span>
       </div>
     </div>
-    <p class="take">Every visitor who lands on the site plus every feature they use: point selections, searches, layer toggles. The four days to <span data-stat="lastDay">September 18</span> ran <span data-stat="recentDays">101, 87, 78 and 83</span><span data-day="Aug 24">, against a pre-rebrand average of <span data-stat="preAvg">39</span></span>. <span data-day="Aug 24"><span data-stat="bandNote">Every one of them is above that average.</span> </span><span data-stat="peakLabel">Monday, Sep 14</span> is the busiest day in this window, at <span data-stat="peak">136</span><span data-stat="sinceRebrandNote"></span>.</p>
+    <p class="take">Every visitor who lands on the site plus every feature they use: point selections, searches, layer toggles. The four days to <span data-stat="lastDay">September 19</span> ran <span data-stat="recentDays">87, 78, 83 and 110</span><span data-day="Aug 24">, against a pre-rebrand average of <span data-stat="preAvg">38</span></span>. <span data-day="Aug 24"><span data-stat="bandNote">Every one of them is above that average.</span> </span><span data-stat="peakLabel">Monday, Sep 14</span> is the busiest day in this window, at <span data-stat="peak">136</span><span data-stat="sinceRebrandNote"></span>.</p>
     <div class="chartcard">
       <div class="chartbox" id="dailyChart"></div>
     </div>
@@ -1156,7 +1156,7 @@ code {
     </div>
     <div class="panel">
       <h2 class="kicker">How readers arrive<sup class="ref"><a href="#note-5" aria-label="Note 5">5</a></sup></h2>
-      <p class="lead"><span data-stat="ref3">DuckDuckGo</span> holds the #3 source spot and <span data-stat="ref4">LinkedIn</span> the #4. Search engines together (Google, DuckDuckGo and Bing) sent <span data-stat="searchVisits">725</span> visits.</p>
+      <p class="lead"><span data-stat="ref3">DuckDuckGo</span> holds the #3 source spot and <span data-stat="ref4">LinkedIn</span> the #4. Search engines together (Google, DuckDuckGo and Bing) sent <span data-stat="searchVisits">734</span> visits.</p>
       <div class="bars" data-bars="refs"></div>
       <h3 class="kicker subhead">Campaigns</h3>
       <div class="bars" data-bars="campaigns"></div>
@@ -1166,7 +1166,7 @@ code {
   <section class="ruled three">
     <div class="panel">
       <h2 class="kicker">Devices and browsers</h2>
-      <p class="lead"><span data-stat="mobilePct">60%</span> of visits are mobile, iOS and Android together, which is why the home-screen install matters. Chrome and Safari cover <span data-stat="topTwoBrowserPct">96%</span> between them.</p>
+      <p class="lead"><span data-stat="mobilePct">60%</span> of visits are mobile, iOS and Android together, which is why the home-screen install matters. Chrome and Safari cover <span data-stat="topTwoBrowserPct">95%</span> between them.</p>
       <h3 class="kicker subhead">Operating systems</h3>
       <div class="bars" data-bars="systems"></div>
       <h3 class="kicker subhead">Browsers</h3>
@@ -1174,13 +1174,19 @@ code {
     </div>
     <div class="panel">
       <h2 class="kicker">What visitors do</h2>
-      <p class="lead">The three core actions, as unique daily users of each. Geolocation succeeds <span data-stat="geoPct">61%</span> of the time it is tried: <span data-stat="geoSuccess">53</span> of <span data-stat="geoAttempts">87</span>.</p>
+      <p class="lead">The three core actions, as unique daily users of each. Geolocation succeeds <span data-stat="geoPct">59%</span> of the time it is tried: <span data-stat="geoSuccess">51</span> of <span data-stat="geoAttempts">86</span>.</p>
       <div class="bars" data-bars="actions"></div>
-      <div class="meter" aria-hidden="true"><div class="fill" id="geoFill" style="width:63%"></div></div>
+      <!-- The fill starts at 0 and the boot script sets it from geoPct. It carried a
+           hand-typed width:63% from #1004 until 2026-09-20, which no sync touched because
+           it is a style rather than a data-stat span: the served bytes drew the bar at 63%
+           beside a sentence reading 59%. The meter is aria-hidden decoration duplicating
+           that sentence, so an empty bar without JavaScript is honest where a wrong one is
+           not. Do not type a percentage back in. -->
+      <div class="meter" aria-hidden="true"><div class="fill" id="geoFill" style="width:0"></div></div>
     </div>
     <div class="panel">
       <h2 class="kicker">Where visits come from</h2>
-      <p class="lead"><span data-stat="usCount">3,323</span> of <span data-stat="total">3,400</span> visits, <span data-stat="usPct">98%</span>, came from the United States.</p>
+      <p class="lead"><span data-stat="usCount">3,394</span> of <span data-stat="total">3,471</span> visits, <span data-stat="usPct">98%</span>, came from the United States.</p>
       <div class="bars" data-bars="geo"></div>
     </div>
   </section>
@@ -1189,19 +1195,19 @@ code {
     <div class="sec-head">
       <h2>What people search for<sup class="ref"><a href="#note-6" aria-label="Note 6">6</a></sup></h2>
       <div class="engines" id="engines" role="group" aria-label="Search engine" hidden>
-        <button type="button" data-engine="google" aria-pressed="true">Google &middot; <span data-stat="searchClicks">204</span> clicks</button>
-        <button type="button" data-engine="bing" aria-pressed="false">Bing &middot; <span data-stat="bingClicks">41</span> clicks</button>
+        <button type="button" data-engine="google" aria-pressed="true">Google &middot; <span data-stat="searchClicks">216</span> clicks</button>
+        <button type="button" data-engine="bing" aria-pressed="false">Bing &middot; <span data-stat="bingClicks">43</span> clicks</button>
       </div>
     </div>
     <div id="searchCard" hidden>
-      <p class="take">Google Search Console, the step <em>before</em> a visit, ranked by impressions because that is where the signal is: <span data-stat="searchClicks">204</span> clicks against <span data-stat="searchImpressions">7,373</span> impressions across <span data-stat="searchQueries">826</span> distinct searches, so ranking by clicks would return a single row in double figures and then a long tail of ones and zeros. The pattern is high visibility and low clickthrough, <span data-stat="searchCtr">2.77%</span> overall, and the top two searches show where that sits, and it is not in the ranking: <em><span data-stat="searchTopQuery">what district am i in</span></em> converts at <span data-stat="searchTopCtr">6.1%</span> from an average position of <span data-stat="searchTopPos">6.4</span>, while <em><span data-stat="searchNextQuery">find my district</span></em>, a near-synonym seen almost as often from position <span data-stat="searchNextPos">7.4</span>, converts at <span data-stat="searchNextCtr">0.7%</span>. Seven results down is the same place on the page for both, so what separates them is the title and description a searcher reads before deciding.</p>
+      <p class="take">Google Search Console, the step <em>before</em> a visit, ranked by impressions because that is where the signal is: <span data-stat="searchClicks">216</span> clicks against <span data-stat="searchImpressions">7,732</span> impressions across <span data-stat="searchQueries">846</span> distinct searches, so ranking by clicks would return a single row in double figures and then a long tail of ones and zeros. The pattern is high visibility and low clickthrough, <span data-stat="searchCtr">2.79%</span> overall, and the top two searches show where that sits, and it is not in the ranking: <em><span data-stat="searchTopQuery">what district am i in</span></em> converts at <span data-stat="searchTopCtr">6.1%</span> from an average position of <span data-stat="searchTopPos">6.4</span>, while <em><span data-stat="searchNextQuery">find my district</span></em>, a near-synonym seen almost as often from position <span data-stat="searchNextPos">7.4</span>, converts at <span data-stat="searchNextCtr">0.7%</span>. Seven results down is the same place on the page for both, so what separates them is the title and description a searcher reads before deciding.</p>
       <div class="tablecard"><table class="q" id="searchTable">
         <thead><tr><th>Search</th><th class="num">Impressions</th><th class="num">Clicks</th><th class="num">CTR</th><th class="num">Position</th></tr></thead>
         <tbody></tbody>
       </table></div>
     </div>
     <div id="bingCard" hidden>
-      <p class="take">Bing Webmaster Tools, the same window and the same ranking: <span data-stat="bingClicks">41</span> clicks against <span data-stat="bingImpressions">3,422</span> impressions across <span data-stat="bingQueries">292</span> distinct searches, <span data-stat="bingCtr">1.20%</span> overall. Bing shows the same pattern as Google and further along it: the most-seen search, <em><span data-stat="bingTopQuery">district</span></em>, converts at <span data-stat="bingTopCtr">0.0%</span> from an average position of <span data-stat="bingTopPos">7.0</span>. The searches differ from Google&rsquo;s in kind: Bing&rsquo;s are ward-and-alderman questions about Chicago where Google&rsquo;s are the generic &ldquo;what district am I in&rdquo;.</p>
+      <p class="take">Bing Webmaster Tools, the same window and the same ranking: <span data-stat="bingClicks">43</span> clicks against <span data-stat="bingImpressions">3,576</span> impressions across <span data-stat="bingQueries">292</span> distinct searches, <span data-stat="bingCtr">1.20%</span> overall. Bing shows the same pattern as Google and further along it: the most-seen search, <em><span data-stat="bingTopQuery">district</span></em>, converts at <span data-stat="bingTopCtr">0.0%</span> from an average position of <span data-stat="bingTopPos">7.0</span>. The searches differ from Google&rsquo;s in kind: Bing&rsquo;s are ward-and-alderman questions about Chicago where Google&rsquo;s are the generic &ldquo;what district am I in&rdquo;.</p>
       <div class="tablecard"><table class="q" id="bingTable">
         <thead><tr><th>Search</th><th class="num">Impressions</th><th class="num">Clicks</th><th class="num">CTR</th><th class="num">Position</th></tr></thead>
         <tbody></tbody>
@@ -1213,12 +1219,12 @@ code {
     <h2>Notes</h2>
     <p class="take">What each figure above cannot tell you, stated here rather than left out. The counts in these notes are read from the same data block as the charts; the dates and the row caps are stated by hand.</p>
     <ol>
-      <li id="note-1"><strong>The two totals.</strong> The <span data-stat="total">3,400</span> figure is GoatCounter&rsquo;s own total for the window, and the browser, system and location bars sum to it exactly; the daily columns sum to <span data-stat="dailySum">3,398</span>, <span data-stat="dailyGap">2</span> apart. Both count the same period, and which one is larger changes from day to day, so it is not a fixed offset. This page does not know what the difference is, so it prints both rather than deriving one from the other. Counts are GoatCounter &ldquo;visits&rdquo;: cookieless, identity-free.</li>
-      <li id="note-2"><strong>The window<span data-day="Aug 24">, and the root path</span>.</strong> This is a rolling two months, <span data-stat="range">July 19 – September 18, 2026</span>, <span data-stat="days">62</span> days ending on the last full day. It used to run from launch on 10&nbsp;July and grow without bound; tracking began that day, so nothing before it exists, and everything before this window does and is simply not drawn here. <span data-day="Aug 24">Until <strong>August 24</strong> the Illinois app was served from <code>/</code> at chidistricts.com; that day it moved under <code>/il/</code> and <code>/</code> became the fleet landing page. The series spans both, so <code>/</code> counts as Illinois on every day before the cutover and as the landing page on the cutover day and after, a whole day at a time, which is the granularity the dashboard publishes per path.</span> <span data-day="Aug 25"><strong>August 25 is not a slump.</strong> Google Safe Browsing flagged the day-old districtry.com domain that morning, and Chrome shows its warning <em>before</em> the page loads, so blocked visits never reached the counter at all. The flag was a false positive and has since been cleared; the day is under-counted by an unknown amount and cannot be reconstructed.</span> The two Illinois SEO pages the narrative tracks are at <span data-stat="seoPolice">22</span> visits (<code>/il/police-district.html</code>) and <span data-stat="seoSchool">105</span> (<code>/il/school-board.html</code>, the third most-visited path on the site).</li>
-      <li id="note-3"><strong>The instance split.</strong> <span data-stat="barCount">Seven</span> bars: <span data-stat="appCount">six</span> apps and the fleet landing page. <span data-day="Aug 24">Read the ranking as age, not quality: until August 24 the non-Illinois tags pointed at GoatCounter sites that did not exist and every one of their visits was dropped, unrecoverable. Illinois has the whole window of history; the rest begin at the cutover.</span> <span data-day="Aug 28">Iowa joined the fleet manifest at 01:24&nbsp;UTC on 28&nbsp;August, so it is listed on the landing page now; until then it was live and in the sitemap but unlisted, which is how it drew a visit from a page that did not offer it.</span> These <span data-stat="barCountLower">seven</span> sum to <span data-stat="instSum">1,311</span> of <span data-stat="pageviews">1,362</span> page visits. The split reads the dashboard&rsquo;s own pages list, which caps at ten rows, so <span data-stat="instResidual">51</span> visits on the long tail are in the total and in no bar.<span data-stat="zeroInstNote"> Bars reading zero (San Francisco and Michigan) mean those paths are not among those ten rows, not that the counter recorded none: their visits sit in that long tail, and this page cannot tell how many, zero included.</span> The root path is divided by date rather than guessed at: each day&rsquo;s root visits go to whichever page was actually there.</li>
-      <li id="note-4"><strong>Layer ids share one namespace across the fleet,</strong> so a layer that exists in more than one city (<code>congress</code>) would <em>sum</em> across them, while city-specific ids (<code>ward</code> = Illinois, <code>council</code> = New York, <code>supervisor-district</code> = San Francisco) are unambiguous. How much blending there could be is measurable even though the blending itself is not: the other <span data-stat="otherCount">five</span> instances have <span data-stat="otherInst">172</span> page visits between them against Illinois&rsquo;s <span data-stat="topInst">889</span>, so a shared id could carry at most that share and the Illinois-only ids carry none of it. That ceiling grows as the other instances do, and this note is where it will be visible when it stops being small. The layer list is the top 10 of those recorded.</li>
-      <li id="note-5"><strong>The referrer list is a top six.</strong> GoatCounter&rsquo;s dashboard shows a &ldquo;Show more&rdquo; beyond it that this page cannot query into. The six sum to <span data-stat="refSum">2,190</span> of <span data-stat="total">3,400</span> visits, so a named search engine&rsquo;s true total could run higher than what is shown here. <code>utm_source</code> tags count in the referrer list; the campaigns list counts only visits from links tagged with <code>?utm_campaign=&hellip;</code>.</li>
-      <li id="note-6"><strong>Search counts combine <span data-stat="searchProps">2</span> Search Console properties,</strong> because the site renamed mid-window and the old domain still appears in results and redirects across; those are two different results for one search, not one counted twice. Google withholds rare queries before anyone sees them, so these will not reconcile exactly with Search Console&rsquo;s own reports. This is also the one thing the visit counter cannot see: Google strips the query from the referrer, so every one of these searches arrives in the referrer list as an anonymous &ldquo;Google&rdquo;. On Bing the figures combine <span data-stat="bingProps">2</span> verified properties: <span data-stat="bingNewHost">districtry.com</span> first appeared in these results on <span data-stat="bingNewFirst">September 13</span>, with <span data-stat="bingNewImpressions">675</span> impressions against chidistricts.com&rsquo;s <span data-stat="bingOldImpressions">2,747</span>. Bing is still indexing the rename, which is why the old domain carries most of the figure.</li>
+      <li id="note-1"><strong>The two totals.</strong> The <span data-stat="total">3,471</span> figure is GoatCounter&rsquo;s own total for the window, and the browser, system and location bars sum to it exactly; the daily columns sum to <span data-stat="dailySum">3,454</span>, <span data-stat="dailyGap">17</span> apart. Both count the same period, and which one is larger changes from day to day, so it is not a fixed offset. This page does not know what the difference is, so it prints both rather than deriving one from the other. Counts are GoatCounter &ldquo;visits&rdquo;: cookieless, identity-free.</li>
+      <li id="note-2"><strong>The window<span data-day="Aug 24">, and the root path</span>.</strong> This is a rolling two months, <span data-stat="range">July 20 – September 19, 2026</span>, <span data-stat="days">62</span> days ending on the last full day. It used to run from launch on 10&nbsp;July and grow without bound; tracking began that day, so nothing before it exists, and everything before this window does and is simply not drawn here. <span data-day="Aug 24">Until <strong>August 24</strong> the Illinois app was served from <code>/</code> at chidistricts.com; that day it moved under <code>/il/</code> and <code>/</code> became the fleet landing page. The series spans both, so <code>/</code> counts as Illinois on every day before the cutover and as the landing page on the cutover day and after, a whole day at a time, which is the granularity the dashboard publishes per path.</span> <span data-day="Aug 25"><strong>August 25 is not a slump.</strong> Google Safe Browsing flagged the day-old districtry.com domain that morning, and Chrome shows its warning <em>before</em> the page loads, so blocked visits never reached the counter at all. The flag was a false positive and has since been cleared; the day is under-counted by an unknown amount and cannot be reconstructed.</span> The two Illinois SEO pages the narrative tracks are at <span data-stat="seoPolice">22</span> visits (<code>/il/police-district.html</code>) and <span data-stat="seoSchool">115</span> (<code>/il/school-board.html</code>, the third most-visited path on the site).</li>
+      <li id="note-3"><strong>The instance split.</strong> <span data-stat="barCount">Seven</span> bars: <span data-stat="appCount">six</span> apps and the fleet landing page. <span data-day="Aug 24">Read the ranking as age, not quality: until August 24 the non-Illinois tags pointed at GoatCounter sites that did not exist and every one of their visits was dropped, unrecoverable. Illinois has the whole window of history; the rest begin at the cutover.</span> <span data-day="Aug 28">Iowa joined the fleet manifest at 01:24&nbsp;UTC on 28&nbsp;August, so it is listed on the landing page now; until then it was live and in the sitemap but unlisted, which is how it drew a visit from a page that did not offer it.</span> These <span data-stat="barCountLower">seven</span> sum to <span data-stat="instSum">1,327</span> of <span data-stat="pageviews">1,388</span> page visits. The split reads the dashboard&rsquo;s own pages list, which caps at ten rows, so <span data-stat="instResidual">61</span> visits on the long tail are in the total and in no bar.<span data-stat="zeroInstNote"> Bars reading zero (San Francisco and Michigan) mean those paths are not among those ten rows, not that the counter recorded none: their visits sit in that long tail, and this page cannot tell how many, zero included.</span> The root path is divided by date rather than guessed at: each day&rsquo;s root visits go to whichever page was actually there.</li>
+      <li id="note-4"><strong>Layer ids share one namespace across the fleet,</strong> so a layer that exists in more than one city (<code>congress</code>) would <em>sum</em> across them, while city-specific ids (<code>ward</code> = Illinois, <code>council</code> = New York, <code>supervisor-district</code> = San Francisco) are unambiguous. How much blending there could be is measurable even though the blending itself is not: the other <span data-stat="otherCount">five</span> instances have <span data-stat="otherInst">175</span> page visits between them against Illinois&rsquo;s <span data-stat="topInst">901</span>, so a shared id could carry at most that share and the Illinois-only ids carry none of it. That ceiling grows as the other instances do, and this note is where it will be visible when it stops being small. The layer list is the top 10 of those recorded.</li>
+      <li id="note-5"><strong>The referrer list is a top six.</strong> GoatCounter&rsquo;s dashboard shows a &ldquo;Show more&rdquo; beyond it that this page cannot query into. The six sum to <span data-stat="refSum">2,168</span> of <span data-stat="total">3,471</span> visits, so a named search engine&rsquo;s true total could run higher than what is shown here. <code>utm_source</code> tags count in the referrer list; the campaigns list counts only visits from links tagged with <code>?utm_campaign=&hellip;</code>.</li>
+      <li id="note-6"><strong>Search counts combine <span data-stat="searchProps">2</span> Search Console properties,</strong> because the site renamed mid-window and the old domain still appears in results and redirects across; those are two different results for one search, not one counted twice. Google withholds rare queries before anyone sees them, so these will not reconcile exactly with Search Console&rsquo;s own reports. This is also the one thing the visit counter cannot see: Google strips the query from the referrer, so every one of these searches arrives in the referrer list as an anonymous &ldquo;Google&rdquo;. On Bing the figures combine <span data-stat="bingProps">2</span> verified properties: <span data-stat="bingNewHost">districtry.com</span> first appeared in these results on <span data-stat="bingNewFirst">September 13</span>, with <span data-stat="bingNewImpressions">874</span> impressions against chidistricts.com&rsquo;s <span data-stat="bingOldImpressions">2,702</span>. Bing is still indexing the rename, which is why the old domain carries most of the figure.</li>
     </ol>
   </section>
 
@@ -1226,7 +1232,7 @@ code {
 
 <footer class="site-footer">
   <div class="footer-inner">
-    <p>Source: GoatCounter (districtry.goatcounter.com), read-only dashboard export on <span data-stat="exportDate">September 19, 2026</span>.
+    <p>Source: GoatCounter (districtry.goatcounter.com), read-only dashboard export on <span data-stat="exportDate">September 20, 2026</span>.
       Every app on the domain &mdash; <span data-stat="appList">Illinois, Iowa, Michigan, New York, San Francisco and Wisconsin</span> &mdash; reports to this one site; instances are told apart by path.
       This report refreshes daily, from three data files fetched on their own schedules and committed to the repository.
       Tracking is cookieless and identity-free; language collection is disabled by site settings.
@@ -1293,14 +1299,13 @@ code {
   /* GENERATED by scripts/build_traffic_page.py from data/goatcounter-traffic.json,
      data/search-performance.json and data/bing-search-performance.json, which
      three daily workflows commit. Do not hand-edit: rerun the script. The
-     window is a ROLLING TWO MONTHS ending on the last full day — 2026-07-19 → 2026-09-18 —
+     window is a ROLLING TWO MONTHS ending on the last full day — 2026-07-20 → 2026-09-19 —
      so this page no longer runs from launch and grows without bound.
 
      The PROSE around this block is not generated and can outlive its numbers.
      Read the script's reconciliation output, then read the page. */
 
   var daily = [
-    ["Jul 19", 17, 37],
     ["Jul 20", 10, 9],
     ["Jul 21", 25, 39],
     ["Jul 22", 15, 21],
@@ -1361,61 +1366,62 @@ code {
     ["Sep 15", 41, 60],
     ["Sep 16", 44, 43],
     ["Sep 17", 38, 40],
-    ["Sep 18", 33, 50]
+    ["Sep 18", 33, 50],
+    ["Sep 19", 43, 67]
   ];
 
   /* Google Search Console. Both properties are summed: the site renamed
      mid-history and the old domain still appears in results and redirects
      across, so those are two different results for one search rather than one
      counted twice. */
-  var searchData = {"clicks":204,"impressions":7373,"queries":826,"top":[{"q":"what district am i in","clicks":23,"impressions":376,"position":6.4},{"q":"find my district","clicks":2,"impressions":274,"position":7.4},{"q":"my district","clicks":1,"impressions":132,"position":13.6},{"q":"find my district chicago","clicks":0,"impressions":126,"position":8.2},{"q":"what school district am i in","clicks":1,"impressions":93,"position":8.3},{"q":"district","clicks":0,"impressions":77,"position":19.0},{"q":"find my cps board member","clicks":0,"impressions":59,"position":5.1},{"q":"which chicago school board district am i in?","clicks":0,"impressions":39,"position":4.9},{"q":"chicago school board district map","clicks":1,"impressions":38,"position":10.6},{"q":"what is my district","clicks":0,"impressions":33,"position":8.0},{"q":"find my precinct","clicks":0,"impressions":32,"position":8.6},{"q":"chicago school board districts","clicks":1,"impressions":31,"position":10.4}],"properties":2,"reporting":2,"newest":{"host":"districtry.com","first":"2026-08-23","firstLabel":"August 23","clicks":52,"impressions":2181},"first":"2026-07-19","last":"2026-09-16"};
+  var searchData = {"clicks":216,"impressions":7732,"queries":846,"top":[{"q":"what district am i in","clicks":23,"impressions":378,"position":6.4},{"q":"find my district","clicks":2,"impressions":274,"position":7.4},{"q":"my district","clicks":1,"impressions":132,"position":13.6},{"q":"find my district chicago","clicks":0,"impressions":126,"position":8.2},{"q":"what school district am i in","clicks":1,"impressions":98,"position":8.1},{"q":"district","clicks":0,"impressions":77,"position":19.0},{"q":"find my cps board member","clicks":0,"impressions":59,"position":5.1},{"q":"which chicago school board district am i in?","clicks":0,"impressions":41,"position":4.9},{"q":"chicago school board district map","clicks":1,"impressions":38,"position":10.6},{"q":"what is my district","clicks":0,"impressions":33,"position":8.0},{"q":"find my precinct","clicks":0,"impressions":32,"position":8.6},{"q":"chicago school board districts","clicks":1,"impressions":31,"position":10.4}],"properties":2,"reporting":2,"newest":{"host":"districtry.com","first":"2026-08-23","firstLabel":"August 23","clicks":60,"impressions":2495},"first":"2026-07-20","last":"2026-09-17"};
 
   /* Bing Webmaster Tools, same window. `reporting` is how many of the verified
      properties returned any rows at all. */
-  var bingData = {"clicks":41,"impressions":3422,"queries":292,"top":[{"q":"district","clicks":0,"impressions":93,"position":7.0},{"q":"chicago ward map","clicks":0,"impressions":22,"position":8.0},{"q":"find my ward chicago","clicks":0,"impressions":19,"position":7.4},{"q":"ward look up","clicks":0,"impressions":18,"position":8.4},{"q":"find my ward","clicks":0,"impressions":17,"position":7.5},{"q":"find my district","clicks":0,"impressions":15,"position":8.4},{"q":"what district am i in","clicks":1,"impressions":15,"position":7.1},{"q":"ward map chicago","clicks":0,"impressions":13,"position":7.0},{"q":"what ward am i in chicago","clicks":0,"impressions":12,"position":4.6},{"q":"nypd precinct finder","clicks":0,"impressions":12,"position":7.0},{"q":"find my alderman chicago","clicks":0,"impressions":11,"position":7.7},{"q":"district chicago","clicks":0,"impressions":10,"position":5.1}],"properties":2,"reporting":2,"newest":{"host":"districtry.com","first":"2026-09-13","firstLabel":"September 13","clicks":23,"impressions":675},"first":"2026-07-19","last":"2026-09-17"};
+  var bingData = {"clicks":43,"impressions":3576,"queries":292,"top":[{"q":"district","clicks":0,"impressions":93,"position":7.0},{"q":"chicago ward map","clicks":0,"impressions":22,"position":8.0},{"q":"find my ward chicago","clicks":0,"impressions":19,"position":7.4},{"q":"ward look up","clicks":0,"impressions":18,"position":8.4},{"q":"find my ward","clicks":0,"impressions":17,"position":7.5},{"q":"find my district","clicks":0,"impressions":15,"position":8.4},{"q":"what district am i in","clicks":1,"impressions":15,"position":7.1},{"q":"ward map chicago","clicks":0,"impressions":13,"position":7.0},{"q":"what ward am i in chicago","clicks":0,"impressions":12,"position":4.6},{"q":"nypd precinct finder","clicks":0,"impressions":12,"position":7.0},{"q":"find my alderman chicago","clicks":0,"impressions":11,"position":7.7},{"q":"district chicago","clicks":0,"impressions":10,"position":5.1}],"properties":2,"reporting":2,"newest":{"host":"districtry.com","first":"2026-09-13","firstLabel":"September 13","clicks":26,"impressions":874},"first":"2026-07-20","last":"2026-09-18"};
 
   var barData = {
     instances: [
-      ["Illinois", 889], ["Fleet landing", 250], ["New York", 81],
-      ["Wisconsin", 74], ["Iowa", 17], ["San Francisco", 0],
+      ["Illinois", 901], ["Fleet landing", 251], ["New York", 81],
+      ["Wisconsin", 76], ["Iowa", 18], ["San Francisco", 0],
       ["Michigan", 0]
     ],
     layers: [
-      ["Ward", 144], ["School board", 109], ["Congress", 88],
-      ["IL House", 80], ["County board", 67], ["IL Senate", 64],
-      ["County", 43], ["Police district", 37], ["Ward precinct", 36],
+      ["Ward", 143], ["School board", 116], ["Congress", 88],
+      ["IL House", 80], ["County board", 70], ["IL Senate", 65],
+      ["County", 45], ["Ward precinct", 37], ["Police district", 36],
       ["School district (unified)", 33]
     ],
     refs: [
-      ["Direct / unknown", 1223], ["Google", 457], ["DuckDuckGo", 151],
-      ["LinkedIn", 125], ["Bing", 117], ["Bluesky", 117]
+      ["Direct / unknown", 1192], ["Google", 466], ["DuckDuckGo", 146],
+      ["LinkedIn", 125], ["Bing", 122], ["Bluesky", 117]
     ],
     systems: [
-      ["iOS", 1191], ["Android", 857], ["Windows", 806],
-      ["macOS", 499], ["Linux", 42], ["Chrome OS", 5]
+      ["iOS", 1218], ["Android", 859], ["Windows", 837],
+      ["macOS", 499], ["Linux", 44], ["Chrome OS", 14]
     ],
     browsers: [
-      ["Chrome", 1924], ["Safari", 1327], ["Firefox", 141],
+      ["Chrome", 1959], ["Safari", 1354], ["Firefox", 150],
       ["Edge", 6], ["(unknown)", 2]
     ],
     actions: [
-      ["Point selects", 439], ["Address searches", 256], ["Geolocations", 87]
+      ["Point selects", 459], ["Address searches", 263], ["Geolocations", 86]
     ],
     geo: [
-      ["United States", 3323], ["Canada", 24], ["Denmark", 11],
+      ["United States", 3394], ["Canada", 24], ["Denmark", 11],
       ["Germany", 5], ["Colombia", 4], ["France", 4]
     ],
     campaigns: [
       ["2026-08", 68], ["districtry-launch", 53]
     ],
     /* geolocate-success events; the meter is geoSuccess / Geolocations */
-    geoSuccess: 53,
+    geoSuccess: 51,
     /* the two Illinois SEO pages the narrative tracks, so the sentence cannot
        claim a figure the path widget has moved past */
-    seo: { police: 22, school: 105 },
+    seo: { police: 22, school: 115 },
     /* Page visits no instance bar carries: the dashboard's pages list caps at
        ten rows, so the long tail is in the pageview total and in no bar. */
-    instResidual: 51
+    instResidual: 61
   };
 
   /* The two facts no arithmetic on this page can recover, so they are stated
@@ -1423,15 +1429,15 @@ code {
 
        exportDate — the day the dashboard was read.
        total      — GoatCounter's own js-total-utc for the window. The browser,
-                    system and location bars sum to it EXACTLY (3,400), and the
-                    daily columns sum to 3,398 — 2 apart, and the SIGN FLIPS day
+                    system and location bars sum to it EXACTLY (3,471), and the
+                    daily columns sum to 3,454 — 17 apart, and the SIGN FLIPS day
                     to day (61 the other way on 2026-09-14), which rules out a
                     fixed offset. Both count the same period and this page does
                     not know what the difference is, so both are printed and
                     neither is derived from the other.
 
      EVERYTHING ELSE is computed below from `daily` and `barData`. */
-  var META = { exportDate: "September 19, 2026", year: 2026, total: 3400 };
+  var META = { exportDate: "September 20, 2026", year: 2026, total: 3471 };
   /* ==== TRAFFIC-DATA:END ==== */
 
   var fmt = function (n) { return n.toLocaleString("en-US"); };
