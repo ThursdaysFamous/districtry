@@ -4090,10 +4090,12 @@ function initNycExplorer() {
   }
   /* ==== ENGINE:END brand-names ==== */
 
-  /* ---------- map-pin geometry (used for the selection marker + decorative
-   * icons). NYC has no flag star like Chicago's, so the wordmark/marker motif
-   * is a "drop a pin" location marker — a teardrop with a hole (two subpaths,
-   * even-odd fill so the hole reads through). Fixed path in a 0 0 100 100 box. */
+  /* ---------- map-pin geometry (the wordmark + empty-state motif). The
+   * six-pointed star this replaced is CHICAGO'S FLAG EMBLEM and means nothing
+   * here, so the motif is a "drop a pin" location marker instead — a teardrop
+   * with a hole (two subpaths, even-odd fill so the hole reads through). Fixed
+   * path in a 0 0 100 100 box. NOT the selection marker: that is the fleet's
+   * circle, below, so it answers the shared dark-map rule. */
   var PIN_PATH =
     "M50 4 C30.7 4 15 19.7 15 39 C15 65 50 96 50 96 C50 96 85 65 85 39 " +
     "C85 19.7 69.3 4 50 4 Z M50 27 A13 13 0 1 0 50.01 27 Z";
@@ -4102,13 +4104,19 @@ function initNycExplorer() {
   document.getElementById("star-path-empty").setAttribute("d", PIN_PATH);
   document.getElementById("star-path-empty").setAttribute("fill-rule", "evenodd");
 
+  // The selection marker is the fleet's circle. The teardrop above is a brand
+  // motif; a marker has to say WHERE the point is, and a circle centred on it
+  // does that without a tip to read. It also answers the shared dark-map rule
+  // (`.chi-star-marker circle`), which only ever reaches a <circle> — the
+  // teardrop was one colour in both themes. The borough seals still replace it
+  // once a point resolves to a borough.
   var starDivIcon = L.divIcon({
-    className: "nyc-point-marker",
-    html: '<svg viewBox="0 0 100 100" width="30" height="40" style="filter:drop-shadow(0 2px 3px rgba(0,0,0,0.45))">' +
-          '<path fill-rule="evenodd" d="' + PIN_PATH + '" fill="#FF6319" stroke="#ffffff" stroke-width="4"/>' +
+    className: "chi-star-marker",
+    html: '<svg viewBox="0 0 100 100" width="34" height="34" style="filter:drop-shadow(0 2px 3px rgba(0,0,0,0.45))">' +
+          '<circle cx="50" cy="50" r="17" fill="#1d5fd6" stroke="#ffffff" stroke-width="6"/>' +
           "</svg>",
-    iconSize: [30, 40],
-    iconAnchor: [15, 38]
+    iconSize: [34, 34],
+    iconAnchor: [17, 17]
   });
 
   /* ---------- borough-seal selection marker ----------
@@ -4118,7 +4126,7 @@ function initNycExplorer() {
    * folder slug; the actual swap happens async in applyBoroughMarker (below
    * setSelectedPoint) so map feedback is instant and the badge upgrades in once
    * the offline borough geometry is cached. A point that matches no borough keeps
-   * the default teardrop — that is most of the state, plus the city's waterways. */
+   * the default marker — that is most of the state, plus the city's waterways. */
   var BOROUGH_SEAL_SLUG = {
     "Manhattan": "manhattan",
     "Bronx": "bronx",
@@ -4948,10 +4956,10 @@ function initNycExplorer() {
 
   /* Swap the teardrop marker for the borough seal once the point resolves to a
    * borough. A point in no borough — anywhere upstate, or on the city's water —
-   * keeps the default teardrop, the same marker every other instance uses.
+   * keeps the default marker, the same circle every other instance uses.
    * Reuses the shared cached borough-boundary loader and pointInGeometry test,
    * so no extra fetch. Stale-async guarded by seq; a boundary-load failure
-   * silently keeps the default teardrop too. */
+   * silently keeps the default marker too. */
   function applyBoroughMarker(lat, lng, seq) {
     if (typeof loadBoroughBoundaries !== "function") return;
     loadBoroughBoundaries().then(function (geo) {
@@ -4966,7 +4974,7 @@ function initNycExplorer() {
           return;
         }
       }
-      // no borough matched — keep the default teardrop
+      // no borough matched — keep the default marker
     }).catch(function () { /* keep the default teardrop marker */ });
   }
 
