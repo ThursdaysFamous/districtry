@@ -29,6 +29,14 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-20, #1054 is green.** `smoke` concluded success on `b5825799` (run
+35477402846, 23:55:29Z to 00:06:38Z), no review threads, mergeable clean against main at
+`92511056`. Two things wait on the manager: merge #1054, and close #1052 rather than
+merging it — a fresh weekly run on this code produces the same roster, 48 counties and 366
+districts, without the Delta and Otsego deletions.
+
+Nothing here is unblocked. Both questions below are still unanswered.
+
 **2026-09-19, #1052's cause, and it was mine.** #1054 open. Delta and Otsego were serving
 normally — re-read here at 5 of 5 in 110,308 bytes and 9 of 9 in 108,745 — so nothing at
 either county had changed. The cause is in `mi_commissioner_scraper.py`, and the floor that
