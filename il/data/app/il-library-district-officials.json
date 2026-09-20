@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-13T16:11:58Z",
+  "generated": "2026-09-20T16:02:19Z",
   "libraries": {
     "Alpha Park Public Library District": {
       "comptrollerCode": "072/010/10",
@@ -523,7 +523,7 @@
         }
       ],
       "comptrollerCode": "064/065/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Mclean",
       "office": {
         "address": "202 E Washington St",
@@ -1491,7 +1491,7 @@
         }
       ],
       "comptrollerCode": "074/060/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Piatt",
       "heads": [
         {
@@ -1500,7 +1500,7 @@
         }
       ],
       "office": {
-        "address": "220 N. Hwy",
+        "address": "220 N. Hwy Ave",
         "city": "De Land IL 61839",
         "email": "goosecreeklibrary@gmail.com",
         "phone": "(217) 664-3572"
@@ -1765,7 +1765,7 @@
         }
       ],
       "comptrollerCode": "102/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Woodford",
       "heads": [
         {
@@ -1775,8 +1775,7 @@
       ],
       "office": {
         "address": "PO Box 770",
-        "city": "Metamora IL 61548",
-        "phone": "(309) 367-4591"
+        "city": "Metamora IL 61548"
       }
     },
     "Illiopolis/Niantic Public Library District": {
@@ -2377,11 +2376,11 @@
         }
       ],
       "comptrollerCode": "081/015/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Rock Island",
       "office": {
         "address": "P.O BOX 325",
-        "city": "Hillsdale IL 61257",
+        "city": "HILLSDALE IL 61257",
         "phone": "(309) 658-2666"
       }
     },
@@ -3011,19 +3010,25 @@
     "Rick Warren Memorial Public Library District": {
       "board": [
         {
-          "name": "Mary Ann Horstmann",
-          "role": "President"
+          "name": "MaryAnn Horstmann",
+          "role": "Treasurer"
         },
         {
-          "name": "Brenda Yates",
-          "role": "Treasurer"
+          "name": "Jeletta Brant",
+          "role": "President"
         }
       ],
       "comptrollerCode": "039/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "Jackson",
+      "heads": [
+        {
+          "name": "Elaina Holland",
+          "role": "Librarian"
+        }
+      ],
       "office": {
-        "email": "johnnie.halstead@rickwarren.lib.il.us"
+        "email": "headlibrarian@rickwarren.lib.il.us"
       }
     },
     "River Valley District Library": {
