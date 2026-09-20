@@ -4117,8 +4117,8 @@ function initNycExplorer() {
    * badge. boroname (from data/app/borough-boundaries.json) maps to the seal
    * folder slug; the actual swap happens async in applyBoroughMarker (below
    * setSelectedPoint) so map feedback is instant and the badge upgrades in once
-   * the offline borough geometry is cached. Points that match no borough are NYC
-   * waterways — they get the NYC Ferry logo instead (see loadWaterFerryIcon). */
+   * the offline borough geometry is cached. A point that matches no borough keeps
+   * the default teardrop — that is most of the state, plus the city's waterways. */
   var BOROUGH_SEAL_SLUG = {
     "Manhattan": "manhattan",
     "Bronx": "bronx",
@@ -4127,7 +4127,7 @@ function initNycExplorer() {
     "Staten Island": "staten-island"
   };
   // Build the round-badge divIcon (circular art + white ring + pointer tail)
-  // shared by every borough seal and the water ferry logo.
+  // used by every borough seal.
   function sealPinIcon(url) {
     return L.divIcon({
       className: "nyc-borough-marker",
@@ -4145,34 +4145,6 @@ function initNycExplorer() {
       boroughIconCache[slug] = sealPinIcon("icons/boroughs/" + slug + "/seal-96.png");
     }
     return boroughIconCache[slug];
-  }
-
-  /* ---------- water marker: NYC Ferry logo ----------
-   * A click that matches no borough is on the water. Show the NYC Ferry logo
-   * there. The logo is preloaded and only swapped in once it actually loads, so
-   * if the asset is missing the marker cleanly stays the default teardrop rather
-   * than rendering a broken image. Result is cached after the first probe. */
-  var WATER_FERRY_URL = "icons/app/ferry.png";
-  var waterFerryIcon = null;   // built once the image is confirmed loadable
-  var waterFerryState = 0;     // 0 = unprobed, 1 = loaded, 2 = missing/failed
-  var waterFerryWaiters = [];
-  function loadWaterFerryIcon(cb) {
-    if (waterFerryState === 1) return cb(waterFerryIcon);
-    if (waterFerryState === 2) return cb(null);
-    waterFerryWaiters.push(cb);
-    if (waterFerryWaiters.length > 1) return; // a probe is already in flight
-    function flush(v) {
-      var w = waterFerryWaiters; waterFerryWaiters = [];
-      for (var i = 0; i < w.length; i++) w[i](v);
-    }
-    var probe = new Image();
-    probe.onload = function () {
-      waterFerryState = 1;
-      waterFerryIcon = sealPinIcon(WATER_FERRY_URL);
-      flush(waterFerryIcon);
-    };
-    probe.onerror = function () { waterFerryState = 2; flush(null); };
-    probe.src = WATER_FERRY_URL;
   }
 
   /* ==== ENGINE:BEGIN sanitize ==== */
@@ -4975,10 +4947,11 @@ function initNycExplorer() {
   }
 
   /* Swap the teardrop marker for the borough seal once the point resolves to a
-   * borough, or the NYC Ferry logo when it resolves to none (water). Reuses the
-   * shared cached borough-boundary loader and pointInGeometry test, so no extra
-   * fetch. Stale-async guarded by seq; a boundary-load failure silently keeps
-   * the default teardrop. */
+   * borough. A point in no borough — anywhere upstate, or on the city's water —
+   * keeps the default teardrop, the same marker every other instance uses.
+   * Reuses the shared cached borough-boundary loader and pointInGeometry test,
+   * so no extra fetch. Stale-async guarded by seq; a boundary-load failure
+   * silently keeps the default teardrop too. */
   function applyBoroughMarker(lat, lng, seq) {
     if (typeof loadBoroughBoundaries !== "function") return;
     loadBoroughBoundaries().then(function (geo) {
@@ -4993,10 +4966,7 @@ function initNycExplorer() {
           return;
         }
       }
-      // no borough matched — the point is on NYC water: use the ferry logo
-      loadWaterFerryIcon(function (icon) {
-        if (icon && seq === state.sequence && selectedMarker) selectedMarker.setIcon(icon);
-      });
+      // no borough matched — keep the default teardrop
     }).catch(function () { /* keep the default teardrop marker */ });
   }
 
