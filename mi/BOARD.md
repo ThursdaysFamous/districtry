@@ -29,6 +29,25 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-20, #1054 merged as `16e706a8`, and #1052 was closed rather than merged.**
+Verified on the merged tree, not on my own PR body. `build_mi_commissioner_roster.py
+--check` passes: **48 counties, 366 districts**, 45 carrying a `readAt`, three preserved
+— Berrien (021), Kalamazoo (077), Kent (081), all three carried since 2026-09-19 behind
+the Cloudflare challenge, each printed on every run. Delta (041) and Otsego (137) are in
+the file, and `mi/county-commissioner/delta.html` and `otsego.html` name Malnar,
+vanGinhoven, Deming and Drzewiecki in their served bytes. `validate_index.py` OK at 15
+layers and 83 counties; `validate_gate_counts.py` and `validate_steward_mirror.py` still
+agree at 68 named static steps and 95 invocations, so the merge moved neither.
+
+#1052 closed at 00:11:06Z with **1,191 deletions that never reached main**. Fourteen
+commissioners and two county pages stayed up.
+
+Main's own push run on `16e706a8` was still in flight when this was written (run
+35478684392, started 00:24:22Z). The check-in at 00:57Z confirms it and then stops; a red
+main from this change would still be mine.
+
+Michigan is back to having nothing unblocked. All three questions below are unanswered.
+
 **2026-09-20, #1054 is green.** `smoke` concluded success on `b5825799` (run
 35477402846, 23:55:29Z to 00:06:38Z), no review threads, mergeable clean against main at
 `92511056`. Two things wait on the manager: merge #1054, and close #1052 rather than
