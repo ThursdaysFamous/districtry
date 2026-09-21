@@ -285,17 +285,51 @@ def collect(s, total, start, end):
     }
     # THE INSTANCE BARS MUST SUM TO THE PAGEVIEW TOTAL, and they are counted
     # two different ways: the total off the totals widget, the split off the
-    # pages list. The pages list is capped, so a few pageviews on the long
-    # tail are in the first and not the second — 9 of 1,232 when this was
-    # written. That difference is a row of its own rather than a rounding
-    # nobody sees, and a LARGE one is an error rather than a tail.
+    # pages list. The pages list caps at ten rows, so every pageview below
+    # rank ten is in the first and not the second. That difference is a row of
+    # its own rather than a rounding nobody sees.
+    #
+    # THE OLD CEILING WAS 5% AND IT WAS MEASURED THE DAY BEFORE THE CHANGE
+    # THAT INVALIDATED IT. This guard was written on 2026-09-14 against a
+    # residual of 9 of 1,232 (0.73%), when 52 of the site's 245 pages carried
+    # the counter and almost all traffic landed on the ten instance roots. The
+    # 2026-09-15 rollout put the tag on 191 more pages, so the tail below rank
+    # ten became the per-county and question pages and started growing. Daily,
+    # off this file's own history:
+    #
+    #     09-14   9 / 1,232  0.73%      09-18  41 / 1,356  3.02%
+    #     09-15   9 / 1,258  0.72%      09-19  51 / 1,362  3.74%
+    #     09-16  12 / 1,291  0.93%      09-20  61 / 1,388  4.39%
+    #     09-17  28 / 1,325  2.11%      09-21  71 / 1,410  5.04%  <- refused
+    #
+    # The residual grew about 10 a day and a 5%-of-pageviews ceiling grew about
+    # 1.3, so they were always going to cross; on 2026-09-21 they did, by ONE,
+    # and the report could not refresh. The tail is unbounded by construction
+    # now — ten rows against 243 counted pages — so no small fraction of it can
+    # mean "error".
+    #
+    # WHAT IS STILL AN ERROR: a negative residual, which says the split
+    # double-counted and is impossible; and a pages list that collapsed, which
+    # drives attributed toward zero and the residual toward 100%. The ceiling
+    # is set where the ten rows stop describing most of the site rather than
+    # where the tail stops being tidy, and a reader is told the number either
+    # way — the page draws the residual as its own row and says it cannot tell
+    # what is in it.
+    #
+    # AND IT IS PRINTED EVERY RUN, which is the actual fix: this number grew
+    # for six days with nothing reporting it until it tripped a threshold.
     attributed = sum(r["count"] for r in out["instances"])
     residual = out["pageviews"] - attributed
-    if residual < 0 or residual > max(20, out["pageviews"] // 20):
+    share = residual / out["pageviews"] * 100 if out["pageviews"] else 0
+    print("instance split: %d of %d pageviews attributed to the ten listed "
+          "rows, %d on the long tail (%.2f%%)"
+          % (attributed, out["pageviews"], residual, share))
+    if residual < 0 or share > 40:
         sys.exit("the instance split does not reconcile: %d pageviews in the "
-                 "totals widget, %d attributed from the pages list. A cap on "
-                 "the list explains a small positive difference and nothing "
-                 "explains this one." % (out["pageviews"], attributed))
+                 "totals widget, %d attributed from the pages list, %d (%.2f%%) "
+                 "unaccounted. The ten-row cap explains a positive difference; "
+                 "a negative one or a majority on the tail does not."
+                 % (out["pageviews"], attributed, residual, share))
     if residual:
         out["instances"].append({"key": "(not in the pages list)",
                                  "count": residual})
