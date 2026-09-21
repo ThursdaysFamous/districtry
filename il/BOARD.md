@@ -117,6 +117,16 @@ reason naming policy rather than TLS; and the module docstring's
 and is closed: the sitemap carries no `lastmod` and lists no member page, so a
 conditional crawl cannot be built. **The cost is real and is Adam's to refuse:
 the weekly job goes from ~3.5 minutes to ~32.**
+**MERGED as `2cea459` at 20:23 UTC, and verified on the merged tree rather than
+from the PR body**: a real paced scrape of two Senate members runs end to end in
+21.7s — three requests, two 10s gaps — reading `robots.txt served (610 bytes):
+no rule in 2 binding group(s) matches`, pacing at 10.0s, and both records
+parsing with their Springfield and district offices. `validate_python_hygiene`,
+`probe_user_agents --check`, `validate_gate_counts` and
+`validate_steward_mirror` all pass on main, and the gate pair is unmoved at
+68/95 because the change adds no gate. **The next scheduled run, Monday
+2026-09-28, is the first at the new pace and the first real test of the ~32
+minutes** — if it is going to time out or collide with anything, that is when.
 
 **[#1073](https://github.com/ThursdaysFamous/districtry/pull/1073) — the skill
 edit the classifier had been refusing went through.** `.claude/skills/
