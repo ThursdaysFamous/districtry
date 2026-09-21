@@ -35,6 +35,42 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-21, the statewide tier is watched on both halves.** PR #1070.
+
+**The task row in the section above is wrong in one direction and understates
+in the other, and the measurement is worth recording rather than silently
+working around.** It reads "Six statewide layers have no `validate_sources.py`
+row and no `ny/WATCH.md` row". Measured on `main` before anything was touched:
+FIVE of the six already had a manifest row — the go-live added them, and my own
+PR comment on #1042 said so. The sixth, `nys-zip-code`, had **nothing at all**,
+and it is the one nobody had named: it draws TIGERweb ZCTAs, and every other
+instance using that same service already watched it. So New York was the
+exception rather than the rule, and the layer that was actually unwatched was
+not on anyone's list. The WATCH.md half was right about all six.
+
+**There was no date to write, which is what the file had been waiting on.**
+It ended with the open item stated honestly — county and municipal boundaries
+change by annexation rather than on a cycle. The decision taken: five of the
+six get **no calendar trigger**, because inventing one would be a date nobody
+should wait for. What they have instead is a measurable change at the
+publisher, so the monthly scan now reads the feature count on all four NYS
+services (62 / 995 / 532 / 936, each measured live and matching what the
+builder recorded) **and** the publisher's own stated `Publication Date` on the
+three Civil Boundaries layers.
+
+Both, because the count alone has a hole: a dissolution moves it, an
+**annexation does not**, and the publication date is what moves on a republish
+either way. Only `nys-zip-code` gets a calendar row, because a Census vintage
+genuinely is decennial.
+
+Two things recorded rather than smoothed. `NYS_Schools` publishes no date at
+all — its entire service description is the five words "School Districts of
+NYS." — so that layer has the count only and is the least watched of the six.
+And the first negative test **was vacuous**: the perturbation did not apply
+because the anchor text had moved, and it was caught only because the test
+checked its own `grep -c` rather than trusting the run. Redone with an
+asserted anchor, it produces exactly the two WARNs it should.
+
 **2026-09-19, MERGED. New York is a statewide instance for a reader.** #1042
 landed as `3416c6b` (squash). New York's three planned PRs are all shipped.
 
