@@ -158,6 +158,14 @@ constant and cannot catch a changed one, and across the eleven skills the shape
 that failed here is essentially this one sentence — a prose-parsing gate would
 be a seventh hand-kept reader of a fact the code already owns. If Adam wants it
 anyway I will build it.
+**MERGED as `d6e9288` and verified on the merged tree**: both corrected claims
+are on main and both still match the code they describe — line 137 against
+`REQUIRED_COUNTIES = ("Cook",)` at `build_municipal_officials_roster.py:416`,
+and line 183 against `if: steps.scrape_cook.outcome == 'success'` at
+`update-municipal-officials.yml:605`. `validate_skills.py` passes with 11
+skills and 772 pointers. **The skill edit #1043 flagged on 2026-09-19 and the
+classifier refused is now closed**, and the second claim quotes the workflow's
+literal, so a reader can re-check that sentence in one grep.
 
 **[#1074](https://github.com/ThursdaysFamous/districtry/pull/1074) — the "2 of 64
 board cards name no office" row is now an ask rather than an open question.**
