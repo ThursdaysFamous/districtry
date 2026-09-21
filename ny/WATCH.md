@@ -26,6 +26,7 @@ thirty-three layers answer anywhere in the state.
 |---|---|---|---|
 | Monthly (1st, 12:00 UTC) | Source-freshness + redistricting-watch scan | `.github/workflows/validate-sources.yml` → single tracking issue on WARN/FAIL | Glance at the issue when it updates. A WARN = a trigger below may have fired. |
 | Weekly (staggered Mon–Thu) | Roster refreshes (legislature, congress, NYPD, CEC, council) | `update-*-roster.yml` → PR for human review on change | Review + merge the roster PRs. |
+| Monthly (rides the scan above) | **Statewide tier tripwire** — feature count on all four NYS services, plus the publisher's own "Publication Date" on the three Civil Boundaries layers | `ny/scripts/validate_sources.py` → same tracking issue | Nothing routine. A WARN here means a village dissolved, a town line moved or a district merged — work the matching trigger below. |
 
 ---
 
@@ -61,6 +62,7 @@ empty during an election period, check whether NYS ITS moved or renamed the serv
 | Rolling, post-enactment | Census TIGERweb publishes the new CD vintage (CD119 field → CD120) | **DONE 2026-09-03.** The watch worked — `ny/scripts/validate_sources.py` FAILed on the layer-name mismatch, which is what it was built for. Rebuilt on CD120 (26 districts, geometry unchanged — 5,000 points, 0 disagreements) and the manifest now expects the 120th and watches for the 121st. | ☑ |
 | Ad hoc | NYPD opens/merges precincts (administrative — the 116th Precinct opened Dec 2024, the first since 2013) | Rebuild `police-precinct`/`police-sector` geometry, re-verify anchors, confirm the commander scraper covers the new precinct page. | ☐ |
 | Ad hoc | DOE redraws Community School District lines (rare) or CEC structure changes | Re-verify `school-district` + `cec` (they share geometry). | ☐ |
+| **2032–2033** (estimated from the 2020 cycle — the 2020-census ZCTAs reached TIGERweb about two years after the count; don't treat the year as firm) | Census publishes the ZCTA vintage built on the 2030 census | `nys-zip-code` is **live TIGERweb**, envelope-queried at runtime, so there is no file to rebuild — the work is confirming the layer index still holds ZCTAs and that the city's own `zip-code` (MODZCTA, a Socrata file) still answers inside New York City. The two are different tilings of the same ground and only one may answer a point. | ☐ |
 
 ---
 
@@ -75,6 +77,25 @@ empty during an election period, check whether NYS ITS moved or renamed the serv
 - **Annual school-zone rotation** — the drill above is the scheduled instance.
 - **Charter revision** — a Charter Revision Commission can touch community-district or
   borough-office structure; if one convenes, read its proposals against the layer list.
+- **A NYS Civil Boundaries republish** — `county`, `municipality` and `village` are
+  *updated in place*: same URL, same service name, new content, for ever. Nothing renames,
+  so reachability checks stay green while the shipped geometry quietly stops matching the
+  state's. Two signals, because one is not enough: a **dissolution or incorporation moves
+  the feature count**, and an **annexation does not** — it moves a line between two
+  municipalities that both still exist — which is why the publisher's own "Publication
+  Date" is watched beside the count. Either moving: rebuild that layer, re-verify the
+  anchors, and check whether `judicial-district` (dissolved from the county fabric) and
+  `metro-outline.json` need rebuilding with it.
+- **A school-district reorganisation** — `nys-school-district` is the same in-place shape,
+  but NYS_Schools publishes **no** date to watch (measured 2026-09-21: its whole description
+  is "School Districts of NYS."), so the raw row count — 936, dissolved to 716 on
+  `SED_CODE_1` — is the only automatic signal, and it sees a merger but not a boundary
+  redraw. This layer is the least watched of the six and that is a measurement, not an
+  oversight.
+- **Judiciary Law §140** — `judicial-district` is thirteen unions of *whole counties*, so it
+  moves only when the statute does or when a county boundary does. The county row above
+  already watches the second, and the first is close to never; no separate detector exists
+  and none is proposed.
 
 When one fires: confirm enactment + effective date, then work **one layer at a time**
 through the runbook. Don't touch layers that didn't change.
@@ -88,10 +109,16 @@ with its own bodies and enactment history (Illinois: wards/ERSB/CPS plus the col
 counties; San Francisco: Redistricting Task Force, election precincts, BART, SFUSD). The
 decennial and off-cycle framing is shared; the layer rows are per-instance.
 
-**The statewide tier is not yet in the rows below, and that is the open item.** PR 2
-shipped the county, municipality, village, school-district and judicial-district layers on
-2026-09-18; the go-live added their freshness entries to
-`ny/scripts/validate_sources.py`, which is what notices a service that moves. What is
-missing here is the other half — when to LOOK for a redraw of the bodies those layers
-draw. County and municipal boundaries change by annexation rather than on a cycle, so the
-row is not simply decennial, and writing it needs a decision about what triggers a check.
+**The statewide tier is in the rows above as of 2026-09-21, and the open item is closed.**
+PR 2 shipped the county, municipality, village, school-district and judicial-district layers
+on 2026-09-18 and the go-live added their freshness entries; what was missing was the other
+half — when to LOOK. The answer turned out not to be a date. Five of the six bodies change
+by annexation, dissolution and reorganisation rather than on a cycle, so a decennial row
+would have been a date nobody should wait for, and the honest trigger is a **measurable
+change at the publisher**: the monthly scan now reads the feature count on all four NYS
+services and the stated publication date on the three that have one. Only `nys-zip-code`
+gets a calendar row, because a Census vintage genuinely is decennial.
+
+The sixth layer also had no freshness entry at all until 2026-09-21 — `nys-zip-code` drew
+TIGERweb ZCTAs with nothing watching them, while every other instance that uses that same
+service already carried a row for it.
