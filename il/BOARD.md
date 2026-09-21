@@ -89,6 +89,35 @@ main as it stands** (8 commits ahead of their base; neither touches a file the
 merges since changed). Both are waiting on a manager review. Neither is mine to
 merge.
 
+**The General Assembly roster row is answered, and answering it found a second
+thing.** `update-ilga-roster.yml` ran today at 18:24 UTC and SUCCEEDED — its
+first green run since 09-14, so the 09-18 fix holds. It opened bot PR
+[#1063](https://github.com/ThursdaysFamous/districtry/pull/1063), one changed
+block, which I verified against the live page rather than from the diff:
+`5025 N. Broadway` and `348-3434` occur ZERO times on ilga.gov today and
+`By appointment only` and `657-4655` occur once each, so Rep. Hoan Huynh's
+District 13 office really has moved to appointment-only. **The Senate half did
+not change at all**, which is why `il-senate-members.json` still dates to
+09-02; that is the source standing still, not the job failing. #1063 is a
+roster PR and wants a human read before it merges.
+
+**[#1072](https://github.com/ThursdaysFamous/districtry/pull/1072) — what that
+verification turned up.** `ilga_scraper.py` had NO reference to robots.txt, and
+ilga.gov asks for `Crawl-delay: 10` while the scraper ran at 0.5s across one
+page per member. **The delay sits in the SECOND of two `User-agent: *` groups**,
+split by a Googlebot group — the half `urllib.robotparser` drops, which is the
+shape `scripts/robots_policy.py` was written for, so this is that reader earning
+its keep on a live host rather than a fixture. Two traps are recorded with it:
+adding the gate naively would have shut the scraper off ENTIRELY, because
+`RobotsGate` reads through the session it is handed and this host omits its
+intermediate, so the TLS failure reads as disallow-all — in CI too, with a
+reason naming policy rather than TLS; and the module docstring's
+`REQUESTS_CA_BUNDLE` warning was one variable short, since requests reads
+`CURL_CA_BUNDLE` next and this sandbox sets both. The cheaper route was measured
+and is closed: the sitemap carries no `lastmod` and lists no member page, so a
+conditional crawl cannot be built. **The cost is real and is Adam's to refuse:
+the weekly job goes from ~3.5 minutes to ~32.**
+
 **On the recurring Hancock churn, since it was asked for.** The weekly run will
 keep re-proposing the same three edits against the reverted file until the
 county answers, because the page is what it reads and the page is what is
@@ -294,10 +323,10 @@ shipping, and has been since 2026-08-01.
   county's own robots.txt, which disallows the directory the Clerk's yearbook
   sits in (#1027). Compliance, not an outage — the check re-runs weekly and
   resumes on its own if the policy changes. Ask 23 is drafted, unsent.
-- **The General Assembly roster has not refreshed since 2026-09-08** (House) or
-  **2026-09-01** (Senate). `update-ilga-roster.yml` failed on 09-14 and its code
-  was fixed on 09-18, so its next scheduled run is the first thing to test it.
-  Not chasing it before then.
+- ~~**The General Assembly roster has not refreshed since 2026-09-08**~~ —
+  **ANSWERED 2026-09-21.** The workflow ran green today and opened #1063, which
+  is verified against the live page and waiting on a human read. The Senate file
+  is unchanged because the Senate pages are unchanged.
 
 Nothing else on the Illinois map is known to be wrong. The coverage ring checks
 out at five rings with all 93 inside and 10 outside anchors correct; 62 of the
