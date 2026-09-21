@@ -300,11 +300,66 @@ class Verdict(object):
         return self.policy.content_signal(user_agent) if self.policy else {}
 
 
+# A ROBOTS.TXT THAT IS HTML IS NOT A ROBOTS.TXT, and until 2026-09-21 this
+# module read one as though it were. mitchellcounty.iowa.gov answered
+# /robots.txt with a bot-detection interstitial -- title "One moment, please",
+# obfuscated JavaScript probing navigator.webdriver, headless user-agents and
+# plugin spoofing, POSTing its failedChecks to a hashed path and reloading --
+# and classify() returned `served`, RobotsPolicy() found no directives in the
+# markup, and allows() answered TRUE with "no group binds this client". A
+# MANAGED CHALLENGE IS AN ACCESS CONTROL and CLAUDE.md says it is never solved
+# or worked around, so reading one as a permissive policy is backwards in the
+# one direction that matters. ia/WATCH.md predicted this on 2026-09-13 off the
+# same host's suspension page and nothing acted on it.
+#
+# TWO OUTCOMES, AND THE SECOND IS DELIBERATELY NOT A REFUSAL. A challenge
+# refuses. Any OTHER HTML at that path means the host has no robots.txt --
+# a soft 404, a parked page, a CMS catch-all -- which RFC 9309 files as allow,
+# and refusing there would shut hosts that are serving us data. CLAUDE.md:
+# skipping data a publisher is actively serving is an error rather than
+# caution. What changes for that case is only the honesty of the line: it no
+# longer claims a robots.txt was served, and the markup is no longer parsed
+# for rules, so a stray `Disallow: /` in prose or script cannot become one.
+_CHALLENGE_MARKERS = (
+    "one moment, please",                  # Mitchell's vendor, measured 2026-09-21
+    "your request is being verified",      # the same interstitial's body text
+    "checking your browser before accessing",   # Cloudflare, classic
+    "enable javascript and cookies to continue",
+    "sgcaptcha",                           # the vendor fronting Union and Williamson
+    "challenge-platform",                  # Cloudflare managed challenge asset path
+    "webdriver",                           # a bot check, obfuscated or not
+)
+
+
+def _html_shape(text):
+    """None for a robots.txt; 'challenge' or 'html' for a body that is not one.
+
+    Only the first 4 KB is examined: a challenge interstitial declares itself
+    in its head, and a real robots.txt is never HTML at any offset.
+    """
+    head = text[:4096]
+    low = head.lower()
+    if not (head.lstrip()[:1] == "<" or "<html" in low or "<!doctype" in low):
+        return None
+    return "challenge" if any(m in low for m in _CHALLENGE_MARKERS) else "html"
+
+
 def classify(http_status, body, final_url=None, error=None):
     """Turn a robots.txt response into a Verdict. Pure, so it is testable."""
     if error is not None:
         return Verdict("unreachable", "robots.txt unreachable: %s" % error, final_url=final_url)
     if http_status == 200 and body is not None and body.strip():
+        shape = _html_shape(body)
+        if shape == "challenge":
+            return Verdict("challenge",
+                           "robots.txt answered with a managed challenge (%d bytes of "
+                           "markup, not a document) — an access control" % len(body),
+                           final_url=final_url, http_status=200)
+        if shape == "html":
+            return Verdict("absent",
+                           "no robots.txt: the host served %d bytes of HTML at that "
+                           "path (allow all)" % len(body),
+                           policy=RobotsPolicy(""), final_url=final_url, http_status=200)
         return Verdict("served", "robots.txt served (%d bytes)" % len(body),
                        policy=RobotsPolicy(body), final_url=final_url, http_status=200)
     if http_status == 200:
@@ -759,19 +814,57 @@ def _selftest():
         for f in failures:
             print("robots_policy --selftest: FAIL — " + f, file=sys.stderr)
         sys.exit(1)
+    # A BODY THAT IS NOT A ROBOTS.TXT (added 2026-09-21, off a live reading of
+    # mitchellcounty.iowa.gov). The challenge fixture is that host's own
+    # interstitial, trimmed; the point of the negative cases is that this must
+    # not start refusing hosts that are serving us data.
+    ua = "districtry/1.0 (+https://districtry.com/ia/)"
+    chal = ('<!DOCTYPE html><html lang="en"><head><meta charset="utf8">'
+            '<title>One moment, please...</title></head><body>'
+            '<div id="text">Please wait while your request is being verified...</div>'
+            '<script>var a=navigator.webdriver;</script></body></html>')
+    v = classify(200, chal, final_url="https://h/robots.txt")
+    check(v.status == "challenge", "a managed challenge at /robots.txt -> challenge")
+    check(v.allows(ua, "https://h/page")[0] is False,
+          "a managed challenge must REFUSE the fetch, not permit it")
+    check("access control" in v.why, "the challenge verdict says what it is")
+
+    plain = '<html><body><h1>Page not found</h1><p>Try the home page.</p></body></html>'
+    v = classify(200, plain, final_url="https://h/robots.txt")
+    check(v.status == "absent", "other HTML at /robots.txt -> absent, never challenge")
+    check(v.allows(ua, "https://h/page")[0] is True,
+          "a host with no robots.txt is still ALLOWED -- refusing it would shut "
+          "hosts that serve us data")
+    check("no robots.txt" in v.why, "the line stops claiming a robots.txt was served")
+
+    # A soft-404 whose prose happens to contain a directive must not yield one.
+    sneaky = '<html><body><pre>User-agent: *\nDisallow: /</pre></body></html>'
+    check(classify(200, sneaky, final_url="https://h/robots.txt")
+          .allows(ua, "https://h/anything")[0] is True,
+          "markup is not parsed for rules, so prose cannot become a Disallow")
+
+    # And a real robots.txt is untouched, including one that merely mentions HTML.
+    real = "User-agent: *\nDisallow: /admin/\nSitemap: https://h/sitemap.xml\n"
+    v = classify(200, real, final_url="https://h/robots.txt")
+    check(v.status == "served", "a real robots.txt still reads as served")
+    check(v.allows(ua, "https://h/admin/")[0] is False, "and its rules still bind")
+    check(v.allows(ua, "https://h/board/")[0] is True, "and its allows still allow")
+
     print("robots_policy --selftest: OK — 3 fixtures + this site's own "
-          "robots.txt + the pacer, %d assertions" % _count_checks())
+          "robots.txt + the pacer + the not-a-robots-txt cases, %d assertions"
+          % _count_checks())
 
 
 def _count_checks():
     # The number of check() calls above; kept as a literal so the OK line
     # cannot claim a count the code does not make. 48 on the three saved
-    # robots.txt files, 5 on the pacer, and 20 on this site's own robots.txt
+    # robots.txt files, 5 on the pacer, 10 on bodies that are not a
+    # robots.txt at all, and 20 on this site's own robots.txt
     # (one structural, nine agents x two, plus /llms.txt). COUNTED BY RUNNING
     # IT rather than by reading the source: the file-missing check() is a call
     # in the source that the normal path never executes, and a first draft of
     # this literal said 74 for exactly that reason.
-    return 73
+    return 83
 
 
 if __name__ == "__main__":
