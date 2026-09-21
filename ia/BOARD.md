@@ -42,6 +42,49 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-21 (later) — #1065 MERGED as `2d933ec`, both pieces, verified on the
+merged tree.**
+
+All four files landed: `scripts/robots_policy.py`, `ia/WATCH.md`,
+`ia/metro-worksheet.json` and its regenerated `ia/scripts/validate_index.py`
+line. **SHA ancestry is the wrong test here** — it was SQUASH-merged, so
+`0a2d781` and `fa5977d` are not ancestors of main and a `--is-ancestor` check
+reports both MISSING while their content is present. Verify content, not the
+commit id.
+
+Nine gates re-run on merged main, all green: `robots_policy --selftest` (83
+assertions), `probe_user_agents --check` (294 hosts), `generate_metro_files
+--check` (117 regions), `ia validate_index`, `validate_gate_counts` (68/95),
+`validate_steward_mirror` (95 for 95), `validate_python_hygiene` (511 files),
+`validate_skills` (772 pointers), `validate_doc_counts` (35 claims).
+
+**THE TWO PIECES SHIPPED IN ONE PR AND SHOULD NOT HAVE.** Piece 2 was held
+unpushed to keep one PR per piece; the session's git hook then flagged it, and
+the hook was right — this container is ephemeral and reclaimed on inactivity,
+so a validated commit existing only in it is one that gets lost silently, and
+the designated branch is the only one pushable. Losing the work is the worse
+failure. The bundling was taken deliberately, stated at the top of the PR body
+with both pieces described separately, and offered for splitting. **The lesson
+is about ORDER, not about the rule:** a piece finished while an earlier PR is
+still open has nowhere to go, so either open its PR first or expect to bundle.
+
+*A risk measured before the push rather than argued about:* piece 2's challenge
+markers can only fire on a body that is genuinely HTML, and before this change
+every HTML body at /robots.txt allowed unconditionally — so the only hosts it
+can newly shut are the challenge case it was written for. All four real robots
+bodies in the tree classify `shape=None`, `served`, `allows=True`, unchanged.
+`www.iowacourts.gov` is the informative one: Cloudflare-fronted and still plain
+text, which is the correct distinction — Cloudflare INSERTING a block into
+robots.txt is not Cloudflare SERVING a challenge instead of it.
+
+*One correction to something I said while waiting:* I flagged that main had
+"gained a new gate" (`validate_officeholder_names.py`). It had not —
+`smoke-test.yml` is unchanged since the PR's base and that script was modified,
+not newly wired. The gate-count pair never moved. I checked it properly by
+building a throwaway worktree at `origin/main`, merging the branch into it, and
+running the count gates on THAT tree, which is the only place the
+"two-correct-changes-meet" failure is visible.
+
 **2026-09-21 — resumed on three tasks; two had already been done or had
 expired, and the third is measured clean.**
 
