@@ -31,7 +31,8 @@ top-level directory carrying both an index.html and a data/app/. Illinois's
 worksheet stayed at the repo root when R2.3 moved its app into `il/`, so the
 path is probed rather than assumed (the check_cache_version.py rule).
 
-TWO PATTERNS, because the claim is written two ways:
+FIVE PATTERNS, because the claim is written five ways. (This heading said TWO
+while listing three; D and E were added 2026-09-21.)
 
   A. A count next to one instance name — "the Iowa half (all 99 counties, 19
      layers)", "### Wisconsin — 31 layers", "**39 layers** ship in Illinois
@@ -89,6 +90,29 @@ TWO PATTERNS, because the claim is written two ways:
      a non-pair number is not read, and the first claim on the line failing is
      what brings a human to it.
 
+  D. A count with the instance name BETWEEN it and the noun — the press list's
+     "one free open-source lookup covering all 27 NYC layers". Pattern A wants
+     the number immediately before "layers" and never matches, so the nearest-
+     name search never runs and the claim is dropped WHOLE rather than
+     misattributed. That claim was invisible to this gate from the day the gate
+     was written, in the outbound press list, which is the one file whose
+     docstring above already calls out as "the number a journalist would have
+     been handed". No nearest-name logic applies: the name is in the phrase.
+
+  E. A bare "N layers" on a line that also names an instance's own WORKSHEET —
+     "27 layers in `ny/metro-worksheet.json`". A worksheet path names exactly
+     one instance and can mean nothing else, which is the structural
+     discriminator pattern B already demands.
+
+     THE OBVIOUS FIX WAS MEASURED AND REJECTED. The claim that prompted this
+     has "New York City" 78 characters back, across a hard line wrap, just
+     outside LOOKBACK's 60-character window — so raising LOOKBACK looks like
+     the fix. It is not. Measured across the scanned surface: 60 reads 28
+     claims with 2 mismatches; 90 finds this one and ALSO invents "Iowa 4" and
+     "Chicago 132", neither a layer count; 120 adds "SF 12" and a stale
+     "Chicago 39"; 200 adds "Wisconsin 11" and "Iowa 132". Nine mismatches
+     bought for two real ones. The window is well chosen and is left alone.
+
 WHAT IT DOES NOT SCAN. `docs/archive/` (preserved verbatim by convention — the
 whole point is that it is not maintained), scripts and tests (a "Thread-5
 layers" in a smoke test is a thread name, not a count), and the generated root
@@ -138,6 +162,18 @@ INSTANCE_NAMES = {
 # Entries: {"path", "name", "count", "reason", "recorded"}. See the docstring —
 # empty is the measured state, not an unfinished table.
 HISTORICAL_COUNTS = [
+    # 2026-09-21, when patterns D and E made two long-invisible claims readable.
+    # The plan's Context section records the state of `ny/` BEFORE the plan ran
+    # and says so in its own heading. It was TRUE when written: the worksheet
+    # held 27 layers when it was read on 2026-09-18 and PR 2 took it to 33
+    # later the SAME DAY. Correcting the number to 33 would make the plan's
+    # starting state a state that never preceded the plan, so the section was
+    # put into the past tense instead and the figure left as the reading it is.
+    {"path": "docs/NY_EXPANSION_PLAN.md", "name": "New York", "count": 27,
+     "reason": "Dated pre-expansion reading: ny/metro-worksheet.json held 27 layers "
+               "when the plan was written on 2026-09-18, and PR 2 took it to 33 the "
+               "same day. The section is marked past tense rather than renumbered",
+     "recorded": "2026-09-21"},
     # The FIRST entry, 2026-09-12, when the `ssa` layer took Illinois 39 -> 40.
     # This sentence is a DATED MEASUREMENT, not a live claim: it reports how many
     # layers a Will or DuPage point resolved when the coverage-wash problem was
@@ -179,6 +215,29 @@ LOOKAHEAD = 30
 # every per-county list in the tree (one, and the collision is Iowa County WI).
 MIN_TOTALS_PAIRS = 3
 
+# A claim MEASURED WRONG in a file this project does not edit. Deliberately NOT
+# folded into HISTORICAL_COUNTS, whose entries mean "was true when written" — a
+# wrong claim filed under that name would make the list itself lie, which is the
+# failure this whole gate exists to catch. Same contract as ACCEPTED_DROPS and
+# EXPECTED_UNREACHABLE otherwise: a reason, a date, printed EVERY run so it
+# cannot go quiet, and a FAIL when it is orphaned or when the claim is fixed.
+#
+# An entry here is a debt, not an exemption. It says the number is wrong, the
+# owner has been told, and this project is not the one to change it.
+OWNER_HELD_COUNTS = [
+    # docs/press-list.json is the outbound press list and is the operator's
+    # file; this session flags it and does not edit it. The claim sits in the
+    # `angle` for City & State New York, wave 4, which carries no `sent` key —
+    # so it is UNSENT, and 27 is the number a journalist would be handed for an
+    # app that ships 33. It reaches no reader through docs/PRESS_LIST.md, which
+    # does not render the `angle` field.
+    {"path": "docs/press-list.json", "name": "NYC", "count": 27,
+     "reason": "Unsent wave-4 pitch (City & State New York) understating the app at 27 "
+               "layers; ships 33. The press list is the operator's file — flagged on "
+               "ny/BOARD.md, not edited here",
+     "recorded": "2026-09-21"},
+]
+
 COUNT_RE = re.compile(r"\b(\d{1,3})\s+layers?\b")
 NAME_RE = re.compile(r"\b(" + "|".join(re.escape(n) for n in INSTANCE_NAMES) + r")\b")
 # Pattern B: a name, a number, then a separator or the word "layers" — never
@@ -193,6 +252,33 @@ FOR_PAIR_RE = re.compile(
     r"\b(\d{1,3})\s+for\s+\**("
     + "|".join(re.escape(n) for n in INSTANCE_NAMES) + r")\b"
 )
+# Pattern D: "N <instance> layers", the name sitting BETWEEN the number and
+# the noun. COUNT_RE cannot see it — it wants the number immediately before
+# "layers" — and the nearest-name search never runs, so the claim is dropped
+# whole. The press list's "all 27 NYC layers" went unread by this gate from the
+# day the gate was written. No nearest-name logic is needed or wanted here: the
+# name is IN the phrase, so the attribution is unambiguous.
+COUNT_NAMED_RE = re.compile(
+    r"\b(\d{1,3})\s+(" + "|".join(re.escape(n) for n in INSTANCE_NAMES)
+    + r")\s+layers?\b")
+# Pattern E: a bare "N layers" on a line that also names an instance's own
+# WORKSHEET. A worksheet path names exactly one instance and cannot mean
+# anything else, which is the structural discriminator this gate's docstring
+# already demands of pattern B.
+#
+# WIDENING LOOKBACK WAS MEASURED AND REJECTED, and the numbers are the reason
+# this rule exists instead. The claim that prompted it — NY_EXPANSION_PLAN.md's
+# "27 layers in `ny/metro-worksheet.json`" — has "New York City" 78 characters
+# back, across a hard line wrap, just outside the 60-character window. Raising
+# LOOKBACK to 90 does find it and ALSO invents two claims that are not layer
+# counts ("Iowa 4", "Chicago 132"); 120 adds "SF 12" and a stale "Chicago 39";
+# 200 adds "Wisconsin 11" and "Iowa 132". Nine mismatches against two real
+# ones. The window is well chosen and is left alone.
+WORKSHEET_PATH_RE = re.compile(r"\b([a-z]{2})/metro-worksheet\.json\b")
+# Display label only — attribution is by TAG. Kept explicit because "New York
+# City" and "New York" both map to `ny` and the output should not wobble.
+CANONICAL_NAME = {"il": "Chicago", "ny": "New York", "ca": "San Francisco",
+                  "wi": "Wisconsin", "ia": "Iowa", "mi": "Michigan"}
 LAYER_WORD_RE = re.compile(r"\blayers?\b", re.IGNORECASE)
 ANY_NUMBER_RE = re.compile(r"\d+")
 
@@ -277,6 +363,21 @@ def claims(rel):
     # word "layer" on its line.
     for pos, name, count in _for_pair_claims(text):
         add(pos, name, count)
+
+    # D: "N <instance> layers" — the name between the number and the noun.
+    for m in COUNT_NAMED_RE.finditer(text):
+        add(m.start(), m.group(2), int(m.group(1)))
+
+    # E: a bare "N layers" on a line naming an instance's own worksheet.
+    for line_text, offset in _lines_with(text, "metro-worksheet.json"):
+        pm = WORKSHEET_PATH_RE.search(line_text)
+        if not pm:
+            continue
+        name = CANONICAL_NAME.get(pm.group(1))
+        if not name:
+            continue
+        for m in COUNT_RE.finditer(line_text):
+            add(offset + m.start(), name, int(m.group(1)))
     return out
 
 
@@ -379,21 +480,81 @@ _C_CASES = [
 ]
 
 
+# Pattern D reads a name that sits BETWEEN the number and the noun, and must
+# not read the shapes A and B already own (which would double-report) or the
+# ones that are not layer counts at all.
+_D_CASES = [
+    ("the press list's real claim",
+     "one free open-source lookup covering all 27 NYC layers, built outside government",
+     [("NYC", 27)]),
+    ("a full instance name in the same shape",
+     "the 16 San Francisco layers each carry a source row",
+     [("San Francisco", 16)]),
+    ("pattern A's shape is NOT pattern D's — no name between",
+     "New York ships 33 layers today",
+     []),
+    ("a number, a name, and a different noun",
+     "we wrote 27 NYC pitches that week",
+     []),
+    ("a name that is not an instance",
+     "all 27 Brooklyn layers",
+     []),
+]
+
+# Pattern E attributes a bare "N layers" by the WORKSHEET PATH on its own line.
+# A worksheet path names exactly one instance; nothing else on the line is
+# consulted, which is what makes it safe where widening LOOKBACK was not.
+_E_CASES = [
+    ("the plan's real claim",
+     "with 27 layers in `ny/metro-worksheet.json` (read 2026-09-18). Measured on that date:",
+     [("New York", 27)]),
+    ("the Wisconsin stub's real claim",
+     "Wisconsin ships 31 layers (`wi/metro-worksheet.json`)",
+     [("Wisconsin", 31)]),
+    ("a worksheet path with no count on the line",
+     "the list that drives it is `ia/metro-worksheet.json`",
+     []),
+    ("a count with no worksheet path on the line",
+     "27 layers were built that week",
+     []),
+    ("an unknown tag in the path",
+     "42 layers in `zz/metro-worksheet.json`",
+     []),
+]
+
+
 def _selftest():
     bad = 0
     for label, line, expect in _C_CASES:
         got = [(n, c) for _, n, c in _for_pair_claims(line + "\n")]
         if got != expect:
             bad += 1
-            print("  BAD %s\n      got %s, expected %s" % (label, got, expect),
-                  file=sys.stderr)
+            print("  BAD pattern C: %s\n      got %s, expected %s"
+                  % (label, got, expect), file=sys.stderr)
+    for label, line, expect in _D_CASES:
+        got = [(m.group(2), int(m.group(1))) for m in COUNT_NAMED_RE.finditer(line)]
+        if got != expect:
+            bad += 1
+            print("  BAD pattern D: %s\n      got %s, expected %s"
+                  % (label, got, expect), file=sys.stderr)
+    for label, line, expect in _E_CASES:
+        pm = WORKSHEET_PATH_RE.search(line)
+        name = CANONICAL_NAME.get(pm.group(1)) if pm else None
+        got = ([(name, int(m.group(1))) for m in COUNT_RE.finditer(line)]
+               if name else [])
+        if got != expect:
+            bad += 1
+            print("  BAD pattern E: %s\n      got %s, expected %s"
+                  % (label, got, expect), file=sys.stderr)
+    total = len(_C_CASES) + len(_D_CASES) + len(_E_CASES)
     if bad:
-        print("validate-doc-counts selftest: FAIL — %d of %d pattern-C case(s) "
-              "wrong" % (bad, len(_C_CASES)), file=sys.stderr)
+        print("validate-doc-counts selftest: FAIL — %d of %d case(s) wrong"
+              % (bad, total), file=sys.stderr)
         return 1
-    print("validate-doc-counts selftest: OK — pattern C reads the one real "
-          "'N for <instance>' layer count in the tree and none of the four "
-          "sentences that share its shape (%d cases)" % len(_C_CASES))
+    print("validate-doc-counts selftest: OK — %d cases. Pattern C reads the one "
+          "real 'N for <instance>' count and none of the four sentences sharing "
+          "its shape; D reads a name between the number and the noun without "
+          "taking A's shape; E attributes by worksheet path alone." % total)
     return 0
 
 
@@ -415,6 +576,7 @@ def main():
         return 1
 
     problems, checked, matched_exemptions = [], 0, set()
+    matched_held = set()
     for rel in documents():
         for line, name, stated, context in claims(rel):
             tag = INSTANCE_NAMES[name]
@@ -427,6 +589,16 @@ def main():
                 print("  %s %s:%d  %s %d (ships %d)"
                       % (mark, rel, line, name, stated, actual))
             if stated == actual:
+                continue
+            held = next((i for i, e in enumerate(OWNER_HELD_COUNTS)
+                         if e["path"] == rel and e["name"] == name
+                         and e["count"] == stated), None)
+            if held is not None:
+                matched_held.add(held)
+                print("  owner-held: %s:%d says %s %d, ships %d — %s (%s)"
+                      % (rel, line, name, stated, actual,
+                         OWNER_HELD_COUNTS[held]["reason"],
+                         OWNER_HELD_COUNTS[held]["recorded"]))
                 continue
             excuse = next((i for i, e in enumerate(HISTORICAL_COUNTS)
                            if e["path"] == rel and e["name"] == name
@@ -442,6 +614,12 @@ def main():
                 "  %s:%d — says %s ships %d layers; %s lists %d\n"
                 "      …%s…" % (rel, line, name, stated, sheet, actual, context))
 
+    for i, entry in enumerate(OWNER_HELD_COUNTS):
+        if i not in matched_held:
+            problems.append(
+                "  OWNER_HELD_COUNTS entry %d is orphaned — nothing in %s now "
+                "claims %s %d. If the owner fixed it, delete the entry."
+                % (i, entry["path"], entry["name"], entry["count"]))
     for i, entry in enumerate(HISTORICAL_COUNTS):
         if i not in matched_exemptions:
             problems.append(
