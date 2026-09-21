@@ -95,11 +95,16 @@ working.** Not relaxed: these slots routinely carry the FILER's own office
 disagrees with itself on the ZIP. No data changed; the measurement landed in
 `witnessed()`'s docstring so the next person to find an AFR address missing
 has the cause and the counter-argument in hand.
+**MERGED as `62dd6bf` and verified on the merged tree**: `witnessed()`'s docstring
+on main carries the whole measurement — the FY2025 slot-B LOWERY against BERGAN,
+the FY2026 all-BERGAN form, the accountant's e-mail domain and the filing's own
+ZIP disagreement — and `comptroller_afr --selftest` passes there. No data moved,
+which was the point: the roster was already right.
 
-**#1067 and #1068 are green, carry no review threads, and merge clean against
-main as it stands** (8 commits ahead of their base; neither touches a file the
-merges since changed). Both are waiting on a manager review. Neither is mine to
-merge.
+**ALL THREE ASSIGNED TASKS ARE MERGED AND VERIFIED** — #1066 `8d54ec4`,
+#1067 `a981ff6`, #1068 `62dd6bf` — each checked on the merged tree rather than
+from its PR body. Two of this session's later PRs, #1073 and #1074, remain open
+and green.
 
 **The General Assembly roster row is answered, and answering it found a second
 thing.** `update-ilga-roster.yml` ran today at 18:24 UTC and SUCCEEDED — its
