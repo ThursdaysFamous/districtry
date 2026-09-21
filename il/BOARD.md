@@ -49,6 +49,12 @@ prints rather than failing the build, because the residual risk runs the other
 way — a library named after a person (this dataset has Rick Warren Memorial)
 could appoint a director sharing the namesake, and a false positive must cost
 an empty slot, never a wrong name on a card. No exception entry.
+**MERGED as `8d54ec4`, and verified on the merged tree rather than from the PR
+body**: `institution_not_person` is at `scripts/build_il_library_contacts.py:109`
+and its six-case `INSTITUTION_SELFTEST` passes there, catching the value L2
+actually served and clearing all four false-positive cases. The builder takes a
+scraped file, so it is not a CI gate — the selftest is what runs, and it runs on
+every invocation ahead of argument parsing.
 
 **[#1067](https://github.com/ThursdaysFamous/districtry/pull/1067) —
 Plattville.** The trailing-token sweep found exactly ONE occurrence file-wide,
@@ -77,6 +83,11 @@ working.** Not relaxed: these slots routinely carry the FILER's own office
 disagrees with itself on the ZIP. No data changed; the measurement landed in
 `witnessed()`'s docstring so the next person to find an AFR address missing
 has the cause and the counter-argument in hand.
+
+**#1067 and #1068 are green, carry no review threads, and merge clean against
+main as it stands** (8 commits ahead of their base; neither touches a file the
+merges since changed). Both are waiting on a manager review. Neither is mine to
+merge.
 
 **On the recurring Hancock churn, since it was asked for.** The weekly run will
 keep re-proposing the same three edits against the reverted file until the
