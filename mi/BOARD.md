@@ -29,6 +29,17 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-21, #1069 merged as `38f479e3`, verified on the merged tree.** The probe gate
+passes there, `probes_fips` reads 10, and the frontier prints 48 ship / 10 recorded shut /
+25 untried, which is the 83. `build_coverage_gaps.py --check --metro michigan` and
+`build_history_page.py --check` both pass, Michigan's gap counts unmoved at 20 (5 blocked,
+2 data-quality, 13 no-source). The ruling is in the merged bytes in all three places, and
+Muskegon's `wanted` no longer offers a route the operator closed — the one reader-facing
+field in the change.
+
+Michigan has nothing unblocked again. The three questions below are all unanswered, and the
+Tasks row above is still the manager's to update.
+
 **2026-09-21, the assigned task was already shipped, so this is what I found looking for it.**
 #1069 open. Tranche 6 is in, and tranche 7 with it: measured on today's tree,
 `mi-commissioner-members.json` names 48 of 83 counties and 366 of 619 districts, and the
