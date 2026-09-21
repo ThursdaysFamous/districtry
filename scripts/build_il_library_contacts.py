@@ -62,6 +62,7 @@ half an address.
 import argparse
 import json
 import os
+import re
 import sys
 
 import sys as _sys, os as _os
@@ -99,7 +100,83 @@ def fail(msg):
     sys.exit("build-il-library-contacts: FAIL — " + msg)
 
 
+def normalise_title(value):
+    """Case, punctuation and spacing removed, for comparing a name to a title."""
+    return re.sub(r"\s+", " ",
+                  re.sub(r"[^a-z0-9 ]+", " ", (value or "").lower())).strip()
+
+
+def institution_not_person(name, library):
+    """Why `name` is the LIBRARY rather than its administrator, or None.
+
+    L2's Primary Administrator block is a free-text field the libraries fill in
+    themselves, and on 2026-09-21 Atkinson's read `Name: Atkinson Public
+    Library`, `Title: Director`, with `Ninette` nowhere on the page. The
+    scraper reproduced it faithfully, which is the problem: shipped, the card
+    would have named an institution as the person who runs it, and would have
+    done so by REMOVING a real name — Atkinson has no `heads` entry in
+    il-library-district-officials.json, so nothing else fills that slot.
+
+    NEITHER EXISTING GUARD CAN SEE THIS. validate_officeholder_names.py judges
+    a name by its SHAPE, and `Atkinson Public Library` is a perfectly well
+    formed name. check_roster_retention.py measures coverage per source, and
+    one administrator of 285 changing sits under every threshold it sets. The
+    value is only wrong RELATIVE TO ITS OWN RECORD, which is why the test has
+    to be made here, where both halves are in hand.
+
+    THE RULE IS PREFIX-OR-SUFFIX, AND IT WAS MEASURED RATHER THAN REASONED.
+    Against the 285 administrators shipped on 2026-09-21: equality alone does
+    NOT catch Atkinson (the key carries a trailing `District` the name does
+    not), while prefix-or-suffix catches it and flags ZERO shipped records.
+    `contains` also flagged zero but is wider than the defect, so it is not
+    used.
+
+    TWO TOKENS MINIMUM, because a single one cannot be told from a surname
+    that happens to match the town: Lisle Library District could appoint a
+    director named Lisle, and refusing that would be this guard inventing a
+    defect. The residual risk is the reverse — a library named after a person
+    (this dataset has Rick Warren Memorial) appointing a director who shares
+    the namesake. That is why the finding DROPS the administrator and ships
+    the record rather than failing the build: the wrong direction costs one
+    empty slot, is printed on the run that does it, and never puts a wrong
+    name on a card.
+    """
+    person = normalise_title(name)
+    title = normalise_title(library)
+    if not person or not title or len(person.split()) < 2:
+        return None
+    if person == title:
+        return "is the library's own name"
+    if title.startswith(person) or title.endswith(person):
+        return "is the library's own name with a word dropped"
+    if person.startswith(title) or person.endswith(title):
+        return "is the library's own name with a word added"
+    return None
+
+
+# Cases this guard must keep getting right, checked on every run. The first is
+# the value L2 actually served; the rest are the false positives the rule was
+# narrowed to avoid.
+INSTITUTION_SELFTEST = (
+    ("Atkinson Public Library", "Atkinson Public Library District", True),
+    ("Atkinson Public Library District", "Atkinson Public Library District", True),
+    ("Ninette Carton", "Atkinson Public Library District", False),
+    ("Lisle", "Lisle Library District", False),          # one token: a surname
+    ("Elaina Holland", "Rick Warren Memorial Library", False),
+    ("Vanessa Robnett", "Tri-City Public Library District", False),
+)
+
+
+def _run_institution_selftest():
+    for name, library, expected in INSTITUTION_SELFTEST:
+        got = institution_not_person(name, library) is not None
+        if got != expected:
+            fail("institution_not_person(%r, %r) -> %s, expected %s"
+                 % (name, library, got, expected))
+
+
 def main():
+    _run_institution_selftest()
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("scraped", help="il_library_contacts_scraper.py --out")
     ap.add_argument("--check", action="store_true",
@@ -111,6 +188,19 @@ def main():
     libraries = payload.get("libraries") or {}
     if not isinstance(libraries, dict):
         fail("the scraper's output has no libraries object")
+
+    # Drop an administrator that is the library itself BEFORE the counts, so
+    # with_admin measures what actually ships and its floor still means what it
+    # says. Printed every run: a silent drop is how a source's defect becomes
+    # this project's, and the count is the only thing a reviewer of a weekly
+    # bot PR would otherwise see move.
+    for key in sorted(libraries):
+        admin = libraries[key].get("admin") or {}
+        why = institution_not_person(admin.get("name"), key)
+        if why:
+            print("  dropped the administrator on %s: %r %s"
+                  % (key, admin.get("name"), why), file=sys.stderr)
+            libraries[key].pop("admin", None)
 
     with_address = sum(1 for v in libraries.values() if v.get("address"))
     with_phone = sum(1 for v in libraries.values() if v.get("phone"))
