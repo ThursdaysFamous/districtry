@@ -38,6 +38,36 @@ Session's own, so REQUESTS_CA_BUNDLE — which this project's sandbox sets and C
 does not — silently WINS over `session.verify`. Setting it on the session
 therefore works in CI and fails locally, which is the worst arrangement: the
 one place a person would test it is the one place it breaks.
+
+THAT WARNING WAS ONE VARIABLE SHORT (measured 2026-09-21). requests reads
+REQUESTS_CA_BUNDLE and then CURL_CA_BUNDLE, and this sandbox sets both, so
+unsetting the named one and re-running still failed on the same missing
+issuer — which reads exactly like the pin not working. pinned_session() forces
+verify per request and is immune to either.
+
+IT NOW READS robots.txt BEFORE THE FIRST FETCH, as the client that crawls.
+Two things that read makes true and neither was true before:
+
+  * ilga.gov ASKS FOR `Crawl-delay: 10` AND WAS GETTING 0.5s. This scraper
+    fetches one page per member, so the whole run is the ask: ~3.5 minutes at
+    the old default against ~32 minutes paced as the host requests. The
+    workflow sets no timeout-minutes, so the 360-minute default covers it.
+    The delay is now the pace, with --delay demoted to a floor that can only
+    make the scrape slower.
+
+  * THE DELAY IS IN THE SECOND OF TWO `User-agent: *` GROUPS, split by a
+    Googlebot group. A reader that keeps only the first — urllib.robotparser
+    does, which is why scripts/robots_policy.py exists — sees four Disallow
+    rules, no delay, and reports a clean bill while ignoring the one thing the
+    file asks of a client allowed everywhere it wants to go. This is a live
+    instance of the shape that reader was written for.
+
+ADDING THE GATE NAIVELY WOULD HAVE SHUT THE SCRAPER OFF ENTIRELY. RobotsGate
+reads robots.txt through the session it is handed and passes no verify of its
+own, so on plain requests that read dies on the missing intermediate above; a
+network failure on robots.txt is disallow-all, so the scrape would refuse
+itself — in CI as well as locally, and with a reason that names policy rather
+than TLS. pinned_session() is what keeps the two from being confused.
 """
 
 import argparse
@@ -52,6 +82,7 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import aia_bundle  # noqa: E402  (shared machinery — do not fork)
+import robots_policy  # noqa: E402  (shared machinery — do not fork)
 from scraper_common import UA_CHROME_WIN_124  # noqa: E402  (shared machinery — do not fork)
 
 BASE = "https://www.ilga.gov"
@@ -67,10 +98,81 @@ CHAMBERS = {
 }
 
 
+def pinned_session(verify):
+    """A Session that forces `verify` on EVERY request, including robots.txt.
+
+    Two reasons this is a class and not `session.verify = verify`.
+
+    First, the module docstring's warning is one variable short of complete:
+    requests merges environment settings over the Session's own, and it reads
+    REQUESTS_CA_BUNDLE *and then CURL_CA_BUNDLE*. This project's sandbox sets
+    both and CI sets neither, so `session.verify` is overridden locally and
+    honoured in CI — measured 2026-09-21, unsetting REQUESTS_CA_BUNDLE alone
+    still failed because CURL_CA_BUNDLE won next. A per-request `verify=`
+    beats both, which is why fetch() has always taken one.
+
+    Second, RobotsGate reads robots.txt through `session.get(...)` and passes
+    no verify of its own. Without this class that read hits ilga.gov's missing
+    intermediate, fails, and classifies as a network error — which is
+    disallow-all. Adding a robots gate to this scraper the obvious way would
+    therefore have shut it off completely, in CI as well as here.
+    """
+    session = requests.Session()
+
+    class _Pinned(type(session)):
+        def request(self, *args, **kwargs):
+            kwargs["verify"] = verify
+            return super().request(*args, **kwargs)
+
+    session.__class__ = _Pinned
+    return session
+
+
+class Pace(object):
+    """Wait out a stated crawl delay before each request to the host.
+
+    ilga.gov asks for `Crawl-delay: 10` and this scraper fetches one page per
+    member — 177 of them plus two roster pages — so the ask is the whole cost
+    of the run: ~3.5 minutes paced at the old 0.5s default, ~32 minutes at the
+    delay the host states. The workflow sets no timeout-minutes, so the
+    360-minute default covers it.
+
+    The delay is in the SECOND of two `User-agent: *` groups, separated by a
+    Googlebot group. A reader that keeps only the first `*` group — which is
+    what urllib.robotparser does, and the reason scripts/robots_policy.py
+    exists — finds the four Disallow rules and NO crawl delay at all, and
+    reports full compliance while ignoring the one thing the file asks of a
+    client that is allowed everywhere it wants to go.
+
+    Not applied to robots.txt itself: a delay stated inside a file cannot
+    govern the fetch that reads it, and RobotsGate fetches it once per host.
+    """
+
+    def __init__(self, seconds):
+        self.seconds = float(seconds or 0.0)
+        self._last = None
+
+    def wait(self):
+        if self.seconds <= 0:
+            return
+        if self._last is not None:
+            gap = time.monotonic() - self._last
+            if gap < self.seconds:
+                time.sleep(self.seconds - gap)
+        self._last = time.monotonic()
+
+
+# Set in main() from what the host states. Module-level because every request
+# this scraper makes goes through fetch(), so one pacer covers roster pages,
+# member pages and retries alike.
+PACE = Pace(0.0)
+
+
 def fetch(url, session, verify=None, retries=3, timeout=20):
     last_err = None
     for attempt in range(retries):
         try:
+            PACE.wait()
             # verify= per request, not session.verify — see the module docstring.
             resp = session.get(url, headers=HEADERS, timeout=timeout, verify=verify)
             if resp.status_code == 200:
@@ -238,7 +340,13 @@ def parse_member_detail(html, member_id, chamber, source_url):
     return record
 
 
-def scrape_chamber(chamber, session, limit=None, delay=0.5, verbose=True, verify=None):
+def scrape_chamber(chamber, session, limit=None, verbose=True, verify=None):
+    """Pacing lives in fetch() via PACE, not here.
+
+    The old trailing `time.sleep(delay)` paced the member pages and left the
+    roster page unpaced, so the first member request followed it immediately.
+    One pacer in fetch() covers every request the scraper makes.
+    """
     cfg = CHAMBERS[chamber]
     ids = get_roster_ids(chamber, session, verify)
     if limit:
@@ -261,7 +369,6 @@ def scrape_chamber(chamber, session, limit=None, delay=0.5, verbose=True, verify
                     "error": str(e),
                 }
             )
-        time.sleep(delay)
     return results
 
 
@@ -270,19 +377,44 @@ def main():
     ap.add_argument("--chamber", choices=["senate", "house", "both"], default="both")
     ap.add_argument("--out", default="ilga_network.json")
     ap.add_argument("--limit", type=int, default=None, help="Limit members per chamber (for testing)")
-    ap.add_argument("--delay", type=float, default=0.5, help="Delay between requests (seconds)")
+    ap.add_argument("--delay", type=float, default=0.5,
+                    help="Floor for the delay between requests (seconds). What "
+                         "the host states in robots.txt wins when it is larger; "
+                         "this only ever makes the scrape slower.")
     args = ap.parse_args()
 
-    session = requests.Session()
     all_results = []
     chambers = ["senate", "house"] if args.chamber == "both" else [args.chamber]
     # The site omits its intermediate; aia_bundle holds the pinned Sectigo
     # certificate (the one copy) and never disables verification.
     verify = aia_bundle.ca_bundle("ilga", "sectigo-ov-r40")
+    session = pinned_session(verify)
     try:
+        # Read the policy before the first fetch, with the client that will
+        # crawl: this scraper's own User-Agent and its own header set, which
+        # is what fetch() sends. A refusal stops the scrape; it is never
+        # worked around.
+        gate = robots_policy.RobotsGate(session, UA_CHROME_WIN_124, headers=HEADERS)
+        probe = BASE + CHAMBERS[chambers[0]]["list_path"]
+        allowed, why = gate.allows(probe)
+        print("ilga-scraper: robots.txt — %s (%s)"
+              % ("allowed" if allowed else "REFUSED", why), file=sys.stderr)
+        if not allowed:
+            sys.exit("ilga-scraper: robots.txt declines %s — stopping" % probe)
+
+        stated = gate.crawl_delay(probe)
+        global PACE
+        PACE = Pace(max(stated or 0.0, args.delay))
+        # No request count is predicted here. The chambers' sizes move with
+        # every reapportionment and a number written into a log line is one
+        # nobody re-measures; scrape_chamber prints "i/len(ids)" off the roster
+        # page it actually read.
+        print("ilga-scraper: crawl delay — host states %s, floor %s, pacing at %.1fs"
+              % (stated, args.delay, PACE.seconds), file=sys.stderr)
+
         for chamber in chambers:
             all_results.extend(scrape_chamber(chamber, session, limit=args.limit,
-                                              delay=args.delay, verify=verify))
+                                              verify=verify))
     finally:
         try:
             os.unlink(verify)
