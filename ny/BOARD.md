@@ -335,6 +335,36 @@ live defects above as a shorter change first.
 
 ## Open questions for Adam
 
+**3. The CEC roster: is it worth building, or is the gap record the answer?**
+Not blocking. Raised because the third item I was sent — "the false
+congress-offices gap record and the empty CEC roster" — turned out to be
+**already done**, and what is left of it is a decision rather than a task.
+
+Measured on `main`: the false congress-offices record is retired, with a Closed
+record in the guidebook (`docs/DATA_LAYER_GUIDEBOOK.md:2433`), and the CEC gap
+is recorded in the corrected wording — the DOE decentralised the listings
+across 32 council sites, so the members are published and not reachable by one
+scraper. Both shipped in #1036. `ny/data/app/cec-members.json` is still an
+empty object, and the card names your council and district and nobody else,
+which is exactly what the gap record says it does.
+
+So the question is whether to build it. Roughly 32 councils at nine to eleven
+members each is around 300 officeholders on a card that currently names none —
+real reader value. The cost is 32 independent sites, each needing its own
+robots read and its own parser, with a real chance of landing at partial
+coverage; and partial coverage is the one outcome this project refuses on an
+officeholder card, because naming twenty councils and not twelve reads as a
+claim about the twelve.
+
+**I would leave it recorded for now and spend the same effort on the county
+tier (question 2), which is the larger absence.** The CEC gap is honest, the
+card does not mislead, and the work is unbounded until somebody finds either a
+single DOE index or the thirty-two URLs in one place — which is exactly what
+the record's `wanted` field asks for. **I did not establish that no such index
+exists**: I probed two guessed DOE paths, both 404, which proves I guessed
+wrong and nothing else. Finding it is the first hour of the job, not a
+precondition someone else should supply.
+
 **1. Is "5 boroughs" still the right scope line for New York?** Not blocking —
 #1042 ships it unchanged, because the plan says it stays until a county joins
 the ring and I would rather raise a disagreement than deviate quietly.
