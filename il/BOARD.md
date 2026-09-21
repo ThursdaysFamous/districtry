@@ -33,6 +33,65 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-21. Three assigned tasks, three PRs, and the third answered a
+different question than it was asked.**
+
+**[#1066](https://github.com/ThursdaysFamous/districtry/pull/1066) — the L2
+guard.** Verified the finding myself against the live source before building:
+`librarylearning.org`'s Primary Administrator block for Atkinson reads
+`Name: Atkinson Public Library`, `Title: Director`, `Ninette` nowhere on the
+page. The rule was MEASURED against the 285 shipped administrators rather than
+reasoned — equality alone does NOT catch it (the record key carries a trailing
+`District` the name does not), prefix-or-suffix catches it and flags zero, and
+`contains` also flags zero but is wider than the defect. Two tokens minimum,
+because one cannot be told from a surname matching the town. It DROPS and
+prints rather than failing the build, because the residual risk runs the other
+way — a library named after a person (this dataset has Rick Warren Memorial)
+could appoint a director sharing the namesake, and a false positive must cost
+an empty slot, never a wrong name on a card. No exception entry.
+
+**[#1067](https://github.com/ThursdaysFamous/districtry/pull/1067) —
+Plattville.** The trailing-token sweep found exactly ONE occurrence file-wide,
+so no wider fix is owed. But the same bleed put two MORE false values on that
+card: `info@kendalldems.net` — the county Democrats' address — as the village
+office's e-mail, and the Illinois Department of Revenue's transfer-tax page as
+its website. Three untrue statements, not one. The cause is
+`kendall_municipal_officials_scraper.parse()` setting `in_section = True` and
+never setting it back, so the LAST municipality alphabetically absorbs the
+rest of the document. **The end-marker fix is deliberately NOT made**: choosing
+one needs the document, Kendall blocks every rung including the Archive, and
+nothing is cached — a guessed, untestable marker would swap a known defect for
+an unknown one. The cause is written at the line that causes it. `ACCEPTED_NAMES`
+is empty again.
+
+**[#1068](https://github.com/ThursdaysFamous/districtry/pull/1068) — Reddick
+Fire, and the caveat closes on neither branch it offered.** Read both filings
+through the module's own parser: **FY2026 is not sparser.** It carries
+`210 E MAIN ST` in all four slots and `(815) 365-4911` in all four. What
+changed is WHO SIGNED — FY2025's slot B was ROBERT LOWERY against SUE BERGAN
+in the other three; FY2026 is SUE BERGAN in all four. `witnessed()` ships a
+value only where two differently-surnamed filers gave it, so nothing has a
+second witness and nothing ships. **The roster is right and the builder is
+working.** Not relaxed: these slots routinely carry the FILER's own office
+(Reddick's filed e-mail is an outside accountant's), and the FY2026 filing
+disagrees with itself on the ZIP. No data changed; the measurement landed in
+`witnessed()`'s docstring so the next person to find an AFR address missing
+has the cause and the counter-argument in hand.
+
+**On the recurring Hancock churn, since it was asked for.** The weekly run will
+keep re-proposing the same three edits against the reverted file until the
+county answers, because the page is what it reads and the page is what is
+wrong. Options I can see: leave it and re-hold weekly (costs a review each
+week, keeps the signal); add Hancock to a preserve list so the roster carries
+forward and the job stops proposing (silences a real source change, and this
+county is not blocked, so it would be the wrong instrument); or gate the
+builder on the county's own certified candidate database, which has no
+District 4 Mason and no board contest for Billy Cramer. **I would leave it and
+re-hold**, because the churn is one review a week and the alternatives either
+hide a real change or build a second reader of a question the ask will settle.
+It is Adam's ask to send.
+
+
 **2026-09-19, 16:45. #1018: THE PARSER IS NOT AT FAULT, AND THE PREMISE IN THE
 TASK ROW IS WRONG.** The row reads "the page moved under the parser". It did
 not. Measured, with robots read first through `robots_policy.py` as the
