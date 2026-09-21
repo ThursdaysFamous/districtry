@@ -185,6 +185,31 @@ source says the board sits there. **The Franklin home addresses were already
 recorded on 2026-09-04 and the scraper asserts the payload address-free before
 writing** — I raised it as a possible leak and it was measured and refused long
 before I looked. Ask 29 is DRAFTED and held; Adam sends.
+**MERGED as `a660e6d` and verified on the merged tree**: Ask 29 is at
+`docs/ASK_DRAFTS.md:2250` carrying both Clerk addresses, and the gap's blocker
+decodes cleanly with the re-probe, the 901-against-100 disagreement and
+`NOT YET ASKED — DRAFTED as Ask 29` all present. `build_coverage_gaps --check`,
+`build_county_status --check` and `validate_index` pass, and the shipped
+`coverage-gaps.json` is unchanged, which is what a blocker-only edit should do.
+
+**THE OPEN-PR QUEUE IS EMPTY.** Five PRs this session, all merged and each
+verified on the merged tree rather than from its own body: #1066 `8d54ec4`,
+#1067 `a981ff6`, #1068 `62dd6bf`, #1072 `2cea459`, #1073 `d6e9288`,
+#1074 `a660e6d` — six with the bot roster PR #1063 `4887020`, which was not
+this session's to merge but was verified against the live page before it went.
+Check-ins stopped.
+
+**What Illinois is waiting on is Adam, not this session.** Fourteen drafted
+asks sit unsent — the thirteen already listed below plus Ask 29 — and the
+Hancock ask still blocks the one county whose weekly run will keep re-proposing
+the same three edits until the county answers. **Ask 28, to the Will County
+Clerk, is the one with a consequence today**: it is the only route to
+unfreezing the municipal roster.
+
+**One thing to watch with no owner**: the next `update-ilga-roster.yml` run is
+Monday 2026-09-28, the first at the 10s crawl delay — about 32 minutes against
+3.5. No `timeout-minutes` is set so it has 360 minutes of headroom, but that
+run is where a timeout or a collision would show.
 
 **On the recurring Hancock churn, since it was asked for.** The weekly run will
 keep re-proposing the same three edits against the reverted file until the
