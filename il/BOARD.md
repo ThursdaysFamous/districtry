@@ -118,6 +118,20 @@ and is closed: the sitemap carries no `lastmod` and lists no member page, so a
 conditional crawl cannot be built. **The cost is real and is Adam's to refuse:
 the weekly job goes from ~3.5 minutes to ~32.**
 
+**[#1073](https://github.com/ThursdaysFamous/districtry/pull/1073) — the skill
+edit the classifier had been refusing went through.** `.claude/skills/
+municipal-officials/SKILL.md` said `REQUIRED_COUNTIES` was "Cook and Will only"
+in one place and that the build step's `if:` "stays Cook-and-Will only" in
+another; main says `("Cook",)` and `steps.scrape_cook.outcome == 'success'`.
+An agent following it would have re-made the exact failure #1043 retired. The
+workflow literal is now quoted rather than paraphrased, so the sentence is
+checkable in one grep. **No gate is added and that is argued rather than
+assumed**: `validate_skills.py` resolves POINTERS, so it catches a renamed
+constant and cannot catch a changed one, and across the eleven skills the shape
+that failed here is essentially this one sentence — a prose-parsing gate would
+be a seventh hand-kept reader of a fact the code already owns. If Adam wants it
+anyway I will build it.
+
 **On the recurring Hancock churn, since it was asked for.** The weekly run will
 keep re-proposing the same three edits against the reverted file until the
 county answers, because the page is what it reads and the page is what is
