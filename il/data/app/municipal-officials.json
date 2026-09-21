@@ -22056,17 +22056,9 @@
     "name": "Village of Plattville",
     "office": {
       "address": "PO Box 1173, Yorkville IL 60560",
-      "email": "info@kendalldems.net",
       "phone": "815-545-3862"
     },
-    "officers": [
-      {
-        "name": "Beth Fals 56",
-        "role": "Clerk"
-      }
-    ],
-    "sourceUrl": "https://www.kendallcountyil.gov/offices/county-clerk-recorder/election-voter-information",
-    "url": "https://www.revenue.state.il.us/localgovernment/propertytax/rett.htm"
+    "sourceUrl": "https://www.kendallcountyil.gov/offices/county-clerk-recorder/election-voter-information"
   },
   "1760599": {
     "board": [

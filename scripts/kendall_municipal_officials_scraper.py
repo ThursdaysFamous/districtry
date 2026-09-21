@@ -245,6 +245,23 @@ def parse(lines, scraped_at):
         if not in_section:
             continue
 
+        # THE SECTION HAS A START AND NO END, which is the whole of the
+        # Plattville defect. `in_section` is never set back to False, so once
+        # the last CITY/VILLAGE OFFICIALS section opens, every remaining line
+        # in the document is still offered to whatever entry is current — and
+        # the LAST entry alphabetically absorbs all of it, because only the
+        # next ENTRY_RE terminates an entry. That is how Plattville came to
+        # ship the county Democrats' e-mail, a Department of Revenue page as
+        # its website, and a clerk named "Beth Fals 56".
+        #
+        # THE REAL FIX IS AN END MARKER AND IT IS NOT MADE HERE, because
+        # choosing one means reading the document to see what follows the
+        # section, and this county blocks every fetch rung including the
+        # Archive's crawler (#234). No copy is cached. Guessing a marker that
+        # cannot be tested would replace a known defect with an unknown one.
+        # What IS made here is the narrow refusal below, which needs no
+        # knowledge of the document.
+
         if ENTRY_RE.match(line):
             flush(current)
             name = NAME_ALIASES.get(line, line)
@@ -277,6 +294,22 @@ def parse(lines, scraped_at):
         officer = OFFICER_RE.search(line)
         if officer:
             name = clean(officer.group("name"))
+            # A NAME ENDING IN A BARE NUMBER IS THE SECTION BLEED, NOT A
+            # PERSON. The yearbook prints no numeral in a name, so a trailing
+            # one is a page number or a row index welded on by the over-read
+            # above. Dropped and PRINTED rather than trimmed to "Beth Fals":
+            # the Douglas County rule says a person's name is never repaired to
+            # make it fit, because a parse that reached past its own section
+            # makes the surname exactly as suspect as the digits.
+            #
+            # Measured across all 629 shipped municipalities on 2026-09-21,
+            # this shape occurs exactly once — Plattville's clerk — so the
+            # refusal costs no other county a name.
+            if name and re.search(r"\s\d{1,4}$", name):
+                print("kendall-municipal-scraper: dropped %r on %s — a trailing "
+                      "number means the parse read past its section"
+                      % (name, current["name"]), file=sys.stderr)
+                continue
             if name:
                 elected = officer.groupdict().get("elected")
                 year = None
