@@ -35,6 +35,23 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-21, #1070 merged** as `34bbe47`. Verified on `main` after the merge
+rather than before it: the manifest runs **0 FAIL / 0 WARN / 35 OK**, all four
+feature-count rows report unchanged against the live services (62 / 995 / 532 /
+936), the `nys-zip-code` endpoint resolves, and the six `ny/WATCH.md` rows are
+in place. The statewide tier is now watched on both halves.
+
+#1071, the layer-count gate, is still open and green. It sat through four quiet
+check-ins beside #1070 and merges clean against `main` carrying it.
+
+**A note on its branch, now that the question has resolved itself.** #1071 is
+on `claude/ny-layer-count-claims` rather than the designated branch, because
+#1070 occupied that one and the instruction was a PR per piece. The designated
+branch was deleted on the squash merge, so it is free again — but GitHub does
+not allow a PR's head branch to be changed, so moving #1071 onto it would mean
+closing the PR and opening a new one, losing its review history and its green
+CI for no gain. It stays where it is.
+
 **2026-09-21, the layer count.** PR #1071. **Two of the four values in the
 task row are not in the tree.** 31 was corrected on 2026-09-18 and
 `ny/README.md` records the fix in its own prose; 32 never survived a commit.
