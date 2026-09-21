@@ -35,6 +35,44 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-21, the layer count.** PR #1071. **Two of the four values in the
+task row are not in the tree.** 31 was corrected on 2026-09-18 and
+`ny/README.md` records the fix in its own prose; 32 never survived a commit.
+Of the two live 27s, one is already excused as a dated record, and the other
+two are the interesting part:
+
+* `docs/NY_EXPANSION_PLAN.md` was **true when written** — the worksheet held 27
+  when it was read on 2026-09-18 and PR 2 took it to 33 later the same day.
+  Renumbering it would make the plan's starting state a state that never
+  preceded the plan, so its Context section is marked past tense instead and
+  the figure kept as the reading it is.
+* `docs/press-list.json` is **flagged and not edited**, per the instruction.
+
+**The real finding is that `validate_doc_counts.py` could not see either of
+them**, and it is the gate written for this exact class. Two shapes were blind:
+a name sitting *between* the number and the noun ("all 27 NYC layers"), and a
+bare count whose only identifier is a worksheet path. Both are now read, each
+measured across the whole surface first, each finding exactly two claims with
+no false positives.
+
+**Widening `LOOKBACK` was the obvious fix and was measured and rejected** — the
+missing name sits 78 characters back across a line wrap, and raising the window
+to 90 finds it while inventing "Iowa 4" and "Chicago 132"; by 200 it is nine
+mismatches for two real claims. Recorded in the docstring where the next person
+will reach for it.
+
+`OWNER_HELD_COUNTS` is a new list rather than an entry in `HISTORICAL_COUNTS`,
+which means "was true when written" — filing a wrong claim under that name
+would make the list lie, which is what the gate exists to catch.
+
+**FOR ADAM — the press pitch, flagged not fixed.** `docs/press-list.json` line
+6283, the `angle` for **City & State New York, wave 4**: "one free open-source
+lookup covering all **27** NYC layers". The app ships 33. The entry carries no
+`sent` key, so the pitch is **unsent** and 27 is the number a journalist would
+be handed. It does not reach `docs/PRESS_LIST.md`, which drops the `angle`
+field, so the wrong figure lives only in the file that would be used to send.
+Nothing here edits it; the gate now prints it every run until it is fixed.
+
 **2026-09-21, the statewide tier is watched on both halves.** PR #1070.
 
 **The task row in the section above is wrong in one direction and understates
