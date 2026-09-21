@@ -134,10 +134,11 @@ Add the county to `COUNTY_FIPS`, `COUNTY_FLOORS`, `PRESERVABLE` and
 precedence reason written where the existing pairs write theirs. Audit all
 four before shipping — Tazewell sat in two of the four (`PRESERVABLE` and
 `COUNTY_PRECEDENCE`) with no floors and a statewide-only GEOID lookup. NEVER
-add a county to `REQUIRED_COUNTIES` (Cook and Will only): a source is
-non-preservable only when building without it would silently ship mayors
-where councils belong. Precedence is `pick_entry` in the builder — override >
-depth > county order (§3.4 "Merge & precedence"): run the build and read
+add a county to `REQUIRED_COUNTIES` (**Cook only** since #1043; Will was in
+it and moved to `PRESERVABLE` when its directory went behind a managed
+challenge): a source is non-preservable only when building without it would
+silently ship mayors where councils belong. Precedence is `pick_entry` in the
+builder — override > depth > county order (§3.4 "Merge & precedence"): run the build and read
 every `NOTE: … is listed by both` line, because a straddling municipality the
 new county wins or loses at equal depth is a decision; a one-town exception
 goes in `PLACE_SOURCE_OVERRIDE` with its mandatory reason, never by
@@ -179,7 +180,7 @@ In `.github/workflows/update-municipal-officials.yml`:
 
 1. **The scrape step**: `id: scrape_<county>`, `continue-on-error: true`.
 2. **The TRACK step** ("Track a blocked or broken source"): its `outcome` in that step's `if:` list, a `<COUNTY>_OUTCOME` env entry, AND a `raise_issue "<County>"` line — all three, or a failure files nothing (the workflow's own comments record Tazewell and Mason reaching that state).
-3. **The BUILD step**: one `add "${{ steps.scrape_<county>.outcome }}" <preserve-id> county /tmp/<county>_municipal_officials.json` line, where `<preserve-id>` is the `PRESERVABLE` key — that line is what turns a failed scrape into `--preserved <id>`. The build step's OWN `if:` stays Cook-and-Will only; never gate a multi-source build on every source succeeding — rule 4's terminal case guarantees some will block permanently.
+3. **The BUILD step**: one `add "${{ steps.scrape_<county>.outcome }}" <preserve-id> county /tmp/<county>_municipal_officials.json` line, where `<preserve-id>` is the `PRESERVABLE` key — that line is what turns a failed scrape into `--preserved <id>`. The build step's OWN `if:` stays **Cook-only** (`steps.scrape_cook.outcome == 'success'`); never gate a multi-source build on every source succeeding — rule 4's terminal case guarantees some will block permanently.
 
 Read `steps.<id>.outcome`, never the jobs API's `conclusion`, which reports a
 swallowed failure as success. Akamai counties need Playwright as the day-one
