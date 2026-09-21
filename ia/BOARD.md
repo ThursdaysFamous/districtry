@@ -42,6 +42,59 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-21 — resumed on three tasks; two had already been done or had
+expired, and the third is measured clean.**
+
+**1. The chair gap record was already correct.** #1034 fixed it on 2026-09-19:
+the Data gaps panel reads 38 and 61 today, and `ia/WATCH.md` line 39 says "38
+of 99 counties as of 2026-09-18". Checked against the SHIPPED panel file rather
+than the guidebook block, since the panel is what a reader opens. The last
+stale copy was somewhere nobody named — `ia-county-board-chairs.json`'s note in
+`ia/metro-worksheet.json`, wrong twice over: 43 was the superseded total, and
+the "38 from its board-of-supervisors page" put that new total in a DIFFERENT
+quantity's slot (the split is 33 pages + 5 minutes). **#1065.** My first attempt
+hand-edited the generated `validate_index.py` and was reverted; the worksheet
+owns it. The replacement states no live count at all and names where each
+figure lives, because this is the third thing in three days to go stale by
+having a weekly-moving number written into a sentence.
+
+**2. Mitchell needed no fix, and the probe found the defect this board's own
+WATCH row predicted.** Measured 2026-09-21 with the scraper's client, robots
+first: `mitchellcounty.iowa.gov` serves its real site again — 70-byte
+robots.txt, `User-agent: *` empty group, home page 110,546 bytes, supervisors
+page 155,651 bytes pairing all five supervisors with districts 1-5, an invented
+path 404s. The suspension ended on its own and the 2026-09-19 run keyed
+Mitchell 5 of 5 (shipped in #1048). **No parser changed, `--allow-drop` never
+passed — the guard was right to refuse for six weeks.**
+
+*What the probe found instead:* the host runs an INTERMITTENT bot challenge and
+**I tripped it myself** with four rapid requests including an invented URL;
+eight spaced reads afterwards all returned the real file. So one bad read of
+this host is not evidence of a suspension, and the trigger is our request shape.
+That interstitial proved the defect: `robots_policy.classify()` returned
+`served` for it and `allows()` answered TRUE — a managed challenge read as
+permission to crawl, in the fleet's single robots reader. Fixed: HTML at
+/robots.txt is no longer parsed as one; challenge markers refuse, any other
+HTML still ALLOWS (a host with no robots.txt is open, and refusing there would
+shut hosts serving us data). 10 new assertions, 73 → 83. **Committed and held
+off the branch until #1065 merges, so the two pieces stay separately
+reviewable.**
+
+**3. The officer phones are clean, and that is the result.** 391 numbers across
+99 counties, measured offline: **zero shared between officers in a county, zero
+repeated across counties, all 391 distinct.** No county's `boardPhone` equals
+any officer's. 80 counties' four officers share one area+exchange, which is
+courthouse direct-dial rather than a switchboard, and 19 span several. The
+defect #1000 fixed on the city rosters — one number rendered as several
+people's direct line — **does not exist in this file.** The card already labels
+each number under its office row rather than as a personal line.
+
+*One of my three tests was vacuous and is not counted as evidence:*
+`ia-county-board-directory.json` carries no phone field (keys are county, plan,
+seats, url), so "does an officer's number equal the county's main number" was
+never actually asked. Answering it needs a comparand this repo does not hold.
+Nothing is proposed to build here.
+
 **2026-09-19, 22:39 UTC — the preserve ruling is live, and the weekly run proves
 it end to end.** #1051 merged at 22:25. Rather than leave #1048 carrying a
 roster that deletes two counties' supervisors until next Saturday, I dispatched
