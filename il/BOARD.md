@@ -69,6 +69,18 @@ one needs the document, Kendall blocks every rung including the Archive, and
 nothing is cached — a guessed, untestable marker would swap a known defect for
 an unknown one. The cause is written at the line that causes it. `ACCEPTED_NAMES`
 is empty again.
+**MERGED as `a981ff6` and verified on the merged tree**: Plattville's record now
+carries head, office address and phone and NOTHING else — the `officers` array,
+`office.email` and `url` are all gone, so a reader is told three fewer untrue
+things. `ACCEPTED_NAMES` is empty with its reason written in, the Kendall
+scraper carries the trailing-number refusal, and `validate_officeholder_names`,
+`check_roster_retention` and `validate_index` all pass on main.
+
+**The ILGA roster bot PR [#1063](https://github.com/ThursdaysFamous/districtry/pull/1063)
+merged too, as `4887020`** — not this session's to merge, but verified on the
+merged tree: `il-house-members.json` District 13 now reads `By appointment only`
+/ `(773) 657-4655`, which is what ilga.gov serves today. The House roster is
+current again for the first time since 2026-09-08.
 
 **[#1068](https://github.com/ThursdaysFamous/districtry/pull/1068) — Reddick
 Fire, and the caveat closes on neither branch it offered.** Read both filings
