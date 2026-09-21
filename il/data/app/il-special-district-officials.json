@@ -2039,7 +2039,7 @@
         },
         "MIDLOTHIAN PARK DISTRICT": {
           "comptrollerCode": "016/450/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Edward Jung",
@@ -2813,7 +2813,7 @@
             }
           ],
           "comptrollerCode": "016/850/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Robert O'Shaughnessy",
@@ -3151,7 +3151,7 @@
             }
           ],
           "comptrollerCode": "019/100/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {}
         },
         "Waterman Fire": {
@@ -4786,7 +4786,7 @@
             }
           ],
           "comptrollerCode": "025/060/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {}
         }
       },
@@ -4927,7 +4927,7 @@
             }
           ],
           "comptrollerCode": "046/030/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Kankakee",
           "office": {
             "address": "c/o Johnson & Taylor PO Box 497",
@@ -5673,19 +5673,19 @@
         "Cary Fire Protection District": {
           "board": [
             {
-              "name": "Lance Neuses",
+              "name": "LANCE NEUSES",
               "role": "Treasurer"
             },
             {
-              "name": "Mark Guerra",
+              "name": "MARK GUERRA",
               "role": "President"
             }
           ],
           "comptrollerCode": "063/030/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "McHenry",
           "office": {
-            "address": "400 Cary Algonquin",
+            "address": "400 Cary Algonquin Road",
             "city": "Cary IL 60013",
             "email": "mguerra@caryfire.com",
             "phone": "(847) 639-2121"
@@ -5988,7 +5988,7 @@
         },
         "Wauconda Fire Protection District": {
           "comptrollerCode": "049/150/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "Curt Hanselman",
@@ -6213,20 +6213,25 @@
         "Lake Barrington Countryside Park District": {
           "board": [
             {
-              "name": "Theresa Tevsh",
-              "role": "Commissioner"
+              "name": "Richard Leng",
+              "role": "President"
             },
             {
               "name": "Kira Panno",
               "role": "Treasurer"
+            },
+            {
+              "name": "Justin Dusek",
+              "role": "V-President"
             }
           ],
           "comptrollerCode": "049/125/12",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
-            "address": "23860 Old Barrington Road",
+            "address": "23860 N Old Barrington Road",
             "city": "Lake Barrington IL 60010",
-            "email": "lakebarringtoncparkdistrict@gmail.com"
+            "email": "lakebarringtoncparkdistrict@gmail.com",
+            "phone": "(847) 886-9071"
           }
         },
         "Lake Bluff Park District": {
@@ -7227,18 +7232,18 @@
         "CARY FIRE DIST": {
           "board": [
             {
-              "name": "Lance Neuses",
+              "name": "LANCE NEUSES",
               "role": "Treasurer"
             },
             {
-              "name": "Mark Guerra",
+              "name": "MARK GUERRA",
               "role": "President"
             }
           ],
           "comptrollerCode": "063/030/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "office": {
-            "address": "400 Cary Algonquin",
+            "address": "400 Cary Algonquin Road",
             "city": "Cary IL 60013",
             "email": "mguerra@caryfire.com",
             "phone": "(847) 639-2121"
@@ -7505,7 +7510,7 @@
         },
         "WAUCONDA FIRE DIST": {
           "comptrollerCode": "049/150/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "filesIn": "Lake",
           "heads": [
             {
@@ -7659,7 +7664,7 @@
             }
           ],
           "comptrollerCode": "067/040/06",
-          "filedFor": "2025",
+          "filedFor": "2026",
           "heads": [
             {
               "name": "NATHAN WILSON",
@@ -9351,7 +9356,7 @@
       }
     }
   },
-  "generated": "2026-09-17T04:15:59Z",
+  "generated": "2026-09-21T18:29:55Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
