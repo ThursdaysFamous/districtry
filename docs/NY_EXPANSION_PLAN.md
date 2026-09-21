@@ -25,10 +25,16 @@ The doctrine this plan applies is `docs/EXPANSION_GUIDE.md` §0.2.1 (a city inst
 state, decided 2026-09-18). It is not restated here; where a step below is the doctrine's, the
 section is cited.
 
-## Context
+## Context — the state of `ny/` BEFORE this plan ran, read 2026-09-18
 
-`ny/` is a New York City app: tag `ny`, `THIS_METRO="nyc"`, served at `districtry.com/ny/`, with
-27 layers in `ny/metro-worksheet.json` (read 2026-09-18). Measured on that date:
+**Everything in this section is past tense as of 2026-09-19**, when PR 3 shipped. It is kept
+as the starting state the plan was written against, not as a description of the app: a reader
+who takes it for current will be wrong about the bounds, the name and the layer count. What
+`ny/` is today is in the status block above and in `ny/metro-worksheet.json`.
+
+`ny/` WAS a New York City app: tag `ny`, `THIS_METRO="nyc"`, served at `districtry.com/ny/`,
+with 27 layers in `ny/metro-worksheet.json` (read 2026-09-18 — PR 2 took it to 33 later the
+same day). Measured on that date:
 
 - **Three layers are already statewide on disk.** `congress-districts.json` (26 features),
   `state-senate-districts.json` (63) and `state-assembly-districts.json` (150) are built by
