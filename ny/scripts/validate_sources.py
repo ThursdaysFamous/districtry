@@ -351,6 +351,16 @@ ENDPOINTS = [
      "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38",
      "vintage": "national NGDA structures layer, METRO_BBOX envelope-queried at runtime",
      "expected_successor": "updated in place (USGS; successor to the retired HIFLD Open layer)"},
+    # THE ONE STATEWIDE LAYER THE GO-LIVE LEFT UNWATCHED. Five of the six
+    # statewide layers got a PROVENANCE row on 2026-09-19; this one got
+    # nothing, and it is the only one of the six whose boundary is not a New
+    # York publisher's. Every other instance that draws this service watches
+    # it (il, ca, wi, ia and mi all carry a row for it), so New York was the
+    # exception rather than the rule.
+    {"layer": "Statewide ZIP Code (Census ZCTA, TIGERweb)",
+     "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11",
+     "vintage": "Census ZCTAs, envelope-queried at runtime because the layer carries no state field",
+     "expected_successor": "a new ZCTA vintage after the 2030 census; updated in place until then"},
     {"layer": "Early-voting poll sites (NYS GIS elections service layer 1)",
      # THE LAYER INDEX IS APPENDED AT RUNTIME. index.html carries the service
      # as one constant (NYS_ELECTIONS_SERVICE) and builds "/0".."/3" from it, so
@@ -359,6 +369,64 @@ ENDPOINTS = [
      "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer",
      "vintage": "NYS/NYC BOE early-voting sites, refreshed per election cycle in place",
      "expected_successor": "updated in place; a service rename surfaces as unreachable"},
+]
+
+NYS_CIVIL_BOUNDARIES = ("https://gisservices.its.ny.gov/arcgis/rest/services/"
+                        "NYS_Civil_Boundaries/FeatureServer/")
+
+# THE STATEWIDE TIER'S OWN TRIPWIRE, and it watches the thing the rest of this
+# file cannot see. Every other check here fires when a source MOVES — a Socrata
+# id rotates, a TIGERweb layer is renamed, an endpoint stops resolving. These
+# four services never move. New York State updates them IN PLACE: a village
+# dissolves, a city annexes town land, two school districts merge, and the same
+# URL keeps answering 200 with different content. So `check_endpoints` stays
+# green for ever while the geometry shipped in `ny/data/app/` quietly stops
+# matching the state's, and a reader in the dissolved village is told it still
+# governs them.
+#
+# The feature COUNT is the signal, and it is EXACT rather than a floor. A floor
+# is the wrong instrument here for a measured reason: the changes these layers
+# actually undergo are dissolutions and mergers, which move the count DOWN, and
+# a floor set below today's value cannot see one. An exact expectation costs a
+# WARN on the monthly tracking issue the day anything moves, which is the whole
+# point — nothing here fails a build and nothing is auto-changed.
+#
+# THE COUNT ALONE HAS A HOLE, and the publisher closes it. An ANNEXATION
+# moves a town/city line without creating or destroying a municipality, so
+# the count is identical afterwards and this check would report "unchanged"
+# about geometry that changed. The three Civil Boundaries layers state a
+# "Publication Date: March 2026. Updated as needed." in their own service
+# description, which is the publisher's declared currency marker and moves
+# on a republish whether or not the count did — so both are watched. The
+# NYS_Schools layer publishes NO such date (measured: its description is the
+# five words "School Districts of NYS."), so that one has the count only and
+# this asymmetry is recorded rather than papered over.
+#
+# MEASURED 2026-09-21, all four counts and all three dates matching what the
+# builders recorded, so these are a live baseline rather than copied figures. robots.txt was read first
+# through scripts/robots_policy.py: gisservices.its.ny.gov serves none (HTTP
+# 404, allow all) and tigerweb.geo.census.gov serves one in which no group
+# binds this client.
+STATEWIDE_COUNTS = [
+    {"layer": "NY counties (feature count)",
+     "pub_date": "March 2026",
+     "url": NYS_CIVIL_BOUNDARIES + "2", "expected": 62,
+     "means": "a county boundary changed, which takes an act of the Legislature"},
+    {"layer": "NY cities and towns (feature count)",
+     "pub_date": "March 2026",
+     "url": NYS_CIVIL_BOUNDARIES + "6", "expected": 995,
+     "means": "a city or town was created, merged or dissolved; annexation alone moves "
+              "the lines without moving this number, so an unchanged count is not proof "
+              "the geometry is unchanged"},
+    {"layer": "NY villages (feature count)",
+     "pub_date": "March 2026",
+     "url": NYS_CIVIL_BOUNDARIES + "7", "expected": 532,
+     "means": "a village dissolved or incorporated — the most likely of the four to move"},
+    {"layer": "NY school district rows (feature count)",
+     "url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Schools/FeatureServer/18",
+     "expected": 936,
+     "means": "a district reorganised; this is the RAW row count, which the builder "
+              "dissolves to 716 districts on SED_CODE_1"},
 ]
 
 FAIL, WARN, OK = "FAIL", "WARN", "OK"
@@ -618,6 +686,75 @@ def check_endpoints(findings, offline):
                          "renamed or retired" % (res, e["url"]))
 
 
+def check_statewide_counts(findings, offline):
+    """The four in-place NYS services still hold the feature count we shipped.
+
+    See STATEWIDE_COUNTS. An unreachable service is reported as a WARN and
+    never as agreement — a check that reads a transport failure as a pass is
+    worse than no check, because it reports OK for ever once the host moves.
+    """
+    if offline:
+        return
+    for c in STATEWIDE_COUNTS:
+        url = c["url"] + "/query?where=1%3D1&returnCountOnly=true&f=json"
+        ok, res = http_get(url)
+        if not ok:
+            findings.add(WARN, c["layer"],
+                         "could not read the feature count (%s) — not checked this run, "
+                         "which is not the same as unchanged: %s" % (res, c["url"]))
+        # An ArcGIS error comes back as HTTP 200 with an {"error": ...} body,
+        # so a missing "count" is a failed read rather than a count of zero.
+        elif not isinstance(res, dict) or "count" not in res:
+            findings.add(WARN, c["layer"],
+                         "the service answered without a count (%s) — not checked this run"
+                         % str(res)[:120])
+        elif res["count"] == c["expected"]:
+            findings.add(OK, c["layer"], "%d features, unchanged" % res["count"])
+        else:
+            findings.add(WARN, c["layer"],
+                         "%d features, was %d when the layer was built. That usually means "
+                         "%s. Rebuild the layer and re-verify the anchors; see ny/WATCH.md."
+                         % (res["count"], c["expected"], c["means"]))
+        # UNCONDITIONAL, and deliberately not nested under the count matching.
+        # The two signals are independent — a republish can move the date, the
+        # count, or both — so a run that reported only one of them would leave
+        # the other unmeasured on exactly the runs that matter most.
+        check_publication_date(findings, c)
+
+
+def check_publication_date(findings, c):
+    """The publisher's own 'Publication Date:' still reads as it did when built.
+
+    This is the ANNEXATION check: a town line can move without the feature
+    count moving, and a republish is the only thing that says so. Only the
+    three Civil Boundaries layers carry the string; an entry without a
+    `pub_date` is skipped rather than reported either way.
+    """
+    want = c.get("pub_date")
+    if not want:
+        return
+    ok, res = http_get(c["url"] + "?f=json")
+    if not ok or not isinstance(res, dict):
+        findings.add(WARN, c["layer"],
+                     "could not read the service description to check the publication "
+                     "date (%s) — not checked this run" % res)
+        return
+    desc = res.get("description") or ""
+    m = re.search(r"Publication Date:\s*([A-Za-z]+\s+\d{4})", desc)
+    if not m:
+        findings.add(WARN, c["layer"],
+                     "the service no longer states a 'Publication Date:' — it said %r "
+                     "when the layer was built, so the annexation tripwire is now blind "
+                     "on this layer" % want)
+    elif m.group(1) != want:
+        findings.add(WARN, c["layer"],
+                     "republished: 'Publication Date: %s', was %r. The feature count can "
+                     "be unchanged across a republish — an annexation moves a line "
+                     "without creating or destroying a municipality — so rebuild and "
+                     "re-verify rather than reading the count as agreement."
+                     % (m.group(1), want))
+
+
 def watch_rows():
     """(layer, vintage, expected_successor) for every manifest source."""
     rows = []
@@ -629,6 +766,9 @@ def watch_rows():
         rows.append((p["layer"], p["vintage"], p["expected_successor"]))
     for e in ENDPOINTS:
         rows.append((e["layer"], e["vintage"], e["expected_successor"]))
+    for c in STATEWIDE_COUNTS:
+        rows.append((c["layer"], "%d features when built" % c["expected"],
+                     "any change at all — %s" % c["means"]))
     return rows
 
 
@@ -688,6 +828,7 @@ def main():
     check_tigerweb(findings, args.offline)
     check_provenance(findings, args.offline)
     check_endpoints(findings, args.offline)
+    check_statewide_counts(findings, args.offline)
 
     report = render(findings)
     sys.stdout.write(report)
