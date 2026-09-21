@@ -35,6 +35,26 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-21, #1071 merged** as `9201574`. Both assigned tasks are now shipped
+and verified on `main`, and this session has nothing queued.
+
+Verified after the merge rather than before it: `validate-doc-counts` reads 38
+claims across 83 documents, all agreeing; the selftest runs 16 cases; the plan
+doc's Context section carries its past-tense heading; and both exception
+entries print on every run — the `HISTORICAL_COUNTS` line for the plan and the
+`OWNER_HELD_COUNTS` line for the press list.
+
+**The press pitch is now flagged by a gate rather than only by a board entry.**
+`docs/press-list.json` line 6283, the unsent wave-4 City & State New York pitch,
+still states 27 layers for an app that ships 33. Nothing here edits it. Every
+run of `validate_doc_counts.py` now prints that claim by name with its reason
+and date, and the entry FAILS the moment the number is corrected — so fixing it
+retires the entry automatically and leaving it keeps it visible.
+
+**Nothing is in flight.** The three open questions below are unchanged and none
+is blocking: the scope line, the county tier's ownership, and whether the CEC
+roster is worth building. No work starts on any of them without an answer.
+
 **2026-09-21, #1070 merged** as `34bbe47`. Verified on `main` after the merge
 rather than before it: the manifest runs **0 FAIL / 0 WARN / 35 OK**, all four
 feature-count rows report unchanged against the live services (62 / 995 / 532 /
