@@ -24,6 +24,77 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-21. Three items assigned; one was done two days ago, one is not due
+yet, and the third had already been measured. What is new is a re-measurement
+worth one city.**
+
+**THE COURT OF APPEALS GUARDS ARE MERGED**, #1040 on 2026-09-19 (`a2a7e41`).
+Both were built exactly as the revised assignment describes — exit 75 for a
+fetch that died before the host answered, forgiven by the workflow, under a
+60-day staleness ceiling read from the workflow's own run history. Nothing to
+do. (The automatic re-run was declined in that PR with its reason: clearing the
+failure needs a DIFFERENT runner, which no in-process retry can ask for, and a
+self-dispatching workflow is the loop `update-bing-performance.yml` already ran
+into. The weekly schedule is the retry; the ceiling makes its failure visible.)
+
+**MPS AND RUSD ARE NOT DUE YET, AND THE FIX IS PRESENT.** Read at 18:55 UTC:
+the most recent scheduled run of each is 2026-09-14, both successes, which is
+before the break. MPS crons 15:30 UTC and RUSD 17:30, and this repo's scheduled
+jobs start 3 to 5.3 hours late, so the windows were ~18:30-20:48 and
+~20:30-22:48 and neither had opened far. **The question is answerable now
+without waiting**: the break was a duplicate `run:` key, which makes GitHub
+refuse to start a workflow at all, and both files parse under a YAML loader
+that errors on duplicate keys — the same refusal the scheduler raises. A
+check-in is armed for 23:09 UTC to read the actual runs. Prior scheduled
+history is MPS 3/3 and RUSD 2/2, all green.
+
+**THE ALDERPERSON SWEEP ALREADY EXISTS AND I DID NOT RE-RUN IT.**
+`wi_alderperson_scraper.py` carries it in its own comment block, run 2026-09-05
+over ALL 149 then-unrostered districted municipalities, with the breakdown: 32
+pairing every district with a name, 14 partially, 67 readable with no pairing,
+17 publishing `Disallow: /`, 15 answering 403, 3 network errors, and 1 with no
+website in the Elections Commission's clerk file. Those sum to 149. Checked
+against today's tree it reproduces exactly — the five built that evening plus
+New Lisbon are rostered, the five shut on schema and the eleven queued are not.
+Re-running it would rediscover what is written down, which is the waste the
+assignment itself cites the Johnson and Perry case against.
+
+**THE BLOCKER IS THE SCHEMA, NOT DISCOVERY.** The roster is
+`members[district] -> ONE member`, and FIFTEEN of the 22 measured-good sources
+seat more than one alderperson per district on staggered terms. Wautoma settles
+the design: 1, 3 and 2 members across its three districts, so a fixed two-slot
+schema fails as well — it needs a genuine list. Measured today: zero shipped
+records carry a list, so the schema is unchanged. That is a card and data-shape
+change, not a measurement pass, and it is in Open questions below.
+
+**THE ONE THING THAT CAN GO STALE IS A `Disallow`, SO I RE-READ THOSE 17.**
+robots.txt only, one request per host, which is the one file a crawler is always
+meant to fetch, read with the client that would crawl. Fifteen still publish
+`Disallow: /`. **MAUSTON ALLOWS** — its `*` group disallows admin, search and
+map paths and not `/` — and it has SEVEN districts drawn and no roster, so it is
+a city that can ship. Why it was recorded among the 17 is NOT established: both
+the fleet's current reader and the `urllib.robotparser` the sweep predates allow
+`/` on today's file, so a misreading of the kind `robots_policy.py` was written
+to fix is disproven for this host. **PRAIRIE DU CHIEN IS UNMEASURED FROM HERE**,
+not shut: its robots.txt returns a 502 through this sandbox's tunnel on both the
+stdlib client and curl, and a working host on the same pass reports
+`remote=127.0.0.1`, so the proxy is answering rather than the city.
+
+**Two defects in my own probe, found and fixed before any of the above was
+recorded.** The scraper's comment writes "St Croix Falls" and "St Francis"
+where the clerk file writes "St. Croix Falls" and "St. Francis", so my first
+pass dropped both as having no website — they have one each and both are still
+shut. And Merrill's first read was a transient 502; re-read, its robots.txt
+served and still disallows.
+
+**The pool itself is bigger than the records say.** Measured today from the
+shipped geometry: 159 municipalities with aldermanic districts drawn (151
+cities, 8 villages) over 866 seats; 24 rostered covering 240 seats; **135
+municipalities and 626 seats drawn with nobody named**. `CLAUDE.md` says 853
+seats across 156 municipalities and the assignment says 156. Not corrected in
+those places yet — it is one sentence in a generated-adjacent paragraph and
+belongs in the change that next touches this layer.
+
 **2026-09-19. #1040 is MERGED (`a2a7e41`).** The Court of Appeals job now
 forgives one failure and has a ceiling on that forgiveness.
 
@@ -230,6 +301,28 @@ Racine school boards "name people", which is true, but both rosters are ageing
 and neither job has run since its repair. Worth a row until Monday proves them.
 
 ## Open questions for Adam
+
+**The alderperson roster needs a LIST per district, and that is a card change
+as much as a data one (2026-09-21).** Measured: 15 of the 22 municipalities
+whose pages pair every district with a name seat more than one alderperson per
+district, on staggered terms — Dodgeville's District 1 is two people with
+overlapping terms, and Wautoma runs 1, 3 and 2 across its three. The shipped
+schema is `members[district] -> ONE member` and carries no list anywhere today,
+so naming either member of a two-member seat would conceal the other, which is
+why those cities were built and then withdrawn rather than shipped.
+
+What I would do: change the roster value to a LIST of members per district,
+render every member on the card, and keep the single-member cities working by
+reading a one-element list. That unlocks the 15 plus whatever the remaining 111
+unswept-since-September municipalities hold, and it is the only thing standing
+between a measured source and a named officeholder in those cities.
+
+What I would not do without you: ship a two-slot schema (Wautoma disproves it),
+or pick one of two sitting members (that is the withhold rule). The change
+touches `wi/index.html`'s card, the roster file's shape, the builder and the
+retention gate's per-source grain, so it is bigger than a tranche and I have
+not started it.
+
 
 **2026-09-19 — the Court of Appeals job. Mostly answered, by the repo itself.**
 I asked whether to re-route this, accept it as unautomatable, or drop the
