@@ -266,6 +266,49 @@ def check_generator():
 
 # ---------------------------------------------------------------- the frontier
 
+def probes_fips(src):
+    """The county FIPS in mi_commissioner_scraper.py's PROBES table, read from
+    that table's own span and COUNT-CHECKED.
+
+    THE PREVIOUS READER DEPENDED ON KEY ORDER IN A HAND-WRITTEN LITERAL, and
+    got the right answer only because the two tables in that one file disagree
+    about it. Measured 2026-09-21: all 48 COUNTIES entries are written "fips"
+    first, all 10 PROBES entries "county" first, and the reader was a regex
+    over the WHOLE source requiring county-then-fips. So it matched PROBES
+    exactly and COUNTIES not at all -- correct, and by coincidence, with the
+    order it needed in the minority style.
+
+    Writing one PROBES entry the way every COUNTIES entry in the same file is
+    written -- a semantically identical reorder of two keys -- dropped that
+    county out of the set, put it in the frontier, and made --check FAIL with
+    "re-run the sweep". Proven on Gogebic, whose robots.txt disallows this
+    client: the gate's own advice would have been a fetch we may not make.
+    Four of the ten PROBES counties disallow us that way.
+
+    The table is not imported, deliberately: mi_commissioner_scraper.py pulls
+    requests and robots_gate at module scope, and this probe's workflow
+    declares neither. So the span is located by name, either key order is
+    accepted, and the parse must account for every entry in it -- the three
+    per-entry keys have to agree on the count and the FIPS have to be
+    distinct. A reader that can quietly return a short set is the defect; a
+    looser regex alone would leave it.
+    """
+    start = src.index("\nPROBES = (")
+    blk = src[start:src.index("\n)", start)]
+    fips = re.findall(r'"fips":\s*"(\d{3})"', blk)
+    tally = {k: len(re.findall(r'"%s":' % k, blk)) for k in ("fips", "county", "seats")}
+    if len(set(tally.values())) != 1 or len(fips) != len(set(fips)) or not fips:
+        raise SystemExit(
+            "probe-mi-county-boards: FAIL — cannot read PROBES reliably. "
+            "Found %d FIPS (%d distinct) against per-entry key counts %s. "
+            "Every entry needs one fips, one county and one seats, and no two "
+            "entries may share a FIPS. Fix the table rather than this reader: "
+            "a county missing from this set lands in the frontier and the "
+            "gate then tells you to re-sweep a host that may refuse us."
+            % (len(fips), len(set(fips)), tally))
+    return set(fips)
+
+
 def frontier():
     """Counties with no roster and no PROBES entry, with seats and population
     read from the shipped district geometry rather than a hand-kept table."""
@@ -279,8 +322,7 @@ def frontier():
         seats[fips] = seats.get(fips, 0) + 1
         name[fips] = p["County"].replace(" County", "")
     built = set(json.load(open(ROSTER)))
-    src = open(SCRAPER).read()
-    probed = set(re.findall(r'"county":\s*"[^"]+",\s*"fips":\s*"(\d{3})"', src))
+    probed = probes_fips(open(SCRAPER).read())
     rows = [{"fips": f, "county": name[f], "seats": seats[f], "pop": pop[f]}
             for f in pop if f not in built and f not in probed]
     rows.sort(key=lambda r: -r["pop"])
