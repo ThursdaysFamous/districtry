@@ -186,15 +186,11 @@ FIELD_LABEL_RE = re.compile(r"(?:e-?mail|phone|fax|website|address)\s*:", re.I)
 # THE REASON IS NEVER "the source publishes it that way". It is this repo
 # reading a document wrongly:
 ACCEPTED_NAMES = {
-    ("il/data/app/municipal-officials.json", "Beth Fals 56"): dict(
-        date="2026-09-19",
-        reason="Plattville's clerk, shipping since 2026-08-01. Kendall's yearbook "
-               "parser reads past the end of the last entry in its section, gluing a "
-               "trailing number on; the same bleed put the county Democrats' e-mail "
-               "and a Department of Revenue URL on that municipality. The name must "
-               "be DROPPED rather than repaired to 'Beth Fals' — the Douglas County "
-               "rule — which is a change to an Illinois scraper, not to this gate.",
-    ),
+    # EMPTY AGAIN AS OF 2026-09-21, which is a measurement rather than an
+    # omission. Its one entry excused Plattville's "Beth Fals 56" and said the
+    # name must be DROPPED rather than repaired — that was done at the source,
+    # so the value no longer exists and the entry went with it. Leaving it
+    # would have been the stale-entry failure audit_accepted() exists to catch.
 }
 
 
