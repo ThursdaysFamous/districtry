@@ -25,6 +25,37 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-21, late. THE MPS AND RUSD JOBS BOTH RAN TODAY AND BOTH SUCCEEDED.
+The #978 fix took.** This closes the check that has been open since 16
+September.
+
+  * MPS, run 35648845084, `event=schedule`, started 20:05:06 UTC, success.
+  * RUSD, run 35655769015, `event=schedule`, started 21:12:14 UTC, success.
+
+Both carry a real run NAME rather than the workflow's file path, and both took
+about 27 seconds. That is the distinction that matters: the duplicate `run:`
+key made GitHub refuse to start these workflows at all, so every failed run
+had ZERO jobs and a name equal to its own path. A run that starts, executes
+and finishes is the thing that was broken.
+
+**They started 4h35m and 3h42m after their crons**, which is inside this
+repo's measured 3-to-5.3-hour band and is why the earlier read at 18:55 found
+nothing and concluded nothing. A schedule is a request, not a guarantee.
+
+Neither opened a pull request, which is correct: MPS's roster last changed 27
+August and RUSD's 3 September, and these jobs open a PR only when the data
+moves. Green with no PR is the expected weekly outcome.
+
+**No further check-ins for these two.** They are on their own schedule now.
+
+**One correction to the brief that carried this check.** It described the
+Court of Appeals job as "dead since 4 September" and "waiting on a decision
+from Adam between three routes". That was true on 18 September and is not now:
+#1040 merged on 19 September (`a2a7e41`) with both guards — the scraper exits
+75 when it could not reach the host, the workflow forgives only that, and
+`wi_coa_staleness.py` fails the job once 60 days pass with no successful
+verification. Nothing there is waiting on a decision.
+
 **2026-09-21. Three items assigned; one was done two days ago, one is not due
 yet, and the third had already been measured. What is new is a re-measurement
 worth one city.**
