@@ -2244,3 +2244,120 @@ Annette Parker, Will County Clerk — `electionsmgmt@willcounty.gov` · (815) 74
   REQUIRED county or whether the builder should ship the other 33 with Will's own
   municipalities explicitly marked as not refreshing, which is a design decision for Adam,
   not a threshold to quietly relax.
+
+---
+
+## Ask 29 — Clinton and Franklin County Clerks: where does the county board sit?
+
+**Status: NOT YET ASKED — DRAFTED.** Gap `county-board-office-addresses` — the last two
+of Illinois's 64 districted board cards that name no office at all, down from 50 on
+2026-09-06.
+
+**Two counties, two e-mails, and deliberately different questions.** Clinton publishes no
+street address anywhere on its board page, so its question is open. Franklin's own site
+footer and the state's directory disagree about the number on the same street, so its
+question is narrow — which is the smaller and more answerable ask of the two.
+
+**What was measured first, 2026-09-21**, because an ask is the residue of a probe and
+neither ledger had a prior ask to either office:
+
+| source | Clinton | Franklin |
+|---|---|---|
+| the county's own board page | HTTP 200, 74,904 bytes, **no street address anywhere** | the only non-residential address is `100 Public Square, Benton, IL 62812`, in the **site-wide footer** beside `618-435-9800` |
+| ISBE County Officers Book | no address in the record at all | no address in the record at all |
+| the county's 2024 AFR filing | `PO Box 308, Carlyle, IL 62231` | `PO Box 967, Benton, IL 62812` |
+| this project's clerk roster | `850 Fairfax Street, Carlyle` — but that is stated as the **Clerk's** office | `901 Public Square, P.O. Box 607, Benton` |
+
+**Why none of that ships.** A post-office box is not a place a reader can go. The clerk's
+own street address is the CLERK's office and no source says the board sits there, and
+inferring it would be this project guessing on a card that tells people where to turn up.
+For Franklin the two street sources disagree on the number — `100` in the county's footer
+against `901` in the state's directory — and a disagreement between two publishers is
+exactly what the board-office builder's two-witness rule exists to catch, so it correctly
+declines to write either.
+
+**Recipients**, each the office that keeps the board's record, and each an address this
+project already holds and did not guess:
+
+### Clinton County Clerk — `ccclerk@clintonco.illinois.gov`
+
+An office mailbox rather than a person, which is what this file prefers.
+
+> Subject: Clinton County Board — the address where the board meets
+>
+> Dear Clinton County Clerk,
+>
+> I run districtry (https://districtry.com/il/), a free, non-commercial site that shows
+> anyone which civic districts cover a point they click on, and who represents them there.
+> It carries no advertising and is not a campaign or a commercial product.
+>
+> Clinton County's five board districts are on it, drawn from the county's own certified
+> election returns, and each card names the district's members. The one thing the card
+> cannot tell a reader is where to go: I can find no street address for the County Board.
+> The county's board page gives none, the State Board of Elections' County Officers Book
+> carries none for Clinton, and the county's Annual Financial Report gives a post-office
+> box, which is not somewhere a person can turn up.
+>
+> Could you tell me, in one line, the street address of the building where the County
+> Board meets or holds office hours? I would publish that and nothing else from this
+> question.
+>
+> **A reply saying the county would rather not is a genuinely useful answer** — I will
+> record it and stop asking.
+>
+> I do not publish home addresses or personal contact details for officeholders: office
+> contact only, or nothing.
+>
+> With thanks for your time,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+### Franklin County Clerk — `paris.dunk@franklincountyil.gov`
+
+The Clerk's own named county address, so the name vouches for it.
+
+> Subject: Franklin County Board — 100 or 901 Public Square?
+>
+> Dear Franklin County Clerk,
+>
+> I run districtry (https://districtry.com/il/), a free, non-commercial site that shows
+> anyone which civic districts cover a point they click on, and who represents them there.
+> It carries no advertising and is not a campaign or a commercial product.
+>
+> Franklin County's three board districts are on it, and the nine members' names come from
+> the county's own County Board Members page. I have one small question before I add the
+> address to that card, because two sources disagree and I would rather ask than pick one.
+>
+> The county website's footer gives `100 Public Square, Benton, IL 62812`. The State Board
+> of Elections' directory records the Clerk's office as `901 Public Square`. Which of those
+> is the building where the County Board meets — and is the board's address the same as the
+> Clerk's, or a different room or entrance?
+>
+> One line is plenty. **A reply saying the county would rather not is a genuinely useful
+> answer** — I will record it and stop asking.
+>
+> I do not publish home addresses or personal contact details for officeholders: office
+> contact only, or nothing. Your County Board Members page lists each member's home
+> address; those are not read and are never published by this project.
+>
+> With thanks for your time,
+>
+> <YOUR NAME>
+> <YOUR E-MAIL>
+> https://districtry.com/il/
+
+### What each answer means
+
+- **A street address** — it ships on that county's board card labelled as coming from the
+  county itself, the card-order gap closes for that county, and `county-board-office-addresses`
+  is retired once both have answered.
+- **"The board meets at the Clerk's office"** — the same, and it settles that the clerk
+  street already in this repo may be used for the board, which it may not today.
+- **A post-office box again, or no** — the gap record stays as it is and becomes final
+  rather than open: it already says plainly that the card names no office and why. A clean
+  no is a good outcome here.
+- **No reply after the follow-up cadence** — record UNRESPONSIVE against the ask, not
+  against the county. Nothing about the boundary or the members is blocked on this; it is
+  one row on two cards.
