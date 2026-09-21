@@ -132,6 +132,25 @@ that failed here is essentially this one sentence — a prose-parsing gate would
 be a seventh hand-kept reader of a fact the code already owns. If Adam wants it
 anyway I will build it.
 
+**[#1074](https://github.com/ThursdaysFamous/districtry/pull/1074) — the "2 of 64
+board cards name no office" row is now an ask rather than an open question.**
+Clinton and Franklin are the two, and the gap's `blocker` recorded NO ASK STATE
+while `docs/ASK_DRAFTS.md` held nothing for either county — an empty blocker on
+a gap whose only route left is an ask. Re-probed both board pages first, robots
+read as the scrapers' own client: **Clinton answers 200 in 74,904 bytes with no
+street address anywhere**, and Franklin's only non-residential address is
+`100 Public Square, Benton` in the SITE-WIDE FOOTER beside the county's general
+phone, which the attribute-it-in-words rule already on this gap correctly
+declines. **What is new is a disagreement** — the state's directory records
+Franklin's Clerk at `901 Public Square`, a different number on the same street —
+so Franklin's ask is NARROW (which of the two is the building) where Clinton's
+is open, and a narrow ask is likelier to be answered. Nothing is shipped from
+inference: the clerk street in this repo is the CLERK'S office for both and no
+source says the board sits there. **The Franklin home addresses were already
+recorded on 2026-09-04 and the scraper asserts the payload address-free before
+writing** — I raised it as a possible leak and it was measured and refused long
+before I looked. Ask 29 is DRAFTED and held; Adam sends.
+
 **On the recurring Hancock churn, since it was asked for.** The weekly run will
 keep re-proposing the same three edits against the reverted file until the
 county answers, because the page is what it reads and the page is what is
