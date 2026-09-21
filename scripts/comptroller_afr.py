@@ -431,7 +431,31 @@ def contact_block(session, code, unit_label, warnings):
               for i in range(SLOTS)]
 
     def witnessed(field):
-        """The first slot whose `field` two differently-surnamed filers gave."""
+        """The first slot whose `field` two differently-surnamed filers gave.
+
+        WHAT THIS COSTS, MEASURED ON A UNIT THAT PAID IT. Reddick Fire
+        (053/085/06) shipped 210 E MAIN ST, REDDICK and (815) 365-4911 from its
+        FY2025 filing and ships no office at all from FY2026 — and the filing
+        did NOT get sparser. Read on 2026-09-21, both years through this same
+        parser: FY2026 carries the street in all four slots and the telephone in
+        all four. What changed is WHO SIGNED. FY2025's slot B was ROBERT LOWERY
+        against SUE BERGAN in A, C and D, so a second surname witnessed the
+        address; in FY2026 SUE BERGAN fills all four, every value has exactly
+        one witness, and nothing ships.
+
+        THAT IS THE RULE WORKING, NOT A LOSS TO FIX. These slots routinely carry
+        the filer's OWN office rather than the unit's — Reddick's filed e-mail
+        is an outside accountant's (billrodosky.com), which is why no e-mail
+        ships either. One person in every slot is exactly the case where an
+        address cannot be told apart from that person's own, so it is withheld.
+        The FY2026 filing also disagrees with itself on the ZIP (60921 in two
+        slots, 60961 in the other two; Reddick is 60961), which is a second
+        reason not to ship it unwitnessed.
+
+        So a reader losing that address is a second filer stopping signing the
+        form, never anything changing about the fire district. Do not relax this
+        to a one-witness rule to win the address back.
+        """
         for filer in filers:
             value = _flat(filer[field])
             if not value:
