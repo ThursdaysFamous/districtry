@@ -29,6 +29,59 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-21, the assigned task was already shipped, so this is what I found looking for it.**
+#1069 open. Tranche 6 is in, and tranche 7 with it: measured on today's tree,
+`mi-commissioner-members.json` names 48 of 83 counties and 366 of 619 districts, and the
+probe's candidate list holds zero. The Tasks row reading "26 of 83, 229 seats, assigned —
+tranche 6" is the one my 2026-09-19 entry flagged as discharged. It is still the manager's
+to update; nothing under it is outstanding.
+
+**What I did instead, and it is a real defect.** `frontier()` in
+`probe_mi_county_boards.py` finds the counties recorded shut with a regex over the whole
+scraper source requiring `"county"` before `"fips"`. That file writes all 48 `COUNTIES`
+entries fips-first and all 10 `PROBES` entries county-first, so the regex matched `PROBES`
+exactly and `COUNTIES` not at all — right, and only because two tables in one file disagree
+about key order, with the order it needed in the minority style. Rewriting one `PROBES`
+entry the way every `COUNTIES` entry in the same file is written, which changes nothing
+about its meaning, dropped that county out of the set and turned `--check` red with
+"re-run the sweep". I proved it on Gogebic, whose robots.txt disallows this client, so the
+gate's own advice would have been a fetch we may not make. Four of the ten refuse us that
+way.
+
+The fix reads the table's own span, takes either key order, and fails loudly when the parse
+cannot account for every entry in it — the three per-entry keys must agree on the count and
+the FIPS must be distinct. Three negative tests, each red before and after in the right
+direction. I did not add an 83-county assertion: `frontier()` subtracts the built and
+recorded sets from the shipped geometry, so 48 + 10 + 25 = 83 is arithmetic rather than a
+claim, and a gate on it could only be vacuous.
+
+**A negative result worth keeping, because deriving it cost most of this turn.** Every one
+of Michigan's 83 counties is already in a machine-readable table — 48 in `COUNTIES`, 10 in
+`PROBES`, 25 in the probe's artifact — and the partition is already held, because the
+probe's `--check` compares the artifact against a frontier derived from the tree. A county
+retired from `COUNTIES` that stops shipping lands in that frontier and turns the gate red.
+I went looking for a hole there and there is none. Three times on the way I had a framing
+that a measurement then contradicted: the ten looked unaccounted, then prose-only, then
+`PROBES`-recorded. The record was right each time and my reading of it was not.
+
+**The ward ruling is recorded where the repo still called it open**, which was the other
+half of this change. `mi/WATCH.md`'s WARD-column row said the state route "is the operator's
+call"; Wyoming's blocker said "the state route is open"; Muskegon's `wanted` offered "the
+state fabric if that route is opened". All three now state the ruling, and Wyoming is a
+measured shut rather than a pending decision, because its record already measures no city,
+county or regional route either. Muskegon's `wanted` is the one reader-facing field in the
+change, 185 characters against the 240 cap.
+
+**Jackson is not settled by it, and my question was the thing that was wrong.** I asked
+whether "the state's precinct fabric" may be the source, which conflated two cases. Jackson's
+proposed source is Jackson County's own precinct layer — a different publisher — which
+leaves the state's fabric as a genuinely independent second witness, a distinction its gap
+record had already drawn before the ruling arrived. The narrower question is below.
+
+Battery from the current `smoke-test.yml`: 85 static gates pass, the Michigan smoke test
+passes, `page_consistency_test.mjs` reports 0 non-cert findings. No host was fetched for any
+of this.
+
 **2026-09-20, #1054 merged as `16e706a8`, and #1052 was closed rather than merged.**
 Verified on the merged tree, not on my own PR body. `build_mi_commissioner_roster.py
 --check` passes: **48 counties, 366 districts**, 45 carrying a `readAt`, three preserved
@@ -432,10 +485,35 @@ What is already measured: ring-based resolution answers all 37 probe places corr
 ceiling is 0 misroutes. A smallest-bbox-AREA tie-break was measured and is NOT the fix — 7
 wrong of 37, the same count as nearest-centre and wrong in different places.
 
+**2026-09-21 — may a COUNTY's precinct map be the source for a CITY's ward boundary?**
+This is what survives the ruling below, and it is a different question from the one I asked.
+Not blocking; nothing waits on it.
+
+Jackson is the only Michigan city where the route exists. Jackson County's own precinct
+layer carries both a municipality column and a ward column, and they populate: City of
+Jackson, 10 precincts across wards 1-6 at 1/2/2/2/1/2, which is exactly what the state's
+2026 fabric independently records. So dissolving the county's precincts keeps the
+two-witness structure this project relies on — the county draws it, the state checks it —
+which is what distinguishes it from Wyoming and Muskegon, where the state fabric would have
+been both source and check and the answer was no.
+
+What it costs either way. Yes: Jackson's six wards ship from a publisher that is not the
+city, and the precedent is open for any county that labels its precincts by ward, which on
+today's measurements is Jackson alone. No: Jackson stays a recorded gap and the city's six
+per-ward pages remain a roster source only. I would take yes, because the second witness
+survives it and that was the whole basis of the ruling below. It costs no fetches to answer.
+
 **2026-09-19 — may the state's precinct fabric be the SOURCE for a city's wards,
-or only the check?** This is the decision under most of the remaining ward gaps, it is
-recorded twice in this repo as the operator's call, and nobody has been asked. It costs no
-fetches to answer.
+or only the check? ANSWERED 2026-09-21: only the check.** This is the decision under most of
+the remaining ward gaps, it is recorded twice in this repo as the operator's call, and nobody
+has been asked. It costs no fetches to answer.
+
+*Answered by the manager session on 2026-09-21 under the standing authority Adam granted it:
+the state's fabric may serve only as an independent currency check on a city-published ward
+boundary, never as the source, because a state precinct tiling is drawn for running elections,
+carries no statement by the city about its own boundary, and aggregates to a ward only where
+the city's lines happen to nest. Recorded in `mi/WATCH.md` and in the Wyoming and Muskegon gap
+records (#1069). The question as I wrote it was too broad — see the Jackson question above.*
 
 **Correcting my own note above.** I wrote that I was starting on (2) because
 `mi/WATCH.md` line 30's WARD query "needs no answer". That query is already spent — it was
@@ -487,6 +565,19 @@ robots.txt, which the strict reading a county website gets makes a refusal, and
 re-examination under (1) is **23 counties, not 25** — Iosco and Tuscola may not
 be fetched at all now, whatever budget is set. The question below is otherwise
 unchanged, and unanswered.
+
+**2026-09-21 correction — that arithmetic describes the probe's record and not the
+remainder.** 48 counties ship, so **35 do not name your commissioner**, and they are 25 in
+the probe's artifact plus 10 in `PROBES`. Everything above about (1) is true of the 25 and
+silent about the 10, which is the more useful half to state: Genesee, Ingham, Gogebic and
+Marquette each disallow this client in robots.txt and may not be fetched at any budget, like
+Iosco and Tuscola; Ottawa and Livingston answer 202 on robots.txt itself, which is an access
+control; Oakland and Allegan are refused at their own edge to both the districtry token and
+a browser string, so nothing is left to try; Washtenaw and Bay answer 200 and are not
+keyable, which is a parser question rather than a budget one. **So a fetch budget reaches 23
+of the 35.** Six of the remaining twelve are shut by policy, two by an edge that refuses
+every client, and two need a reader rather than a request. None of that changes the question
+below; it states what a yes would and would not buy.
 
 Starting on (2) in the meantime: `mi/WATCH.md` line 30's WARD query is one
 request against a service this instance already reads, and it needs no answer.
