@@ -281,8 +281,25 @@ def watched_by(rel_path, watchers=None):
 # A WATCH.md row counts only if it states WHEN. A cadence or a trigger is a
 # plan; a filename sitting in prose is a mention, and the difference is the
 # whole reason this clause is not a loophole.
+#
+# THE FIRST VOCABULARY HELD ONLY INTERVAL WORDS AND REJECTED THE CLEAREST
+# CADENCE IN THE FLEET. Wisconsin's supervisory row reads "Shortly after 15
+# January and 15 July" — the statutory LTSB filing dates, which is a harder
+# commitment than "semiannual" because it names the days — and the regex
+# matched none of it. A CALENDAR DATE IS A CADENCE, so month names count.
 WHEN = re.compile(r"(?i)\b(dail|week|month|quarter|semiannual|semi-annual|annual|"
-                  r"year|decenn|census|any change|on a change|20\d\d-\d\d-\d\d)")
+                  r"year|decenn|census|any change|on a change|20\d\d-\d\d-\d\d|"
+                  r"january|february|march|april|may|june|july|august|september|"
+                  r"october|november|december)")
+
+# A row whose cadence cell points at the row above ("Same windows", "Same run")
+# INHERITS that row's when. Grouping rows under one cadence is how a reader
+# writes a table, and refusing it would push an author into repeating a
+# statutory date on every line — or, worse, into inventing a different-looking
+# cadence to satisfy a gate. It only ever inherits from a row that itself
+# stated a when, so a table of nothing but back-references still counts for
+# nothing.
+SAME_AS_ABOVE = re.compile(r"(?i)^\W*same\b")
 
 
 def watch_rows(tag):
@@ -290,17 +307,23 @@ def watch_rows(tag):
     path = os.path.join(REPO_ROOT, tag, "WATCH.md")
     if not os.path.exists(path):
         return {}
-    out = {}
+    out, last_when = {}, None
     for line in open(path, encoding="utf-8"):
         if not line.lstrip().startswith("|"):
             continue
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
         if not cells or set(cells[0]) <= set("-: "):
             continue
-        if not WHEN.search(cells[0]):
+        when = None
+        if WHEN.search(cells[0]):
+            when = cells[0]
+            last_when = when
+        elif SAME_AS_ABOVE.match(cells[0]) and last_when:
+            when = "%s (%s)" % (cells[0], last_when)
+        if not when:
             continue
         for name in re.findall(r"[A-Za-z0-9_.-]+\.json", line):
-            out.setdefault(name, cells[0])
+            out.setdefault(name, when)
     return out
 
 
