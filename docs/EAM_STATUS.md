@@ -17,7 +17,7 @@ keep a state open forever while telling a reader nothing.
 
 | state | E.A.M. | counties | examined | districts | named | answered | files | maintained |
 |---|---|---|---|---|---|---|---|---|
-| il | **EA·** | 102 | 102/102 | 572 | 998 | all | 309 | 221 without a job |
+| il | **EA·** | 102 | 102/102 | 572 | 997 | all | 309 | 221 without a job |
 | wi | **EA·** | 72 | 72/72 | 1590 | 1,574 | all | 47 | 25 without a job |
 | ia | **EA·** | 99 | 99/99 | 67 | 67 | all | 33 | 16 without a job |
 | mi | **EA·** | 83 | 83/83 | 619 | 615 | all | 22 | 14 without a job |
