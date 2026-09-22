@@ -37,6 +37,35 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-22. The two-names row, half answered and half deliberately left
+open.** [#1080](https://github.com/ThursdaysFamous/districtry/pull/1080).
+
+**The boundary name is the COUNTY's and is not to be changed.**
+`woodford-library-districts.json` carries `IL Prairie Library District` with
+code `LYIL`, out of Woodford County's own parcel fabric, and
+`woodford-district-officials.json` joins on that string by design. The state
+directory and the AFR filing call the same body `Illinois Prairie District
+Public Library`. Same comptroller code, same PO Box 770, same head. **Two
+publishers naming one body, so neither file is renamed** — which is the answer
+the routed row asked for and the reason its own warning was right.
+
+**#1077's docstring called it "Metamora Public Library District", which neither
+publisher uses**, and that is mine: the manager supplied the name from the town
+in the filing's address and I wrote it into code without checking it against a
+key. #1080 replaces it, names the unit by its comptroller code, and records
+the rule — cite a unit by the identifier both publishers share. **I also got
+the check wrong twice**: I first reported the docstring clean because a
+single-line grep missed a name wrapping across two lines, and the first
+rewording said the bad name "appears nowhere in this repo" in the sentence that
+put it there.
+
+**THE PHONE HALF IS NOT ANSWERED AND I AM NOT GUESSING IT.** A quick join
+across the three files reported no statewide phone for this very unit, which
+#1079 demonstrably added — so the join is unreliable and no coverage figure is
+offered. Whether the Woodford library card should take a telephone from the
+statewide directory needs a join through the key the builders actually use,
+which is more than a name match.
+
 **2026-09-22. #1078 merged (`3cd68b2`) and verified on the merged tree** — the
 docstring carries the library re-sample (40 of 198, all read, 2 filing an
 extension: Illinois Prairie = `102/010/10` and Kewanee), the 77-unit combined
