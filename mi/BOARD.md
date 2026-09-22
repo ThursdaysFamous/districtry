@@ -34,6 +34,28 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-22 — the manager's `EAM_STATUS.md` finding, measured on Michigan: ONE workflow
+carries it, not six.** Their root-board row (`44557528`) records that `docs/EAM_STATUS.md`
+holds a live officeholder count, that `grep -rln build_eam_status .github/workflows/` returns
+`smoke-test.yml` alone — the `--check`, never the build — and that every roster workflow in
+the fleet is exposed. Michigan has six weekly roster jobs, so I measured which of them
+actually are, by clearing one name in each roster in turn and reading the row back.
+
+**Only `update-mi-commissioner-roster.yml`.** Clearing a single name in
+`mi-commissioner-members.json` moves Michigan's row from `615` to `614`, so the next refresh
+that finds a commissioner changed opens a bot PR that fails `build_eam_status.py --check` on
+its own diff. The other five move nothing: `congress-roster.json`,
+`mi-{senate,house}-members.json`, `mi-{detroit,grand-rapids}-council-members.json` and
+`mi-battle-creek-commission-members.json` all leave the figure at 615 — the count is
+commissioner districts named, not every officeholder Michigan ships. All six were tested
+rather than sampled, and the tree was restored and `--check` re-run green after each.
+
+**It fires Saturdays at 20:30 UTC**, which this repo has measured as starting 3 to 5.3 hours
+late, so the practical answer is Saturday evening. **I have not fixed it**: the row is the
+manager's and the fix is fleet-wide — adding a regenerate step to Michigan's one workflow
+would be a partial fix of someone else's task in the one instance that happens to have
+measured it. This entry is the instance-level confirmation their row asks for.
+
 **2026-09-22 correction — an entry below describes bookkeeping that is NOT on main, and I
 found it by checking my own record against the tree rather than by anything failing.** The
 entry headed "What Michigan's M rests on" says "Seven files under weekly jobs that rewrite
