@@ -82,7 +82,13 @@ const GEOCODER_STUB_FEATURE = {
 };
 // Contract stubs (their consuming checks are reference-fork scenarios,
 // dropped from this template's body):
-const GAP_PROBE = { county: "statewide", label: "Statewide", lat: 42.7337, lng: -84.5553 };
+// Munising, in Alger County — one of the 35 counties `mi-county-board-*`
+// records name. Measured against this instance's own state-counties.json,
+// 2026-09-22: the point falls in Alger County and in no other. Three more
+// were verified the same way and are here so the next reader does not have
+// to re-derive one: Cadillac 44.2520,-85.4014 (Wexford), Corunna
+// 42.9828,-84.1180 (Shiawassee), Bessemer 46.4794,-90.0529 (Gogebic).
+const GAP_PROBE = { county: "alger", label: "Munising, Alger County", lat: 46.4108, lng: -86.6478 };
 const MOVE_POINT = { lat: 0, lng: 0, district: "0" };
 const STRAGGLER_FILE = "data/app/state-counties.json";
 const STRAGGLER_POINT = "0,0";
@@ -277,6 +283,38 @@ try {
       cold.hrefs.every((h) => /template=source-submission\.yml/.test(h) && /[?&]gap_id=/.test(h)),
       `${cold.hrefs.length} links`);
 
+    // ==== TEMPLATE:BEGIN smoke-gap-probe ====
+    // WITH A POINT SELECTED THE PANEL MUST NEVER CLAIM THE SPOT IS CLEAN UNLESS
+    // IT COULD ACTUALLY TEST THE POINT. This is the check the engine's
+    // `located` flag exists for, and it is here because the bug it guards was
+    // real in this instance: `mappable` was computed from a record's county
+    // ARRAY, `appliesHere` swallowed a failed outline fetch as "not here", and
+    // Michigan tags 35 counties while shipping 0 per-county outlines — so every
+    // locating fetch 404'd and this exact point produced "Nothing recorded is
+    // missing where you clicked" for a reader in a county whose board this app
+    // cannot answer at all.
+    //
+    // THE EXPECTATION IS DERIVED FROM THE TREE, not written down, so the day
+    // those outlines ship the check flips to the reference fork's assertion
+    // (the gaps for this county lead the list) instead of silently continuing
+    // to accept the weaker wording.
+    const probeGaps = Object.values(shipped)
+      .filter((g) => (g.counties || []).indexOf(GAP_PROBE.county) !== -1).length;
+    const probeOutline = existsSync(
+      join(INSTANCE_DIR, `data/app/${GAP_PROBE.county}-county-outline.json`));
+    await page.evaluate(({ n, lat, lng }) => window[n].setSelectedPoint(lat, lng),
+      { n: EXPORTS_NAME, lat: GAP_PROBE.lat, lng: GAP_PROBE.lng });
+    const warm = await openGaps();
+    check(`data gaps panel never claims a clean spot it could not test (${GAP_PROBE.label})`,
+      probeGaps >= 1 && warm.items === expected &&
+      !/Nothing recorded is missing/i.test(warm.lede) &&
+      (probeOutline
+        ? (warm.groups.length >= 2 && /clicked/i.test(warm.groups[0].label) &&
+           warm.groups[0].items === probeGaps && /clicked/i.test(warm.lede))
+        : /could not check/i.test(warm.lede)),
+      `outline=${probeOutline} probeGaps=${probeGaps} ` +
+      `total=${warm.items}/${expected} lede=${JSON.stringify(warm.lede)}`);
+    // ==== TEMPLATE:END smoke-gap-probe ====
 
     await context.close();
   }

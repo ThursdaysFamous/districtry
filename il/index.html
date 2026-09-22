@@ -5903,10 +5903,21 @@ function initChiExplorer() {
     // One cached loader per outline slug. The <slug>-county-outline.json naming
     // convention IS the contract here, so a gap can reference any county whose
     // outline ships without this needing a per-county branch.
+    //
+    // NO RETRIES, deliberately, and it is a same-origin static file that makes
+    // that safe: either the outline ships or it does not, and a 404 is a
+    // definite answer that three attempts cannot improve. Measured in Michigan
+    // on 2026-09-22, which tags 35 counties and ships no outline: the default
+    // two retries turned one panel open into 105 requests, all 404, each pair
+    // separated by the helper's 500 ms and 1000 ms backoff. The cache memoises
+    // the rejection, so a second open in the same session cost nothing — the
+    // whole price was paid on the first. A transient miss now costs the panel
+    // one county's placement and falls to the wording that claims nothing,
+    // which is the honest degradation rather than a wrong answer.
     var outlineCache = {};
     function loadOutline(slug) {
       if (!outlineCache[slug]) {
-        outlineCache[slug] = fetchJSONWithRetry("data/app/" + slug + "-county-outline.json", {}, 2);
+        outlineCache[slug] = fetchJSONWithRetry("data/app/" + slug + "-county-outline.json", {}, 0);
       }
       return outlineCache[slug];
     }
@@ -5941,19 +5952,39 @@ function initChiExplorer() {
       } catch (e) { return null; }
     }
 
-    /* Which of a gap's counties contain the selected point. Resolves to false
-     * for a gap with no counties (nothing to test) and treats an outline that
-     * fails to load as "not here" — a gap still appears in the everywhere list,
-     * so a failed probe can never hide it entirely. */
+    /* Which of a gap's counties contain the selected point — THREE answers,
+     * not two: here, not here, and could not tell. A gap still appears in the
+     * everywhere list whatever comes back, so a failed probe can never hide it
+     * entirely, but the third answer has to be reported rather than folded into
+     * the second. Folding it is what let this panel tell a reader standing in
+     * one of 35 recorded counties that nothing was missing where they clicked:
+     * an outline that 404s resolves exactly like a point outside the county,
+     * so `here` was false for the honest reason and for the broken one alike,
+     * while `mappable` was computed from the ARRAY LENGTH and flipped true on a
+     * tag whose geometry the app never had. Measured in Michigan, 2026-09-22 —
+     * 35 counties tagged, 0 per-county outlines shipped, all 35 fetches 404,
+     * and the lede read "Nothing recorded is missing where you clicked".
+     *
+     * `located` is what the lede is allowed to reason from: SOME county was
+     * actually TESTED against this point, rather than some county was NAMED. It
+     * keeps the existing design's tolerance for a partial answer — one outline
+     * loading and missing is still treated as evidence the point is clean, the
+     * same tolerance the panel already extends to records carrying no county at
+     * all — and that limit is recorded rather than tightened here, because
+     * tightening it would suppress the clean-spot wording for every reader of
+     * an instance with one unloadable outline. */
     function appliesHere(gap, point) {
       var slugs = gap.counties || [];
-      if (!point || !slugs.length) return Promise.resolve(false);
+      if (!point || !slugs.length) return Promise.resolve({ here: false, located: false });
       return Promise.all(slugs.map(function (slug) {
         return loadOutline(slug).then(function (geojson) {
-          return !!findFeatureContaining(geojson, point);
-        }, function () { return false; });
-      })).then(function (hits) {
-        return hits.some(Boolean);
+          return { located: true, hit: !!findFeatureContaining(geojson, point) };
+        }, function () { return { located: false, hit: false }; });
+      })).then(function (probes) {
+        return {
+          here: probes.some(function (p) { return p.hit; }),
+          located: probes.some(function (p) { return p.located; })
+        };
       });
     }
 
@@ -6058,7 +6089,9 @@ function initChiExplorer() {
             return d !== 0 ? d : String(a.area).localeCompare(String(b.area));
           });
         return Promise.all(gaps.map(function (g) {
-          return appliesHere(g, point).then(function (here) { return { gap: g, here: here }; });
+          return appliesHere(g, point).then(function (probe) {
+            return { gap: g, here: probe.here, located: probe.located };
+          });
         }));
       }).then(function (rows) {
         body.textContent = "";
@@ -6075,15 +6108,18 @@ function initChiExplorer() {
         // this affect the place I clicked?" — before the list of everything
         // else. Getting it wrong is worse than saying nothing, so each branch
         // is only claimed when it is provable:
-        //  - "nothing missing where you clicked" is TRUE only if some gap COULD
-        //    have matched the point. A fork that tags no gap with a county can
-        //    never match, so that phrasing would claim a clean point when the
-        //    gaps simply are not mappable.
+        //  - "nothing missing where you clicked" is TRUE only if some gap was
+        //    actually TESTED against the point. A fork that tags no gap with a
+        //    county can never match, and one that tags counties whose outlines
+        //    do not ship can never test — both would claim a clean point where
+        //    the gaps simply could not be placed. `mappable` reads `located`
+        //    for that reason and never the tag: see appliesHere above.
         //  - a point OUTSIDE the covered area is never told nothing is missing
         //    there: out there EVERYTHING is.
         //  - pointInCoverage's null (mask not loaded) falls through to the
         //    wording that claims neither.
-        var mappable = rows.some(function (r) { return (r.gap.counties || []).length > 0; });
+        var mappable = rows.some(function (r) { return r.located; });
+        var named = rows.some(function (r) { return (r.gap.counties || []).length > 0; });
         var inCoverage = point ? pointInCoverage(point) : null;
         var lede = cardEl("p", "gaps-lede");
         if (here.length) {
@@ -6100,15 +6136,20 @@ function initChiExplorer() {
           // did, and for a year this branch did exactly that — measured in
           // Wisconsin, whose ten gaps all shipped with empty `counties`, so
           // `mappable` was false and a reader standing on Milwaukee City Hall
-          // was told to click a spot on the map. Two ways to land here, and
-          // only one of them can explain itself: no gap names a county (nothing
-          // can be tested against the point), or the coverage mask has not
-          // loaded (we cannot tell whether they are inside it). Neither may
-          // claim their spot is clean.
+          // was told to click a spot on the map. THREE ways to land here now,
+          // and the two that can explain themselves say different things: no
+          // gap names a county at all, or gaps name counties whose outlines did
+          // not load, or the coverage mask has not loaded. None may claim the
+          // spot is clean, and the middle one must not borrow the first one's
+          // words — "not mapped to particular places" is false of a record that
+          // names five counties and true of one that names none.
           lede.textContent = mappable
             ? "Here is everything that is missing and why."
-            : "These gaps aren't mapped to particular places, so this list can't lead with the " +
-              "ones that affect you. Here is everything that is missing and why.";
+            : named
+              ? "We could not check which of these affect the spot you clicked. Here is " +
+                "everything that is missing and why."
+              : "These gaps aren't mapped to particular places, so this list can't lead with the " +
+                "ones that affect you. Here is everything that is missing and why.";
         } else {
           lede.textContent = "Click a spot on the map first and this list will lead with the gaps that " +
             "affect you. Otherwise, here is everything that is missing and why.";
