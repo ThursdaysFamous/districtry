@@ -516,8 +516,7 @@ def watch_rows(tag):
     return out
 
 
-def measure():
-    counties, paths, B = load_rosters()
+def measure(counties, paths, B):
     staged = staged_paths()
     watchers = watcher_texts()
     rows = []
@@ -709,6 +708,68 @@ def render(rows):
     return "\n".join(out).rstrip() + "\n"
 
 
+def check_workflows(paths, staged):
+    """A scheduled workflow that rewrites a roster this report COUNTS must
+    regenerate it and commit it.
+
+    The same rule `build_county_pages.py`, `build_officeholder_tables.py` and
+    `build_concept_pages.py` already enforce, and it arrived here the way those
+    three predict: #1093's bot PR went red on `build_eam_status.py --check`
+    because Sangamon lost a member to a vacancy, the `people` figure moved, and
+    no roster workflow rebuilds this file. The bot wrote the change and a human
+    had to work out why a refresh of one county's names failed a gate about the
+    whole fleet.
+
+    THE SURFACE IS MEASURED, NEVER LISTED. The three siblings each carry a
+    hand-written `counts` list because each owns a handful of pages; this report
+    reads every roster `build_county_pages`' adapters read — 71 files across
+    four instances on the day this was written — and that set moves whenever a
+    county ships. So the surface is `load_rosters()`'s own `paths`, and the
+    workflows are whatever `refreshed_by()` already says stages one. A list
+    here would go stale at the speed of the Illinois frontier.
+
+    IT IS THE ADAPTER SURFACE AND NOT EVERY `data/app` FILE, which Michigan
+    measured rather than assumed (`mi/BOARD.md`, 2026-09-22): of its six weekly
+    roster jobs only `update-mi-commissioner-roster.yml` moves the figure,
+    because `people` counts the districts these adapters name and not every
+    officeholder an instance ships. Requiring the step on the other five would
+    ask 59 workflows across the fleet to regenerate a file they cannot change.
+    """
+    surface = sorted({os.path.relpath(p, REPO_ROOT)
+                      for tag in paths for p in paths[tag]})
+    named = {}
+    for rel in surface:
+        for workflow in refreshed_by(rel, staged):
+            named.setdefault(workflow, set()).add(rel)
+    for workflow in sorted(named):
+        text = open(os.path.join(REPO_ROOT, workflow), encoding="utf-8").read()
+        lines = text.splitlines()
+        rosters = ", ".join(sorted(named[workflow]))
+        # RUN and STAGED, never merely MENTIONED, for both of these. The step
+        # this gate asks for carries a comment naming the script and the file,
+        # so a plain `in text` test is satisfied by that comment and passes a
+        # workflow that regenerates nothing — measured on this gate's own
+        # first draft, where the second check was vacuous for exactly that
+        # reason and a negative test caught it.
+        if not any(line.strip() == "python3 scripts/build_eam_status.py"
+                   for line in lines):
+            fail("%s rewrites %s and never regenerates docs/EAM_STATUS.md — "
+                 "add a step running python3 scripts/build_eam_status.py and "
+                 "`git add docs/EAM_STATUS.md`, or its next refresh that moves "
+                 "a count fails this gate on the bot's own pull request"
+                 % (workflow, rosters))
+        if not any("git add " in line and "docs/EAM_STATUS.md" in line
+                   for line in lines):
+            fail("%s regenerates docs/EAM_STATUS.md and never commits it — "
+                 "add it to that job's `git add`" % workflow)
+    if not named:
+        fail("no scheduled workflow stages any of the %d rosters this report "
+             "counts, which cannot be true — the surface or the staged-path "
+             "reader has broken" % len(surface))
+    print("build-eam-status: %d scheduled workflows regenerate this report"
+          % len(named))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true",
@@ -724,7 +785,9 @@ def main():
         return
 
     check_geometry_names_nobody()
-    rows = measure()
+    counties, paths, B = load_rosters()
+    check_workflows(paths, staged_paths())
+    rows = measure(counties, paths, B)
     body = render(rows)
 
     if args.report:
