@@ -18,7 +18,7 @@ keep a state open forever while telling a reader nothing.
 | state | E.A.M. | counties | examined | districts | named | answered | files | maintained |
 |---|---|---|---|---|---|---|---|---|
 | il | **EA·** | 102 | 102/102 | 572 | 998 | all | 309 | 221 without a job |
-| wi | **EA·** | 72 | 72/72 | 1590 | 1,574 | all | 47 | 28 without a job |
+| wi | **EA·** | 72 | 72/72 | 1590 | 1,574 | all | 47 | 25 without a job |
 | ia | **·A·** | 99 | 19/99 | 67 | 67 | all | 33 | 16 without a job |
 | mi | **·A·** | 83 | 48/83 | 370 | 366 | all | 21 | 14 without a job |
 
@@ -255,12 +255,10 @@ keep a state open forever while telling a reader nothing.
 
 ### wi — EA·
 
-- **Under a WATCH.md plan (6):** re-checked on a stated cadence rather than by a job — `madison-outline.json`, `metro-outline.json`, `school-districts-unified.json`, `state-counties.json`, `wi-county-facts.json`, `wi-municipal-facts.json`
-- **Maintained: no.** 28 file(s) under no scheduled job at all, neither rewriting nor watching:
-  - `wi/data/app/aldermanic-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+- **Under a WATCH.md plan (9):** re-checked on a stated cadence rather than by a job — `aldermanic-districts.json`, `county-supervisory-districts.json`, `madison-outline.json`, `metro-outline.json`, `rusd-school-board-districts.json`, `school-districts-unified.json`, `state-counties.json`, `wi-county-facts.json`, `wi-municipal-facts.json`
+- **Maintained: no.** 25 file(s) under no scheduled job at all, neither rewriting nor watching:
   - `wi/data/app/congress-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
   - `wi/data/app/county-board-directory.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/county-supervisory-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
   - `wi/data/app/coverage-gaps.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
   - `wi/data/app/ems-service-areas.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
   - `wi/data/app/fire-service-areas.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
@@ -275,7 +273,6 @@ keep a state open forever while telling a reader nothing.
   - `wi/data/app/mpd-squad-areas.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
   - `wi/data/app/mps-school-board-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
   - `wi/data/app/psap-areas.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
-  - `wi/data/app/rusd-school-board-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
   - `wi/data/app/school-sites.json` — names **2966** people and nothing refreshes them, so they go stale at the speed that board turns over.
   - `wi/data/app/tid-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
   - `wi/data/app/wi-assembly-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
