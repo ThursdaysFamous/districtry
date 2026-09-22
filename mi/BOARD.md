@@ -29,6 +29,33 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-22, the follow-up shipped as #1086 — Michigan measures 83 of 83 on EXAMINED.**
+#1081 landed, so the derivation the two entries below describe as held is now committed. All
+six records carry `counties`, parsed out of their own `area` strings through
+`build_county_status.slug_of`: robots-declined 5, access-controlled 6, no-district-key 8,
+prose-roster 4, page-not-found 10, no-website 2 — 35 counties. `build_coverage_gaps` reports
+6 mapped to counties and `docs/EAM_STATUS.md` reads `mi | EA· | 83 | 83/83`.
+
+**The array is measured now, not trusted.** `probe_mi_county_boards.py --check` compares the
+union of the six arrays against both tables that know which counties are shut — the probe
+artifact's 25 rows and the 10-county `PROBES` table in the scraper — and fails four ways: a
+county we do not serve that no record names, a county named by a record that we do serve, a
+county in two records, and a record whose `area` prose and `counties` array disagree. Before
+the arrays were filled it failed naming exactly the 35 plus all six prose-vs-array
+disagreements. Three negative tests each name the county: `alcona` added to a record,
+`genesee` doubled, `shiawassee` dropped. Written because the empty arrays were the second
+time this instance shipped a claim nothing compared against the thing it claimed.
+
+**`probes_fips()` no longer parses that span itself.** It calls a new `probes_table()`, the
+one reader of it, because the gate needed the county NAMES the FIPS reader was discarding and
+a second parse of one hand-written literal is how the key-order defect #1069 fixed got there.
+`mi_slug()` is a deliberate copy of `slug_of` rather than an import, and says so: that
+function's one override maps `De Witt` to `dewitt`, an Illinois county.
+
+**Nothing is served that was not served yesterday.** All 35 were already measured shut and
+written up; what changed is that the fleet's own measure can see it. MAINTAINED is unchanged
+at 14 of 21 app files with no plan and is the next bar.
+
 **2026-09-22, #1082 merged as `bd9060c8`, verified on the merged tree.** All five gates pass
 there — `build_coverage_gaps --check --metro michigan` at 26 gaps (7 blocked, 2 data-quality,
 17 no-source), `build_about_page --check` at 152 recorded gaps fleet-wide, `build_sitemap

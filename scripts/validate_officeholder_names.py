@@ -103,6 +103,53 @@ line. That is not a failure — an instance can legitimately ship geometry befor
 it ships a roster, which is how Michigan arrived — but it can no longer be
 invisible.
 
+THE PREDICATE WAS ONLY HALF OF IT; THE WALK WAS THE OTHER HALF (2026-09-22).
+is_person_record() can be perfectly right about a record person_records() never
+hands it. The walk passed the IMMEDIATE PARENT KEY as `container`, and the two
+branches disagreed: the list branch PRESERVED it, the dict branch REPLACED it
+with the child's key. So {"members": [{...}]} was examined and
+{"members": {"01": {...}}} was not -- the same roster, differing only in
+whether its collection is a list or is keyed by district, and "members" never
+reaching the predicate in the second case. SHAPE_SELFTEST's second case asserts
+that arm works and it does, through 942 list-shaped records, so every test in
+this file passed while the dict-shaped ones went unexamined. A keyed collection
+now passes its own name through one level, exactly as a list already did, and
+WALK_SELFTEST holds both shapes to the same answer. Measured fleet-wide the
+change admits 182 records in two files -- wi-alderpersons.json 175,
+mps-school-board-members.json 7 -- every one a person, with no false positive
+and no new finding.
+
+1,592 OFFICEHOLDERS ARE STILL OUTSIDE THIS GATE, AND THAT IS A MEASUREMENT.
+Before the walk fix it was 1,774 across 19 files; running why_not_a_name() over
+all of them found ZERO defective, so this is a guard hole rather than a shipped
+defect, and it is recorded here because the next pass would otherwise measure
+it again. The remainder are flat, keyed by seat at the TOP level with no
+collection name anywhere -- {"5514119": {"county": "Wood", "district": 19,
+"name": "Bill L. Leichtnam", ...}} -- so no structural signal exists for the
+walk to carry. The largest are wi/county-board-members.json 1,097,
+mi-commissioner-members.json 197, wi-county-officers.json 125 and
+ny/council-members.json 51.
+
+THE ROUTE OUT IS A DECLARATION, NOT A WIDER PREDICATE, and the arithmetic is
+why. Field shape cannot tell a person from a place: a precinct, a polling
+place, a school site and a library all carry {name, address, url}. Relaxing the
+shape test far enough to reach those 1,592 admits about 23,000 place records,
+6,072 of which carry digits and would FAIL this gate on names their publishers
+chose -- "Judicial District 8", "Eagle Grove Pct 4". What that needs is a
+declared table of the json paths that hold people, re-audited against the tree
+every run and FAILING on an orphan, in the shape ACCEPTED_DROPS and
+NOT_COUNTY_BOARDS already use here. Not done in this change, and named rather
+than implied.
+
+SEVEN OF THIRTEEN PERSON_CONTAINERS NEVER DECIDE AN ADMISSION, measured the
+same day, and that is fine in two different ways. `board` (4,164 records),
+`head` (615) and `officers` (832) are shadowed because every record under them
+carries a `role`, so the first arm admits them -- they are insurance against a
+builder that stops emitting one. `aldermen`, `commissioners`, `council` and
+`delegation` match nothing in the fleet at all; `aldermen` was anticipated
+while the alderperson roster is in fact written `members` keyed by district,
+which is the one shape the walk was dropping.
+
 WHAT IS AND IS NOT A FINDING. A vacancy a county publishes is data, not a
 defect: "Vacant", "Not listed", "TBD" and their spellings pass, because
 Wisconsin's roster ships 16 real ones and saying so is the honest answer. What
@@ -288,7 +335,42 @@ SHAPE_SELFTEST = [
     # the library above. 51 real people this gate does not examine. Widening to
     # reach them needs a signal that separates a person's office from a place's
     # address, and no field in the fleet carries one today.
+    # 51 IS THIS FILE'S SHARE AND NOT THE TOTAL: measured 2026-09-22, 1,592
+    # officeholders across the fleet are blind for this same flat-keyed reason
+    # (wi/county-board-members.json alone is 1,097). See the docstring -- the
+    # route out is a declared table of person-bearing paths, not a wider
+    # predicate, and the WALK fix that landed with this note is a different
+    # defect that recovered a different 182.
     ({"name": "Christopher Marte", "office": "65 East Broadway"}, None, False),
+]
+
+
+# THE WALK GETS A TABLE TOO, because is_person_record() can be perfectly right
+# about a record the walk never hands it. {"members": {"01": {...}}} is the
+# same roster as {"members": [{...}]}, and until 2026-09-22 the first was
+# examined and the second was not: the list branch PRESERVED the container and
+# the dict branch REPLACED it with the district id, so "members" never reached
+# the predicate. SHAPE_SELFTEST's second case asserts that arm works, and it
+# does -- 942 records reach it through list-shaped rosters -- so the gate's own
+# tests all passed while 182 people in two files went unexamined.
+# (payload, the paths that must come out).
+WALK_SELFTEST = [
+    # The pair that was asymmetric. Both are one person under `members`.
+    ({"members": [{"name": "Ada Lovelace"}]}, [".members[0]"]),
+    ({"members": {"01": {"name": "Ada Lovelace"}}}, [".members.01"]),
+    # ...at any depth, which is how the city rosters are actually written.
+    ({"80075": {"members": {"08": {"name": "Dean Peterson"}}}},
+     [".80075.members.08"]),
+    # A keyed collection passes its OWN name through and does NOT hand it to a
+    # person's sub-objects: `office` must not inherit `members`, or every
+    # address in the fleet becomes a person.
+    ({"members": {"01": {"name": "Ada Lovelace",
+                         "office": {"name": "City Hall"}}}},
+     [".members.01"]),
+    # The pass-through is one level and is keyed on the collection's NAME, so a
+    # container cannot leak across a file. A polling place under a district id
+    # is still a place.
+    ({"wards": {"01": {"name": "Ward 1 Polling Place"}}}, []),
 ]
 
 
@@ -303,6 +385,11 @@ def selftest():
         if got != want:
             bad.append("is_person_record(%r, %r) -> %r, expected %r"
                        % (record, container, got, want))
+    for payload, want in WALK_SELFTEST:
+        got = sorted(path for path, _ in person_records(payload))
+        if got != sorted(want):
+            bad.append("person_records(%r) -> %r, expected %r"
+                       % (payload, got, sorted(want)))
     return bad
 
 
@@ -361,10 +448,18 @@ def person_records(payload):
     while stack:
         path, node, container = stack.pop()
         if isinstance(node, dict):
-            if is_person_record(node, container):
+            mine = is_person_record(node, container)
+            if mine:
                 yield path, node
+            # A dict under a person container is a KEYED COLLECTION -- a roster
+            # written {"members": {"01": {...}}} rather than {"members": [...]}.
+            # It passes its own name through to its records, exactly as the list
+            # branch below already does, so the SAME roster is examined whether
+            # its collection is a list or is keyed by district.
+            keyed = container in PERSON_CONTAINERS and not mine
             for key, value in node.items():
-                stack.append(("%s.%s" % (path, key), value, key))
+                stack.append(("%s.%s" % (path, key), value,
+                              container if keyed else key))
         elif isinstance(node, list):
             for i, value in enumerate(node):
                 stack.append(("%s[%d]" % (path, i), value, container))
