@@ -37,6 +37,40 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-22. The phone half of the two-names row, measured — and it is NOT
+the two surfaces disagreeing.**
+
+**There is only ONE library layer.** `library-district` is county-dispatched;
+`il-library-district-officials.json` (AFR) and `il-library-contacts.json` (L2)
+are ROSTER files feeding it, not a second layer. So "which answer a reader gets
+depends on which layer they toggle" is not the mechanism — what differs is
+which roster a county's dispatch entry consults.
+
+**Measured by the comptroller code, which is the key both files share** (a name
+match is what made my first attempt unreliable): **26 county library cards
+across the parcel-fabric counties; 4 lack a telephone that a statewide surface
+has** — Kankakee's CENTRAL CITIZENS LIBRARY, and Woodford's Deer Creek, El Paso
+and IL Prairie. **In all four the number comes from L2 and the AFR column is
+empty on BOTH surfaces.**
+
+**So the AFR route does not contradict itself.** It withholds the same values in
+the county roster and the statewide one, which is the two-witness rule being
+consistent rather than two publishers disagreeing. The whole difference is that
+**the county-roster path does not read L2 at all** and the statewide path does.
+
+**Recommendation, for the manager or Adam to take or refuse:** have the county
+library cards read L2 as well, **labelled as the state library directory's**,
+the way `build_county_board_offices.py` labels its ISBE-sourced addresses — a
+second-hand number that reads as the district's own is the small lie that
+precedent already names. It is four cards today and the lookup is by a code both
+files carry. The alternative is to leave it, which costs a reader in Woodford a
+published telephone that a reader elsewhere gets.
+
+**What I have NOT verified, and would check before building:** how a Woodford
+library card actually renders, and whether a county with its own roster file can
+reach the statewide one at all. I measured the data behind the difference, not
+the render path.
+
 **2026-09-22. The two-names row, half answered and half deliberately left
 open.** [#1080](https://github.com/ThursdaysFamous/districtry/pull/1080).
 
