@@ -485,6 +485,113 @@ def school_board_page(tag, spec, worksheet):
                 lede=lede, sections=sections, named=named)
 
 
+def city_council_page(tag, spec, worksheet):
+    """Who sits on a city council, in the states that draw city wards.
+
+    ONE FUNCTION, TWO INSTANCES, because it is one concept: a city elects some
+    members from wards and some at large, and the map already draws the wards.
+    Everything the prose states is COUNTED on the run that writes the page —
+    how many cities have ward geometry, how many of those have a roster, and
+    how many people it names — because "Michigan draws six cities' wards" is
+    exactly the sentence that survives a seventh city unread.
+
+    THE CITIES DRAWN WITHOUT A ROSTER ARE NAMED RATHER THAN OMITTED. Michigan
+    draws Flint, Warren and Rochester Hills and names nobody in them; a page
+    that listed three cities and said nothing about the other three would read
+    as though the map covered three.
+    """
+    wards = {name: len(load(path)["features"])
+             for name, path in spec["wards"]}
+    # THE TWO COUNTS ARE KEPT APART BECAUSE THEY DESCRIBE DIFFERENT PLACES.
+    # Iowa's page names 22 people in the three cities whose wards this map
+    # draws and 24 more in four cities it does not draw at all, and one total
+    # of 46 beside "draws the wards of 3 cities" reads as though all 46 sat in
+    # those three. The first draft printed exactly that.
+    in_wards, at_large_cities, at_large_named = 0, 0, 0
+    for _label, path, adapter in spec["rosters"]:
+        data = load(path)
+        if adapter == "city_officials":
+            at_large_cities += len(data)
+            at_large_named += sum(1 for rec in data.values()
+                                  for m in rec.get("members") or [] if m.get("name"))
+            continue
+        in_wards += sum(1 for m in data.get("citywide") or [] if m.get("name"))
+        inner = data.get("wards") or data.get("districts") or {}
+        for value in inner.values():
+            for m in (value if isinstance(value, list) else [value]):
+                if m.get("name"):
+                    in_wards += 1
+    named = in_wards + at_large_named
+    rostered = {label for label, _p, a in spec["rosters"] if a != "city_officials"}
+    unrostered = sorted(c for c in wards if c not in rostered)
+    place = spec["place"]
+
+    missing = ("" if not unrostered else
+               " The map also draws %s, where no roster this project can read "
+               "names the members, so those wards answer with the ward number "
+               "and nothing else." % _join(unrostered))
+    elsewhere = ("" if not at_large_named else
+                 " %d more sit on the councils of %d smaller %s cities that "
+                 "elect at large and have no wards to draw; their own county "
+                 "publishes the names."
+                 % (at_large_named, at_large_cities, esc(spec["place"])))
+    lede = dict(
+        html='<p class="lede"><strong>A city council seat is the one on your ballot '
+             'closest to your street.</strong> %s draws the wards of %d %s, and this '
+             'names the <strong>%d people</strong> who hold their seats — the members '
+             'elected by one ward, and the mayor and at-large members elected by the '
+             'whole city.%s%s</p>'
+             % (esc(place), len(wards), "city" if len(wards) == 1 else "cities",
+                in_wards, missing, elsewhere),
+        cta='    <a class="cta" href="./#layers=%s">Find your ward →</a>\n'
+            '    <p class="cta-note">Opens the map with the city ward layer on. Search '
+            'your address or ZIP, or tap your location.</p>' % spec["layers"])
+
+    sections = """  <section>
+    <h2>What the lookup shows</h2>
+    <div class="answer-card">
+      <p>Select any point inside one of these cities and the card names the
+        <strong>ward</strong> covering it. The table below names the member who holds
+        that ward's seat, and the members elected by the city as a whole.</p>
+      <p>Outside those cities the map still answers with the county, the school district
+        and everything else drawn over that point; a city with no wards drawn here simply
+        has no ward card.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>A ward seat and an at-large seat are not the same job</h2>
+    <p>A ward member is elected by the voters of one part of the city and is the person to
+      write to about that part of it. An at-large member and the mayor are elected by
+      everyone, so they answer for the whole city and appear against every address in it.
+      Both are on this page, labelled as the city itself labels them.</p>
+  </section>
+
+  <section>
+    <h2>Where the names come from</h2>
+    <p>Each city's own published roster, re-read on a schedule and landing as a reviewed
+      pull request. A seat the city reports open is shown as vacant rather than left out,
+      because leaving it out would make the council look smaller than the city elects.</p>
+%(disclaimer)s
+  </section>
+
+""" % dict(disclaimer=DISCLAIMER)
+
+    subtitle = "%s city council lookup — free, by address, ZIP, or a tap on the map." % place
+    desc = ("Who represents you on your %s city council — your ward and the member who "
+            "holds it, by address or ZIP." % place)
+    og = ("Find your city ward in %s and the council member who holds it, across %d "
+          "cities." % (place, len(wards)))
+    return dict(title="Who is on my city council?", subtitle=subtitle, desc=desc, og=og,
+                lede=lede, sections=sections, named=named)
+
+
+def _join(names):
+    if len(names) == 1:
+        return names[0]
+    return "%s and %s" % (", ".join(names[:-1]), names[-1])
+
+
 # ------------------------------------------------------------------- the table
 
 PAGES = [
@@ -501,6 +608,51 @@ PAGES = [
          sibling=dict(page="circuit-court.html",
                       label="Who is my circuit court judge?",
                       note="The other lookup that answers by county rather than by city.")),
+    dict(tag="mi", file="city-council.html", worksheet="mi/metro-worksheet.json",
+         layers="city-ward", make=city_council_page, place="Michigan",
+         wards=[("Battle Creek", "mi/data/app/mi-battle-creek-wards.json"),
+                ("Detroit", "mi/data/app/mi-detroit-council-districts.json"),
+                ("Flint", "mi/data/app/mi-flint-wards.json"),
+                ("Grand Rapids", "mi/data/app/mi-grand-rapids-wards.json"),
+                ("Rochester Hills", "mi/data/app/mi-rochester-hills-wards.json"),
+                ("Warren", "mi/data/app/mi-warren-wards.json")],
+         rosters=[("Detroit", "mi/data/app/mi-detroit-council-members.json", "city_council"),
+                  ("Grand Rapids", "mi/data/app/mi-grand-rapids-council-members.json",
+                   "city_council"),
+                  ("Battle Creek", "mi/data/app/mi-battle-creek-commission-members.json",
+                   "city_council")],
+         counts=["mi/data/app/mi-detroit-council-members.json",
+                 "mi/data/app/mi-grand-rapids-council-members.json",
+                 "mi/data/app/mi-battle-creek-commission-members.json",
+                 "mi/data/app/mi-battle-creek-wards.json",
+                 "mi/data/app/mi-detroit-council-districts.json",
+                 "mi/data/app/mi-flint-wards.json",
+                 "mi/data/app/mi-grand-rapids-wards.json",
+                 "mi/data/app/mi-rochester-hills-wards.json",
+                 "mi/data/app/mi-warren-wards.json"],
+         sibling=dict(page="county-commissioner.html",
+                      label="Who is my county commissioner?",
+                      note="The government your city sits inside.")),
+    dict(tag="ia", file="city-council.html", worksheet="ia/metro-worksheet.json",
+         layers="city-ward", make=city_council_page, place="Iowa",
+         wards=[("Cedar Rapids", "ia/data/app/cedar-rapids-wards.json"),
+                ("Des Moines", "ia/data/app/dsm-wards.json"),
+                ("Waterloo", "ia/data/app/waterloo-wards.json")],
+         rosters=[("Des Moines", "ia/data/app/dsm-council-members.json", "city_council"),
+                  ("Cedar Rapids", "ia/data/app/cedar-rapids-council-members.json",
+                   "city_council"),
+                  ("Waterloo", "ia/data/app/waterloo-council-members.json", "city_council"),
+                  ("small cities", "ia/data/app/ia-city-officials.json", "city_officials")],
+         counts=["ia/data/app/dsm-council-members.json",
+                 "ia/data/app/cedar-rapids-council-members.json",
+                 "ia/data/app/waterloo-council-members.json",
+                 "ia/data/app/ia-city-officials.json",
+                 "ia/data/app/cedar-rapids-wards.json",
+                 "ia/data/app/dsm-wards.json",
+                 "ia/data/app/waterloo-wards.json"],
+         sibling=dict(page="county-supervisor.html",
+                      label="Who is my county supervisor?",
+                      note="The government your city sits inside.")),
     dict(tag="il", file="township.html", worksheet="metro-worksheet.json",
          layers="township", make=township_page,
          counts=[TOWNSHIP_ROSTER],
