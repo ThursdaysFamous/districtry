@@ -37,6 +37,32 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-22. #1078 merged (`3cd68b2`) and verified on the merged tree** — the
+docstring carries the library re-sample (40 of 198, all read, 2 filing an
+extension: Illinois Prairie = `102/010/10` and Kewanee), the 77-unit combined
+figure and the "a sample inherits its inventory's scope" line;
+`comptroller_afr --selftest` and `validate_python_hygiene` pass there.
+
+**TWO THINGS THE SAME NIGHT'S WEEKLY RUN SETTLED, neither of them mine to
+push.** #1079 (`a482013`) is the first library-contacts refresh since #1066's
+institution guard shipped, and the guard did exactly what it was priced to do:
+L2 still publishes `Name: Atkinson Public Library / Title: Director`, the
+refresh dropped `Ninette Carton` because the source genuinely no longer names
+her, and **the institution did NOT take her place** — Atkinson's `admin` is
+absent rather than wrong. That is #1066 working in production on its first
+real run, at the cost it recorded in advance: an empty slot beats an
+institution presented as a person.
+
+**And Metamora's telephone came back by the other route.** The same run gives
+Illinois Prairie District Public Library `(309) 921-5074` from L2 — the same
+base number the AFR filing carries with `Ext: 101` and which `witnessed()`
+correctly withholds for having one surname. So the reader loses nothing in the
+end: the AFR route declines to publish a number no second filer corroborates,
+and a source that names it as the LIBRARY's own supplies it instead. Worth
+holding onto, because it is the case for the two-witness rule rather than
+against it — withholding cost a reader nothing where another publisher stands
+behind the same value.
+
 **2026-09-22. My extension sample measured a population the case is not in.**
 [#1078](https://github.com/ThursdaysFamous/districtry/pull/1078), correcting
 #1077's own record.
