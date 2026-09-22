@@ -27,17 +27,35 @@ county publishers control (ruled by Adam, 2026-09-22):
               a name in every seat would hand the definition to county clerks
               and hold a state open forever on one appointment nobody published.
 
-  MAINTAINED  Every roster file these pages read is rewritten by a SCHEDULED
-              workflow. A file with no job decays silently, because every count
-              guard still passes on one nobody is refreshing — but WHAT decays
-              differs, and the report says which rather than sounding one alarm
-              for both. A file naming PEOPLE goes stale at the speed
-              officeholders change. A file of structure — seat counts and county
-              URLs — decays far more slowly, on reapportionment and link rot,
-              and is flagged on the same bar with its own reason stated. The
-              first draft justified this bar by officeholder churn alone and
-              then reported a Wisconsin file holding no people at all, which is
-              a measure whose stated reason does not match its own finding.
+  MAINTAINED  Every roster file these pages read is under a SCHEDULED job —
+              either one that REWRITES it, or one that WATCHES its source and
+              reports when that source moves. A file under neither decays
+              silently, because every count guard still passes on one nobody
+              is refreshing.
+
+              THE WATCHER CASE IS NOT A LOOPHOLE AND WAS LEARNED THE HARD WAY.
+              Mason County's roster is transcribed BY HAND on purpose: its
+              source is a scanned PDF whose text layer extracts as noise that
+              PARSES rather than failing, so a scraper would not error, it
+              would ship confident garbage under real officeholders' names.
+              watch-mason-roster-source.yml checks weekly that the county still
+              links that exact PDF and that its bytes still hash the same, and
+              opens an issue when either moves. That is maintenance — the
+              output is a request for a person rather than a diff — and a bar
+              that only counted `git add` called it unmaintained and would have
+              sent somebody to build the very scraper that workflow's own
+              comment warns against.
+
+              Both kinds are reported, and the report SAYS WHICH, because
+              watched is a weaker guarantee than rewritten: a watcher tells you
+              the source moved, and a person still has to act. The report also
+              distinguishes what a file holds. A file naming PEOPLE goes stale
+              at the speed officeholders change; a file of structure — seat
+              counts and county URLs — decays far more slowly, on
+              reapportionment and link rot. The first draft justified this bar
+              by officeholder churn alone and then reported a Wisconsin file
+              holding no people at all, which is a measure whose stated reason
+              does not match its own finding.
 
 WHAT THIS IS FOR. A state that passes all three switches from expansion to
 maintenance — its session stops hunting counties and only tends what ships.
@@ -217,6 +235,24 @@ def refreshed_by(rel_path, staged):
     return sorted(set(hits))
 
 
+def watched_by(rel_path):
+    """The scheduled workflows that watch `rel_path`'s source and report a move.
+
+    A watcher names the file, runs on a schedule, and can open an issue — it
+    commits nothing, which is the point: where a source cannot be re-read
+    safely by machine, the honest output is a request for a person. Requiring
+    `git add` alone reads that deliberate design as neglect.
+    """
+    hits = []
+    for path in sorted(glob.glob(os.path.join(WORKFLOW_DIR, "*.yml"))):
+        text = open(path, encoding="utf-8").read()
+        if "schedule:" not in text or "issues: write" not in text:
+            continue
+        if rel_path in text:
+            hits.append(os.path.relpath(path, REPO_ROOT))
+    return sorted(set(hits))
+
+
 def measure():
     counties, paths, B = load_rosters()
     staged = staged_paths()
@@ -250,10 +286,14 @@ def measure():
                     if len(unanswered_names) < 12:
                         unanswered_names.append("%s district %s" % (name, d.get("label")))
 
-        unmaintained = []
+        unmaintained, watched = [], []
         for path in sorted(set(paths.get(tag, ()))):
             rel = os.path.relpath(path, REPO_ROOT)
             if refreshed_by(rel, staged):
+                continue
+            watchers = watched_by(rel)
+            if watchers:
+                watched.append((rel, watchers[0]))
                 continue
             # How many people the unrefreshed file names, which is what decides
             # how fast it rots. Counted off the raw file rather than the
@@ -273,6 +313,7 @@ def measure():
             districts=districts, people=people,
             unanswered=unanswered, unanswered_names=unanswered_names,
             rosters=len(set(paths.get(tag, ()))), unmaintained=unmaintained,
+            watched=watched,
             E=(unexamined == 0), A=(unanswered == 0),
             M=(not unmaintained),
         ))
@@ -327,6 +368,15 @@ def render(rows):
             out.append("Examined, Answered and Maintained. Expansion is finished;")
             out.append("this instance is in maintenance.")
             out.append("")
+            for rel, workflow in r["watched"]:
+                out.append("- **Watched, not rewritten:** `%s` is refreshed by no "
+                           "job because it cannot safely be — `%s` checks its "
+                           "source weekly and opens an issue when it moves. "
+                           "That is a weaker guarantee than a rewrite: it tells "
+                           "you the source changed and a person still has to "
+                           "act." % (rel, workflow))
+            if r["watched"]:
+                out.append("")
             continue
         if not r["E"]:
             out.append("- **Examined: no.** %d of %d counties have neither a roster "
@@ -337,9 +387,14 @@ def render(rows):
             out.append("- **Answered: no.** %d district(s) name nobody, are not "
                        "marked vacant and carry no note: %s"
                        % (r["unanswered"], "; ".join(r["unanswered_names"])))
+        for rel, workflow in r["watched"]:
+            out.append("- **Watched, not rewritten:** `%s`, by `%s` — counts "
+                       "for Maintained, and is a weaker guarantee than a "
+                       "rewrite." % (rel, workflow))
         if not r["M"]:
-            out.append("- **Maintained: no.** %d file(s) no scheduled workflow "
-                       "rewrites:" % len(r["unmaintained"]))
+            out.append("- **Maintained: no.** %d file(s) under no scheduled job "
+                       "at all, neither rewriting nor watching:"
+                       % len(r["unmaintained"]))
             for rel, named in r["unmaintained"]:
                 if named:
                     out.append("  - `%s` — names **%d** people and nothing "

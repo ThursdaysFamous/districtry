@@ -17,7 +17,7 @@ keep a state open forever while telling a reader nothing.
 
 | state | E.A.M. | counties | examined | districts | named | answered | rosters | maintained |
 |---|---|---|---|---|---|---|---|---|
-| il | **EA·** | 102 | 102/102 | 572 | 998 | all | 64 | 1 without a job |
+| il | **EAM** | 102 | 102/102 | 572 | 998 | all | 64 | all |
 | wi | **EA·** | 72 | 72/72 | 1590 | 1,574 | all | 2 | 1 without a job |
 | ia | **·AM** | 99 | 19/99 | 67 | 67 | all | 2 | all |
 | mi | **·AM** | 83 | 48/83 | 370 | 366 | all | 1 | all |
@@ -27,14 +27,16 @@ keep a state open forever while telling a reader nothing.
 
 ## What each state still needs
 
-### il — EA·
+### il — **E.A.M.**
 
-- **Maintained: no.** 1 file(s) no scheduled workflow rewrites:
-  - `il/data/app/mason-county-board-members.json` — names **8** people and nothing refreshes them, so they go stale at the speed that board turns over.
+Examined, Answered and Maintained. Expansion is finished;
+this instance is in maintenance.
+
+- **Watched, not rewritten:** `il/data/app/mason-county-board-members.json` is refreshed by no job because it cannot safely be — `.github/workflows/watch-mason-roster-source.yml` checks its source weekly and opens an issue when it moves. That is a weaker guarantee than a rewrite: it tells you the source changed and a person still has to act.
 
 ### wi — EA·
 
-- **Maintained: no.** 1 file(s) no scheduled workflow rewrites:
+- **Maintained: no.** 1 file(s) under no scheduled job at all, neither rewriting nor watching:
   - `wi/data/app/county-board-directory.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
 
 ### ia — ·AM
