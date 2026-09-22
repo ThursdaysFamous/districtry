@@ -887,9 +887,57 @@ def mi_commissioners(inst):
         out[name] = {"districts": districts, "sourceUrl": rec.get("sourceUrl"),
                      "extras": [], "skipped": [], "slug": county_slug(name),
                      "at_large": False, "source_file": path}
-    note = ("%d of Michigan's 83 counties name their commissioners; the rest are "
-            "unreached tranches, not empty boards" % len(out))
-    return out, problems, nameless, [path], note
+    scraped = len(out)
+
+    # THE SECOND ROUTE, AND IT IS A DIFFERENT KIND OF NAME. Adam opened it on
+    # 2026-09-22: the counties the tranches do not reach take their names from
+    # the state district layer's own certified-returns column -- the winners of
+    # the general election of 5 November 2024 -- on the condition that the row
+    # always says so. Every record in that file carries its own `lede`,
+    # `cta_note` and `desc`, which is why this adapter passes them through
+    # rather than composing a sentence here: one wording, written where the
+    # data is built, so the card and this page cannot drift about what these
+    # names are. `mi/scripts/build_mi_returns_roster.py` REFUSES TO WRITE a
+    # record without a lede, and this adapter refuses to render one.
+    returns_path = os.path.join(data_dir, "mi-commissioner-returns.json")
+    for fips, rec in sorted(_read(returns_path).items()):
+        name = (rec.get("county") or "").strip()
+        if not name:
+            problems.append("mi-commissioner-returns.json %r carries no county" % fips)
+            continue
+        if name in out:
+            problems.append(
+                "mi %s County is in BOTH commissioner rosters; the two carry "
+                "different provenance and a page can only state one" % name)
+            continue
+        if not (rec.get("lede") or "").strip():
+            problems.append(
+                "mi %s County is on the certified-returns route and carries no "
+                "`lede`, so its names would render with nothing saying what "
+                "they are" % name)
+            continue
+        named = rec.get("districts") or {}
+        districts = [district(label, [dict(named[label])])
+                     for label in sorted(named, key=district_sort_key)]
+        seats = rec.get("seats")
+        if seats is not None and len(districts) != seats:
+            problems.append(
+                "mi %s County accounts for %d district(s) against a %d-seat "
+                "board" % (name, len(districts), seats))
+            continue
+        entry = {"districts": districts, "sourceUrl": rec.get("sourceUrl"),
+                 "extras": [], "skipped": [], "slug": county_slug(name),
+                 "at_large": False, "source_file": returns_path,
+                 "lede": rec["lede"], "cta_note": rec.get("cta_note"),
+                 "desc": rec.get("desc")}
+        if rec.get("betterSource"):
+            entry["better_source"] = rec["betterSource"]
+        out[name] = entry
+    note = ("%d of Michigan's 83 counties name their commissioners: %d read "
+            "from the county's own board page, %d from the state's certified "
+            "November 2024 returns with every row saying so"
+            % (len(out), scraped, len(out) - scraped))
+    return out, problems, nameless, [path, returns_path], note
 
 
 def _nobody_key(inst, county):

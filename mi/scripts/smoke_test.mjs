@@ -1121,25 +1121,70 @@ try {
       await page.close();
     }
 
-    // A COUNTY THE ROSTER HAS NOT REACHED MUST SAY SO AND NAME NOBODY. Ingham
-    // is the worksheet's own anchor point and its site refuses this client
-    // (robots.txt, one `*` group, Disallow: /), so it is in no tranche. The
-    // card has to state that plainly rather than leave a blank where a name
-    // goes — and it must not fall back to the boundary column, which names
-    // Ingham's 2024 winners perfectly well.
+    // THIS CHECK USED TO ASSERT THAT INGHAM NAMES NOBODY, and it was right
+    // until 2026-09-22. It read "it must not fall back to the boundary column,
+    // which names Ingham's 2024 winners perfectly well" — the rule the
+    // 2026-09-03 decision set, written down as a test. Adam changed that rule:
+    // a certified name MAY be published when the row says what it is, so the
+    // 35 counties no tranche reaches now take the winners the state certified
+    // in November 2024 from mi-commissioner-returns.json. The check is
+    // REWRITTEN rather than deleted, because the thing worth guarding did not
+    // go away — it moved. What must never happen is a certified name wearing
+    // the plain "Commissioner" badge with no provenance, which reads exactly
+    // like a name somebody checked this week.
+    //
+    // Ingham is still the right point for it: the worksheet's own anchor, and
+    // its site refuses this client (robots.txt, one `*` group, Disallow: /),
+    // so it will not leave the certified cohort by being scraped.
     {
       const page = await booted(context,
         `${BASE}#point=42.73370,-84.55530&layers=county-commissioner`);
       const card = await cardText(page, "county-commissioner");
-      const people = await page.evaluate(() => {
-        const el = document.getElementById("card-county-commissioner");
-        return el ? el.querySelectorAll(".card-person").length : -1;
-      });
       const text = card.text || "";
-      check("a county the roster has not reached names nobody and says why",
-        people === 0 && /naming commissioners county by county/.test(text),
-        `personRows=${people} :: ${text.slice(0, 180)}`);
+      const before = text.split("Where this name")[0];
+      check("a county no tranche reaches names the election, never the office",
+        /Elected Nov 2024/.test(text) && /certified as elected/.test(text) &&
+        /5 November 2024/.test(text) && !/\bCommissioner\b/.test(before),
+        text.slice(0, 200));
       await page.close();
+    }
+
+    // TWO ROSTERS FEED ONE CARD AND A READER MUST BE ABLE TO TELL WHICH.
+    {
+      const returns = JSON.parse(readFileSync(
+        join(INSTANCE_DIR, "data/app/mi-commissioner-returns.json"), "utf8"));
+      const members = JSON.parse(readFileSync(
+        join(INSTANCE_DIR, "data/app/mi-commissioner-members.json"), "utf8"));
+      const overlap = Object.keys(returns).filter((k) => k in members);
+      check("the two commissioner rosters are disjoint and cover the state",
+        overlap.length === 0 &&
+        Object.keys(returns).length + Object.keys(members).length === 83,
+        `returns=${Object.keys(returns).length} members=${Object.keys(members).length} ` +
+        `overlap=${overlap.join(",") || "none"}`);
+
+      // Manistee is on the certified route AND publishes its own roster, so it
+      // is the one point exercising the better-source row. Its District 6 is
+      // also the seat measured as having changed hands — certified David
+      // Miehlke, the county's own page names Karen Goodman — which is the case
+      // the wording exists for.
+      const pageM = await booted(context,
+        `${BASE}#point=44.2443,-86.3243&layers=county-commissioner`);
+      const mani = await cardText(pageM, "county-commissioner");
+      check("a county that publishes its own roster says a scraper is better",
+        /better source/i.test(mani.text) || /publishes its own list/i.test(mani.text),
+        mani.text.slice(0, 260));
+      await pageM.close();
+
+      // Calhoun is read from its own board page weekly, so it must keep the
+      // plain badge and carry NO election provenance — the regression this
+      // change could most easily cause.
+      const pageC = await booted(context,
+        `${BASE}#point=42.3211,-85.1797&layers=county-commissioner`);
+      const cal = await cardText(pageC, "county-commissioner");
+      check("a scraped county is unchanged by the certified route",
+        /Commissioner/.test(cal.text) && !/Elected Nov 2024/.test(cal.text) &&
+        !/certified as elected/.test(cal.text), cal.text.slice(0, 200));
+      await pageC.close();
     }
     await context.close();
   }

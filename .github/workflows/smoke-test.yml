@@ -81,6 +81,14 @@ jobs:
       - name: The Michigan board probe's artifact still describes the tree
         run: python3 mi/scripts/probe_mi_county_boards.py --check
 
+      # Adam opened the certified-returns route on 2026-09-22 on ONE condition:
+      # a name from the state's election column may ship only where the row
+      # says what it is. This gate is that condition, enforced -- it fails on a
+      # record with no `lede`, on the two rosters overlapping, and on the cohort
+      # drifting from the counties the gap records name. Offline, stdlib only.
+      - name: Michigan's certified-returns roster still says what its names are
+        run: python3 mi/scripts/build_mi_returns_roster.py --check
+
       # The weekly Detroit roster PR's title and body are written by this
       # script, and a reviewer acts on "no officeholder changed" by NOT reading
       # the diff — so a wrong summary is worse than the static paragraph it
