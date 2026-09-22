@@ -456,9 +456,20 @@ def contact_block(session, code, unit_label, warnings):
         form, never anything changing about the fire district. Do not relax this
         to a one-witness rule to win the address back.
 
-        THERE IS A SECOND LOSS SHAPE AND IT IS REDDICK'S MIRROR IMAGE. Metamora
-        Public Library District (102/010/10) dropped its telephone from
-        woodford-district-officials.json in #1076. Read on 2026-09-22, both
+        THERE IS A SECOND LOSS SHAPE AND IT IS REDDICK'S MIRROR IMAGE. The library
+        district filing as 102/010/10 dropped its telephone from
+        woodford-district-officials.json in #1076. IT HAS TWO NAMES IN THIS
+        REPO AND BOTH ARE CORRECT: Woodford County's own parcel fabric calls it
+        `IL Prairie Library District` (code LYIL), which is what the boundary
+        file and that county roster use, while the library's own state
+        directory and its AFR filing call it `Illinois Prairie District Public
+        Library`. Two publishers naming one body, not a defect -- so neither
+        file is renamed to match the other. An earlier draft of this paragraph
+        called it "Metamora Public Library District" -- a name NEITHER PUBLISHER
+        USES, supplied from the town in the filing's address by a reader who had
+        the code, the office and the head in front of them but not the key.
+        Cite a unit by its comptroller code, which is the one identifier both
+        publishers share. Read on 2026-09-22, both
         years through this same parser: the FILER SLOTS ARE IDENTICAL in both,
         Smith / Smith / Weddle / Smith, and what moved is the VALUE. FY2025
         carried (309) 367-4591 in all four, so Smith and Weddle witnessed it.
