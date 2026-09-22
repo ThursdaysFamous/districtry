@@ -488,13 +488,27 @@ def contact_block(session, code, unit_label, warnings):
         differently-surnamed filers giving the SAME base number at DIFFERENT
         extensions, which is stronger evidence of an institution's switchboard
         than an identical full number is, and a switchboard is exactly what the
-        two-witness rule exists to establish. Measured on a 40-unit sample of
-        the 509 in afr-special-districts.json, each asked for its OWN latest
-        fiscal year: 37 read, 0 filing an extension anywhere, 0 where stripping
-        creates a witness the raw values deny. That is a sample and not the
-        whole corpus, so it bounds the case rather than closing it -- but
-        nothing here licenses relaxing the two-surname rule, which an extension
-        does not bear on: one surname is one surname.
+        two-witness rule exists to establish.
+
+        MEASURED TWICE, BECAUSE THE FIRST SAMPLE WAS DRAWN FROM THE WRONG
+        INVENTORY. afr-special-districts.json holds FIRE (323) and PARK (186)
+        districts and NO libraries at all, so a 40-unit sample of it read 37
+        and found 0 extensions -- a clean zero for something that does not
+        occur in that population, measured while the documented case is a
+        LIBRARY district outside it. Sampling the 198 library districts that
+        carry a comptroller code instead: 40 sampled, all 40 read, 2 filing an
+        extension -- Illinois Prairie District Public Library, which IS
+        102/010/10 above, and Kewanee Public Library District at
+        (309) 853-3333 Ext: 1136. Across both populations, 77 units read and 0
+        where stripping creates a witness the raw values deny. These are
+        samples rather than the whole corpus, so they bound the case rather
+        than closing it -- but nothing here licenses relaxing the two-surname
+        rule, which an extension does not bear on: one surname is one surname.
+
+        A SAMPLE INHERITS ITS INVENTORY'S SCOPE, which is the transferable
+        part: a zero measured over a population the phenomenon cannot appear in
+        reads exactly like a zero measured over one where it could. Check that
+        the inventory you sample contains the case you are reasoning about.
 
         A TRAP THAT COST THIS MEASUREMENT ITS FIRST RUN: most units' latest
         filing is not the current year. Asking all 60 of a first sample for
