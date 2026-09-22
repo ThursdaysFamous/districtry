@@ -316,6 +316,26 @@ PROVENANCE = [
         ),
     },
     {
+        "layer": "county-commissioner",
+        "app_file": "mi-commissioner-returns.json",
+        "source_url": ("https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/"
+                       "boundaries/MapServer/10"),
+        "note": (
+            "Commissioner NAMES for the 35 counties the weekly scrape does not reach, "
+            "from the SAME service as mi-commissioner-districts.json but from the "
+            "Commissioner/Party columns that builder strips. Built by "
+            "mi/scripts/build_mi_returns_roster.py. THE TWO ARE NOT IN CONFLICT: the "
+            "boundary file stays name-free because a name riding a boundary is refreshed "
+            "only when the boundary is, and this file publishes the same column as what "
+            "it is -- the winners the state certified on 5 November 2024 -- with every "
+            "record carrying its own provenance sentence and the builder refusing to "
+            "write one without. How stale that column is, measured 2026-09-22 on the 366 "
+            "seats where the scraped roster gives a comparand: 18 name a different person "
+            "(4.9%), 9 misspell the same one, 1 is a missing space, and the remaining 338 "
+            "agree bar name form. If this service ever drops those columns the builder "
+            "fails loudly rather than shipping a shorter file."),
+    },
+    {
         "layer": "county",
         "app_file": "state-counties.json",
         "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1",

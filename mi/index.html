@@ -9047,6 +9047,20 @@ function initMichiganExplorer() {
   var loadMiCommissionerMembers = makeCached(function () {
     return fetchJSONWithRetry("data/app/mi-commissioner-members.json", {}, 2);
   });
+  /* THE SECOND ROSTER IS A DIFFERENT KIND OF FACT AND THE CARD SAYS WHICH IT
+   * IS SHOWING. mi-commissioner-returns.json carries the 35 counties the
+   * weekly scrape does not reach, from the state layer's own certified-returns
+   * column — the winners of the general election of 5 November 2024, not a
+   * list any county keeps current. Adam opened that route on 2026-09-22 on
+   * the condition the row always says so, which is why every record in that
+   * file carries its own `lede` and the builder refuses to write one without.
+   * The scraped roster still WINS wherever it has the county: it is read from
+   * the county's own page every week, and the two cohorts are disjoint by a
+   * gate in build_mi_returns_roster.py, so this order only ever matters if
+   * that gate is ever wrong. */
+  var loadMiCommissionerReturns = makeCached(function () {
+    return fetchJSONWithRetry("data/app/mi-commissioner-returns.json", {}, 2);
+  });
 
   registerLayer({
     id: "county-commissioner",
@@ -9065,7 +9079,8 @@ function initMichiganExplorer() {
     query: function (point, seq) {
       return Promise.all([
         queryFeatureAt(loadMiCommissionerDistricts, point),
-        loadMiCommissionerMembers().catch(function () { return null; })
+        loadMiCommissionerMembers().catch(function () { return null; }),
+        loadMiCommissionerReturns().catch(function () { return null; })
       ]).then(function (parts) {
         var feature = parts[0];
         if (!feature) return null;
@@ -9092,12 +9107,23 @@ function initMichiganExplorer() {
             unnamedWhy = entry.unnamedWhy[String(district)] || null;
           }
         }
+        // Only where the maintained roster has nothing for this county.
+        var certified = null, certifiedEntry = null;
+        if (!member && !entry && parts[2] && fips != null) {
+          certifiedEntry = parts[2][String(fips)] || null;
+          if (certifiedEntry && certifiedEntry.districts && district != null) {
+            certified = certifiedEntry.districts[String(district)] || null;
+          }
+        }
         return {
           seq: seq,
           district: district,
           county: findPropCI(props, ["county"]),
           population: findPropCI(props, ["population"]),
           member: member || null,
+          certified: certified,
+          certifiedLede: certifiedEntry ? certifiedEntry.lede : null,
+          certifiedBetter: certifiedEntry ? certifiedEntry.betterSource : null,
           unnamedHere: unnamedHere,
           unnamedWhy: unnamedWhy,
           seats: entry ? entry.seats : null,
@@ -9125,6 +9151,17 @@ function initMichiganExplorer() {
         if (result.member.phone) person.phone = String(result.member.phone);
         if (result.member.email) person.email = String(result.member.email);
         wrap.appendChild(renderPersonRows([person]));
+      } else if (result.certified && result.certified.name) {
+        // A CERTIFIED NAME NEVER APPEARS WITHOUT THE SENTENCE THAT SAYS WHAT
+        // IT IS. The badge is deliberately NOT "Commissioner" on its own: this
+        // person won the seat at a named election and may not hold it now, and
+        // a bare "Commissioner" badge would be the claim the 2026-09-03
+        // decision refused. The note carries the party where the state
+        // certified one.
+        var won = { name: String(result.certified.name),
+                    badge: "Elected Nov 2024" };
+        if (result.certified.party) won.note = String(result.certified.party);
+        wrap.appendChild(renderPersonRows([won]));
       }
       var rows = [];
       rows.push({
@@ -9140,7 +9177,25 @@ function initMichiganExplorer() {
           value: Number(result.population).toLocaleString()
         });
       }
-      if (!(result.member && result.member.name)) {
+      if (result.certified && result.certified.name && result.certifiedLede) {
+        // The record's OWN sentence, not one assembled here, so the card, the
+        // county page and any future reader cannot drift from each other about
+        // what these names are. The %(county)s placeholder is the same one
+        // scripts/build_county_pages.py fills on the page side.
+        rows.push({
+          label: "Where this name comes from",
+          value: String(result.certifiedLede).replace(
+            /%\(county\)s/g,
+            result.county != null
+              ? String(result.county).replace(/ County$/, "") : "this")
+        });
+        if (result.certifiedBetter) {
+          rows.push({ label: "A better source exists",
+                      value: String(result.certifiedBetter) });
+        }
+      }
+      if (!(result.member && result.member.name)
+          && !(result.certified && result.certified.name)) {
         rows.push({
           label: "Your commissioner",
           value: result.unnamedWhy

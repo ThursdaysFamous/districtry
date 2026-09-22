@@ -887,9 +887,67 @@ def mi_commissioners(inst):
         out[name] = {"districts": districts, "sourceUrl": rec.get("sourceUrl"),
                      "extras": [], "skipped": [], "slug": county_slug(name),
                      "at_large": False, "source_file": path}
-    note = ("%d of Michigan's 83 counties name their commissioners; the rest are "
-            "unreached tranches, not empty boards" % len(out))
-    return out, problems, nameless, [path], note
+    scraped = len(out)
+
+    # THE SECOND ROUTE, AND IT IS A DIFFERENT KIND OF NAME. Adam opened it on
+    # 2026-09-22: the counties the tranches do not reach take their names from
+    # the state district layer's own certified-returns column -- the winners of
+    # the general election of 5 November 2024 -- on the condition that the row
+    # always says so. Every record in that file carries its own `lede`,
+    # `cta_note` and `desc`, which is why this adapter passes them through
+    # rather than composing a sentence here: one wording, written where the
+    # data is built, so the card and this page cannot drift about what these
+    # names are. `mi/scripts/build_mi_returns_roster.py` REFUSES TO WRITE a
+    # record without a lede, and this adapter refuses to render one.
+    returns_path = os.path.join(data_dir, "mi-commissioner-returns.json")
+    for fips, rec in sorted(_read(returns_path).items()):
+        name = (rec.get("county") or "").strip()
+        if not name:
+            problems.append("mi-commissioner-returns.json %r carries no county" % fips)
+            continue
+        if name in out:
+            problems.append(
+                "mi %s County is in BOTH commissioner rosters; the two carry "
+                "different provenance and a page can only state one" % name)
+            continue
+        # ALL FOUR SURFACES, not just the lede. A page says where its names
+        # came from in four places -- the lede, the standfirst under the H1,
+        # the meta description a search result shows, and the disclaimer at
+        # the foot -- and three of them defaulted to "the county's own
+        # published roster". Requiring only the lede would leave a page whose
+        # opening paragraph names the election and whose next line and last
+        # line contradict it.
+        thin = [k for k in ("lede", "standfirst", "disclaimer", "desc")
+                if not (rec.get(k) or "").strip()]
+        if thin:
+            problems.append(
+                "mi %s County is on the certified-returns route and carries no "
+                "`%s`, so a page would state a provenance it does not have"
+                % (name, "`, no `".join(thin)))
+            continue
+        named = rec.get("districts") or {}
+        districts = [district(label, [dict(named[label])])
+                     for label in sorted(named, key=district_sort_key)]
+        seats = rec.get("seats")
+        if seats is not None and len(districts) != seats:
+            problems.append(
+                "mi %s County accounts for %d district(s) against a %d-seat "
+                "board" % (name, len(districts), seats))
+            continue
+        entry = {"districts": districts, "sourceUrl": rec.get("sourceUrl"),
+                 "extras": [], "skipped": [], "slug": county_slug(name),
+                 "at_large": False, "source_file": returns_path,
+                 "lede": rec["lede"], "cta_note": rec.get("cta_note"),
+                 "desc": rec.get("desc"), "standfirst": rec.get("standfirst"),
+                 "disclaimer": rec.get("disclaimer")}
+        if rec.get("betterSource"):
+            entry["better_source"] = rec["betterSource"]
+        out[name] = entry
+    note = ("%d of Michigan's 83 counties name their commissioners: %d read "
+            "from the county's own board page, %d from the state's certified "
+            "November 2024 returns with every row saying so"
+            % (len(out), scraped, len(out) - scraped))
+    return out, problems, nameless, [path, returns_path], note
 
 
 def _nobody_key(inst, county):
@@ -1505,10 +1563,7 @@ h1 {
 <p class="title-sub">%(standfirst)s</p>
 %(body)s
 %(source)s
-<p class="disclaimer">districtry is an independent, unofficial civic reference.
-It never guesses at who holds a seat: every name above is published by the
-county itself, and where a county publishes none this page says so rather than
-filling the gap.</p>
+<p class="disclaimer">%(disclaimer)s</p>
 <p class="foot">
 <a href="../%(index_page)s">%(all_label)s</a>
 <a href="../">Back to the map</a>
@@ -1522,6 +1577,16 @@ filling the gap.</p>
 </body>
 </html>
 """
+
+
+# The closing sentence of every one of these pages, hoisted out of the shell
+# so a record can replace it. The line breaks are the template's own, kept so
+# every page that does not override it is byte-identical to before.
+DEFAULT_DISCLAIMER = (
+    "districtry is an independent, unofficial civic reference.\n"
+    "It never guesses at who holds a seat: every name above is published by the\n"
+    "county itself, and where a county publishes none this page says so rather than\n"
+    "filling the gap.")
 
 
 def mark_svg():
@@ -1584,15 +1649,35 @@ def build_page(inst, name, rec, at_large, shell, contact=None):
         # Same hook as the flat branch: a record whose names did not come
         # from the county's own roster says so here too, or the search result
         # states a provenance the page itself contradicts.
-        desc = (rec["desc"] % {"head": head, "named": named - extra_n,
+        # THE SAME VOCABULARY THE LEDE HOOK TAKES. It was three keys against
+        # the lede's five, and nothing caught it because Michigan's
+        # certified-returns records are this hook's first consumer: a record
+        # written to the lede's vocabulary raised KeyError('county') here.
+        # Plain values, not esc()'d -- desc is escaped once at insertion
+        # (esc(desc)), where the lede is inserted raw and escapes its own.
+        desc = (rec["desc"] % {"head": head, "heading": head, "county": name,
+                               "phrase": inst["phrase"],
+                               "named": named - extra_n,
                                "districts": n_dist}
                 if rec.get("desc") else
                 "Who represents you on the %s — %d members across "
                 "%d districts%s, from the county's own published roster."
                 % (head, named - extra_n, n_dist,
                    " plus " + suffix if suffix else ""))
-    standfirst = ("Every member of the %s, from the county's own "
+    # THE SAME HOOK, ON THE TWO SURFACES THE LEDE AND THE DESCRIPTION LEFT
+    # BEHIND. This sentence sits under the H1 and the disclaimer closes the
+    # page, and both asserted "the county's own published roster" on every
+    # page of both routes -- so a reader of a certified-returns county was
+    # told twice more that the county published these names, in the very
+    # places a page states where its content came from. A record supplying
+    # neither renders byte-identically to before this hook existed.
+    standfirst = (rec["standfirst"] % {"head": head, "heading": head,
+                                       "county": name,
+                                       "phrase": inst["phrase"]}
+                  if rec.get("standfirst") else
+                  "Every member of the %s, from the county's own "
                   "published roster." % head)
+    disclaimer = rec.get("disclaimer") or DEFAULT_DISCLAIMER
 
     graph = {
         "@context": "https://schema.org",
@@ -1632,7 +1717,7 @@ def build_page(inst, name, rec, at_large, shell, contact=None):
     return PAGE % dict(
         shell,
         title=esc(title), desc=esc(desc), canonical=esc(canonical),
-        h1=esc(head), standfirst=esc(standfirst),
+        h1=esc(head), standfirst=esc(standfirst), disclaimer=esc(disclaimer),
         body=body, source=source_note(rec, at_large), jsonld=jsonld,
         og_image=esc(inst["app_url"] + "og-image.png"),
         app_name=esc(inst["app_name"]), index_page=esc(inst["index_page"]),

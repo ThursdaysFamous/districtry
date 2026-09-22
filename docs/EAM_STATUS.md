@@ -20,7 +20,7 @@ keep a state open forever while telling a reader nothing.
 | il | **EA·** | 102 | 102/102 | 572 | 998 | all | 309 | 221 without a job |
 | wi | **EA·** | 72 | 72/72 | 1590 | 1,574 | all | 47 | 25 without a job |
 | ia | **EA·** | 99 | 99/99 | 67 | 67 | all | 33 | 16 without a job |
-| mi | **EA·** | 83 | 83/83 | 370 | 366 | all | 21 | 14 without a job |
+| mi | **EA·** | 83 | 83/83 | 619 | 615 | all | 22 | 14 without a job |
 
 - **ca** — no county tier, so E does not apply. San Francisco — a consolidated city and county, so the county tier is the city and there is no frontier.
 - **ny** — no county tier, so E does not apply. New York City — the instance serves five boroughs, not a county frontier, so there is no county to examine.
@@ -306,6 +306,7 @@ keep a state open forever while telling a reader nothing.
 
 ### mi — EA·
 
+- **Under a WATCH.md plan (1):** re-checked on a stated cadence rather than by a job — `mi-commissioner-returns.json`
 - **Maintained: no.** 14 file(s) under no scheduled job at all, neither rewriting nor watching — 13 boundary, 1 structure, **0 naming people**. No officeholder is going stale here; what these want is a stated re-check cadence, not a weekly scraper.
   - `mi/data/app/congress-districts.json` — **13** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
   - `mi/data/app/coverage-gaps.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.

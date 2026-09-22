@@ -1,0 +1,1528 @@
+{
+ "003": {
+  "county": "Alger",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Enrico T. Capogrossa",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Dean Sealberg",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "D. Michael Nettleton",
+    "party": "NPA"
+   },
+   "4": {
+    "name": "Kelly Livemore",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Mickey G. Rondeau",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 5,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "005": {
+  "county": "Allegan",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Craig Van Beek",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "D. Mark DeYoung",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Brad Lubbers",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Scott Beltman",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Gale Dugan",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 5,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "009": {
+  "county": "Antrim",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "William Hefferan",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Jarris Rubingh",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Terry VanAlstine",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Jason Helwig",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Ray Scola",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 5,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "013": {
+  "county": "Baraga",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "James Michael Niemela",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Brad Dakota",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Chad Cichosz",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "William F. Menge",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Craig Albert Kent",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 5,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "017": {
+  "betterSource": "Bay County publishes its own list of commissioners, which is kept current where this one is dated. Reading it needs a scraper this project has not yet written, so the certified result is what ships today.",
+  "county": "Bay",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Kathy Niemiec",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Tm Banaszak",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Vaughn J. Begick",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Larry Beson",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Christopher T. Rupp",
+    "party": "Republican"
+   },
+   "6": {
+    "name": "Jesse Dockett",
+    "party": "Democratic"
+   },
+   "7": {
+    "name": "Jerome Crete",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 7,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "019": {
+  "county": "Benzie",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Bob Roelofs",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Art Jeannot",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Christina Trigg",
+    "party": "Democratic"
+   },
+   "4": {
+    "name": "Rhonda Nye",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Tim Markey",
+    "party": "Republican"
+   },
+   "6": {
+    "name": "Evan J. Warsecke",
+    "party": "Republican"
+   },
+   "7": {
+    "name": "Gary G. Sauer",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 7,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "023": {
+  "county": "Branch",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Randy Hazelbaker",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Jon E. Houtz",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Tim Stoll",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Rick Hollister",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Alan McClellan",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 5,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "029": {
+  "county": "Charlevoix",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Robert J. Jess",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Chris Christensen",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Timothy P. Kenney",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Joshua L. Chamberlain",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Scott A. Hankins",
+    "party": "Republican"
+   },
+   "6": {
+    "name": "Annemarie Conway",
+    "party": "NPA"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 6,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "039": {
+  "county": "Crawford",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Laurie Jamison",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Dorothy A. Frederick",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Ed Gosciki",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Shawn M. Kraycs",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Sandra Moore",
+    "party": "Republican"
+   },
+   "6": {
+    "name": "Matthew J. Moeller",
+    "party": "NPA"
+   },
+   "7": {
+    "name": "Phil Lewis",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 7,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "049": {
+  "county": "Genesee",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Delrico J. Loyd",
+    "party": "Democratic"
+   },
+   "2": {
+    "name": "Charles Winfrey",
+    "party": "Democratic"
+   },
+   "3": {
+    "name": "Ellen J. Ellenburg",
+    "party": "Democratic"
+   },
+   "4": {
+    "name": "Beverly Brown",
+    "party": "Democratic"
+   },
+   "5": {
+    "name": "James Avery",
+    "party": "Democratic"
+   },
+   "6": {
+    "name": "Donna Anderson",
+    "party": "Democratic"
+   },
+   "7": {
+    "name": "Martin L. Cousineau",
+    "party": "Democratic"
+   },
+   "8": {
+    "name": "Dale K. Weighill",
+    "party": "Democratic"
+   },
+   "9": {
+    "name": "Wendy Wolcott",
+    "party": "Democratic"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 9,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "051": {
+  "county": "Gladwin",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Michael Visnaw",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Alan Donaldson",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Tami O'Donnell",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Karen L. Moore",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Thomas L. Winarski",
+    "party": "NPA"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 5,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "053": {
+  "county": "Gogebic",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Dan Siirila",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Joseph J. Cayer",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Dan Wood",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "James Lorenson",
+    "party": "Democratic"
+   },
+   "5": {
+    "name": "Peter Matonich",
+    "party": "Democratic"
+   },
+   "6": {
+    "name": "Michael S. Yon",
+    "party": "Republican"
+   },
+   "7": {
+    "name": "George R. Peterson III",
+    "party": "Democratic"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 7,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "057": {
+  "county": "Gratiot",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Dave Owens",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Jan Bunting",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Timothy Gay",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Steven Sopocy",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "George Bailey",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 5,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "063": {
+  "county": "Huron",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Sami Khoury",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Kurt R. Geiger",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "J. Scott Maust",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Steve Vaughan",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "John Hunt",
+    "party": "Republican"
+   },
+   "6": {
+    "name": "Joe Murphy",
+    "party": "Republican"
+   },
+   "7": {
+    "name": "Mary Ellen Babcock",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 7,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "065": {
+  "county": "Ingham",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Randy Maiville",
+    "party": "Republican"
+   },
+   "10": {
+    "name": "Gabrielle Lawrence",
+    "party": "Democratic"
+   },
+   "11": {
+    "name": "Mark Grebner",
+    "party": "Democratic"
+   },
+   "12": {
+    "name": "Irene M. Cahill",
+    "party": "Democratic"
+   },
+   "13": {
+    "name": "Tanya L. Pratt",
+    "party": "Democratic"
+   },
+   "14": {
+    "name": "Mark Polsdofer",
+    "party": "Democratic"
+   },
+   "15": {
+    "name": "Monica Schafer",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Karla Ruest",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Chris Trubac",
+    "party": "Democratic"
+   },
+   "4": {
+    "name": "Todd Tennis",
+    "party": "Democratic"
+   },
+   "5": {
+    "name": "Myles Johnson",
+    "party": "Democratic"
+   },
+   "6": {
+    "name": "Rachel R. Willis",
+    "party": "Democratic"
+   },
+   "7": {
+    "name": "Thomas P. Morgan",
+    "party": "Democratic"
+   },
+   "8": {
+    "name": "Robert Orlando Peña",
+    "party": "Democratic"
+   },
+   "9": {
+    "name": "Ryan Sebolt",
+    "party": "Democratic"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 15,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "069": {
+  "county": "Iosco",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Alexander Hardy",
+    "party": "Democratic"
+   },
+   "2": {
+    "name": "Terry E. Dutcher",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Charles Finley",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Brian J. Loeffler",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Donald Jay O'Farrell",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 5,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "071": {
+  "county": "Iron",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Patti Peretto",
+    "party": "Democratic"
+   },
+   "2": {
+    "name": "Pete Judd",
+    "party": "NPA"
+   },
+   "3": {
+    "name": "Mark Stauber",
+    "party": "NPA"
+   },
+   "4": {
+    "name": "Ean Bruette",
+    "party": "NPA"
+   },
+   "5": {
+    "name": "Jacob Conery",
+    "party": "NPA"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 5,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "083": {
+  "county": "Keweenaw",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Don Piche",
+    "party": "Democratic"
+   },
+   "2": {
+    "name": "Michael LaMotte",
+    "party": "NPA"
+   },
+   "3": {
+    "name": "Del Rajala",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Rober DeMarois",
+    "party": "Democratic"
+   },
+   "5": {
+    "name": "Randy Eckloff",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 5,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "093": {
+  "county": "Livingston",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Douglas G. Helzeman",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Dave Domas",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Frank Sample",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Wes Nakagiri",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Jay R. Drick",
+    "party": "Republican"
+   },
+   "6": {
+    "name": "Roger Deaton",
+    "party": "Republican"
+   },
+   "7": {
+    "name": "Melvin L. Paunovich",
+    "party": "Republican"
+   },
+   "8": {
+    "name": "Nick Fiani",
+    "party": "Republican"
+   },
+   "9": {
+    "name": "Jay Gross",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 9,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "101": {
+  "betterSource": "Manistee County publishes its own list of commissioners, which is kept current where this one is dated. Reading it needs a scraper this project has not yet written, so the certified result is what ships today.",
+  "county": "Manistee",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Janice McCraner",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Richard A. Schmidt",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Nikki Koons",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Eric D. Gustad",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Jeffrey Dontz",
+    "party": "Republican"
+   },
+   "6": {
+    "name": "David Miehlke",
+    "party": "Republican"
+   },
+   "7": {
+    "name": "Shayne Machen",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 7,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "103": {
+  "county": "Marquette",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "John DePetro",
+    "party": "Democratic"
+   },
+   "2": {
+    "name": "Joseph Derocha",
+    "party": "Democratic"
+   },
+   "3": {
+    "name": "Stephen Adamini",
+    "party": "Democratic"
+   },
+   "4": {
+    "name": "Dana LaLonde",
+    "party": "Democratic"
+   },
+   "5": {
+    "name": "Bill Nordeen",
+    "party": "Democratic"
+   },
+   "6": {
+    "name": "Karen Alholm",
+    "party": "Democratic"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 6,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "105": {
+  "county": "Mason",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Nick Krieger",
+    "party": "Democratic"
+   },
+   "2": {
+    "name": "Les Johnson",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Jody Hartley",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Lewis G. Squires",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Steven K. Hull",
+    "party": "Republican"
+   },
+   "6": {
+    "name": "James S. Andersen",
+    "party": "Republican"
+   },
+   "7": {
+    "name": "Ron Bacon",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 7,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "107": {
+  "county": "Mecosta",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Jeff Jackson",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Greg Adams",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Chris Zimmerman",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Gary Lambrix",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Tom O'Neil",
+    "party": "Republican"
+   },
+   "6": {
+    "name": "Chris Jane",
+    "party": "Republican"
+   },
+   "7": {
+    "name": "Bill Routley",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 7,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "113": {
+  "county": "Missaukee",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Lan Bridson",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Frank Vanderwal",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Pam Niebrzydowski",
+    "party": "NPA"
+   },
+   "4": {
+    "name": "Roger Ouwinga",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Dean Smallegan",
+    "party": "Republican"
+   },
+   "6": {
+    "name": "Star Hughston",
+    "party": "Republican"
+   },
+   "7": {
+    "name": "Gary E. Glaudu, Jr.",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 7,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "119": {
+  "county": "Montmorency",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Mary Hardies",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Bob DeVriendt",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Lloyd Peltier",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Michelle LaRose",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Michelle Hamlin",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 5,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "123": {
+  "betterSource": "Newaygo County publishes its own list of commissioners, which is kept current where this one is dated. Reading it needs a scraper this project has not yet written, so the certified result is what ships today.",
+  "county": "Newaygo",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Paul Mellema",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Brian J. Kolk",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Chuck Trapp",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Jim Maike",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Lori Tubbergen Clark",
+    "party": "Republican"
+   },
+   "6": {
+    "name": "Brenda Bird",
+    "party": "Republican"
+   },
+   "7": {
+    "name": "Mike Kruithoff",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 7,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "125": {
+  "county": "Oakland",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Dave Woodward",
+    "party": "Democratic"
+   },
+   "10": {
+    "name": "Kristen Nelson",
+    "party": "Democratic"
+   },
+   "11": {
+    "name": "Marcia Gershenson",
+    "party": "Democratic"
+   },
+   "12": {
+    "name": "Christine A. Long",
+    "party": "Republican"
+   },
+   "13": {
+    "name": "Phil Weipert",
+    "party": "Republican"
+   },
+   "14": {
+    "name": "Robert Smiley",
+    "party": "Republican"
+   },
+   "15": {
+    "name": "Gwen Markam",
+    "party": "Democratic"
+   },
+   "16": {
+    "name": "William Miller",
+    "party": "Democratic"
+   },
+   "17": {
+    "name": "Yolanda Smith Charles",
+    "party": "Democratic"
+   },
+   "18": {
+    "name": "Linnie Taylor",
+    "party": "Democratic"
+   },
+   "19": {
+    "name": "Charlie Cavell",
+    "party": "Democratic"
+   },
+   "2": {
+    "name": "Penny C. Luebs",
+    "party": "Democratic"
+   },
+   "3": {
+    "name": "Ann Erickson Gault",
+    "party": "Democratic"
+   },
+   "4": {
+    "name": "Brendan Johnson",
+    "party": "Democratic"
+   },
+   "5": {
+    "name": "Michael Spisz",
+    "party": "Republican"
+   },
+   "6": {
+    "name": "Michael J. Gingell",
+    "party": "Republican"
+   },
+   "7": {
+    "name": "Bob Hoffman",
+    "party": "Republican"
+   },
+   "8": {
+    "name": "Karen Joliat",
+    "party": "Republican"
+   },
+   "9": {
+    "name": "Angela N. Powell",
+    "party": "Democratic"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 19,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "129": {
+  "county": "Ogemaw",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Jenny David",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Roger Mayhew",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Charles F. Wiltse",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Mark D. Surbrook",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Craig Scott",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 5,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "139": {
+  "county": "Ottawa",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "James Barry",
+    "party": "Republican"
+   },
+   "10": {
+    "name": "Josh Brugger",
+    "party": "Republican"
+   },
+   "11": {
+    "name": "Allison Biedema",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Jordan Jorritsma",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Doug Zylstra",
+    "party": "Democratic"
+   },
+   "4": {
+    "name": "Jacob Bonnema",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Joe Moss",
+    "party": "Republican"
+   },
+   "6": {
+    "name": "Kendra Wenzel",
+    "party": "Republican"
+   },
+   "7": {
+    "name": "John Teeples",
+    "party": "Republican"
+   },
+   "8": {
+    "name": "Sylvia Rhodea",
+    "party": "Republican"
+   },
+   "9": {
+    "name": "Philip Kuyers",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 11,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "149": {
+  "county": "St. Joseph",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Jared Hoffmaster",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Rick Shaffer",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Rusty Baker",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Luis Rosado",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Christina Yunker",
+    "party": "Republican"
+   },
+   "6": {
+    "name": "Ken Malone",
+    "party": "Republican"
+   },
+   "7": {
+    "name": "Terrance Conklin",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 7,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "155": {
+  "county": "Shiawassee",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Josh Haley",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Gregory Brodeur",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Gary Holzhausen",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Bill Johnson",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Brad Howard",
+    "party": "Republican"
+   },
+   "6": {
+    "name": "Cindy L. Garber",
+    "party": "Republican"
+   },
+   "7": {
+    "name": "Matthew Shepard",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 7,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "157": {
+  "county": "Tuscola",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Thomas Young",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Thomas Bardwell",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Kim Vaughan",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Bill Lutz",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Matthew Koch",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 5,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "159": {
+  "betterSource": "Van Buren County publishes its own list of commissioners, which is kept current where this one is dated. Reading it needs a scraper this project has not yet written, so the certified result is what ships today.",
+  "county": "Van Buren",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Gail Lee Patterson-Gladney",
+    "party": "Democratic"
+   },
+   "2": {
+    "name": "Mike Chappell",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Kurt Doroh",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "David J. DiStefano",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Randall Peat",
+    "party": "Republican"
+   },
+   "6": {
+    "name": "Tina Leary",
+    "party": "Republican"
+   },
+   "7": {
+    "name": "Paul Schincariol",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 7,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "161": {
+  "betterSource": "Washtenaw County publishes its own list of commissioners, which is kept current where this one is dated. Reading it needs a scraper this project has not yet written, so the certified result is what ships today.",
+  "county": "Washtenaw",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Jason Maciejewski",
+    "party": "Democratic"
+   },
+   "2": {
+    "name": "Crystal Lyte",
+    "party": "Democratic"
+   },
+   "3": {
+    "name": "Shannon Beeman",
+    "party": "Democratic"
+   },
+   "4": {
+    "name": "Caroline L. Sanders",
+    "party": "Democratic"
+   },
+   "5": {
+    "name": "Justin D. Hodge",
+    "party": "Democratic"
+   },
+   "6": {
+    "name": "Annie Somerville",
+    "party": "Democratic"
+   },
+   "7": {
+    "name": "Andy LaBarre",
+    "party": "Democratic"
+   },
+   "8": {
+    "name": "Yousef Rabhi",
+    "party": "Democratic"
+   },
+   "9": {
+    "name": "Katie Scott",
+    "party": "Democratic"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 9,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ },
+ "165": {
+  "county": "Wexford",
+  "cta_note": "Opens the map with the commissioner-district layer on. The district boundaries come from the same state compilation; the names on this page come from its election-results column and are dated to that election.",
+  "desc": "Who won each seat on %(county)s County's Board of Commissioners at the last election the state certified, and which district each one represents.",
+  "disclaimer": "districtry is an independent, unofficial civic reference.\nIt never guesses at who holds a seat: every name above is a certified result of\nthe general election of 5 November 2024, published by the State of Michigan.\nThis page dates them to that election rather than claiming the seat is still held.",
+  "districts": {
+   "1": {
+    "name": "Aaron D. Sogge",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Jason L. Nelso",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Mark A. Nyman",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Sandy Bengelink",
+    "party": "Republican"
+   },
+   "5": {
+    "name": "Machael C. Bush",
+    "party": "Republican"
+   },
+   "6": {
+    "name": "Julie A. Theobald",
+    "party": "Republican"
+   },
+   "7": {
+    "name": "Gary L. Taylor",
+    "party": "Republican"
+   },
+   "8": {
+    "name": "Jason D. Baughan",
+    "party": "Republican"
+   },
+   "9": {
+    "name": "Brian D. Potter",
+    "party": "Republican"
+   }
+  },
+  "election": "2024-11-05",
+  "lede": "These are the people the State of Michigan certified as elected to %(county)s County's Board of Commissioners in the general election of 5 November 2024. They are the winners of that election, not a list the county keeps up to date, so a seat that has changed hands since will still show the person who won it.",
+  "readAt": "2026-09-22",
+  "route": "certified-returns",
+  "seats": 9,
+  "sourceUrl": "https://gisagocss.state.mi.us/arcgis/rest/services/OpenData/boundaries/MapServer/10",
+  "standfirst": "Everyone the State of Michigan certified as elected to the %(heading)s in the general election of 5 November 2024."
+ }
+}
