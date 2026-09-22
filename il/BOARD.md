@@ -39,6 +39,29 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-22. Both PRs merged, and the dispatched Sangamon run produced the
+right shape — #1093 is yours to merge.**
+
+#1096 (`a21c917`) and #1098 (`1098` merged 21:15) are in. The dispatched refresh
+(run 10, `workflow_dispatch` on `d96a08d`) finished green and force-pushed
+`bot/sangamon-county-board-roster-update`, so **#1093's diff is now the fix's
+output rather than the defect's.** Read against the refreshed diff, not
+predicted:
+
+- `sangamon-county-board-members.json` District 16 → `{"members": [],
+  "sourceUrl": …, "vacancies": 1}`, byte-identical in shape to District 2.
+- `il/county-board/sangamon.html` — the `Person` node is GONE rather than
+  renamed. `ItemList` position 16 keeps its name and carries no `item`, which
+  is the "a seat nobody is named for is still a list position" rule working,
+  and the section renders **"1 of 1 seat here is vacant, as the county reports
+  it."**
+- Every derived count moved with it: `about.html` 3,644 → 3,643,
+  `county-board.html` 1,108 → 1,107 and Sangamon 28 → 27 members, and the
+  page's own title, description and lede 28 → 27.
+
+The word `vacant` appears nowhere as a name in the diff. Nothing further on
+this is mine.
+
 **2026-09-22. #1096 merged; the Sangamon refresh is dispatched so #1093 does not
 wait a week.**
 
