@@ -35,6 +35,30 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-22. My extension sample measured a population the case is not in.**
+[#1078](https://github.com/ThursdaysFamous/districtry/pull/1078), correcting
+#1077's own record.
+
+`afr-special-districts.json` holds FIRE (323) and PARK (186) districts and NO
+libraries, while Metamora is a LIBRARY district — so #1077's "0 filing an
+extension anywhere" was a clean zero over a population the phenomenon does not
+occur in, printed three paragraphs below the case it appears to answer for.
+Accurate about what was measured, misleading about what it bears on, and the
+manager caught it on merge rather than this session.
+
+**Re-measured on the right population rather than caveated.** The shipped
+library file carries 198 comptroller codes; 40 sampled, **all 40 read, 2 filing
+an extension** — Illinois Prairie District Public Library, which IS 102/010/10,
+the documented unit, and Kewanee Public Library District at
+`(309) 853-3333 Ext: 1136`. So extensions occur at about 5% of library
+districts and the first sample could not have seen one.
+
+**The conclusion does not move**: 77 units read across both populations, 0
+where stripping creates a witness the raw values deny. The structural argument
+always settled it — stripping can only create a match, never break one — and
+the sample only ever bounded how often the case arises. Nothing is relaxed.
+The lesson is recorded with it: **a sample inherits its inventory's scope**.
+
 **2026-09-22. The Metamora phone loss is Reddick's mirror image, and the task
 row's premise held.** [#1077](https://github.com/ThursdaysFamous/districtry/pull/1077).
 
