@@ -88,9 +88,14 @@ def named_by_gaps():
                                        and Jones) verified on every run;
       ia-county-officers.json          every county whose supervisors that
                                        file withholds, which is where a NEW
-                                       gap record comes from.
+                                       gap record comes from;
+      the three supervisor files        every county that ELECTS BY DISTRICT,
+      read together                     has its districts drawn, has its
+                                        members named, and has no member keyed
+                                        to a district — the population of
+                                        `ia-supervisor-district-seats`.
 
-    The second is what breaks the chicken-and-egg: build_coverage_gaps.py
+    The second and third are what break the chicken-and-egg: build_coverage_gaps.py
     refuses to write the shipped file while a record names a county with no
     outline, so a builder reading only that file could never learn about the
     county whose outline is missing. A county stops being withheld when its
@@ -104,17 +109,67 @@ def named_by_gaps():
         for rec in (blob.values() if isinstance(blob, dict) else blob):
             for slug in rec.get("counties") or []:
                 out.add(slug)
-    officers = os.path.join(APP, "ia-county-officers.json")
-    if os.path.exists(officers):
-        with open(officers, encoding="utf-8") as fh:
-            for rec in json.load(fh).values():
-                if rec.get("supervisorsWithheld") and (rec.get("county") or "").strip():
-                    out.add(slug_of(rec["county"].strip()))
+    officers_path = os.path.join(APP, "ia-county-officers.json")
+    officers = {}
+    if os.path.exists(officers_path):
+        with open(officers_path, encoding="utf-8") as fh:
+            officers = json.load(fh)
+        for rec in officers.values():
+            if rec.get("supervisorsWithheld") and (rec.get("county") or "").strip():
+                out.add(slug_of(rec["county"].strip()))
+    out |= _elected_by_district_unkeyed(officers)
     if not out:
         fail("no county is named by a gap record and none has its supervisors "
              "withheld — nothing to build, and that is unexpected enough to stop on")
     return out
 
+
+def _elected_by_district_unkeyed(officers):
+    """{slug} — counties where the district is drawn and no member holds it.
+
+    THE ABSENCE IS THE JOIN, NOT THE DISTRICT, which is why this read exists
+    at all and why it is not the withheld read above. A county here publishes
+    its districts (they ship in ia-supervisor-districts.json and the card tells
+    a reader which one they are standing in) and publishes its supervisors
+    (they ship in ia-county-officers.json and the card names them); what
+    nobody publishes is which of those people holds which district. Neither of
+    the two reads above can reach such a county — it tags no gap yet and its
+    supervisors are not withheld — so without this the outline its gap record
+    promises could never be built a first time.
+
+    PLAN 3 ONLY, deliberately. Iowa's PLAN 2 counties draw districts too, but
+    a PLAN 2 supervisor is nominated by district and elected countywide, so
+    "which of these people represents my district" is a different question and
+    belongs to a different record. Widening this to every county that draws a
+    district would build outlines no record names, and `--check` would then
+    fail reporting them as orphans — correctly.
+
+    The set empties itself: a county whose members gain a district drop out on
+    the next run, and `--check` reports its outline as one no record needs.
+    """
+    drawn = os.path.join(APP, "ia-supervisor-districts.json")
+    keyed = os.path.join(APP, "ia-supervisor-members.json")
+    if not (os.path.exists(drawn) and os.path.exists(keyed) and officers):
+        return set()
+    districts = {}
+    with open(drawn, encoding="utf-8") as fh:
+        for feat in json.load(fh).get("features") or []:
+            props = feat.get("properties") or {}
+            name = (props.get("COUNTY") or "").strip()
+            if name:
+                districts.setdefault(name, []).append(props.get("PLANTYPE"))
+    with open(keyed, encoding="utf-8") as fh:
+        has_district = {(r.get("county") or "").strip()
+                        for r in json.load(fh).values()}
+    out = set()
+    for rec in officers.values():
+        name = (rec.get("county") or "").strip()
+        if not name or not rec.get("supervisors") or name in has_district:
+            continue
+        plans = districts.get(name) or []
+        if len(plans) > 1 and all(p == "PLAN 3" for p in plans):
+            out.add(slug_of(name))
+    return out
 
 def shipped_outlines():
     return {f[: -len("-county-outline.json")]

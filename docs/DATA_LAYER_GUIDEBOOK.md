@@ -2129,6 +2129,37 @@ detail into `blocker`.
       "blocker": "MEASURED 2026-09-22 from the shipped ia/data/app/ia-county-officers.json, whose builder (ia/scripts/build_ia_county_officers.py) applies the gate and writes the reason per county. GET https://member-portal.iowacounties.org/countydirectory/directory/ with the districtry token, read by ia/scripts/ia_county_officers_scraper.py: the association's public county directory returns a supervisor row count of 4 for Adair, 2 for Floyd, 6 for Humboldt, 2 for Lucas, 6 for Pottawattamie and 4 for Tama. Iowa Code 331.201 says a board \"shall consist of three members unless the membership is increased to five\", so none of those six counts can describe a lawful board and the builder withholds the names rather than shipping a board of the wrong size.\n\nTHIS IS A GATE WORKING, NOT A SOURCE GOING DARK: every other office in those counties ships from the same table, and the withheld reason is carried on the record so the card can say what it does not know.\n\nNOTED THE SAME DAY AND NOT FIXED HERE: build_ia_county_officers.py's own module docstring still says \"Seven counties fail one or both (measured 2026-08-28)\" and names Henry among them. The shipped file carries EIGHT withheld counties and Henry is not one of them -- Lucas and Pottawattamie are there instead. The data is what was measured; the docstring is a stale sentence beside it, and correcting it belongs to the Iowa session rather than to the change that recorded this gap.\n\nASK: NOT YET ASKED. The association publishes the directory and the counties supply it, so the ask is one letter per county auditor rather than one to the association, and it is worth drafting only after someone checks whether each county's own site already names its supervisors -- which would close this without writing to anybody."
     },
     {
+      "id": "ia-supervisor-district-seats",
+      "kind": "data-quality",
+      "concept": "County supervisor district",
+      "area": "Black Hawk, Butler, Calhoun, Cass, Chickasaw, Dickinson, Guthrie, Howard, Ida, Kossuth, Lee, Montgomery, Osceola, Palo Alto, Sioux, Washington, Winnebago and Worth Counties, Iowa",
+      "layer": "county-supervisor",
+      "counties": [
+        "black-hawk",
+        "butler",
+        "calhoun",
+        "cass",
+        "chickasaw",
+        "dickinson",
+        "guthrie",
+        "howard",
+        "ida",
+        "kossuth",
+        "lee",
+        "montgomery",
+        "osceola",
+        "palo-alto",
+        "sioux",
+        "washington",
+        "winnebago",
+        "worth"
+      ],
+      "summary": "Your County Supervisor card shows the district you live in and names the people on the board, and cannot say which of them holds your district. That is true in 18 Iowa counties, all of which elect their supervisors by district.",
+      "why": "The statewide map draws each county's districts and records no supervisor against them; the directory that names the supervisors carries no district beside a name. Both halves are published and nothing joins them.",
+      "wanted": "Any list a county publishes that prints a district number beside a supervisor's name — a board page, a certified election summary, or a county directory that carries the district.",
+      "blocker": "MEASURED 2026-09-22 from the shipped tree at commit 7f8cbef, with no network fetch: this is a join that is absent from two files this instance already ships, so the measurement is of those files rather than of any host.\n\nia/data/app/ia-supervisor-districts.json carries 272 features over 98 counties, sourced LSA-2024-01-30. Grouped by county: 41 PLAN 1 counties draw exactly ONE feature (the county itself — at large, no district to name), while 15 PLAN 2, 40 PLAN 3 and 2 TRANSITIONING counties draw 3 to 5 each. So for all 18 counties named here the DISTRICTS ARE DRAWN AND SHIP, 3 to 5 apiece, and a reader clicking inside one is correctly told which district they are in. ia/data/app/ia-supervisor-members.json keys members to a district in 17 counties, none of them these 18. ia/data/app/ia-county-officers.json names 3 or 5 supervisors in each of the 18, and a supervisor record there carries only `name` and `party` — 333 of the file's 345 records are that pair and the other 12 are `name` alone, so there is no district field in it to be empty.\n\nTHE ABSENCE IS THE JOIN, NOT THE DISTRICT, and the briefing that opened this record said the opposite — that these counties 'publish no district'. They publish the districts; what nobody publishes, in a form this project has found, is which supervisor holds which one. Black Hawk is the county that makes the distinction concrete: ia/WATCH.md records it shipping real district geometry from its own hosted county service on 2026-08-26, and it is in this record anyway, because that geometry says where the districts are and not who sits for them.\n\nNOT YET ASKED. Each county's own board page is the obvious route and NONE OF THE 18 HAS BEEN FETCHED for this question — that is an unexamined route rather than a measured refusal, and it is the next thing to try before any ask goes out. The two statewide sources are the only ones read so far.\n\nSCOPE, MEASURED THE SAME DAY: 14 PLAN 2 counties (Benton, Buena Vista, Carroll, Cherokee, Clarke, Dallas, Delaware, Greene, Jackson, Muscatine, O'Brien, Page, Plymouth, Woodbury) and Story sit in the identical structural position — districts drawn, members named, no member keyed to a district — and are deliberately NOT in this record. A PLAN 2 supervisor is nominated by district and elected countywide, so 'which of these people represents my district' is a different question there and wants its own sentence rather than being folded into this one. Raised as an open question on ia/BOARD.md the day this record was written."
+    },
+    {
       "id": "johnson-county-supervisor-districts",
       "concept": "County supervisor district",
       "area": "Johnson County",

@@ -27,7 +27,7 @@
 // template starts at -v1: the app shell, icons, and the starter data
 // files bootstrap_state.py builds.)
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-ia-shell-v10";
+const CACHE_NAME = "districtry-ia-shell-v11";
 
 const SHELL_URLS = [
   "./",
@@ -73,6 +73,24 @@ const GEOMETRY_URLS = [
   "./data/app/tama-county-outline.json",
   "./data/app/warren-county-outline.json",
   "./data/app/wright-county-outline.json",
+  "./data/app/black-hawk-county-outline.json",
+  "./data/app/butler-county-outline.json",
+  "./data/app/calhoun-county-outline.json",
+  "./data/app/cass-county-outline.json",
+  "./data/app/chickasaw-county-outline.json",
+  "./data/app/dickinson-county-outline.json",
+  "./data/app/guthrie-county-outline.json",
+  "./data/app/howard-county-outline.json",
+  "./data/app/ida-county-outline.json",
+  "./data/app/kossuth-county-outline.json",
+  "./data/app/lee-county-outline.json",
+  "./data/app/montgomery-county-outline.json",
+  "./data/app/osceola-county-outline.json",
+  "./data/app/palo-alto-county-outline.json",
+  "./data/app/sioux-county-outline.json",
+  "./data/app/washington-county-outline.json",
+  "./data/app/winnebago-county-outline.json",
+  "./data/app/worth-county-outline.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
