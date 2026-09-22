@@ -29,6 +29,44 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-22, the probed blockers are gap records now, and it is 35 counties rather than
+25.** #1082 open. The probe artifact holds 25; the `PROBES` table in
+`mi_commissioner_scraper.py` holds 10 more it was gated on, and 48 + 25 + 10 = 83. That
+second table is exactly as invisible to a gap-record reader as the first, so promoting only
+the 25 would have left Oakland (19 seats), Ingham (15, the state capital), Genesee, Ottawa,
+Livingston, Allegan, Washtenaw, Bay, Gogebic and Marquette in the state this change exists
+to end. Six records rather than 35, because with no county outlines there is no
+location-awareness and every record shows to every reader — each names its counties in
+`area` and in the summary, grouped by what a reader could do about it. Michigan goes 20 to
+26 gaps.
+
+**EXAMINED does not move, and that is measured rather than predicted.** 48 of 83 before and
+after, run with `build_eam_status.py` from #1081 against my own tree. Two things compose:
+its `gap_counties()` reads only each record's `counties` array, and `build_coverage_gaps.py`
+refuses a slug with no `data/app/<slug>-county-outline.json`. Illinois ships 101 of those
+files; Michigan ships none. Negative-tested rather than inferred — tagging one county
+returns `county 'alcona' has no data/app/alcona-county-outline.json`. So the promotion
+delivers the stated purpose in full and delivers nothing to the score. The question below is
+what to do about that, and it is a change to a shared gate rather than to this instance.
+
+**I classified the ten by keyword-matching their prose first, and got two wrong in opposite
+directions.** Bay landed in robots-declined because its write-up mentions a subdomain's
+robots file; Marquette missed that class because its text does not contain the literal
+string. The artifact's fields are structured and were used; the table's are prose for a
+human and were read. Two records were also corrected against the artifact rather than
+against my own earlier entry here: Tuscola is robots-disallowed on `.com` and
+Sucuri-challenged on `.org`, and Branch's blocker is a 202 on its `.gov`, not robots at all.
+
+**The gap-record skill's own regeneration list was two short.** A run that followed §7
+exactly still failed `build_about_page` (the fleet-wide recorded-gap total, 146 to 152) and
+`build_sitemap` (`mi/history.html`'s lastmod). Neither reads the gaps block directly, which
+is why they were not obvious — one counts the shipped gap files, the other dates a page
+those files regenerate. Both added to the skill with the miss recorded.
+
+No reader field carries a count: `counted_prose_problems()` returns early when `counties` is
+empty, so a number written in this shape is checked by nothing. 85 of 85 static gates pass,
+the Michigan smoke test passes, `page_consistency_test.mjs` 0 non-cert. No host was fetched.
+
 **2026-09-21, #1069 merged as `38f479e3`, verified on the merged tree.** The probe gate
 passes there, `probes_fips` reads 10, and the frontier prints 48 ship / 10 recorded shut /
 25 untried, which is the 83. `build_coverage_gaps.py --check --metro michigan` and
@@ -468,6 +506,38 @@ Two corrections to my own last report:
   share above has the census on both sides.
 
 ## Open questions for Adam
+
+**2026-09-22 — Michigan cannot pass EXAMINED without a change to a shared gate. Which
+one?** Not blocking; #1082 does the bookkeeping either way, and nothing else waits on this.
+
+What I measured. `build_eam_status.py`'s `gap_counties()` counts only each gap record's
+`counties` array, and `build_coverage_gaps.py` refuses a slug with no
+`data/app/<slug>-county-outline.json`. Illinois ships 101 of those files, Michigan ships
+none, so Michigan's 26 gap records all carry an empty array and Michigan scores 48 of 83 no
+matter how many blockers it records. Tagging one county fails validation today, tested.
+
+Two ways out, and they differ in kind rather than in size.
+
+1. **Michigan ships 35 single-county outline files.** Follows Illinois exactly, touches no
+   shared code, and turns on the panel's where-you-clicked section for Michigan, which is
+   dead today. It also duplicates geometry this instance already ships: `state-counties.json`
+   carries all 83 counties, so the 35 files would be a second copy of a subset of it, each
+   needing a worksheet `data_files` row, a service-worker list placement and a cache bump.
+
+2. **`build_coverage_gaps.py` accepts a slug present in an instance's shipped county
+   fabric**, not only one with its own outline file. One change to a fleet script, no
+   duplicated geometry, and it fits any future instance that ships a whole-state fabric
+   rather than per-county files. The cost is that it touches a gate four instances depend on,
+   and Illinois's 101 files would then be one of two accepted shapes rather than the shape.
+
+**I would take 2**, because 1 makes Michigan carry 35 files whose contents are already in a
+file it ships, and the rule it satisfies — "the slug must name geometry that exists" — is
+satisfied just as well by the fabric. But it is a shared gate and the manager's, not mine, so
+I have not touched it. If the answer is 1, that is a day's work in this instance and I will
+do it without further discussion.
+
+Worth stating plainly: nothing about either option ships a county or names a commissioner.
+This is about whether the fleet's own measurement can see work Michigan has already done.
 
 **2026-09-19 — the western-UP bbox: is this worth a six-app change?** The Tasks table calls
 it "no fix proposed" and `mi/WATCH.md` does propose one, so the row understates where this
