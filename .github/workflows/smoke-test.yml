@@ -785,6 +785,13 @@ jobs:
           python3 wi/scripts/wi_coa_scraper.py --selftest
           python3 wi/scripts/wi_coa_staleness.py --selftest
 
+      # THE LTSB FILING WATCHER'S OWN FAILURE PATHS. The monthly job is the only
+      # thing that runs that check, and it runs the happy path eleven times a
+      # year; without this its WARNs would first execute in the filing window
+      # somebody is relying on them.
+      - name: The supervisory currency check reports a new filing, a redraw and a moved count
+        run: python3 wi/scripts/validate_sources.py --selftest
+
       # THE COUNTY BOARD SCRAPE ASKS EACH HOST'S ROBOTS.TXT BEFORE ITS FIRST
       # FETCH (2026-09-13), and this runs that decision against doctored
       # robots.txt text: a site-wide disallow refuses, an admin-only file allows

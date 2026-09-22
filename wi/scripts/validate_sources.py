@@ -1042,6 +1042,21 @@ PROVENANCE = [
 ]
 
 # Live endpoints the app queries at runtime.
+# The sidecars the BUILDERS write, compared monthly by
+# _check_shipped_is_current(). Declared here because ENDPOINTS
+# below names them in its rows.
+NG911_BUILT_ROWS = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "data", "source", "ng911", "built-rows.json")
+
+SUPERVISORY_BUILT_ROWS = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "data", "source", "supervisory", "built-rows.json")
+
+SUPERVISORY_LAYER = ("https://services1.arcgis.com/FDsAtKBk8Hy4cAH0/arcgis/rest/services"
+                     "/WI_County_Supervisory_Districts_Current/FeatureServer/0")
+
+
 ENDPOINTS = [
     {
         "layer": "county-subdivision",
@@ -1102,6 +1117,54 @@ ENDPOINTS = [
         # Madison builder so the outline follows.
         "layer": "madison-neighborhood-assoc",
         "url": "https://maps.cityofmadison.com/arcgis/rest/services/Public/OPEN_DATA/MapServer/11/query?where=1%3D1&returnCountOnly=true&f=json",
+    },
+    {
+        # THE SUPERVISORY LAYER'S CURRENCY, which its PREBUILT row above cannot
+        # answer: that row proves the service is REACHABLE and compares nothing
+        # against the shipped file. LTSB republishes under Wis. Stat.
+        # 5.15(4)(br)1 each 15 January and 15 July, and this is an OPERATOR build
+        # with no schedule, so between windows nothing could see the shipped
+        # geometry and the live plan drift apart.
+        #
+        # MONTHLY RATHER THAN TWICE YEARLY, DELIBERATELY: a job that runs only in
+        # the two windows discovers its own first failure in the window it was
+        # needed. Eleven quiet months a year are the liveness check.
+        "layer": "county-board",
+        "built_rows": "districts",
+        "built_rows_file": SUPERVISORY_BUILT_ROWS,
+        "built_rows_builder": "wi/scripts/build_wi_supervisory_districts.py",
+        "built_rows_family": "supervisory",
+        "built_rows_name": True,
+        "built_rows_layer": SUPERVISORY_LAYER,
+        "url": SUPERVISORY_LAYER + "/query?where=1%3D1&returnCountOnly=true&f=json",
+    },
+    {
+        # The ward layer is the district builder's own reconciliation witness and
+        # rides the SAME filing under the same naming rule (`Wards_July_2026`),
+        # so it is pinned beside the districts rather than trusted to move with
+        # them: they are two services and either can be republished alone.
+        "layer": "county-board",
+        "built_rows": "wards",
+        "built_rows_file": SUPERVISORY_BUILT_ROWS,
+        "built_rows_builder": "wi/scripts/build_wi_supervisory_districts.py",
+        "built_rows_family": "supervisory",
+        "built_rows_name": True,
+        "built_rows_layer": "https://services1.arcgis.com/FDsAtKBk8Hy4cAH0/arcgis/rest/services/WI_Municipal_Wards_Current/FeatureServer/0",
+        "url": "https://services1.arcgis.com/FDsAtKBk8Hy4cAH0/arcgis/rest/services/WI_Municipal_Wards_Current/FeatureServer/0/query?where=1%3D1&returnCountOnly=true&f=json",
+    },
+    {
+        # Trempealeau's own adopted plan, shipped in place of LTSB's for that
+        # county alone. NO NAME PIN, measured: the county calls its layer plainly
+        # `Supervisory Districts`, with no window in it, and last edited it on
+        # 2021-11-24. Pinning a name here would assert something that cannot
+        # move; its count and edit date are the signals it actually has.
+        "layer": "county-board",
+        "built_rows": "trempealeau",
+        "built_rows_file": SUPERVISORY_BUILT_ROWS,
+        "built_rows_builder": "wi/scripts/build_wi_supervisory_districts.py",
+        "built_rows_family": "supervisory",
+        "built_rows_layer": "https://services9.arcgis.com/cqHJZMbXoaOT0XrP/arcgis/rest/services/Trempealeau_County_County_Board_Supervisor_Districts_2021_2031_WFL1/FeatureServer/3",
+        "url": "https://services9.arcgis.com/cqHJZMbXoaOT0XrP/arcgis/rest/services/Trempealeau_County_County_Board_Supervisor_Districts_2021_2031_WFL1/FeatureServer/3/query?where=1%3D1&returnCountOnly=true&f=json",
     },
     {
         # THE NG911 COUNT IS COMPARED, NOT JUST FETCHED. These four rows asked
@@ -1295,10 +1358,6 @@ def check_count_envelope_matches_index(findings):
                      "(%s)" % (len(rows), want))
 
 
-NG911_BUILT_ROWS = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    "data", "source", "ng911", "built-rows.json")
-
 
 def _check_shipped_is_current(findings, spec):
     """Report whether the shipped pre-built files still match the live source.
@@ -1313,23 +1372,63 @@ def _check_shipped_is_current(findings, spec):
     """
     layer = spec["layer"]
     key = spec["built_rows"]
+    # A SIDECAR AND ITS BUILDER ARE NAMED PER ROW, because the remedy in every
+    # message below is "re-run the builder" and naming the wrong one sends an
+    # operator to rebuild a layer that is not the one that moved.
+    sidecar = spec.get("built_rows_file") or NG911_BUILT_ROWS
+    builder = spec.get("built_rows_builder") or "wi/scripts/build_wi_ng911_service_areas.py"
+    family = spec.get("built_rows_family") or "NG911"
     try:
-        with open(NG911_BUILT_ROWS) as f:
+        with open(sidecar) as f:
             pin = json.load(f)
     except (OSError, ValueError) as exc:
         findings.add(WARN, layer,
-                     "the NG911 build sidecar could not be read (%s: %s), so "
+                     "the %s build sidecar could not be read (%s: %s), so "
                      "whether the shipped files are current with the source is "
                      "unknown — re-run the builder to write it"
-                     % (os.path.basename(NG911_BUILT_ROWS), exc))
+                     % (family, os.path.basename(sidecar), exc))
         return
     built = (pin.get("rows") or {}).get(key)
     built_on = pin.get("builtOn", "an unrecorded date")
     if not isinstance(built, int):
         findings.add(WARN, layer,
-                     "the NG911 build sidecar carries no row count for %r — it "
+                     "the %s build sidecar carries no row count for %r — it "
                      "was written by an older builder, or the layer was renamed; "
-                     "re-run the builder" % key)
+                     "re-run the builder" % (family, key))
+        return
+
+    # The layer's own metadata is read FIRST, because on a layer whose publisher
+    # names it for the filing window the NAME is the strongest signal available
+    # and a count cannot substitute for it (below).
+    was_edit = (pin.get("dataLastEdit") or {}).get(key)
+    live_edit = live_name = None
+    ok_meta, meta = http_get(spec["built_rows_layer"] + "?f=json")
+    if ok_meta and isinstance(meta, dict):
+        live_name = meta.get("name")
+        ms = (meta.get("editingInfo") or {}).get("dataLastEditDate")
+        if isinstance(ms, (int, float)):
+            live_edit = datetime.datetime.fromtimestamp(
+                ms / 1000.0, datetime.timezone.utc).date().isoformat()
+
+    # THE NAME LEADS WHERE THE PUBLISHER PUTS THE FILING WINDOW IN IT. LTSB
+    # republishes under Wis. Stat. 5.15(4)(br)1 each 15 January and 15 July and
+    # names the layer for the window it published — `Supervisory_July_2026` and
+    # `Wards_July_2026` today, `..._January_2027` after the next one. So the name
+    # moves at the statutory moment whether or not the row count does, and a
+    # count CANNOT promise to move: 72 counties can refile and still sum to the
+    # same 1589 districts. Opt-in per row, because a layer whose name does not
+    # encode a window would otherwise be compared on nothing — Trempealeau's own
+    # layer is plainly called `Supervisory Districts` and last moved in 2021.
+    was_name = (pin.get("name") or {}).get(key)
+    if spec.get("built_rows_name") and was_name and live_name and was_name != live_name:
+        findings.add(WARN, layer,
+                     "the service is now published as %r against the %r these "
+                     "files were built from on %s — the publisher names this layer "
+                     "for its filing window, so this is a NEW FILING rather than a "
+                     "correction. Re-run %s, bump cache_name in "
+                     "wi/metro-worksheet.json (these files are cache-first), and "
+                     "commit the rebuilt files with the refreshed sidecar."
+                     % (live_name, was_name, built_on, builder))
         return
 
     ok, res = http_get(spec["url"])
@@ -1344,47 +1443,153 @@ def _check_shipped_is_current(findings, spec):
                      "count endpoint answered without a count field: %r" % (res,))
         return
 
-    # A ROW COUNT CANNOT SEE A REDRAW, so read the layer's own edit timestamp
-    # too. Measured 2026-09-05: the OEC edited all four layers on 2026-08-31,
-    # moving boundaries in 397 features (138 fire, 161 law, 19 PSAP,
+    # A ROW COUNT CANNOT SEE A REDRAW, so the layer's own edit timestamp is read
+    # too (above). Measured 2026-09-05: the OEC edited all four NG911 layers on
+    # 2026-08-31, moving boundaries in 397 features (138 fire, 161 law, 19 PSAP,
     # 79 EMS), while three of the four row counts did not move at all —
     # the blind spot this file first documented and then
     # immediately hit.
-    was_edit = (pin.get("dataLastEdit") or {}).get(key)
-    live_edit = None
-    ok_meta, meta = http_get(spec["built_rows_layer"] + "?f=json")
-    if ok_meta and isinstance(meta, dict):
-        ms = (meta.get("editingInfo") or {}).get("dataLastEditDate")
-        if isinstance(ms, (int, float)):
-            live_edit = datetime.datetime.fromtimestamp(
-                ms / 1000.0, datetime.timezone.utc).date().isoformat()
-
     if count == built and was_edit and live_edit and was_edit != live_edit:
         findings.add(WARN, layer,
                      "the row count is unchanged at %d, but the service was "
                      "EDITED on %s against the %s these files were built from — a "
                      "redraw does not move a row count. Re-run "
-                     "wi/scripts/build_wi_ng911_service_areas.py, bump cache_name "
+                     "%s, bump cache_name "
                      "in wi/metro-worksheet.json, and commit the rebuilt files."
-                     % (count, live_edit, was_edit))
+                     % (count, live_edit, was_edit, builder))
         return
     if count == built:
         findings.add(OK, layer,
-                     "%d rows, the same count these files were built from on %s%s"
+                     "%d rows, the same count these files were built from on %s%s%s"
                      % (count, built_on,
                         ", and the service's own last edit is still %s" % was_edit
                         if was_edit and live_edit == was_edit
                         else " (the service's edit date could not be read, so a "
-                             "redraw at this row count would not show)"))
+                             "redraw at this row count would not show)",
+                        ", still published as %s" % was_name
+                        if spec.get("built_rows_name") and was_name
+                        and live_name == was_name else ""))
         return
     findings.add(WARN, layer,
                  "the source now has %d rows against the %d these files were "
                  "built from on %s — the shipped layer is behind by %+d and a "
                  "reader may be getting a superseded answer. Re-run "
-                 "wi/scripts/build_wi_ng911_service_areas.py, bump cache_name in "
+                 "%s, bump cache_name in "
                  "wi/metro-worksheet.json (these files are cache-first), and "
                  "commit the rebuilt files with the refreshed sidecar."
-                 % (count, built, built_on, count - built))
+                 % (count, built, built_on, count - built, builder))
+
+
+def selftest_shipped_is_current():
+    """Prove _check_shipped_is_current() reports what it must, offline.
+
+    THE MONTHLY JOB IS THE ONLY THING THAT RUNS THIS CHECK, and it runs it
+    eleven times a year against a source that has not moved. A check whose
+    failure path is exercised twice a year, in exactly the window somebody is
+    relying on it, is one whose first failure is discovered too late — so the
+    failure paths are asserted here instead, on fixtures, with no network.
+
+    Returns a list of problems; empty means every case answered as stated.
+    """
+    import tempfile
+
+    def epoch(day):
+        """Milliseconds for a date, DERIVED — the first draft of this test
+        hand-typed an epoch, it rendered as 2026-07-26 against a fixture that
+        said 2026-07-29, and two cases failed for a reason that was not the
+        code's."""
+        return int(datetime.datetime.fromisoformat(day)
+                   .replace(tzinfo=datetime.timezone.utc).timestamp() * 1000)
+
+    live = {
+        "name": "Supervisory_July_2026",
+        "editingInfo": {"dataLastEditDate": epoch("2026-07-29")},
+    }
+    pinned = {
+        "builtOn": "2026-09-22",
+        "name": {"d": "Supervisory_July_2026"},
+        "dataLastEdit": {"d": "2026-07-29"},
+        "rows": {"d": 1589},
+    }
+
+    def spec(path, name_pin=True):
+        return {"layer": "county-board", "built_rows": "d",
+                "built_rows_file": path, "built_rows_name": name_pin,
+                "built_rows_builder": "wi/scripts/build_wi_supervisory_districts.py",
+                "built_rows_family": "supervisory",
+                # THE REAL LAYER URLS, deliberately. http_get is stubbed below, so
+                # nothing here is ever fetched — but probe_user_agents.py reads URL
+                # LITERALS out of this file and would otherwise record a fixture
+                # hostname as a host this file reaches and nobody has measured.
+                # Splitting the literal to hide it would be worse: that probe
+                # already records a case where half a URL was read as the address.
+                "built_rows_layer": SUPERVISORY_LAYER,
+                "url": SUPERVISORY_LAYER + "/query?where=1%3D1&returnCountOnly=true&f=json"}
+
+    class Rec:
+        def __init__(self): self.rows = []
+        def add(self, lvl, layer, msg): self.rows.append((lvl, msg))
+
+    def run(pin, meta, count, name_pin=True):
+        real = globals()["http_get"]
+
+        def fake(url, want_json=True, params=None):
+            if url.endswith("?f=json"):
+                return (True, meta) if meta is not None else (False, "unreachable")
+            return (True, {"count": count}) if count is not None else (False, "unreachable")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "built-rows.json")
+            if pin is not None:
+                with open(path, "w") as f:
+                    json.dump(pin, f)
+            globals()["http_get"] = fake
+            try:
+                rec = Rec()
+                _check_shipped_is_current(rec, spec(path, name_pin))
+                return rec.rows[0] if rec.rows else (None, "")
+            finally:
+                globals()["http_get"] = real
+
+    bad = []
+
+    def want(case, got, level, needle):
+        lvl, msg = got
+        if lvl != level or needle not in msg:
+            bad.append("%s -> [%s] %s (wanted %s containing %r)"
+                       % (case, lvl, msg, level, needle))
+
+    # 1. Nothing has moved.
+    want("unchanged", run(pinned, live, 1589), OK, "still published as Supervisory_July_2026")
+
+    # 2. THE FILING WINDOW MOVED. The count is deliberately left at 1589 to
+    #    prove the name is what catches it: 72 counties can refile and still sum
+    #    to the same total, and then only the name has moved.
+    want("new filing", run(pinned, dict(live, name="Supervisory_January_2027"), 1589),
+         WARN, "NEW FILING")
+
+    # 3. The count moved.
+    want("count moved", run(pinned, live, 1601), WARN, "behind by +12")
+
+    # 4. A REDRAW at an unchanged count — the NG911 blind spot.
+    want("redraw", run(pinned, dict(live, editingInfo={"dataLastEditDate": epoch("2026-09-20")}), 1589),
+         WARN, "redraw does not move a row count")
+
+    # 5. No sidecar at all.
+    want("no sidecar", run(None, live, 1589), WARN, "could not be read")
+
+    # 6. THE NAME PIN IS OPT-IN AND THAT IS LOAD-BEARING. Trempealeau's own layer
+    #    is called `Supervisory Districts` with no window in it, so a row without
+    #    the pin must NOT report a renamed layer as a new filing.
+    want("no name pin", run(pinned, dict(live, name="Something Else"), 1589, name_pin=False),
+         OK, "1589 rows")
+
+    # 7. ...and a row without the pin must not claim the name still matches.
+    lvl, msg = run(pinned, live, 1589, name_pin=False)
+    if "still published as" in msg:
+        bad.append("no name pin -> claimed a name it does not check: %s" % msg)
+
+    return bad
 
 
 def _check_single_request_count(findings, spec):
@@ -1757,7 +1962,26 @@ def main():
     ap.add_argument("--report", metavar="PATH", help="write the markdown report to PATH (also printed to stdout)")
     ap.add_argument("--status-file", metavar="PATH", help="write ok|warn|fail to PATH (for CI)")
     ap.add_argument("--offline", action="store_true", help="run only the manifest↔index.html checks (no network)")
+    ap.add_argument("--selftest", action="store_true",
+                    help="assert the shipped-is-current check reports what it must, on fixtures (no network)")
     args = ap.parse_args()
+
+    if args.selftest:
+        # RUN IN CI, not monthly. The monthly job exercises only this check's
+        # happy path, eleven times a year against a source that has not moved;
+        # its failure paths would otherwise first run in the filing window
+        # somebody is relying on them.
+        bad = selftest_shipped_is_current()
+        if bad:
+            print("validate_sources: FAIL — the shipped-is-current check has moved:",
+                  file=sys.stderr)
+            for b in bad:
+                print("  - %s" % b, file=sys.stderr)
+            sys.exit(1)
+        print("validate_sources: OK — shipped-is-current reports correctly on 7 fixtures "
+              "(unchanged, new filing, count moved, redraw at an unchanged count, no "
+              "sidecar, and both halves of the opt-in name pin)")
+        return
 
     if not os.path.exists(INDEX_HTML):
         print("validate_sources: FAIL — index.html not found at %s" % INDEX_HTML, file=sys.stderr)
