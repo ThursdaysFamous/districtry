@@ -1611,6 +1611,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .group-safety .dot { background: var(--accent-warm); }
   .group-schools .dot { background: #E8A324; }
   .group-geography .dot { background: #5C8F6B; }
+  /* the compared layer's card, moved to the top of the list on a phone (see
+     placePinnedCard); the dot is the compared outline's own near-black, and
+     the section disappears whenever the card inside it is hidden */
+  .group-pinned .dot { background: var(--ink, #14181C); }
+  .group-pinned:not(:has(> .group-cards > .layer-block:not([hidden]))) { display: none; }
 
   /* Lets each top-level card's inline `order` (set in buildLayerBlock/its
      change handler) float checked layers above unchecked ones within a group. */
@@ -12011,6 +12016,55 @@ function initNycExplorer() {
       var rt = layerRuntime[mod.id];
       if (rt && rt.pinBtn) stylePinButton(rt.pinBtn, mod.id);
     });
+    placePinnedCard(); // every pin change runs through here, including the unpin on toggle-off
+  }
+
+  /* ---- the compared layer's card leads the list on a phone ----
+   * On a phone the card list sits below the map, grouped political → safety →
+   * schools → geography, so a compared school or geography district could be
+   * a long scroll away from the map that is outlining it. While a layer is
+   * pinned there, its card is MOVED (never copied: a second copy would break
+   * every binding layerRuntime holds on the first) into a "Comparing to"
+   * section at the top of the list, and put back exactly where it came from
+   * on unpin, on a new pin, or when the viewport widens past the phone
+   * breakpoint — the same 767px the skin's phone layout uses. A pinned
+   * sub-layer (Ward Precinct) moves on its own, out of its parent card. */
+  var relPinnedSlot = null;  // the <section> at the top of #groups-root
+  var relPinnedHome = null;  // {block, parent, next}: where the moved card lives
+  function relIsPhone() {
+    return !!(window.matchMedia && window.matchMedia("(max-width: 767px)").matches);
+  }
+  function placePinnedCard() {
+    if (relPinnedHome) {
+      var home = relPinnedHome;
+      relPinnedHome = null;
+      var next = home.next && home.next.parentNode === home.parent ? home.next : null;
+      home.parent.insertBefore(home.block, next);
+    }
+    var rt = pinnedParentId ? layerRuntime[pinnedParentId] : null;
+    var root = document.getElementById("groups-root");
+    if (!rt || !rt.block || !root || !relIsPhone()) return;
+    if (!relPinnedSlot) {
+      relPinnedSlot = document.createElement("section");
+      relPinnedSlot.className = "group-section group-pinned";
+      relPinnedSlot.setAttribute("aria-labelledby", "heading-pinned");
+      var heading = document.createElement("h2");
+      heading.className = "group-heading";
+      heading.id = "heading-pinned";
+      heading.innerHTML = '<span class="dot" aria-hidden="true"></span>Comparing to';
+      relPinnedSlot.appendChild(heading);
+      var cards = document.createElement("div");
+      cards.className = "group-cards";
+      relPinnedSlot.appendChild(cards);
+    }
+    if (relPinnedSlot.parentNode !== root || root.firstChild !== relPinnedSlot) root.insertBefore(relPinnedSlot, root.firstChild);
+    relPinnedHome = { block: rt.block, parent: rt.block.parentNode, next: rt.block.nextSibling };
+    relPinnedSlot.lastChild.appendChild(rt.block);
+  }
+  if (window.matchMedia) {
+    var relPhoneMQ = window.matchMedia("(max-width: 767px)");
+    if (relPhoneMQ.addEventListener) relPhoneMQ.addEventListener("change", placePinnedCard);
+    else if (relPhoneMQ.addListener) relPhoneMQ.addListener(placePinnedCard);
   }
   function stylePinButton(btn, id) {
     var pinned = pinnedParentId === id;

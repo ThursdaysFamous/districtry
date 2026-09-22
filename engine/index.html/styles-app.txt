@@ -321,6 +321,11 @@
   .group-safety .dot { background: var(--accent-warm); }
   .group-schools .dot { background: #E8A324; }
   .group-geography .dot { background: #5C8F6B; }
+  /* the compared layer's card, moved to the top of the list on a phone (see
+     placePinnedCard); the dot is the compared outline's own near-black, and
+     the section disappears whenever the card inside it is hidden */
+  .group-pinned .dot { background: var(--ink, #14181C); }
+  .group-pinned:not(:has(> .group-cards > .layer-block:not([hidden]))) { display: none; }
 
   /* Lets each top-level card's inline `order` (set in buildLayerBlock/its
      change handler) float checked layers above unchecked ones within a group. */
