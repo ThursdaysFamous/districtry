@@ -39,10 +39,52 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-22, stand-down. Nothing of mine is unpushed and no PR of mine is
+open — confirmed, not assumed.**
+
+Checked three ways: the working tree is clean on `main`; `scripts/sangamon_county_board_scraper.py`
+is byte-identical between my branch and `origin/main`, with `PARSE_SELFTEST`
+present; and `withCountyLibraryPhone` and `libraryDirectoryNote` are both in
+the shipped `il/index.html`. The forty-odd `claude/*` branches still on this
+checkout are squash-merged leftovers — their commits are not ancestors of main
+by construction, which is what a squash merge does and is not unpushed work.
+One PR is open fleet-wide, **#1103**, and it is another session's phone
+card-list change, not mine.
+
+**Three things landed.** #1096 (`a21c917`) stopped the Sangamon parser reading
+the county's word for an empty seat as a person's name, with `PARSE_SELFTEST`
+pinning both vacancy shapes before any fetch. #1093 merged as `b2799fd` after
+the refresh I dispatched produced the right output, so both empty Sangamon
+seats now ship as `{"members": [], "vacancies": 1}` and the `Person` node is
+gone rather than renamed. #1098 (`031795b`) gave four county library cards the
+state directory's telephone, joined on the comptroller code.
+
+**The correction on `45a2c06` is the one worth carrying.** I had written that
+CCPSA's two `Vacant` records stay inside the app card and reach no crawler.
+They reach one: `build_officeholder_tables.py` puts that roster on
+`il/police-district.html` as visible text and as `Person` nodes. Swept across
+all 414 served pages, it is three nodes on two pages rather than one.
+**My first measurement walked `data/app` and stopped there, which answers
+where the strings are and not where a reader meets them** — and this project
+built the generated pages precisely so those rosters would reach a crawler, so
+the data files were the wrong boundary for a question about what gets
+published.
+
+**Read tomorrow, not tonight.** #1102 (`ecbff07`) gave 62 scheduled roster
+workflows a `build_eam_status.py` step and `docs/EAM_STATUS.md` in their
+`git add`, with `check_workflows()` gating it. Most of those 62 are Illinois's.
+That closes the hole #1093 exposed from the other side: the refresh went red on
+its own bot PR because Sangamon lost a member, the report's people count moved,
+and no workflow rebuilt the file it counts.
+
+**Still Adam's, not mine:** the fourteen Illinois asks, Ask 28 to the Will
+County Clerk above all — the only route to unfreezing the municipal roster.
+Not drafted around, and Will is not re-probed.
+
 **2026-09-22. Both PRs merged, and the dispatched Sangamon run produced the
 right shape — #1093 is yours to merge.**
 
-#1096 (`a21c917`) and #1098 (`1098` merged 21:15) are in. The dispatched refresh
+#1096 (`a21c917`) and #1098 (`031795b`) are in. The dispatched refresh
 (run 10, `workflow_dispatch` on `d96a08d`) finished green and force-pushed
 `bot/sangamon-county-board-roster-update`, so **#1093's diff is now the fix's
 output rather than the defect's.** Read against the refreshed diff, not
