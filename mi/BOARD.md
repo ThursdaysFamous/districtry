@@ -34,6 +34,36 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-22 correction — an entry below describes bookkeeping that is NOT on main, and I
+found it by checking my own record against the tree rather than by anything failing.** The
+entry headed "What Michigan's M rests on" says "Seven files under weekly jobs that rewrite
+them. Fourteen under cadences a person performs — thirteen riding `mi-validate-sources.yml`'s
+monthly tracking issue, one quarterly by hand", and names three files added to the monthly
+source check: `metro-outline.json`, `mi-flint-wards.json`, `mi-warren-wards.json`. **None of
+that is in the tree.** That work was #1086's commit 2; the board entry went straight to main
+as board entries do, #1086 was then CLOSED rather than merged, #1087 carried only its commit
+1, and the bookkeeping went with the closed branch.
+
+**Measured on `d96a08da` just now**, so the gap is stated and not estimated:
+`mi/scripts/validate_sources.py` carries 20 `PROVENANCE` entries and NONE of the three named
+files is among them; `mi/WATCH.md` names exactly ONE `data/app` file, not fifteen; and
+`build_eam_status.py` prints `| mi | EA· | 83 | 83/83 | 619 | 615 | all | 22 | 14 without a
+job |`. So Flint's and Warren's ward geometry, and the coverage wash's own outline, are still
+shipping with no monthly source check at all — which is the thing that entry was written to
+say had been fixed.
+
+**A board entry that goes to main on its own commit outlives the PR it describes.** That is
+the whole mechanism of the defect and it is not specific to this one: every entry in this
+section was pushed separately from the change it reports, so any of them can be left standing
+by a PR that closes instead of merging. The fleet's convention is a new dated entry rather
+than an edit to the old one, so the entry below stays as written and this one corrects it.
+
+**I am not re-pushing commit 2 to fix it.** On #1087 I asked the manager whether they wanted
+it back as its own PR and said I would not re-push without their word; that is unanswered
+after five hours, and a promise does not lapse because waiting became inconvenient. The
+question is restated under Open questions with what each answer costs. Correcting the record
+needed nobody's word and is done here.
+
 **2026-09-22, #1091 merged (`7aba70c`) — and the hold on it found three surfaces, not
 one.** The manager held the first head because all 35 certified-returns counties rendered
 the default districted lede, "exactly as the county publishes them", about counties like
@@ -796,6 +826,33 @@ Two corrections to my own last report:
   share above has the census on both sides.
 
 ## Open questions for Adam
+**2026-09-22 — #1086's commit 2 is unsuperseded, on no path to main, and I promised not to
+re-push it. Does it come back?** What it is: fourteen `mi/WATCH.md` rows naming the data file
+each already-clocked row governs, and three `PROVENANCE` entries in
+`mi/scripts/validate_sources.py` for `metro-outline.json`, `mi-flint-wards.json` and
+`mi-warren-wards.json`. Measured on `d96a08da`: that table carries 20 entries and none of the
+three, `mi/WATCH.md` names one `data/app` file, and the E.A.M. row reads `22 | 14 without a
+job`. **The patch has decayed since I last tested it, and I nearly wrote "applies cleanly" into
+this very entry before re-running it.** `git diff 9346ace7 3b383b82` applied to main at about
+16:55 today; against `d96a08da` it does not. Measured per file: the 55 lines of
+`mi/scripts/validate_sources.py` — the three `PROVENANCE` entries, which are the part that
+closes the real hole — still apply CLEANLY; `mi/WATCH.md` CONFLICTS and needs a three-way
+apply and a hand resolution; `docs/EAM_STATUS.md` conflicts too and is GENERATED, so it is
+regenerated rather than applied at all. Restoring this is therefore no longer one command,
+and it decays further the longer it waits.
+
+**What each answer costs.** Bring it back: one small PR, bookkeeping only, no data file and
+no reader-facing byte changes, and it collides with nothing — the manager has spent the last
+hour in Illinois, Wisconsin and Iowa. Leave it out: three geometry files go on shipping with
+no monthly source check, so a publisher that moves or withdraws one is noticed by nobody, and
+Michigan's M keeps resting on a count that includes them as unwatched. There is no third
+state where the work exists and is not on main — a closed branch is not a holding place.
+
+**Why this is a question rather than a push.** It is reviewed work I offered to restore and
+was asked nothing about; re-pushing it unasked would make my own "I will not re-push without
+your word" worthless, which is worth more than five hours of a monthly check. I would bring
+it back.
+
 **2026-09-22 — #1081 made the BUILDER accept a county slug present in the shipped county
 fabric, and nothing made the PANEL able to place one. Which side closes the gap?** Not
 blocking; `29f1388f` makes the mismatch honest rather than harmful, so Michigan's panel says
