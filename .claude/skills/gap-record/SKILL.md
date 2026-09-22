@@ -118,7 +118,17 @@ python3 scripts/build_coverage_gaps.py --metro iowa      --out ia/data/app/cover
 python3 scripts/build_coverage_gaps.py --metro michigan  --out mi/data/app/coverage-gaps.json
 python3 scripts/build_history_page.py            # the history tiles COUNT the shipped gap files
 python3 scripts/build_county_status.py
+python3 scripts/build_about_page.py              # about.html states the fleet-wide gap TOTAL
+python3 scripts/build_sitemap.py                 # a regenerated history page moves its lastmod
 ```
+
+**The last two were missing from this list until 2026-09-22, and both went red
+on the first change that followed it.** Six new Michigan records took
+`about.html`'s recorded-gap total from 146 to 152, and regenerating
+`mi/history.html` moved the lastmod the sitemap publishes for it — so a run
+that did exactly what this section said still failed two gates. Neither reads
+the gaps block directly, which is why they were not obvious: one counts the
+shipped gap FILES and the other dates a page those files regenerate.
 
 Those are the lines `.github/workflows/smoke-test.yml` runs; a key CI does
 not check (`nyc`, `sf`) still needs its `--metro <key> --out <tag>/data/app/coverage-gaps.json`
