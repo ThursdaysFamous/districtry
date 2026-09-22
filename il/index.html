@@ -12972,13 +12972,18 @@ function initChiExplorer() {
   var loadIlLibraryOfficials = makeCached(function () {
     return fetchJSONWithRetry("data/app/il-library-district-officials.json", {}, 2);
   });
-  /* The office address and telephone of 250 Illinois public libraries, from the
-   * shared directory the three library systems run (L2). It carries only what
-   * the Comptroller filings do not: 173 of the 250 are municipal or township
-   * libraries that file no report of their own, and the rest are filings with no
-   * address, no telephone, or a post-office box where a street should be. So the
-   * stamper applies this file OVER the filing's office with no further judgment.
-   * No officer and no e-mail come from here — scripts/build_il_library_contacts.py. */
+  /* The office address and telephone of every Illinois public library the
+   * shared directory the three library systems run (L2) publishes one for.
+   * Most of its records are libraries the Comptroller filings do not answer for
+   * at all — municipal and township libraries that file no report of their own,
+   * and filings with no address, no telephone, or a post-office box where a
+   * street should be. SINCE 2026-09-15 IT ALSO KEEPS THE DIRECTORY'S COPY WHERE
+   * THE TWO PUBLISHERS AGREE (a disagreement is still the filing's to win —
+   * scripts/build_il_library_contacts.py's floors record the change), so a
+   * value here can be one the filing states too. Measured 2026-09-22: 138
+   * libraries publish a telephone in both files and all 138 agree digit for
+   * digit, which is why the stamper below can apply it OVER the filing's office
+   * with no further judgment. No officer and no e-mail come from here. */
   var loadIlLibraryContacts = makeCached(function () {
     return fetchJSONWithRetry("data/app/il-library-contacts.json", {}, 2);
   });
@@ -13044,6 +13049,18 @@ function initChiExplorer() {
   }
   loadLakeFireOfficials = withIlDistrictOfficials("lake", "fire", ["org_name"])(loadLakeFire);
   loadLakeParksOfficials = withIlDistrictOfficials("lake", "park", ["org_name"])(loadLakeParks);
+  /* ONE sentence for both library paths, because there is one rule and it is
+   * easy to restate wrongly. It NAMES THE PUBLISHER OF WHAT THE DIRECTORY
+   * GAVE, never of the whole row: a card can carry a telephone from the
+   * directory and an address from the filing, and one note claiming both for
+   * either would be wrong. `fields` is what was actually stamped, in card
+   * order. */
+  function libraryDirectoryNote(fields) {
+    return (fields.length === 2
+      ? "Address and telephone from"
+      : "The " + fields[0] + " comes from")
+      + " the Illinois library systems' shared directory.";
+  }
   /* The statewide library layer, all 72 counties through one roster. Its join
    * key is the boundary layer's own `library` column, and its collection is
    * `libraries` rather than `districts` — a library, not a district within a
@@ -13085,15 +13102,71 @@ function initChiExplorer() {
             office.phone = extra.phone;
             added.push("telephone");
           }
-          if (added.length) {
-            // NAME THE PUBLISHER OF WHAT IT GAVE, not of the whole row: a card
-            // can carry a telephone from the filing and an address from the
-            // directory, and one note claiming both for either would be wrong.
-            info.contactNote = (added.length === 2
-              ? "Address and telephone from"
-              : "The " + added[0] + " comes from")
-              + " the Illinois library systems' shared directory.";
-          }
+          if (added.length) info.contactNote = libraryDirectoryNote(added);
+        });
+        return geojson;
+      });
+    });
+  }
+  /* The SAME directory, for the four counties whose library cards read their
+   * OWN roster file instead of the statewide one — Woodford, Grundy, Kankakee
+   * and Peoria. Those entries stamp officers through withAfrOfficials and stop
+   * there, so a library with no telephone in its filing showed none while the
+   * statewide layer showed the directory's for the same library. Measured
+   * 2026-09-22: four cards — Woodford's Deer Creek, El Paso and IL Prairie, and
+   * Kankakee's Central Citizens — and Deer Creek's had no contact row at all.
+   *
+   * THE JOIN IS ON THE COMPTROLLER CODE, never on a name, and the county
+   * roster is what makes that possible: it carries `comptrollerCode`, the one
+   * identifier both publishers share. A name join fails on exactly the cards
+   * this is for — Woodford's parcel fabric calls unit 102/010/10 `IL Prairie
+   * Library District` and the state directory calls it `Illinois Prairie
+   * District Public Library`, and both names are their own publisher's.
+   *
+   * THE DIRECTORY FILE IS KEYED BY NAME, SO THE FILING ROSTER IS THE BRIDGE:
+   * il-library-district-officials.json carries a code on every record and is
+   * keyed by the same name the directory is, so code -> statewide name ->
+   * contact. That is two statewide files on a county library click; both are
+   * cached and both are already fetched by any statewide entry of the same
+   * layer, which is 87 of its 91 counties.
+   *
+   * IT FILLS A GAP AND NEVER OVERWRITES. The statewide stamper applies the
+   * directory's telephone unconditionally, which is safe there because the two
+   * publishers agree wherever both carry one (138 of 138, measured above).
+   * Here the value is stamped only where the filing gives none, so the note
+   * this card shows can never claim the directory for a number the district's
+   * own filing also published.
+   *
+   * NOTHING ELSE IS PORTED. The directory's address, website and administrator
+   * stay on the statewide path alone: the administrator in particular ships
+   * there only where the filing names none, and that rule is worth porting
+   * deliberately rather than as a side effect of this one. */
+  function withCountyLibraryPhone(stamped) {
+    return makeCached(function () {
+      return Promise.all([
+        stamped(),
+        loadIlLibraryOfficials().catch(function () { return null; }),
+        loadIlLibraryContacts().catch(function () { return null; })
+      ]).then(function (results) {
+        var geojson = results[0];
+        var filings = (results[1] && results[1].libraries) || {};
+        var contacts = (results[2] && results[2].libraries) || {};
+        var nameByCode = {};
+        Object.keys(filings).forEach(function (name) {
+          var code = filings[name] && filings[name].comptrollerCode;
+          if (code) nameByCode[String(code)] = name;
+        });
+        (geojson.features || []).forEach(function (f) {
+          var info = (f.properties || {}).dxOfficials;
+          if (!info || !info.comptrollerCode) return;
+          var office = info.office || {};
+          if (office.phone) return;
+          var name = nameByCode[String(info.comptrollerCode)];
+          var extra = name ? contacts[name] : null;
+          if (!extra || !extra.phone) return;
+          info.office = office;
+          office.phone = extra.phone;
+          info.contactNote = libraryDirectoryNote(["telephone"]);
         });
         return geojson;
       });
@@ -25670,7 +25743,7 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "woodford",
         coverage: woodfordCountyCoverage,
-        loader: withWoodfordOfficials(loadWoodfordLibraryDistricts),
+        loader: withCountyLibraryPhone(withWoodfordOfficials(loadWoodfordLibraryDistricts)),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Library District", keys: ["district"], primary: true },
@@ -25685,7 +25758,7 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "grundy",
         coverage: grundyCountyCoverage,
-        loader: withGrundyOfficials(loadGrundyLibraryDistricts),
+        loader: withCountyLibraryPhone(withGrundyOfficials(loadGrundyLibraryDistricts)),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Library District", keys: ["district"], primary: true },
@@ -25716,7 +25789,7 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "kankakee",
         coverage: kankakeeCountyCoverage,
-        loader: withKankakeeOfficials(loadKankakeeLibraries),
+        loader: withCountyLibraryPhone(withKankakeeOfficials(loadKankakeeLibraries)),
         fields: [
           { name: "name", label: "Library District", keys: ["unit_name"], primary: true },
           { label: "County", value: "Kankakee County" },
@@ -25785,7 +25858,7 @@ function initChiExplorer() {
       polygonCountyEntry({
         key: "peoria",
         coverage: peoriaCountyCoverage,
-        loader: withPeoriaOfficials(loadPeoriaLibraryDistricts),
+        loader: withCountyLibraryPhone(withPeoriaOfficials(loadPeoriaLibraryDistricts)),
         snapFeet: PARCEL_FABRIC_SNAP_FT,
         fields: [
           { name: "name", label: "Library District", keys: ["district_name"], primary: true },
