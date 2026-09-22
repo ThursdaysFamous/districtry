@@ -30914,6 +30914,28 @@ function initChiExplorer() {
     relPinnedHome = { block: rt.block, parent: rt.block.parentNode, next: rt.block.nextSibling };
     relPinnedSlot.lastChild.appendChild(rt.block);
   }
+  // After a tap on "Compare to this district" moves the card to the top of
+  // the list, scroll the list up after it: otherwise the card leaves from
+  // under the reader's finger and a different one takes its place. The
+  // target is the "Comparing to" heading, landed just below the map, which
+  // is sticky on a phone and covers the top ~370px of the viewport (measured
+  // 390x844) — a plain scrollIntoView would park the card underneath it.
+  // Only a TAP does this: a permalink arriving pinned, or a resize across
+  // the breakpoint, leaves the reader's scroll position alone. Moving a
+  // focused button out of the DOM drops its focus, so it is handed back
+  // without scrolling, or a keyboard reader loses their place.
+  function followPinnedCard(btn) {
+    if (!relPinnedHome || !relPinnedSlot || !relPinnedSlot.parentNode) return;
+    var mapCol = document.querySelector(".map-col");
+    var cover = mapCol && window.getComputedStyle(mapCol).position === "sticky"
+      ? mapCol.getBoundingClientRect().bottom : 0;
+    var delta = relPinnedSlot.getBoundingClientRect().top - Math.max(cover, 0) - 8;
+    var still = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    if (Math.abs(delta) > 1) window.scrollBy({ top: delta, behavior: still ? "auto" : "smooth" });
+    if (btn && document.activeElement !== btn) {
+      try { btn.focus({ preventScroll: true }); } catch (e) { /* focus is a courtesy, never a failure */ }
+    }
+  }
   if (window.matchMedia) {
     var relPhoneMQ = window.matchMedia("(max-width: 767px)");
     if (relPhoneMQ.addEventListener) relPhoneMQ.addEventListener("change", placePinnedCard);
@@ -30946,7 +30968,10 @@ function initChiExplorer() {
     btn.type = "button";
     btn.className = "pin-parent-btn";
     stylePinButton(btn, mod.id);
-    btn.addEventListener("click", function () { setPinnedParent(mod.id); });
+    btn.addEventListener("click", function () {
+      setPinnedParent(mod.id);
+      if (pinnedParentId === mod.id) followPinnedCard(btn);
+    });
     rt.pinBtn = btn;
     if (!rt.cardFooter && rt.cardBody.querySelector(".card-flush")) {
       // a migrated (flush) card whose module declares no primaryLink still
