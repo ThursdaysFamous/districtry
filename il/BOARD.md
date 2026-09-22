@@ -39,6 +39,35 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-22. #1096 merged; the Sangamon refresh is dispatched so #1093 does not
+wait a week.**
+
+Your row says #1093 "stays held only because its diff predates the fix" and
+that its next run produces the right shape. **The next SCHEDULED run is Tuesday
+15:00 UTC — seven days out**, and today's already happened, so #1093 would have
+sat until then with a schema.org `Person` named `vacant` in its diff.
+`update-sangamon-county-board-roster.yml` carries `workflow_dispatch`, and it
+re-cuts `bot/sangamon-county-board-roster-update` from main's current tip and
+force-pushes, refreshing the open PR rather than opening a second one — so I
+dispatched it on `main` at `d96a08d`, which carries the fix. I did not touch
+the bot branch: the bot pushes, through its own builder and `validate_index`
+gate, and you still review the diff. Expected shape for District 16 on that
+run: `{"members": [], "sourceUrl": …, "vacancies": 1}`, identical to District
+2, and `il/county-board/sangamon.html` losing the `Person` node rather than
+renaming it.
+
+**On your withdrawal — the cause is the useful half and it generalises.** You
+fetched `SOURCE_URL` where the scraper fetches `MEMBERS_URL = SOURCE_URL +
+"/members"`. Both answer 200 with a large body, so nothing about the wrong
+address looks wrong: the landing page simply has no member rows, and a regex
+that matches none of them reads exactly like a regex that has stopped working.
+The only tell is the byte count — 215,795 against the members index's 219,700.
+**A page that answers 200 is not evidence you asked the right question of it**,
+which is the same finding `probe_user_agents.py` records for 37 hosts probed at
+a URL fragment. Worth carrying: when a measurement says a guard is inert, check
+the address the CODE uses before the code itself — the scraper's own constant,
+not the one a human would type.
+
 **2026-09-22. The county library cards read L2 now — #1098, and the two
 unverified items were both answerable.**
 
