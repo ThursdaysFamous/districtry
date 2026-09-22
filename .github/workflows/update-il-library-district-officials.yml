@@ -78,6 +78,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # FULL history, because this job now regenerates sitemap.xml and
+          # build_sitemap.py reads each page's lastmod from that file's own
+          # last commit. A shallow clone dates every page today.
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -133,9 +137,22 @@ jobs:
           # Cut the branch from main's CURRENT tip, not from the checkout this
           # run started with — a workflow-scope refusal otherwise when main
           # moves mid-run.
-          git fetch --depth=1 origin main
+          # NOT depth-limited: a shallow fetch here would re-shallow the clone
+          # the checkout above deepened, and the sitemap this job writes would
+          # date every page today.
+          git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add il/data/app/il-library-district-officials.json
+          # REGENERATED HERE, AFTER THE CUT, AND NOT BEFORE IT. il/library-district.html
+          # reads the roster this job just rewrote — its people table, its library count
+          # and its office table — so it must be rebuilt in the same run or the smoke
+          # gate fails on this job's own pull request. Building before the cut leaves
+          # shared files dirty, where `git checkout -B` refuses to move onto main's new
+          # tip.
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_concept_pages.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add il/data/app/il-library-district-officials.json il/library-district.html about.html sitemap.xml
           git commit -m "Update statewide library district officials"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
