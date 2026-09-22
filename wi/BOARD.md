@@ -27,6 +27,85 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-22, close. Three merged, the LTSB watcher is live, and the brief's
+"four siblings" did not survive being measured.**
+
+  * **#1083 `a59b4d7`** — three `wi/WATCH.md` cadence rows name the file each
+    builder writes, not just the builder.
+  * **#1084 `a3b86c9`** — the fleet name gate's walker was dropping the
+    collection name one level down, so records inside a `members` list under a
+    district were never tested. Wisconsin went 1,492 → 1,674 records the day it
+    merged; the fleet 12,560 → 12,742 then, and 12,990 across 821 files read
+    live today, the difference being other sessions' rosters rather than
+    anything of mine.
+  * **#1099 `42f034c`** — the LTSB filing watcher.
+
+**The watcher leads on the layer's NAME, and that is the whole point of it.**
+LTSB names the service for the filing window it published —
+`Supervisory_July_2026`, `Wards_July_2026` — so the name moves at the statutory
+moment (15 January, 15 July, Wis. Stat. 5.15(4)(br)1) whether or not the
+district total does. A count cannot promise that: 72 counties can refile and
+still sum to 1,589. The builder now writes
+`wi/data/source/supervisory/built-rows.json` pinning name, `dataLastEdit` and
+row count for three services, and the monthly `wi-validate-sources.yml` run
+compares all three.
+
+**The name pin is opt-in per row and that is load-bearing.** Trempealeau's own
+layer is plainly called `Supervisory Districts` and last moved 2021-11-24 —
+there is no window in the name to read — so its count and edit date are
+compared and its name is not. Two selftest cases hold both halves: a renamed
+unpinned layer must report OK, and an unpinned row must not claim a name it
+does not check.
+
+**The brief asked for four siblings to be covered. Measured, the four are not
+the four:**
+
+  * **Trempealeau override** — pinned, name deliberately uncompared, as above.
+  * **The Kenosha witness** (`verify_kenosha_supervisory_map.py`) reads
+    `www.kenoshacountywi.gov` and no LTSB layer at all. Nothing for a filing
+    pin to cover.
+  * **RUSD's dissolve and the aldermanic dissolve** both read
+    `mapservices.legis.wisconsin.gov` — a different LTSB host from the pinned
+    FeatureServer org, so neither rides the pinned services.
+  * **Three files the brief did not name DO ride one.** The Madison, Milwaukee
+    and statewide polling-place builders all read
+    `WI_Municipal_Wards_Current`, which the wards pin covers — so they gained
+    the cover that was asked for, without having been asked for.
+
+One LTSB service on the pinned org is deliberately left unpinned:
+`County_Board_of_Supervisors_WFL1`, read by `wi_county_board_scraper.py`. It
+already has a weekly witness in that job, and a semiannual pin on a weekly
+service would report second.
+
+**The WATCH date is written by the build now, not by hand — and the two had
+already disagreed.** Row 27's last-done cell said 2026-08-25 where the file's
+own last rebuild was 2026-09-05, which row 57 states correctly. The cell points
+at the sidecar's `builtOn` rather than carrying a date of its own.
+
+**The geometry rebuilt byte-identical, so nothing was committed.** That is the
+useful result rather than a null one: the shipped layer is proven current
+against the July 2026 filing, by a real build rather than by the pin agreeing
+with itself.
+
+**The NG911 finding is the manager's open row above and I have not acted on
+it.** It surfaced because I ran `wi/scripts/validate_sources.py` live to verify
+the new supervisory rows, and it is a real WARN — all four layers edited
+2026-09-14 against the 2026-09-08 the shipped files were built from, every row
+count unchanged. That is precisely the redraw a row count cannot see, which is
+the case the sidecar mechanism exists for. It needs a cache_name bump and a
+reviewed PR, not a silent rebuild.
+
+**Stand-down confirmation.** Nothing of mine is unpushed and no PR of mine is
+open — measured, not assumed. The working tree carried nothing but this entry;
+the repository has **no open
+pull requests at all** as of this writing (#1103, which was open earlier today,
+belonged to another session and merged as `ed08809`). My branch
+`claude/calumet-county-supervisors-kl7a7j` sits one commit ahead of main at
+`015c611`, whose content merged as `42f034c`; #1099 was squash-merged, so that
+commit is not an ancestor of main and the remote branch is gone.
+**`origin/wi-watch`, carried on this board as needing external deletion, is
+also gone** — the remote now has two heads.
+
 **2026-09-22. The E.A.M. question: (c) for `county-board-directory.json`, and
 the bar found the derived file rather than the one it derives from.**
 
