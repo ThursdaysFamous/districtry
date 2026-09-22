@@ -315,6 +315,181 @@ def borough_officials(data):
     return rows
 
 
+# ------------------------------- il fire, park and library district officials
+
+def afr_people(rec):
+    """The people one Annual Financial Report names, board before officers.
+
+    That is the order the app's own card prints them in — a "Board" block, then
+    an "Administration" block — and the order the form itself has. Sorting by
+    name would separate a district's president from its treasurer, and sorting
+    the two groups together would mix elected trustees with appointed staff in
+    a column where the reader is told which is which by the role beside them.
+    """
+    out = []
+    for person in list(rec.get("board") or []) + list(rec.get("heads") or []):
+        if person.get("name"):
+            out.append({"name": person["name"], "role": person.get("role")})
+    return out
+
+
+AFR_UNIT_TABLE = "il/data/source/afr-special-districts.json"
+
+
+def afr_unit_names(kind):
+    """{Comptroller unit code: the name that unit files under}.
+
+    THE DISTRICT'S OWN FILED NAME, NEVER THE MAP CARD'S LABEL. The roster is
+    keyed by whatever each county's boundary layer calls a district, and that
+    label is written for a card sitting on a map: DuPage publishes "Addison"
+    for the Addison Fire Protection District, and Boone publishes "1" through
+    "5". On a card the layer's own name and the point the reader clicked supply
+    the rest; on a page a row headed "1" identifies nothing. The join table this
+    project already keeps for the scrape carries the Comptroller's own `label`
+    and `type` per unit, so the page prints "Boone County #1 Fire Protection
+    District" — a name the state publishes, not one composed here beyond
+    joining the two halves the filing itself separates.
+
+    A NAME TWO UNITS SHARE TAKES THE FILING COUNTY. Measured 2026-09-22 that is
+    one pair in the fleet: East Side Fire Protection District exists in both
+    Sangamon and St. Clair, two different districts with one name, and the
+    graph would otherwise merge them into a single organisation. Every other
+    unit is left alone rather than every row gaining a county it does not need.
+    """
+    rows = [r for r in load(AFR_UNIT_TABLE)["districts"] if r.get("layer") == kind]
+    if not rows:
+        fail("%s carries no %s rows — the page's district names come from it"
+             % (AFR_UNIT_TABLE, kind))
+    names, counties = {}, {}
+    for row in rows:
+        label, kind_name = row.get("label"), row.get("type")
+        if not label or not kind_name:
+            fail("%s: unit %s carries no label or no type, and the district's "
+                 "own name is both of them" % (AFR_UNIT_TABLE, row.get("code")))
+        name = (label if label.lower().endswith(kind_name.lower())
+                else "%s %s" % (label, kind_name))
+        if names.setdefault(row["code"], name) != name:
+            fail("%s: unit %s is filed under two names (%r and %r)"
+                 % (AFR_UNIT_TABLE, row["code"], names[row["code"]], name))
+        counties.setdefault(row["code"], row.get("warehouseCounty"))
+
+    shared = {n for n, count in collections.Counter(names.values()).items()
+              if count > 1}
+    for code in list(names):
+        if names[code] not in shared:
+            continue
+        if not counties.get(code):
+            fail("%s: unit %s shares the name %r with another district and "
+                 "names no filing county to tell them apart"
+                 % (AFR_UNIT_TABLE, code, names[code]))
+        names[code] = "%s (%s County)" % (names[code], counties[code])
+    return names
+
+
+def afr_units(data, kind):
+    """[(the name that ships, the filing)] for one kind, deduplicated by unit.
+
+    THE KEY IS THE COMPTROLLER'S UNIT CODE AND NOT THE MAP CARD'S LABEL. The
+    roster is keyed by county, and a district that crosses a county line appears
+    once under each — measured 2026-09-22, 308 fire entries for 287 districts
+    and 179 park entries for 162. Keyed by that label those would be one body
+    printed twice, and they would also COLLIDE in the graph: each county
+    publishes the label in its own casing, so Cook's ARLINGTON HEIGHTS PARK
+    DISTRICT and Lake's Arlington Heights Park District slug identically and
+    org_per_seat would mint one @id for two nodes.
+
+    THIS IS ALSO WHAT build_concept_pages.py READS for the office table beside
+    the people, rather than grouping the file a second time: two readers of one
+    question is where this fleet's recurring defect starts, and here the two
+    would disagree about how many districts there are.
+
+    Four guards, because each failure is silent. A unit the join table does not
+    name is refused rather than falling back to the card label; copies of one
+    unit that name different people, or give different offices, are refused
+    rather than reconciled; and two units whose names slug alike are refused,
+    since the graph would merge them into one organisation.
+    """
+    names = afr_unit_names(kind)
+    groups = collections.OrderedDict()
+    for county in sorted(data.get("counties") or {}):
+        layer = data["counties"][county].get(kind) or {}
+        for label in sorted(layer):
+            code = layer[label].get("comptrollerCode")
+            if not code:
+                fail("il-special-district-officials.json: the %s entry %r in %s "
+                     "carries no comptrollerCode, which is what identifies a "
+                     "district filed under more than one county"
+                     % (kind, label, county))
+            if code not in names:
+                fail("il-special-district-officials.json: the %s entry %r in %s "
+                     "files as unit %s, which %s does not name"
+                     % (kind, label, county, code, AFR_UNIT_TABLE))
+            groups.setdefault(code, []).append((county, label, layer[label]))
+
+    units, seen = [], {}
+    for code, entries in groups.items():
+        people = [afr_people(rec) for _c, _n, rec in entries]
+        if any(other != people[0] for other in people):
+            fail("il-special-district-officials.json: unit %s appears as %s and "
+                 "the copies name different people — refusing to pick one"
+                 % (code, ", ".join("%s/%r" % (c, n) for c, n, _r in entries)))
+        if len({json.dumps(rec.get("office"), sort_keys=True)
+                for _c, _n, rec in entries}) > 1:
+            fail("il-special-district-officials.json: unit %s appears as %s and "
+                 "the copies give different offices — refusing to pick one"
+                 % (code, ", ".join("%s/%r" % (c, n) for c, n, _r in entries)))
+        name = names[code]
+        key = slug(name)
+        if seen.get(key, code) != code:
+            fail("il-special-district-officials.json: units %s and %s both read "
+                 "as %r — two organisations would share one identifier"
+                 % (seen[key], code, name))
+        seen[key] = code
+        units.append((name, entries[0][2]))
+    units.sort(key=lambda unit: unit[0].lower())
+    return units
+
+
+def afr_districts(data, kind):
+    """Illinois fire protection or park districts, one row per person."""
+    return [(name, person)
+            for name, rec in afr_units(data, kind)
+            for person in afr_people(rec)]
+
+
+def fire_districts(data):
+    return afr_districts(data, "fire")
+
+
+def park_districts(data):
+    return afr_districts(data, "park")
+
+
+def library_boards(data):
+    """Illinois library districts, one row per person.
+
+    Keyed by the library's name because that is the shape of the source rather
+    than a saving: the statewide boundary layer clips a library's service area
+    to each county it reaches, so one library draws a card in several counties
+    while filing ONE report. Measured 2026-09-22 the file carries 198 libraries
+    and 198 distinct Comptroller unit codes, so unlike the fire and park file
+    there is nothing here to collapse.
+
+    THE SHARED DIRECTORY'S ADMINISTRATORS ARE DELIBERATELY NOT HERE, and that
+    is a bounded absence rather than an oversight. il-library-contacts.json
+    names a director for 169 further libraries that file no report at all, and
+    the app's card stamps one wherever a filing names none. Both are worth
+    publishing; neither is this file, and folding a second publisher into a
+    table whose own sentence says "as filed with the Comptroller" would make
+    that sentence untrue for some of its rows.
+    """
+    rows = []
+    for name in sorted(data["libraries"], key=lambda s: s.lower()):
+        for person in afr_people(data["libraries"][name]):
+            rows.append((name, person))
+    return rows
+
+
 ADAPTERS = {
     "borough_officials": borough_officials,
     "supreme_justices": supreme_justices,
@@ -327,6 +502,9 @@ ADAPTERS = {
     "school_board_members": school_board_members,
     "name_strings": name_strings,
     "district_council_members": district_council_members,
+    "fire_districts": fire_districts,
+    "park_districts": park_districts,
+    "library_boards": library_boards,
 }
 
 
@@ -530,6 +708,47 @@ CITY_TABLES = [
                         body="the Chicago Board of Education",
                         org="Chicago Board of Education",
                         heading="Who represents each Chicago school board district")]),
+    # THE THREE ILLINOIS SPECIAL DISTRICTS, and the largest single tranche these
+    # tables have taken: 287 fire protection districts, 162 park districts and
+    # 198 library districts, named in their own Annual Financial Report filings
+    # with the Illinois Comptroller. Every one of those people was already
+    # shipped — the app stamps them onto the boundary and renders them on the
+    # card — and measured 2026-09-22 not one appeared in a served byte of this
+    # site.
+    #
+    # EACH DISTRICT IS ITS OWN GOVERNMENT, so all three set org_per_seat: a
+    # single node named for "Illinois fire protection districts" would be a body
+    # that does not exist, and each of these files hundreds of separate reports.
+    #
+    # THE UNIT IS NAMED IN BOTH HALVES because the filing names both halves. A
+    # board's trustees or commissioners and the district's appointed officers
+    # sit in one table under a Role column that says which each person is, the
+    # way the app's own card labels its two blocks; the pages say in prose how
+    # each board is chosen.
+    dict(tag="il", page="fire-district.html", worksheet="metro-worksheet.json",
+         sections=[dict(roster="data/app/il-special-district-officials.json",
+                        adapter="fire_districts",
+                        seat="Fire district", holder="Officer", role_label="Role",
+                        unit="trustees and officers", prep="of",
+                        body="the Illinois fire protection districts that file with the Comptroller",
+                        org_per_seat=True,
+                        heading="Who runs each fire protection district")]),
+    dict(tag="il", page="park-district.html", worksheet="metro-worksheet.json",
+         sections=[dict(roster="data/app/il-special-district-officials.json",
+                        adapter="park_districts",
+                        seat="Park district", holder="Officer", role_label="Role",
+                        unit="commissioners and officers", prep="of",
+                        body="the Illinois park districts that file with the Comptroller",
+                        org_per_seat=True,
+                        heading="Who runs each park district")]),
+    dict(tag="il", page="library-district.html", worksheet="metro-worksheet.json",
+         sections=[dict(roster="data/app/il-library-district-officials.json",
+                        adapter="library_boards",
+                        seat="Library", holder="Officer", role_label="Role",
+                        unit="trustees and officers", prep="of",
+                        body="the Illinois libraries that file with the Comptroller",
+                        org_per_seat=True,
+                        heading="Who runs each library")]),
 ]
 
 

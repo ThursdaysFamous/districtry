@@ -51,6 +51,12 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from question_page import (METROS, PageError, check_layer, head, load,  # noqa: E402
                            MARK_RE, preserved_from_disk, shared_head_block,
                            shell, THEMEBOOT_RE)
+# The three Illinois special-district pages name the districts the officeholder
+# table names, and the table's own module already answers the hard half of that
+# question — which entries in a county-keyed roster are one district filed twice.
+# Importing it keeps ONE reader of that question; grouping the file again here
+# is how the page and the table come to disagree about how many districts exist.
+from build_officeholder_tables import afr_people, afr_units  # noqa: E402
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -792,6 +798,303 @@ def _join(names):
     return "%s and %s" % (", ".join(names[:-1]), names[-1])
 
 
+# ----------------------------------- il fire, park and library districts
+
+SPECIAL_ROSTER = "il/data/app/il-special-district-officials.json"
+LIBRARY_ROSTER = "il/data/app/il-library-district-officials.json"
+
+
+def dispatch_counties(layer):
+    """How many counties il/index.html dispatches a concept layer in.
+
+    Parsed out of the app's own dispatch table for the reason
+    subcircuit_entries() already states: a hand-kept county list here would go
+    stale at the speed the Illinois frontier moves. Seventy-two of the library
+    layer's entries are built by a factory, so the count is taken from the
+    `key:` literals every entry still spells out — which is exactly why
+    statewideLibraryEntry keeps them.
+    """
+    with open(os.path.join(REPO_ROOT, "il", "index.html"), encoding="utf-8") as f:
+        text = f.read()
+    mark = '    id: "%s",\n' % layer
+    if mark not in text:
+        raise PageError("il/index.html no longer registers %s in the shape this "
+                        "parser reads" % layer)
+    start = text.index(mark)
+    end = re.compile(r"\n  \}\);\n").search(text, start)
+    if not end:
+        raise PageError("cannot find the end of the %s registration" % layer)
+    keys = set(re.findall(r'key: "([a-z-]+)"', text[start:end.start()]))
+    if len(keys) < 2:
+        raise PageError("parsed %d counties out of the %s dispatch table — it "
+                        "has changed shape" % (len(keys), layer))
+    return len(keys)
+
+
+def office_table(units, noun, plural):
+    """One row per district that publishes an office, from the same filings.
+
+    THE ADDRESS AND THE TELEPHONE BELONG TO THE DISTRICT, NOT TO A PERSON, so
+    they sit here rather than beside a name in the table above — the rule the
+    township-hall table already follows, and for the same reason: a filing
+    publishes one office per district and one telephone, often a named
+    officer's own line, and printing it next to one trustee would make it
+    theirs.
+
+    NO E-MAIL COLUMN. About a third of these filings carry one and it is
+    almost always a named officer's work address rather than the district's, so
+    it stays on the map's card where the question is who to contact about this
+    district, and off a page that would publish several hundred of them in one
+    scrapeable block.
+    """
+    rows = []
+    for name, rec in units:
+        office = rec.get("office") or {}
+        where = ", ".join(x for x in (office.get("address"), office.get("city")) if x)
+        phone = office.get("phone")
+        if not where and not phone:
+            continue
+        rows.append(
+            "      <tr><td>%s</td><td>%s</td><td>%s</td></tr>"
+            % (esc(name), esc(where),
+               ('<a href="tel:%s">%s</a>'
+                % (re.sub(r"[^0-9+]", "", phone), esc(phone))) if phone else ""))
+    if not rows:
+        raise PageError("no %s publishes an office in its filing — the page's "
+                        "office table would be empty" % noun)
+    return """  <section>
+    <h2>Where to reach each %(noun)s</h2>
+    <p>Where %(n)d of these %(plural)s say to reach them, in their own filings. The address and
+      the telephone belong to the <strong>%(noun)s</strong> rather than to any one person on
+      it: a filing publishes one of each, often a named officer's own line, so this
+      site never prints either beside a name.</p>
+    <div class="flow-table-wrap">
+    <table class="flow">
+      <thead><tr><th>%(head)s</th><th>Office</th><th>Telephone</th></tr></thead>
+      <tbody>
+%(rows)s
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+""" % dict(n=len(rows), rows="\n".join(rows), noun=esc(noun), plural=esc(plural),
+           head=esc(noun[0].upper() + noun[1:]))
+
+
+def afr_provenance(noun, name_note):
+    """The section every filing-sourced page ends with.
+
+    THE FORM'S FOUR-NAME LIMIT IS THE LOAD-BEARING SENTENCE. An Annual Financial
+    Report has room for four officers, so a board of seven can only ever file
+    some of them, and a heading over two names would otherwise read as the whole
+    board. The app's own card says the same thing for the same reason.
+
+    The last paragraph differs by page because the join does: a fire or park
+    district's row is named from the Comptroller's unit table while the map's
+    card prints whatever the county's boundary layer calls it, and a library's
+    row and card are the same name.
+    """
+    return """  <section>
+    <h2>Where the names come from</h2>
+    <p>Every name here is from the %(noun)s's own <strong>Annual Financial Report</strong>,
+      filed with the Illinois Comptroller, re-read on a schedule and landing as a reviewed
+      pull request. Each filing names the fiscal year it covers, and the form has room for
+      four names — so a board of seven can only ever file some of them, and a short list here
+      is the form's limit rather than the whole board.</p>
+    <p>A %(noun)s that crosses a county line files <strong>once</strong>, under the county it
+      is based in, which is why one you meet in one county can be named for another.
+      %(name_note)s</p>
+%(disclaimer)s
+  </section>
+
+""" % dict(noun=esc(noun), name_note=name_note, disclaimer=DISCLAIMER)
+
+
+DISTRICT_NAME_NOTE = (
+    "The name on each row is the one the district files under; the map's card uses whatever "
+    "label the county's own boundary layer prints, which is sometimes just a village name or "
+    "a number.")
+
+LIBRARY_NAME_NOTE = (
+    "The name on each row is the library's own, and it is the name the map's card prints too "
+    "— the boundary layer and the filing agree on it, which is why this page is keyed by "
+    "library rather than by county.")
+
+
+def fire_district_page(tag, spec, worksheet):
+    units = afr_units(load(SPECIAL_ROSTER), "fire")
+    people = sum(len(afr_people(rec)) for _n, rec in units)
+    counties = dispatch_counties("fire-district")
+
+    lede = dict(
+        html='<p class="lede"><strong>A fire protection district is a government of its '
+             'own — its own board, its own tax levy, and no city or county above '
+             'it.</strong> Where you are not inside a municipality that runs its own fire '
+             'department, a district is what answers when you call 911. This names the %d '
+             'trustees and officers of the %d Illinois districts that file an annual report '
+             'with the state.</p>' % (people, len(units)),
+        cta='    <a class="cta" href="./#layers=%s">Find your fire district →</a>\n'
+            '    <p class="cta-note">Opens the map with the fire protection district layer '
+            'on. Search your address or ZIP, or tap your location.</p>' % spec["layers"])
+
+    sections = """  <section>
+    <h2>What the lookup shows</h2>
+    <div class="answer-card">
+      <p>Select any point and the card names the <strong>fire protection district</strong>
+        covering it, the people its latest filing names, and the district's office and
+        telephone.</p>
+      <p>The map draws these districts in %(counties)d Illinois counties. This page names the
+        %(units)d districts among them that file an annual report the state publishes. A
+        district the filings do not reach still draws on the map, and its card may still name
+        people from its own county's data — this page is the filings, not everything the map
+        knows.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>You may not elect these trustees</h2>
+    <p>A fire protection district's trustees are normally <strong>appointed by the county
+      board</strong>, and elected only where the district's own voters chose that at a
+      referendum. Nothing in the filings says which applies to a given district, so this page
+      does not say it either — and it is the one board on this site where "who represents you"
+      may have no ballot behind it. The county board that does the appointing
+      <a href="county-board.html">has its own lookup</a>.</p>
+    <p>The <strong>Role</strong> column is what tells the two kinds of name apart. A president,
+      treasurer, secretary or trustee sits on the board; a chief, administrator, accountant or
+      finance officer is appointed staff the board employs.</p>
+  </section>
+
+"""  % dict(counties=counties, units=len(units))
+    sections += office_table(units, "district", "fire protection districts")
+    sections += afr_provenance("district", DISTRICT_NAME_NOTE)
+
+    return dict(
+        title="Who runs my fire protection district?",
+        subtitle="Illinois fire protection district lookup — free, by address, ZIP, or a "
+                 "tap on the map.",
+        desc="Your Illinois fire protection district by address or ZIP — its trustees, its "
+             "officers, and where to reach it.",
+        og="Find your Illinois fire protection district by address or ZIP, and the %d "
+           "people its own filings name." % people,
+        lede=lede, sections=sections, named=people)
+
+
+def park_district_page(tag, spec, worksheet):
+    units = afr_units(load(SPECIAL_ROSTER), "park")
+    people = sum(len(afr_people(rec)) for _n, rec in units)
+    counties = dispatch_counties("park-district")
+
+    lede = dict(
+        html='<p class="lede"><strong>An Illinois park district is a government you elect '
+             'and most people never vote in.</strong> It levies its own tax, runs the pools '
+             'and the playing fields, and its commissioners are on the same ballot as the '
+             'offices everybody has heard of. This names the %d commissioners and officers '
+             'of the %d districts that file an annual report with the state.</p>'
+             % (people, len(units)),
+        cta='    <a class="cta" href="./#layers=%s">Find your park district →</a>\n'
+            '    <p class="cta-note">Opens the map with the park district layer on. Search '
+            'your address or ZIP, or tap your location.</p>' % spec["layers"])
+
+    sections = """  <section>
+    <h2>What the lookup shows</h2>
+    <div class="answer-card">
+      <p>Select any point and the card names the <strong>park district</strong> covering it,
+        the people its latest filing names, and the district's office and telephone.</p>
+      <p>The map draws park districts in %(counties)d Illinois counties. This page names the
+        %(units)d districts among them that file an annual report the state publishes. A
+        district the filings do not reach still draws on the map, and its card may still name
+        people from its own county's data — this page is the filings, not everything the map
+        knows.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Elected commissioners, appointed staff</h2>
+    <p>Park district commissioners are <strong>elected</strong>, and a park district is its own
+      unit of government rather than a department of the city it is named after. The
+      <strong>Role</strong> column tells the two kinds of name apart: a president, treasurer,
+      secretary or commissioner sits on the elected board, while a director, superintendent,
+      accountant or finance officer is staff the board employs.</p>
+    <p>These filings name more staff than commissioners, and that is the form rather than the
+      board: an Annual Financial Report is about money, so a district files whoever signs for
+      it. A short board here is what the form had room for, never a claim about the board's
+      size.</p>
+  </section>
+
+"""  % dict(counties=counties, units=len(units))
+    sections += office_table(units, "district", "park districts")
+    sections += afr_provenance("district", DISTRICT_NAME_NOTE)
+
+    return dict(
+        title="Who runs my park district?",
+        subtitle="Illinois park district lookup — free, by address, ZIP, or a tap on the map.",
+        desc="Your Illinois park district by address or ZIP — its elected commissioners, its "
+             "officers, and where to reach it.",
+        og="Find your Illinois park district by address or ZIP, and the %d people its own "
+           "filings name." % people,
+        lede=lede, sections=sections, named=people)
+
+
+def library_district_page(tag, spec, worksheet):
+    roster = load(LIBRARY_ROSTER)["libraries"]
+    units = [(name, roster[name]) for name in sorted(roster, key=lambda s: s.lower())]
+    people = sum(len(afr_people(rec)) for _n, rec in units)
+    counties = dispatch_counties("library-district")
+    districts = sum(1 for name, _r in units if "District" in name)
+
+    lede = dict(
+        html='<p class="lede"><strong>A library district is a taxing body you live inside, '
+             'with a board you elect.</strong> It is not a department of the village it is '
+             'named after, and its trustees stand for election on their own. This names the '
+             '%d trustees and officers of the %d Illinois libraries that file an annual '
+             'report with the state.</p>' % (people, len(units)),
+        cta='    <a class="cta" href="./#layers=%s">Find your library district →</a>\n'
+            '    <p class="cta-note">Opens the map with the library district layer on. '
+            'Search your address or ZIP, or tap your location.</p>' % spec["layers"])
+
+    sections = """  <section>
+    <h2>What the lookup shows</h2>
+    <div class="answer-card">
+      <p>Select any point and the card names the <strong>library</strong> serving it, whether
+        it is a district you live inside or a municipal library whose area is simply the
+        village, the people its latest filing names, and its office and telephone.</p>
+      <p>The map draws library boundaries in %(counties)d Illinois counties. This page names
+        the %(units)d libraries among them that file an annual report the state publishes. A
+        library the filings do not reach still draws on the map, and its card may still name an
+        administrator from the library systems' shared directory — this page is the filings,
+        not everything the map knows.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>A district is not the same as a village library</h2>
+    <p>An Illinois library <strong>district</strong> is a unit of government with its own
+      boundary and its own elected trustees; a municipal library's area is simply the city or
+      village, and its board is appointed by the municipality rather than elected. %(districts)d
+      of the %(units)d libraries here name themselves districts and the rest do not, and
+      nothing in a filing says how a particular board was chosen — so this page does not say it
+      for any one of them.</p>
+    <p>The <strong>Role</strong> column tells the two kinds of name apart either way: a
+      president, treasurer, secretary or trustee sits on the board, while a director,
+      librarian, manager or accountant is staff the board employs.</p>
+  </section>
+
+"""  % dict(counties=counties, units=len(units), districts=districts)
+    sections += office_table(units, "library", "libraries")
+    sections += afr_provenance("library", LIBRARY_NAME_NOTE)
+
+    return dict(
+        title="Who runs my library district?",
+        subtitle="Illinois library district lookup — free, by address, ZIP, or a tap on the "
+                 "map.",
+        desc="Your Illinois library district by address or ZIP — its trustees, its officers, "
+             "and where to reach it.",
+        og="Find your Illinois library district by address or ZIP, and the %d people its own "
+           "filings name." % people,
+        lede=lede, sections=sections, named=people)
+
+
 # ------------------------------------------------------------------- the table
 
 PAGES = [
@@ -885,6 +1188,31 @@ PAGES = [
          counts=[],
          sibling=dict(page="county-board.html", label="Who is my county board member?",
                       note="The other district drawn inside a single county.")),
+    # THE THREE ILLINOIS SPECIAL DISTRICTS. Each counts the roster it names on
+    # the run that writes it, so no district count or seat count is typed into
+    # the prose. Both rosters are counted by the fire page and only one by each
+    # of the others, which is what `counts` is for: the weekly job that rewrites
+    # either file has to regenerate every page that reads it.
+    dict(tag="il", file="fire-district.html", worksheet="metro-worksheet.json",
+         layers="fire-district", make=fire_district_page,
+         counts=[SPECIAL_ROSTER],
+         sibling=dict(page="park-district.html", label="Who runs my park district?",
+                      note="Another special district drawn on its own lines — and one "
+                           "whose board you do elect.")),
+    dict(tag="il", file="park-district.html", worksheet="metro-worksheet.json",
+         layers="park-district", make=park_district_page,
+         counts=[SPECIAL_ROSTER],
+         sibling=dict(page="library-district.html",
+                      label="Who runs my library district?",
+                      note="The other special district with an elected board on the same "
+                           "ballot.")),
+    dict(tag="il", file="library-district.html", worksheet="metro-worksheet.json",
+         layers="library-district", make=library_district_page,
+         counts=[LIBRARY_ROSTER],
+         sibling=dict(page="fire-district.html",
+                      label="Who runs my fire protection district?",
+                      note="The special district that answers a 911 call, and the one "
+                           "here whose board you may not elect.")),
 ]
 
 

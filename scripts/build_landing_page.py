@@ -191,6 +191,8 @@ QUESTION_ROWS = [
                                                 "city-council.html")),
     ("What police district am I in?", ("police-district.html", "police-precinct.html")),
     ("Which school board district am I in?", ("school-board.html",)),
+    ("Which special district covers me?", ("fire-district.html", "park-district.html",
+                                           "library-district.html")),
     ("Which court elects my judges?", ("judicial-subcircuit.html", "circuit-court.html",
                                        "supreme-court.html")),
     # The tail row, for a concept only one place answers. A row of its own per
@@ -219,6 +221,9 @@ CHIP_TOPIC = {
     "police-district.html": "police district",
     "police-precinct.html": "NYPD precinct",
     "school-board.html": "school board",
+    "fire-district.html": "fire district",
+    "park-district.html": "park district",
+    "library-district.html": "library district",
     "judicial-subcircuit.html": "judicial subcircuit",
     "circuit-court.html": "circuit court",
     "precinct.html": "precinct",
