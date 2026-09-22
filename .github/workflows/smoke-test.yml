@@ -113,6 +113,23 @@ jobs:
       - name: WI county outlines match the shipped county fabric
         run: python3 wi/scripts/build_wi_county_outlines.py --check
 
+      # THE GAP-LOCATION OUTLINES, both directions. A `counties` tag is a
+      # promise the Data gaps panel can locate that county: it fetches
+      # data/app/<slug>-county-outline.json to decide whether a gap is where a
+      # reader clicked, and a tag with no outline 404s while the panel's
+      # `mappable` flag flips true anyway — so the lede claims "Nothing
+      # recorded is missing where you clicked" inside a county the gap covers.
+      # build_coverage_gaps.py refuses the tag; these refuse the reverse, an
+      # outline whose county is served or no longer named. Offline: each
+      # re-runs the build's own internal-point cross-check from a recorded
+      # artifact. Michigan's shipped on 2026-09-22 IN NO WORKFLOW, which is the
+      # same "a gate nothing runs" hole build_metro_outline.py --check sat in.
+      - name: MI gap outlines match the counties that need them
+        run: python3 mi/scripts/build_mi_gap_outlines.py --check
+
+      - name: IA gap outlines match the counties its gap records name
+        run: python3 ia/scripts/build_ia_gap_outlines.py --check
+
       # districtry/tokens/districtry.tokens.css is the ONE source of the brand
       # surface, and this is what makes that true rather than aspirational. The
       # fleet was carrying one palette under two vocabularies and four hand-kept

@@ -109,7 +109,17 @@ jobs:
           # touched those same files errors instead of pushing, which is right.
           git fetch --depth=1 origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add ia/data/app/ia-county-officers.json
+          # AFTER the branch cut, never before: the re-cut above resets the
+          # tree to main, so pages regenerated earlier would be thrown away and
+          # the commit would carry the new roster beside the old pages. The
+          # per-county pages read this roster, so they are rebuilt here and
+          # staged with it.
+          python3 scripts/build_county_pages.py
+          # about.html counts the people these rosters name, so a refresh that
+          # changes the count must regenerate it in the same commit or its own
+          # --check fails on the bot's PR, over a number the PR is not about.
+          python3 scripts/build_about_page.py
+          git add ia/data/app/ia-county-officers.json ia/county-supervisor about.html
           git commit -m "Update IA county officer roster"
           git push -u origin "$branch" --force
           # Only open a PR if one isn't already open for this branch; if it is,

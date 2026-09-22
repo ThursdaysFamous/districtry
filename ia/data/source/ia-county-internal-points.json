@@ -1,0 +1,77 @@
+{
+ "measured": "2026-09-22",
+ "note": "The Census's own internal point per county \u2014 guaranteed inside, which a centroid is not for a concave shape. Recorded so --check runs offline.",
+ "points": {
+  "adair": {
+   "fips": "001",
+   "lat": 41.3285283,
+   "lng": -94.4781643,
+   "name": "Adair County",
+   "slug": "adair"
+  },
+  "floyd": {
+   "fips": "067",
+   "lat": 43.052741,
+   "lng": -92.7873669,
+   "name": "Floyd County",
+   "slug": "floyd"
+  },
+  "humboldt": {
+   "fips": "091",
+   "lat": 42.7822212,
+   "lng": -94.2027754,
+   "name": "Humboldt County",
+   "slug": "humboldt"
+  },
+  "johnson": {
+   "fips": "103",
+   "lat": 41.670668,
+   "lng": -91.5905458,
+   "name": "Johnson County",
+   "slug": "johnson"
+  },
+  "jones": {
+   "fips": "105",
+   "lat": 42.1251174,
+   "lng": -91.1169136,
+   "name": "Jones County",
+   "slug": "jones"
+  },
+  "lucas": {
+   "fips": "117",
+   "lat": 41.0333206,
+   "lng": -93.3314618,
+   "name": "Lucas County",
+   "slug": "lucas"
+  },
+  "pottawattamie": {
+   "fips": "155",
+   "lat": 41.3401835,
+   "lng": -95.5449053,
+   "name": "Pottawattamie County",
+   "slug": "pottawattamie"
+  },
+  "tama": {
+   "fips": "171",
+   "lat": 42.074848,
+   "lng": -92.5294115,
+   "name": "Tama County",
+   "slug": "tama"
+  },
+  "warren": {
+   "fips": "181",
+   "lat": 41.3324459,
+   "lng": -93.5687512,
+   "name": "Warren County",
+   "slug": "warren"
+  },
+  "wright": {
+   "fips": "197",
+   "lat": 42.7330073,
+   "lng": -93.7347352,
+   "name": "Wright County",
+   "slug": "wright"
+  }
+ },
+ "source": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query"
+}

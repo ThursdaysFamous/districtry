@@ -53,6 +53,8 @@ python3 mi/scripts/probe_mi_county_boards.py --check      # the MI board probe's
 python3 mi/scripts/summarize_detroit_roster_change.py --selftest  # the Detroit PR summary cannot lie about a roster change
 python3 wi/scripts/build_wi_county_board_directory.py --check
 python3 wi/scripts/build_wi_county_outlines.py --check
+python3 mi/scripts/build_mi_gap_outlines.py --check       # a county tag with no outline makes the gaps panel claim a clean spot
+python3 ia/scripts/build_ia_gap_outlines.py --check       # same, derived from the gap records themselves
 python3 scripts/build_brand_tokens.py --check
 python3 scripts/validate_contrast.py                     # text vs ground, both tiers
 python3 scripts/compose_app.py --check                   # engine/ vs every instance's fences
