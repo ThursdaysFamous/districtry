@@ -254,7 +254,40 @@ def county_officers(data):
             for key in sorted(data, key=lambda k: data[k]["county"])]
 
 
+ORDINALS = {"1": "First", "2": "Second", "3": "Third", "4": "Fourth", "5": "Fifth"}
+
+
+def supreme_justices(data):
+    """Illinois's Supreme Court, three justices from Cook and one from each of
+    the other four districts. The court's own role — Chief Justice against one
+    name and Justice against the rest — is what it publishes and is carried."""
+    return [("%s District" % ORDINALS[k], j)
+            for k in sorted(data, key=district_key)
+            for j in data[k]["supreme"]]
+
+
+def appellate_justices(data):
+    """Illinois's Appellate Court: ONE court of five districts, not five courts.
+
+    So the section names a single organisation and the district is each
+    justice's `namedPosition` inside it, the way a state's congressional
+    delegation is one body rather than one per seat.
+
+    THE CLERKS ARE DELIBERATELY NOT HERE, and the reason is the page's subject
+    rather than an oversight: each district's record names its clerk of court,
+    who is appointed by the court and appears on no ballot. This site answers
+    "who represents you", and a page listing five appointed court officers
+    beside 57 elected justices would blur the two. The clerk stays in the data
+    and on the app's own card, where the question is who to contact.
+    """
+    return [("%s District" % ORDINALS[k], j)
+            for k in sorted(data, key=district_key)
+            for j in data[k]["appellate"]["justices"]]
+
+
 ADAPTERS = {
+    "supreme_justices": supreme_justices,
+    "appellate_justices": appellate_justices,
     "county_officers": county_officers,
     "city_council": city_council,
     "city_officials": city_officials,
@@ -398,6 +431,25 @@ CITY_TABLES = [
                   body="four Iowa cities whose officials their county publishes",
                   org_per_seat=True,
                   heading="Who holds each office in four more Iowa cities"),
+         ]),
+    # Illinois's two highest elected courts, both drawn on the same five
+    # judicial districts and both named in no served byte until 2026-09-22.
+    dict(tag="il", page="supreme-court.html", worksheet="metro-worksheet.json",
+         sections=[
+             dict(roster="data/app/il-court-justices.json",
+                  adapter="supreme_justices",
+                  seat="District", holder="Justice", role_label="Role",
+                  unit="justices", prep="on",
+                  body="the Supreme Court of Illinois",
+                  org="Supreme Court of Illinois",
+                  heading="Who sits on the Supreme Court of Illinois"),
+             dict(roster="data/app/il-court-justices.json",
+                  adapter="appellate_justices",
+                  seat="District", holder="Justice",
+                  unit="justices", prep="on",
+                  body="the Appellate Court of Illinois",
+                  org="Appellate Court of Illinois",
+                  heading="Who sits on the Appellate Court of Illinois"),
          ]),
     # Iowa's county auditors: one per county, the county's own chief election
     # officer, and 99 named people who reached no served byte of this site

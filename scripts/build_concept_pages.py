@@ -485,6 +485,76 @@ def school_board_page(tag, spec, worksheet):
                 lede=lede, sections=sections, named=named)
 
 
+def supreme_court_page(tag, spec, worksheet):
+    """Illinois's two highest elected courts, drawn on one set of districts.
+
+    ONE PAGE FOR BOTH, because they share the geometry: an Illinois judicial
+    district elects its Supreme Court justice AND its Appellate Court justices,
+    so a reader who has found their district has found both answers. Splitting
+    them would be two pages over one map.
+
+    EVERY COUNT IS READ, including how many justices each court seats, because
+    Cook County elects three of the seven Supreme Court justices and one
+    retirement moves the appellate figure.
+    """
+    courts = load(spec["counts"][0])
+    supreme = sum(len(d["supreme"]) for d in courts.values())
+    appellate = sum(len(d["appellate"]["justices"]) for d in courts.values())
+    cook = len(courts["1"]["supreme"])
+
+    lede = dict(
+        html='<p class="lede"><strong>Illinois elects its judges, and the district you '
+             'live in decides which ones you vote on.</strong> The state is divided into '
+             '%d judicial districts; each elects justices to the Supreme Court and to the '
+             'Appellate Court, and this names all <strong>%d</strong> of them — %d on the '
+             'Supreme Court, %d on the Appellate Court.</p>'
+             % (len(courts), supreme + appellate, supreme, appellate),
+        cta='    <a class="cta" href="./#layers=%s">Find your judicial district →</a>\n'
+            '    <p class="cta-note">Opens the map with the judicial district layer on. '
+            'Search your address or ZIP, or tap your location.</p>' % spec["layers"])
+
+    sections = """  <section>
+    <h2>What the lookup shows</h2>
+    <div class="answer-card">
+      <p>Select any point in Illinois and the card names the <strong>judicial
+        district</strong> covering it. The tables below name the justices that district
+        elects to each court.</p>
+      <p>The First District is Cook County alone and elects %(cook)d of the Supreme
+        Court's %(supreme)d justices; the other four districts cover the rest of the state
+        and elect one each.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>A judicial district is not a subcircuit</h2>
+    <p>A judicial district elects the justices of the two courts above the trial court. A
+      <a href="judicial-subcircuit.html">judicial subcircuit</a> is a smaller shape inside
+      one county that elects a CIRCUIT judge — who then sits across the whole circuit, which
+      is why no judge belongs to a subcircuit once elected. The two answer different
+      questions and this map draws both.</p>
+  </section>
+
+  <section>
+    <h2>Where the names come from</h2>
+    <p>The Illinois courts' own published rosters, re-read on a schedule and landing as a
+      reviewed pull request. The Supreme Court publishes which of its justices is Chief
+      Justice, and that is carried; the Appellate Court publishes no such role and none is
+      supplied.</p>
+%(disclaimer)s
+  </section>
+
+""" % dict(disclaimer=DISCLAIMER, cook=cook, supreme=supreme)
+
+    subtitle = "Illinois judicial district lookup — free, by address, ZIP, or a tap on the map."
+    desc = ("Which Illinois judicial district you live in, and the Supreme Court and "
+            "Appellate Court justices it elects.")
+    og = ("Find your Illinois judicial district and the %d justices it elects to the "
+          "Supreme and Appellate Courts." % (supreme + appellate))
+    return dict(title="Who is my Supreme Court justice?", subtitle=subtitle,
+                desc=desc, og=og, lede=lede, sections=sections,
+                named=supreme + appellate)
+
+
 def county_auditor_page(tag, spec, worksheet):
     """Who runs elections in an Iowa county, and keeps its records.
 
@@ -729,6 +799,12 @@ PAGES = [
          sibling=dict(page="county-supervisor.html",
                       label="Who is my county supervisor?",
                       note="The government your city sits inside.")),
+    dict(tag="il", file="supreme-court.html", worksheet="metro-worksheet.json",
+         layers="il-supreme-court", make=supreme_court_page,
+         counts=["il/data/app/il-court-justices.json"],
+         sibling=dict(page="judicial-subcircuit.html",
+                      label="What is a judicial subcircuit?",
+                      note="The other judicial shape on this map, and a different court.")),
     dict(tag="il", file="township.html", worksheet="metro-worksheet.json",
          layers="township", make=township_page,
          counts=[TOWNSHIP_ROSTER],

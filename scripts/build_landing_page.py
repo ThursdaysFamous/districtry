@@ -191,7 +191,8 @@ QUESTION_ROWS = [
                                                 "city-council.html")),
     ("What police district am I in?", ("police-district.html", "police-precinct.html")),
     ("Which school board district am I in?", ("school-board.html",)),
-    ("Which court elects my judges?", ("judicial-subcircuit.html", "circuit-court.html")),
+    ("Which court elects my judges?", ("judicial-subcircuit.html", "circuit-court.html",
+                                       "supreme-court.html")),
     # The tail row, for a concept only one place answers. A row of its own per
     # page would be three headings each naming a single link, which is the
     # shape the regrouping exists to retire.
@@ -210,6 +211,7 @@ CHIP_TOPIC = {
     "county-commissioner.html": "commissioners",
     "city-council.html": "city council",
     "county-auditor.html": "county auditor",
+    "supreme-court.html": "Supreme Court",
     "ward.html": "alderman, by ward",
     "council-district.html": "Council district",
     "supervisor-district.html": "supervisor district",

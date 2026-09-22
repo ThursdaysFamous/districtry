@@ -25,6 +25,7 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 - [Which Chicago school board district am I in?](https://districtry.com/il/school-board.html)
 - [Sources & data layers](https://districtry.com/il/sources.html)
 - [Who is my Illinois state legislator?](https://districtry.com/il/state-legislature.html)
+- [Who is my Supreme Court justice?](https://districtry.com/il/supreme-court.html)
 - [What township am I in?](https://districtry.com/il/township.html)
 - [Who is my alderman? Chicago wards](https://districtry.com/il/ward.html)
 - [Chicago district questions](https://districtry.com/il/faq.html)
