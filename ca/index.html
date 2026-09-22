@@ -2526,6 +2526,27 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .rel-sw-in { border-top: 3px solid var(--rel-swatch, #0B5394); }
   .rel-sw-cross { border-top: 3px dashed var(--rel-swatch, #0B5394); }
   .rel-note { opacity: 0.7; font-size: 11px; margin-top: 2px; }
+  /* each compared district's label on the map: the card pill's wording on a
+     solid chip (a translucent pill tint is unreadable over a basemap), bordered
+     in the outline's own colour, with the text darkened from that colour until
+     it clears 4.5:1 on white (--rel-label-ink, set per label at runtime) */
+  .rel-map-label-anchor { background: none; border: none; }
+  .rel-map-label {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    color: var(--rel-label-ink, #14181C);
+    border: 1.5px solid;
+    border-radius: 99px;
+    padding: 1px 7px;
+    font-size: 11.5px;
+    font-weight: 700;
+    line-height: 1.35;
+    white-space: nowrap;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.22);
+    pointer-events: none;
+  }
+  .rel-map-label-hidden { visibility: hidden; }
   .rel-unpin-btn {
     margin-top: 8px;
     font-family: var(--font-body);
@@ -3482,6 +3503,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
   [data-theme="dark"] .rel-sw-parent { border-top-color: #ece9f4; }
   [data-theme="dark"] .rel-sw-in { border-top-color: #6ea8ff; }
   [data-theme="dark"] .rel-sw-cross { border-top-color: #6ea8ff; }
+  /* the per-label ink is darkened for a WHITE chip; on a dark chip it would
+     vanish, so dark mode prints the theme's own ink and keeps the layer's
+     colour in the border */
+  [data-theme="dark"] .rel-map-label { background: var(--dst-raised); color: var(--ink); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6); }
   /* ---- the hover popup is its own small design and all of it is literal */
   [data-theme="dark"] .hover-popup .leaflet-popup-content-wrapper {
     background: var(--panel);
@@ -4144,7 +4169,7 @@ function initSFExplorer() {
    * "districts fully inside the one you're over" outlining). There's no
    * geometry library here, so this is a hand-rolled, vertex-based test:
    * a child polygon counts as inside a parent when every one of its ring
-   * vertices is inside the parent (or within HOVER_CONTAIN_EPS of the parent's
+   * vertices is inside the parent (or within CONTAIN_EPS of the parent's
    * boundary — real nested layers like police beats share edges with their
    * parent district, and two independently-simplified copies of a shared edge
    * don't land on exactly the same coordinates, so an exact test would wrongly
@@ -4206,12 +4231,24 @@ function initSFExplorer() {
     return min;
   }
 
-  // ~11m tolerance. Two independently-sourced boundaries that share an edge
-  // (e.g. a police district and its beats, which come from different CPD
-  // services) don't land on identical coordinates, so a tighter value wrongly
-  // classified truly-nested shapes as "crossing". Far smaller than any real
-  // ward-vs-district crossing, so genuine straddlers are unaffected.
-  var CONTAIN_EPS = 1e-4;
+  // ~50m tolerance (degrees, unscaled, as distToBoundary measures). Two
+  // independently-sourced boundaries that share an edge (e.g. a police
+  // district and its beats, which come from different CPD services) don't land
+  // on identical coordinates, so a tighter value wrongly classified
+  // truly-nested shapes as "crossing" — and, since polygonsOverlap applies it
+  // too, mere NEIGHBOURS as crossing.
+  // WAS 1e-4 (~11m) UNTIL 2026-09-22, and that sat INSIDE the measured range
+  // of shared-edge offsets rather than above it. Measured in this unit at
+  // 41.968,-87.682: shared edges that are only borders reach 1.2e-5 to 4.9e-5
+  // (wards 49 and 50 against school-board District 4) and 1.8e-4 to 2.5e-4
+  // (House 40, House 11 and the Lake Michigan filler against Senate 7 — the
+  // mapshaper-simplified TIGER files diverge further than the city's own);
+  // House 13, 99.86% inside Senate 7, has a vertex 1.8e-4 outside it; and the
+  // SHALLOWEST genuine crossing measured is 3.9e-3 (ward 46, 5% of it inside
+  // District 4). 5e-4 is twice the worst border and eight times below that
+  // crossing. It is a measured heuristic for civic exploration, never legal
+  // precision — re-measure before moving it.
+  var CONTAIN_EPS = 5e-4;
   function polygonFullyInside(child, parent) {
     if (!bboxInside(featureBBox(child), featureBBox(parent), CONTAIN_EPS)) return false;
     var parentGeom = parent.geometry;
@@ -4230,16 +4267,28 @@ function initSFExplorer() {
   }
 
   // Do two polygons overlap at all? Vertex-based approximation: true if any
-  // vertex of one lies inside the other. Misses the rare case of two polygons
-  // that cross only edge-to-edge with no vertex contained — negligible for the
-  // chunky civic boundaries here. Used to tell "crosses the edge" (overlaps but
-  // not fully inside) from "no relationship".
+  // vertex of one lies inside the other by more than CONTAIN_EPS. Misses the
+  // rare case of two polygons that cross only edge-to-edge with no vertex
+  // contained — negligible for the chunky civic boundaries here. Used to tell
+  // "crosses the edge" (overlaps but not fully inside) from "no relationship".
+  //
+  // A NEIGHBOUR IS NOT A CROSSING. The tolerance is the same one
+  // polygonFullyInside applies, for the same reason: two independently drawn
+  // copies of a shared edge never coincide, so a district that only BORDERS
+  // the compared one puts a few vertices a few feet over the line. Without it
+  // those counted as crossing — measured 2026-09-22 comparing Chicago's wards
+  // against school-board District 4, the legend read "8 crossing the edge"
+  // where six wards cross it and two (49 and 50) only border it, overlapping
+  // it by 0.001 square miles each along a shared street.
   function anyVertexInside(a, b) {
     var hit = false;
     eachRing(a.geometry, function (ring) {
       if (hit) return;
       for (var i = 0; i < ring.length; i++) {
-        if (pointInGeometry({ lat: ring[i][1], lng: ring[i][0] }, b.geometry)) { hit = true; return; }
+        if (!pointInGeometry({ lat: ring[i][1], lng: ring[i][0] }, b.geometry)) continue;
+        if (distToBoundary(ring[i], b.geometry) <= CONTAIN_EPS) continue; // on the shared edge
+        hit = true;
+        return;
       }
     });
     return hit;
@@ -10179,8 +10228,211 @@ function initSFExplorer() {
    * ======================================================================= */
   var pinnedParentId = null;      // mod.id of the pinned parent layer, or null
   var relationshipGroup = null;   // L.featureGroup holding the relationship outlines
+  var relLabelGroup = null;       // L.layerGroup holding each outlined district's map label
+  var relLabels = [];             // [{marker, el, spots, clearance}] for the layout pass
   var REL_MAX_OUTLINES = 250;     // perf backstop for a huge parent over a dense layer
   var relLegendEl = document.getElementById("rel-legend");
+
+  /* ---- district labels on the compared outlines ----
+   * Each outlined district carries a label naming it, so a reader comparing
+   * wards against a school-board district can read "Ward 47" off the map
+   * instead of hovering every shape.
+   *
+   * THE TEXT IS THE CARD PILL'S WORDING, AND IT IS LEARNED RATHER THAN WRITTEN.
+   * A card pill is computed from a query RESULT for one point, so there is no
+   * per-feature pill to call for the other forty wards. What is known is the
+   * pill on screen for the feature at the selected point ("Ward 47") and that
+   * same feature's hover identity ("47"). From those two:
+   *   1. a property whose value IS the pill names every feature exactly, by
+   *      each feature's own value for that property;
+   *   2. otherwise, when the pill is the identity inside a wrapper ("Ward ",
+   *      "IL-"), the wrapper is reused — but only if none of its words occurs
+   *      in the feature's own properties (bar a value that carries the
+   *      identity itself — the feature's own formatted name), and only on
+   *      features with the same property schema. Text read from a property
+   *      varies by feature: one layer holds Lockport's wards and Joliet's
+   *      council DISTRICTS, the word coming from each feature's dxSeatLabel,
+   *      and a township precinct pill starts with the township's name. Text
+   *      found nowhere in the feature is a literal in the card's code and
+   *      holds for every feature it built.
+   * Anything unproven falls back to the bare identity, which is always true of
+   * the feature it is printed on. */
+  function relPropSignature(feature) {
+    return Object.keys(feature.properties || {}).sort().join("|");
+  }
+  function relLabelWrapper(mod) {
+    var rt = layerRuntime[mod.id];
+    if (!rt || rt.resultSeq !== state.sequence || !state.selectedPoint) return null;
+    var el = rt.idPill && !rt.idPill.hidden ? rt.idPill
+      : (rt.compactValue && !rt.compactValue.hidden ? rt.compactValue : null);
+    if (!el) return null;
+    var pill = String(el.textContent || "").trim();
+    var here = findFeatureContaining(rt.geojson, state.selectedPoint);
+    if (!pill || !here) return null;
+    var props = here.properties || {};
+    for (var key in props) {
+      if (props.hasOwnProperty(key) && props[key] !== null && String(props[key]).trim() === pill) return { key: key };
+    }
+    var value = hoverValue(mod, here);
+    if (value === "—") return null;
+    var sig = relPropSignature(here);
+    if (pill === value) return { pre: "", post: "", sig: sig };
+    var at = pill.indexOf(value);
+    if (at < 0 || pill.indexOf(value, at + 1) >= 0) return null; // absent, or ambiguous
+    var pre = pill.slice(0, at), post = pill.slice(at + value.length);
+    // the identity must be a whole token of the pill: "4" inside "IL-14" is not "14"
+    if (/[A-Za-z0-9]$/.test(pre) || /^[A-Za-z0-9]/.test(post)) return null;
+    if ((pre + post).length > 24) return null;
+    var words = (pre + " " + post).match(/[A-Za-z]+/g) || [];
+    var ident = " " + value.toLowerCase().replace(/[^a-z0-9]+/g, " ") + " ";
+    for (var k in props) {
+      if (!props.hasOwnProperty(k) || typeof props[k] !== "string") continue;
+      var text = " " + props[k].toLowerCase().replace(/[^a-z0-9]+/g, " ") + " ";
+      // a value carrying the identity itself ("State House District 13") is
+      // the feature's own name for itself, not wording that varies around it
+      if (text.indexOf(ident) >= 0) continue;
+      for (var i = 0; i < words.length; i++) {
+        if (text.indexOf(" " + words[i].toLowerCase() + " ") >= 0) return null; // feature-specific text
+      }
+    }
+    return { pre: pre, post: post, sig: sig };
+  }
+  function relLabelText(mod, feature, wrapper) {
+    if (wrapper && wrapper.key) {
+      var own = (feature.properties || {})[wrapper.key];
+      if (own !== null && own !== undefined && String(own).trim() !== "") return String(own).trim();
+    }
+    var value = hoverValue(mod, feature);
+    if (value === "—") return null;
+    if (wrapper && wrapper.sig !== undefined && relPropSignature(feature) === wrapper.sig) {
+      return wrapper.pre + value + wrapper.post;
+    }
+    return value;
+  }
+
+  // Planar distance in LATITUDE-degree units, with longitude scaled by cos(lat)
+  // so a label's clearance means the same distance in every direction.
+  function relSegDist(px, py, a, b, kx) {
+    return distPointToSegment(px * kx, py, a[0] * kx, a[1], b[0] * kx, b[1]);
+  }
+  function relRingsNear(geometry, box, pad) {
+    // the boundary segments that could be the nearest edge to any point in box
+    var out = [];
+    eachRing(geometry, function (ring) {
+      for (var i = 0; i < ring.length - 1; i++) {
+        var a = ring[i], b = ring[i + 1];
+        if (Math.max(a[0], b[0]) < box[0] - pad || Math.min(a[0], b[0]) > box[2] + pad ||
+            Math.max(a[1], b[1]) < box[1] - pad || Math.min(a[1], b[1]) > box[3] + pad) continue;
+        out.push(a, b);
+      }
+    });
+    return out;
+  }
+
+  // Where to put a district's label: the points of (feature ∩ parent) farthest
+  // from both boundaries, found on a coarse grid with the best refined once.
+  // For a district fully inside the parent that is simply its own widest
+  // spot; for one crossing the edge it lands in the part that falls
+  // INSIDE the compared district, so every label sits within that shape.
+  // Memoized per (feature, parent) pair: outlines redraw each time any layer's
+  // query resolves, and the geometry has not changed between those redraws.
+  function relLabelPoint(feature, parent, inside) {
+    var memo = feature.__relLabel;
+    if (memo && memo.parent === parent) return memo.spots;
+    var fb = featureBBox(feature), pb = featureBBox(parent);
+    var box = inside ? fb : [Math.max(fb[0], pb[0]), Math.max(fb[1], pb[1]), Math.min(fb[2], pb[2]), Math.min(fb[3], pb[3])];
+    var spots = [];
+    if (box[0] < box[2] && box[1] < box[3]) {
+      var kx = Math.cos(((box[1] + box[3]) / 2) * Math.PI / 180);
+      var pad = Math.max((box[2] - box[0]) * kx, box[3] - box[1]);
+      var segs = relRingsNear(feature.geometry, box, pad);
+      // a district that is fully inside its parent is nearer its own edge than
+      // the parent's at every interior point, so the parent's edge is skipped
+      if (!inside) segs = segs.concat(relRingsNear(parent.geometry, box, pad));
+      var clearance = function (x, y) {
+        if (!pointInGeometry({ lat: y, lng: x }, feature.geometry)) return -1;
+        if (!inside && !pointInGeometry({ lat: y, lng: x }, parent.geometry)) return -1;
+        var best = Infinity;
+        for (var s = 0; s < segs.length; s += 2) {
+          var d = relSegDist(x, y, segs[s], segs[s + 1], kx);
+          if (d < best) best = d;
+        }
+        return best;
+      };
+      var scan = function (x0, y0, x1, y1, n, into) {
+        for (var i = 0; i < n; i++) {
+          for (var j = 0; j < n; j++) {
+            var x = x0 + (x1 - x0) * (i + 0.5) / n, y = y0 + (y1 - y0) * (j + 0.5) / n;
+            var c = clearance(x, y);
+            if (c > 0) into.push({ lat: y, lng: x, clearance: c });
+          }
+        }
+      };
+      var N = 10, grid = [];
+      scan(box[0], box[1], box[2], box[3], N, grid);
+      grid.sort(function (a, b) { return b.clearance - a.clearance; });
+      if (grid.length) {
+        var dx = (box[2] - box[0]) / N, dy = (box[3] - box[1]) / N, fine = [];
+        scan(grid[0].lng - dx, grid[0].lat - dy, grid[0].lng + dx, grid[0].lat + dy, 5, fine);
+        fine.sort(function (a, b) { return b.clearance - a.clearance; });
+        if (fine.length && fine[0].clearance > grid[0].clearance) grid[0] = fine[0];
+      }
+      // up to four spots, each clear of the ones before it by its own
+      // clearance, so a label that would cover the selected point or a
+      // neighbour's label has somewhere else in its district to go
+      for (var g = 0; g < grid.length && spots.length < 4; g++) {
+        var cand = grid[g];
+        var apart = spots.every(function (sp) {
+          return Math.hypot((sp.lng - cand.lng) * kx, sp.lat - cand.lat) >= Math.max(sp.clearance, cand.clearance);
+        });
+        if (apart) spots.push(cand);
+      }
+    }
+    feature.__relLabel = { parent: parent, spots: spots };
+    return spots;
+  }
+
+  // Show a label only where it fits its district at the current zoom and
+  // collides with nothing already placed; the widest districts claim their
+  // spot first. Zooming in therefore reveals more labels rather than piling
+  // them on top of each other. Runs on every zoom, since pixel size is the test.
+  // "Fits" means the chip's height fits and at most about a third of its width
+  // overhangs the nearest edge: requiring the whole chip inside hid every label
+  // but one on a ward-over-school-district comparison at city zoom (measured
+  // 2026-09-22), and a chip that overhangs slightly still reads as its own.
+  function layoutRelLabels() {
+    if (!relLabels.length) return;
+    // every marker on the map (the selected point, office pins) is occupied
+    // ground: a label drawn over the star hides the point the reader chose
+    var placed = [];
+    var box = map.getContainer().getBoundingClientRect();
+    map.eachLayer(function (layer) {
+      if (!(layer instanceof L.Marker) || layer.options.pane === "rel-labels") return;
+      var icon = layer.getElement && layer.getElement();
+      if (!icon) return;
+      var r = icon.getBoundingClientRect();
+      if (!r.width && !r.height) return;
+      placed.push({ x0: r.left - box.left, y0: r.top - box.top, x1: r.right - box.left, y1: r.bottom - box.top });
+    });
+    relLabels.forEach(function (l) {
+      l.el.classList.remove("rel-map-label-hidden");
+      var w = l.el.offsetWidth, h = l.el.offsetHeight;
+      for (var i = 0; i < l.spots.length; i++) {
+        var spot = l.spots[i];
+        var p = map.latLngToContainerPoint([spot.lat, spot.lng]);
+        var edge = map.latLngToContainerPoint([spot.lat + spot.clearance, spot.lng]);
+        var room = Math.abs(p.y - edge.y); // pixels from this spot to the nearest edge
+        if (room < Math.max(h * 0.55, w * 0.35)) continue;
+        var rect = { x0: p.x - w / 2 - 3, y0: p.y - h / 2 - 3, x1: p.x + w / 2 + 3, y1: p.y + h / 2 + 3 };
+        var hits = placed.some(function (r) { return rect.x0 < r.x1 && rect.x1 > r.x0 && rect.y0 < r.y1 && rect.y1 > r.y0; });
+        if (hits) continue;
+        l.marker.setLatLng([spot.lat, spot.lng]);
+        placed.push(rect);
+        return;
+      }
+      l.el.classList.add("rel-map-label-hidden");
+    });
+  }
 
   function relationshipParentFeature() {
     if (!pinnedParentId || !state.selectedPoint || !state.layersOn[pinnedParentId]) return null;
@@ -10209,6 +10461,7 @@ function initSFExplorer() {
       if (!rt || !rt.geojson) continue;
       if (rt.relevant === false) continue; // relevance-hidden here (mod.coverage) — draw nothing for it
       var color = darkenHexColor(moduleColor(mod), 0.15);
+      var wrapper = relLabelWrapper(mod);
       var feats = rt.geojson.features || [];
       for (var j = 0; j < feats.length; j++) {
         var f = feats[j];
@@ -10228,18 +10481,52 @@ function initSFExplorer() {
         }).addTo(relationshipGroup);
         drawn++;
         if (inside) nIn++; else nCross++;
+        addRelLabel(mod, f, parentFeature, inside, wrapper, color);
       }
     }
     if (capped) console.warn("pin relationships: capped at " + REL_MAX_OUTLINES + " outlines");
     relationshipGroup.bringToFront();
+    // widest first, so a big district keeps its label when a small one collides
+    relLabels.sort(function (a, b) { return b.clearance - a.clearance; });
+    layoutRelLabels();
     return { inside: nIn, cross: nCross, capped: capped };
+  }
+
+  function addRelLabel(mod, feature, parentFeature, inside, wrapper, color) {
+    var text = relLabelText(mod, feature, wrapper);
+    if (!text) return; // no identity to print — an unlabelled outline says nothing false
+    var spots = relLabelPoint(feature, parentFeature, inside);
+    if (!spots.length) return; // a sliver too thin to hold a point: nothing to label
+    var el = document.createElement("span");
+    el.className = "rel-map-label";
+    el.textContent = text; // textContent: feature text is external
+    el.style.borderColor = color;
+    el.style.setProperty("--rel-label-ink", hoverPillStyle(color).color);
+    var marker = L.marker([spots[0].lat, spots[0].lng], {
+      icon: L.divIcon({ className: "rel-map-label-anchor", html: el, iconSize: null }),
+      pane: "rel-labels",
+      interactive: false,
+      keyboard: false
+    }).addTo(relLabelGroup);
+    relLabels.push({ marker: marker, el: el, spots: spots, clearance: spots[0].clearance });
   }
 
   var relCounts = null; // last computed {inside, cross, capped}, or null
 
   function refreshRelationshipOutlines() {
-    if (!relationshipGroup) relationshipGroup = L.featureGroup().addTo(map);
+    if (!relationshipGroup) {
+      relationshipGroup = L.featureGroup().addTo(map);
+      // labels sit above every overlay (400) and below the selected-point
+      // marker (600); pointer-events off so they never swallow a map click
+      var labelPane = map.createPane("rel-labels");
+      labelPane.style.zIndex = "450";
+      labelPane.style.pointerEvents = "none";
+      relLabelGroup = L.layerGroup().addTo(map);
+      map.on("zoomend", layoutRelLabels);
+    }
     relationshipGroup.clearLayers();
+    relLabelGroup.clearLayers();
+    relLabels = [];
     var parentFeature = relationshipParentFeature();
     relCounts = parentFeature ? drawRelationshipOutlines(parentFeature) : null;
     updateRelLegend();

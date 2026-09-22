@@ -147,6 +147,27 @@
   .rel-sw-in { border-top: 3px solid var(--rel-swatch, #0B5394); }
   .rel-sw-cross { border-top: 3px dashed var(--rel-swatch, #0B5394); }
   .rel-note { opacity: 0.7; font-size: 11px; margin-top: 2px; }
+  /* each compared district's label on the map: the card pill's wording on a
+     solid chip (a translucent pill tint is unreadable over a basemap), bordered
+     in the outline's own colour, with the text darkened from that colour until
+     it clears 4.5:1 on white (--rel-label-ink, set per label at runtime) */
+  .rel-map-label-anchor { background: none; border: none; }
+  .rel-map-label {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    color: var(--rel-label-ink, #14181C);
+    border: 1.5px solid;
+    border-radius: 99px;
+    padding: 1px 7px;
+    font-size: 11.5px;
+    font-weight: 700;
+    line-height: 1.35;
+    white-space: nowrap;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.22);
+    pointer-events: none;
+  }
+  .rel-map-label-hidden { visibility: hidden; }
   .rel-unpin-btn {
     margin-top: 8px;
     font-family: var(--font-body);

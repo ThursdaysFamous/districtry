@@ -2,7 +2,7 @@
    * "districts fully inside the one you're over" outlining). There's no
    * geometry library here, so this is a hand-rolled, vertex-based test:
    * a child polygon counts as inside a parent when every one of its ring
-   * vertices is inside the parent (or within HOVER_CONTAIN_EPS of the parent's
+   * vertices is inside the parent (or within CONTAIN_EPS of the parent's
    * boundary — real nested layers like police beats share edges with their
    * parent district, and two independently-simplified copies of a shared edge
    * don't land on exactly the same coordinates, so an exact test would wrongly
@@ -64,12 +64,24 @@
     return min;
   }
 
-  // ~11m tolerance. Two independently-sourced boundaries that share an edge
-  // (e.g. a police district and its beats, which come from different CPD
-  // services) don't land on identical coordinates, so a tighter value wrongly
-  // classified truly-nested shapes as "crossing". Far smaller than any real
-  // ward-vs-district crossing, so genuine straddlers are unaffected.
-  var CONTAIN_EPS = 1e-4;
+  // ~50m tolerance (degrees, unscaled, as distToBoundary measures). Two
+  // independently-sourced boundaries that share an edge (e.g. a police
+  // district and its beats, which come from different CPD services) don't land
+  // on identical coordinates, so a tighter value wrongly classified
+  // truly-nested shapes as "crossing" — and, since polygonsOverlap applies it
+  // too, mere NEIGHBOURS as crossing.
+  // WAS 1e-4 (~11m) UNTIL 2026-09-22, and that sat INSIDE the measured range
+  // of shared-edge offsets rather than above it. Measured in this unit at
+  // 41.968,-87.682: shared edges that are only borders reach 1.2e-5 to 4.9e-5
+  // (wards 49 and 50 against school-board District 4) and 1.8e-4 to 2.5e-4
+  // (House 40, House 11 and the Lake Michigan filler against Senate 7 — the
+  // mapshaper-simplified TIGER files diverge further than the city's own);
+  // House 13, 99.86% inside Senate 7, has a vertex 1.8e-4 outside it; and the
+  // SHALLOWEST genuine crossing measured is 3.9e-3 (ward 46, 5% of it inside
+  // District 4). 5e-4 is twice the worst border and eight times below that
+  // crossing. It is a measured heuristic for civic exploration, never legal
+  // precision — re-measure before moving it.
+  var CONTAIN_EPS = 5e-4;
   function polygonFullyInside(child, parent) {
     if (!bboxInside(featureBBox(child), featureBBox(parent), CONTAIN_EPS)) return false;
     var parentGeom = parent.geometry;
@@ -88,16 +100,28 @@
   }
 
   // Do two polygons overlap at all? Vertex-based approximation: true if any
-  // vertex of one lies inside the other. Misses the rare case of two polygons
-  // that cross only edge-to-edge with no vertex contained — negligible for the
-  // chunky civic boundaries here. Used to tell "crosses the edge" (overlaps but
-  // not fully inside) from "no relationship".
+  // vertex of one lies inside the other by more than CONTAIN_EPS. Misses the
+  // rare case of two polygons that cross only edge-to-edge with no vertex
+  // contained — negligible for the chunky civic boundaries here. Used to tell
+  // "crosses the edge" (overlaps but not fully inside) from "no relationship".
+  //
+  // A NEIGHBOUR IS NOT A CROSSING. The tolerance is the same one
+  // polygonFullyInside applies, for the same reason: two independently drawn
+  // copies of a shared edge never coincide, so a district that only BORDERS
+  // the compared one puts a few vertices a few feet over the line. Without it
+  // those counted as crossing — measured 2026-09-22 comparing Chicago's wards
+  // against school-board District 4, the legend read "8 crossing the edge"
+  // where six wards cross it and two (49 and 50) only border it, overlapping
+  // it by 0.001 square miles each along a shared street.
   function anyVertexInside(a, b) {
     var hit = false;
     eachRing(a.geometry, function (ring) {
       if (hit) return;
       for (var i = 0; i < ring.length; i++) {
-        if (pointInGeometry({ lat: ring[i][1], lng: ring[i][0] }, b.geometry)) { hit = true; return; }
+        if (!pointInGeometry({ lat: ring[i][1], lng: ring[i][0] }, b.geometry)) continue;
+        if (distToBoundary(ring[i], b.geometry) <= CONTAIN_EPS) continue; // on the shared edge
+        hit = true;
+        return;
       }
     });
     return hit;

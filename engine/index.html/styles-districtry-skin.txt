@@ -933,6 +933,10 @@
   [data-theme="dark"] .rel-sw-parent { border-top-color: #ece9f4; }
   [data-theme="dark"] .rel-sw-in { border-top-color: #6ea8ff; }
   [data-theme="dark"] .rel-sw-cross { border-top-color: #6ea8ff; }
+  /* the per-label ink is darkened for a WHITE chip; on a dark chip it would
+     vanish, so dark mode prints the theme's own ink and keeps the layer's
+     colour in the border */
+  [data-theme="dark"] .rel-map-label { background: var(--dst-raised); color: var(--ink); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6); }
   /* ---- the hover popup is its own small design and all of it is literal */
   [data-theme="dark"] .hover-popup .leaflet-popup-content-wrapper {
     background: var(--panel);
