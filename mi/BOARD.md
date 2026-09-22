@@ -66,6 +66,129 @@ governs, and three missing `PROVENANCE` entries, so Flint's and Warren's ward ge
 with no monthly source check at all. Main reads `EA· … 14 without a job`. Asked the manager
 whether to bring it back as its own PR rather than re-pushing a closed PR's work.
 
+**The two entries below this one describe a BRANCH and not main, and they stay as written.**
+This section is append-only dated snapshots, so the entry claiming Michigan reads EAM and the
+entry saying the engine fix is addressed are left alone: both were true of
+`claude/next-state-priority-tmedsi` on the day. Neither is true of main, which reads
+`EA· … 14 without a job` and carries `mappable` in its original form. This entry is the
+correction and its place is the top of the file rather than inside theirs.
+
+**I OVERWROTE THIS FILE FOUR TIMES TODAY AND RECOVERED IT FROM GIT.** Each board push built
+`mi/BOARD.md` from my FEATURE BRANCH's working copy and then pushed it over main. The branch
+never receives board commits — they go straight to main by design — so its copy was stale by
+construction, and every push after the first silently reverted the entries before it: only the
+newest survived, and the file on main carried one entry where it should have carried four.
+Nothing was lost permanently, because all four commits are the same base plus their own
+insertions, so replaying them against that base with difflib recovers each one exactly; the
+rebuild is verified by every distinctive phrase appearing once and by every base line still
+being present bar the two that one commit deliberately replaced. No other file and no other
+session's content was touched — all four commits are `mi/BOARD.md` alone, and the manager's
+own board edits are in the root `BOARD.md`. **THE RULE: build a board edit from
+`origin/main`'s version of the file, never from the branch's working tree.** A `git diff
+--stat` showing deletions on an append-only file is the tell, and it was there on the second
+push; I read it as a rewrap and did not check.
+
+**2026-09-22, the hold on #1086 was right and is addressed in `29f1388f`. The engine no
+longer lets the gaps panel claim a clean spot it could not test.** Read the code before
+changing it: `appliesHere` swallowed a failed outline fetch as "not here", so a 404 resolved
+exactly like a point outside the county, and `mappable` came off a record's county ARRAY
+rather than off whether any outline had loaded. Both halves had to move. `appliesHere`
+reports three answers now — here, not here, could not tell — and `mappable` reads the third.
+The third case gets its own words, because "these gaps aren't mapped to particular places" is
+false of a record that names five counties and true of one that names none. Michigan's lede
+at the Munising point reads "We could not check which of these affect the spot you clicked."
+
+**One limit was kept rather than tightened, and it is the part worth disagreeing with.** One
+outline loading and missing is still treated as evidence the point is clean — the same
+tolerance the panel already extends to records carrying no county at all. Requiring every
+tagged county to have located would be stricter and would suppress the clean-spot wording for
+every reader of an instance with one unloadable outline. It is in the block's comment rather
+than decided quietly.
+
+**"Michigan is the only one affected" was checked rather than assumed**, across all six:
+il 98 counties tagged / 101 outlines, ny 5/5, ca 1/1, wi 72/72, ia 2/2, mi 35/0. So the fix
+is fleet-wide and changes one instance's reader today, with Iowa next in line at 2 outlines
+for 99 counties.
+
+**The 105 requests were exactly 105, measured in Chromium rather than estimated**: 35
+counties times three attempts, all 404, with the fetch helper's 500 ms and 1000 ms backoff
+between each pair, and zero further requests on a second open in the same session — the
+rejection cache already handled that. The outline loader passes 0 retries now and it is 35.
+
+**The check that would have caught it exists now.** `mi/scripts/smoke_test.mjs` carries the
+reference fork's `smoke-gap-probe` span with a real fixture: Munising, in Alger County, which
+`mi-county-board-no-district-key` names, verified against this instance's own
+`state-counties.json` to fall in Alger and in no other county. All four of the manager's
+points are recorded there. The expectation is DERIVED from the tree — whether that county's
+outline file exists — so the day the outlines ship it flips to asserting the gap leads the
+list rather than going on accepting the weaker wording. Reverting `mappable` alone in
+`mi/index.html` fails it with the exact sentence the hold named.
+
+All six instances' smoke tests pass, the static battery is clean, and no cache bump was
+needed because `SHELL_URLS` is network-first.
+
+**2026-09-22, Michigan reads EAM and is the first instance in the fleet to pass all three.**
+Pushed to #1086 as a second commit. All 21 app files are under a stated plan, which took
+naming rather than building: every one of the 14 the measure called unplanned already had a
+`mi/WATCH.md` row stating a real clock and naming the builder to run, and not one named the
+data file it writes. The measure's rule is a row that names the file and states a when, so
+these were the mirror image of a loophole — the when was there and the filename was not.
+
+**What Michigan's M rests on, so nobody has to infer it from a three-letter mark.** Seven
+files under weekly jobs that rewrite them. Fourteen under cadences a person performs —
+thirteen riding `mi-validate-sources.yml`'s monthly tracking issue, one quarterly by hand.
+Adam's ruling allows that and gives the reason (a weekly job on a boundary is a guaranteed
+no-op), and it is still a weaker guarantee than a rewrite.
+
+**Three files were not in the monthly source check at all** — `metro-outline.json`,
+`mi-flint-wards.json`, `mi-warren-wards.json` — so `mi-validate-sources.yml` had no
+`PROVENANCE` row for them. Iowa registers its outline and Michigan did not. That mattered
+before it was bookkeeping: a row saying "monthly, with `mi-validate-sources.yml`" would have
+been false for Flint and Warren. All three answer HTTP 200 to the districtry token, measured
+today; TIGERweb layer 1 names itself `Counties`, Flint's FeatureServer lists one layer, and
+Warren's `serviceDescription` is the item snippet its builder quotes.
+
+**One claim I nearly shipped was wrong and the two table lengths are what caught it.** The
+draft row for `coverage-gaps.json` said the weekly commissioner job re-tries every county a
+gap record names. It walks 58 of 83: `COUNTIES` holds the 48 that ship and `PROBES` the ten
+candidates. So ten of the 35 counties named by records are re-fetched every Saturday and 25
+are re-fetched by nothing, two of those policy-shut at any cadence. The row states that split
+and puts the 25 plus the nineteen city and fabric records on a quarterly re-probe.
+
+**I did not widen either gate, and both near-misses are written up as questions below.**
+`build_eam_status.py` is untouched by this change. Its `WHEN` vocabulary rejects "whenever
+TIGERweb rolls a vintage", which is a trigger its own docstring says should count, and
+`watched_by` reads workflow text only, so a watcher whose subject list lives in the script it
+invokes is invisible. Both would move il, wi and ia too, and widening a measure to get a pass
+is the one move this repo's own rules put out of bounds.
+
+**2026-09-22, the follow-up shipped as #1086 — Michigan measures 83 of 83 on EXAMINED.**
+#1081 landed, so the derivation the two entries below describe as held is now committed. All
+six records carry `counties`, parsed out of their own `area` strings through
+`build_county_status.slug_of`: robots-declined 5, access-controlled 6, no-district-key 8,
+prose-roster 4, page-not-found 10, no-website 2 — 35 counties. `build_coverage_gaps` reports
+6 mapped to counties and `docs/EAM_STATUS.md` reads `mi | EA· | 83 | 83/83`.
+
+**The array is measured now, not trusted.** `probe_mi_county_boards.py --check` compares the
+union of the six arrays against both tables that know which counties are shut — the probe
+artifact's 25 rows and the 10-county `PROBES` table in the scraper — and fails four ways: a
+county we do not serve that no record names, a county named by a record that we do serve, a
+county in two records, and a record whose `area` prose and `counties` array disagree. Before
+the arrays were filled it failed naming exactly the 35 plus all six prose-vs-array
+disagreements. Three negative tests each name the county: `alcona` added to a record,
+`genesee` doubled, `shiawassee` dropped. Written because the empty arrays were the second
+time this instance shipped a claim nothing compared against the thing it claimed.
+
+**`probes_fips()` no longer parses that span itself.** It calls a new `probes_table()`, the
+one reader of it, because the gate needed the county NAMES the FIPS reader was discarding and
+a second parse of one hand-written literal is how the key-order defect #1069 fixed got there.
+`mi_slug()` is a deliberate copy of `slug_of` rather than an import, and says so: that
+function's one override maps `De Witt` to `dewitt`, an Illinois county.
+
+**Nothing is served that was not served yesterday.** All 35 were already measured shut and
+written up; what changed is that the fleet's own measure can see it. MAINTAINED is unchanged
+at 14 of 21 app files with no plan and is the next bar.
+
 **2026-09-22, #1082 merged as `bd9060c8`, verified on the merged tree.** All five gates pass
 there — `build_coverage_gaps --check --metro michigan` at 26 gaps (7 blocked, 2 data-quality,
 17 no-source), `build_about_page --check` at 152 recorded gaps fleet-wide, `build_sitemap
@@ -584,9 +707,76 @@ Two corrections to my own last report:
   share above has the census on both sides.
 
 ## Open questions for Adam
+**2026-09-22 — #1081 made the BUILDER accept a county slug present in the shipped county
+fabric, and nothing made the PANEL able to place one. Which side closes the gap?** Not
+blocking; `29f1388f` makes the mismatch honest rather than harmful, so Michigan's panel says
+it could not check instead of claiming a clean spot. What is still missing is the better
+answer for a reader.
 
-**2026-09-22 — Michigan cannot pass EXAMINED without a change to a shared gate. Which
-one?** Not blocking; #1082 does the bookkeeping either way, and nothing else waits on this.
+What I measured. The panel places a county by fetching `data/app/<slug>-county-outline.json`.
+Michigan ships none, so its 35 tagged counties cannot be placed and the panel falls to the
+could-not-check wording. Counted across the fleet: il 98 tagged / 101 outlines, ny 5/5, ca
+1/1, wi 72/72, ia 2/2, mi 35/0.
+
+Two ways to close it, and they differ in kind.
+
+1. **Michigan ships 35 single-county outline files.** What the gap-record skill already
+   prescribes, and it turns Michigan's panel from "could not check" into "one recorded gap
+   affects the spot you clicked". It also duplicates geometry this instance already ships —
+   `state-counties.json` carries all 83 — and each file needs a worksheet `data_files` row, a
+   service-worker list placement and a cache bump. 35 requests per first panel open either
+   way; they would succeed rather than 404.
+
+2. **The panel places a tagged county from the instance's own county fabric** when no
+   per-county file exists. No duplicated geometry, and it fits every future instance that
+   ships a whole-state fabric rather than per-county files — which is the shape #1081 already
+   taught the builder to accept. The cost is real: the engine would need the fabric's URL and
+   its name field as METRO config, and it would have to turn a county NAME into the slug a
+   record carries, which means reproducing `slug_of` in JavaScript. A second reader of one
+   question is where this fleet's recurring defect starts, so that variant should instead
+   have the BUILDER write the county's own name into the record and the panel match on that.
+
+**I would take 2 with the builder writing the name**, because it removes the second reader
+rather than adding one, and because route 1 asks this instance to carry 35 files whose
+contents are already in a file it ships. But it is a fleet engine change plus a record-shape
+change, so it is yours. If the answer is 1, that is a day's work here and I will do it without
+further discussion.
+
+
+**2026-09-22 — `build_eam_status.py` reads a near-miss of its own question in two places.
+Both are one-line fixes to a fleet gate and would move il, wi and ia, so neither is mine.**
+Not blocking; Michigan passes MAINTAINED without either, by naming files in rows.
+
+**(a) `WHEN` rejects the trigger form its own docstring allows.** The docstring says "a
+cadence, or a trigger", and the regex accepts `any change` and `on a change`. It does not
+accept `Whenever TIGERweb rolls a vintage`, which is `mi/WATCH.md`'s clearest trigger and the
+one that governs the congressional district field — the field name rolled from `CD119` to
+`CD120` and a query naming the old one now returns HTTP 400, so that row is load-bearing.
+Adding `whenever` to the vocabulary would count it. The cost is that `whenever` also matches
+vaguer prose ("whenever this looks stale", which `mi/WATCH.md` itself carries), so it would
+accept a row that names no clock at all. A tighter form — `whenever <a named source> <verb>`
+— cannot be written as a keyword list.
+
+**(b) `watched_by` reads workflow text only, so a watcher that knows its subjects through a
+script is invisible.** `mi-validate-sources.yml` runs monthly, opens a tracking issue on
+WARN/FAIL, and covers 18 of Michigan's 21 app files — but the file list lives in
+`mi/scripts/validate_sources.py`'s `PROVENANCE` table, not in the `.yml`, so the measure sees
+a watcher naming nothing. The same is true of every instance's own `validate_sources.py`.
+Following the workflow into the scripts it invokes would count them, and would raise wi's and
+ia's MAINTAINED numbers without anybody writing a row. The cost is that it widens what counts
+as a watcher by reading a second file, and it would let a script that merely MENTIONS a
+filename pass as a watcher of it.
+
+**I would take (b) and not (a)**, because (b) is the case where a real scheduled watcher
+exists and the measure cannot see it, while (a) is a wording problem a row can fix in one
+edit. But both change a bar Adam ruled on four days ago, so I have written rows instead and
+left the gate alone.
+
+**2026-09-22 — ~~Michigan cannot pass EXAMINED without a change to a shared gate. Which
+one?~~ ANSWERED 2026-09-22: the manager took route 2 in #1081, and #1086 populated the
+arrays over it. Michigan reads 83/83. The reasoning is kept below because route 1's cost —
+35 files duplicating a subset of a file the instance already ships — is the argument any
+future whole-state instance will need.**
 
 What I measured. `build_eam_status.py`'s `gap_counties()` counts only each gap record's
 `counties` array, and `build_coverage_gaps.py` refuses a slug with no
