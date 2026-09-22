@@ -33,6 +33,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # FULL history, because this job now regenerates sitemap.xml and
+          # build_sitemap.py reads each page's lastmod from that file's own last
+          # commit. Under the default depth-1 checkout git reports the single
+          # fetched commit as the last commit of EVERY file, so every entry takes
+          # today's date and `build_sitemap.py --check` passes on it anyway — the
+          # measurement and the reasoning are in update-wi-circuit-court-roster.yml.
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -69,9 +76,22 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # Cut from main's CURRENT tip — see update-mi-legislature-roster.yml
           # for the measured reason.
-          git fetch --depth=1 origin main
+          # NOT depth-limited: a shallow fetch here would re-shallow the clone
+          # the checkout above deepened, and the sitemap this job writes would
+          # date every page today.
+          git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add mi/data/app/mi-grand-rapids-council-members.json
+          # REGENERATED HERE, AFTER THE CUT, AND NOT BEFORE IT. mi/city-council.html
+          # states counts read off the roster this job just rewrote and carries its
+          # officeholder table, so it must be rebuilt in the same run or the smoke
+          # gate fails on this job's own pull request. Building before the cut leaves
+          # shared files dirty, where `git checkout -B` refuses to move onto main's
+          # new tip — the failure that killed run 35391214303 on 2026-09-18.
+          python3 scripts/build_concept_pages.py
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add mi/data/app/mi-grand-rapids-council-members.json mi/city-council.html about.html sitemap.xml
           git commit -m "Update Grand Rapids council roster"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
