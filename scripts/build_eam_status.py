@@ -101,6 +101,7 @@ Usage:
 """
 
 import argparse
+import ast
 import contextlib
 import glob
 import io
@@ -164,8 +165,12 @@ def paren_literal(path, name):
             depth -= 1
             if depth == 0:
                 try:
-                    return eval(src[start:i + 1])  # noqa: S307 — our own literal
-                except Exception:
+                    # literal_eval, never eval: this reads another script's
+                    # source, and `eval` made `validate_python_hygiene.py`
+                    # skip its whole-file name check — on the one file in
+                    # this repo that has been wrong five times.
+                    return ast.literal_eval(src[start:i + 1])
+                except (ValueError, SyntaxError):
                     return None
     return None
 
@@ -199,6 +204,190 @@ def load_rosters():
             counties[tag] = merged
             paths[tag] = read
     return counties, paths, B
+
+
+# A record naming a PERSON carries one of these beside its name. The list is
+# what the fleet's own rosters publish; it is deliberately short, because the
+# question is only "does this file name people", never "who".
+PERSON_FIELDS = ("email", "phone", "party", "role", "title", "term",
+                 "profileUrl", "vacant")
+
+
+def _records(obj, depth=0):
+    """Every dict inside a roster, at any nesting the fleet actually uses."""
+    if depth > 6:
+        return
+    if isinstance(obj, dict):
+        yield obj
+        for v in obj.values():
+            for x in _records(v, depth + 1):
+                yield x
+    elif isinstance(obj, list):
+        for v in obj:
+            for x in _records(v, depth + 1):
+                yield x
+
+
+def shape_of(path):
+    """(kind, n) for a data file: geometry, roster or structure.
+
+    CORRECTED 2026-09-22, and the defect is worth keeping in view because this
+    module's report is what four sessions read. This counted `"name"` in the
+    raw bytes and called the answer PEOPLE. A GeoJSON feature's
+    `properties.name` is a polygon's label, so `mi-precincts.json` was
+    published as naming 3,895 people and `adams-county-outline.json` as naming
+    1, each with the sentence "they go stale at the speed that board turns
+    over" attached to a boundary that moves once a decade. Measured on the
+    shipped tree the day it was fixed: 171 report lines claimed a person
+    count, 12,654 people in total, and EVERY ONE was wrong — 169 GeoJSON
+    FeatureCollections plus two polling-place files whose names are buildings.
+    An OVERSTATEMENT misroutes work exactly as an understatement does: it
+    sends a session to build a weekly job for a file that needs none.
+
+    The three shapes are read off the file instead:
+
+      geometry   a FeatureCollection. Names nobody; rots on reapportionment.
+      roster     a record carrying a name and one of PERSON_FIELDS.
+      structure  neither — seat counts, addresses, links.
+
+    That a FeatureCollection never names a person is MEASURED, not assumed:
+    CLAUDE.md records seven Illinois counties whose members ride the same GIS
+    feature as the boundary, so the case is real. It does not reach
+    `data/app` today, and `check_geometry_names_nobody()` re-measures that on
+    every run rather than trusting this sentence.
+    """
+    try:
+        with open(path, encoding="utf-8") as fh:
+            doc = json.load(fh)
+    except (OSError, ValueError):
+        return ("structure", 0)
+    if isinstance(doc, dict) and doc.get("type") == "FeatureCollection":
+        return ("geometry", len(doc.get("features") or []))
+    people = sum(1 for rec in _records(doc)
+                 if "name" in rec and any(f in rec for f in PERSON_FIELDS))
+    return ("roster", people) if people else ("structure", 0)
+
+
+# The gate below asks a DIFFERENT question from `shape_of` and therefore uses a
+# different test, which is deliberate rather than the duplication this repo
+# usually warns about. `shape_of` asks "does this file name people", where a
+# `name` beside an `email` or a `phone` is a roster: measured on the shipped
+# tree, narrowing PERSON_FIELDS to the two lists below would reclassify 14 real
+# rosters as structure — Wisconsin's 134 alderpersons, Illinois's 101 county
+# clerks, six county boards. The gate asks "is a BOUNDARY FEATURE naming a
+# person", where those two fields prove nothing, because an organisation has a
+# telephone: `ia-aeas.json` (nine education agencies) and `library-sites.json`
+# (482 library buildings) both carry name + phone and name nobody. Both were
+# flagged by the broad list on the gate's own first run.
+PERSON_ONLY_FIELDS = ("party", "term", "vacant", "role", "profileUrl")
+
+# Matched as whole keys, never as substrings: `FirePD` contains "rep" and
+# `supervisorial_district` contains "supervisor", and a substring test reported
+# both as officeholders.
+ROLE_KEYS = frozenset("""member official chair chairman supervisor
+commissioner alderman alderperson trustee president mayor clerk judge
+incumbent officeholder representative rep""".split())
+
+
+# Each case is (path, expected kind, why this file settles it). The files are
+# named because a shape is only real in a file — and each is re-read from the
+# tree, so a case naming a file that has LEFT the tree fails rather than
+# quietly stopping being checked, the property `ACCEPTED_DROPS` had to be
+# given after the fact.
+SHAPE_CASES = (
+    ("il/data/app/adams-county-outline.json", "geometry",
+     "one polygon whose only property is its own label — the exact file the "
+     "old reader published as naming 1 person"),
+    ("mi/data/app/mi-precincts.json", "geometry",
+     "3,895 polygons; the old reader published 3,895 people"),
+    ("wi/data/app/library-sites.json", "geometry",
+     "482 library buildings carrying name + phone: an organisation's "
+     "telephone is not a person"),
+    ("ia/data/app/ia-aeas.json", "geometry",
+     "nine education agencies, likewise name + phone"),
+    ("wi/data/app/madison-polling-places.json", "structure",
+     "137 buildings with a name and an address and no person"),
+    ("il/data/app/boone-fire-districts.json", "geometry",
+     "six polygons whose only property is a district number — the old "
+     "reader called this 'structure (seat counts, county links)', which it "
+     "carries neither of"),
+    ("il/data/app/il-county-commissioners.json", "roster",
+     "a real roster: people under counties"),
+    ("il/data/app/congress-roster.json", "roster",
+     "a real roster keyed by district"),
+    ("wi/data/app/county-board-members.json", "roster",
+     "783 supervisors, the fleet's largest roster keyed by seat"),
+    ("il/data/app/il-county-clerks.json", "roster",
+     "101 clerks carrying name + email only, which is why PERSON_FIELDS "
+     "cannot be narrowed to the person-only list the gate uses"),
+)
+
+
+def selftest():
+    """Hold `shape_of` to files whose shape is settled.
+
+    This module's own record says it was corrected four times on the day it
+    was built and had no self-test that would have caught any of them. The
+    fifth correction was the classifier, so the classifier gets one.
+    """
+    bad = 0
+    for rel, want, why in SHAPE_CASES:
+        path = os.path.join(REPO_ROOT, rel)
+        if not os.path.exists(path):
+            print("  ORPHAN %s — the case has left the tree; name another "
+                  "file of the same shape" % rel)
+            bad += 1
+            continue
+        got, n = shape_of(path)
+        mark = "ok" if got == want else "WRONG"
+        if got != want:
+            bad += 1
+        print("  %-5s %-52s %-9s n=%-5d %s"
+              % (mark, rel, got, n, why if got == want
+                 else "expected %s" % want))
+    if bad:
+        fail("%d shape case(s) failed" % bad)
+    print("build-eam-status: selftest OK — %d shape case(s)" % len(SHAPE_CASES))
+
+
+def check_geometry_names_nobody():
+    """FAIL if a shipped FeatureCollection starts naming people.
+
+    `shape_of` calls every FeatureCollection nameless. That is true of the
+    tree today and is not true by construction — CLAUDE.md records seven
+    Illinois counties whose members ride the same GIS feature as the
+    boundary, so a roster arriving inside a FeatureCollection is a shape this
+    fleet already produces. It does not reach `data/app` today; if one did,
+    the report would go on calling a roster a boundary and nothing would say
+    so. Measured on the shipped tree: zero features flagged.
+    """
+    stems = {r.rstrip("s") for r in ROLE_KEYS}
+    bad = []
+    for inst in sorted(glob.glob(os.path.join(REPO_ROOT, "*", "data", "app"))):
+        for path in sorted(glob.glob(os.path.join(inst, "*.json"))):
+            try:
+                with open(path, encoding="utf-8") as fh:
+                    doc = json.load(fh)
+            except (OSError, ValueError):
+                continue
+            if not (isinstance(doc, dict)
+                    and doc.get("type") == "FeatureCollection"):
+                continue
+            for feat in doc.get("features") or []:
+                props = feat.get("properties") or {}
+                why = []
+                if "name" in props:
+                    why += [f for f in PERSON_ONLY_FIELDS if f in props]
+                why += [k for k in props
+                        if k.strip().lower().rstrip("s_0123456789") in stems]
+                if why:
+                    bad.append("%s (%s)" % (os.path.relpath(path, REPO_ROOT),
+                                            ", ".join(sorted(set(why)))))
+                    break
+    if bad:
+        fail("a shipped FeatureCollection names people, so shape_of would "
+             "report it as a boundary: %s. Teach shape_of to read it, or "
+             "move the roster into its own file." % "; ".join(sorted(set(bad))))
 
 
 def gap_counties(tag):
@@ -388,16 +577,11 @@ def measure():
             if when:
                 planned.append((rel, when))
                 continue
-            # How many people the unrefreshed file names, which is what decides
-            # how fast it rots. Counted off the raw file rather than the
-            # adapter's output: a directory of seat counts contributes no
-            # districts, so the adapter view cannot tell it from an empty one.
-            try:
-                blob = open(os.path.join(REPO_ROOT, rel), encoding="utf-8").read()
-                named = blob.count('"name"')
-            except OSError:
-                named = 0
-            unmaintained.append((rel, named))
+            # What the unrefreshed file IS, which is what decides how fast it
+            # rots. Read off the file's own shape rather than the adapter's
+            # output: a directory of seat counts contributes no districts, so
+            # the adapter view cannot tell it from an empty one.
+            unmaintained.append((rel,) + shape_of(os.path.join(REPO_ROOT, rel)))
 
         rows.append(dict(
             tag=tag, total=total, ring=ring,
@@ -490,20 +674,37 @@ def render(rows):
                        % (len(r["planned"]),
                           ", ".join("`%s`" % os.path.basename(x) for x, _ in r["planned"])))
         if not r["M"]:
+            by = {}
+            for _, kind, _ in r["unmaintained"]:
+                by[kind] = by.get(kind, 0) + 1
             out.append("- **Maintained: no.** %d file(s) under no scheduled job "
-                       "at all, neither rewriting nor watching:"
-                       % len(r["unmaintained"]))
-            for rel, named in r["unmaintained"]:
-                if named:
+                       "at all, neither rewriting nor watching — %d boundary, "
+                       "%d structure, **%d naming people**. %s"
+                       % (len(r["unmaintained"]),
+                          by.get("geometry", 0), by.get("structure", 0),
+                          by.get("roster", 0),
+                          "No officeholder is going stale here; what these want "
+                          "is a stated re-check cadence, not a weekly scraper."
+                          if not by.get("roster") else
+                          "The roster files are the urgent ones: a name goes "
+                          "wrong the week a member leaves."))
+            for rel, kind, n in r["unmaintained"]:
+                if kind == "roster":
                     out.append("  - `%s` — names **%d** people and nothing "
                                "refreshes them, so they go stale at the speed "
-                               "that board turns over." % (rel, named))
+                               "that body turns over." % (rel, n))
+                elif kind == "geometry":
+                    out.append("  - `%s` — **%d** boundary feature(s), naming "
+                               "nobody. It rots on reapportionment rather than "
+                               "on officeholder churn, so a weekly job would "
+                               "be a guaranteed no-op; what it wants is a "
+                               "`WATCH.md` row stating when the lines are "
+                               "re-checked." % (rel, n))
                 else:
                     out.append("  - `%s` — names nobody; it carries structure "
-                               "(seat counts, county links). Slower to rot, on "
-                               "reapportionment and link rot rather than on "
-                               "officeholder churn, and still refreshed by "
-                               "nothing." % rel)
+                               "(seat counts, addresses, links). Slower to "
+                               "rot, on link rot rather than on officeholder "
+                               "churn, and still refreshed by nothing." % rel)
         out.append("")
     return "\n".join(out).rstrip() + "\n"
 
@@ -514,8 +715,15 @@ def main():
                     help="fail if docs/EAM_STATUS.md is not what this run produces")
     ap.add_argument("--report", action="store_true",
                     help="print the table and write nothing")
+    ap.add_argument("--selftest", action="store_true",
+                    help="hold shape_of to files whose shape is settled")
     args = ap.parse_args()
 
+    if args.selftest:
+        selftest()
+        return
+
+    check_geometry_names_nobody()
     rows = measure()
     body = render(rows)
 

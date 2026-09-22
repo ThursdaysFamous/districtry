@@ -196,7 +196,9 @@ jobs:
       # instead would invert the incentive: the deepest instance carries the
       # most records. Stdlib only.
       - name: E.A.M. status matches its sources
-        run: python3 scripts/build_eam_status.py --check
+        run: |
+          python3 scripts/build_eam_status.py --selftest
+          python3 scripts/build_eam_status.py --check
 
       # Three counties' rosters carry a `seats` value their blocked scrapers
       # cannot re-stamp (DeKalb behind a captcha, Kendall and McHenry blocking
