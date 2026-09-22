@@ -185,6 +185,11 @@ DISTRICTS = os.path.join(INSTANCE, "data", "app", "mi-commissioner-districts.jso
 ROSTER = os.path.join(INSTANCE, "data", "app", "mi-commissioner-members.json")
 SCRAPER = os.path.join(HERE, "mi_commissioner_scraper.py")
 ARTIFACT = os.path.join(INSTANCE, "data", "source", "mi-county-board-probe.json")
+GAPS = os.path.join(INSTANCE, "data", "app", "coverage-gaps.json")
+# The gap records that between them cover every county this instance does
+# not serve. Their ids share this prefix so the gate below can find them
+# without a hand-kept list that would go stale the first time one splits.
+GAP_ID_PREFIX = "mi-county-board-"
 
 TIMEOUT = 25
 DNS_WORKERS = 32
@@ -293,11 +298,23 @@ def probes_fips(src):
     distinct. A reader that can quietly return a short set is the defect; a
     looser regex alone would leave it.
     """
+    return {f for f, _name in probes_table(src)}
+
+
+def probes_table(src):
+    """[(fips, county name)] from the PROBES span — the one reader of it.
+
+    `probes_fips` is a thin caller so the span is located, counted and guarded
+    in exactly one place. The names are needed because the gap records that
+    cover these counties are keyed by county SLUG, not by FIPS.
+    """
     start = src.index("\nPROBES = (")
     blk = src[start:src.index("\n)", start)]
     fips = re.findall(r'"fips":\s*"(\d{3})"', blk)
+    names = re.findall(r'"county":\s*"([^"]+)"', blk)
     tally = {k: len(re.findall(r'"%s":' % k, blk)) for k in ("fips", "county", "seats")}
-    if len(set(tally.values())) != 1 or len(fips) != len(set(fips)) or not fips:
+    if (len(set(tally.values())) != 1 or len(fips) != len(set(fips)) or not fips
+            or len(names) != len(fips)):
         raise SystemExit(
             "probe-mi-county-boards: FAIL — cannot read PROBES reliably. "
             "Found %d FIPS (%d distinct) against per-entry key counts %s. "
@@ -306,7 +323,110 @@ def probes_fips(src):
             "a county missing from this set lands in the frontier and the "
             "gate then tells you to re-sweep a host that may refuse us."
             % (len(fips), len(set(fips)), tally))
-    return set(fips)
+    return list(zip(fips, names))
+
+
+def mi_slug(name):
+    """A county name as the gap records and the E measure spell it.
+
+    A COPY of scripts/build_county_status.py's slug_of, not an import: that
+    file is Illinois's tree and scripts/validate_workflow_deps.py fails a
+    sys.path reach out of this instance, the same reason UA_ROSTER_BOT is
+    copied into the instance scrapers. Its one override is `De Witt` ->
+    `dewitt`, an ILLINOIS county, so the plain rule covers every Michigan
+    name. The alignment is not assumed either: if it were wrong the E measure
+    would union `served` and `recorded` into more than 83 counties, which is
+    exactly what build_eam_status.py reports on.
+    """
+    return name.lower().replace(".", "").replace(" ", "-")
+
+
+def gap_record_counties():
+    """{slug: [gap ids]} for every mi-county-board-* record in the shipped
+    gap file — a county in two records shows up with two ids."""
+    if not os.path.exists(GAPS):
+        return {}
+    blob = json.load(open(GAPS, encoding="utf-8"))
+    records = blob.values() if isinstance(blob, dict) else blob
+    out = {}
+    for rec in records:
+        if not str(rec.get("id") or "").startswith(GAP_ID_PREFIX):
+            continue
+        for slug in rec.get("counties") or []:
+            out.setdefault(slug, []).append(rec["id"])
+    return out
+
+
+def counties_named_in(area):
+    """The county names an `area` string lists, as slugs.
+
+    `area` reads "X County, Y County and Z County, Michigan". Parsed so the
+    prose a reader is shown and the machine-readable array can be held to each
+    other; neither is the source of the other, and the union of the arrays is
+    separately held to the two measurement tables below.
+    """
+    body = re.sub(r",\s*Michigan$", "", area.strip()).replace(" and ", ", ")
+    names = []
+    for part in body.split(","):
+        part = part.strip()
+        if part.endswith(" County"):
+            names.append(part[: -len(" County")])
+        elif part:
+            return None            # not the shape this gate understands
+    return [mi_slug(n) for n in names] or None
+
+
+def check_gap_records(rows, src):
+    """Every county this instance does not serve is named by a gap record, and
+    every record's array agrees with its own prose.
+
+    WHY THIS IS A GATE AND NOT A TRANSCRIPTION. The 35 counties Michigan does
+    not name a commissioner in are measured in two places -- the 25 in this
+    probe's artifact and the 10 in the scraper's PROBES table -- and until
+    2026-09-22 they were recorded ONLY there, where nothing a reader or the
+    fleet's own E measure looks at could see them. Promoting them into gap
+    records fixes that once; this keeps it fixed. A county that ships must
+    leave its record, a county that goes dark must join one, and an `area`
+    edited without its array fails here rather than silently disagreeing.
+
+    It deliberately does not check WHICH record a county belongs to: that is a
+    judgement about what blocked it, read off each county's own measurement,
+    and it lives in the guidebook where a person can read it.
+    """
+    want = {mi_slug(r["county"]) for r in rows}
+    want |= {mi_slug(name) for _fips, name in probes_table(src)}
+    got = gap_record_counties()
+    bad = []
+    missing = sorted(want - set(got))
+    extra = sorted(set(got) - want)
+    doubled = sorted(s for s, ids in got.items() if len(ids) > 1)
+    if missing:
+        bad.append("%d county(s) this instance does not serve are named by no "
+                   "gap record (%s) — they are measured shut in the probe "
+                   "artifact or in PROBES and invisible to everything that "
+                   "reads gap records" % (len(missing), ", ".join(missing)))
+    if extra:
+        bad.append("%d county(s) are named by a gap record and are not shut "
+                   "(%s) — if they have shipped, retire them from the record's "
+                   "`counties` and its `area`" % (len(extra), ", ".join(extra)))
+    if doubled:
+        bad.append("%d county(s) appear in two records (%s) — one blocker each"
+                   % (len(doubled), ", ".join(doubled)))
+    blob = json.load(open(GAPS, encoding="utf-8")) if os.path.exists(GAPS) else {}
+    for rec in (blob.values() if isinstance(blob, dict) else blob):
+        if not str(rec.get("id") or "").startswith(GAP_ID_PREFIX):
+            continue
+        prose = counties_named_in(rec.get("area") or "")
+        array = list(rec.get("counties") or [])
+        if prose is None:
+            bad.append("%s: `area` is not the shape this gate reads, so the "
+                       "prose and the array cannot be held to each other"
+                       % rec["id"])
+        elif sorted(prose) != sorted(array):
+            bad.append("%s: `area` names %s and `counties` lists %s — a reader "
+                       "and the measure would disagree about the same record"
+                       % (rec["id"], sorted(prose), sorted(array)))
+    return bad
 
 
 def frontier():
@@ -1137,17 +1257,21 @@ def check(rows):
         bad.append("%d record(s) name a URL and carry no robots reading (%s) — "
                    "run --refresh-robots, which reads robots.txt and no page"
                    % (len(missing), ", ".join(missing[:6])))
+    bad.extend(check_gap_records(rows, open(SCRAPER, encoding="utf-8").read()))
     check_generator()
     if bad:
         print("probe-mi-county-boards: FAIL")
         for b in bad:
             print("  " + b)
         return 1
+    covered = len(gap_record_counties())
     print("probe-mi-county-boards: OK — %d counties measured %s%s, every named "
-          "URL carries a robots reading, generator still finds all %d known hosts"
+          "URL carries a robots reading, generator still finds all %d known "
+          "hosts, and all %d unserved counties are named by a gap record whose "
+          "prose and array agree"
           % (len(have), data["measured"],
              ", %d since pruned" % len(data["pruned"]) if data.get("pruned") else "",
-             len(KNOWN_HOSTS)))
+             len(KNOWN_HOSTS), covered))
     return 0
 
 

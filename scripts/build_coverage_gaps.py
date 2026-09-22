@@ -195,23 +195,40 @@ def validate(entries, layer_ids, outlines):
         layer = e.get("layer")
         if layer_ids is not None and layer is not None and layer not in layer_ids:
             problems.append("%s: layer %r is not a registered layer id" % (where, layer))
-        # A COUNTY TAG IS CHECKED ONLY WHERE THE INSTANCE SHIPS OUTLINES, which
-        # is `if outlines` rather than `is not None` — an instance with none
-        # returns an EMPTY SET, not None, and the older reading refused every
-        # tag it could ever write. That made EXAMINED unreachable for two
-        # instances by construction: Michigan ships 0 county outlines and Iowa
-        # 2 of 99, so neither could tag a gap however thoroughly it had probed,
-        # and the fleet measure read them as unlooked-at rather than untaggable.
-        # Michigan found it by promoting 35 measured blockers into gap records
-        # and watching its score sit still at 48 of 83 (Adam ruled the fix,
-        # 2026-09-22). Line ~330 below already treats "ships none" as its own
-        # case with `if outlines`; this is the same reading, applied where the
-        # refusal is. Where an instance DOES ship outlines a missing one is
-        # still a real inconsistency and still fails.
-        for slug in (e.get("counties") or []) if outlines else []:
+        # EVERY COUNTY TAG NEEDS ITS OUTLINE, WITH NO EXEMPTION FOR AN INSTANCE
+        # THAT SHIPS NONE — and this line was relaxed to `if outlines` earlier
+        # on 2026-09-22 and put back the same day, which is the whole lesson.
+        #
+        # The relaxation was written to fix a real problem: an instance with no
+        # outlines returns an EMPTY SET, the check refused every tag it could
+        # ever write, and EXAMINED was therefore unreachable by construction for
+        # Michigan (0 outlines) and nearly so for Iowa (2 of 99). Michigan found
+        # it by promoting 35 measured blockers into gap records and watching its
+        # score sit still at 48 of 83.
+        #
+        # But skipping the check is not what "untaggable" needed. Michigan
+        # tagged its 35 counties, the tags passed unchecked, and the Data gaps
+        # panel broke in the one direction it exists to prevent: `appliesHere`
+        # fetches data/app/<slug>-county-outline.json, all 35 404'd,
+        # `mappable` flipped true anyway, and a reader standing in one of those
+        # counties was told "Nothing recorded is missing where you clicked".
+        # THE EMPTY ARRAYS HAD BEEN PROTECTING THE READER BY ACCIDENT.
+        #
+        # Adam ruled the real fix on the same day: ship the outlines
+        # (mi/scripts/build_mi_gap_outlines.py). So the rule is the plain one
+        # again — a `counties` tag is a PROMISE THE PANEL CAN LOCATE THAT
+        # COUNTY, and an instance keeps it by shipping the geometry rather than
+        # by the gate looking away. An instance with no outlines that tags a
+        # gap now fails here and is told which file to build, which is the
+        # answer its score was really waiting on.
+        for slug in e.get("counties") or []:
             if slug not in outlines:
-                problems.append("%s: county %r has no data/app/%s-county-outline.json"
-                                % (where, slug, slug))
+                problems.append(
+                    "%s: county %r has no data/app/%s-county-outline.json — the "
+                    "gaps panel fetches that file to decide whether this gap is "
+                    "where a reader clicked, so the tag would make it claim a "
+                    "clean spot inside a county this gap covers"
+                    % (where, slug, slug))
         problems.extend(counted_prose_problems(where, e))
     return problems
 
