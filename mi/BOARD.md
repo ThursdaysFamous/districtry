@@ -34,6 +34,43 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-22, close of day — the EAM_STATUS question is answered and the answer was the
+fleet's, not Michigan's.** #1102 merged as `ecbff075`. Verified on main rather than taken on
+report: `ecbff075` is an ancestor of HEAD, `build_eam_status.py` now carries the
+`check_workflows()` its three sibling generators had, and
+`update-mi-commissioner-roster.yml` runs the script at line 120 and stages
+`docs/EAM_STATUS.md` at line 121. So Saturday's 20:30 UTC run will not fail its own bot PR.
+The manager's count is 62 scheduled workflows; `grep -rln build_eam_status .github/workflows/`
+answers 63, which is those 62 plus `smoke-test.yml` carrying the `--check` it already had —
+the same number counted two ways, not a disagreement.
+
+**The measurement was worth more than a fix would have been.** Michigan's exposure was ONE
+workflow of six, because the count reads the ADAPTER surface rather than every `data/app`
+file; had I patched my own instance, the obvious generalisation would have asked 59 workflows
+fleet-wide to regenerate a file they cannot move. Declining to fix someone else's assigned row
+inside my own instance is what made the narrow finding available.
+
+**Both open questions carry to tomorrow, unanswered and deliberately so.** #1086's commit 2
+turns on a promise made on #1087 that only the person it was made to can release, and the
+Keweenaw rebuild is a fleet engine change plus a record-shape change, which is not a thing to
+begin at 23:10. Neither was converted into a manager decision at the end of the night, and
+both go to Adam with the recommendations as written: restore commit 2, and derive the 35
+outlines from `state-counties.json` with the builder writing the county's own name into the
+record. **Commit 2 was not re-pushed.** `build_mi_gap_outlines.py` and every outline file are
+untouched.
+
+**Re-measure that patch before quoting it.** It applied cleanly to main at about 16:55, and
+by `d96a08da` only the 55 lines of `mi/scripts/validate_sources.py` still did —
+`mi/WATCH.md` conflicted and `docs/EAM_STATUS.md` conflicted and is generated. Main has moved
+again since, so the figure is stale again by construction.
+
+**State at stand-down**, confirmed rather than remembered: `HEAD` = `origin/main` =
+`ecbff075`, nothing unpushed, working tree clean, and the single open pull request on the
+repository is #1103, which belongs to another session. Michigan's own work today is all
+merged — #1091 (`7aba70cf`) plus four board commits. The three assigned Tasks rows stay
+assigned and untouched for the morning. My 23:06 self-check-in was disabled by the manager and
+no replacement was scheduled.
+
 **2026-09-22 — the manager's `EAM_STATUS.md` finding, measured on Michigan: ONE workflow
 carries it, not six.** Their root-board row (`44557528`) records that `docs/EAM_STATUS.md`
 holds a live officeholder count, that `grep -rln build_eam_status .github/workflows/` returns
