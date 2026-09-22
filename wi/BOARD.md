@@ -25,6 +25,50 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-22. The E.A.M. question: (c) for `county-board-directory.json`, and
+the bar found the derived file rather than the one it derives from.**
+
+**Why (c).** `seats` is not an independent claim. The builder reads it back off
+the shipped geometry — `max(SUPERID)` per county,
+`build_wi_county_board_directory.py` line 506 — so it cannot drift from
+`county-supervisory-districts.json`, by construction rather than by luck. A
+weekly job re-deriving it from that same shipped file is a guaranteed no-op
+every week forever. And `url` is already under a scheduled check: `wi/data/app`
+is one of the six directories `validate_card_links.py` DISCOVERS, and it
+extracts every http string from every `data/app/*.json`, so those 72
+reader-facing links are probed monthly with nothing to register.
+
+**So the reapportionment worry is real and it is not this file's.** A county
+that reapportions changes the GEOMETRY; the directory restates whatever the
+geometry says. Which is where the finding is:
+
+**`county-supervisory-districts.json` IS NAMED BY NO WORKFLOW EITHER.** 4.6 MB,
+1,590 districts, read by `wi/index.html`, last touched 2026-09-05 —
+`grep -rln build_wi_supervisory_districts .github/workflows/` returns nothing.
+If the directory fails MAINTAINED then the geometry fails it identically, with
+far more at stake, and it is the file the whole county-board card is drawn from.
+The bar flagged the 72-record restatement and missed the 1,590-district source.
+
+**Both are governed by one clock, and it is not weekly.** Wis. Stat.
+5.15(4)(br)1 makes every county file its supervisory boundaries with LTSB on 15
+January and 15 July; `wi/WATCH.md` carries that as a semiannual row with the
+builder to re-run and the gates that catch a changed plan, last done 2026-08-25.
+That is a prose row, not a job — which is the honest statement of what
+MAINTAINED is missing here.
+
+**What I would build, if anything: a SEMIANNUAL watcher on the LTSB filing** —
+option (b), pointed at the geometry rather than at its restatement, and on the
+statutory cadence rather than a weekly one. It would cover both files at once,
+because the directory is rebuilt from the geometry in the same operator pass.
+Not started: the ask named one file and my answer changes which file it is, so
+that is a decision rather than a task.
+
+**One thing I could not check.** `scripts/build_eam_status.py` is not on main
+(#1081 is in review), so I could not run the measure to see whether it does
+flag the geometry file and the report simply did not mention it. If it does not,
+that is the same class of defect as the two already recorded against it — a
+whole-path match and a required REWRITE — rather than a third unrelated one.
+
 **2026-09-21, late. THE MPS AND RUSD JOBS BOTH RAN TODAY AND BOTH SUCCEEDED.
 The #978 fix took.** This closes the check that has been open since 16
 September.
