@@ -42,6 +42,85 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-22 — ANSWER TO THE MANAGER'S THREE QUESTIONS ON THE EXAMINED SCORE.
+STOP ON Q1: an at-large adapter over all 91 counties would publish a false
+statement about 37 of them.** Measured on main at `d428959`.
+
+**Q1 — the split is NOT what you read it as.** `supervisorPlan` is the right
+discriminator for how a county ELECTS, but it does not partition the officers
+file into at-large and districted, because **a supervisor record in that file
+has no district field at all** — 333 records are `{name, party}` and 12 are
+`{name}`, and that is every one of the 345.
+
+| | |
+|---|---|
+| At-large: PLAN 1 + PLAN 2 | **53** |
+| PLAN 3 — district-elected | **35**, all 35 with names in the officers file |
+| — of those, districts KNOWN (`ia-supervisor-members.json`) | 17 |
+| — of those, districts known NOWHERE | **18** |
+| TRANSITIONING (Johnson, Story) | **2** |
+
+So the adapter's 91 breaks down 53 at-large / 35 districted / 2 transitioning /
+1 no plan (Jones). **Rendering the 35 + 2 as at-large is the error Illinois
+already has a rule against** — CLAUDE.md: "a districted county's members on
+the at-large card would read as elected countywide." Johnson and Story are
+mid-transition under Senate File 75, so even "at-large" as of today is a
+sentence with a date on it.
+
+Your own worry was right and is worse than you put it: for the **17** a page
+listing names without districts understates what we know, and for the **18** it
+states nothing about districts because nothing is known — two different
+sentences, neither of them "at-large". The 18 are Black Hawk, Butler, Calhoun,
+Cass, Chickasaw, Dickinson, Guthrie, Howard, Ida, Kossuth, Lee, Montgomery,
+Osceola, Palo Alto, Sioux, Washington, Winnebago, Worth.
+
+**Also: all 17 districted counties are in BOTH files.** Whatever the adapter
+does, those people can be listed twice — with a district in one source and
+without in the other.
+
+**Q2 — absence, and it is not an independent variable.** `supervisorPlan` is
+KEY-ABSENT on 9 and present-null on 0. Those 9 are **exactly the 8 withheld
+counties plus Jones**. So the plan is missing precisely where the roster was
+withheld; it is not a separate class of 9 counties with an unrecorded plan.
+**Jones is the only county with supervisors and no plan** — one county's hole,
+worth its own line, not a sentence on nine cards.
+
+**Q3 — the reason was WRONG WHEN WRITTEN, not overtaken, so there is nothing
+to carry forward.** Supervisors first appear in that file at `ba34bea`,
+2026-08-28 (#598), with 92 counties — **sixteen days before**
+`NOT_COUNTY_BOARDS` was dated 2026-09-13. The file did not change under the
+reason. Nobody made a deliberate decision to keep supervisors out of the
+supervisor roster after the fact; the exclusion asserted "row officers, not
+supervisors" about a file that already carried them.
+
+**Two things you will hit that are not in your plan.**
+
+1. `build_county_pages.py` **already reads this file** — `ia_board_contact()`
+   pulls `boardPhone` and `supervisorPlan`. So it is simultaneously in
+   `NOT_COUNTY_BOARDS` and read by an adapter, which may make the
+   reclassification cheaper than you expect, and means `check_registration()`'s
+   semantics need a look rather than an assumption.
+2. That function's docstring is wrong in both numbers: it says boardPhone
+   "90 of 99" (**actual 91**) and plan "(89)" (**actual 90**).
+
+**One correction to your withheld list:** Wright is in the GEOMETRY group with
+Warren, not the Iowa-Code-count group; you listed it in both. The code-count
+group is **six** — Adair, Floyd, Humboldt, Lucas, Pottawattamie, Tama ("the
+county directory lists N, and Iowa Code 331.201 allows only 3 or 5") — and the
+geometry group is **two**, Warren and Wright ("the county directory lists 5,
+and the supervisor-district geometry seats 3").
+
+**What I would do**, since you asked for a view and not just a correction:
+split the adapter by plan rather than writing one at-large adapter. 53 at-large
+counties get the Illinois treatment unchanged; the 35 PLAN 3 counties get a
+page that names the supervisors and says the county elects by district, with
+the district named for the 17 and stated as not published for the 18; Johnson
+and Story say they are transitioning. That still takes E to 99 of 99, and it
+does it without any card claiming a countywide election that Iowa Code does not
+give those counties.
+
+I have not touched any of this and am not starting it — it is yours.
+
 **2026-09-21 (later) — #1065 MERGED as `2d933ec`, both pieces, verified on the
 merged tree.**
 
