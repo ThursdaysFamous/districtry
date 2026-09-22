@@ -674,6 +674,27 @@ NOT_THE_SERVED_COUNT = [
                 "derived by build_concept_pages.py from il/index.html's own "
                 "judicial-subcircuit dispatch entries",
          date="2026-09-16"),
+    # The three special-district pages say how far ONE layer reaches, which is
+    # narrower than the served count on purpose: a county is served when any
+    # county-keyed layer answers in it, and these three answer in far fewer.
+    # Each number is derived on the run that writes the page, by the same
+    # dispatch_counties() parse of il/index.html's own `key:` literals that the
+    # subcircuit entry above relies on, so none of them can be hand-typed.
+    dict(page="il/fire-district.html",
+         reason="the counties the fire-district layer dispatches in, derived "
+                "by build_concept_pages.py from il/index.html's own dispatch "
+                "entries",
+         date="2026-09-22"),
+    dict(page="il/park-district.html",
+         reason="the counties the park-district layer dispatches in, derived "
+                "by build_concept_pages.py from il/index.html's own dispatch "
+                "entries",
+         date="2026-09-22"),
+    dict(page="il/library-district.html",
+         reason="the counties the library-district layer dispatches in, "
+                "derived by build_concept_pages.py from il/index.html's own "
+                "dispatch entries",
+         date="2026-09-22"),
 ]
 
 
