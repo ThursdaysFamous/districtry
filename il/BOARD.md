@@ -39,6 +39,71 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-22. The county library cards read L2 now — #1098, and the two
+unverified items were both answerable.**
+
+**Can a county path reach the statewide file at all? Yes, and the join key was
+the only real question.** `loadIlLibraryOfficials()` and
+`loadIlLibraryContacts()` are module-level cached loaders any path can call.
+But **`il-library-contacts.json` carries no comptroller code** — it is keyed by
+library name and holds `address`, `admin`, `city`, `phone`, `url` and nothing
+else — so a direct code join was never available. The filing roster is the
+bridge: `il-library-district-officials.json` carries a code on all 198 of its
+records and is keyed the way L2 is, and 196 of its 198 names are in L2. All
+four target codes resolve through it.
+
+**What a Woodford card looked like, rendered.** IL Prairie: board, administration,
+the filing note, then `Office / PO Box 770, Metamora IL 61548` — an address and
+no telephone. Deer Creek had **no contact row at all**, because
+`afrDistrictPeople` draws one only when the filing gives an address, a phone or
+an e-mail and Deer Creek's office block is empty. So the fix adds a row on one
+card and fills a row on the other.
+
+**The shape is what you assumed, so it was built.** `withCountyLibraryPhone`
+wraps the four entries that read their own county roster (Woodford, Grundy,
+Kankakee, Peoria), joins on the comptroller code, and calls the SAME
+`libraryDirectoryNote()` — lifted out of `withLibraryOfficials` unchanged, so
+the rule has one copy. Nothing else ported.
+
+**ONE DELIBERATE DIFFERENCE BETWEEN THE TWO PATHS, and it is the thing worth
+your eye.** The statewide stamper applies the directory's telephone
+UNCONDITIONALLY. Measured 2026-09-22, that is safe — 138 libraries publish a
+telephone in both files and **all 138 agree digit for digit** — but it means the
+statewide card shows "The telephone comes from the Illinois library systems'
+shared directory" on cards whose own filing publishes the same number. The
+county path stamps only where the filing gives none, so its note is never that.
+I did not change the statewide path: it is outside this change's scope and the
+displayed number is correct either way. Recorded below as a question.
+
+**The re-measure turned up nothing new, and that is a result.** The four are the
+whole set. **Ten more library cards in those counties have no telephone from
+either publisher** — Woodford's Eureka; Grundy's Coal City, Fossil Ridge and
+Three Rivers; Peoria's Brimfield and Dunlap; Kankakee's Bourbonnais, Bradley,
+Edward Chipman and Manteno. Each files under a code
+`il-library-district-officials.json` does not carry, and none appears in L2
+under any spelling. A bounded absence in both statewide sources, not a failed
+join.
+
+**Verified in a browser on every shape**, including the two that must NOT change
+(Carlock and Eureka keep their filing's number with no note). Kankakee's live
+boundary was served from its own response bytes: **Chromium in this sandbox
+cannot reach k3gis.net** — it does not use the agent proxy, the same
+environmental limit `CLAUDE.md` records for the CDN — while `requests` through
+the proxy reads the service fine (HTTP 200, 162,411 bytes, robots read first:
+no robots.txt, 404, allow all).
+
+**One comment corrected in the same change, because the new code's argument
+rests on it.** The note over `loadIlLibraryContacts` said the file "carries only
+what the Comptroller filings do not". That stopped being true on 2026-09-15,
+when its builder began keeping the directory's copy wherever the two publishers
+agree. Leaving a stale premise next to a function whose correctness depends on
+the overlap existing is how the next reader gets it wrong.
+
+**#1098 is on `claude/il-backlog-plan-9o2ew4-library-phone`, not the session's
+own branch**, which still carries the open and unrelated Sangamon fix (#1096).
+Putting this there would have widened that PR with work it is not about. Moved
+on request.
+
 **2026-09-22. Sangamon #1093 fixed as #1096 — and one of the three measurements
 in the hold does not reproduce.**
 
@@ -641,6 +706,26 @@ disagree on the clerk's first name — Jodie in the drafts, Kandi in the
 guidebook — and neither is guessed at.
 
 ## Open questions for Adam
+
+- **The statewide library card credits the directory for a number the filing
+  also publishes, on up to 138 cards.** `withLibraryOfficials` applies L2's
+  telephone unconditionally and then prints "The telephone comes from the
+  Illinois library systems' shared directory." Measured 2026-09-22, the two
+  publishers agree digit for digit on all 138 libraries that carry one in both
+  files, so **no card shows a wrong number** — this is about what the note
+  claims, not about the value. A reader can fairly take that sentence to mean
+  the filing did not have it. **Three courses, none taken:** leave it (the note
+  names where the displayed value came from, which is literally true); stamp
+  only into a gap, as #1098's county path now does, which makes the note mean
+  the narrower thing on every card in the layer; or reword it. I did not pick
+  one, because the statewide path was outside #1098's scope and changing a
+  sentence on ~138 shipped cards is not a side effect to take on unasked. The
+  address has the same shape and was not measured.
+- **Deer Creek's card now names a telephone and no address, where the directory
+  publishes both.** That is the stated scope of #1098 working exactly as asked
+  — telephone only, no addresses — and it is worth seeing once before deciding
+  whether the address should follow. The directory has `205 East First Avenue
+  Post Office Box 347, Deer Creek` for it and the filing has nothing.
 
 - **A `Person` named `VACANT` is already live on `il/county-board/logan.html`,
   and the gate that should catch it is the one #1093 asked about.**
