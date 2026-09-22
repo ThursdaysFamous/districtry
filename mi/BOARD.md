@@ -29,44 +29,42 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
-**2026-09-22, the hold on #1086 was right and is addressed in `29f1388f`. The engine no
-longer lets the gaps panel claim a clean spot it could not test.** Read the code before
-changing it: `appliesHere` swallowed a failed outline fetch as "not here", so a 404 resolved
-exactly like a point outside the county, and `mappable` came off a record's county ARRAY
-rather than off whether any outline had loaded. Both halves had to move. `appliesHere`
-reports three answers now — here, not here, could not tell — and `mappable` reads the third.
-The third case gets its own words, because "these gaps aren't mapped to particular places" is
-false of a record that names five counties and true of one that names none. Michigan's lede
-at the Munising point reads "We could not check which of these affect the spot you clicked."
+**2026-09-22, #1086 was closed and #1087 carries its first commit. A reader-facing miss
+survives on main and I measured it rather than assuming the outlines closed it.** The point
+48.19701,-88.08566 — Lake Superior, north of Isle Royale — is inside `metro-outline.json`,
+is in Keweenaw County by `state-counties.json`, is named by `mi-county-board-page-not-found`,
+and is inside NONE of the 35 shipped gap outlines. So `appliesHere` is false for every
+record, `mappable` is true, `inCoverage` is true, and the lede reads "Nothing recorded is
+missing where you clicked" — the sentence the hold was about. Rate: 1 of the 1,867 wash
+points that land in a gap county, out of 4,000 sampled inside the wash at seed 20260922,
+which is 99.946%. Zero of the 4,000 fell in no county of the fabric.
 
-**One limit was kept rather than tightened, and it is the part worth disagreeing with.** One
-outline loading and missing is still treated as evidence the point is clean — the same
-tolerance the panel already extends to records carrying no county at all. Requiring every
-tagged county to have located would be stricter and would suppress the clean-spot wording for
-every reader of an instance with one unloadable outline. It is in the block's comment rather
-than decided quietly.
+**Three simplifications of one boundary is the cause.** Keweenaw's gap outline carries 59
+vertices, the fabric's Keweenaw 108, and the wash is one dissolved ring simplified whole, so
+slivers exist between the wash's edge and each outline's edge. **Neither fix closes it**: the
+`located` change I wrote does not, because 34 other outlines load and the tolerance I kept
+lets the claim stand; the strict build gate does not, because the tag has geometry that
+simply does not reach the wash's edge. And the 1,225 internal-point assertions cannot see it
+— every one is an interior point against a self-consistent outline set, and no interior point
+tests an edge.
 
-**"Michigan is the only one affected" was checked rather than assumed**, across all six:
-il 98 counties tagged / 101 outlines, ny 5/5, ca 1/1, wi 72/72, ia 2/2, mi 35/0. So the fix
-is fleet-wide and changes one instance's reader today, with Iowa next in line at 2 outlines
-for 99 counties.
+**What I would change, and it is my earlier objection in its correct form.** Split the 35 out
+of `state-counties.json` rather than re-simplifying from TIGERweb at the wash's tolerance,
+so the county the fabric places a point in and the outline that contains it are the same
+geometry. I said match the fabric rather than the wash because a dissolve has no interior
+borders, and I named county-to-county seams as the risk; the measured miss is at the
+wash-to-outline edge, so the objection held and half my reason for it did not. Reported on
+#1087 with the reproduction and offered to do the rebuild; I have not touched that builder or
+any outline file, because the manager asked that we not both build the same 35.
 
-**The 105 requests were exactly 105, measured in Chromium rather than estimated**: 35
-counties times three attempts, all 404, with the fetch helper's 500 ms and 1000 ms backoff
-between each pair, and zero further requests on a second open in the same session — the
-rejection cache already handled that. The outline loader passes 0 retries now and it is 35.
-
-**The check that would have caught it exists now.** `mi/scripts/smoke_test.mjs` carries the
-reference fork's `smoke-gap-probe` span with a real fixture: Munising, in Alger County, which
-`mi-county-board-no-district-key` names, verified against this instance's own
-`state-counties.json` to fall in Alger and in no other county. All four of the manager's
-points are recorded there. The expectation is DERIVED from the tree — whether that county's
-outline file exists — so the day the outlines ship it flips to asserting the gap leads the
-list rather than going on accepting the weaker wording. Reverting `mappable` alone in
-`mi/index.html` fails it with the exact sentence the hold named.
-
-All six instances' smoke tests pass, the static battery is clean, and no cache bump was
-needed because `SHELL_URLS` is network-first.
+**Of #1086's three commits, one landed and one is now on no path to main.** Commit 1 is in
+#1087 in full. Commit 3, the engine change, I am not asking back — the strict gate prevents
+the shape it guarded — except for the browser-level `smoke-gap-probe` span, which reads the
+actual lede in Chromium where #1087's verification simulated `appliesHere` over the files.
+**Commit 2 is unsuperseded**: the 14 `mi/WATCH.md` rows naming the file each clocked row
+governs, and three missing `PROVENANCE` entries, so Flint's and Warren's ward geometry ships
+with no monthly source check at all. Main reads `EA· … 14 without a job`. Asked the manager
+whether to bring it back as its own PR rather than re-pushing a closed PR's work.
 
 **2026-09-22, #1082 merged as `bd9060c8`, verified on the merged tree.** All five gates pass
 there — `build_coverage_gaps --check --metro michigan` at 26 gaps (7 blocked, 2 data-quality,
@@ -586,41 +584,6 @@ Two corrections to my own last report:
   share above has the census on both sides.
 
 ## Open questions for Adam
-
-**2026-09-22 — #1081 made the BUILDER accept a county slug present in the shipped county
-fabric, and nothing made the PANEL able to place one. Which side closes the gap?** Not
-blocking; `29f1388f` makes the mismatch honest rather than harmful, so Michigan's panel says
-it could not check instead of claiming a clean spot. What is still missing is the better
-answer for a reader.
-
-What I measured. The panel places a county by fetching `data/app/<slug>-county-outline.json`.
-Michigan ships none, so its 35 tagged counties cannot be placed and the panel falls to the
-could-not-check wording. Counted across the fleet: il 98 tagged / 101 outlines, ny 5/5, ca
-1/1, wi 72/72, ia 2/2, mi 35/0.
-
-Two ways to close it, and they differ in kind.
-
-1. **Michigan ships 35 single-county outline files.** What the gap-record skill already
-   prescribes, and it turns Michigan's panel from "could not check" into "one recorded gap
-   affects the spot you clicked". It also duplicates geometry this instance already ships —
-   `state-counties.json` carries all 83 — and each file needs a worksheet `data_files` row, a
-   service-worker list placement and a cache bump. 35 requests per first panel open either
-   way; they would succeed rather than 404.
-
-2. **The panel places a tagged county from the instance's own county fabric** when no
-   per-county file exists. No duplicated geometry, and it fits every future instance that
-   ships a whole-state fabric rather than per-county files — which is the shape #1081 already
-   taught the builder to accept. The cost is real: the engine would need the fabric's URL and
-   its name field as METRO config, and it would have to turn a county NAME into the slug a
-   record carries, which means reproducing `slug_of` in JavaScript. A second reader of one
-   question is where this fleet's recurring defect starts, so that variant should instead
-   have the BUILDER write the county's own name into the record and the panel match on that.
-
-**I would take 2 with the builder writing the name**, because it removes the second reader
-rather than adding one, and because route 1 asks this instance to carry 35 files whose
-contents are already in a file it ships. But it is a fleet engine change plus a record-shape
-change, so it is yours. If the answer is 1, that is a day's work here and I will do it without
-further discussion.
 
 **2026-09-22 — Michigan cannot pass EXAMINED without a change to a shared gate. Which
 one?** Not blocking; #1082 does the bookkeeping either way, and nothing else waits on this.
