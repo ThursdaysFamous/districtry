@@ -188,6 +188,16 @@ jobs:
       - name: County status matches its sources
         run: python3 scripts/build_county_status.py --check
 
+      # E.A.M. — whether each state is Examined, Answered and Maintained, which
+      # is what "done" means here and what moves a session from expansion to
+      # maintenance. Computed from the adapters, the gap records and the
+      # scheduled workflows on every run, so the mark GOES BACKWARD when a
+      # tranche lands without records or a roster loses its job. Counting gaps
+      # instead would invert the incentive: the deepest instance carries the
+      # most records. Stdlib only.
+      - name: E.A.M. status matches its sources
+        run: python3 scripts/build_eam_status.py --check
+
       # Three counties' rosters carry a `seats` value their blocked scrapers
       # cannot re-stamp (DeKalb behind a captcha, Kendall and McHenry blocking
       # every automated client — see scripts/backfill_board_seats.py). This is
