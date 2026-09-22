@@ -797,8 +797,16 @@ guidebook — and neither is guessed at.
   (`vacancies: N` in Sangamon, Boone, Jo Daviess, Lee, Stephenson;
   `vacant: true` in Shelby). **Consequence a reader gets today:** Logan's page
   carries `"@type": "Person", "name": "VACANT"` in its schema.org graph and a
-  member row reading `VACANT`, published. CCPSA's two render in the app card
-  rather than in served bytes, so they do not reach a crawler.
+  member row reading `VACANT`, published. **CORRECTED 2026-09-22 — I said
+  CCPSA's two "render in the app card rather than in served bytes, so they do
+  not reach a crawler". They reach one.** `build_officeholder_tables.py` puts
+  that roster on `il/police-district.html`, where both appear as `Person` nodes
+  in the ld+json AND as visible text. Swept across all 414 served pages'
+  ld+json: **two pages, three such nodes** — Logan's `VACANT` and
+  police-district.html's two `Vacant`. My first measurement walked `data/app`
+  and stopped there, which answered where the STRINGS are and not where a
+  reader meets them; the generated pages are a second surface and this project
+  built them precisely so those rosters would reach a crawler.
   **The proposal, not applied:** drop the sentinel allowance, convert those
   three records to the structural shape their siblings already use, and let the
   gate reject the word outright — which would make it impossible to ship this
