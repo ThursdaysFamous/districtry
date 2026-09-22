@@ -44,6 +44,43 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-22 (later) — #1095 MERGED as `9d7f318`, verified on the merged tree.**
+
+Content confirmed on main rather than SHA ancestry, because these land as
+squashes: the gap record is present with all 18 `counties` tagged, 28 outlines
+ship and every tagged slug has one, the outline builder carries its third read,
+the skill's §7 fix is in, and `ia/WATCH.md` names the record. Thirteen gates
+re-run green on merged main, including `build_ia_gap_outlines --check`,
+`build_about_page --check`, `validate_gate_counts` (72/100),
+`validate_steward_mirror` (100 for 100) and `validate_structured_data`.
+
+**CI CAUGHT ONE THING AND IT WAS THE SKILL'S FAULT, NOT THE OVERSIGHT'S.**
+`build_about_page --check` failed on the first push: `about.html` published 154
+recorded data gaps against a tree that now holds 155, because this change adds
+one. The gap-record skill's §7 is titled "every file that reads the block" and
+did not list `build_about_page.py`, which states the fleet's gap TOTAL — so one
+record anywhere moves it. I followed that list exactly and went red on the one
+gate it omitted, and so would the next person. §7 now carries it with the date
+it was found missing. **A remembered subset is not the battery**, which this
+project already records from Michigan's go-live; I re-ran the generated-page
+gates afterwards rather than the handful I had in mind.
+
+### Still open for the manager — the 14 PLAN 2 counties and Story
+
+Unchanged by the merge and still not mine to decide. Benton, Buena Vista,
+Carroll, Cherokee, Clarke, Dallas, Delaware, Greene, Jackson, Muscatine,
+O'Brien, Page, Plymouth, Woodbury and Story are in the IDENTICAL structural
+position — districts drawn, members named, no member keyed. The option I would
+take is a second record, because a PLAN 2 supervisor is nominated by district
+and elected countywide, so "which of these people represents my district" has a
+different answer there. If one record for all 33 is preferred instead, the
+builder's third read drops its PLAN 3 scope in one line.
+
+*Also still flagged and still not touched:* the per-county pages mint
+`#board-at-large-N` id fragments on all 18. An identifier, not an assertion —
+`roleName` reads "Supervisor" and the prose reads "by district" — so nothing
+false reaches a reader, and it is the manager's adapter.
+
 **2026-09-22 — the 18-county gap is recorded and shipped as #1095, and the
 brief's framing was wrong in the one place that matters.**
 
