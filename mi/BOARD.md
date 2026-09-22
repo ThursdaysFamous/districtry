@@ -29,6 +29,35 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-22, the gate fix works and Michigan measures 83 of 83 — but the follow-up cannot
+be pushed until #1081 lands.** Measured, not predicted: with #1081's one-line fix applied
+locally and uncommitted, and `counties` populated on all six records, `build_coverage_gaps`
+reports 6 mapped to counties and Michigan reads **EA·** at 83/83. Then I reverted both. The
+fix is on the manager's branch at `144ce42` and main still carries
+`if outlines is not None` at line 198, so on main's gate all 35 tags are refused — I
+confirmed that too, `county 'genesee' has no data/app/genesee-county-outline.json` and 34
+more. Populating the arrays on my branch today would turn #1082 red and keep it red until
+#1081 merged, so it is held rather than pushed, and #1082 stands as it is.
+
+**The follow-up needs nothing preserved.** The county names live in each record's own `area`,
+already committed, and the slugs derive from them with `build_county_status.slug_of` — so
+when #1081 is on main this is one derivation over the committed tree, not a re-typing of 35
+names. That was deliberate: deriving the slugs from the prose a reader is shown means the two
+cannot drift, and there is only one place the names live.
+
+**On the shortcut the manager declined.** Matching county names in the `area` prose would
+have needed no gate change, and "Bay City" contains the county "Bay" — Michigan ships a
+`bay-city-ward-boundary` gap record, so that route would have credited Bay County for a gap
+about a city in Saginaw County. Worth stating because it is the same failure I hit an hour
+earlier from the other direction.
+
+**MAINTAINED is the next bar and it is 14 of 21 app files with no plan.** Not started. Under
+#1081's widened measure a `WATCH.md` row naming a file and stating when it is re-checked
+counts, so most of Michigan's 14 are a cadence question rather than a watcher to build —
+`mi-commissioner-districts.json` is a decennial apportionment filing, the four TIGERweb
+fabric layers roll on the census vintage. It waits on #1081 landing too, since the measure
+that defines the bar is on that branch.
+
 **2026-09-22, the probed blockers are gap records now, and it is 35 counties rather than
 25.** #1082 open. The probe artifact holds 25; the `PROBES` table in
 `mi_commissioner_scraper.py` holds 10 more it was gated on, and 48 + 25 + 10 = 83. That
