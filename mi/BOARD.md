@@ -29,32 +29,40 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
-**2026-09-22, the follow-up shipped as #1086 — Michigan measures 83 of 83 on EXAMINED.**
-#1081 landed, so the derivation the two entries below describe as held is now committed. All
-six records carry `counties`, parsed out of their own `area` strings through
-`build_county_status.slug_of`: robots-declined 5, access-controlled 6, no-district-key 8,
-prose-roster 4, page-not-found 10, no-website 2 — 35 counties. `build_coverage_gaps` reports
-6 mapped to counties and `docs/EAM_STATUS.md` reads `mi | EA· | 83 | 83/83`.
+**2026-09-22, Michigan reads EAM and is the first instance in the fleet to pass all three.**
+Pushed to #1086 as a second commit. All 21 app files are under a stated plan, which took
+naming rather than building: every one of the 14 the measure called unplanned already had a
+`mi/WATCH.md` row stating a real clock and naming the builder to run, and not one named the
+data file it writes. The measure's rule is a row that names the file and states a when, so
+these were the mirror image of a loophole — the when was there and the filename was not.
 
-**The array is measured now, not trusted.** `probe_mi_county_boards.py --check` compares the
-union of the six arrays against both tables that know which counties are shut — the probe
-artifact's 25 rows and the 10-county `PROBES` table in the scraper — and fails four ways: a
-county we do not serve that no record names, a county named by a record that we do serve, a
-county in two records, and a record whose `area` prose and `counties` array disagree. Before
-the arrays were filled it failed naming exactly the 35 plus all six prose-vs-array
-disagreements. Three negative tests each name the county: `alcona` added to a record,
-`genesee` doubled, `shiawassee` dropped. Written because the empty arrays were the second
-time this instance shipped a claim nothing compared against the thing it claimed.
+**What Michigan's M rests on, so nobody has to infer it from a three-letter mark.** Seven
+files under weekly jobs that rewrite them. Fourteen under cadences a person performs —
+thirteen riding `mi-validate-sources.yml`'s monthly tracking issue, one quarterly by hand.
+Adam's ruling allows that and gives the reason (a weekly job on a boundary is a guaranteed
+no-op), and it is still a weaker guarantee than a rewrite.
 
-**`probes_fips()` no longer parses that span itself.** It calls a new `probes_table()`, the
-one reader of it, because the gate needed the county NAMES the FIPS reader was discarding and
-a second parse of one hand-written literal is how the key-order defect #1069 fixed got there.
-`mi_slug()` is a deliberate copy of `slug_of` rather than an import, and says so: that
-function's one override maps `De Witt` to `dewitt`, an Illinois county.
+**Three files were not in the monthly source check at all** — `metro-outline.json`,
+`mi-flint-wards.json`, `mi-warren-wards.json` — so `mi-validate-sources.yml` had no
+`PROVENANCE` row for them. Iowa registers its outline and Michigan did not. That mattered
+before it was bookkeeping: a row saying "monthly, with `mi-validate-sources.yml`" would have
+been false for Flint and Warren. All three answer HTTP 200 to the districtry token, measured
+today; TIGERweb layer 1 names itself `Counties`, Flint's FeatureServer lists one layer, and
+Warren's `serviceDescription` is the item snippet its builder quotes.
 
-**Nothing is served that was not served yesterday.** All 35 were already measured shut and
-written up; what changed is that the fleet's own measure can see it. MAINTAINED is unchanged
-at 14 of 21 app files with no plan and is the next bar.
+**One claim I nearly shipped was wrong and the two table lengths are what caught it.** The
+draft row for `coverage-gaps.json` said the weekly commissioner job re-tries every county a
+gap record names. It walks 58 of 83: `COUNTIES` holds the 48 that ship and `PROBES` the ten
+candidates. So ten of the 35 counties named by records are re-fetched every Saturday and 25
+are re-fetched by nothing, two of those policy-shut at any cadence. The row states that split
+and puts the 25 plus the nineteen city and fabric records on a quarterly re-probe.
+
+**I did not widen either gate, and both near-misses are written up as questions below.**
+`build_eam_status.py` is untouched by this change. Its `WHEN` vocabulary rejects "whenever
+TIGERweb rolls a vintage", which is a trigger its own docstring says should count, and
+`watched_by` reads workflow text only, so a watcher whose subject list lives in the script it
+invokes is invisible. Both would move il, wi and ia too, and widening a measure to get a pass
+is the one move this repo's own rules put out of bounds.
 
 **2026-09-22, #1082 merged as `bd9060c8`, verified on the merged tree.** All five gates pass
 there — `build_coverage_gaps --check --metro michigan` at 26 gaps (7 blocked, 2 data-quality,
@@ -575,8 +583,40 @@ Two corrections to my own last report:
 
 ## Open questions for Adam
 
-**2026-09-22 — Michigan cannot pass EXAMINED without a change to a shared gate. Which
-one?** Not blocking; #1082 does the bookkeeping either way, and nothing else waits on this.
+**2026-09-22 — `build_eam_status.py` reads a near-miss of its own question in two places.
+Both are one-line fixes to a fleet gate and would move il, wi and ia, so neither is mine.**
+Not blocking; Michigan passes MAINTAINED without either, by naming files in rows.
+
+**(a) `WHEN` rejects the trigger form its own docstring allows.** The docstring says "a
+cadence, or a trigger", and the regex accepts `any change` and `on a change`. It does not
+accept `Whenever TIGERweb rolls a vintage`, which is `mi/WATCH.md`'s clearest trigger and the
+one that governs the congressional district field — the field name rolled from `CD119` to
+`CD120` and a query naming the old one now returns HTTP 400, so that row is load-bearing.
+Adding `whenever` to the vocabulary would count it. The cost is that `whenever` also matches
+vaguer prose ("whenever this looks stale", which `mi/WATCH.md` itself carries), so it would
+accept a row that names no clock at all. A tighter form — `whenever <a named source> <verb>`
+— cannot be written as a keyword list.
+
+**(b) `watched_by` reads workflow text only, so a watcher that knows its subjects through a
+script is invisible.** `mi-validate-sources.yml` runs monthly, opens a tracking issue on
+WARN/FAIL, and covers 18 of Michigan's 21 app files — but the file list lives in
+`mi/scripts/validate_sources.py`'s `PROVENANCE` table, not in the `.yml`, so the measure sees
+a watcher naming nothing. The same is true of every instance's own `validate_sources.py`.
+Following the workflow into the scripts it invokes would count them, and would raise wi's and
+ia's MAINTAINED numbers without anybody writing a row. The cost is that it widens what counts
+as a watcher by reading a second file, and it would let a script that merely MENTIONS a
+filename pass as a watcher of it.
+
+**I would take (b) and not (a)**, because (b) is the case where a real scheduled watcher
+exists and the measure cannot see it, while (a) is a wording problem a row can fix in one
+edit. But both change a bar Adam ruled on four days ago, so I have written rows instead and
+left the gate alone.
+
+**2026-09-22 — ~~Michigan cannot pass EXAMINED without a change to a shared gate. Which
+one?~~ ANSWERED 2026-09-22: the manager took route 2 in #1081, and #1086 populated the
+arrays over it. Michigan reads 83/83. The reasoning is kept below because route 1's cost —
+35 files duplicating a subset of a file the instance already ships — is the argument any
+future whole-state instance will need.**
 
 What I measured. `build_eam_status.py`'s `gap_counties()` counts only each gap record's
 `counties` array, and `build_coverage_gaps.py` refuses a slug with no
