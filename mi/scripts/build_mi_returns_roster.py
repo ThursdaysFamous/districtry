@@ -377,6 +377,23 @@ def build(rows):
                 "Who won each seat on %(county)s County's Board of "
                 "Commissioners at the last election the state certified, and "
                 "which district each one represents."),
+            # THE OTHER TWO SURFACES THAT STATE WHERE A PAGE'S NAMES CAME
+            # FROM. build_county_pages.py prints a standfirst under the H1 and
+            # a disclaimer at the foot, and both said "the county's own
+            # published roster" on every page of both routes -- so a reader of
+            # one of these 35 was told twice more that the county published
+            # these names. The standfirst takes the same placeholders the lede
+            # does; the disclaimer is literal, because it needs no county name
+            # and a literal contract cannot crash on a stray per cent sign.
+            "standfirst": (
+                "Everyone the State of Michigan certified as elected to the "
+                "%%(heading)s in %s." % ELECTION_NAME),
+            "disclaimer": (
+                "districtry is an independent, unofficial civic reference.\n"
+                "It never guesses at who holds a seat: every name above is a "
+                "certified result of\n%s, published by the State of "
+                "Michigan.\nThis page dates them to that election rather than "
+                "claiming the seat is still held." % ELECTION_NAME),
         }
         if name in PUBLISH_THEIR_OWN:
             entry["betterSource"] = (
@@ -408,7 +425,7 @@ def check_ledes(doc):
             bad.append("%s (%s) is in this file and not on the "
                        "certified-returns route" % (rec.get("county"), fips))
             continue
-        for key in ("lede", "election"):
+        for key in ("lede", "election", "standfirst", "disclaimer"):
             if not (rec.get(key) or "").strip():
                 bad.append("%s (%s) carries no `%s`, so its names would ship "
                            "with nothing saying what they are"
@@ -416,6 +433,21 @@ def check_ledes(doc):
         if rec.get("lede") and "%(county)s" not in rec["lede"]:
             bad.append("%s (%s) has a lede with no %%(county)s placeholder"
                        % (rec.get("county"), fips))
+        # The two sentences that used to claim the county published these
+        # names must now name the election instead. Checked by CONTENT rather
+        # than by presence, because a standfirst or a disclaimer carrying the
+        # default wording would pass a presence test and tell a reader the
+        # opposite of what the lede beside it says.
+        for key in ("standfirst", "disclaimer"):
+            text = rec.get(key) or ""
+            if text and "2024" not in text:
+                bad.append("%s (%s) has a `%s` that does not name the "
+                           "election these names come from" % (rec.get("county"),
+                                                               fips, key))
+            if "county's own published roster" in text:
+                bad.append("%s (%s) has a `%s` still claiming the county "
+                           "published this roster" % (rec.get("county"),
+                                                      fips, key))
     return bad
 
 
