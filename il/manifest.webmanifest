@@ -1,7 +1,7 @@
 {
   "name": "districtry Illinois",
   "short_name": "districtry",
-  "description": "Tap the map or search an Illinois address: ward, police district, school board, county, state and U.S. House — and who represents you. Free, no login.",
+  "description": "Search any Chicago or Illinois address or ZIP — your ward, police district, school board, county board, state and U.S. House seats, and who holds each one.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
