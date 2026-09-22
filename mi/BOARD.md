@@ -8,12 +8,15 @@ Commit board edits straight to main, in their own commit, dated.
 
 Click any point in Michigan and the app answers from **15 layers** — the fewest
 in the fleet, because Michigan is the newest instance (live 2026-09-03). The
-state House and Senate rosters are complete at 110 and 38. **48 of the 83
-counties name your commissioner** — 366 of the 619 seats, 61.4% of the state by
-population.
+state House and Senate rosters are complete at 110 and 38. **All 83 counties
+name your commissioner** — 615 of the 619 seats, on two routes a reader can
+tell apart: 48 counties read weekly from their own board pages (366 seats,
+61.4% of the state by population), and 35 from the state's certified November
+2024 returns (249 seats), every row on that route naming that election rather
+than claiming the seat is still held.
 
-**20 recorded gaps** — 13 no-source, 5 blocked, 2 data-quality. Eighteen of the
-twenty are city council wards.
+**26 recorded gaps** — 17 no-source, 7 blocked, 2 data-quality, counted off the
+shipped `mi/data/app/coverage-gaps.json`. Eighteen are city council wards.
 
 ## Tasks — manager owns this section
 
@@ -30,6 +33,52 @@ twenty are city council wards.
 the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
+
+**2026-09-22, #1091 merged (`7aba70c`) — and the hold on it found three surfaces, not
+one.** The manager held the first head because all 35 certified-returns counties rendered
+the default districted lede, "exactly as the county publishes them", about counties like
+Oakland whose site answers 403. The prescribed fix was to merge main in for #1089's
+`lede`/`cta_note`/`desc` hooks and regenerate. That was right and it was not enough.
+
+**The merge crashed on the second surface.** `desc`'s substitution supplied `head`, `named`
+and `districts` where the `lede` hook beside it supplies five keys including `county`, so the
+first regenerate died on `KeyError: 'county'`. It had never shown because these records are
+that hook's first consumer — every other `desc` in the fleet is on the flat branch and uses
+positional `%d`. The districted hook now takes the same five keys, plain rather than escaped,
+because `desc` is escaped once at insertion where the lede is inserted raw.
+
+**Two more surfaces carried the same claim and neither was hooked at all.** A page states its
+provenance in four places. The standfirst under the H1 read "Every member of the Oakland
+County Board of Commissioners, from the county's own published roster" and the foot
+disclaimer read "every name above is published by the county itself" — on every page of both
+routes. Fixing only the two the hold named would have left an opening paragraph naming the
+election with the next line and the last line contradicting it. Both are overridable off the
+record now, and the disclaimer is hoisted out of the page shell into `DEFAULT_DISCLAIMER`
+carrying the template's own line breaks. **Byte-identity for everything else is measured, not
+asserted: regenerating changed exactly 35 files and left the other 294 untouched.**
+
+The two new sentences are written in `build_mi_returns_roster.py` beside the lede rather than
+composed in the generator, for the reason the manager gave for the first three: one wording,
+where the data is built. Both gates were negative-tested. The roster `--check` reads them by
+CONTENT rather than presence — a standfirst carrying the default wording passes a presence
+test and tells a reader the opposite of the lede beside it — and poisoning Alger's gives two
+FAILs and exit 1; removing them gives `build_county_pages.py` a FAIL naming both, exit 1.
+
+Manistee (returns) against Alcona (scraped), county names factored out, now differ on all
+four surfaces, and the scraped county is unchanged.
+
+**A stale figure in this file's own preamble, corrected in the same commit as this entry.**
+It read "48 of the 83 counties name your commissioner — 366 of the 619 seats", which my own
+change made false, and "20 recorded gaps — 13 no-source, 5 blocked", which was already wrong
+before it: the shipped `coverage-gaps.json` carries 26, of which 17 are no-source and 7
+blocked. The second was not mine and is recorded rather than quietly fixed, because nothing
+gates that preamble against the file it describes and the next reader deserves to know it can
+drift.
+
+Battery after the last edit: 84 of 84 static gates, all six instance smoke tests, page
+consistency 56 findings all 56 this sandbox's cert error and 0 non-cert, point-transmission
+`--check` OK, contrast probe OK across 389 pages, SERP lengths OK. `validate_gate_counts`
+unchanged at 72/100 with the steward mirror agreeing 100 for 100 — no CI step was added.
 
 **2026-09-22, the certified-returns route is built and open as #1091 — all 83 counties name a
 commissioner, 615 of 619 districts in the served bytes, up from 366.** Adam's ruling built to
