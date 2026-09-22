@@ -1177,20 +1177,38 @@ def districted_body(inst, name, rec):
             % esc(inst["phrase"]) if app_reads else
             "the map's %s card reads the same source live, so a card can be up "
             "to a week newer than this page" % esc(inst["phrase"]))
-    out.append(
-        '<p class="lede">The %s is elected by district. This page '
-        'lists %s %s and the %s who %s them, exactly as the county publishes '
-        'them — %s.</p>'
-        % (esc(heading_of(inst, name)), n_dist,
-           "district" if n_dist == 1 else "districts",
-           "member" if named == 1 else "%d members" % named,
-           "holds" if named == 1 else "hold", same))
+    # A RECORD MAY STATE WHERE ITS NAMES CAME FROM, and the default below
+    # cannot serve one that did not come from the county. "exactly as the
+    # county publishes them" is true of every roster scraped from a county's
+    # own board page and FALSE of a roster built from certified election
+    # returns, which names who WON rather than who holds the seat today — the
+    # posture Clark, Union and Williamson already ship under in Illinois. A
+    # record carrying `lede` supplies its own sentence; one that does not
+    # renders byte-identically to before this hook existed.
+    if rec.get("lede"):
+        out.append('<p class="lede">%s</p>'
+                   % (rec["lede"] % {"county": esc(name),
+                                     "heading": esc(heading_of(inst, name)),
+                                     "phrase": esc(inst["phrase"]),
+                                     "districts": n_dist,
+                                     "named": named}))
+    else:
+        out.append(
+            '<p class="lede">The %s is elected by district. This page '
+            'lists %s %s and the %s who %s them, exactly as the county publishes '
+            'them — %s.</p>'
+            % (esc(heading_of(inst, name)), n_dist,
+               "district" if n_dist == 1 else "districts",
+               "member" if named == 1 else "%d members" % named,
+               "holds" if named == 1 else "hold", same))
     out.append('<a class="cta" href="../#layers=%s,county">'
                'Find your %s County district on the map →</a>'
                % (esc(inst["concept"]), esc(name)))
-    out.append('<p class="cta-note">Opens the map with the county and %s '
-               'layers on. Search your address or ZIP, or tap your location.</p>'
-               % esc(inst["phrase"]))
+    out.append('<p class="cta-note">%s</p>'
+               % (esc(rec["cta_note"]) if rec.get("cta_note") else
+                  "Opens the map with the county and %s layers on. Search your "
+                  "address or ZIP, or tap your location."
+                  % esc(inst["phrase"])))
     for anchor, heading, members in rec.get("extras") or []:
         rows = [h for h in (member_html(m) for m in members) if h]
         if not rows:
@@ -1563,7 +1581,13 @@ def build_page(inst, name, rec, at_large, shell, contact=None):
         # one of these 73 descriptions different from the next.
         suffix = ", ".join(extra_words.get(a, "%d more" % extra_n)
                            for a, _h, ms in extras if ms)
-        desc = ("Who represents you on the %s — %d members across "
+        # Same hook as the flat branch: a record whose names did not come
+        # from the county's own roster says so here too, or the search result
+        # states a provenance the page itself contradicts.
+        desc = (rec["desc"] % {"head": head, "named": named - extra_n,
+                               "districts": n_dist}
+                if rec.get("desc") else
+                "Who represents you on the %s — %d members across "
                 "%d districts%s, from the county's own published roster."
                 % (head, named - extra_n, n_dist,
                    " plus " + suffix if suffix else ""))
