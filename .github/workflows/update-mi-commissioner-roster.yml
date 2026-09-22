@@ -113,7 +113,12 @@ jobs:
           # dark, so it can happen on an ordinary weekly run. Without this the
           # bot PR fails build_llms_txt.py --check on a change nobody wrote.
           python3 scripts/build_llms_txt.py
-          git add mi/data/app/mi-commissioner-members.json mi/county-commissioner mi/county-commissioner.html about.html sitemap.xml llms.txt
+          # docs/EAM_STATUS.md counts the districts this roster names, so a
+          # county gaining or losing a member moves it and the smoke gate's
+          # `build_eam_status.py --check` fails on this PR. See that script's
+          # check_workflows(), which is what names this job.
+          python3 scripts/build_eam_status.py
+          git add mi/data/app/mi-commissioner-members.json mi/county-commissioner mi/county-commissioner.html about.html sitemap.xml llms.txt docs/EAM_STATUS.md
           git commit -m "Update Michigan county commissioner roster"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then

@@ -215,7 +215,12 @@ jobs:
           python3 scripts/build_county_pages.py
           python3 scripts/build_about_page.py
           python3 scripts/build_sitemap.py
-          git add ia/data/app/ia-county-board-chairs.json ia/county-supervisor ia/county-supervisor.html about.html sitemap.xml
+          # docs/EAM_STATUS.md counts the districts this roster names, so a
+          # county gaining or losing a member moves it and the smoke gate's
+          # `build_eam_status.py --check` fails on this PR. See that script's
+          # check_workflows(), which is what names this job.
+          python3 scripts/build_eam_status.py
+          git add ia/data/app/ia-county-board-chairs.json ia/county-supervisor ia/county-supervisor.html about.html sitemap.xml docs/EAM_STATUS.md
           git commit -m "Update the Iowa county board chair roster from the counties' own board pages"
           git push -u origin "$branch" --force
           # Only open a PR if one isn't already open for this branch; if it is,

@@ -205,7 +205,12 @@ jobs:
           python3 scripts/build_county_pages.py
           python3 scripts/build_about_page.py
           python3 scripts/build_sitemap.py
-          git add wi/data/app/county-board-members.json wi/data/app/wi-county-officers.json wi/history.html wi/county-board wi/county-board.html about.html sitemap.xml
+          # docs/EAM_STATUS.md counts the districts this roster names, so a
+          # county gaining or losing a member moves it and the smoke gate's
+          # `build_eam_status.py --check` fails on this PR. See that script's
+          # check_workflows(), which is what names this job.
+          python3 scripts/build_eam_status.py
+          git add wi/data/app/county-board-members.json wi/data/app/wi-county-officers.json wi/history.html wi/county-board wi/county-board.html about.html sitemap.xml docs/EAM_STATUS.md
           git commit -m "Update WI county board supervisors from the counties' own pages"
           git push -u origin "$branch" --force
           if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
