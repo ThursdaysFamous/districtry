@@ -44,6 +44,67 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-22 — the 18-county gap is recorded and shipped as #1095, and the
+brief's framing was wrong in the one place that matters.**
+
+**THE ABSENCE IS THE JOIN, NOT THE DISTRICT.** The brief said these counties
+"elect by district and publish no district". They publish the districts.
+Measured on the shipped tree at `7f8cbef`: `ia-supervisor-districts.json` draws
+**3 to 5 districts for every one of the 18**, so a reader clicking inside one is
+correctly told which district they are standing in; `ia-county-officers.json`
+names 3 or 5 supervisors in each, carrying `name` + `party` on 333 of its 345
+supervisor records and `name` alone on the other 12; and
+`ia-supervisor-members.json` keys members to a district in 17 counties, none of
+them these. **Black Hawk is the county that makes it concrete** — `ia/WATCH.md`
+records it shipping real district geometry from its own county service on
+2026-08-26, and the guidebook's Johnson record points at it as the county that
+"publishes its own", which is true of the boundaries and false of the join. It
+is in the record anyway.
+
+The record is `ia-supervisor-district-seats`, `data-quality`, reader fields at
+227/213/179 against the 240 cap, **NOT YET ASKED** with the honest scope stated:
+the two statewide files are all that was read and **no county page was fetched
+for this question**, so the per-county route is unexamined rather than refused.
+
+**It touched the outline builder, and that was not optional.** A `counties` tag
+is a promise the panel can locate — the Michigan defect Adam ruled on. Iowa
+shipped 10 outlines, exactly the 10 its existing records tag, and
+`build_ia_gap_outlines.py`'s two reads (the shipped gaps file; the counties
+whose supervisors are withheld) **could not reach these 18**, which are neither.
+It gains a third read: the record's own population, PLAN 3 only. Yields exactly
+18 and empties itself as counties gain the join.
+
+### Open question — the 14 PLAN 2 counties and Story
+
+Measured the same day: **Benton, Buena Vista, Carroll, Cherokee, Clarke, Dallas,
+Delaware, Greene, Jackson, Muscatine, O'Brien, Page, Plymouth, Woodbury** and
+**Story** sit in the IDENTICAL structural position — districts drawn, members
+named, no member keyed. The brief said PLAN 2 counties have "no district to name
+at all"; they draw 3 to 5 each, so that is wrong too.
+
+They are deliberately NOT in #1095. **The option I would take:** a second record
+rather than widening this one. A PLAN 2 supervisor is nominated by district and
+elected *countywide*, so "which of these people represents my district" has a
+different answer there — arguably all of them — and folding it in would make one
+reader sentence cover two different facts about representation. Story is a third
+case again (transitioning under Senate File 75). If you would rather have one
+record covering all 33, say so and the builder's third read drops its PLAN 3
+scope in one line.
+
+### One thing I checked and did not act on
+
+The per-county pages mint structured-data ids as
+`#board-at-large-1..N` on all 18 — an `@id` URL fragment, not prose and not
+`roleName` (which correctly reads "Supervisor"). It is an identifier rather than
+an assertion, so it states nothing false to a reader or a crawler, and it is
+your adapter. Flagging it rather than touching it.
+
+### My own error worth recording
+
+`build_coverage_gaps.py` caught `why` at **247 characters against its 240 cap**.
+I had printed that number in a pre-check and not compared it to the limit —
+a measurement taken and then not read is the same as not taking it.
+
 **2026-09-22 — ANSWER TO THE MANAGER'S THREE QUESTIONS ON THE EXAMINED SCORE.
 STOP ON Q1: an at-large adapter over all 91 counties would publish a false
 statement about 37 of them.** Measured on main at `d428959`.
