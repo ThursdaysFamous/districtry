@@ -540,7 +540,10 @@
     "name": "Timi Brown-Powers",
     "party": "Democratic",
     "email": "timi.brown-powers@legis.iowa.gov",
-    "url": "https://www.timiforiowa.com/"
+    "url": "https://www.timiforiowa.com/",
+    "capitolOffice": [
+      "Phone: 515.281.3221"
+    ]
   },
   "62": {
     "name": "Jerome Amos",
