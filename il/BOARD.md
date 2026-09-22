@@ -39,6 +39,54 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-22. Sangamon #1093 fixed as #1096 — and one of the three measurements
+in the hold does not reproduce.**
+
+**The fix.** `parse()` now drops a name matching `VACANT_RE` instead of
+returning it, so District 16 takes District 2's path. Verified end to end: the
+scraper writes `{"district": "16", "vacant": true, "url": ...}`, identical in
+shape to District 2, and the builder turns both into
+`{"members": [], "vacancies": 1}`. Every floor passes and none was lowered.
+Reverting the one-line guard in a copy makes the new selftest fail, so the test
+is proved to test the thing. Full static battery green plus the Illinois smoke
+test. **#1093 should not merge until its branch is re-run on this.**
+
+**CORRECTION — the index guard is LIVE, not dead.** The hold's defect (2) says
+`INDEX_ROW_RE` matches **0 of 29 rows** and the corroborated-vacancy branch
+could not fire. Measured today with the scraper's own client and headers,
+robots read first (allowed, no crawl-delay, no Content-Signal): the index
+answers 200 at 219,700 bytes, **`INDEX_ROW_RE` matches 29 of 29 rows**, and
+`vacancies_from_index()` returns `{'2', '16'}`. The run prints
+`index lists 2 vacant district(s): 2, 16`.
+
+**#1093's own diff says the same thing from the other side**, which is the
+stronger proof because it needs no fetch: District 2 stayed
+`{"members": [], "vacancies": 1}` through that very run, and the ONLY branch
+that can produce that key is the index one — the fallback drops the district
+entirely. So the bot run the hold was written from had a working index guard,
+and the 0-of-29 reading was taken some other way.
+
+**What that changes for the fix:** `INDEX_ROW_RE` is NOT re-derived — rewriting
+a regex that matches every row is how a working guard gets broken — and
+District 16 lands on the **corroborated** branch rather than on District 2's
+uncorroborated silent skip, which is a better outcome than the hold predicted.
+The vacancy ships because two county sources agree, not because one went quiet.
+The hold's third item, whether an unreadable index should stay a soft note, is
+therefore not settled here: nothing has been observed reading it as unreadable,
+so there is no measurement to settle it with.
+
+**Defect (3) is on the board below rather than patched**, as instructed.
+
+**A selftest, because a live run only tests this week's shapes.** The blank
+vacancy shape had been exercised weekly since 2026-08-18 and said nothing about
+the other one. `PARSE_SELFTEST` pins eight fixtures minimised from what the
+county served today — both vacancy shapes, the three member-block shapes the
+module docstring already records as having cost a rewrite, a case/inflection
+pair, and a two-token name starting with the vacancy word so the guard cannot
+later widen into a prefix test and take a real person off the board. Every
+street in them is replaced with a placeholder: those are residences, and that
+rule does not stop at a test fixture.
+
 **2026-09-22. The phone half of the two-names row, measured — and it is NOT
 the two surfaces disagreeing.**
 
@@ -568,6 +616,16 @@ shipping, and has been since 2026-08-01.
   **ANSWERED 2026-09-21.** The workflow ran green today and opened #1063, which
   is verified against the live page and waiting on a human read. The Senate file
   is unchanged because the Senate pages are unchanged.
+- **`il/county-board/logan.html` names a member `VACANT`** — a schema.org
+  `Person` of that name and a member row of that name, published, for District
+  5. Found 2026-09-22 while writing up #1093's third defect. Same shape as the
+  Sangamon seat #1096 just fixed: the source's word for an empty seat carried
+  through as if it were a person. Two more sit in
+  `ccpsa-district-councils.json`, which renders in the app card rather than in
+  served bytes. `VACANCY_SENTINELS` lets the word through, which is why nothing
+  failed. The fix is on the board as an open question rather than applied,
+  because it edits a shared gate and two rosters this session was not asked to
+  touch.
 
 Nothing else on the Illinois map is known to be wrong. The coverage ring checks
 out at five rings with all 93 inside and 10 outside anchors correct; 62 of the
@@ -583,6 +641,34 @@ disagree on the clerk's first name — Jodie in the drafts, Kandi in the
 guidebook — and neither is guessed at.
 
 ## Open questions for Adam
+
+- **A `Person` named `VACANT` is already live on `il/county-board/logan.html`,
+  and the gate that should catch it is the one #1093 asked about.**
+  `VACANCY_SENTINELS` in `scripts/validate_officeholder_names.py` returns None
+  for `vacant`, `vacancy`, `tbd`, `none`, `open` and five more, so the word
+  passes as a name. The hold on #1093 called that "right for Wisconsin's
+  marker-shaped roster and blind to Illinois's structural one", and **measured
+  fleet-wide today, that is the wrong way round.** Nothing in Wisconsin uses the
+  marker shape at all: its vacancies are structural (`vacant: true` on 15
+  `county-board-members` records and one school-board record, plus 16
+  `withheld`). The only three records in the fleet that put the word where a
+  name goes are **Illinois's** — `logan-county-board-members.json` District 5,
+  and two in `ccpsa-district-councils.json` — and NEITHER pipeline mentions the
+  word anywhere, so in both cases it is the source's string carried straight
+  through as if it were a person, which is exactly the defect #1096 just fixed
+  in Sangamon. Illinois's own structural shape is in six files
+  (`vacancies: N` in Sangamon, Boone, Jo Daviess, Lee, Stephenson;
+  `vacant: true` in Shelby). **Consequence a reader gets today:** Logan's page
+  carries `"@type": "Person", "name": "VACANT"` in its schema.org graph and a
+  member row reading `VACANT`, published. CCPSA's two render in the app card
+  rather than in served bytes, so they do not reach a crawler.
+  **The proposal, not applied:** drop the sentinel allowance, convert those
+  three records to the structural shape their siblings already use, and let the
+  gate reject the word outright — which would make it impossible to ship this
+  again anywhere in the fleet. **Not done unilaterally** because it edits a
+  shared gate and two rosters this session was not asked to touch, and because
+  the Logan and CCPSA sources should be read before their records are reshaped
+  rather than after. Say the word and it is one change.
 
 - **Thirteen Illinois asks are drafted and waiting on you to send them** — Asks
   2, 9, 10, 11, 13, 16, 18, 19, 21, 23, 26, 27 and 28 in `docs/ASK_DRAFTS.md`,
