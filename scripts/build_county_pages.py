@@ -621,6 +621,8 @@ IA_PLAN_PAGE = {
         "cta_note": ("Opens the map with the county layer on. An at-large board "
                      "has no district geometry, so the members above are the "
                      "answer for anywhere in the county."),
+        "desc": "%d members elected at large across the whole county",
+        "index_note": ", at large",
     },
     "PLAN 2": {
         "lede": ("%(county)s County elects its %(phrase)s <b>countywide</b> — every "
@@ -630,6 +632,8 @@ IA_PLAN_PAGE = {
                      "districts decide where each supervisor must live, not who "
                      "votes on them, so the members above are the answer "
                      "anywhere in the county."),
+        "desc": "%d members elected countywide from residence districts",
+        "index_note": ", countywide",
     },
     "PLAN 3": {
         "lede": ("%(county)s County elects its %(phrase)s <b>by district</b> — each "
@@ -640,6 +644,8 @@ IA_PLAN_PAGE = {
                      "names the district you are in. Pairing a district with its "
                      "supervisor needs a source this county does not publish, so "
                      "the list above is every seat rather than yours."),
+        "desc": "%d members elected one per district",
+        "index_note": ", by district",
     },
     "TRANSITIONING": {
         "lede": ("%(county)s County is moving from at-large to district elections "
@@ -648,6 +654,8 @@ IA_PLAN_PAGE = {
         "cta_note": ("Opens the map with the supervisor-district layer on. The "
                      "district lines are drawn but do not elect anyone yet, so "
                      "the members above are the answer anywhere in the county."),
+        "desc": "%d members elected at large, moving to district elections",
+        "index_note": ", at large until 2026",
     },
 }
 
@@ -663,6 +671,11 @@ IA_PLAN_UNRECORDED = {
     "cta_note": ("Opens the map with the county layer on. The state publishes "
                  "no supervisor districts for this county, so there is no "
                  "district map to send you to."),
+    # No method clause and no index suffix: the page says in words that how the
+    # county elects this board is not established here, and a description or an
+    # index row that names one would contradict the page it describes.
+    "desc": "%d members",
+    "index_note": "",
 }
 
 
@@ -779,6 +792,12 @@ def ia_at_large(inst):
                      "seats": rec.get("supervisorSeats"),
                      "slug": county_slug(name), "at_large": True,
                      "lede": page["lede"], "cta_note": page["cta_note"],
+                     "desc": page["desc"], "index_note": page["index_note"],
+                     # THE ONLY PLAN THAT ELECTS AT LARGE. `at_large` above
+                     # picks the flat renderer; this says whether the county
+                     # actually elects that way, which is what the index page
+                     # and the operator line count.
+                     "claims_at_large": plan == "PLAN 1",
                      "plan": plan}
     note = ("%d county(s) read from the officers file; %d skipped because the "
             "districted roster covers them, %d withheld by that file's own "
@@ -1510,9 +1529,23 @@ def build_page(inst, name, rec, at_large, shell, contact=None):
     head = heading_of(inst, name)
     title = "%s — %s" % (inst["page_title"] % {"county": name}, inst["app_name"])
     if at_large:
-        desc = ("Who sits on the %s: %d members elected at "
-                "large across the whole county, with contact details, from the "
-                "county's own published roster." % (head, named))
+        # A FLAT ROSTER IS NOT A CLAIM ABOUT HOW THE COUNTY ELECTS. The default
+        # clause below is true of a board elected at large and false of Iowa's
+        # plan 2, plan 3, transitioning and plan-less counties, whose records
+        # carry their own — the same split the lede already makes, applied to
+        # the sentence a search result shows. Illinois passes no `desc` and
+        # renders byte-identically to before.
+        # "with contact details" came out on 2026-09-22, when Iowa's flat
+        # pages put 55 descriptions over validate_serp_lengths.py's 155: it is
+        # on every one of these pages, so it differentiates none of them, and
+        # the districted half of this same generator never carried it. The
+        # em dash matches that half too — the two shapes were gratuitously
+        # different.
+        desc = ("Who sits on the %s — %s, from the county's own published "
+                "roster."
+                % (head, (rec.get("desc")
+                          or "%d members elected at large across the whole "
+                             "county") % named))
     else:
         # `named` counts the EXTRA sections too — Illinois's elected chair,
         # Menominee's two at-large supervisors — and none of those people is in
@@ -1593,23 +1626,33 @@ def build_page(inst, name, rec, at_large, shell, contact=None):
 
 
 def render_index(inst, rows):
-    """rows: [(county name, slug, at_large, seats)] — the index the topic page
-    carries. Alphabetical, one flat list: a reader looking for their county
-    scans a name, and a crawler gets 73 internal links from a page that already
-    ranks for the concept."""
+    """rows: [(county name, slug, seats, index note, kind)] — the index the
+    topic page carries. Alphabetical, one flat list: a reader looking for their
+    county scans a name, and a crawler gets 73 internal links from a page that
+    already ranks for the concept.
+
+    `kind` IS THE CLAIM AND THE RENDERER IS NOT. It is "districted",
+    "at-large" or "flat", and the third is a roster with no district keys on a
+    county that does not elect at large — Iowa's plan 2 elects countywide from
+    residence districts and its plan 3 elects by district, neither of them at
+    large, and both reach these pages as a flat list of names. Counting them in
+    the at-large tally, or suffixing their rows ", at large", would state an
+    election method Iowa Code does not give those counties, on the one page
+    that lists every county at once.
+    """
+    at_large = sum(1 for r in rows if r[4] == "at-large")
     out = ['    <p class="matrix-lede">Every %s county whose roster this '
            'project has: <b>%d counties</b>, <b>%d people</b>, each name published '
            'by the county itself.%s</p>'
-           % (esc(inst["state"]), len(rows), sum(r[3] for r in rows),
-              (" %d elect at large, with no districts." % sum(1 for r in rows if r[2]))
-              if any(r[2] for r in rows) else ""),
+           % (esc(inst["state"]), len(rows), sum(r[2] for r in rows),
+              (" %d elect at large, with no districts." % at_large)
+              if at_large else ""),
            '    <ul class="county-index">']
-    for name, slug, at_large, seats in rows:
+    for name, slug, seats, note, _kind in rows:
         out.append('      <li><a href="%s/%s.html">%s County</a> '
                    '<span class="county-index-n">%d %s%s</span></li>'
                    % (esc(inst["concept"]), esc(slug), esc(name), seats,
-                      "member" if seats == 1 else "members",
-                      ", at large" if at_large else ""))
+                      "member" if seats == 1 else "members", esc(note)))
     out.append("    </ul>")
     return "\n".join(out)
 
@@ -2173,6 +2216,10 @@ def main():
                       for w in verify_page(inst, name, rec, at_large, html)]
             if at_large:
                 seats = len(rec["members"])
+                # Illinois carries neither key and keeps the old meaning: a
+                # flat roster there IS a county that elects at large.
+                kind = "at-large" if rec.get("claims_at_large", True) else "flat"
+                note = rec.get("index_note", ", at large")
             else:
                 # District members plus whoever the extras name — the same total
                 # the index prints, because two adjacent numbers five apart read
@@ -2180,8 +2227,9 @@ def main():
                 seats = (sum(len(d["members"]) for d in rec["districts"])
                          + sum(len(ms) for _a, _h, ms in rec.get("extras") or []))
                 skipped += len(rec["skipped"])
+                kind, note = "districted", ""
             people += seats
-            rows.append((name, rec["slug"], at_large, seats))
+            rows.append((name, rec["slug"], seats, note, kind))
         rows.sort()
         totals.append((inst, pages, people, skipped, rows, notes))
 
@@ -2234,11 +2282,14 @@ def main():
         raise SystemExit(1)
 
     for inst, pages, people, skipped, rows, notes in totals:
-        at_large = sum(1 for r in rows if r[2])
+        districted = sum(1 for r in rows if r[4] == "districted")
+        at_large = sum(1 for r in rows if r[4] == "at-large")
+        flat = len(rows) - districted - at_large
         print("  %s  %3d page(s) %s, %4d people named and each one verified onto "
-              "its page (%d districted, %d at large%s)%s"
+              "its page (%d districted, %d at large%s%s)%s"
               % (inst["tag"], len(pages), "current" if check else "written",
-                 people, len(rows) - at_large, at_large,
+                 people, districted, at_large,
+                 ", %d named without districts" % flat if flat else "",
                  ", %d non-district key(s) skipped" % skipped if skipped else "",
                  "; " + "; ".join(notes) if notes else ""))
     print("build-county-pages: OK — %d page(s) across %d instance(s), %d people "
