@@ -30,6 +30,44 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-22, the certified-returns route is built and open as #1091 — all 83 counties name a
+commissioner, 615 of 619 districts in the served bytes, up from 366.** Adam's ruling built to
+the Clark posture: a separate file, `mi-commissioner-returns.json`, every record carrying its
+own sentence naming the general election of 5 November 2024, the builder refusing to write one
+without it, and the card's badge reading "Elected Nov 2024" rather than "Commissioner" —
+a bare office badge is the claim the 2026-09-03 decision refused. The boundary file stays
+name-free and its BANNED_FIELDS guard is untouched.
+
+**The staleness measurement is the part worth keeping, and it is 366 seats rather than 123.**
+The 48 scraped counties give a comparand for every seat the state layer also covers: 234
+identical, 104 the same surname in a different form, 28 a different surname — and those 28
+read by hand are 18 naming a DIFFERENT PERSON (4.9%), 9 misspelling the same one and 1 a
+missing space. On the 35 themselves only Manistee renders names in its served bytes, and there
+6 of 7 match while District 6 does not: certified David Miehlke, the county's own page names
+Karen Goodman. The Wayne case confirmed on this cohort rather than assumed.
+
+**Two counties could not be measured and are recorded as that rather than as agreement.** Van
+Buren renders its directory through a component, so none of its seven names is in the served
+bytes and a substring test reads 0 of 7 — the method failing, not the county changing; the one
+apparent hit was inside a CSS `repeat(...)`. Newaygo's board URL in the probe artifact, read
+2026-09-19, answers 404 today.
+
+**Nothing is corrected and one spelling is recorded.** On the 35 the certified spelling is the
+only spelling there is. Nineteen one-edit surname pairs across the layer reduce to three
+candidates under an asymmetry filter, and Wexford District 2's `Jason L. Nelso` ships as
+certified with the reasoning written down.
+
+**Two things this change had to correct rather than add, and both were mine.** Two gap-record
+summaries said the cards "name no one" in those counties, which my own change made false to a
+reader. And the Michigan smoke test asserted that Ingham names nobody and "must not fall back
+to the boundary column" — the old rule written down as a test. It is rewritten rather than
+deleted: what it guarded moved rather than went away.
+
+**Three labels of mine were wrong today and the code was right each time** — I called Ingham a
+served county, guessed Genesee's FIPS as 081 when it is 049, and chased a duplicated line that
+my own `sed` had printed twice. Each cost a detour and none reached the tree. Look the county
+up; do not name it from memory.
+
 **2026-09-22, #1086 was closed and #1087 carries its first commit. A reader-facing miss
 survives on main and I measured it rather than assuming the outlines closed it.** The point
 48.19701,-88.08566 — Lake Superior, north of Isle Royale — is inside `metro-outline.json`,
