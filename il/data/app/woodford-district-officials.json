@@ -57,7 +57,7 @@
         }
       ],
       "comptrollerCode": "064/065/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "filesIn": "McLean",
       "kind": "library",
       "office": {
@@ -318,7 +318,7 @@
         }
       ],
       "comptrollerCode": "102/010/10",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "heads": [
         {
           "name": "Dawn Smith",
@@ -328,8 +328,7 @@
       "kind": "library",
       "office": {
         "address": "PO Box 770",
-        "city": "Metamora IL 61548",
-        "phone": "(309) 367-4591"
+        "city": "Metamora IL 61548"
       }
     },
     "Metamora Park District": {
@@ -501,7 +500,7 @@
       "office": {}
     }
   },
-  "generated": "2026-09-15T00:05:18Z",
+  "generated": "2026-09-22T00:22:17Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
