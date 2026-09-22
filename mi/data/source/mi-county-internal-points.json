@@ -1,0 +1,252 @@
+{
+ "measured": "2026-09-22",
+ "note": "The Census's own INTPTLAT/INTPTLON per county \u2014 a point guaranteed to lie inside that county, which a centroid is not for a concave or multi-part shape. Recorded so --check can re-run the same cross-check offline.",
+ "points": {
+  "alger": {
+   "fips": "003",
+   "lat": 46.5217365,
+   "lng": -86.6571192,
+   "name": "Alger County",
+   "slug": "alger"
+  },
+  "allegan": {
+   "fips": "005",
+   "lat": 42.4212358,
+   "lng": -86.2614039,
+   "name": "Allegan County",
+   "slug": "allegan"
+  },
+  "antrim": {
+   "fips": "009",
+   "lat": 45.0047132,
+   "lng": -85.1636678,
+   "name": "Antrim County",
+   "slug": "antrim"
+  },
+  "baraga": {
+   "fips": "013",
+   "lat": 46.6958594,
+   "lng": -88.3618198,
+   "name": "Baraga County",
+   "slug": "baraga"
+  },
+  "bay": {
+   "fips": "017",
+   "lat": 43.6997112,
+   "lng": -83.9787007,
+   "name": "Bay County",
+   "slug": "bay"
+  },
+  "benzie": {
+   "fips": "019",
+   "lat": 44.6368444,
+   "lng": -86.2319991,
+   "name": "Benzie County",
+   "slug": "benzie"
+  },
+  "branch": {
+   "fips": "023",
+   "lat": 41.9184551,
+   "lng": -85.0668852,
+   "name": "Branch County",
+   "slug": "branch"
+  },
+  "charlevoix": {
+   "fips": "029",
+   "lat": 45.6185538,
+   "lng": -85.5436841,
+   "name": "Charlevoix County",
+   "slug": "charlevoix"
+  },
+  "crawford": {
+   "fips": "039",
+   "lat": 44.6781673,
+   "lng": -84.6114843,
+   "name": "Crawford County",
+   "slug": "crawford"
+  },
+  "genesee": {
+   "fips": "049",
+   "lat": 43.0210768,
+   "lng": -83.7063718,
+   "name": "Genesee County",
+   "slug": "genesee"
+  },
+  "gladwin": {
+   "fips": "051",
+   "lat": 43.9897504,
+   "lng": -84.3898162,
+   "name": "Gladwin County",
+   "slug": "gladwin"
+  },
+  "gogebic": {
+   "fips": "053",
+   "lat": 46.4880535,
+   "lng": -89.788314,
+   "name": "Gogebic County",
+   "slug": "gogebic"
+  },
+  "gratiot": {
+   "fips": "057",
+   "lat": 43.2923259,
+   "lng": -84.60469,
+   "name": "Gratiot County",
+   "slug": "gratiot"
+  },
+  "huron": {
+   "fips": "063",
+   "lat": 43.907616,
+   "lng": -82.8570449,
+   "name": "Huron County",
+   "slug": "huron"
+  },
+  "ingham": {
+   "fips": "065",
+   "lat": 42.6035338,
+   "lng": -84.3738107,
+   "name": "Ingham County",
+   "slug": "ingham"
+  },
+  "iosco": {
+   "fips": "069",
+   "lat": 44.386912,
+   "lng": -83.3801417,
+   "name": "Iosco County",
+   "slug": "iosco"
+  },
+  "iron": {
+   "fips": "071",
+   "lat": 46.1780694,
+   "lng": -88.5517944,
+   "name": "Iron County",
+   "slug": "iron"
+  },
+  "keweenaw": {
+   "fips": "083",
+   "lat": 47.3672969,
+   "lng": -88.3513318,
+   "name": "Keweenaw County",
+   "slug": "keweenaw"
+  },
+  "livingston": {
+   "fips": "093",
+   "lat": 42.6025316,
+   "lng": -83.9117183,
+   "name": "Livingston County",
+   "slug": "livingston"
+  },
+  "manistee": {
+   "fips": "101",
+   "lat": 44.2448893,
+   "lng": -86.3276971,
+   "name": "Manistee County",
+   "slug": "manistee"
+  },
+  "marquette": {
+   "fips": "103",
+   "lat": 46.6322177,
+   "lng": -87.5626815,
+   "name": "Marquette County",
+   "slug": "marquette"
+  },
+  "mason": {
+   "fips": "105",
+   "lat": 43.9571957,
+   "lng": -86.4429369,
+   "name": "Mason County",
+   "slug": "mason"
+  },
+  "mecosta": {
+   "fips": "107",
+   "lat": 43.6352949,
+   "lng": -85.3327509,
+   "name": "Mecosta County",
+   "slug": "mecosta"
+  },
+  "missaukee": {
+   "fips": "113",
+   "lat": 44.325424,
+   "lng": -85.0854708,
+   "name": "Missaukee County",
+   "slug": "missaukee"
+  },
+  "montmorency": {
+   "fips": "119",
+   "lat": 45.0241337,
+   "lng": -84.1301067,
+   "name": "Montmorency County",
+   "slug": "montmorency"
+  },
+  "newaygo": {
+   "fips": "123",
+   "lat": 43.562696,
+   "lng": -85.7914478,
+   "name": "Newaygo County",
+   "slug": "newaygo"
+  },
+  "oakland": {
+   "fips": "125",
+   "lat": 42.6604518,
+   "lng": -83.3842103,
+   "name": "Oakland County",
+   "slug": "oakland"
+  },
+  "ogemaw": {
+   "fips": "129",
+   "lat": 44.3332801,
+   "lng": -84.1280728,
+   "name": "Ogemaw County",
+   "slug": "ogemaw"
+  },
+  "ottawa": {
+   "fips": "139",
+   "lat": 43.054969,
+   "lng": -86.2193493,
+   "name": "Ottawa County",
+   "slug": "ottawa"
+  },
+  "shiawassee": {
+   "fips": "155",
+   "lat": 42.9515446,
+   "lng": -84.1463518,
+   "name": "Shiawassee County",
+   "slug": "shiawassee"
+  },
+  "st-joseph": {
+   "fips": "149",
+   "lat": 41.9114878,
+   "lng": -85.5228695,
+   "name": "St. Joseph County",
+   "slug": "st-joseph"
+  },
+  "tuscola": {
+   "fips": "157",
+   "lat": 43.4879024,
+   "lng": -83.436618,
+   "name": "Tuscola County",
+   "slug": "tuscola"
+  },
+  "van-buren": {
+   "fips": "159",
+   "lat": 42.2821497,
+   "lng": -86.3060762,
+   "name": "Van Buren County",
+   "slug": "van-buren"
+  },
+  "washtenaw": {
+   "fips": "161",
+   "lat": 42.2522168,
+   "lng": -83.8434233,
+   "name": "Washtenaw County",
+   "slug": "washtenaw"
+  },
+  "wexford": {
+   "fips": "165",
+   "lat": 44.3313751,
+   "lng": -85.5700462,
+   "name": "Wexford County",
+   "slug": "wexford"
+  }
+ },
+ "source": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query"
+}

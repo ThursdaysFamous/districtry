@@ -31,7 +31,9 @@
       "site_description": "Find every civic district that covers a point or address in Michigan, and who represents you there.",
       "app_description": "Click any point in Michigan, or search an address, to see every civic district that contains it, and who represents you.",
       "keywords": "Michigan district map, what district am I in, Michigan Senate district, Michigan House district, county lookup, civic districts, who represents me",
-      "area_served": { "state": "Michigan" }
+      "area_served": {
+        "state": "Michigan"
+      }
     },
     "tagline": "Every civic district that covers your point in Michigan, and who represents you there.",
     "theme_color": "#6d3fd1",
@@ -184,7 +186,10 @@
     },
     {
       "id": "county-commissioner",
-      "guide": { "href": "county-commissioner.html", "text": "What county commissioner district am I in?" },
+      "guide": {
+        "href": "county-commissioner.html",
+        "text": "What county commissioner district am I in?"
+      },
       "label": "County Commissioner District",
       "group": "political",
       "area_rank": 7,
@@ -465,6 +470,251 @@
         "min_features": 4,
         "max_features": 4,
         "note": "Rochester Hills's four city council districts, from the city's OWN ArcGIS Server (gis.rochesterhills.org), built by mi/scripts/build_mi_rochester_hills_wards.py. The AGO item is shared public with an empty licenseInfo (the Detroit/Warren/Flint/Battle Creek case). THE RECORD SAID NO SERVICE EXISTED: the 23-city sweep reported none, and the city runs both its own AGOL org and its own server — a catalogue that does not list it is not a publisher that lacks it. Currency measured against the state's own 2026 precinct WARD column (21 precincts, 6/5/5/5) at 99.725%; balance -2.72% to +3.36% on Census 2020, 76,138 against the Census place's 76,300. THAT -162 IS ONE BLOCK 26 m INSIDE THE CITY LINE, which is why the builder's population ceiling is 0.22% here against the fleet's 0.2% — raised for this city alone on a measurement, with a new and strictly tightening 100 m edge test added beside it so the raise cannot hide a hole. NO OFFICEHOLDER SHIPS: the city's council page is maintained and its robots.txt disallows general crawlers, so the card names the district and links the city."
+      },
+      {
+        "file": "alger-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Alger County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Alger County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "allegan-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Allegan County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Allegan County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "antrim-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Antrim County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Antrim County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "baraga-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Baraga County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Baraga County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "bay-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Bay County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Bay County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "benzie-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Benzie County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Benzie County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "branch-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Branch County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Branch County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "charlevoix-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Charlevoix County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Charlevoix County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "crawford-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Crawford County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Crawford County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "genesee-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Genesee County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Genesee County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "gladwin-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Gladwin County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Gladwin County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "gogebic-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Gogebic County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Gogebic County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "gratiot-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Gratiot County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Gratiot County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "huron-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Huron County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Huron County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "ingham-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Ingham County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Ingham County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "iosco-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Iosco County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Iosco County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "iron-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Iron County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Iron County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "keweenaw-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Keweenaw County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Keweenaw County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "livingston-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Livingston County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Livingston County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "manistee-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Manistee County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Manistee County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "marquette-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Marquette County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Marquette County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "mason-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Mason County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Mason County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "mecosta-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Mecosta County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Mecosta County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "missaukee-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Missaukee County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Missaukee County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "montmorency-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Montmorency County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Montmorency County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "newaygo-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Newaygo County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Newaygo County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "oakland-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Oakland County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Oakland County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "ogemaw-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Ogemaw County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Ogemaw County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "ottawa-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Ottawa County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Ottawa County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "shiawassee-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Shiawassee County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Shiawassee County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "st-joseph-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "St. Joseph County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in St. Joseph County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "tuscola-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Tuscola County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Tuscola County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "van-buren-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Van Buren County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Van Buren County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "washtenaw-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Washtenaw County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Washtenaw County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
+      },
+      {
+        "file": "wexford-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "Wexford County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Wexford County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
+        "dynamic_reference": true
       }
     ],
     "rosters": [
@@ -511,7 +761,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-mi-shell-v12",
+    "cache_name": "districtry-mi-shell-v13",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
@@ -624,7 +874,7 @@
       {
         "date": "2026-09-13",
         "title": "Six counties now name your commissioner",
-        "body": "When Michigan's county commissioner districts arrived, the card named your district and nobody in it. The reason was that the only statewide list of commissioners is the one attached to the boundaries themselves, and that list records who won the November 2024 election rather than who holds the seat today. It has not been updated since, and one district still names a commissioner who died in June 2025. This week the app started naming commissioners the way it does everywhere else: county by county, from each county's own board page, refreshed every week. Six counties are done \u2014 Kalamazoo, Kent, Macomb, Muskegon, Saginaw and Wayne \u2014 which is 76 of the state's 619 districts and about a third of everyone who lives here. The rest still say plainly that this app does not know yet. Doing it this way was worth the trouble. Across those 76 seats the state's list names a different person in seven of them, including both of the Wayne County seats that changed hands and four of Muskegon's seven. Sixteen more are the same person written differently, and one is simply misspelled in the state's copy. Every disagreement is printed each time the roster is rebuilt, so the drift stays visible rather than being quietly resolved in the app's favour. Six more counties were tried and are not here, and each says why rather than going unmentioned. Two ask automated visitors not to read them at all, and this app does not. Two sit behind a challenge page, which is a lock and not a request. Oakland's is refused at the front door to every kind of visitor tried. And Washtenaw publishes its commissioners only inside biographies written in prose, where picking out the name would be guesswork \u2014 one of them does not even begin with the name. Those measurements are written down so the next attempt starts where this one stopped."
+        "body": "When Michigan's county commissioner districts arrived, the card named your district and nobody in it. The reason was that the only statewide list of commissioners is the one attached to the boundaries themselves, and that list records who won the November 2024 election rather than who holds the seat today. It has not been updated since, and one district still names a commissioner who died in June 2025. This week the app started naming commissioners the way it does everywhere else: county by county, from each county's own board page, refreshed every week. Six counties are done — Kalamazoo, Kent, Macomb, Muskegon, Saginaw and Wayne — which is 76 of the state's 619 districts and about a third of everyone who lives here. The rest still say plainly that this app does not know yet. Doing it this way was worth the trouble. Across those 76 seats the state's list names a different person in seven of them, including both of the Wayne County seats that changed hands and four of Muskegon's seven. Sixteen more are the same person written differently, and one is simply misspelled in the state's copy. Every disagreement is printed each time the roster is rebuilt, so the drift stays visible rather than being quietly resolved in the app's favour. Six more counties were tried and are not here, and each says why rather than going unmentioned. Two ask automated visitors not to read them at all, and this app does not. Two sit behind a challenge page, which is a lock and not a request. Oakland's is refused at the front door to every kind of visitor tried. And Washtenaw publishes its commissioners only inside biographies written in prose, where picking out the name would be guesswork — one of them does not even begin with the name. Those measurements are written down so the next attempt starts where this one stopped."
       },
       {
         "date": "2026-09-06",
@@ -664,17 +914,83 @@
     ]
   },
   "metro_explorers": [
-    { "id": "chicago", "label": "Illinois", "url": "https://districtry.com/il/", "emoji": "🌭", "explorer_name": "districtry Illinois",
-      "bbox": { "minLng": -91.52, "minLat": 36.96, "maxLng": -87.01, "maxLat": 42.51 } },
-    { "id": "nyc", "label": "New York", "url": "https://districtry.com/ny/", "emoji": "🗽", "explorer_name": "districtry New York",
-      "bbox": { "minLng": -79.82, "minLat": 40.43, "maxLng": -71.62, "maxLat": 45.07 } },
-    { "id": "sf", "label": "San Francisco", "url": "https://districtry.com/ca/", "emoji": "🌉", "explorer_name": "districtry San Francisco",
-      "bbox": { "minLng": -122.6, "minLat": 37.6, "maxLng": -122.3, "maxLat": 37.95 } },
-    { "id": "wisconsin", "label": "Wisconsin", "url": "https://districtry.com/wi/", "emoji": "🧀", "explorer_name": "districtry Wisconsin",
-      "bbox": { "minLng": -92.89, "minLat": 42.49, "maxLng": -86.25, "maxLat": 47.31 } },
-    { "id": "iowa", "label": "Iowa", "url": "https://districtry.com/ia/", "emoji": "🌽", "explorer_name": "districtry Iowa",
-      "bbox": { "minLng": -96.64, "minLat": 40.37, "maxLng": -90.14, "maxLat": 43.5 } },
-    { "id": "michigan", "label": "Michigan", "url": "https://districtry.com/mi/", "emoji": "🚗", "explorer_name": "districtry Michigan",
-      "bbox": { "minLng": -87.6, "minLat": 41.7, "maxLng": -82.11, "maxLat": 48.01 } }
+    {
+      "id": "chicago",
+      "label": "Illinois",
+      "url": "https://districtry.com/il/",
+      "emoji": "🌭",
+      "explorer_name": "districtry Illinois",
+      "bbox": {
+        "minLng": -91.52,
+        "minLat": 36.96,
+        "maxLng": -87.01,
+        "maxLat": 42.51
+      }
+    },
+    {
+      "id": "nyc",
+      "label": "New York",
+      "url": "https://districtry.com/ny/",
+      "emoji": "🗽",
+      "explorer_name": "districtry New York",
+      "bbox": {
+        "minLng": -79.82,
+        "minLat": 40.43,
+        "maxLng": -71.62,
+        "maxLat": 45.07
+      }
+    },
+    {
+      "id": "sf",
+      "label": "San Francisco",
+      "url": "https://districtry.com/ca/",
+      "emoji": "🌉",
+      "explorer_name": "districtry San Francisco",
+      "bbox": {
+        "minLng": -122.6,
+        "minLat": 37.6,
+        "maxLng": -122.3,
+        "maxLat": 37.95
+      }
+    },
+    {
+      "id": "wisconsin",
+      "label": "Wisconsin",
+      "url": "https://districtry.com/wi/",
+      "emoji": "🧀",
+      "explorer_name": "districtry Wisconsin",
+      "bbox": {
+        "minLng": -92.89,
+        "minLat": 42.49,
+        "maxLng": -86.25,
+        "maxLat": 47.31
+      }
+    },
+    {
+      "id": "iowa",
+      "label": "Iowa",
+      "url": "https://districtry.com/ia/",
+      "emoji": "🌽",
+      "explorer_name": "districtry Iowa",
+      "bbox": {
+        "minLng": -96.64,
+        "minLat": 40.37,
+        "maxLng": -90.14,
+        "maxLat": 43.5
+      }
+    },
+    {
+      "id": "michigan",
+      "label": "Michigan",
+      "url": "https://districtry.com/mi/",
+      "emoji": "🚗",
+      "explorer_name": "districtry Michigan",
+      "bbox": {
+        "minLng": -87.6,
+        "minLat": 41.7,
+        "maxLng": -82.11,
+        "maxLat": 48.01
+      }
+    }
   ]
 }

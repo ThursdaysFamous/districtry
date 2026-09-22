@@ -27,7 +27,7 @@
 // template starts at -v1: the app shell, icons, and the starter data
 // files bootstrap_state.py builds.)
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-mi-shell-v12";
+const CACHE_NAME = "districtry-mi-shell-v13";
 
 const SHELL_URLS = [
   "./",
@@ -59,6 +59,41 @@ const GEOMETRY_URLS = [
   "./data/app/mi-flint-wards.json",
   "./data/app/mi-battle-creek-wards.json",
   "./data/app/mi-rochester-hills-wards.json",
+  "./data/app/alger-county-outline.json",
+  "./data/app/allegan-county-outline.json",
+  "./data/app/antrim-county-outline.json",
+  "./data/app/baraga-county-outline.json",
+  "./data/app/bay-county-outline.json",
+  "./data/app/benzie-county-outline.json",
+  "./data/app/branch-county-outline.json",
+  "./data/app/charlevoix-county-outline.json",
+  "./data/app/crawford-county-outline.json",
+  "./data/app/genesee-county-outline.json",
+  "./data/app/gladwin-county-outline.json",
+  "./data/app/gogebic-county-outline.json",
+  "./data/app/gratiot-county-outline.json",
+  "./data/app/huron-county-outline.json",
+  "./data/app/ingham-county-outline.json",
+  "./data/app/iosco-county-outline.json",
+  "./data/app/iron-county-outline.json",
+  "./data/app/keweenaw-county-outline.json",
+  "./data/app/livingston-county-outline.json",
+  "./data/app/manistee-county-outline.json",
+  "./data/app/marquette-county-outline.json",
+  "./data/app/mason-county-outline.json",
+  "./data/app/mecosta-county-outline.json",
+  "./data/app/missaukee-county-outline.json",
+  "./data/app/montmorency-county-outline.json",
+  "./data/app/newaygo-county-outline.json",
+  "./data/app/oakland-county-outline.json",
+  "./data/app/ogemaw-county-outline.json",
+  "./data/app/ottawa-county-outline.json",
+  "./data/app/shiawassee-county-outline.json",
+  "./data/app/st-joseph-county-outline.json",
+  "./data/app/tuscola-county-outline.json",
+  "./data/app/van-buren-county-outline.json",
+  "./data/app/washtenaw-county-outline.json",
+  "./data/app/wexford-county-outline.json",
 ];
 
 // Roster/officeholder data (also in data/app/) is refreshed by the weekly CI
