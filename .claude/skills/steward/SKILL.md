@@ -58,6 +58,7 @@ python3 scripts/validate_contrast.py                     # text vs ground, both 
 python3 scripts/compose_app.py --check                   # engine/ vs every instance's fences
 python3 scripts/check_engine_parity.py --fleet            # fences agree across instances; names partial blocks
 python3 scripts/build_county_status.py --check
+python3 scripts/build_eam_status.py --selftest        # shape_of held to files whose shape is settled
 python3 scripts/build_eam_status.py --check           # Examined / Answered / Maintained per state
 python3 scripts/backfill_board_seats.py --check
 python3 scripts/build_county_board_offices.py --check  # ISBE addresses still agree with the counties' own
