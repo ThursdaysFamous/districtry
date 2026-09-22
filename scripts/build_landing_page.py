@@ -198,7 +198,7 @@ QUESTION_ROWS = [
     # shape the regrouping exists to retire.
     ("Also answered in one place", ("precinct.html", "township.html",
                                     "community-board.html",
-                                    "county-auditor.html")),
+                                    "county-auditor.html", "borough.html")),
 ]
 
 # The topic each page's chip names, by page basename — the default for every
@@ -212,6 +212,7 @@ CHIP_TOPIC = {
     "city-council.html": "city council",
     "county-auditor.html": "county auditor",
     "supreme-court.html": "Supreme Court",
+    "borough.html": "borough offices",
     "ward.html": "alderman, by ward",
     "council-district.html": "Council district",
     "supervisor-district.html": "supervisor district",

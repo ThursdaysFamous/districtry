@@ -285,7 +285,38 @@ def appellate_justices(data):
             for j in data[k]["appellate"]["justices"]]
 
 
+BOROUGH_OFFICES = (("bp", "Borough President"),
+                   ("da", "District Attorney"),
+                   ("clerk", "County Clerk"))
+
+
+def borough_officials(data):
+    """New York City's five boroughs: the president, the DA and the clerk.
+
+    THE ORDER IS THE OFFICES' AND NOT ALPHABETICAL, so a borough's president
+    sits above its district attorney on every row group rather than being
+    sorted away from them — the rule the township table already follows.
+
+    THE CLERK IS INCLUDED HERE AND THE APPELLATE CLERKS ARE NOT, which is a
+    difference in the PAGE rather than an inconsistency. il/supreme-court.html
+    answers "who is my justice" and a table of 57 elected justices with five
+    appointed officers mixed in would blur the two. This page answers "who
+    answers for my borough", carries a Role column that names each office, and
+    says in its own prose that the first two are elected and the clerk is
+    appointed by the court. A reader is told which is which either way.
+    """
+    rows = []
+    for borough in sorted(data):
+        for key, role in BOROUGH_OFFICES:
+            rec = data[borough].get(key)
+            if not rec:
+                continue
+            rows.append((borough, dict(rec, role=role)))
+    return rows
+
+
 ADAPTERS = {
+    "borough_officials": borough_officials,
     "supreme_justices": supreme_justices,
     "appellate_justices": appellate_justices,
     "county_officers": county_officers,
@@ -432,6 +463,17 @@ CITY_TABLES = [
                   org_per_seat=True,
                   heading="Who holds each office in four more Iowa cities"),
          ]),
+    # New York City's borough-level offices: 15 people across five boroughs,
+    # in no served byte of this site until 2026-09-22. Each borough is its own
+    # government, so each is its own organisation.
+    dict(tag="ny", page="borough.html", worksheet="ny/metro-worksheet.json",
+         sections=[dict(roster="data/app/borough-officials.json",
+                        adapter="borough_officials",
+                        seat="Borough", holder="Officeholder", role_label="Office",
+                        office_label="Office", unit="borough officers", prep="in",
+                        body="New York City's borough governments",
+                        org_per_seat=True,
+                        heading="Who holds each borough office")]),
     # Illinois's two highest elected courts, both drawn on the same five
     # judicial districts and both named in no served byte until 2026-09-22.
     dict(tag="il", page="supreme-court.html", worksheet="metro-worksheet.json",

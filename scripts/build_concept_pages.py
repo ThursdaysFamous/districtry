@@ -485,6 +485,66 @@ def school_board_page(tag, spec, worksheet):
                 lede=lede, sections=sections, named=named)
 
 
+def borough_page(tag, spec, worksheet):
+    """New York City's boroughs, and the three offices each one fills.
+
+    THE COUNTS ARE READ, including how many of the fifteen offices the roster
+    names, because an office between officeholders is a real state and a page
+    that says "fifteen" while naming fourteen is wrong about a vacancy.
+    """
+    boroughs = load(spec["counts"][0])
+    offices = sum(len(rec) for rec in boroughs.values())
+    named = sum(1 for rec in boroughs.values() for v in rec.values()
+                if isinstance(v, dict) and v.get("name"))
+
+    lede = dict(
+        html='<p class="lede"><strong>A borough is also a county, and it fills three '
+             'offices of its own.</strong> New York City\'s %d boroughs each elect a '
+             'borough president and a district attorney, and each has a county clerk; '
+             'this names <strong>%d</strong> of the %d.</p>'
+             % (len(boroughs), named, offices),
+        cta='    <a class="cta" href="./#layers=%s">Find your borough →</a>\n'
+            '    <p class="cta-note">Opens the map with the borough layer on. Search your '
+            'address or ZIP, or tap your location.</p>' % spec["layers"])
+
+    sections = """  <section>
+    <h2>What the lookup shows</h2>
+    <div class="answer-card">
+      <p>Select any point in the city and the card names the <strong>borough</strong>
+        covering it. The table below names that borough's president, its district attorney
+        and its county clerk, with a link to each office.</p>
+      <p>These are borough-wide offices, so the answer is the same anywhere inside the
+        borough — there are no districts within them to be in.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Two of the three are on your ballot</h2>
+    <p>The borough president and the district attorney are elected by the borough's own
+      voters. The county clerk in the five boroughs is appointed by the court rather than
+      elected, and is here because it is the office to go to for county records — the
+      table names each office so the difference is visible rather than implied.</p>
+  </section>
+
+  <section>
+    <h2>Where the names come from</h2>
+    <p>Each office's own published page, checked by hand and landing as a reviewed pull
+      request. An office the roster does not name is shown as unnamed rather than left
+      out.</p>
+%(disclaimer)s
+  </section>
+
+""" % dict(disclaimer=DISCLAIMER)
+
+    subtitle = "New York City borough lookup — free, by address, ZIP, or a tap on the map."
+    desc = ("Which New York City borough you are in, and who holds its three offices — "
+            "borough president, district attorney and county clerk.")
+    og = ("Find your New York City borough and the %d people who hold its borough-level "
+          "offices." % named)
+    return dict(title="Who is my borough president?", subtitle=subtitle, desc=desc, og=og,
+                lede=lede, sections=sections, named=named)
+
+
 def supreme_court_page(tag, spec, worksheet):
     """Illinois's two highest elected courts, drawn on one set of districts.
 
@@ -799,6 +859,12 @@ PAGES = [
          sibling=dict(page="county-supervisor.html",
                       label="Who is my county supervisor?",
                       note="The government your city sits inside.")),
+    dict(tag="ny", file="borough.html", worksheet="ny/metro-worksheet.json",
+         layers="borough", make=borough_page,
+         counts=["ny/data/app/borough-officials.json"],
+         sibling=dict(page="council-district.html",
+                      label="Who is my Council Member?",
+                      note="The seat inside the borough, drawn smaller.")),
     dict(tag="il", file="supreme-court.html", worksheet="metro-worksheet.json",
          layers="il-supreme-court", make=supreme_court_page,
          counts=["il/data/app/il-court-justices.json"],
