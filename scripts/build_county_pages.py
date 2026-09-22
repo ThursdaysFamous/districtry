@@ -2021,8 +2021,13 @@ def ia_board_contact(inst):
 
     ia-county-officers.json carries no clerk or auditor — measured 2026-09-15,
     `auditor` is null on all 99 — so what this contributes is the board's own
-    telephone (90 of 99) and its representation plan (89), which is a fact about
-    how the county elects rather than a person.
+    telephone and its representation plan, which is a fact about how the county
+    elects rather than a person. MEASURED 2026-09-22: 91 of 99 records carry a
+    boardPhone and 90 a supervisorPlan. This docstring said 90 and 89, each one
+    short by one, from the day it was written; Iowa's board session caught both
+    while reading the file for the at-large adapter. Two hand-typed counts in a
+    docstring are exactly the kind nothing gates, so they are dated here rather
+    than restated as current.
     """
     path = os.path.join(app_data("ia"), "ia-county-officers.json")
     if not os.path.exists(path):
