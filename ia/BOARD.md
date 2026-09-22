@@ -44,6 +44,55 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-22 — STAND DOWN. Nothing unpushed, no PR of mine open, no check-in
+scheduled.**
+
+Confirmed rather than asserted: working tree clean;
+`claude/iowa-expansion-plan-isjrwa` level with its remote; the only open PR in
+the repo is another session's engine work on the phone card list. Two local
+branches sit ahead of main by commit id and **`git cherry` marks all five `+`,
+which is the squash-merge blind spot rather than unpushed work** — the content
+is on main (the minutes-chair scraper, the supervisor scraper's `readOn`, the
+WATCH row). Verify by content; a squash breaks every id-based test, which is
+the same trap that made `--is-ancestor` report #1065 and #1095 as MISSING.
+
+**Shipped today:** #1065 (the chair note's last stale copy, plus the
+`robots_policy` managed-challenge fix) and **#1095** (the 18-county gap record,
+18 county outlines, the outline builder's third read, and the gap-record
+skill's §7).
+
+### Two corrections to the stand-down brief, both about the record
+
+**The 18 counties' district lines are NOT "published nowhere".** They are
+drawn and they ship — `ia-supervisor-districts.json` carries 3 to 5 districts
+for every one of them, and a reader clicking inside one is correctly told which
+district they are standing in. What nobody publishes is **which supervisor
+holds which district**. The record says so, and Black Hawk is why it matters:
+it shipped its own district geometry from its own county service on 2026-08-26
+and is in the gap anyway.
+
+**The preserve ruling is already enacted here, not pending.** Measured on main
+tonight: `build_ia_supervisor_roster.py` carries 22 references to the preserved
+path and no `ROBOTS_REFUSED_DROPS`; Bremer and Hamilton are BOTH in the shipped
+roster and both county pages exist. That landed in #1051 on 2026-09-19, the
+same day the deletion was caught — the acceptance test being that
+`check_roster_retention` went quiet on its own with no exception naming either
+county. The posture stands for anything that touches the builder next; the fix
+itself does not need redoing.
+
+### For tomorrow, not started
+
+- **#1102's `check_workflows()`** touches three Iowa workflows — the supervisor
+  roster, the county-officers roster and the county-chair roster. Not verified
+  here; verifying it is tomorrow's first item rather than tonight's.
+- **The 14 PLAN 2 counties and Story** remain the open question, unchanged by
+  the merge: districts drawn, members named, no member keyed. The option I
+  would take is a second record, because a PLAN 2 supervisor is nominated by
+  district and elected countywide, so the reader sentence differs. One record
+  for all 33 instead is a one-line change to the outline builder's third read.
+- **`#board-at-large-N` id fragments** on those 18 pages — an identifier, not
+  an assertion, and the manager's adapter. Flagged, not touched.
+
 **2026-09-22 (later) — #1095 MERGED as `9d7f318`, verified on the merged tree.**
 
 Content confirmed on main rather than SHA ancestry, because these land as
