@@ -34,6 +34,35 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-22. The Metamora phone loss is Reddick's mirror image, and the task
+row's premise held.** [#1077](https://github.com/ThursdaysFamous/districtry/pull/1077).
+
+**Verified rather than taken from the row**, both years through the module's
+own parser with robots read first as the scraper's own client: FY2025 carried
+`(309) 367-4591` in all four slots, FY2026 carries `(309) 921-5074 Ext: 101` in
+A, B and D against `(309) 645-0963` in C. **What the row did not say is that
+the FILER SLOTS ARE IDENTICAL in both years** — Smith / Smith / Weddle / Smith
+throughout. So Reddick kept one value and lost a signer; Metamora kept both
+signers and filed new values. Exact opposites, which is a cleaner thing for the
+next reader to hold than "a second shape", and it is what the docstring now
+says.
+
+**The extension question is measured and resolves FOR the current behaviour.**
+Stripping at `Ext` can only CREATE a match, never break one, and the match it
+creates — two surnames at different extensions of one base number — is stronger
+evidence of a switchboard than an identical full number, which is what the rule
+is trying to establish. Sampled 40 of the 509 units, each asked for its OWN
+latest fiscal year: 37 read, **0 filing an extension anywhere, 0 manufactured
+witnesses**. Stated as a sample, not the corpus. All 492 shipped phones on this
+route carry no extension, because the split discards every one. **Nothing is
+relaxed**: one surname is one surname.
+
+**A trap that cost the first run and is recorded with it**: most units' latest
+filing is not the current year. Asking all 60 of a first sample for FY2026
+returned an empty contact block for 46, which reads exactly like "this unit
+files nothing" and means "not that year" — 28 of the 37 later read were on
+FY2025 and only 8 on FY2026. Ask `latest_fiscal_year()` per unit.
+
 **2026-09-21. Three assigned tasks, three PRs, and the third answered a
 different question than it was asked.**
 
