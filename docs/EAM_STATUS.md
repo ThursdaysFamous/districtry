@@ -19,7 +19,7 @@ keep a state open forever while telling a reader nothing.
 |---|---|---|---|---|---|---|---|---|
 | il | **EA·** | 102 | 102/102 | 572 | 998 | all | 309 | 221 without a job |
 | wi | **EA·** | 72 | 72/72 | 1590 | 1,574 | all | 47 | 25 without a job |
-| ia | **·A·** | 99 | 19/99 | 67 | 67 | all | 33 | 16 without a job |
+| ia | **EA·** | 99 | 99/99 | 67 | 67 | all | 33 | 16 without a job |
 | mi | **EA·** | 83 | 83/83 | 370 | 366 | all | 21 | 14 without a job |
 
 - **ca** — no county tier, so E does not apply. San Francisco — a consolidated city and county, so the county tier is the city and there is no frontier.
@@ -283,9 +283,8 @@ keep a state open forever while telling a reader nothing.
   - `wi/data/app/wi-state-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
   - `wi/data/app/wtcs-districts.json` — **16** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
 
-### ia — ·A·
+### ia — EA·
 
-- **Examined: no.** 80 of 99 counties have neither a roster nor a gap record naming them. They are not blocked — they are unlooked-at, which is the one state this bar refuses.
 - **Under a WATCH.md plan (3):** re-checked on a stated cadence rather than by a job — `dsm-wards.json`, `ia-community-colleges.json`, `ia-school-districts.json`
 - **Maintained: no.** 16 file(s) under no scheduled job at all, neither rewriting nor watching — 14 boundary, 2 structure, **0 naming people**. No officeholder is going stale here; what these want is a stated re-check cadence, not a weekly scraper.
   - `ia/data/app/cedar-rapids-wards.json` — **5** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.

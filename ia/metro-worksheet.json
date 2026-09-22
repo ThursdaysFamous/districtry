@@ -1,10 +1,28 @@
 {
   "this_metro": "iowa",
   "metro_name": "Iowa",
-  "metro_bbox": { "minLng": -96.69, "minLat": 40.32, "maxLng": -90.09, "maxLat": 43.55 },
-  "metro_center": [41.94, -93.39],
-  "permalink_gate": { "minLat": 40.17, "maxLat": 43.70, "minLng": -96.84, "maxLng": -89.94 },
-  "poi_geocode_bbox": { "minLat": 40.17, "maxLat": 43.70, "minLng": -96.84, "maxLng": -89.94 },
+  "metro_bbox": {
+    "minLng": -96.69,
+    "minLat": 40.32,
+    "maxLng": -90.09,
+    "maxLat": 43.55
+  },
+  "metro_center": [
+    41.94,
+    -93.39
+  ],
+  "permalink_gate": {
+    "minLat": 40.17,
+    "maxLat": 43.7,
+    "minLng": -96.84,
+    "maxLng": -89.94
+  },
+  "poi_geocode_bbox": {
+    "minLat": 40.17,
+    "maxLat": 43.7,
+    "minLng": -96.84,
+    "maxLng": -89.94
+  },
   "brand": {
     "app_name": "districtry Iowa",
     "product_name": "districtry",
@@ -13,7 +31,9 @@
       "site_description": "Find every civic district that covers a point or address in Iowa, and who represents you there.",
       "app_description": "Click any point in Iowa, or search an address, to see every civic district that contains it, and who represents you.",
       "keywords": "Iowa district map, what district am I in, Iowa Senate district, Iowa House district, county supervisor district, school district lookup, civic districts, who represents me Iowa",
-      "area_served": { "state": "Iowa" }
+      "area_served": {
+        "state": "Iowa"
+      }
     },
     "tagline": "Every civic district that covers your point in Iowa, and who represents you there.",
     "theme_color": "#6d3fd1",
@@ -36,33 +56,67 @@
   "socrata_app_token": "",
   "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
   "feedback_subject": "districtry Iowa feedback",
-  "hover_number_keys": [["district", "basename", "cd", "sldust", "sldlst"], ["geoid", "number"]],
-  "hover_name_keys": [["name", "namelsad"]],
+  "hover_number_keys": [
+    [
+      "district",
+      "basename",
+      "cd",
+      "sldust",
+      "sldlst"
+    ],
+    [
+      "geoid",
+      "number"
+    ]
+  ],
+  "hover_name_keys": [
+    [
+      "name",
+      "namelsad"
+    ]
+  ],
   "layers": [
     {
-      "id": "us-house", "label": "U.S. House", "group": "political", "area_rank": 1,
+      "id": "us-house",
+      "label": "U.S. House",
+      "group": "political",
+      "area_rank": 1,
       "rank_note": "Congressional districts — the largest districts a state carries below the state itself",
       "source": {
         "answers": "The U.S. House district covering the point, and the representative holding it.",
-        "boundary": [{ "label": "U.S. Census TIGERweb — Legislative, layer 0 (congressional districts), pre-built for the state and shipped with the app", "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0" }],
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 0 (congressional districts), pre-built for the state and shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/0"
+          }
+        ],
         "people": "congress-roster.json, rebuilt weekly by CI from the public-domain unitedstates/congress-legislators dataset — including each member's district office and Washington office.",
         "applies": "Iowa — statewide."
       }
     },
     {
-      "id": "ia-judicial-district", "label": "Judicial District", "group": "political", "area_rank": 2,
+      "id": "ia-judicial-district",
+      "label": "Judicial District",
+      "group": "political",
+      "area_rank": 2,
       "rank_note": "8 districts averaging 12.4 counties apiece (5-22 counties) — smaller than the 4 U.S. House districts' ~25-county average, larger than every other layer",
       "source": {
         "answers": "The judicial election district covering the point, and its bench (district judges, district associate judges, and magistrates).",
         "boundary": [
-          { "label": "Iowa Code SS602.6107/602.6109 (Code 2003) county-to-district assignment, cross-verified against iowacourts.gov's own per-district county page and Ballotpedia, spatially double-witnessed at build time against the LSAFiscal organization's own published district polygons; dissolved from state-counties.json by ia/scripts/build_ia_judicial_district.py", "url": "https://www.iowacourts.gov/iowa-courts/district-court/" }
+          {
+            "label": "Iowa Code SS602.6107/602.6109 (Code 2003) county-to-district assignment, cross-verified against iowacourts.gov's own per-district county page and Ballotpedia, spatially double-witnessed at build time against the LSAFiscal organization's own published district polygons; dissolved from state-counties.json by ia/scripts/build_ia_judicial_district.py",
+            "url": "https://www.iowacourts.gov/iowa-courts/district-court/"
+          }
         ],
         "people": "ia-judicial-judges.json, rebuilt weekly by CI from each district's own \"Judges and Magistrates\" roster page at iowacourts.gov. Judges are RETENTION, never elected: appointed by the Governor from a judicial nominating commission's list, then subject to periodic yes/no retention elections. No phone, e-mail, or courthouse address is published for any judge.",
         "applies": "Iowa — statewide, all 8 districts across all 99 counties."
       }
     },
     {
-      "id": "iowa-aea", "label": "Area Education Agency", "group": "schools", "area_rank": 3,
+      "id": "iowa-aea",
+      "label": "Area Education Agency",
+      "group": "schools",
+      "area_rank": 3,
       "rank_note": "9 agencies tiling the state exactly, because the 324 school districts do — fractionally smaller on average than the 8 judicial districts above them and far larger than the 50 Senate districts below",
       "source": {
         "answers": "The Area Education Agency covering the point — the regional body that supplies special-education, media and professional services to every school district inside it, with the agency's own phone and website.",
@@ -81,58 +135,110 @@
       }
     },
     {
-      "id": "ia-senate", "label": "Iowa Senate District", "group": "political", "area_rank": 4,
+      "id": "ia-senate",
+      "label": "Iowa Senate District",
+      "group": "political",
+      "area_rank": 4,
       "rank_note": "50 Senate districts, each the union of two whole House districts",
       "source": {
         "answers": "The Iowa Senate district covering the point, and the senator holding it.",
-        "boundary": [{ "label": "U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app", "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1" }],
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 1 (state upper chamber), pre-built for the state and shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/1"
+          }
+        ],
         "people": "ia-senate-members.json, rebuilt weekly by CI — the Open States current-people export (name, party, e-mail) merged with each senator's own profile page at legis.iowa.gov (Capitol phone, and the Capitol's own address where the state publishes it).",
         "applies": "Iowa — statewide."
       }
     },
     {
-      "id": "county", "label": "County", "group": "geography", "area_rank": 5,
+      "id": "county",
+      "label": "County",
+      "group": "geography",
+      "area_rank": 5,
       "rank_note": "99 counties, pre-built from TIGERweb; the fork's offline anchor layer",
       "source": {
         "answers": "Which county contains the point, and its county auditor (Iowa's county election commissioner, Iowa Code 47.2).",
-        "boundary": [{ "label": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app", "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1" }],
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — State_County, layer 1, pre-built for the state and shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1"
+          }
+        ],
         "people": "All six elected county offices (Iowa Code ch. 331), rebuilt weekly by CI. The AUDITOR (ia-county-auditors.json) joins the Iowa State Association of County Auditors' directory (https://iowaauditors.org/find/directory/ — name, party, office address, phone) to the Secretary of State's own auditors page (https://sos.iowa.gov/auditors/ — e-mail for all 99, plus party for 4 the association leaves blank). The TREASURER, RECORDER, SHERIFF, COUNTY ATTORNEY and BOARD OF SUPERVISORS (ia-county-officers.json) come from ISAC's member portal, with the recorder, sheriff and county attorney each superseded by that office's own statewide directory. Nothing is guessed: an office whose two publishers name different people ships no name and states the disagreement, and a board of supervisors ships only when the portal's count is legal under Iowa Code 331.201 and agrees with the shipped district geometry.",
         "applies": "Iowa — statewide."
       }
     },
     {
-      "id": "ia-house", "label": "Iowa House District", "group": "political", "area_rank": 6,
+      "id": "ia-house",
+      "label": "Iowa House District",
+      "group": "political",
+      "area_rank": 6,
       "rank_note": "100 House districts; two nest exactly inside each Senate district",
       "source": {
         "answers": "The Iowa House district covering the point, and the representative holding it.",
-        "boundary": [{ "label": "U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber), pre-built for the state and shipped with the app", "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2" }],
+        "boundary": [
+          {
+            "label": "U.S. Census TIGERweb — Legislative, layer 2 (state lower chamber), pre-built for the state and shipped with the app",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Legislative/MapServer/2"
+          }
+        ],
         "people": "ia-house-members.json, rebuilt weekly by CI — the Open States current-people export (name, party, e-mail) merged with each representative's own profile page at legis.iowa.gov (Capitol phone, and the Capitol's own address where the state publishes it).",
         "applies": "Iowa — statewide."
       }
     },
     {
-      "id": "county-supervisor", "guide": { "href": "county-supervisor.html", "text": "Who is my county supervisor?" }, "label": "County Supervisor District", "group": "political", "area_rank": 7,
+      "id": "county-supervisor",
+      "guide": {
+        "href": "county-supervisor.html",
+        "text": "Who is my county supervisor?"
+      },
+      "label": "County Supervisor District",
+      "group": "political",
+      "area_rank": 7,
       "rank_note": "The flagship layer: 272 features across 98 counties, PLANTYPE-aware (at-large / residence-district / single-member)",
       "source": {
         "answers": "The county supervisor district covering the point (where drawn), the county's election plan (at-large, residence-district-elected-countywide, or single-member district), and the board's size.",
         "boundary": [
-          { "label": "Iowa Legislature ArcGIS organization — CountySupervisorDistricts, pre-built for the state and shipped with the app (vintage 2024-01-30; licenseInfo not stated, attribution-only posture)", "url": "https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/CountySupervisorDistricts/FeatureServer/0" },
-          { "label": "Black Hawk County's own hosted GIS — its adopted Senate File 75 plan (5 districts, vintage 2026-02-24), shipped in place of the state layer's stale pre-SF75 at-large row for this county alone", "url": "https://services5.arcgis.com/ya62ECiavqTkK0wv/arcgis/rest/services/BlackHawkCoSupervisor_LSAplan1/FeatureServer/0" },
-          { "label": "Story County Auditor's own Board of Supervisors District Map (prepared 2026-03-13) — the county publishes no GIS service, so its three adopted Senate File 75 districts are read from the map's vector path objects, georeferenced to NAD83 / Iowa North and resolved to whole Census 2020 blocks; the derived populations match the Legislative Services Agency's published 32,783 / 32,894 / 32,860 exactly, district by district", "url": "https://www.storycountyiowa.gov/1172/Jurisdictional-Maps" },
-          { "label": "Johnson County's own site — states its SOS-approved Senate File 75 plan's facts (5 districts, ideal population); no GIS service found, so the county ships as one county-level feature pending real district geometry", "url": "https://johnsoncountyiowa.gov/supervisor-districts" }
+          {
+            "label": "Iowa Legislature ArcGIS organization — CountySupervisorDistricts, pre-built for the state and shipped with the app (vintage 2024-01-30; licenseInfo not stated, attribution-only posture)",
+            "url": "https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/CountySupervisorDistricts/FeatureServer/0"
+          },
+          {
+            "label": "Black Hawk County's own hosted GIS — its adopted Senate File 75 plan (5 districts, vintage 2026-02-24), shipped in place of the state layer's stale pre-SF75 at-large row for this county alone",
+            "url": "https://services5.arcgis.com/ya62ECiavqTkK0wv/arcgis/rest/services/BlackHawkCoSupervisor_LSAplan1/FeatureServer/0"
+          },
+          {
+            "label": "Story County Auditor's own Board of Supervisors District Map (prepared 2026-03-13) — the county publishes no GIS service, so its three adopted Senate File 75 districts are read from the map's vector path objects, georeferenced to NAD83 / Iowa North and resolved to whole Census 2020 blocks; the derived populations match the Legislative Services Agency's published 32,783 / 32,894 / 32,860 exactly, district by district",
+            "url": "https://www.storycountyiowa.gov/1172/Jurisdictional-Maps"
+          },
+          {
+            "label": "Johnson County's own site — states its SOS-approved Senate File 75 plan's facts (5 districts, ideal population); no GIS service found, so the county ships as one county-level feature pending real district geometry",
+            "url": "https://johnsoncountyiowa.gov/supervisor-districts"
+          }
         ],
         "people": "No statewide roster of Iowa county supervisors exists (measured, research pass), so the people come from ia-county-officers.json — each county's own site, gated against Iowa Code 331.201's legal board sizes. ia-supervisor-members.json then names the supervisor a DISTRICT elected, for the 17 plan 3 counties that publish that pairing themselves (67 districts): no Iowa publisher attaches a district to a supervisor's name, so the number is recovered by proximity on the county's own board page and the placement re-checked against the roster and the shipped geometry's seat count. Every other county names nobody here on purpose — under plan 1 there are no districts and under plan 2 supervisors are elected countywide, so a name against a district would assert an election that did not happen. NO PHONE RIDES A SUPERVISOR'S ROW: all 17 publish one number for the whole board, which is the board office and renders as such. ia-county-board-directory.json (board size read back from the shipped geometry + the county's own official site from the Iowa State Association of Counties' member directory) supplies that link; Jones County carries no row in either file — it is entirely absent from the state's own aggregate (measured by name and by FIPS), a recorded gap rather than a guess. ia-county-board-chairs.json then marks WHICH supervisor chairs the board, in 43 of 99 counties as of 2026-09-12, from each county's own board page and — for five of the largest, whose pages never use the word — from the county's own board minutes: no statewide publisher records it — the association directory that supplies the members carries no chair field, and the auditors' association publishes auditors, who are not board members — and the chair is chosen by the board's own January vote, so it rides a weekly re-scrape rather than a one-time answer. The card joins it BY NAME, so a chair who leaves the board stops rendering rather than sliding onto a successor.",
         "applies": "Iowa — 98 of 99 counties (Jones County is a recorded gap)."
       }
     },
     {
-      "id": "school-district-unified", "label": "School District (Unified)", "group": "schools", "area_rank": 8,
+      "id": "school-district-unified",
+      "label": "School District (Unified)",
+      "group": "schools",
+      "area_rank": 8,
       "rank_note": "324 unified school districts, statewide — the only school-district tiling Iowa runs (TIGER's elementary/secondary layers measure zero)",
       "source": {
         "answers": "The unified school district covering the point.",
         "boundary": [
-          { "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), pre-built for the state and shipped with the app; 325 features, one dissolved into a neighbor to reconcile against the state's own current count (see the Dept. of Education witness below)", "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0" },
-          { "label": "Iowa Dept. of Education — CurrentIowaSchoolDistricts (324 districts; Orient-Macksburg dissolved into Nodaway Valley for the 2026-2027 school year, ahead of TIGERweb's federal vintage), used only as a name-set witness the builder checks itself against, never as the geometry source", "url": "https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/CurrentIowaSchoolDistricts/FeatureServer/0" }
+          {
+            "label": "U.S. Census TIGERweb — School, layer 0 (unified school districts), pre-built for the state and shipped with the app; 325 features, one dissolved into a neighbor to reconcile against the state's own current count (see the Dept. of Education witness below)",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0"
+          },
+          {
+            "label": "Iowa Dept. of Education — CurrentIowaSchoolDistricts (324 districts; Orient-Macksburg dissolved into Nodaway Valley for the 2026-2027 school year, ahead of TIGERweb's federal vintage), used only as a name-set witness the builder checks itself against, never as the geometry source",
+            "url": "https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/CurrentIowaSchoolDistricts/FeatureServer/0"
+          }
         ],
         "applies": "Iowa — statewide, all 324 current districts."
       }
@@ -146,19 +252,28 @@
       "source": {
         "answers": "The school board director district covering the point — or, where the district elects its whole board at large, that fact.",
         "boundary": [
-          { "label": "Iowa Legislature ArcGIS organization — IowaSchoolDirectorDistricts (728 published features across 326 school districts; licence CC0, carried on the ITEM 5d6e55f885c54dd282eb17daaca20740 and NOT on the service, whose licenseInfo is null)", "url": "https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/IowaSchoolDirectorDistricts/FeatureServer/0" }
+          {
+            "label": "Iowa Legislature ArcGIS organization — IowaSchoolDirectorDistricts (728 published features across 326 school districts; licence CC0, carried on the ITEM 5d6e55f885c54dd282eb17daaca20740 and NOT on the service, whose licenseInfo is null)",
+            "url": "https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/IowaSchoolDirectorDistricts/FeatureServer/0"
+          }
         ],
         "people": "None. No statewide roster of Iowa school board members exists to join: the state collects them through the login-gated Iowa Education Portal, and the Iowa Association of School Boards' directory is member-gated. The card names the district and says so rather than naming anybody.",
         "applies": "Iowa — all 324 shipped school districts. 193 elect their board AT LARGE and carry one whole-district feature labelled as such by the publisher; the rest are divided into numbered director districts."
       }
     },
     {
-      "id": "community-college", "label": "Community College", "group": "schools", "area_rank": 10,
+      "id": "community-college",
+      "label": "Community College",
+      "group": "schools",
+      "area_rank": 10,
       "rank_note": "15 merged areas, shipped as published (no dissolve) — larger on average than a school district, ranked beside it",
       "source": {
         "answers": "The community college merged area covering the point, and its director-district count.",
         "boundary": [
-          { "label": "Iowa Legislature's own ArcGIS organization — CC_2026update layer (edited 2026-07-02, the current vintage: it fixes a confirmed coding error the older CommColleges2020 layer carries for Southeastern Community College), pre-built by ia/scripts/build_ia_community_colleges.py, witnessed against a second LSA layer on name set, 2020 census population (sums to Iowa's exact 3,190,369), and director-district count (sums to 124)", "url": "https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/CC_2026update/FeatureServer/0" }
+          {
+            "label": "Iowa Legislature's own ArcGIS organization — CC_2026update layer (edited 2026-07-02, the current vintage: it fixes a confirmed coding error the older CommColleges2020 layer carries for Southeastern Community College), pre-built by ia/scripts/build_ia_community_colleges.py, witnessed against a second LSA layer on name set, 2020 census population (sums to Iowa's exact 3,190,369), and director-district count (sums to 124)",
+            "url": "https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/CC_2026update/FeatureServer/0"
+          }
         ],
         "people": "Identity-only: the board is genuinely ELECTED (Iowa Code 260C.11 — one trustee per director district, elected by that district's own electors), but no single statewide roster names all 124 trustees — the state trustees' association's own page publishes only 15 rows (one seat per college), and each college names its own trustees on its own site instead. The sub-district geometry a real roster would need is itself short one polygon (Des Moines Area's District 2), so a districted card is deferred rather than built on a source with a known hole.",
         "applies": "Iowa — statewide, all 15 merged areas."
@@ -173,231 +288,729 @@
       "source": {
         "answers": "The community college director district covering the point — the sub-district its board of trustees is elected from.",
         "boundary": [
-          { "label": "Iowa Dept. of Education, Division of Community Colleges — CC_DirectorDistricts_FINAL, effective 2023-08-01, 123 features across 15 colleges. Its item (b89cf40cef40497e80ae8eb0a6e6d22f) states an EMPTY licence — terms UNSTATED, which is not the same as permissive, and NOT the CC0 the school-director layer's item carries", "url": "https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/CC_DD2023/FeatureServer/0" }
+          {
+            "label": "Iowa Dept. of Education, Division of Community Colleges — CC_DirectorDistricts_FINAL, effective 2023-08-01, 123 features across 15 colleges. Its item (b89cf40cef40497e80ae8eb0a6e6d22f) states an EMPTY licence — terms UNSTATED, which is not the same as permissive, and NOT the CC0 the school-director layer's item carries",
+            "url": "https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/CC_DD2023/FeatureServer/0"
+          }
         ],
         "people": "None. Trustees are elected per director district under Iowa Code 260C.11, but there is no statewide roster and each of the 15 colleges publishes its own board its own way — 6 of 15 name a numbered district on a discoverable page, one is captcha-fronted and one refuses this client. Measured per college in ia/WATCH.md rather than half-joined.",
         "applies": "Iowa — all 15 merged areas, tiled completely. 123 polygons cover a parent layer that seats 124 directors, and the whole difference is Des Moines Area: this publisher draws it as EIGHT districts numbered 1 and 3-9, balancing them against its own IDEAL of the merged area over eight. It is not a hole — the uncovered share of that college is 0.11%, lower than most of the fifteen. The two publishers disagree about the COUNT, not the ground, and this app resolves neither."
       }
     },
     {
-      "id": "county-subdivision", "label": "County Subdivision", "group": "geography", "area_rank": 12,
+      "id": "county-subdivision",
+      "label": "County Subdivision",
+      "group": "geography",
+      "area_rank": 12,
       "rank_note": "1,663 records tiling the state, live from TIGERweb (no data/app file) — 1,600 civil townships, 62 incorporated cities that double as their own subdivision record, and one federal reservoir carried as unorganized territory",
       "source": {
         "answers": "The civil township, or incorporated-city subdivision record, covering the point — and its type.",
         "boundary": [
-          { "label": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, queried live at runtime (no builder script, no committed data/app file)", "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1" }
+          {
+            "label": "U.S. Census TIGERweb — Places / county subdivisions, layer 1, queried live at runtime (no builder script, no committed data/app file)",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1"
+          }
         ],
         "people": "Iowa's civil townships are governed by elected trustees, a clerk and an assessor (Iowa Code ch. 359, ASSERTED) — no statewide roster of township officers was found in the research pass, so the card states that plainly rather than guessing. The 62 incorporated-city subdivision records and the one unorganized-territory record are Census Bureau bookkeeping constructs, not separate governments, so no roster claim applies to them at all.",
         "applies": "Iowa — statewide, all 1,663 records."
       }
     },
     {
-      "id": "municipality", "label": "City", "group": "geography", "area_rank": 13,
+      "id": "municipality",
+      "label": "City",
+      "group": "geography",
+      "area_rank": 13,
       "rank_note": "939 incorporated cities, live from TIGERweb (no data/app file) — small dense pockets within the county-subdivision fabric, so smaller on average than a civil township despite fewer records",
       "source": {
         "answers": "The incorporated city covering the point, if any.",
         "boundary": [
-          { "label": "U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file)", "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" }
+          {
+            "label": "U.S. Census TIGERweb — Places / incorporated places, layer 4, queried live at runtime (no builder script, no committed data/app file)",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
+          }
         ],
         "people": "NO OFFICEHOLDER, AND THE CARD SAYS SO — no statewide source names Iowa's mayors, council members or clerks (measured across four routes, 2026-09-03; the open gap record is ia-municipal-officeholders). What the card DOES carry is the city OFFICE's own phone and website for all 939 cities, from the Iowa League of Cities' own city table — 927 phones, 532 websites, 2 office mailboxes, 11 cities with none of the three. THAT SOURCE WAS ON FILE HERE AS \"a membership directory with no public officials export\" and, elsewhere, as membership-gated: it is not gated, and the old wording was right about the officeholders and wrong about the directory. Per-city rosters of PEOPLE remain city-by-city work; Des Moines is the one city whose own published council districts name them.",
         "applies": "Iowa — statewide, all 939 incorporated cities."
       }
     },
     {
-      "id": "city-ward", "label": "City Council District", "group": "political", "area_rank": 14,
+      "id": "city-ward",
+      "label": "City Council District",
+      "group": "political",
+      "area_rank": 14,
       "rank_note": "The instance's CITY tier: 14 subdivisions across three cities — Des Moines's 4 wards averaging 22.7 sq mi inside one 90.66 sq mi city, Waterloo's 5 wards averaging 12.6 sq mi inside one 62.98 sq mi city, Cedar Rapids's 5 districts averaging 15.2 sq mi inside one 75.54 sq mi city — so strictly smaller than the City that contains them and larger than a precinct",
       "source": {
         "answers": "Which city council ward or district covers the point, in the Iowa cities whose boundaries are published — Des Moines, Waterloo and Cedar Rapids — the council member it elects, and the seats no ward or district carries because the whole city elects them. The toggle says DISTRICT because that is the concept's generic word: the first two cities elect by ward and Cedar Rapids by district, and each card names the unit as its own city does.",
         "boundary": [
-          { "label": "City of Des Moines — its own Wards feature service, pre-built and shipped with the app (4 polygons, item 040390033d514f19b7b62c8a23f30c0d). Used under the city's own Terms and Conditions of Use for City of Des Moines Data, whose Source Data clause permits applications using portal data on condition that they carry the city's disclaimer — so the item's \"All rights reserved\" licenseInfo is the text OF that required notice, not a refusal of use. The notice, required verbatim: © Copyright City of Des Moines, Iowa. All rights reserved. There is no guarantee or warranty concerning the accuracy of the data and the City assumes no liability for its accuracy. The data is subject to change as modifications and updates are completed. It is understood that the information contained in the site is being used at one's own risk.", "url": "https://www.arcgis.com/home/item.html?id=040390033d514f19b7b62c8a23f30c0d" },
-          { "label": "City of Des Moines — Terms and Conditions of Use for City of Des Moines Data: the Source Data clause above, and a Right to Discontinue Feeds clause that is why ia/WATCH.md watches this service rather than assuming it persists", "url": "https://data.dsm.city/pages/terms" },
-          { "label": "City of Des Moines — its own City Boundary layer, read at BUILD TIME only, to prove the four wards tile the city: erasing them from it leaves 0.0070% of its 90.66 sq mi uncovered in 753 perimeter fragments (largest 3,482 m²), which is two outlines digitised apart rather than a hole. The one real artifact is recorded rather than smoothed — wards 1 and 2 overlap along 2.6 km of their shared edge by a ribbon averaging 14 m wide, 9.3 acres in all, Polsby-Popper compactness 0.0169.", "url": "https://www.arcgis.com/home/item.html?id=1dab5de2d13244e8a3d48ed25342d02f" },
-          { "label": "City of Waterloo — its own Wards feature service, pre-built and shipped with the app (5 polygons, services1.arcgis.com/QOAXA4I2iTKKdBuy). Queried unauthenticated 2026-09-04: capabilities Query,Extract, and BOTH serviceDescription AND copyrightText EMPTY. That emptiness is recorded rather than read as permission or as refusal — it is the plain difference from Des Moines, whose terms REQUIRE a verbatim disclaimer, and it is why Waterloo's card carries no data notice.", "url": "https://services1.arcgis.com/QOAXA4I2iTKKdBuy/ArcGIS/rest/services/Wards_view/FeatureServer/0" },
-          { "label": "City of Waterloo — its own City Limits layer, read at BUILD TIME only, to prove the five wards tile the city: erasing them leaves 0.0216% of its 62.98 sq mi uncovered in 156 fragments, largest 7,909 m². That largest fragment is BIGGER than Des Moines's 3,482 m² and is not a worse result: its bounding box is 36 m by 3,156 m at Polsby-Popper 0.0025, a ribbon three kilometres long and a lane wide. NOT ONE of the 156 fragments scores above 0.30 (median 0.0016), so the builder gates on SHAPE as well as size — a genuine hole is one COMPACT part, and an area-only ceiling copied across from Des Moines would eventually admit one.", "url": "https://services1.arcgis.com/QOAXA4I2iTKKdBuy/ArcGIS/rest/services/Waterloo_City_Limits_view/FeatureServer/0" },
-          { "label": "Linn County — its own ElectionsCityCouncilDistrict service, pre-built and shipped with the app. NOT the city's layer: it is the COUNTY's and it holds NINE polygons for the two Linn cities that elect by district, Cedar Rapids's five and Marion's four, separated only by POLITICAL_TWP — a bare code ('27' and '21') with no name field, no domain and no description anywhere in the service. Queried unauthenticated 2026-09-04: copyrightText and serviceDescription both EMPTY, so no notice ships. A BUILD KEYED ON AN OPAQUE CODE MUST PROVE THE CODE: nothing published says 27 is Cedar Rapids, and a single downtown point test would still look right if the county swapped the two codes.", "url": "https://services.arcgis.com/i14SLLmXo7Hn9vNc/ArcGIS/rest/services/ElectionsCityCouncilDistrict/FeatureServer/0" },
-          { "label": "Linn County — \"Cedar Rapids Council Districts & Marion Ward Maps\", the county's own election-services page, publishing five Cedar Rapids district PDFs beside a Marion wards map. It is what the CITY of Cedar Rapids' own \"Find Your District\" page sends readers to, which is the city naming the county as the authority for its own district lines — the provenance link this layer rides in place of an in-band roster.", "url": "https://www.linncountyiowa.gov/1350/Cedar-Rapids-Council-Districts-Marion-Wa" },
-          { "label": "TIGERweb incorporated places, read at BUILD TIME only, to prove the five districts tile Cedar Rapids AND that POLITICAL_TWP=27 is the city it claims. Linn publishes no city-limits polygon at all (its RealEstateBoundary is a cadastral LINE layer), so this is a CROSS-PUBLISHER comparison where Des Moines's and Waterloo's are same-publisher — which is why every ceiling is looser: residual 0.1338% of 75.54 sq mi in 366 fragments (largest 34,190 m²) against Waterloo's 0.0216%. None of that difference is a worse boundary; it is two organisations digitising one city in different years. The compactness floor is raised from 200 m² to 2,000 m² for the same reason — the residual's two most compact fragments are 264 m² at Polsby-Popper 0.617 and 172 m² at 0.461, corner slivers where two outlines disagree, and 2,000 m² is the scale at which a compact fragment could hold somebody. ZERO fragments are both above that floor and above 0.30. THE IDENTITY IS RE-PROVEN EVERY RUN IN BOTH DIRECTIONS: 27 must tile Cedar Rapids (area ratio 1.00323) and 21 must NOT (it leaves 99.996% of the city uncovered). The second is the gate that fires if the county ever reassigns the codes.", "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4" }
+          {
+            "label": "City of Des Moines — its own Wards feature service, pre-built and shipped with the app (4 polygons, item 040390033d514f19b7b62c8a23f30c0d). Used under the city's own Terms and Conditions of Use for City of Des Moines Data, whose Source Data clause permits applications using portal data on condition that they carry the city's disclaimer — so the item's \"All rights reserved\" licenseInfo is the text OF that required notice, not a refusal of use. The notice, required verbatim: © Copyright City of Des Moines, Iowa. All rights reserved. There is no guarantee or warranty concerning the accuracy of the data and the City assumes no liability for its accuracy. The data is subject to change as modifications and updates are completed. It is understood that the information contained in the site is being used at one's own risk.",
+            "url": "https://www.arcgis.com/home/item.html?id=040390033d514f19b7b62c8a23f30c0d"
+          },
+          {
+            "label": "City of Des Moines — Terms and Conditions of Use for City of Des Moines Data: the Source Data clause above, and a Right to Discontinue Feeds clause that is why ia/WATCH.md watches this service rather than assuming it persists",
+            "url": "https://data.dsm.city/pages/terms"
+          },
+          {
+            "label": "City of Des Moines — its own City Boundary layer, read at BUILD TIME only, to prove the four wards tile the city: erasing them from it leaves 0.0070% of its 90.66 sq mi uncovered in 753 perimeter fragments (largest 3,482 m²), which is two outlines digitised apart rather than a hole. The one real artifact is recorded rather than smoothed — wards 1 and 2 overlap along 2.6 km of their shared edge by a ribbon averaging 14 m wide, 9.3 acres in all, Polsby-Popper compactness 0.0169.",
+            "url": "https://www.arcgis.com/home/item.html?id=1dab5de2d13244e8a3d48ed25342d02f"
+          },
+          {
+            "label": "City of Waterloo — its own Wards feature service, pre-built and shipped with the app (5 polygons, services1.arcgis.com/QOAXA4I2iTKKdBuy). Queried unauthenticated 2026-09-04: capabilities Query,Extract, and BOTH serviceDescription AND copyrightText EMPTY. That emptiness is recorded rather than read as permission or as refusal — it is the plain difference from Des Moines, whose terms REQUIRE a verbatim disclaimer, and it is why Waterloo's card carries no data notice.",
+            "url": "https://services1.arcgis.com/QOAXA4I2iTKKdBuy/ArcGIS/rest/services/Wards_view/FeatureServer/0"
+          },
+          {
+            "label": "City of Waterloo — its own City Limits layer, read at BUILD TIME only, to prove the five wards tile the city: erasing them leaves 0.0216% of its 62.98 sq mi uncovered in 156 fragments, largest 7,909 m². That largest fragment is BIGGER than Des Moines's 3,482 m² and is not a worse result: its bounding box is 36 m by 3,156 m at Polsby-Popper 0.0025, a ribbon three kilometres long and a lane wide. NOT ONE of the 156 fragments scores above 0.30 (median 0.0016), so the builder gates on SHAPE as well as size — a genuine hole is one COMPACT part, and an area-only ceiling copied across from Des Moines would eventually admit one.",
+            "url": "https://services1.arcgis.com/QOAXA4I2iTKKdBuy/ArcGIS/rest/services/Waterloo_City_Limits_view/FeatureServer/0"
+          },
+          {
+            "label": "Linn County — its own ElectionsCityCouncilDistrict service, pre-built and shipped with the app. NOT the city's layer: it is the COUNTY's and it holds NINE polygons for the two Linn cities that elect by district, Cedar Rapids's five and Marion's four, separated only by POLITICAL_TWP — a bare code ('27' and '21') with no name field, no domain and no description anywhere in the service. Queried unauthenticated 2026-09-04: copyrightText and serviceDescription both EMPTY, so no notice ships. A BUILD KEYED ON AN OPAQUE CODE MUST PROVE THE CODE: nothing published says 27 is Cedar Rapids, and a single downtown point test would still look right if the county swapped the two codes.",
+            "url": "https://services.arcgis.com/i14SLLmXo7Hn9vNc/ArcGIS/rest/services/ElectionsCityCouncilDistrict/FeatureServer/0"
+          },
+          {
+            "label": "Linn County — \"Cedar Rapids Council Districts & Marion Ward Maps\", the county's own election-services page, publishing five Cedar Rapids district PDFs beside a Marion wards map. It is what the CITY of Cedar Rapids' own \"Find Your District\" page sends readers to, which is the city naming the county as the authority for its own district lines — the provenance link this layer rides in place of an in-band roster.",
+            "url": "https://www.linncountyiowa.gov/1350/Cedar-Rapids-Council-Districts-Marion-Wa"
+          },
+          {
+            "label": "TIGERweb incorporated places, read at BUILD TIME only, to prove the five districts tile Cedar Rapids AND that POLITICAL_TWP=27 is the city it claims. Linn publishes no city-limits polygon at all (its RealEstateBoundary is a cadastral LINE layer), so this is a CROSS-PUBLISHER comparison where Des Moines's and Waterloo's are same-publisher — which is why every ceiling is looser: residual 0.1338% of 75.54 sq mi in 366 fragments (largest 34,190 m²) against Waterloo's 0.0216%. None of that difference is a worse boundary; it is two organisations digitising one city in different years. The compactness floor is raised from 200 m² to 2,000 m² for the same reason — the residual's two most compact fragments are 264 m² at Polsby-Popper 0.617 and 172 m² at 0.461, corner slivers where two outlines disagree, and 2,000 m² is the scale at which a compact fragment could hold somebody. ZERO fragments are both above that floor and above 0.30. THE IDENTITY IS RE-PROVEN EVERY RUN IN BOTH DIRECTIONS: 27 must tile Cedar Rapids (area ratio 1.00323) and 21 must NOT (it leaves 99.996% of the city uncovered). The second is the gate that fires if the county ever reassigns the codes.",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4"
+          }
         ],
         "people": "All seven seats Des Moines elects, from the city's own council page (dsm-council-members.json, weekly CI): the four ward members keyed to their wards, and the mayor plus both at-large members in a citywide block the card renders under its own heading — Iowa Code §372.4(1)(b) seats a mayor, two at-large members and one member from each of four wards, so a ward layer alone would answer four sevenths of the question and look complete doing it (§372.4(2): the mayor is not a member of the council, and is badged Mayor rather than folded into a council list). Name, phone, e-mail, election date and term expiry ship for all seven. THE BOUNDARY'S OWN IN-BAND ROSTER IS NOT READ: the Wards service carries a member name and e-mail on each polygon and they are correct today, but a roster attached to a boundary is refreshed when the boundary is — ward 2's feature still carried its 2024-02-16 edit while wards 1, 3 and 4 were edited across 2025-12-29..31 for the November 2025 cycle — and it has no phone field at all. It is used ONCE, at build time, as a WITNESS: the builder refuses to write a roster whose four ward members disagree with the polygons' own names and e-mails. The city publishes seven DISTINCT phone numbers, so the fleet's switchboard test is re-run every build and correctly does not fire. WATERLOO'S SEVEN COUNCIL SEATS come from the city's own council page the same way (waterloo-council-members.json, weekly CI): five ward members keyed to their wards, both at-large members in the citywide block, each with a phone, an e-mail and a term-expiry date. ITS MAYOR IS DELIBERATELY ABSENT — he is elected citywide, and the at-large rule puts a citywide officer on the unit's identity card rather than a district card; the card names him in prose so the council does not read as the whole of the city's elected government. Des Moines carries its mayor in citywide for historical reasons and that is left alone. THE BOUNDARY'S OWN IN-BAND ROSTER IS NOT READ HERE EITHER: the Wards service carries Ward_Councilperson and both at-large columns and they are correct today (its dataLastEditDate was one day old when measured), but it has no phone, no e-mail and no term, and a roster attached to a boundary is refreshed when the boundary is. It is used ONCE, at build time, as a WITNESS: all five wards and both at-large members must agree, matched on first+last token because the page prints \"Hector A. Salamanca-Arroyo\" where the polygon carries \"Hector Salamanca-Arroyo\" — and that match is PRINTED every run so a normalisation cannot hide a real difference. The council page also repeats every member in a bio-link anchor, TWO of which disagree with the member's own line (\"Steve Simons\" for Steve Simon), so the scraper keys on the term-expiry line and keeps the anchors as its control. CEDAR RAPIDS SHIPS EIGHT OF ITS NINE SEATS (cedar-rapids-council-members.json, weekly CI): five district members keyed to their districts and three at-large members in the citywide block, each with a phone, an e-mail and a term-expiry year, from the city's own seven seat pages. ITS MAYOR IS SCRAPED AND DELIBERATELY NOT SHIPPED — the at-large rule again — and scraping her is what makes that a decision the pipeline can demonstrate rather than a gap it cannot see; the scraper demands all nine seats, so the day her page reshapes it fails instead of quietly shipping eight. THERE IS NO IN-BAND ROSTER TO WITNESS AGAINST AND NONE IS FAKED: Linn's layer carries POLITICAL_TWP, CITYCOUNCIL and Updated, and no names at all. What is witnessed is the NUMBERING, against the shipped boundary — the five districts the roster names must be exactly the five the shipped file draws — which catches a district drawn with no member and a member keyed to no district, and will NOT catch a stale name. That is weaker than Des Moines's and Waterloo's witnesses and is recorded as weaker. Two traps are gated rather than described: 319-286-5763 is the City Clerk's number and sits in the furniture of ALL SEVEN pages, so contact is read only from inside each member's own <p> and the builder refuses if that number ever appears inside a member block; and the council seats TWO OLSONS (Tyler at-large, Scott in District 4), so surname is not a key and a repeated FULL name fails the scrape. One of the eight addresses is off the city's domain — the city publishes scott@scotteolson.com, his own firm — and it ships, witnessed by name under the county officers' address test applied unchanged, because consulting the domain errs in both directions.",
         "applies": "The City of Des Moines, the City of Waterloo and the City of Cedar Rapids only — each city's own wards or districts are its entry's coverage test, all three measured to tile their city (above). Iowa's other 936 cities elect councils this instance does not yet name by district; the City card answers identity for them, and names officials in five of them."
       }
     },
     {
-      "id": "zip-code", "label": "ZIP Code", "group": "geography", "area_rank": 15,
+      "id": "zip-code",
+      "label": "ZIP Code",
+      "group": "geography",
+      "area_rank": 15,
       "rank_note": "Census ZCTAs by Iowa envelope (no data/app file) — 1,443 features measured in-envelope, smaller on average than an incorporated city",
       "source": {
         "answers": "The ZIP Code Tabulation Area (ZCTA) covering the point.",
         "boundary": [
-          { "label": "U.S. Census TIGERweb — PUMA/TAD/TAZ/UGA/ZCTA, layer 11, queried live by an Iowa bounding envelope (ZCTAs cross state lines, so there is no STATE field to filter on)", "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11" }
+          {
+            "label": "U.S. Census TIGERweb — PUMA/TAD/TAZ/UGA/ZCTA, layer 11, queried live by an Iowa bounding envelope (ZCTAs cross state lines, so there is no STATE field to filter on)",
+            "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11"
+          }
         ],
         "applies": "Iowa — the state's bounding envelope; a border ZCTA that straddles the line is included, which is correct for a reader near it."
       }
     },
     {
-      "id": "precinct", "label": "Precinct", "group": "political", "area_rank": 16,
+      "id": "precinct",
+      "label": "Precinct",
+      "group": "political",
+      "area_rank": 16,
       "rank_note": "1,660 election precincts, pre-built (mapshaper-simplified from the Legislature's own ArcGIS layer) — identity-only, no roster; ranked with the other fine-grained political boundaries",
       "source": {
         "answers": "The election precinct covering the point, and its county.",
         "boundary": [
-          { "label": "Iowa Legislature's own ArcGIS organization — Iowa_Precincts layer, pre-built by ia/scripts/build_ia_precincts.py (Visvalingam-simplified, 2,000-point agreement gate)", "url": "https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/Iowa_Precincts/FeatureServer/0" }
+          {
+            "label": "Iowa Legislature's own ArcGIS organization — Iowa_Precincts layer, pre-built by ia/scripts/build_ia_precincts.py (Visvalingam-simplified, 2,000-point agreement gate)",
+            "url": "https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/Iowa_Precincts/FeatureServer/0"
+          }
         ],
         "applies": "Iowa — statewide, all 1,660 precincts across 99 counties. Polling-place fields (PollingPlace/PollingPlaceAddr/PPID) are deliberately never fetched — a precinct's polling place changes far more often than its boundary and this layer makes no claim about it."
       }
     },
     {
-      "id": "police-station", "label": "Police Station", "group": "safety", "area_rank": 17,
+      "id": "police-station",
+      "label": "Police Station",
+      "group": "safety",
+      "area_rank": 17,
       "rank_note": "Nearest-3 point layer (449 stations in the state envelope) — not a containment boundary; ranked with the amenity points",
       "source": {
         "answers": "The three nearest police stations, straight-line distance.",
         "boundary": [
-          { "label": "USGS National Map — structures layer 53 (Law Enforcement), queried live by an Iowa bounding envelope", "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/53" }
+          {
+            "label": "USGS National Map — structures layer 53 (Law Enforcement), queried live by an Iowa bounding envelope",
+            "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/53"
+          }
         ],
         "applies": "Iowa — the state's bounding envelope; nearest-3 is a proximity fact, not a jurisdictional claim."
       }
     },
     {
-      "id": "fire-station", "label": "Fire Station", "group": "safety", "area_rank": 18,
+      "id": "fire-station",
+      "label": "Fire Station",
+      "group": "safety",
+      "area_rank": 18,
       "rank_note": "Nearest-3 point layer (1,262 stations in the state envelope) — denser than the police set, so ranked after it",
       "source": {
         "answers": "The three nearest fire stations, straight-line distance.",
         "boundary": [
-          { "label": "USGS National Map — structures layer 51 (Fire/EMS/Rescue), queried live by an Iowa bounding envelope", "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/51" }
+          {
+            "label": "USGS National Map — structures layer 51 (Fire/EMS/Rescue), queried live by an Iowa bounding envelope",
+            "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/51"
+          }
         ],
         "applies": "Iowa — the state's bounding envelope; nearest-3 is a proximity fact, not a jurisdictional claim."
       }
     },
     {
-      "id": "school-site", "label": "School Location", "group": "schools", "area_rank": 19,
+      "id": "school-site",
+      "label": "School Location",
+      "group": "schools",
+      "area_rank": 19,
       "rank_note": "Nearest-3 point layer (1,321 public school buildings, pre-built) — not a containment boundary; ranked with the amenity points",
       "source": {
         "answers": "The three nearest public school buildings, straight-line distance.",
         "boundary": [
-          { "label": "Iowa Legislature's own ArcGIS organization — IowaSchoolBldgs layer, pre-built by ia/scripts/build_ia_school_sites.py", "url": "https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/IowaSchoolBldgs/FeatureServer/0" }
+          {
+            "label": "Iowa Legislature's own ArcGIS organization — IowaSchoolBldgs layer, pre-built by ia/scripts/build_ia_school_sites.py",
+            "url": "https://services.arcgis.com/vPD5PVLI6sfkZ5E4/arcgis/rest/services/IowaSchoolBldgs/FeatureServer/0"
+          }
         ],
         "applies": "Iowa — statewide; nearest-3 is a proximity fact, not an attendance-zone or enrollment claim."
       }
     },
     {
-      "id": "post-office", "label": "Post Office", "group": "geography", "area_rank": 20,
+      "id": "post-office",
+      "label": "Post Office",
+      "group": "geography",
+      "area_rank": 20,
       "rank_note": "Nearest-3 point layer, straight-line distance — not a containment boundary, ranked last",
       "source": {
         "answers": "The three nearest post offices, straight-line distance.",
         "boundary": [
-          { "label": "USGS National Map — structures layer 38, queried live by an Iowa bounding envelope (deliberately catches border-state post offices near the line)", "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38" }
+          {
+            "label": "USGS National Map — structures layer 38, queried live by an Iowa bounding envelope (deliberately catches border-state post offices near the line)",
+            "url": "https://carto.nationalmap.gov/arcgis/rest/services/structures/MapServer/38"
+          }
         ],
         "applies": "Iowa — the state's bounding envelope; nearest-3 is a proximity fact, not a jurisdictional claim."
       }
     }
   ],
   "min_register_layer": 14,
-  "anchor_point": { "lat": 42.0494, "lng": -92.9071, "note": "downtown Marshalltown, Marshall County" },
+  "anchor_point": {
+    "lat": 42.0494,
+    "lng": -92.9071,
+    "note": "downtown Marshalltown, Marshall County"
+  },
   "anchors": [
-    { "layer": "county", "expected": "Marshall County" },
-    { "layer": "us-house", "expected": "4" },
-    { "layer": "ia-senate", "expected": "26" },
-    { "layer": "ia-house", "expected": "52" },
-    { "layer": "county-supervisor", "expected": "At-large" },
-    { "layer": "school-district-unified", "expected": "Marshalltown Community School District" }
+    {
+      "layer": "county",
+      "expected": "Marshall County"
+    },
+    {
+      "layer": "us-house",
+      "expected": "4"
+    },
+    {
+      "layer": "ia-senate",
+      "expected": "26"
+    },
+    {
+      "layer": "ia-house",
+      "expected": "52"
+    },
+    {
+      "layer": "county-supervisor",
+      "expected": "At-large"
+    },
+    {
+      "layer": "school-district-unified",
+      "expected": "Marshalltown Community School District"
+    }
   ],
-  "negative_point": { "lat": 43.65, "lng": -93.37, "note": "inside Minnesota (near Albert Lea), north of the Iowa land border (~43.50) and inside permalink_gate's maxLat (43.70) so the point is still selectable" },
-  "coverage_key": { "outside": "Outside Iowa" },
+  "negative_point": {
+    "lat": 43.65,
+    "lng": -93.37,
+    "note": "inside Minnesota (near Albert Lea), north of the Iowa land border (~43.50) and inside permalink_gate's maxLat (43.70) so the point is still selectable"
+  },
+  "coverage_key": {
+    "outside": "Outside Iowa"
+  },
   "data_files": {
     "geometry": [
-      { "file": "metro-outline.json", "min_features": 1, "max_features": 1, "note": "The whole-Iowa-state outline for the coverage wash (loadMetroOutline), dissolved from all 99 counties' TIGERweb State_County layer-1 geometry by ia/scripts/build_metro_outline.py (METRO_COUNTY_FIPS = every county; DISPATCH_COUNTY_FIPS empty — no layer is county-keyed yet). Iowa is 2-band coverage — no second, wider region file is needed yet (the WI #523 precedent for when one would be)." },
-      { "file": "state-counties.json", "min_features": 99, "max_features": 99, "note": "Every county, pre-built from TIGERweb State_County layer 1." },
-      { "file": "congress-districts.json", "min_features": 4, "max_features": 4, "note": "U.S. House districts, pre-built from TIGERweb Legislative layer 0." },
-      { "file": "ia-senate-districts.json", "min_features": 50, "max_features": 50, "note": "Iowa Senate districts, pre-built by ia/scripts/build_legislative_boundaries.py (2,000-point agreement gate)." },
-      { "file": "ia-house-districts.json", "min_features": 100, "max_features": 100, "note": "Iowa House districts, pre-built by ia/scripts/build_legislative_boundaries.py (2,000-point agreement gate)." },
-      { "file": "ia-supervisor-districts.json", "min_features": 272, "max_features": 272, "note": "Every county supervisor district across 98 of 99 counties (Jones County absent — a recorded gap), built by ia/scripts/build_ia_supervisor_districts.py: the state's own aggregate for 95 counties, Black Hawk's own hosted GIS (5 real districts), Story's three adopted districts read off the county Auditor's own printed map and resolved to whole Census 2020 blocks by ia/scripts/build_story_supervisor_districts.py (gated on the Legislative Services Agency's published populations matching exactly, district by district), and Johnson still as one county-level TRANSITIONING feature (5,000-in-state-point agreement gate)." },
-      { "file": "johnson-county-outline.json", "min_features": 1, "max_features": 1, "dynamic_reference": true, "note": "Johnson County's own boundary, extracted from state-counties.json by ia/scripts/build_ia_county_outline.py — the Data-gaps panel's map highlight for gap johnson-county-supervisor-districts. Referenced dynamically (built from the gap's county slug at runtime), never by a literal in index.html." },
-      { "file": "jones-county-outline.json", "min_features": 1, "max_features": 1, "dynamic_reference": true, "note": "Jones County's own boundary, extracted from state-counties.json by ia/scripts/build_ia_county_outline.py — the Data-gaps panel's map highlight for gap jones-county-supervisor. Referenced dynamically (built from the gap's county slug at runtime), never by a literal in index.html." },
-      { "file": "ia-school-districts.json", "min_features": 324, "max_features": 324, "note": "324 unified school districts, built by ia/scripts/build_ia_school_districts.py: TIGERweb's 325 dissolved (Orient-Macksburg into Nodaway Valley) and witnessed by name against the Dept. of Education's own current layer (2,000-point agreement gate)." },
-      { "file": "ia-school-director-districts.json", "min_features": 716, "max_features": 716, "note": "716 school board director districts, built by ia/scripts/build_ia_school_director_districts.py from the Iowa Legislature's own ArcGIS org. 728 features are published; 10 are EXACT duplicates (Davis County and East Buchanan each publish every row twice) and 2 name districts stale in that layer (LU VERNE, ORIENT-MACKSBURG — the latter independently corroborating this repo's own dissolve into Nodaway Valley). At-large boards are READ from the publisher's own AT-LARGE label in DIST_NAME, never inferred from DISTRICT=0. Keyed <GEOID>-<DISTRICT> because UID is NOT unique — Webster City publishes districts 2 and 3 under one UID. 2,000-point agreement gate at 99.85%, 0 overlaps." },
-      { "file": "ia-cc-director-districts.json", "min_features": 123, "max_features": 123, "note": "123 community college director districts inside the 15 merged areas, built by ia/scripts/build_ia_cc_director_districts.py. Joined to the parent community-college layer on the NUMERIC key, never the name — the source writes \"North Iowa Area\" and \"Northwest\" where the app ships \"North Iowa\" and \"Northwest Iowa\" — with ONE asserted remap: this source numbers Southeastern 8 where the app ships 16, the correction build_ia_community_colleges.py already documents, and the builder FAILS if that key stops appearing rather than letting a retired remap mis-key something else. Every college publishes exactly the districts its board seats except Des Moines Area, drawn here as EIGHT districts numbered 1 and 3-9. That is a COUNT disagreement, not a coverage hole: sampling puts the share of each merged area covered by none of its own director districts at 0.00-0.64% across all fifteen, with Des Moines Area at 0.11% — lower than most — and the source's own IDEAL for it is the merged-area population over eight, so it balanced eight deliberately. 2,000-point agreement gate at 99.95%, 0 overlaps." },
-      { "file": "ia-school-sites.json", "min_features": 1321, "max_features": 1321, "note": "1,321 public school buildings, pre-built by ia/scripts/build_ia_school_sites.py from the Iowa Legislature's own ArcGIS org's IowaSchoolBldgs layer (paginated past its 1,000-record cap)." },
-      { "file": "ia-precincts.json", "min_features": 1660, "max_features": 1660, "note": "1,660 election precincts across all 99 counties, pre-built by ia/scripts/build_ia_precincts.py from the Iowa Legislature's own ArcGIS org's Iowa_Precincts layer (Visvalingam-simplified from ~18MB raw to under 3MB, 2,000-point agreement gate; polling-place fields never fetched)." },
-      { "file": "ia-judicial-districts.json", "min_features": 8, "max_features": 8, "note": "8 judicial election districts, whole-county unions dissolved from state-counties.json by ia/scripts/build_ia_judicial_district.py, per Iowa Code SS602.6107/602.6109 and double-witnessed at build time against the LSAFiscal organization's own published district polygons." },
-      { "file": "ia-community-colleges.json", "min_features": 15, "max_features": 15, "note": "15 community college merged areas, shipped as published (no dissolve) from the Iowa Legislature's own ArcGIS org by ia/scripts/build_ia_community_colleges.py, witnessed against a second LSA layer on name set, 2020 census population (3,190,369) and director-district count (124)." },
-      { "file": "dsm-wards.json", "min_features": 4, "max_features": 4, "note": "The City of Des Moines's four council wards, shipped as published (no dissolve) from the city's own Wards feature service by ia/scripts/build_dsm_wards.py. Gated twice: the wards must still tile the city's own City Boundary layer (0.0070% uncovered in 753 perimeter fragments, largest 3,482 m² — a hole is one large compact part, so the largest fragment is capped as well as the total), and simplification must add no overlap to the source's own 14 m sliver along the ward 1/2 edge. Carries verbatim the City of Des Moines disclaimer its terms of use require, which the card renders." },
-      { "file": "ia-aeas.json", "min_features": 9, "max_features": 9, "note": "Iowa's nine Area Education Agencies (Iowa Code ch. 273), built by ia/scripts/build_ia_aea.py as a DISSOLVE of the shipped school-district fabric by the Department of Education's own in-band AEA_NUM — not from the Department's published AEA polygon, which is stamped for the 2019-2020 school year. Three gates: the NCES join must stay 324/324 with no leftovers either way, the dissolve must not self-overlap, and every one of the 324 districts must still read as its own agency in the published FY20 polygon — the test that asks whether a district has CHANGED agency, which is the only way an AEA line moves." },
-      { "file": "waterloo-wards.json", "min_features": 5, "max_features": 5, "note": "The City of Waterloo's five council wards, shipped as published (no dissolve) from the city's own Wards feature service by ia/scripts/build_waterloo_wards.py. Gated three ways: the wards must still tile the city's own City Limits layer (0.0216% uncovered in 156 fragments), NO uncovered fragment may be COMPACT (Polsby-Popper above 0.30 — a long thin fragment is two outlines digitised apart, a compact one is a hole where the card would answer nothing), and simplification must add no overlap to the source's own zero. Carries no disclaimer: the city states no such condition, and the card's notice row renders only when the key is present." },
-      { "file": "cedar-rapids-wards.json", "min_features": 5, "max_features": 5, "note": "The City of Cedar Rapids' five council DISTRICTS (its own word; Des Moines and Waterloo say ward), shipped as published — no dissolve — by ia/scripts/build_cedar_rapids_wards.py from LINN COUNTY's ElectionsCityCouncilDistrict service. That service is a COUNTY layer holding two cities' districts keyed only by POLITICAL_TWP, an opaque code with no name anywhere in the service, so the build PROVES the code rather than trusting it: the five polygons under '27' must tile Cedar Rapids (area ratio 1.00323, 0.1338% uncovered in 366 fragments) AND the four under '21' — Marion's — must fail to, leaving 99.996% of the city uncovered. That cross-control is the only automated warning available if the county ever reassigns the codes, and without it a swap would put Marion's districts on Cedar Rapids readers' cards under Cedar Rapids labels. City limits come from TIGERweb because Linn publishes no city-limits polygon at all, so this is a cross-publisher tiling comparison and its ceilings are looser than the two same-publisher ones; the compactness floor is 2,000 m² rather than 200 m² for the same reason, with zero fragments above both it and Polsby-Popper 0.30. Carries no disclaimer: the service's copyrightText and serviceDescription are both empty and Linn's page states no condition." }
+      {
+        "file": "metro-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "note": "The whole-Iowa-state outline for the coverage wash (loadMetroOutline), dissolved from all 99 counties' TIGERweb State_County layer-1 geometry by ia/scripts/build_metro_outline.py (METRO_COUNTY_FIPS = every county; DISPATCH_COUNTY_FIPS empty — no layer is county-keyed yet). Iowa is 2-band coverage — no second, wider region file is needed yet (the WI #523 precedent for when one would be)."
+      },
+      {
+        "file": "state-counties.json",
+        "min_features": 99,
+        "max_features": 99,
+        "note": "Every county, pre-built from TIGERweb State_County layer 1."
+      },
+      {
+        "file": "congress-districts.json",
+        "min_features": 4,
+        "max_features": 4,
+        "note": "U.S. House districts, pre-built from TIGERweb Legislative layer 0."
+      },
+      {
+        "file": "ia-senate-districts.json",
+        "min_features": 50,
+        "max_features": 50,
+        "note": "Iowa Senate districts, pre-built by ia/scripts/build_legislative_boundaries.py (2,000-point agreement gate)."
+      },
+      {
+        "file": "ia-house-districts.json",
+        "min_features": 100,
+        "max_features": 100,
+        "note": "Iowa House districts, pre-built by ia/scripts/build_legislative_boundaries.py (2,000-point agreement gate)."
+      },
+      {
+        "file": "ia-supervisor-districts.json",
+        "min_features": 272,
+        "max_features": 272,
+        "note": "Every county supervisor district across 98 of 99 counties (Jones County absent — a recorded gap), built by ia/scripts/build_ia_supervisor_districts.py: the state's own aggregate for 95 counties, Black Hawk's own hosted GIS (5 real districts), Story's three adopted districts read off the county Auditor's own printed map and resolved to whole Census 2020 blocks by ia/scripts/build_story_supervisor_districts.py (gated on the Legislative Services Agency's published populations matching exactly, district by district), and Johnson still as one county-level TRANSITIONING feature (5,000-in-state-point agreement gate)."
+      },
+      {
+        "file": "johnson-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "dynamic_reference": true,
+        "note": "Johnson County's own boundary, extracted from state-counties.json by ia/scripts/build_ia_county_outline.py — the Data-gaps panel's map highlight for gap johnson-county-supervisor-districts. Referenced dynamically (built from the gap's county slug at runtime), never by a literal in index.html."
+      },
+      {
+        "file": "jones-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "dynamic_reference": true,
+        "note": "Jones County's own boundary, extracted from state-counties.json by ia/scripts/build_ia_county_outline.py — the Data-gaps panel's map highlight for gap jones-county-supervisor. Referenced dynamically (built from the gap's county slug at runtime), never by a literal in index.html."
+      },
+      {
+        "file": "ia-school-districts.json",
+        "min_features": 324,
+        "max_features": 324,
+        "note": "324 unified school districts, built by ia/scripts/build_ia_school_districts.py: TIGERweb's 325 dissolved (Orient-Macksburg into Nodaway Valley) and witnessed by name against the Dept. of Education's own current layer (2,000-point agreement gate)."
+      },
+      {
+        "file": "ia-school-director-districts.json",
+        "min_features": 716,
+        "max_features": 716,
+        "note": "716 school board director districts, built by ia/scripts/build_ia_school_director_districts.py from the Iowa Legislature's own ArcGIS org. 728 features are published; 10 are EXACT duplicates (Davis County and East Buchanan each publish every row twice) and 2 name districts stale in that layer (LU VERNE, ORIENT-MACKSBURG — the latter independently corroborating this repo's own dissolve into Nodaway Valley). At-large boards are READ from the publisher's own AT-LARGE label in DIST_NAME, never inferred from DISTRICT=0. Keyed <GEOID>-<DISTRICT> because UID is NOT unique — Webster City publishes districts 2 and 3 under one UID. 2,000-point agreement gate at 99.85%, 0 overlaps."
+      },
+      {
+        "file": "ia-cc-director-districts.json",
+        "min_features": 123,
+        "max_features": 123,
+        "note": "123 community college director districts inside the 15 merged areas, built by ia/scripts/build_ia_cc_director_districts.py. Joined to the parent community-college layer on the NUMERIC key, never the name — the source writes \"North Iowa Area\" and \"Northwest\" where the app ships \"North Iowa\" and \"Northwest Iowa\" — with ONE asserted remap: this source numbers Southeastern 8 where the app ships 16, the correction build_ia_community_colleges.py already documents, and the builder FAILS if that key stops appearing rather than letting a retired remap mis-key something else. Every college publishes exactly the districts its board seats except Des Moines Area, drawn here as EIGHT districts numbered 1 and 3-9. That is a COUNT disagreement, not a coverage hole: sampling puts the share of each merged area covered by none of its own director districts at 0.00-0.64% across all fifteen, with Des Moines Area at 0.11% — lower than most — and the source's own IDEAL for it is the merged-area population over eight, so it balanced eight deliberately. 2,000-point agreement gate at 99.95%, 0 overlaps."
+      },
+      {
+        "file": "ia-school-sites.json",
+        "min_features": 1321,
+        "max_features": 1321,
+        "note": "1,321 public school buildings, pre-built by ia/scripts/build_ia_school_sites.py from the Iowa Legislature's own ArcGIS org's IowaSchoolBldgs layer (paginated past its 1,000-record cap)."
+      },
+      {
+        "file": "ia-precincts.json",
+        "min_features": 1660,
+        "max_features": 1660,
+        "note": "1,660 election precincts across all 99 counties, pre-built by ia/scripts/build_ia_precincts.py from the Iowa Legislature's own ArcGIS org's Iowa_Precincts layer (Visvalingam-simplified from ~18MB raw to under 3MB, 2,000-point agreement gate; polling-place fields never fetched)."
+      },
+      {
+        "file": "ia-judicial-districts.json",
+        "min_features": 8,
+        "max_features": 8,
+        "note": "8 judicial election districts, whole-county unions dissolved from state-counties.json by ia/scripts/build_ia_judicial_district.py, per Iowa Code SS602.6107/602.6109 and double-witnessed at build time against the LSAFiscal organization's own published district polygons."
+      },
+      {
+        "file": "ia-community-colleges.json",
+        "min_features": 15,
+        "max_features": 15,
+        "note": "15 community college merged areas, shipped as published (no dissolve) from the Iowa Legislature's own ArcGIS org by ia/scripts/build_ia_community_colleges.py, witnessed against a second LSA layer on name set, 2020 census population (3,190,369) and director-district count (124)."
+      },
+      {
+        "file": "dsm-wards.json",
+        "min_features": 4,
+        "max_features": 4,
+        "note": "The City of Des Moines's four council wards, shipped as published (no dissolve) from the city's own Wards feature service by ia/scripts/build_dsm_wards.py. Gated twice: the wards must still tile the city's own City Boundary layer (0.0070% uncovered in 753 perimeter fragments, largest 3,482 m² — a hole is one large compact part, so the largest fragment is capped as well as the total), and simplification must add no overlap to the source's own 14 m sliver along the ward 1/2 edge. Carries verbatim the City of Des Moines disclaimer its terms of use require, which the card renders."
+      },
+      {
+        "file": "ia-aeas.json",
+        "min_features": 9,
+        "max_features": 9,
+        "note": "Iowa's nine Area Education Agencies (Iowa Code ch. 273), built by ia/scripts/build_ia_aea.py as a DISSOLVE of the shipped school-district fabric by the Department of Education's own in-band AEA_NUM — not from the Department's published AEA polygon, which is stamped for the 2019-2020 school year. Three gates: the NCES join must stay 324/324 with no leftovers either way, the dissolve must not self-overlap, and every one of the 324 districts must still read as its own agency in the published FY20 polygon — the test that asks whether a district has CHANGED agency, which is the only way an AEA line moves."
+      },
+      {
+        "file": "waterloo-wards.json",
+        "min_features": 5,
+        "max_features": 5,
+        "note": "The City of Waterloo's five council wards, shipped as published (no dissolve) from the city's own Wards feature service by ia/scripts/build_waterloo_wards.py. Gated three ways: the wards must still tile the city's own City Limits layer (0.0216% uncovered in 156 fragments), NO uncovered fragment may be COMPACT (Polsby-Popper above 0.30 — a long thin fragment is two outlines digitised apart, a compact one is a hole where the card would answer nothing), and simplification must add no overlap to the source's own zero. Carries no disclaimer: the city states no such condition, and the card's notice row renders only when the key is present."
+      },
+      {
+        "file": "cedar-rapids-wards.json",
+        "min_features": 5,
+        "max_features": 5,
+        "note": "The City of Cedar Rapids' five council DISTRICTS (its own word; Des Moines and Waterloo say ward), shipped as published — no dissolve — by ia/scripts/build_cedar_rapids_wards.py from LINN COUNTY's ElectionsCityCouncilDistrict service. That service is a COUNTY layer holding two cities' districts keyed only by POLITICAL_TWP, an opaque code with no name anywhere in the service, so the build PROVES the code rather than trusting it: the five polygons under '27' must tile Cedar Rapids (area ratio 1.00323, 0.1338% uncovered in 366 fragments) AND the four under '21' — Marion's — must fail to, leaving 99.996% of the city uncovered. That cross-control is the only automated warning available if the county ever reassigns the codes, and without it a swap would put Marion's districts on Cedar Rapids readers' cards under Cedar Rapids labels. City limits come from TIGERweb because Linn publishes no city-limits polygon at all, so this is a cross-publisher tiling comparison and its ceilings are looser than the two same-publisher ones; the compactness floor is 2,000 m² rather than 200 m² for the same reason, with zero fragments above both it and Polsby-Popper 0.30. Carries no disclaimer: the service's copyrightText and serviceDescription are both empty and Linn's page states no condition."
+      },
+      {
+        "file": "adair-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "dynamic_reference": true,
+        "note": "Adair County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Adair County which recorded gap affects them: the statewide directory gives it a board size Iowa law does not allow, so no supervisor is named there. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
+      },
+      {
+        "file": "floyd-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "dynamic_reference": true,
+        "note": "Floyd County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Floyd County which recorded gap affects them: the statewide directory gives it a board size Iowa law does not allow, so no supervisor is named there. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
+      },
+      {
+        "file": "humboldt-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "dynamic_reference": true,
+        "note": "Humboldt County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Humboldt County which recorded gap affects them: the statewide directory gives it a board size Iowa law does not allow, so no supervisor is named there. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
+      },
+      {
+        "file": "lucas-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "dynamic_reference": true,
+        "note": "Lucas County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Lucas County which recorded gap affects them: the statewide directory gives it a board size Iowa law does not allow, so no supervisor is named there. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
+      },
+      {
+        "file": "pottawattamie-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "dynamic_reference": true,
+        "note": "Pottawattamie County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Pottawattamie County which recorded gap affects them: the statewide directory gives it a board size Iowa law does not allow, so no supervisor is named there. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
+      },
+      {
+        "file": "tama-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "dynamic_reference": true,
+        "note": "Tama County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Tama County which recorded gap affects them: the statewide directory gives it a board size Iowa law does not allow, so no supervisor is named there. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
+      },
+      {
+        "file": "warren-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "dynamic_reference": true,
+        "note": "Warren County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Warren County which recorded gap affects them: the statewide directory and the state's district map disagree about its board size, so no supervisor is named there. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
+      },
+      {
+        "file": "wright-county-outline.json",
+        "min_features": 1,
+        "max_features": 1,
+        "dynamic_reference": true,
+        "note": "Wright County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Wright County which recorded gap affects them: the statewide directory and the state's district map disagree about its board size, so no supervisor is named there. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
+      }
     ],
     "rosters": [
-      { "file": "congress-roster.json", "min_keys": 4, "note": "U.S. House roster, refreshed weekly by update-ia-congress-roster.yml." },
-      { "file": "ia-senate-members.json", "min_keys": 45, "note": "Senate roster from Open States ia.csv + legis.iowa.gov enrichment, refreshed weekly by update-ia-legislature-roster.yml; floor tolerates transient vacancies (50 seats)." },
-      { "file": "ia-house-members.json", "min_keys": 93, "note": "House roster from Open States ia.csv + legis.iowa.gov enrichment, refreshed weekly by update-ia-legislature-roster.yml; floor tolerates transient vacancies (100 seats)." },
-      { "file": "ia-county-board-directory.json", "min_keys": 98, "note": "One row per county covered by ia-supervisor-districts.json: board size read back from the shipped geometry, plus the county's own official page (Iowa State Association of Counties' member directory) for the card's footer link. Built by ia/scripts/build_ia_county_board_directory.py; not a roster of people — Iowa publishes none statewide." },
-      { "file": "ia-county-auditors.json", "min_keys": 99, "note": "All 99 county auditors: name, party (98 of 99) and office address + phone from the Iowa State Association of County Auditors' own directory, plus an e-mail for all 99 from the Secretary of State's own auditors page (Cloudflare data-cfemail, decoded at scrape time). Where the two directories name different people the county's own site decides, pinned per county in the scraper — 3 measured, resolving 2-1 in the Secretary of State's favour. Built by ia/scripts/ia_county_auditor_scraper.py + build_ia_county_auditors.py, refreshed weekly by update-ia-county-auditor-roster.yml." },
-      { "file": "ia-county-officers.json", "min_keys": 99, "note": "The other five elected county offices (Iowa Code ch. 331) for all 99 counties: treasurer, recorder, sheriff, county attorney and the board of supervisors — the auditor ships in its own file. Recorder/sheriff/county attorney come from each office's own statewide directory (iowalandrecords.org; ISSDA's sheriff directory PDF; the ICAA roster PDF), the treasurer and the supervisors from ISAC's member portal, which is the only source that exists for those two. Gated hard: a board ships only when the portal's row count is a legal 3 or 5 (Iowa Code 331.201) AND equals the seat count read back from the shipped supervisor-district geometry — 7 counties fail and carry a stated reason instead. An office whose two publishers name different people ships no name at all. Built by ia/scripts/ia_county_officers_scraper.py + ia_county_officer_sources_scraper.py + build_ia_county_officers.py, refreshed weekly by update-ia-county-officers-roster.yml. TREASURER AND SHERIFF E-MAIL ADDRESSES COME FROM THE COUNTIES' OWN SITES (ia/scripts/ia_county_officer_email_scraper.py), because no statewide directory carries them — the ISAC portal has no e-mail column at all. An address ships only if the officeholder's own name is in its local part or its form is the office's mailbox; the builder re-checks a witnessed address against the name it actually ships. The second treasurer source, iowatreasurers.org, SERVES THE WRONG COUNTY on 11 of 99 ids with no error and no 404, so every page must independently identify as its county AND the address's domain must fit it." },
-      { "file": "ia-supervisor-members.json", "min_keys": 12, "note": "Which supervisor holds each county supervisor district, keyed by 3-digit county FIPS. PLAN 3 COUNTIES ONLY (Iowa Code 331.206): under plan 1 there are no districts and under plan 2 supervisors are elected countywide and merely reside in one, so only under plan 3 does naming a district's supervisor answer something the County card's list does not. No Iowa publisher attaches a district to a supervisor's name — four statewide routes are measured closed — so the district number is recovered from each county's own board page by PROXIMITY to names the shipped roster already carries, reading no markup at all. Gated: districts must be exactly 1..N with no repeats, the people placed must be exactly the people ia-county-officers.json names, and N must equal the shipped geometry's NUMDISTRICTS. A county failing any gate ships nothing and keeps its unkeyed County-card listing. Built by ia/scripts/ia_supervisor_district_scraper.py + build_ia_supervisor_roster.py, refreshed weekly by update-ia-supervisor-roster.yml." },
-      { "file": "ia-judicial-judges.json", "min_keys": 8, "note": "All 8 districts' benches (371 judges measured 2026-08-28), one entry per district keyed to the geometry's district number. From each district's own \"Judges and Magistrates\" page at iowacourts.gov (name + each judge's own role/title string, shipped verbatim — no phone/e-mail/address is published for any judge). Built by ia/scripts/ia_judicial_district_scraper.py + build_ia_judicial_district_roster.py, refreshed weekly by update-ia-judicial-district-roster.yml." },
-      { "file": "coverage-gaps.json", "min_keys": 0, "note": "The Data gaps panel's content; one recorded gap (Jones County, absent from the county-supervisor source layer)." },
-      { "file": "dsm-council-members.json", "min_keys": 3, "note": "All seven seats Des Moines elects — the four ward members keyed by ward plus a citywide block of the mayor and both at-large members — from the city's own council page, refreshed weekly by update-ia-dsm-council-roster.yml. The scrape is scoped by <h2> heading because the page's Appointed Staff and Department Directors sections use IDENTICAL card markup, and it refuses to write if a name appears under both; the four ward members are cross-witnessed against the Wards layer's own in-band names and e-mails before anything is written." },
-      { "file": "ia-city-contact.json", "min_keys": 900, "note": "The city OFFICE's own phone and website for every one of Iowa's 939 incorporated cities, built by ia/scripts/build_ia_city_contact.py from the Iowa League of Cities' own city table joined to TIGERweb's places. NOT a roster of people — no column of that table names one, which is why the ia-municipal-officeholders gap stays open. The join must be TOTAL (939 of 939 places, one alias: the League's Jewell is TIGER's Jewell Junction) and the nine non-joining League rows must keep their measured shape, so a renamed or dropped city fails the build rather than quietly losing its contact." },
-      { "file": "waterloo-council-members.json", "min_keys": 3, "note": "All seven seats Waterloo elects to its council — five ward members keyed by ward plus a citywide block of both at-large members — from the city's own council page, refreshed weekly by update-ia-waterloo-council-roster.yml. THE MAYOR IS NOT HERE: he is elected citywide and belongs on the City card by the at-large rule. The page is hand-pasted WYSIWYG HTML with no per-member container, so the scrape keys on each member's own \"NAME, SEAT Through MM/DD/YYYY\" line; the bio-link anchors that repeat every name WITHOUT a term are the control, and two of them disagree with the authoritative spelling. All five wards and both at-large members are cross-witnessed against the Wards layer's own in-band names before anything is written." },
-      { "file": "cedar-rapids-council-members.json", "min_keys": 3, "note": "Eight of the nine seats Cedar Rapids elects — five district members keyed by district plus a citywide block of all three at-large members — from the city's own seven seat pages, refreshed weekly by update-ia-cedar-rapids-council-roster.yml. THE MAYOR IS SCRAPED AND NOT SHIPPED: she is elected citywide and belongs on the City card by the at-large rule, and reading her anyway is what keeps that exclusion a decision the pipeline can demonstrate — the scraper demands all nine seats, so a reshaped mayor page fails the run instead of quietly shipping eight. Every member is a structured <h2> heading plus the <p> that follows it, so contact is read from inside that block and nowhere else; the City Clerk's 319-286-5763 sits in the furniture of all seven pages and the scraper refuses if it ever appears inside a member block. NO IN-BAND ROSTER EXISTS to witness against — Linn's layer carries no names — so the witness is the NUMBERING against the shipped boundary, which is weaker than Des Moines's and Waterloo's and is recorded as weaker." },
-      { "file": "ia-city-officials.json", "min_keys": 4, "note": "The elected officials of the FOUR Iowa cities whose own pages a machine can read AND whose robots.txt permits it — a mayor and five at-large council members apiece, 24 people with an e-mail each. A FIFTH, PALO, PUBLISHES A READABLE ROSTER AND IS NOT READ: cityofpalo.com names six crawlers, allows each everything but two admin paths, and ends `User-agent: * / Disallow: /`, so since 2026-09-05 the scraper consults robots.txt first and never requests the page. Palo stays in the scraper table and re-enters by itself if that file changes. NOT a statewide roster and never to be described as one: a sweep of all 532 Iowa cities that publish a website found 16 with a readable roster and 5 that cleared every check, against 407 cities publishing no site at all, so `ia-municipal-officeholders` stays open for the other 834 -- these four, the three cities that elect by ward, and the 98 named by their own COUNTY in ia-county-city-officials.json are the 105 that name anybody -- and the card says so on every one of them. All five are AT-LARGE, so they are roster rows on the City card and not a layer. Every address is re-tested each build against the name actually shipped by the same rule build_ia_county_officers.py applies — the officeholder's own name in the local part, or an office mailbox — because six of the 30 sit on consumer, provider or business domains that these small cities publish as official contact. Built by ia/scripts/ia_city_officials_scraper.py + build_ia_city_officials.py, refreshed weekly by update-ia-city-officials-roster.yml." },
-      { "file": "ia-county-city-officials.json", "min_keys": 92, "note": "The mayors, clerks and council members NINE IOWA COUNTIES publish for the 98 cities inside them \u2014 710 officials, every one of the 98 naming a mayor, 85 naming a clerk, and 104 carrying the ward or at-large seat their own county states, which no other Iowa source pairs with a name at all. THE 710 ARE NOT ALL COUNCIL: 487 council members, 98 mayors and 86 clerk rows across 85 cities, plus 39 who are none of those \u2014 12 city administrators, 10 city attorneys, 5 park commissioners, 5 park board, 5 library trustees, a city manager and an administrative secretary \u2014 shipped under the role their own county publishes, which is why the card's block is headed CITY OFFICIALS rather than claiming an election. TWO MARKUP FACTS ARE PER-COUNTY AND NOT UNIVERSAL, and both were first written here with JASPER ON THE WRONG SIDE OF EACH: SIX of the twelve put the clerk's and mayor's role in a <b> inside the name's own div (Boone, Crawford, Iowa, Jasper, Marion, Winnebago) while the other SIX give every role a positionTitle heading \u2014 and the <b> is an ADDITION rather than an alternative, since all six still take City Council from a heading, so what it carries is the NON-COUNCIL roles, Jasper's four being the widest vocabulary of the twelve and the sole source of all ten City Attorney rows; and the mailto href is EMPTY in Boone, Crawford and Jasper (110 hrefs, none populated), POPULATED in Cerro Gordo, Shelby and Marion, and absent in the other six \u2014 the scraper reads the link TEXT and the role structurally, so it needs neither to be universal. 29 OF THE 116 PHONES ARE THE CITY OFFICE'S OWN NUMBER RATHER THAN A DIRECT LINE, and each carries `phoneIsOffice` so the card says so instead of letting the row read as a personal line \u2014 every one a City Clerk, City Administrator or Library, never a mayor and never a council member, because the counties publish office contact for office staff and personal contact for elected members. The comparand is the city office number on that official's OWN record, never the Iowa League's per-city column: the two can name different numbers for one town, measured 2026-09-18 on Beaver, whose county prints (515) 386-2536 as the city's while its clerk's own row prints a different number and a personal address. Dropping the number instead would be the opposite answer to the one office_mailbox() already gives for e-mail, which keeps an office mailbox on the officeholder it reaches. This is the route `ia-municipal-officeholders`'s own blocker had recorded as NOT YET PROBED: the county auditors, Iowa's statutory commissioners of elections under Iowa Code 47.2. Twelve counties publish such a page and three are REFUSED by a dated gate rather than by a hand list \u2014 Sac, Shelby and Winnebago still publish terms that ended in January 2026, and all three show their four-year seats split across 2025 and 2027 where the other nine straddle 2027 and 2029, the signature of a page last maintained after the November 2023 city election \u2014 so a county that updates its page ships on the next weekly run with nothing to edit here, and one that goes stale drops out the same way. NOT a statewide roster: 833 of Iowa's 939 cities still name nobody and the City card says so on every one of them. Built by ia/scripts/ia_county_city_officials_scraper.py + build_ia_county_city_officials.py, refreshed weekly by update-ia-county-city-officials-roster.yml." },
-      { "file": "ia-county-board-chairs.json", "min_keys": 33, "note": "Which supervisor chairs each county board, from two surfaces each county publishes itself: its board-of-supervisors page and its own board minutes. NO LIVE COUNT IS STATED HERE, because this one moves every week and a number written into a sentence is exactly what goes stale: the min_keys beside this entry is the page route's FLOOR, the shipped file's own total is printed by build_ia_county_chair.py on every run, and the reader-facing figure lives in one place only, the `ia-board-chair` gap record. CORRECTED 2026-09-21: this note said 43 of Iowa's 99 counties as of 2026-09-12, 38 from its board-of-supervisors page and 5 from its own board minutes, and was wrong twice over. 43 was a superseded total, since the file holds 38; and that 38 was the same total misread as the PAGE count, where the split ia/WATCH.md measured on 2026-09-18 is 33 from pages and 5 from minutes. The gap record and WATCH.md were both corrected in #1034 on 2026-09-19 and this note was missed, which is why it was the last place in the tree carrying 43. No statewide publisher records it: ISAC's directory, which is this app's source for the supervisors themselves, carries no chair field at all, and the chair is chosen by the board's own vote each January, so a one-time answer from 99 offices would be stale within the year — which is why this is a weekly re-scrape and not an ask. The `ia-board-chair` gap record had closed this as impossible on the ground that nothing could separate a real name from furniture like `Contact Information` or `Term Expires`; the separator was in the repo already, because a name that is not on that county's own supervisor roster is not a chair. Roster membership alone is NOT enough and an earlier attempt shipped a vice-chairman on it, so the pairing is structural: the role and the name must share the smallest DOM element that holds no OTHER supervisor, a role standing BEFORE a name is refused when a person-shaped phrase stands before it, and the two must sit within 30 characters (widest true pairing measured 28, tightest false one 84). Two further refusals came out of review: a chair QUALIFIED by another body is refused on a window cut backwards from the parent, and a pairing whose own term dates have expired is refused — the latter is why 35 shipped rather than 36 when that was measured, Mahaska's page dating itself two board terms ago — AND MAHASKA IS BACK, from its MINUTES: its board page is still stale and still refused, while its minutes are current and dated-filename, which is the whole argument for reading two surfaces rather than one. Boards-and-commissions pages are excluded outright — a supervisor's chairmanship of some other body is not evidence about the county board, which is how Des Moines County produced a wrong answer that all three structural tests passed. Of the 35 the page route shipped then, 19 were checkable against the county's own minutes and 19 agreed, none disagreed — which is what the MINUTES route was then built on. It reads the two most recent board minutes of counties the page route missed and RESOLVES six, requiring both documents to name the same chair — but ships FIVE (Cerro Gordo, Clinton, Dallas, Des Moines, Mahaska). JOHNSON RESOLVES AND DOES NOT SHIP: its minutes live on a Granicus portal whose robots.txt refuses `districtry` on every path, so the scraper asks before it fetches and never requests the page. The entry stays in the table, so the county re-enters by itself if that file changes. Its own trap is the flattened signature block: Des Moines County's `Shane McCampbell, Chair` / `Tom Broeker, Vice Chair` becomes one line in which the role has a name on BOTH sides, so an occurrence that resolves to two different members is refused and the attendance line settles it. Story County is refused on vocabulary rather than reach — three consecutive packets say `with Murken presiding` and never `chair`, and who gavelled a meeting is not who holds the office. The two routes are FLOORED SEPARATELY, because four counties is a tenth of this file and could collapse entirely behind the page route's healthy number; where the two disagree about a county the county is dropped rather than resolved by preferring a route. The card joins BY NAME so a chair who leaves the board stops rendering rather than sliding onto a successor. THE BOARD-PAGE SCRAPE GOT ITS OWN ROBOTS GATE ON 2026-09-06, which is why 34 ship where 35 did: Cherokee's site redirects /robots.txt to the Revize CMS, whose file ends `User-agent: * / Disallow: /`, so its page is no longer requested and its chair no longer ships. Hamilton is refused by the same vendor file and was never shipping. Both entries stay in the directory, so either re-enters by itself if that file changes. A COUNTY THAT GOES QUIET IS NOW REPORTED RATHER THAN SILENTLY DROPPED, and a narrow subset are carried: the builder reads the shipped file as an input and keeps a record only when this run's verdict was `unreachable` — the one verdict meaning we could not ASK — never on a robots refusal, never past 60 days from the record's own `confirmedOn`, never across a 1 January board reorganisation, and never for a name that has left the county's supervisor roster. A carried county counts toward neither route's floor. This exists because the 2026-09-08 run dropped Clayton and its log could not say why: the scrape printed a line only for a county it RESOLVED, so a county that left the file was visible only as a summary count that moved. Clayton's page names Ray Peterson as chairperson to this project's own client and did on the day it was dropped; the county sits behind Cloudflare, which answers one caller and not another. Both scrapers now print every county's verdict. Built by ia/scripts/ia_county_chair_scraper.py + ia_county_minutes_chair_scraper.py + build_ia_county_chair.py, refreshed weekly by update-ia-county-chair-roster.yml." }
+      {
+        "file": "congress-roster.json",
+        "min_keys": 4,
+        "note": "U.S. House roster, refreshed weekly by update-ia-congress-roster.yml."
+      },
+      {
+        "file": "ia-senate-members.json",
+        "min_keys": 45,
+        "note": "Senate roster from Open States ia.csv + legis.iowa.gov enrichment, refreshed weekly by update-ia-legislature-roster.yml; floor tolerates transient vacancies (50 seats)."
+      },
+      {
+        "file": "ia-house-members.json",
+        "min_keys": 93,
+        "note": "House roster from Open States ia.csv + legis.iowa.gov enrichment, refreshed weekly by update-ia-legislature-roster.yml; floor tolerates transient vacancies (100 seats)."
+      },
+      {
+        "file": "ia-county-board-directory.json",
+        "min_keys": 98,
+        "note": "One row per county covered by ia-supervisor-districts.json: board size read back from the shipped geometry, plus the county's own official page (Iowa State Association of Counties' member directory) for the card's footer link. Built by ia/scripts/build_ia_county_board_directory.py; not a roster of people — Iowa publishes none statewide."
+      },
+      {
+        "file": "ia-county-auditors.json",
+        "min_keys": 99,
+        "note": "All 99 county auditors: name, party (98 of 99) and office address + phone from the Iowa State Association of County Auditors' own directory, plus an e-mail for all 99 from the Secretary of State's own auditors page (Cloudflare data-cfemail, decoded at scrape time). Where the two directories name different people the county's own site decides, pinned per county in the scraper — 3 measured, resolving 2-1 in the Secretary of State's favour. Built by ia/scripts/ia_county_auditor_scraper.py + build_ia_county_auditors.py, refreshed weekly by update-ia-county-auditor-roster.yml."
+      },
+      {
+        "file": "ia-county-officers.json",
+        "min_keys": 99,
+        "note": "The other five elected county offices (Iowa Code ch. 331) for all 99 counties: treasurer, recorder, sheriff, county attorney and the board of supervisors — the auditor ships in its own file. Recorder/sheriff/county attorney come from each office's own statewide directory (iowalandrecords.org; ISSDA's sheriff directory PDF; the ICAA roster PDF), the treasurer and the supervisors from ISAC's member portal, which is the only source that exists for those two. Gated hard: a board ships only when the portal's row count is a legal 3 or 5 (Iowa Code 331.201) AND equals the seat count read back from the shipped supervisor-district geometry — 7 counties fail and carry a stated reason instead. An office whose two publishers name different people ships no name at all. Built by ia/scripts/ia_county_officers_scraper.py + ia_county_officer_sources_scraper.py + build_ia_county_officers.py, refreshed weekly by update-ia-county-officers-roster.yml. TREASURER AND SHERIFF E-MAIL ADDRESSES COME FROM THE COUNTIES' OWN SITES (ia/scripts/ia_county_officer_email_scraper.py), because no statewide directory carries them — the ISAC portal has no e-mail column at all. An address ships only if the officeholder's own name is in its local part or its form is the office's mailbox; the builder re-checks a witnessed address against the name it actually ships. The second treasurer source, iowatreasurers.org, SERVES THE WRONG COUNTY on 11 of 99 ids with no error and no 404, so every page must independently identify as its county AND the address's domain must fit it."
+      },
+      {
+        "file": "ia-supervisor-members.json",
+        "min_keys": 12,
+        "note": "Which supervisor holds each county supervisor district, keyed by 3-digit county FIPS. PLAN 3 COUNTIES ONLY (Iowa Code 331.206): under plan 1 there are no districts and under plan 2 supervisors are elected countywide and merely reside in one, so only under plan 3 does naming a district's supervisor answer something the County card's list does not. No Iowa publisher attaches a district to a supervisor's name — four statewide routes are measured closed — so the district number is recovered from each county's own board page by PROXIMITY to names the shipped roster already carries, reading no markup at all. Gated: districts must be exactly 1..N with no repeats, the people placed must be exactly the people ia-county-officers.json names, and N must equal the shipped geometry's NUMDISTRICTS. A county failing any gate ships nothing and keeps its unkeyed County-card listing. Built by ia/scripts/ia_supervisor_district_scraper.py + build_ia_supervisor_roster.py, refreshed weekly by update-ia-supervisor-roster.yml."
+      },
+      {
+        "file": "ia-judicial-judges.json",
+        "min_keys": 8,
+        "note": "All 8 districts' benches (371 judges measured 2026-08-28), one entry per district keyed to the geometry's district number. From each district's own \"Judges and Magistrates\" page at iowacourts.gov (name + each judge's own role/title string, shipped verbatim — no phone/e-mail/address is published for any judge). Built by ia/scripts/ia_judicial_district_scraper.py + build_ia_judicial_district_roster.py, refreshed weekly by update-ia-judicial-district-roster.yml."
+      },
+      {
+        "file": "coverage-gaps.json",
+        "min_keys": 0,
+        "note": "The Data gaps panel's content; one recorded gap (Jones County, absent from the county-supervisor source layer)."
+      },
+      {
+        "file": "dsm-council-members.json",
+        "min_keys": 3,
+        "note": "All seven seats Des Moines elects — the four ward members keyed by ward plus a citywide block of the mayor and both at-large members — from the city's own council page, refreshed weekly by update-ia-dsm-council-roster.yml. The scrape is scoped by <h2> heading because the page's Appointed Staff and Department Directors sections use IDENTICAL card markup, and it refuses to write if a name appears under both; the four ward members are cross-witnessed against the Wards layer's own in-band names and e-mails before anything is written."
+      },
+      {
+        "file": "ia-city-contact.json",
+        "min_keys": 900,
+        "note": "The city OFFICE's own phone and website for every one of Iowa's 939 incorporated cities, built by ia/scripts/build_ia_city_contact.py from the Iowa League of Cities' own city table joined to TIGERweb's places. NOT a roster of people — no column of that table names one, which is why the ia-municipal-officeholders gap stays open. The join must be TOTAL (939 of 939 places, one alias: the League's Jewell is TIGER's Jewell Junction) and the nine non-joining League rows must keep their measured shape, so a renamed or dropped city fails the build rather than quietly losing its contact."
+      },
+      {
+        "file": "waterloo-council-members.json",
+        "min_keys": 3,
+        "note": "All seven seats Waterloo elects to its council — five ward members keyed by ward plus a citywide block of both at-large members — from the city's own council page, refreshed weekly by update-ia-waterloo-council-roster.yml. THE MAYOR IS NOT HERE: he is elected citywide and belongs on the City card by the at-large rule. The page is hand-pasted WYSIWYG HTML with no per-member container, so the scrape keys on each member's own \"NAME, SEAT Through MM/DD/YYYY\" line; the bio-link anchors that repeat every name WITHOUT a term are the control, and two of them disagree with the authoritative spelling. All five wards and both at-large members are cross-witnessed against the Wards layer's own in-band names before anything is written."
+      },
+      {
+        "file": "cedar-rapids-council-members.json",
+        "min_keys": 3,
+        "note": "Eight of the nine seats Cedar Rapids elects — five district members keyed by district plus a citywide block of all three at-large members — from the city's own seven seat pages, refreshed weekly by update-ia-cedar-rapids-council-roster.yml. THE MAYOR IS SCRAPED AND NOT SHIPPED: she is elected citywide and belongs on the City card by the at-large rule, and reading her anyway is what keeps that exclusion a decision the pipeline can demonstrate — the scraper demands all nine seats, so a reshaped mayor page fails the run instead of quietly shipping eight. Every member is a structured <h2> heading plus the <p> that follows it, so contact is read from inside that block and nowhere else; the City Clerk's 319-286-5763 sits in the furniture of all seven pages and the scraper refuses if it ever appears inside a member block. NO IN-BAND ROSTER EXISTS to witness against — Linn's layer carries no names — so the witness is the NUMBERING against the shipped boundary, which is weaker than Des Moines's and Waterloo's and is recorded as weaker."
+      },
+      {
+        "file": "ia-city-officials.json",
+        "min_keys": 4,
+        "note": "The elected officials of the FOUR Iowa cities whose own pages a machine can read AND whose robots.txt permits it — a mayor and five at-large council members apiece, 24 people with an e-mail each. A FIFTH, PALO, PUBLISHES A READABLE ROSTER AND IS NOT READ: cityofpalo.com names six crawlers, allows each everything but two admin paths, and ends `User-agent: * / Disallow: /`, so since 2026-09-05 the scraper consults robots.txt first and never requests the page. Palo stays in the scraper table and re-enters by itself if that file changes. NOT a statewide roster and never to be described as one: a sweep of all 532 Iowa cities that publish a website found 16 with a readable roster and 5 that cleared every check, against 407 cities publishing no site at all, so `ia-municipal-officeholders` stays open for the other 834 -- these four, the three cities that elect by ward, and the 98 named by their own COUNTY in ia-county-city-officials.json are the 105 that name anybody -- and the card says so on every one of them. All five are AT-LARGE, so they are roster rows on the City card and not a layer. Every address is re-tested each build against the name actually shipped by the same rule build_ia_county_officers.py applies — the officeholder's own name in the local part, or an office mailbox — because six of the 30 sit on consumer, provider or business domains that these small cities publish as official contact. Built by ia/scripts/ia_city_officials_scraper.py + build_ia_city_officials.py, refreshed weekly by update-ia-city-officials-roster.yml."
+      },
+      {
+        "file": "ia-county-city-officials.json",
+        "min_keys": 92,
+        "note": "The mayors, clerks and council members NINE IOWA COUNTIES publish for the 98 cities inside them — 710 officials, every one of the 98 naming a mayor, 85 naming a clerk, and 104 carrying the ward or at-large seat their own county states, which no other Iowa source pairs with a name at all. THE 710 ARE NOT ALL COUNCIL: 487 council members, 98 mayors and 86 clerk rows across 85 cities, plus 39 who are none of those — 12 city administrators, 10 city attorneys, 5 park commissioners, 5 park board, 5 library trustees, a city manager and an administrative secretary — shipped under the role their own county publishes, which is why the card's block is headed CITY OFFICIALS rather than claiming an election. TWO MARKUP FACTS ARE PER-COUNTY AND NOT UNIVERSAL, and both were first written here with JASPER ON THE WRONG SIDE OF EACH: SIX of the twelve put the clerk's and mayor's role in a <b> inside the name's own div (Boone, Crawford, Iowa, Jasper, Marion, Winnebago) while the other SIX give every role a positionTitle heading — and the <b> is an ADDITION rather than an alternative, since all six still take City Council from a heading, so what it carries is the NON-COUNCIL roles, Jasper's four being the widest vocabulary of the twelve and the sole source of all ten City Attorney rows; and the mailto href is EMPTY in Boone, Crawford and Jasper (110 hrefs, none populated), POPULATED in Cerro Gordo, Shelby and Marion, and absent in the other six — the scraper reads the link TEXT and the role structurally, so it needs neither to be universal. 29 OF THE 116 PHONES ARE THE CITY OFFICE'S OWN NUMBER RATHER THAN A DIRECT LINE, and each carries `phoneIsOffice` so the card says so instead of letting the row read as a personal line — every one a City Clerk, City Administrator or Library, never a mayor and never a council member, because the counties publish office contact for office staff and personal contact for elected members. The comparand is the city office number on that official's OWN record, never the Iowa League's per-city column: the two can name different numbers for one town, measured 2026-09-18 on Beaver, whose county prints (515) 386-2536 as the city's while its clerk's own row prints a different number and a personal address. Dropping the number instead would be the opposite answer to the one office_mailbox() already gives for e-mail, which keeps an office mailbox on the officeholder it reaches. This is the route `ia-municipal-officeholders`'s own blocker had recorded as NOT YET PROBED: the county auditors, Iowa's statutory commissioners of elections under Iowa Code 47.2. Twelve counties publish such a page and three are REFUSED by a dated gate rather than by a hand list — Sac, Shelby and Winnebago still publish terms that ended in January 2026, and all three show their four-year seats split across 2025 and 2027 where the other nine straddle 2027 and 2029, the signature of a page last maintained after the November 2023 city election — so a county that updates its page ships on the next weekly run with nothing to edit here, and one that goes stale drops out the same way. NOT a statewide roster: 833 of Iowa's 939 cities still name nobody and the City card says so on every one of them. Built by ia/scripts/ia_county_city_officials_scraper.py + build_ia_county_city_officials.py, refreshed weekly by update-ia-county-city-officials-roster.yml."
+      },
+      {
+        "file": "ia-county-board-chairs.json",
+        "min_keys": 33,
+        "note": "Which supervisor chairs each county board, from two surfaces each county publishes itself: its board-of-supervisors page and its own board minutes. NO LIVE COUNT IS STATED HERE, because this one moves every week and a number written into a sentence is exactly what goes stale: the min_keys beside this entry is the page route's FLOOR, the shipped file's own total is printed by build_ia_county_chair.py on every run, and the reader-facing figure lives in one place only, the `ia-board-chair` gap record. CORRECTED 2026-09-21: this note said 43 of Iowa's 99 counties as of 2026-09-12, 38 from its board-of-supervisors page and 5 from its own board minutes, and was wrong twice over. 43 was a superseded total, since the file holds 38; and that 38 was the same total misread as the PAGE count, where the split ia/WATCH.md measured on 2026-09-18 is 33 from pages and 5 from minutes. The gap record and WATCH.md were both corrected in #1034 on 2026-09-19 and this note was missed, which is why it was the last place in the tree carrying 43. No statewide publisher records it: ISAC's directory, which is this app's source for the supervisors themselves, carries no chair field at all, and the chair is chosen by the board's own vote each January, so a one-time answer from 99 offices would be stale within the year — which is why this is a weekly re-scrape and not an ask. The `ia-board-chair` gap record had closed this as impossible on the ground that nothing could separate a real name from furniture like `Contact Information` or `Term Expires`; the separator was in the repo already, because a name that is not on that county's own supervisor roster is not a chair. Roster membership alone is NOT enough and an earlier attempt shipped a vice-chairman on it, so the pairing is structural: the role and the name must share the smallest DOM element that holds no OTHER supervisor, a role standing BEFORE a name is refused when a person-shaped phrase stands before it, and the two must sit within 30 characters (widest true pairing measured 28, tightest false one 84). Two further refusals came out of review: a chair QUALIFIED by another body is refused on a window cut backwards from the parent, and a pairing whose own term dates have expired is refused — the latter is why 35 shipped rather than 36 when that was measured, Mahaska's page dating itself two board terms ago — AND MAHASKA IS BACK, from its MINUTES: its board page is still stale and still refused, while its minutes are current and dated-filename, which is the whole argument for reading two surfaces rather than one. Boards-and-commissions pages are excluded outright — a supervisor's chairmanship of some other body is not evidence about the county board, which is how Des Moines County produced a wrong answer that all three structural tests passed. Of the 35 the page route shipped then, 19 were checkable against the county's own minutes and 19 agreed, none disagreed — which is what the MINUTES route was then built on. It reads the two most recent board minutes of counties the page route missed and RESOLVES six, requiring both documents to name the same chair — but ships FIVE (Cerro Gordo, Clinton, Dallas, Des Moines, Mahaska). JOHNSON RESOLVES AND DOES NOT SHIP: its minutes live on a Granicus portal whose robots.txt refuses `districtry` on every path, so the scraper asks before it fetches and never requests the page. The entry stays in the table, so the county re-enters by itself if that file changes. Its own trap is the flattened signature block: Des Moines County's `Shane McCampbell, Chair` / `Tom Broeker, Vice Chair` becomes one line in which the role has a name on BOTH sides, so an occurrence that resolves to two different members is refused and the attendance line settles it. Story County is refused on vocabulary rather than reach — three consecutive packets say `with Murken presiding` and never `chair`, and who gavelled a meeting is not who holds the office. The two routes are FLOORED SEPARATELY, because four counties is a tenth of this file and could collapse entirely behind the page route's healthy number; where the two disagree about a county the county is dropped rather than resolved by preferring a route. The card joins BY NAME so a chair who leaves the board stops rendering rather than sliding onto a successor. THE BOARD-PAGE SCRAPE GOT ITS OWN ROBOTS GATE ON 2026-09-06, which is why 34 ship where 35 did: Cherokee's site redirects /robots.txt to the Revize CMS, whose file ends `User-agent: * / Disallow: /`, so its page is no longer requested and its chair no longer ships. Hamilton is refused by the same vendor file and was never shipping. Both entries stay in the directory, so either re-enters by itself if that file changes. A COUNTY THAT GOES QUIET IS NOW REPORTED RATHER THAN SILENTLY DROPPED, and a narrow subset are carried: the builder reads the shipped file as an input and keeps a record only when this run's verdict was `unreachable` — the one verdict meaning we could not ASK — never on a robots refusal, never past 60 days from the record's own `confirmedOn`, never across a 1 January board reorganisation, and never for a name that has left the county's supervisor roster. A carried county counts toward neither route's floor. This exists because the 2026-09-08 run dropped Clayton and its log could not say why: the scrape printed a line only for a county it RESOLVED, so a county that left the file was visible only as a summary count that moved. Clayton's page names Ray Peterson as chairperson to this project's own client and did on the day it was dropped; the county sits behind Cloudflare, which answers one caller and not another. Both scrapers now print every county's verdict. Built by ia/scripts/ia_county_chair_scraper.py + ia_county_minutes_chair_scraper.py + build_ia_county_chair.py, refreshed weekly by update-ia-county-chair-roster.yml."
+      }
     ]
   },
   "sw": {
-    "cache_name": "districtry-ia-shell-v9",
-    "shell_urls": ["./", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/apple-touch-icon.png", "./icons/icon-maskable-512.png", "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js", "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.24.0/maplibre-gl.min.js", "./vendor/leaflet-maplibre-gl.js"]
+    "cache_name": "districtry-ia-shell-v10",
+    "shell_urls": [
+      "./",
+      "./manifest.webmanifest",
+      "./icons/icon-192.png",
+      "./icons/icon-512.png",
+      "./icons/apple-touch-icon.png",
+      "./icons/icon-maskable-512.png",
+      "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.24.0/maplibre-gl.min.js",
+      "./vendor/leaflet-maplibre-gl.js"
+    ]
   },
-  "data_sources": { "registry": "ia/scripts/validate_sources.py" },
+  "data_sources": {
+    "registry": "ia/scripts/validate_sources.py"
+  },
   "workflows": [
-    { "file": "update-ia-congress-roster.yml", "purpose": "U.S. House (IA) roster (unitedstates/congress-legislators)", "schedule": "Mon 14:30 UTC" },
-    { "file": "update-ia-legislature-roster.yml", "purpose": "Iowa Senate + House rosters (Open States ia.csv, legis.iowa.gov enrichment)", "schedule": "Tue 14:30 UTC" },
-    { "file": "update-ia-county-auditor-roster.yml", "purpose": "County auditor roster (iowaauditors.org's own association directory)", "schedule": "Wed 14:30 UTC" },
-    { "file": "update-ia-judicial-district-roster.yml", "purpose": "Judicial district bench (iowacourts.gov per-district Judges and Magistrates pages) + a --check re-verification of the district geometry against the LSAFiscal witness", "schedule": "Thu 16:30 UTC" },
-    { "file": "update-ia-dsm-council-roster.yml", "purpose": "Des Moines city council roster (the city's own council page), plus a --check re-verification of the ward geometry against the city's Wards service and its City Boundary tiling gate", "schedule": "Thu 17:30 UTC" },
-      { "file": "update-ia-county-officers-roster.yml", "purpose": "All six elected county offices (ISAC member portal + the recorders', sheriffs' and county attorneys' own directories), plus the treasurer and sheriff e-mail probe of the counties' own sites", "schedule": "Fri 17:30 UTC" },
-      { "file": "update-ia-supervisor-roster.yml", "purpose": "Supervisor names keyed to their own districts in the plan-3 counties that publish the pairing", "schedule": "Sat 17:30 UTC" },
-      { "file": "update-ia-city-contact-roster.yml", "purpose": "The office phone and website of all 939 incorporated cities (the Iowa League of Cities' own city table joined to TIGERweb's places) — contact, never officeholders", "schedule": "Fri 15:30 UTC" },
-      { "file": "update-ia-waterloo-council-roster.yml", "purpose": "Waterloo city council roster (the city's own council page), plus a --check re-verification of the ward geometry against the city's Wards service and its City Limits tiling gate", "schedule": "Thu 18:30 UTC" },
-      { "file": "update-ia-cedar-rapids-council-roster.yml", "purpose": "Cedar Rapids city council roster (the city's own seven seat pages), plus a --check re-verification of the five district polygons against Linn County's service — including the cross-control that Marion's township code still does NOT tile Cedar Rapids", "schedule": "Thu 19:30 UTC" },
-      { "file": "update-ia-city-officials-roster.yml", "purpose": "Elected officials of the five Iowa cities that publish a readable council page (their own pages; at-large councils, rendered on the City card)", "schedule": "Fri 16:30 UTC" },
-      { "file": "update-ia-county-chair-roster.yml", "purpose": "Which supervisor chairs each county board, from each county's own board page (35 of 99; no statewide publisher carries the chair, and the chair is chosen by each board's own January vote, so this tracks it where a one-time answer could not)", "schedule": "Fri 18:30 UTC" },
-    { "file": "update-ia-county-city-officials-roster.yml", "purpose": "county-published city officials (the counties currently publishing a current page)", "schedule": "Thu 20:30 UTC" },
-    { "file": "ia-validate-sources.yml", "purpose": "source freshness (IA manifest: TIGERweb, congress-legislators, Open States, legis.iowa.gov)", "schedule": "1st of month 15:00 UTC" }
+    {
+      "file": "update-ia-congress-roster.yml",
+      "purpose": "U.S. House (IA) roster (unitedstates/congress-legislators)",
+      "schedule": "Mon 14:30 UTC"
+    },
+    {
+      "file": "update-ia-legislature-roster.yml",
+      "purpose": "Iowa Senate + House rosters (Open States ia.csv, legis.iowa.gov enrichment)",
+      "schedule": "Tue 14:30 UTC"
+    },
+    {
+      "file": "update-ia-county-auditor-roster.yml",
+      "purpose": "County auditor roster (iowaauditors.org's own association directory)",
+      "schedule": "Wed 14:30 UTC"
+    },
+    {
+      "file": "update-ia-judicial-district-roster.yml",
+      "purpose": "Judicial district bench (iowacourts.gov per-district Judges and Magistrates pages) + a --check re-verification of the district geometry against the LSAFiscal witness",
+      "schedule": "Thu 16:30 UTC"
+    },
+    {
+      "file": "update-ia-dsm-council-roster.yml",
+      "purpose": "Des Moines city council roster (the city's own council page), plus a --check re-verification of the ward geometry against the city's Wards service and its City Boundary tiling gate",
+      "schedule": "Thu 17:30 UTC"
+    },
+    {
+      "file": "update-ia-county-officers-roster.yml",
+      "purpose": "All six elected county offices (ISAC member portal + the recorders', sheriffs' and county attorneys' own directories), plus the treasurer and sheriff e-mail probe of the counties' own sites",
+      "schedule": "Fri 17:30 UTC"
+    },
+    {
+      "file": "update-ia-supervisor-roster.yml",
+      "purpose": "Supervisor names keyed to their own districts in the plan-3 counties that publish the pairing",
+      "schedule": "Sat 17:30 UTC"
+    },
+    {
+      "file": "update-ia-city-contact-roster.yml",
+      "purpose": "The office phone and website of all 939 incorporated cities (the Iowa League of Cities' own city table joined to TIGERweb's places) — contact, never officeholders",
+      "schedule": "Fri 15:30 UTC"
+    },
+    {
+      "file": "update-ia-waterloo-council-roster.yml",
+      "purpose": "Waterloo city council roster (the city's own council page), plus a --check re-verification of the ward geometry against the city's Wards service and its City Limits tiling gate",
+      "schedule": "Thu 18:30 UTC"
+    },
+    {
+      "file": "update-ia-cedar-rapids-council-roster.yml",
+      "purpose": "Cedar Rapids city council roster (the city's own seven seat pages), plus a --check re-verification of the five district polygons against Linn County's service — including the cross-control that Marion's township code still does NOT tile Cedar Rapids",
+      "schedule": "Thu 19:30 UTC"
+    },
+    {
+      "file": "update-ia-city-officials-roster.yml",
+      "purpose": "Elected officials of the five Iowa cities that publish a readable council page (their own pages; at-large councils, rendered on the City card)",
+      "schedule": "Fri 16:30 UTC"
+    },
+    {
+      "file": "update-ia-county-chair-roster.yml",
+      "purpose": "Which supervisor chairs each county board, from each county's own board page (35 of 99; no statewide publisher carries the chair, and the chair is chosen by each board's own January vote, so this tracks it where a one-time answer could not)",
+      "schedule": "Fri 18:30 UTC"
+    },
+    {
+      "file": "update-ia-county-city-officials-roster.yml",
+      "purpose": "county-published city officials (the counties currently publishing a current page)",
+      "schedule": "Thu 20:30 UTC"
+    },
+    {
+      "file": "ia-validate-sources.yml",
+      "purpose": "source freshness (IA manifest: TIGERweb, congress-legislators, Open States, legis.iowa.gov)",
+      "schedule": "1st of month 15:00 UTC"
+    }
   ],
-  "geocoder": { "address": "Photon (Iowa-bounded type-ahead)", "unbounded": "Photon (whole-coverage, sibling-metro lookup)", "poi": "Nominatim (office-address pin lookup, Iowa-bounded, serial >=1s queue)", "search_placeholder": "Search an Iowa address" },
-  "palette": { "accent": "#6d3fd1", "accent_deep": "#5730ab", "accent_warm": "#b0316e", "accent_warm_deep": "#8f2659", "label": "districtry palette — brand violet is CHROME ONLY, never map data; shared with the fleet, not state-themed by convention" },
-  "domains": { "canonical": "https://districtry.com/ia/" },
+  "geocoder": {
+    "address": "Photon (Iowa-bounded type-ahead)",
+    "unbounded": "Photon (whole-coverage, sibling-metro lookup)",
+    "poi": "Nominatim (office-address pin lookup, Iowa-bounded, serial >=1s queue)",
+    "search_placeholder": "Search an Iowa address"
+  },
+  "palette": {
+    "accent": "#6d3fd1",
+    "accent_deep": "#5730ab",
+    "accent_warm": "#b0316e",
+    "accent_warm_deep": "#8f2659",
+    "label": "districtry palette — brand violet is CHROME ONLY, never map data; shared with the fleet, not state-themed by convention"
+  },
+  "domains": {
+    "canonical": "https://districtry.com/ia/"
+  },
   "exports_name": "IowaExplorer",
   "verified_date": "September 11, 2026",
   "sources_page": {
     "file": "ia/sources.html",
     "credits": [
-      { "label": "U.S. Census Bureau TIGERweb", "url": "https://tigerweb.geo.census.gov/", "note": "County and legislative-district boundaries." },
-      { "label": "unitedstates/congress-legislators", "url": "https://github.com/unitedstates/congress-legislators", "note": "U.S. House roster (CC0)." },
-      { "label": "Open States", "url": "https://openstates.org/", "note": "Iowa Senate and House roster base." },
-      { "label": "Iowa Legislature", "url": "https://www.legis.iowa.gov/", "note": "Senate and House office enrichment." }
+      {
+        "label": "U.S. Census Bureau TIGERweb",
+        "url": "https://tigerweb.geo.census.gov/",
+        "note": "County and legislative-district boundaries."
+      },
+      {
+        "label": "unitedstates/congress-legislators",
+        "url": "https://github.com/unitedstates/congress-legislators",
+        "note": "U.S. House roster (CC0)."
+      },
+      {
+        "label": "Open States",
+        "url": "https://openstates.org/",
+        "note": "Iowa Senate and House roster base."
+      },
+      {
+        "label": "Iowa Legislature",
+        "url": "https://www.legis.iowa.gov/",
+        "note": "Senate and House office enrichment."
+      }
     ]
   },
   "history_page": {
     "file": "history.html",
     "intro": "districtry Iowa launched with the full phase-1 roadmap: every county and its supervisor districts, both chambers of the Iowa Legislature, Iowa's U.S. House delegation, school districts, townships and cities, and ZIP codes and post offices.",
     "entries": [
-      { "date": "2026-09-04", "title": "Cedar Rapids joins, and the toggle stops saying ward", "body": "Cedar Rapids is the third Iowa city whose council districts are on the map, and the eight of its nine elected seats that a district can carry are named on the card — each district's own member plus all three at-large members, who represent every district. The toggle is renamed City Council District: Des Moines and Waterloo elect by WARD and Cedar Rapids by DISTRICT, and a generic label has to be one no city is contradicted by. Every card still names the unit exactly as its own city does, and links shared under the old name still work. The boundary is not the city's — Cedar Rapids publishes none. It is LINN COUNTY's, a single service holding two cities' districts separated only by a bare code with no name attached anywhere in it, so the build proves the code every run in both directions: the five polygons must cover Cedar Rapids, and Marion's four must fail to. Without that second half a future swap would put Marion's districts on Cedar Rapids readers' cards under Cedar Rapids labels, and nothing else would notice. The city's own \"Find Your District\" page points at the county's, which is the city naming the county as the authority for its own lines. The mayor is elected citywide, so she is named in prose rather than on any one district's card — and unlike the other two cities she is read by the scraper anyway, so leaving her off stays a decision the pipeline can show rather than a gap it cannot see. Iowa's other 936 cities still elect councils this map does not draw, and that gap stays open and stated." },
-      { "date": "2026-09-04", "title": "Waterloo joins, and the ward layer becomes a concept", "body": "Waterloo's five council wards ship, with all seven seats it elects to its council — each ward's own member plus both at-large members, who represent every ward — from the city's own council page. That is a second Iowa city naming real people on a district card, where before only Des Moines did. Because it is the SECOND, the two cities are now two entries on one City Council Ward toggle rather than two near-identical layers: adding a city adds an entry, never a layer. Links shared while it was the Des Moines ward layer still work. The city's own map carries councilmember names inside it, and those are still not what the card reads — a roster attached to a boundary is refreshed when the boundary is, so the names come from the council page and the map's are used once, at build time, to check them. Waterloo's mayor is elected by the whole city, so he is named in prose rather than on any one ward's card. Iowa's other 937 cities still name nobody, and that gap stays open and stated." },
-      { "date": "2026-08-27", "title": "Launched", "body": "Ten layers, statewide, each with a sourced boundary: the national tier (county, U.S. House, Iowa Senate, Iowa House); the flagship county-supervisor layer (270 features across 98 of 99 counties, aware of each county's own election plan under Senate File 75); school-district-unified; county-subdivision and municipality (Iowa's civil townships and its 939 incorporated cities); and zip-code and post-office. Every layer with a statewide officeholder source carries a weekly-refreshed roster; where none exists (county, county-subdivision, municipality, and county-supervisor's supervisor names), the card says so and links the official body rather than guessing. Phase 2 — precincts, judicial districts, community colleges, and the county auditor — is next." }
+      {
+        "date": "2026-09-04",
+        "title": "Cedar Rapids joins, and the toggle stops saying ward",
+        "body": "Cedar Rapids is the third Iowa city whose council districts are on the map, and the eight of its nine elected seats that a district can carry are named on the card — each district's own member plus all three at-large members, who represent every district. The toggle is renamed City Council District: Des Moines and Waterloo elect by WARD and Cedar Rapids by DISTRICT, and a generic label has to be one no city is contradicted by. Every card still names the unit exactly as its own city does, and links shared under the old name still work. The boundary is not the city's — Cedar Rapids publishes none. It is LINN COUNTY's, a single service holding two cities' districts separated only by a bare code with no name attached anywhere in it, so the build proves the code every run in both directions: the five polygons must cover Cedar Rapids, and Marion's four must fail to. Without that second half a future swap would put Marion's districts on Cedar Rapids readers' cards under Cedar Rapids labels, and nothing else would notice. The city's own \"Find Your District\" page points at the county's, which is the city naming the county as the authority for its own lines. The mayor is elected citywide, so she is named in prose rather than on any one district's card — and unlike the other two cities she is read by the scraper anyway, so leaving her off stays a decision the pipeline can show rather than a gap it cannot see. Iowa's other 936 cities still elect councils this map does not draw, and that gap stays open and stated."
+      },
+      {
+        "date": "2026-09-04",
+        "title": "Waterloo joins, and the ward layer becomes a concept",
+        "body": "Waterloo's five council wards ship, with all seven seats it elects to its council — each ward's own member plus both at-large members, who represent every ward — from the city's own council page. That is a second Iowa city naming real people on a district card, where before only Des Moines did. Because it is the SECOND, the two cities are now two entries on one City Council Ward toggle rather than two near-identical layers: adding a city adds an entry, never a layer. Links shared while it was the Des Moines ward layer still work. The city's own map carries councilmember names inside it, and those are still not what the card reads — a roster attached to a boundary is refreshed when the boundary is, so the names come from the council page and the map's are used once, at build time, to check them. Waterloo's mayor is elected by the whole city, so he is named in prose rather than on any one ward's card. Iowa's other 937 cities still name nobody, and that gap stays open and stated."
+      },
+      {
+        "date": "2026-08-27",
+        "title": "Launched",
+        "body": "Ten layers, statewide, each with a sourced boundary: the national tier (county, U.S. House, Iowa Senate, Iowa House); the flagship county-supervisor layer (270 features across 98 of 99 counties, aware of each county's own election plan under Senate File 75); school-district-unified; county-subdivision and municipality (Iowa's civil townships and its 939 incorporated cities); and zip-code and post-office. Every layer with a statewide officeholder source carries a weekly-refreshed roster; where none exists (county, county-subdivision, municipality, and county-supervisor's supervisor names), the card says so and links the official body rather than guessing. Phase 2 — precincts, judicial districts, community colleges, and the county auditor — is next."
+      }
     ]
   },
   "metro_explorers": [
-    { "id": "chicago", "label": "Illinois", "url": "https://districtry.com/il/", "emoji": "🌭", "explorer_name": "districtry Illinois",
-      "bbox": { "minLng": -91.52, "minLat": 36.96, "maxLng": -87.01, "maxLat": 42.51 } },
-    { "id": "nyc", "label": "New York", "url": "https://districtry.com/ny/", "emoji": "🗽", "explorer_name": "districtry New York",
-      "bbox": { "minLng": -79.82, "minLat": 40.43, "maxLng": -71.62, "maxLat": 45.07 } },
-    { "id": "sf", "label": "San Francisco", "url": "https://districtry.com/ca/", "emoji": "🌉", "explorer_name": "districtry San Francisco",
-      "bbox": { "minLng": -122.6, "minLat": 37.6, "maxLng": -122.3, "maxLat": 37.95 } },
-    { "id": "wisconsin", "label": "Wisconsin", "url": "https://districtry.com/wi/", "emoji": "🧀", "explorer_name": "districtry Wisconsin",
-      "bbox": { "minLng": -92.89, "minLat": 42.49, "maxLng": -86.25, "maxLat": 47.31 } },
-    { "id": "iowa", "label": "Iowa", "url": "https://districtry.com/ia/", "emoji": "🌽", "explorer_name": "districtry Iowa",
-      "bbox": { "minLng": -96.64, "minLat": 40.37, "maxLng": -90.14, "maxLat": 43.5 } },
-    { "id": "michigan", "label": "Michigan", "url": "https://districtry.com/mi/", "emoji": "🚗", "explorer_name": "districtry Michigan",
-      "bbox": { "minLng": -87.6, "minLat": 41.7, "maxLng": -82.11, "maxLat": 48.01 } }
+    {
+      "id": "chicago",
+      "label": "Illinois",
+      "url": "https://districtry.com/il/",
+      "emoji": "🌭",
+      "explorer_name": "districtry Illinois",
+      "bbox": {
+        "minLng": -91.52,
+        "minLat": 36.96,
+        "maxLng": -87.01,
+        "maxLat": 42.51
+      }
+    },
+    {
+      "id": "nyc",
+      "label": "New York",
+      "url": "https://districtry.com/ny/",
+      "emoji": "🗽",
+      "explorer_name": "districtry New York",
+      "bbox": {
+        "minLng": -79.82,
+        "minLat": 40.43,
+        "maxLng": -71.62,
+        "maxLat": 45.07
+      }
+    },
+    {
+      "id": "sf",
+      "label": "San Francisco",
+      "url": "https://districtry.com/ca/",
+      "emoji": "🌉",
+      "explorer_name": "districtry San Francisco",
+      "bbox": {
+        "minLng": -122.6,
+        "minLat": 37.6,
+        "maxLng": -122.3,
+        "maxLat": 37.95
+      }
+    },
+    {
+      "id": "wisconsin",
+      "label": "Wisconsin",
+      "url": "https://districtry.com/wi/",
+      "emoji": "🧀",
+      "explorer_name": "districtry Wisconsin",
+      "bbox": {
+        "minLng": -92.89,
+        "minLat": 42.49,
+        "maxLng": -86.25,
+        "maxLat": 47.31
+      }
+    },
+    {
+      "id": "iowa",
+      "label": "Iowa",
+      "url": "https://districtry.com/ia/",
+      "emoji": "🌽",
+      "explorer_name": "districtry Iowa",
+      "bbox": {
+        "minLng": -96.64,
+        "minLat": 40.37,
+        "maxLng": -90.14,
+        "maxLat": 43.5
+      }
+    },
+    {
+      "id": "michigan",
+      "label": "Michigan",
+      "url": "https://districtry.com/mi/",
+      "emoji": "🚗",
+      "explorer_name": "districtry Michigan",
+      "bbox": {
+        "minLng": -87.6,
+        "minLat": 41.7,
+        "maxLng": -82.11,
+        "maxLat": 48.01
+      }
+    }
   ]
 }
