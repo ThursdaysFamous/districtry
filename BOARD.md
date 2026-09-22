@@ -97,6 +97,40 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-22, end of day. All five state sessions stood down for the night; main
+green at `ecbff07`.** Adam asked to wrap the state sessions. All five were already
+IDLE with their last turns complete, nothing unpushed and no PR of their own open —
+verified from the session records rather than assumed — so the wrap was a stand-down
+message each, not an interruption of work in flight.
+
+- **Illinois** — #1093, #1096, #1098 merged; its own `45a2c06` correction (the
+  VACANCY_SENTINELS reach is three nodes across two pages, not one) is the live
+  record and supersedes #1096's merged body.
+- **Wisconsin** — #1083, #1084, #1099 merged; the LTSB filing watcher is live. The
+  NG911 geometry rebuild stays open and stays Wisconsin's.
+- **Iowa** — #1095 merged; the 18 Plan 3 counties are a recorded gap a reader can
+  see. Re-sent Adam's preserve ruling as a standing correction, since its builder
+  deleted Bremer and Hamilton on a 500 and a genuine refusal read as a mandate.
+- **Michigan** — #1091 merged plus three board commits. **Its 23:06 self-check-in was
+  disabled** (`trig_01PaWcv8fdroQ1P424WYFE2B`): it would have woken the session into a
+  turn expecting decisions that were not coming tonight.
+- **New York** — idle since 2026-09-21 with everything shipped; nothing to stand down
+  beyond confirming it.
+
+**MICHIGAN'S TWO OPEN QUESTIONS WERE NOT CONVERTED INTO MANAGER DECISIONS, AND THAT
+WAS THE CALL.** #1086's commit 2 turns on a promise Michigan made on #1087 not to
+re-push unasked, and only the person it was made to can release it; the Keweenaw
+wash-vs-outline choice is a fleet engine change plus a record-shape change, which is
+not a thing to start at 23:10 and leave half-landed. Both carry to Adam with
+Michigan's own recommendations attached. Michigan's re-measurement of that patch —
+catching it decaying and saying so before writing "applies cleanly" into its own
+entry — is why leaving it costs nothing but a further day of decay.
+
+**One session is deliberately NOT stood down**: `session_01EipC4SzjcT91Nzy9D4HJCJ`
+(the compare-districts map labels, #1100/#1101 merged, #1103 open with its own
+23:15 merge-when-green wake). It is not a state session, it is driving its own PR,
+and stopping it mid-flight would leave an open PR nobody owns overnight.
+
 **2026-09-19, third pass. The open-PR queue is empty but for one hold.** Adam
 asked for the open PRs to be merged; two of the three went in, verified on a
 tree with `origin/main` merged rather than from a PR body.
