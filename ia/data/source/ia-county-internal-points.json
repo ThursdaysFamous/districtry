@@ -9,6 +9,48 @@
    "name": "Adair County",
    "slug": "adair"
   },
+  "black-hawk": {
+   "fips": "013",
+   "lat": 42.4769201,
+   "lng": -92.2980108,
+   "name": "Black Hawk County",
+   "slug": "black-hawk"
+  },
+  "butler": {
+   "fips": "023",
+   "lat": 42.734757,
+   "lng": -92.780153,
+   "name": "Butler County",
+   "slug": "butler"
+  },
+  "calhoun": {
+   "fips": "025",
+   "lat": 42.385907,
+   "lng": -94.6437102,
+   "name": "Calhoun County",
+   "slug": "calhoun"
+  },
+  "cass": {
+   "fips": "029",
+   "lat": 41.3338233,
+   "lng": -94.9333006,
+   "name": "Cass County",
+   "slug": "cass"
+  },
+  "chickasaw": {
+   "fips": "037",
+   "lat": 43.0597409,
+   "lng": -92.3172101,
+   "name": "Chickasaw County",
+   "slug": "chickasaw"
+  },
+  "dickinson": {
+   "fips": "059",
+   "lat": 43.3896107,
+   "lng": -95.1960572,
+   "name": "Dickinson County",
+   "slug": "dickinson"
+  },
   "floyd": {
    "fips": "067",
    "lat": 43.052741,
@@ -16,12 +58,33 @@
    "name": "Floyd County",
    "slug": "floyd"
   },
+  "guthrie": {
+   "fips": "077",
+   "lat": 41.6835728,
+   "lng": -94.5012723,
+   "name": "Guthrie County",
+   "slug": "guthrie"
+  },
+  "howard": {
+   "fips": "089",
+   "lat": 43.3653125,
+   "lng": -92.3219084,
+   "name": "Howard County",
+   "slug": "howard"
+  },
   "humboldt": {
    "fips": "091",
    "lat": 42.7822212,
    "lng": -94.2027754,
    "name": "Humboldt County",
    "slug": "humboldt"
+  },
+  "ida": {
+   "fips": "093",
+   "lat": 42.3918601,
+   "lng": -95.5074206,
+   "name": "Ida County",
+   "slug": "ida"
   },
   "johnson": {
    "fips": "103",
@@ -37,6 +100,20 @@
    "name": "Jones County",
    "slug": "jones"
   },
+  "kossuth": {
+   "fips": "109",
+   "lat": 43.2123327,
+   "lng": -94.2139713,
+   "name": "Kossuth County",
+   "slug": "kossuth"
+  },
+  "lee": {
+   "fips": "111",
+   "lat": 40.6475875,
+   "lng": -91.4771574,
+   "name": "Lee County",
+   "slug": "lee"
+  },
   "lucas": {
    "fips": "117",
    "lat": 41.0333206,
@@ -44,12 +121,40 @@
    "name": "Lucas County",
    "slug": "lucas"
   },
+  "montgomery": {
+   "fips": "137",
+   "lat": 41.0217348,
+   "lng": -95.1577896,
+   "name": "Montgomery County",
+   "slug": "montgomery"
+  },
+  "osceola": {
+   "fips": "143",
+   "lat": 43.3784695,
+   "lng": -95.6338858,
+   "name": "Osceola County",
+   "slug": "osceola"
+  },
+  "palo-alto": {
+   "fips": "147",
+   "lat": 43.0753374,
+   "lng": -94.6690546,
+   "name": "Palo Alto County",
+   "slug": "palo-alto"
+  },
   "pottawattamie": {
    "fips": "155",
    "lat": 41.3401835,
    "lng": -95.5449053,
    "name": "Pottawattamie County",
    "slug": "pottawattamie"
+  },
+  "sioux": {
+   "fips": "167",
+   "lat": 43.0826179,
+   "lng": -96.1779798,
+   "name": "Sioux County",
+   "slug": "sioux"
   },
   "tama": {
    "fips": "171",
@@ -64,6 +169,27 @@
    "lng": -93.5687512,
    "name": "Warren County",
    "slug": "warren"
+  },
+  "washington": {
+   "fips": "183",
+   "lat": 41.3294124,
+   "lng": -91.7250385,
+   "name": "Washington County",
+   "slug": "washington"
+  },
+  "winnebago": {
+   "fips": "189",
+   "lat": 43.3781243,
+   "lng": -93.7434883,
+   "name": "Winnebago County",
+   "slug": "winnebago"
+  },
+  "worth": {
+   "fips": "195",
+   "lat": 43.373491,
+   "lng": -93.2485332,
+   "name": "Worth County",
+   "slug": "worth"
   },
   "wright": {
    "fips": "197",
