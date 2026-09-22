@@ -155,11 +155,178 @@ def name_strings(data):
             for k in sorted(data, key=district_key)]
 
 
+def _ordinal(n):
+    """1 -> 1st. Chicago names each council by the ordinal of its district."""
+    if 10 <= n % 100 <= 20:
+        return "%dth" % n
+    return "%d%s" % (n, {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th"))
+
+
+def district_council_members(data):
+    """Chicago's Police District Councils: three members elected per district.
+
+    EACH COUNCIL IS ITS OWN ELECTED BODY, which is why its section sets
+    org_per_seat the way Cook's townships already do — 22 councils, not one
+    body of 65 people. The seat label IS the organisation's name in the graph,
+    so it is the council's own name ("1st District Council", as ccpsa.chicago.gov
+    writes it) rather than the bare district number, which names no body.
+
+    THE `role` IS CARRIED AND IS NOT ALWAYS AN OFFICE. The Commission publishes
+    "Chair" beside one member of each council and a committee assignment beside
+    the others ("Nominating Committee", "Community Engagement"). Both are what
+    the body itself prints against that person, so both ship; nothing here
+    promotes a committee to an office or invents a title for a member the
+    Commission lists without one.
+
+    Districts are ordered by NUMBER and not by string: 2 sorts before 10.
+    """
+    rows = []
+    for key in sorted(data, key=district_key):
+        for member in data[key].get("members") or []:
+            rows.append(("%s District Council" % _ordinal(int(key)), member))
+    return rows
+
+
+def city_council(data):
+    """A city council or commission: the at-large seats, then the wards.
+
+    SIX ROSTERS, FOUR SHAPES, and the variation is in the containers rather
+    than in the records. The at-large members are always a list under
+    `citywide`; the ward members live under `wards` in five of the six and
+    under `districts` in Detroit's, and the value is a single record in three
+    of them and a LIST in the two cities that elect more than one member per
+    ward (Grand Rapids seats two). Every record already carries its own `seat`
+    — "Mayor", "At-Large", "Ward 1", "City Council District 2" — written by the
+    city itself, so the label is read rather than composed, and a city that
+    calls its districts wards is not told it has districts.
+
+    A VACANCY IS CARRIED, NEVER DROPPED. Grand Rapids' roster reports Ward 1
+    open since a resignation in April 2026; a ward left out would make the
+    commission look one seat smaller than the city elects, which is the
+    distinction the county-board pages already make in three states.
+    """
+    rows = [(m.get("seat") or "At large", m) for m in data.get("citywide") or []]
+    wards = data.get("wards") or data.get("districts") or {}
+    vacancies = data.get("vacancies") or {}
+    for key in sorted(wards, key=district_key):
+        value = wards[key]
+        members = value if isinstance(value, list) else [value]
+        for member in members:
+            rows.append((member.get("seat") or "Ward %s" % key, member))
+        if key in vacancies:
+            # The open seat takes the label its WARD-MATES carry, so Grand
+            # Rapids' vacancy reads "Ward 1 Commissioner" beside the member who
+            # holds the ward's other seat rather than "Ward 1" beside it. Two
+            # spellings of one ward in one table read as two wards.
+            sibling = next((m.get("seat") for m in members if m.get("seat")), None)
+            rows.append((sibling or "Ward %s" % key, {"vacant": True}))
+    for key in sorted(set(vacancies) - set(wards), key=district_key):
+        rows.append(("Ward %s" % key, {"vacant": True}))
+    return rows
+
+
+def city_officials(data):
+    """Small Iowa cities whose officials reach this project through a COUNTY.
+
+    Each city is its own government, so the section sets org_per_seat and the
+    seat label is the city's name — one node per council rather than one body
+    holding four cities' mayors. The record's own `role` ("Mayor",
+    "Councilman") is what the county directory prints and is carried as it is.
+    """
+    rows = []
+    for key in sorted(data, key=lambda k: data[k]["city"]):
+        for member in data[key].get("members") or []:
+            rows.append((data[key]["city"], member))
+    return rows
+
+
+def county_officers(data):
+    """One elected officer per county, keyed by county FIPS.
+
+    THE SEAT IS THE COUNTY AND NOT THE OFFICE, because the organisation this
+    person holds office in IS the county: "Adair County" is a government with
+    a member who is its Auditor, where "Adair County Auditor" is an office and
+    naming it as an organisation would invent a body of one. The role comes
+    from the section's `holder`, so no `role` is set on the record — a Role
+    column reading "Auditor" ninety-nine times is noise, not information.
+    """
+    return [("%s County" % data[key]["county"], data[key])
+            for key in sorted(data, key=lambda k: data[k]["county"])]
+
+
+ORDINALS = {"1": "First", "2": "Second", "3": "Third", "4": "Fourth", "5": "Fifth"}
+
+
+def supreme_justices(data):
+    """Illinois's Supreme Court, three justices from Cook and one from each of
+    the other four districts. The court's own role — Chief Justice against one
+    name and Justice against the rest — is what it publishes and is carried."""
+    return [("%s District" % ORDINALS[k], j)
+            for k in sorted(data, key=district_key)
+            for j in data[k]["supreme"]]
+
+
+def appellate_justices(data):
+    """Illinois's Appellate Court: ONE court of five districts, not five courts.
+
+    So the section names a single organisation and the district is each
+    justice's `namedPosition` inside it, the way a state's congressional
+    delegation is one body rather than one per seat.
+
+    THE CLERKS ARE DELIBERATELY NOT HERE, and the reason is the page's subject
+    rather than an oversight: each district's record names its clerk of court,
+    who is appointed by the court and appears on no ballot. This site answers
+    "who represents you", and a page listing five appointed court officers
+    beside 57 elected justices would blur the two. The clerk stays in the data
+    and on the app's own card, where the question is who to contact.
+    """
+    return [("%s District" % ORDINALS[k], j)
+            for k in sorted(data, key=district_key)
+            for j in data[k]["appellate"]["justices"]]
+
+
+BOROUGH_OFFICES = (("bp", "Borough President"),
+                   ("da", "District Attorney"),
+                   ("clerk", "County Clerk"))
+
+
+def borough_officials(data):
+    """New York City's five boroughs: the president, the DA and the clerk.
+
+    THE ORDER IS THE OFFICES' AND NOT ALPHABETICAL, so a borough's president
+    sits above its district attorney on every row group rather than being
+    sorted away from them — the rule the township table already follows.
+
+    THE CLERK IS INCLUDED HERE AND THE APPELLATE CLERKS ARE NOT, which is a
+    difference in the PAGE rather than an inconsistency. il/supreme-court.html
+    answers "who is my justice" and a table of 57 elected justices with five
+    appointed officers mixed in would blur the two. This page answers "who
+    answers for my borough", carries a Role column that names each office, and
+    says in its own prose that the first two are elected and the clerk is
+    appointed by the court. A reader is told which is which either way.
+    """
+    rows = []
+    for borough in sorted(data):
+        for key, role in BOROUGH_OFFICES:
+            rec = data[borough].get(key)
+            if not rec:
+                continue
+            rows.append((borough, dict(rec, role=role)))
+    return rows
+
+
 ADAPTERS = {
+    "borough_officials": borough_officials,
+    "supreme_justices": supreme_justices,
+    "appellate_justices": appellate_justices,
+    "county_officers": county_officers,
+    "city_council": city_council,
+    "city_officials": city_officials,
     "circuit_judges": circuit_judges,
     "township_officials": township_officials,
     "school_board_members": school_board_members,
     "name_strings": name_strings,
+    "district_council_members": district_council_members,
 }
 
 
@@ -242,6 +409,118 @@ CITY_TABLES = [
                         body="the Racine Unified School District Board of Education",
                         org="Racine Unified School District Board of Education",
                         heading="Who sits on the Racine Unified school board")]),
+    # Michigan and Iowa draw city wards and named nobody in them until
+    # 2026-09-22: Detroit's 9, Grand Rapids' 6, Battle Creek's 9, Des Moines'
+    # 7, Cedar Rapids' 8, Waterloo's 7 and 24 more across four small Iowa
+    # cities appeared in no served byte of this site, found by a fleet-wide
+    # audit of rosters whose names reach no page. Each city is its OWN council,
+    # so each gets its own section and its own organisation rather than one
+    # node named for a state's worth of unrelated governments.
+    dict(tag="mi", page="city-council.html", worksheet="mi/metro-worksheet.json",
+         sections=[
+             dict(roster="data/app/mi-detroit-council-members.json",
+                  adapter="city_council", seat="Seat", holder="Council Member",
+                  office_label="City hall", body="the Detroit City Council",
+                  org="Detroit City Council",
+                  heading="Who sits on the Detroit City Council"),
+             dict(roster="data/app/mi-grand-rapids-council-members.json",
+                  adapter="city_council", seat="Seat", holder="Commissioner",
+                  office_label="City hall", body="the Grand Rapids City Commission",
+                  org="Grand Rapids City Commission",
+                  heading="Who sits on the Grand Rapids City Commission"),
+             dict(roster="data/app/mi-battle-creek-commission-members.json",
+                  adapter="city_council", seat="Seat", holder="Commissioner",
+                  office_label="City hall", body="the Battle Creek City Commission",
+                  org="Battle Creek City Commission",
+                  heading="Who sits on the Battle Creek City Commission"),
+         ]),
+    dict(tag="ia", page="city-council.html", worksheet="ia/metro-worksheet.json",
+         sections=[
+             dict(roster="data/app/dsm-council-members.json",
+                  adapter="city_council", seat="Seat", holder="Council Member",
+                  office_label="City hall", body="the Des Moines City Council",
+                  org="Des Moines City Council",
+                  heading="Who sits on the Des Moines City Council"),
+             dict(roster="data/app/cedar-rapids-council-members.json",
+                  adapter="city_council", seat="Seat", holder="Council Member",
+                  office_label="City hall", body="the Cedar Rapids City Council",
+                  org="Cedar Rapids City Council",
+                  heading="Who sits on the Cedar Rapids City Council"),
+             dict(roster="data/app/waterloo-council-members.json",
+                  adapter="city_council", seat="Seat", holder="Council Member",
+                  office_label="City hall", body="the Waterloo City Council",
+                  org="Waterloo City Council",
+                  heading="Who sits on the Waterloo City Council"),
+             # FOUR CITIES, FOUR COUNCILS, one file: these reach this project
+             # through their COUNTY's own directory rather than through a city
+             # page, so the seat is the city's name and each city is its own
+             # organisation. They elect at large and have no wards drawn.
+             dict(roster="data/app/ia-city-officials.json",
+                  adapter="city_officials", seat="City", holder="Council Member",
+                  role_label="Office", unit="elected officials", prep="in",
+                  office_label="City hall",
+                  body="four Iowa cities whose officials their county publishes",
+                  org_per_seat=True,
+                  heading="Who holds each office in four more Iowa cities"),
+         ]),
+    # New York City's borough-level offices: 15 people across five boroughs,
+    # in no served byte of this site until 2026-09-22. Each borough is its own
+    # government, so each is its own organisation.
+    dict(tag="ny", page="borough.html", worksheet="ny/metro-worksheet.json",
+         sections=[dict(roster="data/app/borough-officials.json",
+                        adapter="borough_officials",
+                        seat="Borough", holder="Officeholder", role_label="Office",
+                        office_label="Office", unit="borough officers", prep="in",
+                        body="New York City's borough governments",
+                        org_per_seat=True,
+                        heading="Who holds each borough office")]),
+    # Illinois's two highest elected courts, both drawn on the same five
+    # judicial districts and both named in no served byte until 2026-09-22.
+    dict(tag="il", page="supreme-court.html", worksheet="metro-worksheet.json",
+         sections=[
+             dict(roster="data/app/il-court-justices.json",
+                  adapter="supreme_justices",
+                  seat="District", holder="Justice", role_label="Role",
+                  unit="justices", prep="on",
+                  body="the Supreme Court of Illinois",
+                  org="Supreme Court of Illinois",
+                  heading="Who sits on the Supreme Court of Illinois"),
+             dict(roster="data/app/il-court-justices.json",
+                  adapter="appellate_justices",
+                  seat="District", holder="Justice",
+                  unit="justices", prep="on",
+                  body="the Appellate Court of Illinois",
+                  org="Appellate Court of Illinois",
+                  heading="Who sits on the Appellate Court of Illinois"),
+         ]),
+    # Iowa's county auditors: one per county, the county's own chief election
+    # officer, and 99 named people who reached no served byte of this site
+    # until 2026-09-22. They are recorded in build_county_pages.py's
+    # NOT_COUNTY_BOARDS — correctly, an auditor is not a supervisor — and that
+    # reason says why they are not on the BOARD pages, never that they should
+    # reach no page at all.
+    dict(tag="ia", page="county-auditor.html", worksheet="ia/metro-worksheet.json",
+         sections=[dict(roster="data/app/ia-county-auditors.json",
+                        adapter="county_officers",
+                        seat="County", holder="Auditor",
+                        office_label="Office", unit="county auditors", prep="in",
+                        body="Iowa's county auditors",
+                        org_per_seat=True,
+                        heading="Who is the auditor in each Iowa county")]),
+    # Chicago's District Councils ride the page the police-district layer
+    # already has, because they are elected ON that boundary — one council per
+    # police district — and a reader asking "what police district am I in" is
+    # one step from "who sits on its council". 65 people who reached no served
+    # byte of this site until 2026-09-22, measured by a fleet-wide audit of
+    # rosters whose names appear on no page.
+    dict(tag="il", page="police-district.html", worksheet="metro-worksheet.json",
+         sections=[dict(roster="data/app/ccpsa-district-councils.json",
+                        adapter="district_council_members",
+                        seat="Council", holder="Member", role_label="Role",
+                        unit="elected members", prep="on",
+                        body="Chicago's Police District Councils",
+                        org_per_seat=True,
+                        heading="Who sits on each Police District Council")]),
     dict(tag="il", page="school-board.html", worksheet="metro-worksheet.json",
          sections=[dict(roster="data/app/school-board-members.json",
                         adapter="name_strings",

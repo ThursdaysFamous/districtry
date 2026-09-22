@@ -25,6 +25,7 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 - [Which Chicago school board district am I in?](https://districtry.com/il/school-board.html)
 - [Sources & data layers](https://districtry.com/il/sources.html)
 - [Who is my Illinois state legislator?](https://districtry.com/il/state-legislature.html)
+- [Who is my Supreme Court justice?](https://districtry.com/il/supreme-court.html)
 - [What township am I in?](https://districtry.com/il/township.html)
 - [Who is my alderman? Chicago wards](https://districtry.com/il/ward.html)
 - [Chicago district questions](https://districtry.com/il/faq.html)
@@ -35,6 +36,7 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 Counties, towns and villages, school and judicial districts across the state, plus the city's boroughs, Council and community districts, NYPD precincts and school zones.
 
 - [New York district lookup](https://districtry.com/ny/): 33 layers, 5 boroughs.
+- [Who is my borough president?](https://districtry.com/ny/borough.html)
 - [What community board am I in?](https://districtry.com/ny/community-board.html)
 - [Who is my U.S. representative?](https://districtry.com/ny/congress.html)
 - [What Council district am I in?](https://districtry.com/ny/council-district.html)
@@ -73,7 +75,9 @@ County boards, circuit courts, wards and aldermanic districts across all 72 coun
 All 99 counties: supervisor districts with each county's own election plan, townships and cities, school districts, ZIP codes and post offices — and the Iowa Senate, House and U.S. House seats, and who holds those.
 
 - [Iowa district lookup](https://districtry.com/ia/): 20 layers, all 99 counties.
+- [Who is on my city council?](https://districtry.com/ia/city-council.html)
 - [Who is my U.S. representative?](https://districtry.com/ia/congress.html)
+- [Who is my county auditor?](https://districtry.com/ia/county-auditor.html)
 - [Who is my county supervisor?](https://districtry.com/ia/county-supervisor.html): links a page per county, 91 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/ia/sources.html)
 - [Who is my Iowa legislator?](https://districtry.com/ia/state-legislature.html)
@@ -85,6 +89,7 @@ All 99 counties: supervisor districts with each county's own election plan, town
 All 83 counties: commissioner districts, compiled by the state from the plan each county's apportionment commission files — plus townships and charter townships, cities and villages, school districts, and the Michigan Senate, House and U.S. House seats, and who holds those.
 
 - [Michigan district lookup](https://districtry.com/mi/): 15 layers, all 83 counties.
+- [Who is on my city council?](https://districtry.com/mi/city-council.html)
 - [Who is my U.S. representative?](https://districtry.com/mi/congress.html)
 - [County commissioner district lookup](https://districtry.com/mi/county-commissioner.html): links a page per county, 83 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/mi/sources.html)

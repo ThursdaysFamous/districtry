@@ -19,6 +19,7 @@ twenty are city council wards.
 
 | task | state | opened | notes |
 |---|---|---|---|
+| **#1091 held: the 35 pages say "exactly as the county publishes them"** | **assigned, do FIRST** | 2026-09-22 | Reviewed on your head `20e2683`. The DATA is right and the app card is right — your records carry `lede`, `cta_note` and `desc` exactly as briefed. The PER-COUNTY PAGE is a different surface and `build_county_pages.py` on main has no hook to read them, because that hook is `f88da62` on my branch. So every one of the 35 renders the default districted lede: `mi/county-commissioner/oakland.html` reads "…the 19 members who hold them, **exactly as the county publishes them**" and its meta description reads "from the county's own published roster", about a county that answers HTTP 403 to every client. Manistee (returns) and Alcona (scraped) are word-for-word identical, so a reader cannot tell the two routes apart. **Fix: merge main in once #1089 lands and regenerate** — nothing in your data changes. Detail on the PR. Everything else I checked stands: boundary file still name-free with `BANNED_FIELDS` untouched, staleness re-measured on 366 seats rather than 123, Manistee District 6 confirming the Wayne case on this cohort, and `Jason L. Nelso` shipping as certified with the reasoning written down — correcting it would be inventing a name. |
 | **Open the certified-returns route for all 35 unserved counties** | **assigned, do FIRST** | 2026-09-22 | **Adam's ruling today**, after I put three options to him: ship the 35 from the state layer's OWN name column — the one `build_mi_commissioner_districts.py` discards — under the **Clark / Union / Williamson posture**: every row names the November 2024 election that seated it and never claims currency. He chose ALL 35, not only the dark ones. **THE 2026-09-03 DECISION TO DISCARD THAT COLUMN STANDS AND IS NOT REVERSED.** It was right: a roster attached to a boundary is refreshed when the boundary is, and printing those names as CURRENT would have shipped a woman who died in June 2025 as Wayne District 5's commissioner. What changes is only that a name may be published when the row SAYS what it is. Build a SEPARATE roster file from the same upstream layer; `mi-commissioner-districts.json` stays name-free. **Four traps, all of them yours already.** (1) The misspellings — Markam/Markham, Wuerful/Wuerfel, Richarc/Richard, Sealberg/Seaberg — were found in the SERVED sample; re-measure on the 35 and decide in writing what a row does when the certified spelling is the only spelling there is. (2) The 100% fill rate is evidence AGAINST maintenance, so no row may imply upkeep. (3) A winner who has since died or resigned is the Wayne D5 case; Wayne is served and not among the 35, but re-check the 35 before shipping. (4) Washtenaw, Bay, Manistee, Newaygo and Van Buren PUBLISH names and only the parsing is hard — they ship on this route too, and each should carry a note that a scraper remains the better answer for them. **The generator hooks are in and you are not blocked on me**: `districted_body` now takes `lede`, `cta_note` and `desc` off the record, the same three overrides the flat renderer got in #1088, so your roster supplies its own provenance sentence and a record carrying none renders byte-identically. Write a gate that FAILS if a record on this route carries no `lede`. robots.txt read as the fetching client, as always. |
 | **Commissioner roster covers 48 of 83 counties** | **assigned — tranche 6** | — | The headline gap and the layer the instance was built around. Tranche 5 merged `3fb9820`: 229 of 619 seats, 55.1% of the state by population. The 22 remaining probe candidates need no new discovery and their pages are already saved, so tranche 6 costs no fetch. |
 | Detroit PR-body proposal | open, below tranche work | — | The weekly Detroit PR body is one static paragraph, identical every week whatever changed, so it cannot tell a reviewer that a run moved a snapshot stamp rather than a person's name. Real, unwritten anywhere in the repo, and worth less than the roster — Michigan's own measurement. |
@@ -29,6 +30,44 @@ twenty are city council wards.
 the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
+
+**2026-09-22, the certified-returns route is built and open as #1091 — all 83 counties name a
+commissioner, 615 of 619 districts in the served bytes, up from 366.** Adam's ruling built to
+the Clark posture: a separate file, `mi-commissioner-returns.json`, every record carrying its
+own sentence naming the general election of 5 November 2024, the builder refusing to write one
+without it, and the card's badge reading "Elected Nov 2024" rather than "Commissioner" —
+a bare office badge is the claim the 2026-09-03 decision refused. The boundary file stays
+name-free and its BANNED_FIELDS guard is untouched.
+
+**The staleness measurement is the part worth keeping, and it is 366 seats rather than 123.**
+The 48 scraped counties give a comparand for every seat the state layer also covers: 234
+identical, 104 the same surname in a different form, 28 a different surname — and those 28
+read by hand are 18 naming a DIFFERENT PERSON (4.9%), 9 misspelling the same one and 1 a
+missing space. On the 35 themselves only Manistee renders names in its served bytes, and there
+6 of 7 match while District 6 does not: certified David Miehlke, the county's own page names
+Karen Goodman. The Wayne case confirmed on this cohort rather than assumed.
+
+**Two counties could not be measured and are recorded as that rather than as agreement.** Van
+Buren renders its directory through a component, so none of its seven names is in the served
+bytes and a substring test reads 0 of 7 — the method failing, not the county changing; the one
+apparent hit was inside a CSS `repeat(...)`. Newaygo's board URL in the probe artifact, read
+2026-09-19, answers 404 today.
+
+**Nothing is corrected and one spelling is recorded.** On the 35 the certified spelling is the
+only spelling there is. Nineteen one-edit surname pairs across the layer reduce to three
+candidates under an asymmetry filter, and Wexford District 2's `Jason L. Nelso` ships as
+certified with the reasoning written down.
+
+**Two things this change had to correct rather than add, and both were mine.** Two gap-record
+summaries said the cards "name no one" in those counties, which my own change made false to a
+reader. And the Michigan smoke test asserted that Ingham names nobody and "must not fall back
+to the boundary column" — the old rule written down as a test. It is rewritten rather than
+deleted: what it guarded moved rather than went away.
+
+**Three labels of mine were wrong today and the code was right each time** — I called Ingham a
+served county, guessed Genesee's FIPS as 081 when it is 049, and chased a duplicated line that
+my own `sed` had printed twice. Each cost a detour and none reached the tree. Look the county
+up; do not name it from memory.
 
 **2026-09-22, #1086 was closed and #1087 carries its first commit. A reader-facing miss
 survives on main and I measured it rather than assuming the outlines closed it.** The point

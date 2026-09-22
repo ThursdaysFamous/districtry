@@ -35,6 +35,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # FULL history, because this job now regenerates sitemap.xml and
+          # build_sitemap.py reads each page's lastmod from that file's own last commit.
+          # Under a depth-1 checkout every entry takes today's date and the sitemap check
+          # passes on it anyway — the measurement is in update-wi-circuit-court-roster.yml.
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -86,9 +91,20 @@ jobs:
           # Re-cutting leaves this branch differing from main in its data file(s)
           # alone; the rebuilt files are carried across, and a run where main
           # touched those same files errors instead of pushing, which is right.
-          git fetch --depth=1 origin main
+          # NOT depth-limited: a shallow fetch would re-shallow the clone the
+          # checkout above deepened, and date every page in the sitemap today.
+          git fetch origin main
           git checkout -B "$branch" FETCH_HEAD
-          git add ia/data/app/ia-county-auditors.json
+          # REGENERATED HERE, AFTER THE CUT, AND NOT BEFORE IT. ia/county-auditor.html
+          # states counts read off the roster this job just rewrote and carries its
+          # officeholder table, so it must be rebuilt in the same run or the smoke gate
+          # fails on this job's own pull request. Building before the cut leaves shared
+          # files dirty, where `git checkout -B` refuses to move onto main's new tip.
+          python3 scripts/build_concept_pages.py
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add ia/data/app/ia-county-auditors.json ia/county-auditor.html about.html sitemap.xml
           git commit -m "Update IA county auditor roster from iowaauditors.org"
           git push -u origin "$branch" --force
           # Only open a PR if one isn't already open for this branch; if it is,

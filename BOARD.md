@@ -74,6 +74,10 @@ belongs on that instance's board instead.
 
 | task | owner | state | opened |
 |---|---|---|---|
+| **Officeholders in rosters that reach no served byte** | manager | **in progress** — #1089 open, 310 shipped | 2026-09-22 |
+| ↳ *measurement*: a fleet audit of every roster in every instance's `data/app` and `data/source` against all 367 authored pages, raw and escaped, found **~500 named officeholders in NO served byte** and **~8,800 more** in rosters where fewer than half the names reach a page. Harness validated first: NYC 51/51 and SF 11/11 read as published, Detroit 0/9 as missing. | | | |
+| ↳ *shipped in #1089*: Chicago's 65 Police District Council members onto the existing police-district page; new `mi/city-council.html` (24), `ia/city-council.html` (46), `ia/county-auditor.html` (99), `il/supreme-court.html` (64), `ny/borough.html` (12). The tables now carry **2,075** people against 1,765 before. | | | |
+| ↳ *open, needs Adam*: Illinois's special-district boards. The right source is the STATEWIDE `il-special-district-officials.json` (889) + `il-library-district-officials.json` (392), not the six per-county subsets (229) — which puts the page past the ~500 set he chose and into the ~8,800. And four thin rosters with no non-thin home: BART directors (9), Milwaukee police captains (7), Cook library trustees (8), Cook Board of Review (3). | | | |
 | Roster workflows: regenerate shared pages after the branch cut | IL + WI | **merged** #1030 `5338913`, #1031 `f2a0d88` | 2026-09-19 |
 | Absolute gate on every shipped officeholder name | New York | **merged** #1025 `a3d11c0` | 2026-09-19 |
 | #1025 and #1028 collided with no git conflict. | New York | **closed** — New York merged main in first and measured all four states rather than dropping the entry blind, so the branch was correct in either merge order | 2026-09-19 |

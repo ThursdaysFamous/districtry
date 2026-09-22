@@ -485,6 +485,313 @@ def school_board_page(tag, spec, worksheet):
                 lede=lede, sections=sections, named=named)
 
 
+def borough_page(tag, spec, worksheet):
+    """New York City's boroughs, and the three offices each one fills.
+
+    THE COUNTS ARE READ, including how many of the fifteen offices the roster
+    names, because an office between officeholders is a real state and a page
+    that says "fifteen" while naming fourteen is wrong about a vacancy.
+    """
+    boroughs = load(spec["counts"][0])
+    offices = sum(len(rec) for rec in boroughs.values())
+    named = sum(1 for rec in boroughs.values() for v in rec.values()
+                if isinstance(v, dict) and v.get("name"))
+
+    lede = dict(
+        html='<p class="lede"><strong>A borough is also a county, and it fills three '
+             'offices of its own.</strong> New York City\'s %d boroughs each elect a '
+             'borough president and a district attorney, and each has a county clerk; '
+             'this names <strong>%d</strong> of the %d.</p>'
+             % (len(boroughs), named, offices),
+        cta='    <a class="cta" href="./#layers=%s">Find your borough →</a>\n'
+            '    <p class="cta-note">Opens the map with the borough layer on. Search your '
+            'address or ZIP, or tap your location.</p>' % spec["layers"])
+
+    sections = """  <section>
+    <h2>What the lookup shows</h2>
+    <div class="answer-card">
+      <p>Select any point in the city and the card names the <strong>borough</strong>
+        covering it. The table below names that borough's president, its district attorney
+        and its county clerk, with a link to each office.</p>
+      <p>These are borough-wide offices, so the answer is the same anywhere inside the
+        borough — there are no districts within them to be in.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Two of the three are on your ballot</h2>
+    <p>The borough president and the district attorney are elected by the borough's own
+      voters. The county clerk in the five boroughs is appointed by the court rather than
+      elected, and is here because it is the office to go to for county records — the
+      table names each office so the difference is visible rather than implied.</p>
+  </section>
+
+  <section>
+    <h2>Where the names come from</h2>
+    <p>Each office's own published page, checked by hand and landing as a reviewed pull
+      request. An office the roster does not name is shown as unnamed rather than left
+      out.</p>
+%(disclaimer)s
+  </section>
+
+""" % dict(disclaimer=DISCLAIMER)
+
+    subtitle = "New York City borough lookup — free, by address, ZIP, or a tap on the map."
+    desc = ("Which New York City borough you are in, and who holds its three offices — "
+            "borough president, district attorney and county clerk.")
+    og = ("Find your New York City borough and the %d people who hold its borough-level "
+          "offices." % named)
+    return dict(title="Who is my borough president?", subtitle=subtitle, desc=desc, og=og,
+                lede=lede, sections=sections, named=named)
+
+
+def supreme_court_page(tag, spec, worksheet):
+    """Illinois's two highest elected courts, drawn on one set of districts.
+
+    ONE PAGE FOR BOTH, because they share the geometry: an Illinois judicial
+    district elects its Supreme Court justice AND its Appellate Court justices,
+    so a reader who has found their district has found both answers. Splitting
+    them would be two pages over one map.
+
+    EVERY COUNT IS READ, including how many justices each court seats, because
+    Cook County elects three of the seven Supreme Court justices and one
+    retirement moves the appellate figure.
+    """
+    courts = load(spec["counts"][0])
+    supreme = sum(len(d["supreme"]) for d in courts.values())
+    appellate = sum(len(d["appellate"]["justices"]) for d in courts.values())
+    cook = len(courts["1"]["supreme"])
+
+    lede = dict(
+        html='<p class="lede"><strong>Illinois elects its judges, and the district you '
+             'live in decides which ones you vote on.</strong> The state is divided into '
+             '%d judicial districts; each elects justices to the Supreme Court and to the '
+             'Appellate Court, and this names all <strong>%d</strong> of them — %d on the '
+             'Supreme Court, %d on the Appellate Court.</p>'
+             % (len(courts), supreme + appellate, supreme, appellate),
+        cta='    <a class="cta" href="./#layers=%s">Find your judicial district →</a>\n'
+            '    <p class="cta-note">Opens the map with the judicial district layer on. '
+            'Search your address or ZIP, or tap your location.</p>' % spec["layers"])
+
+    sections = """  <section>
+    <h2>What the lookup shows</h2>
+    <div class="answer-card">
+      <p>Select any point in Illinois and the card names the <strong>judicial
+        district</strong> covering it. The tables below name the justices that district
+        elects to each court.</p>
+      <p>The First District is Cook County alone and elects %(cook)d of the Supreme
+        Court's %(supreme)d justices; the other four districts cover the rest of the state
+        and elect one each.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>A judicial district is not a subcircuit</h2>
+    <p>A judicial district elects the justices of the two courts above the trial court. A
+      <a href="judicial-subcircuit.html">judicial subcircuit</a> is a smaller shape inside
+      one county that elects a CIRCUIT judge — who then sits across the whole circuit, which
+      is why no judge belongs to a subcircuit once elected. The two answer different
+      questions and this map draws both.</p>
+  </section>
+
+  <section>
+    <h2>Where the names come from</h2>
+    <p>The Illinois courts' own published rosters, re-read on a schedule and landing as a
+      reviewed pull request. The Supreme Court publishes which of its justices is Chief
+      Justice, and that is carried; the Appellate Court publishes no such role and none is
+      supplied.</p>
+%(disclaimer)s
+  </section>
+
+""" % dict(disclaimer=DISCLAIMER, cook=cook, supreme=supreme)
+
+    subtitle = "Illinois judicial district lookup — free, by address, ZIP, or a tap on the map."
+    desc = ("Which Illinois judicial district you live in, and the Supreme Court and "
+            "Appellate Court justices it elects.")
+    og = ("Find your Illinois judicial district and the %d justices it elects to the "
+          "Supreme and Appellate Courts." % (supreme + appellate))
+    return dict(title="Who is my Supreme Court justice?", subtitle=subtitle,
+                desc=desc, og=og, lede=lede, sections=sections,
+                named=supreme + appellate)
+
+
+def county_auditor_page(tag, spec, worksheet):
+    """Who runs elections in an Iowa county, and keeps its records.
+
+    ONE OFFICER PER COUNTY, so every number here is read off the roster on the
+    run that writes the page: how many counties it names, and how many of them
+    publish a party. "Iowa has 99 counties" is stated because it cannot move;
+    everything else is counted.
+
+    THE OFFICE IS DESCRIBED BY WHAT IT DOES AND NOT BY ITS TERM. Iowa Code
+    fixes the term and this page cites no statute, so it says what the auditor
+    is — the county's commissioner of elections and the keeper of its records —
+    and leaves the law to the law.
+    """
+    auditors = load(spec["counts"][0])
+    named = sum(1 for rec in auditors.values() if rec.get("name"))
+    with_party = sum(1 for rec in auditors.values() if rec.get("party"))
+
+    lede = dict(
+        html='<p class="lede"><strong>The county auditor is the person who runs your '
+             'election.</strong> Every Iowa county elects one, countywide, and the same '
+             'officer keeps the county\'s records and pays its bills. This names '
+             '<strong>%s</strong>, with the office and a telephone number for each.</p>'
+             % ("all 99" if named == 99 else "%d of the 99" % named),
+        cta='    <a class="cta" href="./#layers=%s">Find your county →</a>\n'
+            '    <p class="cta-note">Opens the map with the county layer on. Search your '
+            'address or ZIP, or tap your location.</p>' % spec["layers"])
+
+    sections = """  <section>
+    <h2>What the lookup shows</h2>
+    <div class="answer-card">
+      <p>Select any point in Iowa and the card names the <strong>county</strong> covering
+        it. The table below names that county's auditor, the office they work from and a
+        number to call.</p>
+      <p>An auditor answers for the whole county, so the answer is the same anywhere
+        inside it — there are no auditor districts to be in.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why this is the office to call about an election</h2>
+    <p>In Iowa the county auditor is the commissioner of elections: the office that
+      registers voters, sets the polling places, prints the ballot and certifies the
+      result. A question about where you vote, whether you are registered, or what a
+      result was is a question for this office rather than for the county board.</p>
+  </section>
+
+  <section>
+    <h2>Where the names come from</h2>
+    <p>Each county's own published directory, re-read on a schedule and landing as a
+      reviewed pull request. %(party_note)s</p>
+%(disclaimer)s
+  </section>
+
+""" % dict(disclaimer=DISCLAIMER,
+           party_note=(
+               "Every one of them names a party."
+               if with_party == named else
+               "%d of the %d name a party; the rest publish none, and this page "
+               "prints none for them rather than supplying one."
+               % (with_party, named)))
+
+    subtitle = "Iowa county auditor lookup — free, by address, ZIP, or a tap on the map."
+    desc = ("Who is your Iowa county auditor — the officer who runs your election — "
+            "by address or ZIP.")
+    og = ("Find your Iowa county auditor, the county's own commissioner of elections, "
+          "across %d counties." % named)
+    return dict(title="Who is my county auditor?", subtitle=subtitle, desc=desc, og=og,
+                lede=lede, sections=sections, named=named)
+
+
+def city_council_page(tag, spec, worksheet):
+    """Who sits on a city council, in the states that draw city wards.
+
+    ONE FUNCTION, TWO INSTANCES, because it is one concept: a city elects some
+    members from wards and some at large, and the map already draws the wards.
+    Everything the prose states is COUNTED on the run that writes the page —
+    how many cities have ward geometry, how many of those have a roster, and
+    how many people it names — because "Michigan draws six cities' wards" is
+    exactly the sentence that survives a seventh city unread.
+
+    THE CITIES DRAWN WITHOUT A ROSTER ARE NAMED RATHER THAN OMITTED. Michigan
+    draws Flint, Warren and Rochester Hills and names nobody in them; a page
+    that listed three cities and said nothing about the other three would read
+    as though the map covered three.
+    """
+    wards = {name: len(load(path)["features"])
+             for name, path in spec["wards"]}
+    # THE TWO COUNTS ARE KEPT APART BECAUSE THEY DESCRIBE DIFFERENT PLACES.
+    # Iowa's page names 22 people in the three cities whose wards this map
+    # draws and 24 more in four cities it does not draw at all, and one total
+    # of 46 beside "draws the wards of 3 cities" reads as though all 46 sat in
+    # those three. The first draft printed exactly that.
+    in_wards, at_large_cities, at_large_named = 0, 0, 0
+    for _label, path, adapter in spec["rosters"]:
+        data = load(path)
+        if adapter == "city_officials":
+            at_large_cities += len(data)
+            at_large_named += sum(1 for rec in data.values()
+                                  for m in rec.get("members") or [] if m.get("name"))
+            continue
+        in_wards += sum(1 for m in data.get("citywide") or [] if m.get("name"))
+        inner = data.get("wards") or data.get("districts") or {}
+        for value in inner.values():
+            for m in (value if isinstance(value, list) else [value]):
+                if m.get("name"):
+                    in_wards += 1
+    named = in_wards + at_large_named
+    rostered = {label for label, _p, a in spec["rosters"] if a != "city_officials"}
+    unrostered = sorted(c for c in wards if c not in rostered)
+    place = spec["place"]
+
+    missing = ("" if not unrostered else
+               " The map also draws %s, where no roster this project can read "
+               "names the members, so those wards answer with the ward number "
+               "and nothing else." % _join(unrostered))
+    elsewhere = ("" if not at_large_named else
+                 " %d more sit on the councils of %d smaller %s cities that "
+                 "elect at large and have no wards to draw; their own county "
+                 "publishes the names."
+                 % (at_large_named, at_large_cities, esc(spec["place"])))
+    lede = dict(
+        html='<p class="lede"><strong>A city council seat is the one on your ballot '
+             'closest to your street.</strong> %s draws the wards of %d %s, and this '
+             'names the <strong>%d people</strong> who hold their seats — the members '
+             'elected by one ward, and the mayor and at-large members elected by the '
+             'whole city.%s%s</p>'
+             % (esc(place), len(wards), "city" if len(wards) == 1 else "cities",
+                in_wards, missing, elsewhere),
+        cta='    <a class="cta" href="./#layers=%s">Find your ward →</a>\n'
+            '    <p class="cta-note">Opens the map with the city ward layer on. Search '
+            'your address or ZIP, or tap your location.</p>' % spec["layers"])
+
+    sections = """  <section>
+    <h2>What the lookup shows</h2>
+    <div class="answer-card">
+      <p>Select any point inside one of these cities and the card names the
+        <strong>ward</strong> covering it. The table below names the member who holds
+        that ward's seat, and the members elected by the city as a whole.</p>
+      <p>Outside those cities the map still answers with the county, the school district
+        and everything else drawn over that point; a city with no wards drawn here simply
+        has no ward card.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>A ward seat and an at-large seat are not the same job</h2>
+    <p>A ward member is elected by the voters of one part of the city and is the person to
+      write to about that part of it. An at-large member and the mayor are elected by
+      everyone, so they answer for the whole city and appear against every address in it.
+      Both are on this page, labelled as the city itself labels them.</p>
+  </section>
+
+  <section>
+    <h2>Where the names come from</h2>
+    <p>Each city's own published roster, re-read on a schedule and landing as a reviewed
+      pull request. A seat the city reports open is shown as vacant rather than left out,
+      because leaving it out would make the council look smaller than the city elects.</p>
+%(disclaimer)s
+  </section>
+
+""" % dict(disclaimer=DISCLAIMER)
+
+    subtitle = "%s city council lookup — free, by address, ZIP, or a tap on the map." % place
+    desc = ("Who represents you on your %s city council — your ward and the member who "
+            "holds it, by address or ZIP." % place)
+    og = ("Find your city ward in %s and the council member who holds it, across %d "
+          "cities." % (place, len(wards)))
+    return dict(title="Who is on my city council?", subtitle=subtitle, desc=desc, og=og,
+                lede=lede, sections=sections, named=named)
+
+
+def _join(names):
+    if len(names) == 1:
+        return names[0]
+    return "%s and %s" % (", ".join(names[:-1]), names[-1])
+
+
 # ------------------------------------------------------------------- the table
 
 PAGES = [
@@ -501,6 +808,69 @@ PAGES = [
          sibling=dict(page="circuit-court.html",
                       label="Who is my circuit court judge?",
                       note="The other lookup that answers by county rather than by city.")),
+    dict(tag="mi", file="city-council.html", worksheet="mi/metro-worksheet.json",
+         layers="city-ward", make=city_council_page, place="Michigan",
+         wards=[("Battle Creek", "mi/data/app/mi-battle-creek-wards.json"),
+                ("Detroit", "mi/data/app/mi-detroit-council-districts.json"),
+                ("Flint", "mi/data/app/mi-flint-wards.json"),
+                ("Grand Rapids", "mi/data/app/mi-grand-rapids-wards.json"),
+                ("Rochester Hills", "mi/data/app/mi-rochester-hills-wards.json"),
+                ("Warren", "mi/data/app/mi-warren-wards.json")],
+         rosters=[("Detroit", "mi/data/app/mi-detroit-council-members.json", "city_council"),
+                  ("Grand Rapids", "mi/data/app/mi-grand-rapids-council-members.json",
+                   "city_council"),
+                  ("Battle Creek", "mi/data/app/mi-battle-creek-commission-members.json",
+                   "city_council")],
+         counts=["mi/data/app/mi-detroit-council-members.json",
+                 "mi/data/app/mi-grand-rapids-council-members.json",
+                 "mi/data/app/mi-battle-creek-commission-members.json",
+                 "mi/data/app/mi-battle-creek-wards.json",
+                 "mi/data/app/mi-detroit-council-districts.json",
+                 "mi/data/app/mi-flint-wards.json",
+                 "mi/data/app/mi-grand-rapids-wards.json",
+                 "mi/data/app/mi-rochester-hills-wards.json",
+                 "mi/data/app/mi-warren-wards.json"],
+         sibling=dict(page="county-commissioner.html",
+                      label="Who is my county commissioner?",
+                      note="The government your city sits inside.")),
+    dict(tag="ia", file="county-auditor.html", worksheet="ia/metro-worksheet.json",
+         layers="county", make=county_auditor_page,
+         counts=["ia/data/app/ia-county-auditors.json"],
+         sibling=dict(page="county-supervisor.html",
+                      label="Who is my county supervisor?",
+                      note="The board the auditor reports the election to.")),
+    dict(tag="ia", file="city-council.html", worksheet="ia/metro-worksheet.json",
+         layers="city-ward", make=city_council_page, place="Iowa",
+         wards=[("Cedar Rapids", "ia/data/app/cedar-rapids-wards.json"),
+                ("Des Moines", "ia/data/app/dsm-wards.json"),
+                ("Waterloo", "ia/data/app/waterloo-wards.json")],
+         rosters=[("Des Moines", "ia/data/app/dsm-council-members.json", "city_council"),
+                  ("Cedar Rapids", "ia/data/app/cedar-rapids-council-members.json",
+                   "city_council"),
+                  ("Waterloo", "ia/data/app/waterloo-council-members.json", "city_council"),
+                  ("small cities", "ia/data/app/ia-city-officials.json", "city_officials")],
+         counts=["ia/data/app/dsm-council-members.json",
+                 "ia/data/app/cedar-rapids-council-members.json",
+                 "ia/data/app/waterloo-council-members.json",
+                 "ia/data/app/ia-city-officials.json",
+                 "ia/data/app/cedar-rapids-wards.json",
+                 "ia/data/app/dsm-wards.json",
+                 "ia/data/app/waterloo-wards.json"],
+         sibling=dict(page="county-supervisor.html",
+                      label="Who is my county supervisor?",
+                      note="The government your city sits inside.")),
+    dict(tag="ny", file="borough.html", worksheet="ny/metro-worksheet.json",
+         layers="borough", make=borough_page,
+         counts=["ny/data/app/borough-officials.json"],
+         sibling=dict(page="council-district.html",
+                      label="Who is my Council Member?",
+                      note="The seat inside the borough, drawn smaller.")),
+    dict(tag="il", file="supreme-court.html", worksheet="metro-worksheet.json",
+         layers="il-supreme-court", make=supreme_court_page,
+         counts=["il/data/app/il-court-justices.json"],
+         sibling=dict(page="judicial-subcircuit.html",
+                      label="What is a judicial subcircuit?",
+                      note="The other judicial shape on this map, and a different court.")),
     dict(tag="il", file="township.html", worksheet="metro-worksheet.json",
          layers="township", make=township_page,
          counts=[TOWNSHIP_ROSTER],
