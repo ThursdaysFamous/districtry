@@ -44,6 +44,19 @@ the old way rather than inventing an empty seat. The party marker stranded on
 the emptied page belongs to the FORMER holder and is not carried: the seat has
 no party, the person who left it did.
 
+AND THE COUNTY WRITES A VACANCY TWO WAYS. District 2 above is the blank kind —
+the name deleted, the party marker left behind. District 16 emptied between the
+2026-09-01 refresh, which still named a member, and the 2026-09-22 one, and its
+page reads "vacant (R)": the county's own word printed where the name was. That
+line carries a party marker, so the name branch took it and returned the literal
+string "vacant", which is truthy, so the seat shipped as a MEMBER of that name —
+a schema.org Person called vacant, affiliated Republican, on the county's own
+page (#1093, held before it merged). Both shapes now land on the same path, and
+both are pinned in PARSE_SELFTEST below rather than left to a live run: the
+blank shape had been exercised weekly since 2026-08-18 and said nothing about
+this one, because a live run only ever tests the shapes the county is publishing
+that week.
+
 Usage:
     python3 sangamon_county_board_scraper.py [output.json]
 """
@@ -135,7 +148,22 @@ def parse(page, district):
             # these pages does, so this never has to guess which line is a name.
             continue
         rec["party"] = party.group(1)
-        rec["name"] = PARTY_RE.sub("", line).strip(" ,")
+        name = PARTY_RE.sub("", line).strip(" ,")
+        if VACANT_RE.match(name):
+            # THE COUNTY WRITES A VACANCY TWO WAYS ON THE SAME KIND OF PAGE, and
+            # only one of them used to survive. District 2 prints a bare "(R)",
+            # so this loop finds a party and an EMPTY name and main() asks the
+            # index. District 16 prints "vacant (R)" -- a party marker on the
+            # line, so the name branch takes it and returns the literal string
+            # "vacant", which main() reads as a member because it is truthy.
+            # That shipped a schema.org Person named "vacant" on the county page
+            # (#1093, held). A word the county uses to say NOBODY HOLDS THIS SEAT
+            # is not a name, so it is dropped here and the district takes
+            # District 2's path. The party is left set exactly as District 2
+            # leaves it: main() discards it when it builds the vacancy record,
+            # because the marker is the DEPARTED member's rather than the seat's.
+            break
+        rec["name"] = name
         break
 
     flat = text_of(BREAK_RE.sub(" ", body))
@@ -152,7 +180,56 @@ def parse(page, district):
     return rec
 
 
+# The shapes this parse must keep getting right, checked on every run before a
+# single page is fetched. Each is a MINIMISED copy of what sangamonil.gov
+# actually served on 2026-09-22, cut to the Term paragraph and the member block
+# that follows it — with every street replaced, because those are residences and
+# the rule against writing one into this repo does not stop at a test fixture.
+#
+# The two vacancy rows are the pair the county publishes AT THE SAME TIME, and
+# they are why this table exists: for three weeks only one of them was tested,
+# by a live run, and the other shipped the word "vacant" as a person's name.
+RESIDENCE = "[residence omitted]"
+
+PARSE_SELFTEST = (
+    # District 2: the seat emptied, leaving the departed member's party marker
+    # on an otherwise blank heading.
+    ("<p>Term: 2022&nbsp;- 2026</p>\n<h3>&nbsp;(R)</h3>\n<p><br />\n&nbsp;</p>", None),
+    # District 16: the same emptying written the other way, with the county's
+    # own word for it left on the line (#1093).
+    ("<p>Term: 2024-2028</p>\n<h3>vacant (R)</h3>\n<p></p>", None),
+    # Case and inflection are the county's to choose, not ours to depend on.
+    ("<p>Term: 2024-2028</p>\n<h3>Vacant (D)</h3>", None),
+    ("<p>Term: 2024-2028</p>\n<h3>VACANCY (R)</h3>", None),
+    # District 4: the address shares the heading with the name, so the line
+    # split is the only thing keeping the residence out of the name.
+    ("<p>Term: 2022-2026 (appointed 7/14/26)</p>\n<h3>Lanae Clarke (R)<br />\n"
+     + RESIDENCE + "<br />\nPawnee, IL 62558</h3>\n<p>217-898-2244</p>",
+     "Lanae Clarke"),
+    # District 21: a plain <p> rather than a heading.
+    ("<p>Term: 2025-2026*appointed 2/11/25</p>\n<p>Reggie Guyton (D)<br />\n"
+     + RESIDENCE + "<br />\nSpringfield, IL 62703</p>", "Reggie Guyton"),
+    # District 12: the member block wrapped in a styled <span>.
+    ('<p>Term: 2024-2026 (appointed 6/9/26)</p>\n<p><span style="font-size:130%;">'
+     "Sheila Feipel (D)<br />\n" + RESIDENCE + "<br />\nSpringfield, IL 62704"
+     "</span></p>", "Sheila Feipel"),
+    # A surname is two tokens and the vacancy word is one, so a name that merely
+    # STARTS like it is still a name. Without this the guard would be free to
+    # widen into a prefix test and take a real person off the board.
+    ("<p>Term: 2022-2026</p>\n<h3>Vance Parker (R)</h3>", "Vance Parker"),
+)
+
+
+def _run_parse_selftest():
+    for fragment, expected in PARSE_SELFTEST:
+        got = parse(fragment, 0).get("name")
+        if (got or None) != expected:
+            sys.exit("sangamon-scraper: SELFTEST FAIL — %r parsed name %r, expected %r"
+                     % (fragment, got, expected))
+
+
 def main():
+    _run_parse_selftest()
     out_path = sys.argv[1] if len(sys.argv) > 1 else "sangamon_county_board_raw.json"
     session = requests.Session()
 
