@@ -15,34 +15,316 @@ Holding a state open until every county ships hands the definition
 to county publishers; a county that will never publish a map would
 keep a state open forever while telling a reader nothing.
 
-| state | E.A.M. | counties | examined | districts | named | answered | rosters | maintained |
+| state | E.A.M. | counties | examined | districts | named | answered | files | maintained |
 |---|---|---|---|---|---|---|---|---|
-| il | **EAM** | 102 | 102/102 | 572 | 998 | all | 64 | all |
-| wi | **EA·** | 72 | 72/72 | 1590 | 1,574 | all | 2 | 1 without a job |
-| ia | **·AM** | 99 | 19/99 | 67 | 67 | all | 2 | all |
-| mi | **·AM** | 83 | 48/83 | 370 | 366 | all | 1 | all |
+| il | **EA·** | 102 | 102/102 | 572 | 998 | all | 309 | 221 without a job |
+| wi | **EA·** | 72 | 72/72 | 1590 | 1,574 | all | 47 | 30 without a job |
+| ia | **·A·** | 99 | 19/99 | 67 | 67 | all | 33 | 16 without a job |
+| mi | **·A·** | 83 | 48/83 | 370 | 366 | all | 21 | 14 without a job |
 
 - **ca** — no county tier, so E does not apply. San Francisco — a consolidated city and county, so the county tier is the city and there is no frontier.
 - **ny** — no county tier, so E does not apply. New York City — the instance serves five boroughs, not a county frontier, so there is no county to examine.
 
 ## What each state still needs
 
-### il — **E.A.M.**
+### il — EA·
 
-Examined, Answered and Maintained. Expansion is finished;
-this instance is in maintenance.
-
-- **Watched, not rewritten:** `il/data/app/mason-county-board-members.json` is refreshed by no job because it cannot safely be — `.github/workflows/watch-mason-roster-source.yml` checks its source weekly and opens an issue when it moves. That is a weaker guarantee than a rewrite: it tells you the source changed and a person still has to act.
+- **Watched, not rewritten:** `il/data/app/mason-county-board-members.json`, by `.github/workflows/watch-mason-roster-source.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
+- **Maintained: no.** 221 file(s) under no scheduled job at all, neither rewriting nor watching:
+  - `il/data/app/adams-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/belvidere-city-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/boone-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/boone-fire-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/boone-library-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/boone-park-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/calhoun-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/calhoun-precincts.json` — names **5** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/carroll-county-board-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/carroll-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/carroll-library-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/carroll-precinct-polling.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/cass-county-board-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/cass-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/cass-precincts.json` — names **21** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/ccbr-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/christian-county-board-districts.json` — names **4** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/christian-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/clark-county-board-districts.json` — names **7** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/clark-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/clark-precincts.json` — names **23** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/clay-county-board-districts.json` — names **14** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/clay-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/clay-precincts.json` — names **18** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/clinton-county-board-districts.json` — names **5** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/clinton-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/coles-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/congress-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/cook-fire-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/coverage-gaps.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/crawford-county-board-districts.json` — names **5** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/crawford-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/crawford-precincts.json` — names **24** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/cumberland-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/cumberland-precincts.json` — names **12** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/dekalb-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/dekalb-precinct-townships.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/dewitt-county-board-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/dewitt-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/douglas-county-board-districts.json` — names **7** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/douglas-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/douglas-precincts.json` — names **17** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/dupage-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/early-voting-sites.json` — names **52** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/edgar-county-board-districts.json` — names **7** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/edgar-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/edgar-precincts.json` — names **31** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/edwards-precincts.json` — names **12** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/effingham-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/ford-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/franklin-county-board-districts.json` — names **3** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/franklin-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/franklin-precincts.json` — names **35** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/fulton-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/gallatin-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/gallatin-precincts.json` — names **11** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/greene-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/greene-precincts.json` — names **22** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/grundy-county-board-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/grundy-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/grundy-fire-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/grundy-library-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/grundy-park-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/hamilton-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/hamilton-precinct-polling.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/hancock-county-board-districts.json` — names **5** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/hancock-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/hancock-precincts.json` — names **33** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/hardin-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/hardin-precincts.json` — names **6** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/henderson-precincts.json` — names **13** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/henry-county-board-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/henry-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/henry-precincts.json` — names **52** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/il-county-board-offices.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/il-house-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/il-senate-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/il-state-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/il-supreme-court-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/iroquois-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/jackson-county-board-districts.json` — names **7** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/jackson-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/jackson-precincts.json` — names **56** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/jefferson-county-board-districts.json` — names **13** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/jefferson-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/jefferson-precincts.json` — names **33** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/jo-daviess-county-board-districts.json` — names **17** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/jo-daviess-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/jo-daviess-precincts.json` — names **28** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/johnson-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/johnson-precincts.json` — names **16** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/kane-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/kane-judicial-subcircuits.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/kankakee-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/kendall-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/kendall-fire-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/kendall-library-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/kendall-park-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/knox-county-board-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/knox-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/lake-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/lasalle-county-board-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/lasalle-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/lee-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/lee-library-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/livingston-county-board-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/livingston-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/livingston-precincts.json` — names **46** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/logan-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/logan-park-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/logan-precinct-polling.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/macon-board-district-labels.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/macon-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/macon-fire-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/macon-library-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/macon-park-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/macoupin-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/macoupin-library-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/madison-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/madison-judicial-subcircuits.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/marshall-county-board-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/marshall-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/marshall-precincts.json` — names **14** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/mason-county-board-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/mason-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/mason-precincts.json` — names **21** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/massac-precincts.json` — names **17** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/mcdonough-board-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/mcdonough-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/mcdonough-precincts.json` — names **27** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/mchenry-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/mchenry-judicial-subcircuits.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/mclean-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/menard-commissioner-districts.json` — names **5** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/menard-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/menard-precincts.json` — names **14** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/mercer-county-board-districts.json` — names **5** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/mercer-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/mercer-precincts.json` — names **24** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/metro-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/monroe-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/montgomery-county-board-districts.json` — names **7** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/montgomery-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/montgomery-precinct-polling.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/montgomery-precincts.json` — names **38** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/morgan-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/moultrie-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/moultrie-precincts.json` — names **16** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/municipal-ward-coverage.json` — names **72** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/ogle-county-board-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/ogle-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/ogle-precincts.json` — names **51** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/peoria-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/perry-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/perry-precincts.json` — names **27** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/pike-precincts.json` — names **31** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/pulaski-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/pulaski-precincts.json` — names **11** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/putnam-precincts.json` — names **8** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/randolph-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/randolph-library-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/richland-county-board-districts.json` — names **7** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/richland-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/richland-precincts.json` — names **21** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/rock-island-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/rock-island-fire-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/rock-island-library-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/rock-island-park-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/saline-precincts.json` — names **28** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/sangamon-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/sangamon-judicial-subcircuits.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/sangamon-library-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/school-board-districts.json` — names **20** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/school-board-members.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/schuyler-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/schuyler-precincts.json` — names **17** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/scott-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/scott-precincts.json` — names **10** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/shelby-county-board-districts.json` — names **11** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/shelby-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/shelby-precincts.json` — names **33** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/st-clair-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/st-clair-library-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/st-clair-precinct-polling.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/stark-county-board-districts.json` — names **2** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/stark-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/stark-fire-districts.json` — names **6** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/stark-library-districts.json` — names **6** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/stark-park-districts.json` — names **2** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/stark-precincts.json` — names **9** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/stephenson-county-board-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/stephenson-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/stephenson-fire-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/stephenson-library-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/stephenson-precincts.json` — names **36** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/tazewell-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/union-precincts.json` — names **20** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/vermilion-county-board-districts.json` — names **9** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/vermilion-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/wabash-precincts.json` — names **16** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/warren-county-board-districts.json` — names **4** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/warren-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/warren-precincts.json` — names **26** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/washington-county-board-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/washington-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/wayne-county-board-districts.json` — names **7** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/wayne-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/wayne-precincts.json` — names **27** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/white-county-board-districts.json` — names **5** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/white-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/white-precincts.json` — names **18** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/whiteside-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/whiteside-precinct-polling.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/will-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/winnebago-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/winnebago-judicial-subcircuits.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/woodford-county-board-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/woodford-county-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `il/data/app/woodford-fire-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/woodford-library-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `il/data/app/woodford-park-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
 
 ### wi — EA·
 
-- **Maintained: no.** 1 file(s) under no scheduled job at all, neither rewriting nor watching:
+- **Under a WATCH.md plan (4):** re-checked on a stated cadence rather than by a job — `madison-outline.json`, `metro-outline.json`, `wi-county-facts.json`, `wi-municipal-facts.json`
+- **Maintained: no.** 30 file(s) under no scheduled job at all, neither rewriting nor watching:
+  - `wi/data/app/aldermanic-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/congress-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
   - `wi/data/app/county-board-directory.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/county-supervisory-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/coverage-gaps.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/ems-service-areas.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/fire-service-areas.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/law-service-areas.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/library-sites.json` — names **482** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `wi/data/app/madison-neighborhood-assocs.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/madison-polling-places.json` — names **137** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `wi/data/app/madison-tid-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/milwaukee-neighborhoods.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/mke-polling-places.json` — names **356** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `wi/data/app/mpd-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/mpd-squad-areas.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/mps-school-board-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/psap-areas.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/rusd-school-board-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/school-districts-unified.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/school-sites.json` — names **2966** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `wi/data/app/state-counties.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/tid-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/wi-assembly-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/wi-circuit-courts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/wi-court-of-appeals-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/wi-municipal-clerks.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/wi-senate-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `wi/data/app/wi-state-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `wi/data/app/wtcs-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
 
-### ia — ·AM
+### ia — ·A·
 
 - **Examined: no.** 80 of 99 counties have neither a roster nor a gap record naming them. They are not blocked — they are unlooked-at, which is the one state this bar refuses.
+- **Under a WATCH.md plan (3):** re-checked on a stated cadence rather than by a job — `dsm-wards.json`, `ia-community-colleges.json`, `ia-school-districts.json`
+- **Maintained: no.** 16 file(s) under no scheduled job at all, neither rewriting nor watching:
+  - `ia/data/app/cedar-rapids-wards.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `ia/data/app/congress-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `ia/data/app/coverage-gaps.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `ia/data/app/ia-aeas.json` — names **9** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `ia/data/app/ia-cc-director-districts.json` — names **123** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `ia/data/app/ia-county-board-directory.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `ia/data/app/ia-house-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `ia/data/app/ia-judicial-districts.json` — names **8** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `ia/data/app/ia-precincts.json` — names **1660** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `ia/data/app/ia-school-director-districts.json` — names **716** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `ia/data/app/ia-school-sites.json` — names **1321** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `ia/data/app/ia-senate-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `ia/data/app/ia-supervisor-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `ia/data/app/metro-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `ia/data/app/state-counties.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `ia/data/app/waterloo-wards.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
 
-### mi — ·AM
+### mi — ·A·
 
 - **Examined: no.** 35 of 83 counties have neither a roster nor a gap record naming them. They are not blocked — they are unlooked-at, which is the one state this bar refuses.
+- **Maintained: no.** 14 file(s) under no scheduled job at all, neither rewriting nor watching:
+  - `mi/data/app/congress-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `mi/data/app/coverage-gaps.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `mi/data/app/metro-outline.json` — names **1** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `mi/data/app/mi-battle-creek-wards.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `mi/data/app/mi-commissioner-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `mi/data/app/mi-detroit-council-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `mi/data/app/mi-flint-wards.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `mi/data/app/mi-grand-rapids-wards.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `mi/data/app/mi-house-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `mi/data/app/mi-precincts.json` — names **3895** people and nothing refreshes them, so they go stale at the speed that board turns over.
+  - `mi/data/app/mi-rochester-hills-wards.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `mi/data/app/mi-senate-districts.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `mi/data/app/mi-warren-wards.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
+  - `mi/data/app/state-counties.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.

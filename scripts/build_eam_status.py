@@ -27,11 +27,31 @@ county publishers control (ruled by Adam, 2026-09-22):
               a name in every seat would hand the definition to county clerks
               and hold a state open forever on one appointment nobody published.
 
-  MAINTAINED  Every roster file these pages read is under a SCHEDULED job —
-              either one that REWRITES it, or one that WATCHES its source and
-              reports when that source moves. A file under neither decays
-              silently, because every count guard still passes on one nobody
-              is refreshing.
+  MAINTAINED  Every data file THE APP READS is under a stated plan — a
+              SCHEDULED job that REWRITES it, a SCHEDULED WATCHER on its
+              source, or a `<tag>/WATCH.md` row that names it and states WHEN
+              it is re-checked. A file under none of those decays silently,
+              because every count guard still passes on one nobody is
+              refreshing.
+
+              THE SURFACE IS THE APP'S, NOT THE PAGES'. The first version
+              measured only the roster files the per-county pages read, and
+              Wisconsin found the hole that leaves: it flagged a 72-record
+              directory of seat counts and MISSED
+              county-supervisory-districts.json — 1,590 districts, 4.6 MB, the
+              file the whole county-board card is drawn on, and the file the
+              directory is derived from (`seats` is `max(SUPERID)` read back
+              off it). A bar that fails a restatement and passes its source is
+              not measuring what it claims to.
+
+              A WATCH.md ROW COUNTS AND IS NOT A LOOPHOLE, because boundaries
+              do not move weekly and a weekly job on them would be a
+              guaranteed no-op. What the row must carry is a WHEN — a cadence,
+              or a trigger. Wisconsin's supervisory boundaries are filed with
+              LTSB on 15 January and 15 July by statute; that is the clock,
+              and a row saying so is a plan. A filename sitting in prose is a
+              mention, and the difference is the whole reason this clause can
+              be allowed.
 
               THE WATCHER CASE IS NOT A LOOPHOLE AND WAS LEARNED THE HARD WAY.
               Mason County's roster is transcribed BY HAND on purpose: its
@@ -235,27 +255,59 @@ def refreshed_by(rel_path, staged):
     return sorted(set(hits))
 
 
-def watched_by(rel_path):
-    """The scheduled workflows that watch `rel_path`'s source and report a move.
+def watcher_texts():
+    """[(workflow rel path, text)] for every scheduled job that can open an issue.
 
-    A watcher names the file, runs on a schedule, and can open an issue — it
-    commits nothing, which is the point: where a source cannot be re-read
-    safely by machine, the honest output is a request for a person. Requiring
-    `git add` alone reads that deliberate design as neglect.
+    Read once. A watcher names the file, runs on a schedule, and commits
+    nothing, which is the point: where a source cannot be re-read safely by
+    machine, the honest output is a request for a person. Requiring `git add`
+    alone reads that deliberate design as neglect.
     """
-    hits = []
+    out = []
     for path in sorted(glob.glob(os.path.join(WORKFLOW_DIR, "*.yml"))):
         text = open(path, encoding="utf-8").read()
-        if "schedule:" not in text or "issues: write" not in text:
+        if "schedule:" in text and "issues: write" in text:
+            out.append((os.path.relpath(path, REPO_ROOT), text))
+    return out
+
+
+def watched_by(rel_path, watchers=None):
+    """The scheduled watchers naming `rel_path`."""
+    if watchers is None:
+        watchers = watcher_texts()
+    return sorted({rel for rel, text in watchers if rel_path in text})
+
+
+# A WATCH.md row counts only if it states WHEN. A cadence or a trigger is a
+# plan; a filename sitting in prose is a mention, and the difference is the
+# whole reason this clause is not a loophole.
+WHEN = re.compile(r"(?i)\b(dail|week|month|quarter|semiannual|semi-annual|annual|"
+                  r"year|decenn|census|any change|on a change|20\d\d-\d\d-\d\d)")
+
+
+def watch_rows(tag):
+    """{filename: the WATCH.md row's cadence cell} for rows that state a when."""
+    path = os.path.join(REPO_ROOT, tag, "WATCH.md")
+    if not os.path.exists(path):
+        return {}
+    out = {}
+    for line in open(path, encoding="utf-8"):
+        if not line.lstrip().startswith("|"):
             continue
-        if rel_path in text:
-            hits.append(os.path.relpath(path, REPO_ROOT))
-    return sorted(set(hits))
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if not cells or set(cells[0]) <= set("-: "):
+            continue
+        if not WHEN.search(cells[0]):
+            continue
+        for name in re.findall(r"[A-Za-z0-9_.-]+\.json", line):
+            out.setdefault(name, cells[0])
+    return out
 
 
 def measure():
     counties, paths, B = load_rosters()
     staged = staged_paths()
+    watchers = watcher_texts()
     rows = []
 
     for tag in ("il", "wi", "ia", "mi"):
@@ -286,21 +338,39 @@ def measure():
                     if len(unanswered_names) < 12:
                         unanswered_names.append("%s district %s" % (name, d.get("label")))
 
-        unmaintained, watched = [], []
-        for path in sorted(set(paths.get(tag, ()))):
-            rel = os.path.relpath(path, REPO_ROOT)
+        # THE SURFACE IS EVERY DATA FILE THE APP READS, not the roster files
+        # alone. Wisconsin found that hole: M flagged a 72-record directory of
+        # seat counts and missed county-supervisory-districts.json, the 1,590
+        # districts it is derived from and the file the whole county-board card
+        # is drawn on. A bar that fails the restatement and passes the source
+        # is not measuring what it claims to.
+        app = os.path.join(REPO_ROOT, tag, "index.html")
+        index_html = open(app, encoding="utf-8").read() if os.path.exists(app) else ""
+        surface = sorted(
+            {os.path.relpath(p, REPO_ROOT) for p in set(paths.get(tag, ()))} |
+            {os.path.relpath(f, REPO_ROOT)
+             for f in glob.glob(os.path.join(REPO_ROOT, tag, "data", "app", "*.json"))
+             if os.path.basename(f) in index_html})
+
+        planned_rows = watch_rows(tag)
+        unmaintained, watched, planned = [], [], []
+        for rel in surface:
             if refreshed_by(rel, staged):
                 continue
-            watchers = watched_by(rel)
-            if watchers:
-                watched.append((rel, watchers[0]))
+            hits = watched_by(rel, watchers)
+            if hits:
+                watched.append((rel, hits[0]))
+                continue
+            when = planned_rows.get(os.path.basename(rel))
+            if when:
+                planned.append((rel, when))
                 continue
             # How many people the unrefreshed file names, which is what decides
             # how fast it rots. Counted off the raw file rather than the
             # adapter's output: a directory of seat counts contributes no
             # districts, so the adapter view cannot tell it from an empty one.
             try:
-                blob = open(path, encoding="utf-8").read()
+                blob = open(os.path.join(REPO_ROOT, rel), encoding="utf-8").read()
                 named = blob.count('"name"')
             except OSError:
                 named = 0
@@ -312,8 +382,8 @@ def measure():
             unexamined=unexamined,
             districts=districts, people=people,
             unanswered=unanswered, unanswered_names=unanswered_names,
-            rosters=len(set(paths.get(tag, ()))), unmaintained=unmaintained,
-            watched=watched,
+            rosters=len(surface), unmaintained=unmaintained,
+            watched=watched, planned=planned,
             E=(unexamined == 0), A=(unanswered == 0),
             M=(not unmaintained),
         ))
@@ -343,7 +413,7 @@ def render(rows):
     out.append("to county publishers; a county that will never publish a map would")
     out.append("keep a state open forever while telling a reader nothing.")
     out.append("")
-    out.append("| state | E.A.M. | counties | examined | districts | named | answered | rosters | maintained |")
+    out.append("| state | E.A.M. | counties | examined | districts | named | answered | files | maintained |")
     out.append("|---|---|---|---|---|---|---|---|---|")
     for r in rows:
         out.append("| %s | **%s** | %d | %d/%d | %d | %s | %s | %d | %s |" % (
@@ -391,6 +461,11 @@ def render(rows):
             out.append("- **Watched, not rewritten:** `%s`, by `%s` — counts "
                        "for Maintained, and is a weaker guarantee than a "
                        "rewrite." % (rel, workflow))
+        if r["planned"]:
+            out.append("- **Under a WATCH.md plan (%d):** re-checked on a "
+                       "stated cadence rather than by a job — %s"
+                       % (len(r["planned"]),
+                          ", ".join("`%s`" % os.path.basename(x) for x, _ in r["planned"])))
         if not r["M"]:
             out.append("- **Maintained: no.** %d file(s) under no scheduled job "
                        "at all, neither rewriting nor watching:"
