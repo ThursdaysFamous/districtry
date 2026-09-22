@@ -455,6 +455,53 @@ def contact_block(session, code, unit_label, warnings):
         So a reader losing that address is a second filer stopping signing the
         form, never anything changing about the fire district. Do not relax this
         to a one-witness rule to win the address back.
+
+        THERE IS A SECOND LOSS SHAPE AND IT IS REDDICK'S MIRROR IMAGE. Metamora
+        Public Library District (102/010/10) dropped its telephone from
+        woodford-district-officials.json in #1076. Read on 2026-09-22, both
+        years through this same parser: the FILER SLOTS ARE IDENTICAL in both,
+        Smith / Smith / Weddle / Smith, and what moved is the VALUE. FY2025
+        carried (309) 367-4591 in all four, so Smith and Weddle witnessed it.
+        FY2026 carries (309) 921-5074 Ext: 101 in A, B and D -- every one of
+        them Smith -- against (309) 645-0963 in C, Weddle's, beside his gmail
+        address. Each distinct number now has exactly one surname.
+
+        So the two shapes are exact opposites and a reader of a phone loss must
+        tell them apart: Reddick kept ONE VALUE and lost a signer, Metamora kept
+        BOTH SIGNERS and filed new values. Do not read every loss here as
+        who-signed drift.
+
+        WHY CARRYING THE OLD VALUE FORWARD IS WORSE HERE, not merely disallowed.
+        The unit's own current filing has REPLACED that number, so preserving it
+        would publish a telephone the publisher has superseded -- a wrong answer
+        rather than a missing one. Adam's 2026-09-19 ruling that a refusal never
+        unpublishes does not reach this case either: the host served fine and
+        the publisher gave new information rather than declining to be read.
+        Weddle's own number moving to what sits beside his personal gmail is a
+        further reason to withhold it.
+
+        THE EXTENSION IS STRIPPED BEFORE WITNESSING (labelled() splits at
+        "Ext"), which was measured rather than assumed on 2026-09-22 and the
+        current behaviour is right. Stripping can only ever CREATE a match --
+        two raw values differing solely by extension become equal -- and never
+        break one, since equal raws stay equal. The match it can create is two
+        differently-surnamed filers giving the SAME base number at DIFFERENT
+        extensions, which is stronger evidence of an institution's switchboard
+        than an identical full number is, and a switchboard is exactly what the
+        two-witness rule exists to establish. Measured on a 40-unit sample of
+        the 509 in afr-special-districts.json, each asked for its OWN latest
+        fiscal year: 37 read, 0 filing an extension anywhere, 0 where stripping
+        creates a witness the raw values deny. That is a sample and not the
+        whole corpus, so it bounds the case rather than closing it -- but
+        nothing here licenses relaxing the two-surname rule, which an extension
+        does not bear on: one surname is one surname.
+
+        A TRAP THAT COST THIS MEASUREMENT ITS FIRST RUN: most units' latest
+        filing is not the current year. Asking all 60 of a first sample for
+        FY2026 returned an empty contact block for 46 of them, which reads
+        exactly like "this unit files nothing" and is really "not that year" --
+        28 of the 37 later read were on FY2025 and only 8 on FY2026. Ask
+        latest_fiscal_year() per unit; never hardcode the year.
         """
         for filer in filers:
             value = _flat(filer[field])
