@@ -29,11 +29,13 @@ keep a state open forever while telling a reader nothing.
 
 ### il — EA·
 
-- **Maintained: no.** 1 roster(s) no scheduled workflow rewrites, so their names go stale with nothing reporting it: il/data/app/mason-county-board-members.json
+- **Maintained: no.** 1 file(s) no scheduled workflow rewrites:
+  - `il/data/app/mason-county-board-members.json` — names **8** people and nothing refreshes them, so they go stale at the speed that board turns over.
 
 ### wi — EA·
 
-- **Maintained: no.** 1 roster(s) no scheduled workflow rewrites, so their names go stale with nothing reporting it: wi/data/app/county-board-directory.json
+- **Maintained: no.** 1 file(s) no scheduled workflow rewrites:
+  - `wi/data/app/county-board-directory.json` — names nobody; it carries structure (seat counts, county links). Slower to rot, on reapportionment and link rot rather than on officeholder churn, and still refreshed by nothing.
 
 ### ia — ·AM
 

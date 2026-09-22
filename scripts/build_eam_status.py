@@ -28,10 +28,16 @@ county publishers control (ruled by Adam, 2026-09-22):
               and hold a state open forever on one appointment nobody published.
 
   MAINTAINED  Every roster file these pages read is rewritten by a SCHEDULED
-              workflow. A roster with no job decays silently: the names go
-              stale at the speed officeholders change and no gate anywhere
-              notices, because every count guard still passes on a file nobody
-              is refreshing.
+              workflow. A file with no job decays silently, because every count
+              guard still passes on one nobody is refreshing — but WHAT decays
+              differs, and the report says which rather than sounding one alarm
+              for both. A file naming PEOPLE goes stale at the speed
+              officeholders change. A file of structure — seat counts and county
+              URLs — decays far more slowly, on reapportionment and link rot,
+              and is flagged on the same bar with its own reason stated. The
+              first draft justified this bar by officeholder churn alone and
+              then reported a Wisconsin file holding no people at all, which is
+              a measure whose stated reason does not match its own finding.
 
 WHAT THIS IS FOR. A state that passes all three switches from expansion to
 maintenance — its session stops hunting counties and only tends what ships.
@@ -247,8 +253,18 @@ def measure():
         unmaintained = []
         for path in sorted(set(paths.get(tag, ()))):
             rel = os.path.relpath(path, REPO_ROOT)
-            if not refreshed_by(rel, staged):
-                unmaintained.append(rel)
+            if refreshed_by(rel, staged):
+                continue
+            # How many people the unrefreshed file names, which is what decides
+            # how fast it rots. Counted off the raw file rather than the
+            # adapter's output: a directory of seat counts contributes no
+            # districts, so the adapter view cannot tell it from an empty one.
+            try:
+                blob = open(path, encoding="utf-8").read()
+                named = blob.count('"name"')
+            except OSError:
+                named = 0
+            unmaintained.append((rel, named))
 
         rows.append(dict(
             tag=tag, total=total, ring=ring,
@@ -322,9 +338,19 @@ def render(rows):
                        "marked vacant and carry no note: %s"
                        % (r["unanswered"], "; ".join(r["unanswered_names"])))
         if not r["M"]:
-            out.append("- **Maintained: no.** %d roster(s) no scheduled workflow "
-                       "rewrites, so their names go stale with nothing reporting "
-                       "it: %s" % (len(r["unmaintained"]), ", ".join(r["unmaintained"])))
+            out.append("- **Maintained: no.** %d file(s) no scheduled workflow "
+                       "rewrites:" % len(r["unmaintained"]))
+            for rel, named in r["unmaintained"]:
+                if named:
+                    out.append("  - `%s` — names **%d** people and nothing "
+                               "refreshes them, so they go stale at the speed "
+                               "that board turns over." % (rel, named))
+                else:
+                    out.append("  - `%s` — names nobody; it carries structure "
+                               "(seat counts, county links). Slower to rot, on "
+                               "reapportionment and link rot rather than on "
+                               "officeholder churn, and still refreshed by "
+                               "nothing." % rel)
         out.append("")
     return "\n".join(out).rstrip() + "\n"
 
