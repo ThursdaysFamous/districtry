@@ -11626,7 +11626,7 @@ function initNycExplorer() {
   var pinnedParentId = null;      // mod.id of the pinned parent layer, or null
   var relationshipGroup = null;   // L.featureGroup holding the relationship outlines
   var relLabelGroup = null;       // L.layerGroup holding each outlined district's map label
-  var relLabels = [];             // [{marker, el, spots, clearance}] for the layout pass
+  var relLabels = [];             // [{marker, el, spots, clearance, here}] for the layout pass
   var REL_MAX_OUTLINES = 250;     // perf backstop for a huge parent over a dense layer
   var relLegendEl = document.getElementById("rel-legend");
 
@@ -11774,10 +11774,10 @@ function initNycExplorer() {
         fine.sort(function (a, b) { return b.clearance - a.clearance; });
         if (fine.length && fine[0].clearance > grid[0].clearance) grid[0] = fine[0];
       }
-      // up to four spots, each clear of the ones before it by its own
+      // up to eight spots, each clear of the ones before it by its own
       // clearance, so a label that would cover the selected point or a
       // neighbour's label has somewhere else in its district to go
-      for (var g = 0; g < grid.length && spots.length < 4; g++) {
+      for (var g = 0; g < grid.length && spots.length < 8; g++) {
         var cand = grid[g];
         var apart = spots.every(function (sp) {
           return Math.hypot((sp.lng - cand.lng) * kx, sp.lat - cand.lat) >= Math.max(sp.clearance, cand.clearance);
@@ -11789,14 +11789,20 @@ function initNycExplorer() {
     return spots;
   }
 
-  // Show a label only where it fits its district at the current zoom and
-  // collides with nothing already placed; the widest districts claim their
-  // spot first. Zooming in therefore reveals more labels rather than piling
-  // them on top of each other. Runs on every zoom, since pixel size is the test.
-  // "Fits" means the chip's height fits and at most about a third of its width
-  // overhangs the nearest edge: requiring the whole chip inside hid every label
-  // but one on a ward-over-school-district comparison at city zoom (measured
-  // 2026-09-22), and a chip that overhangs slightly still reads as its own.
+  // Show a label wherever it collides with nothing already placed; the
+  // district holding the selected point claims its spot first and then the
+  // widest, so where labels compete for space those keep theirs and zooming
+  // in reveals the rest. Runs on every
+  // zoom, since pixel positions are the test.
+  // A CHIP MAY CROSS ITS OWN DISTRICT'S BORDER. The first rule required the
+  // chip to (nearly) fit inside its district, and on a phone that asked the
+  // reader to zoom in until the comparison no longer fit on screen — you could
+  // see the districts or read their names, not both. Overlap with another
+  // label or a map marker is still refused, because a chip over a chip is
+  // unreadable and a chip over the star hides the point the reader chose.
+  // The one size floor is a district under ~8px across, a speck that would
+  // otherwise claim a chip ahead of a neighbour the reader can actually see.
+  var REL_LABEL_MIN_ROOM = 4; // px from the label spot to its nearest edge
   function layoutRelLabels() {
     if (!relLabels.length) return;
     // every marker on the map (the selected point, office pins) is occupied
@@ -11819,7 +11825,7 @@ function initNycExplorer() {
         var p = map.latLngToContainerPoint([spot.lat, spot.lng]);
         var edge = map.latLngToContainerPoint([spot.lat + spot.clearance, spot.lng]);
         var room = Math.abs(p.y - edge.y); // pixels from this spot to the nearest edge
-        if (room < Math.max(h * 0.55, w * 0.35)) continue;
+        if (room < REL_LABEL_MIN_ROOM) continue;
         var rect = { x0: p.x - w / 2 - 3, y0: p.y - h / 2 - 3, x1: p.x + w / 2 + 3, y1: p.y + h / 2 + 3 };
         var hits = placed.some(function (r) { return rect.x0 < r.x1 && rect.x1 > r.x0 && rect.y0 < r.y1 && rect.y1 > r.y0; });
         if (hits) continue;
@@ -11884,7 +11890,14 @@ function initNycExplorer() {
     if (capped) console.warn("pin relationships: capped at " + REL_MAX_OUTLINES + " outlines");
     relationshipGroup.bringToFront();
     // widest first, so a big district keeps its label when a small one collides
-    relLabels.sort(function (a, b) { return b.clearance - a.clearance; });
+    // the district holding the selected point first — it is the one the
+    // reader is standing in, and its spots crowd against the point's own
+    // marker, so ranked by width alone it lost to its neighbours (measured
+    // 2026-09-22: Ward 47 was the one ward of six unlabelled on a phone)
+    relLabels.sort(function (a, b) {
+      if (a.here !== b.here) return a.here ? -1 : 1;
+      return b.clearance - a.clearance;
+    });
     layoutRelLabels();
     return { inside: nIn, cross: nCross, capped: capped };
   }
@@ -11905,7 +11918,8 @@ function initNycExplorer() {
       interactive: false,
       keyboard: false
     }).addTo(relLabelGroup);
-    relLabels.push({ marker: marker, el: el, spots: spots, clearance: spots[0].clearance });
+    var here = !!state.selectedPoint && pointInGeometry(state.selectedPoint, feature.geometry);
+    relLabels.push({ marker: marker, el: el, spots: spots, clearance: spots[0].clearance, here: here });
   }
 
   var relCounts = null; // last computed {inside, cross, capped}, or null
