@@ -68,6 +68,7 @@ Usage:
     python3 wi/scripts/build_wi_supervisory_districts.py --check   # gates only, no write
 """
 
+import datetime
 import json
 import os
 import random
@@ -93,6 +94,13 @@ TREMPEALEAU = (
     "/Trempealeau_County_County_Board_Supervisor_Districts_2021_2031_WFL1/FeatureServer/3"
 )
 TREMPEALEAU_SEATS = 17  # the county's own board page, districts 1-17
+
+# The sidecar this builder writes on every real run, and the monthly
+# validate_sources.py run compares against the live services. LTSB republishes
+# under Wis. Stat. 5.15(4)(br)1 each 15 January and 15 July; this is an OPERATOR
+# build with no schedule, so without a pin nothing could see the two drift
+# apart — the same hole, and the same remedy, as the NG911 sidecar.
+SIDECAR = os.path.join(REPO_ROOT, "data", "source", "supervisory", "built-rows.json")
 
 EXPECT_DISTRICTS = 1589   # LTSB, July 2026 submission window
 EXPECT_COUNTIES = 72      # every Wisconsin county
@@ -122,6 +130,33 @@ def oid_field(base):
         if f.get("type") == "esriFieldTypeOID":
             return f["name"]
     raise RuntimeError("no object-id field on " + base)
+
+
+def layer_pin(base):
+    """What this layer reported at build time: its NAME, its own last data edit,
+    and the count its query endpoint answers.
+
+    THE NAME IS THE STRONGEST SIGNAL AND IS WHY THIS IS NOT A ROW COUNT ALONE.
+    LTSB names the layer for the filing window it published — `Supervisory_July_2026`
+    today, `Supervisory_January_2027` after the next one — so the name moves at
+    the statutory moment whether or not the district total happens to land on a
+    different number. A count cannot promise that; 72 counties can refile and
+    still sum to 1589.
+
+    The count comes from the SAME returnCountOnly endpoint the monthly check
+    reads, rather than from len(features) here, so the two compare like with
+    like — a paged fetch and a count query need not agree if the service changes
+    under a long build.
+    """
+    meta = json.loads(_curl(base + "?f=json"))
+    edit = None
+    ms = (meta.get("editingInfo") or {}).get("dataLastEditDate")
+    if isinstance(ms, (int, float)):
+        edit = datetime.datetime.fromtimestamp(
+            ms / 1000.0, datetime.timezone.utc).date().isoformat()
+    count = json.loads(_curl(
+        base + "/query?where=1%3D1&returnCountOnly=true&f=json")).get("count")
+    return {"name": meta.get("name"), "dataLastEdit": edit, "rows": count}
 
 
 def _ring_is_clockwise(ring):
@@ -570,6 +605,39 @@ def main():
         f.write(compact)
     print("county-supervisory-districts -> data/app/%s: %d features; %s; %d bytes (%s retain, 6dp)"
           % (OUT_NAME, n, msg, len(compact), SIMPLIFY), file=sys.stderr)
+
+    # WRITTEN LAST, so a sidecar on disk always describes a build that finished.
+    # Only the three services THIS builder reads are pinned: a sidecar cannot
+    # honestly speak for a layer its own run never fetched.
+    pins = {
+        "districts": layer_pin(DISTRICTS),
+        "wards": layer_pin(WARDS),
+        "trempealeau": layer_pin(TREMPEALEAU),
+    }
+    sidecar = {
+        "_comment": (
+            "What LTSB's and Trempealeau's services reported at the last operator "
+            "build of wi/scripts/build_wi_supervisory_districts.py. "
+            "validate_sources.py compares all three monthly and WARNs when any has "
+            "moved. LTSB republishes each 15 January and 15 July under Wis. Stat. "
+            "5.15(4)(br)1 and NAMES THE LAYER FOR THE WINDOW, so `name` is the "
+            "signal that leads: it moves at the statutory moment even when the "
+            "district total does not. Written by the build; never edit by hand."
+        ),
+        "builtOn": datetime.date.today().isoformat(),
+        "name": {k: v["name"] for k, v in pins.items()},
+        "dataLastEdit": {k: v["dataLastEdit"] for k, v in pins.items()},
+        "rows": {k: v["rows"] for k, v in pins.items()},
+    }
+    os.makedirs(os.path.dirname(SIDECAR), exist_ok=True)
+    with open(SIDECAR, "w") as f:
+        json.dump(sidecar, f, indent=2, sort_keys=True)
+        f.write("\n")
+    print("       sidecar -> %s: %s"
+          % (os.path.relpath(SIDECAR, REPO_ROOT),
+             ", ".join("%s %s rows, %s, edited %s"
+                       % (k, pins[k]["rows"], pins[k]["name"], pins[k]["dataLastEdit"])
+                       for k in sorted(pins))), file=sys.stderr)
 
 
 if __name__ == "__main__":

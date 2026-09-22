@@ -1,0 +1,19 @@
+{
+  "_comment": "What LTSB's and Trempealeau's services reported at the last operator build of wi/scripts/build_wi_supervisory_districts.py. validate_sources.py compares all three monthly and WARNs when any has moved. LTSB republishes each 15 January and 15 July under Wis. Stat. 5.15(4)(br)1 and NAMES THE LAYER FOR THE WINDOW, so `name` is the signal that leads: it moves at the statutory moment even when the district total does not. Written by the build; never edit by hand.",
+  "builtOn": "2026-09-22",
+  "dataLastEdit": {
+    "districts": "2026-07-29",
+    "trempealeau": "2021-11-24",
+    "wards": "2026-07-29"
+  },
+  "name": {
+    "districts": "Supervisory_July_2026",
+    "trempealeau": "Supervisory Districts",
+    "wards": "Wards_July_2026"
+  },
+  "rows": {
+    "districts": 1589,
+    "trempealeau": 17,
+    "wards": 7161
+  }
+}
