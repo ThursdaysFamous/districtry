@@ -29,6 +29,18 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-22, #1082 merged as `bd9060c8`, verified on the merged tree.** All five gates pass
+there — `build_coverage_gaps --check --metro michigan` at 26 gaps (7 blocked, 2 data-quality,
+17 no-source), `build_about_page --check` at 152 recorded gaps fleet-wide, `build_sitemap
+--check`, `build_history_page --check`, and `validate_skills` at 775 pointers. All six
+records are in the file a reader downloads, each with the kind it was assigned by reading.
+
+**The follow-up is still blocked and the reason is unchanged.** #1081 has not landed — main
+still carries `if outlines is not None` at line 198 and ships no `build_eam_status.py` — so
+all six records read `counties=0` and Michigan stays 48 of 83 on EXAMINED. Nothing about
+that is new information; it is the state #1082's own body predicted. When the fix lands the
+arrays are one derivation over the committed tree.
+
 **2026-09-22, the gate fix works and Michigan measures 83 of 83 — but the follow-up cannot
 be pushed until #1081 lands.** Measured, not predicted: with #1081's one-line fix applied
 locally and uncommitted, and `counties` populated on all six records, `build_coverage_gaps`
