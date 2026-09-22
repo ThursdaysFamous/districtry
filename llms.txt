@@ -75,6 +75,7 @@ All 99 counties: supervisor districts with each county's own election plan, town
 - [Iowa district lookup](https://districtry.com/ia/): 20 layers, all 99 counties.
 - [Who is on my city council?](https://districtry.com/ia/city-council.html)
 - [Who is my U.S. representative?](https://districtry.com/ia/congress.html)
+- [Who is my county auditor?](https://districtry.com/ia/county-auditor.html)
 - [Who is my county supervisor?](https://districtry.com/ia/county-supervisor.html): links a page per county, 91 of them, each naming every member with whatever contact details that county publishes.
 - [Sources & data layers](https://districtry.com/ia/sources.html)
 - [Who is my Iowa legislator?](https://districtry.com/ia/state-legislature.html)

@@ -240,7 +240,22 @@ def city_officials(data):
     return rows
 
 
+def county_officers(data):
+    """One elected officer per county, keyed by county FIPS.
+
+    THE SEAT IS THE COUNTY AND NOT THE OFFICE, because the organisation this
+    person holds office in IS the county: "Adair County" is a government with
+    a member who is its Auditor, where "Adair County Auditor" is an office and
+    naming it as an organisation would invent a body of one. The role comes
+    from the section's `holder`, so no `role` is set on the record — a Role
+    column reading "Auditor" ninety-nine times is noise, not information.
+    """
+    return [("%s County" % data[key]["county"], data[key])
+            for key in sorted(data, key=lambda k: data[k]["county"])]
+
+
 ADAPTERS = {
+    "county_officers": county_officers,
     "city_council": city_council,
     "city_officials": city_officials,
     "circuit_judges": circuit_judges,
@@ -384,6 +399,20 @@ CITY_TABLES = [
                   org_per_seat=True,
                   heading="Who holds each office in four more Iowa cities"),
          ]),
+    # Iowa's county auditors: one per county, the county's own chief election
+    # officer, and 99 named people who reached no served byte of this site
+    # until 2026-09-22. They are recorded in build_county_pages.py's
+    # NOT_COUNTY_BOARDS — correctly, an auditor is not a supervisor — and that
+    # reason says why they are not on the BOARD pages, never that they should
+    # reach no page at all.
+    dict(tag="ia", page="county-auditor.html", worksheet="ia/metro-worksheet.json",
+         sections=[dict(roster="data/app/ia-county-auditors.json",
+                        adapter="county_officers",
+                        seat="County", holder="Auditor",
+                        office_label="Office", unit="county auditors", prep="in",
+                        body="Iowa's county auditors",
+                        org_per_seat=True,
+                        heading="Who is the auditor in each Iowa county")]),
     # Chicago's District Councils ride the page the police-district layer
     # already has, because they are elected ON that boundary — one council per
     # police district — and a reader asking "what police district am I in" is

@@ -485,6 +485,76 @@ def school_board_page(tag, spec, worksheet):
                 lede=lede, sections=sections, named=named)
 
 
+def county_auditor_page(tag, spec, worksheet):
+    """Who runs elections in an Iowa county, and keeps its records.
+
+    ONE OFFICER PER COUNTY, so every number here is read off the roster on the
+    run that writes the page: how many counties it names, and how many of them
+    publish a party. "Iowa has 99 counties" is stated because it cannot move;
+    everything else is counted.
+
+    THE OFFICE IS DESCRIBED BY WHAT IT DOES AND NOT BY ITS TERM. Iowa Code
+    fixes the term and this page cites no statute, so it says what the auditor
+    is — the county's commissioner of elections and the keeper of its records —
+    and leaves the law to the law.
+    """
+    auditors = load(spec["counts"][0])
+    named = sum(1 for rec in auditors.values() if rec.get("name"))
+    with_party = sum(1 for rec in auditors.values() if rec.get("party"))
+
+    lede = dict(
+        html='<p class="lede"><strong>The county auditor is the person who runs your '
+             'election.</strong> Every Iowa county elects one, countywide, and the same '
+             'officer keeps the county\'s records and pays its bills. This names '
+             '<strong>%s</strong>, with the office and a telephone number for each.</p>'
+             % ("all 99" if named == 99 else "%d of the 99" % named),
+        cta='    <a class="cta" href="./#layers=%s">Find your county →</a>\n'
+            '    <p class="cta-note">Opens the map with the county layer on. Search your '
+            'address or ZIP, or tap your location.</p>' % spec["layers"])
+
+    sections = """  <section>
+    <h2>What the lookup shows</h2>
+    <div class="answer-card">
+      <p>Select any point in Iowa and the card names the <strong>county</strong> covering
+        it. The table below names that county's auditor, the office they work from and a
+        number to call.</p>
+      <p>An auditor answers for the whole county, so the answer is the same anywhere
+        inside it — there are no auditor districts to be in.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why this is the office to call about an election</h2>
+    <p>In Iowa the county auditor is the commissioner of elections: the office that
+      registers voters, sets the polling places, prints the ballot and certifies the
+      result. A question about where you vote, whether you are registered, or what a
+      result was is a question for this office rather than for the county board.</p>
+  </section>
+
+  <section>
+    <h2>Where the names come from</h2>
+    <p>Each county's own published directory, re-read on a schedule and landing as a
+      reviewed pull request. %(party_note)s</p>
+%(disclaimer)s
+  </section>
+
+""" % dict(disclaimer=DISCLAIMER,
+           party_note=(
+               "Every one of them names a party."
+               if with_party == named else
+               "%d of the %d name a party; the rest publish none, and this page "
+               "prints none for them rather than supplying one."
+               % (with_party, named)))
+
+    subtitle = "Iowa county auditor lookup — free, by address, ZIP, or a tap on the map."
+    desc = ("Who is your Iowa county auditor — the officer who runs your election — "
+            "by address or ZIP.")
+    og = ("Find your Iowa county auditor, the county's own commissioner of elections, "
+          "across %d counties." % named)
+    return dict(title="Who is my county auditor?", subtitle=subtitle, desc=desc, og=og,
+                lede=lede, sections=sections, named=named)
+
+
 def city_council_page(tag, spec, worksheet):
     """Who sits on a city council, in the states that draw city wards.
 
@@ -633,6 +703,12 @@ PAGES = [
          sibling=dict(page="county-commissioner.html",
                       label="Who is my county commissioner?",
                       note="The government your city sits inside.")),
+    dict(tag="ia", file="county-auditor.html", worksheet="ia/metro-worksheet.json",
+         layers="county", make=county_auditor_page,
+         counts=["ia/data/app/ia-county-auditors.json"],
+         sibling=dict(page="county-supervisor.html",
+                      label="Who is my county supervisor?",
+                      note="The board the auditor reports the election to.")),
     dict(tag="ia", file="city-council.html", worksheet="ia/metro-worksheet.json",
          layers="city-ward", make=city_council_page, place="Iowa",
          wards=[("Cedar Rapids", "ia/data/app/cedar-rapids-wards.json"),

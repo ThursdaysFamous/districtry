@@ -86,6 +86,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://districtry.com/ia/county-auditor.html</loc>
+    <lastmod>2026-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://districtry.com/ia/county-supervisor.html</loc>
     <lastmod>2026-09-22</lastmod>
     <changefreq>monthly</changefreq>
