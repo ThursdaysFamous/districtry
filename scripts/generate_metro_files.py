@@ -164,6 +164,15 @@ def render_metro_config(w):
         a("  // clean the address is. Set from the worksheet's poi_geocode_bbox — widen")
         a("  // it there whenever a layer's cards start naming farther-away offices.")
         a("  var POI_GEOCODE_BBOX = %s;" % bbox_js(w["poi_geocode_bbox"], ["minLng", "minLat", "maxLng", "maxLat"]))
+    # The district-name search index ("33rd ward"). Emitted ONLY when the
+    # worksheet opts in, the same inertness rule poi_geocode_bbox follows: an
+    # instance without the key sees no change, and the engine reads the
+    # variable through a typeof guard, so an instance that never declares it
+    # simply searches addresses as before.
+    if "district_search" in w:
+        a("  // District-name search index (scripts/build_district_search.py): lets the")
+        a("  // search box answer \"33rd ward\" from a same-origin file, no geocoder.")
+        a("  var DISTRICT_SEARCH_URL = %s;" % js_str("data/app/" + w["district_search"]["file"]))
     a("  var SOCRATA_HOST = %s;" % js_str(w["socrata_host"]))
     a("  // Socrata app token: some metros' portals throttle anonymous requests. It is")
     a("  // a throttling identifier, not a secret — public exposure is Socrata's")

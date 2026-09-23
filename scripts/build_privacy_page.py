@@ -284,11 +284,35 @@ def measure_address_list(src, name):
 # two. `shareCopyButton` calls `trackEvent` with ONE argument, so these three
 # send a name and nothing else. The text a reader copies contains their point;
 # the event recording that they copied it does not.
+# `district-search` joined on 2026-09-23 with searching districts by name
+# ("33rd ward"). Its call site is shared engine code, so every app carries it
+# and the parity gate holds — but only an app that DECLARES a district index
+# (DISTRICT_SEARCH_URL, the worksheet's `district_search` key) can ever reach
+# it, so the sentence names those apps, measured off each app's own file,
+# rather than claiming the event for apps that cannot send it. It sends a name
+# and nothing else: not the text typed, not the district chosen.
 EXPECTED_EVENTS = ["address-search", "compare-stop", "compare/",
-                   "copy-coordinates", "embed-iframe", "geolocate",
+                   "copy-coordinates", "district-search", "embed-iframe", "geolocate",
                    "geolocate-success", "layer/", "metro-portal-go/", "select",
                    "share-native", "share-open", "share-permalink"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select"]
+
+
+def event_phrase(event, apps):
+    """One event as the page names it. `district-search` is qualified with the
+    apps that can actually send it, because the list is introduced as what
+    EACH app sends and an app with no district index never sends it."""
+    if event != "district-search":
+        return event
+    mapped = [a for a in apps if a.get("tag")]
+    senders = [a["name"] for a in mapped if a.get("district_search")]
+    if not senders:
+        fail("the event list names district-search but no app declares a district "
+             "index (DISTRICT_SEARCH_URL) — drop it from EXPECTED_EVENTS or restore the index")
+    if len(senders) == len(mapped):
+        return event
+    return "%s (only %s, the app%s that search%s districts by name)" % (
+        event, joined(senders), "" if len(senders) == 1 else "s", "es" if len(senders) == 1 else "")
 COORD_DECIMALS = 2
 
 
@@ -351,6 +375,8 @@ def measure(rel, name, url, tag):
         app["ga"] = {"id": m.group(1), "host": gate.group(1)}
     else:
         app["ga"] = None
+
+    app["district_search"] = bool(re.search(r"\bvar DISTRICT_SEARCH_URL\s*=", src))
 
     m = re.search(r'data-goatcounter="(https://([a-z0-9-]+)\.goatcounter\.com/count)"', src)
     app["goatcounter"] = {"url": m.group(1), "site": m.group(2)} if m else None
@@ -1053,7 +1079,7 @@ def render_analytics_section(apps):
         "app — a county list, a question page, this one — sends the page view and nothing "
         "else. <strong>Nothing you type is ever sent to it.</strong></p>"
         % (where,
-           esc(", ".join(EXPECTED_EVENTS)),
+           esc(", ".join(event_phrase(e, apps) for e in EXPECTED_EVENTS)),
            esc(" and ".join(EXPECTED_COORD_EVENTS)), COORD_DECIMALS))
     parts.append("<h3>Google Analytics</h3>")
     if ga:

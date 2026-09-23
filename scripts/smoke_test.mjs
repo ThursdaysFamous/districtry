@@ -488,6 +488,45 @@ try {
     await context.close();
   }
 
+  // 1d. A district by NAME ("33rd ward", "State Senate District 7"), answered
+  //     from the same-origin index scripts/build_district_search.py writes —
+  //     never by the geocoder. Driven through #q= so the question pages' hand-
+  //     off is covered too, and on a layer whose boundary ships in data/app so
+  //     the check needs no live service. Three claims: the one district result
+  //     is selected, its layer comes on and its card names the district, and
+  //     the geocoder is not asked at all (the text a reader types for a
+  //     district name stays in the browser).
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    let geocoderCalls = 0;
+    const page = await booted(context, `${BASE}#q=${encodeURIComponent("State Senate District 7")}`, async (p) => {
+      // Photon only: the search box's geocoder. Nominatim is the OFFICE-PIN
+      // lookup, which the senate card legitimately runs on its members'
+      // published office addresses once the district is selected.
+      await p.route("**/photon.komoot.io/**", (route) => {
+        geocoderCalls += 1;
+        route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ type: "FeatureCollection", features: [] }) });
+      });
+    });
+    await page
+      .waitForFunction(() => [...document.querySelectorAll(".card-id-pill")].some((e) => /District 7\b/.test(e.textContent)),
+        null, { timeout: QUERY_TIMEOUT })
+      .catch(() => {});
+    const found = await page.evaluate((ns) => ({
+      status: (document.getElementById("geo-status").textContent || "").trim(),
+      on: !!(document.getElementById("toggle-il-senate") || {}).checked,
+      pills: [...document.querySelectorAll(".card-id-pill")].map((e) => e.textContent).filter(Boolean),
+      point: window[ns].state.selectedPoint,
+    }), EXPORTS_NAME);
+    check("a district searched by name is selected and its layer turned on",
+      /^Selected: State Senate District 7/.test(found.status) && found.on && !!found.point,
+      `status=${found.status.slice(0, 60)} on=${found.on}`);
+    check("the searched district's card names that district",
+      found.pills.some((t) => /District 7\b/.test(t)), JSON.stringify(found.pills));
+    check("a district name is never sent to the search geocoder", geocoderCalls === 0, `${geocoderCalls} Photon request(s)`);
+    await context.close();
+  }
+
   // 2. The three no-API layers classify a known point against known ground
   //    truth, fetched from data/app/*.json. Two expected-value shapes: a
   //    NUMERIC expectation asserts the card's own "District N" token exactly

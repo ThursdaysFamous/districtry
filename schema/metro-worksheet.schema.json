@@ -62,6 +62,15 @@
       "$ref": "#/definitions/bbox",
       "description": "OPTIONAL. Envelope the POI (office-address) geocoder is bounded to; defaults to metro_bbox when absent, which is the old behaviour and the right answer for a fork whose layers are all city-scoped. Set it only when a layer can name an address OUTSIDE metro_bbox — the bound tracks the reach of the fork's WIDEST layer, and one tighter than the data silently drops those pins however clean the address is. Chicago's county-clerk card answers statewide, so Chicago sets Illinois."
     },
+    "district_search": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["file"],
+      "properties": {
+        "file": {"type": "string", "pattern": "^[a-z0-9-]+\\.json$"}
+      },
+      "description": "OPTIONAL. Opts the instance into searching districts by name (\"33rd ward\"). `file` is the data/app index scripts/build_district_search.py writes; it must also be listed under data_files.geometry, because it changes only when boundaries do. Absent = the search box searches addresses only, byte-identically to before."
+    },
     "socrata_host": {
       "type": "string",
       "format": "uri"

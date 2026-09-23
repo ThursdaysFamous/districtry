@@ -10,3 +10,6 @@
     font-weight: 600;
     color: var(--accent-deep);
   }
+  /* a district found by name ("33rd ward"): the district first, then the
+     layer it belongs to, muted so the name reads first */
+  .district-result-hint { display: block; font-size: 12px; color: var(--muted, #6b7280); margin-top: 1px; }
