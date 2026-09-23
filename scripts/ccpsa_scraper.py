@@ -51,6 +51,7 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from scraper_common import UA_CHROME_WIN_124  # noqa: E402  (shared machinery — do not fork)
+from validate_officeholder_names import is_vacancy_marker  # noqa: E402  (one reader for the word)
 
 BASE = "https://ccpsa.chicago.gov"
 DC_SITEMAP = BASE + "/district-council-sitemap.xml"
@@ -122,7 +123,18 @@ def parse_members(soup):
     `h3.title` (name), a `p.position` (role on the council, e.g. "Chair",
     "Nominating Committee", "Community Engagement"), and an `a.see-more` link to
     the member's profile. A card with no name is skipped rather than emitted with
-    a null name — an unnamed Councilor is meaningless."""
+    a null name — an unnamed Councilor is meaningless.
+
+    A SEAT CCPSA PRINTS AS VACANT IS KEPT, and that is the one card that is not
+    meaningless without a name. Each council seats three under named roles, so a
+    dropped card would make the body look smaller than the city elects; the row
+    carries the seat's role with `vacant` and no name at all. Measured
+    2026-09-23 on the live pages: the 3rd and 12th councils each print the word
+    in the `h3.title` where a name goes, with "Nominating Committee" beside it,
+    and an `a.see-more` to ccpsa.chicago.gov/member/vacant/ — which answers 200
+    and is a profile page for nobody, so it is not carried. Until this change
+    the word shipped as the member's NAME and reached il/police-district.html as
+    a schema.org Person of that name."""
     members = []
     # Scope to the Members block so unrelated cards elsewhere on the page can't
     # leak in; fall back to the whole document if the wrapper markup changes.
@@ -134,6 +146,10 @@ def parse_members(soup):
             continue
         role_el = card.select_one("p.position")
         role = clean(role_el.get_text()) if role_el else None
+        if is_vacancy_marker(name):
+            members.append({"name": None, "role": role, "profile_url": None,
+                            "vacant": True})
+            continue
         link_el = card.select_one("a.see-more") or card.find("a", href=True)
         profile_url = urljoin(BASE, link_el["href"]) if link_el and link_el.get("href") else None
         members.append({"name": name, "role": role, "profile_url": profile_url})

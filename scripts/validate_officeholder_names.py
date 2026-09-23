@@ -195,11 +195,36 @@ PERSON_CONTAINERS = {
     "delegation",
 }
 
-# A county that publishes a seat as empty is stating a fact about the seat.
+# A publisher that writes one of these where a name goes is stating a fact about
+# the SEAT: nobody holds it. It is never a person, so it is refused here exactly
+# as a party label is, and a roster records the fact STRUCTURALLY instead —
+# `vacancies: N` on the district (Sangamon, Logan) or `vacant: true` on the seat
+# where the seat carries a role worth keeping (Wisconsin, CCPSA).
+#
+# THIS TABLE ALLOWED THE WORD UNTIL 2026-09-23, and what that cost is measured
+# rather than supposed: `il/county-board/logan.html` published a schema.org
+# `Person` named `VACANT`, and `il/police-district.html` published two named
+# `Vacant`, all three as visible text as well. Neither pipeline mentions the
+# word anywhere — in both cases it is the source's own string carried straight
+# through, which is precisely what a gate on names is for.
+#
+# ONE TABLE, THREE READERS. `why_not_a_name` refuses it, and the two scrapers
+# that meet it convert on `is_vacancy_marker` rather than each carrying a copy
+# of the list (scripts/logan_county_board_scraper.py, scripts/ccpsa_scraper.py).
 VACANCY_SENTINELS = {
     "vacant", "vacancy", "unassigned", "open", "tbd", "none", "n/a",
     "not listed", "no candidate",
 }
+
+
+def is_vacancy_marker(value):
+    """True when `value` is a publisher's word for an empty seat.
+
+    The scrapers call this to convert such a row into the structural record the
+    cards and the per-county pages already render, BEFORE the value can reach a
+    roster — so this gate never has to see it.
+    """
+    return isinstance(value, str) and value.strip().lower() in VACANCY_SENTINELS
 
 # A party label is never a person, whatever column it was read out of.
 PARTY_LABELS = {
@@ -254,7 +279,7 @@ def why_not_a_name(value):
     if not text:
         return "empty"
     if text.lower() in VACANCY_SENTINELS:
-        return None
+        return "a vacancy marker standing where a person should be"
     if text.lower() in PARTY_LABELS:
         return "a party label standing where a person should be"
     if PHONE_RE.match(text):
@@ -299,9 +324,21 @@ SELFTEST = [
     ("Dora “Villarreal” Nieman", None),
     ("Bo O'Brien", None),
     ("Ronald (Ron) A. Willhite", None),
-    ("Vacant", None),
-    ("Not listed", None),
-    ("TBD", None),
+    # THE THREE THAT FLIPPED, 2026-09-23. These read `None` — accepted as a
+    # name — until Logan's `VACANT` and CCPSA's two `Vacant` were found on
+    # served pages as schema.org `Person` nodes. A publisher's word for an
+    # empty seat is a fact about the SEAT, and the rosters that meet one now
+    # record it structurally before it can reach a name field, so the predicate
+    # refuses it here.
+    ("Vacant", "a vacancy marker standing where a person should be"),
+    ("Not listed", "a vacancy marker standing where a person should be"),
+    ("TBD", "a vacancy marker standing where a person should be"),
+    # The refusal is on the WHOLE value, never a prefix: a surname that merely
+    # starts like one is still a name, and widening this into a substring test
+    # would take real people off a card.
+    ("Vance Parker", None),
+    ("Noneman", None),
+    ("Openshaw", None),
 ]
 
 

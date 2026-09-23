@@ -66,12 +66,10 @@
         "email": "kschmidt@logancountyil.gov",
         "name": "Kathy Schmidt",
         "phone": "201-362-6039"
-      },
-      {
-        "name": "VACANT"
       }
     ],
-    "sourceUrl": "https://www.logancountyil.gov/index.php?option=com_content&view=article&id=176&Itemid=541&lang=en"
+    "sourceUrl": "https://www.logancountyil.gov/index.php?option=com_content&view=article&id=176&Itemid=541&lang=en",
+    "vacancies": 1
   },
   "6": {
     "members": [

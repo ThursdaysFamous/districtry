@@ -50,6 +50,12 @@ def resolve_roster(records):
         for m in record.get("members") or []:
             name = m.get("name")
             if not name:
+                # A seat CCPSA prints as vacant keeps its row and its role and
+                # carries no name — the shape build_officeholder_tables.py
+                # already renders as "Vacant" with no Person node behind it.
+                # Anything else nameless is a parse miss and is dropped.
+                if m.get("vacant"):
+                    members.append({"vacant": True, "role": m.get("role")})
                 continue
             members.append(
                 {
@@ -86,7 +92,11 @@ def main():
         )
         sys.exit(1)
 
-    total_councilors = sum(len(v["members"]) for v in roster.values())
+    # NAMED councilors, not seats: this floor asks whether the member cards
+    # still parse, and a seat CCPSA prints as vacant parses perfectly while
+    # naming nobody. Counting it would let the floor be met by vacancies.
+    total_councilors = sum(1 for v in roster.values()
+                           for m in v["members"] if m.get("name"))
     if total_councilors < MIN_COUNCILORS:
         print(
             f"WARNING: only {total_councilors}/{MIN_COUNCILORS}+ councilors parsed across "

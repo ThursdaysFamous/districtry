@@ -39,7 +39,13 @@ BOARD = {
     "email": "logancountyboard@logancountyil.gov",
     "sourceUrl": SOURCE_URL,
 }
-EXPECT_MEMBERS_PER_DISTRICT = 2
+# SEATS, NOT MEMBERS. The county seats two per district and says so; whether
+# both are filled is a different question, and conflating them is what made this
+# builder refuse to write the moment a seat went empty. A vacancy moves the
+# named count and never the seat count — the split build_sangamon_county_board_roster.py
+# already draws, for the same reason: the board did not get smaller, one of its
+# seats got emptier.
+EXPECT_SEATS_PER_DISTRICT = 2
 MIN_PHONES = 10
 MIN_EMAILS = 10
 
@@ -60,10 +66,20 @@ def main():
     roster = {}
     chairs = []
     for rec in records:
-        if not rec.get("name") or rec.get("district") is None:
+        if rec.get("district") is None:
             continue
         d = str(rec["district"])
         roster.setdefault(d, {"members": [], "sourceUrl": SOURCE_URL})
+        if rec.get("vacant"):
+            # Counted, never named — the Livingston posture the county-board
+            # card and build_county_pages.py both already render ("N of M seats
+            # here is vacant"). The role the page printed beside the empty seat
+            # is not carried onto the district: it describes a seat nobody
+            # holds, and a role with no person on a card reads as a person.
+            roster[d]["vacancies"] = roster[d].get("vacancies", 0) + 1
+            continue
+        if not rec.get("name"):
+            continue
         m = {"name": rec["name"]}
         if rec.get("role"):
             m["role"] = rec["role"]
@@ -76,19 +92,29 @@ def main():
     if sorted(roster) != sorted(EXPECT_DISTRICTS):
         fail("parsed districts %s, expected exactly %s" % (sorted(roster), list(EXPECT_DISTRICTS)))
     for d, entry in roster.items():
-        if len(entry["members"]) != EXPECT_MEMBERS_PER_DISTRICT:
-            fail("district %s has %d members, the county seats exactly %d"
-                 % (d, len(entry["members"]), EXPECT_MEMBERS_PER_DISTRICT))
+        seats = len(entry["members"]) + entry.get("vacancies", 0)
+        if seats != EXPECT_SEATS_PER_DISTRICT:
+            fail("district %s accounts for %d seats (%d named, %d vacant), the "
+                 "county seats exactly %d"
+                 % (d, seats, len(entry["members"]), entry.get("vacancies", 0),
+                    EXPECT_SEATS_PER_DISTRICT))
     roles = sorted(r for r, _ in chairs)
     if roles != ["Chair", "Vice Chair"]:
         fail("expected exactly one Chair and one Vice Chair, got %s — the page's "
              "role tags changed" % (chairs or "none"))
+    named = sum(len(v["members"]) for v in roster.values())
+    vacancies = sum(v.get("vacancies", 0) for v in roster.values())
     phones = sum(1 for v in roster.values() for m in v["members"] if m.get("phone"))
     emails = sum(1 for v in roster.values() for m in v["members"] if m.get("email"))
+    # The denominator is the NAMED count, not the seat count: an empty seat has
+    # nobody to carry a phone, so measuring against 12 would report a shortfall
+    # the county has not got.
     if phones < MIN_PHONES:
-        fail("only %d/12 members carry a phone (floor %d)" % (phones, MIN_PHONES))
+        fail("only %d/%d named members carry a phone (floor %d)"
+             % (phones, named, MIN_PHONES))
     if emails < MIN_EMAILS:
-        fail("only %d/12 members carry an e-mail (floor %d)" % (emails, MIN_EMAILS))
+        fail("only %d/%d named members carry an e-mail (floor %d)"
+             % (emails, named, MIN_EMAILS))
 
     # Added AFTER every district check above, all of which read roster's keys
     # as districts (sorted(roster) == EXPECT_DISTRICTS) or index members on
@@ -100,9 +126,10 @@ def main():
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(roster, f, indent=2, ensure_ascii=False, sort_keys=True)
         f.write("\n")
-    print("logan-board-roster: wrote %s — 6 districts x 2 members + the board "
-          "office block (%d phones, %d e-mails; %s)"
-          % (os.path.relpath(out_path, REPO_ROOT), phones, emails,
+    print("logan-board-roster: wrote %s — 6 districts x 2 seats (%d named, %d "
+          "vacant) + the board office block (%d phones, %d e-mails; %s)"
+          % (os.path.relpath(out_path, REPO_ROOT), named, vacancies,
+             phones, emails,
              ", ".join("%s %s" % (r, n) for r, n in sorted(chairs))))
 
 
