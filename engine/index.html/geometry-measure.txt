@@ -9,6 +9,8 @@
    *   measurePointWeight(g, pts)-> the summed weight of the [lng, lat, w]
    *                                points inside g (a population, when the
    *                                points are Census blocks)
+   *   measurePointsIn(g, pts)   -> those points themselves, the subset the
+   *                                weight is summed over
    * Producing the overlap SHAPE (intersection, union) is a different and much
    * harder problem — districts share borders, and shared edges are exactly
    * the degenerate case clipping algorithms get wrong — so it is not attempted.
@@ -137,14 +139,25 @@
     var m = measureRows(measurePrepared(a), measurePrepared(b));
     return { area: m.area, overlap: m.overlap, share: m.area > 0 ? Math.min(1, m.overlap / m.area) : 0 };
   }
-  function measurePointWeight(geometry, points) {
-    var prep = measurePrepared(geometry), e = prep.extent, sum = 0;
+  // The points inside g, as a new array of the same point objects — so a
+  // caller can take a district's blocks once and measure other districts
+  // against that subset instead of the whole county.
+  function measurePointsIn(geometry, points) {
+    var prep = measurePrepared(geometry), e = prep.extent, out = [];
     for (var i = 0; i < points.length; i++) {
       var p = points[i];
       if (p[0] < e[0] || p[0] > e[2] || p[1] < e[1] || p[1] > e[3]) continue;
       var xs = measureCrossings(prep.index, p[1]), left = 0;
       for (var k = 0; k < xs.length && xs[k] < p[0]; k++) left++;
-      if (left % 2 === 1) sum += p.length > 2 ? +p[2] || 0 : 1;
+      if (left % 2 === 1) out.push(p);
+    }
+    return out;
+  }
+  function measurePointWeight(geometry, points) {
+    var inside = measurePointsIn(geometry, points), sum = 0;
+    for (var i = 0; i < inside.length; i++) {
+      var p = inside[i];
+      sum += p.length > 2 ? +p[2] || 0 : 1;
     }
     return sum;
   }

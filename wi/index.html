@@ -1706,7 +1706,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
      The card vocabulary is the whole card surface now — the legacy
      renderFieldList dt/dd table was retired in engine-v1.0.13. Palette is
      scoped to the cards — the rest of the app keeps the existing token set. ---- */
-  .layer-block {
+  /* the palette is shared with the comparison stats screen, which renders
+     cards inside its own panel (compare-stats) */
+  .layer-block,
+  .stats-panel {
     --card-accent: #1d5fd6;
     --card-link: #1a56c4;
     --card-link-hover: #123c8a;
@@ -1723,6 +1726,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
     --card-border: #e8eaef;
     --card-row-border: #f1f3f7;
     --card-btn-border: #c7d7f2;
+  }
+  .layer-block {
     background: #fff;
     border: 1px solid rgba(0, 0, 0, 0.08);
     /* the left accent keeps each layer's own map color (the card-to-overlay
@@ -1903,6 +1908,57 @@ svg.leaflet-image-layer.leaflet-interactive path {
     padding: 6px 12px;
   }
   .card-footer .pin-parent-btn:hover { background: #f3f7fd; }
+  /* "Stats" beside "★ Comparing": a text button, so the pin stays the
+     footer's one bordered control (compare-stats) */
+  .pin-stats-btn {
+    margin: 0;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--card-link);
+    background: none;
+    border: none;
+    padding: 6px 4px;
+    min-height: 24px;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+  }
+  .pin-stats-btn:hover { color: var(--card-link-hover); }
+  .pin-stats-btn[hidden] { display: none; }
+
+  /* ---- the comparison stats screen (compare-stats): the feedback modal's
+     shell, wider, scrolling inside itself; a full-height sheet on a phone ---- */
+  .feedback-panel.stats-panel { max-width: 640px; max-height: 84vh; overflow-y: auto; }
+  .stats-head { margin: 0 0 14px; }
+  .stats-layer { font-size: 12px; font-weight: 600; color: var(--card-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .stats-name { font-size: 18px; font-weight: 700; color: var(--card-ink); }
+  .stats-totals { font-size: 13px; color: var(--card-muted); margin-top: 2px; }
+  .stats-group { margin: 16px 0 0; }
+  .stats-group-title { font-size: 13px; font-weight: 700; color: var(--card-ink); margin: 0 0 6px; padding-bottom: 4px; border-bottom: 1px solid var(--card-border); }
+  .stats-row { border-bottom: 1px solid var(--card-border); }
+  .stats-row > summary { list-style: none; cursor: pointer; padding: 8px 0; display: block; }
+  .stats-row > summary::-webkit-details-marker { display: none; }
+  .stats-row > summary:focus-visible { outline: 2px solid var(--card-link); outline-offset: 2px; }
+  .stats-row-top { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .stats-row-name { font-size: 14px; font-weight: 700; color: var(--card-ink); }
+  .stats-row-name::before { content: "▸ "; color: var(--card-muted); font-weight: 400; }
+  .stats-row[open] .stats-row-name::before { content: "▾ "; }
+  .stats-rel { font-size: 11.5px; font-weight: 600; padding: 1px 7px; border-radius: 999px; border: 1px solid var(--card-btn-border); color: var(--card-muted); }
+  .stats-rel.is-cross { border-style: dashed; }
+  .stats-line { display: block; font-size: 12.5px; line-height: 1.45; color: var(--card-body-ink); margin-top: 2px; }
+  .stats-line[hidden] { display: none; }
+  .stats-card { padding: 0 0 10px 14px; }
+  .stats-card .stats-link { display: inline-block; margin-top: 6px; font-size: 13px; font-weight: 600; color: var(--card-link); }
+  .stats-rest { font-size: 12.5px; font-style: italic; color: var(--card-muted); margin: 6px 0 0; }
+  .stats-note { font-size: 12.5px; color: var(--card-muted); margin: 6px 0; }
+  .stats-foot { font-size: 12px; color: var(--card-muted); margin: 16px 0 0; }
+  /* the doubled classes outrank the modal shell's own rules, which the
+     stylesheet states later (styles-footer) */
+  @media (max-width: 767px) {
+    .feedback-modal.stats-modal { padding: 0; align-items: stretch; }
+    .feedback-modal.stats-modal .feedback-panel.stats-panel { max-width: none; max-height: none; height: 100%; border-radius: 0; box-sizing: border-box; }
+  }
   .card-footer-link { margin-left: auto; font-size: 13px; font-weight: 600; color: var(--card-link); text-decoration: none; white-space: nowrap; }
   .card-footer-link::after { content: " ↗"; }
   .card-footer-link:hover { color: var(--card-link-hover); }
@@ -3426,7 +3482,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
   /* ---- result cards. The card system is its own palette (--card-*), so it
      needs its own inversion; --card-accent/--card-link ARE the data tier and
      take the design package's dark data ramp rather than the chrome violet. */
-  :root[data-theme="dark"] .layer-block {
+  :root[data-theme="dark"] .layer-block,
+  :root[data-theme="dark"] .stats-panel {
     --card-accent: #6ea8ff;
     --card-link: #8db9ff;
     --card-link-hover: #b6d2ff;
@@ -3443,6 +3500,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
     --card-border: rgba(236, 233, 244, 0.10);
     --card-row-border: rgba(236, 233, 244, 0.06);
     --card-btn-border: rgba(110, 168, 255, 0.34);
+  }
+  :root[data-theme="dark"] .layer-block {
     background: #201d29;
     border-color: rgba(236, 233, 244, 0.10);
     /* No color-mix on the stripe any more. --layer-accent is set from
@@ -4319,6 +4378,8 @@ function initWisconsinExplorer() {
    *   measurePointWeight(g, pts)-> the summed weight of the [lng, lat, w]
    *                                points inside g (a population, when the
    *                                points are Census blocks)
+   *   measurePointsIn(g, pts)   -> those points themselves, the subset the
+   *                                weight is summed over
    * Producing the overlap SHAPE (intersection, union) is a different and much
    * harder problem — districts share borders, and shared edges are exactly
    * the degenerate case clipping algorithms get wrong — so it is not attempted.
@@ -4447,14 +4508,25 @@ function initWisconsinExplorer() {
     var m = measureRows(measurePrepared(a), measurePrepared(b));
     return { area: m.area, overlap: m.overlap, share: m.area > 0 ? Math.min(1, m.overlap / m.area) : 0 };
   }
-  function measurePointWeight(geometry, points) {
-    var prep = measurePrepared(geometry), e = prep.extent, sum = 0;
+  // The points inside g, as a new array of the same point objects — so a
+  // caller can take a district's blocks once and measure other districts
+  // against that subset instead of the whole county.
+  function measurePointsIn(geometry, points) {
+    var prep = measurePrepared(geometry), e = prep.extent, out = [];
     for (var i = 0; i < points.length; i++) {
       var p = points[i];
       if (p[0] < e[0] || p[0] > e[2] || p[1] < e[1] || p[1] > e[3]) continue;
       var xs = measureCrossings(prep.index, p[1]), left = 0;
       for (var k = 0; k < xs.length && xs[k] < p[0]; k++) left++;
-      if (left % 2 === 1) sum += p.length > 2 ? +p[2] || 0 : 1;
+      if (left % 2 === 1) out.push(p);
+    }
+    return out;
+  }
+  function measurePointWeight(geometry, points) {
+    var inside = measurePointsIn(geometry, points), sum = 0;
+    for (var i = 0; i < inside.length; i++) {
+      var p = inside[i];
+      sum += p.length > 2 ? +p[2] || 0 : 1;
     }
     return sum;
   }
@@ -13276,6 +13348,10 @@ function initWisconsinExplorer() {
     btn.textContent = pinned ? "★ Comparing — click to stop" : "☆ Compare to this district";
     btn.setAttribute("aria-pressed", pinned ? "true" : "false");
     btn.classList.toggle("is-pinned", pinned);
+    // the numbers behind the comparison (compare-stats), beside the pin only
+    // while this card's district is the one being compared to
+    var rt = layerRuntime[id];
+    if (rt && rt.statsBtn) rt.statsBtn.hidden = !pinned;
   }
 
   // Append the "Compare to this district" control to a layer's card — only for
@@ -13290,12 +13366,20 @@ function initWisconsinExplorer() {
     var btn = document.createElement("button");
     btn.type = "button";
     btn.className = "pin-parent-btn";
-    stylePinButton(btn, mod.id);
     btn.addEventListener("click", function () {
       setPinnedParent(mod.id);
       if (pinnedParentId === mod.id) followPinnedCard(btn);
     });
     rt.pinBtn = btn;
+    var stats = document.createElement("button");
+    stats.type = "button";
+    stats.className = "pin-stats-btn";
+    stats.textContent = "Stats";
+    stats.setAttribute("aria-label", "Comparison stats");
+    stats.setAttribute("aria-haspopup", "dialog");
+    stats.addEventListener("click", openCompareStats);
+    rt.statsBtn = stats;
+    stylePinButton(btn, mod.id); // after the stats button exists, which it also shows or hides
     if (!rt.cardFooter && rt.cardBody.querySelector(".card-flush")) {
       // a migrated (flush) card whose module declares no primaryLink still
       // needs the footer — the flush body has no padding for a loose button
@@ -13308,11 +13392,360 @@ function initWisconsinExplorer() {
       // migrated cards: the pin sits left in the shell-owned footer, before
       // the right-aligned primary link (docs/CARD_RENDER_API.md)
       rt.cardFooter.insertBefore(btn, rt.cardFooter.firstChild);
+      rt.cardFooter.insertBefore(stats, btn.nextSibling);
     } else {
       rt.cardBody.appendChild(btn);
+      rt.cardBody.appendChild(stats);
     }
   }
   /* ==== ENGINE:END relationship-pinning ==== */
+
+  /* ==== ENGINE:BEGIN compare-stats ==== */
+  /* =========================================================================
+   * COMPARISON STATS — the numbers behind the compared outlines. With a
+   * district pinned ("★ Comparing"), its card carries a "Stats" button that
+   * opens this screen: every district of every other switched-on polygon
+   * layer that overlaps the pinned one, grouped by layer, each with
+   *   - whether it lies inside the pinned district or crosses its edge;
+   *   - how much of IT is inside the pinned district, and how much of the
+   *     pinned district it makes up — by people where the app ships Census
+   *     block populations (POPULATION_INDEX_URL), and by area everywhere;
+   *   - its own card, run on demand when the row is opened.
+   * and, per layer, how much of the pinned district no district of that
+   * layer covers at all.
+   *
+   * THE SAME DISTRICTS AS THE OUTLINES. The rows are chosen by the tests the
+   * map's outlines use (polygonFullyInside / polygonsOverlap) over the same
+   * layers, so the screen never lists a district the map does not outline.
+   * Names use the outline labels' wording (relLabelText), which is the card
+   * pill's wording where that can be proven.
+   *
+   * PEOPLE ARE COUNTED, AREA IS MEASURED (engine block geometry-measure).
+   * People are the Census 2020 blocks whose internal point falls inside a
+   * district, so a map drawn on block lines (congress, the legislature,
+   * wards) gets an exact count, and one that is not gets a close one — the
+   * footnote says so. The block files are fetched per county, only for the
+   * counties the districts touch, and only when this screen opens.
+   *
+   * A ROW'S CARD RUNS THE LAYER'S OWN QUERY AT A POINT INSIDE THE DISTRICT
+   * (the outline label's spot, which lies in the part inside the pinned
+   * district), and renders it with the layer's own render — so it reads
+   * exactly as a click there would. That query is the same request a click
+   * makes, which for a layer that asks its server about a point sends that
+   * point; the privacy page says so. It runs only when a reader opens the
+   * row, never for the whole list. ---------- */
+  var statsModal = null;
+  var statsOpenSeq = 0;
+  var statsPopIndex = null;
+  var statsPopFiles = {};
+
+  function statsLoadPopulationIndex() {
+    if (typeof POPULATION_INDEX_URL === "undefined") return Promise.resolve(null);
+    if (!statsPopIndex) {
+      statsPopIndex = fetchJSONWithRetry(POPULATION_INDEX_URL, {}, 2)["catch"](function (err) {
+        console.warn("population index unavailable; comparing by area only:", err);
+        statsPopIndex = null;
+        return null;
+      });
+    }
+    return statsPopIndex;
+  }
+  // The block points of every county whose extent meets `box`, as a list of
+  // arrays (one per county file, never concatenated: Cook alone is ~60,000).
+  function statsLoadPopulation(box) {
+    return statsLoadPopulationIndex().then(function (index) {
+      if (!index || !index.counties) return null;
+      var base = POPULATION_INDEX_URL.replace(/[^\/]*$/, "");
+      var wanted = [];
+      Object.keys(index.counties).forEach(function (fips) {
+        var c = index.counties[fips], b = c.bbox;
+        if (!b || b[0] > box[2] || b[2] < box[0] || b[1] > box[3] || b[3] < box[1]) return;
+        if (!statsPopFiles[c.file]) {
+          statsPopFiles[c.file] = fetchJSONWithRetry(base + c.file, {}, 2)["catch"](function (err) {
+            delete statsPopFiles[c.file];
+            throw err;
+          });
+        }
+        wanted.push(statsPopFiles[c.file]);
+      });
+      return Promise.all(wanted).then(function (docs) {
+        return docs.map(function (d) { return d.points || []; });
+      });
+    });
+  }
+  function statsPointsIn(geometry, sets) {
+    return sets.map(function (pts) { return measurePointsIn(geometry, pts); });
+  }
+  function statsWeight(geometry, sets) {
+    var sum = 0;
+    for (var i = 0; i < sets.length; i++) sum += measurePointWeight(geometry, sets[i]);
+    return sum;
+  }
+  function statsSetsWeight(sets) {
+    var sum = 0;
+    for (var i = 0; i < sets.length; i++) for (var j = 0; j < sets[i].length; j++) sum += sets[i][j][2] || 0;
+    return sum;
+  }
+
+  // A share as a reader should see it: never "0%" for something that is
+  // there, never "100%" for something that is not all of it.
+  function statsPct(part, whole) {
+    if (!(whole > 0)) return "—";
+    var x = part / whole;
+    if (x <= 0) return "none";
+    if (x >= 1) return "all";
+    if (x < 0.01) return "under 1%";
+    if (x > 0.99) return "over 99%";
+    return Math.round(x * 100) + "%";
+  }
+  function statsNum(n) {
+    return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+  function statsSqMi(km2) {
+    var mi = km2 * 0.386102;
+    return (mi >= 10 ? statsNum(mi) : mi >= 1 ? mi.toFixed(1) : mi.toFixed(2)) + " sq mi";
+  }
+
+  // The districts the outlines would draw, per layer, with their relation.
+  function statsCollect(parentFeature) {
+    var groups = [], drawn = 0, capped = false;
+    for (var li = 0; li < layers.length && !capped; li++) {
+      var mod = layers[li];
+      if (mod.id === pinnedParentId || !state.layersOn[mod.id]) continue;
+      if (!mod.overlay || !mod.overlay.style) continue;
+      var rt = layerRuntime[mod.id];
+      if (!rt || !rt.geojson || rt.relevant === false) continue;
+      var wrapper = relLabelWrapper(mod), rows = [];
+      var feats = rt.geojson.features || [];
+      for (var j = 0; j < feats.length; j++) {
+        var f = feats[j];
+        var inside = polygonFullyInside(f, parentFeature);
+        if (!inside && !polygonsOverlap(f, parentFeature)) continue;
+        if (drawn >= REL_MAX_OUTLINES) { capped = true; break; }
+        drawn++;
+        rows.push({ mod: mod, feature: f, inside: inside,
+          name: relLabelText(mod, f, wrapper) || (mod.label + " (unnamed district)") });
+      }
+      if (rows.length) groups.push({ mod: mod, rows: rows });
+    }
+    // the districts making up most of the compared one first
+    var parentGeom = parentFeature.geometry;
+    groups.forEach(function (g) {
+      g.rows.forEach(function (r) { r.ov = measureOverlap(r.feature.geometry, parentGeom); });
+      g.rows.sort(function (a, b) { return b.ov.overlap - a.ov.overlap; });
+    });
+    return { groups: groups, capped: capped };
+  }
+
+  function statsBuildModal() {
+    if (statsModal) return statsModal;
+    var modal = document.createElement("div");
+    modal.className = "feedback-modal stats-modal";
+    modal.id = "stats-modal";
+    modal.hidden = true;
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
+    modal.setAttribute("aria-labelledby", "stats-title");
+    var backdrop = cardEl("div", "feedback-backdrop");
+    var panel = cardEl("div", "feedback-panel stats-panel");
+    panel.setAttribute("role", "document");
+    var close = document.createElement("button");
+    close.type = "button";
+    close.className = "feedback-close";
+    close.setAttribute("aria-label", "Close");
+    close.textContent = "×";
+    var title = cardEl("h2", null, "Comparison stats");
+    title.id = "stats-title";
+    var body = cardEl("div", "stats-body");
+    body.id = "stats-body";
+    panel.appendChild(close);
+    panel.appendChild(title);
+    panel.appendChild(body);
+    modal.appendChild(backdrop);
+    modal.appendChild(panel);
+    document.body.appendChild(modal);
+    var lastFocus = null;
+    function onKey(e) { if (e.key === "Escape") statsClose(); }
+    statsModal = {
+      el: modal, body: body, close: close,
+      open: function () {
+        lastFocus = document.activeElement;
+        modal.hidden = false;
+        close.focus();
+        document.addEventListener("keydown", onKey);
+      },
+      shut: function () {
+        modal.hidden = true;
+        document.removeEventListener("keydown", onKey);
+        if (lastFocus && lastFocus.focus && document.contains(lastFocus)) lastFocus.focus();
+      }
+    };
+    close.addEventListener("click", statsClose);
+    backdrop.addEventListener("click", statsClose);
+    return statsModal;
+  }
+  function statsClose() {
+    statsOpenSeq++; // anything still computing for the closed screen stops
+    if (statsModal && !statsModal.el.hidden) statsModal.shut();
+  }
+
+  function openCompareStats() {
+    var parentFeature = relationshipParentFeature();
+    var parentMod = pinnedParentId ? getLayerById(pinnedParentId) : null;
+    if (!parentFeature || !parentMod) return;
+    // Counted by the PINNED layer, the shape compare/<id> already uses, and
+    // never by district: which ward a reader compares says where they live.
+    trackEvent("compare-stats/" + pinnedParentId);
+    var m = statsBuildModal();
+    var token = ++statsOpenSeq, seq = state.sequence;
+    var live = function () { return token === statsOpenSeq && seq === state.sequence; };
+    var body = m.body;
+    body.innerHTML = "";
+    var parentName = relLabelText(parentMod, parentFeature, relLabelWrapper(parentMod)) || parentMod.label;
+    var head = cardEl("div", "stats-head");
+    head.appendChild(cardEl("div", "stats-layer", parentMod.label));
+    head.appendChild(cardEl("div", "stats-name", parentName));
+    var parentArea = measureArea(parentFeature.geometry);
+    var totals = cardEl("div", "stats-totals", statsSqMi(parentArea));
+    head.appendChild(totals);
+    body.appendChild(head);
+
+    var found = statsCollect(parentFeature);
+    var cells = []; // {row, peopleEl, area overlap} filled once people load
+    if (!found.groups.length) {
+      body.appendChild(cardEl("p", "stats-note",
+        "Turn on another district layer to see how its districts fall inside this one."));
+    }
+    found.groups.forEach(function (g) {
+      var sec = cardEl("section", "stats-group");
+      sec.appendChild(cardEl("h3", "stats-group-title", g.mod.label));
+      var sumArea = 0;
+      g.rows.forEach(function (r) {
+        var ov = r.ov;
+        sumArea += ov.overlap;
+        var det = document.createElement("details");
+        det.className = "stats-row";
+        var sum = document.createElement("summary");
+        var top = cardEl("span", "stats-row-top");
+        top.appendChild(cardEl("span", "stats-row-name", r.name));
+        top.appendChild(cardEl("span", "stats-rel " + (r.inside ? "is-inside" : "is-cross"),
+          r.inside ? "inside" : "crosses the edge"));
+        sum.appendChild(top);
+        var people = cardEl("span", "stats-line stats-people");
+        sum.appendChild(people);
+        sum.appendChild(cardEl("span", "stats-line stats-area",
+          "Area: " + statsPct(ov.overlap, ov.area) + " of it is in " + parentName + ", making up " +
+          statsPct(ov.overlap, parentArea) + " of " + parentName));
+        det.appendChild(sum);
+        var card = cardEl("div", "stats-card");
+        det.appendChild(card);
+        det.addEventListener("toggle", function () {
+          if (det.open && !card.__ran) { card.__ran = true; statsRunCard(r, parentFeature, card, live); }
+        });
+        sec.appendChild(det);
+        cells.push({ row: r, el: people, det: det });
+      });
+      // What no district of this layer covers. Only stated for a layer whose
+      // districts do not overlap each other — summed shares of an overlapping
+      // layer would count some ground twice and say nothing true.
+      var restArea = parentArea - sumArea;
+      g.restEl = cardEl("p", "stats-rest");
+      if (sumArea <= parentArea * 1.005) {
+        g.restEl.textContent = restArea > parentArea * 0.005
+          ? statsPct(restArea, parentArea) + " of " + parentName + "'s area is in no " + g.mod.label + " district."
+          : "Every part of " + parentName + " is in one of these districts.";
+        sec.appendChild(g.restEl);
+      }
+      g.sumArea = sumArea;
+      body.appendChild(sec);
+    });
+    if (found.capped) body.appendChild(cardEl("p", "stats-note", "Showing the first " + REL_MAX_OUTLINES + " districts."));
+    var foot = cardEl("p", "stats-foot");
+    body.appendChild(foot);
+    m.open();
+
+    // People, where this app ships them: every county the districts touch.
+    var box = featureBBox(parentFeature).slice();
+    found.groups.forEach(function (g) {
+      g.rows.forEach(function (r) {
+        var b = featureBBox(r.feature);
+        box = [Math.min(box[0], b[0]), Math.min(box[1], b[1]), Math.max(box[2], b[2]), Math.max(box[3], b[3])];
+      });
+    });
+    var pending = typeof POPULATION_INDEX_URL !== "undefined";
+    cells.forEach(function (c) { c.el.textContent = pending ? "People: counting…" : ""; c.el.hidden = !pending; });
+    foot.textContent = pending
+      ? "People are Census 2020 counts by block. A block on a district's edge counts wholly on the side its centre falls in, so a district not drawn on block lines gets a close figure, not an exact one. Areas are measured from the map's simplified boundaries."
+      : "Areas are measured from the map's simplified boundaries. This app has no population figures yet.";
+    if (!pending) return;
+    statsLoadPopulation(box).then(function (sets) {
+      if (!live()) return;
+      if (!sets) { cells.forEach(function (c) { c.el.hidden = true; }); return; }
+      var inParent = statsPointsIn(parentFeature.geometry, sets);
+      var parentPop = statsSetsWeight(inParent);
+      totals.textContent = statsNum(parentPop) + " people · " + statsSqMi(parentArea);
+      var sharedByLayer = {};
+      cells.forEach(function (c) {
+        var all = statsWeight(c.row.feature.geometry, sets);
+        var shared = statsWeight(c.row.feature.geometry, inParent);
+        sharedByLayer[c.row.mod.id] = (sharedByLayer[c.row.mod.id] || 0) + shared;
+        c.el.textContent = "People: " + statsPct(shared, all) + " of its " + statsNum(all) + " are in " +
+          parentName + ", making up " + statsPct(shared, parentPop) + " of " + parentName;
+        c.shared = shared;
+      });
+      // with people counted, the districts holding most of the compared
+      // one's people lead each layer's list (area ordered it until now)
+      found.groups.forEach(function (g) {
+        var mine = cells.filter(function (c) { return c.row.mod === g.mod; });
+        if (!mine.length) return;
+        var parent = mine[0].det.parentNode, after = g.restEl && g.restEl.parentNode === parent ? g.restEl : null;
+        mine.sort(function (a, b) { return b.shared - a.shared; });
+        mine.forEach(function (c) { parent.insertBefore(c.det, after); });
+      });
+      found.groups.forEach(function (g) {
+        if (!g.restEl || !g.restEl.parentNode) return;
+        var rest = parentPop - (sharedByLayer[g.mod.id] || 0);
+        if (rest > 0) {
+          g.restEl.textContent = statsNum(rest) + " people (" + statsPct(rest, parentPop) + ") and " +
+            statsPct(Math.max(0, parentArea - g.sumArea), parentArea) + " of the area of " + parentName +
+            " are in no " + g.mod.label + " district.";
+        }
+      });
+    })["catch"](function (err) {
+      if (!live()) return;
+      console.warn("population files unavailable:", err);
+      cells.forEach(function (c) { c.el.textContent = "People: the population files did not load."; });
+    });
+  }
+
+  // One row's card: the layer's own query at a point inside the district, and
+  // its own render. Isolated like every card: a failure stays in this row.
+  function statsRunCard(r, parentFeature, el, live) {
+    var spots = relLabelPoint(r.feature, parentFeature, r.inside);
+    if (!spots.length) { el.appendChild(cardEl("p", "stats-note", "This district is too thin to look up a point inside it.")); return; }
+    var point = { lat: spots[0].lat, lng: spots[0].lng };
+    el.appendChild(cardEl("p", "stats-note", "Loading…"));
+    Promise.resolve()
+      .then(function () { return r.mod.query(point, state.sequence); })
+      .then(function (result) {
+        if (!live()) return;
+        el.innerHTML = "";
+        if (!result) { el.appendChild(cardEl("p", "stats-note", "This layer has nothing more to show here.")); return; }
+        if (!r.mod.compact && r.mod.render) el.appendChild(r.mod.render(result));
+        var link = r.mod.primaryLink ? r.mod.primaryLink(result) : null;
+        var a = link ? cardExternalLink(link.label || "More", link.url) : null;
+        // the card's footer link, unless its body already carries that address
+        var dup = a && [].some.call(el.querySelectorAll("a[href]"), function (x) { return x.href === a.href; });
+        if (a && !dup) { a.classList.add("stats-link"); el.appendChild(a); }
+        if (!el.firstChild) el.appendChild(cardEl("p", "stats-note", "This layer's card names only the district."));
+      })["catch"](function (err) {
+        if (!live()) return;
+        console.error("[" + r.mod.id + "] stats card failed:", err);
+        el.innerHTML = "";
+        el.appendChild(cardEl("p", "stats-note", "This layer's data source didn't respond. It won't affect the other rows."));
+      });
+  }
+  /* ==== ENGINE:END compare-stats ==== */
 
   /* =========================================================================
    * BOOT

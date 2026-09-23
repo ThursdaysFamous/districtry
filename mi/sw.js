@@ -277,6 +277,20 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
+  // Census block populations (data/app/population/, the comparison stats
+  // screen): one file per county, fetched only for the counties a comparison
+  // touches. A PREFIX like the fonts and for the same reason — listing them
+  // would precache several megabytes most visitors never ask for — and
+  // cacheOnlyElseNetwork like the fonts, because a census count does not
+  // change under a fixed URL: a rebuild (the 2030 census) reaches a returning
+  // visitor through a CACHE_NAME bump, which check_cache_version.py enforces
+  // for these files as it does for fonts. An instance that ships no such
+  // folder never requests anything under it.
+  if (href.startsWith(new URL("data/app/population/", self.registration.scope).href)) {
+    event.respondWith(cacheOnlyElseNetwork(event.request));
+    return;
+  }
+
   // Everything else (all live district/roster API calls) hits the network normally.
 });
 /* ==== ENGINE:END sw-handlers ==== */

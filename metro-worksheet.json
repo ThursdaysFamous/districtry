@@ -26,6 +26,9 @@
   "district_search": {
     "file": "district-search.json"
   },
+  "population": {
+    "index": "population/index.json"
+  },
   "socrata_host": "https://data.cityofchicago.org",
   "socrata_app_token": "",
   "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",

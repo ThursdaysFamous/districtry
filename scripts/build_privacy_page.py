@@ -292,7 +292,12 @@ def measure_address_list(src, name):
 # worksheet's `district_search` key) can ever reach it, so the sentence names
 # those apps, measured off each app's own file, rather than claiming the
 # event for apps that cannot send it.
-EXPECTED_EVENTS = ["address-search", "compare-stop", "compare/",
+# `compare-stats/` joined on 2026-09-23 with the comparison stats screen. It
+# carries the PINNED layer ("compare-stats/congress") and nothing else — not
+# the district, which would say where a reader lives. Every app can send it:
+# the screen is shared engine code and compares by area where an app ships no
+# population, so no qualifier is needed the way district-search/ needs one.
+EXPECTED_EVENTS = ["address-search", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "geolocate",
                    "geolocate-success", "layer/", "metro-portal-go/", "select",
                    "share-native", "share-open", "share-permalink"]
@@ -935,9 +940,12 @@ def render_recipient_rows(apps):
         "<strong>inside your browser</strong>. Where an app is marked in the table above as "
         "sending a point, that layer instead asks the server about "
         "<strong>your exact selected point</strong> so one district can answer immediately "
-        "while the full layer downloads. Layers whose data ships with the app contact "
+        "while the full layer downloads. Opening a row on the comparison stats screen runs "
+        "that same lookup for a point <strong>inside the district the row names</strong>, "
+        "which is a point you did not click. Layers whose data ships with the app contact "
         "nobody at all.",
-        "When you turn a layer on and select a point.", "Every app with a map."))
+        "When you turn a layer on and select a point, or open a row of comparison stats.",
+        "Every app with a map."))
     # NOT a list of the apps. Every page here carries the counter, so naming the
     # seven surfaces this generator reads would have understated the recipient —
     # see COUNTER_EXCEPTIONS. The WHEN column separates the two things that are

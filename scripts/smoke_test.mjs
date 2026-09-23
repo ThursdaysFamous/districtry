@@ -612,6 +612,52 @@ try {
     await context.close();
   }
 
+  // 1f. COMPARISON STATS. With Congress pinned at the Loop and the State
+  //     House on, the pinned card carries "Stats", and the screen it opens
+  //     counts people from the shipped Census block files: IL-7 holds
+  //     753,676 (drawn to 753,677; the one person is the simplified outline),
+  //     every House district it lists is a real overlap, and the House map
+  //     covers all of it, so no share of it is left unassigned. Every file
+  //     involved ships in data/app, so this needs no live service. The use is
+  //     counted by the PINNED layer, once.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=41.88250,-87.62850&layers=congress,il-house&pin=congress&zoom=11`, async (p) => {
+      await p.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+      await p.addInitScript(() => {
+        window.__gcEvents = [];
+        window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+      });
+    });
+    const shown = await page.waitForSelector(".pin-stats-btn:not([hidden])", { timeout: QUERY_TIMEOUT }).then(() => true, () => false);
+    check("a pinned district's card carries the comparison stats button", shown);
+    if (shown) {
+      await page.click(".pin-stats-btn:not([hidden])");
+      await page
+        .waitForFunction(() => { const e = document.querySelector(".stats-people"); return e && /^People: .* of its/.test(e.textContent); },
+          null, { timeout: QUERY_TIMEOUT })
+        .catch(() => {});
+      const stats = await page.evaluate(() => ({
+        open: !document.getElementById("stats-modal").hidden,
+        totals: (document.querySelector(".stats-totals") || {}).textContent || "",
+        rows: document.querySelectorAll(".stats-row").length,
+        people: [...document.querySelectorAll(".stats-people")].map((e) => e.textContent),
+        rest: [...document.querySelectorAll(".stats-rest")].map((e) => e.textContent),
+        events: (window.__gcEvents || []).filter((v) => v && v.event).map((v) => v.path),
+      }));
+      check("the stats screen counts the compared district's people from the block files",
+        stats.open && /^753,676 people · \d+ sq mi$/.test(stats.totals), stats.totals);
+      check("the stats screen lists each overlapping district with its share of people",
+        stats.rows >= 10 && stats.people.length === stats.rows && stats.people.every((t) => /^People: .* of its [\d,]+ are in IL-7/.test(t)),
+        `${stats.rows} row(s); first: ${stats.people[0]}`);
+      check("a layer that covers the compared district leaves none of it unassigned",
+        stats.rest.length === 1 && /^Every part of IL-7/.test(stats.rest[0]), JSON.stringify(stats.rest));
+      check("opening the stats is counted in GoatCounter by the pinned layer, once",
+        stats.events.filter((e) => /^compare-stats\//.test(e)).join() === "compare-stats/congress", JSON.stringify(stats.events));
+    }
+    await context.close();
+  }
+
   // 2. The three no-API layers classify a known point against known ground
   //    truth, fetched from data/app/*.json. Two expected-value shapes: a
   //    NUMERIC expectation asserts the card's own "District N" token exactly
