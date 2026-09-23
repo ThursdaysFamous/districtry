@@ -564,6 +564,40 @@ try {
     await context.close();
   }
 
+  // 1e. THE MASTHEAD NEVER WRAPS: its links fold into "More" from the end
+  //     (dstFitMastheadActions) before the row would drop them below the
+  //     search, which a reader saw as the search bar jumping from the middle
+  //     to the right at ~1,600px. Measured at three widths: all links in the
+  //     row, some folded with "What data is missing?" still in the row, and
+  //     everything folded including the theme toggle, which folds last.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 1870, height: 900 } });
+    const page = await booted(context, BASE);
+    await page.waitForTimeout(800); // the web font changes the pills' widths
+    const at = async (w) => {
+      await page.setViewportSize({ width: w, height: 900 });
+      await page.waitForTimeout(300);
+      return page.evaluate(() => {
+        const row = document.querySelector(".masthead-actions").getBoundingClientRect();
+        const search = document.querySelector(".masthead .map-toolbar").getBoundingClientRect();
+        const panel = document.getElementById("dst-more-panel");
+        return {
+          wrapped: row.top >= search.bottom - 2,
+          folded: panel ? panel.children.length : 0,
+          gapsInRow: !!document.querySelector(".masthead-actions > #gaps-btn"),
+          toggleFolded: !!(panel && panel.querySelector(".districtry-theme-toggle")),
+        };
+      });
+    };
+    const wide = await at(1870), mid = await at(1400), narrow = await at(800);
+    check("the masthead keeps one row at every desktop width",
+      !wide.wrapped && !mid.wrapped && !narrow.wrapped, JSON.stringify({ wide, mid, narrow }));
+    check("masthead links fold from the end, the data-gaps door last and the theme toggle after it",
+      wide.folded === 0 && mid.folded > 0 && mid.gapsInRow && !mid.toggleFolded && narrow.toggleFolded && !narrow.gapsInRow,
+      `1870:${wide.folded} 1400:${mid.folded} 800:${narrow.folded}`);
+    await context.close();
+  }
+
   // 2. The three no-API layers classify a known point against known ground
   //    truth, fetched from data/app/*.json. Two expected-value shapes: a
   //    NUMERIC expectation asserts the card's own "District N" token exactly
