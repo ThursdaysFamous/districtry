@@ -74,6 +74,12 @@ belongs on that instance's board instead.
 
 | task | owner | state | opened |
 |---|---|---|---|
+| **`fleet_status.py` reads the last completed run on ANY branch, so a deleted branch's startup failure becomes a health row** | manager | **open, measured 2026-09-23** | 2026-09-23 |
+| ↳ `scripts/fleet_status.py:412` queries `/actions/workflows/<f>/runs?per_page=1&status=completed` with no `branch=` and no `event=`. Two of #138's seven WARN rows — `update-mps-school-board-roster.yml` and `update-rusd-school-board-roster.yml` — are not failed refreshes at all: both ran GREEN on their own Monday schedules on main (2026-09-21T20:05:06Z and 21:12:14Z), after the dashboard measured at 19:50:12Z. What it reported are zero-job, zero-duration PUSH runs carrying the file path in place of the workflow's `name:` — the shape GitHub records for a workflow file it cannot start. **THIS ONE REPEATS RATHER THAN SELF-CORRECTS**: the latest completed run of each today is another such run on `claude/goat-counter-data-access-g5ycax`, a branch that is gone from origin, so nothing supersedes it until the next Monday schedule — and this workflow's cron is 15:00 UTC where MPS's is 15:30 and RUSD's 17:30. Posted on #138 with the other five rows re-measured (three cleared on their own later runs, two unchanged and correct). **The inference is read off the runs, not off the deleted branch's copy of the file, which is unfetchable.** |  |  |  |
+| **`docs/MANAGER.md` contradicts the prompt that loads it** | manager | **open, measured 2026-09-23** | 2026-09-23 |
+| ↳ Line 9 still says the facts that go stale "belong on the tracking issue, whose latest comment is the only state that survives a container", and the word *board* appears NOWHERE in the file — grep on `0b341f2`, 0 occurrences. The hourly routine reads the root `BOARD.md` first and `MANAGER.md` second, so the rules file tells the next manager the opposite of what the prompt does. The boards landed in `b3ac708` on 2026-09-19 and 161 commits have touched one since; `MANAGER.md` never followed. Recorded on #960. |  |  |  |
+| **`CLAUDE.md` calls Kendall and McHenry hand-verified because they "block all automated fetch" — false since 2026-09-10** | manager | **open, measured 2026-09-23** | 2026-09-23 |
+| ↳ `CLAUDE.md`'s Data pipeline section (line 306) still lists `kendall-county-board-members.json` + `mchenry-county-board-members.json` as hand-verified on that ground. `54786f5` ended it on 2026-09-03 by adding a stdlib rung between `requests` and `playwright`: the Akamai edge refuses the `requests` stack and serves a stdlib client sending real Chromium Sec-CH-UA hints, and it needs BOTH — the leave-one-out is in `user-agent-measurements.json` (requests+token 403, stdlib+token 403, requests+chrome 403, stdlib+chrome 200). Two scheduled runs each have scraped the live pages since with the report step SKIPPED, and both scrapes reproduce the shipped rosters exactly. #234 and #235 closed on that measurement 2026-09-23; the sentence is the last place the retired claim survives. |  |  |  |
 | **`docs/EAM_STATUS.md` counts officeholders and NO workflow regenerates it** | manager | **fix open as #1102, 2026-09-22** | 2026-09-22 |
 | ↳ Found by #1093 going red on its own bot PR. The file carries a live per-instance count of named officeholders (Illinois 998); Sangamon District 16 became a vacancy, the count moved to 997, and `build_eam_status.py --check` failed the refresh that caused it. **`grep -rln build_eam_status .github/workflows/` returns `smoke-test.yml` alone** — the `--check`, never the build. And unlike `build_county_pages.py`, `build_officeholder_tables.py` and `build_concept_pages.py`, it has **no `check_workflows()`**: the gate those three carry precisely so a weekly job that rewrites a roster they count cannot merge without regenerating. So every roster workflow in the fleet goes red on its own pull request the first time its record count moves, and the failure lands on a bot PR nobody wrote. I regenerated the file onto the bot branch to unblock #1093; that is the symptom. The fix is the gate plus the regeneration step in whichever workflows it names, and it is mine rather than an instance's because the file is fleet-wide. |
 | ↳ **FIXED IN #1102, 2026-09-22.** `build_eam_status.py` gains the `check_workflows()` its three sibling generators have, and **62 scheduled workflows gain the regenerate step and the `git add`**. The surface is MEASURED rather than listed: the siblings each carry a hand-written `counts` list because each owns a handful of pages, while this report reads every roster `build_county_pages`' own adapters read — 71 files across four instances today, a set that moves whenever a county ships — so the gate takes `load_rosters()`'s own `paths` and asks `refreshed_by()` which scheduled job stages one. **It is the adapter surface and not every `data/app` file**, which Michigan measured rather than assumed (`mi/BOARD.md`, `69986bd`): of its six weekly roster jobs only `update-mi-commissioner-roster.yml` moves the figure, because `people` counts the districts these adapters name and not every officeholder an instance ships — requiring the step on the other five would ask 59 workflows fleet-wide to regenerate a file they cannot change. **BOTH CHECKS LOOK FOR A COMMAND AND A STAGED PATH, NEVER A MENTION, AND THE FIRST DRAFT DID NOT.** The step carries a comment naming the script and the file, so an `in text` test is satisfied by that comment; the draft's second check was vacuous for exactly that reason and a negative test that stripped the path from `git add` PASSED. All three failure branches are now negative-tested, and the gate refuses a run that finds no workflow at all. `docs/EAM_STATUS.md` itself does not change — no data moved. | | | |
@@ -96,6 +102,37 @@ belongs on that instance's board instead.
 | `llms.txt` counts the per-county pages and 60 of 62 refresh workflows do not regenerate it | manager | open | 2026-09-19 | Found by Iowa when its own weekly run went red on a file it never touched. `llms.txt` states the page count, a county dropping out moves it, and only Michigan's and Iowa's workflows rebuild it. Iowa fixed its own and boarded the general case rather than editing four instances' workflows unasked, which was right. The recurrence-proof fix is a GATE — `build_county_pages.py --check` already fails a workflow that does not regenerate its own pages, and nothing does the same for `llms.txt`. Counted here as 60 of 62 rather than Iowa's 61 of 63: their denominator included `smoke-test.yml`, which runs `--check` and regenerates nothing. |
 
 ## Status — manager writes here
+
+**2026-09-23 — reviewed all 14 open issues; 4 updated, 2 closed, 8 left alone.**
+Adam asked for the standing reviews to be updated only where something has changed.
+Fourteen agents investigated one issue each against primary sources, and every
+"something changed" verdict went to two independent refuters before anything was
+posted. **Nine claimed a change; five were refuted and dropped.** In each dropped
+case the refuter whose job was to RE-MEASURE found the conclusion did not follow
+from the evidence, which is the outcome that rule exists for — posting a wrong
+update to a standing issue costs more than posting nothing.
+
+- **#235 McHenry and #234 Kendall — CLOSED.** The edge block ended 2026-09-03 with
+  `54786f5`; two scheduled runs each have scraped the counties' live pages since
+  with the "Report blocked source" step SKIPPED, and both scrapes reproduce the
+  shipped rosters exactly. `validate_sources.py` has said "can close" since that
+  day. **Closing loses nothing**: the report step re-files a fresh issue when no
+  open one carries the title, which was checked in the workflow rather than assumed.
+- **#138 Fleet status — commented.** Two WARN rows are a measurement defect that
+  repeats; see the task row above.
+- **#960 Manager check-in log — commented.** Its body stopped describing the
+  check-in on 2026-09-19 and `MANAGER.md` never followed; see the task row above.
+- **Eight left alone** (#1121, #1027, #304, #202, #201, #200, #1026, #387, #654,
+  #259 — ten counting the two whose change claim was refuted twice). Each still
+  describes reality, and a bot re-posting the same row is not a change.
+
+**THE RUN CONCLUSION IS NOT THE EVIDENCE, and it decided both closes.** Every one
+of these county workflows carries `continue-on-error: true` on its scrape step, so
+the job goes green whether it fetched the county or not. What moved is the REPORT
+step's own conclusion — `skipped` on each run since the fix, `success` on the run
+that posted the last "still blocked" row. A reviewer reading run conclusions would
+have seen green for six weeks before the block lifted and green after, and learned
+nothing.
 
 **2026-09-22, end of day. All five state sessions stood down for the night; main
 green at `ecbff07`.** Adam asked to wrap the state sessions. All five were already
