@@ -8341,9 +8341,17 @@ function initNycExplorer() {
    * outright — no toggle, no card, no overlay — so a reader in a county the
    * local layers do not reach can see 21 toggles while the app registers 39.
    * Telling them "2 of 39" would count 18 layers they have no way to turn on
-   * and read as a failure rather than as the honest edge of the data. The
-   * numerator is activeLayerCount(), which the opacity scaler already uses
-   * for the same reason: on-and-hidden is not on.
+   * and read as a failure rather than as the honest edge of the data. On-and-
+   * hidden is not on, for the same reason.
+   *
+   * BOTH numbers also count top-level toggles only. A sub-layer (Ward
+   * Precinct under City Ward, Township under County) is not one of the
+   * total, so it cannot be one of the count either: the count used to be
+   * activeLayerCount(), which includes sub-layers, and with every layer on
+   * at the Loop the panel read "36 of 33 layers on". Both numbers now come
+   * from one pass over one test, so the count can never exceed the total.
+   * activeLayerCount() itself is left counting sub-layers, because the
+   * opacity scaler uses it and a sub-layer paints a fill of its own.
    *
    * Called from refreshGroupVisibility (every relevance change), from
    * onLayerToggled (every tick) and once at the end of buildGroupsUI, which
@@ -8352,11 +8360,14 @@ function initNycExplorer() {
   function syncPanelStats() {
     var el = document.getElementById("districtry-stats");
     if (!el) return;
-    var shown = layers.filter(function (l) {
+    var shown = 0, on = 0;
+    layers.forEach(function (l) {
       var rt = layerRuntime[l.id];
-      return !l.subOf && (!rt || rt.relevant !== false);
-    }).length;
-    el.textContent = activeLayerCount() + " of " + shown +
+      if (l.subOf || (rt && rt.relevant === false)) return;
+      shown++;
+      if (state.layersOn[l.id]) on++;
+    });
+    el.textContent = on + " of " + shown +
       (shown === 1 ? " layer on" : " layers on");
   }
 
