@@ -404,6 +404,14 @@ jobs:
       - name: Question pages carry the address box their own CTA describes
         run: python3 scripts/build_question_forms.py --check
 
+      # The district-name search index ("33rd ward"). Offline and stdlib-only:
+      # every district in a shipped boundary file must be present, its point
+      # INSIDE it and its extent matching, and the two live layers must still
+      # load the dataset the index was built from. Rebuilding needs the
+      # network and shapely, so it is an operator step, not this one.
+      - name: District search index matches the boundaries it names
+        run: python3 scripts/build_district_search.py --check
+
       # The city rosters in the served bytes. build_county_pages.py put 2,650
       # county officeholders where a crawler can read them and left the city
       # seats behind a JSON fetch: measured 2026-09-15, NYC's 51 Council

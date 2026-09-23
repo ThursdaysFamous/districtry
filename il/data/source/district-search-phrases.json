@@ -1,0 +1,48 @@
+{
+  "_about": "The hand-owned half of il/data/app/district-search.json, which lets the search box answer '33rd ward' or 'State Senate District 7'. Each entry names a layer and the OFFICIAL NAME of one of its districts with the number taken out ('Ward' for 'Ward 33'). The app derives the variants a reader types from that name — 'Ward 33', 'ward #33', 'ward no. 33', '33rd ward', '33 ward' — and also accepts the layer's own sidebar label ('City Ward 33'), which the builder copies from metro-worksheet.json so the two cannot disagree. An entry whose districts belong to one city carries `where`: the result names it ('City Ward · Chicago') so a reader in a suburb with its own Ward 3 is not handed Chicago's without being told, and a query may include it ('Chicago Ward 33'). The DISTRICTS are never listed here: scripts/build_district_search.py reads them from each layer's own source, and its --check fails if this file names a layer the app does not register. Only layers whose numbering is unique across their whole ground belong here; a layer where 'District 3' exists once per county or per town needs a way to say which, and is left out until it has one.",
+  "layers": [
+    {
+      "layer": "ward",
+      "where": "Chicago",
+      "name": "Ward",
+      "why": "Chicago's 50 wards. The layer also holds suburban wards, whose numbers repeat town to town, so only the City's own dataset is indexed."
+    },
+    {
+      "layer": "police-district",
+      "where": "Chicago",
+      "name": "Police District",
+      "why": "CPD's 22 districts, numbered once city-wide. '9th Police District' is derived; CPD's own bare '9th District' is not, because 'district 9' names a district in every layer here and would be a guess about which one."
+    },
+    {
+      "layer": "school-board",
+      "where": "Chicago",
+      "name": "School Board District",
+      "why": "The Chicago Board of Education's 20 electoral districts, numbered 1-20 as the card's pill numbers them. The source also carries each one's sub-district label from the 2024 pairing (District 4 is '2b'); that label is not what a reader searches for and is not indexed."
+    },
+    {
+      "layer": "congress",
+      "name": "Congressional District",
+      "why": "The census file's own name for each of Illinois's 17 districts."
+    },
+    {
+      "layer": "il-senate",
+      "name": "State Senate District",
+      "why": "The census file's own name for each of Illinois's 59 districts."
+    },
+    {
+      "layer": "il-house",
+      "name": "State House District",
+      "why": "The census file's own name for each of Illinois's 118 districts."
+    },
+    {
+      "layer": "il-supreme-court",
+      "name": "Supreme Court District",
+      "why": "The Illinois Supreme Court's 5 judicial districts."
+    },
+    {
+      "layer": "ccbr",
+      "name": "Board of Review District",
+      "why": "The Cook County Board of Review's 3 districts."
+    }
+  ]
+}

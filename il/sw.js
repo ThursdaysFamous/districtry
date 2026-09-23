@@ -122,6 +122,7 @@ const GEOMETRY_URLS = [
   "./data/app/dekalb-county-outline.json",
   "./data/app/dewitt-county-board-districts.json",
   "./data/app/dewitt-county-outline.json",
+  "./data/app/district-search.json",
   "./data/app/douglas-county-outline.json",
   "./data/app/dupage-county-outline.json",
   "./data/app/edgar-county-board-districts.json",

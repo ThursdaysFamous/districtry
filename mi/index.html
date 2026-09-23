@@ -1265,6 +1265,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
     font-weight: 600;
     color: var(--accent-deep);
   }
+  /* a district found by name ("33rd ward"): the district first, then the
+     layer it belongs to, muted so the name reads first */
+  .district-result-hint { display: block; font-size: 12px; color: var(--muted, #6b7280); margin-top: 1px; }
   /* ==== ENGINE:END styles-sibling-result ==== */
   /* ==== ENGINE:BEGIN styles-app ==== */
 
@@ -6098,7 +6101,171 @@ function initMichiganExplorer() {
    * merely looks like a unit ("The Room 43") is only ever cleaned once the
    * as-typed query has already come back empty. Costs one extra request on a
    * miss, exactly like the sibling-metro fallback it runs ahead of. */
+  /* ---------- search by district name: "33rd ward", "State Senate District 7" ----------
+   * An instance that declares DISTRICT_SEARCH_URL (the worksheet's
+   * district_search key; Illinois today) ships an index of its numbered
+   * districts, one point inside each plus its extent, built by
+   * scripts/build_district_search.py. The query is matched against that
+   * file in the browser, so a district name never goes to the geocoder.
+   *
+   * THE VARIANTS ARE DERIVED HERE, ONCE. The file stores each layer's
+   * official district name with the number taken out ("ward", "state senate
+   * district") and its sidebar label; a query matches when, after lower-
+   * casing, dropping punctuation, "#", "no." and "number", it is one number
+   * (plain or ordinal: 33, 33rd) plus words that are:
+   *   - a phrase exactly ("ward 33", "33rd ward", "City Ward #33"), or
+   *   - the start of one, for type-ahead ("33rd wa"), or
+   *   - its last two or more words ("senate district 7").
+   * A bare "district 7" matches nothing: every layer here has a District 7,
+   * and picking one would be a guess.
+   *
+   * A complete name (the phrase, or its last two or more words) answers
+   * alone and nothing is sent to the geocoder. A type-ahead prefix is shown
+   * ABOVE the address results, because "33 wa" is also the start of
+   * "33 Wabash Ave" and the reader may mean the street.
+   *
+   * Selecting a result turns its layer on (a real click, so every handler
+   * runs, as the permalink restore does), selects the stored point — the
+   * spot inside the district farthest from its edges — and frames the
+   * district's extent. Every card then answers for that point exactly as it
+   * would for a click there. */
+  var districtIndexPromise = null;
+  var districtSearchSeq = 0;
+  function loadDistrictIndex() {
+    if (typeof DISTRICT_SEARCH_URL === "undefined") return Promise.resolve(null);
+    if (!districtIndexPromise) {
+      districtIndexPromise = fetchJSONWithRetry(DISTRICT_SEARCH_URL, {}, 2)["catch"](function (err) {
+        console.warn("district search index unavailable; searching addresses only:", err);
+        districtIndexPromise = null; // try again on the next search
+        return null;
+      });
+    }
+    return districtIndexPromise;
+  }
+  function normalizeDistrictText(text) {
+    return String(text || "").toLowerCase().replace(/#/g, " ").replace(/[^a-z0-9]+/g, " ").trim();
+  }
+  function parseDistrictQuery(q) {
+    var num = null, words = [];
+    var tokens = normalizeDistrictText(q).split(" ");
+    for (var i = 0; i < tokens.length; i++) {
+      var t = tokens[i];
+      if (!t || t === "no" || t === "number") continue;
+      var m = /^(\d+)(st|nd|rd|th)?$/.exec(t);
+      if (m) {
+        if (num !== null) return null; // two numbers: an address, not a district
+        num = String(parseInt(m[1], 10));
+        continue;
+      }
+      words.push(t);
+    }
+    if (num === null || num === "0" || !words.length) return null;
+    return { num: num, words: words.join(" ") };
+  }
+  // 2 = the phrase or its last 2+ words (a complete name: answers alone),
+  // 1 = the start of one (type-ahead, which may yet become a street name),
+  // 0 = no match
+  function districtPhraseScore(words, phrase) {
+    if (words === phrase) return 2;
+    if (words.indexOf(" ") > 0 && phrase.length > words.length &&
+        phrase.slice(-(words.length + 1)) === " " + words) return 2;
+    if (words.length >= 2 && phrase.indexOf(words) === 0) return 1;
+    return 0;
+  }
+  function findDistricts(q) {
+    var parsed = parseDistrictQuery(q);
+    if (!parsed) return Promise.resolve({ hits: [], exact: false });
+    return loadDistrictIndex().then(function (index) {
+      var hits = [], exact = false;
+      if (!index || !index.layers || !index.features) return { hits: hits, exact: exact };
+      Object.keys(index.layers).forEach(function (layerId) {
+        var spec = index.layers[layerId];
+        // a layer that belongs to one city ("where": "Chicago") also matches
+        // with that city named in the query: "Chicago Ward 33"
+        var words = parsed.words;
+        if (spec.where) {
+          var place = " " + normalizeDistrictText(spec.where) + " ";
+          words = (" " + words + " ").replace(place, " ").trim();
+        }
+        var score = 0;
+        if (words) (spec.phrases || []).forEach(function (p) { score = Math.max(score, districtPhraseScore(words, p)); });
+        if (!score) return;
+        for (var i = 0; i < index.features.length; i++) {
+          var f = index.features[i], props = f.properties || {};
+          if (props.layer === layerId && String(props.id) === parsed.num) {
+            hits.push({ layer: layerId, label: spec.where ? spec.label + " \u00b7 " + spec.where : spec.label, name: props.name, bbox: props.bbox, coords: f.geometry.coordinates, score: score });
+            if (score === 2) exact = true;
+            break;
+          }
+        }
+      });
+      hits.sort(function (a, b) { return b.score - a.score; });
+      return { hits: hits, exact: exact };
+    });
+  }
+  function syncResultCount() {
+    var n = geoResultsList.querySelectorAll("li > button").length;
+    geoStatus.textContent = n + " match" + (n === 1 ? "" : "es") + " found.";
+    geoStatus.className = "geo-status";
+  }
+  function renderDistrictResults(hits, above) {
+    if (!above) geoResultsList.innerHTML = "";
+    var first = geoResultsList.firstChild;
+    hits.forEach(function (hit) {
+      var li = document.createElement("li");
+      li.className = "district-result";
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.appendChild(document.createTextNode(hit.name));
+      var hint = document.createElement("span");
+      hint.className = "district-result-hint";
+      hint.textContent = hit.label;
+      btn.appendChild(hint);
+      btn.addEventListener("click", function () {
+        clearTimeout(debounceTimer);
+        if (inFlightController) inFlightController.abort();
+        // Counted in GoatCounter by LAYER ("district-search/ward"), the shape
+        // layer/<id> and compare/<id> already use, so the traffic report can
+        // say which layers people search by name. Never the district itself:
+        // "Ward 33" says where a reader lives more precisely than the
+        // two-decimal rounding every point event is held to.
+        trackEvent("district-search/" + hit.layer);
+        var box = document.getElementById("toggle-" + hit.layer);
+        if (box && !box.checked) box.click(); // a real click, so the layer's handlers run
+        setSelectedPoint(hit.coords[1], hit.coords[0], { skipPan: true });
+        var b = hit.bbox;
+        if (b && b.length === 4) map.fitBounds([[b[1], b[0]], [b[3], b[2]]], { padding: [24, 24] });
+        else map.setView([hit.coords[1], hit.coords[0]], Math.max(map.getZoom(), 13));
+        geoResultsList.innerHTML = "";
+        geoStatus.textContent = "Selected: " + hit.name + " (" + hit.label + ")";
+        geoStatus.className = "geo-status";
+        collapseAfterSelect = true;
+        refreshSearchShellExpanded();
+      });
+      li.appendChild(btn);
+      geoResultsList.insertBefore(li, first);
+    });
+    syncResultCount();
+  }
+
   function runGeocodeSearch(q) {
+    var seq = ++districtSearchSeq;
+    return findDistricts(q).then(function (found) {
+      if (seq !== districtSearchSeq) return; // a newer search owns the list now
+      if (found.exact) {
+        // a district name answers alone: nothing goes to the geocoder, and an
+        // address lookup still in flight from an earlier keystroke is dropped
+        if (inFlightController) inFlightController.abort();
+        renderDistrictResults(found.hits, false);
+        return;
+      }
+      return runAddressSearch(q).then(function () {
+        if (found.hits.length && seq === districtSearchSeq) renderDistrictResults(found.hits, true);
+      });
+    });
+  }
+
+  function runAddressSearch(q) {
     return geocodeAddress(q).then(function (results) {
       if (results && results.length) return renderGeocodeResults(results);
       var cleaned = cleanPoiAddress(q);
