@@ -312,9 +312,16 @@ def measure_address_list(src, name):
 # the last two by the gap's record id) joined on 2026-09-23. A gap id names a
 # concept and an area no finer than a county, and the panel lists every gap
 # wherever the reader is, so it says what interested them, not where they are.
+# `feedback-open/button`, `feedback-open/link`, `feedback-link` and
+# `feedback-send/github` / `feedback-send/email` joined the same day, when the
+# report form became openable by a link (#feedback): which way it was opened,
+# a link to it copied, and which way a report left. None carries what the
+# reader wrote — the text is in the address HASH, which analytics never sees.
 EXPECTED_EVENTS = ["address-search", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
-                   "copy-coordinates", "district-search/", "embed-iframe", "gaps-open",
+                   "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
+                   "feedback-open/button", "feedback-open/link", "feedback-send/email",
+                   "feedback-send/github", "gaps-open",
                    "gaps-suggest/", "gaps-why/", "geolocate",
                    "geolocate-success", "layer/", "metro-portal-go/", "more-item/", "more-open", "select",
                    "share-native", "share-open", "share-permalink"]
@@ -1502,7 +1509,13 @@ PRIVACY_BODY = """
         prepares a draft containing what you wrote, the current page URL — which may include your
         point — and your browser's user-agent string. It is only ever a draft: nothing is
         transmitted until you submit the GitHub issue or send the email yourself, and you can
-        edit it first.</p>
+        edit it first. The same form sits at <a href="/feedback.html">/feedback.html</a> for every
+        page that is not a map, and it fills in the address of the page you came from.</p>
+      <p><strong>A link can open the form.</strong> A link ending in <span class="k">#feedback</span>
+        opens it, and <span class="k">#feedback=</span> followed by text fills that text in, so
+        someone can send you a form that already says what to check. That text, and a copied link
+        to the form with what you typed, travel after the <span class="k">#</span> in the address,
+        which your browser never sends to a server or to analytics.</p>
     </div>
   </section>
 

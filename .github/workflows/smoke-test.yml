@@ -366,6 +366,13 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/build_about_page.py --check
 
+      # /feedback.html, the report form every page's footer links (the apps
+      # carry their own, opened by #feedback). It is generated on the same root
+      # shell, so it also fails if that shell moves and this page is not rebuilt.
+      - name: Feedback page matches its generator
+        if: ${{ !cancelled() }}
+        run: python3 scripts/build_feedback_page.py --check
+
       # Which analytics host each page loads, held to the worksheet that
       # declares it. `brand.analytics` is the one place that says whether an
       # instance runs Google Analytics, and the generator emits the tag into

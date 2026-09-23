@@ -2136,12 +2136,19 @@ footer.site-footer a { color: var(--accent-deep); }
            carried the same sentence in a <span class="standing">. Counting
            copies by their wrapper undercounts them; count by the sentence.
            traffic.html now takes this block, with one CSS rule matching
-           .footer-byline to the .standing it replaced so nothing moved. -->
+           .footer-byline to the .standing it replaced so nothing moved.
+
+           "Report a problem with this page" opens /feedback.html, the
+           report form outside the apps (scripts/build_feedback_page.py). It
+           carries no page address: this byline is one copy for every page, so
+           the form reads the page from the referrer instead, which a same-site
+           link always sends in full. -->
       <p class="footer-byline">Written and maintained by
       <a href="https://overberg.co" rel="author noopener" target="_blank">Adam Overberg</a>
       — <a href="mailto:hello@overberg.co">hello@overberg.co</a>.
       Corrections are welcome; every one gets a reply.
-      <a href="/about.html">About this project</a>.</p>
+      <a href="/about.html">About this project</a>.
+      <a href="/feedback.html">Report a problem with this page</a>.</p>
       <!-- ==== ENGINE:END footer-byline ==== -->
     </div>
   </div>
