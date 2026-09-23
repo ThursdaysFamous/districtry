@@ -35,7 +35,14 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
-**2026-09-23, the scope line.** PR #1107, open. Adam answered open question 1
+**2026-09-23, the scope line. #1107 MERGED** as `b5f7af7`, on Adam's "Merge".
+Verified on `main` after the merge rather than on the branch: `metros.json`
+carries `statewide, 5 boroughs in depth`, the 90 python gates pass on the
+merged tree, `validate_gate_counts.py` still reads 74/102 (two other PRs
+merged in between and #1109 edited `smoke-test.yml` itself, which is exactly
+the case where the pair moves with nothing in either diff to look at), and
+`landing_test.mjs` reports the legend as `statewide, 5 boroughs in depth`
+with no row repeating the word. Adam answered open question 1
 with the middle option: **`statewide, 5 boroughs in depth`**. `metros.json` is
 the one place that fact lives, so the change is one key and a regenerate —
 **seven** generators read it (`build_about_page`, `build_concept_pages`,
