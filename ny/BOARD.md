@@ -63,6 +63,43 @@ fails naming the doubled string — **the `endsWith` half passes on a doubled
 scope**, which is why the second assertion is separate rather than a tightening
 of the first.
 
+**Three records the regenerate could not reach, all found by the same sweep.**
+None is generated, which is why a correct regenerate left all three saying New
+York is a five-borough app.
+
+`ca/supervisor-district.html:1121` is **the fleet's only hand-written sibling
+row**. Twenty-four pages generate that row from `metros.json`; this one is
+authored, and read `New York City` / "The same lookup, rebuilt for the five
+boroughs" — the exact claim the change exists to retire, on a page a reader
+reaches from San Francisco. It now matches the generated row byte for byte, so
+bringing that page under a generator later is a zero-diff move. **The Illinois
+row beside it is the same shape and is right today** ("across 93 Illinois
+counties"): a hand-kept copy of a number that moves every tranche. Recorded,
+not changed — it is Illinois's to own and it is not wrong yet.
+
+`metros.json`'s own `$comment` specified a **"(2-4 word)"** phrase in one of
+three shapes — partial state, complete state, city. The new value is five words
+and matches none, because New York is the first instance of a FOURTH shape:
+answers everywhere in its state, goes deep in one city. The comment names that
+shape now, and carries the runtime-prefix trap, which constrains every future
+scope value and is visible in no generated file. **The same comment already
+required `scope` and `blurb` to agree**, and New York's blurb has said "across
+the state" since go-live — so the two DISAGREED before this change and agree
+after it. The spec's own test reaches the answer Adam did.
+
+`docs/NY_EXPANSION_PLAN.md` ruled scope "stays 5 boroughs until a county joins
+the ring". Marked SUPERSEDED rather than rewritten: the rule it protects —
+never claim a county tier that does not exist — is kept, since the shipped
+phrase names no county and no count, and "Never all 62 counties" stands. What
+it got wrong was assuming the only honest alternatives were a borough count or
+a county count.
+
+`docs/EXPANSION_GUIDE.md`'s coverage-band table read `New York City | the 5
+boroughs | 2 | same` while the worksheet carries a `region` band, making it
+three. **Not caused by this change** — it went stale at the go-live and nothing
+gates it. Corrected because it is a measured-false record about New York rather
+than left as a flag.
+
 **Two things put to Adam in the PR, neither changed on my own initiative.** The
 eight Illinois sibling-link pages render the scope inside a sentence, so they
 now read `The same lookup, statewide, 5 boroughs in depth.` — grammatical, but
