@@ -673,6 +673,28 @@ try {
       check("printing the report opens every row, with every card loaded, before the print dialog",
         printed.printed === 1 && printed.printing && printed.open === printed.rows && printed.loading === 0,
         JSON.stringify(printed));
+      // A LINK REOPENS THE REPORT: the open report puts stats=1 in the
+      // permalink, closing it takes it out, and a fresh load of that link
+      // opens the report by itself once the boundaries are in.
+      const openHash = await page.evaluate(() => location.hash);
+      await page.keyboard.press("Escape");
+      const closedHash = await page.evaluate(() => location.hash);
+      check("the open report puts stats=1 in the link, and closing it takes it out",
+        /[#&]pin=congress&stats=1(&|$)/.test(openHash) && !/stats=1/.test(closedHash), `${openHash} / ${closedHash}`);
+      const again = await browser.newContext({ serviceWorkers: "block" });
+      const reopened = await booted(again, `${BASE}${openHash}`);
+      const came = await reopened
+        .waitForFunction(() => { const m = document.getElementById("stats-modal"); return m && !m.hidden && document.querySelectorAll(".stats-row").length >= 10; },
+          null, { timeout: QUERY_TIMEOUT })
+        .then(() => true, () => false);
+      const back = await reopened.evaluate(() => ({
+        name: ((document.querySelector("#stats-modal .stats-name") || {}).textContent || ""),
+        rows: document.querySelectorAll(".stats-row").length,
+        hash: location.hash,
+      }));
+      check("a link carrying stats=1 reopens the report for the same district",
+        came && back.name === "IL-7" && /stats=1/.test(back.hash), JSON.stringify(back));
+      await again.close();
     }
     await context.close();
   }
