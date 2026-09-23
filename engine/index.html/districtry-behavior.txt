@@ -168,7 +168,136 @@
     var counts = dstLayerCounts();
     if (col && counts && dstIsPhone() && counts.on) col.classList.add("dst-collapsed");
     dstSyncLayerChooser();
+    dstFitMastheadActions(); // the doors may have just come back into the masthead
   }
+
+  /* ==== the masthead links fold into a "More" menu before they wrap ====
+     The masthead is one row of [title][search][links] only while all three
+     fit, and each instance writes its own links (Illinois seven, others
+     fewer), so the width at which the row wraps differs by instance — about
+     1,600px for Illinois, measured 2026-09-23. Below it the links dropped to
+     a second row and the search jumped from the middle to the right, which a
+     reader saw as the search bar moving. Now the row never wraps: the links
+     leave it one at a time, from the END, into a "More" menu until the rest
+     fit beside the search. MEASURED, never a fixed breakpoint, so a state
+     with a different set of links folds at its own width with nothing to
+     configure. "What data is missing?" is first in the row and so the last
+     link to fold — the skin promotes it as the standing caveat on every
+     answer — and the theme toggle folds only after every link has, as a
+     last resort at tablet widths, and after it the tagline under the
+     wordmark, so the row holds down to the 767px phone breakpoint. The links are MOVED, not copied: the
+     gaps and batch buttons keep their listeners and their ids. Phones are
+     not this code's business: there dstPlaceDoors has already moved every
+     link to the panel foot, and the menu hides. */
+  var dstMore = null;       // {wrap, btn, panel}
+  var dstMoreItems = null;  // the row's links in their authored order
+  function dstMoreClose(focusBtn) {
+    if (!dstMore || dstMore.panel.hidden) return;
+    dstMore.panel.hidden = true;
+    dstMore.btn.setAttribute("aria-expanded", "false");
+    if (focusBtn) dstMore.btn.focus();
+  }
+  function dstBuildMore(actions) {
+    var wrap = document.createElement("div");
+    wrap.className = "dst-more";
+    wrap.hidden = true;
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "masthead-action-link dst-more-btn";
+    btn.id = "dst-more-btn";
+    btn.setAttribute("aria-expanded", "false");
+    btn.setAttribute("aria-controls", "dst-more-panel");
+    btn.textContent = "More";
+    var panel = document.createElement("div");
+    panel.className = "dst-more-panel";
+    panel.id = "dst-more-panel";
+    panel.hidden = true;
+    wrap.appendChild(btn);
+    wrap.appendChild(panel);
+    var sep = actions.querySelector(".districtry-toggle-sep");
+    actions.insertBefore(wrap, sep || null);
+    btn.addEventListener("click", function () {
+      var open = panel.hidden;
+      panel.hidden = !open;
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      if (open) {
+        var first = panel.querySelector("a, button");
+        if (first) first.focus();
+      }
+    });
+    // a choice made in the menu closes it (a door may open a dialog over it)
+    panel.addEventListener("click", function (e) {
+      if (e.target.closest && e.target.closest("a, button")) dstMoreClose(false);
+    });
+    wrap.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { dstMoreClose(true); e.stopPropagation(); }
+    });
+    wrap.addEventListener("focusout", function (e) {
+      if (!e.relatedTarget || !wrap.contains(e.relatedTarget)) dstMoreClose(false);
+    });
+    document.addEventListener("click", function (e) {
+      if (!wrap.contains(e.target)) dstMoreClose(false);
+    });
+    return { wrap: wrap, btn: btn, panel: panel };
+  }
+  function dstMastheadWrapped(actions) {
+    // wrapped = the links sit below the search rather than beside it
+    var beside = document.querySelector(".masthead .map-toolbar") || document.querySelector(".masthead .title");
+    if (!beside) return false;
+    return actions.getBoundingClientRect().top >= beside.getBoundingClientRect().bottom - 2;
+  }
+  function dstFitMastheadActions() {
+    var actions = document.querySelector(".masthead-actions");
+    if (!actions) return;
+    var toggle = actions.querySelector(".districtry-theme-toggle") ||
+      (dstMore && dstMore.panel.querySelector(".districtry-theme-toggle"));
+    var sep = actions.querySelector(".districtry-toggle-sep");
+    if (!dstMoreItems) {
+      dstMoreItems = [];
+      var found = actions.querySelectorAll("#gaps-btn, .masthead-action-link");
+      for (var i = 0; i < found.length; i++) dstMoreItems.push(found[i]);
+      if (!dstMoreItems.length) return;
+    }
+    if (!dstMore) dstMore = dstBuildMore(actions);
+    dstMoreClose(false);
+    // put every link that is in this masthead back in the row, in order,
+    // and the theme toggle back after its separator
+    dstMoreItems.forEach(function (item) {
+      if (actions.contains(item)) actions.insertBefore(item, dstMore.wrap);
+    });
+    if (toggle && sep && toggle.parentNode !== actions) actions.insertBefore(toggle, sep.nextSibling);
+    actions.classList.remove("dst-toggle-folded");
+    var header = document.querySelector("header.masthead");
+    if (header) header.classList.remove("dst-tagline-folded");
+    dstMore.wrap.hidden = true;
+    if (dstIsPhone()) return; // the doors live in the panel foot there
+    if (!dstMastheadWrapped(actions)) return;
+    dstMore.wrap.hidden = false;
+    for (var k = dstMoreItems.length - 1; k >= 0 && dstMastheadWrapped(actions); k--) {
+      if (actions.contains(dstMoreItems[k])) dstMore.panel.insertBefore(dstMoreItems[k], dstMore.panel.firstChild);
+    }
+    // last resort: every link is in the menu and the row still wraps
+    if (toggle && dstMastheadWrapped(actions)) {
+      dstMore.panel.appendChild(toggle);
+      actions.classList.add("dst-toggle-folded");
+    }
+    // and after that, the tagline under the wordmark, which is what makes a
+    // title wide (the phone layout already hides it): measured, a state
+    // whose title is wider than Illinois's still wrapped at 768-850px with
+    // every link and the toggle folded
+    if (header && dstMastheadWrapped(actions)) header.classList.add("dst-tagline-folded");
+    if (!dstMore.panel.firstChild) dstMore.wrap.hidden = true;
+  }
+  var dstFitQueued = false;
+  function dstQueueFit() {
+    if (dstFitQueued) return;
+    dstFitQueued = true;
+    (window.requestAnimationFrame || setTimeout)(function () { dstFitQueued = false; dstFitMastheadActions(); });
+  }
+  window.addEventListener("resize", dstQueueFit);
+  // the pills' widths change when the web font arrives
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(dstQueueFit);
+
   dstApplyPhoneLayout();
   if (window.matchMedia) {
     var dstPhoneMQ = window.matchMedia("(max-width: 767px)");
