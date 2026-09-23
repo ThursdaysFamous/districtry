@@ -551,6 +551,16 @@ try {
     check("a county board district is found by county and letter",
       dewitt.join() === "De Witt County Board District A", JSON.stringify(dewitt));
     check("a county board district without its county matches nothing", bare.length === 0, JSON.stringify(bare));
+    // TYPE-AHEAD before the number: the words name a kind of district, so the
+    // list says what to type next. A hint is text, never a button, so it
+    // cannot be picked and #q= can never auto-select it.
+    await page.fill("#geocode-input", "Lake County Board Dis");
+    await page.waitForFunction(() => document.querySelector("#geocode-results li.district-hint"), null, { timeout: 5000 }).catch(() => {});
+    const hint = await page.evaluate(() => [...document.querySelectorAll("#geocode-results li.district-hint")]
+      .map((li) => ({ text: li.textContent.replace(/\s+/g, " ").trim(), button: !!li.querySelector("button") })));
+    check("typing a district name before its number shows what to type next",
+      hint.length === 1 && /Lake County Board District/.test(hint[0].text) && /1\u201319/.test(hint[0].text) && !hint[0].button,
+      JSON.stringify(hint));
     await context.close();
   }
 
