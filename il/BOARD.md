@@ -39,6 +39,50 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-23, later. Adam said "merge 1125 then 1127". Both are in — `02abf6f`
+and `4a785724` — and getting the second one there cost three commits that are
+worth more than the change.**
+
+**A SQUASH MERGE MOVES A STACKED BRANCH'S MERGE BASE, and git then handles the
+two generated files that count people in opposite ways.** #1125 squashed, so its
+own commit stopped being an ancestor of main and the base for #1127 fell back to
+the commit before it — both sides looked like independent edits.
+`docs/EAM_STATUS.md` CONFLICTED, on Illinois's "N without a job" column.
+`about.html` MERGED CLEAN AND WRONG, taking #1125's "3,383 more across the 42
+rosters" onto a tree that names 3,385, because this change's two new seats moved
+a different hunk. That is the gate-count lesson `CLAUDE.md` already records —
+the half that conflicts is the lucky half — in a second file class. **Check the
+generated files by REGENERATING them after any merge, never by reading the
+diff**, and note that GitHub's own merge button would have shipped the silent
+one.
+
+**A MERGE COMMIT COMMITS THE INDEX, which is my own error and the one I would
+repeat.** I regenerated `about.html` on disk, read its one-line diff, and never
+`git add`ed it — only `EAM_STATUS.md`, because its conflict forced me to. So the
+commit whose message describes fixing that value shipped the wrong one. `git
+status` caught it; no gate had run yet. **Stage the regeneration in the same
+breath as running it.**
+
+**A RED SMOKE JOB HAS A GREEN LOG TAIL.** The job accumulates failures with
+`|| status=1`, so every gate after the failing one still runs and prints, and
+the last line of a failed run is a pass. I read the tail twice before working
+that out. The failure was `build_history_page.py --check`: that page's job-count
+tile is MEASURED from the worksheet's own `workflows[]`, and this change adds
+one. **Reproduce a red run with the steward skill's battery, never by reading
+the log.**
+
+**And I had been running a SUBSET and calling it the full battery.** The PR body
+said "full static battery green" when a dozen gates had never been run against
+this change — `build_history_page` among them. `CLAUDE.md` records this exact
+mistake from Michigan's go-live ("run the workflow's own command list, never a
+remembered subset") and I made it anyway. The skill exists to be opened BEFORE
+the first push.
+
+What actually shipped is in #1127's body: the Chicago school board roster is a
+weekly pipeline off the Board's own index instead of a hand-curated file, and
+two of its twenty seats were wrong — District 9a said VACANT where the Board
+names its Vice President, District 10b named a member who resigned in March.
+
 **2026-09-23. Adam asked me to fix the school board one too. Following it to
 the source found the seat is not vacant — #1127.**
 
