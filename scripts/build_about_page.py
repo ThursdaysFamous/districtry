@@ -252,10 +252,13 @@ def body(fleet, pages, seats, tabled, tables, gaps, jobs, signal):
   <section>
     <p class="lede">districtry answers one question: <strong>which civic districts contain the
       point you picked, and who represents you there.</strong> It is free, needs no account, and
-      is built and maintained by one person.</p>
+      is built and maintained by one person working with AI coding agents;
+      <a href="/ai.html">how districtry uses AI</a> says what they do and what no AI does.</p>
     <p>It began as a Chicago-only explorer and now answers in %(n)d places. Every boundary comes
-      from the government that draws it and every name from the body that elects or appoints the
-      person, each cited on the card that shows it.</p>
+      from the government that draws it. Every name comes from a published roster: usually the
+      body the person sits on, and for Congress and several state legislatures a public dataset
+      compiled from official records. Each place's sources page names the source of every
+      layer.</p>
   </section>
 
   <section>
@@ -281,7 +284,8 @@ def body(fleet, pages, seats, tabled, tables, gaps, jobs, signal):
         tabled on its question pages, each one dated with the day it describes.</li>
       <li><strong>%(jobs)s</strong> scheduled jobs that re-read a published source on their own
         timetable. A job that finds a different officeholder opens a pull request rather than
-        committing, so nothing about a person ships without someone looking at it first.</li>
+        committing, so the change runs the automated checks and is reviewed before it
+        ships.</li>
       <li><strong>%(gaps)s</strong> recorded data gaps — places where a publisher withholds
         something, written down in the app rather than papered over.</li>
     </ul>
@@ -317,8 +321,8 @@ def body(fleet, pages, seats, tabled, tables, gaps, jobs, signal):
       <a href="/llms.txt">/llms.txt</a>. <a href="/robots.txt">robots.txt</a> disallows no
       crawler by name and carries <code>Content-Signal: %(signal)s</code>: search is welcome, so
       is grounding an answer in these pages by reference with a link back to the page that names
-      the person, and training is reserved. Every fact here comes from a government publisher and
-      is cited to it, so there is nothing to withhold and every reason to want the answers found.</p>
+      the person, and training is reserved. Every fact here comes from a published source and is
+      cited to it, so there is nothing to withhold and every reason to want the answers found.</p>
   </section>
 
   <p class="disclaimer"><strong>Not for legal or official use.</strong> Boundary and roster data
