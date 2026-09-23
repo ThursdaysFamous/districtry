@@ -251,8 +251,9 @@
   .stats-note { font-size: 12.5px; color: var(--card-muted); margin: 6px 0; }
   .stats-foot { font-size: 12px; color: var(--card-muted); margin: 16px 0 0; }
   .stats-parent-card { margin: 10px 0 0; padding: 0; }
-  .stats-print-btn {
-    margin: 12px 0 0;
+  .stats-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
+  .stats-print-btn, .stats-link-btn {
+    margin: 0;
     font: inherit;
     font-size: 13px;
     font-weight: 600;
@@ -275,7 +276,7 @@
     body.stats-printing .stats-modal { position: static; display: block; padding: 0; }
     body.stats-printing .stats-modal .feedback-backdrop,
     body.stats-printing .stats-modal .feedback-close,
-    body.stats-printing .stats-print-btn { display: none !important; }
+    body.stats-printing .stats-actions { display: none !important; }
     body.stats-printing .stats-panel {
       max-width: none; max-height: none; height: auto; overflow: visible;
       box-shadow: none; border: none; border-radius: 0; padding: 0;

@@ -1,5 +1,5 @@
   /* =========================================================================
-   * SHAREABLE URL — #point=lat,lng&layers=id1,id2&pin=id&zoom=N mirrors the
+   * SHAREABLE URL — #point=lat,lng&layers=id1,id2&pin=id&stats=1&zoom=N mirrors the
    * current selection so any view can be copied out of the URL bar (or via the
    * point chip's Copy-link button) and restored on load. replaceState, not
    * location.hash assignment, so clicking around never pollutes the back
@@ -29,7 +29,12 @@
     // condition puts that id in `on` above, so `layers=` is always emitted
     // beside it, and the root's app-parameter forwarding guard (which matches
     // point/layers/zoom) still recognises every link that carries a pin.
-    if (pinnedParentId && state.layersOn[pinnedParentId]) parts.push("pin=" + pinnedParentId);
+    if (pinnedParentId && state.layersOn[pinnedParentId]) {
+      parts.push("pin=" + pinnedParentId);
+      // The comparison stats report, while it is open (compare-stats). Only
+      // beside a pin, because the report is OF the pinned district.
+      if (statsIsOpen()) parts.push("stats=1");
+    }
     // Zoom rides the permalink because it is part of what was shared: an embed of
     // a whole county answers a different question from an embed of one block, and
     // a refresh should not throw the reader back to the default view. Emitted
@@ -121,6 +126,11 @@
       if (parent && state.layersOn[parent.id] &&
           parent.overlay && parent.overlay.style) {
         setPinnedParent(parent.id);
+        // `stats=1`: reopen the comparison report once the pinned district
+        // and the other layers' boundaries have loaded (statsRequestRestore).
+        // Only when the pin itself was restored — a report of nothing is
+        // not opened.
+        if (params.stats === "1") statsRequestRestore();
       }
     }
     // #q=<address> — an address handed over by a question page's lookup

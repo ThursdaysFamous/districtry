@@ -329,6 +329,7 @@
     var parentFeature = relationshipParentFeature();
     relCounts = parentFeature ? drawRelationshipOutlines(parentFeature) : null;
     updateRelLegend();
+    statsTryRestore(); // a link's report waits for the boundaries this refresh drew
   }
 
   // The legend lives above the Hover toggle and, per the toggle's role as the

@@ -299,7 +299,14 @@ def measure_address_list(src, name):
 # population, so no qualifier is needed the way district-search/ needs one.
 # `compare-stats-print/` joined the same day with the report's print button,
 # counted the same way, by the pinned layer and never the district.
-EXPECTED_EVENTS = ["address-search", "compare-stats-print/", "compare-stats/", "compare-stop", "compare/",
+# `compare-stats-link/` joined the same day with the report's "Copy link"
+# button, which hands out a permalink that reopens the report; counted by the
+# pinned layer only, and it records that a link was copied, not the link.
+# `compare-stats-reopen/` (a shared link reopened the report, by the pinned
+# layer) and `compare-stats-row/` (a reader opened one row's card, by that
+# ROW's layer) joined with it. Neither carries a district.
+EXPECTED_EVENTS = ["address-search", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
+                   "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "geolocate",
                    "geolocate-success", "layer/", "metro-portal-go/", "select",
                    "share-native", "share-open", "share-permalink"]

@@ -1999,8 +1999,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .stats-note { font-size: 12.5px; color: var(--card-muted); margin: 6px 0; }
   .stats-foot { font-size: 12px; color: var(--card-muted); margin: 16px 0 0; }
   .stats-parent-card { margin: 10px 0 0; padding: 0; }
-  .stats-print-btn {
-    margin: 12px 0 0;
+  .stats-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
+  .stats-print-btn, .stats-link-btn {
+    margin: 0;
     font: inherit;
     font-size: 13px;
     font-weight: 600;
@@ -2023,7 +2024,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     body.stats-printing .stats-modal { position: static; display: block; padding: 0; }
     body.stats-printing .stats-modal .feedback-backdrop,
     body.stats-printing .stats-modal .feedback-close,
-    body.stats-printing .stats-print-btn { display: none !important; }
+    body.stats-printing .stats-actions { display: none !important; }
     body.stats-printing .stats-panel {
       max-width: none; max-height: none; height: auto; overflow: visible;
       box-shadow: none; border: none; border-radius: 0; padding: 0;
@@ -5761,7 +5762,7 @@ function initChiExplorer() {
 
   /* ==== ENGINE:BEGIN permalink ==== */
   /* =========================================================================
-   * SHAREABLE URL — #point=lat,lng&layers=id1,id2&pin=id&zoom=N mirrors the
+   * SHAREABLE URL — #point=lat,lng&layers=id1,id2&pin=id&stats=1&zoom=N mirrors the
    * current selection so any view can be copied out of the URL bar (or via the
    * point chip's Copy-link button) and restored on load. replaceState, not
    * location.hash assignment, so clicking around never pollutes the back
@@ -5791,7 +5792,12 @@ function initChiExplorer() {
     // condition puts that id in `on` above, so `layers=` is always emitted
     // beside it, and the root's app-parameter forwarding guard (which matches
     // point/layers/zoom) still recognises every link that carries a pin.
-    if (pinnedParentId && state.layersOn[pinnedParentId]) parts.push("pin=" + pinnedParentId);
+    if (pinnedParentId && state.layersOn[pinnedParentId]) {
+      parts.push("pin=" + pinnedParentId);
+      // The comparison stats report, while it is open (compare-stats). Only
+      // beside a pin, because the report is OF the pinned district.
+      if (statsIsOpen()) parts.push("stats=1");
+    }
     // Zoom rides the permalink because it is part of what was shared: an embed of
     // a whole county answers a different question from an embed of one block, and
     // a refresh should not throw the reader back to the default view. Emitted
@@ -5883,6 +5889,11 @@ function initChiExplorer() {
       if (parent && state.layersOn[parent.id] &&
           parent.overlay && parent.overlay.style) {
         setPinnedParent(parent.id);
+        // `stats=1`: reopen the comparison report once the pinned district
+        // and the other layers' boundaries have loaded (statsRequestRestore).
+        // Only when the pin itself was restored — a report of nothing is
+        // not opened.
+        if (params.stats === "1") statsRequestRestore();
       }
     }
     // #q=<address> — an address handed over by a question page's lookup
@@ -31531,6 +31542,7 @@ function initChiExplorer() {
     var parentFeature = relationshipParentFeature();
     relCounts = parentFeature ? drawRelationshipOutlines(parentFeature) : null;
     updateRelLegend();
+    statsTryRestore(); // a link's report waits for the boundaries this refresh drew
   }
 
   // The legend lives above the Hover toggle and, per the toggle's role as the
@@ -31780,7 +31792,17 @@ function initChiExplorer() {
    * opens every section inside the cards, and calls the browser's print
    * dialog, where a phone also offers to share or save a PDF. While printing,
    * body.stats-printing hides everything but the report and prints the page's
-   * address and the date under the pinned district. ---------- */
+   * address and the date under the pinned district.
+   *
+   * A LINK REOPENS THE REPORT. While the report is open the permalink carries
+   * `stats=1` beside the pin (syncUrlHash), and "Copy link" hands that URL
+   * out — on a touch device through the platform's share sheet. A reader
+   * who opens it gets the point, the layers and the pin from the permalink,
+   * and then the report, once the pinned district and the other switched-on
+   * layers' boundaries have loaded — or after 20 s with whatever has loaded,
+   * because a layer whose source is down must not keep the report shut. A
+   * link whose pin cannot be restored opens no report, the same rule the
+   * pin follows. ---------- */
   // the print styles apply only while the report is being printed
   window.addEventListener("afterprint", function () { document.body.classList.remove("stats-printing"); });
   var statsModal = null;
@@ -31933,18 +31955,69 @@ function initChiExplorer() {
     backdrop.addEventListener("click", statsClose);
     return statsModal;
   }
+  function statsIsOpen() {
+    return !!(statsModal && !statsModal.el.hidden);
+  }
   function statsClose() {
     statsOpenSeq++; // anything still computing for the closed screen stops
-    if (statsModal && !statsModal.el.hidden) statsModal.shut();
+    if (statsIsOpen()) {
+      statsModal.shut();
+      syncUrlHash(); // the permalink stops carrying stats=1
+    }
   }
 
-  function openCompareStats() {
+  // REOPENING FROM A LINK (`stats=1`). Requested by applyStateFromHash after
+  // it restores the pin; tried again every time the outlines refresh, which
+  // is every time a layer's query or boundaries arrive.
+  var STATS_RESTORE_WAIT_MS = 20000;
+  var statsRestore = null;
+  function statsRequestRestore() {
+    statsRestore = { seq: state.sequence, deadline: Date.now() + STATS_RESTORE_WAIT_MS };
+    setTimeout(statsTryRestore, STATS_RESTORE_WAIT_MS + 50);
+    statsTryRestore();
+  }
+  // Every other switched-on polygon layer has its boundaries, is out of
+  // coverage here, or has failed to load them (overlayLoaded goes back to
+  // false) — so the report opens with every row it will ever have.
+  function statsLayersSettled() {
+    for (var i = 0; i < layers.length; i++) {
+      var mod = layers[i];
+      if (mod.id === pinnedParentId || !state.layersOn[mod.id]) continue;
+      if (!mod.overlay || !mod.overlay.style) continue;
+      var rt = layerRuntime[mod.id];
+      if (!rt || rt.relevant === false || rt.geojson) continue;
+      if (rt.overlayLoaded) return false; // still downloading
+    }
+    return true;
+  }
+  function statsTryRestore() {
+    var r = statsRestore;
+    if (!r) return;
+    // a new point, or the pin let go, before the report could open: the
+    // link's report no longer describes what is on screen
+    if (r.seq !== state.sequence || !pinnedParentId) { statsRestore = null; return; }
+    var late = Date.now() >= r.deadline;
+    if (!relationshipParentFeature()) { if (late) statsRestore = null; return; }
+    if (!late && !statsLayersSettled()) return;
+    statsRestore = null;
+    if (!statsIsOpen()) openCompareStats({ fromLink: true });
+  }
+
+  // `opts` is { fromLink: true } when a link reopens the report; the Stats
+  // button's click passes its event, which carries no such field.
+  function openCompareStats(opts) {
     var parentFeature = relationshipParentFeature();
     var parentMod = pinnedParentId ? getLayerById(pinnedParentId) : null;
     if (!parentFeature || !parentMod) return;
+    statsRestore = null; // opened, whether by a link or by hand
     // Counted by the PINNED layer, the shape compare/<id> already uses, and
     // never by district: which ward a reader compares says where they live.
-    trackEvent("compare-stats/" + pinnedParentId);
+    // A report reopened by a shared link is counted apart from one a reader
+    // opened, so the count says how often a shared report is followed.
+    // Two calls, not a ternary: build_privacy_page.py reads the event names
+    // off literal first arguments.
+    if (opts && opts.fromLink === true) trackEvent("compare-stats-reopen/" + pinnedParentId);
+    else trackEvent("compare-stats/" + pinnedParentId);
     var m = statsBuildModal();
     var token = ++statsOpenSeq, seq = state.sequence;
     var live = function () { return token === statsOpenSeq && seq === state.sequence; };
@@ -31962,14 +32035,19 @@ function initChiExplorer() {
     var parentCard = cardEl("div", "stats-card stats-parent-card");
     head.appendChild(parentCard);
     var parentRun = statsShowCard(parentMod, state.selectedPoint, parentCard, live);
+    var actions = cardEl("div", "stats-actions");
     var printBtn = document.createElement("button");
     printBtn.type = "button";
     printBtn.className = "stats-print-btn";
     printBtn.textContent = "Print or share";
-    head.appendChild(printBtn);
-    // what a printout carries that the screen does not: where it came from
-    head.appendChild(cardEl("p", "stats-print-source",
-      "From " + String(window.location.href) + " \u00b7 " + new Date().toLocaleDateString()));
+    actions.appendChild(printBtn);
+    actions.appendChild(statsLinkButton(parentMod, parentName));
+    head.appendChild(actions);
+    // what a printout carries that the screen does not: where it came from.
+    // Written when printing, from the permalink as it is then, so the address
+    // on paper reopens this report.
+    var printSource = cardEl("p", "stats-print-source");
+    head.appendChild(printSource);
     body.appendChild(head);
 
     var found = statsCollect(parentFeature);
@@ -32005,7 +32083,15 @@ function initChiExplorer() {
           if (!card.__ran) card.__ran = statsRunCard(r, parentFeature, card, live);
           return card.__ran;
         };
-        det.addEventListener("toggle", function () { if (det.open) run(); });
+        det.addEventListener("toggle", function () {
+          if (!det.open) return;
+          // A reader opening a row, counted once per row by the ROW's layer
+          // (which layer's cards readers want), never its district. Printing
+          // runs every row before its toggle event fires, so card.__ran is
+          // already set and a print counts nothing here.
+          if (!card.__ran) trackEvent("compare-stats-row/" + r.mod.id);
+          run();
+        });
         sec.appendChild(det);
         cells.push({ row: r, el: people, det: det, run: run });
       });
@@ -32027,6 +32113,7 @@ function initChiExplorer() {
     var foot = cardEl("p", "stats-foot");
     body.appendChild(foot);
     m.open();
+    syncUrlHash(); // the permalink now reopens this report (stats=1)
 
     // People, where this app ships them: every county the districts touch.
     var box = featureBBox(parentFeature).slice();
@@ -32056,6 +32143,8 @@ function initChiExplorer() {
         printBtn.disabled = false;
         printBtn.textContent = "Print or share";
         if (!live() || m.el.hidden) return;
+        syncUrlHash();
+        printSource.textContent = "From " + String(window.location.href) + " \u00b7 " + new Date().toLocaleDateString();
         document.body.classList.add("stats-printing");
         window.print();
       });
@@ -32104,6 +32193,34 @@ function initChiExplorer() {
       console.warn("population files unavailable:", err);
       cells.forEach(function (c) { c.el.textContent = "People: the population files did not load."; });
     });
+  }
+
+  // "Copy link": the permalink with stats=1, so the reader it is sent to
+  // lands on this report. On a touch device the platform's share sheet, as
+  // the point chip's Share does. Counted by the pinned layer, never the
+  // district.
+  function statsLinkButton(parentMod, parentName) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "stats-link-btn";
+    var native = !hoverCapable && !!navigator.share;
+    var label = native ? "Share link" : "Copy link";
+    btn.textContent = label;
+    btn.title = "A link that opens this report";
+    btn.addEventListener("click", function () {
+      trackEvent("compare-stats-link/" + parentMod.id);
+      var url = shareLinkUrl();
+      if (native) {
+        navigator.share({ title: parentName + " \u00b7 " + appDisplayName(), url: url })
+          .catch(function () { /* dismissed, or the platform refused — nothing to undo */ });
+        return;
+      }
+      copyTextToClipboard(url).then(function (ok) {
+        btn.textContent = ok ? "Copied!" : "Copy failed";
+        setTimeout(function () { btn.textContent = label; }, 1600);
+      });
+    });
+    return btn;
   }
 
   // One row's card: the layer's own query at a point inside the district, and
