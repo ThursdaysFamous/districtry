@@ -1309,9 +1309,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
     font-weight: 600;
     color: var(--accent-deep);
   }
-  /* a district found by name ("33rd ward"): the district first, then the
-     layer it belongs to, muted so the name reads first */
-  .district-result-hint { display: block; font-size: 12px; color: var(--muted, #6b7280); margin-top: 1px; }
+  /* a district found by name ("33rd ward"): the name in bold, so it reads
+     apart from the address rows beneath it, then the layer it belongs to,
+     muted and at regular weight */
+  #geocode-results li.district-result button { font-weight: 600; }
+  .district-result-hint { display: block; font-size: 12px; font-weight: 400; color: var(--muted, #6b7280); margin-top: 1px; }
   /* "Lake County Board District …  Type its number: 1–19" — what to type
      next, before a number is typed. Not a button: it cannot be picked. */
   #geocode-results li.district-hint { padding: 9px 8px; font-size: 13.5px; color: var(--ink); cursor: default; }
