@@ -439,7 +439,11 @@ Three things had to be true for the move to be an improvement rather than a relo
   while the app registers 39, and "2 of 39" would count 18 layers they have no way to turn on.
   The numerator is `activeLayerCount()`, which the opacity scaler already uses for the same
   reason — on-and-hidden is not on. Downtown Chicago reads "2 of 32", and 32 is the figure this
-  project's own notes give for what Chicago resolves.
+  project's own notes give for what Chicago resolves. **Corrected 2026-09-23:** the numerator is
+  no longer `activeLayerCount()`. That function counts nested sub-layers (Ward Precinct, Police
+  Beat, Township) while `M` does not, so with every layer on at the Loop the panel read "36 of 33
+  layers on". `syncPanelStats()` now counts both numbers in one pass over top-level toggles, and
+  smoke check 2i holds the header to the sidebar a reader sees.
 
 **The lesson both halves share:** a CSS rule with no subject is invisible to every gate in this
 repo, and a comment describing markup is not markup. When a rebrand lands as an override island,

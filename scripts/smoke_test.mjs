@@ -1225,6 +1225,52 @@ try {
     await context.close();
   }
 
+  // 2i. THE PANEL COUNT COUNTS WHAT THE SIDEBAR SHOWS. The results panel's
+  //     "N of M layers on" counts top-level toggles only — a nested sub-layer
+  //     (Township under County, Ward Precinct under City Ward) is not one of
+  //     the M — and N was once activeLayerCount(), which counts sub-layers
+  //     too, so every layer on at the Loop read "36 of 33 layers on". County
+  //     and Township declare no coverage test, so both are relevant at any
+  //     point with no network, which makes this pair the deterministic case.
+  //     The expected figures are read off the sidebar a reader sees (visible
+  //     top-level blocks, and the checked ones among them) rather than
+  //     recomputed from the layer list, and the check refuses to pass unless
+  //     the sub-layer is actually on and showing, so it cannot pass vacuously.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=county,township`);
+    await page
+      .waitForFunction(() => {
+        const sub = document.getElementById("toggle-township");
+        const stats = document.getElementById("districtry-stats");
+        return sub && sub.checked && stats && /\d+ of \d+/.test(stats.textContent);
+      }, null, { timeout: QUERY_TIMEOUT })
+      .catch(() => {});
+    const res = await page.evaluate(() => {
+      const top = Array.from(document.querySelectorAll(".layer-block:not(.layer-block-sub)"))
+        .filter((b) => !b.hidden);
+      const on = top.filter((b) => {
+        const cb = b.querySelector(":scope > .layer-block-head input[type=checkbox]");
+        return cb && cb.checked;
+      }).length;
+      const sub = document.getElementById("toggle-township");
+      const subBlock = sub && sub.closest(".layer-block");
+      return {
+        header: ((document.getElementById("districtry-stats") || {}).textContent || "").trim(),
+        on,
+        shown: top.length,
+        subOn: !!(sub && sub.checked && subBlock && !subBlock.hidden),
+      };
+    });
+    const m = /^(\d+) of (\d+) layers? on$/.exec(res.header);
+    check(
+      "the panel count counts top-level toggles only, never above its total",
+      !!m && res.subOn && Number(m[1]) === res.on && Number(m[2]) === res.shown && Number(m[1]) <= Number(m[2]),
+      JSON.stringify(res)
+    );
+    await context.close();
+  }
+
   // ==== TEMPLATE:BEGIN smoke-failure-isolation ====
   // 3. A failing data source degrades to that layer's error card + Retry, in
   //    isolation — the app's per-layer failure-isolation rule. (Named on two
