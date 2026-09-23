@@ -1998,6 +1998,42 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .stats-rest { font-size: 12.5px; font-style: italic; color: var(--card-muted); margin: 6px 0 0; }
   .stats-note { font-size: 12.5px; color: var(--card-muted); margin: 6px 0; }
   .stats-foot { font-size: 12px; color: var(--card-muted); margin: 16px 0 0; }
+  .stats-parent-card { margin: 10px 0 0; padding: 0; }
+  .stats-print-btn {
+    margin: 12px 0 0;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--card-link);
+    background: none;
+    border: 1px solid var(--card-btn-border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  .stats-print-btn:disabled { opacity: 0.7; cursor: progress; }
+  .stats-print-source { display: none; }
+  /* PRINTING THE REPORT: only the stats dialog prints, at full length, with
+     every row open (the button opens them before printing) and nothing a
+     reader could click on paper. Scoped to body.stats-printing so printing
+     the app itself is unchanged. */
+  @media print {
+    body.stats-printing > *:not(.stats-modal) { display: none !important; }
+    body.stats-printing { height: auto !important; overflow: visible !important; background: #fff !important; }
+    body.stats-printing .stats-modal { position: static; display: block; padding: 0; }
+    body.stats-printing .stats-modal .feedback-backdrop,
+    body.stats-printing .stats-modal .feedback-close,
+    body.stats-printing .stats-print-btn { display: none !important; }
+    body.stats-printing .stats-panel {
+      max-width: none; max-height: none; height: auto; overflow: visible;
+      box-shadow: none; border: none; border-radius: 0; padding: 0;
+      --card-ink: #111827; --card-body-ink: #374151; --card-muted: #4b5563; --card-link: #1a56c4;
+      --card-border: #d1d5db; --card-btn-border: #9ca3af; background: #fff; color: #111827;
+    }
+    body.stats-printing .stats-print-source { display: block; font-size: 11px; color: #4b5563; margin: 6px 0 0; word-break: break-all; }
+    body.stats-printing .stats-row { break-inside: avoid; }
+    body.stats-printing .stats-row-name::before { content: none; }
+  }
   /* the doubled classes outrank the modal shell's own rules, which the
      stylesheet states later (styles-footer) */
   @media (max-width: 767px) {
@@ -31734,7 +31770,19 @@ function initChiExplorer() {
    * exactly as a click there would. That query is the same request a click
    * makes, which for a layer that asks its server about a point sends that
    * point; the privacy page says so. It runs only when a reader opens the
-   * row, never for the whole list. ---------- */
+   * row, or prints the report.
+   *
+   * THE PINNED DISTRICT'S OWN CARD heads the report, run by the same query
+   * its sidebar card ran at the selected point, so the report names who
+   * represents it as well as how it divides.
+   *
+   * PRINT OR SHARE opens every row, waits for each row's card (up to 15 s),
+   * opens every section inside the cards, and calls the browser's print
+   * dialog, where a phone also offers to share or save a PDF. While printing,
+   * body.stats-printing hides everything but the report and prints the page's
+   * address and the date under the pinned district. ---------- */
+  // the print styles apply only while the report is being printed
+  window.addEventListener("afterprint", function () { document.body.classList.remove("stats-printing"); });
   var statsModal = null;
   var statsOpenSeq = 0;
   var statsPopIndex = null;
@@ -31909,6 +31957,19 @@ function initChiExplorer() {
     var parentArea = measureArea(parentFeature.geometry);
     var totals = cardEl("div", "stats-totals", statsSqMi(parentArea));
     head.appendChild(totals);
+    // the pinned district's own card, from the same query its sidebar card ran
+    // at the selected point — so the report names who represents it too
+    var parentCard = cardEl("div", "stats-card stats-parent-card");
+    head.appendChild(parentCard);
+    var parentRun = statsShowCard(parentMod, state.selectedPoint, parentCard, live);
+    var printBtn = document.createElement("button");
+    printBtn.type = "button";
+    printBtn.className = "stats-print-btn";
+    printBtn.textContent = "Print or share";
+    head.appendChild(printBtn);
+    // what a printout carries that the screen does not: where it came from
+    head.appendChild(cardEl("p", "stats-print-source",
+      "From " + String(window.location.href) + " \u00b7 " + new Date().toLocaleDateString()));
     body.appendChild(head);
 
     var found = statsCollect(parentFeature);
@@ -31940,11 +32001,13 @@ function initChiExplorer() {
         det.appendChild(sum);
         var card = cardEl("div", "stats-card");
         det.appendChild(card);
-        det.addEventListener("toggle", function () {
-          if (det.open && !card.__ran) { card.__ran = true; statsRunCard(r, parentFeature, card, live); }
-        });
+        var run = function () {
+          if (!card.__ran) card.__ran = statsRunCard(r, parentFeature, card, live);
+          return card.__ran;
+        };
+        det.addEventListener("toggle", function () { if (det.open) run(); });
         sec.appendChild(det);
-        cells.push({ row: r, el: people, det: det });
+        cells.push({ row: r, el: people, det: det, run: run });
       });
       // What no district of this layer covers. Only stated for a layer whose
       // districts do not overlap each other — summed shares of an overlapping
@@ -31973,13 +32036,37 @@ function initChiExplorer() {
         box = [Math.min(box[0], b[0]), Math.min(box[1], b[1]), Math.max(box[2], b[2]), Math.max(box[3], b[3])];
       });
     });
+    // PRINT OR SHARE: every row opens and its card loads before the browser's
+    // print dialog appears, because a printout cannot be clicked open. On a
+    // phone that dialog is also where the report is shared or saved as a PDF.
+    // Each row's card waits up to 15 s; one that has not answered prints as
+    // "Loading…" rather than holding the whole report back.
+    var peopleDone = Promise.resolve();
+    printBtn.addEventListener("click", function () {
+      trackEvent("compare-stats-print/" + parentMod.id);
+      printBtn.disabled = true;
+      printBtn.textContent = "Opening every row\u2026";
+      var waits = [parentRun, peopleDone].concat(cells.map(function (c) { c.det.open = true; return c.run(); }));
+      var settled = Promise.all(waits.map(function (w) { return Promise.resolve(w)["catch"](function () {}); }));
+      var timeout = new Promise(function (res) { setTimeout(res, 15000); });
+      Promise.race([settled, timeout]).then(function () {
+        // and every section inside the cards (a card's "Offices"), which
+        // paper cannot open either
+        [].forEach.call(m.body.querySelectorAll("details"), function (d) { d.open = true; });
+        printBtn.disabled = false;
+        printBtn.textContent = "Print or share";
+        if (!live() || m.el.hidden) return;
+        document.body.classList.add("stats-printing");
+        window.print();
+      });
+    });
     var pending = typeof POPULATION_INDEX_URL !== "undefined";
     cells.forEach(function (c) { c.el.textContent = pending ? "People: counting…" : ""; c.el.hidden = !pending; });
     foot.textContent = pending
       ? "People are Census 2020 counts by block. A block on a district's edge counts wholly on the side its centre falls in, so a district not drawn on block lines gets a close figure, not an exact one. Areas are measured from the map's simplified boundaries."
       : "Areas are measured from the map's simplified boundaries. This app has no population figures yet.";
     if (!pending) return;
-    statsLoadPopulation(box).then(function (sets) {
+    peopleDone = statsLoadPopulation(box).then(function (sets) {
       if (!live()) return;
       if (!sets) { cells.forEach(function (c) { c.el.hidden = true; }); return; }
       var inParent = statsPointsIn(parentFeature.geometry, sets);
@@ -32023,10 +32110,35 @@ function initChiExplorer() {
   // its own render. Isolated like every card: a failure stays in this row.
   function statsRunCard(r, parentFeature, el, live) {
     var spots = relLabelPoint(r.feature, parentFeature, r.inside);
-    if (!spots.length) { el.appendChild(cardEl("p", "stats-note", "This district is too thin to look up a point inside it.")); return; }
-    var point = { lat: spots[0].lat, lng: spots[0].lng };
+    var point = spots.length ? { lat: spots[0].lat, lng: spots[0].lng } : statsPointInside(r.feature);
+    if (!point) {
+      el.appendChild(cardEl("p", "stats-note", "This district is too thin to look up a point inside it."));
+      return Promise.resolve();
+    }
+    return statsShowCard(r.mod, point, el, live);
+  }
+  // Any point inside a district, for one whose share of the compared district
+  // is a sliver the label search cannot land in: a finer grid over the
+  // district's own extent, the point nearest its middle. Its card is the same
+  // wherever inside the district it is asked.
+  function statsPointInside(feature) {
+    var b = featureBBox(feature), best = null, bestD = Infinity, N = 24;
+    var cx = (b[0] + b[2]) / 2, cy = (b[1] + b[3]) / 2;
+    for (var i = 0; i < N; i++) {
+      for (var j = 0; j < N; j++) {
+        var x = b[0] + (b[2] - b[0]) * (i + 0.5) / N, y = b[1] + (b[3] - b[1]) * (j + 0.5) / N;
+        var d = (x - cx) * (x - cx) + (y - cy) * (y - cy);
+        if (d < bestD && pointInGeometry({ lat: y, lng: x }, feature.geometry)) { best = { lat: y, lng: x }; bestD = d; }
+      }
+    }
+    return best;
+  }
+  // A layer's card for one point: its own query and its own render, plus its
+  // footer link. Resolves when the card is on the page (or has failed).
+  function statsShowCard(mod, point, el, live) {
+    var r = { mod: mod };
     el.appendChild(cardEl("p", "stats-note", "Loading…"));
-    Promise.resolve()
+    return Promise.resolve()
       .then(function () { return r.mod.query(point, state.sequence); })
       .then(function (result) {
         if (!live()) return;

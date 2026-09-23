@@ -250,6 +250,42 @@
   .stats-rest { font-size: 12.5px; font-style: italic; color: var(--card-muted); margin: 6px 0 0; }
   .stats-note { font-size: 12.5px; color: var(--card-muted); margin: 6px 0; }
   .stats-foot { font-size: 12px; color: var(--card-muted); margin: 16px 0 0; }
+  .stats-parent-card { margin: 10px 0 0; padding: 0; }
+  .stats-print-btn {
+    margin: 12px 0 0;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--card-link);
+    background: none;
+    border: 1px solid var(--card-btn-border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  .stats-print-btn:disabled { opacity: 0.7; cursor: progress; }
+  .stats-print-source { display: none; }
+  /* PRINTING THE REPORT: only the stats dialog prints, at full length, with
+     every row open (the button opens them before printing) and nothing a
+     reader could click on paper. Scoped to body.stats-printing so printing
+     the app itself is unchanged. */
+  @media print {
+    body.stats-printing > *:not(.stats-modal) { display: none !important; }
+    body.stats-printing { height: auto !important; overflow: visible !important; background: #fff !important; }
+    body.stats-printing .stats-modal { position: static; display: block; padding: 0; }
+    body.stats-printing .stats-modal .feedback-backdrop,
+    body.stats-printing .stats-modal .feedback-close,
+    body.stats-printing .stats-print-btn { display: none !important; }
+    body.stats-printing .stats-panel {
+      max-width: none; max-height: none; height: auto; overflow: visible;
+      box-shadow: none; border: none; border-radius: 0; padding: 0;
+      --card-ink: #111827; --card-body-ink: #374151; --card-muted: #4b5563; --card-link: #1a56c4;
+      --card-border: #d1d5db; --card-btn-border: #9ca3af; background: #fff; color: #111827;
+    }
+    body.stats-printing .stats-print-source { display: block; font-size: 11px; color: #4b5563; margin: 6px 0 0; word-break: break-all; }
+    body.stats-printing .stats-row { break-inside: avoid; }
+    body.stats-printing .stats-row-name::before { content: none; }
+  }
   /* the doubled classes outrank the modal shell's own rules, which the
      stylesheet states later (styles-footer) */
   @media (max-width: 767px) {
