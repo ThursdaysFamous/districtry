@@ -68,9 +68,100 @@ const VENDORED = ["leaflet.js", "leaflet.css", "maplibre-gl.min.js", "maplibre-g
   .map((f) => [f, f.endsWith(".css") ? "text/css" : "application/javascript",
                readFileSync(join(VENDOR, f))]);
 
-const PAGES = [...readFileSync(join(REPO, "sitemap.xml"), "utf8")
+const SITEMAP = [...readFileSync(join(REPO, "sitemap.xml"), "utf8")
   .matchAll(/<loc>([^<]+)<\/loc>/g)]
   .map((m) => m[1].replace("https://districtry.com", ""));
+
+// THE 329 PER-COUNTY PAGES ARE COVERED BY ONE REPRESENTATIVE PER DISTINCT
+// PAINTED-ELEMENT SIGNATURE, WHICH IS A PARTITION AND NOT A SAMPLE.
+//
+// They are four templates rendered 329 times, and sweeping all of them was 658
+// of this probe's 784 page loads. What a contrast pair can come from is a
+// (tag, class) pair some rule paints, so two pages carrying the same SET of
+// (tag, class) combinations cannot produce a colour pair the other does not.
+// Grouping on that set and visiting one page per group is therefore lossless
+// here, where "three per instance, spread across the alphabet" — the honest
+// sample page_consistency_test.mjs takes, for a check whose subject is
+// different — would be a real if small reduction in coverage.
+//
+// MEASURED 2026-09-23 on the full sweep it replaces: of the twelve below-floor
+// pairs, ELEVEN appear on no per-county page at all, and the twelfth
+// (rgb(107,114,128) on rgb(244,242,238)) appears on 329 of them AND on 8
+// other pages. So the 658 loads were contributing one pair that eight cheaper
+// pages already carry. 329 pages fall into 41 signatures.
+//
+// A GROUP'S REPRESENTATIVE IS ITS LARGEST PAGE, which costs nothing and buys
+// insurance the signature does not cover by itself: more districts means more
+// rows, so a structural rule keyed on position would still be exercised.
+//
+// THE GROUPING IS ONLY SOUND WHILE THE CSS CANNOT DISTINGUISH TWO PAGES THAT
+// SHARE A SIGNATURE, so that is asserted rather than assumed — see
+// assertSignatureIsComplete below. If a page ever gains an id selector or a
+// position-keyed colour rule, this refuses to group rather than quietly
+// measuring less than it says.
+//
+// It is self-maintaining in the direction that matters: a new county page
+// whose markup differs at all lands in its own group and is visited. Only a
+// page identical in every (tag, class) to one already visited is skipped.
+const DEEP = (p) => p.replace(/^\//, "").split("/").length >= 3;
+
+function paintedSignature(html) {
+  const out = new Set();
+  for (const m of html.matchAll(/<([a-zA-Z][a-zA-Z0-9]*)\b([^>]*)>/g)) {
+    const cls = /class="([^"]*)"/.exec(m[2]);
+    out.add(m[1].toLowerCase() + "." + (cls ? cls[1].trim() : ""));
+  }
+  return [...out].sort().join("|");
+}
+
+// The two things a (tag, class) signature cannot see. An id selector can paint
+// one page in a group and not its twin; a position-keyed rule can paint a row
+// that a shorter page in the same group does not have. Neither exists in these
+// pages' CSS today, and if one appears the grouping is unsound.
+function assertSignatureIsComplete(html, path) {
+  const css = [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)].map((m) => m[1]).join("\n");
+  // `[, sel, body]` and not `[sel, body]`: matchAll yields the FULL match first,
+  // so the latter binds sel to the whole rule and body to the selector, and the
+  // paints test below then never sees a declaration. Caught by negative test.
+  for (const [, sel, body] of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    const paints = /(^|;|\s)(color|background|background-color|border[-a-z]*color)\s*:/.test(body);
+    if (!paints) continue;
+    // `#abc123` inside a declaration is a colour; an id SELECTOR is in the selector.
+    if (/#[A-Za-z][-\w]*/.test(sel)) {
+      return `${path}: CSS paints through an id selector (${sel.trim().slice(0, 60)})`;
+    }
+    if (/:(nth-child|nth-of-type|nth-last-child|first-child|last-child|only-child)/.test(sel)) {
+      return `${path}: CSS paints through a position-keyed selector (${sel.trim().slice(0, 60)})`;
+    }
+  }
+  return null;
+}
+
+const guidePages = SITEMAP.filter((p) => !DEEP(p));
+const deepPages = SITEMAP.filter(DEEP);
+const groups = new Map();
+const unsound = [];
+for (const path of deepPages) {
+  const file = join(REPO, path.replace(/^\//, ""));
+  if (!existsSync(file)) { groups.set("missing:" + path, [{ path, size: 0 }]); continue; }
+  const html = readFileSync(file, "utf8");
+  const why = assertSignatureIsComplete(html, path);
+  if (why) unsound.push(why);
+  const sig = paintedSignature(html);
+  if (!groups.has(sig)) groups.set(sig, []);
+  groups.get(sig).push({ path, size: html.length });
+}
+if (unsound.length) {
+  console.error("probe-contrast-pairs: FAIL — per-county pages cannot be grouped by " +
+    "painted-element signature any more, so grouping them would measure less than " +
+    "this probe claims. Sweep them all, or narrow the grouping:");
+  for (const u of unsound.slice(0, 5)) console.error("  - " + u);
+  process.exit(1);
+}
+// Largest first, then by path, so the choice is deterministic across runs.
+const representatives = [...groups.values()]
+  .map((g) => g.sort((a, b) => b.size - a.size || (a.path < b.path ? -1 : 1))[0].path);
+const PAGES = [...guidePages, ...representatives].sort();
 
 // Walks every element that owns text, composites its ground the way the
 // browser paints it (nearest painted ancestor, translucent layers stacked),
@@ -316,6 +407,8 @@ if (problems.length) {
   for (const p of problems) console.error("  - " + p);
   process.exit(1);
 }
-console.log("probe-contrast-pairs: OK — %s page(s) x 2 themes, %s below-floor text node(s) " +
-  "in %s distinct colour pair(s), every one already measured and called short by " +
-  "validate_contrast.py", visited / 2, nodes, found.size);
+console.log("probe-contrast-pairs: OK — %s page(s) x 2 themes (%s guide + %s representing " +
+  "%s per-county pages in %s painted-element signature(s)), %s below-floor text node(s) in %s " +
+  "distinct colour pair(s), every one already measured and called short by validate_contrast.py",
+  visited / 2, guidePages.length, representatives.length, deepPages.length, groups.size,
+  nodes, found.size);
