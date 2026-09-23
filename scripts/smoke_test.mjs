@@ -536,6 +536,31 @@ try {
     check("picking a district by name is counted in GoatCounter by layer, once",
       found.events.filter((e) => /^district-search\//.test(e)).join() === "district-search/il-senate",
       JSON.stringify(found.events));
+        // A COUNTY-dispatched layer needs the county in the query: every county
+    // has a District 3. De Witt's lettered districts ship in data/app, so this
+    // needs no county server; the bare phrase must match NO district row.
+    const byCounty = async (q) => {
+      await page.fill("#geocode-input", q);
+      await page.press("#geocode-input", "Enter");
+      await page.waitForTimeout(600);
+      return page.evaluate(() => [...document.querySelectorAll("#geocode-results li.district-result")]
+        .map((li) => li.querySelector("button").firstChild.textContent.trim()));
+    };
+    const dewitt = await byCounty("DeWitt County Board District A");
+    const bare = await byCounty("county board district 3");
+    check("a county board district is found by county and letter",
+      dewitt.join() === "De Witt County Board District A", JSON.stringify(dewitt));
+    check("a county board district without its county matches nothing", bare.length === 0, JSON.stringify(bare));
+    // TYPE-AHEAD before the number: the words name a kind of district, so the
+    // list says what to type next. A hint is text, never a button, so it
+    // cannot be picked and #q= can never auto-select it.
+    await page.fill("#geocode-input", "Lake County Board Dis");
+    await page.waitForFunction(() => document.querySelector("#geocode-results li.district-hint"), null, { timeout: 5000 }).catch(() => {});
+    const hint = await page.evaluate(() => [...document.querySelectorAll("#geocode-results li.district-hint")]
+      .map((li) => ({ text: li.textContent.replace(/\s+/g, " ").trim(), button: !!li.querySelector("button") })));
+    check("typing a district name before its number shows what to type next",
+      hint.length === 1 && /Lake County Board District/.test(hint[0].text) && /1\u201319/.test(hint[0].text) && !hint[0].button,
+      JSON.stringify(hint));
     await context.close();
   }
 

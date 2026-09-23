@@ -12,6 +12,30 @@
     pointInGeometry: pointInGeometry,
     fetchJSONWithRetry: fetchJSONWithRetry,
     probeGeometryColumn: probeGeometryColumn,
+    // Every district of a county-dispatched layer, fetched through that
+    // layer's OWN per-county loaders and named by its own hover identity —
+    // what scripts/build_district_search.py reads to index "Lake County Board
+    // District 3" without re-implementing ~60 county fetches. Settles every
+    // county, failed ones included (ok:false), so a build can refuse a partial
+    // index rather than silently ship one.
+    layerDistricts: function (id) {
+      var mod = getLayerById(id);
+      if (!mod || !mod.countyEntries) return Promise.reject(new Error(id + " is not a county-dispatched layer"));
+      return Promise.all(mod.countyEntries.map(function (entry) {
+        return Promise.resolve().then(function () { return entry.loadGeometry(); }).then(function (geojson) {
+          return {
+            key: entry.key,
+            ok: true,
+            features: (geojson.features || []).map(function (f) {
+              var wrapped = { type: "Feature", geometry: f.geometry, properties: f.properties, dxCounty: entry.key };
+              return { value: hoverValue(mod, wrapped), geometry: f.geometry };
+            })
+          };
+        }, function (err) {
+          return { key: entry.key, ok: false, error: String(err && err.message || err) };
+        });
+      }));
+    },
     cleanPoiAddress: cleanPoiAddress, // exposed so the smoke test can regression-guard the office-pin address cleaner (a recurring break point) without any network call
     basemap: function () { return { kind: districtryTileKind, vector: baseIsVector }; } // which basemap kind is live + which theme style it shows — the vector canvas has no tile <img> whose src a test could read
   };

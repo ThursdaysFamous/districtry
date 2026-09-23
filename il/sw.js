@@ -43,7 +43,7 @@
 // refreshed per election.)
 /* ==== TEMPLATE:END sw-version-history ==== */
 /* ==== GENERATED:BEGIN sw-metro-config ==== */
-const CACHE_NAME = "districtry-il-shell-v33";
+const CACHE_NAME = "districtry-il-shell-v34";
 
 const SHELL_URLS = [
   "./",

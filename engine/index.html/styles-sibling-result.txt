@@ -13,3 +13,6 @@
   /* a district found by name ("33rd ward"): the district first, then the
      layer it belongs to, muted so the name reads first */
   .district-result-hint { display: block; font-size: 12px; color: var(--muted, #6b7280); margin-top: 1px; }
+  /* "Lake County Board District …  Type its number: 1–19" — what to type
+     next, before a number is typed. Not a button: it cannot be picked. */
+  #geocode-results li.district-hint { padding: 9px 8px; font-size: 13.5px; color: var(--ink); cursor: default; }
