@@ -39,6 +39,64 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-23. Adam asked me to fix the school board one too. Following it to
+the source found the seat is not vacant — #1127.**
+
+`school-board-members.json` mapped district 17 to the bare string `VACANT`, the
+third case of the shape #1125 fixed. **The Chicago Board of Education's own
+member index names its VICE PRESIDENT in that seat**, Dr. Angel L. Velez, and
+the file was wrong about a second one: district 20 named Olga Bautista, who the
+Board's own news of 4 September says resigned in March and was succeeded by
+Connie L. Anderson on 27 August. District 7 misspelled Karen Zaccor.
+
+**The record said the drift was unavoidable and that claim was the defect.**
+`sources.html` and the worksheet both said the roster is hand-curated "because
+no machine-readable roster is published for this board". `cpsboe.org/about/bios`
+publishes all 21 seats as an `<ol class="bios">` — `.name`, `.title` and
+`.district` spans per member, each linked to a bio page carrying the same three
+plus a `cps.edu` address. Nothing here had looked since the layer shipped.
+
+**So the fix is a pipeline, not a corrected value.** Scraper, builder and a
+weekly job on the pattern every other roster uses. The join is read off the
+shipped geometry's own sub-district label, because the two publishers number the
+same seats differently — the boundary 1..20, the Board 1A..10B — and a table
+written down here would outlive a re-districting.
+
+**ABSENCE IS NOT VACANCY, and the two sources are why that is a guard rather
+than a comment.** CPS's own page listed twenty of twenty-one seats the same day,
+with no row for District 10B at all — the seat Anderson holds. A district the
+Board's index does not carry FAILS the build; only a seat the Board itself
+prints as empty becomes `{vacant: true}`, on #1125's shared `is_vacancy_marker`.
+That vacancy carries no role, unlike CCPSA's: there a role is the seat's
+committee assignment, here it is an office the members elect one of their own
+to, and an empty seat cannot hold the vice presidency.
+
+**Four guards, each negative-tested to exit 1** — the two witnesses disagreeing,
+a district named by nobody, a telephone number where a name goes, and a printed
+vacancy shipping as a seat. The index is one block of repeating markup, so a
+pattern that reads it wrongly reads all twenty-one wrongly and every count still
+passes; that is what the per-member bio fetch buys.
+
+**The card gained what the card order asks and it never had**: the Board's own
+office from its published hCard, and its President in a `Citywide` section on
+every card — he holds no district, and the Board says so with an EMPTY district
+span rather than no span. It also stopped reading "Sub-district **District** 9a",
+which it had done since the layer shipped.
+
+**What I did not fix, measured rather than implied.**
+`validate_officeholder_names.py` examines **1 of the 20** records in this file —
+the Vice President, admitted only because his `role` trips the first shape arm.
+The other nineteen are the flat-keyed blind class that gate's own docstring
+already records, and the route out it names is a declared table of person-bearing
+paths, not a wider predicate. What changed is that all twenty now go through
+`why_not_a_name()` at WRITE time, weekly — the check a hand-curated file could
+never have.
+
+**One line for the manager**: the reader-facing half of this is that a person in
+sub-district 9a has been told their seat is empty while the Board's Vice
+President holds it, and a person in 10b has been given a member who left in
+March. Both are fixed in #1127, which is open.
+
 **2026-09-23. Adam took the VACANCY_SENTINELS question — #1125 fixes Logan and
 CCPSA both, and the gate now refuses the word.**
 
