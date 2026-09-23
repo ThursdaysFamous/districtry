@@ -6224,7 +6224,12 @@ function initIowaExplorer() {
       btn.addEventListener("click", function () {
         clearTimeout(debounceTimer);
         if (inFlightController) inFlightController.abort();
-        trackEvent("district-search");
+        // Counted in GoatCounter by LAYER ("district-search/ward"), the shape
+        // layer/<id> and compare/<id> already use, so the traffic report can
+        // say which layers people search by name. Never the district itself:
+        // "Ward 33" says where a reader lives more precisely than the
+        // two-decimal rounding every point event is held to.
+        trackEvent("district-search/" + hit.layer);
         var box = document.getElementById("toggle-" + hit.layer);
         if (box && !box.checked) box.click(); // a real click, so the layer's handlers run
         setSelectedPoint(hit.coords[1], hit.coords[0], { skipPan: true });

@@ -284,15 +284,16 @@ def measure_address_list(src, name):
 # two. `shareCopyButton` calls `trackEvent` with ONE argument, so these three
 # send a name and nothing else. The text a reader copies contains their point;
 # the event recording that they copied it does not.
-# `district-search` joined on 2026-09-23 with searching districts by name
-# ("33rd ward"). Its call site is shared engine code, so every app carries it
-# and the parity gate holds — but only an app that DECLARES a district index
-# (DISTRICT_SEARCH_URL, the worksheet's `district_search` key) can ever reach
-# it, so the sentence names those apps, measured off each app's own file,
-# rather than claiming the event for apps that cannot send it. It sends a name
-# and nothing else: not the text typed, not the district chosen.
+# `district-search/` joined on 2026-09-23 with searching districts by name
+# ("33rd ward"). It carries the LAYER searched ("district-search/ward") and
+# nothing else: not the text typed, not the district chosen. Its call site is
+# shared engine code, so every app carries it and the parity gate holds — but
+# only an app that DECLARES a district index (DISTRICT_SEARCH_URL, the
+# worksheet's `district_search` key) can ever reach it, so the sentence names
+# those apps, measured off each app's own file, rather than claiming the
+# event for apps that cannot send it.
 EXPECTED_EVENTS = ["address-search", "compare-stop", "compare/",
-                   "copy-coordinates", "district-search", "embed-iframe", "geolocate",
+                   "copy-coordinates", "district-search/", "embed-iframe", "geolocate",
                    "geolocate-success", "layer/", "metro-portal-go/", "select",
                    "share-native", "share-open", "share-permalink"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select"]
@@ -302,12 +303,12 @@ def event_phrase(event, apps):
     """One event as the page names it. `district-search` is qualified with the
     apps that can actually send it, because the list is introduced as what
     EACH app sends and an app with no district index never sends it."""
-    if event != "district-search":
+    if event != "district-search/":
         return event
     mapped = [a for a in apps if a.get("tag")]
     senders = [a["name"] for a in mapped if a.get("district_search")]
     if not senders:
-        fail("the event list names district-search but no app declares a district "
+        fail("the event list names district-search/ but no app declares a district "
              "index (DISTRICT_SEARCH_URL) — drop it from EXPECTED_EVENTS or restore the index")
     if len(senders) == len(mapped):
         return event

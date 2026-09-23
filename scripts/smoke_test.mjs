@@ -507,6 +507,14 @@ try {
         geocoderCalls += 1;
         route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ type: "FeatureCollection", features: [] }) });
       });
+      // GoatCounter is how the feature's use is measured, so the event is part
+      // of what ships. Its script is replaced by a recorder (the real one also
+      // declines to count on localhost), and every count() call is kept.
+      await p.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+      await p.addInitScript(() => {
+        window.__gcEvents = [];
+        window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+      });
     });
     await page
       .waitForFunction(() => [...document.querySelectorAll(".card-id-pill")].some((e) => /District 7\b/.test(e.textContent)),
@@ -517,6 +525,7 @@ try {
       on: !!(document.getElementById("toggle-il-senate") || {}).checked,
       pills: [...document.querySelectorAll(".card-id-pill")].map((e) => e.textContent).filter(Boolean),
       point: window[ns].state.selectedPoint,
+      events: (window.__gcEvents || []).filter((v) => v && v.event).map((v) => v.path),
     }), EXPORTS_NAME);
     check("a district searched by name is selected and its layer turned on",
       /^Selected: State Senate District 7/.test(found.status) && found.on && !!found.point,
@@ -524,6 +533,9 @@ try {
     check("the searched district's card names that district",
       found.pills.some((t) => /District 7\b/.test(t)), JSON.stringify(found.pills));
     check("a district name is never sent to the search geocoder", geocoderCalls === 0, `${geocoderCalls} Photon request(s)`);
+    check("picking a district by name is counted in GoatCounter by layer, once",
+      found.events.filter((e) => /^district-search\//.test(e)).join() === "district-search/il-senate",
+      JSON.stringify(found.events));
     await context.close();
   }
 
