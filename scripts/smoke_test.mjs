@@ -536,6 +536,21 @@ try {
     check("picking a district by name is counted in GoatCounter by layer, once",
       found.events.filter((e) => /^district-search\//.test(e)).join() === "district-search/il-senate",
       JSON.stringify(found.events));
+        // A COUNTY-dispatched layer needs the county in the query: every county
+    // has a District 3. De Witt's lettered districts ship in data/app, so this
+    // needs no county server; the bare phrase must match NO district row.
+    const byCounty = async (q) => {
+      await page.fill("#geocode-input", q);
+      await page.press("#geocode-input", "Enter");
+      await page.waitForTimeout(600);
+      return page.evaluate(() => [...document.querySelectorAll("#geocode-results li.district-result")]
+        .map((li) => li.querySelector("button").firstChild.textContent.trim()));
+    };
+    const dewitt = await byCounty("DeWitt County Board District A");
+    const bare = await byCounty("county board district 3");
+    check("a county board district is found by county and letter",
+      dewitt.join() === "De Witt County Board District A", JSON.stringify(dewitt));
+    check("a county board district without its county matches nothing", bare.length === 0, JSON.stringify(bare));
     await context.close();
   }
 

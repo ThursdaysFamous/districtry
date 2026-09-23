@@ -6300,7 +6300,12 @@ function initNycExplorer() {
    *   - the start of one, for type-ahead ("33rd wa"), or
    *   - its last two or more words ("senate district 7").
    * A bare "district 7" matches nothing: every layer here has a District 7,
-   * and picking one would be a guess.
+   * and picking one would be a guess. The same reason makes a COUNTY-
+   * dispatched layer ("where_per_district", the county board) match only
+   * when the query names the county: "Lake County Board District 3" or
+   * "Lake Board District 3", never "county board district 3", which is
+   * every county's. A lettered district ("Clay County Board District C")
+   * is read from the one letter that follows "district".
    *
    * A complete name (the phrase, or its last two or more words) answers
    * alone and nothing is sent to the geocoder. A type-ahead prefix is shown
@@ -6342,6 +6347,14 @@ function initNycExplorer() {
       }
       words.push(t);
     }
+    // no number: a lettered district is the single letter after "district"
+    if (num === null) {
+      var at = words.indexOf("district");
+      if (at >= 0 && at + 1 < words.length && /^[a-z]$/.test(words[at + 1])) {
+        num = words[at + 1].toUpperCase();
+        words.splice(at + 1, 1);
+      }
+    }
     if (num === null || num === "0" || !words.length) return null;
     return { num: num, words: words.join(" ") };
   }
@@ -6361,25 +6374,45 @@ function initNycExplorer() {
     return loadDistrictIndex().then(function (index) {
       var hits = [], exact = false;
       if (!index || !index.layers || !index.features) return { hits: hits, exact: exact };
+      // the query's words with one place name taken out, or null when the
+      // place is not in them ("lake" out of "lake county board district")
+      // A two-word name is also tried run together, since "DeWitt" is how
+      // many readers type De Witt.
+      var without = function (words, place) {
+        var w = " " + words + " ", name = normalizeDistrictText(place);
+        var forms = [name, name.replace(/ /g, "")];
+        for (var k = 0; k < forms.length; k++) {
+          var p = " " + forms[k] + " ";
+          if (forms[k] && w.indexOf(p) >= 0) return w.replace(p, " ").trim();
+        }
+        return null;
+      };
+      var bestScore = function (words, phrases) {
+        var score = 0;
+        if (words) (phrases || []).forEach(function (p) { score = Math.max(score, districtPhraseScore(words, p)); });
+        return score;
+      };
       Object.keys(index.layers).forEach(function (layerId) {
         var spec = index.layers[layerId];
-        // a layer that belongs to one city ("where": "Chicago") also matches
-        // with that city named in the query: "Chicago Ward 33"
-        var words = parsed.words;
-        if (spec.where) {
-          var place = " " + normalizeDistrictText(spec.where) + " ";
-          words = (" " + words + " ").replace(place, " ").trim();
-        }
-        var score = 0;
-        if (words) (spec.phrases || []).forEach(function (p) { score = Math.max(score, districtPhraseScore(words, p)); });
-        if (!score) return;
         for (var i = 0; i < index.features.length; i++) {
           var f = index.features[i], props = f.properties || {};
-          if (props.layer === layerId && String(props.id) === parsed.num) {
-            hits.push({ layer: layerId, label: spec.where ? spec.label + " \u00b7 " + spec.where : spec.label, name: props.name, bbox: props.bbox, coords: f.geometry.coordinates, score: score });
-            if (score === 2) exact = true;
-            break;
+          if (props.layer !== layerId || String(props.id) !== parsed.num) continue;
+          var score;
+          if (spec.where_per_district) {
+            // the county is required: every county has this district number
+            var rest = without(parsed.words, props.where || "");
+            if (rest === null) continue;
+            score = bestScore(rest, spec.phrases);
+          } else {
+            // a layer that belongs to one city ("where": "Chicago") also
+            // matches with that city named in the query: "Chicago Ward 33"
+            var words = spec.where ? (without(parsed.words, spec.where) || parsed.words) : parsed.words;
+            score = bestScore(words, spec.phrases);
           }
+          if (!score) continue;
+          hits.push({ layer: layerId, label: spec.where ? spec.label + " \u00b7 " + spec.where : spec.label, name: props.name, bbox: props.bbox, coords: f.geometry.coordinates, score: score });
+          if (score === 2) exact = true;
+          if (!spec.where_per_district) break; // one district per number in a single-numbering layer
         }
       });
       hits.sort(function (a, b) { return b.score - a.score; });
@@ -12354,6 +12387,30 @@ function initNycExplorer() {
     pointInGeometry: pointInGeometry,
     fetchJSONWithRetry: fetchJSONWithRetry,
     probeGeometryColumn: probeGeometryColumn,
+    // Every district of a county-dispatched layer, fetched through that
+    // layer's OWN per-county loaders and named by its own hover identity —
+    // what scripts/build_district_search.py reads to index "Lake County Board
+    // District 3" without re-implementing ~60 county fetches. Settles every
+    // county, failed ones included (ok:false), so a build can refuse a partial
+    // index rather than silently ship one.
+    layerDistricts: function (id) {
+      var mod = getLayerById(id);
+      if (!mod || !mod.countyEntries) return Promise.reject(new Error(id + " is not a county-dispatched layer"));
+      return Promise.all(mod.countyEntries.map(function (entry) {
+        return Promise.resolve().then(function () { return entry.loadGeometry(); }).then(function (geojson) {
+          return {
+            key: entry.key,
+            ok: true,
+            features: (geojson.features || []).map(function (f) {
+              var wrapped = { type: "Feature", geometry: f.geometry, properties: f.properties, dxCounty: entry.key };
+              return { value: hoverValue(mod, wrapped), geometry: f.geometry };
+            })
+          };
+        }, function (err) {
+          return { key: entry.key, ok: false, error: String(err && err.message || err) };
+        });
+      }));
+    },
     cleanPoiAddress: cleanPoiAddress, // exposed so the smoke test can regression-guard the office-pin address cleaner (a recurring break point) without any network call
     basemap: function () { return { kind: districtryTileKind, vector: baseIsVector }; } // which basemap kind is live + which theme style it shows — the vector canvas has no tile <img> whose src a test could read
   };

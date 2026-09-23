@@ -21,6 +21,16 @@ TWO HALVES, TWO OWNERS.
 The variants a reader types ("ward #33", "33rd ward") are derived by the app
 from the phrase, not stored, so there is one rule for all of them.
 
+COUNTY-DISPATCHED LAYERS ("Lake County Board District 3"). Illinois's county
+board layer is ~60 counties, most fetched live from each county's own GIS by
+loader code that exists only in il/index.html. Those districts are read
+THROUGH THE APP: scripts/dump_layer_districts.mjs boots it headless and asks
+window.ChiExplorer.layerDistricts for every county's features and the hover
+identity the map prints for each. Every county has a District 3, so each of
+these districts carries its county ("where": "Lake County") and a query must
+name it. A county whose districts are named rather than numbered or lettered
+(Menard's "Rock Creek") is recorded in SKIP and not indexed.
+
 BUILD vs --check.
   Building needs the network (two layers are loaded live by the app: Chicago's
   wards from the City's portal and CPD's police districts from its ArcGIS
@@ -39,8 +49,14 @@ BUILD vs --check.
       built from — so a source swap in index.html fails here instead of
       leaving the index describing a map the app no longer draws.
 
+    - for a county-dispatched layer, every county the index names is one the
+      app still dispatches (a county dropped from the map must not stay
+      searchable); a county the app dispatches and the index lacks is PRINTED,
+      not failed, because counties join weekly and a rebuild needs a browser.
+
 Usage:
-  python3 scripts/build_district_search.py            # rebuild (network, shapely)
+  python3 scripts/build_district_search.py            # rebuild (network, shapely, playwright)
+  python3 scripts/build_district_search.py --county-dump dump.json   # reuse a dump
   python3 scripts/build_district_search.py --check    # CI gate (offline, stdlib)
 """
 import argparse
@@ -48,8 +64,16 @@ import json
 import os
 import re
 import sys
+import subprocess
+import tempfile
+import threading
 import urllib.request
 from datetime import date
+from functools import partial
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from build_county_status import ALL_COUNTIES, slug_of  # noqa: E402  (the county page slugs are the app's dispatch keys)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INSTANCE = os.path.join(ROOT, "il")
@@ -92,7 +116,29 @@ SOURCES = {
     "il-house": {"file": "il-house-districts.json", "key": lambda p: _num(p.get("BASENAME"))},
     "il-supreme-court": {"file": "il-supreme-court-districts.json", "key": lambda p: _num(p.get("DISTRICTN"))},
     "ccbr": {"file": "ccbr-districts.json", "key": lambda p: _num(p.get("DISTRICTN"))},
+    # Read through the app's own loaders (scripts/dump_layer_districts.mjs).
+    "county-board": {
+        "app_layer": True,
+        "skip": {
+            "menard": "its five commissioner districts are NAMED ('Rock Creek', "
+                      "'South Petersburg'), not numbered or lettered, so 'District 3' "
+                      "cannot name one; indexing them needs a name-search rule first",
+        },
+    },
 }
+
+COUNTY_NAME = {slug_of(n): n for n, _ in ALL_COUNTIES}
+
+
+def district_token(value):
+    """A county district's hover identity as the id a reader types: '3' and
+    'District 3' -> '3', 'c' -> 'C'. None when it is neither (a named district)."""
+    v = re.sub(r"^\s*district\s+", "", str(value or ""), flags=re.I).strip()
+    if v.isdigit() and int(v) > 0:
+        return str(int(v))
+    if re.fullmatch(r"[A-Za-z]", v):
+        return v.upper()
+    return None
 
 DIGITS = 5            # ~1 m; the point only has to land inside a district
 BBOX_TOLERANCE = 2e-5  # rounding slack when --check re-derives an extent
@@ -131,7 +177,7 @@ def phrase_layers():
             problems.append("%s: named twice in the phrase file" % lid)
             continue
         phrases = []
-        for p in (name, labels[lid]):
+        for p in [name, labels[lid]] + list(entry.get("aliases") or []):
             n = normalize_phrase(p)
             if n and n not in phrases:
                 phrases.append(n)
@@ -140,6 +186,10 @@ def phrase_layers():
         # Chicago's Ward 3 never reads as a suburb's Ward 3
         if entry.get("where"):
             out[lid]["where"] = entry["where"].strip()
+        # a county-dispatched layer: every district carries its own county,
+        # which the query must name ("Lake County Board District 3")
+        if SOURCES.get(lid, {}).get("app_layer"):
+            out[lid]["where_per_district"] = True
     # one phrase must never name two layers, or "house district 5" would be a
     # coin toss rather than a list — the app shows every layer that matches,
     # but a phrase OWNED twice is a phrase file mistake
@@ -244,13 +294,94 @@ def load_source(lid):
     return esri_to_features(data) if spec["format"] == "esri" else data["features"]
 
 
-def build():
+def run_dump(layer_id):
+    """Serve the repo on a free port, boot the app headless and dump the layer's
+    districts through its own loaders (scripts/dump_layer_districts.mjs)."""
+    handler = partial(SimpleHTTPRequestHandler, directory=ROOT)
+    handler.log_message = lambda *a, **k: None
+    server = ThreadingHTTPServer(("127.0.0.1", 0), handler)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    try:
+        with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as tmp:
+            out = tmp.name
+        env = dict(os.environ, BASE_URL="http://127.0.0.1:%d/il/" % server.server_address[1])
+        subprocess.run(["node", os.path.join(ROOT, "scripts", "dump_layer_districts.mjs"), layer_id, out],
+                       check=True, env=env, cwd=ROOT)
+        return load_json(out)
+    finally:
+        server.shutdown()
+
+
+def app_layer_districts(lid, dump):
+    """{(county slug, district id): [rings]} for a county-dispatched layer,
+    plus {slug: count} and the recorded skips. REFUSES a dump in which any
+    county failed to load: a partial index would quietly drop counties."""
+    spec = SOURCES[lid]
+    if dump.get("layer") != lid:
+        raise SystemExit("build-district-search: the dump is of %r, not %r" % (dump.get("layer"), lid))
+    failed = [c["key"] for c in dump["counties"] if not c.get("ok")]
+    if failed:
+        raise SystemExit("build-district-search: %s — %d county source(s) failed to load (%s); refusing a "
+                         "partial index. Re-run when they answer." % (lid, len(failed), ", ".join(failed)))
+    groups, counts, skipped = {}, {}, {}
+    for county in dump["counties"]:
+        key = county["key"]
+        if key in spec["skip"]:
+            skipped[key] = spec["skip"][key]
+            continue
+        if key not in COUNTY_NAME:
+            raise SystemExit("build-district-search: %s entry %r is not an Illinois county slug" % (lid, key))
+        ids = [district_token(f["value"]) for f in county["features"]]
+        if None in ids:
+            bad = sorted({str(f["value"]) for f in county["features"] if district_token(f["value"]) is None})
+            raise SystemExit("build-district-search: %s %s has districts that are neither numbered nor "
+                             "lettered (%s) — index them by a new rule or record the county in SKIP"
+                             % (lid, key, ", ".join(bad[:5])))
+        for d, f in zip(ids, county["features"]):
+            groups.setdefault((key, d), []).extend(rings_of(f["geometry"]))
+        counts[key] = len(set(ids))
+    for key in spec["skip"]:
+        if key not in skipped:
+            raise SystemExit("build-district-search: SKIP names %r, which the app no longer dispatches — "
+                             "drop the entry" % key)
+    return groups, counts, skipped
+
+
+def district_name(layer_name, d, where=None):
+    """'Ward 33'; with a county, '<County> <layer name> <id>' — 'Lake' +
+    'County Board District' + '3' is 'Lake County Board District 3'."""
+    return "%s %s %s" % (where, layer_name, d) if where else "%s %s" % (layer_name, d)
+
+
+def district_sort_key(d):
+    return (0, int(d), "") if d.isdigit() else (1, 0, d)
+
+
+def build(county_dump=None):
     layers, problems = phrase_layers()
     if problems:
         raise SystemExit("build-district-search: " + "; ".join(problems))
     features, live = [], {}
     for lid in layers:
         spec = SOURCES[lid]
+        if spec.get("app_layer"):
+            dump = load_json(county_dump) if county_dump else run_dump(lid)
+            groups, counts, skipped = app_layer_districts(lid, dump)
+            for (key, d) in sorted(groups, key=lambda kd: (kd[0], district_sort_key(kd[1]))):
+                rings = groups[(key, d)]
+                where = COUNTY_NAME[key]
+                features.append({
+                    "type": "Feature",
+                    "geometry": {"type": "Point", "coordinates": interior_point(rings)},
+                    "properties": {"layer": lid, "id": d, "county": key, "where": where,
+                                   "name": district_name(layers[lid]["name"], d, where),
+                                   "bbox": [round(v, DIGITS) for v in bbox_of(rings)]},
+                })
+            live[lid] = {"source": "the app's own loaders (scripts/dump_layer_districts.mjs)",
+                         "fetched": date.today().isoformat(), "counties": counts, "skipped": skipped}
+            print("build-district-search: %-17s %3d district(s) in %d count%s (live, via the app); skipped %s"
+                  % (lid, len(groups), len(counts), "y" if len(counts) == 1 else "ies", ", ".join(skipped) or "none"))
+            continue
         groups = group_districts(load_source(lid), spec["key"])
         expect = spec.get("ids")
         if expect and sorted(groups, key=int) != expect:
@@ -267,7 +398,7 @@ def build():
             features.append({
                 "type": "Feature",
                 "geometry": {"type": "Point", "coordinates": interior_point(rings)},
-                "properties": {"layer": lid, "id": d, "name": "%s %s" % (layers[lid]["name"], d), "bbox": bb},
+                "properties": {"layer": lid, "id": d, "name": district_name(layers[lid]["name"], d), "bbox": bb},
             })
         print("build-district-search: %-17s %3d district(s)%s" % (lid, len(groups), " (live)" if lid in live else ""))
     return {
@@ -280,12 +411,59 @@ def build():
 
 
 def write(doc):
+    """ONE DISTRICT PER LINE: compact on the wire (the app fetches this on a
+    reader's first search) while a rebuild's diff still reads district by
+    district. Everything but `features` is written indented."""
+    head = {k: v for k, v in doc.items() if k != "features"}
+    text = json.dumps(head, indent=1, ensure_ascii=False)
+    lines = [json.dumps(f, ensure_ascii=False, separators=(",", ":")) for f in doc["features"]]
+    body = text[:-2] + ',\n "features": [\n' + ",\n".join(lines) + "\n ]\n}\n"
+    json.loads(body)  # the splice above must still be JSON
     with open(OUT, "w", encoding="utf-8") as fh:
-        json.dump(doc, fh, indent=1, ensure_ascii=False)
-        fh.write("\n")
+        fh.write(body)
 
 
 # ---------- check (offline, stdlib) ----------
+def dispatch_keys(lid, index_html):
+    """The entry keys of a county-dispatched layer, read from its own
+    registerCountyLayer block in il/index.html (the block runs to the next one)."""
+    i = index_html.find('id: "%s"' % lid)
+    if i < 0:
+        return None
+    j = index_html.find("registerCountyLayer({", i)
+    return set(re.findall(r'\bkey:\s*"([a-z-]+)"', index_html[i:j if j > 0 else len(index_html)]))
+
+
+def check_app_layer(lid, feats, doc, index_html):
+    fails = []
+    src = SOURCES[lid]
+    keys = dispatch_keys(lid, index_html)
+    if not keys:
+        return ["%s: no registerCountyLayer block found in il/index.html" % lid]
+    rec = (doc.get("live") or {}).get(lid) or {}
+    indexed = {f["properties"].get("county") for f in feats}
+    gone = sorted(indexed - keys)
+    if gone:
+        fails.append("%s: the index still names %s, which the app no longer dispatches — rebuild, or a "
+                     "reader is sent to a district the map does not draw" % (lid, ", ".join(gone)))
+    for key in src["skip"]:
+        if key not in keys:
+            fails.append("%s: SKIP names %r, which the app no longer dispatches" % (lid, key))
+        if key in indexed:
+            fails.append("%s: %r is both skipped and indexed" % (lid, key))
+    counts = {}
+    for f in feats:
+        counts[f["properties"]["county"]] = counts.get(f["properties"]["county"], 0) + 1
+    if counts != rec.get("counties"):
+        fails.append("%s: the per-county district counts disagree with the ones recorded at build" % lid)
+    missing = sorted(keys - indexed - set(src["skip"]))
+    if missing:
+        # NOT a failure: counties join weekly and a rebuild needs a browser.
+        print("build-district-search: NOTE — %s: %d dispatched count%s not yet searchable by name (%s); "
+              "run the builder to add them" % (lid, len(missing), "y" if len(missing) == 1 else "ies", ", ".join(missing)))
+    return fails
+
+
 def check():
     fails = []
     if not os.path.exists(OUT):
@@ -306,12 +484,21 @@ def check():
     for lid, spec in layers.items():
         src = SOURCES[lid]
         feats = by_layer.get(lid, [])
-        ids = [f["properties"]["id"] for f in feats]
-        if len(set(ids)) != len(ids):
+        # a district is unique per layer, or per county in a county-dispatched one
+        keyed = [(f["properties"].get("county"), f["properties"]["id"]) for f in feats]
+        if len(set(keyed)) != len(keyed):
             fails.append("%s: a district is listed twice" % lid)
+        ids = [f["properties"]["id"] for f in feats]
         for f in feats:
-            if f["properties"].get("name") != "%s %s" % (spec["name"], f["properties"]["id"]):
-                fails.append("%s %s: name %r does not follow the phrase file" % (lid, f["properties"]["id"], f["properties"].get("name")))
+            p = f["properties"]
+            where = p.get("where") if src.get("app_layer") else None
+            if src.get("app_layer") and where != COUNTY_NAME.get(p.get("county")):
+                fails.append("%s %s: where %r is not that county's name" % (lid, p.get("county"), where))
+            if p.get("name") != district_name(spec["name"], p["id"], where):
+                fails.append("%s %s: name %r does not follow the phrase file" % (lid, p["id"], p.get("name")))
+        if src.get("app_layer"):
+            fails += check_app_layer(lid, feats, doc, index_html)
+            continue
         if "file" in src:
             if src["file"] not in index_html:
                 fails.append("%s: il/index.html no longer loads %s" % (lid, src["file"]))
@@ -347,7 +534,9 @@ def check():
         for f in fails:
             print("  - " + f)
         return 1
-    live = ", ".join("%s (%d, fetched %s)" % (k, len(v["ids"]), v["fetched"]) for k, v in sorted((doc.get("live") or {}).items()))
+    live = ", ".join("%s (%d%s, fetched %s)" % (k, len(v["ids"]) if "ids" in v else sum(v["counties"].values()),
+                                                "" if "ids" in v else " in %d counties" % len(v["counties"]), v["fetched"])
+                     for k, v in sorted((doc.get("live") or {}).items()))
     print("build-district-search: OK — %d district(s) across %d layer(s); %d re-derived from shipped boundaries "
           "(inside and extent verified); live layers complete: %s" % (len(doc["features"]), len(layers), checked, live))
     return 0
@@ -356,10 +545,11 @@ def check():
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--check", action="store_true", help="offline CI gate; never writes")
+    ap.add_argument("--county-dump", help="a dump_layer_districts.mjs output to use instead of running it")
     args = ap.parse_args()
     if args.check:
         sys.exit(check())
-    doc = build()
+    doc = build(args.county_dump)
     write(doc)
     print("build-district-search: wrote %s (%d districts)" % (os.path.relpath(OUT, ROOT), len(doc["features"])))
     sys.exit(check())

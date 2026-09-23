@@ -148,6 +148,10 @@
       id: opts.id,
       group: opts.group,
       label: opts.label,
+      // the per-county table, read by build tooling (EXPLORER_EXPORTS'
+      // layerDistricts) so an index of this layer's districts is built from
+      // the same loaders the map draws with rather than a second copy of them
+      countyEntries: entries,
       // OR of the per-county coverage tests (each a cached same-origin outline
       // check), asked in parallel. A throwing test cannot decide the answer for
       // the others; if none matched and one threw, the error propagates so the
