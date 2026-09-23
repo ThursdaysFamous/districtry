@@ -1066,6 +1066,17 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/validate_geometry_measure.py
 
+      # Illinois's Census 2020 block populations, one file per county, which a
+      # comparison of districts sums to say how many PEOPLE two districts
+      # share. Each file's totals, count and extent must match index.json and
+      # the state must sum to its 2020 count; then the engine's own
+      # measurePointWeight sums the points inside every shipped congressional
+      # and legislative district, and each map must partition the state
+      # exactly with every district where its plan put it. Offline.
+      - name: The block populations still sum to each district's census count
+        if: ${{ !cancelled() }}
+        run: python3 scripts/build_block_population.py --check
+
       # Nine Illinois data files carry a top-level `generated` stamp, so each
       # weekly workflow opens a bot PR whether or not an officeholder moved.
       # The stamp is right and stays; what the nine builders now print beside it
