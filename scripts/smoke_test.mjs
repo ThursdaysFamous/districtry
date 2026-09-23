@@ -751,7 +751,15 @@ try {
       check("the open report puts stats=1 in the link, and closing it takes it out",
         /[#&]pin=congress&stats=1(&|$)/.test(openHash) && !/stats=1/.test(closedHash), `${openHash} / ${closedHash}`);
       const again = await browser.newContext({ serviceWorkers: "block" });
+      // The Congress card's roster is held back 4 s so the boundaries always
+      // arrive first: the report must wait for the card, whose wording names
+      // the district ("IL-7"), rather than open on the bare number ("7"). The
+      // first deploy of this restore lost that race on CI's timing alone.
       const reopened = await booted(again, `${BASE}${openHash}`, async (p) => {
+        await p.route("**/congress-roster.json", async (route) => {
+          await new Promise((res) => setTimeout(res, 4000));
+          await route.continue();
+        });
         await p.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
         await p.addInitScript(() => {
           window.__gcEvents = [];

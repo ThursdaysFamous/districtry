@@ -13128,14 +13128,24 @@ function initNycExplorer() {
   }
   // Every other switched-on polygon layer has its boundaries, is out of
   // coverage here, or has failed to load them (overlayLoaded goes back to
-  // false) — so the report opens with every row it will ever have.
+  // false) — so the report opens with every row it will ever have. AND every
+  // switched-on polygon layer's CARD, the pinned one's included, has finished
+  // loading: the report names each district in its card's own wording
+  // (relLabelWrapper reads the card's pill, and only once that card has a
+  // result for this point), so a report opened while a card still spins says
+  // "7" where the card says "IL-7". Measured on the first deploy of this
+  // restore, where the boundaries won that race. A result, an empty card and
+  // an error all replace the loading row, so a failed card does not hold the
+  // report back; the 20 s deadline covers one that never answers.
   function statsLayersSettled() {
     for (var i = 0; i < layers.length; i++) {
       var mod = layers[i];
-      if (mod.id === pinnedParentId || !state.layersOn[mod.id]) continue;
+      if (!state.layersOn[mod.id]) continue;
       if (!mod.overlay || !mod.overlay.style) continue;
       var rt = layerRuntime[mod.id];
-      if (!rt || rt.relevant === false || rt.geojson) continue;
+      if (!rt || rt.relevant === false) continue;
+      if (rt.cardBody && rt.cardBody.querySelector(".loading-row")) return false; // card still loading
+      if (mod.id === pinnedParentId || rt.geojson) continue;
       if (rt.overlayLoaded) return false; // still downloading
     }
     return true;
