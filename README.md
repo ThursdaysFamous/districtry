@@ -1,7 +1,7 @@
 <!-- ==== GENERATED:BEGIN metro-header ==== -->
 # districtry
 
-**Click the map for every district you're in, and who represents you.**
+**Click the map for every district you are in, and who represents you.**
 <!-- ==== GENERATED:END metro-header ==== -->
 
 Pick a point on the map. The app looks it up against every civic-district boundary you've toggled on — ward, county board, congressional, police, school, and dozens more — and builds a "civic profile" for that exact spot, naming the district and, wherever a verifiable source exists, the person who represents it. No login, no build step, no server: it's a single HTML file with an inline script, deployed as a static site.
@@ -25,7 +25,7 @@ They share one engine — the metro-agnostic core, layer-registration framework,
 
 ## What it answers
 
-**40 layers** ship in Illinois today, split political (11) · public safety (7) · schools (9) · geography (13). Layers are location-aware: Chicago-only layers hide once you're outside the city, county-scoped layers only appear in counties that publish the underlying data, and the statewide layers (county, township, municipality, school district, ZIP) work anywhere in Illinois.
+**41 layers** ship in Illinois today, split political (11) · public safety (7) · schools (9) · geography (13). Layers are location-aware: Chicago-only layers hide once you're outside the city, county-scoped layers only appear in counties that publish the underlying data, and the statewide layers (county, township, municipality, school district, ZIP) work anywhere in Illinois.
 
 | Group | Layer | What you get |
 |---|---|---|
