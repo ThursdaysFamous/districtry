@@ -35,6 +35,43 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-23, the scope line.** PR #1107, open. Adam answered open question 1
+with the middle option: **`statewide, 5 boroughs in depth`**. `metros.json` is
+the one place that fact lives, so the change is one key and a regenerate —
+**seven** generators read it (`build_about_page`, `build_concept_pages`,
+`build_coverage_map`, `build_landing_page`, `build_legislator_pages`,
+`build_llms_txt`, `build_redirect_stubs`), measured rather than assumed, and
+each output was checked to carry the new string rather than only to regenerate
+clean.
+
+**The coverage map would have shipped "statewide, statewide, 5 boroughs in
+depth", and no diff would have shown it.** `build_coverage_map.py` marks the
+dashed statewide wash by PREPENDING `"statewide, "` to the scope **at runtime**,
+for any area carrying a state outline — which New York does. The prefix is
+assembled in the page's own JavaScript and never written into the data the
+generator emits, so the generated file was byte-correct and `--check` passed.
+`legendRow` now takes the prefix only where the scope does not already open
+with the word; `ia` and `mi` ship one tier and correctly still take none.
+
+**The browser gate was reading the legend and not its scope**, which is why it
+was silent too: `landing_test.mjs` took each row's name and `href` and never
+the `.mt` cell, so the one field assembled at runtime was the one field
+unasserted. It now checks that every row ENDS with its own `metros.json` scope
+(the prefix cannot eat or reword it) and that no row says statewide twice.
+Negative-tested by removing the guard, regenerating, and confirming the gate
+fails naming the doubled string — **the `endsWith` half passes on a doubled
+scope**, which is why the second assertion is separate rather than a tightening
+of the first.
+
+**Two things put to Adam in the PR, neither changed on my own initiative.** The
+eight Illinois sibling-link pages render the scope inside a sentence, so they
+now read `The same lookup, statewide, 5 boroughs in depth.` — grammatical, but
+three commas where the siblings get `The same lookup, all 99 counties.` It is
+his chosen phrase, so it is not reworded here. And New York's is now the only
+scope in the fleet that is not a count and the only one with a comma — the
+asymmetry the question itself predicted might read as special pleading, and
+also the reason the doubling surfaced at all.
+
 **2026-09-21, #1071 merged** as `9201574`. Both assigned tasks are now shipped
 and verified on `main`, and this session has nothing queued.
 
@@ -402,8 +439,15 @@ exists**: I probed two guessed DOE paths, both 404, which proves I guessed
 wrong and nothing else. Finding it is the first hour of the job, not a
 precondition someone else should supply.
 
-**1. Is "5 boroughs" still the right scope line for New York?** Not blocking —
-#1042 ships it unchanged, because the plan says it stays until a county joins
+**1. ~~Is "5 boroughs" still the right scope line for New York?~~ ANSWERED
+2026-09-23 by Adam: "statewide, 5 boroughs in depth — update the scope line".**
+Shipped as PR #1107. The middle option, which is the one recommended below.
+What the change found is recorded in Status above; the question and its
+reasoning are left standing rather than deleted, because the answer is only
+legible beside what was asked.
+
+The original question follows. Not blocking —
+#1042 shipped it unchanged, because the plan says it stays until a county joins
 the ring and I would rather raise a disagreement than deviate quietly.
 
 Measured: the landing page now reads **New York · 5 boroughs** beside
