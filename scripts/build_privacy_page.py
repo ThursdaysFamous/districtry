@@ -305,10 +305,18 @@ def measure_address_list(src, name):
 # `compare-stats-reopen/` (a shared link reopened the report, by the pinned
 # layer) and `compare-stats-row/` (a reader opened one row's card, by that
 # ROW's layer) joined with it. Neither carries a district.
+# `more-open` and `more-item/` (the masthead's "More" menu opened, and which
+# item was picked from it: gaps, batch, faq, sources, history, about, theme)
+# and `gaps-open`, `gaps-why/` and `gaps-suggest/` (the data-gaps panel
+# opened, a gap's explanation expanded, its "Suggest a source" link followed,
+# the last two by the gap's record id) joined on 2026-09-23. A gap id names a
+# concept and an area no finer than a county, and the panel lists every gap
+# wherever the reader is, so it says what interested them, not where they are.
 EXPECTED_EVENTS = ["address-search", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
-                   "copy-coordinates", "district-search/", "embed-iframe", "geolocate",
-                   "geolocate-success", "layer/", "metro-portal-go/", "select",
+                   "copy-coordinates", "district-search/", "embed-iframe", "gaps-open",
+                   "gaps-suggest/", "gaps-why/", "geolocate",
+                   "geolocate-success", "layer/", "metro-portal-go/", "more-item/", "more-open", "select",
                    "share-native", "share-open", "share-permalink"]
 EXPECTED_COORD_EVENTS = ["geolocate-success", "select"]
 

@@ -5814,6 +5814,17 @@ function initWisconsinExplorer() {
       moreLabel.className = "gap-more-label";
       moreLabel.textContent = "Why, and what would fix it";
       more.appendChild(moreLabel);
+      // Counted by the GAP (its record id), once per panel render, so the
+      // count says which absences readers want explained. A gap names a
+      // concept and an area no finer than a county, and the panel lists every
+      // gap wherever the reader is, so the id says what interested them, not
+      // where they are.
+      var counted = false;
+      more.addEventListener("toggle", function () {
+        if (!more.open || counted) return;
+        counted = true;
+        trackEvent("gaps-why/" + gap.id);
+      });
       [["Why", gap.why], ["What would fix it", gap.wanted]].forEach(function (pair) {
         if (!pair[1]) return;
         var p = cardEl("p", "gap-detail");
@@ -5830,6 +5841,7 @@ function initWisconsinExplorer() {
       link.target = "_blank";
       link.rel = "noopener";
       link.textContent = "Suggest a source →";
+      link.addEventListener("click", function () { trackEvent("gaps-suggest/" + gap.id); });
       actions.appendChild(link);
       more.appendChild(actions);
       item.appendChild(more);
@@ -5948,6 +5960,7 @@ function initWisconsinExplorer() {
     }
 
     function open() {
+      trackEvent("gaps-open");
       lastFocus = document.activeElement;
       modal.hidden = false;
       render();
@@ -14613,13 +14626,19 @@ function initWisconsinExplorer() {
       panel.hidden = !open;
       btn.setAttribute("aria-expanded", open ? "true" : "false");
       if (open) {
+        trackEvent("more-open");
         var first = panel.querySelector("a, button");
         if (first) first.focus();
       }
     });
-    // a choice made in the menu closes it (a door may open a dialog over it)
+    // a choice made in the menu closes it (a door may open a dialog over it),
+    // and is counted by which item it was — so the count says which folded
+    // links readers still reach for
     panel.addEventListener("click", function (e) {
-      if (e.target.closest && e.target.closest("a, button")) dstMoreClose(false);
+      var item = e.target.closest && e.target.closest("a, button");
+      if (!item) return;
+      trackEvent("more-item/" + dstMoreItemKey(item));
+      dstMoreClose(false);
     });
     wrap.addEventListener("keydown", function (e) {
       if (e.key === "Escape") { dstMoreClose(true); e.stopPropagation(); }
@@ -14631,6 +14650,16 @@ function initWisconsinExplorer() {
       if (!wrap.contains(e.target)) dstMoreClose(false);
     });
     return { wrap: wrap, btn: btn, panel: panel };
+  }
+  // A menu item's name in the event: its id without "-btn" (gaps, batch),
+  // the page a link opens (faq, sources, history, about), or "theme" for the
+  // theme toggle. All of it is this app's own markup, never reader input.
+  function dstMoreItemKey(item) {
+    if (item.closest(".districtry-theme-toggle")) return "theme";
+    if (item.id) return item.id.replace(/-btn$/, "");
+    var href = item.getAttribute("href") || "";
+    var page = href.split(/[?#]/)[0].replace(/\/+$/, "").split("/").pop().replace(/\.html$/, "");
+    return page || "home";
   }
   function dstMastheadWrapped(actions) {
     // wrapped = the links sit below the search rather than beside it
