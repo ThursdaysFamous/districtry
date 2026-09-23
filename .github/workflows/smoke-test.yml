@@ -20,6 +20,25 @@ on:
 env:
   PLAYWRIGHT_VERSION: "1.56.1"
 
+# SUPERSEDED PR RUNS ARE CANCELLED; MAIN'S ARE NOT.
+#
+# Measured on 2026-09-22: runs 2726 (00:39:06) and 2727 (00:42:15) were the
+# same branch three minutes apart, and 2726 ran to completion at 00:52:59 —
+# fourteen minutes of runner time on a commit that was obsolete before it
+# finished, producing a red-or-green signal for code nobody would look at
+# again. With five sessions pushing, that is the largest pure waste in this
+# file.
+#
+# THE GROUP IS PER-PR AND DELIBERATELY NOT PER-BRANCH-ON-MAIN. A push to main
+# is the merge record and the input to the deploy, so cancelling one would
+# lose the only run that says whether what merged is green. Giving those runs
+# a group keyed on the run id rather than the ref keeps them ungrouped in
+# effect — they neither cancel each other nor QUEUE behind each other, which a
+# shared group would silently make them do.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   smoke:
     runs-on: ubuntu-latest
@@ -37,6 +56,26 @@ jobs:
     # its own 15-minute cap, so this ceiling guards the OTHER steps and true
     # catastrophes, not the install's ordinary sick days.
     timeout-minutes: 30
+    # EVERY STEP BUT THE CHECKOUT CARRIES `if: ${{ !cancelled() }}`, so one
+    # red gate no longer hides the other seventy-eight answers.
+    #
+    # The browser step below already aggregates, with its reasoning written
+    # out: `|| status=1` on each instance "so a PR sees every broken instance
+    # in one go rather than one per push." That reasoning was never applied to
+    # the steps AHEAD of it, where it is cheaper and worth more — the whole
+    # static block is 90s (measured 2026-09-22 on run 35805094847), and it
+    # holds 74 independent answers against that step's six. A change breaking
+    # three unrelated gates cost three ~14-minute round trips to find out.
+    #
+    # THE JOB STILL FAILS: `!cancelled()` runs the step, it does not forgive
+    # it, and a job with a failed step is red however many steps followed it.
+    # `always()` is deliberately not used — it would also run these while the
+    # job is being cancelled, which is the one time nobody wants the answer.
+    #
+    # The cost is that a break in an early generation gate now shows up again
+    # in whatever downstream gate reads what it generates. That is the right
+    # trade: several red steps with one root cause are read in a minute, where
+    # one red step and 78 unknowns are another push.
     steps:
       - uses: actions/checkout@v4
         with:
@@ -49,6 +88,7 @@ jobs:
       # Hand-editing a generated region fails here — edit the worksheet and
       # run scripts/generate_metro_files.py instead.
       - name: Generated regions match the worksheet
+        if: ${{ !cancelled() }}
         run: |
           pip install -c scripts/requirements.txt jsonschema
           python3 scripts/generate_metro_files.py --check
@@ -58,6 +98,7 @@ jobs:
       # guidebook without regenerating (or the reverse) fails here rather than
       # shipping a panel that disagrees with the document of record. Stdlib only.
       - name: Coverage gaps match the guidebook
+        if: ${{ !cancelled() }}
         run: |
           python3 scripts/build_coverage_gaps.py --check
           python3 scripts/build_coverage_gaps.py --check --metro wisconsin --out wi/data/app/coverage-gaps.json
@@ -79,6 +120,7 @@ jobs:
       # artifact it guards went a tranche out of date in the first place.
       # Stdlib only, no network.
       - name: The Michigan board probe's artifact still describes the tree
+        if: ${{ !cancelled() }}
         run: python3 mi/scripts/probe_mi_county_boards.py --check
 
       # Adam opened the certified-returns route on 2026-09-22 on ONE condition:
@@ -87,6 +129,7 @@ jobs:
       # record with no `lede`, on the two rosters overlapping, and on the cohort
       # drifting from the counties the gap records name. Offline, stdlib only.
       - name: Michigan's certified-returns roster still says what its names are
+        if: ${{ !cancelled() }}
         run: python3 mi/scripts/build_mi_returns_roster.py --check
 
       # The weekly Detroit roster PR's title and body are written by this
@@ -101,6 +144,7 @@ jobs:
       # what a Wednesday summary quietly leaves out.
       # Stdlib only, no network.
       - name: The Detroit roster summariser still describes that roster
+        if: ${{ !cancelled() }}
         run: python3 mi/scripts/summarize_detroit_roster_change.py --selftest
 
       # Wisconsin's county-board-directory.json carries each county's board
@@ -110,6 +154,7 @@ jobs:
       # Local files only: the builder's --check re-derives the seat counts from
       # data/app and compares, and fetches nothing.
       - name: WI county board directory matches the shipped districts
+        if: ${{ !cancelled() }}
         run: python3 wi/scripts/build_wi_county_board_directory.py --check
 
       # Wisconsin's 72 county containment outlines are SLICED from the same
@@ -119,6 +164,7 @@ jobs:
       # than failing. Local files only; the builder's own containment and
       # exclusivity gates re-run on every check.
       - name: WI county outlines match the shipped county fabric
+        if: ${{ !cancelled() }}
         run: python3 wi/scripts/build_wi_county_outlines.py --check
 
       # THE GAP-LOCATION OUTLINES, both directions. A `counties` tag is a
@@ -133,9 +179,11 @@ jobs:
       # artifact. Michigan's shipped on 2026-09-22 IN NO WORKFLOW, which is the
       # same "a gate nothing runs" hole build_metro_outline.py --check sat in.
       - name: MI gap outlines match the counties that need them
+        if: ${{ !cancelled() }}
         run: python3 mi/scripts/build_mi_gap_outlines.py --check
 
       - name: IA gap outlines match the counties its gap records name
+        if: ${{ !cancelled() }}
         run: python3 ia/scripts/build_ia_gap_outlines.py --check
 
       # districtry/tokens/districtry.tokens.css is the ONE source of the brand
@@ -155,6 +203,7 @@ jobs:
       # shipped. Both tiers of the skin are checked now, presence required,
       # and the worksheets are discovered rather than listed. Stdlib only.
       - name: Brand tokens have one source
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_brand_tokens.py --check
 
       # The token file is the one source of the brand surface; this is the one
@@ -171,6 +220,7 @@ jobs:
       # fails on anything new, on a recorded value that moves in either
       # direction, and on an accepted entry that nothing tests. Stdlib only.
       - name: Brand text is legible on the grounds it is painted on
+        if: ${{ !cancelled() }}
         run: python3 scripts/validate_contrast.py
 
       # There is ONE copy of each engine block, under engine/, and every
@@ -180,6 +230,7 @@ jobs:
       # the cross-repo release channel that used to keep N copies in step —
       # there is no longer more than one copy to keep. Stdlib only.
       - name: Instances carry exactly the shared engine
+        if: ${{ !cancelled() }}
         run: python3 scripts/compose_app.py --check
 
       # The same invariant read from the other side, plus the one thing the
@@ -199,6 +250,7 @@ jobs:
       # two. Every count it prints is measured at run time and none is written
       # down here, because the fleet's file list moves. Stdlib only.
       - name: Every instance's fences agree, and partial blocks are named
+        if: ${{ !cancelled() }}
         run: python3 scripts/check_engine_parity.py --fleet
 
       # (The state-template gate was retired in R2.1 — the template repo is
@@ -211,6 +263,7 @@ jobs:
       # gate: a county change that skips the regenerate fails here rather
       # than letting the table rot the way prose counts do. Stdlib only.
       - name: County status matches its sources
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_county_status.py --check
 
       # E.A.M. — whether each state is Examined, Answered and Maintained, which
@@ -221,6 +274,7 @@ jobs:
       # instead would invert the incentive: the deepest instance carries the
       # most records. Stdlib only.
       - name: E.A.M. status matches its sources
+        if: ${{ !cancelled() }}
         run: |
           python3 scripts/build_eam_status.py --selftest
           python3 scripts/build_eam_status.py --check
@@ -234,6 +288,7 @@ jobs:
       # written and no workflow ran it until the 2026-08-24 scripts audit.
       # Stdlib only.
       - name: Backfilled board seats still stamped
+        if: ${{ !cancelled() }}
         run: python3 scripts/backfill_board_seats.py --check
 
       # Illinois's shared board-office fallback. 33 districted board cards name
@@ -254,6 +309,7 @@ jobs:
       # Sixty roster workflows open bot PRs into this gate, so that is the
       # realistic failure and it is the one worth guarding. Stdlib only.
       - name: Shared board-office addresses still corroborated
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_county_board_offices.py --check
 
       # Dark mode's map palette is DERIVED from the app's own layer colours, not
@@ -262,6 +318,7 @@ jobs:
       # re-deriving and the dark counterpart silently keeps the old hue, which
       # is invisible in light mode and wrong in dark. Stdlib only.
       - name: Dark map palette matches the app's layer colours
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_dark_map_palette.py --check
 
       # The root landing page is GENERATED from metros.json + the Districtry
@@ -270,6 +327,7 @@ jobs:
       # a front door that disagrees with the manifest. It is also what catches a
       # renamed design token — the builder names the ones it needs. Stdlib only.
       - name: Landing page matches the fleet manifest
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_landing_page.py --check
 
       # The coverage map the landing page embeds is generated from the SAME
@@ -279,6 +337,7 @@ jobs:
       # this fails by name rather than shipping a map with a place missing —
       # which on a coverage map reads as "we don't cover there". Stdlib only.
       - name: Coverage map matches the fleet manifest and the instances' outlines
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_coverage_map.py --check
 
       # The privacy page is GENERATED, and uniquely among these gates it is
@@ -292,6 +351,7 @@ jobs:
       # and the two-decimal coordinate rounding) as IDENTICAL across the three
       # apps, so a divergence cannot be published as a shared fact. Stdlib only.
       - name: Privacy page matches what the apps actually do
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_privacy_page.py --check
 
       # /about.html states this project's own size — how many places it answers
@@ -303,6 +363,7 @@ jobs:
       # shares the root pages' shell with the privacy page, so it also fails if
       # that shell is edited for one page and not the other.
       - name: About page matches the tree it describes
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_about_page.py --check
 
       # Which analytics host each page loads, held to the worksheet that
@@ -315,6 +376,7 @@ jobs:
       # counter at all, including all 183 per-county pages, so the traffic
       # report has never counted the largest page set on the site.
       - name: Analytics match the worksheets that declare them
+        if: ${{ !cancelled() }}
         run: python3 scripts/validate_analytics.py
 
       # The deployment-history pages (opt-in per instance): the stat tiles are
@@ -322,6 +384,7 @@ jobs:
       # regenerates the page or fails here — a history page that has drifted
       # from the data it describes is worse than no history page.
       - name: History pages match the instances' own data
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_history_page.py --check
 
       # The web app manifest is the surface NO other gate could see, and it
@@ -334,6 +397,7 @@ jobs:
       # name an icon that is not on disk — a manifest pointing at a missing
       # PNG installs a blank square and nothing else notices. Stdlib only.
       - name: Install manifests match the brand keys
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_manifests.py --check
 
       # sitemap.xml is GENERATED, and it is the last hand-kept surface on the
@@ -354,6 +418,7 @@ jobs:
       # tree is going unread — a new state's roster fails this gate until an
       # adapter reads it or a reason is recorded.
       - name: County board pages match their rosters
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_county_pages.py --check
 
       # The seven Illinois counties whose board MEMBERS ride the same GIS
@@ -364,6 +429,7 @@ jobs:
       # recorded with a reason why it cannot be. Offline; it reads il/index.html
       # and the tree and fetches nothing.
       - name: Every Illinois board card has a roster or a recorded reason
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_il_gis_board_rosters.py --check
 
       # /llms.txt, the guide robots.txt points a client at. GENERATED, because
@@ -374,6 +440,7 @@ jobs:
       # page that does not exist, and it refuses to write a districtry.com link
       # the sitemap does not list.
       - name: llms.txt matches the fleet it describes
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_llms_txt.py --check
 
       # Both halves matter. The dates are why this gate was written; the PARSE
@@ -384,6 +451,7 @@ jobs:
       # it read the file with a regex that matched each <url> block one at a time
       # and never asked whether the file around them parsed.
       - name: Sitemap parses, and its lastmods match each page's last commit
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_sitemap.py --check
 
       # The eight root redirect shells and the 404 are generated from one
@@ -393,6 +461,7 @@ jobs:
       # /precinct.html both 404'd while six siblings had shells — which is what
       # eight near-identical hand-written files produce.
       - name: Redirect shells and the 404 match their sources
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_redirect_stubs.py --check
 
       # The address box on the eleven question pages. It is one form generated
@@ -402,6 +471,7 @@ jobs:
       # it opens, or a new question page that ships without a form, fails here
       # rather than serving a box that hands the app the wrong layers.
       - name: Question pages carry the address box their own CTA describes
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_question_forms.py --check
 
       # The district-name search index ("33rd ward"). Offline and stdlib-only:
@@ -410,6 +480,7 @@ jobs:
       # load the dataset the index was built from. Rebuilding needs the
       # network and shapely, so it is an operator step, not this one.
       - name: District search index matches the boundaries it names
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_district_search.py --check
 
       # The city rosters in the served bytes. build_county_pages.py put 2,650
@@ -429,6 +500,7 @@ jobs:
       # rosters and the worksheets they are built from, and fails on a page
       # naming a layer its own instance does not register.
       - name: Legislator pages match their rosters
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_legislator_pages.py --check
 
       # The four concept pages — circuit court, township, school board and
@@ -438,9 +510,11 @@ jobs:
       # subcircuit and then sits circuit-wide, and its inventory table is parsed
       # out of il/index.html's own dispatch entries rather than kept by hand.
       - name: Concept pages match their rosters
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_concept_pages.py --check
 
       - name: City officeholder tables match their rosters
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_officeholder_tables.py --check
 
       # The favicon is the one branded asset whose audience is a CRAWLER, and it
@@ -452,6 +526,7 @@ jobs:
       # data: URI — because "it looks right in my tab" is exactly the evidence
       # that misled here. Stdlib only.
       - name: Home page declares a favicon a crawler can fetch
+        if: ${{ !cancelled() }}
         run: python3 scripts/validate_favicon.py
 
       # A `#` comment between two backslash-continued lines does not annotate
@@ -461,6 +536,7 @@ jobs:
       # green, because the assemble step only runs on main, AFTER the merge.
       # This is the cheap guard that reaches the PR. Stdlib only.
       - name: No comment inside a shell line-continuation
+        if: ${{ !cancelled() }}
         run: python3 scripts/validate_shell_continuations.py
 
       # Every script a workflow runs must import under the dependencies that
@@ -472,6 +548,7 @@ jobs:
       # data fine, validate_index fine, every local run fine. Stdlib only, so it
       # runs before anything is installed.
       - name: Workflow scripts import under their declared dependencies
+        if: ${{ !cancelled() }}
         run: python3 scripts/validate_workflow_deps.py
 
       # A workflow that regenerates and commits sitemap.xml must check out FULL
@@ -482,6 +559,7 @@ jobs:
       # structurally blind to it: it fails on a date that is BEHIND, and this
       # moves every date forward to today. Stdlib only, no network.
       - name: Sitemap-committing workflows check out full history
+        if: ${{ !cancelled() }}
         run: python3 scripts/validate_workflow_checkout.py
 
       # scripts/undeliverable.py withholds addresses that cannot receive mail
@@ -494,6 +572,7 @@ jobs:
       # dropping. The third test — a withheld domain that comes back — needs DNS
       # and runs monthly in validate_card_links.py.
       - name: The undeliverable-address list has not gone stale
+        if: ${{ !cancelled() }}
         run: python3 scripts/undeliverable.py
 
       # A skill under .claude/skills/ is prose an agent loads at the moment it
@@ -508,6 +587,7 @@ jobs:
       # trigger surface. It found its first stale path in the first skill
       # written against it. Stdlib only.
       - name: Skills point at things that exist
+        if: ${{ !cancelled() }}
         run: python3 scripts/validate_skills.py
 
       # Two defects that ship green in Python, both of them live in this repo
@@ -525,6 +605,7 @@ jobs:
       # Stdlib only; --selftest drives both checks against source carrying each
       # defect and source carrying its near-miss.
       - name: Every loaded name is bound and no dict key is set twice
+        if: ${{ !cancelled() }}
         run: |
           python3 scripts/validate_python_hygiene.py --selftest
           python3 scripts/validate_python_hygiene.py
@@ -537,6 +618,7 @@ jobs:
       # a branch this job failed, which is the one thing the skill exists to
       # prevent.
       - name: The steward skill runs the same battery this job does
+        if: ${{ !cancelled() }}
         run: python3 scripts/validate_steward_mirror.py
 
       # CLAUDE.md states this battery's size twice — as named steps and as
@@ -546,6 +628,7 @@ jobs:
       # on a figure that was itself wrong and described a state no commit ever
       # had. Every one of those numbers was in git the whole time.
       - name: CLAUDE.md states the size of the battery this job runs
+        if: ${{ !cancelled() }}
         run: python3 scripts/validate_gate_counts.py
 
       # The graph the generated pages publish: 183 county boards, 20 rostered
@@ -555,6 +638,7 @@ jobs:
       # whose numberOfItems disagrees with its own elements, or a block that no
       # longer parses passes every one of them.
       - name: Structured data parses, resolves and counts what it says
+        if: ${{ !cancelled() }}
         run: python3 scripts/validate_structured_data.py
 
       # The drafted Wikidata item. Its jurisdictions come from metros.json, so a
@@ -562,6 +646,7 @@ jobs:
       # network re-check of its 20 verified ids is --verify and is deliberately
       # not scheduled — see the file it writes.
       - name: The Wikidata draft still matches the fleet manifest
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_wikidata_draft.py --check
 
       # No app may ask an ArcGIS service for f=geojson. The export unnests a
@@ -572,6 +657,7 @@ jobs:
       # failed fetch renders as the honest "data source didn't respond" state,
       # so nothing looks wrong. This is the static half.
       - name: No app requests the lossy ArcGIS GeoJSON export
+        if: ${{ !cancelled() }}
         run: python3 scripts/validate_arcgis_format.py
 
       # The nesting itself, on fixtures rather than on whichever county server
@@ -579,6 +665,7 @@ jobs:
       # stubbed, so before this the polygon path — orphan CCW rings, collapsed
       # rings, a shell no larger than its hole — ran in CI only by accident.
       - name: Esri ring nesting behaves on fixtures
+        if: ${{ !cancelled() }}
         run: node scripts/esri_rings_test.mjs
 
       # THE SOCIAL CARD IS THE ONE PAGE ASSET NOBODY ON THE TEAM EVER LOOKS AT,
@@ -605,6 +692,7 @@ jobs:
       # It proves PROVENANCE, not correctness: a card whose design is wrong
       # passes, and only a person looking at it catches that.
       - name: Social cards are the ones the renderer wrote
+        if: ${{ !cancelled() }}
         run: node scripts/build_og_image.mjs --check
 
       # ADDING A STATE IS NOT ONE EDIT. The instance is a folder, and a dozen
@@ -621,6 +709,7 @@ jobs:
       # instance — so a sixth folder nobody registered fails here instead of
       # being quietly untested. Stdlib only.
       - name: Every instance is registered everywhere
+        if: ${{ !cancelled() }}
         run: python3 scripts/validate_instance_registration.py
 
       # EVERY SAME-ORIGIN FILE A PAGE ASKS FOR MUST BE IN THE TREE. Michigan's
@@ -639,6 +728,7 @@ jobs:
       # is DISCOVERED from the tree, so a new instance is covered the day its
       # folder exists. Stdlib only.
       - name: Every same-origin asset a page names is in the tree
+        if: ${{ !cancelled() }}
         run: python3 scripts/validate_instance_assets.py
 
       # THE COVERAGE WASH IS A CLAIM, AND ITS GATE WAS IN NO WORKFLOW. Each
@@ -653,6 +743,7 @@ jobs:
       # county list offline: one anchor per served county, no county doubled,
       # none both inside and outside. Stdlib only, no network.
       - name: Coverage ring anchors track the served-county list
+        if: ${{ !cancelled() }}
         run: |
           # --check reads the shipped ring and the anchor lists and fetches
           # nothing, but validate_workflow_deps.py walks an entry point WITH its
@@ -674,6 +765,7 @@ jobs:
       # stale copy is what makes someone pitch the same tips inbox twice.
       # Stdlib only.
       - name: Press list matches its data
+        if: ${{ !cancelled() }}
         run: python3 scripts/build_press_list.py --check
 
       # "N layers" is the fleet's most-repeated number and, until this gate,
@@ -686,6 +778,7 @@ jobs:
       # them in docs/press-list.json — the outbound press list, i.e. the number
       # a journalist would have been handed. Stdlib only.
       - name: Layer counts in prose match the worksheets
+        if: ${{ !cancelled() }}
         run: python3 scripts/validate_doc_counts.py
 
       # That gate's pattern C reads "N for <instance>", and the bare shape
@@ -696,6 +789,7 @@ jobs:
       # the guard, because the four are visible only when the pattern is
       # wrong. Six literal lines, no files read, no network.
       - name: The layer-count reader still ignores what only looks like a count
+        if: ${{ !cancelled() }}
         run: python3 scripts/validate_doc_counts.py --selftest
 
       # Every authored page's <title> and meta description against what Google
@@ -707,6 +801,7 @@ jobs:
       # ny/community-board.html that spent its whole tail on the brand. Surface
       # DISCOVERED, not listed. Stdlib only.
       - name: Titles and descriptions fit a search result
+        if: ${{ !cancelled() }}
         run: python3 scripts/validate_serp_lengths.py
 
       # ONE READING OF robots.txt, and it has to agree with the readings this
@@ -742,6 +837,7 @@ jobs:
       # guards is a second group that names one client and silently drops the
       # signal for the rest.
       - name: The robots.txt reader agrees with the readings established by hand
+        if: ${{ !cancelled() }}
         run: python3 scripts/robots_policy.py --selftest
 
       # Over a hundred files here send a browser user-agent (115 when this was
@@ -755,6 +851,7 @@ jobs:
       # property EXPECTED_UNREACHABLE and ACCEPTED_DROPS already have, and the
       # reason either can be trusted.
       - name: User-agent measurements still describe the tree
+        if: ${{ !cancelled() }}
         run: |
           python3 scripts/probe_user_agents.py --selftest
           python3 scripts/probe_user_agents.py --check
@@ -770,6 +867,7 @@ jobs:
       # Walworth's Scholz/Scholtz, two judges colliding on one contact row).
       # Stdlib only, no network.
       - name: The circuit-court name join still joins only what it should
+        if: ${{ !cancelled() }}
         run: python3 wi/scripts/build_wi_circuit_court_roster.py --selftest
 
       # THE COURT OF APPEALS JOB FORGIVES ONE FAILURE, SO BOTH HALVES OF THAT
@@ -789,6 +887,7 @@ jobs:
       # alone, against fixed dates — the API is never called here. Stdlib only,
       # no network on either.
       - name: The Court of Appeals job forgives only an unreachable host, and not forever
+        if: ${{ !cancelled() }}
         run: |
           python3 wi/scripts/wi_coa_scraper.py --selftest
           python3 wi/scripts/wi_coa_staleness.py --selftest
@@ -798,6 +897,7 @@ jobs:
       # year; without this its WARNs would first execute in the filing window
       # somebody is relying on them.
       - name: The supervisory currency check reports a new filing, a redraw and a moved count
+        if: ${{ !cancelled() }}
         run: python3 wi/scripts/validate_sources.py --selftest
 
       # THE COUNTY BOARD SCRAPE ASKS EACH HOST'S ROBOTS.TXT BEFORE ITS FIRST
@@ -818,6 +918,7 @@ jobs:
       # but a gate that trusted a comment about which code path CI takes would
       # be no gate. Constrained to the same pin the weekly workflow uses.
       - name: The county board scrape reads robots.txt the same way every time
+        if: ${{ !cancelled() }}
         run: |
           pip install -c wi/scripts/requirements.txt pypdf
           python3 wi/scripts/wi_county_board_scraper.py --selftest
@@ -832,6 +933,7 @@ jobs:
       # This runs those guards against the worked examples. Stdlib only, and no
       # network: --jasper is the networked mode and is deliberately not run here.
       - name: Precinct-fabric reconciliation causes still hold
+        if: ${{ !cancelled() }}
         run: python3 scripts/isbe_precinct_fabric.py --selftest
 
       # The Iowa board-chair minutes parser refuses four things, and every one
@@ -854,6 +956,7 @@ jobs:
       # splitting the self-test into a second entry point to dodge a true
       # dependency is not.
       - name: Iowa board-chair minutes parser still refuses its traps
+        if: ${{ !cancelled() }}
         run: |
           pip install -c ia/scripts/requirements.txt pdfplumber
           python3 ia/scripts/ia_county_minutes_chair_scraper.py --selftest
@@ -866,6 +969,7 @@ jobs:
       # that has left the county's supervisor roster -- and a rule nothing
       # exercises is a rule that loosens. Twenty-one literal cases, no network.
       - name: Iowa board-chair carry-forward rules still hold
+        if: ${{ !cancelled() }}
         run: python3 ia/scripts/build_ia_county_chair.py --selftest
 
       # The same mechanism, one file down: Milwaukee County's 19 municipal
@@ -881,6 +985,7 @@ jobs:
       # and never when the county's own layer has stopped naming that person.
       # Twenty-two literal cases, no network and no capture.
       - name: WI municipal-executive carry-forward rules still hold
+        if: ${{ !cancelled() }}
         run: python3 wi/scripts/build_wi_municipal_executives.py --selftest
 
       # Two tables. display_name strips a leading honorific from an officer's
@@ -893,6 +998,7 @@ jobs:
       # party — no row matches, and two rows both match, which is same_person's
       # own stated limit showing.
       - name: Iowa officer display names and the party name-join
+        if: ${{ !cancelled() }}
         run: python3 ia/scripts/build_ia_county_officers.py --selftest
 
       # BOTH HALVES OF THIS GATE FAIL SILENTLY AND LOOK RIGHT, which is why it
@@ -909,6 +1015,7 @@ jobs:
       # scraper, pinned as the weekly workflow pins it, so the step does not
       # depend on an earlier one having installed it.
       - name: Iowa supervisor scrape asks robots.txt before it fetches, and paces what asks
+        if: ${{ !cancelled() }}
         run: |
           pip install -c ia/scripts/requirements.txt requests
           python3 ia/scripts/ia_supervisor_district_scraper.py --selftest
@@ -925,6 +1032,7 @@ jobs:
       # footer's, so a fixture that stops reproducing the defect fails rather
       # than passing quietly.
       - name: Iowa city council pages bound the last member, so a footer cannot donate a phone
+        if: ${{ !cancelled() }}
         run: python3 ia/scripts/ia_city_officials_scraper.py --selftest
 
       # The parcel-fabric builder repairs invalid geometry before it writes, and
@@ -943,6 +1051,7 @@ jobs:
       # build itself cannot; requests and shapely are module-scope imports of
       # the builder, so they are installed even though nothing is fetched.
       - name: The parcel-fabric repair still refuses what it must
+        if: ${{ !cancelled() }}
         run: |
           pip install -c scripts/requirements.txt requests shapely
           python3 scripts/build_parcel_fabric_districts.py --selftest
@@ -960,6 +1069,7 @@ jobs:
       # too deep must REFUSE rather than compare a record's fields as if each
       # were a record. Stdlib only, no network, every case a literal.
       - name: The what-moved line still says nothing when nothing moved
+        if: ${{ !cancelled() }}
         run: python3 scripts/scraper_common.py --selftest
 
       # The retention gate below asks whether a field is still PUBLISHED. This
@@ -974,6 +1084,7 @@ jobs:
       # stood for fourteen days. Absolute rather than diff-based, so it keeps
       # answering after the defect reaches the base branch. Stdlib only.
       - name: Every shipped officeholder name is a name
+        if: ${{ !cancelled() }}
         run: python3 scripts/validate_officeholder_names.py
 
       # A roster's count guard proves it still has twelve members; it proves
@@ -985,6 +1096,7 @@ jobs:
       # published — including per county inside a shared file, which is where
       # that near-miss actually lived. Stdlib only.
       - name: Roster fields still published
+        if: ${{ !cancelled() }}
         run: |
           BASE="${{ github.event.pull_request.base.sha || github.event.before }}"
           if [ -z "$BASE" ] || ! git cat-file -e "$BASE^{commit}" 2>/dev/null; then
@@ -1001,6 +1113,7 @@ jobs:
       # on the map, greying out the very counties that had just been added.
       # sw.js says to bump it; nothing checked that anyone had.
       - name: Cache-first data carries a cache bump
+        if: ${{ !cancelled() }}
         run: |
           BASE="${{ github.event.pull_request.base.sha || github.event.before }}"
           if [ -z "$BASE" ] || ! git cat-file -e "$BASE^{commit}" 2>/dev/null; then
@@ -1010,6 +1123,7 @@ jobs:
           python3 scripts/check_cache_version.py --base "$BASE"
 
       - uses: actions/setup-node@v4
+        if: ${{ !cancelled() }}
         with:
           node-version: "20"
 
@@ -1030,6 +1144,7 @@ jobs:
       # run). deploy-pages.yml and release-engine.yml run this same
       # toolchain and carry the same pair, pointing here for the story.
       - name: Cache Playwright Chromium
+        if: ${{ !cancelled() }}
         id: pw-cache
         uses: actions/cache@v4
         with:
@@ -1037,6 +1152,7 @@ jobs:
           key: playwright-chromium-${{ env.PLAYWRIGHT_VERSION }}-${{ runner.os }}
 
       - name: Install Playwright + Chromium
+        if: ${{ !cancelled() }}
         # Backstop for a multi-phase failure day. The ladder inside is sized to
         # fail NAMED under this cap when any ONE phase is sick (budgets in the
         # run body); two-plus sick phases at once is what this cap is for.
@@ -1099,6 +1215,7 @@ jobs:
       # from the repo root. Stdlib only, so this sits before the browser work
       # and fails fast.
       - name: Each instance's index validates
+        if: ${{ !cancelled() }}
         run: |
           python3 scripts/validate_index.py il/index.html
           python3 ca/scripts/validate_index.py ca/index.html
@@ -1117,6 +1234,7 @@ jobs:
       # ENOENT here. Each instance keeps its own smoke test because each
       # describes a different city; what is shared is the server and the gate.
       - name: Serve app and run every instance's smoke test
+        if: ${{ !cancelled() }}
         run: |
           # The access log goes to a FILE, not to this step. It is one line per
           # request and the browser work makes tens of thousands of them, which
