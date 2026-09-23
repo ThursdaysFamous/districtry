@@ -73,8 +73,8 @@ ROOT_ORDER = ("privacy.html", "sponsorship.html", "traffic.html")
 SUMMARY = ("Click a point, or type an address, and see every civic district "
            "that covers it — and who holds those seats. Six instances across "
            "Illinois, Wisconsin, Iowa, Michigan, New York City and San "
-           "Francisco. Every boundary and every name comes from a government "
-           "publisher and is cited to it.")
+           "Francisco. Every boundary and every name comes from a published "
+           "source and is cited to it.")
 
 
 def fail(msg):

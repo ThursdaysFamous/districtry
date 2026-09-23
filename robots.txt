@@ -25,8 +25,8 @@
 # AND RELATED RIGHTS IN THE DIGITAL SINGLE MARKET.
 
 # What this site asks for, and why. Every district boundary and every
-# officeholder name here comes from a government publisher and is cited to it,
-# so there is nothing secret to withhold and every reason to want the answers
+# officeholder name here comes from a published source and is cited to it, so
+# there is nothing secret to withhold and every reason to want the answers
 # found: a reader typing "who is on the LaSalle County board" should get the
 # answer. So search is welcome, and so is grounding an answer in these pages —
 # ai-input=yes, use=reference — on the terms the signal already names: by

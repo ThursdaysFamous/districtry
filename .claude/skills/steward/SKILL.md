@@ -71,6 +71,7 @@ python3 scripts/build_coverage_map.py --check            # every instance's outl
 python3 scripts/build_privacy_page.py --check
 python3 scripts/build_about_page.py --check              # /about.html vs the tree it describes; every number on it is read at build time
 python3 scripts/build_feedback_page.py --check           # /feedback.html, the report form every footer links, vs its generator
+python3 scripts/build_ai_page.py --check                 # /ai.html vs its generator, and its claims: no AI host served, no AI in workflows or scripts, pushes open PRs
 python3 scripts/validate_analytics.py                    # which counter each page loads: GoatCounter on all but the two recorded, GA only where a worksheet declares it
 python3 scripts/build_history_page.py --check
 python3 scripts/build_manifests.py --check

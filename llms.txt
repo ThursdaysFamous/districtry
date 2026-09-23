@@ -1,6 +1,6 @@
 # districtry
 
-> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. Six instances across Illinois, Wisconsin, Iowa, Michigan, New York City and San Francisco. Every boundary and every name comes from a government publisher and is cited to it.
+> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. Six instances across Illinois, Wisconsin, Iowa, Michigan, New York City and San Francisco. Every boundary and every name comes from a published source and is cited to it.
 
 Free, no account, no tracking of individuals. The map runs in the browser; what each page sends to whom is listed at https://districtry.com/privacy.html.
 
@@ -11,6 +11,7 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 - [Sponsorship](https://districtry.com/sponsorship.html)
 - [Traffic report](https://districtry.com/traffic.html)
 - [About districtry](https://districtry.com/about.html)
+- [How districtry uses AI](https://districtry.com/ai.html)
 - [Report a problem or leave a comment](https://districtry.com/feedback.html)
 
 ## Illinois

@@ -1535,6 +1535,8 @@ PRIVACY_BODY = """
     <p>Every app here is a single open-source page. If a claim on this page and the code ever
       disagree, the code is the truth and this page is the bug:
       <a href="%(repo)s" target="_blank" rel="noopener">read it, or file the discrepancy</a>.</p>
+    <p>How AI coding agents are used in building districtry, and where AI is never used, is on its
+      own page: <a href="/ai.html">How districtry uses AI</a>.</p>
   </section>
 
   <section>

@@ -373,6 +373,16 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/build_feedback_page.py --check
 
+      # /ai.html, how districtry uses AI. Its prose carries no number, so the
+      # drift half of this guards the shared root shell; the rest checks the
+      # page's own claims: no served file names an AI service's API host, no
+      # workflow or script uses one, every workflow that pushes opens a pull
+      # request unless DIRECT_PUSH records why, and robots.txt's Content-Signal
+      # still says what the page says about AI systems reading the site.
+      - name: AI page matches its generator, and its claims still hold
+        if: ${{ !cancelled() }}
+        run: python3 scripts/build_ai_page.py --check
+
       # Which analytics host each page loads, held to the worksheet that
       # declares it. `brand.analytics` is the one place that says whether an
       # instance runs Google Analytics, and the generator emits the tag into
