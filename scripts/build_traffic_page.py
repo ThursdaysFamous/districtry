@@ -307,8 +307,14 @@ def build():
     campaigns: [
       %s
     ],
-    /* geolocate-success events; the meter is geoSuccess / Geolocations */
-    geoSuccess: %d,
+    /* geolocate-success events; the meter is geoSuccess / Geolocations.
+       NULL, NOT ZERO, when the dashboard's ten-row events list does not carry
+       the row. Absence and zero are different facts and `.get(key, 0)` made
+       them the same one: on 2026-09-23 the row fell off the list and the page
+       published "Geolocation succeeds 0%% of the time it is tried: 0 of 88".
+       The fetch now asks for it by name, and this stays null-able because a
+       row can go missing for a reason that fix does not cover. */
+    geoSuccess: %s,
     /* the two Illinois SEO pages the narrative tracks, so the sentence cannot
        claim a figure the path widget has moved past */
     seo: { police: %d, school: %d },
@@ -344,7 +350,8 @@ def build():
               ("Geolocations", ev.get("geolocate", 0))]),
         rows([(r["label"] or r["key"], r["count"]) for r in gc["locations"]]),
         rows([(r["label"] or r["key"], r["count"]) for r in gc["campaigns"]], 2),
-        ev.get("geolocate-success", 0),
+        ("null" if ev.get("geolocate-success") is None
+         else str(ev["geolocate-success"])),
         pg.get("/il/police-district.html", 0), pg.get("/il/school-board.html", 0),
         residual,
         "{:,}".format(gc["total"]), "{:,}".format(daily_sum),

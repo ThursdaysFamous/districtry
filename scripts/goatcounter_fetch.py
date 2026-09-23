@@ -270,6 +270,21 @@ def collect(s, total, start, end):
     pages_truncated = MORE and MORE[0]
     event_rows = pages(widget(s, 0, total, start, end, max=mx,
                               filter="is:event"))
+    # THE EVENTS LIST IS CAPPED AT TEN ROWS AND THE PAGE NEEDS A ROW THAT FELL
+    # OFF IT. `geolocate-success` sat LOWEST of the ten for five days running
+    # — 55, 53, 51, 51, 52 — and on 2026-09-23 `layer/county` at 53 pushed it
+    # out. Nothing about geolocation changed; it stopped being measured, and
+    # the page went on to publish "Geolocation succeeds 0% of the time it is
+    # tried: 0 of 88", which is a false statement about the product.
+    #
+    # So the two geolocate rows are asked for BY NAME rather than hoped for in
+    # a ranking, the way `layer/` already is. One extra request covers both,
+    # and `geolocate` itself was the next to go: at 88 it sits one row above
+    # the cut. `select` (502) and `address-search` (284) are far from it and
+    # are left to the ranked list.
+    event_rows += [r for r in pages(widget(s, 0, total, start, end, max=mx,
+                                           filter="geolocate"))
+                   if r["path"] not in {e["path"] for e in event_rows}]
     layer_rows = pages(widget(s, 0, total, start, end, max=mx, filter="layer/"))
 
     out = {
