@@ -1174,7 +1174,7 @@ code {
     </div>
     <div class="panel">
       <h2 class="kicker">What visitors do</h2>
-      <p class="lead">The three core actions, as unique daily users of each. <span data-stat="geoNote">Geolocation was tried 88 times; how many of those succeeded is not in this window’s data, because the dashboard’s events list caps at ten rows and that row fell below it.</span></p>
+      <p class="lead">The three core actions, as unique daily users of each. <span data-stat="geoNote">Geolocation succeeds 59% of the time it is tried: 52 of 88.</span></p>
       <div class="bars" data-bars="actions"></div>
       <!-- The fill starts at 0 and the boot script sets it from geoPct. It carried a
            hand-typed width:63% from #1004 until 2026-09-20, which no sync touched because
@@ -1421,7 +1421,7 @@ code {
        published "Geolocation succeeds 0% of the time it is tried: 0 of 88".
        The fetch now asks for it by name, and this stays null-able because a
        row can go missing for a reason that fix does not cover. */
-    geoSuccess: null,
+    geoSuccess: 52,
     /* the two Illinois SEO pages the narrative tracks, so the sentence cannot
        claim a figure the path widget has moved past */
     seo: { police: 23, school: 132 },
