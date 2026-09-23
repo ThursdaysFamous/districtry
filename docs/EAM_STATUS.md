@@ -17,7 +17,7 @@ keep a state open forever while telling a reader nothing.
 
 | state | E.A.M. | counties | examined | districts | named | answered | files | maintained |
 |---|---|---|---|---|---|---|---|---|
-| il | **EA·** | 102 | 102/102 | 572 | 996 | all | 310 | 222 without a job |
+| il | **EA·** | 102 | 102/102 | 572 | 996 | all | 310 | 221 without a job |
 | wi | **EA·** | 72 | 72/72 | 1590 | 1,574 | all | 47 | 25 without a job |
 | ia | **EA·** | 99 | 99/99 | 67 | 67 | all | 33 | 16 without a job |
 | mi | **EA·** | 83 | 83/83 | 619 | 615 | all | 22 | 14 without a job |
@@ -30,7 +30,7 @@ keep a state open forever while telling a reader nothing.
 ### il — EA·
 
 - **Watched, not rewritten:** `il/data/app/mason-county-board-members.json`, by `.github/workflows/watch-mason-roster-source.yml` — counts for Maintained, and is a weaker guarantee than a rewrite.
-- **Maintained: no.** 222 file(s) under no scheduled job at all, neither rewriting nor watching — 211 boundary, 11 structure, **0 naming people**. No officeholder is going stale here; what these want is a stated re-check cadence, not a weekly scraper.
+- **Maintained: no.** 221 file(s) under no scheduled job at all, neither rewriting nor watching — 211 boundary, 10 structure, **0 naming people**. No officeholder is going stale here; what these want is a stated re-check cadence, not a weekly scraper.
   - `il/data/app/adams-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
   - `il/data/app/belvidere-city-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
   - `il/data/app/boone-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
@@ -205,7 +205,6 @@ keep a state open forever while telling a reader nothing.
   - `il/data/app/sangamon-judicial-subcircuits.json` — **7** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
   - `il/data/app/sangamon-library-districts.json` — **16** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
   - `il/data/app/school-board-districts.json` — **20** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
-  - `il/data/app/school-board-members.json` — names nobody; it carries structure (seat counts, addresses, links). Slower to rot, on link rot rather than on officeholder churn, and still refreshed by nothing.
   - `il/data/app/schuyler-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
   - `il/data/app/schuyler-precincts.json` — **17** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.
   - `il/data/app/scott-county-outline.json` — **1** boundary feature(s), naming nobody. It rots on reapportionment rather than on officeholder churn, so a weekly job would be a guaranteed no-op; what it wants is a `WATCH.md` row stating when the lines are re-checked.

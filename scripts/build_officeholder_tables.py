@@ -143,16 +143,31 @@ def school_board_members(data):
             for k in sorted(members, key=district_key)]
 
 
-def name_strings(data):
-    """Chicago's elected school board, which maps a district to a NAME STRING.
+def chicago_school_board(data):
+    """Chicago's Board of Education: twenty sub-district seats and a president.
 
-    The roster writes a vacant seat as the literal "VACANT", which the renderer
-    would otherwise mark up as a person of that name. It becomes a vacancy here.
+    THE FILE IS KEYED BY THE MAP'S DISTRICT NUMBER plus one `board` entry that
+    is not a district. That entry holds the Board's own office and its
+    PRESIDENT, who is seated city-wide and holds no district — he is a member of
+    the body this table names, so he takes the last row under the seat the Board
+    gives him rather than being dropped for want of a district number. His
+    telephone is the Board's own switchboard and stays off the row, because a
+    number that is the same for all twenty-one is not a way to reach any one of
+    them.
+
+    UNTIL 2026-09-23 THIS ROSTER MAPPED A DISTRICT STRAIGHT TO A NAME STRING and
+    wrote an empty seat as the literal "VACANT", which this adapter converted to
+    a vacancy at read time. The roster carries {"vacant": true} now, so the
+    conversion lives where the data is written and one reader fewer has to know
+    the word.
     """
-    return [("District %s" % k,
-             {"vacant": True} if str(data[k]).strip().upper() == "VACANT"
-             else {"name": data[k]})
-            for k in sorted(data, key=district_key)]
+    rows = [("District %s" % key, data[key])
+            for key in sorted((k for k in data if k != "board"), key=district_key)]
+    board = data.get("board") or {}
+    if board.get("president"):
+        rows.append(("Citywide", {"name": board["president"],
+                                  "role": board.get("role") or "President"}))
+    return rows
 
 
 def _ordinal(n):
@@ -500,7 +515,7 @@ ADAPTERS = {
     "circuit_judges": circuit_judges,
     "township_officials": township_officials,
     "school_board_members": school_board_members,
-    "name_strings": name_strings,
+    "chicago_school_board": chicago_school_board,
     "district_council_members": district_council_members,
     "fire_districts": fire_districts,
     "park_districts": park_districts,
@@ -701,13 +716,19 @@ CITY_TABLES = [
                         heading="Who sits on each Police District Council")]),
     dict(tag="il", page="school-board.html", worksheet="metro-worksheet.json",
          sections=[dict(roster="data/app/school-board-members.json",
-                        adapter="name_strings",
-                        seat="District", holder="Board Member",
+                        adapter="chicago_school_board",
+                        seat="District", holder="Board Member", role_label="Role",
                         office_label="Office",
-                        unit="elected district seats", prep="on",
+                        # "seats", NOT "elected seats": the Board is hybrid until
+                        # 2027 — its own index says eleven members including the
+                        # president are appointed by the mayor and ten are
+                        # elected — and nothing published says which of the
+                        # twenty a given district's member is. This table said
+                        # "All 20 elected district seats" until 2026-09-23.
+                        unit="seats", prep="on",
                         body="the Chicago Board of Education",
                         org="Chicago Board of Education",
-                        heading="Who represents each Chicago school board district")]),
+                        heading="Who sits on the Chicago Board of Education")]),
     # THE THREE ILLINOIS SPECIAL DISTRICTS, and the largest single tranche these
     # tables have taken: 287 fire protection districts, 162 park districts and
     # 198 library districts, named in their own Annual Financial Report filings

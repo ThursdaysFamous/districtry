@@ -17,7 +17,7 @@
   "robots-unreadable": 4,
   "stack-not-token": 7,
   "tls-chain": 1,
-  "token-ok": 224,
+  "token-ok": 225,
   "token-refused": 3,
   "token-refused-and-stack": 15
  },
@@ -4581,6 +4581,27 @@
     "scripts/cook_municipal_officials_scraper.py": "browser",
     "scripts/validate_sources.py": "both"
    }
+  },
+  "www.cpsboe.org": {
+   "host": "www.cpsboe.org",
+   "url": "https://www.cpsboe.org/about/bios",
+   "cells": {
+    "requests+token": {
+     "kind": "ok",
+     "note": "HTTP 200, 15425 bytes"
+    }
+   },
+   "robots": {
+    "requests+token": "read, 1 group(s) bind this client with 3 rule(s)"
+   },
+   "verdict": "token-ok",
+   "note": "requests+token HTTP 200, 15425 bytes",
+   "callers": {
+    "scripts/build_chicago_school_board_roster.py": "unknown",
+    "scripts/cps_board_scraper.py": "self",
+    "scripts/validate_sources.py": "both"
+   },
+   "measured": "2026-09-23"
   },
   "www.crawfordcountywi.gov": {
    "host": "www.crawfordcountywi.gov",
