@@ -4306,6 +4306,159 @@ function initIowaExplorer() {
   }
 
   /* ==== ENGINE:END polygon-containment ==== */
+
+  /* ==== ENGINE:BEGIN geometry-measure ==== */
+  /* ---------- geometry measurement: area, overlap and point weights ----------
+   * There is no geometry library here, and this block is deliberately not
+   * one: it MEASURES and never cuts. It answers three questions about GeoJSON
+   * Polygon / MultiPolygon geometry, which is all a comparison of districts
+   * needs:
+   *   measureArea(g)            -> km²
+   *   measureOverlap(a, b)      -> { area, overlap, share } — km² of a, km²
+   *                                of a that b covers, and overlap / area
+   *   measurePointWeight(g, pts)-> the summed weight of the [lng, lat, w]
+   *                                points inside g (a population, when the
+   *                                points are Census blocks)
+   * Producing the overlap SHAPE (intersection, union) is a different and much
+   * harder problem — districts share borders, and shared edges are exactly
+   * the degenerate case clipping algorithms get wrong — so it is not attempted.
+   *
+   * SCANLINES, EVEN-ODD. Area is integrated over MEASURE_ROWS horizontal
+   * lines across the measured geometry's extent. Each line meets the rings in
+   * a sorted list of crossings; alternate pairs are the spans inside, which is
+   * the even-odd rule over every ring at once, so a hole is a hole whatever
+   * its winding and however a source nests its rings. An overlap is the
+   * length both geometries' spans share on the same line, so area and overlap
+   * come from the same samples and their ratio is consistent. Each row is
+   * weighted by its true area on a sphere, (sin φ₂ − sin φ₁)·Δλ·R², so a
+   * km² here is a km² in Galena and in Cairo alike.
+   *
+   * WHAT IT IS HELD TO. scripts/validate_geometry_measure.py runs this block,
+   * as shipped, in Node against the fleet's own district files and fails if
+   * an area strays from the spherical area of its rings, an overlap share
+   * from shapely's intersection, or a point weight from shapely's contains.
+   * Measured, not exact: a figure here is for comparing districts, never a
+   * legal description (the app's disclaimer). ---------- */
+  var MEASURE_EARTH_KM = 6371.0088; // IUGG mean radius
+  var MEASURE_ROWS = 512;
+  var MEASURE_RAD = Math.PI / 180;
+
+  function measureRings(geometry) {
+    if (!geometry) return [];
+    if (geometry.type === "Polygon") return geometry.coordinates;
+    if (geometry.type === "MultiPolygon") {
+      var out = [];
+      for (var i = 0; i < geometry.coordinates.length; i++) out = out.concat(geometry.coordinates[i]);
+      return out;
+    }
+    return [];
+  }
+  function measureExtent(rings) {
+    var b = [Infinity, Infinity, -Infinity, -Infinity];
+    for (var r = 0; r < rings.length; r++) {
+      for (var i = 0; i < rings[r].length; i++) {
+        var p = rings[r][i];
+        if (p[0] < b[0]) b[0] = p[0];
+        if (p[1] < b[1]) b[1] = p[1];
+        if (p[0] > b[2]) b[2] = p[0];
+        if (p[1] > b[3]) b[3] = p[1];
+      }
+    }
+    return b;
+  }
+  // The edges of every ring, bucketed by the horizontal bands they span, so a
+  // line (or a point) only visits the edges near it. Built once per geometry.
+  function measureEdgeIndex(rings, extent) {
+    var bands = 64, lo = extent[1], span = extent[3] - extent[1];
+    var buckets = [];
+    for (var k = 0; k < bands; k++) buckets.push([]);
+    var band = function (y) {
+      var n = span > 0 ? Math.floor((y - lo) / span * bands) : 0;
+      return n < 0 ? 0 : n >= bands ? bands - 1 : n;
+    };
+    for (var r = 0; r < rings.length; r++) {
+      var ring = rings[r];
+      for (var i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        var a = ring[i], c = ring[j];
+        if (a[1] === c[1]) continue; // horizontal: never crossed by a horizontal line
+        var e = [a[0], a[1], c[0], c[1]];
+        for (var q = band(Math.min(a[1], c[1])), top = band(Math.max(a[1], c[1])); q <= top; q++) buckets[q].push(e);
+      }
+    }
+    return { buckets: buckets, band: band };
+  }
+  // sorted x where the line y crosses the rings (a half-open rule, so a
+  // vertex exactly on the line is counted once)
+  function measureCrossings(index, y) {
+    var xs = [], edges = index.buckets[index.band(y)];
+    for (var i = 0; i < edges.length; i++) {
+      var e = edges[i];
+      if ((e[1] > y) !== (e[3] > y)) xs.push(e[0] + (y - e[1]) * (e[2] - e[0]) / (e[3] - e[1]));
+    }
+    xs.sort(function (p, q) { return p - q; });
+    return xs;
+  }
+  function measureSpanLength(xs) {
+    var s = 0;
+    for (var i = 0; i + 1 < xs.length; i += 2) s += xs[i + 1] - xs[i];
+    return s;
+  }
+  function measureSpanOverlap(a, b) {
+    var s = 0, i = 0, j = 0;
+    while (i + 1 < a.length && j + 1 < b.length) {
+      var lo = Math.max(a[i], b[j]), hi = Math.min(a[i + 1], b[j + 1]);
+      if (hi > lo) s += hi - lo;
+      if (a[i + 1] < b[j + 1]) i += 2; else j += 2;
+    }
+    return s;
+  }
+  function measurePrepared(geometry) {
+    if (geometry && geometry.__measure) return geometry.__measure;
+    var rings = measureRings(geometry), extent = measureExtent(rings);
+    var prep = { rings: rings, extent: extent, index: measureEdgeIndex(rings, extent) };
+    if (geometry) {
+      try { Object.defineProperty(geometry, "__measure", { value: prep, enumerable: false }); } catch (e) { /* frozen: recompute next time */ }
+    }
+    return prep;
+  }
+  // Rows across a's extent; `other`, when given, is measured on the same rows.
+  function measureRows(a, other) {
+    var e = a.extent, total = 0, shared = 0;
+    if (!(e[3] > e[1])) return { area: 0, overlap: 0 };
+    var h = (e[3] - e[1]) / MEASURE_ROWS, R2 = MEASURE_EARTH_KM * MEASURE_EARTH_KM;
+    var skip = other && (other.extent[0] > e[2] || other.extent[2] < e[0] ||
+      other.extent[1] > e[3] || other.extent[3] < e[1]);
+    for (var k = 0; k < MEASURE_ROWS; k++) {
+      var y0 = e[1] + k * h, y = y0 + h / 2;
+      var xs = measureCrossings(a.index, y);
+      if (!xs.length) continue;
+      var rowKm2 = (Math.sin((y0 + h) * MEASURE_RAD) - Math.sin(y0 * MEASURE_RAD)) * MEASURE_RAD * R2;
+      total += measureSpanLength(xs) * rowKm2;
+      if (other && !skip && y >= other.extent[1] && y <= other.extent[3]) {
+        shared += measureSpanOverlap(xs, measureCrossings(other.index, y)) * rowKm2;
+      }
+    }
+    return { area: total, overlap: shared };
+  }
+  function measureArea(geometry) {
+    return measureRows(measurePrepared(geometry)).area;
+  }
+  function measureOverlap(a, b) {
+    var m = measureRows(measurePrepared(a), measurePrepared(b));
+    return { area: m.area, overlap: m.overlap, share: m.area > 0 ? Math.min(1, m.overlap / m.area) : 0 };
+  }
+  function measurePointWeight(geometry, points) {
+    var prep = measurePrepared(geometry), e = prep.extent, sum = 0;
+    for (var i = 0; i < points.length; i++) {
+      var p = points[i];
+      if (p[0] < e[0] || p[0] > e[2] || p[1] < e[1] || p[1] > e[3]) continue;
+      var xs = measureCrossings(prep.index, p[1]), left = 0;
+      for (var k = 0; k < xs.length && xs[k] < p[0]; k++) left++;
+      if (left % 2 === 1) sum += p.length > 2 ? +p[2] || 0 : 1;
+    }
+    return sum;
+  }
+  /* ==== ENGINE:END geometry-measure ==== */
   /* ==== ENGINE:BEGIN fetch-retry ==== */
   /* ---------- fetch JSON with retry + timeout. The abort timer stays armed
    * through the body read, not just the headers — every caller parses JSON,
