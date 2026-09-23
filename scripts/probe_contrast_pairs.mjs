@@ -140,6 +140,15 @@ const BELOW_FLOOR = () => {
 
 const key = (tier, fg, bg) => `${tier}|${fg.join(",")}|${bg.join(",")}`;
 
+// How often the page loop reports progress. Low enough to locate a stall,
+// high enough that a green run's log is read rather than scrolled past.
+const PROGRESS_EVERY = 25;
+
+// How long an app root gets to stop changing, and how often it is asked.
+// The cap is 20x the longest settle any root has ever needed.
+const SETTLE_STEP_MS = 100;
+const SETTLE_CAP_MS = 2000;
+
 const gateRows = JSON.parse(execFileSync("python3",
   [join(REPO, "scripts", "validate_contrast.py"), "--json"], { encoding: "utf8" }));
 const known = new Map();       // colours the gate measures AND calls short
@@ -151,8 +160,14 @@ for (const r of gateRows) {
 
 const browser = await chromium.launch({ args: ["--no-sandbox"] });
 const found = new Map();
+const FONTS = new Map();   // same-origin .woff2 read once, keyed by url path
+// The app roots, derived from the fleet manifest for the same reason every
+// other gate here derives its instance list: a sixth instance registered
+// without a line edited is the point.
+const APP_ROOTS = new Set(JSON.parse(readFileSync(join(REPO, "metros.json"), "utf8"))
+  .metros.map((m) => `/${m.tag}/`));
 let nodes = 0, visited = 0;
-const brokenPages = [];
+const brokenPages = [];   // a page that never answered, or whose answer never stopped moving
 for (const scheme of ["light", "dark"]) {
   const ctx = await browser.newContext({
     viewport: { width: 1280, height: 900 }, colorScheme: scheme, serviceWorkers: "block",
@@ -180,18 +195,85 @@ for (const scheme of ["light", "dark"]) {
     await ctx.route(`**/cdnjs.cloudflare.com/**/${name}`,
       (r) => r.fulfill({ status: 200, contentType: type, body }));
   }
+  // The self-hosted Barlow, served from memory. REGISTERED AFTER the catch-all
+  // for the reason stated above: the LAST handler wins.
+  //
+  // WHY THIS IS NOT A MICRO-OPTIMISATION. A ctx.route handler takes its request
+  // out of the browser's HTTP cache, so `route.continue()` re-fetches every
+  // face on every navigation: measured on this tree, 3,240 requests over 784
+  // loads for 55 distinct urls — nine font files, each served from the root and
+  // from every instance — and 76% of the whole step's log. Reading them once
+  // and fulfilling from a buffer serves the SAME BYTES, which is what
+  // the settle below depends on — a fallback face must never be what gets
+  // measured, so these are fulfilled and never aborted.
+  await ctx.route("**/*.woff2", (route, request) => {
+    const path = new URL(request.url()).pathname;
+    if (!FONTS.has(path)) {
+      const file = join(REPO, path.replace(/^\//, ""));
+      FONTS.set(path, existsSync(file) ? readFileSync(file) : null);
+    }
+    const body = FONTS.get(path);
+    return body
+      ? route.fulfill({ status: 200, contentType: "font/woff2", body })
+      : route.continue();
+  });
   const page = await ctx.newPage();
+  let done = 0;
   for (const path of PAGES) {
     try {
       await page.goto(BASE + path, { waitUntil: "load", timeout: 60000 });
       // Barlow is a webfont, and a fallback face can render at a different
-      // size, which changes the large-text classification.
+      // size, which changes the large-text classification. So wait for the
+      // faces, then for a frame painted with them — two rAFs is the condition
+      // "layout now reflects the loaded faces", stated rather than slept for.
+      //
+      // A FLAT `waitForTimeout(300)` STOOD HERE AND IT WAS 300ms OF EVERY
+      // 345ms THIS PROBE SPENT PER PAGE: 3.9 minutes of a 4.9-minute run, on
+      // 784 loads of which 778 needed none of it. Replacing it with the two
+      // rAFs alone is WRONG, and measuring is what said so: /il/ and /wi/ both
+      // drop 12 below-floor nodes to 10, because an app boots its map and
+      // renders its cards after `load` and two frames do not wait for that.
+      // Every other page in the sitemap is unmoved — measured page by page
+      // across all 392, both themes.
+      //
+      // So the app roots, which are DERIVED from metros.json and never listed,
+      // are measured until the answer stops moving. That is the condition the
+      // sleep was guessing at, and it is self-verifying where a number is not:
+      // swept 2026-09-23, all six roots hold the same count from 100ms to
+      // 5000ms, so the old 300ms was adequate and this cannot silently become
+      // inadequate the way a number can.
       await page.evaluate(() => document.fonts.ready);
-      await page.waitForTimeout(300);
+      await page.evaluate(() => new Promise((r) =>
+        requestAnimationFrame(() => requestAnimationFrame(r))));
       visited++;
-      const rows = await page.evaluate(BELOW_FLOOR);
-      // One line per page, so a run that stalls says where.
-      console.log("  %s  %s  %s below floor", scheme.padEnd(5), path.padEnd(32), rows.length);
+      let rows = await page.evaluate(BELOW_FLOOR);
+      if (APP_ROOTS.has(path)) {
+        let settled = false;
+        for (let waited = 0; waited < SETTLE_CAP_MS; waited += SETTLE_STEP_MS) {
+          await page.waitForTimeout(SETTLE_STEP_MS);
+          const again = await page.evaluate(BELOW_FLOOR);
+          settled = again.length === rows.length;
+          rows = again;
+          if (settled) break;
+        }
+        // Never take the last value and say nothing: a count still moving after
+        // the cap means this page's answer is not reproducible, which is a
+        // defect in its own right and not something to average away.
+        if (!settled) {
+          brokenPages.push(`${scheme} ${path}: below-floor count still moving ` +
+            `after ${SETTLE_CAP_MS}ms (last ${rows.length})`);
+          continue;
+        }
+      }
+      // A line every PROGRESS_EVERY pages, naming the last one done, so a run
+      // that stalls still says roughly where. It used to be one line per page,
+      // which on a green run said nothing: 784 lines of which 350 read "0" and
+      // the other 434 counted nodes the closing summary accounts for anyway.
+      // Nothing here is diagnostic — the failure report below names every page
+      // of every unmeasured pair, and that is what a red run needs.
+      if (++done % PROGRESS_EVERY === 0) {
+        console.log("  %s  %d/%d pages  (last: %s)", scheme.padEnd(5), done, PAGES.length, path);
+      }
       for (const row of rows) {
         nodes++;
         const k = key(scheme, row.fg, row.bg);
@@ -224,7 +306,7 @@ for (const [k, f] of found) {
 }
 
 if (brokenPages.length) {
-  console.error("probe-contrast-pairs: FAIL — page(s) did not load:");
+  console.error("probe-contrast-pairs: FAIL — page(s) did not load, or did not settle:");
   for (const b of brokenPages) console.error("  - " + b);
   process.exit(1);
 }

@@ -1118,7 +1118,13 @@ jobs:
       # describes a different city; what is shared is the server and the gate.
       - name: Serve app and run every instance's smoke test
         run: |
-          python3 -m http.server 8000 &
+          # The access log goes to a FILE, not to this step. It is one line per
+          # request and the browser work makes tens of thousands of them, which
+          # on a green run buried the handful of lines anyone reads: measured on
+          # this tree, 4,244 server lines against 785 from the probes, 76% of
+          # them repeat fetches of six font files. It is still kept, and still
+          # printed — on failure, below, which is the only time it says anything.
+          python3 -m http.server 8000 > /tmp/http-server.log 2>&1 &
           server_pid=$!
           trap 'kill "$server_pid" 2>/dev/null || true' EXIT
           for i in $(seq 1 40); do
@@ -1189,6 +1195,19 @@ jobs:
           # browser sweep that lived in a scratch directory; this is that sweep,
           # kept, and it asserts only that a below-floor pair is one the static
           # gate already calls short. It aborts every cross-origin request but
-          # cdnjs, so it needs no third party and takes ~30s.
+          # cdnjs, so it needs no third party. It takes ~55s on this tree,
+          # measured 2026-09-23 over 392 sitemap pages x 2 themes — it was
+          # ~30s when the sitemap was 37 pages and 4m55s before the sleep it
+          # spent 80% of its time in was replaced by the condition that sleep
+          # stood for. A figure here is per-page cost x a page count that moves
+          # every time a county ships, so re-measure it rather than trust it.
           BASE_URL=http://localhost:8000        node scripts/probe_contrast_pairs.mjs || status=1
+
+          # The server's own log, only where it can explain something: a 404 on
+          # an asset, or a page that never answered.
+          if [ "$status" != 0 ]; then
+            echo "::group::http.server access log"
+            cat /tmp/http-server.log
+            echo "::endgroup::"
+          fi
           exit $status
