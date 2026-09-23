@@ -73,6 +73,10 @@ SHELL = re.compile(r"const\s+SHELL_URLS\s*=\s*\[(.*?)\];", re.S)
 # nothing to parse for names — its presence in the BASE's sw.js is what says a
 # returning visitor may be holding a cached font.
 FONT_BRANCH = re.compile(r'new URL\("fonts/", self\.registration\.scope\)')
+# The Census block populations are a prefix branch too (data/app/population/),
+# served without revalidation, so the same rule holds: once the BASE's worker
+# carries the branch, a changed file there needs a CACHE_NAME bump.
+POPULATION_BRANCH = re.compile(r'new URL\("data/app/population/", self\.registration\.scope\)')
 
 
 def _git(*args):
@@ -115,7 +119,9 @@ def _worksheet_for(tag):
 def _cache_first(sw_text, tag):
     """The files this service worker serves cache-first.
 
-    Two kinds, because the worker matches them two ways. GEOMETRY_URLS is a
+    Two kinds, because the worker matches them two ways. (The Census block
+    populations under data/app/population/ are a second prefix branch, handled
+    exactly like the fonts below.) GEOMETRY_URLS is a
     literal list of data/app paths. The fonts are a PREFIX branch — the worker
     serves anything under its own fonts/ cache-first without naming a file,
     because a page downloads only the faces it renders glyphs for and listing
@@ -133,6 +139,12 @@ def _cache_first(sw_text, tag):
             hit = re.search(r'"\./data/app/([^"]+)"', line)
             if hit:
                 files.add("%s/data/app/%s" % (tag, hit.group(1)))
+    if POPULATION_BRANCH.search(sw_text or ""):
+        pop = os.path.join(REPO_ROOT, tag, "data", "app", "population")
+        if os.path.isdir(pop):
+            for name in sorted(os.listdir(pop)):
+                if name.endswith(".json"):
+                    files.add("%s/data/app/population/%s" % (tag, name))
     if FONT_BRANCH.search(sw_text or ""):
         fonts = os.path.join(REPO_ROOT, tag, "fonts")
         if os.path.isdir(fonts):

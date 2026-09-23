@@ -71,6 +71,15 @@
       },
       "description": "OPTIONAL. Opts the instance into searching districts by name (\"33rd ward\"). `file` is the data/app index scripts/build_district_search.py writes; it must also be listed under data_files.geometry, because it changes only when boundaries do. Absent = the search box searches addresses only, byte-identically to before."
     },
+    "population": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["index"],
+      "properties": {
+        "index": {"type": "string", "pattern": "^[a-z0-9-]+/index\\.json$"}
+      },
+      "description": "OPTIONAL. Opts the instance into counting PEOPLE on the comparison stats screen. `index` is the data/app path of the per-county Census block population index scripts/build_block_population.py writes (`population/index.json`). The county files it names are served by the service worker's prefix rule, cached on first use and never precached, so neither the index nor the files belong in data_files. Absent = the stats screen compares by area only."
+    },
     "socrata_host": {
       "type": "string",
       "format": "uri"

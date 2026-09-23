@@ -173,6 +173,12 @@ def render_metro_config(w):
         a("  // District-name search index (scripts/build_district_search.py): lets the")
         a("  // search box answer \"33rd ward\" from a same-origin file, no geocoder.")
         a("  var DISTRICT_SEARCH_URL = %s;" % js_str("data/app/" + w["district_search"]["file"]))
+    # Census block populations for the comparison stats screen. Opt-in on the
+    # same inertness rule: without the key the stats screen compares by area.
+    if "population" in w:
+        a("  // Census block population index (scripts/build_block_population.py): lets")
+        a("  // the comparison stats screen count people as well as area.")
+        a("  var POPULATION_INDEX_URL = %s;" % js_str("data/app/" + w["population"]["index"]))
     a("  var SOCRATA_HOST = %s;" % js_str(w["socrata_host"]))
     a("  // Socrata app token: some metros' portals throttle anonymous requests. It is")
     a("  // a throttling identifier, not a secret — public exposure is Socrata's")

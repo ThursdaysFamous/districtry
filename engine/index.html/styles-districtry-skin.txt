@@ -884,7 +884,8 @@
   /* ---- result cards. The card system is its own palette (--card-*), so it
      needs its own inversion; --card-accent/--card-link ARE the data tier and
      take the design package's dark data ramp rather than the chrome violet. */
-  :root[data-theme="dark"] .layer-block {
+  :root[data-theme="dark"] .layer-block,
+  :root[data-theme="dark"] .stats-panel {
     --card-accent: #6ea8ff;
     --card-link: #8db9ff;
     --card-link-hover: #b6d2ff;
@@ -901,6 +902,8 @@
     --card-border: rgba(236, 233, 244, 0.10);
     --card-row-border: rgba(236, 233, 244, 0.06);
     --card-btn-border: rgba(110, 168, 255, 0.34);
+  }
+  :root[data-theme="dark"] .layer-block {
     background: #201d29;
     border-color: rgba(236, 233, 244, 0.10);
     /* No color-mix on the stripe any more. --layer-accent is set from

@@ -3,7 +3,10 @@
      The card vocabulary is the whole card surface now — the legacy
      renderFieldList dt/dd table was retired in engine-v1.0.13. Palette is
      scoped to the cards — the rest of the app keeps the existing token set. ---- */
-  .layer-block {
+  /* the palette is shared with the comparison stats screen, which renders
+     cards inside its own panel (compare-stats) */
+  .layer-block,
+  .stats-panel {
     --card-accent: #1d5fd6;
     --card-link: #1a56c4;
     --card-link-hover: #123c8a;
@@ -20,6 +23,8 @@
     --card-border: #e8eaef;
     --card-row-border: #f1f3f7;
     --card-btn-border: #c7d7f2;
+  }
+  .layer-block {
     background: #fff;
     border: 1px solid rgba(0, 0, 0, 0.08);
     /* the left accent keeps each layer's own map color (the card-to-overlay
@@ -200,6 +205,57 @@
     padding: 6px 12px;
   }
   .card-footer .pin-parent-btn:hover { background: #f3f7fd; }
+  /* "Stats" beside "★ Comparing": a text button, so the pin stays the
+     footer's one bordered control (compare-stats) */
+  .pin-stats-btn {
+    margin: 0;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--card-link);
+    background: none;
+    border: none;
+    padding: 6px 4px;
+    min-height: 24px;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+  }
+  .pin-stats-btn:hover { color: var(--card-link-hover); }
+  .pin-stats-btn[hidden] { display: none; }
+
+  /* ---- the comparison stats screen (compare-stats): the feedback modal's
+     shell, wider, scrolling inside itself; a full-height sheet on a phone ---- */
+  .feedback-panel.stats-panel { max-width: 640px; max-height: 84vh; overflow-y: auto; }
+  .stats-head { margin: 0 0 14px; }
+  .stats-layer { font-size: 12px; font-weight: 600; color: var(--card-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .stats-name { font-size: 18px; font-weight: 700; color: var(--card-ink); }
+  .stats-totals { font-size: 13px; color: var(--card-muted); margin-top: 2px; }
+  .stats-group { margin: 16px 0 0; }
+  .stats-group-title { font-size: 13px; font-weight: 700; color: var(--card-ink); margin: 0 0 6px; padding-bottom: 4px; border-bottom: 1px solid var(--card-border); }
+  .stats-row { border-bottom: 1px solid var(--card-border); }
+  .stats-row > summary { list-style: none; cursor: pointer; padding: 8px 0; display: block; }
+  .stats-row > summary::-webkit-details-marker { display: none; }
+  .stats-row > summary:focus-visible { outline: 2px solid var(--card-link); outline-offset: 2px; }
+  .stats-row-top { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .stats-row-name { font-size: 14px; font-weight: 700; color: var(--card-ink); }
+  .stats-row-name::before { content: "▸ "; color: var(--card-muted); font-weight: 400; }
+  .stats-row[open] .stats-row-name::before { content: "▾ "; }
+  .stats-rel { font-size: 11.5px; font-weight: 600; padding: 1px 7px; border-radius: 999px; border: 1px solid var(--card-btn-border); color: var(--card-muted); }
+  .stats-rel.is-cross { border-style: dashed; }
+  .stats-line { display: block; font-size: 12.5px; line-height: 1.45; color: var(--card-body-ink); margin-top: 2px; }
+  .stats-line[hidden] { display: none; }
+  .stats-card { padding: 0 0 10px 14px; }
+  .stats-card .stats-link { display: inline-block; margin-top: 6px; font-size: 13px; font-weight: 600; color: var(--card-link); }
+  .stats-rest { font-size: 12.5px; font-style: italic; color: var(--card-muted); margin: 6px 0 0; }
+  .stats-note { font-size: 12.5px; color: var(--card-muted); margin: 6px 0; }
+  .stats-foot { font-size: 12px; color: var(--card-muted); margin: 16px 0 0; }
+  /* the doubled classes outrank the modal shell's own rules, which the
+     stylesheet states later (styles-footer) */
+  @media (max-width: 767px) {
+    .feedback-modal.stats-modal { padding: 0; align-items: stretch; }
+    .feedback-modal.stats-modal .feedback-panel.stats-panel { max-width: none; max-height: none; height: 100%; border-radius: 0; box-sizing: border-box; }
+  }
   .card-footer-link { margin-left: auto; font-size: 13px; font-weight: 600; color: var(--card-link); text-decoration: none; white-space: nowrap; }
   .card-footer-link::after { content: " ↗"; }
   .card-footer-link:hover { color: var(--card-link-hover); }

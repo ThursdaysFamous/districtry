@@ -483,6 +483,10 @@
     btn.textContent = pinned ? "★ Comparing — click to stop" : "☆ Compare to this district";
     btn.setAttribute("aria-pressed", pinned ? "true" : "false");
     btn.classList.toggle("is-pinned", pinned);
+    // the numbers behind the comparison (compare-stats), beside the pin only
+    // while this card's district is the one being compared to
+    var rt = layerRuntime[id];
+    if (rt && rt.statsBtn) rt.statsBtn.hidden = !pinned;
   }
 
   // Append the "Compare to this district" control to a layer's card — only for
@@ -497,12 +501,20 @@
     var btn = document.createElement("button");
     btn.type = "button";
     btn.className = "pin-parent-btn";
-    stylePinButton(btn, mod.id);
     btn.addEventListener("click", function () {
       setPinnedParent(mod.id);
       if (pinnedParentId === mod.id) followPinnedCard(btn);
     });
     rt.pinBtn = btn;
+    var stats = document.createElement("button");
+    stats.type = "button";
+    stats.className = "pin-stats-btn";
+    stats.textContent = "Stats";
+    stats.setAttribute("aria-label", "Comparison stats");
+    stats.setAttribute("aria-haspopup", "dialog");
+    stats.addEventListener("click", openCompareStats);
+    rt.statsBtn = stats;
+    stylePinButton(btn, mod.id); // after the stats button exists, which it also shows or hides
     if (!rt.cardFooter && rt.cardBody.querySelector(".card-flush")) {
       // a migrated (flush) card whose module declares no primaryLink still
       // needs the footer — the flush body has no padding for a loose button
@@ -515,7 +527,9 @@
       // migrated cards: the pin sits left in the shell-owned footer, before
       // the right-aligned primary link (docs/CARD_RENDER_API.md)
       rt.cardFooter.insertBefore(btn, rt.cardFooter.firstChild);
+      rt.cardFooter.insertBefore(stats, btn.nextSibling);
     } else {
       rt.cardBody.appendChild(btn);
+      rt.cardBody.appendChild(stats);
     }
   }
