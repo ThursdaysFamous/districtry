@@ -74,12 +74,13 @@ belongs on that instance's board instead.
 
 | task | owner | state | opened |
 |---|---|---|---|
-| **`fleet_status.py` reads the last completed run on ANY branch, so a deleted branch's startup failure becomes a health row** | manager | **open, measured 2026-09-23** | 2026-09-23 |
+| **~~`fleet_status.py` reads the last completed run on ANY branch, so a deleted branch's startup failure becomes a health row~~** | manager | **FIXED 2026-09-23** | 2026-09-23 |
 | ↳ `scripts/fleet_status.py:412` queries `/actions/workflows/<f>/runs?per_page=1&status=completed` with no `branch=` and no `event=`. Two of #138's seven WARN rows — `update-mps-school-board-roster.yml` and `update-rusd-school-board-roster.yml` — are not failed refreshes at all: both ran GREEN on their own Monday schedules on main (2026-09-21T20:05:06Z and 21:12:14Z), after the dashboard measured at 19:50:12Z. What it reported are zero-job, zero-duration PUSH runs carrying the file path in place of the workflow's `name:` — the shape GitHub records for a workflow file it cannot start. **THIS ONE REPEATS RATHER THAN SELF-CORRECTS**: the latest completed run of each today is another such run on `claude/goat-counter-data-access-g5ycax`, a branch that is gone from origin, so nothing supersedes it until the next Monday schedule — and this workflow's cron is 15:00 UTC where MPS's is 15:30 and RUSD's 17:30. Posted on #138 with the other five rows re-measured (three cleared on their own later runs, two unchanged and correct). **The inference is read off the runs, not off the deleted branch's copy of the file, which is unfetchable.** |  |  |  |
-| **`docs/MANAGER.md` contradicts the prompt that loads it** | manager | **open, measured 2026-09-23** | 2026-09-23 |
+| **~~`docs/MANAGER.md` contradicts the prompt that loads it~~** | manager | **FIXED 2026-09-23** | 2026-09-23 |
 | ↳ Line 9 still says the facts that go stale "belong on the tracking issue, whose latest comment is the only state that survives a container", and the word *board* appears NOWHERE in the file — grep on `0b341f2`, 0 occurrences. The hourly routine reads the root `BOARD.md` first and `MANAGER.md` second, so the rules file tells the next manager the opposite of what the prompt does. The boards landed in `b3ac708` on 2026-09-19 and 161 commits have touched one since; `MANAGER.md` never followed. Recorded on #960. |  |  |  |
-| **`CLAUDE.md` calls Kendall and McHenry hand-verified because they "block all automated fetch" — false since 2026-09-10** | manager | **open, measured 2026-09-23** | 2026-09-23 |
+| **~~`CLAUDE.md` calls Kendall and McHenry hand-verified because they "block all automated fetch"~~ — false since 2026-09-03, not 2026-09-10 as this row first said** | manager | **FIXED 2026-09-23** | 2026-09-23 |
 | ↳ `CLAUDE.md`'s Data pipeline section (line 306) still lists `kendall-county-board-members.json` + `mchenry-county-board-members.json` as hand-verified on that ground. `54786f5` ended it on 2026-09-03 by adding a stdlib rung between `requests` and `playwright`: the Akamai edge refuses the `requests` stack and serves a stdlib client sending real Chromium Sec-CH-UA hints, and it needs BOTH — the leave-one-out is in `user-agent-measurements.json` (requests+token 403, stdlib+token 403, requests+chrome 403, stdlib+chrome 200). Two scheduled runs each have scraped the live pages since with the report step SKIPPED, and both scrapes reproduce the shipped rosters exactly. #234 and #235 closed on that measurement 2026-09-23; the sentence is the last place the retired claim survives. |  |  |  |
+| ↳ **FIXED, and the diagnosis in the row above was wrong in two places.** The branch is not the test: run `35166293478` is the same zero-job shape ON MAIN, so filtering to `branch=main` would have cleared today's rows by luck and left the defect. And `check_roster_workflow_health.py` — which writes #387, the report that tells a human a roster is frozen — had the SAME defect and the row never said so; its MPS and RUSD FAILING rows are the same two phantom runs. `scripts/workflow_run_evidence.py` is now the one reader both scripts ask, because two readers of one question is where this fleet's recurring defect starts. The test is whether a job ever ran: a shape proxy that costs nothing narrows it, then the job count CONFIRMS before anything is dropped, and an unconfirmable run is kept — silence about a frozen roster is the expensive direction. A never-started run on the default branch is kept and reported, because there it means the shipped file cannot start. Replayed through the real `classify()`, MPS goes FAILING → OK and reproduces #387's exact wrong string. 16-assertion self-test, negative-tested three ways, wired into CI; the gate pair moves to 79 / 107. |  |  |  |
 | **`docs/EAM_STATUS.md` counts officeholders and NO workflow regenerates it** | manager | **fix open as #1102, 2026-09-22** | 2026-09-22 |
 | ↳ Found by #1093 going red on its own bot PR. The file carries a live per-instance count of named officeholders (Illinois 998); Sangamon District 16 became a vacancy, the count moved to 997, and `build_eam_status.py --check` failed the refresh that caused it. **`grep -rln build_eam_status .github/workflows/` returns `smoke-test.yml` alone** — the `--check`, never the build. And unlike `build_county_pages.py`, `build_officeholder_tables.py` and `build_concept_pages.py`, it has **no `check_workflows()`**: the gate those three carry precisely so a weekly job that rewrites a roster they count cannot merge without regenerating. So every roster workflow in the fleet goes red on its own pull request the first time its record count moves, and the failure lands on a bot PR nobody wrote. I regenerated the file onto the bot branch to unblock #1093; that is the symptom. The fix is the gate plus the regeneration step in whichever workflows it names, and it is mine rather than an instance's because the file is fleet-wide. |
 | ↳ **FIXED IN #1102, 2026-09-22.** `build_eam_status.py` gains the `check_workflows()` its three sibling generators have, and **62 scheduled workflows gain the regenerate step and the `git add`**. The surface is MEASURED rather than listed: the siblings each carry a hand-written `counts` list because each owns a handful of pages, while this report reads every roster `build_county_pages`' own adapters read — 71 files across four instances today, a set that moves whenever a county ships — so the gate takes `load_rosters()`'s own `paths` and asks `refreshed_by()` which scheduled job stages one. **It is the adapter surface and not every `data/app` file**, which Michigan measured rather than assumed (`mi/BOARD.md`, `69986bd`): of its six weekly roster jobs only `update-mi-commissioner-roster.yml` moves the figure, because `people` counts the districts these adapters name and not every officeholder an instance ships — requiring the step on the other five would ask 59 workflows fleet-wide to regenerate a file they cannot change. **BOTH CHECKS LOOK FOR A COMMAND AND A STAGED PATH, NEVER A MENTION, AND THE FIRST DRAFT DID NOT.** The step carries a comment naming the script and the file, so an `in text` test is satisfied by that comment; the draft's second check was vacuous for exactly that reason and a negative test that stripped the path from `git add` PASSED. All three failure branches are now negative-tested, and the gate refuses a run that finds no workflow at all. `docs/EAM_STATUS.md` itself does not change — no data moved. | | | |
@@ -102,6 +103,48 @@ belongs on that instance's board instead.
 | `llms.txt` counts the per-county pages and 60 of 62 refresh workflows do not regenerate it | manager | open | 2026-09-19 | Found by Iowa when its own weekly run went red on a file it never touched. `llms.txt` states the page count, a county dropping out moves it, and only Michigan's and Iowa's workflows rebuild it. Iowa fixed its own and boarded the general case rather than editing four instances' workflows unasked, which was right. The recurrence-proof fix is a GATE — `build_county_pages.py --check` already fails a workflow that does not regenerate its own pages, and nothing does the same for `llms.txt`. Counted here as 60 of 62 rather than Iowa's 61 of 63: their denominator included `smoke-test.yml`, which runs `--check` and regenerates nothing. |
 
 ## Status — manager writes here
+
+**2026-09-23 — the three tree-side defects are fixed, and the first one's diagnosis
+was wrong twice.** Adam said to take them. Nothing here changes what a reader of the
+site sees; all three are about whether this project's own reports tell the truth.
+
+- **The run-health defect was wider and different than recorded.** The row said
+  `fleet_status.py` reads the newest completed run on any BRANCH. The branch is not
+  the test: run `35166293478` is the same zero-job shape on MAIN, so a `branch=main`
+  filter would have cleared today's two rows by luck and left the defect in place.
+  And the row named one script where there are two — `check_roster_workflow_health.py`
+  writes #387, the report that tells a human a roster is frozen, and its MPS and RUSD
+  FAILING rows are the same two phantom runs. **The real test is whether a job ever
+  ran.** `scripts/workflow_run_evidence.py` is now the one reader both scripts ask,
+  because two readers of one question is where this fleet's recurring defect starts.
+  A free shape proxy narrows it and the job count CONFIRMS before anything is
+  dropped; an unconfirmable run is KEPT, because silence about a frozen roster is the
+  expensive direction. A never-started run on the default branch is kept and reported
+  — there it means the shipped file cannot start. Replayed through the real
+  `classify()`, MPS goes FAILING → OK and reproduces #387's exact wrong string. The
+  adjacent question it does NOT decide — whether a dispatch on a feature branch
+  should clear the staleness clock for the shipped roster — is recorded in the module
+  rather than answered, because narrowing that would move workflows this change has
+  not measured one by one.
+- **`docs/MANAGER.md` now names the boards.** It had said durable state belongs on
+  "the tracking issue, whose latest comment is the only state that survives a
+  container", and the word *board* appeared nowhere in 310 lines. True when written
+  on 2026-09-15, false four days later; a commit touched the file seven hours after
+  the boards landed and did not revisit it. The disproved sentence is kept in place
+  under its correction.
+- **`CLAUDE.md` no longer calls Kendall and McHenry hand-verified.** `54786f5` took
+  them off it on 2026-09-03, not 2026-09-10 as the task row said, and both have
+  refreshed weekly from their own scrapes since. **My own first draft of that
+  correction was itself wrong**: it said Playwright is the rung that reaches them,
+  taking the phrase from the `blocked` note on the counties' municipal yearbook
+  sources, which are a different surface. Measured on the board-members page itself,
+  the working rung is the stdlib client plus Sec-CH-UA hints — `requests`+token,
+  stdlib+token and `requests`+Chrome all 403, stdlib+Chrome 200 at 120,795 bytes.
+  A source that needs a browser-class client is not a source that blocks automation,
+  and the retired claim had recorded the two as one thing.
+
+The gate pair moves to **79 named steps / 107 invocations**, measured after the last
+edit, with the steward mirror restated to match.
 
 **2026-09-23 evening — the Wisconsin Court of Appeals roster unfroze after 18 days,
 and District II has a new Presiding Judge.** `update-wi-court-of-appeals-roster.yml`
