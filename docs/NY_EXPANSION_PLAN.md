@@ -866,6 +866,12 @@ re-measured against the shipped county fabric in the PR that sets them.
   sibling's `metro_center`; measured clear), and **`scope` the served count**: it stays "5 boroughs"
   (or becomes "5 counties") until a county joins the ring, and then "N counties" with N =
   `len(METRO_COUNTY_FIPS)`, gated by the generalised `check_illinois_scope`. Never "all 62 counties".
+  **SUPERSEDED 2026-09-23 by Adam: "statewide, 5 boroughs in depth" (PR #1107).** The rule this
+  bullet was protecting — never claim a county tier that does not exist — is kept: the shipped
+  phrase names no county and no count. What it got wrong was assuming the only honest alternatives
+  were a borough count or a county count, when 15 of the 33 layers already answered statewide, so
+  both understated the instance. The "Never 'all 62 counties'" half stands unchanged. The
+  generalised `check_illinois_scope` was never built, so nothing gated this either way.
 - `--sync-fleet` touches all six worksheets: `metro-worksheet.json` (il), `ny/`, `ca/`, `wi/`,
   `ia/`, `mi/metro-worksheet.json`, each of which carries a `metro_explorers` entry for `nyc`
   (measured at il :33, ca :55, ia :392, mi :682, ny :44, wi :2539 on 2026-09-18).
