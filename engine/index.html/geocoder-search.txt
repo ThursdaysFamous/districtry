@@ -241,88 +241,200 @@
       return na && nb ? Number(a) - Number(b) : (na ? -1 : nb ? 1 : (a < b ? -1 : a > b ? 1 : 0));
     })[0];
   }
+  /* ---------- NAMED districts: "Galesburg school district", "Curie HS" ----------
+   * A layer marked `match: "name"` (the statewide school districts, CPS's
+   * attendance zones) is matched by each district's own name, because its
+   * numbers repeat — 36 Illinois unified districts are District 1. The
+   * query and the name are read the same way: lower case, punctuation
+   * dropped, a number split from a letter stuck to it ("365U", "D203"), and
+   * the abbreviations districts use for themselves spelled out (CUSD,
+   * CCSD, HSD, SD, HS...), so "Galesburg CUSD 205" and "Galesburg Community
+   * Unit School District 205" are one query. Every word typed must be in
+   * the name or in the layer's own name ("Galesburg unified"), and the last
+   * may be the start of one, for type-ahead. It must also:
+   *   - name a place: at least one word of the district's name that is not
+   *     a kind of school ("Galesburg", "Curie"). A number alone finds only a
+   *     district whose name has no place in it ("District 214"), since the
+   *     number is the only name it has;
+   *   - say it is a school, with a school word or the number, so "Evanston"
+   *     alone stays an address search.
+   * A name typed in full answers alone, like a numbered district; one still
+   * being typed is shown above the address results. */
+  var NAMED_EXPAND = {
+    cusd: "community unit school district", ccsd: "community consolidated school district",
+    chsd: "community high school district", thsd: "township high school district",
+    hsd: "high school district", esd: "elementary school district", cud: "community unit district",
+    csd: "consolidated school district",
+    sd: "school district", d: "district", dist: "district", hs: "high school", es: "elementary school",
+    ms: "middle school", elem: "elementary", twp: "township", comm: "community", cons: "consolidated",
+    sch: "school", schools: "school", unified: "unit"
+  };
+  var NAMED_FILLER = { no: 1, number: 1, the: 1, of: 1, and: 1, public: 1 };
+  // words that say what kind of school, never which one
+  var NAMED_KIND = { school: 1, district: 1, high: 1, elementary: 1, middle: 1, unit: 1, community: 1,
+    consolidated: 1, township: 1, zone: 1, cps: 1, grade: 1, junior: 1, senior: 1, area: 1, county: 1, city: 1 };
+  function namedTokens(text) {
+    var out = [];
+    normalizeDistrictText(text).replace(/(\d)([a-z])/g, "$1 $2").replace(/([a-z])(\d)/g, "$1 $2")
+      .split(" ").forEach(function (t) {
+        if (!t || NAMED_FILLER[t]) return;
+        if (/^\d+$/.test(t)) { out.push(String(parseInt(t, 10))); return; }
+        (NAMED_EXPAND[t] || t).split(" ").forEach(function (w) { out.push(w); });
+      });
+    return out;
+  }
+  // per feature, once per index load: every word it answers to, and the
+  // words of its own name that name a place
+  function namedEntries(index) {
+    if (index.__named) return index.__named;
+    var entries = [];
+    index.features.forEach(function (f) {
+      var p = f.properties || {}, spec = index.layers[p.layer];
+      if (!spec || spec.match !== "name") return;
+      var own = namedTokens(p.name), all = {}, place = [];
+      own.concat(namedTokens(spec.label), namedTokens(spec.name), namedTokens(spec.where || ""))
+        .forEach(function (w) { all[w] = 1; });
+      own.forEach(function (w) {
+        if (w.length > 1 && !/^\d+$/.test(w) && !NAMED_KIND[w] && place.indexOf(w) < 0) place.push(w);
+      });
+      entries.push({ f: f, spec: spec, all: all, words: Object.keys(all), place: place });
+    });
+    index.__named = entries;
+    return entries;
+  }
+  function findNamedDistricts(index, q) {
+    var query = namedTokens(q), found = [];
+    if (!query.length) return found;
+    namedEntries(index).forEach(function (e) {
+      var partial = false, place = 0, num = false, kind = false;
+      for (var i = 0; i < query.length; i++) {
+        var w = query[i], hit = null;
+        if (e.all[w]) hit = w;
+        else if (i === query.length - 1 && w.length > 1 && !/^\d+$/.test(w)) {
+          for (var k = 0; k < e.words.length; k++) {
+            if (e.words[k].indexOf(w) === 0 && (!hit || e.place.indexOf(e.words[k]) >= 0)) hit = e.words[k];
+          }
+          if (hit) partial = true;
+        }
+        if (!hit) return;
+        if (e.place.indexOf(hit) >= 0) place++;
+        else if (/^\d+$/.test(hit)) num = true;
+        else if (NAMED_KIND[hit]) kind = true;
+      }
+      if (!kind && !num) return;
+      if (!place && !(num && !e.place.length)) return;
+      var p = e.f.properties, where = p.where || e.spec.where;
+      found.push({ layer: p.layer, label: where ? e.spec.label + " \u00b7 " + where : e.spec.label,
+        name: p.name, bbox: p.bbox, coords: e.f.geometry.coordinates, score: partial ? 1 : 2,
+        missed: e.place.length - place });
+    });
+    found.sort(function (a, b) {
+      return b.score - a.score || a.missed - b.missed || (a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
+    });
+    return found.slice(0, 8);
+  }
   function findDistricts(q) {
     var parsed = parseDistrictQuery(q);
-    if (!parsed) return Promise.resolve({ hits: [], exact: false, hints: [] });
+    var none = { hits: [], exact: false, hints: [] };
+    if (!parsed && !namedTokens(q).length) return Promise.resolve(none);
     return loadDistrictIndex().then(function (index) {
-      var hits = [], exact = false, hints = [];
-      if (!index || !index.layers || !index.features) return { hits: hits, exact: exact, hints: hints };
-      // the query's words with one place name taken out, or null when the
-      // place is not in them ("lake" out of "lake county board district")
-      // A two-word name is also tried run together, since "DeWitt" is how
-      // many readers type De Witt.
-      var without = function (words, place) {
-        var w = " " + words + " ", name = normalizeDistrictText(place);
-        var forms = [name, name.replace(/ /g, "")];
-        for (var k = 0; k < forms.length; k++) {
-          var p = " " + forms[k] + " ";
-          if (forms[k] && w.indexOf(p) >= 0) return w.replace(p, " ").trim();
-        }
-        return null;
+      if (!index || !index.layers || !index.features) return none;
+      var found = parsed ? findNumberedDistricts(index, parsed) : none;
+      var named = findNamedDistricts(index, q);
+      if (!named.length) return found;
+      return {
+        hits: found.hits.concat(named),
+        exact: found.exact || named.some(function (h) { return h.score === 2; }),
+        // a name is being matched: "Type its name" would only repeat it
+        hints: found.hints.filter(function (h) { return !h.named; })
       };
-      var bestScore = function (words, phrases) {
-        var score = 0;
-        if (words) (phrases || []).forEach(function (p) { score = Math.max(score, districtPhraseScore(words, p)); });
-        return score;
-      };
-      if (parsed.num === null) {
-        // NO NUMBER YET: the words name a kind of district ("Lake County
-        // Board Dis", "ward"), so say what to type next rather than guess
-        // which district is meant. A hint is not a result and is not a
-        // button: it cannot be picked, and #q= never auto-selects it.
-        var sets = districtIdSets(index);
-        Object.keys(index.layers).forEach(function (layerId) {
-          var spec = index.layers[layerId];
-          if (spec.where_per_district) {
-            var named = false, example = null;
-            Object.keys(sets).forEach(function (key) {
-              if (key.indexOf(layerId + "|") !== 0) return;
-              var place = key.slice(layerId.length + 1);
-              if (!example || place < example) example = place;
-              var rest = without(parsed.words, place);
-              if (rest === null || !bestScore(rest, spec.phrases)) return;
-              named = true;
-              hints.push({ name: place + " " + spec.name, note: "Type its number: " + describeIds(sets[key]) });
-            });
-            if (!named && bestScore(parsed.words, spec.phrases) && example) {
-              hints.push({ name: spec.name, note: "Start with the county, e.g. " + example + " " + spec.name + " " +
-                firstId(sets[layerId + "|" + example]) });
-            }
-            return;
-          }
-          var words = spec.where ? (without(parsed.words, spec.where) || parsed.words) : parsed.words;
-          if (!bestScore(words, spec.phrases)) return;
-          hints.push({ name: spec.name, note: "Type its number: " + describeIds(sets[layerId + "|"] || []) +
-            (spec.where ? " \u00b7 " + spec.where : "") });
-        });
-        return { hits: hits, exact: exact, hints: hints };
+    });
+  }
+  function findNumberedDistricts(index, parsed) {
+    var hits = [], exact = false, hints = [];
+    // the query's words with one place name taken out, or null when the
+    // place is not in them ("lake" out of "lake county board district")
+    // A two-word name is also tried run together, since "DeWitt" is how
+    // many readers type De Witt.
+    var without = function (words, place) {
+      var w = " " + words + " ", name = normalizeDistrictText(place);
+      var forms = [name, name.replace(/ /g, "")];
+      for (var k = 0; k < forms.length; k++) {
+        var p = " " + forms[k] + " ";
+        if (forms[k] && w.indexOf(p) >= 0) return w.replace(p, " ").trim();
       }
+      return null;
+    };
+    var bestScore = function (words, phrases) {
+      var score = 0;
+      if (words) (phrases || []).forEach(function (p) { score = Math.max(score, districtPhraseScore(words, p)); });
+      return score;
+    };
+    if (parsed.num === null) {
+      // NO NUMBER YET: the words name a kind of district ("Lake County
+      // Board Dis", "ward"), so say what to type next rather than guess
+      // which district is meant. A hint is not a result and is not a
+      // button: it cannot be picked, and #q= never auto-selects it.
+      var sets = districtIdSets(index);
       Object.keys(index.layers).forEach(function (layerId) {
         var spec = index.layers[layerId];
-        for (var i = 0; i < index.features.length; i++) {
-          var f = index.features[i], props = f.properties || {};
-          if (props.layer !== layerId || String(props.id) !== parsed.num) continue;
-          var score;
-          if (spec.where_per_district) {
-            // the county is required: every county has this district number
-            var rest = without(parsed.words, props.where || "");
-            if (rest === null) continue;
-            score = bestScore(rest, spec.phrases);
-          } else {
-            // a layer that belongs to one city ("where": "Chicago") also
-            // matches with that city named in the query: "Chicago Ward 33"
-            var words = spec.where ? (without(parsed.words, spec.where) || parsed.words) : parsed.words;
-            score = bestScore(words, spec.phrases);
+        if (spec.match === "name") {
+          if (bestScore(parsed.words, spec.phrases)) {
+            hints.push({ name: spec.name, named: true,
+              note: "Type its name" + (spec.where ? " \u00b7 " + spec.where : "") });
           }
-          if (!score) continue;
-          hits.push({ layer: layerId, label: spec.where ? spec.label + " \u00b7 " + spec.where : spec.label, name: props.name, bbox: props.bbox, coords: f.geometry.coordinates, score: score });
-          if (score === 2) exact = true;
-          if (!spec.where_per_district) break; // one district per number in a single-numbering layer
+          return;
         }
+        if (spec.where_per_district) {
+          var named = false, example = null;
+          Object.keys(sets).forEach(function (key) {
+            if (key.indexOf(layerId + "|") !== 0) return;
+            var place = key.slice(layerId.length + 1);
+            if (!example || place < example) example = place;
+            var rest = without(parsed.words, place);
+            if (rest === null || !bestScore(rest, spec.phrases)) return;
+            named = true;
+            hints.push({ name: place + " " + spec.name, note: "Type its number: " + describeIds(sets[key]) });
+          });
+          if (!named && bestScore(parsed.words, spec.phrases) && example) {
+            hints.push({ name: spec.name, note: "Start with the county, e.g. " + example + " " + spec.name + " " +
+              firstId(sets[layerId + "|" + example]) });
+          }
+          return;
+        }
+        var words = spec.where ? (without(parsed.words, spec.where) || parsed.words) : parsed.words;
+        if (!bestScore(words, spec.phrases)) return;
+        hints.push({ name: spec.name, note: "Type its number: " + describeIds(sets[layerId + "|"] || []) +
+          (spec.where ? " \u00b7 " + spec.where : "") });
       });
-      hits.sort(function (a, b) { return b.score - a.score; });
       return { hits: hits, exact: exact, hints: hints };
+    }
+    Object.keys(index.layers).forEach(function (layerId) {
+      var spec = index.layers[layerId];
+      if (spec.match === "name") return; // matched by name, below
+      for (var i = 0; i < index.features.length; i++) {
+        var f = index.features[i], props = f.properties || {};
+        if (props.layer !== layerId || String(props.id) !== parsed.num) continue;
+        var score;
+        if (spec.where_per_district) {
+          // the county is required: every county has this district number
+          var rest = without(parsed.words, props.where || "");
+          if (rest === null) continue;
+          score = bestScore(rest, spec.phrases);
+        } else {
+          // a layer that belongs to one city ("where": "Chicago") also
+          // matches with that city named in the query: "Chicago Ward 33"
+          var words = spec.where ? (without(parsed.words, spec.where) || parsed.words) : parsed.words;
+          score = bestScore(words, spec.phrases);
+        }
+        if (!score) continue;
+        hits.push({ layer: layerId, label: spec.where ? spec.label + " \u00b7 " + spec.where : spec.label, name: props.name, bbox: props.bbox, coords: f.geometry.coordinates, score: score });
+        if (score === 2) exact = true;
+        if (!spec.where_per_district) break; // one district per number in a single-numbering layer
+      }
     });
+    hits.sort(function (a, b) { return b.score - a.score; });
+    return { hits: hits, exact: exact, hints: hints };
   }
   function syncResultCount() {
     var n = geoResultsList.querySelectorAll("li > button").length;

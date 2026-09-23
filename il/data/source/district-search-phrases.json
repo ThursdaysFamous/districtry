@@ -1,5 +1,5 @@
 {
-  "_about": "The hand-owned half of il/data/app/district-search.json, which lets the search box answer '33rd ward' or 'State Senate District 7'. Each entry names a layer and the OFFICIAL NAME of one of its districts with the number taken out ('Ward' for 'Ward 33'). The app derives the variants a reader types from that name — 'Ward 33', 'ward #33', 'ward no. 33', '33rd ward', '33 ward' — and also accepts the layer's own sidebar label ('City Ward 33'), which the builder copies from metro-worksheet.json so the two cannot disagree. An entry whose districts belong to one city carries `where`: the result names it ('City Ward · Chicago') so a reader in a suburb with its own Ward 3 is not handed Chicago's without being told, and a query may include it ('Chicago Ward 33'). The DISTRICTS are never listed here: scripts/build_district_search.py reads them from each layer's own source, and its --check fails if this file names a layer the app does not register. A layer belongs here when 'District 3' names one district: either its numbering is unique across its whole ground, or it is county-dispatched and each district carries its county, which the query must then name ('Lake County Board District 3'). Suburban wards and precincts, whose numbers repeat per town, are left out until they have a way to say which.",
+  "_about": "The hand-owned half of il/data/app/district-search.json, which lets the search box answer '33rd ward' or 'State Senate District 7'. Each entry names a layer and the OFFICIAL NAME of one of its districts with the number taken out ('Ward' for 'Ward 33'). The app derives the variants a reader types from that name — 'Ward 33', 'ward #33', 'ward no. 33', '33rd ward', '33 ward' — and also accepts the layer's own sidebar label ('City Ward 33'), which the builder copies from metro-worksheet.json so the two cannot disagree. An entry whose districts belong to one city carries `where`: the result names it ('City Ward · Chicago') so a reader in a suburb with its own Ward 3 is not handed Chicago's without being told, and a query may include it ('Chicago Ward 33'). The DISTRICTS are never listed here: scripts/build_district_search.py reads them from each layer's own source, and its --check fails if this file names a layer the app does not register. A layer belongs here when 'District 3' names one district: either its numbering is unique across its whole ground, or it is county-dispatched and each district carries its county, which the query must then name ('Lake County Board District 3'). A layer whose districts are NAMED rather than numbered — the statewide school districts and CPS's attendance zones — carries `\"match\": \"name\"`: each district is found by its own name ('Galesburg school district', 'Curie high school'), with or without its number, and `name` here is only the kind of district, used for the hint shown before a name is typed. Suburban wards and precincts, whose numbers repeat per town, are left out until they have a way to say which.",
   "layers": [
     {
       "layer": "ward",
@@ -43,6 +43,45 @@
       "layer": "ccbr",
       "name": "Board of Review District",
       "why": "The Cook County Board of Review's 3 districts."
+    },
+    {
+      "layer": "school-district-unified",
+      "match": "name",
+      "name": "Unified School District",
+      "why": "Census TIGER's 387 Illinois unified (K-12) districts, Chicago Public Schools among them as District 299. Numbers repeat across the state (36 are District 1), so a district is found by its name: 'Galesburg school district', 'Galesburg 205', 'Galesburg CUSD 205'. A number alone finds only the few districts whose name has no place in it ('Community Unit School District 300')."
+    },
+    {
+      "layer": "school-district-secondary",
+      "match": "name",
+      "name": "High School District",
+      "why": "Census TIGER's 105 Illinois high school districts, where elementary and high school districts are separate. Several carry no place name ('Township High School District 214'), so 'District 214' finds those."
+    },
+    {
+      "layer": "school-district-elementary",
+      "match": "name",
+      "name": "Elementary School District",
+      "why": "Census TIGER's 371 Illinois elementary districts: 'Evanston 65', 'Evanston CCSD 65'."
+    },
+    {
+      "layer": "cps-elementary",
+      "match": "name",
+      "where": "Chicago",
+      "name": "Elementary School Zone",
+      "why": "CPS's elementary attendance zones, one per school, named as the card names them: 'Metcalfe elementary', 'Alcott ES'."
+    },
+    {
+      "layer": "cps-middle",
+      "match": "name",
+      "where": "Chicago",
+      "name": "Middle School Zone",
+      "why": "CPS's middle-school attendance zones, where middle schools are zoned separately."
+    },
+    {
+      "layer": "cps-high",
+      "match": "name",
+      "where": "Chicago",
+      "name": "High School Zone",
+      "why": "CPS's high school attendance zones: 'Curie high school', 'Curie HS'."
     },
     {
       "layer": "county-board",
