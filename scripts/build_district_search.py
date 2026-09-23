@@ -21,6 +21,17 @@ TWO HALVES, TWO OWNERS.
 The variants a reader types ("ward #33", "33rd ward") are derived by the app
 from the phrase, not stored, so there is one rule for all of them.
 
+NAMED LAYERS ("Galesburg school district", "Curie high school"). The three
+statewide school-district layers (Census TIGER) and CPS's three attendance-
+zone layers are named, not numbered, and their numbers repeat — 36 Illinois
+unified districts are District 1 — so the app matches them by name (see
+findNamedDistricts in engine/index.html/geocoder-search.txt). The phrase file
+marks them `"match": "name"`. Each is fetched live as the app fetches it; a
+district drawn as several features (a CPS school with a detached piece) is
+one district keyed by its id, and two districts sharing a name inside one
+layer (two Oak Grove School District 68s) each carry their county, looked up
+from TIGER's county layer at the district's point.
+
 COUNTY-DISPATCHED LAYERS ("Lake County Board District 3"). Illinois's county
 board layer is ~60 counties, most fetched live from each county's own GIS by
 loader code that exists only in il/index.html. Those districts are read
@@ -47,7 +58,9 @@ BUILD vs --check.
     - for the two live layers, which cannot be re-read offline, the district
       set is complete and the app still loads the dataset this index was
       built from — so a source swap in index.html fails here instead of
-      leaving the index describing a map the app no longer draws.
+      leaving the index describing a map the app no longer draws. The
+      named school layers are held the same way; CPS rotates its dataset id
+      every school year, so this is where a stale school index fails.
 
     - for a county-dispatched layer, every county the index names is one the
       app still dispatches (a county dropped from the map must not stay
@@ -93,6 +106,62 @@ def _num(v):
     s = str(v if v is not None else "").strip()
     return str(int(s)) if s.isdigit() and int(s) > 0 else None
 
+TIGER_SCHOOL = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/%d/query"
+
+
+def _tiger_school(layer_index):
+    """A statewide TIGER school-district layer, read exactly as the app's
+    tigerStatewideLoader reads it: STATE='17', keyed by GEOID, named by NAME.
+    Census's own filler polygon ("School District Not Defined") is no district."""
+    return {
+        "named": True,
+        "live": (TIGER_SCHOOL % layer_index) + "?where=STATE%3D%2717%27&outFields=GEOID,NAME&returnGeometry=true"
+                "&outSR=4326&geometryPrecision=5&f=json",
+        "format": "esri",
+        "token": 'tigerStatewideLoader("School", %d,' % layer_index,
+        "key": lambda p: str(p.get("GEOID") or "").strip() or None,
+        "title": lambda p: str(p.get("NAME") or "").strip(),
+        "exclude": lambda p: "not defined" in str(p.get("NAME") or "").lower(),
+    }
+
+
+# The name keys registerCpsZone reads, in its order; the card title-cases them.
+CPS_NAME_KEYS = ["short_name", "school_nam", "school_nm", "school_name", "schoolname", "sch_name", "name"]
+
+
+def card_title_case(text):
+    """The app's cardTitleCase, so a result reads exactly as the card will:
+    'NORTH-GRAND HS' -> 'North-grand HS', single letters and school types kept."""
+    keep = {"ES", "MS", "HS", "PS", "IS", "NE", "NW", "SE", "SW", "IL", "NY", "CA", "US"}
+    out = []
+    for word in re.split(r"\s+", str(text).strip()):
+        if len(word) < 2 or re.search(r"\d", word) or word in keep:
+            out.append(word)
+        else:
+            out.append(word[0].upper() + word[1:].lower())
+    return " ".join(out)
+
+
+def _cps_zone(dataset):
+    """A CPS attendance-zone layer: one zone per school, keyed by school_id
+    (a school drawn as several polygons is one district), named as the card
+    names it. The dataset id rotates each school year, so --check fails the
+    day il/index.html loads a new one and this index still describes the old."""
+    def title(p):
+        for k in CPS_NAME_KEYS:
+            if p.get(k):
+                return card_title_case(p[k])
+        return ""
+    return {
+        "named": True,
+        "live": "https://data.cityofchicago.org/resource/%s.geojson?$limit=5000" % dataset,
+        "format": "geojson",
+        "token": '"%s"' % dataset,
+        "key": lambda p: str(p.get("school_id") or "").strip() or None,
+        "title": title,
+    }
+
+
 SOURCES = {
     "ward": {
         "live": "https://data.cityofchicago.org/resource/p293-wvbd.geojson?$limit=200",
@@ -117,6 +186,17 @@ SOURCES = {
     "il-supreme-court": {"file": "il-supreme-court-districts.json", "key": lambda p: _num(p.get("DISTRICTN"))},
     "ccbr": {"file": "ccbr-districts.json", "key": lambda p: _num(p.get("DISTRICTN"))},
     # Read through the app's own loaders (scripts/dump_layer_districts.mjs).
+    # NAMED districts ("Galesburg Community Unit School District 205", CPS's
+    # "Curie HS"). Their numbers repeat across the state — 36 unified districts
+    # are District 1 — so they are matched by name in the app, not by number.
+    # All six are fetched live, as the app fetches them; --check confirms the
+    # set it recorded and that the app still loads the same source.
+    "school-district-unified": _tiger_school(0),
+    "school-district-secondary": _tiger_school(1),
+    "school-district-elementary": _tiger_school(2),
+    "cps-elementary": _cps_zone("x72b-38qv"),
+    "cps-middle": _cps_zone("fyff-53xy"),
+    "cps-high": _cps_zone("xg7c-d8rm"),
     "county-board": {
         "app_layer": True,
         "skip": {
@@ -186,6 +266,12 @@ def phrase_layers():
         # Chicago's Ward 3 never reads as a suburb's Ward 3
         if entry.get("where"):
             out[lid]["where"] = entry["where"].strip()
+        # a NAMED layer is matched by each district's own name, not a number
+        if bool(entry.get("match") == "name") != bool(SOURCES[lid].get("named")):
+            problems.append("%s: the phrase file says match %r, the builder reads it as %s"
+                            % (lid, entry.get("match"), "named" if SOURCES[lid].get("named") else "numbered"))
+        if SOURCES[lid].get("named"):
+            out[lid]["match"] = "name"
         # a county-dispatched layer: every district carries its own county,
         # which the query must name ("Lake County Board District 3")
         if SOURCES.get(lid, {}).get("app_layer"):
@@ -294,6 +380,39 @@ def load_source(lid):
     return esri_to_features(data) if spec["format"] == "esri" else data["features"]
 
 
+def county_at(point):
+    """The Illinois county holding a point, from TIGER's county layer — the
+    same layer the app's County card reads."""
+    url = ("https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query"
+           "?geometry=%s,%s&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects"
+           "&where=STATE%%3D%%2717%%27&outFields=NAME&returnGeometry=false&f=json" % (point[0], point[1]))
+    feats = fetch(url).get("features") or []
+    if len(feats) != 1:
+        raise SystemExit("build-district-search: no single county at %s" % point)
+    return feats[0]["attributes"]["NAME"]
+
+
+def named_districts(lid):
+    """({id: [rings]}, {id: name}) for a named layer. A district drawn as
+    several features is one district, and they must agree on its name."""
+    spec = SOURCES[lid]
+    feats = load_source(lid)
+    groups, titles = {}, {}
+    for f in feats:
+        p = f.get("properties") or {}
+        if spec.get("exclude") and spec["exclude"](p):
+            continue
+        d, title = spec["key"](p), spec["title"](p)
+        if not d or not title:
+            raise SystemExit("build-district-search: %s has a feature with no id or no name (%r)" % (lid, p))
+        if titles.setdefault(d, title) != title:
+            raise SystemExit("build-district-search: %s %s is named both %r and %r" % (lid, d, titles[d], title))
+        groups.setdefault(d, []).extend(rings_of(f.get("geometry")))
+    if len(groups) < 10:
+        raise SystemExit("build-district-search: %s returned %d district(s); refusing a partial index" % (lid, len(groups)))
+    return groups, titles
+
+
 def run_dump(layer_id):
     """Serve the repo on a free port, boot the app headless and dump the layer's
     districts through its own loaders (scripts/dump_layer_districts.mjs)."""
@@ -364,6 +483,26 @@ def build(county_dump=None):
     features, live = [], {}
     for lid in layers:
         spec = SOURCES[lid]
+        if spec.get("named"):
+            groups, titles = named_districts(lid)
+            seen = {}
+            for d in titles:
+                seen[titles[d]] = seen.get(titles[d], 0) + 1
+            for d in sorted(groups, key=lambda k: (titles[k].lower(), k)):
+                rings = groups[d]
+                point = interior_point(rings)
+                props = {"layer": lid, "id": d, "name": titles[d],
+                         "bbox": [round(v, DIGITS) for v in bbox_of(rings)]}
+                # two districts of one name (there are two Oak Grove School
+                # District 68s) would be two identical rows, so each says
+                # which county it is in
+                if seen[titles[d]] > 1:
+                    props["where"] = county_at(point)
+                features.append({"type": "Feature", "geometry": {"type": "Point", "coordinates": point},
+                                 "properties": props})
+            live[lid] = {"source": spec["token"], "fetched": date.today().isoformat(), "ids": sorted(groups)}
+            print("build-district-search: %-26s %3d district(s) (live, by name)" % (lid, len(groups)))
+            continue
         if spec.get("app_layer"):
             dump = load_json(county_dump) if county_dump else run_dump(lid)
             groups, counts, skipped = app_layer_districts(lid, dump)
@@ -494,10 +633,31 @@ def check():
             where = p.get("where") if src.get("app_layer") else None
             if src.get("app_layer") and where != COUNTY_NAME.get(p.get("county")):
                 fails.append("%s %s: where %r is not that county's name" % (lid, p.get("county"), where))
+            if src.get("named"):
+                if not str(p.get("name") or "").strip():
+                    fails.append("%s %s: a named district with no name" % (lid, p["id"]))
+                continue
             if p.get("name") != district_name(spec["name"], p["id"], where):
                 fails.append("%s %s: name %r does not follow the phrase file" % (lid, p["id"], p.get("name")))
         if src.get("app_layer"):
             fails += check_app_layer(lid, feats, doc, index_html)
+            continue
+        if src.get("named"):
+            # a name shared inside one layer must be told apart by its county
+            shown = [(f["properties"]["name"], f["properties"].get("where")) for f in feats]
+            names = [n for n, _ in shown]
+            for n, w in shown:
+                if names.count(n) > 1 and (not w or shown.count((n, w)) > 1):
+                    fails.append("%s: %r names more than one district and %s tells them apart"
+                                 % (lid, n, "no county" if not w else "the county %r no longer" % w))
+            if src["token"] not in index_html:
+                fails.append("%s: il/index.html no longer loads %s, the source this index was built from — "
+                             "rebuild against the new one" % (lid, src["token"]))
+            rec = (doc.get("live") or {}).get(lid) or {}
+            if rec.get("source") != src["token"]:
+                fails.append("%s: the index records source %r, the builder reads %r" % (lid, rec.get("source"), src["token"]))
+            if sorted(ids) != rec.get("ids"):
+                fails.append("%s: its districts disagree with the ids recorded at build" % lid)
             continue
         if "file" in src:
             if src["file"] not in index_html:

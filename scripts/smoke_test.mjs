@@ -536,7 +536,7 @@ try {
     check("picking a district by name is counted in GoatCounter by layer, once",
       found.events.filter((e) => /^district-search\//.test(e)).join() === "district-search/il-senate",
       JSON.stringify(found.events));
-        // A COUNTY-dispatched layer needs the county in the query: every county
+    // A COUNTY-dispatched layer needs the county in the query: every county
     // has a District 3. De Witt's lettered districts ship in data/app, so this
     // needs no county server; the bare phrase must match NO district row.
     const byCounty = async (q) => {
@@ -551,6 +551,20 @@ try {
     check("a county board district is found by county and letter",
       dewitt.join() === "De Witt County Board District A", JSON.stringify(dewitt));
     check("a county board district without its county matches nothing", bare.length === 0, JSON.stringify(bare));
+    // A NAMED district (the statewide school districts, CPS's zones) is found
+    // by its name, abbreviations spelled out; a number alone finds only a
+    // district whose name has no place in it, and a place alone stays an
+    // address search. All four read the index only, so no Census call.
+    const galesburg = await byCounty("Galesburg CUSD 205");
+    const d214 = await byCounty("district 214");
+    const d1 = await byCounty("school district 1");
+    const town = await byCounty("Evanston");
+    check("a school district is found by its name and abbreviation",
+      galesburg.join() === "Galesburg Community Unit School District 205", JSON.stringify(galesburg));
+    check("a school district whose only name is its number is found by the number",
+      d214.join() === "Township High School District 214", JSON.stringify(d214));
+    check("a school district number shared across the state, or a town alone, matches no district",
+      d1.length === 0 && town.length === 0, JSON.stringify({ d1, town }));
     // TYPE-AHEAD before the number: the words name a kind of district, so the
     // list says what to type next. A hint is text, never a button, so it
     // cannot be picked and #q= can never auto-select it.
