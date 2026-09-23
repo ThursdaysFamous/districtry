@@ -469,7 +469,15 @@ if (typeof L === "undefined") {
         layer.on("click", function () { open_(a.url); });
         var c = L.geoJSON(sgj || gj).getBounds().getCenter();
         label(c, a.name, "place-label", [110, 14], [55, 7]);
-        legendRow(DATA, a.name, (sgj ? "statewide, " : "") + a.scope, a.url);
+        /* The "statewide, " prefix marks the dashed wash, and it is PREPENDED
+           rather than assumed: ia and mi ship one tier, so they get no prefix.
+           A scope that already says statewide must not take it twice —
+           New York's is "statewide, 5 boroughs in depth", which read
+           "statewide, statewide, 5 boroughs in depth" before this test, and
+           the doubling was invisible in the generated diff because the prefix
+           is added HERE at runtime rather than written into the data above. */
+        var scopeSaysStatewide = a.scope.toLowerCase().indexOf("statewide") === 0;
+        legendRow(DATA, a.name, (sgj && !scopeSaysStatewide ? "statewide, " : "") + a.scope, a.url);
       });
       CITIES.forEach(function (c) {
         L.circleMarker([c.lat, c.lng], {
