@@ -68,6 +68,11 @@ import urllib.error
 import urllib.request
 import zipfile
 
+# The one reader of "which of a workflow's runs say anything about whether it
+# is still refreshing". The roster-health watchdog reads the same module; it
+# is a plain sibling import because both scripts already run from scripts/.
+import workflow_run_evidence
+
 API = "https://api.github.com"
 CAP_RE = re.compile(r"^CAPABILITIES\s*=\s*\[(.*?)\]", re.DOTALL | re.MULTILINE)
 GUIDEBOOK_PATH = os.path.join("docs", "DATA_LAYER_GUIDEBOOK.md")
@@ -407,11 +412,27 @@ def inventory_diff(repo_root):
 
 
 def workflow_health(repo, wf_file):
-    """(conclusion, date, coverage_lines) of the last completed run."""
+    """(conclusion, date, coverage_lines) of the last completed run that is evidence.
+
+    THE LAST COMPLETED RUN IS NOT ALWAYS A RUN. Until 2026-09-23 this asked for
+    one run and reported its conclusion, so a run GitHub recorded for a workflow
+    file it could not START — no job, nothing scraped, on a branch that has since
+    been deleted — became a whole instance's scraper-health row. Two rows of the
+    weekly issue said a roster refresh was failing when both had succeeded on
+    their own schedules on main the day before, and they would have repeated
+    every Monday, because nothing on a deleted branch is ever superseded.
+    workflow_run_evidence.py is the one reader of that question; the roster-health
+    watchdog, which had the same defect, asks it too. Several runs are fetched
+    now because the newest one may not be evidence.
+    """
     try:
-        runs = api_get("/repos/%s/actions/workflows/%s/runs?per_page=1&status=completed" % (repo, wf_file))
-        run = runs["workflow_runs"][0]
-    except (urllib.error.URLError, LookupError):
+        runs = api_get("/repos/%s/actions/workflows/%s/runs?per_page=10&status=completed"
+                       % (repo, wf_file))
+        real = workflow_run_evidence.evidence(
+            runs["workflow_runs"],
+            job_count=workflow_run_evidence.job_counter(api_get, repo))
+        run = real[0]
+    except (urllib.error.URLError, LookupError):   # LookupError covers the empty list
         return ("no runs", "", [])
     coverage = []
     try:

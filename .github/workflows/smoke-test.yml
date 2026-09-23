@@ -857,6 +857,18 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/robots_policy.py --selftest
 
+      # Two reports say whether a weekly roster refresh is still running, and both
+      # used to take a workflow's newest completed run without asking whether it
+      # was a run. GitHub records one for a workflow file it cannot START, with no
+      # job and nothing scraped, and on 2026-09-23 two such runs — on a branch
+      # deleted from origin, so nothing could supersede them — were being reported
+      # as failing roster refreshes that would repeat every week. The predicate
+      # that tells those apart is four lines long, which is exactly the kind that
+      # gets simplified into being wrong.
+      - name: The run-evidence predicate still tells a run from a run that never started
+        if: ${{ !cancelled() }}
+        run: python3 scripts/workflow_run_evidence.py --selftest
+
       # Over a hundred files here send a browser user-agent (115 when this was
       # measured), and CLAUDE.md's rule for that
       # (settled 2026-09-11) is that the calling file records which token was

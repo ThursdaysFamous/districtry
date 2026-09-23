@@ -88,6 +88,10 @@ import sys
 import urllib.error
 import urllib.request
 
+# One reader for "which runs are evidence about the refresh"; fleet_status.py
+# asks the same module the same question.
+import workflow_run_evidence
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WORKFLOW_DIR = os.path.join(REPO_ROOT, ".github", "workflows")
 API = "https://api.github.com"
@@ -298,7 +302,14 @@ def main():
         try:
             data = api_get("/repos/%s/actions/workflows/%s/runs?per_page=20"
                            % (args.repo, fn), token)
-            runs = data.get("workflow_runs") or []
+            # A run GitHub recorded for a workflow file it could not START is not
+            # evidence about the refresh: no job ran and nothing was scraped. Two
+            # rows of this report named exactly that on 2026-09-23. One reader
+            # answers that question for this script and fleet_status.py alike.
+            runs = workflow_run_evidence.evidence(
+                data.get("workflow_runs") or [],
+                job_count=workflow_run_evidence.job_counter(
+                    lambda path: api_get(path, token), args.repo))
         except urllib.error.HTTPError as exc:
             unreadable.append((fn, name, "HTTP %s" % exc.code))
             continue
