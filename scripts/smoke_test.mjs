@@ -654,6 +654,9 @@ try {
         stats.rest.length === 1 && /^Every part of IL-7/.test(stats.rest[0]), JSON.stringify(stats.rest));
       check("opening the stats is counted in GoatCounter by the pinned layer, once",
         stats.events.filter((e) => /^compare-stats\//.test(e)).join() === "compare-stats/congress", JSON.stringify(stats.events));
+      // Opening a row is counted by the ROW's layer, once; printing opens
+      // every other row and must count none of them.
+      await page.click(".stats-row summary");
       // PRINT OR SHARE opens every row and waits for its card before the
       // print dialog; window.print is replaced by a recorder so the check
       // sees the report as it would be printed.
@@ -673,16 +676,31 @@ try {
       check("printing the report opens every row, with every card loaded, before the print dialog",
         printed.printed === 1 && printed.printing && printed.open === printed.rows && printed.loading === 0,
         JSON.stringify(printed));
+      const statsEvents = await page.evaluate(() =>
+        (window.__gcEvents || []).filter((v) => v && v.event && /^compare-stats-(row|print)\//.test(v.path)).map((v) => v.path));
+      check("opening a row and printing are each counted once, by layer",
+        statsEvents.join() === "compare-stats-row/il-house,compare-stats-print/congress", JSON.stringify(statsEvents));
       // A LINK REOPENS THE REPORT: the open report puts stats=1 in the
       // permalink, closing it takes it out, and a fresh load of that link
       // opens the report by itself once the boundaries are in.
       const openHash = await page.evaluate(() => location.hash);
+      await page.click(".stats-link-btn");
+      const linkEvents = await page.evaluate(() =>
+        (window.__gcEvents || []).filter((v) => v && v.event && /^compare-stats-link\//.test(v.path)).map((v) => v.path));
+      check("copying the report's link is counted by the pinned layer, once",
+        linkEvents.join() === "compare-stats-link/congress", JSON.stringify(linkEvents));
       await page.keyboard.press("Escape");
       const closedHash = await page.evaluate(() => location.hash);
       check("the open report puts stats=1 in the link, and closing it takes it out",
         /[#&]pin=congress&stats=1(&|$)/.test(openHash) && !/stats=1/.test(closedHash), `${openHash} / ${closedHash}`);
       const again = await browser.newContext({ serviceWorkers: "block" });
-      const reopened = await booted(again, `${BASE}${openHash}`);
+      const reopened = await booted(again, `${BASE}${openHash}`, async (p) => {
+        await p.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+        await p.addInitScript(() => {
+          window.__gcEvents = [];
+          window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+        });
+      });
       const came = await reopened
         .waitForFunction(() => { const m = document.getElementById("stats-modal"); return m && !m.hidden && document.querySelectorAll(".stats-row").length >= 10; },
           null, { timeout: QUERY_TIMEOUT })
@@ -691,9 +709,12 @@ try {
         name: ((document.querySelector("#stats-modal .stats-name") || {}).textContent || ""),
         rows: document.querySelectorAll(".stats-row").length,
         hash: location.hash,
+        events: (window.__gcEvents || []).filter((v) => v && v.event && /^compare-stats/.test(v.path)).map((v) => v.path),
       }));
       check("a link carrying stats=1 reopens the report for the same district",
         came && back.name === "IL-7" && /stats=1/.test(back.hash), JSON.stringify(back));
+      check("a report reopened by a link is counted apart from one opened by hand",
+        back.events.join() === "compare-stats-reopen/congress", JSON.stringify(back.events));
       await again.close();
     }
     await context.close();
