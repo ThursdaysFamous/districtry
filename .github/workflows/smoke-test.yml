@@ -1056,6 +1056,16 @@ jobs:
           pip install -c scripts/requirements.txt requests shapely
           python3 scripts/build_parcel_fabric_districts.py --selftest
 
+      # The engine's geometry-measure block is the app's only way to say how
+      # much of one district lies in another, and it is hand written because
+      # the app carries no geometry library. This runs the block AS SHIPPED in
+      # Node against the fleet's own district files and holds its areas,
+      # overlap shares and point weights to shapely on the same rings. Offline;
+      # shapely is installed by the step above.
+      - name: The geometry-measure block still agrees with shapely
+        if: ${{ !cancelled() }}
+        run: python3 scripts/validate_geometry_measure.py
+
       # Nine Illinois data files carry a top-level `generated` stamp, so each
       # weekly workflow opens a bot PR whether or not an officeholder moved.
       # The stamp is right and stays; what the nine builders now print beside it
