@@ -138,6 +138,17 @@
       moreLabel.className = "gap-more-label";
       moreLabel.textContent = "Why, and what would fix it";
       more.appendChild(moreLabel);
+      // Counted by the GAP (its record id), once per panel render, so the
+      // count says which absences readers want explained. A gap names a
+      // concept and an area no finer than a county, and the panel lists every
+      // gap wherever the reader is, so the id says what interested them, not
+      // where they are.
+      var counted = false;
+      more.addEventListener("toggle", function () {
+        if (!more.open || counted) return;
+        counted = true;
+        trackEvent("gaps-why/" + gap.id);
+      });
       [["Why", gap.why], ["What would fix it", gap.wanted]].forEach(function (pair) {
         if (!pair[1]) return;
         var p = cardEl("p", "gap-detail");
@@ -154,6 +165,7 @@
       link.target = "_blank";
       link.rel = "noopener";
       link.textContent = "Suggest a source →";
+      link.addEventListener("click", function () { trackEvent("gaps-suggest/" + gap.id); });
       actions.appendChild(link);
       more.appendChild(actions);
       item.appendChild(more);
@@ -272,6 +284,7 @@
     }
 
     function open() {
+      trackEvent("gaps-open");
       lastFocus = document.activeElement;
       modal.hidden = false;
       render();

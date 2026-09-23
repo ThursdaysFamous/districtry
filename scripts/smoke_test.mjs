@@ -612,6 +612,63 @@ try {
     await context.close();
   }
 
+  // 1g. THE MORE MENU AND THE GAPS PANEL ARE COUNTED. At 1,400px some
+  //     links sit in "More": opening it and picking an item are counted, the
+  //     item by its name; opening the data-gaps panel, expanding a gap's
+  //     explanation and following its "Suggest a source" link are counted,
+  //     the last two by the gap's record id. Links are prevented from
+  //     navigating so the page stays to be read.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block", viewport: { width: 1400, height: 900 } });
+    const page = await booted(context, BASE, async (p) => {
+      await p.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+      await p.addInitScript(() => {
+        window.__gcEvents = [];
+        window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+      });
+    });
+    await page.waitForTimeout(800); // the web font changes the pills' widths
+    await page.evaluate(() => document.addEventListener("click", (e) => {
+      const a = e.target.closest && e.target.closest("a[href]");
+      if (a) e.preventDefault();
+    }, true));
+    const events = () => page.evaluate(() => (window.__gcEvents || []).filter((v) => v && v.event).map((v) => v.path));
+    const hasMore = await page.$("#dst-more-btn:not([hidden])").then((h) => !!h && page.isVisible("#dst-more-btn"));
+    if (hasMore) {
+      await page.click("#dst-more-btn");
+      const key = await page.evaluate(() => {
+        const item = document.querySelector("#dst-more-panel a, #dst-more-panel button");
+        const href = item && item.getAttribute("href") || "";
+        return item ? (item.id ? item.id.replace(/-btn$/, "") : href.split(/[?#]/)[0].split("/").pop().replace(/\.html$/, "")) : "";
+      });
+      await page.click("#dst-more-panel :is(a, button)");
+      const more = (await events()).filter((e) => /^more-/.test(e));
+      check("the More menu counts being opened and the item picked, once each",
+        more.join() === "more-open,more-item/" + key, JSON.stringify(more));
+    } else {
+      check("the More menu counts being opened and the item picked, once each", false, "no More menu at 1,400px");
+    }
+    await page.click("#gaps-btn");
+    const why = await page.waitForSelector(".gap-more-label", { state: "attached", timeout: QUERY_TIMEOUT }).then(() => true, () => false);
+    if (why) {
+      const id = await page.evaluate(() => {
+        const d = document.querySelector(".gap-more");
+        d.closest("details:not(.gap-more)") && (d.closest("details:not(.gap-more)").open = true);
+        const m = /gap_id=([^&]+)/.exec(d.querySelector(".gap-suggest").getAttribute("href"));
+        return m ? decodeURIComponent(m[1]) : "";
+      });
+      await page.click(".gap-more-label");
+      await page.click(".gap-more[open] .gap-suggest");
+      await page.waitForTimeout(100);
+      const gaps = (await events()).filter((e) => /^gaps-/.test(e));
+      check("the gaps panel counts opening, a gap's explanation and its suggestion link, by gap",
+        id && gaps.join() === `gaps-open,gaps-why/${id},gaps-suggest/${id}`, JSON.stringify(gaps));
+    } else {
+      check("the gaps panel counts opening, a gap's explanation and its suggestion link, by gap", false, "the panel listed no gap");
+    }
+    await context.close();
+  }
+
   // 1f. COMPARISON STATS. With Congress pinned at the Loop and the State
   //     House on, the pinned card carries "Stats", and the screen it opens
   //     counts people from the shipped Census block files: IL-7 holds
