@@ -103,6 +103,41 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-23 evening — the Wisconsin Court of Appeals roster unfroze after 18 days,
+and District II has a new Presiding Judge.** `update-wi-court-of-appeals-roster.yml`
+had not opened a PR since 2026-09-05. It was the UNPROVEN row on #387: #1040 gave the
+job one forgiven failure, and its first run after that fix drew a runner that could
+reach `www.wicourts.gov` — the block is per-runner egress IP, measured in the
+scraper's own docstring, not a source change. **Merged as #1123.**
+
+What moved for a reader: Wisconsin's Court of Appeals card for District II now names
+**Maria S. Lazar** as Presiding Judge at (262) 521-5233, where it named Mark D.
+Gundrum. Gundrum is still on that bench; only the role moved. Verified against the
+court's own contact page, fetched today as the scraper's own client
+(`districtry-wisconsin/1.0`; that host's robots.txt is a 404, so allow-all, read
+through `robots_policy.py` before the fetch). The page prints
+`LAZAR, HON. MARIA S. - Presiding Judge` first and `GUNDRUM, HON. MARK D.` third with
+no role, which is exactly the diff. **The role is parsed from the page's own label,
+not from list position** — so this is the court's statement, not a reordering
+artefact. The four-judge seat gate passed and no other district moved.
+
+The merged tree was verified before the merge, not the PR body: `wi/validate_index.py`,
+`check_roster_retention.py`, `check_cache_version.py` and `build_eam_status.py --check`
+all green with the bot branch merged onto current main. Nothing generated reads this
+roster, so no page needed regenerating.
+
+**Also merged to main while this session was reviewing issues: #1122, `/ai.html`.**
+Not mine — the feature session's — but verified here on the merged tree afterwards,
+because two branches can each be right against their own base and both wrong once
+merged. The gate pair holds at **78 named steps / 106 invocations** (`validate_gate_counts.py`
+and `validate_steward_mirror.py` agree), and `build_ai_page.py --check`,
+`build_about_page.py --check`, `build_privacy_page.py --check`, `validate_analytics.py`,
+`build_llms_txt.py --check` and `robots_policy.py --selftest` all pass. For a reader:
+the site now has a page saying it is mostly written by AI agents, what they do and
+what they do not, and `about.html` no longer claims every name comes from the body
+that elects the person — the Congress and several state-legislature rosters come from
+the @unitedstates project and Open States.
+
 **2026-09-23 — reviewed all 14 open issues; 4 updated, 2 closed, 8 left alone.**
 Adam asked for the standing reviews to be updated only where something has changed.
 Fourteen agents investigated one issue each against primary sources, and every
