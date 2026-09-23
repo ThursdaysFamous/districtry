@@ -297,7 +297,9 @@ def measure_address_list(src, name):
 # the district, which would say where a reader lives. Every app can send it:
 # the screen is shared engine code and compares by area where an app ships no
 # population, so no qualifier is needed the way district-search/ needs one.
-EXPECTED_EVENTS = ["address-search", "compare-stats/", "compare-stop", "compare/",
+# `compare-stats-print/` joined the same day with the report's print button,
+# counted the same way, by the pinned layer and never the district.
+EXPECTED_EVENTS = ["address-search", "compare-stats-print/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "geolocate",
                    "geolocate-success", "layer/", "metro-portal-go/", "select",
                    "share-native", "share-open", "share-permalink"]
@@ -942,9 +944,9 @@ def render_recipient_rows(apps):
         "<strong>your exact selected point</strong> so one district can answer immediately "
         "while the full layer downloads. Opening a row on the comparison stats screen runs "
         "that same lookup for a point <strong>inside the district the row names</strong>, "
-        "which is a point you did not click. Layers whose data ships with the app contact "
+        "which is a point you did not click, and printing that screen opens every row. Layers whose data ships with the app contact "
         "nobody at all.",
-        "When you turn a layer on and select a point, or open a row of comparison stats.",
+        "When you turn a layer on and select a point, or open or print comparison stats.",
         "Every app with a map."))
     # NOT a list of the apps. Every page here carries the counter, so naming the
     # seven surfaces this generator reads would have understated the recipient —

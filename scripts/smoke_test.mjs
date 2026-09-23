@@ -654,6 +654,25 @@ try {
         stats.rest.length === 1 && /^Every part of IL-7/.test(stats.rest[0]), JSON.stringify(stats.rest));
       check("opening the stats is counted in GoatCounter by the pinned layer, once",
         stats.events.filter((e) => /^compare-stats\//.test(e)).join() === "compare-stats/congress", JSON.stringify(stats.events));
+      // PRINT OR SHARE opens every row and waits for its card before the
+      // print dialog; window.print is replaced by a recorder so the check
+      // sees the report as it would be printed.
+      await page.evaluate(() => { window.__printed = 0; window.print = () => { window.__printed += 1; }; });
+      await page.click(".stats-print-btn");
+      await page.waitForFunction(() => window.__printed > 0, null, { timeout: QUERY_TIMEOUT }).catch(() => {});
+      const printed = await page.evaluate(() => ({
+        printed: window.__printed,
+        rows: document.querySelectorAll(".stats-row").length,
+        open: document.querySelectorAll(".stats-row[open]").length,
+        loading: [...document.querySelectorAll(".stats-card")].filter((c) => /Loading/.test(c.textContent)).length,
+        parent: ((document.querySelector(".stats-parent-card") || {}).textContent || "").trim().length,
+        printing: document.body.classList.contains("stats-printing"),
+      }));
+      check("the report leads with the compared district's own card",
+        printed.parent > 0, `${printed.parent} characters`);
+      check("printing the report opens every row, with every card loaded, before the print dialog",
+        printed.printed === 1 && printed.printing && printed.open === printed.rows && printed.loading === 0,
+        JSON.stringify(printed));
     }
     await context.close();
   }
