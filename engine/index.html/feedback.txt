@@ -3,6 +3,19 @@
    * no backend here, so a submission is routed either to a prefilled GitHub
    * issue or to a mailto. The current permalink + browser are attached so a
    * report is reproducible. Keep this independent of any layer.
+   *
+   * A LINK OPENS IT. `#feedback` in the address opens the form on load, and
+   * `#feedback=<text>` also fills in its starting text, beside any point and
+   * layers the link carries — so a tester can be handed a link that opens the
+   * form on the view to check, already saying what to look at. The HASH, not
+   * the query string: GoatCounter sends location.search with every hit, and
+   * a reader's report text has no business in the analytics record. "Copy a
+   * link to this form" builds that link from the current view and whatever
+   * is typed. Nothing is sent anywhere until the reader presses one of the
+   * two send buttons, exactly as before.
+   *
+   * Every page that is not an app links /feedback.html from its footer, the
+   * same form outside the map; it reads the same `#feedback=<text>`.
    * ======================================================================= */
   (function wireFeedback() {
     // REPO_ISSUES + FEEDBACK_SUBJECT come from the METRO config block.
@@ -16,6 +29,38 @@
     var emailLink = document.getElementById("feedback-email");
     var lastFocus = null;
 
+    // The `feedback` value in the address, or null when the key is absent.
+    // `#feedback` alone is "" (open, nothing to fill in).
+    function hashFeedback() {
+      var parts = location.hash.replace(/^#/, "").split("&");
+      for (var i = 0; i < parts.length; i++) {
+        var kv = parts[i], eq = kv.indexOf("=");
+        var key = eq < 0 ? kv : kv.slice(0, eq);
+        if (key !== "feedback") continue;
+        if (eq < 0) return "";
+        try { return decodeURIComponent(kv.slice(eq + 1).replace(/\+/g, " ")); } catch (e) { return ""; }
+      }
+      return null;
+    }
+    // The page address without the feedback text, which the report carries
+    // in its own right above it.
+    function pageAddress() {
+      var hash = location.hash.replace(/^#/, "").split("&").filter(function (kv) {
+        return kv && kv.split("=")[0] !== "feedback";
+      }).join("&");
+      return location.origin + location.pathname + location.search + (hash ? "#" + hash : "");
+    }
+    // A link that opens this form on the current view, with what is typed.
+    function formLink() {
+      if (typeof syncUrlHash === "function") syncUrlHash();
+      var hash = location.hash.replace(/^#/, "").split("&").filter(function (kv) {
+        return kv && kv.split("=")[0] !== "feedback";
+      });
+      var text = (textEl.value || "").trim();
+      hash.push(text ? "feedback=" + encodeURIComponent(text) : "feedback");
+      return location.origin + location.pathname + "#" + hash.join("&");
+    }
+
     function buildBody() {
       // Whatever the user typed, plus the context that makes it reproducible.
       var lines = [];
@@ -23,7 +68,7 @@
       if (comment) lines.push(comment);
       lines.push("");
       lines.push("---");
-      lines.push("Page: " + window.location.href);
+      lines.push("Page: " + pageAddress());
       if (window.navigator && window.navigator.userAgent) {
         lines.push("Browser: " + window.navigator.userAgent);
       }
@@ -52,13 +97,42 @@
         "&body=" + encodeURIComponent(buildBody());
     }
 
-    openBtn.addEventListener("click", openModal);
+    openBtn.addEventListener("click", function () {
+      trackEvent("feedback-open/button");
+      openModal();
+    });
     closeBtn.addEventListener("click", closeModal);
     backdrop.addEventListener("click", closeModal);
     textEl.addEventListener("input", refreshMailto);
     emailLink.addEventListener("click", function () {
       refreshMailto(); // sync href before the browser follows the anchor
       closeModal();
+    });
+    // "Copy a link to this form", added here rather than in each app's
+    // markup so all six get it from this one block.
+    var copyBtn = document.createElement("button");
+    copyBtn.type = "button";
+    copyBtn.className = "btn-secondary feedback-link-btn";
+    copyBtn.textContent = "Copy a link to this form";
+    copyBtn.title = "A link that opens this form on this view, with what you have typed";
+    var actions = githubBtn.parentNode;
+    if (actions) actions.appendChild(copyBtn);
+    copyBtn.addEventListener("click", function () {
+      trackEvent("feedback-link");
+      var url = formLink();
+      var done = function (ok) {
+        copyBtn.textContent = ok ? "Copied!" : "Copy failed";
+        setTimeout(function () { copyBtn.textContent = "Copy a link to this form"; }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function () { done(true); }, function () { done(false); });
+      } else {
+        done(false);
+      }
+    });
+    emailLink.addEventListener("click", function () { trackEvent("feedback-send/email"); });
+    githubBtn.addEventListener("click", function () {
+      trackEvent("feedback-send/github");
     });
     githubBtn.addEventListener("click", function () {
       var url = REPO_ISSUES +
@@ -68,5 +142,14 @@
       closeModal();
     });
     refreshMailto();
+
+    // Opened by a link: `#feedback` or `#feedback=<text>`.
+    var fromLink = hashFeedback();
+    if (fromLink !== null) {
+      if (fromLink) textEl.value = fromLink; // .value: the text is never parsed as markup
+      refreshMailto();
+      trackEvent("feedback-open/link");
+      openModal();
+    }
   })();
 

@@ -669,6 +669,41 @@ try {
     await context.close();
   }
 
+  // 1h. THE REPORT FORM OPENS FROM A LINK. `#feedback=<text>` beside a point
+  //     opens the form with that text filled in, counted once as opened by a
+  //     link; "Copy a link to this form" hands back a link carrying the view
+  //     and the text; and the report the GitHub button drafts names the page
+  //     without the feedback text, which it already carries above.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block", permissions: ["clipboard-read", "clipboard-write"] });
+    const page = await booted(context, `${BASE}#point=41.88250,-87.62850&layers=congress&feedback=Wrong%20name%20here`, async (p) => {
+      await p.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+      await p.addInitScript(() => {
+        window.__gcEvents = [];
+        window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+        window.__opened = [];
+        window.open = (url) => { window.__opened.push(String(url)); return null; };
+      });
+    });
+    const opened = await page.waitForFunction(() => { const m = document.getElementById("feedback-modal"); return m && !m.hidden; },
+      null, { timeout: QUERY_TIMEOUT }).then(() => true, () => false);
+    const text = await page.evaluate(() => (document.getElementById("feedback-text") || {}).value || "");
+    check("a #feedback= link opens the report form with its text filled in", opened && text === "Wrong name here", `open=${opened} text=${JSON.stringify(text)}`);
+    await page.click(".feedback-link-btn");
+    await page.waitForTimeout(300);
+    const copied = await page.evaluate(() => navigator.clipboard.readText().catch(() => ""));
+    check("the form's copied link carries the view and the text",
+      /#point=41\.88250,-87\.62850&layers=congress/.test(copied) && /[#&]feedback=Wrong%20name%20here$/.test(copied), copied);
+    await page.click("#feedback-github");
+    const drafted = await page.evaluate(() => decodeURIComponent((window.__opened[0] || "").split("&body=")[1] || ""));
+    check("the drafted report names the page without repeating the feedback text",
+      /^Wrong name here\n/.test(drafted) && /Page: \S+#point=41\.88250,-87\.62850/.test(drafted) && !/Page: \S*feedback=/.test(drafted), drafted.slice(0, 160));
+    const events = await page.evaluate(() => (window.__gcEvents || []).filter((v) => v && v.event && /^feedback/.test(v.path)).map((v) => v.path));
+    check("opening from a link, copying and sending are each counted once",
+      events.join() === "feedback-open/link,feedback-link,feedback-send/github", JSON.stringify(events));
+    await context.close();
+  }
+
   // 1f. COMPARISON STATS. With Congress pinned at the Loop and the State
   //     House on, the pinned card carries "Stats", and the screen it opens
   //     counts people from the shipped Census block files: IL-7 holds

@@ -11,6 +11,7 @@ Free, no account, no tracking of individuals. The map runs in the browser; what 
 - [Sponsorship](https://districtry.com/sponsorship.html)
 - [Traffic report](https://districtry.com/traffic.html)
 - [About districtry](https://districtry.com/about.html)
+- [Report a problem or leave a comment](https://districtry.com/feedback.html)
 
 ## Illinois
 

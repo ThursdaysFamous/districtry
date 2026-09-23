@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>About districtry</title>
-<meta name="description" content="Who builds districtry, where every boundary and every officeholder name comes from, how often each is re-read, and how to send a correction." />
+<title>Report a problem or leave a comment — districtry</title>
+<meta name="description" content="Tell districtry about a wrong district, a wrong name or a broken page, or leave a comment. Sent as a GitHub issue or an e-mail you review first." />
 <meta name="robots" content="index, follow" />
-<link rel="canonical" href="https://districtry.com/about.html" />
+<link rel="canonical" href="https://districtry.com/feedback.html" />
 <meta name="theme-color" content="#6d3fd1" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192" />
@@ -16,75 +16,28 @@
 async src="//gc.zgo.at/count.js"></script>
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="districtry" />
-<meta property="og:title" content="About districtry" />
-<meta property="og:description" content="Who builds districtry, where every boundary and every officeholder name comes from, how often each is re-read, and how to send a correction." />
-<meta property="og:url" content="https://districtry.com/about.html" />
+<meta property="og:title" content="Report a problem or leave a comment — districtry" />
+<meta property="og:description" content="Tell districtry about a wrong district, a wrong name or a broken page, or leave a comment. Sent as a GitHub issue or an e-mail you review first." />
+<meta property="og:url" content="https://districtry.com/feedback.html" />
 <meta property="og:image" content="https://districtry.com/og-image.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:locale" content="en_US" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="About districtry" />
-<meta name="twitter:description" content="Who builds districtry, where every boundary and every officeholder name comes from, how often each is re-read, and how to send a correction." />
+<meta name="twitter:title" content="Report a problem or leave a comment — districtry" />
+<meta name="twitter:description" content="Tell districtry about a wrong district, a wrong name or a broken page, or leave a comment. Sent as a GitHub issue or an e-mail you review first." />
 <meta name="twitter:image" content="https://districtry.com/og-image.png" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "AboutPage",
-  "@id": "https://districtry.com/about.html",
-  "url": "https://districtry.com/about.html",
-  "name": "About districtry",
-  "description": "Who builds districtry, where every boundary and every officeholder name comes from, how often each is re-read, and how to send a correction.",
+  "@type": "ContactPage",
+  "@id": "https://districtry.com/feedback.html",
+  "url": "https://districtry.com/feedback.html",
+  "name": "Report a problem or leave a comment \u2014 districtry",
+  "description": "Tell districtry about a wrong district, a wrong name or a broken page, or leave a comment. Sent as a GitHub issue or an e-mail you review first.",
   "inLanguage": "en-US",
-  "author": {
-    "@type": "Person",
-    "@id": "https://districtry.com/#author",
-    "name": "Adam Overberg",
-    "url": "https://overberg.co",
-    "email": "hello@overberg.co"
-  },
   "isPartOf": {
     "@id": "https://districtry.com/#website"
-  },
-  "mainEntity": {
-    "@type": "Organization",
-    "@id": "https://districtry.com/#organization",
-    "name": "districtry",
-    "url": "https://districtry.com/",
-    "description": "Who builds districtry, where every boundary and every officeholder name comes from, how often each is re-read, and how to send a correction.",
-    "founder": {
-      "@id": "https://districtry.com/#author"
-    },
-    "email": "hello@overberg.co",
-    "sameAs": [
-      "https://github.com/ThursdaysFamous/districtry"
-    ],
-    "areaServed": [
-      {
-        "@type": "AdministrativeArea",
-        "name": "Illinois"
-      },
-      {
-        "@type": "AdministrativeArea",
-        "name": "New York"
-      },
-      {
-        "@type": "AdministrativeArea",
-        "name": "San Francisco"
-      },
-      {
-        "@type": "AdministrativeArea",
-        "name": "Wisconsin"
-      },
-      {
-        "@type": "AdministrativeArea",
-        "name": "Iowa"
-      },
-      {
-        "@type": "AdministrativeArea",
-        "name": "Michigan"
-      }
-    ]
   },
   "breadcrumb": {
     "@type": "BreadcrumbList",
@@ -98,15 +51,14 @@ async src="//gc.zgo.at/count.js"></script>
       {
         "@type": "ListItem",
         "position": 2,
-        "name": "About"
+        "name": "Report a problem"
       }
     ]
   }
 }
 </script>
-<!-- GENERATED by scripts/build_about_page.py. Every number here is read
-     from a shipped file on the run that wrote it; `--check` fails when the
-     tree moves under it. Do NOT hand-edit. -->
+<!-- GENERATED by scripts/build_feedback_page.py. `--check` fails when this
+     file and the script disagree. Do NOT hand-edit. -->
 <script>
 /* THE THEME BOOT, in ONE copy, for every page that is not the app.
 
@@ -504,8 +456,23 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
 }
 </style>
 <style>
-.facts { margin: 0; padding-left: 1.15rem; display: grid; gap: 0.5rem; }
-.facts li { max-width: 68ch; }
+.fb-form { max-width: 720px; }
+.fb-form label { display: block; font-weight: 600; margin: 18px 0 6px; }
+.fb-form .hint { color: var(--muted); font-size: 14px; margin: 4px 0 0; }
+.fb-form input, .fb-form textarea {
+  width: 100%; font: inherit; color: var(--ink); background: var(--surface);
+  border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px;
+}
+.fb-form textarea { min-height: 180px; resize: vertical; }
+.fb-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 8px; }
+.fb-actions button, .fb-actions a {
+  display: inline-flex; align-items: center; min-height: 40px;
+  font: 600 14px/1 var(--font-body); border-radius: 999px; padding: 10px 18px;
+  cursor: pointer; text-decoration: none;
+}
+.fb-primary { background: var(--brand-700); color: var(--paper); border: 1px solid var(--brand-700); }
+.fb-secondary { background: transparent; color: var(--brand-700); border: 1px solid var(--border); }
+.fb-primary:hover, .fb-secondary:hover { border-color: var(--brand-600); }
 </style>
 </head>
 <body>
@@ -515,17 +482,12 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
 <header class="masthead">
   <div class="masthead-inner">
     <h1>
-      <span class="title-row"><svg class="logo-mark" viewBox="0 0 96 96" aria-hidden="true"><g class="mk-blend"><polygon points="51.5,63.2 12.4,55.7 11.5,18.6 42.7,5.0 72.7,35.3" fill="#6d3fd1" fill-opacity="0.55"></polygon></g><g class="mk-blend"><polygon points="54.1,81.9 34.6,47.9 56.5,19.3 87.5,28.1 83.8,71.0" fill="#1d5fd6" fill-opacity="0.5"></polygon></g><g class="mk-blend"><polygon points="13.7,64.5 27.6,31.2 62.7,37.6 70.3,66.9 33.9,89.0" fill="#b0316e" fill-opacity="0.45"></polygon></g><circle cx="42" cy="60" r="17" fill="none" stroke="currentColor" stroke-width="11"></circle><line x1="59" y1="16" x2="59" y2="82.5" stroke="currentColor" stroke-width="11"></line></svg><span class="title-text">About</span></span>
-      <small>Who makes it, where the answers come from, and how to correct one.</small>
+      <span class="title-row"><svg class="logo-mark" viewBox="0 0 96 96" aria-hidden="true"><g class="mk-blend"><polygon points="51.5,63.2 12.4,55.7 11.5,18.6 42.7,5.0 72.7,35.3" fill="#6d3fd1" fill-opacity="0.55"></polygon></g><g class="mk-blend"><polygon points="54.1,81.9 34.6,47.9 56.5,19.3 87.5,28.1 83.8,71.0" fill="#1d5fd6" fill-opacity="0.5"></polygon></g><g class="mk-blend"><polygon points="13.7,64.5 27.6,31.2 62.7,37.6 70.3,66.9 33.9,89.0" fill="#b0316e" fill-opacity="0.45"></polygon></g><circle cx="42" cy="60" r="17" fill="none" stroke="currentColor" stroke-width="11"></circle><line x1="59" y1="16" x2="59" y2="82.5" stroke="currentColor" stroke-width="11"></line></svg><span class="title-text">Report a problem</span></span>
+      <small>Found something wrong, or have a suggestion? Say what and where.</small>
     </h1>
     <div class="masthead-actions">
       <a href="/">&larr; districtry</a>
-      <a href="https://districtry.com/il/">Illinois</a>
-      <a href="https://districtry.com/ny/">New York</a>
-      <a href="https://districtry.com/ca/">San Francisco</a>
-      <a href="https://districtry.com/wi/">Wisconsin</a>
-      <a href="https://districtry.com/ia/">Iowa</a>
-      <a href="https://districtry.com/mi/">Michigan</a>
+      <a href="/about.html">About</a>
       <a href="/privacy.html">Privacy</a>
     </div>
   </div>
@@ -534,85 +496,100 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
 <main id="page-main" tabindex="-1">
 
   <section>
-    <p class="lede">districtry answers one question: <strong>which civic districts contain the
-      point you picked, and who represents you there.</strong> It is free, needs no account, and
-      is built and maintained by one person.</p>
-    <p>It began as a Chicago-only explorer and now answers in 6 places. Every boundary comes
-      from the government that draws it and every name from the body that elects or appoints the
-      person, each cited on the card that shows it.</p>
+    <p>Describe what is wrong or what you would like, then file it as a GitHub issue or send it
+      by e-mail. Either one opens a draft for you to read and edit first; nothing is sent until
+      you send it. Every report gets a reply.</p>
+    <p class="cta-note">Reporting something on a map? Use the form inside the app instead
+      (&ldquo;Report a bug or leave a comment&rdquo; at the foot of its panel): it attaches the
+      point and layers you were looking at. The apps: <a href="https://districtry.com/il/">Illinois</a>, <a href="https://districtry.com/ny/">New York</a>, <a href="https://districtry.com/ca/">San Francisco</a>, <a href="https://districtry.com/wi/">Wisconsin</a>, <a href="https://districtry.com/ia/">Iowa</a>, <a href="https://districtry.com/mi/">Michigan</a>.</p>
+    <form class="fb-form" onsubmit="return false">
+      <label for="fb-page">Which page is this about?</label>
+      <input id="fb-page" type="url" inputmode="url" autocomplete="off"
+        placeholder="https://districtry.com/…" />
+      <p class="hint">Filled in with the page you came from. Change it if the problem is somewhere else.</p>
+      <label for="fb-text">Your report or comment</label>
+      <textarea id="fb-text" placeholder="What is wrong, what you expected, and where&hellip;"></textarea>
+      <div class="fb-actions">
+        <button type="button" class="fb-primary" id="fb-github">Open a GitHub issue</button>
+        <a class="fb-secondary" id="fb-email" href="mailto:adam@overberg.co">Send by e-mail instead</a>
+        <button type="button" class="fb-secondary" id="fb-copy">Copy a link to this form</button>
+      </div>
+      <p class="hint">A GitHub issue is public. The e-mail goes to adam@overberg.co. Either one carries
+        what you wrote, the page address and your browser's user-agent string.</p>
+    </form>
   </section>
 
-  <section>
-    <h2>Where it answers</h2>
-    <div class="table-wrap">
-    <table>
-      <thead><tr><th>Place</th><th>Scope</th><th class="num">Layers</th><th>Sources verified</th></tr></thead>
-      <tbody>
-      <tr><td><a href="https://districtry.com/il/">Illinois</a></td><td>93 counties</td><td class="num">40</td><td>September 11, 2026</td></tr>
-      <tr><td><a href="https://districtry.com/ny/">New York</a></td><td>statewide, 5 boroughs in depth</td><td class="num">33</td><td>September 11, 2026</td></tr>
-      <tr><td><a href="https://districtry.com/ca/">San Francisco</a></td><td>1 city</td><td class="num">16</td><td>September 11, 2026</td></tr>
-      <tr><td><a href="https://districtry.com/wi/">Wisconsin</a></td><td>all 72 counties</td><td class="num">31</td><td>September 11, 2026</td></tr>
-      <tr><td><a href="https://districtry.com/ia/">Iowa</a></td><td>all 99 counties</td><td class="num">20</td><td>September 11, 2026</td></tr>
-      <tr><td><a href="https://districtry.com/mi/">Michigan</a></td><td>all 83 counties</td><td class="num">15</td><td>September 11, 2026</td></tr>
-      </tbody>
-    </table>
-    </div>
-    <p class="cta-note">Each place has its own sources page listing every layer, what it answers,
-      and the publisher its boundary comes from.</p>
-  </section>
-
-  <section>
-    <h2>What it publishes</h2>
-    <ul class="facts">
-      <li><strong>329</strong> per-county pages naming <strong>3,643</strong> county
-        officeholders, one page per county board.</li>
-      <li><strong>3,385</strong> more across the <strong>42</strong> rosters
-        tabled on its question pages, each one dated with the day it describes.</li>
-      <li><strong>128</strong> scheduled jobs that re-read a published source on their own
-        timetable. A job that finds a different officeholder opens a pull request rather than
-        committing, so nothing about a person ships without someone looking at it first.</li>
-      <li><strong>155</strong> recorded data gaps — places where a publisher withholds
-        something, written down in the app rather than papered over.</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>How it decides what to say</h2>
-    <p><strong>An officeholder is never guessed.</strong> Where no verifiable roster exists the
-      card links the official body instead of inventing a name, and says so. Where two sources
-      disagree, the disagreement is recorded rather than resolved by preference.</p>
-    <p><strong>A boundary comes from the authority that draws it</strong> — a county GIS, a state
-      redistricting filing, the Census Bureau, a clerk's certified election returns. Where a
-      boundary had to be derived, the derivation and its checks are written down in the script
-      that did it, and that script is public.</p>
-    <p><strong>Absence is published.</strong> A county whose board this project cannot name has
-      a gap record saying what was tried and what answered, and that record is in the app's own
-      data-gaps panel — not only in a document nobody reads.</p>
-  </section>
-
-  <section>
-    <h2>Corrections</h2>
-    <p>If a name, a boundary or a contact detail is wrong, say so and it gets fixed. Every
-      correction gets a reply. The fastest route is
-      <a href="mailto:corrections@overberg.co?subject=districtry%20correction">corrections@overberg.co</a>;
-      <a href="https://github.com/ThursdaysFamous/districtry/issues/new" target="_blank" rel="noopener">an issue on GitHub</a> works
-      too, and the whole history of every file is
-      <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">there to read</a>.</p>
-  </section>
-
-  <section>
-    <h2>For machines</h2>
-    <p>A short guide for a client reading the site rather than crawling it is at
-      <a href="/llms.txt">/llms.txt</a>. <a href="/robots.txt">robots.txt</a> disallows no
-      crawler by name and carries <code>Content-Signal: ai-input=yes, ai-train=no, search=yes, use=reference</code>: search is welcome, so
-      is grounding an answer in these pages by reference with a link back to the page that names
-      the person, and training is reserved. Every fact here comes from a government publisher and
-      is cited to it, so there is nothing to withhold and every reason to want the answers found.</p>
-  </section>
-
-  <p class="disclaimer"><strong>Not for legal or official use.</strong> Boundary and roster data
-    come from public sources that explicitly disclaim legal precision. Confirm a district
-    assignment with the relevant government office before relying on it for anything official.</p>
+<script>
+(function () {
+  var ISSUES = "https://github.com/ThursdaysFamous/districtry/issues/new", EMAIL = "adam@overberg.co", SUBJECT = "districtry feedback";
+  var text = document.getElementById("fb-text");
+  var page = document.getElementById("fb-page");
+  var gh = document.getElementById("fb-github");
+  var mail = document.getElementById("fb-email");
+  var copy = document.getElementById("fb-copy");
+  function hashParam(name) {
+    var parts = location.hash.replace(/^#/, "").split("&");
+    for (var i = 0; i < parts.length; i++) {
+      var eq = parts[i].indexOf("=");
+      if ((eq < 0 ? parts[i] : parts[i].slice(0, eq)) !== name) continue;
+      if (eq < 0) return "";
+      try { return decodeURIComponent(parts[i].slice(eq + 1).replace(/\+/g, " ")); } catch (e) { return ""; }
+    }
+    return null;
+  }
+  // The page being reported: #page= when the link names it, otherwise the
+  // page the reader came from, when that is on this site.
+  var from = "";
+  try {
+    var ref = document.referrer ? new URL(document.referrer) : null;
+    if (ref && ref.origin === location.origin && ref.pathname !== location.pathname) from = ref.href;
+  } catch (e) {}
+  // Read on load, and again when only the part after # changes, which a
+  // browser does without reloading the page.
+  function fromHash(first) {
+    var named = hashParam("page"), prefill = hashParam("feedback");
+    if (named || first) page.value = named || from;
+    if (prefill) text.value = prefill; // .value: the text is never parsed as markup
+  }
+  fromHash(true);
+  window.addEventListener("hashchange", function () { fromHash(false); refresh(); });
+  function report() {
+    var lines = [];
+    var t = (text.value || "").trim();
+    if (t) lines.push(t);
+    lines.push("", "---");
+    lines.push("Page: " + ((page.value || "").trim() || "(not given)"));
+    if (navigator.userAgent) lines.push("Browser: " + navigator.userAgent);
+    return lines.join("\n");
+  }
+  function refresh() {
+    mail.href = "mailto:" + EMAIL + "?subject=" + encodeURIComponent(SUBJECT) +
+      "&body=" + encodeURIComponent(report());
+  }
+  text.addEventListener("input", refresh);
+  page.addEventListener("input", refresh);
+  mail.addEventListener("click", refresh);
+  gh.addEventListener("click", function () {
+    window.open(ISSUES + "?title=" + encodeURIComponent("Bug report / comment") +
+      "&body=" + encodeURIComponent(report()), "_blank", "noopener");
+  });
+  copy.addEventListener("click", function () {
+    var parts = [];
+    var p = (page.value || "").trim(), t = (text.value || "").trim();
+    if (p) parts.push("page=" + encodeURIComponent(p));
+    if (t) parts.push("feedback=" + encodeURIComponent(t));
+    var url = location.origin + location.pathname + (parts.length ? "#" + parts.join("&") : "");
+    var done = function (ok) {
+      copy.textContent = ok ? "Copied!" : "Copy failed";
+      setTimeout(function () { copy.textContent = "Copy a link to this form"; }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(function () { done(true); }, function () { done(false); });
+    } else { done(false); }
+  });
+  refresh();
+})();
+</script>
 
 </main>
 
@@ -623,12 +600,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
       officeholder.</p>
     <div class="footer-links">
       <a href="/">&larr; districtry</a>
-      <a href="https://districtry.com/il/">Illinois</a>
-      <a href="https://districtry.com/ny/">New York</a>
-      <a href="https://districtry.com/ca/">San Francisco</a>
-      <a href="https://districtry.com/wi/">Wisconsin</a>
-      <a href="https://districtry.com/ia/">Iowa</a>
-      <a href="https://districtry.com/mi/">Michigan</a>
+      <a href="/about.html">About</a>
       <a href="/privacy.html">Privacy</a>
       <a href="https://overberg.co/why/" target="_blank" rel="noopener">Why this exists</a>
       <a href="https://github.com/ThursdaysFamous/districtry" target="_blank" rel="noopener">View source on GitHub</a>
