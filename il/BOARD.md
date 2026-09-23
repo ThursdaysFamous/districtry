@@ -39,6 +39,48 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-23. Adam took the VACANCY_SENTINELS question — #1125 fixes Logan and
+CCPSA both, and the gate now refuses the word.**
+
+**Removing the allowance would not have been enough, which is the part worth
+keeping.** Every other rule in `why_not_a_name` passes `"VACANT"` happily — not
+a party label, no digits, no `@`, has letters — so deleting the early return
+would have left it accepted by silence. It takes an explicit refusal, and the
+gate's own `SELFTEST` pinned the old answer and failed until flipped, which is
+the test doing its job on the thing I changed.
+
+**The shape is per source and both already existed.** Logan takes
+`vacancies: 1` on the district — counted, never named, the posture its own
+siblings ship. CCPSA takes `vacant: true` on the seat WITH its role, because
+each council seats three under named roles and dropping the row would report a
+two-member body the city seats three of; `build_officeholder_tables.py` already
+renders that record as "Vacant" with no `Person` behind it.
+
+**Both sources read live, robots first as each scraper's own client.** Logan
+prints `DISTRICT 5 / MEMBER / VACANT` with none of the address, phone or e-mail
+every other member carries. CCPSA prints the word where a name goes with the
+seat's role beside it and an `a.see-more` to `ccpsa.chicago.gov/member/vacant/`
+— which answers **200 with 51 KB**, a real profile page about nobody, and is
+not carried.
+
+**A builder was counting members where it meant seats.**
+`build_logan_board_roster.py` failed on any district not holding exactly two
+MEMBERS, so it would have refused to write the moment a seat emptied. Seats now,
+with the contact floors measured against the named count.
+
+**Verified:** both pipelines re-run end to end with no named person moving,
+zero `Person` nodes named a sentinel across all 416 served pages (from three on
+two), Logan's page reading "1 of 2 seats here is vacant", and three CCPSA cards
+rendered in Chromium — the 3rd and 12th at "2 elected councilors · 1 vacant
+seat", the 1st unchanged as the control.
+
+**One thing recorded and not fixed:** `school-board-members.json` maps district
+17 to the bare string `VACANT`, and the gate cannot see it at all — it examines
+person-shaped DICTS, never a district-to-name-STRING roster. It reaches no page
+as a person, because `build_officeholder_tables.py` converts it at read time.
+That is a blind spot in the walker rather than the defect Adam named, so it is
+written down here instead of widened into #1125.
+
 **2026-09-22, stand-down. Nothing of mine is unpushed and no PR of mine is
 open — confirmed, not assumed.**
 
@@ -775,16 +817,10 @@ shipping, and has been since 2026-08-01.
   **ANSWERED 2026-09-21.** The workflow ran green today and opened #1063, which
   is verified against the live page and waiting on a human read. The Senate file
   is unchanged because the Senate pages are unchanged.
-- **`il/county-board/logan.html` names a member `VACANT`** — a schema.org
-  `Person` of that name and a member row of that name, published, for District
-  5. Found 2026-09-22 while writing up #1093's third defect. Same shape as the
-  Sangamon seat #1096 just fixed: the source's word for an empty seat carried
-  through as if it were a person. Two more sit in
-  `ccpsa-district-councils.json`, which renders in the app card rather than in
-  served bytes. `VACANCY_SENTINELS` lets the word through, which is why nothing
-  failed. The fix is on the board as an open question rather than applied,
-  because it edits a shared gate and two rosters this session was not asked to
-  touch.
+- ~~**`il/county-board/logan.html` names a member `VACANT`**~~ — **FIXED
+  2026-09-23 as #1125**, with CCPSA's two on `il/police-district.html`. The
+  word is refused by the name gate now, so it cannot ship as a person from any
+  roster in the fleet.
 
 Nothing else on the Illinois map is known to be wrong. The coverage ring checks
 out at five rings with all 93 inside and 10 outside anchors correct; 62 of the
@@ -815,6 +851,21 @@ guidebook — and neither is guessed at.
   one, because the statewide path was outside #1098's scope and changing a
   sentence on ~138 shipped cards is not a side effect to take on unasked. The
   address has the same shape and was not measured.
+- **Deer Creek's card now names a telephone and no address, where the directory
+  publishes both.** That is the stated scope of #1098 working exactly as asked
+  — telephone only, no addresses — and it is worth seeing once before deciding
+  whether the address should follow. The directory has `205 East First Avenue
+  Post Office Box 347, Deer Creek` for it and the filing has nothing.
+
+- ~~**A `Person` named `VACANT` is live on `il/county-board/logan.html`**~~ —
+  **ANSWERED 2026-09-23. Adam: "fix the VACANCY_SENTINELS thing — Logan and
+  CCPSA both."** Built as #1125. `why_not_a_name` REFUSES the word now rather
+  than allowing it, both rosters record the fact structurally (`vacancies: 1`
+  on Logan's district, `vacant: true` with its role on CCPSA's seat), and the
+  two scrapers convert on one shared `is_vacancy_marker` instead of each
+  carrying a copy of the table. Zero `Person` nodes named a sentinel across all
+  416 served pages, down from three on two.
+
 - **Deer Creek's card now names a telephone and no address, where the directory
   publishes both.** That is the stated scope of #1098 working exactly as asked
   — telephone only, no addresses — and it is worth seeing once before deciding
