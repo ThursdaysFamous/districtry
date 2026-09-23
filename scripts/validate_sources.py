@@ -149,6 +149,18 @@ PROVENANCE = [
      "app_file": "school-board-districts.json",
      "source_url": "https://www.ilsenateredistricting.com/",
      "note": "ERSB 20-subdistrict map (SB 15). Redrawn ~once a decade."},
+    {"layer": "Chicago Board of Education members",
+     "app_file": "school-board-members.json",
+     "source_url": "https://www.cpsboe.org/about/bios",
+     "note": "The Board's OWN member index: every seat with its sub-district, "
+             "the office a member holds, a cps.edu address and a link to that "
+             "member's bio page. Rebuilt weekly by "
+             "update-chicago-school-board-roster.yml, which holds the index and "
+             "each bio page to agreeing on name, office and district. THIS FILE "
+             "WAS HAND-CURATED UNTIL 2026-09-23 on a recorded belief that no "
+             "machine-readable roster is published for this board, and had "
+             "drifted two seats — so this manifest watches the page and the "
+             "weekly run watches the names."},
     {"layer": "IL Supreme Court districts",
      "app_file": "il-supreme-court-districts.json",
      "source_url": "https://www.illinoiscourts.gov/",

@@ -19414,10 +19414,19 @@ function initChiExplorer() {
     return fetchJSONWithRetry("data/app/school-board-districts.json", {}, 2);
   });
 
-  /* ---------- Board member roster, keyed by district number. Derived from
-   * a CPS schools-by-ERSB-district roster (one member per district; some
-   * districts show "VACANT" per that roster, surfaced as-is rather than
-   * guessed at). ---------- */
+  /* ---------- Board member roster, keyed by the same district number the
+   * geometry carries. Built weekly by scripts/cps_board_scraper.py +
+   * build_chicago_school_board_roster.py from the Board's OWN member index at
+   * cpsboe.org, which publishes every seat with its sub-district, the office
+   * a member holds where they hold one, and a cps.edu address. The two
+   * publishers number the same seats differently — the boundary calls them
+   * 1..20 and the Board calls them 1A..10B — so the builder joins them on the
+   * geometry's own longName rather than on a table written down anywhere. A
+   * seat the Board itself prints as empty ships as {vacant: true} and is never
+   * a person of that name; a district the Board does not name at all FAILS the
+   * build rather than being read as empty. The top-level `board` entry carries
+   * the Board's own office and its President, who is seated city-wide and
+   * holds no district. ---------- */
   var loadSchoolBoardMembers = makeCached(function () {
     return fetchJSONWithRetry("data/app/school-board-members.json", {}, 2);
   });
@@ -19444,25 +19453,61 @@ function initChiExplorer() {
         var district = findPropCI(props, ["district"]);
         var longName = findPropCI(props, ["longname"]);
         var member = district != null ? members[String(district)] : undefined;
-        return { seq: seq, district: district, longName: longName, member: member };
+        return { seq: seq, district: district, longName: longName, member: member,
+                 board: members.board || null };
       });
     },
     render: function (result) {
       var wrap = cardEl("div", "card-flush");
+      var member = result.member;
+      var board = result.board;
       // the "1a"/"6b"-style sub-district name — candidate questionnaires and
-      // CPS materials reference districts by this scheme, not the flat number
+      // CPS materials reference districts by this scheme, not the flat number.
+      // The boundary writes it as "District 9a", so the leading word comes off
+      // or the line reads "Sub-district District 9a", which it did until
+      // 2026-09-23.
+      var note = result.longName
+        ? "Sub-district " + String(result.longName).replace(/^District\s+/i, "")
+        : null;
+      if (member && member.vacant) {
+        note = (note ? note + " · " : "") + "seat vacant, as the Board reports it";
+      }
       wrap.appendChild(renderBodyIntro({
         title: "Chicago Board of Education",
-        note: result.longName ? "Sub-district " + String(result.longName) : null
+        note: note
       }));
-      if (result.member) {
-        // names render exactly as the roster stores them (textContent —
-        // quoted nicknames like "Jitu"/"Rhymefest" need no escaping here);
-        // a VACANT seat is surfaced as such, never guessed at
+      // names render exactly as the roster stores them (textContent — quoted
+      // nicknames like "Rhymefest" need no escaping here). An empty seat is
+      // stated in the note above and gets NO person row and no profile link:
+      // the vacancy is a fact about the seat, not a member called Vacant.
+      if (member && member.name) {
         wrap.appendChild(renderPersonRows([{
-          name: result.member === "VACANT" ? "Vacant" : String(result.member),
-          badge: "Board member"
+          name: String(member.name),
+          badge: member.role ? String(member.role) : "Board member",
+          email: member.email,
+          links: member.profileUrl
+            ? [{ label: "Profile", url: member.profileUrl }] : null
         }]));
+      }
+      // The President is seated city-wide and holds no district, so he votes on
+      // every reader's board — the separated section the county-board cards
+      // already give a countywide-elected chair.
+      if (board && board.president) {
+        wrap.appendChild(renderSectionLabel("Citywide"));
+        wrap.appendChild(renderPersonRows([{
+          name: String(board.president),
+          badge: board.role ? String(board.role) : "President",
+          email: board.email,
+          links: board.presidentProfileUrl
+            ? [{ label: "Profile", url: board.presidentProfileUrl }] : null
+        }], { tinted: true }));
+      }
+      if (board && (board.address || board.phone)) {
+        wrap.appendChild(renderLinkRow({
+          title: "Board office",
+          note: board.address,
+          phone: board.phone
+        }));
       }
       return wrap;
     },
@@ -19470,19 +19515,21 @@ function initChiExplorer() {
       return result.district ? "District " + String(result.district) : null;
     },
     primaryLink: function () {
-      return { label: "Chicago Board of Education", url: "https://www.cps.edu/about/chicago-board-of-education/" };
+      // the Board's OWN member index, which is where this card's roster comes
+      // from. CPS's page carries a hand-maintained copy of it that was a seat
+      // behind on 2026-09-23 (it had no row for District 10b at all).
+      return { label: "Chicago Board of Education", url: "https://www.cpsboe.org/about/bios" };
     },
     // hover popup: name the board member from the prefetched roster (keyed by
-    // district number; the roster stores a bare name string, "VACANT" for empty
-    // seats — surfaced as "Vacant", same as the card).
+    // district number). A seat the Board reports empty names nobody here — a
+    // popup is a one-line identity and "Vacant" in it reads as a person.
     hoverOfficial: {
       load: loadSchoolBoardMembers,
       name: function (feature, members) {
         if (!members) return null;
         var d = findPropCI(feature.properties || {}, ["district"]);
         var m = d != null ? members[String(d)] : null;
-        if (!m) return null;
-        return m === "VACANT" ? "Vacant" : String(m);
+        return m && m.name ? String(m.name) : null;
       }
     }
   });

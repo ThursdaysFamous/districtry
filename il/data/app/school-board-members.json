@@ -1,22 +1,111 @@
 {
-  "1": "Ed Bannon",
-  "2": "Jennifer Custer",
-  "3": "Ebony L. DeBerry",
-  "4": "Debby Pope",
-  "5": "Norma Rios-Sierra",
-  "6": "Carlos A. Rivas, Jr.",
-  "7": "Karen Zacor",
-  "8": "Ellen Rosenfeld",
-  "9": "Aaron \"Jitu\" Brown",
-  "10": "Michilla Blaise",
-  "11": "Anusha Thotakura",
-  "12": "Jessica Biggs",
-  "13": "Emma Lozano",
-  "14": "Yesenia Lopez",
-  "15": "Angel Gutierrez",
-  "16": "Cydney Sylvan Wallace",
-  "17": "VACANT",
-  "18": "Therese Boyle",
-  "19": "Che \"Rhymefest\" Smith",
-  "20": "Olga Bautista"
+  "1": {
+    "email": "ebannon@cps.edu",
+    "name": "Ed Bannon",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2034"
+  },
+  "10": {
+    "email": "mblaise@cps.edu",
+    "name": "Michilla Blaise",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2029"
+  },
+  "11": {
+    "email": "athotakura@cps.edu",
+    "name": "Anusha Thotakura",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2039"
+  },
+  "12": {
+    "email": "jbiggs7@cps.edu",
+    "name": "Jessica Biggs",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2047"
+  },
+  "13": {
+    "email": "elozano23@cps.edu",
+    "name": "Emma Lozano",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2040"
+  },
+  "14": {
+    "email": "ylopez86@cps.edu",
+    "name": "Yesenia Lopez",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2048"
+  },
+  "15": {
+    "email": "agutierrez262@cps.edu",
+    "name": "Angel Gutierrez",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2041"
+  },
+  "16": {
+    "email": "cwallace21@cps.edu",
+    "name": "Cydney Wallace",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2049"
+  },
+  "17": {
+    "email": "avelez41@cps.edu",
+    "name": "Dr. Angel L. Velez",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2050",
+    "role": "Vice President"
+  },
+  "18": {
+    "email": "tboyle2@cps.edu",
+    "name": "Therese Boyle",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2045"
+  },
+  "19": {
+    "email": "csmith299@cps.edu",
+    "name": "Dr. Che \"Rhymefest\" Smith",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2042"
+  },
+  "2": {
+    "email": "jcuster@cps.edu",
+    "name": "Jennifer Custer",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2035"
+  },
+  "20": {
+    "name": "Connie L. Anderson",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2051"
+  },
+  "3": {
+    "email": "edeberry@cps.edu",
+    "name": "Ebony DeBerry",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2036"
+  },
+  "4": {
+    "email": "dpope16@cps.edu",
+    "name": "Debby Pope",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2030"
+  },
+  "5": {
+    "email": "nriossierra1@cps.edu",
+    "name": "Norma Rios-Sierra",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2037"
+  },
+  "6": {
+    "email": "crivas18@cps.edu",
+    "name": "Carlos A. Rivas, Jr.",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2043"
+  },
+  "7": {
+    "email": "kzaccor1@cps.edu",
+    "name": "Karen Zaccor",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2038"
+  },
+  "8": {
+    "email": "erosenfeld2@cps.edu",
+    "name": "Ellen Rosenfeld",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2044"
+  },
+  "9": {
+    "email": "jbrown512@cps.edu",
+    "name": "Jitu Brown",
+    "profileUrl": "https://www.cpsboe.org/about/bios/2046"
+  },
+  "board": {
+    "address": "42 West Madison Street, Garden Level, Chicago, Illinois 60602",
+    "email": "boe-president@cps.edu",
+    "phone": "(773) 553-1600",
+    "president": "Sean B. Harden",
+    "presidentProfileUrl": "https://www.cpsboe.org/about/bios/2033",
+    "role": "President",
+    "sourceUrl": "https://www.cpsboe.org/about/bios"
+  }
 }

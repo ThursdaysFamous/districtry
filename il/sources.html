@@ -1220,7 +1220,7 @@ table.matrix code {
                     <li><a href="https://www.ilsenateredistricting.com" target="_blank" rel="noopener">ERSB 20-subdistrict map (SB 15) — shapefile from ilsenateredistricting.com, simplified and shipped with the app</a></li>
                   </ul>
                 </td>
-                <td data-label="Who it names">school-board-members.json — hand-curated and hand-verified, because no machine-readable roster is published for this board.</td>
+                <td data-label="Who it names">school-board-members.json, rebuilt weekly by CI from the Board's OWN member index at cpsboe.org — every seat with its sub-district, the office a member holds where they hold one, a cps.edu address and a link to that member's own bio page, plus the Board's office and its city-wide President on every card. THIS FILE WAS HAND-CURATED UNTIL 2026-09-23 and this note said no machine-readable roster is published for this board, which was false and had let the file drift: District 9a shipped the bare string VACANT where the Board names its Vice President, and District 10b named a member who resigned in March 2026. The two publishers number the same seats differently — the boundary calls them 1..20 and the Board calls them 1A..10B — so the builder joins them on the shipped geometry's own sub-district label, and the Board's index and each member's bio page must agree on name, office and district before anything is written.</td>
                 <td data-label="Where it applies">City of Chicago.</td>
               </tr>
               <tr id="layer-ward">
@@ -2123,7 +2123,7 @@ table.matrix code {
       "@id": "https://districtry.com/il/sources.html#dataset-school-board",
       "identifier": "school-board",
       "name": "Elected School Board District",
-      "description": "Which of Chicago's 20 elected school board districts covers the point, and who represents it. school-board-members.json — hand-curated and hand-verified, because no machine-readable roster is published for this board.",
+      "description": "Which of Chicago's 20 elected school board districts covers the point, and who represents it. school-board-members.json, rebuilt weekly by CI from the Board's OWN member index at cpsboe.org — every seat with its sub-district, the office a member holds where they hold one, a cps.edu address and a link to that member's own bio page, plus the Board's office and its city-wide President on every card. THIS FILE WAS HAND-CURATED UNTIL 2026-09-23 and this note said no machine-readable roster is published for this board, which was false and had let the file drift: District 9a shipped the bare string VACANT where the Board names its Vice President, and District 10b named a member who resigned in March 2026. The two publishers number the same seats differently — the boundary calls them 1..20 and the Board calls them 1A..10B — so the builder joins them on the shipped geometry's own sub-district label, and the Board's index and each member's bio page must agree on name, office and district before anything is written.",
       "url": "https://districtry.com/il/sources.html#layer-school-board",
       "isPartOf": {
         "@id": "https://districtry.com/il/sources.html#catalog"
