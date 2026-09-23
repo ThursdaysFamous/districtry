@@ -248,7 +248,7 @@ html, body { margin: 0; height: 100%; background: var(--paper); font-family: var
 <script>
 var AREAS = [
   { tag: "il", name: "Illinois", url: "https://districtry.com/il/", file: "il/data/app/metro-outline.json", state: "il/data/app/il-state-outline.json", scope: "93 counties" },
-  { tag: "ny", name: "New York", url: "https://districtry.com/ny/", file: "ny/data/app/metro-outline.json", state: "ny/data/app/ny-state-outline.json", scope: "5 boroughs" },
+  { tag: "ny", name: "New York", url: "https://districtry.com/ny/", file: "ny/data/app/metro-outline.json", state: "ny/data/app/ny-state-outline.json", scope: "statewide, 5 boroughs in depth" },
   { tag: "wi", name: "Wisconsin", url: "https://districtry.com/wi/", file: "wi/data/app/metro-outline.json", state: "wi/data/app/wi-state-outline.json", scope: "all 72 counties" },
   { tag: "ia", name: "Iowa", url: "https://districtry.com/ia/", file: "ia/data/app/metro-outline.json", state: null, scope: "all 99 counties" },
   { tag: "mi", name: "Michigan", url: "https://districtry.com/mi/", file: "mi/data/app/metro-outline.json", state: null, scope: "all 83 counties" }
@@ -344,7 +344,15 @@ if (typeof L === "undefined") {
         layer.on("click", function () { open_(a.url); });
         var c = L.geoJSON(sgj || gj).getBounds().getCenter();
         label(c, a.name, "place-label", [110, 14], [55, 7]);
-        legendRow(DATA, a.name, (sgj ? "statewide, " : "") + a.scope, a.url);
+        /* The "statewide, " prefix marks the dashed wash, and it is PREPENDED
+           rather than assumed: ia and mi ship one tier, so they get no prefix.
+           A scope that already says statewide must not take it twice —
+           New York's is "statewide, 5 boroughs in depth", which read
+           "statewide, statewide, 5 boroughs in depth" before this test, and
+           the doubling was invisible in the generated diff because the prefix
+           is added HERE at runtime rather than written into the data above. */
+        var scopeSaysStatewide = a.scope.toLowerCase().indexOf("statewide") === 0;
+        legendRow(DATA, a.name, (sgj && !scopeSaysStatewide ? "statewide, " : "") + a.scope, a.url);
       });
       CITIES.forEach(function (c) {
         L.circleMarker([c.lat, c.lng], {

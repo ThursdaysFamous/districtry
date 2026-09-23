@@ -552,7 +552,7 @@ the instance's own layers cover, not by whether a state exists:
 | Illinois | the served counties | **3** | county/township/municipality/school-district/ZIP answer statewide; the county layers do not |
 | Wisconsin | the counties whose supervisor ROSTER ships (`metro-outline.json`); `wi-state-outline.json` is the region ring | **3** | every layer answers statewide — the middle band means "district shown, supervisor not named", a narrower claim than the other three instances' middle/outer bands make (it was 2 bands at launch, when coverage *was* the state outline; #523 split them the day the roster shipped) |
 | San Francisco | the 11 supervisor districts | 2 | no wider region in play |
-| New York City | the 5 boroughs | 2 | same |
+| New York | the 5 boroughs (`metro-outline.json`); `ny-state-outline.json` is the region ring | **3** | the statewide layers answer everywhere in the state; the city's own districts and the county legislatures do not (it was 2 bands as a city instance — the `region` band arrived with the go-live, #1042, and this row went stale that day) |
 
 A two-band key is not a degraded key. Until it shipped the grey was unexplained in every
 instance, and one row saying "Outside New York City" is the whole of what that map claims.

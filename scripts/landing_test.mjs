@@ -410,13 +410,32 @@ try {
       await page.evaluate(() => !!document.querySelector(".leaflet-container")),
       vendored ? "vendored Leaflet" : "CDN Leaflet");
     const legend = await page.$$eval("#legend-rows a", (els) =>
-      els.map((e) => ({ name: e.querySelector(".nm")?.textContent, href: e.getAttribute("href") })));
+      els.map((e) => ({ name: e.querySelector(".nm")?.textContent,
+                        scope: e.querySelector(".mt")?.textContent,
+                        href: e.getAttribute("href") })));
     check("coverage map legend lists every fleet place",
       legend.length === FLEET.length,
       JSON.stringify(legend.map((r) => r.name)) + " vs metros.json " + FLEET.length);
     check("coverage map legend links the fleet urls",
       legend.every((r) => FLEET.some((m) => m.url === r.href)),
       JSON.stringify(legend.map((r) => r.href)));
+    // The scope is the one legend field ASSEMBLED AT RUNTIME: a two-tier area
+    // gets a "statewide, " prefix the generated file does not contain, so a
+    // wrong scope here appears in no diff. New York's scope became
+    // "statewide, 5 boroughs in depth" on 2026-09-23 and read
+    // "statewide, statewide, 5 boroughs in depth" until the generator learned
+    // not to prefix a scope that already says it. Both halves are asserted:
+    // every row still ends with its own metros.json scope (the prefix may not
+    // eat or reword it), and no row says statewide twice.
+    check("coverage map legend states each place's own scope",
+      legend.every((r) => {
+        const m = FLEET.find((f) => f.url === r.href);
+        return m && typeof r.scope === "string" && r.scope.endsWith(m.scope);
+      }),
+      JSON.stringify(legend.map((r) => r.scope)));
+    check("no legend scope repeats statewide",
+      legend.every((r) => (String(r.scope).toLowerCase().match(/statewide/g) || []).length <= 1),
+      JSON.stringify(legend.map((r) => r.scope)));
     // The outlines each come from their own instance's data/app — a 404 on one
     // is exactly the "drew Illinois for everybody" failure the two-tier map
     // exists to avoid, and it would otherwise show only as a missing polygon.
