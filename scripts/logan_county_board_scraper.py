@@ -29,6 +29,7 @@ import sys
 
 import requests
 from scraper_common import UA_ROSTER_COMPACT  # noqa: E402  (shared machinery — do not fork)
+from validate_officeholder_names import is_vacancy_marker  # noqa: E402  (one reader for the word)
 
 LIST_URL = ("https://www.logancountyil.gov/index.php?option=com_content"
             "&view=article&id=176&Itemid=541&lang=en")
@@ -62,6 +63,23 @@ def main():
         role = ROLE_MAP[block[0].upper()]
         name = block[1] if len(block) > 1 else None
         if not name or re.search(r"\d|@", name):
+            continue
+        if is_vacancy_marker(name):
+            # THE COUNTY WRITES AN EMPTY SEAT AS A NAME, and the block is
+            # otherwise a member's: "DISTRICT 5 / MEMBER / VACANT", with no
+            # address, phone or e-mail after it. The word passes the name
+            # filter above — it carries no digit and no "@" — so until
+            # 2026-09-23 it was appended as a member called VACANT and reached
+            # il/county-board/logan.html as a schema.org Person of that name.
+            #
+            # It is a fact about the SEAT, so it is recorded as one and the
+            # builder counts it into `vacancies`, the shape this county's
+            # siblings already ship and the card already renders. The role goes
+            # with the record rather than being dropped: a vacancy on the Chair
+            # seat is a different statement from one on a plain member's, and
+            # the builder's Chair/Vice-Chair check should see it.
+            records.append({"name": None, "district": district, "role": role,
+                            "vacant": True, "phone": None, "email": None})
             continue
         phone = email = None
         for line in block[2:6]:

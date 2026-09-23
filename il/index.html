@@ -16849,11 +16849,23 @@ function initChiExplorer() {
       });
     },
     render: function (result) {
-      var members = (result.members || []).filter(function (m) { return m && m.name; });
+      // A COUNCIL SEATS THREE AND THE NOTE SAYS SO EVEN WHEN ONE IS EMPTY.
+      // CCPSA prints a vacant seat with its role and the word where a name
+      // goes; the scraper converts that to `vacant` with no name (counted,
+      // never named — the county-board cards' posture), so a plain name filter
+      // would drop the seat and report a two-member body the city seats three
+      // of. The count is stated instead, and no person row is drawn for a seat
+      // nobody holds.
+      var seats = (result.members || []).filter(function (m) { return m && (m.name || m.vacant); });
+      var members = seats.filter(function (m) { return m.name; });
+      var vacant = seats.length - members.length;
       var wrap = cardEl("div", "card-flush");
       wrap.appendChild(renderBodyIntro({
         title: "Police District Council",
-        note: members.length ? members.length + " elected councilors" : "Councilor roster not available"
+        note: seats.length
+          ? members.length + " elected councilor" + (members.length === 1 ? "" : "s")
+            + (vacant ? " · " + vacant + " vacant seat" + (vacant === 1 ? "" : "s") : "")
+          : "Councilor roster not available"
       }));
       if (members.length) {
         wrap.appendChild(renderPersonRows(members.map(function (m) {

@@ -47,9 +47,8 @@
         "profileUrl": "https://ccpsa.chicago.gov/member/kenya-franklin/"
       },
       {
-        "name": "Vacant",
-        "role": "Nominating Committee",
-        "profileUrl": "https://ccpsa.chicago.gov/member/vacant/"
+        "vacant": true,
+        "role": "Nominating Committee"
       },
       {
         "name": "Janice Jones",
@@ -232,9 +231,8 @@
         "profileUrl": "https://ccpsa.chicago.gov/member/michelle-d-page/"
       },
       {
-        "name": "Vacant",
-        "role": "Nominating Committee",
-        "profileUrl": "https://ccpsa.chicago.gov/member/vacant/"
+        "vacant": true,
+        "role": "Nominating Committee"
       }
     ],
     "sourceUrl": "https://ccpsa.chicago.gov/district-council/12th-district-council/"
