@@ -106,6 +106,52 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-24 01:40 — night's close.** Seven things merged tonight, four of them
+changing what a reader sees. Main green on every commit bar the last, which was
+still running at close and is covered by a scheduled check.
+
+**What moved for a reader.**
+
+- **Chicago's school board card was wrong in two of twenty districts** and is now
+  right in all twenty (#1127, Illinois's). Sub-district 9a said the seat was
+  vacant while the Board's own Vice President holds it; 10b named a member who
+  resigned in March. I verified every district against `cpsboe.org`'s live index
+  and found zero mismatches. The hand-curated file became a weekly pipeline.
+- **That card is now searchable by the Board's own seat names** (#1129) — "2b"
+  rather than "District 4", which is what the card had been printing all along.
+- **Detroit's council card reads the city's own page again** (#1126), not a
+  twelve-day-old archive copy. The archive fallback stays: one direct answer is
+  not proof an intermittent block has lifted.
+- **Wisconsin's Court of Appeals names the right Presiding Judge for District II**
+  (#1123), after that job had opened no PR for eighteen days.
+
+**What moved for nobody but is now true**: the three tree-side defects (#1124),
+Boone's stamp-only refresh (#1128), and the roster-health report telling the
+truth about which refreshes are failing.
+
+**THE FIX FROM #1124 WAS CONFIRMED ON LIVE DATA, which is the only kind of
+confirmation that counts here.** #387's 00:58 run went from four FAILING rows
+plus one UNPROVEN to ONE. Both phantom rows are gone — they had been reporting
+runs in which no job ever started, on a branch deleted from origin, and would
+have repeated every week.
+
+**One real thing is left open and it is Wisconsin's**: the legislature roster is
+frozen at its 2026-09-15 reading on a single unretried `urlopen` timeout, next
+scheduled run ~2026-09-29. Routed to `wi/BOARD.md` with the run named. Preserving
+the last-good reading is already correct; a retry is what is missing.
+
+**Three mistakes of my own, all caught and none shipped.** I read a failed run's
+log TAIL and saw only passes, because the smoke job accumulates failures — now a
+task row on this board, since every session reads red runs. A compound
+`git fetch` aborted on a deleted ref, left main stale, and my checkout silently
+landed on main, so a batch of gates came back green for a tree I had not meant to
+test; I re-ran against the real merged tree rather than reporting those. And I
+wrote a fix for #1127's history-page failure that Illinois had already pushed
+byte-identically, and dropped mine rather than pushing a duplicate.
+
+Adam's hourly routine is left running. It is cheap, it answers "nothing changed"
+on a quiet hour, and a red main overnight should wake somebody.
+
 **2026-09-23 — the three tree-side defects are fixed, and the first one's diagnosis
 was wrong twice.** Adam said to take them. Nothing here changes what a reader of the
 site sees; all three are about whether this project's own reports tell the truth.
