@@ -152,6 +152,21 @@ byte-identically, and dropped mine rather than pushing a duplicate.
 Adam's hourly routine is left running. It is cheap, it answers "nothing changed"
 on a quiet hour, and a red main overnight should wake somebody.
 
+**APPENDED 01:57.** #1130 landed after the above was written and is merged as
+`b804a8c`: the school board's flat 1-20 numbers become an internal key and every
+surface a reader sees carries the sub-district. **It fixes a live misleading label**
+— measured on the shipped labels, our "District 4" was the Board's sub-district 2b
+while the Board's own 4A and 4B were our 7 and 8, so a reader cross-referencing the
+official name was sent to a seat on the other side of the city. Verified as a
+relabelling and not a data change: the same 21 records, the same 21 names.
+**Adam then asked that this thread stay with the session that wrote it**
+(`session_01EipC4SzjcT91Nzy9D4HJCJ`), so #1129, #1130 and anything following from
+them are theirs, including watching `b804a8c` to green. Poked with the state and the
+one thing I noticed and did not act on — the sub-district labels derive from the
+boundary's `longName`, so a replaced boundary file moves them silently. My own check
+on that commit is cancelled so we are not both watching it; the hourly routine's
+cheap gate still reads main's newest smoke conclusion.
+
 **2026-09-23 — the three tree-side defects are fixed, and the first one's diagnosis
 was wrong twice.** Adam said to take them. Nothing here changes what a reader of the
 site sees; all three are about whether this project's own reports tell the truth.
