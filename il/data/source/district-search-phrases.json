@@ -17,7 +17,9 @@
       "layer": "school-board",
       "where": "Chicago",
       "name": "School Board District",
-      "why": "The Chicago Board of Education's 20 electoral districts, numbered 1-20 as the card's pill numbers them. The source also carries each one's sub-district label from the 2024 pairing (District 4 is '2b'); that label is not what a reader searches for and is not indexed."
+      "alt_name": "Sub-district",
+      "alt_aliases": ["Subdistrict", "School Board Sub-district", "School Board Subdistrict", "School Board"],
+      "why": "The Chicago Board of Education's 20 electoral districts, numbered 1-20 as the card's pill numbers them. Each is also found by its SUB-DISTRICT, the name the Board itself gives the seat (1A..10B) and the card prints ('Sub-district 2b' is District 4): 'sub-district 2b', 'subdistrict 2B', 'school board 2b', '2 b'. Those words match only the sub-district name, so 'sub-district 4' finds nothing rather than District 4."
     },
     {
       "layer": "congress",

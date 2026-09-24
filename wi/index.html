@@ -6528,6 +6528,14 @@ function initWisconsinExplorer() {
    * every county's. A lettered district ("Clay County Board District C")
    * is read from the one letter that follows "district".
    *
+   * A SECOND NAME. A layer whose districts also have a name of the form
+   * number-plus-letter carries it on each district as `alt` — the Chicago
+   * Board of Education's sub-districts, 1a..10b, the name the Board itself
+   * gives each of the 20 seats. "2b" or "2 b" in a query is read as that
+   * name, and matches only through the layer's `alt_phrases`
+   * ("sub-district 2b", "school board 2b"): "sub-district 4" finds nothing,
+   * and "school board district 4" still finds District 4 by its number.
+   *
    * A complete name (the phrase, or its last two or more words) answers
    * alone and nothing is sent to the geocoder. A type-ahead prefix is shown
    * ABOVE the address results, because "33 wa" is also the start of
@@ -6564,6 +6572,18 @@ function initWisconsinExplorer() {
       if (m) {
         if (num !== null) return null; // two numbers: an address, not a district
         num = String(parseInt(m[1], 10));
+        // "2 b": a number and the one letter after it are a second name
+        if (!m[2] && /^[a-z]$/.test(tokens[i + 1] || "")) {
+          num += tokens[i + 1].toUpperCase();
+          i++;
+        }
+        continue;
+      }
+      // "2b": a second name written as one word
+      var alt = /^(\d+)([a-z])$/.exec(t);
+      if (alt) {
+        if (num !== null) return null;
+        num = String(parseInt(alt[1], 10)) + alt[2].toUpperCase();
         continue;
       }
       words.push(t);
@@ -6789,6 +6809,17 @@ function initWisconsinExplorer() {
           return;
         }
         var words = spec.where ? (without(parsed.words, spec.where) || parsed.words) : parsed.words;
+        if (spec.alt_phrases && bestScore(words, spec.alt_phrases)) {
+          var alts = index.features.filter(function (f) { return f.properties.layer === layerId && f.properties.alt; })
+            .map(function (f) { return f.properties.alt; })
+            .sort(function (a, b) { return parseInt(a, 10) - parseInt(b, 10) || (a < b ? -1 : a > b ? 1 : 0); });
+          if (alts.length) {
+            // "School Board District" + "Sub-district" -> "School Board Sub-district"
+            hints.push({ name: spec.name.replace(/\s*district$/i, "") + " " + spec.alt_name,
+              note: "Type its " + spec.alt_name.toLowerCase() + ": " + alts[0] + "\u2013" + alts[alts.length - 1] +
+                (spec.where ? " \u00b7 " + spec.where : "") });
+          }
+        }
         if (!bestScore(words, spec.phrases)) return;
         hints.push({ name: spec.name, note: "Type its number: " + describeIds(sets[layerId + "|"] || []) +
           (spec.where ? " \u00b7 " + spec.where : "") });
@@ -6800,9 +6831,16 @@ function initWisconsinExplorer() {
       if (spec.match === "name") return; // matched by name, below
       for (var i = 0; i < index.features.length; i++) {
         var f = index.features[i], props = f.properties || {};
-        if (props.layer !== layerId || String(props.id) !== parsed.num) continue;
+        if (props.layer !== layerId) continue;
+        // the district's number, or its second name ("2B") — which matches
+        // only through the layer's own words for that name
+        var byAlt = !!props.alt && String(props.alt).toUpperCase() === parsed.num;
+        if (String(props.id) !== parsed.num && !byAlt) continue;
         var score;
-        if (spec.where_per_district) {
+        if (byAlt) {
+          var altWords = spec.where ? (without(parsed.words, spec.where) || parsed.words) : parsed.words;
+          score = bestScore(altWords, spec.alt_phrases);
+        } else if (spec.where_per_district) {
           // the county is required: every county has this district number
           var rest = without(parsed.words, props.where || "");
           if (rest === null) continue;
