@@ -45,6 +45,72 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-24 (evening, later still) — #1137 is GREEN and held for the manager.
+The queued deletion-trigger question is MEASURED, and its premise was half
+wrong — mine.**
+
+#1137 head `45d357a`, smoke SUCCESS at 17:50 UTC, `mergeable_state: clean`.
+Not merged by me. A re-check is armed for 18:45.
+
+### The deletion-trigger question, answered by simulation rather than reading
+
+I deleted three Iowa gap outlines on a clean tree and ran all **93** static
+CI gates, baseline first (93 of 93 green in this sandbox, so every failure
+below is the deletion). **Four fired, and they are two different things.**
+
+THREE ARE LOUD AND CORRECT, and name the file and the reader consequence:
+`build_coverage_gaps.py --check --metro iowa` ("county 'floyd' has no
+data/app/floyd-county-outline.json — the gaps panel fetches that file to
+decide whether this gap is where a reader clicked"),
+`ia/scripts/build_ia_gap_outlines.py --check`, and `validate_gap_counts.py`
+relaying the builder. **An orphaned outline cannot ship**, which the question
+as written assumed was the danger. It is not.
+
+ONE IS THE REAL CASE: `build_endpoint_inventory.py --check`, which fails with
+"has drifted from the tree it describes" and names nothing that moved.
+
+### The premise was wrong in two ways and I wrote both
+
+1. **`docs/EAM_STATUS.md` was never the unnamed case.** My #1136 commit
+   message says "both are `--check` gates that the three deleted data files
+   moved". Its diff is one cell, `67 → 78` — the Iowa supervisor roster's
+   DISTRICT count, which those three counties raised — and **62 workflows
+   already carry `build_eam_status.py` as a regenerate step** for exactly that
+   trigger. The simulation confirms it independently: delete the three files
+   and EAM_STATUS stays green.
+2. **The trigger is not deletion.** Adding one file — an empty
+   `zzz-probe-temp.json` — fails the inventory identically. `files = len([f
+   for f in os.listdir(appdir) if f.endswith(".json")])`, a raw count, so it
+   moves in BOTH directions. Every county that ships a roster file moves it,
+   not only a gap record whose `counties` array shrinks.
+
+### Why the two disagree, which is worth keeping
+
+`build_eam_status.py` globs `data/app` too, but filters
+`if os.path.basename(f) in index_html` — it counts the files the app
+references **by literal name**. Every gap outline is `"dynamic_reference":
+true`, its filename built at runtime, so the whole gap-outline set is
+invisible to it. `build_endpoint_inventory.py` counts every `.json` in the
+directory. Two readers of one phrase, "shipped `data/app` files", and here the
+difference is defensible — they publish different things — but it is why one
+moved and the other did not, and nothing says so.
+
+### The narrowed gap, and what it is owed
+
+**`build_endpoint_inventory.py` is named as a regenerate step in NO workflow
+and NO skill.** Measured: `grep -rln` finds it in `steward/SKILL.md` (as a
+`--check`), in its own output document, and in `smoke-test.yml`. So the skills
+for the paths that add and remove these files weekly — `county-n-plus-1`,
+`roster-pipeline`, `gap-record` §7 — run a green local battery, push, and meet
+it in CI. That is the same failure §7's own prose already records about
+`build_about_page.py` and `build_sitemap.py`.
+
+Its own FAIL line does say "regenerate it", so it is self-explaining once hit;
+the cost is only that it is hit after pushing. **Not fixed, and deliberately
+not on #1137's branch** — a PR per piece. It is the next change once #1137
+merges, and the question is whether to name it in three skills or once in the
+place that says what a change still owes.
+
 **2026-09-24 (evening, later) — #1137's two blocking fixes are pushed as
 `45d357a`, and the review's third item is fixed with them. Branch head clean
 against main, CI running.**
