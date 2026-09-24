@@ -43,7 +43,7 @@ const BASE = process.env.BASE_URL || "http://localhost:8000/";
 // ==== GENERATED:BEGIN smoke-config ====
 const POINT = "41.88250,-87.62850"; // downtown Loop — inside Cook County
 const OFFLINE = ["school-board", "il-supreme-court", "ccbr"];
-const EXPECT_DISTRICT = { "school-board": "12", "il-supreme-court": "1", "ccbr": "3" };
+const EXPECT_DISTRICT = { "school-board": "Sub-district 6b", "il-supreme-court": "1", "ccbr": "3" };
 const NEGATIVE_POINT = "41.70000,-87.10000"; // Lake Michigan, Indiana waters — outside all three anchor layers
 const APP_NAME = "districtry Illinois";
 const EXPECT_LAYERS = 40; // 17 base + police-beat (#43) + school-site (#45) + ccpsa-district-council + ward-precinct + 6 statewide local-gov layers (county, township, municipality, school districts x3 — TIGERweb) + 6 consolidated county-dispatched layers (county-board, judicial-subcircuit, fire-district, park-district, library-district, county-precinct — Cook/Will/DuPage/Lake/Kane/McHenry/Kendall entries; docs/COUNTY_LAYER_CONSOLIDATION.md) + 1 DuPage-only layer (dupage-county-special-police) + 2 Cook-only tax-agency layers (tif-district, mwrd — dedicated until a second county ships the concept) + 1 Chicago-only special-service layer (ssa — dedicated until a second municipality ships the concept) + 3 amenity nearest-point layers (post-office, library, early-voting) = 40 — THE SUM IS THE CLAIM, so a new layer needs its own term here and not just a bigger total: this read 39 for the day the `ssa` layer shipped because the total was the only part anyone would have changed. NOTHING GATES THIS NOTE — validate_doc_counts.py compares prose against layers[] and deliberately does not scan the worksheet it takes as canonical, so this is hand-kept. Addition re-checked against layers[] 2026-09-12; the underlying live verification of the layer list was 2026-07
@@ -70,7 +70,7 @@ const GAP_PROBE = { county: "kankakee", label: "Kankakee", lat: 41.1254, lng: -8
 // Point-move probe (check 2): a second point in a DIFFERENT district of the
 // first anchor layer than the ground-truth POINT, exercising the
 // incremental-restyle fast path. district is the expected identifier there.
-const MOVE_POINT = { lat: 41.99, lng: -87.66, district: "4" }; // school-board district 4 (vs 12 at the Loop POINT)
+const MOVE_POINT = { lat: 41.99, lng: -87.66, district: "2b" }; // school-board sub-district 2b (vs 6b at the Loop POINT)
 // Straggler fixture (check 2d): one same-origin county-board county's
 // geometry to delay, plus a point inside one of that county's districts.
 // App-RELATIVE on purpose: this doubles as a page.route glob ("**/" + it), and
@@ -566,17 +566,22 @@ try {
     check("a school district number shared across the state, or a town alone, matches no district",
       d1.length === 0 && town.length === 0, JSON.stringify({ d1, town }));
     // A CHICAGO SCHOOL BOARD SUB-DISTRICT (1a..10b, the Board's own name for
-    // each seat) finds its district, written "2b" or "2 b"; the sub-district
-    // words never match the flat number, and the flat number still works.
+    // each seat) is found by that name, written "2b" or "2 b", and is the only
+    // name shown: the boundary's own 1..20 is an internal row number, so
+    // "school board district 4" is the Board's District 4 — 4a and 4b — and
+    // never the row numbered 4 (which is 2b). "sub-district 4" finds nothing.
     const sub = await byCounty("sub-district 2b");
     const subSpaced = await byCounty("School Board 2 B");
     const subFlat = await byCounty("sub-district 4");
-    const flat = await byCounty("school board district 4");
-    check("a school board sub-district is found by its own name",
-      sub.join() === "School Board District 4 \u00b7 Sub-district 2b" && subSpaced.join() === sub.join(),
+    const pair = await byCounty("school board district 4");
+    const row = await byCounty("school board district 20");
+    check("a school board sub-district is found and named by its own name",
+      sub.join() === "School Board Sub-district 2b" && subSpaced.join() === sub.join(),
       JSON.stringify({ sub, subSpaced }));
-    check("sub-district words never match a flat number, and the flat number still finds the district",
-      subFlat.length === 0 && flat.join() === sub.join(), JSON.stringify({ subFlat, flat }));
+    check("a school board district number finds its two sub-districts, never the internal row number",
+      subFlat.length === 0 && row.length === 0 &&
+      pair.join() === "School Board Sub-district 4a,School Board Sub-district 4b",
+      JSON.stringify({ subFlat, row, pair }));
     // TYPE-AHEAD before the number: the words name a kind of district, so the
     // list says what to type next. A hint is text, never a button, so it
     // cannot be picked and #q= can never auto-select it.
@@ -856,7 +861,7 @@ try {
       const got = m ? m[1] : null;
       const ok = /[^0-9]/.test(want) ? info.text.includes(want) : got === want;
       check(
-        `${id} classifies point (District ${want})`,
+        `${id} classifies point (${/^\d/.test(want) ? "District " + want : want})`,
         !info.error && ok,
         info.text.slice(0, 70)
       );
@@ -871,7 +876,7 @@ try {
     // Bonus: moving the selection re-classifies correctly. This exercises the
     // incremental-restyle fast path (P7) — same layers on, new point — where
     // updateLayerHighlight only flips the old/new matched paths instead of
-    // re-styling every path. MOVE_POINT is school-board district 4 (vs 12 at
+    // re-styling every path. MOVE_POINT is school-board sub-district 2b (vs 6b at
     // the Loop point above), and the matched-region highlight must move with it.
     const moved = await page.evaluate(async ({ n, lat, lng, district }) => {
       window[n].setSelectedPoint(lat, lng);
@@ -891,7 +896,7 @@ try {
       return { text: el ? cardTextNow() : "(no card)", highlights };
     }, { n: EXPORTS_NAME, lat: MOVE_POINT.lat, lng: MOVE_POINT.lng, district: MOVE_POINT.district });
     check(
-      `point move re-classifies (District ${EXPECT_DISTRICT["school-board"]} -> ${MOVE_POINT.district}) and re-highlights`,
+      `point move re-classifies (${EXPECT_DISTRICT["school-board"]} -> ${MOVE_POINT.district}) and re-highlights`,
       new RegExp("District\\s+" + MOVE_POINT.district + "\\b", "i").test(moved.text) && moved.highlights >= 1,
       `${moved.text.slice(0, 60)} | highlights=${moved.highlights}`
     );

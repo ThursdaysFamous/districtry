@@ -19,7 +19,8 @@
       "name": "School Board District",
       "alt_name": "Sub-district",
       "alt_aliases": ["Subdistrict", "School Board Sub-district", "School Board Subdistrict", "School Board"],
-      "why": "The Chicago Board of Education's 20 electoral districts, numbered 1-20 as the card's pill numbers them. Each is also found by its SUB-DISTRICT, the name the Board itself gives the seat (1A..10B) and the card prints ('Sub-district 2b' is District 4): 'sub-district 2b', 'subdistrict 2B', 'school board 2b', '2 b'. Those words match only the sub-district name, so 'sub-district 4' finds nothing rather than District 4."
+      "internal_numbers": true,
+      "why": "The Chicago Board of Education's 20 seats, each found and named by its SUB-DISTRICT, the name the Board and the ballot give it (1a..10b): 'sub-district 2b', 'subdistrict 2B', 'school board 2b', '2 b'. The boundary file also numbers them 1-20, which is its row order and nothing a reader sees, so internal_numbers keeps that number out of every name and every match. A bare district number names the Board's own district, which is two sub-districts: 'school board district 4' finds 4a and 4b. 'sub-district 4' finds nothing, because a sub-district always has its letter."
     },
     {
       "layer": "congress",

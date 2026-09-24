@@ -2,102 +2,122 @@
   "1": {
     "email": "ebannon@cps.edu",
     "name": "Ed Bannon",
-    "profileUrl": "https://www.cpsboe.org/about/bios/2034"
+    "profileUrl": "https://www.cpsboe.org/about/bios/2034",
+    "subDistrict": "1a"
   },
   "10": {
     "email": "mblaise@cps.edu",
     "name": "Michilla Blaise",
-    "profileUrl": "https://www.cpsboe.org/about/bios/2029"
+    "profileUrl": "https://www.cpsboe.org/about/bios/2029",
+    "subDistrict": "5b"
   },
   "11": {
     "email": "athotakura@cps.edu",
     "name": "Anusha Thotakura",
-    "profileUrl": "https://www.cpsboe.org/about/bios/2039"
+    "profileUrl": "https://www.cpsboe.org/about/bios/2039",
+    "subDistrict": "6a"
   },
   "12": {
     "email": "jbiggs7@cps.edu",
     "name": "Jessica Biggs",
-    "profileUrl": "https://www.cpsboe.org/about/bios/2047"
+    "profileUrl": "https://www.cpsboe.org/about/bios/2047",
+    "subDistrict": "6b"
   },
   "13": {
     "email": "elozano23@cps.edu",
     "name": "Emma Lozano",
-    "profileUrl": "https://www.cpsboe.org/about/bios/2040"
+    "profileUrl": "https://www.cpsboe.org/about/bios/2040",
+    "subDistrict": "7a"
   },
   "14": {
     "email": "ylopez86@cps.edu",
     "name": "Yesenia Lopez",
-    "profileUrl": "https://www.cpsboe.org/about/bios/2048"
+    "profileUrl": "https://www.cpsboe.org/about/bios/2048",
+    "subDistrict": "7b"
   },
   "15": {
     "email": "agutierrez262@cps.edu",
     "name": "Angel Gutierrez",
-    "profileUrl": "https://www.cpsboe.org/about/bios/2041"
+    "profileUrl": "https://www.cpsboe.org/about/bios/2041",
+    "subDistrict": "8a"
   },
   "16": {
     "email": "cwallace21@cps.edu",
     "name": "Cydney Wallace",
-    "profileUrl": "https://www.cpsboe.org/about/bios/2049"
+    "profileUrl": "https://www.cpsboe.org/about/bios/2049",
+    "subDistrict": "8b"
   },
   "17": {
     "email": "avelez41@cps.edu",
     "name": "Dr. Angel L. Velez",
     "profileUrl": "https://www.cpsboe.org/about/bios/2050",
-    "role": "Vice President"
+    "role": "Vice President",
+    "subDistrict": "9a"
   },
   "18": {
     "email": "tboyle2@cps.edu",
     "name": "Therese Boyle",
-    "profileUrl": "https://www.cpsboe.org/about/bios/2045"
+    "profileUrl": "https://www.cpsboe.org/about/bios/2045",
+    "subDistrict": "9b"
   },
   "19": {
     "email": "csmith299@cps.edu",
     "name": "Dr. Che \"Rhymefest\" Smith",
-    "profileUrl": "https://www.cpsboe.org/about/bios/2042"
+    "profileUrl": "https://www.cpsboe.org/about/bios/2042",
+    "subDistrict": "10a"
   },
   "2": {
     "email": "jcuster@cps.edu",
     "name": "Jennifer Custer",
-    "profileUrl": "https://www.cpsboe.org/about/bios/2035"
+    "profileUrl": "https://www.cpsboe.org/about/bios/2035",
+    "subDistrict": "1b"
   },
   "20": {
     "name": "Connie L. Anderson",
-    "profileUrl": "https://www.cpsboe.org/about/bios/2051"
+    "profileUrl": "https://www.cpsboe.org/about/bios/2051",
+    "subDistrict": "10b"
   },
   "3": {
     "email": "edeberry@cps.edu",
     "name": "Ebony DeBerry",
-    "profileUrl": "https://www.cpsboe.org/about/bios/2036"
+    "profileUrl": "https://www.cpsboe.org/about/bios/2036",
+    "subDistrict": "2a"
   },
   "4": {
     "email": "dpope16@cps.edu",
     "name": "Debby Pope",
-    "profileUrl": "https://www.cpsboe.org/about/bios/2030"
+    "profileUrl": "https://www.cpsboe.org/about/bios/2030",
+    "subDistrict": "2b"
   },
   "5": {
     "email": "nriossierra1@cps.edu",
     "name": "Norma Rios-Sierra",
-    "profileUrl": "https://www.cpsboe.org/about/bios/2037"
+    "profileUrl": "https://www.cpsboe.org/about/bios/2037",
+    "subDistrict": "3a"
   },
   "6": {
     "email": "crivas18@cps.edu",
     "name": "Carlos A. Rivas, Jr.",
-    "profileUrl": "https://www.cpsboe.org/about/bios/2043"
+    "profileUrl": "https://www.cpsboe.org/about/bios/2043",
+    "subDistrict": "3b"
   },
   "7": {
     "email": "kzaccor1@cps.edu",
     "name": "Karen Zaccor",
-    "profileUrl": "https://www.cpsboe.org/about/bios/2038"
+    "profileUrl": "https://www.cpsboe.org/about/bios/2038",
+    "subDistrict": "4a"
   },
   "8": {
     "email": "erosenfeld2@cps.edu",
     "name": "Ellen Rosenfeld",
-    "profileUrl": "https://www.cpsboe.org/about/bios/2044"
+    "profileUrl": "https://www.cpsboe.org/about/bios/2044",
+    "subDistrict": "4b"
   },
   "9": {
     "email": "jbrown512@cps.edu",
     "name": "Jitu Brown",
-    "profileUrl": "https://www.cpsboe.org/about/bios/2046"
+    "profileUrl": "https://www.cpsboe.org/about/bios/2046",
+    "subDistrict": "5a"
   },
   "board": {
     "address": "42 West Madison Street, Garden Level, Chicago, Illinois 60602",
