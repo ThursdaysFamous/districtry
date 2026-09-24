@@ -107,6 +107,24 @@ FLOORS = {
     # carries a phone and the city's own per-district page for every seat and
     # no e-mail for any.
     "02375": ("Appleton", 15, 15, 0, 14, 14),
+    # THE MULTI-MEMBER TRANCHE OF 2026-09-24, the four cities #1133 unblocked.
+    # Each seats more than one alderperson per district, which is why the
+    # `districts` column and the `named` floor are now different numbers: read
+    # Wautoma as three districts holding six people. The contact floors are
+    # this tranche's first measured run less one, as everywhere above.
+    #   Wautoma   1, 3 and 2 across three districts — the UNEVEN council that
+    #             settled the schema. Phones for all six, no e-mail published;
+    #             its page prints home addresses, which are never read.
+    #   Algoma    two per district; a mailbox and a phone for all eight. The
+    #             mailboxes are numbered by SEAT (alder1..alder8), not by
+    #             district, so they are carried and never used to place anyone.
+    #   Horicon   two per district; the page publishes neither e-mail nor phone
+    #             where this scrape reads, so both floors are 0 by measurement.
+    #   Dodgeville two per district; eight mailboxes, six phones.
+    "84625": ("Wautoma", 3, 6, 0, 5, 0),
+    "01000": ("Algoma", 4, 8, 7, 7, 0),
+    "35750": ("Horicon", 3, 6, 0, 0, 0),
+    "20350": ("Dodgeville", 4, 8, 7, 5, 0),
 }
 
 
