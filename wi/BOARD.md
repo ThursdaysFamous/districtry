@@ -28,6 +28,47 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-24, later. #1133 MERGED as `71e09b9`** — four commits, `smoke` green
+on each head it was asked about (`0c689a0` run 36010013959, `5f44307` run
+36017751882), merging clean, no review thread, and I did not merge it myself.
+Content verified on main file by file against my branch head rather than
+assumed from the merge event.
+
+  * `8719b44` — `members[district]` is a LIST. The multi-member blocker is
+    retired; PR 2 (the cities) is now unblocked.
+  * `c27f79c` — the NG911 tiling, ten days stale, rebuilt. 109 features
+    redrawn; `cache_name` v39 to v40.
+  * `0c689a0` — the legislature fetch retries. That roster is current and no
+    longer one timeout from a week's freeze.
+  * `5f44307` — the aldermanic counts, which had been eighteen days behind
+    their own gate.
+
+**THE LAST ONE IS THE ONE WORTH KEEPING, and it started with my own error.**
+The worksheet line commit 1 added said "the other 132 municipalities' councils
+are a recorded gap" — I derived it by subtracting 24 from a 156 I read off the
+prose beside it. Measured, the shipped geometry has **866 features across 159
+municipalities**, so the figure is 135 and the 156 was itself stale.
+
+`validate_index.py` has expected 866 for that file since **2026-09-06**
+(`cc0f261`, #787, which added three excluded cities' compositions). No sentence
+followed it. Eighteen days, every gate green, because that gate counts FEATURES
+and nothing reads the sentence beside them — and `validate_doc_counts.py` does
+not reach it either, since its subject is "N layers" and not a layer's own
+feature count. Corrected in all four surfaces at once, each stating the
+measurement with its date and the figure it replaces, because a half-corrected
+count is worse than an uncorrected one: the next reader cannot tell which is
+authoritative.
+
+**I found it by checking a number before acting on it.** The alderperson row
+quotes "156 municipalities with council districts drawn; 24 name theirs". The
+24 is right. Verifying the other cost one local command and turned up a defect
+eighteen days old.
+
+**The pool measurement's candidate list is therefore already measured, with no
+fetch**: 159 municipalities have districts drawn, 24 name people, **135 name
+nobody — 626 districts with no name in them.** That is the artifact that
+assignment starts from, and it is derivable from two shipped files.
+
 **2026-09-24. Three of the six assigned rows are DONE and pushed as #1133; two
 were already finished before the brief was written; one item of substance
 remains.**
