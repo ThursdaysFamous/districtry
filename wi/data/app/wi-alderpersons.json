@@ -1,461 +1,652 @@
 {
  "01550": {
+  "districts": 6,
   "members": {
-   "01": {
-    "name": "Dale Stuber"
-   },
-   "02": {
-    "name": "Timothy Lima"
-   },
-   "03": {
-    "name": "Bruce Thielen"
-   },
-   "04": {
-    "name": "Matthew Biren"
-   },
-   "05": {
-    "name": "Susie Zillmer"
-   },
-   "06": {
-    "name": "Susan Rowe"
-   }
+   "01": [
+    {
+     "name": "Dale Stuber"
+    }
+   ],
+   "02": [
+    {
+     "name": "Timothy Lima"
+    }
+   ],
+   "03": [
+    {
+     "name": "Bruce Thielen"
+    }
+   ],
+   "04": [
+    {
+     "name": "Matthew Biren"
+    }
+   ],
+   "05": [
+    {
+     "name": "Susie Zillmer"
+    }
+   ],
+   "06": [
+    {
+     "name": "Susan Rowe"
+    }
+   ]
   },
   "municipality": "Altoona",
   "seats": 6,
   "sourceUrl": "https://www.altoonawi.gov/government/elected_officials.php"
  },
  "02375": {
+  "districts": 15,
   "members": {
-   "01": {
-    "name": "Josh Lambrecht",
-    "phone": "(920) 268-4808",
-    "url": "https://www.appletonwi.gov/government/district_1.php"
-   },
-   "02": {
-    "name": "Vered Meltzer",
-    "phone": "(920) 809-6669",
-    "url": "https://www.appletonwi.gov/government/district_2.php"
-   },
-   "03": {
-    "name": "Brad Firkus",
-    "phone": "(920) 358-0339",
-    "url": "https://www.appletonwi.gov/government/district_3.php"
-   },
-   "04": {
-    "name": "Martyn Smith",
-    "phone": "(920) 215-0982",
-    "url": "https://www.appletonwi.gov/government/district_4.php"
-   },
-   "05": {
-    "name": "Katie Van Zeeland",
-    "phone": "(920) 358-0501",
-    "url": "https://www.appletonwi.gov/government/district_5.php"
-   },
-   "06": {
-    "name": "Denise Fenton",
-    "phone": "(920) 475-1603",
-    "url": "https://www.appletonwi.gov/government/district_6.php"
-   },
-   "07": {
-    "name": "Patrick Hayden",
-    "phone": "(920) 585-9530",
-    "url": "https://www.appletonwi.gov/government/district_7.php"
-   },
-   "08": {
-    "name": "Patti Heffernan",
-    "phone": "(920) 680-5911",
-    "url": "https://www.appletonwi.gov/government/district_8.php"
-   },
-   "09": {
-    "name": "Alex Schultz",
-    "phone": "(920) 221-1233",
-    "url": "https://www.appletonwi.gov/government/district_9.php"
-   },
-   "10": {
-    "name": "Vaya Jones",
-    "phone": "(920) 810-7996",
-    "url": "https://www.appletonwi.gov/government/district_10.php"
-   },
-   "11": {
-    "name": "Adrian Stancil-Martin",
-    "phone": "(414) 301-3651",
-    "url": "https://www.appletonwi.gov/government/district_11.php"
-   },
-   "12": {
-    "name": "Nate Wolff",
-    "phone": "(920) 450-3543",
-    "url": "https://www.appletonwi.gov/government/district_12.php"
-   },
-   "13": {
-    "name": "Sheri S Hartzheim",
-    "phone": "(920) 570-2873",
-    "url": "https://www.appletonwi.gov/government/district_13.php"
-   },
-   "14": {
-    "name": "Christopher Croatt",
-    "phone": "(920) 735-9532",
-    "url": "https://www.appletonwi.gov/government/district_14.php"
-   },
-   "15": {
-    "name": "Denis Dougherty",
-    "phone": "(920) 259-9153",
-    "url": "https://www.appletonwi.gov/government/district_15.php"
-   }
+   "01": [
+    {
+     "name": "Josh Lambrecht",
+     "phone": "(920) 268-4808",
+     "url": "https://www.appletonwi.gov/government/district_1.php"
+    }
+   ],
+   "02": [
+    {
+     "name": "Vered Meltzer",
+     "phone": "(920) 809-6669",
+     "url": "https://www.appletonwi.gov/government/district_2.php"
+    }
+   ],
+   "03": [
+    {
+     "name": "Brad Firkus",
+     "phone": "(920) 358-0339",
+     "url": "https://www.appletonwi.gov/government/district_3.php"
+    }
+   ],
+   "04": [
+    {
+     "name": "Martyn Smith",
+     "phone": "(920) 215-0982",
+     "url": "https://www.appletonwi.gov/government/district_4.php"
+    }
+   ],
+   "05": [
+    {
+     "name": "Katie Van Zeeland",
+     "phone": "(920) 358-0501",
+     "url": "https://www.appletonwi.gov/government/district_5.php"
+    }
+   ],
+   "06": [
+    {
+     "name": "Denise Fenton",
+     "phone": "(920) 475-1603",
+     "url": "https://www.appletonwi.gov/government/district_6.php"
+    }
+   ],
+   "07": [
+    {
+     "name": "Patrick Hayden",
+     "phone": "(920) 585-9530",
+     "url": "https://www.appletonwi.gov/government/district_7.php"
+    }
+   ],
+   "08": [
+    {
+     "name": "Patti Heffernan",
+     "phone": "(920) 680-5911",
+     "url": "https://www.appletonwi.gov/government/district_8.php"
+    }
+   ],
+   "09": [
+    {
+     "name": "Alex Schultz",
+     "phone": "(920) 221-1233",
+     "url": "https://www.appletonwi.gov/government/district_9.php"
+    }
+   ],
+   "10": [
+    {
+     "name": "Vaya Jones",
+     "phone": "(920) 810-7996",
+     "url": "https://www.appletonwi.gov/government/district_10.php"
+    }
+   ],
+   "11": [
+    {
+     "name": "Adrian Stancil-Martin",
+     "phone": "(414) 301-3651",
+     "url": "https://www.appletonwi.gov/government/district_11.php"
+    }
+   ],
+   "12": [
+    {
+     "name": "Nate Wolff",
+     "phone": "(920) 450-3543",
+     "url": "https://www.appletonwi.gov/government/district_12.php"
+    }
+   ],
+   "13": [
+    {
+     "name": "Sheri S Hartzheim",
+     "phone": "(920) 570-2873",
+     "url": "https://www.appletonwi.gov/government/district_13.php"
+    }
+   ],
+   "14": [
+    {
+     "name": "Christopher Croatt",
+     "phone": "(920) 735-9532",
+     "url": "https://www.appletonwi.gov/government/district_14.php"
+    }
+   ],
+   "15": [
+    {
+     "name": "Denis Dougherty",
+     "phone": "(920) 259-9153",
+     "url": "https://www.appletonwi.gov/government/district_15.php"
+    }
+   ]
   },
   "municipality": "Appleton",
   "seats": 15,
   "sourceUrl": "https://www.appletonwi.gov/government/common_council.php"
  },
  "21625": {
+  "districts": 4,
   "members": {
-   "01": {
-    "email": "COERWard1@eagleriverwi.gov",
-    "name": "Vic Washelesky",
-    "phone": "(715) 525-1555"
-   },
-   "02": {
-    "email": "COERWard2@eagleriverwi.gov",
-    "name": "Dan Grosskopf",
-    "phone": "715-891-0526"
-   },
-   "03": {
-    "email": "COERWard3-4@eagleriverwi.gov",
-    "name": "Kim Schaffer",
-    "phone": "715-479-2599"
-   },
-   "04": {
-    "email": "COERWard5@eagleriverwi.gov",
-    "name": "Becky Boxrucker",
-    "phone": "715-891-0191"
-   }
+   "01": [
+    {
+     "email": "COERWard1@eagleriverwi.gov",
+     "name": "Vic Washelesky",
+     "phone": "(715) 525-1555"
+    }
+   ],
+   "02": [
+    {
+     "email": "COERWard2@eagleriverwi.gov",
+     "name": "Dan Grosskopf",
+     "phone": "715-891-0526"
+    }
+   ],
+   "03": [
+    {
+     "email": "COERWard3-4@eagleriverwi.gov",
+     "name": "Kim Schaffer",
+     "phone": "715-479-2599"
+    }
+   ],
+   "04": [
+    {
+     "email": "COERWard5@eagleriverwi.gov",
+     "name": "Becky Boxrucker",
+     "phone": "715-891-0191"
+    }
+   ]
   },
   "municipality": "Eagle River",
   "seats": 4,
   "sourceUrl": "https://eagleriverwi.gov/city-government/elected-officials/"
  },
  "22300": {
+  "districts": 5,
   "members": {
-   "01": {
-    "name": "Jessica Schoen",
-    "url": "https://www.eauclairewi.gov/m/directory/employee?eid=325"
-   },
-   "02": {
-    "name": "Joyce Orth",
-    "url": "https://www.eauclairewi.gov/m/directory/employee?eid=326"
-   },
-   "03": {
-    "name": "Aaron Brewster",
-    "url": "https://www.eauclairewi.gov/m/directory/employee?eid=245"
-   },
-   "04": {
-    "name": "Clara Serrano",
-    "url": "https://www.eauclairewi.gov/m/directory/employee?eid=327"
-   },
-   "05": {
-    "name": "Andrew Werthmann",
-    "url": "https://www.eauclairewi.gov/m/directory/employee?eid=328"
-   }
+   "01": [
+    {
+     "name": "Jessica Schoen",
+     "url": "https://www.eauclairewi.gov/m/directory/employee?eid=325"
+    }
+   ],
+   "02": [
+    {
+     "name": "Joyce Orth",
+     "url": "https://www.eauclairewi.gov/m/directory/employee?eid=326"
+    }
+   ],
+   "03": [
+    {
+     "name": "Aaron Brewster",
+     "url": "https://www.eauclairewi.gov/m/directory/employee?eid=245"
+    }
+   ],
+   "04": [
+    {
+     "name": "Clara Serrano",
+     "url": "https://www.eauclairewi.gov/m/directory/employee?eid=327"
+    }
+   ],
+   "05": [
+    {
+     "name": "Andrew Werthmann",
+     "url": "https://www.eauclairewi.gov/m/directory/employee?eid=328"
+    }
+   ]
   },
   "municipality": "Eau Claire",
   "seats": 5,
   "sourceUrl": "https://www.eauclairewi.gov/310/City-Council"
  },
  "28875": {
+  "districts": 4,
   "members": {
-   "01": {
-    "name": "Terri Kaminski"
-   },
-   "02": {
-    "name": "Meg Cutts"
-   },
-   "03": {
-    "name": "Robert Warren"
-   },
-   "04": {
-    "name": "Jan Miller"
-   }
+   "01": [
+    {
+     "name": "Terri Kaminski"
+    }
+   ],
+   "02": [
+    {
+     "name": "Meg Cutts"
+    }
+   ],
+   "03": [
+    {
+     "name": "Robert Warren"
+    }
+   ],
+   "04": [
+    {
+     "name": "Jan Miller"
+    }
+   ]
   },
   "municipality": "Germantown",
   "seats": 4,
   "sourceUrl": "https://www.germantownwi.gov/299/Village-Board"
  },
  "31000": {
+  "districts": 12,
   "members": {
-   "01": {
-    "email": "Jennifer.Grant@greenbaywi.gov",
-    "name": "Jennifer Grant",
-    "phone": "920-510-6861",
-    "url": "https://www.greenbaywi.gov/m/directory/employee?eid=70"
-   },
-   "02": {
-    "email": "Jim.Hutchison@greenbaywi.gov",
-    "name": "Jim Hutchison",
-    "phone": "920-819-8015",
-    "url": "https://www.greenbaywi.gov/m/directory/employee?eid=73"
-   },
-   "03": {
-    "email": "Bill.Morgan@greenbaywi.gov",
-    "name": "Bill Morgan",
-    "phone": "920-217-8424",
-    "url": "https://www.greenbaywi.gov/m/directory/employee?eid=77"
-   },
-   "04": {
-    "email": "Jon.Shelton@greenbaywi.gov",
-    "name": "Jon Shelton",
-    "phone": "920-977-4911",
-    "url": "https://www.greenbaywi.gov/m/directory/employee?eid=90"
-   },
-   "05": {
-    "email": "doug.orlowski@greenbaywi.gov",
-    "name": "Doug Orlowski",
-    "phone": "920-391-5600",
-    "url": "https://www.greenbaywi.gov/m/directory/employee?eid=131"
-   },
-   "06": {
-    "email": "Joey.Prestley@greenbaywi.gov",
-    "name": "Joey Prestley",
-    "phone": "920-238-3969",
-    "url": "https://www.greenbaywi.gov/m/directory/employee?eid=132"
-   },
-   "07": {
-    "email": "Alyssa.Proffitt@greenbaywi.gov",
-    "name": "Alyssa Proffitt",
-    "phone": "920-536-1901",
-    "url": "https://www.greenbaywi.gov/m/directory/employee?eid=93"
-   },
-   "08": {
-    "email": "jim.ridderbush@greenbaywi.gov",
-    "name": "Jim Ridderbush",
-    "phone": "920-498-9257",
-    "url": "https://www.greenbaywi.gov/m/directory/employee?eid=94"
-   },
-   "09": {
-    "email": "Ben.Debaker@greenbaywi.gov",
-    "name": "Ben DeBaker",
-    "url": "https://www.greenbaywi.gov/m/directory/employee?eid=133"
-   },
-   "10": {
-    "email": "Ben.Delie@greenbaywi.gov",
-    "name": "Ben Delie",
-    "phone": "920-639-1017",
-    "url": "https://www.greenbaywi.gov/m/directory/employee?eid=96"
-   },
-   "11": {
-    "email": "Melinda.Eck@greenbaywi.gov",
-    "name": "Melinda Eck",
-    "phone": "920-621-9827",
-    "url": "https://www.greenbaywi.gov/m/directory/employee?eid=98"
-   },
-   "12": {
-    "email": "Kathy.Hinkfuss@greenbaywi.gov",
-    "name": "Kathy Hinkfuss",
-    "phone": "920-366-6325",
-    "url": "https://www.greenbaywi.gov/m/directory/employee?eid=134"
-   }
+   "01": [
+    {
+     "email": "Jennifer.Grant@greenbaywi.gov",
+     "name": "Jennifer Grant",
+     "phone": "920-510-6861",
+     "url": "https://www.greenbaywi.gov/m/directory/employee?eid=70"
+    }
+   ],
+   "02": [
+    {
+     "email": "Jim.Hutchison@greenbaywi.gov",
+     "name": "Jim Hutchison",
+     "phone": "920-819-8015",
+     "url": "https://www.greenbaywi.gov/m/directory/employee?eid=73"
+    }
+   ],
+   "03": [
+    {
+     "email": "Bill.Morgan@greenbaywi.gov",
+     "name": "Bill Morgan",
+     "phone": "920-217-8424",
+     "url": "https://www.greenbaywi.gov/m/directory/employee?eid=77"
+    }
+   ],
+   "04": [
+    {
+     "email": "Jon.Shelton@greenbaywi.gov",
+     "name": "Jon Shelton",
+     "phone": "920-977-4911",
+     "url": "https://www.greenbaywi.gov/m/directory/employee?eid=90"
+    }
+   ],
+   "05": [
+    {
+     "email": "doug.orlowski@greenbaywi.gov",
+     "name": "Doug Orlowski",
+     "phone": "920-391-5600",
+     "url": "https://www.greenbaywi.gov/m/directory/employee?eid=131"
+    }
+   ],
+   "06": [
+    {
+     "email": "Joey.Prestley@greenbaywi.gov",
+     "name": "Joey Prestley",
+     "phone": "920-238-3969",
+     "url": "https://www.greenbaywi.gov/m/directory/employee?eid=132"
+    }
+   ],
+   "07": [
+    {
+     "email": "Alyssa.Proffitt@greenbaywi.gov",
+     "name": "Alyssa Proffitt",
+     "phone": "920-536-1901",
+     "url": "https://www.greenbaywi.gov/m/directory/employee?eid=93"
+    }
+   ],
+   "08": [
+    {
+     "email": "jim.ridderbush@greenbaywi.gov",
+     "name": "Jim Ridderbush",
+     "phone": "920-498-9257",
+     "url": "https://www.greenbaywi.gov/m/directory/employee?eid=94"
+    }
+   ],
+   "09": [
+    {
+     "email": "Ben.Debaker@greenbaywi.gov",
+     "name": "Ben DeBaker",
+     "url": "https://www.greenbaywi.gov/m/directory/employee?eid=133"
+    }
+   ],
+   "10": [
+    {
+     "email": "Ben.Delie@greenbaywi.gov",
+     "name": "Ben Delie",
+     "phone": "920-639-1017",
+     "url": "https://www.greenbaywi.gov/m/directory/employee?eid=96"
+    }
+   ],
+   "11": [
+    {
+     "email": "Melinda.Eck@greenbaywi.gov",
+     "name": "Melinda Eck",
+     "phone": "920-621-9827",
+     "url": "https://www.greenbaywi.gov/m/directory/employee?eid=98"
+    }
+   ],
+   "12": [
+    {
+     "email": "Kathy.Hinkfuss@greenbaywi.gov",
+     "name": "Kathy Hinkfuss",
+     "phone": "920-366-6325",
+     "url": "https://www.greenbaywi.gov/m/directory/employee?eid=134"
+    }
+   ]
   },
   "municipality": "Green Bay",
   "seats": 12,
   "sourceUrl": "https://www.greenbaywi.gov/m/directory"
  },
  "35950": {
+  "districts": 8,
   "members": {
-   "01": {
-    "name": "Maria Lasecki",
-    "url": "https://www.villageofhoward.com/directory.aspx?EID=110"
-   },
-   "02": {
-    "name": "Chris Nielsen",
-    "url": "https://www.villageofhoward.com/Directory.aspx?EID=116"
-   },
-   "03": {
-    "name": "Cathy Hughes",
-    "url": "https://www.villageofhoward.com/Directory.aspx?EID=115"
-   },
-   "04": {
-    "name": "Daniel Kussow",
-    "url": "https://www.villageofhoward.com/Directory.aspx?EID=157"
-   },
-   "05": {
-    "name": "Michael Nieft",
-    "url": "https://www.villageofhoward.com/Directory.aspx?EID=114"
-   },
-   "06": {
-    "name": "Raymond Suennen",
-    "url": "https://www.villageofhoward.com/Directory.aspx?EID=113"
-   },
-   "07": {
-    "name": "Adam Lemorande",
-    "url": "https://www.villageofhoward.com/directory.aspx?EID=112"
-   },
-   "08": {
-    "name": "Craig McAllister",
-    "url": "https://www.villageofhoward.com/Directory.aspx?EID=111"
-   }
+   "01": [
+    {
+     "name": "Maria Lasecki",
+     "url": "https://www.villageofhoward.com/directory.aspx?EID=110"
+    }
+   ],
+   "02": [
+    {
+     "name": "Chris Nielsen",
+     "url": "https://www.villageofhoward.com/Directory.aspx?EID=116"
+    }
+   ],
+   "03": [
+    {
+     "name": "Cathy Hughes",
+     "url": "https://www.villageofhoward.com/Directory.aspx?EID=115"
+    }
+   ],
+   "04": [
+    {
+     "name": "Daniel Kussow",
+     "url": "https://www.villageofhoward.com/Directory.aspx?EID=157"
+    }
+   ],
+   "05": [
+    {
+     "name": "Michael Nieft",
+     "url": "https://www.villageofhoward.com/Directory.aspx?EID=114"
+    }
+   ],
+   "06": [
+    {
+     "name": "Raymond Suennen",
+     "url": "https://www.villageofhoward.com/Directory.aspx?EID=113"
+    }
+   ],
+   "07": [
+    {
+     "name": "Adam Lemorande",
+     "url": "https://www.villageofhoward.com/directory.aspx?EID=112"
+    }
+   ],
+   "08": [
+    {
+     "name": "Craig McAllister",
+     "url": "https://www.villageofhoward.com/Directory.aspx?EID=111"
+    }
+   ]
   },
   "municipality": "Howard",
   "seats": 8,
   "sourceUrl": "https://www.villageofhoward.com/208/Village-President-Board-of-Trustees"
  },
  "39225": {
+  "districts": 17,
   "members": {
-   "01": {
-    "name": "Eric J. Haugaard"
-   },
-   "02": {
-    "name": "Bill Siel"
-   },
-   "03": {
-    "name": "Jan Michalski"
-   },
-   "04": {
-    "name": "Rex Davenport"
-   },
-   "05": {
-    "name": "Rocco J. Lamacchia, Sr."
-   },
-   "06": {
-    "name": "Brandi Ferree"
-   },
-   "07": {
-    "name": "Kelly MacKay"
-   },
-   "08": {
-    "name": "Peni Keeling"
-   },
-   "09": {
-    "name": "Keith W. Rosenberg"
-   },
-   "10": {
-    "name": "Anthony Kennedy"
-   },
-   "11": {
-    "name": "Rollin Pizzala"
-   },
-   "12": {
-    "name": "Ruth Dyson"
-   },
-   "13": {
-    "name": "Curt Wilson"
-   },
-   "14": {
-    "name": "Daniel Prozanski"
-   },
-   "15": {
-    "name": "Julia Metallo"
-   },
-   "16": {
-    "name": "Dominic Ruffalo"
-   },
-   "17": {
-    "name": "Art DeBaere"
-   }
+   "01": [
+    {
+     "name": "Eric J. Haugaard"
+    }
+   ],
+   "02": [
+    {
+     "name": "Bill Siel"
+    }
+   ],
+   "03": [
+    {
+     "name": "Jan Michalski"
+    }
+   ],
+   "04": [
+    {
+     "name": "Rex Davenport"
+    }
+   ],
+   "05": [
+    {
+     "name": "Rocco J. Lamacchia, Sr."
+    }
+   ],
+   "06": [
+    {
+     "name": "Brandi Ferree"
+    }
+   ],
+   "07": [
+    {
+     "name": "Kelly MacKay"
+    }
+   ],
+   "08": [
+    {
+     "name": "Peni Keeling"
+    }
+   ],
+   "09": [
+    {
+     "name": "Keith W. Rosenberg"
+    }
+   ],
+   "10": [
+    {
+     "name": "Anthony Kennedy"
+    }
+   ],
+   "11": [
+    {
+     "name": "Rollin Pizzala"
+    }
+   ],
+   "12": [
+    {
+     "name": "Ruth Dyson"
+    }
+   ],
+   "13": [
+    {
+     "name": "Curt Wilson"
+    }
+   ],
+   "14": [
+    {
+     "name": "Daniel Prozanski"
+    }
+   ],
+   "15": [
+    {
+     "name": "Julia Metallo"
+    }
+   ],
+   "16": [
+    {
+     "name": "Dominic Ruffalo"
+    }
+   ],
+   "17": [
+    {
+     "name": "Art DeBaere"
+    }
+   ]
   },
   "municipality": "Kenosha",
   "seats": 17,
   "sourceUrl": "https://gis-city.kenosha.org/server/rest/services/Organizational_Layers/Districts_ElectedRepresentation/FeatureServer/150"
  },
  "48000": {
+  "districts": 20,
   "members": {
-   "01": {
-    "email": "district1@cityofmadison.com",
-    "name": "Devine O. Nzegwu",
-    "url": "https://www.cityofmadison.com/council/district1"
-   },
-   "02": {
-    "email": "district2@cityofmadison.com",
-    "name": "Will Ochowicz",
-    "url": "https://www.cityofmadison.com/council/district2"
-   },
-   "03": {
-    "email": "district3@cityofmadison.com",
-    "name": "Derek Field",
-    "url": "https://www.cityofmadison.com/council/district3"
-   },
-   "04": {
-    "email": "district4@cityofmadison.com",
-    "name": "Michael E. Verveer",
-    "url": "https://www.cityofmadison.com/council/district4"
-   },
-   "05": {
-    "email": "district5@cityofmadison.com",
-    "name": "Regina M. Vidaver",
-    "url": "https://www.cityofmadison.com/council/district5"
-   },
-   "06": {
-    "email": "district6@cityofmadison.com",
-    "name": "Davy Mayer",
-    "url": "https://www.cityofmadison.com/council/district6"
-   },
-   "07": {
-    "email": "district7@cityofmadison.com",
-    "name": "Badri Lankella",
-    "url": "https://www.cityofmadison.com/council/district7"
-   },
-   "08": {
-    "email": "district8@cityofmadison.com",
-    "name": "Ellen Zhang",
-    "url": "https://www.cityofmadison.com/council/district8"
-   },
-   "09": {
-    "email": "district9@cityofmadison.com",
-    "name": "Joann Pritchett",
-    "url": "https://www.cityofmadison.com/council/district9"
-   },
-   "10": {
-    "email": "district10@cityofmadison.com",
-    "name": "Yannette Figueroa Cole",
-    "url": "https://www.cityofmadison.com/council/district10"
-   },
-   "11": {
-    "email": "district11@cityofmadison.com",
-    "name": "Bill Tishler",
-    "url": "https://www.cityofmadison.com/council/district11"
-   },
-   "12": {
-    "email": "district12@cityofmadison.com",
-    "name": "Julia Matthews",
-    "url": "https://www.cityofmadison.com/council/district12"
-   },
-   "13": {
-    "email": "district13@cityofmadison.com",
-    "name": "Tag Evers",
-    "url": "https://www.cityofmadison.com/council/district13"
-   },
-   "14": {
-    "email": "district14@cityofmadison.com",
-    "name": "Noah L. Lieberman",
-    "url": "https://www.cityofmadison.com/council/district14"
-   },
-   "15": {
-    "email": "district15@cityofmadison.com",
-    "name": "Dina Nina Martinez-Rutherford",
-    "url": "https://www.cityofmadison.com/council/district15"
-   },
-   "16": {
-    "email": "district16@cityofmadison.com",
-    "name": "Sean O'Brien",
-    "url": "https://www.cityofmadison.com/council/district16"
-   },
-   "17": {
-    "email": "district17@cityofmadison.com",
-    "name": "Sabrina V. Madison",
-    "url": "https://www.cityofmadison.com/council/district17"
-   },
-   "18": {
-    "email": "district18@cityofmadison.com",
-    "name": "Carmella Glenn",
-    "url": "https://www.cityofmadison.com/council/district18"
-   },
-   "19": {
-    "email": "district19@cityofmadison.com",
-    "name": "John P. Guequierre",
-    "url": "https://www.cityofmadison.com/council/district19"
-   },
-   "20": {
-    "email": "district20@cityofmadison.com",
-    "name": "Barbara Harrington-McKinney",
-    "url": "https://www.cityofmadison.com/council/district20"
-   }
+   "01": [
+    {
+     "email": "district1@cityofmadison.com",
+     "name": "Devine O. Nzegwu",
+     "url": "https://www.cityofmadison.com/council/district1"
+    }
+   ],
+   "02": [
+    {
+     "email": "district2@cityofmadison.com",
+     "name": "Will Ochowicz",
+     "url": "https://www.cityofmadison.com/council/district2"
+    }
+   ],
+   "03": [
+    {
+     "email": "district3@cityofmadison.com",
+     "name": "Derek Field",
+     "url": "https://www.cityofmadison.com/council/district3"
+    }
+   ],
+   "04": [
+    {
+     "email": "district4@cityofmadison.com",
+     "name": "Michael E. Verveer",
+     "url": "https://www.cityofmadison.com/council/district4"
+    }
+   ],
+   "05": [
+    {
+     "email": "district5@cityofmadison.com",
+     "name": "Regina M. Vidaver",
+     "url": "https://www.cityofmadison.com/council/district5"
+    }
+   ],
+   "06": [
+    {
+     "email": "district6@cityofmadison.com",
+     "name": "Davy Mayer",
+     "url": "https://www.cityofmadison.com/council/district6"
+    }
+   ],
+   "07": [
+    {
+     "email": "district7@cityofmadison.com",
+     "name": "Badri Lankella",
+     "url": "https://www.cityofmadison.com/council/district7"
+    }
+   ],
+   "08": [
+    {
+     "email": "district8@cityofmadison.com",
+     "name": "Ellen Zhang",
+     "url": "https://www.cityofmadison.com/council/district8"
+    }
+   ],
+   "09": [
+    {
+     "email": "district9@cityofmadison.com",
+     "name": "Joann Pritchett",
+     "url": "https://www.cityofmadison.com/council/district9"
+    }
+   ],
+   "10": [
+    {
+     "email": "district10@cityofmadison.com",
+     "name": "Yannette Figueroa Cole",
+     "url": "https://www.cityofmadison.com/council/district10"
+    }
+   ],
+   "11": [
+    {
+     "email": "district11@cityofmadison.com",
+     "name": "Bill Tishler",
+     "url": "https://www.cityofmadison.com/council/district11"
+    }
+   ],
+   "12": [
+    {
+     "email": "district12@cityofmadison.com",
+     "name": "Julia Matthews",
+     "url": "https://www.cityofmadison.com/council/district12"
+    }
+   ],
+   "13": [
+    {
+     "email": "district13@cityofmadison.com",
+     "name": "Tag Evers",
+     "url": "https://www.cityofmadison.com/council/district13"
+    }
+   ],
+   "14": [
+    {
+     "email": "district14@cityofmadison.com",
+     "name": "Noah L. Lieberman",
+     "url": "https://www.cityofmadison.com/council/district14"
+    }
+   ],
+   "15": [
+    {
+     "email": "district15@cityofmadison.com",
+     "name": "Dina Nina Martinez-Rutherford",
+     "url": "https://www.cityofmadison.com/council/district15"
+    }
+   ],
+   "16": [
+    {
+     "email": "district16@cityofmadison.com",
+     "name": "Sean O'Brien",
+     "url": "https://www.cityofmadison.com/council/district16"
+    }
+   ],
+   "17": [
+    {
+     "email": "district17@cityofmadison.com",
+     "name": "Sabrina V. Madison",
+     "url": "https://www.cityofmadison.com/council/district17"
+    }
+   ],
+   "18": [
+    {
+     "email": "district18@cityofmadison.com",
+     "name": "Carmella Glenn",
+     "url": "https://www.cityofmadison.com/council/district18"
+    }
+   ],
+   "19": [
+    {
+     "email": "district19@cityofmadison.com",
+     "name": "John P. Guequierre",
+     "url": "https://www.cityofmadison.com/council/district19"
+    }
+   ],
+   "20": [
+    {
+     "email": "district20@cityofmadison.com",
+     "name": "Barbara Harrington-McKinney",
+     "url": "https://www.cityofmadison.com/council/district20"
+    }
+   ]
   },
   "municipality": "Madison",
   "seats": 20,
@@ -463,749 +654,1062 @@
   "vacantDistricts": []
  },
  "48500": {
+  "districts": 10,
   "members": {
-   "01": {
-    "name": "Andrew Dunbar",
-    "phone": "(765) 462-6464",
-    "url": "https://www.manitowoc.org/79/Aldermanic-District-1"
-   },
-   "02": {
-    "name": "Chad Beeman",
-    "phone": "(920) 860-9141",
-    "url": "https://www.manitowoc.org/80/Aldermanic-District-2"
-   },
-   "03": {
-    "name": "Michael Cummings",
-    "phone": "(920) 320-1265"
-   },
-   "04": {
-    "name": "Jodi Brey",
-    "phone": "(920) 682-9713",
-    "url": "https://www.manitowoc.org/82/Aldermanic-District-4"
-   },
-   "05": {
-    "name": "Mason Benzinger",
-    "phone": "(920) 320-1018",
-    "url": "https://www.manitowoc.org/83/Aldermanic-District-5"
-   },
-   "06": {
-    "name": "Eric J. Sitkiewitz",
-    "phone": "(920) 686-1324",
-    "url": "https://www.manitowoc.org/84/Aldermanic-District-6"
-   },
-   "07": {
-    "name": "Brian Anderson",
-    "phone": "(920) 323-3328",
-    "url": "https://www.manitowoc.org/85/Aldermanic-District-7"
-   },
-   "08": {
-    "name": "Bill Schlei",
-    "phone": "(920) 471-3113",
-    "url": "https://www.manitowoc.org/86/Aldermanic-District-8"
-   },
-   "09": {
-    "name": "Brett Norell",
-    "phone": "(920) 663-1350",
-    "url": "https://www.manitowoc.org/87/Aldermanic-District-9"
-   },
-   "10": {
-    "name": "Todd Reckelberg",
-    "phone": "(920) 973-6365",
-    "url": "https://www.manitowoc.org/88/Aldermanic-District-10"
-   }
+   "01": [
+    {
+     "name": "Andrew Dunbar",
+     "phone": "(765) 462-6464",
+     "url": "https://www.manitowoc.org/79/Aldermanic-District-1"
+    }
+   ],
+   "02": [
+    {
+     "name": "Chad Beeman",
+     "phone": "(920) 860-9141",
+     "url": "https://www.manitowoc.org/80/Aldermanic-District-2"
+    }
+   ],
+   "03": [
+    {
+     "name": "Michael Cummings",
+     "phone": "(920) 320-1265"
+    }
+   ],
+   "04": [
+    {
+     "name": "Jodi Brey",
+     "phone": "(920) 682-9713",
+     "url": "https://www.manitowoc.org/82/Aldermanic-District-4"
+    }
+   ],
+   "05": [
+    {
+     "name": "Mason Benzinger",
+     "phone": "(920) 320-1018",
+     "url": "https://www.manitowoc.org/83/Aldermanic-District-5"
+    }
+   ],
+   "06": [
+    {
+     "name": "Eric J. Sitkiewitz",
+     "phone": "(920) 686-1324",
+     "url": "https://www.manitowoc.org/84/Aldermanic-District-6"
+    }
+   ],
+   "07": [
+    {
+     "name": "Brian Anderson",
+     "phone": "(920) 323-3328",
+     "url": "https://www.manitowoc.org/85/Aldermanic-District-7"
+    }
+   ],
+   "08": [
+    {
+     "name": "Bill Schlei",
+     "phone": "(920) 471-3113",
+     "url": "https://www.manitowoc.org/86/Aldermanic-District-8"
+    }
+   ],
+   "09": [
+    {
+     "name": "Brett Norell",
+     "phone": "(920) 663-1350",
+     "url": "https://www.manitowoc.org/87/Aldermanic-District-9"
+    }
+   ],
+   "10": [
+    {
+     "name": "Todd Reckelberg",
+     "phone": "(920) 973-6365",
+     "url": "https://www.manitowoc.org/88/Aldermanic-District-10"
+    }
+   ]
   },
   "municipality": "Manitowoc",
   "seats": 10,
   "sourceUrl": "https://www.manitowoc.org/78/Meet-Your-Alderperson"
  },
  "50825": {
+  "districts": 8,
   "members": {
-   "01": {
-    "name": "Chris Rand",
-    "phone": "(920) 366-1763"
-   },
-   "02": {
-    "name": "Rosita Eisenach",
-    "phone": "(920) 915-6163"
-   },
-   "03": {
-    "name": "Tim Hale",
-    "phone": "(920) 213-4242"
-   },
-   "04": {
-    "name": "Terri Perkins",
-    "phone": "(920) 215-2088"
-   },
-   "05": {
-    "name": "Joy Lewis",
-    "phone": "(920) 205-8162"
-   },
-   "06": {
-    "name": "Tom Marshall",
-    "phone": "(920) 850-3314"
-   },
-   "07": {
-    "name": "Ted Grade",
-    "phone": "(920) 428-9055"
-   },
-   "08": {
-    "name": "Josh School",
-    "phone": "(920) 284-1325"
-   }
+   "01": [
+    {
+     "name": "Chris Rand",
+     "phone": "(920) 366-1763"
+    }
+   ],
+   "02": [
+    {
+     "name": "Rosita Eisenach",
+     "phone": "(920) 915-6163"
+    }
+   ],
+   "03": [
+    {
+     "name": "Tim Hale",
+     "phone": "(920) 213-4242"
+    }
+   ],
+   "04": [
+    {
+     "name": "Terri Perkins",
+     "phone": "(920) 215-2088"
+    }
+   ],
+   "05": [
+    {
+     "name": "Joy Lewis",
+     "phone": "(920) 205-8162"
+    }
+   ],
+   "06": [
+    {
+     "name": "Tom Marshall",
+     "phone": "(920) 850-3314"
+    }
+   ],
+   "07": [
+    {
+     "name": "Ted Grade",
+     "phone": "(920) 428-9055"
+    }
+   ],
+   "08": [
+    {
+     "name": "Josh School",
+     "phone": "(920) 284-1325"
+    }
+   ]
   },
   "municipality": "Menasha",
   "seats": 8,
   "sourceUrl": "https://www.menashawi.gov/residents/government/common_council/index.php"
  },
  "51025": {
+  "districts": 11,
   "members": {
-   "01": {
-    "name": "Jeff Luther",
-    "url": "https://www.menomonie-wi.gov/Directory.aspx?EID=72"
-   },
-   "02": {
-    "name": "Diane Edwards",
-    "url": "https://www.menomonie-wi.gov/Directory.aspx?EID=342"
-   },
-   "03": {
-    "name": "Eric Sutherland",
-    "url": "https://www.menomonie-wi.gov/Directory.aspx?EID=74"
-   },
-   "04": {
-    "name": "Gretchen Yonko",
-    "url": "https://www.menomonie-wi.gov/Directory.aspx?EID=75"
-   },
-   "05": {
-    "name": "Abigail Pickard",
-    "url": "https://www.menomonie-wi.gov/directory.aspx?EID=76"
-   },
-   "06": {
-    "name": "Leland Schwebs",
-    "url": "https://www.menomonie-wi.gov/Directory.aspx?EID=77"
-   },
-   "07": {
-    "name": "Cody Gentz",
-    "url": "https://www.menomonie-wi.gov/directory.aspx?EID=78"
-   },
-   "08": {
-    "name": "Camden Hargrove",
-    "url": "https://www.menomonie-wi.gov/Directory.aspx?EID=343"
-   },
-   "09": {
-    "name": "Chad Schlough",
-    "url": "https://www.menomonie-wi.gov/Directory.aspx?EID=80"
-   },
-   "10": {
-    "name": "Ryland J. Erdman",
-    "url": "https://www.menomonie-wi.gov/Directory.aspx?EID=81"
-   },
-   "11": {
-    "name": "Randy Sommerfeld",
-    "url": "https://www.menomonie-wi.gov/Directory.aspx?EID=82"
-   }
+   "01": [
+    {
+     "name": "Jeff Luther",
+     "url": "https://www.menomonie-wi.gov/Directory.aspx?EID=72"
+    }
+   ],
+   "02": [
+    {
+     "name": "Diane Edwards",
+     "url": "https://www.menomonie-wi.gov/Directory.aspx?EID=342"
+    }
+   ],
+   "03": [
+    {
+     "name": "Eric Sutherland",
+     "url": "https://www.menomonie-wi.gov/Directory.aspx?EID=74"
+    }
+   ],
+   "04": [
+    {
+     "name": "Gretchen Yonko",
+     "url": "https://www.menomonie-wi.gov/Directory.aspx?EID=75"
+    }
+   ],
+   "05": [
+    {
+     "name": "Abigail Pickard",
+     "url": "https://www.menomonie-wi.gov/directory.aspx?EID=76"
+    }
+   ],
+   "06": [
+    {
+     "name": "Leland Schwebs",
+     "url": "https://www.menomonie-wi.gov/Directory.aspx?EID=77"
+    }
+   ],
+   "07": [
+    {
+     "name": "Cody Gentz",
+     "url": "https://www.menomonie-wi.gov/directory.aspx?EID=78"
+    }
+   ],
+   "08": [
+    {
+     "name": "Camden Hargrove",
+     "url": "https://www.menomonie-wi.gov/Directory.aspx?EID=343"
+    }
+   ],
+   "09": [
+    {
+     "name": "Chad Schlough",
+     "url": "https://www.menomonie-wi.gov/Directory.aspx?EID=80"
+    }
+   ],
+   "10": [
+    {
+     "name": "Ryland J. Erdman",
+     "url": "https://www.menomonie-wi.gov/Directory.aspx?EID=81"
+    }
+   ],
+   "11": [
+    {
+     "name": "Randy Sommerfeld",
+     "url": "https://www.menomonie-wi.gov/Directory.aspx?EID=82"
+    }
+   ]
   },
   "municipality": "Menomonie",
   "seats": 11,
   "sourceUrl": "https://www.menomonie-wi.gov/248/City-Council"
  },
  "53000": {
+  "districts": 15,
   "members": {
-   "01": {
-    "name": "Andrea Pratt"
-   },
-   "02": {
-    "name": "Mark Chambers Jr."
-   },
-   "03": {
-    "name": "Alex Brower"
-   },
-   "04": {
-    "name": "Robert Bauman"
-   },
-   "05": {
-    "name": "Lamont Westmoreland"
-   },
-   "06": {
-    "name": "Milele A. Coggs"
-   },
-   "07": {
-    "name": "DiAndre Jackson"
-   },
-   "08": {
-    "name": "JoCasta Zamarripa"
-   },
-   "09": {
-    "name": "Larresa Taylor"
-   },
-   "10": {
-    "name": "Sharlen Moore"
-   },
-   "11": {
-    "name": "Peter Burgelis"
-   },
-   "12": {
-    "name": "Jose Perez"
-   },
-   "13": {
-    "name": "Scott Spiker"
-   },
-   "14": {
-    "name": "Marina Dimitrijevic"
-   },
-   "15": {
-    "name": "Russell W. Stamper"
-   }
+   "01": [
+    {
+     "name": "Andrea Pratt"
+    }
+   ],
+   "02": [
+    {
+     "name": "Mark Chambers Jr."
+    }
+   ],
+   "03": [
+    {
+     "name": "Alex Brower"
+    }
+   ],
+   "04": [
+    {
+     "name": "Robert Bauman"
+    }
+   ],
+   "05": [
+    {
+     "name": "Lamont Westmoreland"
+    }
+   ],
+   "06": [
+    {
+     "name": "Milele A. Coggs"
+    }
+   ],
+   "07": [
+    {
+     "name": "DiAndre Jackson"
+    }
+   ],
+   "08": [
+    {
+     "name": "JoCasta Zamarripa"
+    }
+   ],
+   "09": [
+    {
+     "name": "Larresa Taylor"
+    }
+   ],
+   "10": [
+    {
+     "name": "Sharlen Moore"
+    }
+   ],
+   "11": [
+    {
+     "name": "Peter Burgelis"
+    }
+   ],
+   "12": [
+    {
+     "name": "Jose Perez"
+    }
+   ],
+   "13": [
+    {
+     "name": "Scott Spiker"
+    }
+   ],
+   "14": [
+    {
+     "name": "Marina Dimitrijevic"
+    }
+   ],
+   "15": [
+    {
+     "name": "Russell W. Stamper"
+    }
+   ]
   },
   "municipality": "Milwaukee",
   "seats": 15,
   "sourceUrl": "https://webapi.legistar.com/v1/milwaukee/officerecords?$filter=OfficeRecordBodyId%20eq%201&$top=1000"
  },
  "56375": {
+  "districts": 7,
   "members": {
-   "01": {
-    "name": "John Hopkins"
-   },
-   "02": {
-    "name": "Meg Gardner"
-   },
-   "03": {
-    "name": "Dave Maxey"
-   },
-   "04": {
-    "name": "Kenneth A. Harenda II"
-   },
-   "05": {
-    "name": "Joseph Stribl"
-   },
-   "06": {
-    "name": "Dennis Horbinski"
-   },
-   "07": {
-    "name": "Charlotte Kroupa"
-   }
+   "01": [
+    {
+     "name": "John Hopkins"
+    }
+   ],
+   "02": [
+    {
+     "name": "Meg Gardner"
+    }
+   ],
+   "03": [
+    {
+     "name": "Dave Maxey"
+    }
+   ],
+   "04": [
+    {
+     "name": "Kenneth A. Harenda II"
+    }
+   ],
+   "05": [
+    {
+     "name": "Joseph Stribl"
+    }
+   ],
+   "06": [
+    {
+     "name": "Dennis Horbinski"
+    }
+   ],
+   "07": [
+    {
+     "name": "Charlotte Kroupa"
+    }
+   ]
   },
   "municipality": "New Berlin",
   "seats": 7,
   "sourceUrl": "https://www.newberlinwi.gov/"
  },
  "56900": {
+  "districts": 4,
   "members": {
-   "01": {
-    "name": "Ken Southworth",
-    "phone": "(608) 562-3024"
-   },
-   "02": {
-    "name": "Sheldon LaBudda",
-    "phone": "(608) 343-5562"
-   },
-   "03": {
-    "name": "Christopher Ulrich",
-    "phone": "(608) 542-0422"
-   },
-   "04": {
-    "name": "Marv Newlun",
-    "phone": "(608) 562-3035"
-   }
+   "01": [
+    {
+     "name": "Ken Southworth",
+     "phone": "(608) 562-3024"
+    }
+   ],
+   "02": [
+    {
+     "name": "Sheldon LaBudda",
+     "phone": "(608) 343-5562"
+    }
+   ],
+   "03": [
+    {
+     "name": "Christopher Ulrich",
+     "phone": "(608) 542-0422"
+    }
+   ],
+   "04": [
+    {
+     "name": "Marv Newlun",
+     "phone": "(608) 562-3035"
+    }
+   ]
   },
   "municipality": "New Lisbon",
   "seats": 4,
   "sourceUrl": "https://cityofnewlisbon.com/common-council"
  },
  "64100": {
+  "districts": 9,
   "members": {
-   "01": {
-    "email": "David.Trantow@portagewi.gov",
-    "name": "David Trantow",
-    "phone": "608-432-5424"
-   },
-   "02": {
-    "email": "Shannon.Dunahee@portagewi.gov",
-    "name": "Shannon Dunahee",
-    "phone": "920-463-0147"
-   },
-   "03": {
-    "email": "David.Paull@portagewi.gov",
-    "name": "David Paull",
-    "phone": "608-617-6808"
-   },
-   "04": {
-    "email": "Lydia.Foss@portagewi.gov",
-    "name": "Lydia Foss",
-    "phone": "715-574-1674"
-   },
-   "05": {
-    "email": "Tim.Green@portagewi.gov",
-    "name": "Tim Green",
-    "phone": "608-434-1212"
-   },
-   "06": {
-    "email": "Kyle.Bernander@portagewi.gov",
-    "name": "Kyle Bernander",
-    "phone": "608-617-1176"
-   },
-   "07": {
-    "email": "Karyn.Wetzel@portagewi.gov",
-    "name": "Karyn Wetzel",
-    "phone": "608-617-7293"
-   },
-   "08": {
-    "email": "Amy.Schlinkert@portagewi.gov",
-    "name": "Amy Schlinkert",
-    "phone": "608-448-6124"
-   },
-   "09": {
-    "email": "Christopher.Crawley@portagewi.gov",
-    "name": "Christopher Crawley",
-    "phone": "608-333-3283"
-   }
+   "01": [
+    {
+     "email": "David.Trantow@portagewi.gov",
+     "name": "David Trantow",
+     "phone": "608-432-5424"
+    }
+   ],
+   "02": [
+    {
+     "email": "Shannon.Dunahee@portagewi.gov",
+     "name": "Shannon Dunahee",
+     "phone": "920-463-0147"
+    }
+   ],
+   "03": [
+    {
+     "email": "David.Paull@portagewi.gov",
+     "name": "David Paull",
+     "phone": "608-617-6808"
+    }
+   ],
+   "04": [
+    {
+     "email": "Lydia.Foss@portagewi.gov",
+     "name": "Lydia Foss",
+     "phone": "715-574-1674"
+    }
+   ],
+   "05": [
+    {
+     "email": "Tim.Green@portagewi.gov",
+     "name": "Tim Green",
+     "phone": "608-434-1212"
+    }
+   ],
+   "06": [
+    {
+     "email": "Kyle.Bernander@portagewi.gov",
+     "name": "Kyle Bernander",
+     "phone": "608-617-1176"
+    }
+   ],
+   "07": [
+    {
+     "email": "Karyn.Wetzel@portagewi.gov",
+     "name": "Karyn Wetzel",
+     "phone": "608-617-7293"
+    }
+   ],
+   "08": [
+    {
+     "email": "Amy.Schlinkert@portagewi.gov",
+     "name": "Amy Schlinkert",
+     "phone": "608-448-6124"
+    }
+   ],
+   "09": [
+    {
+     "email": "Christopher.Crawley@portagewi.gov",
+     "name": "Christopher Crawley",
+     "phone": "608-333-3283"
+    }
+   ]
   },
   "municipality": "Portage",
   "seats": 9,
   "sourceUrl": "https://www.portagewi.gov/mayor-and-council"
  },
  "66000": {
+  "districts": 15,
   "members": {
-   "01": {
-    "name": "Malik Frazier",
-    "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-1/"
-   },
-   "02": {
-    "name": "Alyson Weiss",
-    "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/02-district/"
-   },
-   "03": {
-    "name": "Olivia Turquoise Davis",
-    "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/03-district/"
-   },
-   "04": {
-    "name": "David L. Maack",
-    "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/04-district/"
-   },
-   "05": {
-    "name": "Jens Jorgensen",
-    "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-5/"
-   },
-   "06": {
-    "name": "Sandy Weidner",
-    "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-6/"
-   },
-   "07": {
-    "name": "Maurice Horton",
-    "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-7/"
-   },
-   "08": {
-    "name": "Brittany Hodges",
-    "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-8/"
-   },
-   "09": {
-    "name": "Grace Allen",
-    "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-9/"
-   },
-   "10": {
-    "name": "Sam Peete",
-    "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-10/"
-   },
-   "11": {
-    "name": "Mary Land",
-    "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-11/"
-   },
-   "12": {
-    "name": "Rocco DeMark",
-    "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-12/"
-   },
-   "13": {
-    "name": "Renee Kelly",
-    "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-13/"
-   },
-   "14": {
-    "name": "Marlo Harmon",
-    "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-14/"
-   },
-   "15": {
-    "name": "Nathan Pabon",
-    "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-15/"
-   }
+   "01": [
+    {
+     "name": "Malik Frazier",
+     "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-1/"
+    }
+   ],
+   "02": [
+    {
+     "name": "Alyson Weiss",
+     "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/02-district/"
+    }
+   ],
+   "03": [
+    {
+     "name": "Olivia Turquoise Davis",
+     "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/03-district/"
+    }
+   ],
+   "04": [
+    {
+     "name": "David L. Maack",
+     "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/04-district/"
+    }
+   ],
+   "05": [
+    {
+     "name": "Jens Jorgensen",
+     "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-5/"
+    }
+   ],
+   "06": [
+    {
+     "name": "Sandy Weidner",
+     "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-6/"
+    }
+   ],
+   "07": [
+    {
+     "name": "Maurice Horton",
+     "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-7/"
+    }
+   ],
+   "08": [
+    {
+     "name": "Brittany Hodges",
+     "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-8/"
+    }
+   ],
+   "09": [
+    {
+     "name": "Grace Allen",
+     "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-9/"
+    }
+   ],
+   "10": [
+    {
+     "name": "Sam Peete",
+     "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-10/"
+    }
+   ],
+   "11": [
+    {
+     "name": "Mary Land",
+     "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-11/"
+    }
+   ],
+   "12": [
+    {
+     "name": "Rocco DeMark",
+     "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-12/"
+    }
+   ],
+   "13": [
+    {
+     "name": "Renee Kelly",
+     "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-13/"
+    }
+   ],
+   "14": [
+    {
+     "name": "Marlo Harmon",
+     "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-14/"
+    }
+   ],
+   "15": [
+    {
+     "name": "Nathan Pabon",
+     "url": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/district-15/"
+    }
+   ]
   },
   "municipality": "Racine",
   "seats": 15,
   "sourceUrl": "https://cityofracinewi.gov/government/city-leadership/common-council/cityalderman/"
  },
  "72975": {
+  "districts": 10,
   "members": {
-   "01": {
-    "name": "Ryan Menzer",
-    "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=167"
-   },
-   "02": {
-    "name": "Erin Bremser",
-    "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=168"
-   },
-   "03": {
-    "name": "Michael Close",
-    "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=169"
-   },
-   "04": {
-    "name": "Alanza Grawien",
-    "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=170"
-   },
-   "05": {
-    "name": "Susie Boorse",
-    "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=171"
-   },
-   "06": {
-    "name": "Dean Dekker",
-    "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=172"
-   },
-   "07": {
-    "name": "Grazia Perrella",
-    "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=173"
-   },
-   "08": {
-    "name": "Bryan Kelly",
-    "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=174"
-   },
-   "09": {
-    "name": "Trey Mitchell",
-    "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=175"
-   },
-   "10": {
-    "name": "Joseph Heidemann",
-    "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=176"
-   }
+   "01": [
+    {
+     "name": "Ryan Menzer",
+     "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=167"
+    }
+   ],
+   "02": [
+    {
+     "name": "Erin Bremser",
+     "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=168"
+    }
+   ],
+   "03": [
+    {
+     "name": "Michael Close",
+     "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=169"
+    }
+   ],
+   "04": [
+    {
+     "name": "Alanza Grawien",
+     "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=170"
+    }
+   ],
+   "05": [
+    {
+     "name": "Susie Boorse",
+     "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=171"
+    }
+   ],
+   "06": [
+    {
+     "name": "Dean Dekker",
+     "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=172"
+    }
+   ],
+   "07": [
+    {
+     "name": "Grazia Perrella",
+     "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=173"
+    }
+   ],
+   "08": [
+    {
+     "name": "Bryan Kelly",
+     "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=174"
+    }
+   ],
+   "09": [
+    {
+     "name": "Trey Mitchell",
+     "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=175"
+    }
+   ],
+   "10": [
+    {
+     "name": "Joseph Heidemann",
+     "url": "https://www.sheboyganwi.gov/m/directory/employee?eid=176"
+    }
+   ]
   },
   "municipality": "Sheboygan",
   "seats": 10,
   "sourceUrl": "https://www.sheboyganwi.gov/395/Common-Council"
  },
  "77200": {
+  "districts": 11,
   "members": {
-   "01": {
-    "name": "Marc Christianson",
-    "phone": "715-315-2490",
-    "url": "https://stevenspoint.com/m/directory/employee?eid=212"
-   },
-   "02": {
-    "name": "Jacqui Guthrie",
-    "phone": "608-444-5202",
-    "url": "https://stevenspoint.com/m/directory/employee?eid=128"
-   },
-   "03": {
-    "name": "Ginger Keymer",
-    "phone": "715-869-0443",
-    "url": "https://stevenspoint.com/m/directory/employee?eid=153"
-   },
-   "04": {
-    "name": "Andrea Olson",
-    "phone": "(715) 544-7875",
-    "url": "https://stevenspoint.com/m/directory/employee?eid=249"
-   },
-   "05": {
-    "name": "Allison Birr",
-    "phone": "920-604-2029",
-    "url": "https://stevenspoint.com/m/directory/employee?eid=73"
-   },
-   "06": {
-    "name": "Joe Donahue",
-    "phone": "715-321-0335",
-    "url": "https://stevenspoint.com/m/directory/employee?eid=230"
-   },
-   "07": {
-    "name": "Mary Kneebone",
-    "phone": "715-295-4689",
-    "url": "https://stevenspoint.com/m/directory/employee?eid=75"
-   },
-   "08": {
-    "name": "Dean Shuda",
-    "phone": "715-340-6014",
-    "url": "https://stevenspoint.com/m/directory/employee?eid=219"
-   },
-   "09": {
-    "name": "Sam Lang",
-    "phone": "715-570-1490",
-    "url": "https://stevenspoint.com/m/directory/employee?eid=147"
-   },
-   "10": {
-    "name": "Matt Moldenhauer",
-    "phone": "(715) 991-3003",
-    "url": "https://stevenspoint.com/m/directory/employee?eid=78"
-   },
-   "11": {
-    "name": "Shaun Morrow",
-    "phone": "715-544-4422",
-    "url": "https://stevenspoint.com/m/directory/employee?eid=79"
-   }
+   "01": [
+    {
+     "name": "Marc Christianson",
+     "phone": "715-315-2490",
+     "url": "https://stevenspoint.com/m/directory/employee?eid=212"
+    }
+   ],
+   "02": [
+    {
+     "name": "Jacqui Guthrie",
+     "phone": "608-444-5202",
+     "url": "https://stevenspoint.com/m/directory/employee?eid=128"
+    }
+   ],
+   "03": [
+    {
+     "name": "Ginger Keymer",
+     "phone": "715-869-0443",
+     "url": "https://stevenspoint.com/m/directory/employee?eid=153"
+    }
+   ],
+   "04": [
+    {
+     "name": "Andrea Olson",
+     "phone": "(715) 544-7875",
+     "url": "https://stevenspoint.com/m/directory/employee?eid=249"
+    }
+   ],
+   "05": [
+    {
+     "name": "Allison Birr",
+     "phone": "920-604-2029",
+     "url": "https://stevenspoint.com/m/directory/employee?eid=73"
+    }
+   ],
+   "06": [
+    {
+     "name": "Joe Donahue",
+     "phone": "715-321-0335",
+     "url": "https://stevenspoint.com/m/directory/employee?eid=230"
+    }
+   ],
+   "07": [
+    {
+     "name": "Mary Kneebone",
+     "phone": "715-295-4689",
+     "url": "https://stevenspoint.com/m/directory/employee?eid=75"
+    }
+   ],
+   "08": [
+    {
+     "name": "Dean Shuda",
+     "phone": "715-340-6014",
+     "url": "https://stevenspoint.com/m/directory/employee?eid=219"
+    }
+   ],
+   "09": [
+    {
+     "name": "Sam Lang",
+     "phone": "715-570-1490",
+     "url": "https://stevenspoint.com/m/directory/employee?eid=147"
+    }
+   ],
+   "10": [
+    {
+     "name": "Matt Moldenhauer",
+     "phone": "(715) 991-3003",
+     "url": "https://stevenspoint.com/m/directory/employee?eid=78"
+    }
+   ],
+   "11": [
+    {
+     "name": "Shaun Morrow",
+     "phone": "715-544-4422",
+     "url": "https://stevenspoint.com/m/directory/employee?eid=79"
+    }
+   ]
   },
   "municipality": "Stevens Point",
   "seats": 11,
   "sourceUrl": "https://stevenspoint.com/Directory.aspx?DID=23"
  },
  "77875": {
+  "districts": 7,
   "members": {
-   "01": {
-    "email": "sbdistrict1@sturgeonbaywi.gov",
-    "name": "Helen L. Bacon",
-    "phone": "920-493-7200"
-   },
-   "02": {
-    "email": "sbdistrict2@sturgeonbaywi.gov",
-    "name": "Matthew Huston",
-    "phone": "920-333-2442"
-   },
-   "03": {
-    "email": "sbdistrict3@sturgeonbaywi.gov",
-    "name": "Dan Williams",
-    "phone": "920-559-3551"
-   },
-   "04": {
-    "email": "sbdistrict4@sturgeonbaywi.gov",
-    "name": "J. Spencer Gustafson",
-    "phone": "920-256-1437"
-   },
-   "05": {
-    "email": "sbdistrict5@sturgeonbaywi.gov",
-    "name": "Gary Nault",
-    "phone": "920-743-1100"
-   },
-   "06": {
-    "email": "sbdistrict6@sturgeonbaywi.gov",
-    "name": "Seth Wiederanders",
-    "phone": "920-493-2048"
-   },
-   "07": {
-    "email": "sbdistrict7@sturgeonbaywi.gov",
-    "name": "Nicole Matson",
-    "phone": "920-241-6819"
-   }
+   "01": [
+    {
+     "email": "sbdistrict1@sturgeonbaywi.gov",
+     "name": "Helen L. Bacon",
+     "phone": "920-493-7200"
+    }
+   ],
+   "02": [
+    {
+     "email": "sbdistrict2@sturgeonbaywi.gov",
+     "name": "Matthew Huston",
+     "phone": "920-333-2442"
+    }
+   ],
+   "03": [
+    {
+     "email": "sbdistrict3@sturgeonbaywi.gov",
+     "name": "Dan Williams",
+     "phone": "920-559-3551"
+    }
+   ],
+   "04": [
+    {
+     "email": "sbdistrict4@sturgeonbaywi.gov",
+     "name": "J. Spencer Gustafson",
+     "phone": "920-256-1437"
+    }
+   ],
+   "05": [
+    {
+     "email": "sbdistrict5@sturgeonbaywi.gov",
+     "name": "Gary Nault",
+     "phone": "920-743-1100"
+    }
+   ],
+   "06": [
+    {
+     "email": "sbdistrict6@sturgeonbaywi.gov",
+     "name": "Seth Wiederanders",
+     "phone": "920-493-2048"
+    }
+   ],
+   "07": [
+    {
+     "email": "sbdistrict7@sturgeonbaywi.gov",
+     "name": "Nicole Matson",
+     "phone": "920-241-6819"
+    }
+   ]
   },
   "municipality": "Sturgeon Bay",
   "seats": 7,
   "sourceUrl": "https://www.sturgeonbaywi.org/government/city_council/index.php"
  },
  "78650": {
+  "districts": 10,
   "members": {
-   "01": {
-    "email": "LEDINN@SUPERIORWI.GOV",
-    "name": "Nicholas Ledin",
-    "phone": "(218)428-6080"
-   },
-   "02": {
-    "email": "ANDERSONS@SUPERIORWI.GOV",
-    "name": "Sarah Anderson",
-    "phone": "(651)278-2445"
-   },
-   "03": {
-    "email": "MOFFATG@SUPERIORWI.GOV",
-    "name": "Garner Moffat",
-    "phone": "(320) 292-5675"
-   },
-   "04": {
-    "email": "SWEENEYJ@SUPERIORWI.GOV",
-    "name": "Jack Sweeney",
-    "phone": "(715) 398-6512"
-   },
-   "05": {
-    "email": "RADTKEJ@SUPERIORWI.GOV",
-    "name": "Joseph Radtke",
-    "phone": "(218) 590-7131"
-   },
-   "06": {
-    "email": "ELMT@SUPERIORWI.GOV",
-    "name": "Tylor Elm",
-    "phone": "(218) 461-0356"
-   },
-   "07": {
-    "email": "CAVENK@SUPERIORWI.GOV",
-    "name": "Karly Caven",
-    "phone": "(715) 319-8031"
-   },
-   "08": {
-    "email": "HERRICKM@SUPERIORWI.GOV",
-    "name": "Mike Herrick",
-    "phone": "(218) 428-8037"
-   },
-   "09": {
-    "email": "HERINGR@SUPERIORWI.GOV",
-    "name": "Robert Hering",
-    "phone": "(218) 269-0872"
-   },
-   "10": {
-    "email": "GRASKEYL@SUPERIORWI.GOV",
-    "name": "Lindsey Graskey",
-    "phone": "(218) 428-3114"
-   }
+   "01": [
+    {
+     "email": "LEDINN@SUPERIORWI.GOV",
+     "name": "Nicholas Ledin",
+     "phone": "(218)428-6080"
+    }
+   ],
+   "02": [
+    {
+     "email": "ANDERSONS@SUPERIORWI.GOV",
+     "name": "Sarah Anderson",
+     "phone": "(651)278-2445"
+    }
+   ],
+   "03": [
+    {
+     "email": "MOFFATG@SUPERIORWI.GOV",
+     "name": "Garner Moffat",
+     "phone": "(320) 292-5675"
+    }
+   ],
+   "04": [
+    {
+     "email": "SWEENEYJ@SUPERIORWI.GOV",
+     "name": "Jack Sweeney",
+     "phone": "(715) 398-6512"
+    }
+   ],
+   "05": [
+    {
+     "email": "RADTKEJ@SUPERIORWI.GOV",
+     "name": "Joseph Radtke",
+     "phone": "(218) 590-7131"
+    }
+   ],
+   "06": [
+    {
+     "email": "ELMT@SUPERIORWI.GOV",
+     "name": "Tylor Elm",
+     "phone": "(218) 461-0356"
+    }
+   ],
+   "07": [
+    {
+     "email": "CAVENK@SUPERIORWI.GOV",
+     "name": "Karly Caven",
+     "phone": "(715) 319-8031"
+    }
+   ],
+   "08": [
+    {
+     "email": "HERRICKM@SUPERIORWI.GOV",
+     "name": "Mike Herrick",
+     "phone": "(218) 428-8037"
+    }
+   ],
+   "09": [
+    {
+     "email": "HERINGR@SUPERIORWI.GOV",
+     "name": "Robert Hering",
+     "phone": "(218) 269-0872"
+    }
+   ],
+   "10": [
+    {
+     "email": "GRASKEYL@SUPERIORWI.GOV",
+     "name": "Lindsey Graskey",
+     "phone": "(218) 428-3114"
+    }
+   ]
   },
   "municipality": "Superior",
   "seats": 10,
   "sourceUrl": "https://www.superiorwi.gov/697/City-Councilor-Information"
  },
  "80075": {
+  "districts": 8,
   "members": {
-   "01": {
-    "name": "Travis Scholze",
-    "url": "https://www.tomahwi.gov/directory-listing/travis-scholze-1"
-   },
-   "02": {
-    "name": "Richard Yarrington",
-    "url": "https://www.tomahwi.gov/directory-listing/richard-yarrington"
-   },
-   "03": {
-    "name": "John Glynn",
-    "url": "https://www.tomahwi.gov/directory-listing/john-glynn"
-   },
-   "04": {
-    "name": "Shawn Zabinski",
-    "url": "https://www.tomahwi.gov/directory-listing/shawn-zabinski"
-   },
-   "05": {
-    "name": "Mitch Koel",
-    "url": "https://www.tomahwi.gov/directory-listing/mitch-koel"
-   },
-   "06": {
-    "name": "Daniel Crego",
-    "url": "https://www.tomahwi.gov/directory-listing/daniel-crego"
-   },
-   "07": {
-    "name": "Nellie Pater",
-    "url": "https://www.tomahwi.gov/directory-listing/nellie-pater"
-   },
-   "08": {
-    "name": "Dean Peterson",
-    "url": "https://www.tomahwi.gov/directory-listing/dean-peterson"
-   }
+   "01": [
+    {
+     "name": "Travis Scholze",
+     "url": "https://www.tomahwi.gov/directory-listing/travis-scholze-1"
+    }
+   ],
+   "02": [
+    {
+     "name": "Richard Yarrington",
+     "url": "https://www.tomahwi.gov/directory-listing/richard-yarrington"
+    }
+   ],
+   "03": [
+    {
+     "name": "John Glynn",
+     "url": "https://www.tomahwi.gov/directory-listing/john-glynn"
+    }
+   ],
+   "04": [
+    {
+     "name": "Shawn Zabinski",
+     "url": "https://www.tomahwi.gov/directory-listing/shawn-zabinski"
+    }
+   ],
+   "05": [
+    {
+     "name": "Mitch Koel",
+     "url": "https://www.tomahwi.gov/directory-listing/mitch-koel"
+    }
+   ],
+   "06": [
+    {
+     "name": "Daniel Crego",
+     "url": "https://www.tomahwi.gov/directory-listing/daniel-crego"
+    }
+   ],
+   "07": [
+    {
+     "name": "Nellie Pater",
+     "url": "https://www.tomahwi.gov/directory-listing/nellie-pater"
+    }
+   ],
+   "08": [
+    {
+     "name": "Dean Peterson",
+     "url": "https://www.tomahwi.gov/directory-listing/dean-peterson"
+    }
+   ]
   },
   "municipality": "Tomah",
   "seats": 8,
   "sourceUrl": "https://www.tomahwi.gov/citycouncil"
  },
  "82925": {
+  "districts": 9,
   "members": {
-   "01": {
-    "email": "smcclurg@viroqua-wisconsin.com",
-    "name": "SETH MCCLURG",
-    "phone": "(608) 606-2683"
-   },
-   "02": {
-    "email": "abergum@viroqua-wisconsin.com",
-    "name": "ANDREW BERGUM",
-    "phone": "(608) 606-3591"
-   },
-   "03": {
-    "email": "tkirking@viroqua-wisconsin.com",
-    "name": "TODD KIRKING",
-    "phone": "(608) 637-8224"
-   },
-   "04": {
-    "email": "kbartelt@viroqua-wisconsin.com",
-    "name": "KYLE BARTELT",
-    "phone": "(612) 201-2687"
-   },
-   "05": {
-    "email": "tspaeth@viroqua-wisconsin.com",
-    "name": "TODD SPAETH",
-    "phone": "(608) 606-0914"
-   },
-   "06": {
-    "email": "chubbard@viroqua-wisconsin.com",
-    "name": "CYNDY HUBBARD",
-    "phone": "(608) 637-7595"
-   },
-   "07": {
-    "email": "jthompson@viroqua-wisconsin.com",
-    "name": "JOHN THOMPSON",
-    "phone": "(608) 637-2613"
-   },
-   "08": {
-    "email": "tbirke@viroqua-wisconsin.com",
-    "name": "TANJA BIRKE",
-    "phone": "(612) 245-2357"
-   },
-   "09": {
-    "email": "swillis@viroqua-wisconsin.com",
-    "name": "STEVE WILLIS",
-    "phone": "(612) 327-7399"
-   }
+   "01": [
+    {
+     "email": "smcclurg@viroqua-wisconsin.com",
+     "name": "SETH MCCLURG",
+     "phone": "(608) 606-2683"
+    }
+   ],
+   "02": [
+    {
+     "email": "abergum@viroqua-wisconsin.com",
+     "name": "ANDREW BERGUM",
+     "phone": "(608) 606-3591"
+    }
+   ],
+   "03": [
+    {
+     "email": "tkirking@viroqua-wisconsin.com",
+     "name": "TODD KIRKING",
+     "phone": "(608) 637-8224"
+    }
+   ],
+   "04": [
+    {
+     "email": "kbartelt@viroqua-wisconsin.com",
+     "name": "KYLE BARTELT",
+     "phone": "(612) 201-2687"
+    }
+   ],
+   "05": [
+    {
+     "email": "tspaeth@viroqua-wisconsin.com",
+     "name": "TODD SPAETH",
+     "phone": "(608) 606-0914"
+    }
+   ],
+   "06": [
+    {
+     "email": "chubbard@viroqua-wisconsin.com",
+     "name": "CYNDY HUBBARD",
+     "phone": "(608) 637-7595"
+    }
+   ],
+   "07": [
+    {
+     "email": "jthompson@viroqua-wisconsin.com",
+     "name": "JOHN THOMPSON",
+     "phone": "(608) 637-2613"
+    }
+   ],
+   "08": [
+    {
+     "email": "tbirke@viroqua-wisconsin.com",
+     "name": "TANJA BIRKE",
+     "phone": "(612) 245-2357"
+    }
+   ],
+   "09": [
+    {
+     "email": "swillis@viroqua-wisconsin.com",
+     "name": "STEVE WILLIS",
+     "phone": "(612) 327-7399"
+    }
+   ]
   },
   "municipality": "Viroqua",
   "seats": 9,
   "sourceUrl": "https://viroqua-wisconsin.com/government/city_council_and_committees.php"
  },
  "84250": {
+  "districts": 15,
   "members": {
-   "01": {
-    "email": "alddist1@waukesha-wi.gov",
-    "name": "Mike Chrisien",
-    "phone": "1-262-875-4860"
-   },
-   "02": {
-    "email": "alddist2@waukesha-wi.gov",
-    "name": "Jim Evert",
-    "phone": "1-262-354-4649"
-   },
-   "03": {
-    "email": "alddist3@waukesha-wi.gov",
-    "name": "Doreen Wigderson",
-    "phone": "1-262-352-6209"
-   },
-   "04": {
-    "email": "alddist4@waukesha-wi.gov",
-    "name": "Joe Pieper",
-    "phone": "1-262-896-0454"
-   },
-   "05": {
-    "email": "alddist5@waukesha-wi.gov",
-    "name": "Steve Van Trieste",
-    "phone": "1-262-309-7251"
-   },
-   "06": {
-    "email": "alddist6@waukesha-wi.gov",
-    "name": "Jack Wells",
-    "phone": "1-262-290-5103"
-   },
-   "07": {
-    "email": "alddist7@waukesha-wi.gov",
-    "name": "Daniel J. Manion",
-    "phone": "1-262-542-5550"
-   },
-   "08": {
-    "email": "alddist8@waukesha-wi.gov",
-    "name": "Elizabeth Moltzan",
-    "phone": "1-262-349-4078"
-   },
-   "09": {
-    "email": "alddist9@waukesha-wi.gov",
-    "name": "Paul Wuteska",
-    "phone": "1-262-271-2563"
-   },
-   "10": {
-    "email": "alddist10@waukesha-wi.gov",
-    "name": "Mike Anderson",
-    "phone": "1-262-289-2739"
-   },
-   "11": {
-    "email": "alddist11@waukesha-wi.gov",
-    "name": "Erik Helgestad",
-    "phone": "1-262-264-8517"
-   },
-   "12": {
-    "email": "alddist12@waukesha-wi.gov",
-    "name": "Dale Matthews",
-    "phone": "1-262-236-5332"
-   },
-   "13": {
-    "email": "alddist13@waukesha-wi.gov",
-    "name": "Eileen Micklitz",
-    "phone": "1-262-454-2176"
-   },
-   "14": {
-    "email": "alddist14@waukesha-wi.gov",
-    "name": "Rick Lemke",
-    "phone": "1-262-442-2580"
-   },
-   "15": {
-    "email": "alddist15@waukesha-wi.gov",
-    "name": "Rico Camacho",
-    "phone": "1-414-405-6347"
-   }
+   "01": [
+    {
+     "email": "alddist1@waukesha-wi.gov",
+     "name": "Mike Chrisien",
+     "phone": "1-262-875-4860"
+    }
+   ],
+   "02": [
+    {
+     "email": "alddist2@waukesha-wi.gov",
+     "name": "Jim Evert",
+     "phone": "1-262-354-4649"
+    }
+   ],
+   "03": [
+    {
+     "email": "alddist3@waukesha-wi.gov",
+     "name": "Doreen Wigderson",
+     "phone": "1-262-352-6209"
+    }
+   ],
+   "04": [
+    {
+     "email": "alddist4@waukesha-wi.gov",
+     "name": "Joe Pieper",
+     "phone": "1-262-896-0454"
+    }
+   ],
+   "05": [
+    {
+     "email": "alddist5@waukesha-wi.gov",
+     "name": "Steve Van Trieste",
+     "phone": "1-262-309-7251"
+    }
+   ],
+   "06": [
+    {
+     "email": "alddist6@waukesha-wi.gov",
+     "name": "Jack Wells",
+     "phone": "1-262-290-5103"
+    }
+   ],
+   "07": [
+    {
+     "email": "alddist7@waukesha-wi.gov",
+     "name": "Daniel J. Manion",
+     "phone": "1-262-542-5550"
+    }
+   ],
+   "08": [
+    {
+     "email": "alddist8@waukesha-wi.gov",
+     "name": "Elizabeth Moltzan",
+     "phone": "1-262-349-4078"
+    }
+   ],
+   "09": [
+    {
+     "email": "alddist9@waukesha-wi.gov",
+     "name": "Paul Wuteska",
+     "phone": "1-262-271-2563"
+    }
+   ],
+   "10": [
+    {
+     "email": "alddist10@waukesha-wi.gov",
+     "name": "Mike Anderson",
+     "phone": "1-262-289-2739"
+    }
+   ],
+   "11": [
+    {
+     "email": "alddist11@waukesha-wi.gov",
+     "name": "Erik Helgestad",
+     "phone": "1-262-264-8517"
+    }
+   ],
+   "12": [
+    {
+     "email": "alddist12@waukesha-wi.gov",
+     "name": "Dale Matthews",
+     "phone": "1-262-236-5332"
+    }
+   ],
+   "13": [
+    {
+     "email": "alddist13@waukesha-wi.gov",
+     "name": "Eileen Micklitz",
+     "phone": "1-262-454-2176"
+    }
+   ],
+   "14": [
+    {
+     "email": "alddist14@waukesha-wi.gov",
+     "name": "Rick Lemke",
+     "phone": "1-262-442-2580"
+    }
+   ],
+   "15": [
+    {
+     "email": "alddist15@waukesha-wi.gov",
+     "name": "Rico Camacho",
+     "phone": "1-414-405-6347"
+    }
+   ]
   },
   "municipality": "Waukesha",
   "seats": 15,

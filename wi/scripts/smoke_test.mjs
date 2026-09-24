@@ -530,6 +530,47 @@ try {
     check("tile failure shows dismissible banner", shown && hiddenAfterDismiss === true, `shown=${shown} hiddenAfterDismiss=${hiddenAfterDismiss}`);
     await context.close();
   }
+
+  // ---- 8. A MULTI-MEMBER ALDERMANIC DISTRICT RENDERS EVERY MEMBER ----
+  // wi-alderpersons.json holds `members[district]` as a LIST because fifteen
+  // of the twenty-two municipalities measured in the 2026-09-06 sweep seat
+  // more than one alderperson per district — Wautoma seats one, three and two.
+  // EVERY municipality shipped today names exactly one, so no real point
+  // exercises the list: a regression that rendered only the first member would
+  // pass every other gate and every other check here, and would be found by a
+  // reader in Wautoma rather than by CI. So the roster is DOCTORED in flight —
+  // Madison's districts given two extra members each — and the card must show
+  // all three, each badged, in the roster's own order.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    // wi/scripts/ -> wi/, the same self-location VENDOR_DIR uses
+    const roster = JSON.parse(readFileSync(
+      join(dirname(dirname(fileURLToPath(import.meta.url))),
+           "data", "app", "wi-alderpersons.json"), "utf8"));
+    const madison = roster["48000"];
+    for (const d of Object.keys(madison.members)) {
+      madison.members[d] = madison.members[d].concat(
+        [{ name: "Second Member" }, { name: "Third Member" }]);
+    }
+    const doctored = JSON.stringify(roster);
+    const page = await booted(
+      context,
+      `${BASE}#point=43.07310,-89.40120&layers=aldermanic-district`,
+      (p) => p.route("**/data/app/wi-alderpersons.json",
+                     (r) => r.fulfill({ status: 200, contentType: "application/json",
+                                        body: doctored })));
+    await cardText(page, "aldermanic-district");
+    const names = await page.$$eval("#card-aldermanic-district .card-person-name",
+                                    (els) => els.map((e) => e.textContent.trim()));
+    const badges = await page.$$eval("#card-aldermanic-district .card-badge",
+                                     (els) => els.map((e) => e.textContent.trim()));
+    const ok = names.length === 3 &&
+               names[1] === "Second Member" && names[2] === "Third Member" &&
+               badges.filter((b) => b === "Alderperson").length === 3;
+    check("a multi-member aldermanic district renders every member",
+          ok, `rows=${names.length} ${JSON.stringify(names)}`);
+    await context.close();
+  }
 } finally {
   await browser.close();
 }
