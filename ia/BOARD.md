@@ -45,6 +45,79 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-24 (night) — #1137 merged and verified by content. WINNEBAGO SHIPS
+as #1139, and the queue's item 2 is done.**
+
+#1137 is on main at `1427f64`; all three corrections survived and
+`validate_gap_counts.py` reports 4 counts agreeing. The branch was restarted
+from main, because GitHub deleted it on merge and a merged PR cannot carry
+follow-up work.
+
+### The predicted fix was not the fix
+
+The gap record said the plain fallback paths would recover Winnebago. True,
+and it treats the symptom. Measured: the home page links FIVE urls matching
+`supervisor` and the board's own is SECOND, so a first-match rule was always
+going to take the wrong one — `board_of_supervisors/boards_commissions/`, a
+different set of bodies, matching only on its HREF while its LABEL says so.
+**The label is what the county says a page is.** Ranked on the label, same one
+link and same three-page budget, Winnebago keys Durby 1, Smith 2, Jensvold 3
+in slot one.
+
+### The obvious extra key is measured wrong and cost a county
+
+Preferring the shallowest path looks like preferring a section root. On the
+commonest county CMS it is the opposite: Linn's board page is
+`/123/Board-of-Supervisors` at depth 2 while a NEWS ITEM and two CALENDAR
+EVENTS sit at depth 1. That draft promoted the news story and **LINN DROPPED
+OUT after keying correctly for weeks**. A query string replaced depth — an app
+endpoint takes an id, a section page does not. **The 40-county regression is
+the only thing that could have caught it: the depth draft passed Winnebago and
+lost Linn in the same run.** Final sweep against the pre-change baseline —
+gained Winnebago, lost none, every other county identical, one citation moved
+(Mitchell, off an `#agendas` fragment).
+
+### My own self-test put three hostnames into a measured surface
+
+`probe_user_agents.py` reads a scheme-and-host literal as an address a file
+reaches, so absolute fixtures registered Winnebago and Linn onto this
+scraper's surface while the other 38 counties it fetches stayed absent — their
+urls come from a data file — plus a fabricated `example.gov`. **A measurement
+shaped by where a url happens to be quoted is worse than none.** The fixtures
+are the pages' own relative hrefs now. And the comment explaining it had the
+SAME defect: it quoted the scheme between backticks and the probe read a host
+named a backtick. Caught by the gate, not by me.
+
+### Two things I got wrong in the doing
+
+Ran `build_ia_gap_outlines.py` before regenerating the shipped
+`coverage-gaps.json`, which is the order §7 gives — the outline builder reads
+the SHIPPED file, so it still wanted Winnebago and reported nothing stale.
+Run in order it flags the orphan exactly as designed. And I shipped an
+unrelated encoding churn in `ia-county-internal-points.json` into the working
+tree twice before noticing the builder writes `\u2014` where the committed file
+has a literal em-dash; reverted both times, and it is a latent drift anyone
+running that builder will hit.
+
+### Dickinson is not part of the regression
+
+Its robots.txt answered the captcha-shaped 202, served 25 minutes later, then
+202 again. The Black Hawk lesson a second time. On the allowed run its pages
+carried no readable district and it fell out of the roster it had been
+PRESERVED into — not caused by this change, not probed further, and the
+preservation question it raises is the builder's.
+
+### Queue after this
+
+1. **Michigan's `mi-commissioner-roster` declaration** — 83/48/35 across two
+   disjoint files, theirs to confirm, still untouched.
+2. **`build_endpoint_inventory.py` is named as a regenerate step nowhere** —
+   measured this afternoon, and this change hit it again exactly as predicted.
+   Its own PR: name it in `county-n-plus-1` / `roster-pipeline` / `gap-record`
+   §7, or once where a change's remaining obligations are stated.
+3. **The `ia-county-internal-points.json` em-dash drift** above, if it is worth
+   a line at all.
+
 **2026-09-24 (evening, later still) — #1137 is GREEN and held for the manager.
 The queued deletion-trigger question is MEASURED, and its premise was half
 wrong — mine.**
