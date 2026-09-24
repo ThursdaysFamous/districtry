@@ -260,6 +260,42 @@ ALTOONA_INDEX = "https://www.altoonawi.gov/government/elected_officials.php"
 EAGLE_RIVER_INDEX = "https://eagleriverwi.gov/city-government/elected-officials/"
 GERMANTOWN_INDEX = "https://www.germantownwi.gov/299/Village-Board"
 
+# ---- the multi-member tranche of 2026-09-24, unblocked by #1133 ----
+# Each address moves out of the queue comment above into a constant HERE in the
+# same change that starts fetching it, never before — validate_robots.py reads
+# an upper-case module attribute as a SCHEDULED FETCH. robots.txt was read for
+# every one of these BEFORE the first page fetch, as the client this file
+# sends: Algoma serves no robots.txt (404, allow all), Wautoma, Horicon and
+# Dodgeville each serve one whose `*` group reaches none of these paths.
+# DODGEVILLE STATES `Crawl-delay: 15`, AND IT IS SATISFIED BY CONSTRUCTION
+# RATHER THAN BY PACING — which is worth stating plainly, because "honoured"
+# would be a claim this module cannot back. A Crawl-delay governs the INTERVAL
+# BETWEEN requests to one host; this scrape makes exactly ONE request per host
+# per weekly run, so there is no interval to be too short. If a second page on
+# that host is ever added, this stops being true and the delay has to be
+# enacted, not re-asserted.
+#
+# AND IF YOU SEE www.cityofdodgeville.com IN validate_robots.py's "would not
+# serve robots.txt — policy unknown" LIST, THAT IS THE SWEEP AND NOT THE HOST.
+# Measured 2026-09-24: five consecutive reads through the shared reader each
+# returned the same 3,885-byte file, permitting this path, stating the delay
+# above — while the gate's own run minutes earlier could not read it. The
+# likeliest cause is the gate asking a host that states a 15-second delay as
+# fast as it asks the rest, which is the one kind of refusal this project can
+# provoke in itself. Re-read it before recording that host as unknown.
+#
+# THIS MODULE DOES NOT READ robots.txt ITSELF, and that is the fleet's recorded
+# state for it rather than a gap this tranche opens: `wi/scripts/
+# validate_robots.py` reads every host named in an upper-case attribute here
+# against that host's own file, monthly, and fails on a Disallow that reaches
+# one of these paths. The four below were additionally read by hand, through
+# the shared reader and as the client this file sends, before their first
+# fetch.
+ALGOMA_INDEX = "https://www.algomacity.org/government/city_council.php"
+DODGEVILLE_INDEX = "https://www.cityofdodgeville.com/council"
+HORICON_INDEX = "https://www.horiconwi.gov/185/Elected-Officials"
+WAUTOMA_INDEX = "http://www.cityofwautoma.com/common-council"
+
 APPLETON_INDEX = "https://www.appletonwi.gov/government/common_council.php"
 
 ORDINALS = {"first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5,
@@ -288,26 +324,11 @@ ORDINALS = {"first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5,
 # itself loudly on the day it should.
 KENOSHA_CANVASS_WINS = {}
 
-CITIES = {  # COUSUBFP -> (name, seats)
-    "53000": ("Milwaukee", 15),
-    "48000": ("Madison", 20),
-    "31000": ("Green Bay", 12),
-    "39225": ("Kenosha", 17),
-    "66000": ("Racine", 15),
-    "84250": ("Waukesha", 15),
-    "77200": ("Stevens Point", 11),
-    "51025": ("Menomonie", 11),
-    "48500": ("Manitowoc", 10),
-    "72975": ("Sheboygan", 10),
-    "78650": ("Superior", 10),
-    "64100": ("Portage", 9),
-    "82925": ("Viroqua", 9),
-    "50825": ("Menasha", 8),
-    "35950": ("Howard", 8),
-    "80075": ("Tomah", 8),
-    "22300": ("Eau Claire", 5),
-    "02375": ("Appleton", 15),
-}
+# CITIES WAS RETIRED 2026-09-24. It listed the municipalities a second
+# time, was never imported and was read only as main()'s denominator,
+# where it had been stale at 18 since the tranche of 2026-09-05 — so
+# every run since printed a fraction over the wrong total. The list
+# lives once, as COVERED in main().
 
 
 def fetch(url, binary=False, tries=3, timeout=60):
@@ -1123,22 +1144,34 @@ def _contact(fragment):
 
 
 def _put(city, members, key, entry):
-    """Record one member, and REFUSE a second name for the same district.
+    """Append one member to their district's list, refusing an exact duplicate.
 
-    THIS IS THE GUARD THAT MATTERS HERE, and it exists because its absence
-    shipped a plausible half-truth: a `setdefault` took the first name and
+    THIS FUNCTION USED TO REFUSE THE SECOND NAME, and that was right while the
+    schema held one member per district: a `setdefault` had taken the first and
     dropped the second in silence, so Dodgeville read as four alderpersons
-    when the page names eight. The schema is members[district] -> ONE member,
-    so a city that seats two per district cannot be represented at all, and
-    naming one of each pair would conceal the other rather than merely be
-    incomplete. Fail loudly instead.
+    where its page names eight, and naming one of each pair would have
+    concealed the other rather than merely been incomplete. Failing loudly was
+    the honest answer available at the time, and it is what kept Algoma,
+    Dodgeville, Oconomowoc and Horicon out of the file rather than half-right.
+
+    Since #1133 `members[district]` is a LIST, so a second name is no longer a
+    conflict to refuse — it is the answer. What is still refused is the SAME
+    person arriving twice, which is a parse reading one block twice rather than
+    a council seating somebody twice, and which would inflate every count guard
+    below it.
     """
-    if key in members and members[key]["name"] != entry["name"]:
-        raise SystemExit("%s names two people for district %s (%s and %s) — the "
-                         "roster schema holds one member per district, so this "
-                         "city cannot ship without concealing a seat"
-                         % (city, key, members[key]["name"], entry["name"]))
-    members[key] = entry
+    seat = members.setdefault(key, [])
+    for existing in seat:
+        if fold(existing["name"]) == fold(entry["name"]):
+            raise SystemExit("%s names %s twice in district %s — a block read "
+                             "twice, not a seat held twice"
+                             % (city, entry["name"], key))
+    seat.append(entry)
+
+
+def _people(members):
+    """How many PEOPLE a members mapping holds, across the per-district lists."""
+    return sum(len(v) for v in members.values())
 
 
 def body_note(page, *markers):
@@ -1159,10 +1192,28 @@ def body_note(page, *markers):
 
 
 def _seats_or_die(city, members, seats, page=None, *markers):
+    """`seats` is the DISTRICT count — the number of keys, not of people.
+
+    It keeps that meaning after #1133 because it is what the geometry draws and
+    what every caller passes. A multi-member council additionally states how
+    many PEOPLE it expects, through _people_or_die: a page that lost one of a
+    district's three members still names every district, so this check alone
+    cannot see it.
+    """
     if len(members) != seats:
         note = (" [%s]" % body_note(page, *markers)) if page is not None else ""
         raise SystemExit("%s names %d of %d districts%s"
                          % (city, len(members), seats, note))
+    return members
+
+
+def _people_or_die(city, members, people, page=None, *markers):
+    """The seat count a MULTI-MEMBER council must produce, people not districts."""
+    got = _people(members)
+    if got != people:
+        note = (" [%s]" % body_note(page, *markers)) if page is not None else ""
+        raise SystemExit("%s names %d alderpersons, expected %d across %d "
+                         "district(s)%s" % (city, got, people, len(members), note))
     return members
 
 
@@ -1561,6 +1612,174 @@ def attempt(label, fn):
         return None, reason
 
 
+
+NAME_RE = (r"[A-Z][A-Za-z.'\-]+(?:\s+(?:\"[A-Za-z]+\"\s+)?[A-Z][A-Za-z.'\-]*\.?){1,3}")
+
+
+def _seat_blocks(flat, label_re):
+    """(district, block) per labelled seat, the block running to the NEXT label.
+
+    Counting separators from the label does not survive these pages: stripping
+    tags leaves runs of `|` and newlines in no fixed number — Wautoma puts two
+    between a label and its name and eleven between a name and its address, on
+    the same page — so a parser that says "the field three pipes along" reads
+    one member's phone onto another's row. Each seat's own block, bounded by
+    the next label, has no such offset to get wrong.
+    """
+    hits = list(re.finditer(label_re, flat))
+    for i, h in enumerate(hits):
+        end = hits[i + 1].start() if i + 1 < len(hits) else min(len(flat), h.end() + 900)
+        yield h, flat[h.end():end]
+
+
+
+# ------------------------------------------------- the multi-member tranche
+# FOUR CITIES THAT COULD NOT SHIP UNTIL #1133. Each seats more than one
+# alderperson per district, which the old schema could not hold: _put()
+# refused the second name, correctly, and these four stayed out of the file
+# rather than shipping half a council. What changed is the shape, not the
+# source — every page below was already measured on 2026-09-06.
+
+
+def scrape_wautoma():
+    """`Alderperson Dist N`, then the name. UNEVEN: 1, 3 and 2 across three
+    districts, six seats.
+
+    THIS IS THE CITY THAT SETTLED THE SCHEMA. A two-slot design would carry
+    Algoma, Dodgeville and Horicon and not this, which is why the shape is a
+    list of arbitrary length rather than a pair.
+
+    Its page prints a HOME ADDRESS between the name and the phone for every
+    member. The address line is stepped over and never stored, the same rule
+    Sturgeon Bay, Menasha and Portage are already read under.
+
+    ITS `Term Expires:` YEAR IS READ AND DISCARDED, decided on review of #1135.
+    The card maps name, badge, phone, email, note and url and has no term
+    branch, so the field would reach a reader's browser and no surface — bytes
+    with a live check_roster_retention gate attached, which from its first ship
+    reddens a weekly bot PR when Wautoma's page drops a year nobody sees. And
+    six records of 268 is not a column: no roster in this file carries a term,
+    so a card showing one for Wautoma and not for the other 27 municipalities
+    answers a reader's question inconsistently. If terms belong here it is a
+    fleet decision with each source's term column established first.
+    """
+    page = fetch(WAUTOMA_INDEX)
+    flat = re.sub(r"<[^>]+>", "|", H.unescape(page))
+    members = {}
+    LABEL = r"Alderperson\s+Dist\.?\s*(\d{1,2})\b"
+    for hit, block in _seat_blocks(flat, LABEL):
+        nm = re.search(r"[\s|]*(" + NAME_RE + r")", block)
+        if not nm:
+            continue
+        entry = {"name": " ".join(nm.group(1).split())}
+        ph = re.search(r"Phone:\s*\(?(\d{3})\)?[ .-]?(\d{3})-(\d{4})", block)
+        if ph:
+            entry["phone"] = "(%s) %s-%s" % ph.groups()
+        _put("wautoma", members, "%02d" % int(hit.group(1)), entry)
+    _seats_or_die("wautoma", members, 3, page,
+                  ("Alderperson Dist N", r"Alderperson\s+Dist\.?\s*\d"))
+    return _people_or_die("wautoma", members, 6, page,
+                          ("Alderperson Dist N", r"Alderperson\s+Dist\.?\s*\d")), WAUTOMA_INDEX
+
+
+def scrape_algoma():
+    """`Alderperson District N` / name / home address / mailbox / phone / term.
+    Two per district over four districts, eight seats.
+
+    THE MAILBOX IS NUMBERED BY SEAT, NOT BY DISTRICT — alder1@ and alder2@ are
+    both District 1 — so it is carried as that member's own address and never
+    used to derive which district anybody sits in.
+    """
+    page = fetch(ALGOMA_INDEX)
+    flat = re.sub(r"<[^>]+>", "|", H.unescape(page))
+    members = {}
+    LABEL = r"Alderperson\s+District\s+(\d{1,2})\b"
+    for hit, block in _seat_blocks(flat, LABEL):
+        nm = re.search(r"[\s|]*(" + NAME_RE + r")", block)
+        if not nm:
+            continue
+        entry = {"name": " ".join(nm.group(1).split())}
+        em = re.search(r"([A-Za-z0-9._%+-]+@algomacity\.org)", block)
+        if em:
+            entry["email"] = em.group(1).lower()
+        ph = re.search(r"\b(\d{3})-(\d{3})-(\d{4})\b", block)
+        if ph:
+            entry["phone"] = "(%s) %s-%s" % ph.groups()
+        _put("algoma", members, "%02d" % int(hit.group(1)), entry)
+    _seats_or_die("algoma", members, 4, page,
+                  ("Alderperson District N", r"Alderperson\s+District\s+\d"))
+    return _people_or_die("algoma", members, 8, page,
+                          ("Alderperson District N", r"Alderperson\s+District\s+\d")), ALGOMA_INDEX
+
+
+def scrape_horicon():
+    """NAME FIRST, then `, [role, ]District N Alderperson` — the Lafayette
+    `same-line-lead` reading, which is also the only shape that recovers a ROLE
+    from the seat's own row. Two per district over three, six seats.
+
+    Reading this the other way round — district then name — pairs every member
+    with the district ABOVE them, which is the off-by-one that shape exists to
+    produce.
+    """
+    page = fetch(HORICON_INDEX)
+    flat = re.sub(r"\|+", "|", re.sub(r"<[^>]+>", "|", H.unescape(page)))
+    members = {}
+    for m in re.finditer(
+            r"([A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]*\.?){1,3})\s*\|*\s*,\s*"
+            r"(?:([^,|]{3,40}?),\s*)?District\s+(\d{1,2})\s+Alderperson", flat):
+        entry = {"name": m.group(1).strip()}
+        role = (m.group(2) or "").strip()
+        if role and not role.lower().startswith("district"):
+            entry["note"] = role
+        _put("horicon", members, "%02d" % int(m.group(3)), entry)
+    _seats_or_die("horicon", members, 3, page,
+                  ("District N Alderperson", r"District\s+\d{1,2}\s+Alderperson"))
+    return _people_or_die("horicon", members, 6, page,
+                          ("District N Alderperson", r"District\s+\d{1,2}\s+Alderperson")), HORICON_INDEX
+
+
+def scrape_dodgeville():
+    """A TABLE: `Alderperson District N` / `Wards ...` / [`*President*`] /
+    name / [phone] / mailbox / term. Two per district over four, eight seats.
+    The page states its own shape — "four aldermanic districts with two
+    representatives" — which is asserted rather than trusted.
+
+    ITS MAILBOXES ARE NUMERIC CHARACTER REFERENCES (`&#109;&#97;...`), not
+    Cloudflare's `data-cfemail`: H.unescape decodes them, so they are ordinary
+    published addresses and no obfuscation is being worked around.
+    """
+    page = fetch(DODGEVILLE_INDEX)
+    if not re.search(r"four aldermanic districts with two representatives", page, re.I):
+        raise SystemExit("dodgeville: the page no longer states four districts "
+                         "with two representatives — re-read it before trusting "
+                         "the counts below [%s]" % body_note(page))
+    flat = re.sub(r"<[^>]+>", "|", H.unescape(page))
+    members = {}
+    LABEL = r"Alderperson\s+District\s+(\d{1,2})\b"
+    for hit, block in _seat_blocks(flat, LABEL):
+        # the ward list and an optional *President* sit between the label and
+        # the name; neither is a name, so the first name-shaped run is the
+        # member's and the role is read from the text before it.
+        nm = re.search(r"[\s|]*(?:Wards?[^|]*\|)?[\s|]*(?:\*[^*|]*\*[\s|]*)?("
+                       + NAME_RE + r")", block)
+        if not nm:
+            continue
+        entry = {"name": " ".join(nm.group(1).split())}
+        if re.search(r"\*President\*", block[:nm.end()]):
+            entry["note"] = "Council President"
+        em = re.search(r"([A-Za-z0-9._%+-]+@(?:ci\.)?dodgeville[A-Za-z.]*\.\w+)", block)
+        if em:
+            entry["email"] = em.group(1).lower()
+        ph = re.search(r"\b(\d{3})-(\d{3})-(\d{4})\b", block)
+        if ph:
+            entry["phone"] = "(%s) %s-%s" % ph.groups()
+        _put("dodgeville", members, "%02d" % int(hit.group(1)), entry)
+    _seats_or_die("dodgeville", members, 4, page,
+                  ("Alderperson District N", r"Alderperson\s+District\s+\d"))
+    return _people_or_die("dodgeville", members, 8, page,
+                          ("Alderperson District N", r"Alderperson\s+District\s+\d")), DODGEVILLE_INDEX
+
+
 def as_member_lists(members):
     """district -> ONE member, or district -> [members], in; always a LIST out.
 
@@ -1598,7 +1817,12 @@ def main():
     out_path = argv[argv.index("--out") + 1] if "--out" in argv else DEFAULT_OUT
 
     got, failures = {}, {}
-    for code, name, districts, fn in (
+    # THE ONE LIST. `CITIES` used to restate it and was read in exactly one
+    # place — this loop's own denominator — where it had gone stale at 18
+    # against 28 and printed "27 of 18". A table nothing else reads, that
+    # disagrees with the loop beside it, is not a second source: it is a
+    # second answer to a question with one.
+    COVERED = (
             ("53000", "Milwaukee", 15, scrape_milwaukee),
             ("48000", "Madison", 20, scrape_madison),
             ("31000", "Green Bay", 12, scrape_green_bay),
@@ -1623,7 +1847,14 @@ def main():
             ("01550", "Altoona", 6, scrape_altoona),
             ("21625", "Eagle River", 4, scrape_eagle_river),
             ("28875", "Germantown", 4, scrape_germantown),
-            ("56900", "New Lisbon", 4, scrape_new_lisbon)):
+            ("56900", "New Lisbon", 4, scrape_new_lisbon),
+            # the multi-member tranche of 2026-09-24, which #1133 unblocked
+            ("84625", "Wautoma", 3, scrape_wautoma),
+            ("01000", "Algoma", 4, scrape_algoma),
+            ("35750", "Horicon", 3, scrape_horicon),
+            ("20350", "Dodgeville", 4, scrape_dodgeville),
+    )
+    for code, name, districts, fn in COVERED:
         result, reason = attempt(name, fn)
         if result is None:
             failures[code] = {"municipality": name, "reason": reason}
@@ -1656,7 +1887,7 @@ def main():
     madison = got.get("48000", {}).get("vacantDistricts")
     print("scraped %d alderpersons across %d of %d municipalities (Madison "
           "vacant: %s)%s -> %s"
-          % (total, len(got), len(CITIES), madison or "none",
+          % (total, len(got), len(COVERED), madison or "none",
              "" if not failures else "; MISSED %s" % ", ".join(
                  sorted(f["municipality"] for f in failures.values())),
              out_path))

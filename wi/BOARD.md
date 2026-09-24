@@ -28,6 +28,72 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-24, late. The second multi-member tranche is open as #1138, and
+running its robots gate three times produced a finding about the gate.**
+
+Black River Falls and Neenah ship: **285 alderpersons across 261 districts in
+30 municipalities**, up from 268/254/28, and wi reads 1,719 in the fleet name
+gate. Verified in a browser at a real point in Neenah District 1 — Mark A.
+Ellis, Flo Bruno and Brian Defferding, with phones and mailboxes.
+
+Two traps, both the page's own. **Neenah lists its nine members in NO district
+order** (it opens with the 2nd district's president, then 1,1,1,2,2,3,3,3), so
+a positional read files eight of nine under the wrong district *while looking
+orderly*. And **a role is name-shaped**: Neenah prints "Council President,
+2026-2027" between the name and the label, and the first draft read `Council
+President` as the member's name for exactly the one seat that has a role.
+Black River Falls' ward numbers are read as districts only under the live
+LTSB ward-is-district witness.
+
+**OCONOMOWOC IS RECORDED RATHER THAN SHIPPED, AND NOT FOR ACCESS.** Its apex
+host serves robots and permits the path, its page answers 200 at 132 KB, and
+only `www` resets. Its directory names seven people plus one entry reading
+`Vacanct District 1` — the city's own typo — against its own sentence of eight
+aldermen over four districts. So District 1 seats two, names one, leaves one
+empty, and **the card has no way to say that**: `vacantDistricts` fires only
+when nobody is named. Shipping the single name silently is the same
+concealment one level down that the list schema was built to end. It needs the
+per-district seat count Illinois's at-large card already carries as `seats`,
+plus a card branch — its own change, not another fetch.
+
+**THE ROBOTS GATE'S "POLICY UNKNOWN" LIST IS NOT A PROPERTY OF THE HOSTS.**
+I ran `wi/scripts/validate_robots.py` three times today against the same tree:
+18, 18 and 21 hosts listed. Excluding the API and fixture hosts that
+legitimately 403 or cannot resolve, **19 municipal hosts were listed at least
+once and only 2 in all three — seventeen of nineteen churn.** Read
+individually, four of the churners serve the file every time (Horicon,
+Dodgeville, Black River Falls, Neenah, 4 of 4 each; Dodgeville 5 of 5 earlier).
+
+The line's own wording is "policy unknown, **not assumed**", which exists so a
+reader can act on it. A list whose municipal membership differs 17/19 between
+runs cannot tell a host that genuinely will not serve its policy from one the
+sweep throttled itself out of, and the gate passes either way, so nothing
+surfaces the difference. The likeliest cause is the sweep asking hosts as fast
+as it can reach them, several of which state a crawl delay — Dodgeville states
+15 seconds — or rate-limit without stating one: the one class of refusal this
+project can provoke in itself.
+
+**Not fixed here, deliberately** — it is well past two cities' worth of scope.
+The shape of the fix is the discipline `check_roster_retention.py` already
+states for a different question, that a source which failed to fetch once is
+not a source that stopped: re-ask a host before listing it unknown, and pace
+the sweep by each host's own stated delay. Its own change, with its own
+negative test, and the three-run measurement above is what to build it
+against. Recorded on #1138 as well, since that PR's body carried the caveat.
+
+**2026-09-24. #1135 MERGED as `f4a9b3d`.** The multi-member schema is complete
+end to end: PR 1 (`71e09b9`) made the shape, PR 2 filled it. Verified on main
+rather than taken from the merge event — 28 municipalities, **254 districts,
+268 alderpersons**, the field set back to `name` / `email` / `phone` / `url`
+plus `note`, and Wautoma District 2 naming Mathew Hedrick, Robert Cayer and
+Patrick King.
+
+**What a reader gets: twenty-eight people who were not on the site**, in four
+councils that could not be represented at all while the roster held one member
+per district. The review took two rounds and both findings improved it.
+
+Next: the tranche this unblocks — Black River Falls, Neenah, Oconomowoc.
+
 **2026-09-24, evening. The #1135 hold is cleared, and the count in it was
 mine.** Pushed as `bfc1503`; both findings were verified against the shipped
 file before either was acted on.
