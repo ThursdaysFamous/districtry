@@ -460,6 +460,22 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/build_llms_txt.py --check
 
+      # docs/ENDPOINT_INVENTORY.md — every host the apps contact while a reader
+      # uses them, every dataset the build depends on, and where the terms on
+      # each are recorded. GENERATED, because every figure in it moves: the
+      # runtime host list grows whenever a county ships a layer that loads live
+      # from its own GIS, the dataset counts move weekly, and the
+      # point-transmission figures move whenever a loader is rerouted. It
+      # IMPORTS build_privacy_page.py rather than re-deciding who receives what,
+      # and holds the two readers to each other per app on CARTO, cdnjs and the
+      # geocoders — the case neither can see alone. Its "not recorded anywhere in
+      # this repository" claims are re-audited every run and FAIL once the repo
+      # starts recording one, because that claim rots in the dangerous
+      # direction. Offline; it reads the tree and fetches nothing.
+      - name: The endpoint and dataset inventory matches the tree it describes
+        if: ${{ !cancelled() }}
+        run: python3 scripts/build_endpoint_inventory.py --check
+
       # Both halves matter. The dates are why this gate was written; the PARSE
       # is why it was rewritten. sitemap.xml shipped with a double hyphen inside
       # its own header comment (2026-09-12, the commit that first generated it),
