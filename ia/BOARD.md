@@ -45,6 +45,49 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-24 (night, last) — #1140 is GREEN on its four positional fixes. THE
+INTERNAL-POINTS DRIFT IS ALREADY CLOSED, by a change that merged three hours
+ago. MY BOARD QUEUE IS NOW EMPTY of anything that is mine.**
+
+#1140 head `2698c37`, smoke SUCCESS 20:42 UTC, two files, no review threads.
+Held for the manager.
+
+### Item 2 was answered by re-deriving it, like item 3 and the Dickinson ask
+
+The brief was to check whether the committed file or the builder is the odd
+one out. **Measured: the builder OWNS the file** —
+`ia/scripts/build_ia_gap_outlines.py` writes the whole of
+`ia/data/source/ia-county-internal-points.json` at its `json.dump`, and the
+source of the sentence in question is a string literal in the builder itself.
+So the committed literal em-dash was the stale side and there was never a
+question of which to change.
+
+**AND IT IS ALREADY FIXED.** `a92cee4` — #1139, Winnebago — shipped that file,
+because retiring Winnebago's outline legitimately rewrote it (eight lines of
+its point removed), and the builder's `ensure_ascii` escape rode along in the
+same diff. Running the builder now produces NO diff at all: the committed file
+carries zero non-ASCII bytes and one `\u2014`, exactly what the builder writes.
+
+**A DRIFT BETWEEN A GENERATOR AND ITS OWN OUTPUT CLOSES ITSELF the next time
+that file changes for a real reason.** I reverted it twice today while it was
+UNRELATED churn, which was right both times; the third time it had a reason to
+move and went with it. What I recorded as a standing item was true for about
+four hours.
+
+### Where that leaves the queue
+
+1. **Michigan's `mi-commissioner-roster` declaration** — theirs to confirm,
+   untouched all day, and nothing about it has changed.
+2. **CLOSED**, above.
+
+So nothing on this board is mine and open except #1140 itself. Three of the
+four things I queued today dissolved on re-derivation — the endpoint-inventory
+red-CI claim, the Dickinson preservation question, and this. **Each was a
+measurement I took correctly and a conclusion I wrote down as though it had
+been measured too.** The pattern is specific enough to name: the grep, the
+diff and the probe were all right; what failed was the sentence built on them
+in the same breath, before anything tested it.
+
 **2026-09-24 (night, latest) — THE DICKINSON PRESERVATION QUESTION DOES NOT
 ARISE, AND I STATED IT WRONG THREE TIMES. #1140 is held on four positional
 references, now pushed.**
