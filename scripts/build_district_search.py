@@ -179,10 +179,10 @@ SOURCES = {
         "key": lambda p: _num(p.get("DISTRICT")),
         "count": 22,
     },
-    # Each of the 20 seats also has the SUB-DISTRICT name the Board of
-    # Education itself uses (1A..10B), which the boundary carries as
-    # longName ("District 2b") and the card prints ("Sub-district 2b"). It is
-    # indexed beside the flat number so "sub-district 2b" finds District 4.
+    # Each of the 20 seats is named by the Board of Education as a number and
+    # a letter (1A..10B), which the boundary carries as longName ("District
+    # 2b") and the card prints. The boundary's own 1..20 is its row order and
+    # is never shown or matched (internal_numbers in the phrase file).
     "school-board": {"file": "school-board-districts.json", "key": lambda p: _num(p.get("district")),
                      "alt": lambda p: _alt_label(p.get("longName"))},
     "congress": {"file": "congress-districts.json", "key": lambda p: _num(p.get("BASENAME"))},
@@ -296,21 +296,26 @@ def phrase_layers():
             if n and n not in phrases:
                 phrases.append(n)
         out[lid] = {"name": name, "label": labels[lid], "phrases": phrases}
-        # a SECOND NAME for each district ("Sub-district 2b" for School Board
-        # District 4): its own phrases, which match only that name, never
-        # the flat number, so "sub-district 4" finds nothing
+        # a SECOND NAME for each district (number and letter, "2b"): its own
+        # phrases, which match only that name, never the flat number, so
+        # "school board 4" alone never reads as a second name
         if entry.get("alt_name"):
             if "alt" not in SOURCES[lid]:
                 problems.append("%s: alt_name given but the builder reads no second name for it" % lid)
             alt = []
-            for p in [entry["alt_name"]] + list(entry.get("alt_aliases") or []):
+            # where the number is internal the second name IS the district's
+            # name, so the layer's own phrases name it ("school board district
+            # 2b") and alt_name alone ("district") is never a phrase — a bare
+            # "district 2b" stays unmatched like every bare "district N"
+            first = phrases if entry.get("internal_numbers") else [entry["alt_name"]]
+            for p in list(first) + list(entry.get("alt_aliases") or []):
                 n = normalize_phrase(p)
                 if n and n not in alt:
                     alt.append(n)
             out[lid]["alt_name"] = entry["alt_name"].strip()
             out[lid]["alt_phrases"] = alt
             # THE NUMBER IS INTERNAL: the second name is the only name a
-            # reader is shown ("School Board Sub-district 2b"), the layer's own
+            # reader is shown ("School Board District 2b"), the layer's own
             # number is never matched, and a bare number after the layer's
             # phrases names every district whose second name starts with it —
             # the Board's "District 4" is the pair 4a + 4b
@@ -340,7 +345,7 @@ def phrase_layers():
     owner = {}
     for lid, spec in out.items():
         for p in spec["phrases"] + spec.get("alt_phrases", []):
-            if p in owner:
+            if p in owner and owner[p] != lid:
                 problems.append("phrase %r is claimed by both %s and %s" % (p, owner[p], lid))
             owner[p] = lid
     return out, problems
@@ -528,7 +533,7 @@ def district_name(layer_name, d, where=None, alt=None, alt_name=None, alt_title=
     """'Ward 33'; with a county, '<County> <layer name> <id>' — 'Lake' +
     'County Board District' + '3' is 'Lake County Board District 3'; with a
     second name, '<layer name> <id> · <alt name> <alt>'; and where the number
-    is internal, the second name alone: 'School Board Sub-district 2b'."""
+    is internal, the second name alone: 'School Board District 2b'."""
     if alt_title:
         if not alt:
             raise SystemExit("build-district-search: district %s has no second name, and its "

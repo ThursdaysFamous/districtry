@@ -7088,10 +7088,10 @@ function initChiExplorer() {
    *
    * A SECOND NAME. A layer whose districts also have a name of the form
    * number-plus-letter carries it on each district as `alt` — the Chicago
-   * Board of Education's sub-districts, 1a..10b, the name the Board itself
-   * gives each of the 20 seats. "2b" or "2 b" in a query is read as that
-   * name, and matches only through the layer's `alt_phrases`
-   * ("sub-district 2b", "school board 2b"): "sub-district 4" finds nothing.
+   * Board of Education's seats, 1a..10b, the name the Board itself gives
+   * each of the 20. "2b" or "2 b" in a query is read as that name, and
+   * matches only through the layer's `alt_phrases` ("school board district
+   * 2b", "school board 2b").
    * Where the layer marks its own number INTERNAL (`alt_title` in the
    * index), that number is never matched or shown — the Board's seats are
    * rows 1..20 of a shapefile to this index and nothing to a reader — and a
@@ -7377,7 +7377,8 @@ function initChiExplorer() {
             .map(function (f) { return f.properties.alt; })
             .sort(function (a, b) { return parseInt(a, 10) - parseInt(b, 10) || (a < b ? -1 : a > b ? 1 : 0); });
           if (alts.length) {
-            // "School Board District" + "Sub-district" -> "School Board Sub-district"
+            // alt_title where the number is internal ("School Board District"),
+            // else the layer's name with alt_name in place of "District"
             hints.push({ name: spec.alt_title || spec.name.replace(/\s*district$/i, "") + " " + spec.alt_name,
               note: "Type its " + spec.alt_name.toLowerCase() + ": " + alts[0] + "\u2013" + alts[alts.length - 1] +
                 (spec.where ? " \u00b7 " + spec.where : "") });
@@ -19478,11 +19479,11 @@ function initChiExplorer() {
     return fetchJSONWithRetry("data/app/school-board-members.json", {}, 2);
   });
 
-  /* ---------- The name a reader is shown: the sub-district, "2b". The
+  /* ---------- The name a reader is shown: number and letter, "2b". The
    * boundary's `district` (1..20) is the shapefile's row number and stays an
    * internal key — it joins the roster and nothing else. No ballot or Board
    * page uses it, and it collides with the names they do use: the Board's
-   * "District 4" is the pair 4a + 4b, while this file's 4 is sub-district 2b.
+   * "District 4" is the pair 4a + 4b, while this file's 4 is District 2b.
    * The boundary writes the name as "District 2b", so the leading word comes
    * off. ---------- */
   function schoolSubDistrict(feature) {
@@ -19520,7 +19521,7 @@ function initChiExplorer() {
       var wrap = cardEl("div", "card-flush");
       var member = result.member;
       var board = result.board;
-      // the sub-district is the card's own pill (cardIdentifier below), so
+      // the district is the card's own pill (cardIdentifier below), so
       // the note carries only what the pill cannot: an empty seat
       var note = member && member.vacant ? "Seat vacant, as the Board reports it" : null;
       wrap.appendChild(renderBodyIntro({
@@ -19562,15 +19563,15 @@ function initChiExplorer() {
       }
       return wrap;
     },
-    // "Sub-district 2b", never the boundary's flat 1..20 (see
-    // schoolSubDistrict): with no sub-district the pill stays empty rather
+    // "District 2b", never the boundary's flat 1..20 (see
+    // schoolSubDistrict): with no letter district the pill stays empty rather
     // than printing a number that names a different seat
     cardIdentifier: function (result) {
-      return result.subDistrict ? "Sub-district " + result.subDistrict : null;
+      return result.subDistrict ? "District " + result.subDistrict : null;
     },
     hoverName: function (feature) {
       var sub = schoolSubDistrict(feature);
-      return sub ? "Sub-district " + sub : null;
+      return sub ? "District " + sub : null;
     },
     primaryLink: function () {
       // the Board's OWN member index, which is where this card's roster comes

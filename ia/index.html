@@ -6529,10 +6529,10 @@ function initIowaExplorer() {
    *
    * A SECOND NAME. A layer whose districts also have a name of the form
    * number-plus-letter carries it on each district as `alt` — the Chicago
-   * Board of Education's sub-districts, 1a..10b, the name the Board itself
-   * gives each of the 20 seats. "2b" or "2 b" in a query is read as that
-   * name, and matches only through the layer's `alt_phrases`
-   * ("sub-district 2b", "school board 2b"): "sub-district 4" finds nothing.
+   * Board of Education's seats, 1a..10b, the name the Board itself gives
+   * each of the 20. "2b" or "2 b" in a query is read as that name, and
+   * matches only through the layer's `alt_phrases` ("school board district
+   * 2b", "school board 2b").
    * Where the layer marks its own number INTERNAL (`alt_title` in the
    * index), that number is never matched or shown — the Board's seats are
    * rows 1..20 of a shapefile to this index and nothing to a reader — and a
@@ -6818,7 +6818,8 @@ function initIowaExplorer() {
             .map(function (f) { return f.properties.alt; })
             .sort(function (a, b) { return parseInt(a, 10) - parseInt(b, 10) || (a < b ? -1 : a > b ? 1 : 0); });
           if (alts.length) {
-            // "School Board District" + "Sub-district" -> "School Board Sub-district"
+            // alt_title where the number is internal ("School Board District"),
+            // else the layer's name with alt_name in place of "District"
             hints.push({ name: spec.alt_title || spec.name.replace(/\s*district$/i, "") + " " + spec.alt_name,
               note: "Type its " + spec.alt_name.toLowerCase() + ": " + alts[0] + "\u2013" + alts[alts.length - 1] +
                 (spec.where ? " \u00b7 " + spec.where : "") });
