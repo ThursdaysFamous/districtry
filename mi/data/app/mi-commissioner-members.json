@@ -637,6 +637,34 @@
   "seats": 9,
   "sourceUrl": "https://www.gtcountymi.gov/184/Board-of-Commissioners"
  },
+ "057": {
+  "county": "Gratiot",
+  "districts": {
+   "1": {
+    "name": "Dave Owens",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Jan Bunting",
+    "party": "Republican",
+    "role": "Vice Chair"
+   },
+   "3": {
+    "name": "Timothy Gay",
+    "party": "Republican"
+   },
+   "4": {
+    "name": "Steve Sopocy"
+   },
+   "5": {
+    "name": "George Bailey",
+    "party": "Republican"
+   }
+  },
+  "readAt": "2026-09-24",
+  "seats": 5,
+  "sourceUrl": "https://www.gratiotmi.com/302/Board-of-Commissioners"
+ },
  "059": {
   "county": "Hillsdale",
   "districts": {
@@ -1026,6 +1054,46 @@
   "preservedSince": "2026-09-19",
   "seats": 21,
   "sourceUrl": "https://www.kentcountymi.gov/1464/Meet-the-Commissioners"
+ },
+ "083": {
+  "county": "Keweenaw",
+  "districts": {
+   "1": {
+    "email": "piched@keweenawcountymi.gov",
+    "name": "Don Piche",
+    "party": "Democratic",
+    "phone": "906-370-8099",
+    "role": "Chairman"
+   },
+   "2": {
+    "email": "lamottem@keweenawcountymi.gov",
+    "name": "Mike LaMotte",
+    "party": "NPA",
+    "phone": "906-281-0944"
+   },
+   "3": {
+    "email": "rajalad@keweenawcountymi.gov",
+    "name": "Del Rajala",
+    "party": "Republican",
+    "phone": "906-370-3642",
+    "role": "Vice-Chair"
+   },
+   "4": {
+    "email": "demaroisb@keweenawcountymi.gov",
+    "name": "Robert DeMarois",
+    "party": "Democratic",
+    "phone": "906-337-0861"
+   },
+   "5": {
+    "email": "eckloffr@keweenawcountymi.gov",
+    "name": "Randy Eckloff",
+    "party": "Republican",
+    "phone": "906-369-3170"
+   }
+  },
+  "readAt": "2026-09-24",
+  "seats": 5,
+  "sourceUrl": "https://www.keweenawcountyonline.org/commissions-board.php"
  },
  "085": {
   "county": "Lake",
@@ -1559,6 +1627,33 @@
   "seats": 5,
   "sourceUrl": "https://oceana.mi.us/government/board-of-commissioners/"
  },
+ "129": {
+  "county": "Ogemaw",
+  "districts": {
+   "1": {
+    "name": "Jenny David",
+    "phone": "989-709-0049"
+   },
+   "2": {
+    "name": "Roger Mayhew"
+   },
+   "3": {
+    "name": "Charles Wiltse",
+    "phone": "517-256-2078"
+   },
+   "4": {
+    "name": "Mark Surbrook",
+    "phone": "989-312-0652"
+   },
+   "5": {
+    "name": "Craig Scott",
+    "phone": "989-329-2830"
+   }
+  },
+  "readAt": "2026-09-24",
+  "seats": 5,
+  "sourceUrl": "https://www.ocmi.us/commissioners/"
+ },
  "131": {
   "county": "Ontonagon",
   "districts": {
@@ -1923,6 +2018,58 @@
   "readAt": "2026-09-19",
   "seats": 5,
   "sourceUrl": "https://schoolcraftcounty.net/government/elected-officials/commissioners"
+ },
+ "155": {
+  "county": "Shiawassee",
+  "districts": {
+   "1": {
+    "email": "jhaley@shiawassee.net",
+    "name": "Josh Haley",
+    "party": "Republican",
+    "phone": "989-992-4698"
+   },
+   "2": {
+    "email": "gbrodeur@shiawassee.net",
+    "name": "Gregory Brodeur",
+    "party": "Republican",
+    "phone": "989-413-0621",
+    "role": "Chairman"
+   },
+   "3": {
+    "email": "gholz63@gmail.com",
+    "name": "Gary Holzhausen",
+    "party": "Republican",
+    "phone": "989-277-6699"
+   },
+   "4": {
+    "email": "bjohnson@shiawassee.net",
+    "name": "Bill Johnson",
+    "party": "Republican",
+    "phone": "989-666-2501"
+   },
+   "5": {
+    "email": "bhoward@shiawassee.net",
+    "name": "Brad Howard",
+    "party": "Republican",
+    "phone": "989-277-5856"
+   },
+   "6": {
+    "email": "cgarber@shiawassee.net",
+    "name": "Cindy L. Garber",
+    "party": "Republican",
+    "phone": "989-627-2035",
+    "role": "Vice Chairperson"
+   },
+   "7": {
+    "email": "mshepard@shiawassee.net",
+    "name": "Matthew Shepard",
+    "party": "Republican",
+    "phone": "989-413-9952"
+   }
+  },
+  "readAt": "2026-09-24",
+  "seats": 7,
+  "sourceUrl": "https://shiawassee.net/board-of-commissioners/"
  },
  "163": {
   "county": "Wayne",

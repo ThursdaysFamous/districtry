@@ -1,5 +1,5 @@
 {
- "measured": "2026-09-22",
+ "measured": "2026-09-24",
  "note": "The Census's own INTPTLAT/INTPTLON per county \u2014 a point guaranteed to lie inside that county, which a centroid is not for a concave or multi-part shape. Recorded so --check can re-run the same cross-check offline.",
  "points": {
   "alger": {
@@ -86,13 +86,6 @@
    "name": "Gogebic County",
    "slug": "gogebic"
   },
-  "gratiot": {
-   "fips": "057",
-   "lat": 43.2923259,
-   "lng": -84.60469,
-   "name": "Gratiot County",
-   "slug": "gratiot"
-  },
   "huron": {
    "fips": "063",
    "lat": 43.907616,
@@ -120,13 +113,6 @@
    "lng": -88.5517944,
    "name": "Iron County",
    "slug": "iron"
-  },
-  "keweenaw": {
-   "fips": "083",
-   "lat": 47.3672969,
-   "lng": -88.3513318,
-   "name": "Keweenaw County",
-   "slug": "keweenaw"
   },
   "livingston": {
    "fips": "093",
@@ -191,26 +177,12 @@
    "name": "Oakland County",
    "slug": "oakland"
   },
-  "ogemaw": {
-   "fips": "129",
-   "lat": 44.3332801,
-   "lng": -84.1280728,
-   "name": "Ogemaw County",
-   "slug": "ogemaw"
-  },
   "ottawa": {
    "fips": "139",
    "lat": 43.054969,
    "lng": -86.2193493,
    "name": "Ottawa County",
    "slug": "ottawa"
-  },
-  "shiawassee": {
-   "fips": "155",
-   "lat": 42.9515446,
-   "lng": -84.1463518,
-   "name": "Shiawassee County",
-   "slug": "shiawassee"
   },
   "st-joseph": {
    "fips": "149",

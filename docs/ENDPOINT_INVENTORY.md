@@ -135,8 +135,8 @@ prose.
 | ca | 17 | 14 | 0 |
 | wi | 91 | 262 | 5 |
 | ia | 69 | 57 | 0 |
-| mi | 25 | 57 | 1 |
-| **total** | **366** | **803** | **11** |
+| mi | 25 | 53 | 1 |
+| **total** | **366** | **799** | **11** |
 
 **129 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and

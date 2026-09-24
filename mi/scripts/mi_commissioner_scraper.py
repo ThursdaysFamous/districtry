@@ -1729,6 +1729,183 @@ def parse_cass(page, also=None):
     return out
 
 
+# --- tranche 8, 2026-09-24: the four counties the shut-list re-examination
+# --- reopened. Each was recorded `no-board-page` or `no-confirmed-host` by a
+# --- sweep that never asked for the address its own county publishes, and
+# --- each page below sits on a host no earlier sweep tried.
+
+
+# ------------------------------------------------------------------ 155 ---
+
+def parse_shiawassee(page):
+    """A bare "District N" heading, then the member, address, phone, e-mail.
+
+    EVERY DISTRICT NUMBER APPEARS TWICE AND ONLY ONE OF THEM IS THE KEY. After
+    each member's e-mail the page prints "District N includes <townships>",
+    which is a description and not a heading -- so a parser matching any
+    "District N" finds fourteen for a seven-seat board, and because the
+    description sits immediately above the NEXT heading, pairing on the
+    following line hands District 2's seat to District 3's member. The key is
+    the line that is a heading and nothing else.
+
+    The e-mail is taken as published: District 3's is a gmail.com address while
+    the other six are @shiawassee.net, and a roster that dropped it for not
+    matching its neighbours would be deciding that a county published the
+    wrong contact for its own commissioner.
+    """
+    out = {}
+    L = lines(page)
+    for i, line in enumerate(L):
+        m = re.match(r"^District\s+(\d{1,2})$", line)
+        if not m:
+            continue
+        blk = "\n".join(L[i + 1:i + 8])
+        name = txt(L[i + 1]) if i + 1 < len(L) else ""
+        if not name:
+            continue
+        # first_mailto() greps raw HTML and this parser reads lines(), which has
+        # already rewritten every mailto into a [mail:...] marker -- so the
+        # helper returns None here and all seven addresses go missing while the
+        # roster still ships seven correct names.
+        mail = re.search(r"\[mail:\s*([^\]\s]+)\]", blk)
+        rec = {"name": re.sub(r"\s*[\u2013-]\s*(Chair|Vice).*$", "", name).strip(" ,-"),
+               "email": mail.group(1) if mail else None,
+               "phone": first_phone(blk) or None}
+        role = re.search(r"(Chair(?:person|man)?|Vice\s*Chair(?:person|man)?)", name, re.I)
+        if role:
+            rec["role"] = role.group(1)
+        party = re.search(r"\((R|D|I)\)", name)
+        if party:
+            rec["party"] = PARTY.get(party.group(1))
+        rec["name"] = re.sub(r"\s*\((R|D|I)\)\s*", " ", rec["name"]).strip(" ,-")
+        out.setdefault(m.group(1), {k: v for k, v in rec.items() if v})
+    return out
+
+
+# ------------------------------------------------------------------ 129 ---
+
+def parse_ogemaw(page):
+    """Name, then "District N Commissioner", then a phone -- when there is one.
+
+    THE PHONE IS NOT ALWAYS THERE AND THE NEXT LINE IS THE NEXT MEMBER. District
+    2's entry carries no number, so the line after its heading is "Charles
+    Wiltse", District 3's member: a parser reading name/district/phone as a
+    fixed triple ships a commissioner's name as another commissioner's
+    telephone number. The phone is taken only when the following line IS a
+    phone number, and District 2 ships without one because the county
+    publishes none.
+
+    No e-mail and no party: the page prints neither for anybody.
+    """
+    out = {}
+    L = lines(page)
+    for i, line in enumerate(L):
+        m = re.match(r"^District\s*#?\s*(\d{1,2})\s+Commissioner$", txt(line))
+        if not m or i == 0:
+            continue
+        name = txt(L[i - 1])
+        if not re.match(r"^[A-Z][A-Za-z.'\-]+(?:\s+[A-Z][A-Za-z.'\-]+){1,3}$", name):
+            continue
+        rec = {"name": name}
+        nxt = txt(L[i + 1]) if i + 1 < len(L) else ""
+        ph = phone(nxt)
+        if ph and not re.search(r"[A-Za-z]{3}", nxt):
+            rec["phone"] = ph
+        out.setdefault(m.group(1), rec)
+    return out
+
+
+# ------------------------------------------------------------------ 083 ---
+
+def parse_keweenaw(page):
+    """A bare "District N" heading, then the member with party, address,
+    telephone and a Cloudflare-obfuscated address printed twice.
+
+    THE tel: HREF IS NOT MAINTAINED AND THE VISIBLE NUMBER IS. Measured
+    2026-09-24: on three of five seats the href and the printed number agree,
+    and on two they do not -- District 2 links 906-337-5585 under a printed
+    906-281-0944, District 5 links 906-934-2509 under a printed 906-369-3170.
+    Two of five is a column that is not kept, not a typo, so this parser reads
+    the PRINTED number and never the link, and says so rather than picking the
+    one that happens to parse first.
+
+    The two `[cf:` markers per member decode to one address each way round --
+    the link and its own display text -- so they are deduplicated rather than
+    shipped as two contacts. The addresses are @keweenawcountymi.gov, a domain
+    this county does not serve its website from.
+    """
+    out = {}
+    L = lines(page)
+    for i, line in enumerate(L):
+        m = re.match(r"^District\s+(\d{1,2})$", line)
+        if not m or i + 1 >= len(L):
+            continue
+        name = txt(L[i + 1])
+        if not re.search(r"[A-Za-z]{3}", name):
+            continue
+        blk = "\n".join(L[i + 1:i + 7])
+        rec = {"name": re.sub(r"\s*,?\s*(Chair(?:man|person)?|Vice[-\s]*Chair(?:man|person)?)"
+                             r"\s*(\([A-Z]{1,3}\))?\s*$", "", name).strip(" ,")}
+        role = re.search(r"(Vice[-\s]*Chair(?:man|person)?|Chair(?:man|person)?)", name, re.I)
+        if role:
+            rec["role"] = role.group(1)
+        party = re.search(r"\(([A-Z]{1,3})\)", name)
+        if party:
+            rec["party"] = PARTY.get(party.group(1), party.group(1))
+        rec["name"] = re.sub(r"\s*\([A-Z]{1,3}\)\s*", " ", rec["name"])
+        rec["name"] = re.sub(r"\s+", " ", rec["name"]).strip(" ,")
+        # the PRINTED number, never the tel: target -- see the docstring
+        shown = re.search(r"\[tel:[^\]]*\]\s*([\d][\d\s().-]{8,})", blk)
+        if shown:
+            ph = phone(shown.group(1))
+            if ph:
+                rec["phone"] = ph
+        mails = []
+        for hexed in re.findall(r"\[cf:([0-9a-fA-F]+)\]", blk):
+            addr = cf_decode(hexed)
+            if addr and addr not in mails:
+                mails.append(addr)
+        if len(mails) == 1:
+            rec["email"] = mails[0]
+        out.setdefault(m.group(1), rec)
+    return out
+
+
+# ------------------------------------------------------------------ 057 ---
+
+def parse_gratiot(page):
+    """One <li> per member: the name in an <a>, then "District N: <townships>".
+
+    THE DISTRICTS ARE NOT IN ORDER. The page lists 4, 2, 1, 3, 5, so a parser
+    that walks the list and counts ships every seat under the wrong number --
+    the reason this reads the number out of each item rather than from its
+    position.
+
+    Party is taken where the page prints it and not invented: four members
+    carry (R) and the first carries none, which is what the county publishes.
+    No e-mail ships: the only address on the page is the County Clerk's.
+    """
+    out = {}
+    for item in re.findall(r"<li\b[^>]*>(.*?)</li>", page, re.S | re.I):
+        if not re.search(r"District\s*\d", item):
+            continue
+        m = re.search(r"<a\b[^>]*>(.*?)</a>(.*?)District\s*#?\s*(\d{1,2})\s*:",
+                      item, re.S | re.I)
+        if not m:
+            continue
+        name, after, dist = txt(m.group(1)), txt(m.group(2)), m.group(3)
+        rec = {"name": re.sub(r"\s*\((R|D|I)\)\s*", " ", name).strip(" ,")}
+        party = re.search(r"\((R|D|I)\)", name)
+        if party:
+            rec["party"] = PARTY.get(party.group(1))
+        role = re.search(r"(Vice\s*Chair(?:person|man)?|Chair(?:person|man)?)", after, re.I)
+        if role:
+            rec["role"] = role.group(1)
+        out.setdefault(dist, rec)
+    return out
+
+
+
 COUNTIES = (
     {"fips": "077", "county": "Kalamazoo", "seats": 9, "parse": parse_kalamazoo,
      "url": "https://www.kalcounty.gov/479/Board-of-Commissioners"},
@@ -1842,6 +2019,21 @@ COUNTIES = (
     {"fips": "027", "county": "Cass", "seats": 8, "parse": parse_cass,
      "url": "https://casscountymi.org/1289/Board-of-Commissioners",
      "also": "https://casscountymi.org/1500/BOC-Committees"},
+    # --- tranche 8, 2026-09-24: four counties the probe had recorded shut.
+    # --- EVERY URL HERE IS ON A HOST NO EARLIER SWEEP ASKED FOR. The probe's
+    # --- candidate generator could not produce these spellings, so
+    # --- `no-board-page` and `no-confirmed-host` were facts about its
+    # --- candidate list; each address came from the county's own Wikipedia
+    # --- infobox, which is not a county host, and was then confirmed against
+    # --- the county's own front page before this page was read.
+    {"fips": "155", "county": "Shiawassee", "seats": 7, "parse": parse_shiawassee,
+     "url": "https://shiawassee.net/board-of-commissioners/"},
+    {"fips": "129", "county": "Ogemaw", "seats": 5, "parse": parse_ogemaw,
+     "url": "https://www.ocmi.us/commissioners/"},
+    {"fips": "083", "county": "Keweenaw", "seats": 5, "parse": parse_keweenaw,
+     "url": "https://www.keweenawcountyonline.org/commissions-board.php"},
+    {"fips": "057", "county": "Gratiot", "seats": 5, "parse": parse_gratiot,
+     "url": "https://www.gratiotmi.com/302/Board-of-Commissioners"},
 )
 
 # The counties tried and not yielded, measured from this project's sandbox

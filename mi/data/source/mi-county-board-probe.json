@@ -105,54 +105,6 @@
    "verdict": "not-keyable"
   },
   {
-   "board_url": null,
-   "county": "Shiawassee",
-   "evidence": null,
-   "fips": "155",
-   "host": null,
-   "notes": [
-    "shiawasseecounty.com answers HTTP 200 in 114 bytes and never names Shiawassee on any of 3 fetches \u2014 not taken as the county's own site",
-    "www.shiawasseecounty.com answers HTTP 200 in 114 bytes and never names Shiawassee on any of 3 fetches \u2014 not taken as the county's own site",
-    "shiawassee.org answers HTTP 200 in 114 bytes and never names Shiawassee on any of 3 fetches \u2014 not taken as the county's own site",
-    "www.shiawassee.org answers HTTP 200 in 114 bytes and never names Shiawassee on any of 3 fetches \u2014 not taken as the county's own site"
-   ],
-   "pop": 68094,
-   "rejected": [
-    {
-     "detail": null,
-     "host": "shiawasseecounty.com",
-     "why": "names-another"
-    },
-    {
-     "detail": null,
-     "host": "www.shiawasseecounty.com",
-     "why": "names-another"
-    },
-    {
-     "detail": null,
-     "host": "shiawassee.org",
-     "why": "names-another"
-    },
-    {
-     "detail": null,
-     "host": "www.shiawassee.org",
-     "why": "names-another"
-    }
-   ],
-   "resolved": 4,
-   "score": -1,
-   "seats": 7,
-   "superseded": {
-    "board_url": "https://shiawassee.net/board-of-commissioners/",
-    "carries": "a Board of Commissioners page",
-    "date": "2026-09-24",
-    "host": "shiawassee.net",
-    "note": "Re-examined 2026-09-24 under a budget of one request per county to an address this record does not name. The address came from the county's own English Wikipedia infobox, not from permutation; en.wikipedia.org is not a county host, so the lookup cost this county nothing. The verdict here was correct for the hosts it asked and is incomplete for the county. NO BOARD PAGE HAS BEEN READ at the new address: that is a second request per county and a separate budget.",
-    "prior_verdict": "no-confirmed-host"
-   },
-   "verdict": "no-confirmed-host"
-  },
-  {
    "board_url": "https://stjosephcountymi.gov/government/county-commissioners/",
    "county": "St. Joseph",
    "evidence": {
@@ -545,66 +497,6 @@
    "score": 5.0,
    "seats": 7,
    "verdict": "no-districts"
-  },
-  {
-   "board_url": null,
-   "county": "Gratiot",
-   "evidence": null,
-   "fips": "057",
-   "host": "gratiot.org",
-   "notes": [
-    "co.gratiot.mi.us unreachable after 3 tries (ConnectionError)",
-    "www.co.gratiot.mi.us unreachable after 3 tries (ConnectionError)",
-    "gratiotcounty.com answers HTTP 200 in 114 bytes and never names Gratiot on any of 3 fetches \u2014 not taken as the county's own site",
-    "www.gratiotcounty.com answers HTTP 200 in 114 bytes and never names Gratiot on any of 3 fetches \u2014 not taken as the county's own site",
-    "gratiot.org: neither its sitemap nor its front page names a board page",
-    "www.gratiot.org: neither its sitemap nor its front page names a board page",
-    "no confirmed host carries a board page this client can read"
-   ],
-   "pop": 38113,
-   "rejected": [
-    {
-     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
-     "host": "co.gratiot.mi.us",
-     "why": "unreachable"
-    },
-    {
-     "detail": "('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
-     "host": "www.co.gratiot.mi.us",
-     "why": "unreachable"
-    },
-    {
-     "detail": null,
-     "host": "gratiotcounty.com",
-     "why": "names-another"
-    },
-    {
-     "detail": null,
-     "host": "www.gratiotcounty.com",
-     "why": "names-another"
-    }
-   ],
-   "resolved": 6,
-   "robots": {
-    "host": {
-     "allowed": true,
-     "read": "2026-09-19",
-     "status": "served",
-     "url": "https://gratiot.org/",
-     "why": "robots.txt served (256 bytes)"
-    }
-   },
-   "score": -1,
-   "seats": 5,
-   "superseded": {
-    "board_url": "https://www.gratiotmi.com/302/Board-of-Commissioners",
-    "carries": "a Board of Commissioners page",
-    "date": "2026-09-24",
-    "host": "www.gratiotmi.com",
-    "note": "Re-examined 2026-09-24 under a budget of one request per county to an address this record does not name. The address came from the county's own English Wikipedia infobox, not from permutation; en.wikipedia.org is not a county host, so the lookup cost this county nothing. The verdict here was correct for the hosts it asked and is incomplete for the county. NO BOARD PAGE HAS BEEN READ at the new address: that is a second request per county and a separate budget.",
-    "prior_verdict": "no-board-page"
-   },
-   "verdict": "no-board-page"
   },
   {
    "board_url": null,
@@ -1122,59 +1014,6 @@
    "verdict": "no-districts"
   },
   {
-   "board_url": null,
-   "county": "Ogemaw",
-   "evidence": null,
-   "fips": "129",
-   "host": "ogemawcounty.net",
-   "notes": [
-    "ogemawcounty.com answers HTTP 200 in 114 bytes and never names Ogemaw on any of 3 fetches \u2014 not taken as the county's own site",
-    "www.ogemawcounty.com answers HTTP 200 in 114 bytes and never names Ogemaw on any of 3 fetches \u2014 not taken as the county's own site",
-    "www.ogemawcounty.net is a CATCH-ALL \u2014 an impossible path returns 8016 bytes against the root's 8016, so a 200 here proves nothing",
-    "ogemawcounty.net: neither its sitemap nor its front page names a board page",
-    "no confirmed host carries a board page this client can read"
-   ],
-   "pop": 20770,
-   "rejected": [
-    {
-     "detail": null,
-     "host": "ogemawcounty.com",
-     "why": "names-another"
-    },
-    {
-     "detail": null,
-     "host": "www.ogemawcounty.com",
-     "why": "names-another"
-    },
-    {
-     "detail": null,
-     "host": "www.ogemawcounty.net",
-     "why": "catch-all"
-    }
-   ],
-   "resolved": 4,
-   "robots": {
-    "host": {
-     "allowed": true,
-     "read": "2026-09-19",
-     "status": "absent",
-     "url": "https://ogemawcounty.net/",
-     "why": "no robots.txt (HTTP 404, allow all)"
-    }
-   },
-   "score": -1,
-   "seats": 5,
-   "superseded": {
-    "board_url": "https://www.ocmi.us/commissioners/",
-    "carries": "a Commissioners page",
-    "date": "2026-09-24",
-    "host": "www.ocmi.us",
-    "note": "Re-examined 2026-09-24 under a budget of one request per county to an address this record does not name. The address came from the county's own English Wikipedia infobox, not from permutation; en.wikipedia.org is not a county host, so the lookup cost this county nothing. The verdict here was correct for the hosts it asked and is incomplete for the county. NO BOARD PAGE HAS BEEN READ at the new address: that is a second request per county and a separate budget.",
-    "prior_verdict": "no-board-page"
-   },
-   "verdict": "no-board-page"
-  },
-  {
    "board_url": "https://benzieco.gov/government/board_of_commissioners/index.php",
    "county": "Benzie",
    "evidence": {
@@ -1681,90 +1520,6 @@
     "prior_verdict": "no-board-page"
    },
    "verdict": "no-board-page"
-  },
-  {
-   "board_url": null,
-   "county": "Keweenaw",
-   "evidence": null,
-   "fips": "083",
-   "host": "keweenaw.org",
-   "notes": [
-    "keweenawcounty.com answers HTTP 200 in 114 bytes and never names Keweenaw on any of 3 fetches \u2014 not taken as the county's own site",
-    "keweenawcounty.net is a CATCH-ALL \u2014 an impossible path returns 43803 bytes against the root's 43803, so a 200 here proves nothing",
-    "keweenawcounty.org is a CATCH-ALL \u2014 an impossible path returns 43803 bytes against the root's 43803, so a 200 here proves nothing",
-    "www.keweenawcounty.com answers HTTP 200 in 114 bytes and never names Keweenaw on any of 3 fetches \u2014 not taken as the county's own site",
-    "www.keweenawcounty.net is a CATCH-ALL \u2014 an impossible path returns 43803 bytes against the root's 43803, so a 200 here proves nothing",
-    "www.keweenawcounty.org is a CATCH-ALL \u2014 an impossible path returns 43803 bytes against the root's 43803, so a 200 here proves nothing",
-    "keweenawco.com answers HTTP 200 in 114 bytes and never names Keweenaw on any of 3 fetches \u2014 not taken as the county's own site",
-    "www.keweenawco.com answers HTTP 200 in 114 bytes and never names Keweenaw on any of 3 fetches \u2014 not taken as the county's own site",
-    "keweenaw.org: neither its sitemap nor its front page names a board page",
-    "www.keweenaw.org: neither its sitemap nor its front page names a board page",
-    "no confirmed host carries a board page this client can read"
-   ],
-   "pop": 2046,
-   "rejected": [
-    {
-     "detail": null,
-     "host": "keweenawcounty.com",
-     "why": "names-another"
-    },
-    {
-     "detail": null,
-     "host": "keweenawcounty.net",
-     "why": "catch-all"
-    },
-    {
-     "detail": null,
-     "host": "keweenawcounty.org",
-     "why": "catch-all"
-    },
-    {
-     "detail": null,
-     "host": "www.keweenawcounty.com",
-     "why": "names-another"
-    },
-    {
-     "detail": null,
-     "host": "www.keweenawcounty.net",
-     "why": "catch-all"
-    },
-    {
-     "detail": null,
-     "host": "www.keweenawcounty.org",
-     "why": "catch-all"
-    },
-    {
-     "detail": null,
-     "host": "keweenawco.com",
-     "why": "names-another"
-    },
-    {
-     "detail": null,
-     "host": "www.keweenawco.com",
-     "why": "names-another"
-    }
-   ],
-   "resolved": 10,
-   "robots": {
-    "host": {
-     "allowed": true,
-     "read": "2026-09-19",
-     "status": "served",
-     "url": "https://keweenaw.org/",
-     "why": "robots.txt served (220 bytes)"
-    }
-   },
-   "score": -1,
-   "seats": 5,
-   "superseded": {
-    "board_url": "https://www.keweenawcountyonline.org/commissions-board.php",
-    "carries": "a Board of Commissioners page",
-    "date": "2026-09-24",
-    "host": "www.keweenawcountyonline.org",
-    "note": "Re-examined 2026-09-24 under a budget of one request per county to an address this record does not name. The address came from the county's own English Wikipedia infobox, not from permutation; en.wikipedia.org is not a county host, so the lookup cost this county nothing. The verdict here was correct for the hosts it asked and is incomplete for the county. NO BOARD PAGE HAS BEEN READ at the new address: that is a second request per county and a separate budget.",
-    "prior_verdict": "no-board-page"
-   },
-   "verdict": "no-board-page"
   }
  ],
  "measured": "2026-09-18",
@@ -1782,11 +1537,13 @@
   "043 Dickinson",
   "047 Emmet",
   "053 Gogebic",
+  "057 Gratiot",
   "059 Hillsdale",
   "061 Houghton",
   "067 Ionia",
   "073 Isabella",
   "079 Kalkaska",
+  "083 Keweenaw",
   "085 Lake",
   "089 Leelanau",
   "095 Luce",
@@ -1795,6 +1552,7 @@
   "109 Menominee",
   "117 Montcalm",
   "127 Oceana",
+  "129 Ogemaw",
   "131 Ontonagon",
   "133 Osceola",
   "135 Oscoda",
@@ -1802,6 +1560,7 @@
   "141 Presque Isle",
   "143 Roscommon",
   "151 Sanilac",
-  "153 Schoolcraft"
+  "153 Schoolcraft",
+  "155 Shiawassee"
  ]
 }
