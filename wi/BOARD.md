@@ -28,6 +28,19 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-24. #1135 MERGED as `f4a9b3d`.** The multi-member schema is complete
+end to end: PR 1 (`71e09b9`) made the shape, PR 2 filled it. Verified on main
+rather than taken from the merge event — 28 municipalities, **254 districts,
+268 alderpersons**, the field set back to `name` / `email` / `phone` / `url`
+plus `note`, and Wautoma District 2 naming Mathew Hedrick, Robert Cayer and
+Patrick King.
+
+**What a reader gets: twenty-eight people who were not on the site**, in four
+councils that could not be represented at all while the roster held one member
+per district. The review took two rounds and both findings improved it.
+
+Next: the tranche this unblocks — Black River Falls, Neenah, Oconomowoc.
+
 **2026-09-24, evening. The #1135 hold is cleared, and the count in it was
 mine.** Pushed as `bfc1503`; both findings were verified against the shipped
 file before either was acted on.
