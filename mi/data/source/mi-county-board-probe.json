@@ -142,6 +142,14 @@
    "resolved": 4,
    "score": -1,
    "seats": 7,
+   "superseded": {
+    "board_url": "https://shiawassee.net/board-of-commissioners/",
+    "carries": "a Board of Commissioners page",
+    "date": "2026-09-24",
+    "host": "shiawassee.net",
+    "note": "Re-examined 2026-09-24 under a budget of one request per county to an address this record does not name. The address came from the county's own English Wikipedia infobox, not from permutation; en.wikipedia.org is not a county host, so the lookup cost this county nothing. The verdict here was correct for the hosts it asked and is incomplete for the county. NO BOARD PAGE HAS BEEN READ at the new address: that is a second request per county and a separate budget.",
+    "prior_verdict": "no-confirmed-host"
+   },
    "verdict": "no-confirmed-host"
   },
   {
@@ -588,6 +596,14 @@
    },
    "score": -1,
    "seats": 5,
+   "superseded": {
+    "board_url": "https://www.gratiotmi.com/302/Board-of-Commissioners",
+    "carries": "a Board of Commissioners page",
+    "date": "2026-09-24",
+    "host": "www.gratiotmi.com",
+    "note": "Re-examined 2026-09-24 under a budget of one request per county to an address this record does not name. The address came from the county's own English Wikipedia infobox, not from permutation; en.wikipedia.org is not a county host, so the lookup cost this county nothing. The verdict here was correct for the hosts it asked and is incomplete for the county. NO BOARD PAGE HAS BEEN READ at the new address: that is a second request per county and a separate budget.",
+    "prior_verdict": "no-board-page"
+   },
    "verdict": "no-board-page"
   },
   {
@@ -803,6 +819,14 @@
    },
    "score": -1,
    "seats": 5,
+   "superseded": {
+    "board_url": null,
+    "carries": "unknown \u2014 robots.txt answered HTTP 202, a challenge, so no page was fetched",
+    "date": "2026-09-24",
+    "host": "gladwincounty-mi.gov",
+    "note": "Re-examined 2026-09-24 under a budget of one request per county to an address this record does not name. The address came from the county's own English Wikipedia infobox, not from permutation; en.wikipedia.org is not a county host, so the lookup cost this county nothing. The verdict here was correct for the hosts it asked and is incomplete for the county. NO BOARD PAGE HAS BEEN READ at the new address: that is a second request per county and a separate budget.",
+    "prior_verdict": "no-board-page"
+   },
    "verdict": "no-board-page"
   },
   {
@@ -920,6 +944,14 @@
    },
    "score": -1,
    "seats": 5,
+   "superseded": {
+    "board_url": null,
+    "carries": "unknown \u2014 robots.txt answered HTTP 202, a challenge, so no page was fetched",
+    "date": "2026-09-24",
+    "host": "iosco.net",
+    "note": "Re-examined 2026-09-24 under a budget of one request per county to an address this record does not name. The address came from the county's own English Wikipedia infobox, not from permutation; en.wikipedia.org is not a county host, so the lookup cost this county nothing. The verdict here was correct for the hosts it asked and is incomplete for the county. NO BOARD PAGE HAS BEEN READ at the new address: that is a second request per county and a separate budget.",
+    "prior_verdict": "no-board-page"
+   },
    "verdict": "no-board-page"
   },
   {
@@ -1132,6 +1164,14 @@
    },
    "score": -1,
    "seats": 5,
+   "superseded": {
+    "board_url": "https://www.ocmi.us/commissioners/",
+    "carries": "a Commissioners page",
+    "date": "2026-09-24",
+    "host": "www.ocmi.us",
+    "note": "Re-examined 2026-09-24 under a budget of one request per county to an address this record does not name. The address came from the county's own English Wikipedia infobox, not from permutation; en.wikipedia.org is not a county host, so the lookup cost this county nothing. The verdict here was correct for the hosts it asked and is incomplete for the county. NO BOARD PAGE HAS BEEN READ at the new address: that is a second request per county and a separate budget.",
+    "prior_verdict": "no-board-page"
+   },
    "verdict": "no-board-page"
   },
   {
@@ -1416,6 +1456,14 @@
    },
    "score": -1,
    "seats": 5,
+   "superseded": {
+    "board_url": null,
+    "carries": "no board page \u2014 its front page links only a Road Commission and a Drain Commissioner",
+    "date": "2026-09-24",
+    "host": "ironmi.com",
+    "note": "Re-examined 2026-09-24 under a budget of one request per county to an address this record does not name. The address came from the county's own English Wikipedia infobox, not from permutation; en.wikipedia.org is not a county host, so the lookup cost this county nothing. The verdict here was correct for the hosts it asked and is incomplete for the county. NO BOARD PAGE HAS BEEN READ at the new address: that is a second request per county and a separate budget.",
+    "prior_verdict": "no-board-page"
+   },
    "verdict": "no-board-page"
   },
   {
@@ -1492,6 +1540,14 @@
    "resolved": 10,
    "score": -1,
    "seats": 5,
+   "superseded": {
+    "board_url": "https://www.montcounty.org/board-of-commissioners.html",
+    "carries": "a Board of Commissioners page",
+    "date": "2026-09-24",
+    "host": "www.montcounty.org",
+    "note": "Re-examined 2026-09-24 under a budget of one request per county to an address this record does not name. The address came from the county's own English Wikipedia infobox, not from permutation; en.wikipedia.org is not a county host, so the lookup cost this county nothing. The verdict here was correct for the hosts it asked and is incomplete for the county. NO BOARD PAGE HAS BEEN READ at the new address: that is a second request per county and a separate budget.",
+    "prior_verdict": "no-confirmed-host"
+   },
    "verdict": "no-confirmed-host"
   },
   {
@@ -1616,6 +1672,14 @@
    },
    "score": -1,
    "seats": 5,
+   "superseded": {
+    "board_url": null,
+    "carries": "nothing \u2014 keweenawbay.org, the address this county's Wikipedia infobox names, titles itself \"Keweenaw Bay - The Heart of Baraga County\" and is a tourism site, not the county. The verdict below stands and this note exists so the address is not tried again.",
+    "date": "2026-09-24",
+    "host": null,
+    "note": "Re-examined 2026-09-24 under a budget of one request per county to an address this record does not name. The address came from the county's own English Wikipedia infobox, not from permutation; en.wikipedia.org is not a county host, so the lookup cost this county nothing. The verdict here was correct for the hosts it asked and is incomplete for the county. NO BOARD PAGE HAS BEEN READ at the new address: that is a second request per county and a separate budget.",
+    "prior_verdict": "no-board-page"
+   },
    "verdict": "no-board-page"
   },
   {
@@ -1692,6 +1756,14 @@
    },
    "score": -1,
    "seats": 5,
+   "superseded": {
+    "board_url": "https://www.keweenawcountyonline.org/commissions-board.php",
+    "carries": "a Board of Commissioners page",
+    "date": "2026-09-24",
+    "host": "www.keweenawcountyonline.org",
+    "note": "Re-examined 2026-09-24 under a budget of one request per county to an address this record does not name. The address came from the county's own English Wikipedia infobox, not from permutation; en.wikipedia.org is not a county host, so the lookup cost this county nothing. The verdict here was correct for the hosts it asked and is incomplete for the county. NO BOARD PAGE HAS BEEN READ at the new address: that is a second request per county and a separate budget.",
+    "prior_verdict": "no-board-page"
+   },
    "verdict": "no-board-page"
   }
  ],
