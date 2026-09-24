@@ -28,6 +28,41 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-24. #1138 MERGED as `cd4e118`.** Verified on main: 30 municipalities,
+261 districts, **285 alderpersons**, with Black River Falls' four wards at two
+each and Neenah's three districts at three each.
+
+**THE DAY, FOR A READER.** The alderperson roster went **240 → 285** across
+**24 → 30** municipalities; the councils with a district drawn and nobody named
+went 135 → 129. Six councils that the roster could not represent AT ALL — it
+held one member per district and refused the second name, correctly — now name
+every member. wi reads 1,719 in the fleet name gate, from 1,674.
+
+Three PRs: **#1133 `71e09b9`** (the list schema, plus the NG911 rebuild and the
+legislature retry), **#1135 `f4a9b3d`** (Algoma, Dodgeville, Horicon, Wautoma),
+**#1138 `cd4e118`** (Black River Falls, Neenah).
+
+**WHAT IS OPEN, AND EACH ONE IS SCOPED RATHER THAN VAGUE:**
+
+  * **Oconomowoc** — not an access problem and worth not re-probing. Its apex
+    host serves robots and permits the path, its page answers 200 at 132 KB,
+    only `www` resets. Its directory names seven people plus one entry reading
+    `Vacanct District 1` — the city's own typo — against its own sentence of
+    eight aldermen over four districts, so District 1 seats two, names one and
+    leaves one empty. **The card cannot say that**: `vacantDistricts` fires
+    only when nobody is named. Needs the per-district seat count Illinois's
+    at-large card carries as `seats`, plus a card branch and a smoke check —
+    its own change.
+  * **The robots gate's unknown list** — measured churning 17 of 19 municipal
+    hosts across three runs today while those hosts serve their file 4 of 4
+    individually. The fix is to re-ask before listing and to pace by each
+    host's own stated delay; the three-run measurement is what to build it
+    against.
+  * **The rest of the 22** the 2026-09-06 sweep matched, against the settled
+    shape. Waupaca stays blocked on its numbering offset.
+  * **The alderperson pool artifact**: 159 municipalities drawn, 30 named, 129
+    with nobody. Derivable from two shipped files with no fetch.
+
 **2026-09-24, late. The second multi-member tranche is open as #1138, and
 running its robots gate three times produced a finding about the gate.**
 
