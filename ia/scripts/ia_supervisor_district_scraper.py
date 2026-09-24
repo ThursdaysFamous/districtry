@@ -52,7 +52,8 @@ KNOWN: data/app/ia-county-officers.json supplies each county's supervisors,
 gated in its own build against Iowa Code 331.201 and against the seat count in
 the shipped district geometry. The only missing fact is a NUMBER, so the page
 is flattened to text and each known surname is matched to the nearest
-"District N" within PROXIMITY_CHARS. That is Wisconsin's witness_window
+district heading within PROXIMITY_CHARS, in any of the THREE shapes Iowa
+counties write one (see DISTRICT_RE). That is Wisconsin's witness_window
 pattern (wi/scripts/wi_county_officer_contact_scraper.py) applied to a
 district instead of a phone number, and it is indifferent to markup.
 
@@ -129,7 +130,11 @@ BOARD_DIRECTORY = os.path.join(APP_DATA_DIR, "ia-county-board-directory.json")
 # a tripwire: if pairings ever start landing near the limit, the assumption
 # that counties publish this adjacently has stopped holding.
 PROXIMITY_CHARS = 80
-MAX_OBSERVED_GAP = 42   # measured across 67 districts in 17 counties, 2026-08-28
+MAX_OBSERVED_GAP = 42   # measured across 78 districts in 18 counties, 2026-09-24
+                        # (was 67 in 17 on 2026-08-28; the VALUE did not move when
+                        # Butler, Chickasaw and Howard joined — their widest gaps are
+                        # 8, 21 and 19 — but the basis it was measured on did, and a
+                        # tripwire is worth only what its denominator says)
 
 # Tried in order after the county's own home page is searched for a link. Each
 # is a real path observed on an Iowa county site during the 2026-08-28 sweep.
