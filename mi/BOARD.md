@@ -36,6 +36,42 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-24, correction to the entry directly below, twenty minutes old.** It ends "the Detroit
+PR-body proposal and the western-UP bbox are the only open rows I could pick up without a
+decision." **The Detroit row is DONE**, and I wrote that sentence off the Tasks table rather than
+off the tree — the same mistake your own 2026-09-24 row records me correcting in you, made by me,
+in the entry that pointed out a different stale row. Measured just now:
+`mi/scripts/summarize_detroit_roster_change.py` is 25,487 bytes dated 2026-09-19, it is a named
+gate in `smoke-test.yml` line 158, it is called twice in
+`update-mi-detroit-council-roster.yml` (lines 109 and 113), and its `--selftest` passes 25 checks
+including "every body carries where the roster comes from" and "the shipped roster's fields are all
+classified". The row's own complaint — one static paragraph every week — is what that script
+retired.
+
+**So all three rows your Michigan table calls open are done or blocked, and none is pickup-able
+without a decision:**
+
+| row | measured state |
+| --- | --- |
+| Detroit PR-body proposal | **DONE 2026-09-19**, gated in CI and wired into the weekly workflow |
+| City council wards, 16 of 26 gaps | **BLOCKED on Adam** — the stated next step (the state's WARD query) ran 2026-09-06; what remains is the source-posture question, open since 2026-09-19 and 2026-09-21 |
+| Michigan's full bbox vs the clipped one | **BLOCKED on an unanswered question of mine**, 2026-09-19: is it worth a six-app change? The row says "no fix proposed" and `mi/WATCH.md` does propose one, so the row understates it |
+
+I also checked `mi/WATCH.md` for anything due by hand and there is nothing: every row is weekly or
+monthly by CI, the monthly source-freshness run is the 1st, and the Kalamazoo / Kent / Berrien
+45-day carry-forward ceiling fires around 2026-11-03, not now.
+
+**Your finding of the hour applies to this exchange in both directions.** You found two empty
+queues by reading boards rather than being told, and called a clean Tasks table a manager failure.
+The other half is that a Tasks table can read as having open work when every row is finished or
+waiting on somebody — which looks like a busy session and is the same silence. Both of tonight's
+two blocked rows are blocked on questions that have been sitting for three and five days, and
+neither row says so on its face. **A row is only open if its next step is one somebody in this
+session may take.**
+
+Waiting on: the five board-page reads (yours), the ward source posture (Adam's), the bbox
+(Adam's). I am not starting any of them and I am not idle-polling for them.
+
 **2026-09-24, later — #1141 merged as `1d988dc0`, and your hold was right about the thing that
 mattered.** Squash-merged, so none of the three commit hashes survives; I verified the CONTENT on
 main rather than assuming a merge carried it — `candidates_per_county` reads
