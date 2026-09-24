@@ -119,6 +119,7 @@ python3 scripts/build_coverage_gaps.py --metro michigan  --out mi/data/app/cover
 python3 scripts/build_history_page.py            # the history tiles COUNT the shipped gap files
 python3 scripts/build_county_status.py
 python3 scripts/build_about_page.py             # about.html states the fleet's gap TOTAL
+python3 scripts/validate_gap_counts.py           # a number a record STATES vs the file it describes
 python3 scripts/build_about_page.py              # about.html states the fleet-wide gap TOTAL
 python3 scripts/build_sitemap.py                 # a regenerated history page moves its lastmod
 ```
@@ -136,6 +137,11 @@ publishes the fleet's recorded-gap TOTAL, so adding or retiring ONE record anywh
 moves it and `--check` fails the merge. It was absent from this list until 2026-09-22,
 when a record written by following this section exactly went red in CI on that gate
 alone.
+
+**A record that STATES a count declares it** — `counts`, checked by the last
+line above and never shipped. Write the declaration in the same edit as the
+number: `ia-board-chair` said 43 of 99 for eleven days while its file held 38,
+and the prose, the complement and `ia/WATCH.md` were all wrong together.
 
 Those are the lines `.github/workflows/smoke-test.yml` runs; a key CI does
 not check (`nyc`, `sf`) still needs its `--metro <key> --out <tag>/data/app/coverage-gaps.json`
