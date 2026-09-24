@@ -36,6 +36,84 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-24 — the 25 shut counties are re-examined and FIVE OF THEM PUBLISH A BOARD PAGE.**
+Pushed as `5f0920b5` on the branch; #1141 now carries two independent commits and says so, because
+this session may push to one branch and that PR was open and unmerged when the second landed.
+
+**The budget you authorised was held exactly**: one request per county, to a URL the record does
+not name, nothing at all to Branch or Tuscola. I added one constraint the budget did not state —
+the recorded robots readings were 2026-09-19 and a five-day-old reading does not license a fetch
+today — so every host's robots.txt was re-read as the client that fetches, before its one request.
+The manager's own assignment already treats a robots read as outside the budget ("the request every
+client makes first anyway").
+
+**The addresses did not come from permuting names, and that is the transferable part.** Each
+county's own English Wikipedia article carries its official website in the infobox; `/wiki/` is
+allowed to this client with no crawl-delay; and **en.wikipedia.org is not a county host**, so the
+lookup cost the counties nothing and could not trip the WAF a repeated sweep tripped on Tuscola.
+The probe's docstring records three directory routes as closed — michigan.gov 403 on robots.txt,
+micounties.org 202, Wikidata's SPARQL and `/w/` API disallowed, all measured 2026-09-15 — and
+stops there. **A fourth was never tried.** Ten addresses no sweep had asked for; nine answered.
+
+| county | address | outcome |
+| --- | --- | --- |
+| **Shiawassee** | shiawassee.net | was `no-confirmed-host` — Board of Commissioners page |
+| **Montmorency** | montcounty.org | was `no-confirmed-host` — Board of Commissioners page |
+| **Ogemaw** | ocmi.us | was `no-board-page` — Commissioners page |
+| **Keweenaw** | keweenawcountyonline.org | was `no-board-page` — Board of Commissioners page |
+| **Gratiot** | gratiotmi.com | was `no-board-page` — Board of Commissioners page |
+| Iron | ironmi.com | live county host, still links no board page |
+| Gladwin | gladwincounty-mi.gov | HTTP 202 on robots.txt — a challenge, not fetched |
+| Iosco | iosco.net | HTTP 202 on robots.txt — a challenge, not fetched |
+| Baraga | keweenawbay.org | **rejected** — its own title is "Keweenaw Bay - The Heart of Baraga County", a tourism site |
+
+**Both `no-confirmed-host` counties have a host.** That was the probe's strongest negative and it
+was a fact about the candidate list.
+
+**Two I had written up as finds before measuring, and they are not.** Benzie and Mason were
+`no-districts`, which was reached by READING a board page; `benzieco.net` and `masoncounty.net`
+serve the same CMS path as the hosts already recorded, so a second domain says nothing about a
+page's content. I also had the mechanism wrong for them — I wrote that the probe stops at the
+first confirmed host, and it does not, the Washtenaw lesson is already coded. Measured: Benzie's
+`benzieco.net` resolves at rank 14 of 18 and `resolved[:12]` never asked it; Mason's
+`masoncounty.net` resolves at rank 6 of 25 and WAS asked.
+
+**NO BOARD PAGE HAS BEEN READ at any of the nine.** That is a second request per county and a
+separate budget, and it is the whole of what stands between those five counties and a roster.
+**That is what I would ask for next** — one request each to a page the county's own front page
+names, which is neither a guess nor a permutation.
+
+**The root cause is in code, not only here.** Six of the ten are FORMS `_forms()` cannot produce:
+`.net` on the bare stem, `flat[:4]+"county"`, `flat+"mi"`, `flat+"countyonline"`,
+`flat+"county-mi"`, and initials+`"c"`+`"mi"`. 80 candidates per county to 92, or 108 for a
+two-word county. Three things keep it true: `KNOWN_HOSTS` gains the six confirmed hosts and a new
+`CHALLENGE_HOSTS` carries Gladwin's and Iosco's — which may NOT go in `KNOWN_HOSTS`, since no page
+was read from either, while `check_generator()` reads both because the question it asks is whether
+the generator can NAME an address, which is answerable for a host nobody may fetch; a new
+`check_superseded()` holds nine artifact rows to a dated block and fails if one is dropped, if a
+key is missing, if `prior_verdict` stops matching, or **if a sweep catches up and the block should
+go**, so it retires itself; and `candidates_per_county` is measured on the run that writes the
+artifact, where it was the literal `"about 61"` that this change would have left nine days from
+wrong. Every form and every failure mode negative-tested. **Gladwin's form was ungated until
+`CHALLENGE_HOSTS` existed, and the comment I had just written claiming all six were gated was
+false** — the negative test is what caught it.
+
+**One gate was reporting a smaller surface than it guards**, which is the direction that reads as
+reassuring: the OK line printed `len(KNOWN_HOSTS)` while `check_generator()` held the generator to
+`KNOWN_HOSTS` plus `CHALLENGE_HOSTS`. It reports what it checked now.
+
+**What I spent and what it bought, including the nothing.** Two ArcGIS Online catalogue queries —
+the Vermilion first check, zero county traffic — returned **no board-district or roster item for
+any of the 25**; the Michigan-looking hits were homonym counties in Pennsylvania, Washington, Utah,
+Ohio and Indiana, which is the "Wisconsin has a county named Iowa" trap one level out. That is a
+measured negative and it closes the Vermilion route for these counties rather than leaving it
+unexamined. 25 Wikipedia article fetches, one per county bar the two challenge hosts, which
+rate-limited at HTTP 429 twice; I treated that as rate-limiting my own probe caused, backed off and
+retried, and recorded both caveats — including that the infobox can be wrong, which Baraga proves —
+in the probe's docstring. **Eleven county requests, nine answers, Branch and Tuscola untouched.**
+
+97 of 97 static gates pass, run from the steward mirror rather than a remembered subset.
+
 **2026-09-24 — of the three items assigned tonight, one was real and two were already done.**
 Measured before starting anything, because this morning's brief was stale the same way and the
 manager's own note says to assume a stated figure is wrong until measured.
