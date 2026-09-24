@@ -110,6 +110,16 @@ jobs:
           python3 scripts/build_coverage_gaps.py --check --metro nyc --out ny/data/app/coverage-gaps.json
           python3 scripts/build_coverage_gaps.py --check --metro sf --out ca/data/app/coverage-gaps.json
 
+      # A number a gap record STATES must equal the file it describes.
+      # ia-board-chair told readers "43 of Iowa's 99 counties" for eleven days
+      # while the file held 38, and #1034 fixed the number without adding a
+      # gate — so the next weekly run could make it stale again in silence.
+      # The record declares which number is backed by what; nothing is inferred,
+      # because only 3 of the 153 numbers in the reader fields are file-backed.
+      - name: Stated gap counts match their sources
+        if: ${{ !cancelled() }}
+        run: python3 scripts/validate_gap_counts.py
+
       # mi/data/source/mi-county-board-probe.json records which unserved Michigan
       # counties publish a district-keyed board page, and its --check re-audits
       # that file against the tree offline: a county that has since shipped or
