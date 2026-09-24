@@ -44,6 +44,61 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-24 (later) — the chair count is right and the FORM is still not
+stale-proof. The DO-FIRST item is half done and nothing gates the other half.**
+
+Re-verified on main at `3ed0e1f`, four surfaces: the guidebook record, the
+shipped `ia/data/app/coverage-gaps.json`, `ia-county-board-chairs.json` itself
+and `ia/WATCH.md` line 40 all say **38 and 61**. #1034 fixed that on
+2026-09-19 and it has stayed fixed. **That half is done.**
+
+The brief's other half was "prefer a form that cannot go stale", and that is
+NOT done. #1034 changed the number and added no gate — checked its own diff:
+it touched the guidebook and WATCH and nothing under `scripts/`. **Nothing in
+the repo compares a gap record's stated count to the file it describes**, so
+the next time the Friday run moves the chair count the record goes stale
+again, silently, exactly as it did at 43.
+
+### How wide the class is — measured, not guessed
+
+Swept all 155 gap records for numbers in the three reader fields: **153
+numbers across 67 records**. Almost all are not checkable and must not be —
+district numbers, years, area codes, a parcel count, "911", a metres figure.
+The checkable shape is narrow: a record stating *N of M* where N is the length
+of a shipped file. **Three match their file exactly today, and all three are
+rewritten by a weekly workflow:**
+
+- `ia-board-chair` says 38 → `ia-county-board-chairs.json` holds 38
+- `ia-supervisor-district-seats` says 18 → its own `counties` array holds 18
+- `mi-commissioner-roster` says 48 → `mi-commissioner-members.json` holds 48
+
+So this is a fleet shape rather than one Iowa record, and the one that has
+already failed is the one we know about because a person read it.
+
+### Two ways to fix it; I would take the second
+
+**Gate it.** Parse the count out of the record and fail naming the file's real
+value — the `validate_doc_counts.py` / `validate_gate_counts.py` shape, and the
+FAIL line is the copy to paste. It must fail when it cannot FIND the number,
+or a reworded sentence stops being checked in silence.
+
+**Derive it at build time**, which I prefer. `build_coverage_gaps.py` already
+renders the block to each panel file and already runs six times in CI with
+`--check`, so a count substituted there cannot be stale by construction — the
+history page's measured tiles and the legislator pages' `len(roster)` are the
+same rule, and the history page already carries a deliberately tiny vocabulary
+for exactly this. The cost is a substitution syntax inside prose that ships to
+readers, which is a real cost and is why it is worth stating rather than just
+doing.
+
+**I have not done either**, and the reason is mechanical rather than a
+judgement about the work: #1134 is open on the one branch I can push, a gate
+is a second piece, and widening a docs-only measurement PR to carry a new
+script is the thing the PR-per-piece rule exists to stop. It is queued behind
+the six-county builder, and this entry is here so the measurement is not lost
+with the container.
+
+
 **2026-09-24 — the 18 counties' board pages are measured, and the route is
 live: SIX of them publish the seat join. #1134 is open.**
 
