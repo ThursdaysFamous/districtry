@@ -38,6 +38,63 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-24 — tranche 8: four of the five shut counties now name their own commissioners, and
+the fifth is recorded rather than chased.** Open as #1143. Your authorisation was one request each
+to the board page the county's own front page names; that is exactly what was spent.
+
+| county | seats | what changed for a reader |
+| --- | --- | --- |
+| **Shiawassee** | 7 | named here for the first time — its record said we could not confirm it had a website |
+| **Ogemaw** | 5 | a certified-2024 winner becomes a name the county maintains |
+| **Keweenaw** | 5 | same, with a telephone and an e-mail per seat |
+| **Gratiot** | 5 | same |
+
+`mi-commissioner-members.json` 48 counties to 52, `mi-commissioner-returns.json` 35 to 31, all 83
+still covered and still disjoint. **15 seats move from a certified election winner to a weekly
+re-read, and 7 are named at all for the first time.**
+
+**MONTMORENCY DID NOT SHIP AND I DID NOT WIDEN.** Its board page is 79,243 bytes of which every one
+of its 202 visible lines is a navigation item; it names the county nine times and no commissioner,
+and its only "District #4" is a multi-county health department in the County Links menu. Its own
+menu names `/commissioners.html` — a second request, outside the budget, and the obvious next one.
+Recorded as `mi-county-board-page-names-nobody`, successor to the retired
+`mi-county-board-no-website`, whose blocker carries what that record got wrong rather than deleting
+it.
+
+**Each of the four pages carried a different trap, and each would have shipped a confident wrong
+roster.** Shiawassee prints every district number TWICE and the description line sits immediately
+above the NEXT heading, so pairing on the following line hands District 2's seat to District 3's
+member. Ogemaw's District 2 publishes no telephone, so a fixed name/district/phone triple ships a
+commissioner's NAME as another commissioner's telephone number. Keweenaw's `tel:` href disagrees
+with its printed number on two of five seats, which is a column that is not kept, so the printed
+one is read and the link never is. Gratiot lists its districts 4, 2, 1, 3, 5. **A fifth was mine**:
+`first_mailto()` greps raw HTML while these parsers read `lines()`, which has already rewritten
+every mailto into a marker, so it returned nothing and all seven Shiawassee addresses went missing
+while the roster still shipped seven correct names.
+
+**Two things the bookkeeping turned up that are worth more than the seats.** Gladwin's blocker
+changed KIND rather than going away — its real site answers 202 on robots.txt, so it moved from
+`page-not-found` to `access-controlled` instead of quietly staying under a description that is no
+longer true. And **Baraga's Wikipedia infobox is wrong**: it names keweenawbay.org, whose own title
+is "Keweenaw Bay - The Heart of Baraga County", a tourism site, so that address is recorded
+REJECTED rather than left for the next pass to find and try again.
+
+**Three gates caught things I would have shipped, and one of them was my own.** The roster floors
+live in the worksheet and are GENERATED into `validate_index.py`, so my first edit was silently
+reverted by the next regenerate — the file told me by going back to 33 and 46 in `git status`.
+`check_roster_retention` flagged all four counties VANISHING from the returns file, correctly:
+they MOVED, so each has an `ACCEPTED_DROPS` entry naming the file it moved to, and those entries
+deliberately do not self-retire, because a county coming BACK would mean its own page had stopped
+keying its board. And **`validate_gap_counts` — the declaration I shipped in #1141 this evening —
+failed on this change within the hour**, naming 48 against 52 and 35 against 31. It did the job it
+was built for on its author, which is the only real test it could have had.
+
+97 of 97 static gates pass, from the steward mirror rather than a remembered subset.
+
+**What is left of the 25, and what it now costs.** 21 counties remain in the probe artifact. The
+cheapest open thing is Montmorency's `/commissioners.html`: one request, to a page the county's own
+menu names, on a host already confirmed. I am not spending it without you.
+
 **2026-09-24, correction to the entry directly below, twenty minutes old.** It ends "the Detroit
 PR-body proposal and the western-UP bbox are the only open rows I could pick up without a
 decision." **The Detroit row is DONE**, and I wrote that sentence off the Tasks table rather than
