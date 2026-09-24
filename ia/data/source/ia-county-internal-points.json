@@ -1,6 +1,6 @@
 {
- "measured": "2026-09-22",
- "note": "The Census's own internal point per county \u2014 guaranteed inside, which a centroid is not for a concave shape. Recorded so --check runs offline.",
+ "measured": "2026-09-24",
+ "note": "The Census's own internal point per county — guaranteed inside, which a centroid is not for a concave shape. Recorded so --check runs offline.",
  "points": {
   "adair": {
    "fips": "001",
@@ -16,13 +16,6 @@
    "name": "Black Hawk County",
    "slug": "black-hawk"
   },
-  "butler": {
-   "fips": "023",
-   "lat": 42.734757,
-   "lng": -92.780153,
-   "name": "Butler County",
-   "slug": "butler"
-  },
   "calhoun": {
    "fips": "025",
    "lat": 42.385907,
@@ -36,13 +29,6 @@
    "lng": -94.9333006,
    "name": "Cass County",
    "slug": "cass"
-  },
-  "chickasaw": {
-   "fips": "037",
-   "lat": 43.0597409,
-   "lng": -92.3172101,
-   "name": "Chickasaw County",
-   "slug": "chickasaw"
   },
   "dickinson": {
    "fips": "059",
@@ -64,13 +50,6 @@
    "lng": -94.5012723,
    "name": "Guthrie County",
    "slug": "guthrie"
-  },
-  "howard": {
-   "fips": "089",
-   "lat": 43.3653125,
-   "lng": -92.3219084,
-   "name": "Howard County",
-   "slug": "howard"
   },
   "humboldt": {
    "fips": "091",

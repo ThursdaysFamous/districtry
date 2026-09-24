@@ -19,7 +19,7 @@ keep a state open forever while telling a reader nothing.
 |---|---|---|---|---|---|---|---|---|
 | il | **EA·** | 102 | 102/102 | 572 | 996 | all | 310 | 221 without a job |
 | wi | **EA·** | 72 | 72/72 | 1590 | 1,574 | all | 47 | 25 without a job |
-| ia | **EA·** | 99 | 99/99 | 67 | 67 | all | 33 | 16 without a job |
+| ia | **EA·** | 99 | 99/99 | 78 | 78 | all | 33 | 16 without a job |
 | mi | **EA·** | 83 | 83/83 | 619 | 615 | all | 22 | 14 without a job |
 
 - **ca** — no county tier, so E does not apply. San Francisco — a consolidated city and county, so the county tier is the city and there is no frontier.

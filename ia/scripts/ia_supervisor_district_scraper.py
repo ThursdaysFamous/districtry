@@ -52,7 +52,8 @@ KNOWN: data/app/ia-county-officers.json supplies each county's supervisors,
 gated in its own build against Iowa Code 331.201 and against the seat count in
 the shipped district geometry. The only missing fact is a NUMBER, so the page
 is flattened to text and each known surname is matched to the nearest
-"District N" within PROXIMITY_CHARS. That is Wisconsin's witness_window
+district heading within PROXIMITY_CHARS, in any of the THREE shapes Iowa
+counties write one (see DISTRICT_RE). That is Wisconsin's witness_window
 pattern (wi/scripts/wi_county_officer_contact_scraper.py) applied to a
 district instead of a phone number, and it is indifferent to markup.
 
@@ -129,7 +130,11 @@ BOARD_DIRECTORY = os.path.join(APP_DATA_DIR, "ia-county-board-directory.json")
 # a tripwire: if pairings ever start landing near the limit, the assumption
 # that counties publish this adjacently has stopped holding.
 PROXIMITY_CHARS = 80
-MAX_OBSERVED_GAP = 42   # measured across 67 districts in 17 counties, 2026-08-28
+MAX_OBSERVED_GAP = 42   # measured across 78 districts in 18 counties, 2026-09-24
+                        # (was 67 in 17 on 2026-08-28; the VALUE did not move when
+                        # Butler, Chickasaw and Howard joined — their widest gaps are
+                        # 8, 21 and 19 — but the basis it was measured on did, and a
+                        # tripwire is worth only what its denominator says)
 
 # Tried in order after the county's own home page is searched for a link. Each
 # is a real path observed on an Iowa county site during the 2026-08-28 sweep.
@@ -148,7 +153,38 @@ HEADERS = {
 }
 REQUEST_TIMEOUT = 25
 
-DISTRICT_RE = re.compile(r"\bDistrict\s*#?\s*([1-9])\b", re.I)
+# THREE SHAPES, MEASURED 2026-09-24 ON SIX COUNTIES' OWN BOARD PAGES. This was
+# `District\s*#?\s*([1-9])` and read only the first of them, which made it a
+# FALSE-NEGATIVE pattern rather than a wrong one: four Plan 3 counties publish
+# the pairing this file exists to find and were recorded as publishing nothing.
+# Butler writes "Greg Barnett, 1st District", Chickasaw "Steven Breitbach
+# Supervisor First District" beside "Issac Carter District 4" on one page,
+# Howard "District (3): Dean Eastman" and Winnebago "Terry Durby , 1st
+# District". Widening is safe in the direction that matters: re-measured
+# against all 17 shipped counties the same day, every one keys IDENTICALLY
+# (Bremer and Hamilton refuse by robots.txt and keep their preserved records),
+# so this adds counties and moves none.
+#
+# A BARE DIGIT BEFORE "District" IS NOT AN ORDINAL, and leaving that out is the
+# whole reason shape 2 demands the suffix. Howard's page runs a telephone number
+# straight into the heading -- "...203-1407 District (3): Dean Eastman" -- and a
+# pattern accepting `([1-9])\s+District` reads that 7 and puts Eastman in a
+# district the county does not have. Shape 1's `[#(]?` is what reads the real
+# number out of the same string.
+_ORDINAL_WORDS = {"first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5}
+DISTRICT_RE = re.compile(
+    r"\bDistrict\s*[#(]?\s*([1-9])\b"                      # District 4 / #4 / (3)
+    r"|\b([1-9])(?:st|nd|rd|th)\s+District\b"               # 1st District
+    r"|\b(first|second|third|fourth|fifth)\s+District\b",   # First District
+    re.I)
+
+
+def district_number(match):
+    """The district a DISTRICT_RE match names, whichever of the three shapes it took."""
+    for group in match.groups():
+        if group:
+            return int(group) if group.isdigit() else _ORDINAL_WORDS[group.lower()]
+    raise ValueError("DISTRICT_RE matched %r and captured nothing" % match.group(0))
 LINK_RE = re.compile(r'href="([^"]*)"[^>]*>(.{0,90}?)</a>', re.I | re.S)
 # 51% of Plan 3 counties answered on the sweep; the rest 403, answer 202
 # behind a captcha, or publish no district anywhere. A floor well under that
@@ -426,7 +462,7 @@ def key_page(text, names):
     Reads no markup at all -- the names come from the shipped roster, so the
     only thing being recovered here is which number each sits beside.
     """
-    districts = [(m.start(), int(m.group(1))) for m in DISTRICT_RE.finditer(text)]
+    districts = [(m.start(), district_number(m)) for m in DISTRICT_RE.finditer(text)]
     if not districts:
         return None, "the page names no district"
     keyed, widest = {}, 0
@@ -556,6 +592,71 @@ def _selftest():
         _ROBOTS_CACHE.clear()
         _ROBOTS_SAID.clear()
         ROBOTS_PACER.honoured.clear()
+
+    # ---- the PARSE half, added 2026-09-24 -------------------------------
+    # Gate 3 (exactly 1..N, no repeats) is what stops a page that merely
+    # mentions districts from shipping as a board, and the two refusals below
+    # are the cases that prove it still does after DISTRICT_RE was widened.
+    # Both are real pages, and a directional reader gets BOTH of them wrong
+    # while looking right, which is why they are pinned here rather than
+    # described in a comment.
+    for text, want in [
+            ("District 4", [4]), ("District #4", [4]), ("District (3)", [3]),
+            ("1st District", [1]), ("Fifth District Supervisor Amber Garman", [5]),
+            ("AJ Stone Board Member - District 1", [1]),
+            # Howard runs a telephone number into the heading. The 7 of "1407"
+            # is not an ordinal; the parenthesised 3 is the district.
+            ("Phone number: (563) 203-1407 District (3): Dean Eastman", [3]),
+            ("Term Expires: 2022", []), ("21st District", []),
+            ("the 2020 census", [])]:
+        got = [district_number(m) for m in DISTRICT_RE.finditer(text)]
+        check(got == want, "DISTRICT_RE reads %r as %s" % (text[:44], want))
+
+    def _keys_to(text, names):
+        """What key_page makes of a page, after gate 3. None means refused."""
+        result, why = key_page(text, names)
+        if why:
+            return None
+        keyed, _ = result
+        ordered = sorted(keyed.values())
+        if ordered != list(range(1, len(names) + 1)):
+            return None                      # gate 3 refuses
+        return {n.split()[-1]: d for n, d in keyed.items()}
+
+    # KOSSUTH publishes its districts ROTATED -- the headings run 4, 5, 1, 2, 3
+    # -- and puts each heading BEFORE the name it belongs to. Read name-first,
+    # every supervisor pairs with the NEXT row's heading and the answer is a
+    # clean permutation shifted one position round the cycle, which no 1..N
+    # test can see. key_page is saved by taking the nearest match in EITHER
+    # direction, which on this page collides instead of shifting.
+    kossuth = " ".join("District %d Supervisor %s Phone: (515) 295-%04d" % (d, n, 2600 + i)
+                       for i, (d, n) in enumerate([(4, "Kyle Stecker"), (5, "Amber Garman"),
+                                                   (1, "Carter Nath"), (2, "Howard Haas"),
+                                                   (3, "Joshua Waechter")]))
+    check(_keys_to(kossuth, ["Kyle Stecker", "Amber Garman", "Carter Nath",
+                             "Howard Haas", "Joshua Waechter"]) is None,
+          "a rotated district-first page is REFUSED, never shipped shifted")
+
+    # WORTH renders its roster TWICE on one page (a detail list, then a short
+    # "Our Team" list). Nearest-match then draws from whichever copy is closer
+    # and collides, so the county ships nothing rather than a guess.
+    worth = ("AJ Stone Board Member - District 1 Term Expires: 2022 "
+             "Mark Smeby Board Member - District 2 Term Expires: 2024 "
+             "Enos Loberg Board Member - District 3 Term Expires: 2022 "
+             "Our Team AJ Stone , Board Member - District 1 "
+             "Mark Smeby , Board Member - District 2 "
+             "Enos Loberg , Board Member - District 3")
+    check(_keys_to(worth, ["AJ Stone", "Mark Smeby", "Enos Loberg"]) is None,
+          "a page carrying the roster twice is REFUSED rather than guessed at")
+
+    # And the shape it SHOULD read, so the refusals above cannot pass by the
+    # parser having stopped working altogether.
+    butler = ("Greg Barnett, 1st District Phone: (319) 231-9585 "
+              "Wayne Dralle, 2nd District Phone: (641) 330-3446 "
+              "Rusty Eddy, 3rd District Phone: (319) 269-0811")
+    check(_keys_to(butler, ["Greg Barnett", "Wayne Dralle", "Rusty Eddy"])
+          == {"Barnett": 1, "Dralle": 2, "Eddy": 3},
+          "a name-first page still keys every supervisor correctly")
 
     print("selftest: %d failure(s)" % len(failures), file=sys.stderr)
     return 1 if failures else 0
