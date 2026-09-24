@@ -1652,6 +1652,16 @@ def scrape_wautoma():
     Its page prints a HOME ADDRESS between the name and the phone for every
     member. The address line is stepped over and never stored, the same rule
     Sturgeon Bay, Menasha and Portage are already read under.
+
+    ITS `Term Expires:` YEAR IS READ AND DISCARDED, decided on review of #1135.
+    The card maps name, badge, phone, email, note and url and has no term
+    branch, so the field would reach a reader's browser and no surface — bytes
+    with a live check_roster_retention gate attached, which from its first ship
+    reddens a weekly bot PR when Wautoma's page drops a year nobody sees. And
+    six records of 268 is not a column: no roster in this file carries a term,
+    so a card showing one for Wautoma and not for the other 27 municipalities
+    answers a reader's question inconsistently. If terms belong here it is a
+    fleet decision with each source's term column established first.
     """
     page = fetch(WAUTOMA_INDEX)
     flat = re.sub(r"<[^>]+>", "|", H.unescape(page))
@@ -1665,9 +1675,6 @@ def scrape_wautoma():
         ph = re.search(r"Phone:\s*\(?(\d{3})\)?[ .-]?(\d{3})-(\d{4})", block)
         if ph:
             entry["phone"] = "(%s) %s-%s" % ph.groups()
-        term = re.search(r"Term Expires:?\s*(\d{4})", block)
-        if term:
-            entry["term"] = term.group(1)
         _put("wautoma", members, "%02d" % int(hit.group(1)), entry)
     _seats_or_die("wautoma", members, 3, page,
                   ("Alderperson Dist N", r"Alderperson\s+Dist\.?\s*\d"))
