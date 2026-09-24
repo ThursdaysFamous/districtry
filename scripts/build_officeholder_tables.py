@@ -144,7 +144,7 @@ def school_board_members(data):
 
 
 def chicago_school_board(data):
-    """Chicago's Board of Education: twenty sub-district seats and a president.
+    """Chicago's Board of Education: twenty district seats (1a..10b) and a president.
 
     THE FILE IS KEYED BY THE MAP'S DISTRICT NUMBER plus one `board` entry that
     is not a district. That entry holds the Board's own office and its
@@ -161,19 +161,44 @@ def chicago_school_board(data):
     conversion lives where the data is written and one reader fewer has to know
     the word.
 
-    THE SEAT IS NAMED BY ITS SUB-DISTRICT, NEVER THE KEY. The key is the
+    THE SEAT IS NAMED BY ITS NUMBER AND LETTER ("District 2b"), NEVER THE KEY. The key is the
     boundary shapefile's row number, 1..20, which no ballot or Board page uses;
     the Board's "District 4" is the pair 4a + 4b, so a row headed "District 4"
     beside the member for 2b would name the wrong seat. A seat the roster gives
-    no sub-district FAILS rather than falling back to the number.
+    no subDistrict FAILS rather than falling back to the number.
+
+    THE LABEL IS HELD TO THE MAP. The roster copies each seat's name from the
+    boundary's own longName when it is built, weekly; the boundary file can be
+    replaced in between, and a card reads the name off the boundary while this
+    table reads it off the roster. So every seat's name is compared with the
+    shipped boundary here, which runs in CI as --check, and a disagreement
+    FAILS: the two would otherwise name one person's seat two ways.
     """
+    with open(os.path.join(REPO_ROOT, "il", "data", "app", "school-board-districts.json"),
+              encoding="utf-8") as fh:
+        drawn = {}
+        for f in json.load(fh)["features"]:
+            props = f.get("properties") or {}
+            m = re.match(r"(?i)^(?:district\s+)?(\d+[a-z])$", str(props.get("longName") or "").strip())
+            if props.get("district") is None or not m:
+                raise SystemExit("build-officeholder-tables: school-board boundary feature %r "
+                                 "carries no district number and letter name" % (props,))
+            drawn[str(props["district"])] = m.group(1).lower()
+    seats = sorted((k for k in data if k != "board"), key=district_key)
+    if sorted(seats, key=district_key) != sorted(drawn, key=district_key):
+        raise SystemExit("build-officeholder-tables: the school-board roster keys %s and the "
+                         "boundary draws %s — rebuild the roster" % (seats, sorted(drawn, key=district_key)))
     rows = []
-    for key in sorted((k for k in data if k != "board"), key=district_key):
+    for key in seats:
         sub = (data[key] or {}).get("subDistrict")
         if not sub:
             raise SystemExit("build-officeholder-tables: school-board seat %s carries no "
                              "subDistrict — rebuild the roster" % key)
-        rows.append(("Sub-district %s" % sub, data[key]))
+        if sub != drawn[key]:
+            raise SystemExit("build-officeholder-tables: school-board seat %s is %r in the roster "
+                             "and %r on the boundary — rebuild the roster against the shipped "
+                             "boundary" % (key, sub, drawn[key]))
+        rows.append(("District %s" % sub, data[key]))
     board = data.get("board") or {}
     if board.get("president"):
         rows.append(("Citywide", {"name": board["president"],
@@ -728,7 +753,7 @@ CITY_TABLES = [
     dict(tag="il", page="school-board.html", worksheet="metro-worksheet.json",
          sections=[dict(roster="data/app/school-board-members.json",
                         adapter="chicago_school_board",
-                        seat="Sub-district", holder="Board Member", role_label="Role",
+                        seat="District", holder="Board Member", role_label="Role",
                         office_label="Office",
                         # "seats", NOT "elected seats": the Board is hybrid until
                         # 2027 — its own index says eleven members including the
