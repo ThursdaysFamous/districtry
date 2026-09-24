@@ -206,6 +206,63 @@
   "seats": 15,
   "sourceUrl": "https://www.appletonwi.gov/government/common_council.php"
  },
+ "07900": {
+  "districts": 4,
+  "members": {
+   "01": [
+    {
+     "email": "erin.rave@blackriverfallswi.gov",
+     "name": "Erin Rave",
+     "phone": "(715) 299-1401"
+    },
+    {
+     "email": "michael.rave@blackriverfallswi.gov",
+     "name": "Michael Rave",
+     "phone": "(715) 670-0599"
+    }
+   ],
+   "02": [
+    {
+     "email": "jpeloquin@blackriverfallswi.gov",
+     "name": "Jacob Peloquin",
+     "phone": "(608) 498-6021"
+    },
+    {
+     "email": "gary.ammann@blackriverfallswi.gov",
+     "name": "Gary Ammann",
+     "phone": "(715) 284-9706"
+    }
+   ],
+   "03": [
+    {
+     "email": "kylee.wussow@blackriverfallswi.gov",
+     "name": "Kylee Wussow",
+     "phone": "(715) 284-2815"
+    },
+    {
+     "email": "desiree.gearing-lancaster@blackriverfallswi.gov",
+     "name": "Desiree Gearing-Lancaster",
+     "phone": "(715) 284-2815"
+    }
+   ],
+   "04": [
+    {
+     "email": "jdougherty@blackriverfallswi.gov",
+     "name": "Justin Dougherty",
+     "phone": "(715) 896-1599"
+    },
+    {
+     "email": "joel.busse@blackriverfallswi.gov",
+     "name": "Joel Busse",
+     "note": "Council President",
+     "phone": "(715) 299-7229"
+    }
+   ]
+  },
+  "municipality": "Black River Falls",
+  "seats": 8,
+  "sourceUrl": "https://blackriverfallswi.gov/common-council-committee-of-the-whole"
+ },
  "20350": {
   "districts": 4,
   "members": {
@@ -1086,6 +1143,66 @@
   "municipality": "Milwaukee",
   "seats": 15,
   "sourceUrl": "https://webapi.legistar.com/v1/milwaukee/officerecords?$filter=OfficeRecordBodyId%20eq%201&$top=1000"
+ },
+ "55750": {
+  "districts": 3,
+  "members": {
+   "01": [
+    {
+     "email": "mellis@neenahwi.gov",
+     "name": "Mark A. Ellis",
+     "phone": "(920) 257-7529"
+    },
+    {
+     "email": "fbruno@neenahwi.gov",
+     "name": "Flo Bruno",
+     "phone": "(727) 466-8880"
+    },
+    {
+     "email": "bdefferding@neenahwi.gov",
+     "name": "Brian Defferding",
+     "phone": "(920) 475-5241"
+    }
+   ],
+   "02": [
+    {
+     "email": "dsteiner@neenahwi.gov",
+     "name": "Dan Steiner",
+     "note": "Council President",
+     "phone": "(608) 220-5528"
+    },
+    {
+     "email": "terickson@neenahwi.gov",
+     "name": "Tami Erickson",
+     "phone": "(920) 740-4080"
+    },
+    {
+     "email": "mneuman@neenahwi.gov",
+     "name": "Mark Neuman",
+     "phone": "(920) 810-1541"
+    }
+   ],
+   "03": [
+    {
+     "email": "sweber@neenahwi.gov",
+     "name": "Scott Weber",
+     "phone": "(920) 216-0218"
+    },
+    {
+     "email": "wpollnow@neenahwi.gov",
+     "name": "William Pollnow",
+     "phone": "(920) 637-4980"
+    },
+    {
+     "email": "jlinski@neenahwi.gov",
+     "name": "Jeff Linski",
+     "phone": "(920) 636-0459"
+    }
+   ]
+  },
+  "municipality": "Neenah",
+  "seats": 9,
+  "sourceUrl": "https://www.ci.neenah.wi.us/common-council/"
  },
  "56375": {
   "districts": 7,
