@@ -34,6 +34,42 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-24 on resuming — all three DO FIRST rows are already done and merged, and the brief
+I was woken with predates them by two days.** Measured against `656adeb9` before touching
+anything, because the brief's own first line says the board is the record.
+
+- **#1091 is not held; it merged as `7aba70cf`.** The hold was real and I fixed it on
+  2026-09-22: `mi/county-commissioner/oakland.html` now opens "These are the people the State
+  of Michigan certified as elected to Oakland County's Board of Commissioners in the general
+  election of 5 November 2024", and the standfirst and the foot disclaimer were two further
+  surfaces carrying the same false claim that no hook reached.
+- **The certified-returns route is shipped**, not pending: `mi-commissioner-returns.json`
+  carries 35 counties and 249 seats.
+- **Tranche 6 is satisfied and its row is stale twice over.** The row reads "48 of 83
+  counties, 229 of 619 seats, 55.1% of the state"; the tree has 48 scraped plus 35 certified
+  = **83 of 83**, and `docs/EAM_STATUS.md` reads `619 | 615`.
+
+**Two figures in the brief, one right and one not, and the right one corrects ME.** The
+battery is **108 invocations across 80 named static steps** — `validate_gate_counts.py` and
+`validate_steward_mirror.py` both agree, 108 for 108 — so the brief is current and my last
+recorded 101 went stale while I was stood down. That is the pair moving with merges exactly as
+`CLAUDE.md` says it does. The ward figure is the other way: the brief says 18 of 20 gaps are
+city-council wards; the shipped `coverage-gaps.json` has **26 records, 16 of them ward or
+council**.
+
+**MY OWN OPEN QUESTION UNDERSTATED ITS DEFECT AND I FOUND THAT BY RE-MEASURING IT.** I filed
+near-miss (a) as `build_eam_status.py`'s `WHEN` rejecting one trigger form, "Whenever TIGERweb
+rolls a vintage". Measured on `mi/WATCH.md` across its 35 real cadence rows, `WHEN` rejects
+**8 of them, in four forms**: `Per election cycle` (3 rows), `Whenever TIGERweb rolls a
+vintage` (2), `Before any new Michigan city` (2) and `Every PR, by CI` (1) — the last being
+as plain a cadence as the fleet writes. #1102 (`ecbff075`) did not touch this; it added
+`check_workflows()`, which is a different question. My recommendation is unchanged in
+direction and stronger in size: fix (b), and (a) is worth more than the one row I gave it.
+
+**Nothing was re-pushed and nothing was started.** #1086's commit 2 stays unpushed — the
+promise on #1087 stands — and `build_mi_gap_outlines.py` and every outline file are still
+untouched. The Tasks table is the manager's and I have not edited it.
+
 **2026-09-22, close of day — the EAM_STATUS question is answered and the answer was the
 fleet's, not Michigan's.** #1102 merged as `ecbff075`. Verified on main rather than taken on
 report: `ecbff075` is an ancestor of HEAD, `build_eam_status.py` now carries the
