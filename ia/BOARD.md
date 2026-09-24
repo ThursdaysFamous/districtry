@@ -45,6 +45,101 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-24 (late) — the 152 / 153 disagreement is REAL, REPRODUCIBLE, and is
+the assignment's own best argument. Design settled; #1136 holds the branch.**
+
+The brief re-measured 152 reader-field numbers where my board said 153, and
+offered the drift as the argument for the gate. **It is better than that: both
+figures are correct and the difference is one character.** Measured on
+`227082f` through `load_gaps()`, the whole corpus contains exactly ONE
+comma-grouped number — `1,659` in `lasalle-board-districts-stale`'s summary —
+and:
+
+| tokenizer | count |
+|---|---|
+| `\b\d+(?:,\d{3})*\b` (thousands-aware) | **152** |
+| `\b\d{1,4}\b` and `\b\d+\b` (mine) | **153** |
+| `\d[\d,]*` | 159 |
+
+So the manager read `1,659` as one number and I read it as two. Neither of us
+mis-measured; **neither of us stated the rule**. Two careful readers, one
+corpus, the same hour, and a figure that cannot be reconciled without the
+method beside it — which is the fleet's own "state the figure WITH ITS METHOD"
+rule failing in miniature, and exactly why constraint 1 (explicit declaration,
+never a heuristic) is right. A gate that enumerates numbers would be measuring
+its own regex.
+
+### Design, settled — the four constraints and where each lands
+
+**Where it lives: `scripts/validate_gap_counts.py`, beside the builder, run
+ONCE.** `build_coverage_gaps.py` runs six times with different `--metro`/`--out`;
+the count question is fleet-wide over one guidebook block, so folding it in
+would run one fleet check six times and make each instance's run depend on
+every other instance's data files.
+
+**The declaration needs NO change to `build_coverage_gaps.py`, which I
+verified rather than assumed.** `render()` copies an explicit `FIELD_ORDER`
+allowlist and there is no unknown-key rejection anywhere in the module, so a
+`counts` key on a record is non-shipped BY CONSTRUCTION — constraint 3 is
+satisfied by the builder's existing shape, and `--check` byte-identity proves
+it the way #1134 proved its blocker non-shipped.
+
+**The shape**, beside `blocker` and out of `FIELD_ORDER`:
+
+    "counts": [
+      {"value": 38, "in": "summary", "file": "ia/data/app/ia-county-board-chairs.json", "metric": "keys"},
+      {"value": 61, "in": "summary", "file": "...same...", "metric": "keys", "of": 99}
+    ]
+
+`of` carries the COMPLEMENT, and it is not decoration: when this record was
+wrong it said "43 … the other 56" and **both numbers were stale**. A gate
+checking only the 38 leaves the 61 free to rot.
+
+**`in` is required, and that is the tokenizer lesson applied to my own gate.**
+The check is `(?<!\d)38(?!\d)` against that ONE named field — an exact
+membership test for one number, never an enumeration — so the gate can say
+"this record states 38 and its file holds 37" without ever needing a rule for
+what counts as a number in general. A declaration whose `value` does not
+appear in its named field FAILS, which is what stops a declaration drifting
+away from the prose it is supposed to guard.
+
+**Vocabulary: shared, not rewritten.** `build_history_page.py`'s `METRIC_RE`
+(line 109) plus `PERSON_WORDS`, `_people_in` and `measure_metric` lift into
+`scripts/measured_metric.py` with `fail` and the repo root injected; the
+history page imports it and its twelve pages must come back byte-identical,
+which is the proof the extraction was faithful.
+
+**Branches to negative-test** (constraint 4, and I will say which I witnessed
+failing rather than that I wrote them): value above the file, value below it,
+a `file` that does not exist, a `metric` outside `METRIC_RE`, an `of`
+complement that no longer subtracts, a `value` absent from its named field,
+and the vacuity guard — the gate must refuse to pass having found no
+declaration at all, the property `validate_instance_registration.py` already
+has.
+
+### What I am NOT deciding alone
+
+Michigan's `mi-commissioner-roster` states 83 / 48 / 35 across two disjoint
+files and the brief says it moved today. I will ship the gate with **Iowa's
+two records declared** and leave Michigan's to a follow-up after coordinating,
+rather than encode a snapshot of a roster in flux. Adding a declaration does
+not touch their reader text, but the shape their two-file split needs is
+theirs to confirm.
+
+### Blocked, and on what
+
+#1136 is green (smoke success on 6371c0a), clean against main, unmerged, and
+it holds `claude/iowa-expansion-plan-isjrwa` — the one branch I can push. The
+gate is a separate piece and widening #1136 to carry a new script is what the
+PR-per-piece rule exists to stop, so this is written down rather than written.
+**Nothing about the design depends on the merge**; the moment #1136 lands I
+restart the branch from main and build it.
+
+One thing from the brief worth keeping: CI started NO run on #1134's branch
+and the manager ran the battery by hand. It did run on #1136. Worth watching
+whether it recurs.
+
+
 **2026-09-24 (evening) — #1134 merged; three of its six counties now ship as
 #1136. The builder I was going to write already existed.**
 
