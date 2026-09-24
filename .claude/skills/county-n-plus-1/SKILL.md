@@ -295,10 +295,20 @@ Then, in order:
 
 ```bash
 python3 scripts/generate_metro_files.py          # worksheet entries → generated regions
-python3 scripts/build_coverage_gaps.py           # the gap block → il/data/app/coverage-gaps.json
-python3 scripts/build_history_page.py            # il/history.html counts the gaps file in a MEASURED tile
 python3 scripts/build_county_status.py           # docs/COUNTY_STATUS.md; its --check fails a lagging table
 ```
+
+**The gaps-block chain is not repeated here.** `.claude/skills/gap-record/SKILL.md`
+§7 owns it — every generator that reads the block, for all six instances, with
+the reason each is on the list. Run it there. THIS SECTION USED TO CARRY ITS OWN
+COPY AND THE COPY WENT SHORT: measured 2026-09-24 it was missing
+`build_about_page.py` (which §7 calls the one most easily missed and not
+optional), `build_sitemap.py`, `validate_gap_counts.py`, and
+`--metro michigan` entirely — a whole instance, because the copy was written
+when there were two non-Illinois statewide instances and Michigan shipped into
+only one of the two lists. The steward battery catches all four, so the cost was
+cycles rather than a red CI; the point is that two hand-kept answers to one
+question diverge, and this one had.
 
 plus the guidebook's coverage-map, inventory and matrix rows, the smoke
 ground truth if the county adds an anchor, and the READER-FACING COUNTS that
@@ -338,17 +348,13 @@ reachable county into one file, never a new triple. Two WI-only CI gates run
 on every PR: the county board directory and the county outlines must match
 the shipped fabric.
 
-Both instances carry their own worksheets and gap blocks. `--metro` chooses
-the key and `--out` is MANDATORY beside it — without `--out` the script
-writes and compares against Illinois's shipped file:
-
-```bash
-python3 scripts/build_coverage_gaps.py --metro wisconsin --out wi/data/app/coverage-gaps.json
-python3 scripts/build_coverage_gaps.py --metro iowa      --out ia/data/app/coverage-gaps.json
-```
-
-(`--check` on each for the gate.) Part 5 of the guide is the cross-state
-statement of the rules; §3.5.1 is their Illinois-worded original.
+Each instance carries its own worksheet and its own gap block — more than the
+two this paragraph used to name. `--metro` chooses the key and `--out` is
+MANDATORY beside it, in BOTH modes: without `--out` the script writes and
+compares against Illinois's shipped file. The full set of runs lives in
+`.claude/skills/gap-record/SKILL.md` §7 and is not copied here, for the reason
+above. Part 5 of the guide is the cross-state statement of the rules; §3.5.1 is
+their Illinois-worded original.
 
 ## 10. Nevers specific to county work
 

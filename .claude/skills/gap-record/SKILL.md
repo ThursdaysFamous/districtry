@@ -116,12 +116,28 @@ python3 scripts/build_coverage_gaps.py                                          
 python3 scripts/build_coverage_gaps.py --metro wisconsin --out wi/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --metro iowa      --out ia/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --metro michigan  --out mi/data/app/coverage-gaps.json
+python3 ia/scripts/build_ia_gap_outlines.py      # AFTER the line above, never before: it reads the SHIPPED file
+python3 scripts/generate_metro_files.py          # a retired outline drops a worksheet entry; bump sw cache_name first
 python3 scripts/build_history_page.py            # the history tiles COUNT the shipped gap files
 python3 scripts/build_county_status.py
 python3 scripts/validate_gap_counts.py           # a number a record STATES vs the file it describes
 python3 scripts/build_about_page.py              # about.html states the fleet-wide gap TOTAL
 python3 scripts/build_sitemap.py                 # a regenerated history page moves its lastmod
+python3 scripts/build_endpoint_inventory.py      # it counts every json in an instance's data/app
 ```
+
+**The last three lines were added 2026-09-24, each from a step the Winnebago
+build actually hit.** `build_ia_gap_outlines.py` is ORDER-SENSITIVE and this
+section is where the order lives: it derives its county list from the SHIPPED
+`coverage-gaps.json`, not from the guidebook, so run before the regenerate above
+it still wants the county you just removed and reports nothing stale. Run after,
+it names the orphan exactly as designed — and retiring that outline is a manual
+delete plus the worksheet entry and the **cache bump** those cache-first files
+require, which is what `generate_metro_files.py` is doing here. Then
+`build_endpoint_inventory.py`, because it publishes a per-instance count of
+`data/app` files and a raw count moves when a file is ADDED as much as when one
+is deleted. The steward battery catches all three, so skipping them costs a
+cycle rather than a red CI; they are here so the cycle is not spent.
 
 **The last two were missing from this list until 2026-09-22, and both went red
 on the first change that followed it.** Six new Michigan records took
