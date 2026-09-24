@@ -26,7 +26,8 @@ THE DECLARATION lives on the record beside `blocker`, and ships to nobody:
 `build_coverage_gaps.render()` copies an explicit FIELD_ORDER allowlist, so a
 `counts` key reaches no reader and no data file. That is verified rather than
 assumed — the `--check` below re-runs the builder's own check for every
-instance and refuses if any shipped file moved.
+instance and refuses when any of the six fails, which a negative test confirms
+it does.
 
     "counts": [
       {"value": 38, "in": "summary", "file": "ia/data/app/x.json", "metric": "keys"},
@@ -147,13 +148,23 @@ def measured(record, entry, where):
 
 
 def check_shipped():
-    """The declaration reaches no reader — proven, not asserted."""
+    """The declaration reaches no reader — proven by negative test, not asserted.
+
+    NEGATIVE-TESTED 2026-09-24 by adding `counts` to the builder's FIELD_ORDER:
+    all six instances failed. They failed by CRASHING, not by the file moving —
+    `render()` copies the allowlist with `e[key]`, so the first record WITHOUT a
+    `counts` key raises `KeyError: 'counts'` before a byte is written. A moved
+    file is the other path, and it is the one a leak would take only if EVERY
+    record carried a declaration. Re-running the builder's own check catches
+    both; diffing the shipped file would catch only the second.
+    """
     for metro, out in SHIPPED:
         cmd = [sys.executable, os.path.join(REPO_ROOT, "scripts", "build_coverage_gaps.py"),
                "--check", "--metro", metro, "--out", os.path.join(REPO_ROOT, out)]
         r = subprocess.run(cmd, capture_output=True, text=True)
         if r.returncode != 0:
-            fail("%s moved — a `counts` declaration must ship to nobody:\n    %s"
+            fail("%s: the builder refused or the file moved — a `counts` "
+                 "declaration must ship to nobody:\n    %s"
                  % (out, (r.stderr or r.stdout).strip().splitlines()[-1]))
 
 

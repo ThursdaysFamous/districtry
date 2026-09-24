@@ -13,7 +13,7 @@ WHAT MOVED AND WHAT DID NOT. This is `build_history_page.py`'s code, lifted
 unchanged except that the two things it used to read off its own module —
 the repository root and its `fail` — are now arguments. The history page
 passes its own, so its failures still say `build-history-page`, and the proof
-the lift was faithful is that all twelve history pages come back byte-identical.
+the lift was faithful is that all four history pages come back byte-identical.
 
 THE VOCABULARY IS DELIBERATELY TINY and should stay that way: `keys`,
 `features`, `sum:<field>`, `count-nonzero:<field>`, `people:<fields>` and
@@ -30,13 +30,6 @@ METRIC_RE = re.compile(
     r"^(keys|features|sum:[A-Za-z]+|count-nonzero:[A-Za-z]+"
     r"|people:[A-Za-z]+(?:\+[A-Za-z]+)*|keys-naming:[A-Za-z]+(?:\+[A-Za-z]+)*)$")
 
-# A label using one of these is claiming something about PEOPLE, which is what
-# makes a `keys` metric under it worth checking. The word list only decides
-# WHETHER TO CHECK; it never decides the answer. That distinction is the
-# correction of this gate's own first draft, which failed two ILGA tiles —
-# "118 Illinois House seats with their member, party and both offices" — that
-# are true: one key per seat, every key naming a member. A word cannot tell a
-# true claim from a false one, so the check below measures instead.
 # A label using one of these is claiming something about PEOPLE, which is what
 # makes a `keys` metric under it worth checking. The word list only decides
 # WHETHER TO CHECK; it never decides the answer. That distinction is the

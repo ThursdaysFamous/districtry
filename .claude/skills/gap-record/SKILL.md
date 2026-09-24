@@ -118,7 +118,6 @@ python3 scripts/build_coverage_gaps.py --metro iowa      --out ia/data/app/cover
 python3 scripts/build_coverage_gaps.py --metro michigan  --out mi/data/app/coverage-gaps.json
 python3 scripts/build_history_page.py            # the history tiles COUNT the shipped gap files
 python3 scripts/build_county_status.py
-python3 scripts/build_about_page.py             # about.html states the fleet's gap TOTAL
 python3 scripts/validate_gap_counts.py           # a number a record STATES vs the file it describes
 python3 scripts/build_about_page.py              # about.html states the fleet-wide gap TOTAL
 python3 scripts/build_sitemap.py                 # a regenerated history page moves its lastmod
