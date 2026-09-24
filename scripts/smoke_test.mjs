@@ -565,6 +565,18 @@ try {
       d214.join() === "Township High School District 214", JSON.stringify(d214));
     check("a school district number shared across the state, or a town alone, matches no district",
       d1.length === 0 && town.length === 0, JSON.stringify({ d1, town }));
+    // A CHICAGO SCHOOL BOARD SUB-DISTRICT (1a..10b, the Board's own name for
+    // each seat) finds its district, written "2b" or "2 b"; the sub-district
+    // words never match the flat number, and the flat number still works.
+    const sub = await byCounty("sub-district 2b");
+    const subSpaced = await byCounty("School Board 2 B");
+    const subFlat = await byCounty("sub-district 4");
+    const flat = await byCounty("school board district 4");
+    check("a school board sub-district is found by its own name",
+      sub.join() === "School Board District 4 \u00b7 Sub-district 2b" && subSpaced.join() === sub.join(),
+      JSON.stringify({ sub, subSpaced }));
+    check("sub-district words never match a flat number, and the flat number still finds the district",
+      subFlat.length === 0 && flat.join() === sub.join(), JSON.stringify({ subFlat, flat }));
     // TYPE-AHEAD before the number: the words name a kind of district, so the
     // list says what to type next. A hint is text, never a button, so it
     // cannot be picked and #q= can never auto-select it.
@@ -575,6 +587,13 @@ try {
     check("typing a district name before its number shows what to type next",
       hint.length === 1 && /Lake County Board District/.test(hint[0].text) && /1\u201319/.test(hint[0].text) && !hint[0].button,
       JSON.stringify(hint));
+    await page.fill("#geocode-input", "chicago subdistrict");
+    await page.waitForFunction(() => document.querySelector("#geocode-results li.district-hint"), null, { timeout: 5000 }).catch(() => {});
+    const subHint = await page.evaluate(() => [...document.querySelectorAll("#geocode-results li.district-hint")]
+      .map((li) => li.textContent.replace(/\s+/g, " ").trim()));
+    check("typing sub-district before its name shows the range to type",
+      subHint.length === 1 && /School Board Sub-district/.test(subHint[0]) && /1a\u201310b/.test(subHint[0]),
+      JSON.stringify(subHint));
     await context.close();
   }
 

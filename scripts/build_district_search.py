@@ -179,7 +179,12 @@ SOURCES = {
         "key": lambda p: _num(p.get("DISTRICT")),
         "count": 22,
     },
-    "school-board": {"file": "school-board-districts.json", "key": lambda p: _num(p.get("district"))},
+    # Each of the 20 seats also has the SUB-DISTRICT name the Board of
+    # Education itself uses (1A..10B), which the boundary carries as
+    # longName ("District 2b") and the card prints ("Sub-district 2b"). It is
+    # indexed beside the flat number so "sub-district 2b" finds District 4.
+    "school-board": {"file": "school-board-districts.json", "key": lambda p: _num(p.get("district")),
+                     "alt": lambda p: _alt_label(p.get("longName"))},
     "congress": {"file": "congress-districts.json", "key": lambda p: _num(p.get("BASENAME"))},
     "il-senate": {"file": "il-senate-districts.json", "key": lambda p: _num(p.get("BASENAME"))},
     "il-house": {"file": "il-house-districts.json", "key": lambda p: _num(p.get("BASENAME"))},
@@ -208,6 +213,35 @@ SOURCES = {
 }
 
 COUNTY_NAME = {slug_of(n): n for n, _ in ALL_COUNTIES}
+
+
+def _alt_label(value):
+    """'District 2b' -> '2b'; None unless it is a number and one letter."""
+    v = re.sub(r"^\s*district\s+", "", str(value or ""), flags=re.I).strip().lower()
+    return v if re.fullmatch(r"[1-9][0-9]*[a-z]", v) else None
+
+
+def alt_labels(lid, features):
+    """{district id: its second name} for a layer whose source carries one.
+    Every district must have one, and no two the same, or the build fails:
+    a second name that names two districts, or only some, is a guess."""
+    spec = SOURCES[lid]
+    if "alt" not in spec:
+        return {}
+    out = {}
+    for f in features:
+        props = f.get("properties") or {}
+        d, a = spec["key"](props), spec["alt"](props)
+        if d is None:
+            continue
+        if a is None:
+            raise SystemExit("build-district-search: %s %s has no second name in its source" % (lid, d))
+        if out.get(d, a) != a:
+            raise SystemExit("build-district-search: %s %s carries two second names" % (lid, d))
+        out[d] = a
+    if len(set(out.values())) != len(out):
+        raise SystemExit("build-district-search: %s: two districts share a second name" % lid)
+    return out
 
 
 def district_token(value):
@@ -262,6 +296,21 @@ def phrase_layers():
             if n and n not in phrases:
                 phrases.append(n)
         out[lid] = {"name": name, "label": labels[lid], "phrases": phrases}
+        # a SECOND NAME for each district ("Sub-district 2b" for School Board
+        # District 4): its own phrases, which match only that name, never
+        # the flat number, so "sub-district 4" finds nothing
+        if entry.get("alt_name"):
+            if "alt" not in SOURCES[lid]:
+                problems.append("%s: alt_name given but the builder reads no second name for it" % lid)
+            alt = []
+            for p in [entry["alt_name"]] + list(entry.get("alt_aliases") or []):
+                n = normalize_phrase(p)
+                if n and n not in alt:
+                    alt.append(n)
+            out[lid]["alt_name"] = entry["alt_name"].strip()
+            out[lid]["alt_phrases"] = alt
+        elif "alt" in SOURCES[lid]:
+            problems.append("%s: the builder reads a second name for it, the phrase file gives no alt_name" % lid)
         # a layer whose districts belong to one city names it, so a result for
         # Chicago's Ward 3 never reads as a suburb's Ward 3
         if entry.get("where"):
@@ -281,7 +330,7 @@ def phrase_layers():
     # but a phrase OWNED twice is a phrase file mistake
     owner = {}
     for lid, spec in out.items():
-        for p in spec["phrases"]:
+        for p in spec["phrases"] + spec.get("alt_phrases", []):
             if p in owner:
                 problems.append("phrase %r is claimed by both %s and %s" % (p, owner[p], lid))
             owner[p] = lid
@@ -466,10 +515,12 @@ def app_layer_districts(lid, dump):
     return groups, counts, skipped
 
 
-def district_name(layer_name, d, where=None):
+def district_name(layer_name, d, where=None, alt=None, alt_name=None):
     """'Ward 33'; with a county, '<County> <layer name> <id>' — 'Lake' +
-    'County Board District' + '3' is 'Lake County Board District 3'."""
-    return "%s %s %s" % (where, layer_name, d) if where else "%s %s" % (layer_name, d)
+    'County Board District' + '3' is 'Lake County Board District 3'; with a
+    second name, 'School Board District 4 · Sub-district 2b'."""
+    name = "%s %s %s" % (where, layer_name, d) if where else "%s %s" % (layer_name, d)
+    return "%s \u00b7 %s %s" % (name, alt_name, alt) if alt else name
 
 
 def district_sort_key(d):
@@ -521,7 +572,9 @@ def build(county_dump=None):
             print("build-district-search: %-17s %3d district(s) in %d count%s (live, via the app); skipped %s"
                   % (lid, len(groups), len(counts), "y" if len(counts) == 1 else "ies", ", ".join(skipped) or "none"))
             continue
-        groups = group_districts(load_source(lid), spec["key"])
+        source = load_source(lid)
+        groups = group_districts(source, spec["key"])
+        alts = alt_labels(lid, source)
         expect = spec.get("ids")
         if expect and sorted(groups, key=int) != expect:
             raise SystemExit("build-district-search: %s has districts %s, expected %s"
@@ -534,10 +587,16 @@ def build(county_dump=None):
         for d in sorted(groups, key=int):
             rings = groups[d]
             bb = [round(v, DIGITS) for v in bbox_of(rings)]
+            props = {"layer": lid, "id": d,
+                     "name": district_name(layers[lid]["name"], d, alt=alts.get(d),
+                                           alt_name=layers[lid].get("alt_name")),
+                     "bbox": bb}
+            if d in alts:
+                props["alt"] = alts[d]
             features.append({
                 "type": "Feature",
                 "geometry": {"type": "Point", "coordinates": interior_point(rings)},
-                "properties": {"layer": lid, "id": d, "name": district_name(layers[lid]["name"], d), "bbox": bb},
+                "properties": props,
             })
         print("build-district-search: %-17s %3d district(s)%s" % (lid, len(groups), " (live)" if lid in live else ""))
     return {
@@ -637,7 +696,7 @@ def check():
                 if not str(p.get("name") or "").strip():
                     fails.append("%s %s: a named district with no name" % (lid, p["id"]))
                 continue
-            if p.get("name") != district_name(spec["name"], p["id"], where):
+            if p.get("name") != district_name(spec["name"], p["id"], where, p.get("alt"), spec.get("alt_name")):
                 fails.append("%s %s: name %r does not follow the phrase file" % (lid, p["id"], p.get("name")))
         if src.get("app_layer"):
             fails += check_app_layer(lid, feats, doc, index_html)
@@ -662,7 +721,13 @@ def check():
         if "file" in src:
             if src["file"] not in index_html:
                 fails.append("%s: il/index.html no longer loads %s" % (lid, src["file"]))
-            groups = group_districts(load_json(os.path.join(INSTANCE, "data", "app", src["file"]))["features"], src["key"])
+            source = load_json(os.path.join(INSTANCE, "data", "app", src["file"]))["features"]
+            groups = group_districts(source, src["key"])
+            alts = alt_labels(lid, source)
+            got_alts = {f["properties"]["id"]: f["properties"]["alt"] for f in feats if "alt" in f["properties"]}
+            if got_alts != alts:
+                fails.append("%s: the second names in the index %s disagree with the boundary file's %s"
+                             % (lid, sorted(got_alts.items()), sorted(alts.items())))
             if set(ids) != set(groups):
                 fails.append("%s: index has %s, boundary file has %s" % (lid, sorted(set(ids) - set(groups), key=int) or "no extras", sorted(set(groups) - set(ids), key=int) or "nothing missing"))
             for f in feats:
