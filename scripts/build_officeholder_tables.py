@@ -166,13 +166,38 @@ def chicago_school_board(data):
     the Board's "District 4" is the pair 4a + 4b, so a row headed "District 4"
     beside the member for 2b would name the wrong seat. A seat the roster gives
     no subDistrict FAILS rather than falling back to the number.
+
+    THE LABEL IS HELD TO THE MAP. The roster copies each seat's name from the
+    boundary's own longName when it is built, weekly; the boundary file can be
+    replaced in between, and a card reads the name off the boundary while this
+    table reads it off the roster. So every seat's name is compared with the
+    shipped boundary here, which runs in CI as --check, and a disagreement
+    FAILS: the two would otherwise name one person's seat two ways.
     """
+    with open(os.path.join(REPO_ROOT, "il", "data", "app", "school-board-districts.json"),
+              encoding="utf-8") as fh:
+        drawn = {}
+        for f in json.load(fh)["features"]:
+            props = f.get("properties") or {}
+            m = re.match(r"(?i)^(?:district\s+)?(\d+[a-z])$", str(props.get("longName") or "").strip())
+            if props.get("district") is None or not m:
+                raise SystemExit("build-officeholder-tables: school-board boundary feature %r "
+                                 "carries no district number and letter name" % (props,))
+            drawn[str(props["district"])] = m.group(1).lower()
+    seats = sorted((k for k in data if k != "board"), key=district_key)
+    if sorted(seats, key=district_key) != sorted(drawn, key=district_key):
+        raise SystemExit("build-officeholder-tables: the school-board roster keys %s and the "
+                         "boundary draws %s — rebuild the roster" % (seats, sorted(drawn, key=district_key)))
     rows = []
-    for key in sorted((k for k in data if k != "board"), key=district_key):
+    for key in seats:
         sub = (data[key] or {}).get("subDistrict")
         if not sub:
             raise SystemExit("build-officeholder-tables: school-board seat %s carries no "
                              "subDistrict — rebuild the roster" % key)
+        if sub != drawn[key]:
+            raise SystemExit("build-officeholder-tables: school-board seat %s is %r in the roster "
+                             "and %r on the boundary — rebuild the roster against the shipped "
+                             "boundary" % (key, sub, drawn[key]))
         rows.append(("District %s" % sub, data[key]))
     board = data.get("board") or {}
     if board.get("president"):
