@@ -329,6 +329,23 @@ def _forms(name):
     return sorted(out)
 
 
+def candidates_line(counties, known_count):
+    """The artifact's `candidates_per_county`, computed from the generator.
+
+    ONE reader for the run that WRITES the artifact and the `--check` that
+    holds it, because two readers of one question is where this repo's
+    recurring defect starts. The field describes the GENERATOR, not the sweep:
+    `_forms()` is pure string work over a county name, so its answer is a fact
+    about the tree today and not about the day the sweep ran. That is why
+    --check may hold a field inside an artifact stamped with an older date --
+    and why it must, since the field went nine days wrong at "about 61, gated
+    on 24 known hosts" while every gate stayed green.
+    """
+    widths = [len(_forms(rec["county"])) for rec in counties]
+    return "%d-%d, gated on %d known hosts" % (min(widths), max(widths),
+                                               known_count)
+
+
 def check_superseded(rows):
     """A verdict this repo has since learned better than must SAY SO.
 
@@ -1289,14 +1306,12 @@ def main():
         os.makedirs(os.path.dirname(ARTIFACT), exist_ok=True)
         payload = {"measured": time.strftime("%Y-%m-%d"),
                    "client": UA_ROSTER_BOT,
-                   # MEASURED, never a remembered figure. It read "about 61"
-                   # for nine days after the 2026-09-24 widening took it past
-                   # 90, which is the drift a literal in a generated artifact
-                   # always develops.
-                   "candidates_per_county":
-                       "%d-%d, gated on %d known hosts"
-                       % (min(len(_forms(r["county"])) for r in rows),
-                          max(len(_forms(r["county"])) for r in rows), n),
+                   # MEASURED, never a remembered figure, and held by
+                   # --check to the same reader. It read "about 61, gated on
+                   # 24 known hosts" for nine days while every gate stayed
+                   # green, which is the drift a literal in a generated
+                   # artifact always develops.
+                   "candidates_per_county": candidates_line(results, n),
                    "counties": results}
         with open(ARTIFACT, "w") as fh:
             json.dump(payload, fh, indent=1, sort_keys=True)
@@ -1392,6 +1407,13 @@ def check(rows):
     # KNOWN_HOSTS plus CHALLENGE_HOSTS, which is a gate reporting a smaller
     # surface than it guards -- the one direction that reads as reassuring.
     known_checked = check_generator()
+    want_line = candidates_line(data["counties"], known_checked)
+    if data.get("candidates_per_county") != want_line:
+        bad.append("candidates_per_county says %r and this tree's generator "
+                   "produces %r — the field describes the GENERATOR, which "
+                   "this tree owns, not the sweep's date, so it is correctable "
+                   "without re-sweeping"
+                   % (data.get("candidates_per_county"), want_line))
     if bad:
         print("probe-mi-county-boards: FAIL")
         for b in bad:
