@@ -300,7 +300,7 @@
    }
   },
   "readOn": "2026-09-24",
-  "sourceUrl": "https://mitchellcounty.iowa.gov/board-of-supervisors/#agendas"
+  "sourceUrl": "https://mitchellcounty.iowa.gov/departments/board-of-supervisors/"
  },
  "133": {
   "boardPhone": "(712) 433-1585",
@@ -443,6 +443,26 @@
   },
   "readOn": "2026-09-24",
   "sourceUrl": "https://www.webstercountyia.gov/departments/board_of_supervisors/index.php"
+ },
+ "189": {
+  "boardPhone": "(641) 585-3412",
+  "county": "Winnebago",
+  "districts": {
+   "1": {
+    "name": "Terry Durby",
+    "party": "Republican"
+   },
+   "2": {
+    "name": "Susan Smith",
+    "party": "Republican"
+   },
+   "3": {
+    "name": "Bill Jensvold",
+    "party": "Republican"
+   }
+  },
+  "readOn": "2026-09-24",
+  "sourceUrl": "https://www.winnebagocountyiowa.gov/board_of_supervisors/"
  },
  "191": {
   "boardPhone": "(563) 382-2370",

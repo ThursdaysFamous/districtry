@@ -1,6 +1,6 @@
 {
  "measured": "2026-09-24",
- "note": "The Census's own internal point per county — guaranteed inside, which a centroid is not for a concave shape. Recorded so --check runs offline.",
+ "note": "The Census's own internal point per county \u2014 guaranteed inside, which a centroid is not for a concave shape. Recorded so --check runs offline.",
  "points": {
   "adair": {
    "fips": "001",
@@ -155,13 +155,6 @@
    "lng": -91.7250385,
    "name": "Washington County",
    "slug": "washington"
-  },
-  "winnebago": {
-   "fips": "189",
-   "lat": 43.3781243,
-   "lng": -93.7434883,
-   "name": "Winnebago County",
-   "slug": "winnebago"
   },
   "worth": {
    "fips": "195",
