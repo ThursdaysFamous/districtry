@@ -28,6 +28,156 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-24. Three of the six assigned rows are DONE and pushed as #1133; two
+were already finished before the brief was written; one item of substance
+remains.**
+
+I checked each row against the tree before working it, and two of the six had
+already been delivered. That is worth stating first, because acting on them
+would have been a day spent rebuilding what merged last week.
+
+**MPS AND RUSD DID NOT NEED CHECKING AGAIN, AND THE BRIEF'S PREMISE IS WRONG.**
+It says "several Mondays have now passed". Today is **Thursday 24 September**.
+The #978 fix merged 16 September; exactly ONE Monday has passed since —
+**21 September** — and both ran green on it, which this board already recorded
+that evening (MPS run 35648845084, RUSD 35655769015, both `event=schedule`,
+both success, both ~27 seconds with a real run name). The next scheduled run is
+28 September. There was nothing new to look at.
+
+**What I did find is a separate thing the board does not record.** Both
+workflows show **zero-job failed runs on `push` events** — the same signature
+as the bug #978 fixed — most recently 2026-09-22 on another session's branch,
+and on 2026-09-17 on `main` itself. I nearly recorded that as a regression. It
+is not one:
+
+  * `yaml.safe_load` **silently accepts duplicate keys**, so the obvious check
+    calls these files clean. Read with a loader that reports them, `4e80f18`
+    (#978, 16 September) is clean and every commit since is clean.
+  * The failing runs are **stale branches carrying the pre-fix copy**. The
+    2026-09-17 run on main is at `8404029a`, which is **not a descendant of the
+    fix** — a bot PR branched before #978 and merged after. Its copy still had
+    the duplicate `run:` key at line 50, so GitHub could not parse the file,
+    could not see there is no `push:` trigger, and filed a startup failure.
+
+So the fix took, and the noise dies with the branches. **The instrument matters
+more than the answer here**: the defect that cost three workflows their entire
+existence is invisible to the YAML parser anyone would reach for first, and
+nothing in the repo looks for it.
+
+**THE COURT OF APPEALS ROW IS STALE AND THE WORK IS MERGED.** #1040 landed
+2026-09-19 (`a2a7e41`) with both guards the row asks for, and this board said
+so on 21 September. Verified in the tree today rather than from the record:
+`wi/scripts/wi_coa_staleness.py` exists, the scraper carries
+`UNREACHABLE_EXIT = 75`, and the workflow forgives only 75 before running
+`wi_coa_staleness.py --ceiling-days 60`. Nothing to build.
+
+---
+
+**#1133 carries three commits, one per change, none sharing a file.** They are
+on one PR because this session is restricted to a single branch, and the PR
+says so.
+
+**1. The multi-member schema — the DO FIRST item.** `members[district]` is now
+always a LIST. The fence question was settled BEFORE anything was edited, as
+the row requires: the aldermanic card is **not** inside an ENGINE fence — the
+nearest closes at `chamber-factory` (line 9722) and the next opens at
+`hover-explorer` (12675) — so this is Wisconsin-local and not a fleet diff to
+port. Both refusals hold: no two-slot schema (Wautoma's 1, 3, 2), and the list
+vocabulary is the one `county-board-members.json` already uses for Menominee
+rather than a second way of saying the same thing. One shape, no union type,
+the 24 shipped municipalities converted in the same change.
+
+**The downstream readers were NAMED BY MEASUREMENT rather than taken from the
+row**, and the row's list is not the list. `build_officeholder_tables` and
+`validate_structured_data` do not read this file at all — the first has an
+explicit section registry with no alderperson entry, the second reads ld+json
+on pages. `build_county_pages` classifies it and does not page it.
+`check_roster_retention` and `validate_officeholder_names` do read it, and both
+pass unchanged.
+
+**The name gate needed nothing, and that is #1084 paying off.** wi reads 1,674
+records before and after — byte-identical to the base with my change stashed —
+because the walker fix I merged on 22 September propagates the container name
+into a list, so `members: {d: [person]}` is tested exactly as `members: {d:
+person}` was. A schema change landing on a gate fixed two days earlier, with no
+edit to the gate.
+
+**Four counts moved from districts to people** and each reads plausibly when
+wrong. The shape is checked before any of them runs: iterating a bare member
+object yields its KEYS, so `{name, phone, url}` counts as three people, and
+without the guard the failure is an `AttributeError` inside a genexpr rather
+than a named refusal — measured by removing the guard.
+
+**The smoke test gained check 8 and it is the one that matters.** Every
+municipality shipped names exactly one member per district, so NO REAL POINT
+exercises the list: a regression rendering only the first member would pass
+every other gate in the repo and be found by a reader in Wautoma. It doctors
+the roster in flight and asserts three badged rows; regressing the card to
+`.slice(0, 1)` fails it. Three stated counts were wrong and are corrected —
+measured 2026-09-24, 24 municipalities, 240 districts, 240 alderpersons, no
+vacancy (Madison's District 1 has been filled).
+
+**2. The NG911 tiling was ten days stale and the pin was right.** All four
+layers reported `dataLastEditDate` 2026-09-14 against the 2026-09-08 the
+shipped files were built from, every row count unchanged — the first time that
+sidecar has fired, and exactly the case it was written for. Rebuilt: 109
+features redrawn (fire 45, ems 33, law 25, psap 6), agency counts unchanged on
+all four, 25/25 point-query and 4000/4000 name-set agreement per layer, UNFILED
+map still matching all 72 authorities. `cache_name` v39 to v40, because these
+are cache-first and without it a returning visitor keeps the old tiling while
+every gate stays green.
+
+**The one label change was measured on the ground, not on the text.** Buffalo
+County refiled nine joint ambulance/first-responder EMS areas from
+`X Amb | Y 1st Resp` to `X Amb/Y 1st Resp` with abbreviations. Three keep a
+BYTE-IDENTICAL polygon, which is what proves the rest are the same agencies
+relabelled rather than nine leaving and nine arriving; and the nine together
+intersect the old union EXACTLY, so the old coverage is a strict subset of the
+new and no reader loses an answer.
+
+**3. The legislature roster is unfrozen, and the retry is built.** I dispatched
+the workflow before writing any code, because the cheapest thing that settles
+"transient or refusal" is asking again: run **36005954124** finished in **23
+seconds** and succeeded, against the 61-second timeout that killed run
+35762232826 on 22 September. It opened no PR, so the 15 September names were
+still correct — the roster was frozen, never wrong. The retry follows
+`scraper_common.fetch`'s policy and is reimplemented rather than imported
+because `wi/scripts` has no path to that module and the workflow installs no
+pip dependencies at all. Six selftest cases, each asserting how many attempts
+were made; two of them exist because **`HTTPError` subclasses `URLError`**, so
+catching `URLError` first would retry a 404 four times.
+
+**I did not build the COA exit-75 shape here.** A retry turns a one-in-N
+transient into one-in-N-to-the-fourth, which is proportionate to what was
+measured; forgiving the failure under a staleness ceiling is a bigger change
+and nobody asked for it on this job.
+
+---
+
+**One finding recorded and deliberately not fixed.**
+`wi/scripts/build_wi_municipal_executives.py` uses `https://example.invalid/layer`
+as a selftest fixture, and `wi/scripts/validate_robots.py` reports it among the
+eighteen hosts whose policy is unknown. It is noise in a report whose whole
+value is that unknown policies are visible. Unrelated to these three commits,
+so it is written down rather than swept into them — and I hit the same trap
+myself in this session's first draft, where `probe_user_agents.py` would have
+failed it as an unmeasured host reached by a browser-string file.
+
+**Still open, in the brief's own order: the alderperson pool** (item 6), which
+the row rightly gates on the schema — the shape is settled now, so the sweep
+can be measured once and shipped in tranches against the artifact. And **the
+fifteen multi-member cities themselves**, which is PR 2 of the schema work.
+
+**On provenance, since it decides what I may act on.** This session has had no
+human turn. Everything above came in through a scheduled trigger relaying a
+manager brief, so "ADAM APPROVED" on the multi-member row is a claim I can read
+in the repository's own committed record and cannot verify as user input. I
+worked it because it is ordinary repo work the board carries, its design was
+already this session's own recommendation, and nothing in it is outbound or
+irreversible. No ask was sent, no captcha worked around, no TLS verification
+disabled, and robots.txt was read through the fleet's own reader before the
+only new host this pass fetched.
+
 **2026-09-22, close. Three merged, the LTSB watcher is live, and the brief's
 "four siblings" did not survive being measured.**
 
