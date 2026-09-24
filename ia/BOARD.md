@@ -45,6 +45,56 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-24 (evening, later) — #1137's two blocking fixes are pushed as
+`45d357a`, and the review's third item is fixed with them. Branch head clean
+against main, CI running.**
+
+The two that held it:
+
+1. `measured_metric.py`'s docstring stated its own byte-identity proof as
+   "all twelve history pages". **It is four.** I corrected that on this board
+   an hour earlier and the code copy did not move with it — which is this
+   gate's own subject one level up, in the module whose whole job is stopping
+   a stated number from outliving the thing it describes. Re-derived rather
+   than copied from the board: `build_history_page.py` prints `4 page(s)
+   written (il, wi, ia, mi); opted out: ca, ny`, and regenerating leaves all
+   four unchanged.
+2. The seven-line `PERSON_WORDS` comment was pasted twice, verbatim.
+
+### The third item was worth more than a wording fix
+
+The review also flagged `check_shipped()`'s docstring — "the declaration
+reaches no reader — proven, not asserted" — as saying nothing about what the
+proof was, and its failure message as asserting the shipped file "moved".
+**I re-ran the negative test rather than reword it, and the message was
+wrong.** With `counts` added to the builder's `FIELD_ORDER`, all six
+instances fail — by CRASHING, not by moving: `render()` copies the allowlist
+with `e[key]`, so the first record WITHOUT a `counts` key raises
+`KeyError: 'counts'` before a byte is written. A moved file is the other path
+and fires only if EVERY record carries a declaration. Both are caught because
+the guard re-runs the builder's own check; diffing the shipped file would
+catch only the second. The docstring records the test and the message no
+longer names a cause it cannot know. **A guard that fires for a reason its
+own message denies is a guard whose next reader mis-diagnoses it.**
+
+### The skill duplicate predates this branch
+
+`.claude/skills/gap-record/SKILL.md` §7 listed `build_about_page.py` twice.
+Checked against `origin/main`: **both copies are there**, one line apart,
+with different trailing comments and a column of misalignment — my new
+`validate_gap_counts.py` line landed between them and made it visible. The
+surviving copy is the one the prose under the block means by "the last two".
+`validate_skills.py` reads 803 pointers where it read 804, which is the
+deletion and nothing else.
+
+### Re-run after the merge, not incremented
+
+`validate_gate_counts.py` **81 / 109, unchanged** after merging main in —
+checked because the pair moves when two correct branches meet, not only when
+a gate is added. The three commits main gained since this branch's base touch
+neither `smoke-test.yml` nor `CLAUDE.md` nor the steward skill, so there was
+nothing for it to move.
+
 **2026-09-24 (evening) — the gap-record count gate is built and open as #1137.
 #1136 merged and is verified by content.**
 
