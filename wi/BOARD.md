@@ -28,6 +28,80 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-24, evening. The #1135 hold is cleared, and the count in it was
+mine.** Pushed as `bfc1503`; both findings were verified against the shipped
+file before either was acted on.
+
+**THE DISTRICT COUNT.** `wi/metro-worksheet.json` and the comment it generates
+in `validate_index.py` said "268 alderpersons across 244 districts in 28
+municipalities, **measured** that day". Measured: 28 municipalities, **254**
+districts, 268 people — and it closes the other way, 240 in the base file plus
+3 + 4 + 3 + 4 = 14 from the four new cities. **244 is 240 plus four
+MUNICIPALITIES**, which is the slip exactly, and it was sitting inside a
+sentence claiming to be a measurement. Two counts in that sentence were right
+and the third was a different quantity wearing the same units.
+
+**TERM IS DROPPED**, on the two grounds that do not depend on the clause since
+withdrawn from the Tasks row. Nothing renders it — the card maps name, badge,
+phone, email, note and url, with no term branch — so it would reach a browser
+and no surface, as bytes carrying a live `check_roster_retention` gate from
+its first ship. And six records of 268 is not a column: no roster in this file
+has a term, so showing one for Wautoma and not the other 27 answers a reader
+inconsistently. The reason is in `scrape_wautoma`'s docstring rather than only
+in a PR thread. Wautoma was re-parsed from the copy already fetched.
+
+**`note` STAYS, AND THE TEST IS THE RENDER, NOT THE FIELD COUNT.** It is two
+records, which is fewer than term's six — so a count-based rule would have cut
+the wrong one. It is in `renderPersonRows`'s own documented contract and
+already ships on `wi-county-officers.json`'s 21 records: an established field a
+reader sees, where term is a new one nobody does.
+
+**TWO STRINGS NEITHER INTRODUCED NOR LEFT.** `layers[].answers` read "in the
+156 cities and villages … and, in 18 of them, the alderperson or trustee
+holding the seat" and `applies` read 156. Both corrected to 159 and 28; they
+flow into `sources.html` and its `Dataset` description.
+
+**`check_roster_retention` WENT RED AND IT WAS BASE DRIFT — worth recording
+because the failure reads like a real event in a file the branch never
+touched.** It named Butler, Chickasaw and Howard as VANISHED from
+`ia-supervisor-members.json`, under the gate's own line that a source which
+stops publishing is a real event. This branch touches no `ia/` file. Main
+gained all three in Iowa's own PR after the branch point, and the gate compares
+the working tree against main's CURRENT tip, so counties main had GAINED read
+as counties this tree had LOST. Rebasing cleared it. **The tell was in the same
+report**, which listed those three counties' outline files under "new since
+that ref" — a file that is new and records that are missing, in one run, is the
+branch's age rather than a publisher's change.
+
+**TWO OF THE THREE ITEMS IN TONIGHT'S RELAY ARE ALREADY ON MAIN**, both merged
+in #1133 (`71e09b9`) this afternoon, and I checked rather than assumed:
+
+  * **NG911** — `wi/data/source/ng911/built-rows.json` on main reads
+    `builtOn 2026-09-24` with all four `dataLastEdit` at 2026-09-14, matching
+    the live service, and `sw.js` carries `districtry-wi-shell-v40`. The
+    rebuild, the cache bump and the refreshed sidecar all shipped.
+  * **The legislature roster** — `ATTEMPTS = 4` and the six-case retry selftest
+    are both on main, and the roster itself was unfrozen before the code
+    landed: dispatch run 36005954124 succeeded in 23 seconds against the
+    61-second timeout that killed the scheduled run, and opened no PR because
+    the names had not moved.
+
+That is the second brief today to assign work that had already merged, after
+the Court of Appeals and MPS/RUSD rows this morning. Not a complaint — the
+relay is written before the merge lands — but it is why every row gets checked
+against the tree before a pass is spent on it.
+
+**The alderperson pool's artifact exists and cost no fetch**: 159 municipalities
+with districts drawn, 28 naming people after #1135, **131 naming nobody across
+626 districts**. It falls out of `aldermanic-districts.json` and
+`wi-alderpersons.json`, so the "measure every candidate once" step starts from
+a measurement rather than a sweep. The next tranche is scoped: Black River
+Falls (uppercase `WARD N`, needs the LTSB ward-is-district witness, 8 over 4),
+Neenah (ordinal, listed in NO district order so a positional read is wrong, 9
+over 3), then Oconomowoc (apex host serves robots and permits the path, `www`
+resets — a retry, not a block). Waupaca stays measured-shut: its page numbers
+districts 1-5 where LTSB keys 41-45, and nothing witnesses the correspondence.
+
 **2026-09-24, later. #1133 MERGED as `71e09b9`** — four commits, `smoke` green
 on each head it was asked about (`0c689a0` run 36010013959, `5f44307` run
 36017751882), merging clean, no review thread, and I did not merge it myself.
