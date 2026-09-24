@@ -125,6 +125,15 @@ FLOORS = {
     "01000": ("Algoma", 4, 8, 7, 7, 0),
     "35750": ("Horicon", 3, 6, 0, 0, 0),
     "20350": ("Dodgeville", 4, 8, 7, 5, 0),
+    # The second multi-member tranche, 2026-09-24. Both publish a mailbox and a
+    # direct phone for every seat, so their contact floors are the measured
+    # count less one rather than a zero.
+    #   Black River Falls numbers its seats by WARD and the scraper asserts
+    #     ward N IS district N against LTSB's live fabric before reading a name.
+    #   Neenah lists its nine members in NO district order, so each name is
+    #     read from the text before its own label rather than by position.
+    "07900": ("Black River Falls", 4, 8, 7, 7, 0),
+    "55750": ("Neenah", 3, 9, 8, 8, 0),
 }
 
 

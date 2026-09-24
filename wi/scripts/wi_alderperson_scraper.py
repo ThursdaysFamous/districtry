@@ -173,6 +173,22 @@ WAUKESHA_INDEX = "https://www.waukesha-wi.gov/about_the_common_council/index.php
 #   it scored district-to-name PAIRINGS, and a page that pairs each district
 #   twice scores as a full match.
 #
+#   OCONOMOWOC IS THE ONE OF THOSE FOUR STILL OUT, AND NOT FOR ACCESS —
+#   re-measured 2026-09-24, when Algoma, Dodgeville and Horicon shipped. Its
+#   APEX host serves robots.txt and permits /225/Common-Council, and its page
+#   answers 200 at 132 KB; its `www` host resets the connection, the Barron and
+#   Forest pattern where neither prefix is a safe default, and the page reset
+#   once on the apex too and answered on a retry. What holds it back is the
+#   CARD'S VOCABULARY. The city's own sentence says "eight Aldermen
+#   representing each of the City's four districts", and its directory names
+#   SEVEN people plus one entry reading `Vacanct District 1` — the city's own
+#   typo — so District 1 seats two, names one, and leaves one empty. The card
+#   can say a whole district is vacant (vacantDistricts, Madison's District 1)
+#   and cannot say a district seats two and names one. Shipping the one name
+#   silently is the same concealment one level down that the list schema was
+#   built to end, so it waits for the per-district seat count Illinois's
+#   at-large card already carries as `seats`, and not for another fetch.
+#
 #   WAUPACA's page numbers its districts 1-5 while LTSB keys its geometry
 #   41-45. Nothing read here witnesses the correspondence, and a wrong offset
 #   moves every name one seat, so it is not guessed.
@@ -291,6 +307,14 @@ GERMANTOWN_INDEX = "https://www.germantownwi.gov/299/Village-Board"
 # one of these paths. The four below were additionally read by hand, through
 # the shared reader and as the client this file sends, before their first
 # fetch.
+# ---- the second multi-member tranche, 2026-09-24 ----
+# robots.txt read for both before the first page fetch, through the shared
+# reader and as the client this file sends: each serves a file whose `*`
+# group reaches neither path, and neither states a Crawl-delay.
+BLACK_RIVER_FALLS_INDEX = ("https://blackriverfallswi.gov"
+                           "/common-council-committee-of-the-whole")
+NEENAH_INDEX = "https://www.ci.neenah.wi.us/common-council/"
+
 ALGOMA_INDEX = "https://www.algomacity.org/government/city_council.php"
 DODGEVILLE_INDEX = "https://www.cityofdodgeville.com/council"
 HORICON_INDEX = "https://www.horiconwi.gov/185/Elected-Officials"
@@ -1613,6 +1637,11 @@ def attempt(label, fn):
 
 
 
+# Roles printed where a name goes. They are NAME-SHAPED — two capitalised
+# words — so they must be removed before the name test, not after: Neenah's
+# council president read as a member called "Council President" until they
+# were.
+ROLE_RE = re.compile(r"(Council Vice President|Council President|Vice President)", re.I)
 NAME_RE = (r"[A-Z][A-Za-z.'\-]+(?:\s+(?:\"[A-Za-z]+\"\s+)?[A-Z][A-Za-z.'\-]*\.?){1,3}")
 
 
@@ -1780,6 +1809,97 @@ def scrape_dodgeville():
                           ("Alderperson District N", r"Alderperson\s+District\s+\d")), DODGEVILLE_INDEX
 
 
+
+def scrape_black_river_falls():
+    """`WARD N` headings, two alderpersons under each, eight over four.
+
+    THE HEADINGS ARE UPPERCASE and a case-sensitive `Ward` misses every one of
+    them, which is why the 2026-09-06 sweep recorded that shape rather than
+    leaving the next reader to find it.
+
+    THE CITY NUMBERS ITS SEATS BY WARD, so ward N is read as district N only
+    under require_ward_is_district — the Viroqua rule: the state must file
+    exactly four wards for this council and each must carry its own number.
+    A city that gains a fifth ward stops being keyable this way and fails here
+    rather than filing every alderperson one seat along.
+
+    The per-member anchor is `Serving Since YYYY`, not a separator count: the
+    tag strip leaves seventeen `|` runs between Ward 4's first name and its
+    anchor and eight between Ward 1's, on one page.
+    """
+    require_ward_is_district("Black River Falls", "C", 4)
+    page = fetch(BLACK_RIVER_FALLS_INDEX)
+    flat = H.unescape(re.sub(r"<[^>]+>", "|", page))
+    wards = list(re.finditer(r"WARD\s+(\d{1,2})\b", flat))
+    members = {}
+    for i, hit in enumerate(wards):
+        end = wards[i + 1].start() if i + 1 < len(wards) else min(len(flat), hit.end() + 2600)
+        block, prev = flat[hit.end():end], 0
+        for seat in re.finditer(r"Serving Since\s+(\d{4})", block):
+            seg = block[prev:seat.start()]
+            prev = seat.end()
+            names = re.findall(NAME_RE, ROLE_RE.sub(" ", seg))
+            if not names:
+                continue
+            entry = {"name": " ".join(names[-1].split())}
+            role = ROLE_RE.search(seg)
+            if role:
+                entry["note"] = role.group(1)
+            tail = block[seat.end():seat.end() + 400]
+            ph = re.search(r"Phone:\s*\((\d{3})\)\s*(\d{3})-(\d{4})", tail)
+            if ph:
+                entry["phone"] = "(%s) %s-%s" % ph.groups()
+            em = re.search(r"([A-Za-z0-9._%+-]+@blackriverfallswi\.gov)", tail)
+            if em:
+                entry["email"] = em.group(1).lower()
+            _put("black river falls", members, "%02d" % int(hit.group(1)), entry)
+    _seats_or_die("black river falls", members, 4, page,
+                  ("WARD N", r"WARD\s+\d{1,2}\b"))
+    return _people_or_die("black river falls", members, 8, page,
+                          ("WARD N", r"WARD\s+\d{1,2}\b")), BLACK_RIVER_FALLS_INDEX
+
+
+def scrape_neenah():
+    """NAME FIRST, then `Nth Aldermanic District – Term Expiration: ...`.
+    Three per district over three districts, nine seats.
+
+    THE PAGE IS NOT IN DISTRICT ORDER — it opens with the 2nd district's
+    council president and then runs 1, 1, 1, 2, 2, 3, 3, 3 — so a positional
+    read files eight of nine under the wrong district while looking orderly.
+    Each name is taken from the text immediately before its own label.
+
+    A ROLE SITS BETWEEN THE NAME AND THE LABEL (`Council President,
+    2026-2027`), and it is name-shaped: the first draft of this parser read
+    `Council President` as the member's name for exactly the seat that has
+    one. It is stripped for the name test and kept as the note.
+    """
+    page = fetch(NEENAH_INDEX)
+    flat = H.unescape(re.sub(r"<[^>]+>", "|", page))
+    members, prev = {}, 0
+    for hit in re.finditer(r"(\d)(?:st|nd|rd|th)\s+Aldermanic\s+District", flat):
+        seg = flat[prev:hit.start()]
+        prev = hit.end()
+        names = re.findall(NAME_RE, ROLE_RE.sub(" ", seg))
+        if not names:
+            continue
+        entry = {"name": " ".join(names[-1].split())}
+        role = ROLE_RE.search(seg)
+        if role:
+            entry["note"] = role.group(1)
+        tail = flat[hit.end():hit.end() + 400]
+        ph = re.search(r"\b(\d{3})[-.](\d{3})[-.](\d{4})\b", tail)
+        if ph:
+            entry["phone"] = "(%s) %s-%s" % ph.groups()
+        em = re.search(r"([A-Za-z0-9._%+-]+@neenahwi\.gov)", tail)
+        if em:
+            entry["email"] = em.group(1).lower()
+        _put("neenah", members, "%02d" % int(hit.group(1)), entry)
+    _seats_or_die("neenah", members, 3, page,
+                  ("Nth Aldermanic District", r"\d(?:st|nd|rd|th)\s+Aldermanic\s+District"))
+    return _people_or_die("neenah", members, 9, page,
+                          ("Nth Aldermanic District", r"\d(?:st|nd|rd|th)\s+Aldermanic\s+District")), NEENAH_INDEX
+
+
 def as_member_lists(members):
     """district -> ONE member, or district -> [members], in; always a LIST out.
 
@@ -1853,6 +1973,9 @@ def main():
             ("01000", "Algoma", 4, scrape_algoma),
             ("35750", "Horicon", 3, scrape_horicon),
             ("20350", "Dodgeville", 4, scrape_dodgeville),
+            # the second multi-member tranche, 2026-09-24
+            ("07900", "Black River Falls", 4, scrape_black_river_falls),
+            ("55750", "Neenah", 3, scrape_neenah),
     )
     for code, name, districts, fn in COVERED:
         result, reason = attempt(name, fn)
