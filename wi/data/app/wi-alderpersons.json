@@ -1,4 +1,60 @@
 {
+ "01000": {
+  "districts": 4,
+  "members": {
+   "01": [
+    {
+     "email": "alder1@algomacity.org",
+     "name": "Kevin Schmidt",
+     "phone": "(920) 255-0673"
+    },
+    {
+     "email": "alder2@algomacity.org",
+     "name": "John Ortlieb",
+     "phone": "(920) 487-9987"
+    }
+   ],
+   "02": [
+    {
+     "email": "alder3@algomacity.org",
+     "name": "Scott Meverden",
+     "phone": "(920) 412-3351"
+    },
+    {
+     "email": "alder4@algomacity.org",
+     "name": "Midge Swedberg",
+     "phone": "(612) 991-4092"
+    }
+   ],
+   "03": [
+    {
+     "email": "alder5@algomacity.org",
+     "name": "Wayne R. Schmidt",
+     "phone": "(920) 362-2433"
+    },
+    {
+     "email": "alder6@algomacity.org",
+     "name": "Casey Buhr",
+     "phone": "(920) 360-0351"
+    }
+   ],
+   "04": [
+    {
+     "email": "alder7@algomacity.org",
+     "name": "Jamie Stangel",
+     "phone": "(920) 323-5067"
+    },
+    {
+     "email": "alder8@algomacity.org",
+     "name": "Amy Johnson",
+     "phone": "(414) 745-1078"
+    }
+   ]
+  },
+  "municipality": "Algoma",
+  "seats": 8,
+  "sourceUrl": "https://www.algomacity.org/government/city_council.php"
+ },
  "01550": {
   "districts": 6,
   "members": {
@@ -149,6 +205,61 @@
   "municipality": "Appleton",
   "seats": 15,
   "sourceUrl": "https://www.appletonwi.gov/government/common_council.php"
+ },
+ "20350": {
+  "districts": 4,
+  "members": {
+   "01": [
+    {
+     "email": "shaunsersch@ci.dodgeville.wi.us",
+     "name": "Shaun Sersch",
+     "note": "Council President",
+     "phone": "(608) 935-2808"
+    },
+    {
+     "email": "rrlair@ci.dodgeville.wi.us",
+     "name": "Roxanne Reynolds-Lair"
+    }
+   ],
+   "02": [
+    {
+     "email": "tomdevoss@ci.dodgeville.wi.us",
+     "name": "Tom DeVoss"
+    },
+    {
+     "email": "jeffweber@ci.dodgeville.wi.us",
+     "name": "Jeff \"Potsie\" Weber",
+     "phone": "(608) 553-2817"
+    }
+   ],
+   "03": [
+    {
+     "email": "mike.olson@dodgevillewi.gov",
+     "name": "Mike Olson",
+     "phone": "(608) 515-8242"
+    },
+    {
+     "email": "jerryjohnson@ci.dodgeville.wi.us",
+     "name": "Jerry Johnson",
+     "phone": "(608) 574-5115"
+    }
+   ],
+   "04": [
+    {
+     "email": "jjsolberg@ci.dodgeville.wi.us",
+     "name": "Julie Johnson-Solberg",
+     "phone": "(608) 574-5546"
+    },
+    {
+     "email": "mpeterson@dodgevillewi.gov",
+     "name": "Michelle Peterson",
+     "phone": "(608) 930-5228"
+    }
+   ]
+  },
+  "municipality": "Dodgeville",
+  "seats": 8,
+  "sourceUrl": "https://www.cityofdodgeville.com/council"
  },
  "21625": {
   "districts": 4,
@@ -354,6 +465,39 @@
   "municipality": "Green Bay",
   "seats": 12,
   "sourceUrl": "https://www.greenbaywi.gov/m/directory"
+ },
+ "35750": {
+  "districts": 3,
+  "members": {
+   "01": [
+    {
+     "name": "Forrest Frami",
+     "note": "Council President"
+    },
+    {
+     "name": "Lisa Sullivan"
+    }
+   ],
+   "02": [
+    {
+     "name": "Jim Bandsma"
+    },
+    {
+     "name": "Marie Fenske"
+    }
+   ],
+   "03": [
+    {
+     "name": "Christine Schmitz"
+    },
+    {
+     "name": "Duane Olbinski"
+    }
+   ]
+  },
+  "municipality": "Horicon",
+  "seats": 6,
+  "sourceUrl": "https://www.horiconwi.gov/185/Elected-Officials"
  },
  "35950": {
   "districts": 8,
@@ -1714,5 +1858,49 @@
   "municipality": "Waukesha",
   "seats": 15,
   "sourceUrl": "https://www.waukesha-wi.gov/about_the_common_council/index.php"
+ },
+ "84625": {
+  "districts": 3,
+  "members": {
+   "01": [
+    {
+     "name": "Aaron Grimm",
+     "phone": "(920) 787-0745",
+     "term": "2029"
+    }
+   ],
+   "02": [
+    {
+     "name": "Mathew Hedrick",
+     "phone": "(920) 252-0061",
+     "term": "2030"
+    },
+    {
+     "name": "Robert Cayer",
+     "phone": "(920) 787-9058",
+     "term": "2030"
+    },
+    {
+     "name": "Patrick King",
+     "phone": "(920) 787-2809",
+     "term": "2029"
+    }
+   ],
+   "03": [
+    {
+     "name": "Ryan Petersen",
+     "phone": "(608) 495-0883",
+     "term": "2029"
+    },
+    {
+     "name": "Steve Ryerson",
+     "phone": "(920) 420-7551",
+     "term": "2030"
+    }
+   ]
+  },
+  "municipality": "Wautoma",
+  "seats": 6,
+  "sourceUrl": "http://www.cityofwautoma.com/common-council"
  }
 }
