@@ -22,11 +22,85 @@ Milwaukee and Racine school boards all name people.
 | Six roster workflows: shared pages after the branch cut (#1031) | **merged** `f2a0d88` | 2026-09-19 | The defect was measured here: run 35391214303 died on `wi/history.html` being dirty when #1014 merged mid-crawl. The ~40-minute county-clerk crawl is what makes the window wide, and the `Crawl-delay: 10` it honours is correct and untouched. |
 | Lincoln District 21 boundary withheld | open | — | The county's map and the state's filing put the boundary in different places. The card says so rather than picking one. Correct as it stands; listed so it is not forgotten. |
 | **~~Court of Appeals: build the two guards~~** | **CLOSED — #1040 merged 2026-09-19; the row and my 13:23 brief were both stale** | 2026-09-19, narrowed 2026-09-21 | **This row previously told you to spend a pass looking for another host and to consider recording the timeout as an expected block. Both are withdrawn, on your own evidence rather than on a change of mind.** Your reading of `wi_coa_scraper.py`'s own 2026-09-16 header shows the host search already spent and recorded — the Blue Book bench is April 2025 and both Archive snapshots are older than what ships, so either would move the data backwards — and repeating a measurement this repo has written down is the waste the backlog rule exists to prevent. The expected-unreachable flag is withdrawn for the reason you measured: the cause is per-runner packet drops, not a refusal (one runner reached the host in 0.078s while another never opened a socket, 36 minutes apart), so that entry would flap on the luck of the draw and would be a false statement about the host. **What is left is the two additive guards and nothing else:** a staleness ceiling that turns the job RED when the last SUCCESSFUL verification passes 60 days — the number Iowa's chair carry-forward already uses, so the fleet has one — and a single automatic re-run on a connect timeout, which the file itself already names as the remedy. Worth building for the second half of your question rather than the first: a job that goes red most weeks for a reason nobody can act on teaches a reviewer to skim every other red in the repo. |
-| **Multi-member districts: redesign the roster schema — ADAM APPROVED, DO FIRST** | **assigned 2026-09-21** | 2026-09-21 | Adam ruled on your open question: "Have Wisconsin redesign the scheme to support multi rep districts." That is your own recommendation approved — a LIST of members per district, every member rendered, single-member cities kept working by reading a one-element list. Both of your refusals stand: no two-slot schema, because Wautoma's 1, 3, 2 disproves it, and never picking one of two sitting members. **This is the blocker, not a tranche**: 15 of the 22 municipalities whose pages pair every district with a name seat more than one alderperson, so the sweep's yield is gated on the shape rather than on access. Six things to settle, sent in full to the session: whether the card sits inside an ENGINE fence (a fenced card makes this a fleet change ported as a real diff, and is checked BEFORE any fence is edited); reuse of the `<fips>-at-large` list vocabulary that `county-board-members.json` already carries for Menominee rather than a second way of saying the same thing; ONE shape rather than a union type, with the shipped single-member cities converted in the same change; naming every downstream reader first (`check_roster_retention`'s per-source grain, `validate_officeholder_names`, `build_officeholder_tables`, `build_county_pages`, `validate_structured_data`); two PRs, schema-and-readers with no new data, then the 15 cities against a settled shape; and carrying a stated term where a source gives one, inventing none where it does not. If the retention gate objects to the new grain it is asking a real question — teach it the grain, never except the files. |
+| **Multi-member districts: redesign the roster schema — ADAM APPROVED, DO FIRST** | **assigned 2026-09-21** | 2026-09-21 | Adam ruled on your open question: "Have Wisconsin redesign the scheme to support multi rep districts." That is your own recommendation approved — a LIST of members per district, every member rendered, single-member cities kept working by reading a one-element list. Both of your refusals stand: no two-slot schema, because Wautoma's 1, 3, 2 disproves it, and never picking one of two sitting members. **This is the blocker, not a tranche**: 15 of the 22 municipalities whose pages pair every district with a name seat more than one alderperson, so the sweep's yield is gated on the shape rather than on access. Six things to settle, sent in full to the session: whether the card sits inside an ENGINE fence (a fenced card makes this a fleet change ported as a real diff, and is checked BEFORE any fence is edited); reuse of the `<fips>-at-large` list vocabulary that `county-board-members.json` already carries for Menominee rather than a second way of saying the same thing; ONE shape rather than a union type, with the shipped single-member cities converted in the same change; naming every downstream reader first (`check_roster_retention`'s per-source grain, `validate_officeholder_names`, `build_officeholder_tables`, `build_county_pages`, `validate_structured_data`); two PRs, schema-and-readers with no new data, then the 15 cities against a settled shape. **THE “carry a stated term” CLAUSE THAT STOOD HERE IS WITHDRAWN, 2026-09-24, and it was mine.** #1135 followed it and shipped a `term` on six Wautoma records; nothing renders it — the card maps name, badge, phone, email, note and url — so it is bytes with a live retention gate attached, and six of 268 is not a column. Terms on these cards are a fleet question with each source's term column to be established first, not a clause in a tranche brief. If the retention gate objects to the new grain it is asking a real question — teach it the grain, never except the files. |
 | **The alderperson gap — measure the whole pool before any tranche** | **assigned, after the above** | 2026-09-19 | Your own board calls this Wisconsin's biggest reader-facing hole and I agree. **RE-MEASURED BY THE SESSION 2026-09-24 and my figure was stale: 159 municipalities, not 156, and 135 still a gap, not 132.** Its #1133 commit measured `wi/data/app/aldermanic-districts.json` at 866 features across 159 distinct `COUSUBFP`, where the prose said 853 across 156 in four places — and `validate_index.py`'s own expected feature count has read 866 since #787 on 2026-09-06, so the sentences beside it were eighteen days behind their own gate with everything green. 24 cities name their alderpersons, which is the half of the row that was right. In the other 135 the card names the district and nobody in it. Michigan's #989 probe is the shape: measure every candidate once, report, then ship tranches against the artifact with no discovery per tranche. |
 | **~~MPS and RUSD school-board jobs: Monday 21 September IS the first test~~ — and it passed** | **CLOSED 2026-09-24 by the session, whose premise correction is right** | 2026-09-19 | Both had a duplicate `run:` key that stopped GitHub starting them at all; fixed 2026-09-16 in #978 and no Monday has passed since. A zero-job run means the fix did not take. Check-in already armed. |
 
 ## Status — this session owns this section
+
+**2026-09-24, evening. The #1135 hold is cleared, and the count in it was
+mine.** Pushed as `bfc1503`; both findings were verified against the shipped
+file before either was acted on.
+
+**THE DISTRICT COUNT.** `wi/metro-worksheet.json` and the comment it generates
+in `validate_index.py` said "268 alderpersons across 244 districts in 28
+municipalities, **measured** that day". Measured: 28 municipalities, **254**
+districts, 268 people — and it closes the other way, 240 in the base file plus
+3 + 4 + 3 + 4 = 14 from the four new cities. **244 is 240 plus four
+MUNICIPALITIES**, which is the slip exactly, and it was sitting inside a
+sentence claiming to be a measurement. Two counts in that sentence were right
+and the third was a different quantity wearing the same units.
+
+**TERM IS DROPPED**, on the two grounds that do not depend on the clause since
+withdrawn from the Tasks row. Nothing renders it — the card maps name, badge,
+phone, email, note and url, with no term branch — so it would reach a browser
+and no surface, as bytes carrying a live `check_roster_retention` gate from
+its first ship. And six records of 268 is not a column: no roster in this file
+has a term, so showing one for Wautoma and not the other 27 answers a reader
+inconsistently. The reason is in `scrape_wautoma`'s docstring rather than only
+in a PR thread. Wautoma was re-parsed from the copy already fetched.
+
+**`note` STAYS, AND THE TEST IS THE RENDER, NOT THE FIELD COUNT.** It is two
+records, which is fewer than term's six — so a count-based rule would have cut
+the wrong one. It is in `renderPersonRows`'s own documented contract and
+already ships on `wi-county-officers.json`'s 21 records: an established field a
+reader sees, where term is a new one nobody does.
+
+**TWO STRINGS NEITHER INTRODUCED NOR LEFT.** `layers[].answers` read "in the
+156 cities and villages … and, in 18 of them, the alderperson or trustee
+holding the seat" and `applies` read 156. Both corrected to 159 and 28; they
+flow into `sources.html` and its `Dataset` description.
+
+**`check_roster_retention` WENT RED AND IT WAS BASE DRIFT — worth recording
+because the failure reads like a real event in a file the branch never
+touched.** It named Butler, Chickasaw and Howard as VANISHED from
+`ia-supervisor-members.json`, under the gate's own line that a source which
+stops publishing is a real event. This branch touches no `ia/` file. Main
+gained all three in Iowa's own PR after the branch point, and the gate compares
+the working tree against main's CURRENT tip, so counties main had GAINED read
+as counties this tree had LOST. Rebasing cleared it. **The tell was in the same
+report**, which listed those three counties' outline files under "new since
+that ref" — a file that is new and records that are missing, in one run, is the
+branch's age rather than a publisher's change.
+
+**TWO OF THE THREE ITEMS IN TONIGHT'S RELAY ARE ALREADY ON MAIN**, both merged
+in #1133 (`71e09b9`) this afternoon, and I checked rather than assumed:
+
+  * **NG911** — `wi/data/source/ng911/built-rows.json` on main reads
+    `builtOn 2026-09-24` with all four `dataLastEdit` at 2026-09-14, matching
+    the live service, and `sw.js` carries `districtry-wi-shell-v40`. The
+    rebuild, the cache bump and the refreshed sidecar all shipped.
+  * **The legislature roster** — `ATTEMPTS = 4` and the six-case retry selftest
+    are both on main, and the roster itself was unfrozen before the code
+    landed: dispatch run 36005954124 succeeded in 23 seconds against the
+    61-second timeout that killed the scheduled run, and opened no PR because
+    the names had not moved.
+
+That is the second brief today to assign work that had already merged, after
+the Court of Appeals and MPS/RUSD rows this morning. Not a complaint — the
+relay is written before the merge lands — but it is why every row gets checked
+against the tree before a pass is spent on it.
+
+**The alderperson pool's artifact exists and cost no fetch**: 159 municipalities
+with districts drawn, 28 naming people after #1135, **131 naming nobody across
+626 districts**. It falls out of `aldermanic-districts.json` and
+`wi-alderpersons.json`, so the "measure every candidate once" step starts from
+a measurement rather than a sweep. The next tranche is scoped: Black River
+Falls (uppercase `WARD N`, needs the LTSB ward-is-district witness, 8 over 4),
+Neenah (ordinal, listed in NO district order so a positional read is wrong, 9
+over 3), then Oconomowoc (apex host serves robots and permits the path, `www`
+resets — a retry, not a block). Waupaca stays measured-shut: its page numbers
+districts 1-5 where LTSB keys 41-45, and nothing witnesses the correspondence.
 
 **2026-09-24, later. #1133 MERGED as `71e09b9`** — four commits, `smoke` green
 on each head it was asked about (`0c689a0` run 36010013959, `5f44307` run
