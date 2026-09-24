@@ -36,6 +36,40 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-24 — of the three items assigned tonight, one was real and two were already done.**
+Measured before starting anything, because this morning's brief was stale the same way and the
+manager's own note says to assume a stated figure is wrong until measured.
+
+**Item 1, the counts declaration, was real and is open as #1141.** All three numbers turned out
+sayable in #1137's grammar with nothing stretched — 83 is `features` on
+`mi/data/app/state-counties.json`, 48 is `keys` on `mi-commissioner-members.json`, 35 is `keys`
+on `mi-commissioner-returns.json` — and all three were already correct. `self` was not available:
+this record's own `counties` array is EMPTY, so it measures 0 rather than 83. A complement for 35
+was considered and rejected, because `of: 83` minus the scraped file ties the number to the file
+it is not about. With all three declared the sum identity follows, so a fourth entry asserting it
+would add nothing.
+
+**Item 3, the probe's robots gap, was done on 2026-09-19** and is `#60` in this session's own
+task list. Verified against the artifact rather than the docstring that claims it:
+`mi/data/source/mi-county-board-probe.json` holds 25 rows, 23 carry `robots`, and those 23 are
+exactly the rows with a confirmed `host` — the two without are Shiawassee and Montmorency at
+`no-confirmed-host`, where there is no host whose robots.txt could be read.
+
+**Item 2, the WARD query, was spent on 2026-09-06 and the route it fed was closed on 2026-09-21.**
+`mi/WATCH.md` records the query settling 23 cities in one request, and then the operator ruling
+that the state's precinct fabric may only ever CHECK a city-published ward boundary and never
+stand in for one, because a state tiling carries no statement by the city about its own boundary.
+So Wyoming is a measured shut rather than a pending decision, and one question survives that
+ruling and is a different one: Jackson, whose proposed source is JACKSON COUNTY's precinct layer,
+a separate publisher, which leaves the state's fabric as a genuinely independent check.
+
+**What is genuinely open is the 25-county re-examination**, and the authorised budget fits it:
+the probe's 25 rows are 11 `no-board-page`, 7 `no-districts`, 3 `not-keyable`, 2
+`no-confirmed-host` and 2 `challenge` (Branch and Tuscola, which get nothing at all). The 11 are
+the shape the manager named. Their recorded robots readings are five days old, and the rule is
+that robots.txt is read before the first fetch, so a reading from 2026-09-19 does not license a
+fetch today — each host is re-read as the client that fetches before its one request.
+
 **2026-09-24 on resuming — all three DO FIRST rows are already done and merged, and the brief
 I was woken with predates them by two days.** Measured against `656adeb9` before touching
 anything, because the brief's own first line says the board is the record.
