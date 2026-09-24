@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """
 Build data/app/wi-alderpersons.json from wi_alderperson_scraper.py's
-intermediate — the aldermanic-district card's roster for the 18 municipalities
+intermediate — the aldermanic-district card's roster for the 24 municipalities
 whose routes are verified (the six of 2026-08-26: Milwaukee, Madison, Green
-Bay, Kenosha, Racine, Waukesha; and the twelve of 2026-09-05: Stevens Point,
+Bay, Kenosha, Racine, Waukesha; the twelve of 2026-09-05: Stevens Point,
 Menomonie, Manitowoc, Sheboygan, Superior, Portage, Viroqua, Menasha, Howard,
-Tomah, Eau Claire, Appleton — 208 seats, 207 filled + Madison's vacant
-District 1).
+Tomah, Eau Claire, Appleton; the five of that evening: New Berlin, Sturgeon
+Bay, Altoona, Eagle River, Germantown; and New Lisbon, 2026-09-06).
+Measured 2026-09-24: 240 districts, 240 alderpersons, no vacancy. The count
+this docstring carried said 18 municipalities and 208 seats, and Madison's
+District 1, recorded here as vacant, has since been filled.
 Keyed by COUSUBFP + zero-padded district id, the exact key pair the
 dissolved geometry carries, and CROSS-GATED against the shipped geometry
 file: a roster row naming a district the map does not draw fails the build,
@@ -15,6 +18,22 @@ as does a covered city whose district count stops matching its seat count.
 Floors are per municipality and per field, tuned to that municipality's
 measured first run — one losing its e-mail column (the Brown County lesson)
 fails here before the retention gate ever sees it.
+
+THE SHAPE: `members[district]` IS ALWAYS A LIST, never a bare member object.
+Wisconsin councils do not all seat one alderperson per district — of the 22
+municipalities the 2026-09-06 sweep matched, FIFTEEN seat more than one, and
+Wautoma seats ONE, THREE and TWO across its three districts, so an arbitrary
+count is the only shape that fits and a fixed pair of slots was refused. Every
+municipality shipped today names exactly one member per district, so every list
+here has one element; that is a fact about these municipalities and never a
+shape any reader may rely on.
+
+TWO NUMBERS THAT COINCIDE TODAY AND WILL NOT. `districts` is how many districts
+the municipality's geometry draws, and is what the geometry cross-gate compares.
+`seats` is how many PEOPLE those districts elect, DERIVED here by counting the
+members rather than restated by hand. They are equal for all 24 municipalities
+in this file and diverge the day a multi-member council joins, which is why they
+are counted separately now rather than when it happens.
 """
 
 import datetime
@@ -28,7 +47,10 @@ RAW = os.path.join(SCRIPT_DIR, ".cache", "wi_alderpersons_raw.json")
 GEOMETRY = os.path.join(REPO_ROOT, "data", "app", "aldermanic-districts.json")
 OUT = os.path.join(REPO_ROOT, "data", "app", "wi-alderpersons.json")
 
-# COUSUBFP -> (name, seats, min named, min emails, min phones, min urls)
+# COUSUBFP -> (name, districts, min named, min emails, min phones, min urls)
+# `districts` is the count the shipped geometry must draw. The four floors
+# count PEOPLE, not districts: in a multi-member council one district losing
+# one of its three members is a real loss a district count cannot see.
 FLOORS = {
     "53000": ("Milwaukee", 15, 15, 0, 0, 0),
     "48000": ("Madison", 20, 18, 17, 0, 17),
@@ -162,7 +184,9 @@ def carry_forward(cities, failures):
             pass
         print("  NOT RE-READ %-14s %d members kept from the last shipped file, "
               "carried since %s%s — %s"
-              % (FLOORS[code][0], len(block["members"]), block["carriedFrom"],
+              % (FLOORS[code][0],
+                 sum(len(v) for v in block["members"].values()),
+                 block["carriedFrom"],
                  age, reason))
     if len(carried) > MAX_CARRIED:
         raise SystemExit("%d of %d cities were unreadable (%s) — that is this "
@@ -173,7 +197,180 @@ def carry_forward(cities, failures):
     return cities
 
 
+def check_city(name, districts, floors, c, geo_districts):
+    """Every guard for one municipality, and the derived `seats` it writes.
+
+    A function rather than a loop body so selftest() can drive it with
+    fixtures: the shape change this file describes moved four counts at once,
+    and each of them reads plausibly when it is wrong, so each needs a case
+    that fails on purpose.
+
+    `geo_districts` is the set of district ids the shipped geometry draws for
+    this municipality. Raises SystemExit naming the municipality on any
+    failure; on success sets c["seats"] and returns the people it counted.
+    """
+    mn, me, mp, mu = floors
+    ms = c["members"]
+    # THE SHAPE IS CHECKED BEFORE ANYTHING IS COUNTED. Every count below reads
+    # through a list, so a bare member object would be counted by len() as its
+    # number of KEYS — "name", "phone", "url" reads as three people. A wrong
+    # number that looks plausible is worse than a crash, so the shape fails
+    # here, named, before any arithmetic runs on it.
+    for district, people in sorted(ms.items()):
+        if not isinstance(people, list):
+            raise SystemExit("%s district %s: members must be a LIST (got %s) "
+                             "— see this file's docstring"
+                             % (name, district, type(people).__name__))
+        if not people:
+            raise SystemExit("%s district %s: empty member list — a district "
+                             "with nobody in it is a VACANCY and rides "
+                             "vacantDistricts" % (name, district))
+    if c["municipality"] != name or c.get("districts") != districts:
+        raise SystemExit("%s: identity drifted (%r/%r)"
+                         % (name, c["municipality"], c.get("districts")))
+    if not geo_districts:
+        raise SystemExit("%s has a roster but no districts in the shipped "
+                         "geometry" % name)
+    if len(geo_districts) != districts:
+        raise SystemExit("%s: geometry draws %d districts, the roster expects %d"
+                         % (name, len(geo_districts), districts))
+    stray = set(ms) - geo_districts
+    if stray:
+        raise SystemExit("%s: roster names district(s) %s the map does not draw"
+                         % (name, sorted(stray)))
+    vacant = set("%02d" % v for v in c.get("vacantDistricts", []))
+    if set(ms) | vacant != geo_districts:
+        raise SystemExit("%s: %d district(s) named + %d vacant does not cover "
+                         "the %d the map draws"
+                         % (name, len(ms), len(vacant), len(geo_districts)))
+    # PEOPLE, flattened out of the per-district lists. len(ms) counts DISTRICTS
+    # and is the wrong denominator for every one of these four.
+    people = [m for lst in ms.values() for m in lst]
+    counts = (len(people),
+              sum(1 for m in people if m.get("email")),
+              sum(1 for m in people if m.get("phone")),
+              sum(1 for m in people if m.get("url")))
+    for label, got, floor in zip(("named", "emails", "phones", "urls"),
+                                 counts, (mn, me, mp, mu)):
+        if got < floor:
+            raise SystemExit("%s: only %d %s (floor %d) — the page shape moved"
+                             % (name, got, label, floor))
+    # `seats` is DERIVED and never carried through from the scraper's own
+    # hand-kept table: how many people these districts elect is a property of
+    # the roster just read, and a hand-kept copy of it is a second reader of
+    # one question.
+    c["seats"] = len(people) + len(vacant)
+    return len(people)
+
+
+def _city(members, districts=None, municipality="Testville", vacant=None):
+    c = {"municipality": municipality, "members": members,
+         "districts": districts if districts is not None else len(members),
+         "sourceUrl": "https://example.test/council"}
+    if vacant is not None:
+        c["vacantDistricts"] = vacant
+    return c
+
+
+def selftest():
+    """Drive check_city with fixtures, one per count the list shape moved.
+
+    Every case that must FAIL is asserted to fail. A guard nothing can fail on
+    purpose is a guard nobody has tested, and four of these count people where
+    the code they replaced counted districts — a difference that is invisible
+    while every council seats exactly one member, which is every council in the
+    file today.
+    """
+    bad, ran = [], []
+
+    def want_ok(label, members, districts, floors, geo, seats, vacant=None):
+        ran.append(label)
+        c = _city(members, districts, vacant=vacant)
+        try:
+            check_city("Testville", districts, floors, c, set(geo))
+        except SystemExit as e:
+            bad.append("%s: expected OK, refused with %s" % (label, e))
+            return
+        if c["seats"] != seats:
+            bad.append("%s: seats %r, expected %r" % (label, c["seats"], seats))
+
+    def want_fail(label, members, districts, floors, geo, expect, vacant=None):
+        ran.append(label)
+        try:
+            check_city("Testville", districts, floors,
+                       _city(members, districts, vacant=vacant), set(geo))
+        except SystemExit as e:
+            if expect not in str(e):
+                bad.append("%s: refused for the wrong reason: %s" % (label, e))
+            return
+        bad.append("%s: expected a refusal, got none" % label)
+
+    one = {"01": [{"name": "A"}], "02": [{"name": "B"}]}
+    # 1. The shape every municipality has today: one member per district.
+    want_ok("single-member", one, 2, (2, 0, 0, 0), {"01", "02"}, 2)
+
+    # 2. THE CASE THE CHANGE EXISTS FOR — Wautoma's uneven councils. Two
+    #    districts, four people. `seats` must be 4 and the named floor must be
+    #    satisfied by 4, not by the 2 a district count would have given.
+    uneven = {"01": [{"name": "A"}],
+              "02": [{"name": "B"}, {"name": "C"}, {"name": "D"}]}
+    want_ok("multi-member", uneven, 2, (4, 0, 0, 0), {"01", "02"}, 4)
+
+    # 3. ...and the floor counts PEOPLE, so a council that loses one of a
+    #    district's three members fails even though every district is still
+    #    named. This is the loss a district count cannot see.
+    short = {"01": [{"name": "A"}], "02": [{"name": "B"}, {"name": "C"}]}
+    want_fail("member lost from a multi-member district", short, 2,
+              (4, 0, 0, 0), {"01", "02"}, "only 3 named")
+
+    # 4. The old shape must not pass silently. A bare dict has three keys, so
+    #    a len() over it reads as three people.
+    want_fail("bare member object (the pre-2026-09-24 shape)",
+              {"01": {"name": "A", "phone": "x", "url": "y"}, "02": [{"name": "B"}]},
+              2, (2, 0, 0, 0), {"01", "02"}, "must be a LIST")
+
+    # 5. An empty list is a vacancy written the wrong way.
+    want_fail("empty member list", {"01": [], "02": [{"name": "B"}]}, 2,
+              (1, 0, 0, 0), {"01", "02"}, "empty member list")
+
+    # 6. Contact floors count people across the lists, not districts.
+    contacts = {"01": [{"name": "A", "email": "a@x.test"}],
+                "02": [{"name": "B", "email": "b@x.test"},
+                       {"name": "C", "email": "c@x.test"}]}
+    want_ok("contacts counted per person", contacts, 2, (3, 3, 0, 0),
+            {"01", "02"}, 3)
+    want_fail("e-mail column emptying", contacts, 2, (3, 4, 0, 0),
+              {"01", "02"}, "only 3 emails")
+
+    # 7. The geometry cross-gate compares DISTRICTS and is unmoved by how many
+    #    people sit in them.
+    want_fail("geometry draws a district the roster does not expect", uneven, 2,
+              (4, 0, 0, 0), {"01", "02", "03"}, "geometry draws 3 districts")
+    want_fail("roster names a district the map does not draw", uneven, 2,
+              (4, 0, 0, 0), {"01", "09"}, "does not draw")
+
+    # 8. A vacancy is still a district with no members KEY, and still counts
+    #    towards seats — the card says "vacant" rather than naming nobody.
+    want_ok("vacant district", {"01": [{"name": "A"}]}, 2, (1, 0, 0, 0),
+            {"01", "02"}, 2, vacant=[2])
+
+    if bad:
+        for line in bad:
+            print("  FAIL %s" % line)
+        raise SystemExit("selftest: %d of %d case(s) failed"
+                         % (len(bad), len(ran)))
+    # COUNTED, never stated: the first draft of this line said 11 where ten
+    # cases run, which is the defect the rest of this file exists to prevent.
+    print("selftest: %d case(s), 0 failures" % len(ran))
+
+
 def main():
+    # ON EVERY BUILD, not as a separate CI step. It costs milliseconds and the
+    # weekly job is the witness that it still passes; a --selftest flag with no
+    # caller is a test that stops being run the week somebody forgets it.
+    selftest()
+    if "--selftest" in sys.argv[1:]:
+        return
     with open(RAW) as f:
         raw = json.load(f)
     cities = raw["cities"]
@@ -188,38 +385,14 @@ def main():
     if set(cities) != set(FLOORS):
         raise SystemExit("scraper covered %s, floors expect %s"
                          % (sorted(cities), sorted(FLOORS)))
-    for k, (name, seats, mn, me, mp, mu) in FLOORS.items():
-        c = cities[k]
-        ms = c["members"]
-        if c["municipality"] != name or c["seats"] != seats:
-            raise SystemExit("%s: identity drifted (%r/%r)" % (name, c["municipality"], c["seats"]))
-        if k not in geo_keys:
-            raise SystemExit("%s (%s) has a roster but no districts in the shipped "
-                             "geometry" % (name, k))
-        if len(geo_keys[k]) != seats:
-            raise SystemExit("%s: geometry draws %d districts, the city seats %d"
-                             % (name, len(geo_keys[k]), seats))
-        stray = set(ms) - geo_keys[k]
-        if stray:
-            raise SystemExit("%s: roster names district(s) %s the map does not draw"
-                             % (name, sorted(stray)))
-        vacant = set("%02d" % v for v in c.get("vacantDistricts", []))
-        if set(ms) | vacant != geo_keys[k]:
-            raise SystemExit("%s: %d named + %d vacant does not cover the %d districts"
-                             % (name, len(ms), len(vacant), len(geo_keys[k])))
-        counts = (len(ms),
-                  sum(1 for m in ms.values() if m.get("email")),
-                  sum(1 for m in ms.values() if m.get("phone")),
-                  sum(1 for m in ms.values() if m.get("url")))
-        for label, got, floor in zip(("named", "emails", "phones", "urls"),
-                                     counts, (mn, me, mp, mu)):
-            if got < floor:
-                raise SystemExit("%s: only %d %s (floor %d) — the page shape moved"
-                                 % (name, got, label, floor))
+    for k, (name, districts, mn, me, mp, mu) in FLOORS.items():
+        check_city(name, districts, (mn, me, mp, mu), cities[k],
+                   geo_keys.get(k, set()))
 
     with open(OUT, "w") as f:
         json.dump(cities, f, indent=1, ensure_ascii=False, sort_keys=True)
-    total = sum(len(c["members"]) for c in cities.values())
+    total = sum(len(lst) for c in cities.values()
+                for lst in c["members"].values())
     print("wi-alderpersons.json: %d alderpersons across %d cities -> %s"
           % (total, len(cities), os.path.relpath(OUT, REPO_ROOT)))
 

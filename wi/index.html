@@ -11602,15 +11602,21 @@ function initWisconsinExplorer() {
         var cousub = findPropCI(props, ["cousubfp"]);
         var alderid = findPropCI(props, ["alderid"]);
         var city = (parts[1] && cousub != null) ? parts[1][String(cousub)] : null;
-        var member = (city && city.members && alderid != null)
+        // members[district] IS ALWAYS A LIST. Wisconsin councils do not all
+        // seat one alderperson per district — Wautoma seats one, three and two
+        // across its three — so the card renders however many the roster
+        // names. A one-member district is a one-element list, not a special
+        // case, which is why there is no bare-object branch to fall back to.
+        var members = (city && city.members && alderid != null)
           ? city.members[String(alderid)] : null;
+        if (!members || !members.length) members = null;
         var vacant = false;
-        if (city && !member && city.vacantDistricts) {
+        if (city && !members && city.vacantDistricts) {
           var n = parseInt(String(alderid), 10);
           vacant = city.vacantDistricts.indexOf(n) !== -1;
         }
         return { seq: seq, props: props, city: city || null,
-                 member: member || null, vacant: vacant };
+                 members: members, vacant: vacant };
       });
     },
     cardIdentifier: function (result) {
@@ -11625,17 +11631,24 @@ function initWisconsinExplorer() {
       // shipped rows were kept; without this row the card would show
       // weeks-old officeholders in exactly the same voice as fresh ones.
       var carriedFrom = result.city && result.city.carriedFrom;
-      if (result.member) {
-        var person = {
-          name: String(result.member.name),
-          badge: isTrustee ? "Trustee" : "Alderperson",
-          phone: result.member.phone ? String(result.member.phone) : null,
-          email: result.member.email ? String(result.member.email) : null
-        };
-        if (result.member.note) person.note = String(result.member.note);
-        var profile = safeHttpUrl(result.member.url);
-        if (profile) person.links = [{ label: "Profile", url: profile }];
-        wrap.appendChild(renderPersonRows([person]));
+      if (result.members) {
+        // EVERY member the district elects, in the order the roster names
+        // them. renderPersonRows already takes a list, so a three-member
+        // district renders three rows with no other change; what was wrong
+        // before was upstream of it, where the roster held room for one.
+        var people = result.members.map(function (m) {
+          var person = {
+            name: String(m.name),
+            badge: isTrustee ? "Trustee" : "Alderperson",
+            phone: m.phone ? String(m.phone) : null,
+            email: m.email ? String(m.email) : null
+          };
+          if (m.note) person.note = String(m.note);
+          var profile = safeHttpUrl(m.url);
+          if (profile) person.links = [{ label: "Profile", url: profile }];
+          return person;
+        });
+        wrap.appendChild(renderPersonRows(people));
       } else if (result.vacant) {
         // Madison's District 1 at first build — the city's own directory
         // says vacant, so the card says vacant rather than nothing
@@ -11644,7 +11657,8 @@ function initWisconsinExplorer() {
         ]));
       }
       // THE CARRY NOTE SITS OUTSIDE THE NAMED BRANCH, corrected 2026-09-05.
-      // It was written inside `if (result.member)`, so a carried municipality
+      // It was written inside the named branch (`result.member` then,
+      // `result.members` now), so a carried municipality
       // whose district is VACANT showed "Vacant" in the same confident voice
       // as a fresh reading — and a vacancy is exactly the fact most likely to
       // have changed while the city's page was unreadable. The staleness

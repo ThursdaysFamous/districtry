@@ -1561,12 +1561,44 @@ def attempt(label, fn):
         return None, reason
 
 
+def as_member_lists(members):
+    """district -> ONE member, or district -> [members], in; always a LIST out.
+
+    THE SHIPPED FILE HAS EXACTLY ONE SHAPE — `members[district]` is always a
+    list — because a reader that must ask "dict or list?" is a reader that will
+    one day guess. This conversion is the only place the question is asked.
+
+    It is applied HERE, at the single point every city's parse passes through,
+    rather than by editing twenty-five independently-shaped parsers. Each of
+    those has its own witnesses and its own count guards, and a mechanical
+    sweep across them is exactly where a silent wrong answer would enter; a
+    parser that names one member per district keeps returning what it returns
+    and is converted once, in one place, under this docstring.
+
+    A parser that reads a genuinely multi-member council returns lists already
+    and passes through untouched — Wautoma seats one, three and two members
+    across its three districts, so the shape has to hold an arbitrary count and
+    a fixed pair of slots was refused.
+    """
+    out = {}
+    for district, value in members.items():
+        if isinstance(value, list):
+            if not value:
+                raise SystemExit("%s: empty member list — a district with "
+                                 "nobody in it is a VACANCY, which rides "
+                                 "vacantDistricts, not an empty list" % district)
+            out[district] = value
+        else:
+            out[district] = [value]
+    return out
+
+
 def main():
     argv = sys.argv[1:]
     out_path = argv[argv.index("--out") + 1] if "--out" in argv else DEFAULT_OUT
 
     got, failures = {}, {}
-    for code, name, seats, fn in (
+    for code, name, districts, fn in (
             ("53000", "Milwaukee", 15, scrape_milwaukee),
             ("48000", "Madison", 20, scrape_madison),
             ("31000", "Green Bay", 12, scrape_green_bay),
@@ -1598,8 +1630,13 @@ def main():
             continue
         # Madison alone returns a third value: the districts it says are vacant
         members, source = result[0], result[1]
-        entry = {"municipality": name, "seats": seats, "sourceUrl": source,
-                 "members": members}
+        # `districts`, not `seats`: this number has always been the count of
+        # districts the municipality's geometry draws, which the builder
+        # compares against the shipped layer. It stops equalling the number of
+        # people the council seats the moment a multi-member city joins, so it
+        # is named for what it counts.
+        entry = {"municipality": name, "districts": districts, "sourceUrl": source,
+                 "members": as_member_lists(members)}
         if len(result) > 2:
             entry["vacantDistricts"] = result[2]
         got[code] = entry
@@ -1613,7 +1650,9 @@ def main():
     with open(out_path, "w") as f:
         json.dump({"cities": got, "failures": failures}, f, indent=2,
                   ensure_ascii=False)
-    total = sum(len(c["members"]) for c in got.values())
+    # PEOPLE, not districts: len(members) counts districts once the values
+    # are lists, and a multi-member city would under-report itself.
+    total = sum(len(ms) for c in got.values() for ms in c["members"].values())
     madison = got.get("48000", {}).get("vacantDistricts")
     print("scraped %d alderpersons across %d of %d municipalities (Madison "
           "vacant: %s)%s -> %s"
