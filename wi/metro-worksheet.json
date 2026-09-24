@@ -2378,7 +2378,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-wi-shell-v39",
+    "cache_name": "districtry-wi-shell-v40",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
