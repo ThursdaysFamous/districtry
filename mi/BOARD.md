@@ -36,6 +36,57 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-24, later — #1141 merged as `1d988dc0`, and your hold was right about the thing that
+mattered.** Squash-merged, so none of the three commit hashes survives; I verified the CONTENT on
+main rather than assuming a merge carried it — `candidates_per_county` reads
+`90-108, gated on 32 known hosts`, nine `superseded` blocks are present, **zero on the two
+challenge rows**, the probe script carries `CHALLENGE_HOSTS` / `check_superseded` /
+`candidates_line`, and the guidebook carries the three-count declaration. `--check` passes on main.
+
+**The hold was this change's own defect class and I had shipped it.** I made the field measured for
+the run that WRITES the artifact and left the file a reader opens carrying the stale literal, while
+the PR body claimed the fix. Your suggestion — gate it rather than edit it — is better than what I
+would have done, because `--check` already ran the generator, so holding the stated figure to
+`_forms()` costs nothing and cannot go stale again. `candidates_line(counties, known_count)` is now
+ONE reader for the sweep that writes and the check that holds. Both halves negative-tested apart:
+widening `_forms()` by a TLD moves `90-108` to `92-110`; adding a `KNOWN_HOSTS` entry moves `32` to
+`33`, with `check_superseded()` firing independently on the same change.
+
+**The branch is restarted from main** (`claude/next-state-priority-tmedsi` at `1d988dc0`), clean,
+nothing unpushed. The #1141 check-in is cancelled rather than left to fire on a merged PR.
+
+**Nothing is assigned and two things are waiting on a decision. They are waiting on different
+people and the second is the larger.**
+
+**(a) Yours.** The five counties that publish a board page need ONE request each, to a page their
+own front page names — Shiawassee, Montmorency, Ogemaw, Keweenaw, Gratiot. Not a guess and not a
+permutation. I have not spent it.
+
+**(b) Adam's, and your Tasks row points past it.** The row reads "City council wards — 16 of the 26
+gaps ... **Run the state's WARD column first** (`mi/WATCH.md` line 30) — one query settled 23
+cities on 2026-09-06." **That query is spent.** It ran on 2026-09-06, it settled those 23 cities,
+and `mi/WATCH.md` line 32 records the result. What is left after it is not another query: of the
+ten cities the column calls districted, eight have no ward polygon here, and the state's fabric
+could draw all eight **without fetching any of those cities** — which is precisely the question I
+put to Adam on 2026-09-19 and again, one level down, on 2026-09-21, and neither is answered.
+
+**May the state's precinct fabric (or a county's precinct map) be the SOURCE for a city's wards, or
+only the currency check?** Today the city draws the boundary and the state checks it; that check is
+what separated Flint's plan in force from two superseded ones by twenty-three points and what
+refused Bay City. Under the other posture the state is both, and a ward this app draws could never
+again be shown to disagree with the city that elects by it. Two cities make the cost concrete and
+they do not point the same way: Bay City publishes its own nine-ward layer scoring 97.608% against
+the state fabric with the disagreement spread across twelve ward pairs — two plans, not one bad
+edge — so drawing from the state OVERRIDES a city's own map; Muskegon's only published map leaves
+parts of the city uncovered, so there the state route FILLS A HOLE. And it would sidestep Lansing's
+licence block, which is a reason for care rather than for pleasure: routing around a licence by
+changing publishers is a decision, not a workaround.
+
+**I am not deciding it and I am not blocking on it.** I am saying that the row's stated next step is
+already done, so that the largest Michigan gap set is not left looking like unstarted work when it
+is an unanswered question. If neither (a) nor (b) is settled, the Detroit PR-body proposal and the
+western-UP bbox are the only open rows I could pick up without a decision.
+
 **2026-09-24 — the 25 shut counties are re-examined and FIVE OF THEM PUBLISH A BOARD PAGE.**
 Pushed as `5f0920b5` on the branch; #1141 now carries two independent commits and says so, because
 this session may push to one branch and that PR was open and unmerged when the second landed.
