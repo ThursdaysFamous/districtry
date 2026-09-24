@@ -45,6 +45,68 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-24 (evening) — the gap-record count gate is built and open as #1137.
+#1136 merged and is verified by content.**
+
+The assignment is done: `scripts/validate_gap_counts.py` plus
+`scripts/measured_metric.py`, four declarations on Iowa's two records, wired
+into CI as one step. Battery 108 of 109 — the one failure is the cert
+interception, now proven environmental three times today and green in CI on
+both #1134 and #1136.
+
+### The 152 / 153 disagreement resolved, and it argued for the design
+
+Both figures are correct. The corpus holds exactly ONE comma-grouped number,
+`1,659` in `lasalle-board-districts-stale`, and a thousands-aware pattern
+reads it as one where `\b\d{1,4}\b` reads it as two. Two careful readers, one
+corpus, the same hour, differing because the RULE was never stated. That is
+the whole case for constraint 1, so the declaration names which number it is
+and which field states it, and the check is `(?<!\d)38(?!\d)` against that one
+field — a membership test, never an enumeration. Of 153 numbers in the reader
+fields, three are file-backed; a rule that inferred would be wrong about 150.
+
+### What the negative tests found
+
+Every branch was run rather than written, and the one that matters most is the
+real case: dropping a county from the chairs roster fires BOTH numbers —
+"states 38, the source holds 37" and "states 61, the source holds 62". That is
+the original 43/56 defect caught whole, and it is what earns the `of`
+complement its place rather than checking the count alone.
+
+**They also found a defect in my own gate.** `measured_metric`'s evaluator
+calls `fail` and then CARRIES ON, because `build_history_page.py`'s `fail`
+exits the process. Mine accumulates, so a declaration naming a metric outside
+the grammar walked past its own refusal and crashed with a traceback instead
+of a verdict. `fail_stop` raises and each entry catches, so a run still
+reports all its failures at once. **A gate that cannot survive its own
+failure path is not a gate**, and only running the branch showed it.
+
+### A correction I owe
+
+I said "twelve history pages" in the design note earlier today and in the
+#1137 write-up's first draft. **It is FOUR** — il, wi, ia and mi; ca and ny
+opt out of `history_page`. The byte-identity proof of the shared-vocabulary
+extraction is 4 of 4, not 12 of 12. The proof stands; the count was wrong.
+
+### Left deliberately undone
+
+**Michigan's `mi-commissioner-roster`** states 83 / 48 / 35 across two
+disjoint files and the brief said it moved that day. The gate supports it
+today — one declaration per number, two of them naming the second file — but
+the shape is Michigan's to confirm, so nothing of theirs is touched. That is
+the follow-up.
+
+### Still queued behind it
+
+1. **Winnebago** — page discovery in `ia_supervisor_district_scraper.py`,
+   measured to be worth one county plus a correctness point, needing the
+   17-county regression #1136 ran.
+2. **`docs/EAM_STATUS.md` and `docs/ENDPOINT_INVENTORY.md` went stale on
+   #1136 because three `data/app` files were DELETED**, and no procedure names
+   them for that trigger. The gap-record skill's §7 now names the count gate,
+   but a data-file DELETION is a different trigger and still has no list.
+
+
 **2026-09-24 (late) — the 152 / 153 disagreement is REAL, REPRODUCIBLE, and is
 the assignment's own best argument. Design settled; #1136 holds the branch.**
 
