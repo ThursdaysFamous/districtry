@@ -788,13 +788,6 @@
         "note": "Washington County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Washington County which recorded gap affects them: the county elects its supervisors by district and its districts ship, but nothing published says which supervisor holds which district, so the card names the board and cannot place any of them. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
       },
       {
-        "file": "winnebago-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "dynamic_reference": true,
-        "note": "Winnebago County gap-location geometry — NOT a dispatched county and not a coverage test. It ships so the Data gaps panel can tell a reader standing in Winnebago County which recorded gap affects them: the county elects its supervisors by district and its districts ship, but nothing published says which supervisor holds which district, so the card names the board and cannot place any of them. Without this file `appliesHere` 404s while the panel's `mappable` flag is true and the lede claims \"Nothing recorded is missing where you clicked\" inside a county a gap covers. Built by ia/scripts/build_ia_gap_outlines.py from TIGERweb at the same 25 m tolerance the coverage wash uses, verified by the Census's own internal point for every gap-named county landing inside its own outline and outside all the others. The county list is DERIVED from the guidebook's own gap records, so an outline cannot outlive the gap that needs it."
-      },
-      {
         "file": "worth-county-outline.json",
         "min_features": 1,
         "max_features": 1,
@@ -886,7 +879,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-ia-shell-v12",
+    "cache_name": "districtry-ia-shell-v13",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",

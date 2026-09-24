@@ -130,7 +130,7 @@ BOARD_DIRECTORY = os.path.join(APP_DATA_DIR, "ia-county-board-directory.json")
 # a tripwire: if pairings ever start landing near the limit, the assumption
 # that counties publish this adjacently has stopped holding.
 PROXIMITY_CHARS = 80
-MAX_OBSERVED_GAP = 42   # measured across 78 districts in 18 counties, 2026-09-24
+MAX_OBSERVED_GAP = 42   # measured across 81 districts in 19 counties, 2026-09-24
                         # (was 67 in 17 on 2026-08-28; the VALUE did not move when
                         # Butler, Chickasaw and Howard joined — their widest gaps are
                         # 8, 21 and 19 — but the basis it was measured on did, and a
@@ -384,19 +384,82 @@ def fetch(url, attempts=3):
     return None
 
 
+# A label that names a DIFFERENT body or a different artefact, on a page that
+# still sits under the board's own path. Measured on Winnebago, whose home page
+# links five URLs matching `supervisor`: the board's own page, a dead duplicate
+# of it, and these three.
+NOT_THE_ROSTER_RE = re.compile(
+    r"\bboards?\s*(?:&(?:amp;)?|and)\s*commissions?\b|\bcommissions?\b"
+    r"|\bminutes\b|\bagendas?\b|\bmeetings?\b|\bordinances?\b"
+    r"|\bcommittees?\b", re.I)
+
+
+def rank_link(url, label):
+    """Sort key for one candidate link. Lower is better; ties keep document order.
+
+    WHY RANKING AND NOT THE FIRST MATCH. This took the first link whose href OR
+    label contained `supervisor` and stopped, and on Winnebago that is
+    `/board_of_supervisors/boards_commissions/` -- a page under the board's own
+    path listing a DIFFERENT SET OF BODIES. Its href carries `supervisor`; its
+    label says "Boards & Commissions". Measured 2026-09-24, that home page links
+    FIVE matching urls and the board's own is SECOND, so the budget went on that
+    page and two 404s while `/board_of_supervisors/` -- which keys Durby 1,
+    Smith 2, Jensvold 3 -- was never fetched.
+
+    THE LABEL IS WHAT THE COUNTY SAYS THE PAGE IS; the href is a path that may
+    merely sit under a section. That one key separates the board's page from all
+    three wrong ones on Winnebago. The other two each come from a county that
+    broke an earlier draft:
+
+      artefact   Linn links `/161/Agendas-Minutes` as "Board of Supervisors
+                 Meetings" -- a label naming the supervisors, on a page that is
+                 not the roster.
+      query      Linn also links a NEWS ITEM (`/CivicAlerts.aspx?AID=4531`,
+                 "Linn County Board of Supervisors Approves Speed Li...") and two
+                 CALENDAR EVENTS (`/Calendar.aspx?EID=...`). Each names the
+                 supervisors and none is a page about them. A query string is an
+                 app endpoint taking an id, never a section page.
+
+    PATH DEPTH WAS THE FOURTH KEY AND IT IS MEASURED WRONG, which is worth more
+    than the three that stayed. A shallower path looks like a section root, and
+    on the commonest county CMS it is the opposite: Linn's board page is
+    `/123/Board-of-Supervisors` at depth 2 while those news and calendar
+    endpoints sit at depth 1, so ranking by depth promoted a news story over the
+    board and LOST a county that was keying correctly. The 40-county regression
+    caught it; nothing in the diff to the one county being fixed would have.
+
+    EVERY KEY IS A PREFERENCE, NEVER A FILTER. A county whose supervisors page is
+    linked as "The Board", with `supervisor` only in its href, still ranks --
+    below a label match, and above nothing else. Dropping such a link would lose
+    counties to gain this one.
+    """
+    text = strip_tags(label)
+    return (0 if re.search(r"supervisor", text, re.I) else 1,
+            1 if NOT_THE_ROSTER_RE.search(text) else 0,
+            1 if urllib.parse.urlparse(url).query else 0)
+
+
 def candidate_pages(home):
     """The county's own supervisors page: a link off the home page first, then
     the observed path shapes. Nothing is pinned per county, so a site that
-    reorganises heals itself instead of needing a config edit."""
-    urls, body = [], fetch(home)
+    reorganises heals itself instead of needing a config edit.
+
+    ONE link is carried, as before -- the budget is three pages and the fallback
+    paths need what is left. What changed is WHICH one: see rank_link.
+    """
+    urls, body, links = [], fetch(home), []
     if body:
         for href, label in LINK_RE.findall(body):
             href = href.strip()
             if href.lower().startswith(("javascript:", "mailto:", "#")):
                 continue
             if re.search(r"supervisor", href + " " + strip_tags(label), re.I):
-                urls.append(urllib.parse.urljoin(home, html.unescape(href)))
-                break
+                links.append((urllib.parse.urljoin(home, html.unescape(href)), label))
+    if links:
+        # min() over a stable list keeps document order as the last tie-break,
+        # which is what the old first-match rule was when nothing else separates
+        # two links -- Winnebago labels two of its five "Board of Supervisors".
+        urls.append(min(links, key=lambda pair: rank_link(*pair))[0])
     urls += [urllib.parse.urljoin(home, p) for p in FALLBACK_PATHS]
     seen, out = set(), []
     for u in urls:
@@ -657,6 +720,60 @@ def _selftest():
     check(_keys_to(butler, ["Greg Barnett", "Wayne Dralle", "Rusty Eddy"])
           == {"Barnett": 1, "Dralle": 2, "Eddy": 3},
           "a name-first page still keys every supervisor correctly")
+
+    # ---- the DISCOVERY half, added 2026-09-24 ---------------------------
+    # candidate_pages used to take the FIRST link matching `supervisor` in its
+    # href OR its label. Both counties below link five matching urls and put the
+    # board's own page SECOND, so the first-match rule spent the three-page
+    # budget elsewhere. These are their real link sets, in document order.
+    #
+    # THE HREFS ARE RELATIVE, AS THE PAGES' OWN MARKUP CARRIES THEM, AND THAT IS
+    # DELIBERATE. rank_link reads only the url's QUERY component, so urljoin
+    # changes nothing about the answer -- and probe_user_agents.py reads every
+    # scheme-and-host literal in a file as a host that file reaches. (Writing
+    # that scheme out here would itself have been one: the first draft of this
+    # comment quoted it between backticks and the probe read a host named `.)
+    # Absolute fixtures would add Winnebago and Linn to this scraper's measured
+    # address surface while the other 38 counties it fetches stay absent,
+    # because their urls arrive from a data file rather than from source. A
+    # measurement shaped by where a url happens to be quoted is worse than none.
+    def _best(links):
+        """What candidate_pages would carry: the best-ranked link, ties by order."""
+        return min(links, key=lambda pair: rank_link(*pair))[0]
+
+    winnebago = [
+        ("/board_of_supervisors/boards_commissions/", "Boards &amp; Commissions"),
+        ("/board_of_supervisors/", "Board of Supervisors"),
+        ("/board_of_supervisors/county_ordinances/", "County Ordinances"),
+        ("/board_of_supervisors/meetings_minutes/", "Meetings &amp; Minutes"),
+        ("/supervisors/", "Board of Supervisors"),
+    ]
+    check(_best(winnebago) == "/board_of_supervisors/",
+          "Winnebago: the board's own page beats a Boards & Commissions page "
+          "sitting under the board's own path")
+
+    # Linn is the DEPTH counter-example. Its board page is at depth 2 and a news
+    # item and two calendar events sit at depth 1, so ranking by path depth
+    # promotes a news story and loses a county that was keying correctly.
+    linn = [
+        ("/123/Board-of-Supervisors", "Board of Supervisors"),
+        ("/161/Agendas-Minutes", "Board of Supervisors Meetings"),
+        ("/CivicAlerts.aspx?AID=4531",
+         "Linn County Board of Supervisors Approves Speed Limit Change"),
+        ("/Calendar.aspx?EID=5016", "Board of Supervisors Work Session"),
+        ("/Calendar.aspx?EID=5068", "Board of Supervisors Formal Session"),
+    ]
+    check(_best(linn) == "/123/Board-of-Supervisors",
+          "Linn: the board's own page beats a news item and two calendar events "
+          "that all name the supervisors, and beats its own meetings page")
+    check(_best(list(reversed(linn))) == "/123/Board-of-Supervisors",
+          "Linn: and it still wins with the links in the opposite order, so the "
+          "answer is the ranking rather than document order")
+
+    # A preference, never a filter: the only candidate still gets carried even
+    # when `supervisor` appears solely in its href.
+    check(_best([("/board_of_supervisors/", "The Board")]) == "/board_of_supervisors/",
+          "a link whose label never says supervisor is ranked last, not dropped")
 
     print("selftest: %d failure(s)" % len(failures), file=sys.stderr)
     return 1 if failures else 0
