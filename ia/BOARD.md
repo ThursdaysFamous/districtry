@@ -44,6 +44,64 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-24 (evening) — #1134 merged; three of its six counties now ship as
+#1136. The builder I was going to write already existed.**
+
+#1134 merged and is verified by content on main. The next piece was "write the
+builder for the six counties that publish the seat join", and the first thing
+I found is that `ia/scripts/ia_supervisor_district_scraper.py` has been doing
+exactly that for 17 counties since August — matching each known supervisor to
+the nearest district number behind four gates. **These six were never a
+missing builder; they were a regex reading one shape out of three.** Widened,
+it keys Butler 3/3, Chickasaw 5/5 and Howard 3/3, each agreeing exactly with
+the independent reading in the gap record. The roster goes 17 counties to 20,
+78 districts keyed.
+
+### I predicted the shipped gate was unsafe, and it is not
+
+Gate 3 is the 1..N bijection I had just proved necessary-and-not-sufficient,
+so I expected the cyclic shift to pass through it. It does not. `key_page`
+takes the nearest token in EITHER direction, and mixing directions per name
+produces **collisions rather than a clean shift** — which gate 3 catches. I
+tested a linear district-first page and Kossuth's real rotated one and it
+refused both. **The shift was a property of my own directional probe, not of
+this parser**, and I should have tested before hypothesising a defect in
+shipped officeholder code. Twice while testing it I printed a hardcoded
+verdict that my own data contradicted; both are corrected in the transcript
+and I derived the rest from the gate results.
+
+Kossuth and Worth stay refused, correctly, and are now pinned in the
+scraper's self-test AS REFUSALS — a later directional "improvement" would
+return a clean permutation shifted one position round the cycle, and nothing
+else in the repo could see that.
+
+### The safety check that mattered, and one that is missing
+
+Re-measured against all 17 counties already shipped: every one keys
+identically. 17 unchanged, 0 changed. Bremer and Hamilton refuse by robots.txt
+and keep their preserved records — the preserve ruling working.
+
+**`docs/EAM_STATUS.md` and `docs/ENDPOINT_INVENTORY.md` both went stale on
+this change and neither is named by the gap-record procedure.** They are
+`--check` gates moved by DELETING three `data/app` files, which is a different
+trigger from editing a gap record, so §7's list could not have caught them. I
+found them only by running the whole battery. Worth a look at whether the
+data-file-deletion path has a named regenerate list anywhere.
+
+### Still queued
+
+1. **Winnebago** — page discovery, not parsing. `candidate_pages` prefers a
+   link to the county's boards AND COMMISSIONS list and spends its three-page
+   budget before the plain path is tried, which keys 3/3 when fetched direct.
+   Measured across all nine counties the sweep skipped for want of a page, the
+   fallback paths recover Winnebago ALONE. One county plus a correctness point
+   (the scraper prefers a page about other bodies), and it re-ranks pages for
+   all 40 counties, so it wants its own regression run.
+2. **The gap-record count gate or derivation**, recorded at `8e6d478` and
+   untouched. This change is itself an instance of it: I had to hand-edit
+   "18 Iowa counties" to 15 in the record, the area line, and the WATCH row.
+
+
 **2026-09-24 (later) — the chair count is right and the FORM is still not
 stale-proof. The DO-FIRST item is half done and nothing gates the other half.**
 
