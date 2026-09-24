@@ -45,6 +45,37 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-24 (end of day) — #1140 MERGED and verified by content. Five PRs
+landed today and this board has nothing open that is mine. Awaiting an
+assignment.**
+
+Verified on main at `5e81b2c` rather than by ancestry, which a squash merge
+makes useless: `county-n-plus-1` references `gap-record/SKILL.md` twice and
+carries ZERO copied `--metro` lines, §7 carries all three added steps, exactly
+ONE positional phrase survives anywhere in the file and it is the rule quoting
+the phrases it forbids, and `validate_skills.py` resolves 801 pointers.
+
+### The day, and the one thing worth carrying forward
+
+Merged: #1134 (the 18-county probe recorded), #1136 (Butler, Chickasaw and
+Howard), #1137 (the stated-count gate), #1139 (Winnebago), #1140 (one owner
+for the regenerate chain). Two counties now name the supervisor who holds each
+district where nothing did this morning, and a reader in Winnebago County sees
+three names against three districts.
+
+**THE PATTERN WORTH CARRYING IS MY OWN ERROR RATE ON CONCLUSIONS.** Three of
+the four items I queued today dissolved when I re-derived them before
+building: the endpoint-inventory red-CI claim, the Dickinson preservation
+question, and the internal-points drift. In every case the MEASUREMENT was
+right — the grep found three paths, the diff was real, the encoding differed —
+and the sentence written beside it in the same breath was not. Nothing tested
+the sentence, because it arrived wearing the measurement's authority.
+
+The habit that caught all three is cheap and should be the default: **before
+building on a queued item, re-run the thing that produced it and check that
+the conclusion still follows.** It cost minutes each time and saved three
+changes that would have been built on nothing.
+
 **2026-09-24 (night, last) — #1140 is GREEN on its four positional fixes. THE
 INTERNAL-POINTS DRIFT IS ALREADY CLOSED, by a change that merged three hours
 ago. MY BOARD QUEUE IS NOW EMPTY of anything that is mine.**
