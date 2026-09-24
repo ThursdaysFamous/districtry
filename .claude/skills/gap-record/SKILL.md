@@ -116,7 +116,7 @@ python3 scripts/build_coverage_gaps.py                                          
 python3 scripts/build_coverage_gaps.py --metro wisconsin --out wi/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --metro iowa      --out ia/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --metro michigan  --out mi/data/app/coverage-gaps.json
-python3 ia/scripts/build_ia_gap_outlines.py      # AFTER the line above, never before: it reads the SHIPPED file
+python3 ia/scripts/build_ia_gap_outlines.py      # AFTER the `--metro iowa` run: it reads that SHIPPED file
 python3 scripts/generate_metro_files.py          # a retired outline drops a worksheet entry; bump sw cache_name first
 python3 scripts/build_history_page.py            # the history tiles COUNT the shipped gap files
 python3 scripts/build_county_status.py
@@ -126,9 +126,10 @@ python3 scripts/build_sitemap.py                 # a regenerated history page mo
 python3 scripts/build_endpoint_inventory.py      # it counts every json in an instance's data/app
 ```
 
-**The last three lines were added 2026-09-24, each from a step the Winnebago
-build actually hit.** `build_ia_gap_outlines.py` is ORDER-SENSITIVE and this
-section is where the order lives: it derives its county list from the SHIPPED
+**`build_ia_gap_outlines.py`, `generate_metro_files.py` and
+`build_endpoint_inventory.py` were added 2026-09-24, each from a step the
+Winnebago build actually hit.** `build_ia_gap_outlines.py` is ORDER-SENSITIVE
+and this section is where the order lives: it derives its county list from the SHIPPED
 `coverage-gaps.json`, not from the guidebook, so run before the regenerate above
 it still wants the county you just removed and reports nothing stale. Run after,
 it names the orphan exactly as designed — and retiring that outline is a manual
@@ -139,9 +140,17 @@ require, which is what `generate_metro_files.py` is doing here. Then
 is deleted. The steward battery catches all three, so skipping them costs a
 cycle rather than a red CI; they are here so the cycle is not spent.
 
-**The last two were missing from this list until 2026-09-22, and both went red
-on the first change that followed it.** Six new Michigan records took
-`about.html`'s recorded-gap total from 146 to 152, and regenerating
+**NAME THE SCRIPT, NEVER THE POSITION.** Every sentence here used to say "the
+last two", "the last three lines", "the last line above" — and this list GROWS,
+so each one silently came to mean a different command the next time it did. All
+three were wrong at once on 2026-09-24, and one of them had been wrong since the
+day it was written two lines below where it meant to point. `validate_skills.py`
+cannot see this class: every path, flag and §section in those sentences exists.
+
+**`build_about_page.py` and `build_sitemap.py` were missing from this list
+until 2026-09-22, and both went red on the first change that followed it.**
+Six new Michigan records took `about.html`'s recorded-gap total from 146 to
+152, and regenerating
 `mi/history.html` moved the lastmod the sitemap publishes for it — so a run
 that did exactly what this section said still failed two gates. Neither reads
 the gaps block directly, which is why they were not obvious: one counts the
@@ -153,9 +162,9 @@ moves it and `--check` fails the merge. It was absent from this list until 2026-
 when a record written by following this section exactly went red in CI on that gate
 alone.
 
-**A record that STATES a count declares it** — `counts`, checked by the last
-line above and never shipped. Write the declaration in the same edit as the
-number: `ia-board-chair` said 43 of 99 for eleven days while its file held 38,
+**A record that STATES a count declares it** — `counts`, checked by
+`validate_gap_counts.py` and never shipped. Write the declaration in the same
+edit as the number: `ia-board-chair` said 43 of 99 for eleven days while its file held 38,
 and the prose, the complement and `ia/WATCH.md` were all wrong together.
 
 Those are the lines `.github/workflows/smoke-test.yml` runs; a key CI does
