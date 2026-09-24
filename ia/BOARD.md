@@ -45,6 +45,74 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-24 (night, later) — #1139 merged and verified by content. THE BOARD
+ENTRY ABOVE IT WAS WRONG AND #1140 CORRECTS IT WHILE FIXING WHAT WAS ACTUALLY
+BROKEN.**
+
+Winnebago is on main at `a92cee4`: the outline is gone, its page names Terry
+Durby, `rank_link` ships, the tripwire's basis reads 81 districts in 19
+counties, the cache is v13, and the gap record holds 14 counties with
+`winnebago` absent and its stated count at 14.
+
+### I re-tested my own queue item before building it, and it did not hold
+
+Item 2 said `build_endpoint_inventory.py` "is named as a regenerate step in NO
+workflow and NO skill", so the skills "run a green local battery, push, and
+meet it in CI". The first half is true. **The second half is false.**
+`gap-record` §7 ends "and the steward battery", `county-n-plus-1` says "the
+whole steward battery before the push", and `build_endpoint_inventory.py
+--check` is IN that battery. Every one of these is caught LOCALLY. I conflated
+§7's REGENERATE list with the gate battery, which is exactly the distinction
+§7 keeps.
+
+### What the re-test found instead is worse and is real
+
+Two hand-kept lists answer one question, and they had DIVERGED.
+`county-n-plus-1`'s copy was four commands short of §7: `build_about_page.py`
+(the one §7 itself calls most easily missed and not optional),
+`build_sitemap.py`, `validate_gap_counts.py`, and **`--metro michigan`
+entirely** — a whole instance, because the copy was written when there were
+two non-Illinois statewide instances, its prose still said "Both instances",
+Michigan shipped into one of the two lists, and nothing compared them.
+`roster-pipeline` and `new-layer` carry no such list at all, so they were
+never at risk.
+
+**A premise I recorded as measured was an inference.** The measurement was
+`grep -rln build_endpoint_inventory` returning three paths; the CONCLUSION
+about red CI was not measured and was wrong. Re-test a queued item against
+the tree before building on it — the grep was right and the sentence built on
+it was not.
+
+### #1140
+
+`county-n-plus-1` points at §7 now and keeps only its county-specific steps,
+so there is nothing left to diverge. §7 gains three lines, each from a step
+this session got wrong today rather than from reading code:
+`build_ia_gap_outlines.py` with its ORDER (it reads the SHIPPED file, so run
+early it reports nothing stale — my mistake this afternoon),
+`generate_metro_files.py` (a retired outline drops a worksheet entry and needs
+the cache bump), and `build_endpoint_inventory.py` (a data/app file COUNT
+moves on an add as much as a delete). §7's list was then run end to end on a
+current tree as the test of the procedure itself: every generator no-ops.
+
+### Deliberately not shipped
+
+Running §7 surfaced a two-line `sitemap.xml` refresh — Mitchell's and
+Winnebago's pages, the two #1139 changed. `build_sitemap.py`'s own docstring
+already records that `lastmod` reads the last commit to touch a file, so a
+page changed IN a commit reads as yesterday and its `--check` tolerates
+exactly one day. It recurs by design and self-heals, so it is churn, and
+restating it in §7 would be the two-copies defect this change exists to fix.
+
+### Queue
+
+1. **Michigan's `mi-commissioner-roster` declaration** — 83/48/35 across two
+   disjoint files, theirs to confirm. Untouched.
+2. **`ia/data/source/ia-county-internal-points.json` encoding drift** —
+   `build_ia_gap_outlines.py` writes the escape where the committed file
+   carries a literal em-dash, so running that builder always dirties it. I
+   reverted it twice today. A line at most.
+
 **2026-09-24 (night) — #1137 merged and verified by content. WINNEBAGO SHIPS
 as #1139, and the queue's item 2 is done.**
 
