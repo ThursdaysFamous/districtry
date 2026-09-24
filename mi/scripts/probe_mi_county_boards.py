@@ -93,28 +93,54 @@ links is a better bet than one with nine districts and none; both are
 
 HOW A HOST IS FOUND
 --------------------
-Michigan has no reachable statewide directory of county websites. The state's
-own michigan.gov answers HTTP 403 on robots.txt, which is a refusal under the
-strict reading county websites take here; micounties.org answers HTTP 202 on
-robots.txt, which is a challenge and an access control; and Wikidata's SPARQL
-endpoint and /w/ API are both disallowed in its robots.txt. All three were
-measured 2026-09-15 and none was worked around.
+Michigan has no reachable statewide GOVERNMENT directory of county websites.
+The state's own michigan.gov answers HTTP 403 on robots.txt, which is a refusal
+under the strict reading county websites take here; micounties.org answers
+HTTP 202 on robots.txt, which is a challenge and an access control; and
+Wikidata's SPARQL endpoint and /w/ API are both disallowed in its robots.txt.
+All three were measured 2026-09-15 and none was worked around.
 
-What is left is permutation over candidate host names, and the honest way to
-use it is to GATE IT ON COUNTIES WHOSE ANSWER IS ALREADY KNOWN. The generator
-below is held to the 24 counties already measured -- the 16 that ship and the
-8 in PROBES -- and finds the real host for 24 of 24. check_generator() runs
-that gate on every invocation and refuses to sweep if it ever stops finding
-them all.
+ASK A PUBLISHER THAT NAMES THE ADDRESS BEFORE PERMUTING NAMES. Measured
+2026-09-24, the fourth route those three closed off was never tried: each
+county's own English Wikipedia article carries the county's official website
+in its infobox, `/wiki/` is allowed to this client with no crawl-delay, and
+en.wikipedia.org is NOT A COUNTY HOST -- so a lookup there costs the county
+nothing and cannot trip the WAF that a repeated sweep tripped on Tuscola.
+Read for the 23 shut counties a fetch could reach, it named TEN addresses no
+sweep had asked for, of which NINE answered and eight were the county's own.
+Two caveats, both measured the same day. The infobox can be wrong: Baraga
+County's names keweenawbay.org, whose own title is "Keweenaw Bay - The Heart
+of Baraga County", a tourism site and not the county, so the address it gives
+is a LEAD and the confirm_host() stage below is still what settles it. And it
+rate-limits: fetching 23 articles back to back returned HTTP 429 twice, which
+this project treats as rate-limiting caused by the probe, backs off and retries.
+
+What is left after that is permutation over candidate host names, and the
+honest way to use it is to GATE IT ON COUNTIES WHOSE ANSWER IS ALREADY KNOWN.
+The generator below is held to every county host this project has read a page
+from or watched answer -- KNOWN_HOSTS plus CHALLENGE_HOSTS -- and finds the
+real host for all of them. check_generator() runs that gate on every invocation
+and refuses to sweep if it ever stops finding them all.
 
 THE LIMIT OF THAT GATE IS STATED RATHER THAN IMPLIED. The form list was
-derived FROM those 24 hosts, so 24 of 24 proves the generator covers every
-form Michigan counties have been OBSERVED to use -- not that it finds a form
-nobody has used yet. `no-host` therefore means "not found by these candidates",
-which is a fact about this sweep and never about the county. Bare three-letter
+derived FROM those hosts, so finding all of them proves the generator covers
+every form Michigan counties have been OBSERVED to use -- not that it finds a
+form nobody has used yet. THAT LIMIT IS NOT HYPOTHETICAL AND HAS NOW BEEN PAID
+TWICE: the 2026-09-15 re-probe found 14 counties with a form the generator had
+never tried, and the 2026-09-24 re-examination found six more shapes, one per
+county that had been written down as publishing no board page while publishing
+one -- shiawassee.net and iosco.net (a bare stem with .net), montcounty.org
+(a four-letter stem), ironmi.com and gratiotmi.com (the name plus the state),
+keweenawcountyonline.org, gladwincounty-mi.gov, and ocmi.us (initials plus the
+state). `no-host` and `no-board-page` therefore mean "not found by these
+candidates", which is a fact about this sweep and never about the county.
+Bare three-letter
 stems were dropped after measurement: cli.com, van.org, mar.us and luc.net all
 resolve, none to a county, and dropping them cut the candidate set from 182 per
-county to about 61 while still finding all 24.
+county to about 61 while still finding all 24 hosts known at the time. The
+2026-09-24 widening took it back to 92 for a one-word county and 108 for a
+two-word one; the artifact records the range it measured on the run that
+wrote it rather than a figure anybody keeps by hand.
 
 THE CATCH-ALL TRAP, WHICH THIS SWEEP WOULD OTHERWISE WALK INTO
 ---------------------------------------------------------------
@@ -195,9 +221,11 @@ TIMEOUT = 25
 DNS_WORKERS = 32
 HOST_WORKERS = 6
 
-# The 24 counties whose real host is already known: the 16 that ship a roster
-# and the 8 recorded in PROBES. check_generator() holds the candidate
-# generator to these on every run.
+# The counties whose real host is already known: the 16 that ship a roster, the
+# 8 recorded in PROBES, and the 6 the 2026-09-24 re-examination confirmed.
+# check_generator() holds the candidate generator to these and to
+# CHALLENGE_HOSTS on every run; no count is written here, because the two dicts
+# are the count and a number in a comment beside them can only go stale.
 KNOWN_HOSTS = {
     "Kalamazoo": "www.kalcounty.gov",      "Kent": "www.kentcountymi.gov",
     "Macomb": "bocmacomb.org",             "Muskegon": "co.muskegon.mi.us",
@@ -211,6 +239,33 @@ KNOWN_HOSTS = {
     "Ingham": "www.ingham.org",            "Ottawa": "www.miottawa.org",
     "Livingston": "www.livgov.com",        "Allegan": "www.allegancounty.org",
     "Bay": "www.baycountymi.gov",          "Washtenaw": "www.washtenaw.org",
+    # SIX MORE, CONFIRMED 2026-09-24 by the re-examination of the 25 counties
+    # this probe recorded shut. Each answered HTTP 200 to UA_ROSTER_BOT, named
+    # its own county in its own <title>, and is an address NO EARLIER SWEEP
+    # ASKED FOR -- so the `no-board-page` and `no-confirmed-host` verdicts on
+    # these counties were facts about the candidate list, exactly as this
+    # file's docstring warns `no-host` can be. They are in this gate rather
+    # than only in a comment because the gate is the only thing that keeps the
+    # new forms above from being dropped by a later tidy-up. Five of the six
+    # link a Board of Commissioners page; Iron links none and is here for its
+    # host alone. NONE of the six has had its board page read: that is a
+    # second request per county and a separate budget.
+    "Shiawassee": "shiawassee.net",        "Montmorency": "montcounty.org",
+    "Ogemaw": "ocmi.us",                   "Keweenaw": "www.keweenawcountyonline.org",
+    "Gratiot": "www.gratiotmi.com",        "Iron": "ironmi.com",
+}
+
+# TWO MORE ADDRESSES THE SAME RE-EXAMINATION FOUND, HELD APART BECAUSE NO PAGE
+# WAS READ FROM EITHER. Both answered HTTP 202 on robots.txt itself -- the
+# sgcaptcha shape, an access control -- so the host resolves and answers and
+# this project has not seen a byte of its content. They may not go in
+# KNOWN_HOSTS, which means "confirmed as the county's own site", and they are
+# still the only evidence for the `flat + "county-mi"` form, so the generator
+# gate reads them too. The question that gate asks is whether the generator can
+# NAME an address, which is answerable for a host nobody may fetch.
+CHALLENGE_HOSTS = {
+    "Gladwin": "gladwincounty-mi.gov",     # named by the county's Wikipedia infobox
+    "Iosco": "iosco.net",                  # same; iosco.org already refused this client
 }
 
 # Stem -> the TLDs that stem is ever OBSERVED with across those 24. Bare
@@ -220,8 +275,12 @@ def _forms(name):
     words = [w for w in re.split(r"[^a-z]+", name.lower()) if w]
     ab = flat[:3]
     ini = "".join(w[0] for w in words) if len(words) > 1 else None
+    # The initials of "<Name> County" -- the county's words plus a c. Ogemaw
+    # County publishes at ocmi.us, which is those initials plus the state
+    # abbreviation, a form no stem above can reach.
+    inic = "".join(w[0] for w in words) + "c"
     spec = [
-        (flat,               (".org", ".gov", ".mi.us")),
+        (flat,               (".org", ".gov", ".mi.us", ".net")),
         (flat + "county",    (".org", ".gov", ".com", ".net", ".us")),
         (flat + "countymi",  (".gov", ".org", ".com")),
         # HYPHENATED AND SHORT-SUFFIX FORMS. The first sweep recorded Clinton
@@ -241,6 +300,21 @@ def _forms(name):
         (ab + "gov",         (".com", ".org", ".gov")),
         (ab + "county",      (".gov", ".org", ".com")),
         (ab + "countymi",    (".gov",)),
+        # SIX FORMS MEASURED 2026-09-24, one per county that the re-examination
+        # of the 25 shut counties found publishing a board page at an address
+        # this generator could not produce. Each TLD here is the one that
+        # county was OBSERVED with and no other, which is this table's rule.
+        #   shiawassee.net, iosco.net           -> ".net" on the bare stem above
+        #   montcounty.org                      -> flat[:4] + "county"
+        #   ironmi.com, gratiotmi.com           -> flat + "mi"
+        #   keweenawcountyonline.org            -> flat + "countyonline"
+        #   gladwincounty-mi.gov                -> flat + "county-mi"
+        #   ocmi.us                             -> initials + "c" + "mi" (below)
+        (flat[:4] + "county", (".org",)),
+        (flat + "mi",         (".com",)),
+        (flat + "countyonline", (".org",)),
+        (flat + "county-mi",  (".gov",)),
+        (inic + "mi",         (".us",)),
     ]
     if ini:
         spec += [(ini + "county", (".gov", ".org")), (ini + "countymi", (".gov", ".org")),
@@ -255,18 +329,82 @@ def _forms(name):
     return sorted(out)
 
 
+def candidates_line(counties, known_count):
+    """The artifact's `candidates_per_county`, computed from the generator.
+
+    ONE reader for the run that WRITES the artifact and the `--check` that
+    holds it, because two readers of one question is where this repo's
+    recurring defect starts. The field describes the GENERATOR, not the sweep:
+    `_forms()` is pure string work over a county name, so its answer is a fact
+    about the tree today and not about the day the sweep ran. That is why
+    --check may hold a field inside an artifact stamped with an older date --
+    and why it must, since the field went nine days wrong at "about 61, gated
+    on 24 known hosts" while every gate stayed green.
+    """
+    widths = [len(_forms(rec["county"])) for rec in counties]
+    return "%d-%d, gated on %d known hosts" % (min(widths), max(widths),
+                                               known_count)
+
+
+def check_superseded(rows):
+    """A verdict this repo has since learned better than must SAY SO.
+
+    A sweep's verdict is a fact about the hosts it asked. When a later
+    re-examination finds the county at an address that sweep never asked for,
+    the row becomes accurate-as-written and wrong-about-the-county -- the
+    staleness this project keeps paying for, and the kind nothing looks old.
+    So a county whose real host is known (KNOWN_HOSTS or CHALLENGE_HOSTS) and
+    whose row names a different host, or none, must carry a dated `superseded`
+    block, and a block that the tree has caught up with must be retired. Both
+    directions fail, so the block cannot quietly outlive its reason.
+
+    The next full sweep rewrites this artifact and drops every block, which is
+    correct: by then the sweep will have measured what the block only asserts.
+    """
+    known = dict(KNOWN_HOSTS, **CHALLENGE_HOSTS)
+    out = []
+    for rec in rows:
+        real = known.get(rec["county"])
+        sup = rec.get("superseded")
+        agrees = real is not None and rec.get("host") == real
+        if real and not agrees and not sup:
+            out.append("%s: this repo knows the county at %s and the row names "
+                       "%s — add a dated `superseded` block or re-sweep the "
+                       "county" % (rec["county"], real, rec.get("host") or "no host"))
+        if sup:
+            for k in ("date", "note", "host", "carries", "prior_verdict"):
+                if k not in sup:
+                    out.append("%s: `superseded` is missing `%s`" % (rec["county"], k))
+            if sup.get("prior_verdict") != rec.get("verdict"):
+                out.append("%s: `superseded.prior_verdict` says %r and the row's "
+                           "verdict is %r — the block describes a verdict this "
+                           "row no longer carries"
+                           % (rec["county"], sup.get("prior_verdict"), rec.get("verdict")))
+            if agrees:
+                out.append("%s: `superseded` names %s and the row now names it "
+                           "too — a sweep has caught up, so delete the block"
+                           % (rec["county"], real))
+    return out
+
+
 def check_generator():
-    """Refuse to sweep if the generator stops finding the 24 known hosts."""
-    missed = [(c, h) for c, h in KNOWN_HOSTS.items() if h not in set(_forms(c))]
+    """Refuse to sweep if the generator stops finding a host we already have.
+
+    KNOWN_HOSTS plus CHALLENGE_HOSTS: every Michigan county host this project
+    has either read a page from or watched answer. A generator that cannot
+    name one of them cannot be trusted to have looked for the rest.
+    """
+    known = dict(KNOWN_HOSTS, **CHALLENGE_HOSTS)
+    missed = [(c, h) for c, h in known.items() if h not in set(_forms(c))]
     if missed:
         raise SystemExit(
             "probe-mi-county-boards: FAIL — the candidate generator no longer "
             "finds %d of %d known hosts (%s). Widen _forms() before sweeping; a "
             "`no-host` verdict from a generator that cannot find the counties we "
             "already have is not a measurement."
-            % (len(missed), len(KNOWN_HOSTS),
+            % (len(missed), len(known),
                ", ".join("%s=%s" % m for m in missed)))
-    return len(KNOWN_HOSTS)
+    return len(known)
 
 
 # ---------------------------------------------------------------- the frontier
@@ -1168,7 +1306,12 @@ def main():
         os.makedirs(os.path.dirname(ARTIFACT), exist_ok=True)
         payload = {"measured": time.strftime("%Y-%m-%d"),
                    "client": UA_ROSTER_BOT,
-                   "candidates_per_county": "about 61, gated on %d known hosts" % n,
+                   # MEASURED, never a remembered figure, and held by
+                   # --check to the same reader. It read "about 61, gated on
+                   # 24 known hosts" for nine days while every gate stayed
+                   # green, which is the drift a literal in a generated
+                   # artifact always develops.
+                   "candidates_per_county": candidates_line(results, n),
                    "counties": results}
         with open(ARTIFACT, "w") as fh:
             json.dump(payload, fh, indent=1, sort_keys=True)
@@ -1258,20 +1401,34 @@ def check(rows):
                    "run --refresh-robots, which reads robots.txt and no page"
                    % (len(missing), ", ".join(missing[:6])))
     bad.extend(check_gap_records(rows, open(SCRAPER, encoding="utf-8").read()))
-    check_generator()
+    bad.extend(check_superseded(data["counties"]))
+    # The number this line reports is the number the gate CHECKED. It printed
+    # len(KNOWN_HOSTS) while check_generator() was holding the generator to
+    # KNOWN_HOSTS plus CHALLENGE_HOSTS, which is a gate reporting a smaller
+    # surface than it guards -- the one direction that reads as reassuring.
+    known_checked = check_generator()
+    want_line = candidates_line(data["counties"], known_checked)
+    if data.get("candidates_per_county") != want_line:
+        bad.append("candidates_per_county says %r and this tree's generator "
+                   "produces %r — the field describes the GENERATOR, which "
+                   "this tree owns, not the sweep's date, so it is correctable "
+                   "without re-sweeping"
+                   % (data.get("candidates_per_county"), want_line))
     if bad:
         print("probe-mi-county-boards: FAIL")
         for b in bad:
             print("  " + b)
         return 1
     covered = len(gap_record_counties())
+    sup = sum(1 for r in data["counties"] if r.get("superseded"))
     print("probe-mi-county-boards: OK — %d counties measured %s%s, every named "
-          "URL carries a robots reading, generator still finds all %d known "
-          "hosts, and all %d unserved counties are named by a gap record whose "
-          "prose and array agree"
+          "URL carries a robots reading, %d verdict(s) this repo has since "
+          "learned better than carry a dated `superseded` block, generator "
+          "still finds all %d known hosts, and all %d unserved counties are "
+          "named by a gap record whose prose and array agree"
           % (len(have), data["measured"],
              ", %d since pruned" % len(data["pruned"]) if data.get("pruned") else "",
-             len(KNOWN_HOSTS), covered))
+             sup, known_checked, covered))
     return 0
 
 
