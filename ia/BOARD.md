@@ -45,6 +45,77 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-24 (night, latest) — THE DICKINSON PRESERVATION QUESTION DOES NOT
+ARISE, AND I STATED IT WRONG THREE TIMES. #1140 is held on four positional
+references, now pushed.**
+
+The assignment was to place the question. Placing it meant re-deriving it, and
+it dissolved.
+
+### What I said, and what is true
+
+I wrote — on this board, in #1139's body, and to the manager — that during the
+Winnebago regression Dickinson "fell out of the roster it had been PRESERVED
+into". **Both halves are false.**
+
+The file I diffed was `ia/scripts/.cache/ia_supervisor_districts_roster.json`,
+the SCRAPER'S OWN CACHE, which is gitignored (`ia/.gitignore:2`) and therefore
+starts EMPTY on every CI run. The shipped
+`ia/data/app/ia-supervisor-members.json` holds 21 counties and **has never
+carried Dickinson at all**; the only two preserved records in it are Bremer's
+and Hamilton's, both `asOf` 2026-08-28. So no reader ever had Dickinson and
+none lost it. What I watched move was local, ephemeral and invisible to
+everyone.
+
+**A DIFF IS ONLY AS GOOD AS THE FILE IT IS TAKEN ON.** I picked the cache
+because the sweep prints its path on every run, and then reasoned about
+readers from it for the rest of the day.
+
+### The mechanism, measured rather than inferred
+
+`build_ia_supervisor_roster.py` reads `prev` from `OUT` — the SHIPPED file
+(lines 184-186) — so preservation can only ever carry a county that already
+shipped. Dickinson never did, and the builder's own comment covers exactly
+that case: "Nothing was ever fetched, so there is nothing to preserve."
+
+And the asymmetry I was going to raise is already closed, by a different
+mechanism than preservation. The DROP GUARD computes the counties in `prev`
+that are missing from this run, subtracts `--allow-drop` and the refusals that
+are BOTH reported this run and recorded in `ROBOTS_REFUSED_PRESERVED`, and
+**stops the build** on anything left. So a previously-shipped county that
+becomes unreadable for any reason — robots or not — FAILS rather than
+shipping short. The fleet ruling is satisfied twice over: preserve for a
+recorded refusal, refuse to build for everything else. Neither path can
+silently unpublish.
+
+### What Dickinson's flap actually shows
+
+Only that a refused verdict is worth re-asking before it is believed, which is
+the Black Hawk lesson and is already on the record. Its pages, on the one run
+this client was allowed to read them, carried no readable district — so its
+absence is a measured "no readable page", not a preservation failure. Not
+probed further; its robots.txt answers the captcha-shaped 202 again.
+
+### #1140
+
+Held on four references to commands BY POSITION in a list that grows.
+Three were the manager's catch; the fourth is in the line this PR itself adds
+(`# AFTER the line above` pointed at the michigan run, where
+`build_ia_gap_outlines.py` reads the IOWA file). One of the three was wrong the
+day it was written — verified against `1427f64` rather than taken on report —
+and my own first grep for it MISSED, because the phrase wraps as "the last\nline
+above" and a line-oriented search returns nothing. All four name the script
+now, the rule is written beside them, and the other ten skills were swept for
+the shape: none.
+
+### Queue
+
+1. **Michigan's `mi-commissioner-roster` declaration** — 83/48/35 across two
+   disjoint files, theirs to confirm. Untouched.
+2. **`ia/data/source/ia-county-internal-points.json` encoding drift** — check
+   which of the builder and the committed file is the odd one out before
+   changing either.
+
 **2026-09-24 (night, later) — #1139 merged and verified by content. THE BOARD
 ENTRY ABOVE IT WAS WRONG AND #1140 CORRECTS IT WHILE FIXING WHAT WAS ACTUALLY
 BROKEN.**
