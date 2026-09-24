@@ -44,6 +44,72 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-24 — the 18 counties' board pages are measured, and the route is
+live: SIX of them publish the seat join. #1134 is open.**
+
+The `ia-supervisor-district-seats` record said each county's own board page was
+"an unexamined route rather than a measured refusal, and it is the next thing
+to try before any ask goes out". That is now measured, and the record's blocker
+carries it as a dated `RE-MEASURED` section. **Butler, Chickasaw, Howard,
+Kossuth, Winnebago and Worth** print which supervisor holds which district on
+their own pages — 22 of the 78 supervisors in the record. Read through
+`ia_county_chair_scraper`'s own robots gate, host pacer and districtry token,
+so robots.txt was read before the first fetch of each host as the client that
+fetches. **No county was written to; NOT YET ASKED still holds for all 18.**
+
+Five fetched a 200 that is **not the roster page** (Black Hawk's home page
+carries all five names and the word *district* zero times) — the route is
+partly examined there, not closed. Seven were not fetched: three 403s,
+Dickinson's 202 captcha shape (an access control, not worked around), and three
+whose robots.txt was unreachable, where RFC 9309 makes us abstain and the county
+has stated nothing.
+
+**Nothing ships in #1134.** A blocker is never served, and the six
+`build_coverage_gaps` runs plus the three page builders all come back
+byte-identical — which is the check that it really is non-shipped. The reader
+fields stay as they are, because they describe what the app can tell a reader
+and that has not changed for any of the 18.
+
+### My method was wrong four times, and the fourth is the one worth keeping
+
+Each wrong version produced a confident answer. A ±200-character window takes
+the **first** token in the window, so Butler read 3/3 with all three supervisors
+in district 1 — impossible for disjoint districts, and that impossibility is
+the only reason it was caught. A digits-only pattern read Kossuth, which spells
+its districts as words, as publishing nothing at all. Letting a bare digit count
+as an ordinal matched the tail of a phone number and put Dean Eastman in
+district 7.
+
+**And the one arithmetic cannot catch:** on a page that heads each row with its
+district, reading name-then-district pairs every name with the NEXT row's
+heading and returns a **perfect bijection shifted one position around the
+cycle**. A cyclic shift of a permutation is still a permutation, so the 1..N
+gate passes on an assignment in which every supervisor is in the wrong district.
+Five of the six admit exactly one order; **Kossuth admits both**. A bijection is
+necessary and not sufficient, and the builder must read the page's own row
+boundaries rather than flat text.
+
+Two smaller things measured on the way. **Worth's page prints "Term Expires:
+2022" beside two current supervisors** — names maintained, term column not — so
+a builder takes the name and the district off these pages and never a term or
+an election date (the Cook County rule). And **Black Hawk's verdict moved
+between two runs 25 minutes apart**, robots-unknown then 200, so an unreachable
+verdict is worth re-asking before it is believed, which is the rule Wisconsin's
+builder already holds.
+
+### What I did not do, and why
+
+I did not build it. The brief was measure and report before building anything,
+and the build is a real piece: a structural row parse (Kossuth proves flat text
+cannot settle it), count guards, retention, and a weekly workflow. **It is the
+next thing I would pick up unless the manager redirects.**
+
+The twelve that do not publish it are what an ask would be for — a narrower and
+better-founded ask than one to all 18, which is what the record would have
+supported yesterday. The five whose fetched page was not the roster page want a
+better page-discovery pass first, and that could raise the six.
+
+
 **2026-09-22 — STAND DOWN. Nothing unpushed, no PR of mine open, no check-in
 scheduled.**
 
