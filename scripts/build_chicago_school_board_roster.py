@@ -145,6 +145,11 @@ def main():
                  "such sub-district — a re-districting, not a roster change" % label)
         if key in roster:
             fail("two members claim %s (district %s)" % (label, key))
+        # THE NAME A READER IS SHOWN. The key is the boundary's row number
+        # (1..20), which nothing the Board or the ballot publishes uses — its
+        # "District 4" is the PAIR 4a + 4b, not the seat this file keys as 4 —
+        # so the key stays an index and every surface prints this instead.
+        sub = m.group("label").lower()
 
         if is_vacancy_marker(name):
             # The Board's own word for an empty seat, kept as a seat rather than
@@ -153,14 +158,14 @@ def main():
             # seat's committee assignment, and here it is an OFFICE OF THE BOARD
             # that the members elect one of their own to — an empty seat cannot
             # hold the vice presidency.
-            roster[key] = {"vacant": True}
+            roster[key] = {"vacant": True, "subDistrict": sub}
             continue
 
         reason = why_not_a_name(name)
         if reason:
             fail("%s would ship %r as its member's name, which is %s"
                  % (label, name, reason))
-        entry = {"name": name}
+        entry = {"name": name, "subDistrict": sub}
         if bio.get("email"):
             entry["email"] = bio["email"]
         if record.get("profile_url"):

@@ -160,9 +160,20 @@ def chicago_school_board(data):
     a vacancy at read time. The roster carries {"vacant": true} now, so the
     conversion lives where the data is written and one reader fewer has to know
     the word.
+
+    THE SEAT IS NAMED BY ITS SUB-DISTRICT, NEVER THE KEY. The key is the
+    boundary shapefile's row number, 1..20, which no ballot or Board page uses;
+    the Board's "District 4" is the pair 4a + 4b, so a row headed "District 4"
+    beside the member for 2b would name the wrong seat. A seat the roster gives
+    no sub-district FAILS rather than falling back to the number.
     """
-    rows = [("District %s" % key, data[key])
-            for key in sorted((k for k in data if k != "board"), key=district_key)]
+    rows = []
+    for key in sorted((k for k in data if k != "board"), key=district_key):
+        sub = (data[key] or {}).get("subDistrict")
+        if not sub:
+            raise SystemExit("build-officeholder-tables: school-board seat %s carries no "
+                             "subDistrict — rebuild the roster" % key)
+        rows.append(("Sub-district %s" % sub, data[key]))
     board = data.get("board") or {}
     if board.get("president"):
         rows.append(("Citywide", {"name": board["president"],
@@ -717,7 +728,7 @@ CITY_TABLES = [
     dict(tag="il", page="school-board.html", worksheet="metro-worksheet.json",
          sections=[dict(roster="data/app/school-board-members.json",
                         adapter="chicago_school_board",
-                        seat="District", holder="Board Member", role_label="Role",
+                        seat="Sub-district", holder="Board Member", role_label="Role",
                         office_label="Office",
                         # "seats", NOT "elected seats": the Board is hybrid until
                         # 2027 — its own index says eleven members including the

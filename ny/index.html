@@ -6715,8 +6715,13 @@ function initNycExplorer() {
    * Board of Education's sub-districts, 1a..10b, the name the Board itself
    * gives each of the 20 seats. "2b" or "2 b" in a query is read as that
    * name, and matches only through the layer's `alt_phrases`
-   * ("sub-district 2b", "school board 2b"): "sub-district 4" finds nothing,
-   * and "school board district 4" still finds District 4 by its number.
+   * ("sub-district 2b", "school board 2b"): "sub-district 4" finds nothing.
+   * Where the layer marks its own number INTERNAL (`alt_title` in the
+   * index), that number is never matched or shown — the Board's seats are
+   * rows 1..20 of a shapefile to this index and nothing to a reader — and a
+   * bare number after the layer's own phrases names every district whose
+   * second name starts with it: "school board district 4" is the Board's
+   * District 4, which is 4a and 4b.
    *
    * A complete name (the phrase, or its last two or more words) answers
    * alone and nothing is sent to the geocoder. A type-ahead prefix is shown
@@ -6991,18 +6996,18 @@ function initNycExplorer() {
           return;
         }
         var words = spec.where ? (without(parsed.words, spec.where) || parsed.words) : parsed.words;
-        if (spec.alt_phrases && bestScore(words, spec.alt_phrases)) {
+        if (spec.alt_phrases && (bestScore(words, spec.alt_phrases) || (spec.alt_title && bestScore(words, spec.phrases)))) {
           var alts = index.features.filter(function (f) { return f.properties.layer === layerId && f.properties.alt; })
             .map(function (f) { return f.properties.alt; })
             .sort(function (a, b) { return parseInt(a, 10) - parseInt(b, 10) || (a < b ? -1 : a > b ? 1 : 0); });
           if (alts.length) {
             // "School Board District" + "Sub-district" -> "School Board Sub-district"
-            hints.push({ name: spec.name.replace(/\s*district$/i, "") + " " + spec.alt_name,
+            hints.push({ name: spec.alt_title || spec.name.replace(/\s*district$/i, "") + " " + spec.alt_name,
               note: "Type its " + spec.alt_name.toLowerCase() + ": " + alts[0] + "\u2013" + alts[alts.length - 1] +
                 (spec.where ? " \u00b7 " + spec.where : "") });
           }
         }
-        if (!bestScore(words, spec.phrases)) return;
+        if (spec.alt_title || !bestScore(words, spec.phrases)) return; // an internal number is never offered
         hints.push({ name: spec.name, note: "Type its number: " + describeIds(sets[layerId + "|"] || []) +
           (spec.where ? " \u00b7 " + spec.where : "") });
       });
@@ -7017,7 +7022,11 @@ function initNycExplorer() {
         // the district's number, or its second name ("2B") — which matches
         // only through the layer's own words for that name
         var byAlt = !!props.alt && String(props.alt).toUpperCase() === parsed.num;
-        if (String(props.id) !== parsed.num && !byAlt) continue;
+        // an internal number: "district 4" is every district whose second
+        // name is 4 and a letter, and the index's own 4 matches nothing
+        var byPair = !!spec.alt_title && !byAlt && !!props.alt &&
+          String(props.alt).replace(/[a-z]$/i, "") === parsed.num;
+        if (spec.alt_title ? !byAlt && !byPair : String(props.id) !== parsed.num && !byAlt) continue;
         var score;
         if (byAlt) {
           var altWords = spec.where ? (without(parsed.words, spec.where) || parsed.words) : parsed.words;
@@ -7036,7 +7045,7 @@ function initNycExplorer() {
         if (!score) continue;
         hits.push({ layer: layerId, label: spec.where ? spec.label + " \u00b7 " + spec.where : spec.label, name: props.name, bbox: props.bbox, coords: f.geometry.coordinates, score: score });
         if (score === 2) exact = true;
-        if (!spec.where_per_district) break; // one district per number in a single-numbering layer
+        if (!spec.where_per_district && !byPair) break; // one district per number in a single-numbering layer
       }
     });
     hits.sort(function (a, b) { return b.score - a.score; });

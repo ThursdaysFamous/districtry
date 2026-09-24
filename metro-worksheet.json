@@ -1010,7 +1010,7 @@
   "anchors": [
     {
       "layer": "school-board",
-      "expected": "12"
+      "expected": "Sub-district 6b"
     },
     {
       "layer": "il-supreme-court",
@@ -3360,7 +3360,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-il-shell-v36",
+    "cache_name": "districtry-il-shell-v37",
     "shell_urls": [
       "./",
       "./sources.html",

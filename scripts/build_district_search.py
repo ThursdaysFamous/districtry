@@ -309,6 +309,15 @@ def phrase_layers():
                     alt.append(n)
             out[lid]["alt_name"] = entry["alt_name"].strip()
             out[lid]["alt_phrases"] = alt
+            # THE NUMBER IS INTERNAL: the second name is the only name a
+            # reader is shown ("School Board Sub-district 2b"), the layer's own
+            # number is never matched, and a bare number after the layer's
+            # phrases names every district whose second name starts with it —
+            # the Board's "District 4" is the pair 4a + 4b
+            if entry.get("internal_numbers"):
+                out[lid]["alt_title"] = "%s %s" % (re.sub(r"(?i)\s*district$", "", name), entry["alt_name"].strip())
+        elif entry.get("internal_numbers"):
+            problems.append("%s: internal_numbers needs an alt_name to show instead" % lid)
         elif "alt" in SOURCES[lid]:
             problems.append("%s: the builder reads a second name for it, the phrase file gives no alt_name" % lid)
         # a layer whose districts belong to one city names it, so a result for
@@ -515,10 +524,16 @@ def app_layer_districts(lid, dump):
     return groups, counts, skipped
 
 
-def district_name(layer_name, d, where=None, alt=None, alt_name=None):
+def district_name(layer_name, d, where=None, alt=None, alt_name=None, alt_title=None):
     """'Ward 33'; with a county, '<County> <layer name> <id>' — 'Lake' +
     'County Board District' + '3' is 'Lake County Board District 3'; with a
-    second name, 'School Board District 4 · Sub-district 2b'."""
+    second name, '<layer name> <id> · <alt name> <alt>'; and where the number
+    is internal, the second name alone: 'School Board Sub-district 2b'."""
+    if alt_title:
+        if not alt:
+            raise SystemExit("build-district-search: district %s has no second name, and its "
+                             "layer shows nothing else" % d)
+        return "%s %s" % (alt_title, alt)
     name = "%s %s %s" % (where, layer_name, d) if where else "%s %s" % (layer_name, d)
     return "%s \u00b7 %s %s" % (name, alt_name, alt) if alt else name
 
@@ -589,7 +604,8 @@ def build(county_dump=None):
             bb = [round(v, DIGITS) for v in bbox_of(rings)]
             props = {"layer": lid, "id": d,
                      "name": district_name(layers[lid]["name"], d, alt=alts.get(d),
-                                           alt_name=layers[lid].get("alt_name")),
+                                           alt_name=layers[lid].get("alt_name"),
+                                           alt_title=layers[lid].get("alt_title")),
                      "bbox": bb}
             if d in alts:
                 props["alt"] = alts[d]
@@ -696,7 +712,7 @@ def check():
                 if not str(p.get("name") or "").strip():
                     fails.append("%s %s: a named district with no name" % (lid, p["id"]))
                 continue
-            if p.get("name") != district_name(spec["name"], p["id"], where, p.get("alt"), spec.get("alt_name")):
+            if p.get("name") != district_name(spec["name"], p["id"], where, p.get("alt"), spec.get("alt_name"), spec.get("alt_title")):
                 fails.append("%s %s: name %r does not follow the phrase file" % (lid, p["id"], p.get("name")))
         if src.get("app_layer"):
             fails += check_app_layer(lid, feats, doc, index_html)
