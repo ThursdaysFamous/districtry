@@ -78,6 +78,7 @@ python3 scripts/build_manifests.py --check
 python3 scripts/build_county_pages.py --check            # the 183 per-county board pages (il 83, wi 72, ia 17, mi 11) vs their rosters, the 60 workflows that rewrite one, and any county roster no adapter reads
 python3 scripts/build_il_gis_board_rosters.py --check     # the seven Illinois boards whose members ride the boundary feature; fails on a carded county with no roster and no recorded reason
 python3 scripts/build_llms_txt.py --check                 # /llms.txt vs the fleet it describes; its page set comes from sitemap.xml, so it cannot name a page that is not there
+python3 scripts/build_endpoint_inventory.py --check       # docs/ENDPOINT_INVENTORY.md vs the tree: runtime hosts, dataset counts, point transmission; also fails once the repo starts recording a term it calls unrecorded
 python3 scripts/build_sitemap.py --check                 # sitemap.xml PARSES as XML, and every page's lastmod matches its last commit (regenerate with no flag; a page you have edited but not committed dates today, so the order you run it in no longer matters). A parse FAIL means no crawler can read any of it — that is what a double hyphen in its header comment did on 2026-09-12.
 python3 scripts/build_redirect_stubs.py --check           # the 8 root shells + 404.html vs their targets
 python3 scripts/build_question_forms.py --check          # every question page's address box vs that page's own .cta
