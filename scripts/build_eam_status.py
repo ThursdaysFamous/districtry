@@ -340,6 +340,15 @@ def selftest():
     fifth correction was the classifier, so the classifier gets one.
     """
     bad = 0
+    for cell, want, why in WHEN_CASES:
+        got = states_a_when(cell)
+        if got != want:
+            bad += 1
+            print("  WHEN  %-58s want=%s got=%s  (%s)"
+                  % (cell[:58], want, got, why))
+    print("  WHEN  %d cadence-cell case(s), %d accepted / %d refused"
+          % (len(WHEN_CASES), sum(1 for _, w, _ in WHEN_CASES if w),
+             sum(1 for _, w, _ in WHEN_CASES if not w)))
     for rel, want, why in SHAPE_CASES:
         path = os.path.join(REPO_ROOT, rel)
         if not os.path.exists(path):
@@ -356,7 +365,8 @@ def selftest():
                  else "expected %s" % want))
     if bad:
         fail("%d shape case(s) failed" % bad)
-    print("build-eam-status: selftest OK — %d shape case(s)" % len(SHAPE_CASES))
+    print("build-eam-status: selftest OK — %d shape case(s), %d cadence cell(s)"
+          % (len(SHAPE_CASES), len(WHEN_CASES)))
 
 
 def check_geometry_names_nobody():
@@ -515,6 +525,56 @@ WHEN = re.compile(r"(?i)\b(dail|week|month|quarter|semiannual|semi-annual|annual
 # nothing.
 SAME_AS_ABOVE = re.compile(r"(?i)^\W*same\b")
 
+# A DATE IS A WHEN, AND ONLY WHERE THE CELL LEADS WITH IT (Adam's ruling,
+# 2026-09-25: "widen the vocabulary to accept a date"). A year — with or without
+# a quarter or a range — is a MORE specific commitment than `annually`, and
+# rejecting it forced a row to be worded vaguer than what the project actually
+# knows: the root WATCH.md's `**2029 Q4**`, `**2031 Q2**`, `**2031–2032**` and
+# `**2032–2033**` are all real plans, and the identical set is in `ny/WATCH.md`
+# and `ca/WATCH.md`, so this is a fleet rule that reaches only `il` today
+# because the report reads four instances.
+#
+# ANCHORED AT THE START OF THE CELL, `**` AND ALL, BECAUSE A BARE `\b20\d\d\b`
+# IS TOO LOOSE AND THE CELL IT BREAKS IS NAMED: `ia/WATCH.md` line 53 reads
+# "Iowa specifically, no fixed cadence (the Legislature's own ArcGIS org has
+# already revised this boundary once, mid-2026, ...)" — a cell that states
+# outright that it has NO cadence, which a year matched anywhere inside it would
+# silently promote to a plan. The date has to be the cell's OWN commitment
+# rather than a numeral somewhere in its prose, and that Iowa cell still failing
+# is the negative test this clause is worth nothing without. `WHEN_CASES` below
+# ships it, with the five other phrases that must keep failing.
+WHEN_DATE = re.compile(r"^\W*20\d\d\b")
+
+
+def states_a_when(cell):
+    """True when a cadence cell commits to a time, by vocabulary or by date."""
+    return bool(WHEN.search(cell) or WHEN_DATE.match(cell))
+
+
+# (cell, should it count as a when, why this case is here). Each is a REAL cell
+# from a WATCH.md in this tree or a phrase the ruling deliberately leaves out.
+WHEN_CASES = (
+    ("**2029 Q4**", True, "root WATCH.md's pre-cycle dry read — a date, no vocabulary word"),
+    ("**2031 Q2**", True, "P.L. 94-171 delivery; the same cell is in ny/ and ca/"),
+    ("**2031\u20132032**", True, "a RANGE is still the cell's own commitment"),
+    ("**2032\u20132033**", True, "municipal remaps"),
+    ("**2031**, when TIGERweb publishes 2030 census blocks", True,
+     "matched twice over — the anchored date and the word census"),
+    ("Iowa specifically, no fixed cadence (the Legislature's own ArcGIS org has "
+     "already revised this boundary once, mid-2026, ...)", False,
+     "ia/WATCH.md line 53 — THE negative test: says it has no cadence, and a "
+     "year matched anywhere inside would promote it to a plan"),
+    ("Rolling, post-enactment", False, "states a trigger shape, not a when"),
+    ("Per-body, ad hoc", False, "ad hoc is the absence of a cadence"),
+    ("Ad hoc", False, "same, standing alone"),
+    ("no fixed cadence", False, "says so in words"),
+    ("Before each election", False,
+     "an election has no fixed date; a row wanting this names the months"),
+    ("Every PR, by CI", False,
+     "a gate is not a cadence — and a --check proves a file matches its inputs, "
+     "never that the inputs are current"),
+)
+
 
 # ILLINOIS'S WATCH FILE IS THE ROOT ONE, and reading `<tag>/WATCH.md` for
 # every state meant reading NOTHING for the instance that carries most of the
@@ -530,12 +590,31 @@ SAME_AS_ABOVE = re.compile(r"(?i)^\W*same\b")
 WATCH_FILE = {"il": "WATCH.md"}
 
 
+# A CLASS ROW NAMES A PATTERN, BECAUSE A ROW CANNOT NAME 101 FILES. Illinois
+# carries 101 `<county>-county-outline.json`, 79 library-district files and 46
+# precinct layers, and every file in each of those sets has ONE clock — the
+# TIGER vintage roll, an annexation, a re-precincting. Writing them out would
+# be 234 lines restating three facts, which is the shape this report exists to
+# replace, so a row may name its class as a glob inside backticks.
+#
+# THREE THINGS KEEP IT FROM BECOMING A BLANKET. The glob must be written
+# `*-<suffix>.json` in backticks, so prose cannot match by accident and a bare
+# `*.json` is not expressible. The suffix must be at least six characters, so
+# `*-x.json` cannot stand in for everything. And `measure()` FAILS when one
+# pattern covers more than a third of an instance's surface, because a single
+# cadence claimed over that many files is a statement about several different
+# clocks — fire, park, library and board districts do not move together — and
+# prints every pattern's match count on each run so a widening one is visible
+# before it reaches that ceiling.
+CLASS_GLOB = re.compile(r"`\*-([A-Za-z0-9_-]{6,}\.json)`")
+
+
 def watch_rows(tag):
-    """{filename: the WATCH.md row's cadence cell} for rows that state a when."""
+    """({filename: cadence}, [(pattern, cadence)]) for rows that state a when."""
     path = os.path.join(REPO_ROOT, WATCH_FILE.get(tag, os.path.join(tag, "WATCH.md")))
     if not os.path.exists(path):
-        return {}
-    out, last_when = {}, None
+        return {}, []
+    out, globs, last_when = {}, [], None
     for line in open(path, encoding="utf-8"):
         if not line.lstrip().startswith("|"):
             continue
@@ -543,13 +622,16 @@ def watch_rows(tag):
         if not cells or set(cells[0]) <= set("-: "):
             continue
         when = None
-        if WHEN.search(cells[0]):
+        if states_a_when(cells[0]):
             when = cells[0]
             last_when = when
         elif SAME_AS_ABOVE.match(cells[0]) and last_when:
             when = "%s (%s)" % (cells[0], last_when)
         if not when:
             continue
+        for suffix in CLASS_GLOB.findall(line):
+            globs.append((re.compile(r"^[A-Za-z0-9_-]+-%s$" % re.escape(suffix)),
+                          "*-" + suffix, when))
         for name in re.findall(r"[A-Za-z0-9_.-]+\.json", line):
             out.setdefault(name, when)
         # A FOLDER CLASS CARRIES NO FILENAME, so the `.json` scan above cannot
@@ -559,7 +641,7 @@ def watch_rows(tag):
         for rel in PREFIX_KIND:
             if rel in line or rel.rstrip("/") in line:
                 out.setdefault(rel, when)
-    return out
+    return out, globs
 
 
 # THE APP'S OWN STATEMENT OF WHICH FILES IT FETCHES IS `sw.js`, AND THE
@@ -704,7 +786,18 @@ def measure(counties, paths, B):
             {os.path.relpath(p, REPO_ROOT) for p in set(paths.get(tag, ()))} |
             set(app_data_files(tag)) | set(prefix_classes(tag)))
 
-        planned_rows = watch_rows(tag)
+        planned_rows, class_globs = watch_rows(tag)
+        # THE CEILING COUNTS WHAT A PATTERN COULD MATCH, NEVER WHAT IT WAS LEFT,
+        # and the first version counted the leftovers — which made it nearly
+        # vacuous, caught by its own negative test. The lookup below breaks on
+        # the FIRST matching row, so a blanket `*-districts.json` written under
+        # the narrow rows only ever claimed the files they had not taken, and a
+        # guard reading those claims would have passed it. Counted against the
+        # whole surface instead, a blanket is a blanket wherever it sits.
+        glob_reach = {label: sum(1 for r in surface
+                                 if rx.match(os.path.basename(r) or r))
+                      for rx, label, _ in class_globs}
+        glob_hits = {label: 0 for _, label, _ in class_globs}
         unmaintained, watched, planned = [], [], []
         for rel in surface:
             if refreshed_by(rel, staged):
@@ -716,8 +809,13 @@ def measure(counties, paths, B):
             # A folder class is keyed by its own path; `os.path.basename` of a
             # path ending in "/" is the empty string, which would look up
             # nothing and read as unplanned forever.
-            when = planned_rows.get(rel if rel.endswith("/")
-                                    else os.path.basename(rel))
+            base = rel if rel.endswith("/") else os.path.basename(rel)
+            when = planned_rows.get(base)
+            if not when:
+                for rx, label, cadence in class_globs:
+                    if rx.match(base):
+                        when, glob_hits[label] = cadence, glob_hits[label] + 1
+                        break
             if when:
                 planned.append((rel, when))
                 continue
@@ -726,6 +824,19 @@ def measure(counties, paths, B):
             # output: a directory of seat counts contributes no districts, so
             # the adapter view cannot tell it from an empty one.
             unmaintained.append((rel,) + shape_of(os.path.join(REPO_ROOT, rel)))
+
+        for label, reach in sorted(glob_reach.items()):
+            claimed = glob_hits[label]
+            print("build-eam-status: %s — WATCH.md class `%s` matches %d file(s)"
+                  "%s" % (tag, label, reach,
+                          "" if claimed == reach
+                          else ", %d of them claimed here (the rest by an "
+                               "earlier row)" % claimed))
+            if reach > len(surface) // 3:
+                fail("%s: WATCH.md class `%s` matches %d of %d files on the "
+                     "surface. One cadence over more than a third of an "
+                     "instance is a claim about several different clocks; "
+                     "split the row." % (tag, label, reach, len(surface)))
 
         rows.append(dict(
             tag=tag, total=total, ring=ring,
