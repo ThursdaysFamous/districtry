@@ -50,6 +50,29 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — #1158 MERGED AS `acafd1d`; BOTH OUTER LOOPS ARE GONE FROM MAIN.** Verified by
+content rather than by the merge event: no `ROBOTS_RETRIES` assignment and no
+`for attempt in range(ROBOTS_RETRIES…)` remains in either file — the four textual matches
+left are comments naming the retired constant to say it is retired — and on main
+`ia_supervisor_district_scraper --selftest` reports 0 failures while
+`wi_county_board_scraper --selftest` reports `robots selftest: 16 assertions`. CI was green on
+`c030bae` (run `36146185468`, `pull_request`, 14:14:47 → 14:24:28Z) and the merged tree had
+already been checked here against main's two later commits, since my PR's CI ran against the
+older base `f67eb45`: `validate_steward_mirror`, `validate_gate_counts`, `validate_skills` and
+`validate_doc_counts` all pass on the local merge. The check-in is retired, the subscription
+closed.
+
+**THE COORDINATION WAS THE PART WORTH RECORDING, AND IT NEARLY FAILED.** Wisconsin's own
+check-in carried a standing instruction to build this same change as task #60 the moment #1157
+merged — and #1157 merged as `dcd3687`, minutes after #1158. Two sessions were one timer apart
+from building the same two files. Nothing in either PR would have shown it: the collision was
+only visible in their scheduled prompt, which I read while looking for something else.
+`SendMessage` could not reach them — a separate remote session, absent from `ListAgents` — so
+the channel was a comment on the artefact their check-in re-reads. **A SESSION'S NEXT ACTION CAN
+BE SCHEDULED RATHER THAN DECIDED, so "they have not started it" is not the same as "they will
+not", and the place to say so is wherever their own timer looks.** Their task table is the
+manager's to retire; this notes it rather than editing it.
+
 **2026-09-25 — THE OUTER-LOOP RETIREMENT IS BUILT AND OPEN AS #1158.** The entry below
 ends "still unstarted"; that stopped being true an hour later, once Wisconsin agreed on
 `cc2253f`. Both loops are gone — mine and theirs — and the part worth recording is what
