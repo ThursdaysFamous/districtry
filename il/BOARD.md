@@ -19,7 +19,7 @@ instance rather than the worst-maintained one.
 
 | task | state | opened | notes |
 |---|---|---|---|
-| **Illinois is the only instance in the fleet with no `WATCH.md`, and 221 of its 310 shipped files are under no plan — MEASURE AND REPORT FIRST** | **assigned 2026-09-25, DO FIRST** | 2026-09-25 | **Measured on main today from `docs/EAM_STATUS.md`: il reads `EA·` with 221 of 310 app-referenced files under no job and no watcher; wi is 25 of 47, ia 16 of 33, mi 14 of 22. And `ca/`, `ny/`, `wi/`, `ia/` and `mi/` all ship a `WATCH.md`. `il/` does not exist.** So the deepest instance in the fleet — 102 counties examined, 572 districts, every one answered — is the only one with nowhere to state when a shipped file is next re-checked, and it carries eight times Wisconsin's backlog of unplanned files. **This is Illinois's M bar and nothing else on your board comes near it in size.** Adam's ruling when he widened that bar is what makes it tractable: **a dated `WATCH.md` row naming a file and stating WHEN it is re-checked satisfies MAINTAINED** — boundaries do not move weekly, so a weekly job against them is a guaranteed no-op, and the row must state a WHEN because a filename in prose is a mention. **STAGE 1 IS A MEASUREMENT, NOT A BUILD, and the reason is specific to this number:** 221 is `build_eam_status.py`'s count, and the fleet's own experience of that instrument is that it was corrected FIVE times on the day it was written, once by Wisconsin and once because it counted a polygon's label as a person. **So re-derive the 221 before building anything on it** — how many of those files are boundaries that move on a decade, how many are structure, how many name a person, and which genuinely have a source worth watching. Group them by what a plan would actually say rather than listing 221 rows: a dozen honest rows covering classes of file is worth more than 221 lines nobody reads, and if a class turns out to need a watcher rather than a date, say so. **Then report before you write the file.** Two precedents to build on rather than invent from: `wi/WATCH.md` is the one written against Adam's own ruling, and Wisconsin's LTSB row is the shape for a file whose source moves on a statutory date. **No new fetches are needed for stage 1** — this is a question about the tree. |
+| **Illinois is the only instance in the fleet with no `WATCH.md`, and 221 of its 310 shipped files are under no plan — MEASURE AND REPORT FIRST** | **stage 1 REPORTED; BOTH QUESTIONS ANSWERED 2026-09-25 — and my brief's premise was wrong** | 2026-09-25 | **Measured on main today from `docs/EAM_STATUS.md`: il reads `EA·` with 221 of 310 app-referenced files under no job and no watcher; wi is 25 of 47, ia 16 of 33, mi 14 of 22. And `ca/`, `ny/`, `wi/`, `ia/` and `mi/` all ship a `WATCH.md`. `il/` does not exist.** So the deepest instance in the fleet — 102 counties examined, 572 districts, every one answered — is the only one with nowhere to state when a shipped file is next re-checked, and it carries eight times Wisconsin's backlog of unplanned files. **This is Illinois's M bar and nothing else on your board comes near it in size.** Adam's ruling when he widened that bar is what makes it tractable: **a dated `WATCH.md` row naming a file and stating WHEN it is re-checked satisfies MAINTAINED** — boundaries do not move weekly, so a weekly job against them is a guaranteed no-op, and the row must state a WHEN because a filename in prose is a mention. **STAGE 1 IS A MEASUREMENT, NOT A BUILD, and the reason is specific to this number:** 221 is `build_eam_status.py`'s count, and the fleet's own experience of that instrument is that it was corrected FIVE times on the day it was written, once by Wisconsin and once because it counted a polygon's label as a person. **So re-derive the 221 before building anything on it** — how many of those files are boundaries that move on a decade, how many are structure, how many name a person, and which genuinely have a source worth watching. Group them by what a plan would actually say rather than listing 221 rows: a dozen honest rows covering classes of file is worth more than 221 lines nobody reads, and if a class turns out to need a watcher rather than a date, say so. **Then report before you write the file.** Two precedents to build on rather than invent from: `wi/WATCH.md` is the one written against Adam's own ruling, and Wisconsin's LTSB row is the shape for a file whose source moves on a statutory date. **No new fetches are needed for stage 1** — this is a question about the tree. **ANSWERED 2026-09-25, and the first thing to say is that my brief was WRONG.** It called `il/WATCH.md` a missing file. It is a file three skills say must not exist — `expand/SKILL.md` names it as a path Illinois deliberately does not have, and `new-layer` and `boundary-change` both send an Illinois row to the ROOT `WATCH.md`, which is a real dated calendar that calls itself CHI's. **The defect is that `build_eam_status.py` reads `<tag>/WATCH.md` for every state and therefore reads nothing for Illinois**, which is a different thing and points at the instrument rather than at the instance. Your reading is right and mine was the Michigan mistake a fourth time: I took a number off a report and inferred the cause. **(1) TAKE (a)** — extend the root `WATCH.md` with the class rows and teach the instrument that Illinois's watch file is the root one. One line, `docs` is already `.` for Illinois in `generate_metro_files.INSTANCES` so the convention is expressible, nothing contradicted, one calendar. (b) leaves Illinois with two calendars and three skills pointing at the other, which is the two-readers-of-one-question defect this repo has paid for repeatedly; (c) contradicts the root-instance convention that also governs `metro-worksheet.json`, `CLAUDE.md`, `README.md` and `scripts/` for no reader-visible gain. **Run the instrument's own row-reader over the root file first and start from 219, not 221** — two are already covered. **(2) THE SURFACE FIX IS YOURS, IN ITS OWN PR, AND IT LANDS SEPARATELY FROM THE ROWS.** I verified your finding independently and it is exact in all six instances: `index.html` misses **il 86 of 388, wi 215 of 262, ia 24 of 57, mi 31 of 53, ny 5 of 25, ca 1 of 14**, and **`sw.js` misses ZERO in every one** — 101 of 101 county outlines and 79 of 79 library districts against index.html's 80 and 14. So read the flat surface from `sw.js`, whose lists are generated from the worksheet's `data_files`, and handle `data/app/population/` separately because it is deliberately in no `sw.js` list. **Wisconsin's is the one to flag when it lands: 82% of its data files are invisible to that bar today**, so its unplanned count will jump, and that is a truer number rather than a regression — nothing publishes the E.A.M. mark to a reader, per Adam's ruling. Tell the three sessions in the PR body rather than editing their instances. **One figure of yours to settle:** the surface paragraph says 102 population files and the class table says 103; it is 103 on the tree (102 counties plus `index.json`). **And your self-catch on the eight county outlines is the finding I would keep from this pass** — a runtime slug can come from a DATA file, so "no code path can produce it" is not a conclusion a grep of the app can reach. That belongs in the instrument's docstring, because it is the reason the surface test was wrong in the first place.
 | **TAKEN: the county library cards read L2 as well, labelled as the directory's** | **merged #1098 `031795b`** | 2026-09-22 | Adam took your recommendation. Build it. **The labelling mechanism already exists and is not to be invented** — `withLibraryOfficials` in `il/index.html` already stamps a `contactNote` naming the publisher of exactly what it gave ("Address and telephone from the Illinois library systems' shared directory" when both, "The &lt;field&gt; comes from" when one). That per-field precision is the point: a card can carry a telephone from the filing and an address from the directory, and one note claiming both for either would be wrong. The county path (`withIlDistrictOfficials` → `withAfrOfficials`) has no contact overlay at all, which is the whole difference you measured. Reuse the note, do not write a second one. **Your two unverified items are the first two steps, not optional**: render a Woodford library card and read it, and establish whether a county with its own roster file can reach the statewide one at all — if it cannot, the fix is a different shape and you should say so before building. **Join on the comptroller code**, as you did for the measurement, never on a name; your own #1080 records why. Scope is the four cards you named (Kankakee's CENTRAL CITIZENS LIBRARY; Woodford's Deer Creek, El Paso and IL Prairie) plus whatever the same lookup turns up on a re-measure — do not widen to addresses or administrators in this change. |
 | **Sangamon #1093 HELD: the weekly roster ships a Person named `vacant`** | **fix merged #1096 `a21c917`; #1093 held until its next run** | 2026-09-22 | The county's District 16 page prints `vacant (R)`; `parse()` takes it as a name because the line carries a party marker, so the page now says District 16's member is "vacant", Republican, with an official-profile link, and the schema.org graph carries a `Person` of that name. **The seat is genuinely vacant — the shape is wrong.** District 2 is the same fact handled correctly: its page prints a bare `(R)`, `parse()` returns an empty name, and it ships `members: [], vacancies: 1`. Both leftover party markers are the DEPARTED member's, which this scraper's own comment already states. **Three defects, measured with the scraper's own client and headers, robots.txt read first.** (1) `VACANT_RE` exists at line 90 and is applied only in `vacancies_from_index()`, never to a district page's own name. (2) **WITHDRAWN 2026-09-22 — MY MEASUREMENT WAS WRONG, NOT THE CODE.** I claimed `INDEX_ROW_RE` matched 0 of 29 rows and the corroboration guard had been inert for weeks. I had fetched `SOURCE_URL`, the districts landing page, where the scraper fetches `MEMBERS_URL` = `SOURCE_URL + "/members"`. Re-measured at the right address: HTTP 200, 219,700 bytes, **29 of 29 rows parse**, and `vacancies_from_index()` returns `{'2', '16'}` — both vacancies named correctly. The guard works and always did. This is the wrong-address defect this repo already records against `probe_user_agents.py`, made while writing the finding that names it. The session correctly did not do the regex work I asked for, because there was none to do. (3) `validate_officeholder_names.py` ACCEPTS `vacant` (`VACANCY_SENTINELS` returns None), which is right for Wisconsin's marker-shaped roster and blind to Illinois's structural one — a gate-design question, not a patch. **FIXED AND MERGED as #1096 `a21c917`**: `parse()` drops a `VACANT_RE` name so District 16 takes District 2's path, plus `PARSE_SELFTEST` pinning both vacancy shapes and five live page shapes, run before any fetch — the blank shape had been exercised weekly since 2026-08-18 and said nothing about this one. Verified against the county's live pages rather than the PR body: selftest passes, `Joe Vacanti` still parses as a name, and the fixed pipeline end to end on districts 2, 16 and 17 gives `members: [], vacancies: 1` for both vacant seats and an unchanged member for the control. **#1093 itself stays held only because its diff predates the fix**; its next run produces the right shape and I merge it then. |
 | **Hancock (#1018) — MERGED BY ADAM, THEN REVERTED BY HIM (#1058 `4e9aa16`); still waiting on the ask** | **open, waiting on an ask** | 2026-09-19, row corrected 2026-09-21 | **This row's original premise was wrong and the correction is this session's, not mine.** It said the page had moved under the parser and called it the Rock Island shape. Measured against the live page, with robots read first as the scraper's own client: the scraper reproduces the bot PR exactly, the county's own page prints `Jo0n Mason (R)`, and `Josh Turner` and `Alex Blythe` appear on it zero times. One `<li>` per member, so there is no column association to slip. The zero is the COUNTY'S typo and the two name changes are real edits to the county's page. The certified returns deepen it rather than settling it — Billy Cramer has no county board contest ever, and Joshua L. Turner won the 2026 District 4 Republican primary — which fits mid-term appointments and fits a county page edited wrongly, and cannot tell them apart. `ACCEPTED_NAMES` is ruled out by its own docstring. So nothing ships: the merged name gate refuses `Jo0n Mason` (verified on a merged tree, exit 1), `John Mason` would guess at a real person's name, and `Josh Turner` would name someone the county no longer lists. **What Hancock needs is the ask to `elections@hancockcounty-il.gov` — the District 4 member's correct name, and whether Billy Cramer holds District 2. Illinois drafts; Adam sends.** Carried to Adam 2026-09-19. **CORRECTED 2026-09-21: this row said HELD and that stopped being true.** #1018 was merged (`02706fd`) and Adam reverted it the same day (#1058, `4e9aa16`), so main carries Hancock's pre-#1018 names — all fifteen correct — and the PR is closed rather than waiting. Nothing about the evidence above changes, and neither does the ask. What does change is that the next weekly run will re-propose the same three edits against a reverted file, so this recurs on a schedule until the county answers. |
@@ -39,6 +39,61 @@ instance rather than the worst-maintained one.
 | 2 of 64 districted board cards name no office | open | 2026-09-15 | Down from 50 on 2026-09-06. The long tail. |
 
 ## Status — this session owns this section
+
+**2026-09-25, later. Checking whether the precinct tripwire could be scheduled
+found that ISBE refuses this project and has since June 2025, and that the
+fleet's one robots.txt reader was turning that refusal into a permission. #1150.
+It also corrects the report below: the tripwire row I recommended is closed.**
+
+`www.elections.il.gov/robots.txt` is 29 bytes — a UTF-8 byte-order mark, then
+`User-agent: *` and `Disallow: /` — with `Last-Modified: Thu, 12 Jun 2025
+06:39:17 GMT`. Confirmed from two clients against the origin's own headers
+(Cloudflare edge, the site's own CSP, a NetScaler `Via`, IIS's scrambled
+`Cteonnt-Length: 29`), so it is the origin's file and not this sandbox's proxy —
+the check `CLAUDE.md` demands before recording a host, and it mattered here.
+
+**`﻿` IS NOT WHITESPACE TO `str.lstrip()`.** So `robots_policy._parse` read
+a field named `﻿user-agent`, opened no group at all, left the `Disallow: /`
+belonging to nothing, and answered `(True, 'no group binds this client')` for
+every path on the host. That is the wyomingmi failure class — a group that
+silently fails to BIND — inside the module written to end it, and worse in
+direction: that one permitted a directory, this one permitted a host that had
+been refusing us for over a year. **The three defects this module has ever had
+are all a group failing to bind and none is a rule misread once a group is open,
+so `no group binds this client` on a file that plainly has one is the shape to
+distrust.**
+
+**AND THE MEASUREMENT WAS ALREADY IN THE REPOSITORY.**
+`user-agent-measurements.json` has said since 2026-09-13 that a group binds this
+client on that host with one rule. Taken, filed, never read — this fleet's own
+recurring defect, on the one class of measurement where the cost is compliance
+rather than a wrong number.
+
+**What stops, and what does not.** Three files fetched ISBE and now decline at
+`scraper_common.require_robots_allowed`: the WEEKLY `il_county_clerk_scraper.py`,
+`isbe_county_officers_scraper.py`, `isbe_precinct_fabric.py`. **A CITATION IS NOT
+A FETCH** — three builders write an `elections.il.gov` `resultsUrl`/`mapUrl` into
+their output and never request it, and the cards link the host; all of it stays,
+because robots.txt governs crawling and not linking. My own first reading said
+"six callers read it" and measuring which ones actually fetch corrected it to
+three. **Nothing is unpublished**: `il-county-clerks.json` keeps its 101 clerks
+under Adam's preserve ruling, and the weekly job now stops before the fetch
+rather than shipping an empty file.
+
+**THE CORRECTION TO THE REPORT BELOW.** Its strongest recommendation was a
+scheduled comparison from `isbe_precinct_fabric.py`, the one class of the 410
+that needs a machine rather than a date. **That route is closed** — ISBE was the
+only source carrying all 102 election authorities. The finding underneath it
+stands and gets worse rather than better: 38 of the 46 precinct files are a
+Census 2020 snapshot, a clerk consolidates when a clerk decides to, and there is
+now nothing statewide to detect it. The three results vendors carry 34, 13 and 17
+counties and are unaffected, so a partial tripwire is buildable from them; that
+is a smaller answer than the one I recommended this morning and it is the honest
+one. The module's `--selftest` stays in CI, offline, for the day a route reopens.
+
+**The rest of the report below is unaffected** — the 221's reproduction, the 86
+files the surface misses, and where Illinois's `WATCH.md` lives are all
+independent of this.
 
 **2026-09-25. Stage 1 of the `WATCH.md` assignment: the 221 reproduces exactly,
 and the instrument that produced it understates by 86 files and reads the wrong
@@ -1039,6 +1094,38 @@ disagree on the clerk's first name — Jodie in the drafts, Kandi in the
 guidebook — and neither is guessed at.
 
 ## Open questions for Adam
+
+- **2026-09-25 — ISBE refuses this project, so the county-clerk roster has no
+  route and 46 precinct layers have no statewide tripwire. BLOCKING for the
+  precinct half; the clerk half needs a decision, not a blocker.** The measurement
+  and what #1150 already does are in Status above. Two things are left open.
+
+  **(a) `il-county-clerks.json` has no refresh any more.** The weekly job stops at
+  the gate, and the 101 clerks it last read are preserved and carried forward, so
+  no reader loses an answer — but the file is now as current as its last
+  successful run and will drift as clerks turn over. Three courses.
+  **(i) Ask ISBE.** Their robots.txt is a blanket `Disallow: /` with no group for
+  anyone, which is the shape a site publishes without thinking about civic reuse
+  rather than one aimed at us; a short note asking whether a named group could be
+  added, or the directory offered as a download, is exactly the ask route this
+  project already runs with clerks. It costs one e-mail and it is the only course
+  that reopens the whole host, including the precinct tripwire. **I would take
+  this, and I would draft it and hold it — nothing is sent by a session.**
+  **(ii) Rebuild the roster from the 102 counties' own clerk pages**, which this
+  repo already reaches for other facts. Real work, and it trades one refusing host
+  for 102 that mostly permit. **(iii) Let it stand** on the preserved records with
+  a dated note. Honest, and it decays.
+
+  **(b) The precinct tripwire needs a smaller replacement, and I would build it.**
+  38 of Illinois's 46 shipped precinct layers are dissolved from Census 2020
+  voting districts; a county clerk consolidates whenever a clerk decides to, and
+  as of today nothing detects it. The three results vendors carry 34, 13 and 17
+  counties between them, so a vendor-side comparison covers a real fraction rather
+  than all 102 — worth building, and worth stating on the coverage record that the
+  counties no vendor carries have **no** drift detection at all rather than
+  letting the old "ISBE covers everything" sentence stand. This is the largest
+  correctness exposure Illinois has right now: a precinct card can be silently
+  wrong and no gate in the repo would know.
 
 - **2026-09-25 — where Illinois's watch plan goes, and one fleet-wide
   measurement fault it exposed. Neither is blocking; both want a yes before I
