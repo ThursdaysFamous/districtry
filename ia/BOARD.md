@@ -49,6 +49,85 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — THE 90-COUNTY SWEEP IS RUN AND REPORTED. The answer is ONE new
+county, and nine was very nearly all that exists on this route.** #1148 carries
+the artifact; stage 2 is deliberately not in it.
+
+**The assignment's premise was wrong in a way that made the work cheaper and
+better.** It said nobody had asked the other 90. The
+`ia-municipal-officeholders` blocker records a 99-county sweep on **2026-09-05,
+run twice**, and it was STRONGER than the budget authorised here — each county's
+homepage plus up to fourteen followed links plus eight guessed paths, 562 pages
+cached, scored offline. **What was missing was not the sweep. It was the
+artifact.** `ia/scripts/.cache/` is untracked and the only tracked products are
+the twelve POSITIVE results, so for the other 87 counties nothing in the tree
+said which were measured absent, which refused, and which never answered; that
+survived only as prose in a 30 KB blocker naming about a dozen. This project's
+own rule is exact — a measurement filed in a backlog and nowhere else is a
+measurement the next pass repeats — and being asked a second time is the proof.
+So the product of #1148 is `ia/data/source/ia-city-officials-sweep.json`, one row
+per county.
+
+### What 99 counties answer
+
+One GET each at the CMS path all twelve publishers use, robots read first by the
+same client, Osceola not probed at all because its 202 sgcaptcha is recorded:
+**12 ship, ADAMS publishes, WORTH has the module and nobody in it**, 53 answer no
+page, 22 are robots-refused, 7 answer 200 naming nobody, 2 are unreachable.
+
+**ADAMS IS THE JASPER DEFECT RECURRING, and it is the whole yield.** The
+2026-09-05 sweep took all 99 domains from the AUDITOR'S E-MAIL ADDRESS; Jasper's
+auditor mails from a domain with no A record, so its 502 was never evidence about
+the county, and its page turned up later on a host sitting in three of this app's
+own data files. Measured today, **sixteen counties' repo-known host differs from
+their auditor mail domain** — `adamscountyia.com` was probed and
+`adamscounty.iowa.gov` publishes. Through the SHIPPING parser rather than my
+heuristic: **4 cities, 28 named officials** (20 council, 4 clerks, 4 mayors), on
+terms ending 2028 and 2030, LATER than the nine shipping counties' 2027/2029 — so
+more current than what ships, not stale.
+
+### Two things the raw tally would overstate, and both are in the rows
+
+**Of the 22 robots refusals only SIX are a county's own statement** — five
+robots.txt answering 202, one `Disallow: /`. The other sixteen are a FAILED
+ROBOTS READ, which policy makes disallow-all, correctly, and which is not a
+statement by anybody; they are mostly TLS failures on legacy domains. And **51 of
+the 77 non-answers were probed only on the auditor mail domain**, 24 of those
+counties having no site host in the repo at all, so those negatives are about a
+mail domain and not a county. `Decatur → grm.net` is that at its clearest.
+My sweep asked ONE path where the earlier one followed about eight pages per
+county, so for the 53 `no-page` counties the earlier negative is still the
+stronger one. What this adds is the artifact, the host fix that found Adams, and
+Worth's shape.
+
+### The classifier was wrong once and the yield check caught it
+
+Its first version accepted any CMS marker and called **Worth** a publisher on
+seven `filterDiv` blocks and seven role headings. The shipping parser returns **0
+cities and 0 people** from that same URL, because every name lives in `offName`
+and Worth has none. `publishes` now requires that marker, and a module with
+nobody in it gets its own verdict — which is a BETTER lead than absence, since
+the county already uses the route. **A marker heuristic and the real parser are
+two readers of one question, and the cheap one was wrong.**
+
+### What it means for the record
+
+**A measured negative is a result and this is one.** The gap's `wanted` — "more
+counties publishing their cities' officials the way nine already do" — is now
+bounded rather than open-ended: one more does, one has the module empty, and the
+remaining upside on this route is the 24 counties whose only known address is a
+mail domain. That points the effort at **Ask 8**, the Secretary of State, which
+this board already calls the highest-value ask.
+
+**Stage 2 is not in #1148**: building Adams in, raising `MIN_COUNTIES` 9 → 10,
+and narrowing `wanted`. The floor is raised when a county joins and never lowered
+to get past one going stale.
+
+**No ungated prose restatement turned up in Iowa on this pass** — the figure a
+gate would want here is `MIN_COUNTIES`, and `build_ia_county_city_officials.py`
+already derives its comparison from the file rather than restating it. Wisconsin
+keeps the general case.
+
 **2026-09-25 (end of session) — #1145 MERGED and verified by content. The Iowa
 board has nothing open that is mine; awaiting an assignment.**
 
