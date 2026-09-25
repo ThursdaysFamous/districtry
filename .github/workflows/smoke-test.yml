@@ -118,7 +118,9 @@ jobs:
       # because only 3 of the 153 numbers in the reader fields are file-backed.
       - name: Stated gap counts match their sources
         if: ${{ !cancelled() }}
-        run: python3 scripts/validate_gap_counts.py
+        run: |
+          python3 scripts/validate_gap_counts.py --selftest
+          python3 scripts/validate_gap_counts.py
 
       # mi/data/source/mi-county-board-probe.json records which unserved Michigan
       # counties publish a district-keyed board page, and its --check re-audits

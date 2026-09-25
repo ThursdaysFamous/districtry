@@ -140,8 +140,18 @@ def measured(record, entry, where):
         return None
     # measure_metric joins root/inst/file, so the repo-relative path is split
     # to keep its own failure messages readable.
+    # `claim` IS EMPTY ON PURPOSE. measure_metric tests a caller's own words
+    # for PERSON_WORDS and, finding one on a `keys` metric, demands a `naming`
+    # key saying the keys name people. A stat tile's label is such a claim; a
+    # gap record's `counts` entry is not — it asserts only that a number in the
+    # prose equals a measurement, and the only words it could offer are the
+    # record's ID, which NAMES AN ABSENCE. Passing `where` here made
+    # `ia-municipal-officeholders` demand that 939 CITY contact rows declare
+    # they name people, and 18 record ids across four instances trip the same
+    # way, while `ia-board-chair`'s 38 keys ARE 38 named chairs and pass
+    # unchecked. A record that wants the comparison gives `naming` and gets it.
     spec = {"file": os.path.basename(path), "metric": entry["metric"],
-            "label": where}
+            "label": where, "claim": ""}
     if "naming" in entry:
         spec["naming"] = entry["naming"]
     return measure_metric(REPO_ROOT, os.path.dirname(path), spec, fail_stop)
@@ -168,11 +178,79 @@ def check_shipped():
                  % (out, (r.stderr or r.stdout).strip().splitlines()[-1]))
 
 
+def _selftest():
+    """The `claim` split, both directions, offline against shipped files.
+
+    WHY IT EXISTS. The 2026-09-25 fix is invisible to every other gate here.
+    Eighteen record ids across four instances contain a PERSON_WORD, and today
+    exactly one of them declares a count — through `self`, which never reaches
+    measure_metric at all. So reverting the split would leave this gate green
+    until somebody gave one of the other seventeen a `file` + `metric`, and then
+    it would refuse a true declaration for a reason no reader could act on.
+
+    Both directions are asserted, because the fix must not weaken the check it
+    narrows: a caller whose OWN WORDS claim people while counting keys is still
+    refused, and a caller that makes no such claim is not.
+    """
+    failures = []
+
+    def check(cond, msg):
+        if not cond:
+            failures.append(msg)
+        print("  %s %s" % ("ok  " if cond else "FAIL", msg), file=sys.stderr)
+
+    def run(spec):
+        """measure_metric with a recording fail; returns (value, [messages])."""
+        said = []
+        val = measure_metric(REPO_ROOT, "ia/data/app", spec, said.append)
+        return val, said
+
+    CITIES = "ia-city-contact.json"      # 939 keys, names nobody
+    CHAIRS = "ia-county-board-chairs.json"  # 38 keys, every one names a `chair`
+
+    # A. STILL REFUSED. A stat tile's label IS its claim, so a tile counting
+    #    keys while its words say "seats" must still be made to declare where
+    #    its people are. This is the check that caught two real ILGA tiles.
+    val, said = run({"file": CITIES, "metric": "keys",
+                     "label": "939 Iowa city seats with their member"})
+    check(len(said) == 1 and "needs a \"naming\" key" in said[0],
+          "a caller whose own label claims people is still refused without naming")
+
+    # B. NO LONGER REFUSED. A gap record's counts entry passes claim="" because
+    #    the only words it has are its ID, which names an ABSENCE.
+    val, said = run({"file": CITIES, "metric": "keys", "claim": "",
+                     "label": "iowa/ia-municipal-officeholders counts[0]"})
+    check(val == 939 and not said,
+          "a gap record whose ID merely contains a person word counts its 939 "
+          "cities without being asked to claim they are people")
+
+    # C. THE OPT-IN STILL WORKS, and is driven by `naming` rather than by the
+    #    words, so a caller with no person word in sight can still ask for it.
+    val, said = run({"file": CHAIRS, "metric": "keys", "claim": "",
+                     "label": "opt-in", "naming": "chair"})
+    check(val == 38 and not said,
+          "a caller that opts in with naming gets the comparison and passes "
+          "when every key names somebody")
+
+    # D. AND THE OPT-IN STILL CATCHES A FALSE ONE. Same naming, wrong file.
+    val, said = run({"file": CITIES, "metric": "keys", "claim": "",
+                     "label": "opt-in on the wrong file", "naming": "chair"})
+    check(any("names anybody under it" in m for m in said),
+          "an opt-in naming that no record satisfies is still refused")
+
+    print("selftest: %d failure(s)" % len(failures), file=sys.stderr)
+    return 1 if failures else 0
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--report", action="store_true",
                     help="print every declaration, not only the failures")
+    ap.add_argument("--selftest", action="store_true",
+                    help="assert the claim/label split in both directions, offline")
     args = ap.parse_args()
+    if args.selftest:
+        sys.exit(_selftest())
 
     checked = 0
     for metro, gaps in sorted(load_gaps().items()):
