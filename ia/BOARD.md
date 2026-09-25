@@ -48,6 +48,62 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — the phone-number question is ANSWERED and it dissolves, and what
+makes it worth writing up is that it asked about the one Iowa file that cannot
+have the defect.** Measured today on the shipped files, offline, nothing
+fetched. No change ships.
+
+The question was whether `ia-county-officers.json`'s numbers had ever been
+checked for the problem #1000 fixed on the city rosters — one switchboard
+number repeated across several named people, which reads as a direct line and
+is not one.
+
+**The file it named carries 391 phones, not the roughly 305 the question
+estimated, and all 391 are distinct** — no repeat within a county and none
+anywhere in the file, across 391 named officers in 99 counties.
+
+**It also cannot carry that defect, by shape.** The Calhoun rule's precondition
+is several named people on ONE body, where a shared number belongs to the body
+and standing it under each name invents per-member channels. These records are
+one person per OFFICE — `countyAttorney`, `recorder`, `sheriff`, `treasurer` —
+so there is no body for a switchboard to stand in for. 93 of the 99 counties
+show three or more offices sharing an area code and exchange, which is the
+courthouse switchboard reached at a different extension per office: these are
+per-office direct lines, which is the right thing to print.
+
+**The files that DO have that shape were swept in the same run, and all four
+are clean.**
+
+- `ia-supervisor-members.json` — 81 named supervisors in 21 counties, **zero
+  per-person phone fields** against 21 board-level `boardPhone`s. The rule is
+  enacted by construction: there is nowhere in the record to put a per-member
+  number.
+- `ia-county-city-officials.json` — 710 named people across 98 member lists,
+  the largest surface. Three numbers are shared by two named people each
+  (Newton's Clerk and Administrator, Ogden's Administrator and Clerk,
+  Westside's Clerk and Library), and **every record in all three carries
+  `phoneIsOffice: true`**, so the file states the number is the office's rather
+  than the person's. Both inverse tests come back zero: no shared number with
+  an unflagged sharer, and no number equal to the body's own `officePhone`
+  printed as a personal line — 29 flagged as office lines, 87 as personal.
+- `ia-city-officials.json` — 24 named across 4 lists, no number shared.
+- `ia-city-contact.json` (939) and `ia-county-board-chairs.json` (38) are not
+  the shape at all: one phone per city with nobody named, and no member lists.
+
+**The transferable part is that a defect's precondition is a SHAPE, and it is
+cheaper to ask which files can exhibit one than to measure a file that cannot.**
+The question was put to the file with the most phone numbers rather than to the
+files with several named people under one body, and those were the ones worth
+measuring.
+
+**One figure I had wrong mid-measurement, caught before it reached this board.**
+The first sweep reported 196 member lists in `ia-county-city-officials.json`;
+it is 98. The walker collected every list of objects, and each city's `sources`
+array is one — indistinguishable from `members` unless the key is named. The
+named count was unaffected, because a source record has no `name`, which is
+exactly why the error survived one reading: the number it corrupted was not the
+number I was looking at.
+
 **2026-09-24 (end of day) — #1140 MERGED and verified by content. Five PRs
 landed today and this board has nothing open that is mine. Awaiting an
 assignment.**
@@ -1521,7 +1577,3 @@ recurring.
 - **Mitchell County** — re-read the page and fix the parser, or pass
   `--allow-drop` and let the county go? I would re-read it: five named
   supervisors is a real loss and the page changing shape is the likelier cause.
-- **`ia-county-officers.json`'s phone numbers have never been measured** for the
-  problem #1000 fixed on the city rosters — a single switchboard number repeated
-  across several named people. It carries roughly 305 numbers across 99
-  counties. Worth the measurement, or leave it?
