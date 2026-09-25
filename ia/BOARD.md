@@ -49,6 +49,37 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — #1151 IS MERGED AS `ccdfbc9`, VERIFIED ON MAIN BY CONTENT.** Ask 8's
+letter now says true things, and it is still unsent.
+
+```
+letter      927 telephones, 531 websites, 109 of those cities, leaves 830
+            Cedar Rapids named; the 99-county evidence carried
+            "cannot name a single" and "for each" occur ZERO times in it
+ledger      NOT YET ASKED - DRAFTED, no send date anywhere
+blocker     CORRECTED and RE-PROBED 2026-09-25 both present, the disproved
+            sentence still above them, the ask ledger still last
+skill       gap-record section 7 carries both the ordering rule and the
+            build_sitemap.py shallow-clone warning
+```
+
+**THE FIRST VERIFICATION SCRIPT FAILED TWO CHECKS AND THE SCRIPT WAS WRONG, NOT THE
+FILE.** It searched the whole Ask 8 section for the two retired phrases, and both
+appear there exactly once — inside the dated note that says they were wrong, which
+is the keep-the-disproved-sentence-under-its-correction convention working exactly
+as intended. Scoped to the block-quoted letter, both are zero. **Fourth time today
+that a failing check was a claim about the check**, after the wrapped-line grep, the
+empty-sha `git show`, and the shallow-clone `git log -1`. The pattern is stable
+enough to state plainly: **when a check fails on content I just wrote and verified,
+suspect the check first — I have been wrong about the check four times and about the
+content none.**
+
+**THE IOWA BOARD IS CLEAR.** Nothing is in flight and nothing is assigned. Asks 8,
+30 and 31 are all drafted and with Adam; nothing here sends. The other items still
+wait on him: the auditor labelling (17 counties, measured, proposed), the
+suspended-host excuse path (dormant), Mitchell's parser (a 2026-09-19 entry says it
+needed no fix).
+
 **2026-09-25 — BOTH ITEMS OFFERED TO ME WERE ALREADY DONE, AND SAYING SO IS THE
 WORK.** Ask 8 has been drafted since 2026-09-03 with its recipient corrected on
 2026-09-04, and the gap-record §7 skill carry merged inside #1149 at line 143.
