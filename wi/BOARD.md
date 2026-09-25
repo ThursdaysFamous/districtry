@@ -29,6 +29,47 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-25. #1147 MERGED as `6a4a595`, verified on main by content.** The
+squash carried exactly the two files — `scripts/measure_restated_counts.py` (343
+lines) and this board's 93 — and the script RE-RUN FROM MAIN reproduces every
+figure: 967 prose fields and 5,496 numbers, 1,351 kept in 714, 799 data-file
+entries, 309 target fields with 38 candidates, and the per-instance split that
+was the first hold now printing `ia 2, mi 6, wi 2` where it used to print four
+sample rows. Check-in deleted, subscription closed itself.
+
+**BOTH HOLDS WERE REAL AND I RE-MEASURED RATHER THAN TAKING EITHER.** The second
+turned out LARGER than the review stated, in the direction that helps: it named
+one field as proof the pattern never required a figure, and measured, **zero of
+the ten dated clauses contain one**. Every match is a bare date stamp and the
+figure it is provenance for sits elsewhere in the field; one field states its
+count as the WORD "One". So a digit pattern cannot even locate the
+figure-and-date pairing, which is a failure mode that PRECEDES the one I had
+argued, and the report now states three numbers where it stated one.
+
+**THE FIRST HOLD IS THE ONE WORTH KEEPING ON THE RECORD, because it was my own
+defect in the shape of the thing I was measuring.** `target_surface()` returned a
+count and a four-row SAMPLE, so the per-instance split was invisible in the
+script's own output — and the PR body I wrote from it named Michigan and Iowa and
+omitted **Wisconsin's own two**. That section routes the follow-up, so as written
+the other two instances were told to declare and mine went unfixed. A reader that
+cannot see what it reports, on a change about readers that cannot see what they
+report.
+
+**STAGE 2 IS PROPOSED AND NOT STARTED**, three pieces deliberately separate
+because they are not one remedy:
+
+  1. **The 38 declarations** — `counts` on `layers[].source.*`, read by
+     `validate_gap_counts.py` over `measured_metric.py`; no new grammar, no
+     second reader. Wisconsin's two dated fields join this one.
+  2. **The gap record's county list** — a DERIVATION from the shipped geometry
+     and roster, not a declaration: it went wrong in both directions precisely
+     because nothing recomputes it.
+  3. **The queue comment** — derived from `FLOORS`'s complement. Wisconsin-local
+     and the smallest of the three.
+
+Iowa's two and Michigan's six dated fields are **named and left alone**; nothing
+in either instance was touched.
+
 **2026-09-25. THE RESTATEMENT ASSIGNMENT, MEASURED AND REPORTED BEFORE
 BUILDING, as the task says. The answer is "not by inference", and the numbers
 are why.** `scripts/measure_restated_counts.py` is committed so this is a figure
