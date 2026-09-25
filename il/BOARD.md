@@ -48,6 +48,59 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-25, evening. THE LEGISLATIVE BOUNDARIES NOW RUN WHERE THE REAL LINES
+DO, AND IT COST 871 BYTES LESS THAN BEING WRONG.** PR #1174. Adam's two
+observations — House highlight lines parting from their Senate district's at
+zoom 16, and the boundary cutting diagonally through blocks where the real line
+follows streets — were one defect in `build_legislative_boundaries.py`. Worst
+stray of the true line from the drawn line goes 331.0 m to 17.8 m; districts
+straying past 25 m go 176 of 177 to NONE; the House/Senate nesting goes from a
+210 m worst error to exact on all 59 pairings.
+
+**THE SOURCE WAS PERFECT AND EVERY METRE WAS OURS.** TIGER's Senate 20 against
+House 39+40, as this builder itself fetches them, is 0.0000% area disagreement
+with every Senate vertex 0.0 m from a House line.
+
+**TWO CAUSES, AND THE SECOND WAS NEARLY MISSED BECAUSE FIXING THE FIRST LOOKS
+SUFFICIENT.** mapshaper ran once per chamber at its own retain percentage and
+builds topology WITHIN a file, so a shared edge could not survive; `combine-files`
+fixes that and does NOTHING for the diagonals — measured on the full state it
+still leaves 331 m and 175 of 177, the two layers wrong together. **A
+SMALL-INPUT TEST SAYS OTHERWISE AND IS LYING**: the retain percentage is
+relative to the whole dataset, so three districts at 10% keep far more detail
+each than a state at 10%, which is how a three-district trial reported 4 m. The
+real cause is that Visvalingam thresholds triangle AREA, which does not bound
+deviation — successive below-threshold removals compound, and that is exactly
+how a staircase becomes a chord through somebody's house. Douglas-Peucker
+thresholds DEVIATION. Reaching the same fidelity by raising the percentage costs
+3.0-3.5x the download, which is the trade this looked like until the ALGORITHM
+was measured rather than the dial.
+
+**THE FIDELITY METRIC HAS A DIRECTION AND THE OBVIOUS ONE GATES NOTHING**:
+simplification keeps a SUBSET of source vertices, so every drawn vertex already
+lies on the source line and measuring that way answers ~0 by construction. The
+25 m ceiling is measured, not picked — the true line's own staircase step is a
+median 17.9 m over the 191 source segments where Adam was looking, so 25 m is
+about one step.
+
+**THE CROSS-LAYER GATE IS EXACT, WITH NO TOLERANCE**, because under one topology
+the Senate ring is assembled from House arcs: every Senate vertex IS a House
+vertex. 59 of 59 after, 59 of 59 FAILING before. It needs no network, so it runs
+in CI on the shipped files — the question the per-layer 2,000-point sample could
+never ask, since that only tests whether a layer agrees with itself. The builder
+takes no chamber argument any more, because rebuilding one chamber alone is the
+defect.
+
+**TWO COSTS RECORDED RATHER THAN SMOOTHED.** The new outline is a mean 0.6
+people per district further from each congressional ideal (3.3 to 3.9, worst 14
+to 18, both assigning every block exactly once), so IL-7's smoke fixture moved
+753,676 to 753,659 — measured BOTH ways before the fixture was touched, because
+changing an expected value to make a test pass is only honest if the new value
+is the better one. The old one-person miss was luck. And the geometry is
+cache-first, so `cache_name` went to v39 and 92 `district-search.json` extents
+were re-derived through the builder's own function, the full rebuild having
+correctly refused when 27 county GIS services were unreachable from here.
+
 **2026-09-25, later. #1171 IS MERGED AS `66d5ed4` AND VERIFIED ON THE MERGED
 TREE BY CONTENT.** The selftest prints its 7 checks; the gate pair holds at 83
 named steps / 112 invocations; the steward mirror answers 112 for 112; CI
