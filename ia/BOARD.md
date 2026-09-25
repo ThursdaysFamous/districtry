@@ -50,6 +50,26 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — THE OUTER-LOOP RETIREMENT IS BUILT AND OPEN AS #1158.** The entry below
+ends "still unstarted"; that stopped being true an hour later, once Wisconsin agreed on
+`cc2253f`. Both loops are gone — mine and theirs — and the part worth recording is what
+the change is held together by. **THE DELETION IS NOT THE FIX; THE READ COUNT IS.** Both
+loops survived the change that made them redundant because nothing counted reads, so
+each file's selftest now stubs `rp._fetch_once`, asks for a host that never answers, and
+asserts the verdict is still `unreachable` → disallow-all AND that it cost exactly
+`rp.RETRY_ATTEMPTS` reads. Negative-tested both ways by putting the loop back: each names
+**9 of 3** and fails. Wisconsin's robots selftest goes 14 → 16 assertions, verified
+against the base rather than assumed. **The figures are labelled by how they were got**:
+nine attempts is MEASURED by counting, and 237s→78s (Iowa, 25s timeout) and 282s→93s
+(Wisconsin, 30s, on one host of a serial 72-county scrape) are COMPUTED from two
+constants each — this repo has paid for a correction derived by arithmetic and presented
+as a measurement. Behaviour is unchanged for every host that answers at all, and
+unchanged for one that recovers late, since the shared backoff is the same 1 then 2.
+Wisconsin's second comment — the one arguing its page ladder is bounded because
+`unreachable` is re-asked `ROBOTS_RETRIES` times — now names `rp.RETRY_ATTEMPTS`, because
+the argument outlived the constant. 100 of 100 static invocations green, enumerated
+through `validate_gate_counts.measure()`; no CI step added, so 81/110 is unchanged.
+
 **2026-09-25 — THE CITY ROSTER REFRESHES AGAIN, AND THE RUN DOES NOT PROVE THE RETRY
 FIRED.**
 
