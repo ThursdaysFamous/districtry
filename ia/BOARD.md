@@ -99,7 +99,23 @@ within 0.4%. What the 849 measured is NOT established, and the two measurements 
 everything that matters — the median share to two digits (0.0095% against 0.0093%) and the
 divergent-pair count within two.
 
-**WHAT IS NOT DESIGNED IS THE BUILDER CHANGE.** My combined run merged both chambers into ONE
+**CLOSED THE SAME HOUR — `-i combine-files` IS THE SHIPPABLE INVOCATION, and Wisconsin got there
+first.** `b53ff66` landed minutes before this entry with the identical conclusion reached
+independently on its own state: TIGERweb exact 33 of 33, equalising the percentage NOT a fix, one
+combined run exact, and its own worst offset (418 m) likewise failing to reproduce the briefing's
+(595 m) with the median reproducing. **Three instances, one answer.** Their mechanism is the piece
+I had flagged as undesigned, so I measured it rather than re-deriving it:
+`mapshaper -i <sen> <hou> combine-files -simplify visvalingam keep-shapes 10% -o …` writes **two
+files, each keeping its own field set**, and the pairs come out **0 m and 0.0000% on all fifty**.
+Payload gzipped: senate 89,051 → 83,490, house 108,604 → 112,498 — **net 1.7 KB SMALLER** for both
+chambers, where my one-layer merge measured +0.6 KB larger, so the real mechanism is cheaper than
+the test that stood in for it. It also printed `[simplify] Repaired 2 intersections`, which the
+separate runs never reported. Wisconsin measured +15.2 KB on its own state, so **the payload cost
+of this fix varies by state and is not one figure.** Still not built here: three builders need it
+and the invocation should be one shape rather than three, which is a coordination call rather than
+mine to make.
+
+**WHAT WAS NOT DESIGNED WHEN THIS ENTRY WAS WRITTEN.** My combined run merged both chambers into ONE
 layer and split them afterwards, which is not what the builder ships — it writes two files with
 different field sets (`SLDU` against `SLDL`) and different `min_features` guards, and `us-house`
 is a third target in the same script that nests inside neither. Proving the topology approach
