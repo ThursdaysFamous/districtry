@@ -55,10 +55,12 @@ whose subject can silently become empty is one that reports success for having
 looked at nothing.
 """
 import argparse
+import json
 import os
 import re
 import subprocess
 import sys
+import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -179,7 +181,7 @@ def check_shipped():
 
 
 def _selftest():
-    """The `claim` split, both directions, offline against shipped files.
+    """The `claim` split, both directions, against a FIXTURE and never the tree.
 
     WHY IT EXISTS. The 2026-09-25 fix is invisible to every other gate here.
     Eighteen record ids across four instances contain a PERSON_WORD, and today
@@ -191,6 +193,21 @@ def _selftest():
     Both directions are asserted, because the fix must not weaken the check it
     narrows: a caller whose OWN WORDS claim people while counting keys is still
     refused, and a caller that makes no such claim is not.
+
+    IT READ THE SHIPPED FILES UNTIL 2026-09-25 AND THAT WAS THE WRONG CALL. Its
+    two value assertions were `== 38` on ia-county-board-chairs.json and `== 939`
+    on ia-city-contact.json, so the weekly chair refresh — five Iowa counties
+    starting to name a chair, 38 to 43, the good outcome that roster exists to
+    produce — made this gate's own proof of correctness FAIL on the bot PR while
+    passing on main. **A selftest that a data change can break is not a selftest
+    of the code**, and the second assertion was one new Iowa city away from the
+    same thing. Both now run against a two-file fixture in a temp directory.
+
+    THE FIXTURE COUNTS ARE 7 AND 3 ON PURPOSE. No real file in this fleet holds
+    either — Iowa has 99 counties and 939 cities — so if anybody points these
+    cases back at the tree the assertions FAIL rather than passing by luck. That
+    is the whole proof of hermeticity: the expected values could only have come
+    from the fixture.
     """
     failures = []
 
@@ -199,44 +216,62 @@ def _selftest():
             failures.append(msg)
         print("  %s %s" % ("ok  " if cond else "FAIL", msg), file=sys.stderr)
 
-    def run(spec):
-        """measure_metric with a recording fail; returns (value, [messages])."""
-        said = []
-        val = measure_metric(REPO_ROOT, "ia/data/app", spec, said.append)
-        return val, said
+    with tempfile.TemporaryDirectory() as tmp:
+        inst = os.path.join("fixture", "data", "app")
+        os.makedirs(os.path.join(tmp, inst))
 
-    CITIES = "ia-city-contact.json"      # 939 keys, names nobody
-    CHAIRS = "ia-county-board-chairs.json"  # 38 keys, every one names a `chair`
+        def write(name, obj):
+            with open(os.path.join(tmp, inst, name), "w", encoding="utf-8") as fh:
+                json.dump(obj, fh)
 
-    # A. STILL REFUSED. A stat tile's label IS its claim, so a tile counting
-    #    keys while its words say "seats" must still be made to declare where
-    #    its people are. This is the check that caught two real ILGA tiles.
-    val, said = run({"file": CITIES, "metric": "keys",
-                     "label": "939 Iowa city seats with their member"})
-    check(len(said) == 1 and "needs a \"naming\" key" in said[0],
-          "a caller whose own label claims people is still refused without naming")
+        # The ia-city-contact SHAPE: keyed by place, naming nobody.
+        CITIES, N_CITIES = "cities.json", 7
+        write(CITIES, {"190%04d" % i: {"city": "Fixture City %d" % i,
+                                       "phone": "515-000-0000",
+                                       "website": "example.invalid"}
+                       for i in range(1, N_CITIES + 1)})
+        # The ia-county-board-chairs SHAPE: keyed by county, every one naming a
+        # `chair`, which is what the opt-in comparison looks for.
+        CHAIRS, N_CHAIRS = "chairs.json", 3
+        write(CHAIRS, {"191%02d" % i: {"county": "Fixture County %d" % i,
+                                       "chair": "A Person %d" % i}
+                       for i in range(1, N_CHAIRS + 1)})
 
-    # B. NO LONGER REFUSED. A gap record's counts entry passes claim="" because
-    #    the only words it has are its ID, which names an ABSENCE.
-    val, said = run({"file": CITIES, "metric": "keys", "claim": "",
-                     "label": "iowa/ia-municipal-officeholders counts[0]"})
-    check(val == 939 and not said,
-          "a gap record whose ID merely contains a person word counts its 939 "
-          "cities without being asked to claim they are people")
+        def run(spec):
+            """measure_metric with a recording fail; returns (value, [messages])."""
+            said = []
+            val = measure_metric(tmp, inst, spec, said.append)
+            return val, said
 
-    # C. THE OPT-IN STILL WORKS, and is driven by `naming` rather than by the
-    #    words, so a caller with no person word in sight can still ask for it.
-    val, said = run({"file": CHAIRS, "metric": "keys", "claim": "",
-                     "label": "opt-in", "naming": "chair"})
-    check(val == 38 and not said,
-          "a caller that opts in with naming gets the comparison and passes "
-          "when every key names somebody")
+        # A. STILL REFUSED. A stat tile's label IS its claim, so a tile counting
+        #    keys while its words say "seats" must still be made to declare where
+        #    its people are. This is the check that caught two real ILGA tiles.
+        val, said = run({"file": CITIES, "metric": "keys",
+                         "label": "%d Iowa city seats with their member" % N_CITIES})
+        check(len(said) == 1 and "needs a \"naming\" key" in said[0],
+              "a caller whose own label claims people is still refused without naming")
 
-    # D. AND THE OPT-IN STILL CATCHES A FALSE ONE. Same naming, wrong file.
-    val, said = run({"file": CITIES, "metric": "keys", "claim": "",
-                     "label": "opt-in on the wrong file", "naming": "chair"})
-    check(any("names anybody under it" in m for m in said),
-          "an opt-in naming that no record satisfies is still refused")
+        # B. NO LONGER REFUSED. A gap record's counts entry passes claim="" because
+        #    the only words it has are its ID, which names an ABSENCE.
+        val, said = run({"file": CITIES, "metric": "keys", "claim": "",
+                         "label": "iowa/ia-municipal-officeholders counts[0]"})
+        check(val == N_CITIES and not said,
+              "a gap record whose ID merely contains a person word counts its %d "
+              "cities without being asked to claim they are people" % N_CITIES)
+
+        # C. THE OPT-IN STILL WORKS, and is driven by `naming` rather than by the
+        #    words, so a caller with no person word in sight can still ask for it.
+        val, said = run({"file": CHAIRS, "metric": "keys", "claim": "",
+                         "label": "opt-in", "naming": "chair"})
+        check(val == N_CHAIRS and not said,
+              "a caller that opts in with naming gets the comparison and passes "
+              "when every key names somebody")
+
+        # D. AND THE OPT-IN STILL CATCHES A FALSE ONE. Same naming, wrong file.
+        val, said = run({"file": CITIES, "metric": "keys", "claim": "",
+                         "label": "opt-in on the wrong file", "naming": "chair"})
+        check(any("names anybody under it" in m for m in said),
+              "an opt-in naming that no record satisfies is still refused")
 
     print("selftest: %d failure(s)" % len(failures), file=sys.stderr)
     return 1 if failures else 0
