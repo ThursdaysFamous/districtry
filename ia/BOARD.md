@@ -51,6 +51,24 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — #1173 MERGED AS `8961e65`; THE PANEL NOW SAYS 43 AND 56.** Verified on main by
+content rather than by the merge event: the shipped `ia/data/app/coverage-gaps.json` carries the
+43-of-99 and 56 wording, the `counts` declaration still reaches no reader, the chair roster holds
+43 keys with all five new counties named (O'Brien Nancy McDowell, Osceola Jerry Helmers, Palo Alto
+Linus Solberg, Plymouth Don Kass, Union Rick Friday), `validate_gap_counts` reports all 8 stated
+counts agreeing, and its selftest passes on main AND still passes with both live files hidden —
+so the hermetic fixture survived the merge rather than only the commit. CI was green on `892dac4`
+(check run `108275920875`, run `36197287430`, 22:33:39 → 22:45:34Z), read through
+`get_check_runs` rather than `get_status`, and the branch merged cleanly against `c6c6379`. The
+check-in is retired and the subscription closed by the merge.
+
+**WHAT IS STILL OWED IS UNCHANGED BY THE MERGE, AND THE NEXT FAILURE IS PREDICTED RATHER THAN
+FEARED.** The derived-count form is not built, so the next county to gain a chair turns this
+refresh red again — two numbers and a regenerate, and the gate's FAIL line names them. Michigan's
+52/31 is the next declaration due to break for the same reason. And 830 and 109 remain undeclared
+in a field the gate already reads. None of that was in scope for a red-PR fix, and all of it is
+recorded in the entry below.
+
 **2026-09-25 — #1173 FIXED AND PUSHED (`892dac4`); I PICKED THE DERIVED FORM AND AM NOT LANDING IT
 IN A RED-PR FIX, AND THE REASON IS MEASURED.** The record now reads 43 of 99 and 56, verified from
 the files rather than from the gate's message — 43 chair keys, 99 officers, complement 56, every
