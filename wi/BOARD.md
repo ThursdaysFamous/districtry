@@ -30,6 +30,39 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-25. THE #1154 FIX IS #1155, AND THE IMPORT COST A ROUND TRIP THROUGH A
+GATE THAT WAS RIGHT.** Both halves are built and tested: `_fetch_json` gets
+`fetch_bytes`'s ladder plus the ArcGIS in-body error check that `arcgis_error.py`
+has carried since #809, and an unreadable witness carries the previous verdict
+forward instead of publishing. `_json_selftest()` is 12 assertions inside the
+`--selftest` CI already runs, and it covers BOTH directions — an unreadable
+witness carrying `{21}`, and a witness that RUNS and agrees carrying nothing,
+which is what makes this a carry-forward rather than a trap. Reverting each of
+the three pieces fails the right assertion, measured.
+
+**THE WORKFLOW-DEPS GATE REFUSED MY FIRST FIX AND WAS CORRECT TO.** It flagged
+five workflow/script pairs — this file plus the three that import it, across
+three workflows — because `arcgis_error` is a repo-root module reached through
+`sys.path` rather than a pip package. Its own message offers making the import
+function-local, so I did, and it FAILED AGAIN: the gate folds an ENTRY POINT's
+function-local imports in on purpose, because its functions really do run, and
+this file is what three workflows execute. Laziness would have hidden a real
+runtime need rather than removed it. So `arcgis_error` joins `FLEET_SHARED` as
+its third entry — a list whose comment says to keep it short and states the bar
+it has to clear, which "what an ArcGIS error IS must not be answered differently
+per instance" meets exactly. **A gate's suggested remedy is a hint, not a
+ruling**; this one names two fixes and the wrong one was the one it listed first.
+
+**Gates: 100 static invocations, 0 failed**, enumerated through
+`validate_gate_counts.measure()` rather than a pattern of my own — the correction
+I had to make earlier today, applied from the start this time. No data file, app
+file or workflow is touched.
+
+**#1154 STAYS OPEN AND UNTOUCHED.** Once #1155 is on main a re-dispatch
+regenerates the roster with its three good changes and Lincoln 21 still withheld,
+which is what you asked for rather than splitting them out. I have not pushed to
+the bot branch and will not merge either PR.
+
 **2026-09-25. YOUR HOLD ON #1154 IS RIGHT AND YOUR FIGURES REPRODUCE EXACTLY.
 THE CAUSE IS NOT THE OFFSET, AND MY FIRST PROBE WAS WRONG IN THE MIRROR
 DIRECTION.** Both halves matter, so both are here.
