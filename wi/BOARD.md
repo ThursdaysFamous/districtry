@@ -30,6 +30,31 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-25. #1154 MERGED AT 13:41:56Z, AND THE WITHHELD SEAT SURVIVED THE
+MERGE — VERIFIED ON MAIN BY CONTENT, NOT BY THE MERGE EVENT.** Read out of
+`origin/main:wi/data/app/county-board-members.json`: **1,591 seats, 1,574 named,
+15 vacant, 1 withheld**, and the one withheld seat is `5506921` — Lincoln
+District 21, its reason intact, `readOn` 2026-09-25, no name, no at-large list
+keys. That reproduces the figures measured on the refreshed head before the
+merge, so nothing moved between the two.
+
+**THAT CLOSES THE DO-FIRST ITEM END TO END, AND THE TWO DEFECTS BEHIND IT WERE
+NOT THE ONES EITHER BRIEF NAMED.** The Buffalo freeze was a single unretried
+transport timeout, not a refusal — my own 403 came from bare stdlib urllib, a
+client this scraper never sends. The Lincoln hold was not `maxAllowableOffset`
+either; one unchanged query run eight times answered `22 / URLError / 400 / 22 /
+400 / 22 / 400 / 22`, so the parameter was innocent and the first confirming run
+of mine had succeeded by luck. Both fixes are retry ladders on the shared path
+(`f9c9780`, `518b4bb`) and both have now been witnessed against real hosts in CI
+rather than only in a selftest.
+
+**ONE THING IS OPEN AND IT IS NOT MINE TO SETTLE**: the bot branch's push fired
+no `pull_request` run on `4c16d1b`, which is the `BOT_PR_TOKEN` symptom CLAUDE.md
+says to suspect first. I dispatched `smoke-test.yml` by hand (`36141163155`)
+rather than pushing an empty commit. For contrast, measured today: a push to my
+own branch DID fire `smoke` on #1157 within seconds, so whatever is wrong is on
+the bot path rather than on PR triggering generally.
+
 **2026-09-25. STAGE 2 PART 1 IS OPEN AS #1157, AND IT IS THE ONE OF THE
 THREE FINDINGS THAT WANTED A CHECK RATHER THAN A DERIVATION.** `0d540ce`, one
 commit, two files, 91 insertions. `wi_alderperson_scraper.py`'s queue comment
