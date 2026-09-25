@@ -123,6 +123,7 @@ python3 wi/scripts/wi_coa_staleness.py --selftest                  # and not for
 python3 wi/scripts/validate_sources.py --selftest        # the LTSB filing watcher: a new filing (the layer is named for its window), a redraw at an unchanged count, a moved count
 python3 wi/scripts/wi_county_board_scraper.py --selftest            # the county board scrape's robots decision: a site-wide disallow refuses, an API host's 403 does not, 5xx and 202 refuse, and the Archive rung never routes round a disallow
 python3 scripts/isbe_precinct_fabric.py --selftest         # the five Jasper-test reconciliation causes
+python3 scripts/il_library_trustees_scraper.py --selftest   # the library board-page reader's six shapes and five refusals
 python3 ia/scripts/ia_county_minutes_chair_scraper.py --selftest   # the four refusals that stand between a chair card and a wrong name
 python3 ia/scripts/build_ia_county_chair.py --selftest              # the carry-forward rules: only `unreachable`, never a refusal, never past 60 days or a January
 python3 wi/scripts/build_wi_municipal_executives.py --selftest      # the same, narrower: never a refusal, a dead link, a page that read without witnessing, 60 days, or an April election

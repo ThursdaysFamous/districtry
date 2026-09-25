@@ -1,0 +1,1774 @@
+{
+  "generated": "2026-09-25T19:32:38Z",
+  "libraries": {
+    "Albion Public Library": {
+      "board": [
+        {
+          "name": "Melissa Felling",
+          "role": "President"
+        },
+        {
+          "name": "Will Swardstrom",
+          "role": "Vice-President"
+        },
+        {
+          "name": "Samantha McDaniel",
+          "role": "Secretary"
+        },
+        {
+          "name": "Trevor Ward",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Dianne Berger"
+        },
+        {
+          "name": "Shelby Harris"
+        },
+        {
+          "name": "Sydney Gracyalny"
+        },
+        {
+          "name": "Rod Minatra"
+        },
+        {
+          "name": "Terry Harper"
+        }
+      ],
+      "boardUrl": "https://www.albion.lib.il.us/board-of-trustees",
+      "heading": "Meet the Board",
+      "readOn": "2026-09-25"
+    },
+    "Alpha Park Public Library District": {
+      "board": [
+        {
+          "name": "Kris Adams"
+        },
+        {
+          "name": "Kimberly Strack"
+        },
+        {
+          "name": "Kimberly Martin"
+        },
+        {
+          "name": "Thomas P. Stagg"
+        },
+        {
+          "name": "Joanna Freimuth"
+        },
+        {
+          "name": "Al Schneider"
+        },
+        {
+          "name": "Scott Archer"
+        }
+      ],
+      "boardUrl": "http://www.alphapark.org/governance",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Anne West Lindsey District Library": {
+      "board": [
+        {
+          "name": "Heather Abell Castlebery",
+          "role": "President"
+        },
+        {
+          "name": "Paula Root",
+          "role": "Vice-President"
+        },
+        {
+          "name": "Nancy Schmidt",
+          "role": "Secretary"
+        },
+        {
+          "name": "Elaine Miskell",
+          "role": "Treasurer"
+        }
+      ],
+      "boardUrl": "https://awlindsey.com/about-us/board-of-trustees/",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Auburn Public Library District": {
+      "board": [
+        {
+          "name": "Lacy Strader",
+          "role": "President"
+        },
+        {
+          "name": "Monica Garrett",
+          "role": "Vice President"
+        },
+        {
+          "name": "Ashley Jarrett",
+          "role": "Secretary"
+        },
+        {
+          "name": "Dan Dixon",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Shelley Husemann"
+        }
+      ],
+      "boardUrl": "https://auburnpubliclibraryil.org/library-board",
+      "heading": "Library Board",
+      "readOn": "2026-09-25"
+    },
+    "Breese Public Library": {
+      "board": [
+        {
+          "name": "Angie Becker",
+          "role": "President"
+        },
+        {
+          "name": "Allison Netemeyer",
+          "role": "Vice President"
+        },
+        {
+          "name": "Judy Kampwerth",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Gwen Fischer",
+          "role": "Secretary"
+        },
+        {
+          "name": "Brandon Richter",
+          "role": "Trustee"
+        },
+        {
+          "name": "Angela Richter",
+          "role": "Trustee"
+        },
+        {
+          "name": "Cyndi Riley",
+          "role": "Trustee"
+        },
+        {
+          "name": "Jamie Fields",
+          "role": "Trustee"
+        },
+        {
+          "name": "Bonnie Holzinger",
+          "role": "Trustee"
+        }
+      ],
+      "boardUrl": "https://breeselibrary.org/about/",
+      "heading": "Library Board Members",
+      "readOn": "2026-09-25"
+    },
+    "C.E. Brehm Memorial Public Library District": {
+      "board": [
+        {
+          "name": "Amanda Crider",
+          "role": "President"
+        },
+        {
+          "name": "Holly Johnson",
+          "role": "Vice-President"
+        },
+        {
+          "name": "Hannah Greever",
+          "role": "Secretary"
+        },
+        {
+          "name": "Robert Metcalf",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Alyson Morris"
+        },
+        {
+          "name": "Katie Williams"
+        },
+        {
+          "name": "Jared Knapp"
+        }
+      ],
+      "boardUrl": "https://mtvbrehm.org/about-us/board-of-trustees/",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Casey Township Library": {
+      "board": [
+        {
+          "name": "Karen Bradford"
+        },
+        {
+          "name": "Chrissy Squires"
+        },
+        {
+          "name": "Sharon Durham"
+        },
+        {
+          "name": "Doug Stoutin"
+        },
+        {
+          "name": "Shawn Huisinga"
+        }
+      ],
+      "boardUrl": "https://sites.google.com/view/casey-township-library/about-us/library-board",
+      "heading": "Library Board",
+      "readOn": "2026-09-25"
+    },
+    "Centralia Regional Library District": {
+      "board": [
+        {
+          "name": "Julie Boltz",
+          "role": "President"
+        },
+        {
+          "name": "Karen Bounds",
+          "role": "Vice-President"
+        },
+        {
+          "name": "Paula Becker",
+          "role": "Secretary/Treasurer"
+        },
+        {
+          "name": "Todd Glispie"
+        },
+        {
+          "name": "Tracey Starr"
+        },
+        {
+          "name": "Cathy Karrick"
+        },
+        {
+          "name": "Victoria Benjamin"
+        }
+      ],
+      "boardUrl": "https://www.centralialibrary.org/about-us/board-of-trustees/",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Clover Public Library District": {
+      "board": [
+        {
+          "name": "Darcie Berry",
+          "role": "President"
+        },
+        {
+          "name": "Alissa Gelaude",
+          "role": "Vice President"
+        },
+        {
+          "name": "Pamela S. Eiker",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Breanna McLaughlin",
+          "role": "Secretary"
+        },
+        {
+          "name": "Karen Pfeiffer",
+          "role": "Trustee"
+        },
+        {
+          "name": "Tonya Williams",
+          "role": "Trustee"
+        },
+        {
+          "name": "Riva Walsh",
+          "role": "Trustee"
+        }
+      ],
+      "boardUrl": "https://cloverlibrarywoodhull.com/library-board/",
+      "heading": "Library Board Members",
+      "readOn": "2026-09-25"
+    },
+    "Columbia Public Library": {
+      "board": [
+        {
+          "name": "Dan Brutton",
+          "role": "President"
+        },
+        {
+          "name": "Diane Stechmesser",
+          "role": "Vice President"
+        },
+        {
+          "name": "Cindy Waldemer",
+          "role": "Secretary"
+        },
+        {
+          "name": "Sara Joergen",
+          "role": "Treasurer"
+        },
+        {
+          "name": "John Daab",
+          "role": "Trustee"
+        },
+        {
+          "name": "Kathleen Endraske"
+        },
+        {
+          "name": "Rebecca Hunt"
+        },
+        {
+          "name": "David Jackson"
+        }
+      ],
+      "boardUrl": "https://www.columbialibrary.org/board-of-trustees/",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Divernon Township Library": {
+      "board": [
+        {
+          "name": "Kathi Katcher",
+          "role": "President"
+        },
+        {
+          "name": "Jake Rettberg",
+          "role": "Vice President"
+        },
+        {
+          "name": "Cathy Lewis",
+          "role": "Secretary"
+        },
+        {
+          "name": "Leslie Crosby",
+          "role": "Treasurer"
+        }
+      ],
+      "boardUrl": "https://divernontownshiplibrary.org/library-board/",
+      "heading": "Board Members",
+      "readOn": "2026-09-25"
+    },
+    "Dixon Public Library": {
+      "board": [
+        {
+          "name": "Nicholas Haws",
+          "role": "President"
+        },
+        {
+          "name": "Kevin Marx",
+          "role": "Vice President"
+        },
+        {
+          "name": "Nicole Graff",
+          "role": "Secretary"
+        },
+        {
+          "name": "Marcella Kitson",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Tracey Lawton"
+        },
+        {
+          "name": "Carol Linkowski"
+        },
+        {
+          "name": "Mali Mills"
+        },
+        {
+          "name": "Jonathan C. Self"
+        },
+        {
+          "name": "Leah Stach"
+        }
+      ],
+      "boardUrl": "https://dixonpubliclibrary.org/library-board-and-governance/",
+      "heading": "Library Board and Governance",
+      "readOn": "2026-09-25"
+    },
+    "Dominy Memorial Library": {
+      "board": [
+        {
+          "name": "Kathy Popejoy",
+          "role": "President"
+        },
+        {
+          "name": "Cindy Helmers",
+          "role": "Vice President"
+        },
+        {
+          "name": "Ruth Teubel",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Marcia Walter",
+          "role": "Secretary"
+        },
+        {
+          "name": "Jason Whitfill"
+        },
+        {
+          "name": "Jim Munz"
+        },
+        {
+          "name": "Bob Nussbaum"
+        },
+        {
+          "name": "Sally Tipton"
+        },
+        {
+          "name": "John Tollensdorf"
+        }
+      ],
+      "boardUrl": "http://www.dominymemoriallibrary.org/about-us/staff-and-trustees",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "DuQuoin Public Library": {
+      "board": [
+        {
+          "name": "Leanna Gray",
+          "role": "President"
+        },
+        {
+          "name": "Carol Downs",
+          "role": "Member"
+        },
+        {
+          "name": "Gail Durkota",
+          "role": "Member"
+        },
+        {
+          "name": "Paula Myers",
+          "role": "Member"
+        },
+        {
+          "name": "Rose Alongi",
+          "role": "Member"
+        },
+        {
+          "name": "LaTasha Baxter",
+          "role": "Member"
+        },
+        {
+          "name": "Janice Wilbanks",
+          "role": "Member"
+        },
+        {
+          "name": "Vickie Morrow",
+          "role": "Member"
+        },
+        {
+          "name": "Andrea Helmer",
+          "role": "Member"
+        }
+      ],
+      "boardUrl": "https://duquoinlibrary.org/du-quoin-library-board-of-trustees/",
+      "heading": "The Du Quoin Library Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Earlville Public Library District": {
+      "board": [
+        {
+          "name": "Ann A. Hecathorn"
+        },
+        {
+          "name": "Mary Bender"
+        },
+        {
+          "name": "Stephanie Eller"
+        }
+      ],
+      "boardUrl": "https://www.earlvillelibrary.org/bod/",
+      "heading": "Board Of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "El Paso District Library": {
+      "board": [
+        {
+          "name": "Heather Marie Kosur",
+          "role": "President"
+        },
+        {
+          "name": "David Glacinski"
+        },
+        {
+          "name": "Jennie Kearney"
+        },
+        {
+          "name": "Darla Crump",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Alex DePauw"
+        },
+        {
+          "name": "Douglas Kaufman-Dickson"
+        }
+      ],
+      "boardUrl": "https://www.elpasodistrictlibrary.org/library-board.html",
+      "heading": "Library Board",
+      "readOn": "2026-09-25"
+    },
+    "Fairfield Public Library": {
+      "board": [
+        {
+          "name": "Steve Lee"
+        },
+        {
+          "name": "David Land"
+        },
+        {
+          "name": "Judy Griswold"
+        },
+        {
+          "name": "Kayla Warren"
+        },
+        {
+          "name": "Marcia Puckett"
+        },
+        {
+          "name": "Jala Morris"
+        },
+        {
+          "name": "Bill Arthur"
+        },
+        {
+          "name": "Diane Robinson"
+        },
+        {
+          "name": "Lea Ann Hungerford"
+        }
+      ],
+      "boardUrl": "https://fairfieldlibrary.org/board-members/",
+      "heading": "Board Members",
+      "readOn": "2026-09-25"
+    },
+    "Fairview Heights Public Library": {
+      "board": [
+        {
+          "name": "Deborah Smith",
+          "role": "President"
+        },
+        {
+          "name": "Donna Bullock",
+          "role": "Vice-President"
+        },
+        {
+          "name": "Linda Spencer",
+          "role": "Secretary"
+        },
+        {
+          "name": "Karie Sheils",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Carolyn Clark"
+        },
+        {
+          "name": "Rochelle Hobson"
+        },
+        {
+          "name": "Patti Hopkins"
+        },
+        {
+          "name": "Laurinda Hardy"
+        },
+        {
+          "name": "Bill Poletti"
+        }
+      ],
+      "boardUrl": "https://fairviewheightslibrary.org/board-of-trustees/",
+      "heading": "Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Flora Public Library": {
+      "board": [
+        {
+          "name": "Maralee Johnson",
+          "role": "President"
+        },
+        {
+          "name": "Jon Akers",
+          "role": "Vice President"
+        },
+        {
+          "name": "Rebecca Stocke",
+          "role": "Secretary"
+        },
+        {
+          "name": "Kari Warren",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Robbin Dickey"
+        },
+        {
+          "name": "Joseph E. Gilliland"
+        },
+        {
+          "name": "Joe McCoy"
+        },
+        {
+          "name": "Mark Henson"
+        },
+        {
+          "name": "Jane Blanchette"
+        }
+      ],
+      "boardUrl": "https://florapubliclibrary.org/about-us/board/",
+      "heading": "Flora Public Library Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Forman Valley Public Library District": {
+      "board": [
+        {
+          "name": "Julie DeSutter"
+        },
+        {
+          "name": "Nancy Proehl"
+        },
+        {
+          "name": "Jennie Frank"
+        },
+        {
+          "name": "Bonnie Kammeyer"
+        },
+        {
+          "name": "Patia Picken"
+        },
+        {
+          "name": "Jen Jockisch"
+        },
+        {
+          "name": "Sara Hayden"
+        }
+      ],
+      "boardUrl": "http://www.formanvalleylibrary.com/about-us/#board-of-trustees",
+      "heading": "Board Members",
+      "readOn": "2026-09-25"
+    },
+    "Frank Bertetti Benld Public Library": {
+      "board": [
+        {
+          "name": "Jeri Bayse",
+          "role": "Member"
+        },
+        {
+          "name": "Don Chapman",
+          "role": "President"
+        },
+        {
+          "name": "Vickie Laughlin",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Cindy Saracco",
+          "role": "Secretary"
+        },
+        {
+          "name": "Dona Hubert",
+          "role": "Member"
+        },
+        {
+          "name": "Norm Emmons",
+          "role": "Member"
+        },
+        {
+          "name": "Bill Bertetto",
+          "role": "Member"
+        },
+        {
+          "name": "Stacy Jarman",
+          "role": "Vice President"
+        },
+        {
+          "name": "Denise Cadmus",
+          "role": "Member"
+        }
+      ],
+      "boardUrl": "http://www.benldlibrary.org/board-members",
+      "heading": "Board Members",
+      "readOn": "2026-09-25"
+    },
+    "Gilman-Danforth District Library": {
+      "board": [
+        {
+          "name": "Janet Elliott",
+          "role": "President"
+        },
+        {
+          "name": "Jill Cummings",
+          "role": "Vice President"
+        },
+        {
+          "name": "Cindy Guttendorf",
+          "role": "Secretary/Treasurer"
+        },
+        {
+          "name": "Barb Uehle",
+          "role": "Member"
+        },
+        {
+          "name": "Alissa Haase",
+          "role": "Member"
+        },
+        {
+          "name": "Judy Pree",
+          "role": "Member"
+        },
+        {
+          "name": "Jan Villwock",
+          "role": "Member"
+        }
+      ],
+      "boardUrl": "http://gilmandanforthlib.org/library-board",
+      "heading": "Library Board",
+      "readOn": "2026-09-25"
+    },
+    "Greenup Township Public Library": {
+      "board": [
+        {
+          "name": "Robert Blade",
+          "role": "President"
+        },
+        {
+          "name": "Patty Judson",
+          "role": "Vice-President"
+        },
+        {
+          "name": "Michelle Neal",
+          "role": "Secretary"
+        },
+        {
+          "name": "Cheryl Brandenburg",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Paula Gabel"
+        },
+        {
+          "name": "Sid Stone"
+        },
+        {
+          "name": "Deborah Light"
+        }
+      ],
+      "boardUrl": "https://www.greenup.lib.il.us/board-of-trustees",
+      "heading": "Meet the Greenup Township Library Board",
+      "readOn": "2026-09-25"
+    },
+    "Greenville Public Library": {
+      "board": [
+        {
+          "name": "Chance Vohlken",
+          "role": "President"
+        },
+        {
+          "name": "Judy Cox",
+          "role": "Vice President"
+        },
+        {
+          "name": "Jane Wilhite",
+          "role": "Secretary"
+        },
+        {
+          "name": "Amanda O'Regan",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Kayla Curry"
+        },
+        {
+          "name": "Kyle Littlefield"
+        },
+        {
+          "name": "Bob Munshaw"
+        },
+        {
+          "name": "Cindy Pate"
+        },
+        {
+          "name": "Dawn Mulholland"
+        }
+      ],
+      "boardUrl": "https://www.greenvillepubliclibrary.org/board-of-trustees",
+      "heading": "Meet the Board",
+      "readOn": "2026-09-25"
+    },
+    "Greig Memorial Library": {
+      "board": [
+        {
+          "name": "Dawn P.",
+          "role": "President"
+        },
+        {
+          "name": "Sarah K.",
+          "role": "Vice President"
+        },
+        {
+          "name": "Katie F.",
+          "role": "Secretary"
+        },
+        {
+          "name": "Abbie S.",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Teresa F.",
+          "role": "Trustee"
+        },
+        {
+          "name": "Valerie T.",
+          "role": "Trustee"
+        },
+        {
+          "name": "Doddie J.",
+          "role": "Trustee"
+        },
+        {
+          "name": "Amy H.",
+          "role": "Trustee"
+        },
+        {
+          "name": "Cindy T.",
+          "role": "Trustee"
+        }
+      ],
+      "boardUrl": "https://www.greigmemlibrary.com/board-of-trustees",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Gridley Public Library District": {
+      "board": [
+        {
+          "name": "Evan Giesel",
+          "role": "President"
+        },
+        {
+          "name": "Sheila Watkins",
+          "role": "Vice President"
+        },
+        {
+          "name": "Melissa Gibson",
+          "role": "Secretary"
+        },
+        {
+          "name": "Brianne Herrman",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Alfred Hany"
+        },
+        {
+          "name": "Travis Cornwall"
+        }
+      ],
+      "boardUrl": "https://gridleylibrary.org/trustees/",
+      "heading": "Contact the Library Board",
+      "readOn": "2026-09-25"
+    },
+    "Groff Memorial Library": {
+      "board": [
+        {
+          "name": "Andy Brock",
+          "role": "President"
+        },
+        {
+          "name": "Kate Clark",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Marionette Blood",
+          "role": "Vice-President"
+        },
+        {
+          "name": "Dale Mosberger",
+          "role": "Secretary"
+        },
+        {
+          "name": "Linda Bova",
+          "role": "Trustee"
+        },
+        {
+          "name": "Scott Browning",
+          "role": "Trustee"
+        },
+        {
+          "name": "Kayla DeStefano",
+          "role": "Trustee"
+        },
+        {
+          "name": "Miranda Morris",
+          "role": "Trustee"
+        },
+        {
+          "name": "Lana Pierson",
+          "role": "Trustee"
+        }
+      ],
+      "boardUrl": "https://www.grofflibrary.org/board-members",
+      "heading": "Board Members",
+      "readOn": "2026-09-25"
+    },
+    "Herrin City Library": {
+      "board": [
+        {
+          "name": "Barbara Guebert"
+        },
+        {
+          "name": "Kathleen Jones"
+        },
+        {
+          "name": "Jennifer Sarver"
+        }
+      ],
+      "boardUrl": "https://herrincitylibrary.org/about-us/board-of-trustees/",
+      "heading": "Library Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Jacksonville Public Library": {
+      "board": [
+        {
+          "name": "Mary Fergurson",
+          "role": "President"
+        },
+        {
+          "name": "Kevin Eckhoff",
+          "role": "Vice-President"
+        },
+        {
+          "name": "Elizabeth Kennedy",
+          "role": "Secretary"
+        },
+        {
+          "name": "Laura Bandy",
+          "role": "Trustee"
+        },
+        {
+          "name": "Noel Beard",
+          "role": "Trustee"
+        },
+        {
+          "name": "Beth Widmaier Capo",
+          "role": "Trustee"
+        },
+        {
+          "name": "Lisa Haley",
+          "role": "Trustee"
+        },
+        {
+          "name": "Forrest Keaton",
+          "role": "Trustee"
+        },
+        {
+          "name": "Katie Scullion Weeks",
+          "role": "Trustee"
+        }
+      ],
+      "boardUrl": "https://jaxpl.org/library-board-of-trustees/",
+      "heading": "Library Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Kansas Community Memorial Library": {
+      "board": [
+        {
+          "name": "Mary Walker"
+        },
+        {
+          "name": "Terah Kubicek"
+        },
+        {
+          "name": "Alice Kubicek"
+        }
+      ],
+      "boardUrl": "http://www.kansaslibrary.jigsy.com/library-trustees",
+      "heading": "Trustees:",
+      "readOn": "2026-09-25"
+    },
+    "LaSalle Public Library": {
+      "board": [
+        {
+          "name": "Jo-Ann Benassi"
+        },
+        {
+          "name": "Joe Jeppson"
+        },
+        {
+          "name": "Dan Churney"
+        },
+        {
+          "name": "James Collins"
+        },
+        {
+          "name": "Nancy Nieslawski"
+        },
+        {
+          "name": "Dawn Parker"
+        },
+        {
+          "name": "Michelle Smudzinki"
+        }
+      ],
+      "boardUrl": "http://www.lasallepubliclibrary.org/board-of-trustees",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Marion Carnegie Library": {
+      "board": [
+        {
+          "name": "Andrea Bradley"
+        },
+        {
+          "name": "Matt Colboth"
+        },
+        {
+          "name": "Phyllis Landwehr"
+        },
+        {
+          "name": "Carolyn Loving"
+        },
+        {
+          "name": "Twila Couey"
+        },
+        {
+          "name": "Jenna Griffith"
+        },
+        {
+          "name": "Roderick Throgmorton"
+        },
+        {
+          "name": "Linda Walker"
+        },
+        {
+          "name": "Dr. Elizabeth Bailey-Smith"
+        }
+      ],
+      "boardUrl": "https://www.marioncarnegielibrary.org/library-board/",
+      "heading": "Marion Carnegie Library Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Marissa Area Public Library District": {
+      "board": [
+        {
+          "name": "Carol Mercer",
+          "role": "President"
+        },
+        {
+          "name": "David Lea",
+          "role": "Vice President"
+        },
+        {
+          "name": "Linda Lea",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Leslie Lehman",
+          "role": "Secretary"
+        },
+        {
+          "name": "Doug White",
+          "role": "Trustee"
+        },
+        {
+          "name": "Diane Chandler",
+          "role": "Trustee"
+        },
+        {
+          "name": "Tiffany Griswold",
+          "role": "Trustee"
+        }
+      ],
+      "boardUrl": "http://www.marissalibrary.org/board-members",
+      "heading": "Board Members",
+      "readOn": "2026-09-25"
+    },
+    "Marquette Heights Public Library": {
+      "board": [
+        {
+          "name": "Mark Valentine",
+          "role": "President"
+        },
+        {
+          "name": "Kathie Quisenberry",
+          "role": "Vice President"
+        },
+        {
+          "name": "Ryan King",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Michelle Valentine",
+          "role": "Secretary"
+        },
+        {
+          "name": "Sandra Ascherl"
+        },
+        {
+          "name": "Grace Augustine"
+        },
+        {
+          "name": "Cheryl Langley"
+        },
+        {
+          "name": "Vickie Rayburn"
+        }
+      ],
+      "boardUrl": "http://www.mhlibrary.com/library-staff-and-trustees",
+      "heading": "Library Board Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Marshall Public Library": {
+      "board": [
+        {
+          "name": "John Tarble",
+          "role": "President"
+        },
+        {
+          "name": "Herman Wallace",
+          "role": "Vice President"
+        },
+        {
+          "name": "Janet Hasten",
+          "role": "Secretary"
+        },
+        {
+          "name": "Jennifer Smitley",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Melissa Strait"
+        },
+        {
+          "name": "Jody Green"
+        },
+        {
+          "name": "Mike Cameron"
+        },
+        {
+          "name": "Bob Nelson"
+        },
+        {
+          "name": "Steve Schofield"
+        }
+      ],
+      "boardUrl": "http://www.marshallillibrary.com/mpl-board-of-trustees",
+      "heading": "Marshall Public Library Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Mascoutah Public Library": {
+      "board": [
+        {
+          "name": "Nancy Larson",
+          "role": "President"
+        },
+        {
+          "name": "Scot Erickson",
+          "role": "Vice President"
+        },
+        {
+          "name": "Merly Friedland",
+          "role": "Secretary"
+        },
+        {
+          "name": "Frank Bandre",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Casey Hoercher",
+          "role": "Trustee"
+        },
+        {
+          "name": "Jordan Rehfeldt",
+          "role": "Trustee"
+        },
+        {
+          "name": "Suzy Friederich",
+          "role": "Trustee"
+        },
+        {
+          "name": "Kay Connolly",
+          "role": "Trustee"
+        },
+        {
+          "name": "Wayne Wilhelm",
+          "role": "Trustee"
+        }
+      ],
+      "boardUrl": "http://www.mascoutahlibrary.com/board-of-trustees",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Mattoon Public Library": {
+      "board": [
+        {
+          "name": "Laura Huddleston",
+          "role": "President"
+        },
+        {
+          "name": "Teresa Righter",
+          "role": "Vice President"
+        },
+        {
+          "name": "Phyllis Karpus",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Jamie Golladay",
+          "role": "Secretary"
+        },
+        {
+          "name": "Greg Ray",
+          "role": "Trustee"
+        },
+        {
+          "name": "Harold Pettigrew",
+          "role": "Trustee"
+        },
+        {
+          "name": "Jacob Kimery",
+          "role": "Trustee"
+        },
+        {
+          "name": "Christina Krost",
+          "role": "Trustee"
+        },
+        {
+          "name": "Lorraine Malmborg",
+          "role": "Trustee"
+        }
+      ],
+      "boardUrl": "https://mattoonlibrary.org/board-of-trustees/",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Morris Area Public Library District": {
+      "board": [
+        {
+          "name": "Lauren Keavney"
+        },
+        {
+          "name": "Caroline Cummings"
+        },
+        {
+          "name": "Robert Geiger"
+        },
+        {
+          "name": "Maureen Keegan"
+        },
+        {
+          "name": "Peg Ebert"
+        },
+        {
+          "name": "Kathy Peterson"
+        },
+        {
+          "name": "Dana Russell"
+        }
+      ],
+      "boardUrl": "https://morrislibrary.com/board-of-trustees",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Morrison-Talbott Library": {
+      "board": [
+        {
+          "name": "Andrew Mayer",
+          "role": "President"
+        },
+        {
+          "name": "Amy Grandcolas",
+          "role": "Vice President"
+        },
+        {
+          "name": "Kathryn Canova-Osterhage",
+          "role": "Secretary/Treasurer"
+        },
+        {
+          "name": "Sarah Linker"
+        },
+        {
+          "name": "Kimberle Straub"
+        },
+        {
+          "name": "Sharon Glessner"
+        },
+        {
+          "name": "Connie Lutz"
+        },
+        {
+          "name": "Rita Trantham"
+        }
+      ],
+      "boardUrl": "https://waterloolibrary.org/library-board/",
+      "heading": "Library Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Mount Olive Public Library": {
+      "board": [
+        {
+          "name": "Tammy Pickerill",
+          "role": "President"
+        },
+        {
+          "name": "Linda Walker",
+          "role": "Vice-President"
+        },
+        {
+          "name": "Bill Vogt",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Helen Stilwell",
+          "role": "Secretary"
+        }
+      ],
+      "boardUrl": "https://mtolivepubliclibrary.org/library-board-staff/",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Neoga Public Library District": {
+      "board": [
+        {
+          "name": "Jenny Ballinger",
+          "role": "President"
+        },
+        {
+          "name": "Beth Craig",
+          "role": "Vice-President"
+        },
+        {
+          "name": "Rebecca Mueller",
+          "role": "Secretary"
+        },
+        {
+          "name": "Elaine Edwards",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Stacy Gresens"
+        },
+        {
+          "name": "Bill Fritcher"
+        },
+        {
+          "name": "Barb Titus"
+        }
+      ],
+      "boardUrl": "https://www.neoga.lib.il.us/board-of-trustees",
+      "heading": "Meet the Board",
+      "readOn": "2026-09-25"
+    },
+    "O`Fallon Public Library": {
+      "board": [
+        {
+          "name": "Suzanne Rupright",
+          "role": "President"
+        },
+        {
+          "name": "Judline \"Judy\" Nicholson",
+          "role": "Vice-President"
+        },
+        {
+          "name": "Doug Distler",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Charla Morton",
+          "role": "Secretary"
+        }
+      ],
+      "boardUrl": "http://www.ofpl.info/board",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Odell Public Library": {
+      "board": [
+        {
+          "name": "Marc Adami",
+          "role": "President"
+        },
+        {
+          "name": "Rebecca West",
+          "role": "Vice President"
+        },
+        {
+          "name": "Chris Vanderleest",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Melissa Nyboer",
+          "role": "Secretary"
+        },
+        {
+          "name": "Anne Mills"
+        },
+        {
+          "name": "Jessie Wroble"
+        },
+        {
+          "name": "Larry Jackson"
+        },
+        {
+          "name": "Nora Wenzel"
+        },
+        {
+          "name": "Judy Deter"
+        }
+      ],
+      "boardUrl": "https://odellpubliclibrary.com/wp/history",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Odell Public Library District": {
+      "board": [
+        {
+          "name": "Lynne Verdun",
+          "role": "President"
+        },
+        {
+          "name": "Candace Lhotka",
+          "role": "Vice President"
+        },
+        {
+          "name": "Paula Cleary",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Kristine Stahler",
+          "role": "Secretary"
+        },
+        {
+          "name": "Margaret Doran"
+        },
+        {
+          "name": "Dale Hoke"
+        },
+        {
+          "name": "Chuck Rinn"
+        }
+      ],
+      "boardUrl": "https://odelllibrary.com/trustees-staff",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Pankhurst Memorial Library": {
+      "board": [
+        {
+          "name": "Deb Hopkins",
+          "role": "President"
+        },
+        {
+          "name": "Jillian Rieskamp",
+          "role": "Vice President"
+        },
+        {
+          "name": "Britainy Kaleel",
+          "role": "Secretary"
+        },
+        {
+          "name": "Linda Grady",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Mary Kathryn Stenzel",
+          "role": "Trustee"
+        },
+        {
+          "name": "Tony McCoy",
+          "role": "Trustee"
+        }
+      ],
+      "boardUrl": "https://amboy.lib.il.us/about-us/library-board/",
+      "heading": "Library Board",
+      "readOn": "2026-09-25"
+    },
+    "Pekin Public Library": {
+      "board": [
+        {
+          "name": "Carrie Allen",
+          "role": "President"
+        },
+        {
+          "name": "Randy Turner"
+        },
+        {
+          "name": "Leslie Leitner"
+        },
+        {
+          "name": "Gary Gillis"
+        }
+      ],
+      "boardUrl": "https://pekinpubliclibrary.org/library-board/",
+      "heading": "Members",
+      "readOn": "2026-09-25"
+    },
+    "Pontiac Public Library": {
+      "board": [
+        {
+          "name": "William Bertram"
+        },
+        {
+          "name": "Eric Hoover",
+          "role": "Secretary"
+        },
+        {
+          "name": "Larry Krominga"
+        },
+        {
+          "name": "Lisa Martin",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Kathy Mclean",
+          "role": "Vice President"
+        },
+        {
+          "name": "Nancy Milhauser"
+        },
+        {
+          "name": "John Wille"
+        },
+        {
+          "name": "Debbie Dowdy"
+        },
+        {
+          "name": "Connie Snyder",
+          "role": "President"
+        }
+      ],
+      "boardUrl": "https://www.pontiac.org/506/Library-Administration-Board-of-Trustees",
+      "heading": "Board Members and Officers",
+      "readOn": "2026-09-25"
+    },
+    "Rosiclare Memorial Public Library": {
+      "board": [
+        {
+          "name": "Shirley Angleton",
+          "role": "President"
+        },
+        {
+          "name": "Kevan Eddleman",
+          "role": "Vice President"
+        },
+        {
+          "name": "Jennifer Lane",
+          "role": "Secretary/Treasurer"
+        },
+        {
+          "name": "Judy Alvey",
+          "role": "Member"
+        },
+        {
+          "name": "Chris Goolsby",
+          "role": "Member"
+        },
+        {
+          "name": "Gwynndolyn Johnson",
+          "role": "Member"
+        },
+        {
+          "name": "Dana Lampert",
+          "role": "Member"
+        },
+        {
+          "name": "Dennis Riley",
+          "role": "Member"
+        },
+        {
+          "name": "Suzy Dutton",
+          "role": "Member"
+        }
+      ],
+      "boardUrl": "http://www.rosiclarelibrary.net/board-of-trustees",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Sallie Logan Public Library": {
+      "board": [
+        {
+          "name": "Sara Faye Marten",
+          "role": "President"
+        },
+        {
+          "name": "Heather Parr"
+        },
+        {
+          "name": "Sharon Fry",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Jessica Audain",
+          "role": "Trustee"
+        },
+        {
+          "name": "Julie Erbes",
+          "role": "Trustee"
+        },
+        {
+          "name": "Jakale Hill",
+          "role": "Trustee"
+        },
+        {
+          "name": "Shirley Krienert",
+          "role": "Trustee"
+        },
+        {
+          "name": "Shaker Samuel",
+          "role": "Trustee"
+        },
+        {
+          "name": "Tamarra Williams",
+          "role": "Trustee"
+        }
+      ],
+      "boardUrl": "https://sallieloganlibrary.org/about-us/board-of-directors/",
+      "heading": "Board of Directors",
+      "readOn": "2026-09-25"
+    },
+    "Shawneetown Public Library": {
+      "board": [
+        {
+          "name": "Alberta Doerr",
+          "role": "President"
+        },
+        {
+          "name": "Olivia Bradley",
+          "role": "Vice President"
+        },
+        {
+          "name": "Mary Ann Patton",
+          "role": "Secretary"
+        },
+        {
+          "name": "Tara Wood",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Randi Vickery",
+          "role": "Trustee"
+        },
+        {
+          "name": "Paige Hall",
+          "role": "Trustee"
+        },
+        {
+          "name": "Judy Jones",
+          "role": "Trustee"
+        },
+        {
+          "name": "Ashley Barnes",
+          "role": "Trustee"
+        },
+        {
+          "name": "Julie Robbins",
+          "role": "Trustee"
+        }
+      ],
+      "boardUrl": "https://shawneetownlibrary.org/board-members",
+      "heading": "Board Members",
+      "readOn": "2026-09-25"
+    },
+    "Silvis Public Library": {
+      "board": [
+        {
+          "name": "Katherine Henderson",
+          "role": "President"
+        },
+        {
+          "name": "Amanda VanOpdorp",
+          "role": "Vice President"
+        },
+        {
+          "name": "Amanda Watson",
+          "role": "Secretary"
+        },
+        {
+          "name": "Bruce Boyd"
+        },
+        {
+          "name": "Gloria Douglas"
+        },
+        {
+          "name": "Ivy Pittman-Outen"
+        },
+        {
+          "name": "Bev Reese"
+        },
+        {
+          "name": "Beth Tepen"
+        },
+        {
+          "name": "Meaghan Terry"
+        }
+      ],
+      "boardUrl": "http://www.silvislibrary.org/about.php#board",
+      "heading": "Silvis Library Board",
+      "readOn": "2026-09-25"
+    },
+    "Sparta Public Library": {
+      "board": [
+        {
+          "name": "Sue Polino",
+          "role": "Secretary"
+        },
+        {
+          "name": "Anne Bourner",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Donald Adams"
+        },
+        {
+          "name": "Amy Kloos"
+        },
+        {
+          "name": "Robert Taylor"
+        },
+        {
+          "name": "Kyle Daniels"
+        },
+        {
+          "name": "Andrea Schulein"
+        }
+      ],
+      "boardUrl": "https://www.spartapubliclibrary.com/about-us/board-of-trustees/",
+      "heading": "Board of Trustees",
+      "readOn": "2026-09-25"
+    },
+    "Virginia Memorial Public Library": {
+      "board": [
+        {
+          "name": "Michael Reynolds",
+          "role": "President"
+        },
+        {
+          "name": "Steve Clark",
+          "role": "Vice President"
+        },
+        {
+          "name": "Amy Fritsche",
+          "role": "Secretary"
+        },
+        {
+          "name": "Thomas Prather",
+          "role": "Treasurer"
+        },
+        {
+          "name": "Angela Brown",
+          "role": "Trustee"
+        },
+        {
+          "name": "Ashley French",
+          "role": "Trustee"
+        },
+        {
+          "name": "Deborah Krohe",
+          "role": "Trustee"
+        },
+        {
+          "name": "Trista Barrett",
+          "role": "Trustee"
+        },
+        {
+          "name": "Elizabeth Vaughn",
+          "role": "Trustee"
+        }
+      ],
+      "boardUrl": "https://virginiamemorialpubliclibrary.com/board-of-trustees-and-library-staff/",
+      "heading": "Library Board",
+      "readOn": "2026-09-25"
+    }
+  },
+  "source": "Each library's own website"
+}

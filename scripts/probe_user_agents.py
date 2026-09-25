@@ -196,9 +196,18 @@ SKIP_HOST_RE = re.compile(r"""(?x)
 """)
 URL_RE = re.compile(r"""https?://[^\s"'<>)\\]+""")
 
+# A STACK IS NOT A STRING, and `fetch_stdlib` was on this list until 2026-09-25.
+# It is the CLIENT for two of the four rungs — stdlib+token and stdlib+Chrome —
+# and it sends whatever `headers` its caller passes, so referencing it says
+# nothing about the User-Agent. Measured across the tree the day it came off:
+# exactly TWO files were classified `both` on that marker alone, and neither
+# names a Chrome string, a hint set or the word Mozilla anywhere in code —
+# scripts/validate_sources.py, which this module's own SELF_TOKEN_RE note
+# already records misreading once, and scripts/il_library_trustees_scraper.py,
+# whose eight fixture hosts the check then demanded browser-string measurements
+# for. Both send only their own districtry token. The figure moves 105 -> 103.
 BROWSER_MARKERS = ("UA_CHROME_WIN_126_FULL", "UA_CHROME_WIN_126", "UA_CHROME_WIN_124",
-                   "UA_CHROME_X11_128", "UA_CHROME_X11_120", "UA_HINTS_CHROME_126",
-                   "fetch_stdlib")
+                   "UA_CHROME_X11_128", "UA_CHROME_X11_120", "UA_HINTS_CHROME_126")
 SELF_MARKERS = ("UA_ROSTER_BOT", "UA_ROSTER_COMPACT", "UA_CIVIC_BOT")
 SELF_INLINE_RE = re.compile(r"districtry|chidistricts|DistrictExplorer", re.I)
 # A SELF-IDENTIFYING TOKEN IS EITHER VERSIONED OR CONTACT-ADDRESSED. The first
