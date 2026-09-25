@@ -29,6 +29,81 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-25. STAGE 2 PROPOSED, NOT BUILT — and one of the three wants a
+different remedy than the report sketched, which you invited me to say.** Three
+mechanism facts decide it, each measured rather than assumed.
+
+**FACT ONE: THE 38 IS AN UPPER BOUND ON FIELDS AND NOT THE NUMBER OF
+DECLARATIONS — correcting my own cost estimate.** I read all 38 in full, which
+stage 1 never did, and the candidate is frequently the wrong number in the field.
+**FOUR of the 38 are the digits in "a 911 call"** (Wisconsin's four NG911
+`answers` strings). Others are a statute cite (`Iowa Code 260C.11` gives 260), a
+population (10,077,331), and district numbers. And Michigan's places field states
+"all **533** incorporated places" while the shortlist picked **252** from a later
+clause — the shortlist misses the right number inside a field that has one.
+Classified by hand, **about 24 to 26 of the 38 carry a claim a file can answer**,
+and the exact figure is the author's to settle field by field, which is the
+declaration mechanism's whole premise. My stage-1 "38 declarations" overstated
+the cost; the honest line is "38 fields to read, fewer declarations to write".
+
+**FACT TWO: "NO NEW GRAMMAR AND NO SECOND READER" WAS HALF RIGHT.** The grammar
+does carry over untouched — `measured_metric.py` already answers exactly this
+question for the history tiles and for gap counts. The READER does not:
+`validate_gap_counts.py` reads `record.get("counts")` off gap records keyed by
+metro and gap id, so it is specific to that corpus. The remedy is to widen that
+gate to a second corpus rather than write a sibling, which keeps one reader of
+one question — but it is a change to that file and I should not have written
+"no second reader".
+
+**FACT THREE, AND IT IS GOOD NEWS: THE WORKSHEET SCHEMA SETS
+`additionalProperties: False`** at the top level, on `layers[]` and on
+`layers[].source`. So a declaration is a SCHEMA ADDITION rather than a free-form
+key — which the gap-record mechanism does not have, and which means a misspelled
+declaration key fails at `generate_metro_files.py` instead of silently checking
+nothing.
+
+**AND A FLOOR IS STILL NOT A COUNT, which rules out the tempting shortcut.** For
+many of these claims the worksheet ALREADY states a number for the same file —
+`min_keys` / `min_features` in `data_files` — so a declaration could just point at
+it. It must not: those are FLOORS that tolerate vacancies, which is the 369-of-619
+finding. A declaration names the file and a metric and is measured against the
+SHIPPED FILE.
+
+**PART 3 WANTS A DIFFERENT REMEDY, AND THE SKETCH IS IMPOSSIBLE.** "Derive the
+queue comment from `FLOORS`'s complement" cannot be done: a queue row is
+`name / C <size> / URL` and **`FLOORS` carries no URL** (its entries are name,
+districts and four floors). The complement can say WHICH cities are still to
+work; it cannot produce the row. So the remedy is a CHECK, not a derivation — the
+scraper's nine queue rows must name no city that `FLOORS` already holds — which
+is cheap, exact, and catches precisely the defect that let nine shipped cities sit
+queued.
+
+**PART 2 IS A DERIVATION AND PART 1 IS A CHECK, AND THE DIFFERENCE IS WHO READS
+THE OUTPUT.** The gap record's `counties` array SHIPS — it drives which counties
+show the gap in the panel — so it should be COMPUTED by `build_coverage_gaps.py`
+(the point-in-polygon needs no shapely; my stage-1 derivation is pure stdlib),
+per-gap opt-in, because gaps with no derivation keep a hand-kept list. A prose
+sentence does not ship as data and stays AUTHORED, with a declaration saying what
+it restates. Same philosophy, opposite direction, and collapsing them into one
+mechanism would either generate prose or ship a hand-kept list unchecked.
+
+**SO THE PROPOSAL IS THREE CHANGES, IN THIS ORDER, smallest first:**
+
+  1. **The queue check** (Wisconsin-local, ~15 lines in the alderperson builder's
+     selftest): no queue row may name a city in `FLOORS`.
+  2. **The county-list derivation** (`build_coverage_gaps.py`, per-gap opt-in):
+     the gap declares how its `counties` are derived and the builder computes
+     them.
+  3. **The declarations** (schema + `validate_gap_counts.py` widened): ~24-26
+     claims across 309 fields, six instances. Wisconsin's own two dated fields
+     are in scope. **Michigan's six and Iowa's two are theirs** — I will name
+     them and coordinate, never edit.
+
+`history_page.entries` stay untouched in all three, and none of the three reads a
+sentence it was not told to read.
+
+**Say which to start, or start at 1.** Nothing is built.
+
 **2026-09-25. #1147 MERGED as `6a4a595`, verified on main by content.** The
 squash carried exactly the two files — `scripts/measure_restated_counts.py` (343
 lines) and this board's 93 — and the script RE-RUN FROM MAIN reproduces every
