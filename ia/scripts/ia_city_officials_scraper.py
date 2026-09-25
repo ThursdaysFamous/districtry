@@ -316,12 +316,18 @@ def main():
     for city in CITIES:
         allowed, why = gate.allows(city["url"])
         if not allowed:
-            # The city's own robots.txt refuses this agent, so its page is
-            # never requested. The entry STAYS in CITIES: the check runs every
-            # week, so a city that changes its file re-enters by itself.
+            # NOT FETCHED, AND THE REASON IS THE GATE'S RATHER THAN A GUESS.
+            # This line used to open "robots.txt refuses districtry" whatever the
+            # verdict was, and on 2026-09-24 it printed
+            #   robots.txt refuses districtry (robots.txt unreachable: ConnectTimeout...)
+            # for a host that publishes no robots.txt at all and answers 404 in
+            # under a second -- a sentence contradicting its own parenthetical.
+            # `unreachable` means no answer arrived; `refused` means one did and
+            # it said no. Only the gate knows which, so only the gate says.
+            # The entry STAYS in CITIES: the check runs weekly, so a city
+            # whose verdict changes re-enters by itself.
             refused.append((city["name"], why))
-            print("  %-11s SKIPPED — robots.txt refuses districtry (%s)"
-                  % (city["name"], why), file=sys.stderr)
+            print("  %-11s NOT FETCHED — %s" % (city["name"], why), file=sys.stderr)
             continue
         r = session.get(city["url"], headers=HEADERS, timeout=45)
         r.raise_for_status()
