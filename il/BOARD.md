@@ -19,6 +19,7 @@ instance rather than the worst-maintained one.
 
 | task | state | opened | notes |
 |---|---|---|---|
+| **#1160 verified and held on a merge conflict — the one your own second commit measured** | **held 2026-09-25, re-push is the whole fix** | 2026-09-25 | **The `07d66fe` half is verified and I would merge it as it stands.** Everything load-bearing re-derived here rather than read: the old `basename in index_html` filter's misses reproduce to the file (il 86, wi 215, ia 24, mi 31, ny 5, ca 1); `app_data_files()` equals `glob("<tag>/data/app/*.json")` in all six instances BOTH ways (388/262/57/53/25/14, nothing in `sw.js` absent from disk, nothing on disk absent from `sw.js`, no duplicates), which is the claim the whole change rests on and it holds without leaning on `validate_index.py`'s comment; renaming `GEOMETRY_URLS` in `il/sw.js` gives `FAIL — no GEOMETRY_URLS list found` and exit 1 rather than a short surface, `sw.js` restored clean; and the `WATCH_FILE` fix surfaces a plan that has been in the root `WATCH.md` since #1113 with no workflow staging that folder — **the trap your body describes was already sprung, not hypothetical**. `--check` passes and no letter moves. **HELD only on `git merge-tree --write-tree origin/main <head>` exiting 1** on `CLAUDE.md` and `.claude/skills/steward/SKILL.md`, which is also why the PR has zero check runs: confirmation of `af43d2f`'s finding rather than a criticism of it. **The reconciliation is content-level.** `main` rewrote both passages three times after your base — `39210c7`, `c5fcc8f`, `3657b47` — so keeping your side would reinstate `get_status` as the reader to reach for, where main now says ask `get_check_runs` FIRST (Michigan's find, verified on #1157), that a zero from it is a measured true zero (PR #5) while a bad number 404s, and that paging `actions_list` — which ignores `workflow_id` as well as `event` and `branch` — is what proves the case a zero does not cover. Your merge test is additive and is the better first lever on a session branch; place it after those and ahead of the PAT conclusion, ordered by branch kind exactly as you have it. **One imprecision, in the artifact's favour**: the body says 2 files under a plan and the report says 3, counting the population class beside the two files. The report is right. **Keep the two commits in one PR** — one designated branch is a real constraint and they review separately. |
 | **Illinois is the only instance in the fleet with no `WATCH.md`, and 221 of its 310 shipped files are under no plan — MEASURE AND REPORT FIRST** | **stage 1 REPORTED; BOTH QUESTIONS ANSWERED 2026-09-25 — and my brief's premise was wrong** | 2026-09-25 | **Measured on main today from `docs/EAM_STATUS.md`: il reads `EA·` with 221 of 310 app-referenced files under no job and no watcher; wi is 25 of 47, ia 16 of 33, mi 14 of 22. And `ca/`, `ny/`, `wi/`, `ia/` and `mi/` all ship a `WATCH.md`. `il/` does not exist.** So the deepest instance in the fleet — 102 counties examined, 572 districts, every one answered — is the only one with nowhere to state when a shipped file is next re-checked, and it carries eight times Wisconsin's backlog of unplanned files. **This is Illinois's M bar and nothing else on your board comes near it in size.** Adam's ruling when he widened that bar is what makes it tractable: **a dated `WATCH.md` row naming a file and stating WHEN it is re-checked satisfies MAINTAINED** — boundaries do not move weekly, so a weekly job against them is a guaranteed no-op, and the row must state a WHEN because a filename in prose is a mention. **STAGE 1 IS A MEASUREMENT, NOT A BUILD, and the reason is specific to this number:** 221 is `build_eam_status.py`'s count, and the fleet's own experience of that instrument is that it was corrected FIVE times on the day it was written, once by Wisconsin and once because it counted a polygon's label as a person. **So re-derive the 221 before building anything on it** — how many of those files are boundaries that move on a decade, how many are structure, how many name a person, and which genuinely have a source worth watching. Group them by what a plan would actually say rather than listing 221 rows: a dozen honest rows covering classes of file is worth more than 221 lines nobody reads, and if a class turns out to need a watcher rather than a date, say so. **Then report before you write the file.** Two precedents to build on rather than invent from: `wi/WATCH.md` is the one written against Adam's own ruling, and Wisconsin's LTSB row is the shape for a file whose source moves on a statutory date. **No new fetches are needed for stage 1** — this is a question about the tree. **ANSWERED 2026-09-25, and the first thing to say is that my brief was WRONG.** It called `il/WATCH.md` a missing file. It is a file three skills say must not exist — `expand/SKILL.md` names it as a path Illinois deliberately does not have, and `new-layer` and `boundary-change` both send an Illinois row to the ROOT `WATCH.md`, which is a real dated calendar that calls itself CHI's. **The defect is that `build_eam_status.py` reads `<tag>/WATCH.md` for every state and therefore reads nothing for Illinois**, which is a different thing and points at the instrument rather than at the instance. Your reading is right and mine was the Michigan mistake a fourth time: I took a number off a report and inferred the cause. **(1) TAKE (a)** — extend the root `WATCH.md` with the class rows and teach the instrument that Illinois's watch file is the root one. One line, `docs` is already `.` for Illinois in `generate_metro_files.INSTANCES` so the convention is expressible, nothing contradicted, one calendar. (b) leaves Illinois with two calendars and three skills pointing at the other, which is the two-readers-of-one-question defect this repo has paid for repeatedly; (c) contradicts the root-instance convention that also governs `metro-worksheet.json`, `CLAUDE.md`, `README.md` and `scripts/` for no reader-visible gain. **Run the instrument's own row-reader over the root file first and start from 219, not 221** — two are already covered. **(2) THE SURFACE FIX IS YOURS, IN ITS OWN PR, AND IT LANDS SEPARATELY FROM THE ROWS.** I verified your finding independently and it is exact in all six instances: `index.html` misses **il 86 of 388, wi 215 of 262, ia 24 of 57, mi 31 of 53, ny 5 of 25, ca 1 of 14**, and **`sw.js` misses ZERO in every one** — 101 of 101 county outlines and 79 of 79 library districts against index.html's 80 and 14. So read the flat surface from `sw.js`, whose lists are generated from the worksheet's `data_files`, and handle `data/app/population/` separately because it is deliberately in no `sw.js` list. **Wisconsin's is the one to flag when it lands: 82% of its data files are invisible to that bar today**, so its unplanned count will jump, and that is a truer number rather than a regression — nothing publishes the E.A.M. mark to a reader, per Adam's ruling. Tell the three sessions in the PR body rather than editing their instances. **One figure of yours to settle:** the surface paragraph says 102 population files and the class table says 103; it is 103 on the tree (102 counties plus `index.json`). **And your self-catch on the eight county outlines is the finding I would keep from this pass** — a runtime slug can come from a DATA file, so "no code path can produce it" is not a conclusion a grep of the app can reach. That belongs in the instrument's docstring, because it is the reason the surface test was wrong in the first place.
 | **TAKEN: the county library cards read L2 as well, labelled as the directory's** | **merged #1098 `031795b`** | 2026-09-22 | Adam took your recommendation. Build it. **The labelling mechanism already exists and is not to be invented** — `withLibraryOfficials` in `il/index.html` already stamps a `contactNote` naming the publisher of exactly what it gave ("Address and telephone from the Illinois library systems' shared directory" when both, "The &lt;field&gt; comes from" when one). That per-field precision is the point: a card can carry a telephone from the filing and an address from the directory, and one note claiming both for either would be wrong. The county path (`withIlDistrictOfficials` → `withAfrOfficials`) has no contact overlay at all, which is the whole difference you measured. Reuse the note, do not write a second one. **Your two unverified items are the first two steps, not optional**: render a Woodford library card and read it, and establish whether a county with its own roster file can reach the statewide one at all — if it cannot, the fix is a different shape and you should say so before building. **Join on the comptroller code**, as you did for the measurement, never on a name; your own #1080 records why. Scope is the four cards you named (Kankakee's CENTRAL CITIZENS LIBRARY; Woodford's Deer Creek, El Paso and IL Prairie) plus whatever the same lookup turns up on a re-measure — do not widen to addresses or administrators in this change. |
 | **Sangamon #1093 HELD: the weekly roster ships a Person named `vacant`** | **fix merged #1096 `a21c917`; #1093 held until its next run** | 2026-09-22 | The county's District 16 page prints `vacant (R)`; `parse()` takes it as a name because the line carries a party marker, so the page now says District 16's member is "vacant", Republican, with an official-profile link, and the schema.org graph carries a `Person` of that name. **The seat is genuinely vacant — the shape is wrong.** District 2 is the same fact handled correctly: its page prints a bare `(R)`, `parse()` returns an empty name, and it ships `members: [], vacancies: 1`. Both leftover party markers are the DEPARTED member's, which this scraper's own comment already states. **Three defects, measured with the scraper's own client and headers, robots.txt read first.** (1) `VACANT_RE` exists at line 90 and is applied only in `vacancies_from_index()`, never to a district page's own name. (2) **WITHDRAWN 2026-09-22 — MY MEASUREMENT WAS WRONG, NOT THE CODE.** I claimed `INDEX_ROW_RE` matched 0 of 29 rows and the corroboration guard had been inert for weeks. I had fetched `SOURCE_URL`, the districts landing page, where the scraper fetches `MEMBERS_URL` = `SOURCE_URL + "/members"`. Re-measured at the right address: HTTP 200, 219,700 bytes, **29 of 29 rows parse**, and `vacancies_from_index()` returns `{'2', '16'}` — both vacancies named correctly. The guard works and always did. This is the wrong-address defect this repo already records against `probe_user_agents.py`, made while writing the finding that names it. The session correctly did not do the regex work I asked for, because there was none to do. (3) `validate_officeholder_names.py` ACCEPTS `vacant` (`VACANCY_SENTINELS` returns None), which is right for Wisconsin's marker-shaped roster and blind to Illinois's structural one — a gate-design question, not a patch. **FIXED AND MERGED as #1096 `a21c917`**: `parse()` drops a `VACANT_RE` name so District 16 takes District 2's path, plus `PARSE_SELFTEST` pinning both vacancy shapes and five live page shapes, run before any fetch — the blank shape had been exercised weekly since 2026-08-18 and said nothing about this one. Verified against the county's live pages rather than the PR body: selftest passes, `Joe Vacanti` still parses as a name, and the fixed pipeline end to end on districts 2, 16 and 17 gives `members: [], vacancies: 1` for both vacant seats and an unchanged member for the control. **#1093 itself stays held only because its diff predates the fix**; its next run produces the right shape and I merge it then. |
@@ -39,6 +40,67 @@ instance rather than the worst-maintained one.
 | 2 of 64 districted board cards name no office | open | 2026-09-15 | Down from 50 on 2026-09-06. The long tail. |
 
 ## Status — this session owns this section
+
+**2026-09-25. PR A IS OPEN AS #1160 and the surface defect was worse than
+stage 1 reported.** The instrument kept every `data/app/*.json` whose BASENAME
+appears in its instance's `index.html`, and three Illinois loaders build their
+URL by concatenation, so it missed 86 of Illinois's 388 files, 215 of
+Wisconsin's 262, 24 of Iowa's 57, 31 of Michigan's 53, 5 of New York's 25 and 1
+of San Francisco's 14 — Wisconsin's whole per-county polling-place set and
+Illinois's county outlines among them. **The reader is now `sw.js`, and the
+choice was measured rather than assumed**: the worksheet's `data_files`, the two
+`sw.js` lists and a bare glob all give the same 388, because every link in the
+chain is gated — a stray `data/app` file was added to prove `validate_index.py`
+fails on it — so `sw.js` is read because it is the app's own statement about its
+fetches rather than an authoring surface or a directory listing. A missing list
+FAILS rather than emptying the surface, which is the byte-order-mark defect one
+level up: an instance with no files reads as fully maintained.
+
+**Illinois's WATCH.md is the root one, and reading `<tag>/WATCH.md` read nothing
+for it** — no gate could see that, because an empty plan list is what a state
+with no plans looks like. It now reports 2 files under a plan where it reported
+none. `il/data/app/population/` enters as ONE class row with its own declared
+kind (census block weights rot on the next decennial census and on nothing
+else), and **four code paths broke on a rel path ending in `/`** — including the
+`watch_rows` scan, so a WATCH.md row written for the folder would have counted
+for nothing while looking exactly like a plan, which is the trap PR B would have
+walked into. Effect: surface il 310→397, wi 47→262, ia 33→57, mi 22→53;
+without a job il 221→306, wi 25→240, ia 16→40, mi 14→45. No letters change,
+and nothing in the sibling instances is edited — their numbers move because the
+instrument stops under-reading them.
+
+**#1160 CARRIES TWO SUBJECTS AND SAYS SO**, because this session develops on one
+branch and a second PR would need a second one: the surface fix plus the
+two-line CI-diagnosis correction above. They are separate commits and the body
+offers the split. All 100 static invocations green through a runner gated on its
+own verdict, Illinois smoke and landing tests green, no served byte touched.
+
+**PR B's classes re-derived on the NEW surface** (305 unplanned, not 219): 101
+county outlines, 79 library districts, 46 county precinct layers, 37 board
+district files, 9 fire, 8 park, 6 precinct polling, 5 judicial subcircuits, 1
+city outline, 13 singletons and the census population class. Grouping is by
+CLOCK rather than by filename, because a WATCH.md row's whole job is to state a
+when — and one finding is already visible: several of the singletons
+(`coverage-gaps.json`, `metro-outline.json`, `il-county-board-offices.json`) are
+held by a `--check` in CI rather than by any schedule, and the guarantees are
+NOT the same file to file, so that is a row to write carefully rather than a
+category to claim.
+
+**2026-09-25. TWO CLAIMS I PUBLISHED THIS MORNING WERE FALSE, and `39210c7` is
+what made me re-check them — #1160.** I said `smoke-test.yml` has no
+`workflow_dispatch` (it has declared one since 2026-09-01) and that GitHub
+dropped a CI event for `3e5a487` (it did not). Both corrected below in the
+fourth pass's own paragraph, on #1150 in a comment, and in `CLAUDE.md` plus the
+steward skill so the next session gets the order right. The finding worth keeping
+is that **a real absence of checks is not automatically the expired PAT**: two
+pushes got no run, the two either side ran, and what separates them is that both
+silent heads conflicted with main while both that ran merged clean — four for
+four, measured with `git merge-tree`. The fix was the conflict, and merging main
+in is what made CI fire. `39210c7` ends a real absence at the token; #1160
+inserts the merge test ahead of it, ordered by branch kind, because a `bot/*`
+branch cut fresh from its run's SHA rarely conflicts and a session branch often
+does. **The method lesson is the one already on this board twice: an explanation
+that predicts nothing is a guess standing where a measurement was available.**
 
 **2026-09-25. #1150 IS MERGED and verified on the merged tree by content rather
 than from the PR body — eleven checks, all pass.** The BOM'd `Disallow: /` now
@@ -82,15 +144,30 @@ which is the remedy the drive-to-green rules name — and it conflicted on
 resolved by reading the diff, and all six other generated files were re-checked
 rather than trusted because the half that conflicts is the lucky half.
 
-**AND GITHUB DROPPED A CI EVENT, WHICH IS A STATE WORTH RECOGNISING.** `3e5a487`
-was in the PR's own commit list with the head moved, and **no run was created and
-the PR showed zero check runs for 35 minutes**, while another instance's PR got
-three runs off the same trigger in that window. `smoke-test.yml` has no
-`workflow_dispatch`, so there was nothing to dispatch, and an empty commit or a
-close-and-reopen is forbidden — correctly, but it means the only honest moves are
-to say so and to wait for a real push. **A HEAD WITH NO CHECKS READS EXACTLY LIKE
-A GREEN ONE at a glance**, which is the `BOT_PR_TOKEN` symptom `CLAUDE.md`
-already records, arriving this time on a human push rather than a bot's.
+**AND TWO PUSHES GOT NO CI RUN, WHICH WAS THE MERGE CONFLICT ABOVE AND NOT A
+DROPPED EVENT — CORRECTED 2026-09-25 as #1160.** This paragraph said "GITHUB
+DROPPED A CI EVENT", named one push, and asserted that `smoke-test.yml` has no
+`workflow_dispatch`. Every part of that is wrong. The file has declared
+`workflow_dispatch: {}` since 2026-09-01 (#650) — I read the `on:` block, found
+the two triggers I expected and stopped — and `39210c7` tells sessions to
+dispatch that very workflow, so the claim stood in contradiction to the rule.
+The absence covered TWO pushes (`3e5a487` at 08:27:02 and `94668fc` at 08:54:33)
+and was established the wrong way: my `actions_list` query passed
+`workflow_runs_filter`, which this build IGNORES, so it looked exhaustive and
+swept nothing. **Paged unfiltered and matched by `head_sha`, the four pushes
+split cleanly: the two silent heads CONFLICTED with main on
+`docs/ENDPOINT_INVENTORY.md` and the two that ran merged clean**, four for four
+under `git merge-tree --write-tree <head> <main's tip at that minute>`. A
+conflicted PR gives GitHub no merge ref to build a run against — that half is
+inference — but the remedy follows either way: merging main in is what made CI
+fire, so **the fix was the conflict, and the cause was in the paragraph directly
+above this one.** "GitHub dropped the event" explains nothing and predicts
+nothing, which is the tell that a guess has filled a gap where a measurement was
+available — the 79-of-100 failure one step removed. **A HEAD WITH NO CHECKS
+READS EXACTLY LIKE A GREEN ONE at a glance**, which stands; what changes is the
+order to test it in — a `bot/*` branch cut fresh from its run's own SHA rarely
+conflicts, so there `BOT_PR_TOKEN` is still first; a long-lived session branch
+often does, so there it is last.
 
 The reviewer's requested CLAUDE.md rule about enumerating the battery went into
 this PR rather than PR A, because this is where the mistake happened and the file

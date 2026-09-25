@@ -1210,7 +1210,6 @@ from arcgis_error import (ArcGISServiceError,                    # noqa: E402
 # counties need re-sourcing, where a green one would have gone on fetching two
 # pages their publishers had said not to.
 ROBOTS_TIMEOUT = 30
-ROBOTS_RETRIES = 3
 
 # _fetch_json's ladder. Deliberately LONGER than fetch_bytes's four: that one
 # reads county PAGES, where a failure costs one county's roster and the builder
@@ -1282,10 +1281,23 @@ def _robots_verdict(url):
     """One robots.txt read per (client, host), cached for the run.
 
     scripts/robots_policy.RobotsGate does the caching and locking part of this
-    and is NOT used, for one reason: it is built with a single User-Agent and
-    this file sends two, so there would be a gate per client and the retry
-    below would have to reach into a gate's private cache to discard a verdict
-    it wants to re-ask. A dict and a lock here is less code than that.
+    and is NOT used, for one reason that survives #1158: it is built with a
+    single User-Agent and this file sends two, so there would be a gate per
+    client and something would still have to pick the right one per URL --
+    which is what the `(ua, robots url)` key below does in one dict.
+
+    THIS DOCSTRING GAVE A SECOND REASON UNTIL 2026-09-25 AND IT NAMED THE LOOP
+    #1158 RETIRED: that a gate's private cache would have to be reached into to
+    discard a verdict "the retry below" wanted to re-ask. There is no retry
+    below any more -- one `rp.fetch_verdict` call and no loop -- so the clause
+    described a mechanism that had left the function. It is the third sentence
+    in this file reasoning from that loop; #1158 correctly moved the other two
+    and this one reads as present tense rather than history, which is why a
+    grep for the constant did not surface it. Worth removing rather than
+    leaving: it told a reader arriving at this function that it retries, and
+    the likeliest repair for a reader who then cannot find the retry is to put
+    one back -- the exact defect the read-counting assertion in selftest() now
+    catches.
     """
     # THE POLICY IS READ WITH THE HEADER SET THE CRAWL SENDS. Reading it with
     # only User-Agent + Accept measures a different client from the one that
@@ -1300,19 +1312,31 @@ def _robots_verdict(url):
     with _ROBOTS_CACHE_LOCK:
         if key in _ROBOTS_CACHE:
             return _ROBOTS_CACHE[key]
-    verdict = rp.fetch_verdict(key[1], ua, timeout=ROBOTS_TIMEOUT,
-                               headers=crawl_headers)
     # RFC 9309 files a 5xx or a network failure as disallow-all, which is
     # right, and a single flaky read would otherwise drop a county out of the
     # weekly file: co.forest.wi.gov served its policy on 2026-09-12 and was
     # unreachable for one minute on 2026-09-13. So an `unreachable` verdict is
     # re-asked before it is believed; nothing else is retried, because a served
     # file, an absent one and a refusal are all answers.
-    for attempt in range(ROBOTS_RETRIES - 1):
-        if verdict.status != "unreachable":
-            break
-        time.sleep(2 ** attempt)
-        verdict = rp.fetch_verdict(key[1], ua, timeout=ROBOTS_TIMEOUT,
+    #
+    # THAT RETRY IS rp.fetch_verdict's NOW, AND THIS FILE KEPT A SECOND COPY OF
+    # IT UNTIL 2026-09-25. #1156 put the mechanism in the shared reader because
+    # the defect was shared -- Iowa's city roster froze on one Muscatine
+    # timeout -- and the local `ROBOTS_RETRIES = 3` loop here then wrapped it:
+    # MEASURED by stubbing `_fetch_once` and counting, a permanently dead host
+    # cost NINE connect attempts rather than three, which at this file's
+    # 30-second timeout and the shared (1, 2) backoff is a COMPUTED 282s on ONE
+    # host of a serial 72-county scrape, rather than 93s. The attempts are
+    # measured and the seconds are arithmetic over the two constants; both are
+    # stated as what they are.
+    # The copy retired is the untested one -- the shared retry is covered five
+    # ways in `robots_policy.py --selftest`, this loop was covered nowhere --
+    # and no host that answers at all reads differently.
+    #
+    # WHAT DOES NOT MOVE: the shared reader's backoff is (1, 2) seconds where
+    # this loop's was 1 then 2 as well, so a host that recovers on its second
+    # or third read costs the same as before.
+    verdict = rp.fetch_verdict(key[1], ua, timeout=ROBOTS_TIMEOUT,
                                headers=crawl_headers)
     with _ROBOTS_CACHE_LOCK:
         _ROBOTS_CACHE.setdefault(key, verdict)
@@ -2808,10 +2832,16 @@ def fetch_bytes(url, headers=None, timeout=45, attempts=4, opener=None):
         # WHAT IT COSTS IS BOUNDED BY AN EARLIER STAGE. This scrape is serial
         # over 72 counties, so a retry on every host would be expensive -- but
         # a runner that has lost the network fails at the robots read first,
-        # where `unreachable` is re-asked ROBOTS_RETRIES times and then filed as
-        # disallow-all under RFC 9309, raising RobotsRefused before any page is
-        # fetched. So this ladder is only ever climbed by a host that SERVES its
-        # policy and then hangs, which is Buffalo's shape.
+        # where `unreachable` is re-asked `rp.RETRY_ATTEMPTS` times and then
+        # filed as disallow-all under RFC 9309, raising RobotsRefused before any
+        # page is fetched. So this ladder is only ever climbed by a host that
+        # SERVES its policy and then hangs, which is Buffalo's shape.
+        #
+        # THE CONSTANT THIS SENTENCE NAMES MOVED ON 2026-09-25 and the argument
+        # did not: the count was a local `ROBOTS_RETRIES` until the outer loop
+        # was retired, and the bound now comes from the shared reader. It is
+        # named here rather than restated as a number, because a number copied
+        # beside the thing that owns it is what goes stale.
         #
         # An `ssl.SSLError` is an OSError and is retried with the rest. It costs
         # three extra handshakes on a host that would fail anyway, which is
@@ -3011,6 +3041,39 @@ def _robots_selftest():
     #     overlap: a host cannot be both permanently permissive and pending.
     check("no host is in both lists",
           not (set(ROBOTS_PERMISSIVE_HOSTS) & set(ROBOTS_REFUSED_PENDING)))
+
+    # 11. THE ATTEMPTS ARE SPENT ONCE, AND NOTHING MEASURED THAT UNTIL NOW.
+    #     #1156 put the `unreachable` retry in scripts/robots_policy.py because
+    #     the defect was shared -- Iowa's city roster froze for a week on one
+    #     Muscatine connect timeout -- and this file's own `ROBOTS_RETRIES = 3`
+    #     loop then wrapped it, so a permanently dead host cost NINE connect
+    #     attempts rather than three -- a computed 282s at ROBOTS_TIMEOUT
+    #     rather than 93s, on ONE host of a serial 72-county scrape. The
+    #     redundant loop survived the change that made it redundant because no
+    #     test counted reads. Counting the reads
+    #     the shared module actually issues is the one form of this assertion
+    #     that a reintroduced loop cannot pass. The fixture host is ASSEMBLED
+    #     like every other one here, never spelled out, because
+    #     scripts/probe_user_agents.py reads this file's text for the hosts it
+    #     fetches.
+    reads = []
+
+    def _counting_fetch_once(robots_url, user_agent, **kw):
+        reads.append(robots_url)
+        return rp.classify(None, None, error="OSError: connect timeout")
+
+    saved_once, saved_backoff = rp._fetch_once, rp.RETRY_BACKOFF
+    rp._fetch_once, rp.RETRY_BACKOFF = _counting_fetch_once, (0, 0)
+    try:
+        dead = "https://%s%s" % ("never-answers.example.test", "/supervisors")
+        check("a host that never answers stays unreachable -> disallow-all",
+              robots_says(dead)[0] is False)
+        check("and costs rp.RETRY_ATTEMPTS reads (%d of %d), not a multiple of "
+              "them: this file keeps no retry of its own"
+              % (len(reads), rp.RETRY_ATTEMPTS),
+              len(reads) == rp.RETRY_ATTEMPTS)
+    finally:
+        rp._fetch_once, rp.RETRY_BACKOFF = saved_once, saved_backoff
 
     if failures:
         raise SystemExit("robots selftest FAILED: " + "; ".join(failures))

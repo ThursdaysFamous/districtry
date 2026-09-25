@@ -201,7 +201,6 @@ sys.path.append(os.path.join(os.path.dirname(os.path.dirname(
 import robots_policy as rp                                        # noqa: E402
 
 ROBOTS_TIMEOUT = 25
-ROBOTS_RETRIES = 3
 
 # WHAT THE HOSTS SAY, measured on two full runs of 2026-09-13 as the client
 # below sends (requests + the pinned Chrome/120 string; a browser string
@@ -273,18 +272,26 @@ def _robots_verdict(url):
     a 5xx or a network error as disallow-all, which is right, and one flaky
     read would otherwise drop a county out of the weekly file for no reason.
     Nothing else is retried -- a served file, an absent one and a refusal are
-    all answers. Bremer's 500 survives this: it is the same on every try.
+    all answers. Bremer's 500 survives it: it is the same on every try.
+
+    THE RETRY IS rp.fetch_verdict's, AND THIS FILE KEPT A SECOND COPY OF IT
+    UNTIL 2026-09-25. #1156 put the mechanism in the shared reader because the
+    defect was shared, and the local `ROBOTS_RETRIES = 3` loop that had been
+    here since #916 then wrapped it: MEASURED by stubbing `_fetch_once` and
+    counting, a permanently dead host cost NINE connect attempts rather than
+    three, which at this file's 25-second timeout and the shared (1, 2) backoff
+    is a COMPUTED 237s on one host rather than 78s. The attempts are measured
+    and the seconds are arithmetic over the two constants; both are stated as
+    what they are. The copy retired is the untested one -- the shared retry is
+    covered five ways in `robots_policy.py --selftest`, this loop was covered
+    nowhere -- and the shipped behaviour is unchanged for every host that
+    answers at all.
     """
     key = _robots_url(url)
     if key in _ROBOTS_CACHE:
         return _ROBOTS_CACHE[key]
     ua = HEADERS["User-Agent"]
     verdict = rp.fetch_verdict(key, ua, timeout=ROBOTS_TIMEOUT)
-    for attempt in range(ROBOTS_RETRIES - 1):
-        if verdict.status != "unreachable":
-            break
-        time.sleep(2 ** attempt)
-        verdict = rp.fetch_verdict(key, ua, timeout=ROBOTS_TIMEOUT)
     _ROBOTS_CACHE[key] = verdict
     return verdict
 
@@ -650,6 +657,34 @@ def _selftest():
         fetch(u("allow.example", "/b"))
         check(len(calls) == n + 2 and time.monotonic() - t0 < 0.5,
               "a host that states no delay is not paced")
+
+        # THE ATTEMPTS ARE SPENT ONCE, AND NOTHING MEASURED THAT UNTIL NOW.
+        # #1156 put the `unreachable` retry in the shared reader because the
+        # defect was shared; this file's own `ROBOTS_RETRIES = 3` loop then
+        # wrapped it, so a permanently dead host cost NINE connect attempts
+        # rather than three -- a computed 237s at ROBOTS_TIMEOUT rather than
+        # 78s. The redundant loop
+        # survived the change that made it redundant because no test counted
+        # reads. Counting the reads the shared module actually issues is the
+        # one form of this assertion that a reintroduced loop cannot pass.
+        reads = []
+
+        def _counting_fetch_once(robots_url, user_agent, **kw):
+            reads.append(robots_url)
+            return rp.classify(None, None, error="OSError: connect timeout")
+
+        saved_once, saved_backoff = rp._fetch_once, rp.RETRY_BACKOFF
+        rp._fetch_once, rp.RETRY_BACKOFF = _counting_fetch_once, (0, 0)
+        try:
+            dead = u("never-answers.example")
+            check(robots_says(dead)[0] is False,
+                  "a host that never answers stays unreachable -> disallow-all")
+            check(len(reads) == rp.RETRY_ATTEMPTS,
+                  "and costs rp.RETRY_ATTEMPTS reads (%d of %d), not a multiple "
+                  "of them: this file keeps no retry of its own"
+                  % (len(reads), rp.RETRY_ATTEMPTS))
+        finally:
+            rp._fetch_once, rp.RETRY_BACKOFF = saved_once, saved_backoff
     finally:
         requests.get = real_get
         _ROBOTS_CACHE.clear()

@@ -243,6 +243,27 @@ named workflow's own latest run before believing any row.
 **Adam's instruction, 2026-09-25: stop using `get_status`; page through
 `actions_list` instead.**
 
+**Corrected the same day: there IS a reader that sees check runs — `pull_request_read`'s `get_check_runs` method, found by the Michigan session.** Ask it first. Verified on #1157: `get_status` answered `total_count: 0, pending` while `get_check_runs` returned the smoke run with `conclusion: success` and the same run id the paging had found. Its limit is stated rather than assumed — every call made against it so far was on a PR that HAD a run, so a ZERO from it is
+untested, and the paging below remains what establishes a genuine ABSENCE.
+
+**Tested 2026-09-25, on Adam's instruction, and the zero holds.** PR #5 — merged
+eleven seconds after it opened on 2026-07-08, when this repository ran one
+workflow (`pages build and deployment`, `dynamic` trigger, run numbers 7 to 10)
+and nothing PR-triggered existed — answers `total_count: 0, check_runs: []`,
+while #40 a day later answers with its smoke run. **A zero from
+`get_check_runs` is a true zero.** It is also unambiguous: a pull-request number
+that does not exist returns a **404 error** rather than a zero, where
+`get_status` answers zero to both. Not covered: a bot PR whose trigger was
+SUPPRESSED rather than absent — the mechanism is the same, the case is
+unmeasured. So page `actions_list` to NAME the run and its conclusion, and to
+corroborate a suppressed-trigger absence; `get_check_runs` alone answers
+whether a run exists.
+
+**`actions_list` ignores `workflow_id` as well as `event` and `branch`.** Paging
+it with one workflow's id returns every workflow's runs interleaved, so match
+`head_sha` yourself and read each row's `path` or `name` to tell which workflow
+it is.
+
 `pull_request_read(method="get_status")` reads the commit-status API. This
 repository's smoke test is a **check run**, so that call returns
 `total_count: 0, statuses: []` for every pull request here, green ones
