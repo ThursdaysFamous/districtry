@@ -1168,6 +1168,27 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/build_block_population.py --check
 
+      # Two IL House districts make up exactly one IL Senate district, so Senate
+      # N's outer edge IS the outer edge of House 2N-1 + 2N. TIGER guarantees it
+      # exactly — 0.0000% area disagreement, every Senate vertex 0.0 m from a
+      # House line — and this repo used to break it, because each chamber was
+      # simplified on its own file at its own retain percentage and mapshaper
+      # builds topology WITHIN one file. Measured on the files this replaced, 55
+      # of 59 pairings had a Senate vertex more than 25 m off any House line,
+      # worst 210 m, and a reader at zoom 16 saw the two highlight lines diverge.
+      # Nothing compared one layer against another: the builder's own validate()
+      # samples 2,000 points per layer and asks whether THAT layer is
+      # self-consistent, which it was the whole time. This gate is the
+      # cross-layer question, and it is exact rather than tolerant — under one
+      # shared topology the Senate ring is assembled from House arcs, so every
+      # Senate vertex IS a House vertex with no epsilon to tune. The regression
+      # it catches is somebody rebuilding one chamber alone. Offline, stdlib, no
+      # network: the fidelity half needs the TIGER fetch to compare against and
+      # so lives in the build instead.
+      - name: IL House districts still tile their Senate district exactly
+        if: ${{ !cancelled() }}
+        run: python3 scripts/build_legislative_boundaries.py --check
+
       # Nine Illinois data files carry a top-level `generated` stamp, so each
       # weekly workflow opens a bot PR whether or not an officeholder moved.
       # The stamp is right and stays; what the nine builders now print beside it
