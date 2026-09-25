@@ -7898,6 +7898,45 @@ today, against a ceiling of twelve.
 
 ### ISBE's precinct-level results archive — a statewide superset of the vendor route (found 2026-08-20)
 
+> **CLOSED 2026-09-25 — ISBE REFUSES THIS PROJECT, AND HAS SINCE JUNE 2025. Nothing
+> below is fetched any more; it is kept because it is an accurate description of a
+> source, and because a route that closes on POLICY can reopen on policy.**
+>
+> `www.elections.il.gov/robots.txt` is 29 bytes: a UTF-8 byte-order mark, then
+> `User-agent: *` and `Disallow: /`, served with `Last-Modified: Thu, 12 Jun 2025
+> 06:39:17 GMT` and confirmed from two clients against the origin's own headers
+> (Cloudflare edge, the site's own CSP, a NetScaler `Via`). No group names any
+> client, so the `*` group binds this project fully — CLAUDE.md, without exception.
+>
+> **IT READ AS A PERMISSION FOR OVER A YEAR BECAUSE OF THE BYTE-ORDER MARK.**
+> `\ufeff` is not whitespace to `str.lstrip()`, so `robots_policy._parse` saw a
+> field named `\ufeffuser-agent`, opened no group, and answered `(True, 'no group
+> binds this client')` for every path on the host. Fixed in `_parse` — the one place
+> every construction path passes — with ISBE's own bytes as a selftest fixture, and
+> negative-tested. **This repo's own `user-agent-measurements.json` has said since
+> 2026-09-13 that a group binds this client there with one rule, and nothing acted
+> on it**; the measurement was filed and not read, which is the failure this
+> guidebook already names in other words.
+>
+> **WHAT STOPS AND WHAT DOES NOT.** Three files fetched the host and now decline at
+> `scraper_common.require_robots_allowed`: `il_county_clerk_scraper.py` (WEEKLY),
+> `isbe_county_officers_scraper.py`, `isbe_precinct_fabric.py`. The tripwire's
+> `--selftest` stays in CI — it is offline and proves the parser for the day a route
+> reopens. **A CITATION IS NOT A FETCH**: `build_calhoun_precincts.py`,
+> `build_vtd_precincts.py` and `build_stephenson_fire_districts.py` write an
+> `elections.il.gov` `resultsUrl`/`mapUrl` into their output and never fetch it, and
+> the cards link the host; all of that stays, because robots.txt governs crawling
+> and not linking. **Nothing is unpublished** — `il-county-clerks.json` keeps its 101
+> clerks (Adam, 2026-09-19: "Preserve data we have already fetched").
+>
+> **THE COST IS THE TRIPWIRE, AND IT IS REAL.** 38 of Illinois's 46 shipped precinct
+> layers are dissolved from Census 2020 voting districts — a snapshot that goes
+> silently wrong the day a county clerk consolidates, which has happened at least
+> three times in counties this project serves. ISBE was the only source carrying all
+> 102 authorities. The vendor routes still carry 34 + 13 + 17 counties between them
+> and are unaffected; they are now the whole of what can detect a re-precincting.
+
+
 Found while measuring whether Brown's and Calhoun's precincts could be built. **ISBE
 publishes precinct-level certified results as CSV for every election authority in
 Illinois**, and nothing in this repo reads it.
@@ -9053,7 +9092,7 @@ matrix; when one is rejected, move the rationale into a NO HONEST ANALOG footnot
 > |---|---|---|
 > | ~~**Winnebago voting precincts, free and public**~~ **STALE ON ARRIVAL — ALREADY SHIPPED 2026-07-30, 25 days before this row was written** (found 2026-08-05 while measuring what Stephenson's Clerk meant by "GIS" — see the ask ledger) — `maps.wingis.org/public/rest/services/WardsAndDistricts/MapServer`, no token, layer 7 **WinCo Voting Precincts**, alongside Winnebago County Board, political townships and the Rockford/Loves Park/Machesney Park ward layers. This is the same service that shipped Winnebago's 94-precinct `county-precinct` dispatch entry (covering the county OUTSIDE the City of Rockford, which runs its own Board of Election Commissioners) — so "Winnebago is a served county that ships no precinct layer" was already false the day this row was written. The genuinely open remainder is narrower and already has its own gap record: `rockford-city-precincts`. The same host's `ElectedOfficials` service carries per-municipality officeholder layers (already the source behind Winnebago's municipal roster) | none found for Rockford's own precincts | **superseded — see gap `rockford-city-precincts`** |
 > | **The `pollresults.net` / `accessliberty.com` county pair** (found 2026-08-18 while building Clark) — one election-results vendor serving **34 Illinois counties**, each at `il-<county>.accessliberty.com` (the Clerk's site, one TEXT-LAYER certified canvass PDF per election back to ~2006) and `il-<county>.pollresults.net` (an AngularJS shell whose ENTIRE result set is embedded in the page as JSON — no API, no key, one GET). Its own navigation names them: Bond, Boone, Bureau, Carroll, Christian, Clark, Clay, Coles, Crawford, DeWitt, Douglas, Edgar, Ford, Hardin, Kankakee, LaSalle, Lee, Livingston, Logan, Macon, Macoupin, Marshall, Mason, Mercer, Montgomery, Moultrie, Ogle, Piatt, Putnam, Shelby, Stephenson, Tazewell, Vermilion, Whiteside. **EIGHT are unserved as of 2026-08-21 — Bureau, Christian, Clay, Douglas, Ford, Hardin, Piatt and Vermilion — down from fourteen as Clark, Coles, Crawford, Edgar, Macoupin, Mercer, Moultrie and Shelby shipped; two of the eight are enclaves (Bureau, Christian).** AND THE LIST OVERSTATES WHAT IS REACHABLE, measured 2026-08-21: probing `pastelections.aspx` across all thirty frontier counties, only BUREAU (68 canvasses) and CHRISTIAN (60) actually return an archive — every other frontier county 404s with a ~9.6 KB error page, and the two carried ones are already measured shut for reasons the vendor cannot fix (Bureau splits precincts between districts; Christian re-precincted, and its own download handler 404s on the pageid/mid pair its page advertises). So this route is EXHAUSTED for the current frontier rather than merely unworked.  A FOURTH VENDOR JOINS THIS BACKLOG (2026-08-21): **results.gbsvote.com** (GBS), neither the accessliberty/pollresults pair nor platinumelectionresults.com, carrying THIRTEEN Illinois counties — Cass, Cumberland, Fulton, Greene, Grundy, Jasper, Johnson, Knox, Morgan, Perry, Scott, Warren, Washington — five of them unserved (Cumberland, Jasper, Johnson, Knox, Perry). Archives run back to 2016 at /locations/county_results.asp?id=N and each county page names its election authority. It was found the way the others should have been: on a county's OWN Elections page, not by guessing a hostname. Its first yield was PERRY's board form, settled AT LARGE from three certified elections whose commissioner contests each span all 27 precincts — a county-card answer, not a geometry one. THE FLEET NOW HAS FOUR SUCH VENDORS AND THE LESSON IS THE SAME EACH TIME: read the county's Elections page first, because every one of these was linked from one. Clark proved what this is worth: precinct-level canvasses turn a "no map" county into a buildable one whenever its board districts are unions of whole precincts, and they answer §2.5 step 2 (districted or at-large) without anyone replying to an e-mail | none — the pages are public and static; the work is per-county, and each still needs the Jasper test (do the census VTDs match the county's CURRENT precincts?) before any dissolve ships | **yes — a research pass, unstarted** |
-> | **The ISBE precinct-map collection** (found 2026-08-05 via Hamilton's Clerk — see the ask ledger) — `elections.il.gov/PrecinctMaps/<County>/`, **98 of 102 counties**, open directory listings. A 14-county sample measured **3 vector / 11 scan**, so the lead is the vector subset (Knox, Menard, Williamson confirmed so far). Knox's and Menard's files were checked and CONFIRM their existing gap records (2011 content; raster) rather than closing them | needs a per-county download-and-extract pass to find which counties' maps are vector AND current | **yes — a cheap research pass, unstarted** |
+> | **The ISBE precinct-map collection** (found 2026-08-05 via Hamilton's Clerk — see the ask ledger) — `elections.il.gov/PrecinctMaps/<County>/`, **98 of 102 counties**, open directory listings. A 14-county sample measured **3 vector / 11 scan**, so the lead is the vector subset (Knox, Menard, Williamson confirmed so far). Knox's and Menard's files were checked and CONFIRM their existing gap records (2011 content; raster) rather than closing them | needs a per-county download-and-extract pass to find which counties' maps are vector AND current | **NO — CLOSED 2026-09-25. That directory is on `elections.il.gov`, which refuses this project (`User-agent: * / Disallow: /`, Last-Modified 12 Jun 2025); see the ISBE results-archive section above. The lead is not wrong, it is not ours to fetch** |
 > | ~~**Pass-14 first fruit — Hamilton**~~ **SHIPPED 2026-08-05, the forty-fifth dispatched county and SECOND island**, four hours after its Clerk's four-minute reply settled the at-large question and surfaced the county's vendor-hosted GIS org: precincts 17 (one unnamed — `hamilton-unnamed-precinct`, asked back) + fire 3 named as dispatch entries; the five-member board rides the County card from the weekly commissioners scrape of the county's own new site. `hamilton-precinct-polling` CLOSED 2026-08-11 — the county's post-migration site published the Clerk's statutory GPE polling notice, all sixteen pairings (see the ask ledger). STILL OPEN: `hamilton-municipal-officials` | nothing | done — one live ask recorded |
 > | ~~**The pass-13 build-ready ledger** — Effingham~~ **SHIPPED 2026-08-04, same day — the forty-fourth dispatched county and the FIRST ISLAND** (§2.5.1 checklist exercised: metro-outline.json is now a MultiPolygon, the island proven an OUTER ring by anchor, the Vandalia/Shelbyville corridor proven washed): board 9 districts A–I with the roster ON the features (no scraper — the county's own live service is the officeholder source), precincts 38 (polling 38/38), fire 17, park 4, library 1. The build's verification also caught findPropCI's lowercase-candidate contract being violated by six `keys:` entries — Macon's fire/park/library cards had shipped reading "Unknown" — fixed in the same change. STILL OPEN: `effingham-municipal-officials` (12 municipalities, no councils source) | nothing | done — municipal officials stay a recorded gap |
 > | ~~LaSalle county-board rebuild~~ **SHIPPED 2026-08-01** — boundary derived from the county's precinct layer per its full 2024+2026 canvass record; weekly directory roster with the countywide Chairman; 11 split precincts drawn with their majority side and stated on the card | remaining: the split-precinct cut refinement, or the county publishing its adopted map as GIS | done — refinement recorded |

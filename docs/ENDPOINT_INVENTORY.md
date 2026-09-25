@@ -130,20 +130,24 @@ prose.
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
 |---|---|---|---|
-| il | 129 | 388 | 5 |
+| il | 129 | 388 | 6 |
 | ny | 35 | 25 | 0 |
 | ca | 17 | 14 | 0 |
 | wi | 91 | 262 | 5 |
 | ia | 70 | 57 | 0 |
 | mi | 25 | 53 | 1 |
-| **total** | **367** | **799** | **11** |
+| **total** | **367** | **799** | **12** |
 
 **130 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
-provenance URL the build depends on, and is machine-checked monthly. A
-`blocked` entry means the source is *measured* as refusing this client, and
-the check **inverts** for it: unreachable is expected, reachable again is
-the signal a human can act on.
+provenance URL the build depends on, and is machine-checked monthly. Two
+entry classes mean the source refuses this client, and the check
+**inverts** for both: the refusal is expected and its LIFTING is the signal
+a human can act on. They differ in whether anything is fetched. A
+`blocked` entry was measured unreachable and IS re-probed, because probing
+is how you learn an outage ended. A `robots_declined` entry is a host whose
+own robots.txt asks this client not to read it, and is NEVER fetched — the
+request is the thing being asked for, so only robots.txt is re-read.
 
 ## 3. Terms
 

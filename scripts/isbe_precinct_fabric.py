@@ -76,7 +76,7 @@ import urllib.parse
 import urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from scraper_common import UA_HINTS_CHROME_126, make_fail  # noqa: E402
+from scraper_common import UA_HINTS_CHROME_126, make_fail, require_robots_allowed  # noqa: E402
 
 BASE = "https://www.elections.il.gov"
 TOTALS = BASE + "/ElectionOperations/ElectionVoteTotals.aspx"
@@ -830,6 +830,24 @@ def main():
 
     if args.selftest:
         return selftest()
+
+    # ISBE refuses this project: www.elections.il.gov/robots.txt is a
+    # BOM'd `User-agent: * / Disallow: /`, Last-Modified 2025-06-12, measured
+    # 2026-09-25. The full record is in scripts/il_county_clerk_scraper.py's
+    # main() and in scripts/robots_policy.py's `_parse`, whose BOM defect is why
+    # a year-old refusal read as a permission. Nothing is fetched from this host;
+    # files already built from it keep their records (CLAUDE.md, Adam 2026-09-19).
+    #
+    # THIS CLOSES THE RE-PRECINCTING TRIPWIRE THIS MODULE IS. Its docstring
+    # explains that most Illinois precinct layers are a Census 2020 snapshot and
+    # that ISBE was the only source carrying all 102 authorities, so nothing else
+    # can run the comparison today. The gate sits AFTER --selftest deliberately:
+    # that path is offline, runs in CI, and proves the parser for the day a route
+    # reopens. Every other flag fetches, so every other flag stops here.
+    require_robots_allowed(TOTALS, UA_HINTS_CHROME_126["User-Agent"],
+                           headers=UA_HINTS_CHROME_126,
+                           label="isbe-precinct-fabric")
+
     if args.jasper:
         return run_jasper(args.jasper, args.county)
 

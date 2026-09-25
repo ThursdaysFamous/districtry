@@ -356,6 +356,21 @@ RATE_LIMIT_PAUSE = 8
 # whose host nobody cites any more is warned about too.
 # ---------------------------------------------------------------------------
 ROBOTS_DECLINED = {
+    "www.elections.il.gov":
+        "robots.txt is 29 bytes — a UTF-8 byte-order mark, then `User-agent: *` and "
+        "`Disallow: /` — served with `Last-Modified: Thu, 12 Jun 2025 06:39:17 GMT`. "
+        "Measured 2026-09-25 from two clients against the origin's own headers, so "
+        "the Illinois State Board of Elections has refused this project since at "
+        "least June 2025. It went unseen because the BOM made robots_policy._parse "
+        "open no group, and a full refusal answered `no group binds this client`. "
+        "Illinois publishes LINKS to this host on cards and in three builders' "
+        "`resultsUrl`/`mapUrl` citations, which stay: a link a reader clicks is not "
+        "a fetch by us, and the pages are public. What stopped is our fetching — "
+        "il_county_clerk_scraper.py, isbe_county_officers_scraper.py and "
+        "isbe_precinct_fabric.py all decline at the gate now",
+    "elections.il.gov":
+        "the bare host serves the same 29-byte `User-agent: * / Disallow: /`. "
+        "Measured 2026-09-25. See the www entry",
     "www.rochesterhills.org":
         "robots.txt (served via a redirect to the city's CMS host) allows exactly five "
         "named bots — Googlebot, Bingbot, FacebookBot, LinkedInBot, Twitterbot — and "

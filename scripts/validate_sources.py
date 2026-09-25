@@ -470,9 +470,28 @@ PROVENANCE = [
     {"layer": "Illinois county clerks (roster)",
      "app_file": "il-county-clerks.json",
      "source_url": "https://www.elections.il.gov/ElectionOperations/ElectionAuthorities.aspx",
+     "robots_declined": "ROBOTS-REFUSED, measured 2026-09-25. www.elections.il.gov/robots.txt "
+                "is 29 bytes — a UTF-8 byte-order mark, then `User-agent: *` and "
+                "`Disallow: /` — with `Last-Modified: Thu, 12 Jun 2025 06:39:17 GMT`, "
+                "confirmed from two clients against the origin's own headers. No group "
+                "names any client, so the `*` group binds this project fully. The "
+                "refusal went unseen because the BOM stopped robots_policy._parse "
+                "opening the group at all, so a full refusal read as `no group binds "
+                "this client`; that is fixed, with ISBE's own bytes as a fixture. This "
+                "row is INVERTED like the others: not fetching is the expected state, "
+                "and the WARN is the day the rule lifts, because that is when "
+                "automation could resume. UNLIKE the other blocked entries this one is "
+                "a POLICY and not an outage — the pages serve fine to a browser — so "
+                "it is never worked around, and the weekly job now declines at the "
+                "gate rather than fetching",
      "note": "Scraped weekly from ISBE's election-authority directory "
-             "(il_county_clerk_scraper.py); Peoria deliberately absent (its "
-             "authority is the appointed county election commission)."},
+             "(il_county_clerk_scraper.py) until 2026-09-25, when that host's "
+             "robots.txt was read correctly for the first time and refuses us. The "
+             "101 clerks already fetched are PRESERVED and carried forward — a "
+             "refusal stops the fetch and never unpublishes what we have (Adam, "
+             "2026-09-19) — so the file keeps its last-good records and its own read "
+             "stamp. Peoria deliberately absent (its authority is the appointed "
+             "county election commission)."},
     {"layer": "Suburban municipal governing bodies (roster)",
      "app_file": "municipal-officials.json",
      "source_url": "https://www.cookcountyclerkil.gov/elections/directory-elected-officials",
@@ -1154,6 +1173,29 @@ class Findings(object):
         return "ok"
 
 
+# The client this gate crawls as. Named once because the robots read below must
+# use it: READ THE POLICY WITH THE CLIENT THAT WILL CRAWL, and two literals is
+# how that stops being true.
+VALIDATOR_UA = "districtry source validator (+https://districtry.com/il/)"
+
+
+def robots_refuses(url):
+    """(refused, why) for `url` under its host's own robots.txt, as THIS gate.
+
+    Read through scripts/robots_policy.py — the fleet's one reader — so a host's
+    policy gets the same answer here as in every scraper. robots.txt is the one
+    document no policy governs, since a rule stated inside a file cannot bind
+    the fetch that reads it, so this is the only request a declined entry makes.
+    """
+    try:
+        from robots_policy import RobotsGate  # noqa: PLC0415 - stdlib sibling
+        ok, why = RobotsGate(None, VALIDATOR_UA).allows(url)
+        return (not ok), why
+    except Exception as exc:  # noqa: BLE001 - an unreadable policy is not a crash
+        return False, "robots.txt could not be read (%s: %s) — not fetched" % (
+            type(exc).__name__, exc)
+
+
 def http_get(url, want_json=True, params=None):
     """GET with a sane UA; returns (ok, payload_or_error). Never raises."""
     if requests is None:
@@ -1163,7 +1205,7 @@ def http_get(url, want_json=True, params=None):
             url,
             params=params,
             timeout=HTTP_TIMEOUT,
-            headers={"User-Agent": "districtry source validator (+https://districtry.com/il/)"},
+            headers={"User-Agent": VALIDATOR_UA},
         )
     except Exception as e:  # network/TLS/proxy errors are a finding, not a crash
         return False, "request failed: %s" % e
@@ -1307,6 +1349,40 @@ def check_provenance(findings, offline):
             findings.add(FAIL, layer, "built data file data/app/%s is missing" % p["app_file"])
         if offline:
             continue
+
+        # A ROBOTS REFUSAL IS NOT AN OUTAGE, AND THE DIFFERENCE IS A FETCH.
+        # `blocked` below fetches first and inverts the REPORT afterwards, which
+        # is right for a source measured unreachable: probing is how you learn
+        # an outage ended. It is wrong for a source whose owner asked us not to
+        # read it, because the fetch itself is the thing being asked for — and
+        # this project has already paid for that once. CLAUDE.md records it:
+        # "THE CARD LINK WAS A SCHEDULED GET OF A `Disallow: /` PATH… so the
+        # Rochester Hills card link made this project issue a recurring,
+        # automated request for a path whose owner asked crawlers to leave it
+        # alone." The remedy invented then is `ROBOTS_DECLINED` in
+        # validate_card_links.py, which never fetches and re-reads only
+        # robots.txt; this is that mechanism in the sibling gate, so the two
+        # agree about a host instead of one of them crawling it monthly.
+        #
+        # The inversion is the same and the fetch is gone: the rule standing is
+        # OK, the rule LIFTING is the WARN, because that is the state a person
+        # can act on — it means automation may resume.
+        declined = p.get("robots_declined")
+        if declined:
+            refused, why = robots_refuses(p["source_url"])
+            if refused:
+                findings.add(OK, layer,
+                             "NOT FETCHED, as the host's own robots.txt asks (%s). "
+                             "%s %s" % (why, declined, p["source_url"]))
+            else:
+                findings.add(WARN, layer,
+                             "the robots rule has LIFTED (%s) — this host now permits "
+                             "this client, so automation may be able to resume. Re-read "
+                             "the policy, then move this entry off `robots_declined`. "
+                             "Recorded refusal: %s %s"
+                             % (why, declined, p["source_url"]))
+            continue
+
         ok, res = http_get(p["source_url"], want_json=False)
         blocked = p.get("blocked")
         if ok and blocked:

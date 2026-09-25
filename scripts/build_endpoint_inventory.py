@@ -350,7 +350,15 @@ def dataset_counts():
         appdir = os.path.join(REPO_ROOT, tag, "data", "app")
         files = len([f for f in os.listdir(appdir) if f.endswith(".json")]) \
             if os.path.isdir(appdir) else 0
-        out[tag] = (src.count('"layer":'), files, src.count('"blocked":'))
+        # BOTH CLASSES COUNT AS A SOURCE REFUSING US, and they are different
+        # mechanisms rather than different prose: `blocked` is measured
+        # unreachable and is re-probed, because probing is how you learn an
+        # outage ended; `robots_declined` is a host that asked us not to read it
+        # and is NEVER fetched, because the fetch is the thing being asked for —
+        # only its robots.txt is re-read. Counting one and not the other would
+        # understate what refuses this project.
+        out[tag] = (src.count('"layer":'), files,
+                    src.count('"blocked":') + src.count('"robots_declined":'))
     return out
 
 
@@ -481,10 +489,14 @@ def render():
     w("**%d distinct source hosts** across the six manifests. Each instance's"
       % len(manifest_hosts()))
     w("`validate_sources.py` is the authority — it carries every dataset id and")
-    w("provenance URL the build depends on, and is machine-checked monthly. A")
-    w("`blocked` entry means the source is *measured* as refusing this client, and")
-    w("the check **inverts** for it: unreachable is expected, reachable again is")
-    w("the signal a human can act on.")
+    w("provenance URL the build depends on, and is machine-checked monthly. Two")
+    w("entry classes mean the source refuses this client, and the check")
+    w("**inverts** for both: the refusal is expected and its LIFTING is the signal")
+    w("a human can act on. They differ in whether anything is fetched. A")
+    w("`blocked` entry was measured unreachable and IS re-probed, because probing")
+    w("is how you learn an outage ended. A `robots_declined` entry is a host whose")
+    w("own robots.txt asks this client not to read it, and is NEVER fetched — the")
+    w("request is the thing being asked for, so only robots.txt is re-read.")
     w("")
     w("## 3. Terms")
     w("")

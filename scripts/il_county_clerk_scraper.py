@@ -54,7 +54,7 @@ from datetime import datetime, timezone
 
 import requests
 from bs4 import BeautifulSoup
-from scraper_common import UA_CHROME_WIN_124  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import UA_CHROME_WIN_124, require_robots_allowed  # noqa: E402  (shared machinery — do not fork)
 
 URL = "https://www.elections.il.gov/ElectionOperations/ElectionAuthorities.aspx"
 HEADERS = {
@@ -185,6 +185,25 @@ def main():
                         default="auto",
                         help="fetch rung; auto tries requests then playwright")
     args = parser.parse_args()
+
+    # ISBE REFUSES THIS PROJECT, AND HAS SINCE BEFORE THIS SCRAPER WAS WRITTEN.
+    # https://www.elections.il.gov/robots.txt is 29 bytes — a byte-order mark,
+    # then `User-agent: * / Disallow: /` — served with `Last-Modified: Thu, 12
+    # Jun 2025 06:39:17 GMT`, confirmed 2026-09-25 from two clients against the
+    # origin's own headers. No group names any client here, so the `*` group
+    # binds this scraper whatever token it sends, and CLAUDE.md is unconditional:
+    # "A `*` group that disallows binds this project fully."
+    #
+    # It went unseen because the fleet's own reader could not read it: the BOM
+    # made `robots_policy._parse` open no group at all, so a full refusal
+    # answered `(True, 'no group binds this client')`. Fixed there, with ISBE's
+    # own bytes as a selftest fixture.
+    #
+    # The shipped roster is NOT emptied. Adam's ruling of 2026-09-19 — "Preserve
+    # data we have already fetched" — means `il-county-clerks.json` keeps the 101
+    # clerks it last read, and the weekly job now stops here instead of fetching.
+    require_robots_allowed(URL, HEADERS["User-Agent"], headers=HEADERS,
+                           label="il-county-clerk-scraper")
 
     html = fetch_results(args.engine)
     table = BeautifulSoup(html, "html.parser").find(id=RESULTS_TABLE_ID)
