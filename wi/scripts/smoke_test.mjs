@@ -571,6 +571,49 @@ try {
           ok, `rows=${names.length} ${JSON.stringify(names)}`);
     await context.close();
   }
+
+  // ---- 9. A DISTRICT THAT IS A SEAT SHORT SAYS SO ----
+  // Oconomowoc seats two alderpersons per district, names seven people and its
+  // own directory prints `Vacanct` for District 1's other seat, so the roster
+  // carries vacantSeats and the card must state the shortfall. Rendering the one
+  // name alone is indistinguishable from a district that seats one, which is the
+  // same concealment the list schema was built to end, one level down.
+  //
+  // DOCTORED, not read from Oconomowoc's own row, for the reason check 8 gives
+  // and one more: the day the city fills that seat the vacancy correctly
+  // disappears from the file, and a check anchored on it would fail on a real
+  // change in the world. This one tests the CARD.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const roster = JSON.parse(readFileSync(
+      join(dirname(dirname(fileURLToPath(import.meta.url))),
+           "data", "app", "wi-alderpersons.json"), "utf8"));
+    const madison = roster["48000"];
+    madison.vacantSeats = {};
+    for (const d of Object.keys(madison.members)) madison.vacantSeats[d] = 1;
+    const doctored = JSON.stringify(roster);
+    const page = await booted(
+      context,
+      `${BASE}#point=43.07310,-89.40120&layers=aldermanic-district`,
+      (p) => p.route("**/data/app/wi-alderpersons.json",
+                     (r) => r.fulfill({ status: 200, contentType: "application/json",
+                                        body: doctored })));
+    await cardText(page, "aldermanic-district");
+    const fields = await page.$$eval("#card-aldermanic-district .card-field",
+      (els) => els.map((e) => ({
+        label: (e.querySelector(".card-field-label") || {}).textContent || "",
+        value: (e.querySelector(".card-field-value") || {}).textContent || ""
+      })));
+    const names = await page.$$eval("#card-aldermanic-district .card-person-name",
+                                    (els) => els.map((e) => e.textContent.trim()));
+    const seatRow = fields.find((f) => f.label.trim() === "Seats");
+    const ok = names.length === 1 && !!seatRow &&
+               seatRow.value.indexOf("1 of 2 seats named") !== -1 &&
+               seatRow.value.indexOf("lists the other as vacant") !== -1;
+    check("a district with a vacant seat names the member and states the shortfall",
+          ok, `rows=${names.length} seats=${JSON.stringify(seatRow || null)}`);
+    await context.close();
+  }
 } finally {
   await browser.close();
 }

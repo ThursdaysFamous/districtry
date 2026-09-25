@@ -1279,6 +1279,60 @@
   "seats": 4,
   "sourceUrl": "https://cityofnewlisbon.com/common-council"
  },
+ "59250": {
+  "districts": 4,
+  "members": {
+   "01": [
+    {
+     "email": "kspiegelberg@oconomowoc-wi.gov",
+     "name": "Karen Spiegelberg",
+     "phone": "(262) 354-8161"
+    }
+   ],
+   "02": [
+    {
+     "email": "lkowieski@oconomowoc-wi.gov",
+     "name": "Lou Kowieski",
+     "phone": "(414) 875-7625"
+    },
+    {
+     "email": "cschellpeper@oconomowoc-wi.gov",
+     "name": "Charles Schellpeper",
+     "phone": "(262) 569-3271"
+    }
+   ],
+   "03": [
+    {
+     "email": "zfrankowski@oconomowoc-wi.gov",
+     "name": "Zach Frankowski",
+     "phone": "(414) 313-9199"
+    },
+    {
+     "email": "ejungwirth@oconomowoc-wi.gov",
+     "name": "Erik Jungwirth",
+     "phone": "(414) 702-8009"
+    }
+   ],
+   "04": [
+    {
+     "email": "jaultmankloth@oconomowoc-wi.gov",
+     "name": "Jennifer Aultman Kloth",
+     "phone": "(262) 372-1314"
+    },
+    {
+     "email": "kellis@oconomowoc-wi.gov",
+     "name": "Kevin Ellis",
+     "phone": "(973) 934-7558"
+    }
+   ]
+  },
+  "municipality": "Oconomowoc",
+  "seats": 8,
+  "sourceUrl": "https://oconomowoc-wi.gov/225/Common-Council",
+  "vacantSeats": {
+   "01": 1
+  }
+ },
  "64100": {
   "districts": 9,
   "members": {

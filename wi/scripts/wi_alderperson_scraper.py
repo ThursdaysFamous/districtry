@@ -171,23 +171,33 @@ WAUKESHA_INDEX = "https://www.waukesha-wi.gov/about_the_common_council/index.php
 #   the other. Shut on the SCHEMA, not on the source: representing them needs
 #   a schema and a card that hold a list. THE SWEEP COULD NOT HAVE SEEN THIS —
 #   it scored district-to-name PAIRINGS, and a page that pairs each district
-#   twice scores as a full match.
+#   twice scores as a full match. ALL FOUR SHIP NOW, the first three in #1135
+#   and Oconomowoc on 2026-09-25.
 #
-#   OCONOMOWOC IS THE ONE OF THOSE FOUR STILL OUT, AND NOT FOR ACCESS —
-#   re-measured 2026-09-24, when Algoma, Dodgeville and Horicon shipped. Its
+#   OCONOMOWOC SHIPPED 2026-09-25, and it was never an access problem: its
 #   APEX host serves robots.txt and permits /225/Common-Council, and its page
-#   answers 200 at 132 KB; its `www` host resets the connection, the Barron and
-#   Forest pattern where neither prefix is a safe default, and the page reset
-#   once on the apex too and answered on a retry. What holds it back is the
-#   CARD'S VOCABULARY. The city's own sentence says "eight Aldermen
-#   representing each of the City's four districts", and its directory names
-#   SEVEN people plus one entry reading `Vacanct District 1` — the city's own
-#   typo — so District 1 seats two, names one, and leaves one empty. The card
-#   can say a whole district is vacant (vacantDistricts, Madison's District 1)
-#   and cannot say a district seats two and names one. Shipping the one name
-#   silently is the same concealment one level down that the list schema was
-#   built to end, so it waits for the per-district seat count Illinois's
-#   at-large card already carries as `seats`, and not for another fetch.
+#   answers 200 at 132,246 bytes; its `www` host resets the connection, the
+#   Barron and Forest pattern where neither prefix is a safe default, and the
+#   apex reset on three of nine reads from this sandbox and answered on a
+#   retry. WHAT HELD IT BACK WAS THE CARD'S VOCABULARY. The city's own sentence
+#   says "eight Aldermen representing each of the City's four districts", and
+#   its directory names SEVEN people plus one entry reading `Vacanct District 1`
+#   — the city's own typo — so District 1 seats two, names one, and leaves one
+#   empty. `vacantDistricts` says a whole district is vacant (Madison's District
+#   1 at first build) and could not say a district seats two and names one, and
+#   shipping the one name silently is the same concealment one level down that
+#   the list schema was built to end. So this change adds `vacantSeats`, a count
+#   per district of the seats the source itself lists as vacant, and the card
+#   states it beside the names.
+#
+#   TWO CLAIMS THAT LOOK ALIKE AND ARE NOT, recorded here because the next city
+#   will be one or the other. `vacantSeats` is the city SAYING a seat is vacant.
+#   A city that seats two, names one and says nothing about the other is making
+#   no such statement, and the honest field for that is the one Illinois's
+#   at-large card carries — `seats`, with the card reading "1 of 2 seats not
+#   listed". Nothing here needs it yet, so it is not built; do not reach for
+#   `vacantSeats` to express it, because a card saying "the city lists the other
+#   as vacant" about a seat the city never mentioned is a false statement.
 #
 #   WAUPACA's page numbers its districts 1-5 while LTSB keys its geometry
 #   41-45. Nothing read here witnesses the correspondence, and a wrong offset
@@ -203,28 +213,29 @@ WAUKESHA_INDEX = "https://www.waukesha-wi.gov/about_the_common_council/index.php
 # genuine LIST per district. Wautoma also prints home addresses beside every
 # name, which are never read.
 #
-# The remaining twelve, with the page the sweep scored, so the next pass starts
-# from a measurement instead of repeating this one. THEIR SEAT VOCABULARY WAS
-# MEASURED 2026-09-05: seven number seats by WARD (the Viroqua shape, needing
-# the live LTSB ward-is-district witness) — Cumberland, Hillsboro, Nekoosa,
-# New Lisbon, Westby, Greenwood, Montreal; Wautoma writes "Dist. N" and
-# Wisconsin Dells an ordinal "Nth District"; Black River Falls, Neenah and
-# New Holstein pair by neither, and want a read before a regex:
+# THE REMAINING NINE, with the page the sweep scored, so the next pass starts
+# from a measurement instead of repeating this one. IT WAS EIGHTEEN ROWS UNTIL
+# 2026-09-25 AND NINE OF THEM HAD SHIPPED — Algoma, Dodgeville, Horicon and
+# Wautoma in #1135, Black River Falls and Neenah in #1138, New Lisbon on
+# 2026-09-06, Oconomowoc in this change, and Horicon a second time because the
+# list had carried it twice. The comment above this one says an address moves
+# out of the queue in the same change that starts fetching it; nothing said the
+# reverse, so a queue meant to stop the next pass repeating a measurement was
+# instead sending it to re-read six councils already in the shipped file. A
+# QUEUE THAT LISTS WHAT SHIPPED IS NOT A QUEUE. Removing a row is now part of
+# building the city, the same step as adding its constant.
+#
+# THEIR SEAT VOCABULARY WAS MEASURED 2026-09-05: six number seats by WARD (the
+# Viroqua shape, needing the live LTSB ward-is-district witness) — Cumberland,
+# Hillsboro, Nekoosa, Westby, Greenwood, Montreal; Wisconsin Dells uses an
+# ordinal "Nth District"; New Holstein pairs by neither and wants a read before
+# a regex:
 #
 #   Waupaca           C 5  https://cityofwaupaca.org/government/mayor-city-council/
-#   Algoma            C 4  https://www.algomacity.org/government/city_council.php
-#   Horicon           C 3  https://www.horiconwi.gov/185/Elected-Officials
-#   Black River Falls C 4  https://blackriverfallswi.gov/common-council-committee-of-the-whole
 #   Cumberland        C 4  https://cityofcumberland.net/city-council
-#   Dodgeville        C 4  https://www.cityofdodgeville.com/council
 #   Hillsboro         C 4  https://www.hillsborowi.com/mayor-and-council
 #   Nekoosa           C 4  https://cityofnekoosa.org/city-council
 #   New Holstein      C 4  https://cityofnewholstein.org/elected-officials/
-#   New Lisbon        C 4  https://cityofnewlisbon.com/common-council
-#   Oconomowoc        C 4  https://oconomowoc-wi.gov/225/Common-Council
-#   Horicon           C 3  https://www.horiconwi.gov/185/Elected-Officials
-#   Neenah            C 3  https://www.ci.neenah.wi.us/common-council/
-#   Wautoma           C 3  http://www.cityofwautoma.com/common-council
 #   Westby            C 3  https://www.cityofwestby.org/westby-city-council
 #   Wisconsin Dells   C 3  https://www.citywd.org/departments/city-government
 #   Greenwood         C 2  https://cityofgreenwood.wi.gov/city-council
@@ -320,7 +331,29 @@ DODGEVILLE_INDEX = "https://www.cityofdodgeville.com/council"
 HORICON_INDEX = "https://www.horiconwi.gov/185/Elected-Officials"
 WAUTOMA_INDEX = "http://www.cityofwautoma.com/common-council"
 
+# ---- the partially-filled district, 2026-09-25 ----
+# THE APEX HOST, NOT `www`. Measured 2026-09-25: oconomowoc-wi.gov serves
+# robots.txt (816 bytes, four of four reads) and its `*` group reaches
+# /activedit, /admin, /Search, /map.aspx and 19 more paths and not this one;
+# www.oconomowoc-wi.gov resets the connection. Neither prefix is a safe
+# default (the Barron and Forest pattern), so the spelling that answers is
+# the spelling that ships.
+OCONOMOWOC_INDEX = "https://oconomowoc-wi.gov/225/Common-Council"
+
 APPLETON_INDEX = "https://www.appletonwi.gov/government/common_council.php"
+
+# Cardinal number words, for a page that STATES the size of its own council.
+# Oconomowoc's "eight Aldermen representing each of the City's four
+# districts" is the only witness this project has for how many seats that
+# council holds, so the sentence is parsed rather than read by a person once
+# and written down; a word outside this table fails the build rather than
+# being skipped, because the seat total is what the vacancy count is checked
+# against.
+CARDINALS = {"two": 2, "three": 3, "four": 4, "five": 5, "six": 6,
+             "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11,
+             "twelve": 12, "thirteen": 13, "fourteen": 14, "fifteen": 15,
+             "sixteen": 16, "seventeen": 17, "eighteen": 18,
+             "nineteen": 19, "twenty": 20}
 
 ORDINALS = {"first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5,
             "sixth": 6, "seventh": 7, "eighth": 8, "ninth": 9, "tenth": 10,
@@ -576,7 +609,13 @@ def scrape_madison():
         raise SystemExit("madison: %d named + %d vacant != 20" % (len(members), len(vacant)))
     if len(members) < 17:
         raise SystemExit("madison names only %d of 20 districts" % len(members))
-    return members, MADISON_INDEX, vacant
+    # The third value is the EXTRA FIELDS this city adds beyond its members,
+    # named rather than positional: main() reads it as a mapping and refuses
+    # a key it does not know. It was a bare `vacant` list until 2026-09-25,
+    # when a second city needed a different extra field (Oconomowoc's
+    # vacantSeats) and a fourth positional element would have meant every
+    # caller knowing which slot means what.
+    return members, MADISON_INDEX, {"vacantDistricts": vacant}
 
 
 # ---------------------------------------------------------------- Green Bay
@@ -1900,6 +1939,114 @@ def scrape_neenah():
                           ("Nth Aldermanic District", r"\d(?:st|nd|rd|th)\s+Aldermanic\s+District")), NEENAH_INDEX
 
 
+# --------------------------------------------------- the partially-filled seat
+# `Vacanct` is Oconomowoc's own spelling, and the test is against the WHOLE
+# heading rather than its start, so a member whose surname begins these letters
+# is unaffected: the page prints a forename beside every name, and a heading of
+# one word is not a name here. The spellings a city might use are few and this
+# tolerates three trailing characters, so "Vacant", "Vacanct" and "Vacancy" all
+# read as the same statement.
+VACANCY_RE = re.compile(r"vacan\w{0,3}\Z", re.I)
+H3_RE = re.compile(r"<h3[^>]*>(.*?)</h3>", re.S)
+
+
+def scrape_oconomowoc():
+    """One CivicPlus editor widget per SEAT, name first, then `District N`.
+    Two seats per district over four districts, and District 1's second seat is
+    listed by the city as vacant, so seven people hold eight seats.
+
+    THIS IS THE CITY THE `vacantSeats` FIELD EXISTS FOR. Its page states its own
+    council's size — "eight Aldermen representing each of the City's four
+    districts" — and its directory prints eight blocks, seven naming a person
+    and one reading `Vacanct`. Shipping the seven alone would have said District
+    1 seats one alderperson, which is the same concealment as naming one member
+    of a two-member seat, so the count the city states is carried and the card
+    says the district is a seat short.
+
+    THE SENTENCE IS THE WITNESS AND IT IS PARSED, not read once by a person and
+    written into a constant: it is the only source for how many seats this
+    council holds, and a hand-kept 8 would go on being asserted after the city
+    changed it. CARDINALS turns its number words into integers and a word
+    outside that table fails the build.
+
+    EACH SEAT'S CONTACT COMES FROM ITS OWN BLOCK, bounded by the `<script>` the
+    widget ends with. Unbounded, the last block runs 70,505 bytes to the end of
+    the document and would take its phone from the mayor's row; a block with no
+    such bound is SKIPPED rather than guessed at, and the seat total below turns
+    that skip into a failure instead of a quiet short council.
+
+    TWO THINGS ON THIS PAGE WOULD SHIP A WRONG ANSWER IF READ, and neither is:
+    one mailto carries `title="Ald. Chris Douglas"` over the address
+    `ejungwirth@`, a name appearing nowhere else on the page — the Manitowoc
+    trap, where a stale `title=` names a previous alderperson — so the name is
+    taken from the block's own heading and no title is read. And District 1's
+    member links a District 4 map, so no district is ever derived from an href.
+    """
+    page = fetch(OCONOMOWOC_INDEX)
+    text = H.unescape(page)
+    MARKERS = (("fr-view widget", r'class="fr-view"'),
+               ("District N heading", r"<h3[^>]*>\s*(?:<strong>)?\s*District\s+\d"))
+    stated = re.search(r"(\w+)\s+Aldermen\s+representing\s+each\s+of\s+the\s+"
+                       r"City.s\s+(\w+)\s+districts", text)
+    if not stated:
+        raise SystemExit("oconomowoc: the page no longer states its own council "
+                         "size, which is the only witness for the seat total "
+                         "[%s]" % body_note(page, *MARKERS))
+    seats = CARDINALS.get(stated.group(1).lower())
+    districts = CARDINALS.get(stated.group(2).lower())
+    if not seats or not districts:
+        raise SystemExit("oconomowoc states %r aldermen over %r districts and "
+                         "one of those words is not in CARDINALS"
+                         % (stated.group(1), stated.group(2)))
+
+    members, vacant_seats = {}, {}
+    for block in re.split(r'<div class="fr-view">', page)[1:]:
+        cut = block.find("<script")
+        if cut < 0:
+            continue
+        block = block[:cut]
+        heads = [_clean(h.group(1)) for h in H3_RE.finditer(block)]
+        if len(heads) < 2:
+            continue
+        d = re.match(r"District\s+(\d{1,2})\Z", heads[1])
+        if not d:
+            continue
+        key = "%02d" % int(d.group(1))
+        if VACANCY_RE.match(heads[0]):
+            vacant_seats[key] = vacant_seats.get(key, 0) + 1
+            continue
+        if not re.match(NAME_RE + r"\Z", heads[0]):
+            raise SystemExit("oconomowoc district %s heads a seat with %r, "
+                             "which is neither a name nor a vacancy — a role "
+                             "or a label has moved into the name's place"
+                             % (key, heads[0]))
+        entry = {"name": heads[0]}
+        entry.update(_contact(block))
+        _put("oconomowoc", members, key, entry)
+
+    _seats_or_die("oconomowoc", members, districts, page, *MARKERS)
+    orphan = sorted(set(vacant_seats) - set(members))
+    if orphan:
+        raise SystemExit("oconomowoc district(s) %s are listed vacant with "
+                         "nobody named at all — that is vacantDistricts, which "
+                         "the card reads differently, not vacantSeats"
+                         % ", ".join(orphan))
+    # THE SEAT TOTAL IS CHECKED, NOT THE PEOPLE COUNT. A hard 7 here would fail
+    # the day the city fills the seat, which is a correct change in the world;
+    # the floor that catches a LOST member is in the builder, where a floor is
+    # allowed to be exceeded. What must always hold is that the blocks and the
+    # city's own sentence agree about how many seats there are.
+    total = _people(members) + sum(vacant_seats.values())
+    if total != seats:
+        raise SystemExit("oconomowoc names %d alderperson(s) and reads %d vacant "
+                         "seat(s) across %d district(s), %d seats in all, where "
+                         "the page states %d [%s]"
+                         % (_people(members), sum(vacant_seats.values()),
+                            len(members), total, seats, body_note(page, *MARKERS)))
+    extra = {"vacantSeats": vacant_seats} if vacant_seats else {}
+    return members, OCONOMOWOC_INDEX, extra
+
+
 def as_member_lists(members):
     """district -> ONE member, or district -> [members], in; always a LIST out.
 
@@ -1976,13 +2123,14 @@ def main():
             # the second multi-member tranche, 2026-09-24
             ("07900", "Black River Falls", 4, scrape_black_river_falls),
             ("55750", "Neenah", 3, scrape_neenah),
+            # the partially-filled district, 2026-09-25
+            ("59250", "Oconomowoc", 4, scrape_oconomowoc),
     )
     for code, name, districts, fn in COVERED:
         result, reason = attempt(name, fn)
         if result is None:
             failures[code] = {"municipality": name, "reason": reason}
             continue
-        # Madison alone returns a third value: the districts it says are vacant
         members, source = result[0], result[1]
         # `districts`, not `seats`: this number has always been the count of
         # districts the municipality's geometry draws, which the builder
@@ -1991,8 +2139,18 @@ def main():
         # is named for what it counts.
         entry = {"municipality": name, "districts": districts, "sourceUrl": source,
                  "members": as_member_lists(members)}
-        if len(result) > 2:
-            entry["vacantDistricts"] = result[2]
+        # A city may add fields beyond its members, and it names them: Madison
+        # says which whole districts are vacant, Oconomowoc how many seats
+        # WITHIN a district it lists as vacant. The allow-list is what makes
+        # that safe — a misspelled key would otherwise ship a field the card
+        # never reads and no gate would see it, which is the shape of every
+        # silently-wrong roster column this file already guards against.
+        for key, value in sorted((result[2] if len(result) > 2 else {}).items()):
+            if key not in ("vacantDistricts", "vacantSeats"):
+                raise SystemExit("%s returned the extra field %r, which nothing "
+                                 "reads; add it to this allow-list and to the "
+                                 "card in the same change" % (name, key))
+            entry[key] = value
         got[code] = entry
 
     if not got:
@@ -2008,9 +2166,10 @@ def main():
     # are lists, and a multi-member city would under-report itself.
     total = sum(len(ms) for c in got.values() for ms in c["members"].values())
     madison = got.get("48000", {}).get("vacantDistricts")
+    seats_vacant = sum(sum(c.get("vacantSeats", {}).values()) for c in got.values())
     print("scraped %d alderpersons across %d of %d municipalities (Madison "
-          "vacant: %s)%s -> %s"
-          % (total, len(got), len(COVERED), madison or "none",
+          "vacant: %s; %d vacant seat(s) inside a named district)%s -> %s"
+          % (total, len(got), len(COVERED), madison or "none", seats_vacant,
              "" if not failures else "; MISSED %s" % ", ".join(
                  sorted(f["municipality"] for f in failures.values())),
              out_path))
