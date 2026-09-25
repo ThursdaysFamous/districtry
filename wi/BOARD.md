@@ -30,6 +30,66 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-25. THE FREEZE IS OVER, AND THE RUN THAT ENDED IT DOES NOT WITNESS THE
+FIX.** #1153 is open and green; dispatched on its branch, run `36126246755`
+(12m14s, success) read **72 of 72 counties, 1,590 seats (1,575 named, 15
+vacant)** where the failing run got 71 and 1,576, re-reading 63 of the 72 live
+today, and opened **#1154** (`bot/wi-county-board-roster-update`, `f097d5a7`, 70
+files, +2,975/-2,959). Buffalo is in it — the chair line reads `Buffalo: Dennis
+Bork -> Dennis Bork`, which only prints once its board roster resolves. That PR
+is cut from main's tip, so it carries the roster data and NOT the unmerged
+scraper fix; its data was produced by branch code whose only difference from main
+is the retry ladder. It is a roster PR and not mine to merge.
+
+**WHAT THAT RUN PROVES IS NOT THE RETRY.** Buffalo answered on the first attempt
+and the log carries no `wait TimeoutError … retrying` line anywhere, so the run
+proves the change is harmless across 72 counties and that the page reads fine —
+the ladder's own behaviour is witnessed by `_fetch_retry_selftest`'s 17
+assertions and its two negative tests, not by this run. One green run is a
+sample, not a verdict.
+
+**MY OWN BATTERY RUN WAS SHORT BY SIX, BY EXACTLY THE METHOD CLAUDE.md HAD JUST
+NAMED.** I extracted the smoke job's commands with a pattern of my own, slicing
+the job at `actions/setup-node`, and got 94 — which is the second of the three
+wrong methods that file records from this morning ("94 from slicing the job at
+the wrong boundary"). Re-enumerated through `validate_gate_counts.measure()`'s
+own reader the list is **100 static invocations**, and the six I dropped are
+**every per-instance `validate_index.py` run** — the one class this repo has
+already paid for skipping, on Michigan's go-live, where the curated list hid a
+hard fail on `il` and `wi`. They sit in a `run: |` block positioned after
+setup-node, so slicing there cut them off while they are static gates. All 100
+re-run green, with `BASE=origin/main` exported rather than left empty as my first
+pass left it. **The rule as written ("never a remembered subset") does not catch
+this**, and that file now says why: a pattern you just wrote does not feel like
+remembering. Enumerate through `measure()` or the steward skill.
+
+**ONE FINDING SURFACED THAT IS NOT MINE AND NOT NEW.** The officer-contact step
+prints `Buffalo/districtAttorney: fetch failed — …/departments/district-attorney-
+corporation-counsel/: HTTP Error 404`. A 404 is correctly not retried. It is
+pre-existing rather than a regression: the shipped record's `districtAttorney`
+carries a name from the Blue Book and **no `url`**, where five sibling offices on
+the same county carry one, and `contactChecked` has read 4 since 2026-09-17. So
+that path in `wi_county_officer_contact_scraper.py`'s Buffalo table has never
+answered; the DA's name still ships from the book. Recorded, not fixed here.
+
+**THE TWO OTHER TIMEOUT-BLIND SCRAPERS ARE NOT IN #1153 AND WANT DIFFERENT
+REMEDIES**, which is the part of the diagnosis worth keeping. `wi_circuit_judges_
+scraper` reads www.wicourts.gov, where `wi_coa_scraper` ALREADY carries the
+ladder and its docstring records that the ladder **cannot clear that host's
+failure** — every attempt runs from one runner egress IP, and the 2026-09-12 run
+spent 2m39s demonstrating it. Its remedy is the closed COA row's (one automatic
+job re-run on a connect timeout plus the 60-day staleness ceiling), and an
+in-process ladder there would look like a fix without being one; it has already
+failed on this cause once, run `34697791129`. `mps_school_board_scraper` reads an
+ordinary host with no measured cause, so a ladder IS right there — but it has no
+`--selftest` and none in CI, and a tested ladder means a new CI step, which moves
+the 81/110 pair and the steward mirror. Its own change.
+
+**AND IOWA HIT THE SAME CLASS TODAY, INDEPENDENTLY**: main's `3d12206` reads "the
+Muscatine robots timeout is transient, and it was one attempt not two". Two
+instances measuring one-attempt-on-a-timeout in one morning is the shape of a
+fleet question rather than two coincidences, and I have not touched Iowa's.
+
 **2026-09-25. BUFFALO IS NOT A REFUSAL, AND THE FAILING RUN'S OWN LOG SAYS SO.**
 Diagnosis first, as asked; nothing built yet. Three measurements, none of them a
 reading of a comment.
