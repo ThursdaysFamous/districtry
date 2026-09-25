@@ -40,6 +40,42 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-25, fifth pass. #1150 was HELD on review and the hold was right: my
+`blocked` entry inverted the REPORT and not the REQUEST, so the monthly source
+gate would have fetched the exact path ISBE asked us not to read — in the change
+that established the refusal. Fixed in `3e5a487`.**
+
+`check_provenance` runs `http_get(p["source_url"])` unconditionally at line 1329,
+before it has read the flag at all. **AN INVERSION ON THE REPORT IS NOT AN
+INVERSION ON THE REQUEST**, and my own note carried the argument for a different
+mechanism without following it — "UNLIKE the other blocked entries this one is a
+POLICY and not an outage" is a reason to stop fetching, and I used it as prose on
+the mechanism that fetches. That is the Rochester Hills defect this repo had
+already paid for once, and `ROBOTS_DECLINED` in `validate_card_links.py` was the
+remedy invented then — **the very table this same PR was already using correctly
+in the sibling gate.** I had the right mechanism in one hand and the wrong one in
+the other, in one change.
+
+`robots_declined` never calls `http_get`: an outage is worth re-probing because
+probing is how you learn it ended, and a refusal is not, because the document that
+says whether it has lifted is robots.txt. Read through `robots_policy` as the
+client this gate crawls as, with `VALIDATOR_UA` now one constant for both the
+robots read and the crawl. **Proven by instrumenting `http_get` rather than by
+reading: zero calls on the refused path AND zero on the lifted one.**
+
+**THE REVIEWER ALSO CAUGHT A FIGURE I HAD CORRECTED IN ONE PLACE AND NOT THE
+OTHER** — `require_robots_allowed`'s docstring still said "six files here read
+it" where the PR body already said three. A correction that reaches the PR body
+and not the shared helper leaves the authoritative-looking copy wrong. It now says
+six referenced it and three fetched it, which is the honest version.
+
+And one the review made me look for: `build_endpoint_inventory.py` counted
+`"blocked":` literals alone, so moving ISBE to the other key would have taken
+Illinois's "sources measured as blocking" from 6 back to 5 — **a refusal vanishing
+from a reader-facing figure because its mechanism changed.** It counts both classes
+now. The lesson generalises past this entry: when a fact gets a second mechanism,
+grep for everything that counted the first one.
+
 **2026-09-25, fourth pass. #1150 is green, mergeable and waiting on its
 reviewer. Before that I had to correct my own verification claim, and the
 correction is the more useful half: I ran 79 of the battery's 100 static
