@@ -49,6 +49,56 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — I TOOK THE RE-PROBE SUGGESTION AND IT FOUND A STANDING INSTRUCTION TO
+SCRAPE A HOST THAT DISALLOWS US.** #1152 is open. Two of the three oldest
+drafted-and-unsent asks verify exactly; the third did not.
+
+**THE COUNT FIRST: sixteen asks carry an emphasised `NOT YET ASKED — DRAFTED`
+ledger line, not four**, three of them undated, and the oldest Iowa ones — 13, 14
+and 15 — have waited 21 days and were in none of the four named. My own first
+pass said 22, because it matched the phrase anywhere, including inside each ask's
+"what each answer means" section. Cheap heuristic, real parser, two readers of one
+question; the 16 comes from the emphasised ledger line alone.
+
+```
+Ask 13  Adams IL   21d   "seven of twenty-one ship today"      7 of 21   VERIFIED
+Ask 14  Jones IA   21d   266 rows / 98 counties, Jones absent  absent by
+                         county AND by FIPS 105, layer
+                         unedited since 2024-01-30             VERIFIED
+Ask 15  Marion IA  20d   "your agenda portal is reachable"     WITHDRAWN
+```
+
+**`cityofmarion.civicweb.net` SERVES A robots.txt WHOSE BINDING `*` GROUP IS
+`Disallow: /`**, on every path tried. The letter told a city clerk that this
+project had read it. **REACHABLE AND PERMITTED ARE DIFFERENT QUESTIONS**, and the
+2026-09-05 pass asked only the first — it gave six routes a measured verdict each
+and then wrote the one surface that ANSWERED up as the way forward without reading
+its policy once.
+
+**The finding is bigger than the ask, which is why it was worth the probe.** That
+portal was named in THREE places as "the one reachable surface" and "the route a
+next pass should take": the letter, the blocker's route (7), and this instance's
+own WATCH row, which carried an explicit **"You do: develop the CivicWeb route"** —
+a standing instruction to build a scraper against a host that refuses us. All three
+withdrawn, history kept under its correction.
+
+**Also dropped from the letter:** the `/api` ErrorCode 900 sub-claim naming this
+server's IP. It stays in the blocker with its date. It did not reproduce on the two
+paths probed today, and **a specific assertion about another organisation's
+infrastructure should not go out on a measurement nobody re-ran.**
+
+**RECORDED AGAINST THIS PROJECT RATHER THAN THE CITY: the re-probe itself breached
+the fetch rule.** The script read robots.txt and fetched the portal root in one
+pass without gating the fetch on the answer, so one GET went to a host the gate had
+already refused. One request, nothing extracted, no further fetch, written into both
+the blocker and the ask rather than quietly fixed. **Read the verdict BEFORE the
+fetch in the same script, not beside it.**
+
+**The §7 sitemap warning paid on its first use:** the chain ran with
+`build_sitemap.py --check` this time and it PASSES, which confirms yesterday's
+lastmod write was purely the shallow-clone artifact and nothing was ever wrong with
+the file.
+
 **2026-09-25 — #1151 IS MERGED AS `ccdfbc9`, VERIFIED ON MAIN BY CONTENT.** Ask 8's
 letter now says true things, and it is still unsent.
 
