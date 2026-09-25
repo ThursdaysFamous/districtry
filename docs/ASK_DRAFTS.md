@@ -513,6 +513,38 @@ the ask was written: the recorded `/about/contact.html` and `/elections/index.ht
 **DRAFTED IN THE OPERATOR'S MAILBOX 2026-09-04**, addressed to `elections@sos.iowa.gov`. Not sent —
 rule 1 stands, and the ledger stays `NOT YET ASKED — DRAFTED` until the day it goes.
 
+*RE-MEASURED 2026-09-25, and the letter was corrected rather than the record above.* An
+unsent draft is not history: it is a statement that will be made to a public official on
+the day it goes, so its claims have to be true then. Two of them had stopped being true.
+
+**"carries an office phone and website for each" was never right, and the gap record
+says so one sentence after contradicting itself.** `ia-city-contact.json` ships 939
+cities with **927** telephones and **531** websites — the League's own table gives 935
+and 536, so the join drops a few more. The blocker in `docs/DATA_LAYER_GUIDEBOOK.md`
+states 935 and 536 and then says "all 939 cities now carry their own office phone and
+website", in consecutive sentences. That is the third figure this month whose own
+supporting numbers sat beside it, unread.
+
+**"outside Des Moines and Waterloo … it cannot name a single mayor, council member or
+clerk" is now false, and correcting it makes the ask stronger.** Counted as a union
+across the three rosters rather than by arithmetic: 102 cities from the ten counties
+that publish, 4 that publish their own, and Des Moines, Cedar Rapids and Waterloo —
+**109**, with no city counted twice, leaving **830**. Cedar Rapids was missing from the
+sentence as well. And the 99-county sweep of 2026-09-25 is evidence the draft could not
+have had: every county's own site was asked once, and ten publish a page of this kind,
+which is what makes the Secretary of State the right recipient rather than the next
+ninety.
+
+**The site was re-probed before the draft was touched, per the rule that a redesigned
+site often starts publishing the thing.** Four pages — `/`, `/voters/schools-and-cities`,
+`/contact-us` and `/city-elections` — read 2026-09-25 with the **districtry token**, no
+browser string needed, all 200, robots.txt allowing each with no crawl delay and no
+Content-Signal. **Zero occurrences of "clerk" across all four.** `/city-elections` is
+linked from the Schools & Cities page and was not named in the 2026-09-03 measurement;
+it carries none either, so the ask is still warranted and now rests on four pages rather
+than two. `elections@sos.iowa.gov` is still live on the contact page, still
+Cloudflare-obfuscated, so the recipient stands.
+
 > **Subject:** Is there a statewide list of Iowa city clerks?
 >
 > Dear Elections Division,
@@ -523,11 +555,16 @@ rule 1 stands, and the ledger stays `NOT YET ASKED — DRAFTED` until the day it
 > colleges and judicial districts from the Legislature's and the Department of Education's
 > own published services, and all six elected county offices in all 99 counties.
 >
-> The one level it cannot answer for is the city. It knows all 939 of Iowa's incorporated
-> places and carries an office phone and website for each, from the Iowa League of Cities'
-> own directory — but outside Des Moines and Waterloo, which publish their council members
-> themselves, it cannot name a single mayor, council member or clerk, because I can find no
-> statewide source. Is there a list of Iowa's city clerks — names and
+> The one level it can barely answer for is the city. It knows all 939 of Iowa's
+> incorporated places and carries an office telephone for 927 of them and a website for
+> 531, from the Iowa League of Cities' own directory. It can name a mayor, council member
+> or clerk in 109 of those cities: Des Moines, Cedar Rapids and Waterloo publish their own
+> council members, and ten counties publish the officials of every city inside them. That
+> leaves 830 cities where the site can give a reader their city hall's telephone number
+> and cannot tell them who answers it.
+>
+> I checked all 99 counties' own sites this month, and ten publish a page of that kind, so
+> that route is close to exhausted. Is there a list of Iowa's city clerks — names and
 > office contact details — held anywhere in your office or by the county commissioners of
 > elections, in any form you would be willing to share? A spreadsheet or a PDF is perfectly
 > usable; it does not need to be a published dataset.
