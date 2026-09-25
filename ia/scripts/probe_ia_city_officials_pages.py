@@ -53,27 +53,31 @@ question a builder needs -- does this county answer the CMS page the nine
 shipping counties answer -- and it names the rest as leads rather than verdicts.
 
 TWO SETS THAT ARE EASY TO CONFUSE, AND THE FIRST DRAFT OF THIS CHANGE CONFUSED
-THEM. The output's `caveats` block states both, measured, because a sentence
-naming the wrong one reaches a reader through the gap record's `wanted`.
-  * 24 is THE PAGE WAS NEVER ASKED -- 22 robots-refused plus 2 unreachable.
-    That is the honest bound on the remaining upside, because nothing was
-    requested from those counties at all.
-  * 57 is NO SITE HOST IN THE REPO, which is exactly `hostSource ==
+THEM. `derive_caveats` states both with their counts, because a sentence naming
+the wrong one reaches a reader through the gap record's `wanted`. No count is
+repeated HERE, deliberately -- this docstring says which sets exist and how each
+is constructed, and the output says how big they are.
+  * THE PAGE WAS NEVER ASKED -- robots-refused plus unreachable. That is the
+    honest bound on the remaining upside, because nothing was requested from
+    those counties at all.
+  * NO SITE HOST IN THE REPO, which is exactly `hostSource ==
     "auditor-mail-domain"`: `pick_host` reaches the mail domain ONLY when the
-    repo knows no site host, so the two are one set by construction, and 51 of
-    them are among the 77 non-answers.
-They are different sizes and different claims, and 24 was written for both.
+    repo knows no site host, so those two are one set by construction, and most
+    of it falls inside the non-answers.
+They are different sizes and different claims, and the first draft wrote the
+smaller one's figure for both.
 
-THE REFUSAL TALLY IS ENTIRELY AN ARTIFACT OF PROBING A MAIL DOMAIN: not ONE of
-the 22 is on a host the repo knows. Only SIX are a county's own statement (five
-robots.txt answering 202, one serving a disallow); the other sixteen are a
-FAILED ROBOTS READ, which policy makes disallow-all and which nobody stated.
-Those sixteen are not one shape either -- nine other TLS failures, four
-connection resets, TWO PROXY 502s that are this sandbox's egress rather than
-the host (the docs.legis.wisconsin.gov distinction), and ONE
-`unable to get local issuer certificate`, which is the Coles/Gallatin/Vermilion
-incomplete-chain shape `scripts/probe_incomplete_tls_chains.py` exists for. A
-pinned intermediate by AIA would OPEN that host rather than refuse it, and never
+THE REFUSAL TALLY IS ENTIRELY AN ARTIFACT OF PROBING A MAIL DOMAIN: not ONE
+refusal is on a host the repo knows. Only some are a county's own statement
+(robots.txt answering 202, or serving a rule that disallows); the rest are a
+FAILED ROBOTS READ, which policy makes disallow-all and which nobody stated, and
+those are not one shape either. `refusal_shape` splits them, so the proxy 502s
+that are this sandbox's egress rather than the host (the
+docs.legis.wisconsin.gov distinction) and the
+`unable to get local issuer certificate` are visible per row instead of folded
+into "mostly TLS failures". That last is the Coles/Gallatin/Vermilion
+incomplete-chain shape `scripts/probe_incomplete_tls_chains.py` exists for, and
+a pinned intermediate by AIA would OPEN the host rather than refuse it -- never
 by disabling verification.
 """
 import json
@@ -218,6 +222,132 @@ def probe(row, gate, pacer):
     return row
 
 
+def refusal_shape(why):
+    """Why a robots read refused, from the reader's own message.
+
+    The sixteen failed reads are NOT one shape, and folding them into "TLS
+    failures" hides the two that are this sandbox rather than the host.
+    """
+    if "202" in why:
+        return "robots.txt answered 202 — an access control the county states"
+    if "Disallow" in why or "disallow" in why:
+        return "robots.txt served and disallows the path — the county states it"
+    if "ProxyError" in why or "Tunnel connection failed" in why:
+        return "proxy 502 — THIS VANTAGE, not the host"
+    if "local issuer" in why:
+        return "incomplete TLS chain — unable to get local issuer"
+    if "SSLError" in why:
+        return "other TLS failure"
+    return "connection reset"
+
+
+STATED = ("an access control the county states", "the county states it")
+
+
+def derive_caveats(rows, hosts, aud, pub):
+    """Every figure the write-up quotes, DERIVED from the rows that carry them.
+
+    WHY THIS IS A FUNCTION AND NOT A PARAGRAPH, which is the whole point of the
+    change it sits in. The first version of this block was hand-typed into the
+    JSON after the run, so `main()` wrote four keys and the next invocation of
+    this script would have silently deleted the correction -- in a change whose
+    subject is that a measurement filed where nothing maintains it gets
+    repeated. The docstring above asserted "the output's caveats block states
+    both, measured" while the output did not. Now it does.
+    """
+    ref = [r for r in rows if r["verdict"] == "robots-refused"]
+    unreach = [r for r in rows if r["verdict"] == "unreachable"]
+    mail = [r for r in rows if r.get("hostSource") == "auditor-mail-domain"]
+    nonans = [r for r in rows
+              if r["verdict"] in ("no-page", "robots-refused", "unreachable")]
+    shapes = {}
+    for r in ref:
+        s = refusal_shape(r.get("robots") or "")
+        shapes[s] = shapes.get(s, 0) + 1
+    stated = sum(n for s, n in shapes.items() if any(t in s for t in STATED))
+
+    def named(match):
+        return sorted(r["county"] for r in ref
+                      if match in (r.get("robots") or ""))
+
+    # The host comparison, on the same rule pick_host uses.
+    strip = lambda h: re.sub(r"^www\.", "", h)
+    raw = raw_nonpub = www_only = subst = 0
+    for fips in aud:
+        em = aud[fips].get("email") or ""
+        md = em.split("@")[1].lower() if "@" in em else None
+        hs = hosts.get(fips) or set()
+        if not (md and hs):
+            continue
+        best = sorted(hs, key=lambda h: (0 if h.endswith("iowa.gov") else 1,
+                                         0 if h.startswith("www.") else 1, len(h)))[0]
+        if best == md:
+            continue
+        raw += 1
+        if fips not in pub:
+            raw_nonpub += 1
+        if strip(best) == strip(md):
+            www_only += 1
+        else:
+            subst += 1
+
+    proxy, chain = named("ProxyError"), named("local issuer")
+    return {
+      "pageNeverAsked": {
+        "n": len(ref) + len(unreach),
+        "means": ("robots-refused (%d) + unreachable (%d). THIS is the set the bound "
+                  "belongs to: these counties' page was never requested, so nothing "
+                  "here is a statement about whether they publish."
+                  % (len(ref), len(unreach))),
+        "refusalShapes": shapes,
+        "ownStatement": ("Only %d of the %d refusals are the county's own statement "
+                         "(robots.txt answering 202, or serving a rule that "
+                         "disallows). The rest are a FAILED ROBOTS READ, which policy "
+                         "makes disallow-all and which nobody stated."
+                         % (stated, len(ref)))},
+      "noSiteHostInRepo": {
+        "n": len(mail),
+        "means": ("hostSource == auditor-mail-domain. pick_host reaches the mail "
+                  "domain ONLY when the repo knows no site host for that county, so "
+                  "these two are the same set. %d of them are among the %d "
+                  "non-answers, and a negative on a mail domain is a weaker statement "
+                  "than one on a county's real site — the Jasper shape."
+                  % (sum(1 for r in nonans
+                         if r.get("hostSource") == "auditor-mail-domain"), len(nonans)))},
+      "everyRefusalIsAMailDomain": {
+        "repoKnownHostRefusals": sum(1 for r in ref if r.get("hostSource") == "repo-known"),
+        "means": ("NOT ONE of the %d refusals is on a host the repo knows; all %d are "
+                  "the auditor mail domain. So the refusal tally is entirely an "
+                  "artifact of probing a mail domain, which strengthens the caveat "
+                  "above rather than qualifying it." % (len(ref), len(ref)))},
+      "hostDiffersFromAuditorMailDomain": {
+        "substantive": subst, "rawStringDifference": raw,
+        "wwwOnlyOfThoseRaw": www_only, "rawAcrossNonPublishers": raw_nonpub,
+        "method": ("%d is the count ignoring a leading `www.`, across all %d counties. "
+                   "A RAW string comparison gives %d, of which %d differ by `www.` "
+                   "alone; across the non-publishers alone the raw figure is %d. State "
+                   "the method with the number or a reader reproducing it gets %d."
+                   % (subst, len(aud), raw, www_only, raw_nonpub, raw))},
+      "failuresThatAreThisVantage": {
+        "counties": proxy,
+        "means": ("Failed with a proxy 502 (Tunnel connection failed), which is this "
+                  "sandbox's agent egress and not the host — the "
+                  "docs.legis.wisconsin.gov distinction this repo already draws. "
+                  "Calling the failed reads 'mostly TLS failures on legacy domains' "
+                  "folds these in wrongly.")},
+      "failuresThatAreTheIncompleteChainShape": {
+        "counties": chain,
+        "hosts": sorted(r["host"] for r in ref if "local issuer" in (r.get("robots") or "")),
+        "means": ("SSLError 'unable to get local issuer certificate' is the "
+                  "Coles/Gallatin/Vermilion shape that "
+                  "scripts/probe_incomplete_tls_chains.py exists for, and a pinned "
+                  "intermediate by AIA would OPEN the host rather than refuse it — "
+                  "never by disabling verification. The 2026-09-05 record says of its "
+                  "own re-probe that the chain probe was run and found none, so one of "
+                  "those two statements has moved and this row is the newer "
+                  "measurement.")}}
+
+
 def main():
     aud = json.load(open(os.path.join(APP, "ia-county-auditors.json"), encoding="utf-8"))
     hosts, pub = county_hosts(), publishers()
@@ -258,6 +388,11 @@ def main():
            "method": ("one GET per county at the shared CMS path all twelve "
                       "publishers answer on; robots.txt read first by the same "
                       "client; a host recorded as a challenge is not probed"),
+           "classifierNote": ("`publishes` requires the name-bearing offName marker. An "
+                              "earlier version accepted any marker and called Worth a "
+                              "publisher, where the shipping parser returns nobody; a "
+                              "module with nobody filled in gets its own verdict."),
+           "caveats": derive_caveats(rows, hosts, aud, pub),
            "counties": rows}
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as f:

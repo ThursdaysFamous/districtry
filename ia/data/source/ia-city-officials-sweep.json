@@ -4,8 +4,25 @@
    "means": "NOT ONE of the 22 refusals is on a host the repo knows; all 22 are the auditor mail domain. So the refusal tally is entirely an artifact of probing a mail domain, which strengthens the caveat above rather than qualifying it.",
    "repoKnownHostRefusals": 0
   },
+  "failuresThatAreTheIncompleteChainShape": {
+   "counties": [
+    "Wright"
+   ],
+   "hosts": [
+    "wrightco.iowa.gov"
+   ],
+   "means": "SSLError 'unable to get local issuer certificate' is the Coles/Gallatin/Vermilion shape that scripts/probe_incomplete_tls_chains.py exists for, and a pinned intermediate by AIA would OPEN the host rather than refuse it \u2014 never by disabling verification. The 2026-09-05 record says of its own re-probe that the chain probe was run and found none, so one of those two statements has moved and this row is the newer measurement."
+  },
+  "failuresThatAreThisVantage": {
+   "counties": [
+    "Ida",
+    "Webster"
+   ],
+   "means": "Failed with a proxy 502 (Tunnel connection failed), which is this sandbox's agent egress and not the host \u2014 the docs.legis.wisconsin.gov distinction this repo already draws. Calling the failed reads 'mostly TLS failures on legacy domains' folds these in wrongly."
+  },
   "hostDiffersFromAuditorMailDomain": {
    "method": "16 is the count ignoring a leading `www.`, across all 99 counties. A RAW string comparison gives 30, of which 14 differ by `www.` alone; across the non-publishers alone the raw figure is 23. State the method with the number or a reader reproducing it gets 30.",
+   "rawAcrossNonPublishers": 23,
    "rawStringDifference": 30,
    "substantive": 16,
    "wwwOnlyOfThoseRaw": 14
@@ -13,11 +30,6 @@
   "noSiteHostInRepo": {
    "means": "hostSource == auditor-mail-domain. pick_host reaches the mail domain ONLY when the repo knows no site host for that county, so these two are the same set. 51 of them are among the 77 non-answers, and a negative on a mail domain is a weaker statement than one on a county's real site \u2014 the Jasper shape.",
    "n": 57
-  },
-  "oneFailureIsTheIncompleteChainShape": {
-   "county": "Wright",
-   "host": "wrightco.iowa.gov",
-   "means": "SSLError 'unable to get local issuer certificate' is the Coles/Gallatin/Vermilion shape that scripts/probe_incomplete_tls_chains.py exists for, and a pinned intermediate by AIA would OPEN this host rather than refuse it \u2014 never by disabling verification. The 2026-09-05 record says of its own re-probe that the chain probe was run and found none, so one of those two statements has moved and this row is the newer measurement."
   },
   "pageNeverAsked": {
    "means": "robots-refused (22) + unreachable (2). THIS is the set the bound belongs to: these counties' page was never requested, so nothing here is a statement about whether they publish.",
@@ -31,16 +43,9 @@
     "robots.txt answered 202 \u2014 an access control the county states": 5,
     "robots.txt served and disallows the path \u2014 the county states it": 1
    }
-  },
-  "twoFailuresAreThisVantage": {
-   "counties": [
-    "Ida",
-    "Webster"
-   ],
-   "means": "Both failed with a proxy 502 (Tunnel connection failed), which is this sandbox's agent egress and not the host \u2014 the docs.legis.wisconsin.gov distinction this repo already draws. Calling the sixteen unreadable reads 'mostly TLS failures on legacy domains' folds these two in wrongly."
   }
  },
- "classifierNote": "`publishes` requires the name-bearing offName marker. The first run of this script accepted any marker and called Worth a publisher, where the shipping parser returns nobody; Adams and Worth were then re-measured through that parser and their rows carry its counts.",
+ "classifierNote": "`publishes` requires the name-bearing offName marker. An earlier version accepted any marker and called Worth a publisher, where the shipping parser returns nobody; a module with nobody filled in gets its own verdict.",
  "counties": [
   {
    "county": "Adair",
