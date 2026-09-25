@@ -40,6 +40,40 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-25, third pass. The manager's routing is accepted and the population
+figure is corrected below, with the cause named rather than just the number.
+Two PRs to come, in this order, because #1150 holds the branch.**
+
+Take (a): extend the root `WATCH.md` with the class rows, and teach
+`build_eam_status.py` that Illinois's watch file is the root one. Both PRs will
+say which they are.
+
+**PR A — the instrument.** Read each instance's flat surface from its own
+`sw.js` lists, which are generated from the worksheet's `data_files` and name
+every file including the concatenated ones (measured: `sw.js` misses 0 in all
+six instances where `index.html` misses 86 / 215 / 24 / 31 / 5 / 1).
+`il/data/app/population/` is handled on its own, because it is deliberately in
+no `sw.js` list and `CLAUDE.md` records why — that is the one class `sw.js`
+cannot answer for. Plus Illinois's `WATCH.md` path. **Wisconsin's unplanned
+count jumps when this lands** — 82% of its data files are outside the current
+bar — and that is a truer number rather than a regression; nothing publishes the
+E.A.M. mark to a reader, so no card changes. The PR body will say so for
+Wisconsin, Iowa and Michigan; their instances are not edited.
+
+The self-catch goes in `build_eam_status.py`'s own docstring, not only here: a
+runtime slug can come from a DATA file — the gaps panel draws any county whose
+outline ships, from `coverage-gaps.json` — so "no code path can produce this
+file" is not a conclusion a grep of the app can reach. That is why the surface
+test was wrong in the first place, so it belongs beside the fix.
+
+**PR B — the rows**, eleven of them on the root `WATCH.md`, from the class table
+below, starting from 219 rather than 221.
+
+**Sequencing.** #1150 (the ISBE robots fix) is on this session's designated
+branch, so PR A starts when it merges; I am not stacking a second PR on it after
+writing down what the last squash-merge did to two generated files. The two ISBE
+questions below are still open and are not affected by any of this.
+
 **2026-09-25, later. Checking whether the precinct tripwire could be scheduled
 found that ISBE refuses this project and has since June 2025, and that the
 fleet's one robots.txt reader was turning that refusal into a permission. #1150.
@@ -118,8 +152,17 @@ literally in `il/index.html`". Three loaders build their URL instead:
 - `il/index.html:16243` — `"data/app/" + slug + "-library-districts.json"`
 
 so **86 shipped boundary files are invisible to it** (21 county outlines, 65
-library districts), and the 102 `il/data/app/population/*.json` files are served
-by prefix from a directory its glob does not descend into. Measured: **491 files
+library districts), and the **103** `il/data/app/population/*.json` files are
+served by prefix from a directory its glob does not descend into. **That figure
+read 102 until the manager checked it, and the cause is the defect I was
+measuring, in my own script** — I labelled a file "reached by a built URL" or
+"reached by prefix" by asking whether its basename appears in `index.html`, so
+`population/index.json`, whose basename does, was counted as literally
+referenced although the instrument's `il/data/app/*.json` glob never descends to
+it. **A TEST THAT ANSWERS A DIFFERENT QUESTION FROM THE ONE ASKED** is what the
+whole pass is about, and a throwaway measuring script gets no exemption: the
+question was never "is this basename in the app", it was "does the surface reach
+this file", and all 103 are outside it whatever the app happens to name. Measured: **491 files
 the app reads, 81 under a cron or a watcher, 410 with no plan** — 297 boundary,
 113 structure, 0 people. This is the Wisconsin correction the brief cites,
 happening again in Illinois: a surface that misses the file the card is drawn
@@ -1126,6 +1169,12 @@ guidebook — and neither is guessed at.
   letting the old "ISBE covers everything" sentence stand. This is the largest
   correctness exposure Illinois has right now: a precinct card can be silently
   wrong and no gate in the repo would know.
+
+- **ANSWERED 2026-09-25 by the manager (`d9939c0`): take (a), and the surface
+  fix is mine in its own PR, landing separately from the rows. It also retired
+  its own brief — the defect is the instrument reading `<tag>/WATCH.md` for every
+  state, not Illinois lacking a file.** Kept below as the record of what was
+  measured and offered.
 
 - **2026-09-25 — where Illinois's watch plan goes, and one fleet-wide
   measurement fault it exposed. Neither is blocking; both want a yes before I
