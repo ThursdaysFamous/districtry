@@ -77,23 +77,43 @@ def measure_metric(root, inst, spec, fail):
     if metric == "keys":
         if not isinstance(data, dict):
             fail("%s: %s is not an object — 'keys' cannot count it" % (inst, spec["file"]))
-        label = spec["label"].lower()
-        claimed = [w for w in PERSON_WORDS if w in label]
-        if claimed:
-            # A label about people, on a count of records. Whether that is false
-            # is MEASURED, not reasoned: the tile declares where its people are
-            # and this compares the keys against the keys that name somebody.
-            # Equal, and one key is one named seat and `keys` is exactly right.
-            # Unequal, and the tile is publishing a number for a different
-            # quantity than its own words.
-            naming = spec.get("naming")
-            if not naming:
-                fail("%s: metric %r counts KEYS and its label says %r, so it "
-                     "needs a \"naming\" key giving the field(s) its people are "
-                     "in, joined by +. Nothing can infer that: `name` on a "
-                     "Wisconsin board record is a supervisor and on an Illinois "
-                     "municipal record is the village."
-                     % (inst, spec["label"], claimed[0]))
+        # WHOSE WORDS ARE TESTED, and this is the whole of the 2026-09-25 fix.
+        # `claim` is the text that ASSERTS something about what the number
+        # counts; `label` only says where the number lives, for the messages.
+        # They were the same string, and for a stat tile they still are — a
+        # tile's label IS its claim ("118 Illinois House seats with their
+        # member"), so `claim` defaults to it and build_history_page.py passes
+        # nothing. validate_gap_counts.py passes the EMPTY claim, because a gap
+        # record's `counts` entry asserts only that a number in the prose equals
+        # a measurement, and the label it could offer is the record's own ID —
+        # which NAMES AN ABSENCE. `ia-municipal-officeholders` counts 939 CITIES
+        # in a file that names nobody, and was being asked to declare those keys
+        # name people; 18 record ids across four instances trip the same way,
+        # while `ia-board-chair`'s 38 keys ARE 38 named chairs and pass
+        # unchecked because "chair" is not in the list. A record that does want
+        # the comparison opts in by giving `naming`.
+        claim = spec.get("claim", spec["label"]).lower()
+        claimed = [w for w in PERSON_WORDS if w in claim]
+        naming = spec.get("naming")
+        if claimed and not naming:
+            fail("%s: metric %r counts KEYS and its claim says %r, so it "
+                 "needs a \"naming\" key giving the field(s) its people are "
+                 "in, joined by +. Nothing can infer that: `name` on a "
+                 "Wisconsin board record is a supervisor and on an Illinois "
+                 "municipal record is the village."
+                 % (inst, spec["label"], claimed[0]))
+        # Driven by `naming`, not by the claim, so a caller that opts in gets the
+        # comparison whether or not its words happen to carry a person word.
+        # Whether the claim is false is MEASURED, not reasoned: the caller
+        # declares where its people are and this compares the keys against the
+        # keys that name somebody. Equal, and one key is one named seat and
+        # `keys` is exactly right. Unequal, and the number is for a different
+        # quantity than the words beside it.
+        if naming:
+            # `claimed` can be empty here — a caller may opt in without using
+            # one of the words — so the message names people generically rather
+            # than indexing a list that may have nothing in it.
+            said = claimed[0] if claimed else "people"
             fields = naming.split("+")
             counts = [people_in(v, fields) for v in data.values()
                       if isinstance(v, dict)]
@@ -106,7 +126,7 @@ def measure_metric(root, inst, spec, fail):
                      "only %d of those keys name anybody (naming=%s). Use "
                      "keys-naming:%s for the keys that do, or people:%s for "
                      "everyone named — %d of them."
-                     % (inst, spec["label"], len(data), claimed[0], naming_keys,
+                     % (inst, spec["label"], len(data), said, naming_keys,
                         naming, naming, naming, sum(counts)))
         return len(data)
     if metric == "features":
