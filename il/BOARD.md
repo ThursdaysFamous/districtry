@@ -44,6 +44,56 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-25. #1160 MERGED and verified on the merged tree — 397/305/3 for
+Illinois, the corrected figures, instrument green. PR B IS OPEN AS #1161 and it
+takes Illinois to EAM, the first instance to reach it.** Flagged at the top of
+its body rather than buried: every new row's `Last done` is `(never)`, the M bar
+asks for a row that names the file and states when it is re-checked, and these
+are that — so Illinois passes on the bar's own terms today. **If a plan nobody has
+executed should not count, the DEFINITION wants revisiting rather than the rows**,
+which is the operator's call; I would rather the letter be rejected than write
+dishonest rows to avoid claiming it.
+
+**The rows cite the runbook's exposure classes and a row may now name a CLASS**,
+which is the instrument change PR B needed and the brief did not anticipate:
+`watch_rows` read rows by FILENAME, so a plan for 101 county outlines would have
+been 101 lines restating one fact. A glob in backticks (`*-<suffix>.json`) with
+three guards, ALL NEGATIVE-TESTED — backticked so prose cannot match and a bare
+`*.json` is inexpressible, a six-character minimum suffix, and a FAIL when one
+pattern reaches more than a third of an instance's surface.
+
+**THE CEILING'S FIRST VERSION WAS NEARLY VACUOUS AND ITS OWN NEGATIVE TEST CAUGHT
+IT**, which is this board's own rule from Wisconsin this morning working on me:
+if you cannot say what would have made a check fail, it tested nothing. It
+counted what each pattern was LEFT after earlier rows claimed theirs, and the
+lookup breaks on the first match, so a blanket written below the narrow rows took
+only the leftovers and passed. Counted against the whole surface it reaches 139 of
+397 and fails.
+
+**TWO OF MY OWN CLAIMS WERE WRONG AND THE RUN CAUGHT BOTH.** The printed reach
+count showed `*-districts.json` at 43 rather than 38 — it also matches the
+congressional, legislative, Supreme Court, Board of Review and Chicago
+school-board maps, so my row had silently claimed **55 ILCS 5/2-3003, the
+county-board statute, for the congressional map**; split into three rows on the
+runbook's own classes. And **a `--check` proves a file matches its INPUTS and
+never that the inputs are current**, which corrects the board entry I wrote two
+hours ago: measured, `build_coverage_gaps.py --check` re-emits and compares,
+`build_county_board_offices.py --check` verifies against a fresh build, and
+`build_metro_outline.py --check` does neither — it reads the anchor registry.
+Three guarantees, none upstream, so all four derived files are in the table.
+
+**The CPS row is reworded to Adam's ruling** — reword rather than widen the
+vocabulary — and to a month SPAN rather than a month, because this file's own
+edition table records four publications from 24 August to 3 October. The manager's
+instruction said "the month", singular, and the file disproves it one line below
+the row; naming one month would be less true than what we already know. `Last
+done` and the 2026-09-03 half-run note untouched.
+
+**The precinct row is the weakest plan in the file and says so**: 38 of 46 layers
+are a Census 2020 snapshot, the ISBE tripwire closed with #1150, and the
+three-vendor replacement (34 + 13 + 17 counties) is smaller and not built. A
+calendar entry standing in for a detector, recorded as that.
+
 **2026-09-25. PR B's DESIGN is settled and it is smaller than the brief assumed:
 the rows CITE a clock that already exists rather than stating one.**
 `docs/REDISTRICTING_RUNBOOK.md` carries a per-layer blast-radius table with an
