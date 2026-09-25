@@ -40,6 +40,106 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-25. Stage 1 of the `WATCH.md` assignment: the 221 reproduces exactly,
+and the instrument that produced it understates by 86 files and reads the wrong
+path for this instance. Both corrections point the same way — there is more
+unplanned than the brief says, and the file to write is not `il/WATCH.md`.**
+
+**THE NUMBER IS RIGHT ABOUT WHAT IT MEASURES.** Re-derived without importing
+`build_eam_status.py` — a second reader over the same tree, because that module
+was corrected five times on the day it was written: **221 unplanned, 211
+boundary, 10 structure, 0 naming a person.** Identical on every figure. So this
+is not a sixth correction of the count, and the brief's headline holds: no
+officeholder is going stale here. I checked that harder than asked — the
+person test was run over all 410 files below, not the 221, and **no unplanned
+Illinois file carries a person-shaped record or a role-ish key.**
+
+**ITS SURFACE IS 310 OF THE 491 FILES THE APP ACTUALLY READS, and it misses them
+in the direction that hides work.** The surface test is "basename appears
+literally in `il/index.html`". Three loaders build their URL instead:
+
+- `il/index.html:6277` — `"data/app/" + slug + "-county-outline.json"`, the gaps panel's outline loader
+- `il/index.html:16227` — the same concatenation for the county-dispatched layers
+- `il/index.html:16243` — `"data/app/" + slug + "-library-districts.json"`
+
+so **86 shipped boundary files are invisible to it** (21 county outlines, 65
+library districts), and the 102 `il/data/app/population/*.json` files are served
+by prefix from a directory its glob does not descend into. Measured: **491 files
+the app reads, 81 under a cron or a watcher, 410 with no plan** — 297 boundary,
+113 structure, 0 people. This is the Wisconsin correction the brief cites,
+happening again in Illinois: a surface that misses the file the card is drawn
+on. **The fix is already in the tree and costs no regex — `il/sw.js` names all
+86**, because its URL lists are generated from the worksheet's `data_files`, so
+reading the surface from `sw.js` answers all 388 flat files exactly.
+
+**`il/WATCH.md` IS NOT A MISSING FILE. IT IS A FILE THREE SKILLS SAY MUST NOT
+EXIST, AND ILLINOIS'S WATCH CALENDAR IS THE ROOT ONE.** `expand/SKILL.md`:
+"Illinois's `WATCH.md`, `CLAUDE.md` and `README.md` are the root files; there is
+no `il/scripts/`, `il/WATCH.md` or `il/CLAUDE.md`". `new-layer/SKILL.md`: "a row
+in `WATCH.md` (root for Illinois, `<tag>/WATCH.md` elsewhere)".
+`boundary-change/SKILL.md`: "root `WATCH.md` for Illinois". `validate_skills.py`
+reads a path a skill names in order to say it is NOT there as the warning it is.
+The root file has carried a dated calendar since the metro era — the CPS drill,
+the early-voting refresh, 2029 Q4, 2031 Q2, the 2031 TIGERweb block roll,
+2031-2032 legislative, 2032-2033 municipal — and says so itself: "This file is
+CHI's." `build_eam_status.py` reads `<tag>/WATCH.md` for every state, so for
+Illinois it reads nothing. **Run its own row-reader over the root file and it
+accepts two of the 221 before a word is written** — `district-search.json` and
+`early-voting-sites.json` — so the true starting figure is **219**.
+
+**WHAT THE 410 ARE, in the classes a plan would name.** Eleven rows cover all of
+them; 221 rows would cover none, because nobody reads 221 rows.
+
+| n | class | what moves it | row shape |
+|---|---|---|---|
+| 103 | Census 2020 block population | the 2030 census, and nothing else until then | **already a root row** (2031 TIGERweb) — it names the folder, so add the file pattern |
+| 101 | county outlines (TIGER) | a county line changes by statute; the TIGER vintage rolls annually | one row: re-run `build_county_outline.py` at each vintage roll, same shape as the CD120→CD121 row |
+| 79 | library districts | annexation, continuously, from a publisher whose provenance is already recorded as weak | one row, annual — and the weakest row in the set |
+| 46 | precinct fabric | **a county clerk's own decision, any year** | **the one class a date cannot cover — see below** |
+| 35 | county board districts | decennial reapportionment, plus mid-decade redraws | one row: post-census, plus the off-cycle trigger the root file already has |
+| 17 | fire + park districts | annexation | one row, annual |
+| 6 | polling places | per election | one row, per-election, beside the early-voting row |
+| 5 | judicial subcircuits | the General Assembly; `validate_sources.py` already watches the two hosts monthly | one row, statutory |
+| 3 | legislative districts | enactment and court order | **already a root row by LAYER** — add the three filenames so the instrument can see it |
+| 4 | our own derived files (`metro-outline`, `coverage-gaps`, `municipal-ward-coverage`, `il-county-board-offices`) | our own tree; each has a CI `--check` | one row saying the gate is the plan |
+| 11 | the singletons (state outline, Belvidere's place outline, Macon's labels, Menard's commissioner districts, DeKalb's precinct-township table, the two statewide decennial sets, the two other board-district sets) | mixed | one row, or two |
+
+For scale: 307 of the 410 are floored by `validate_index.py` (which catches a
+file emptying, never a boundary moving) and 38 are in `validate_sources.py`'s
+monthly manifest (which catches a source going unreachable, never a source
+publishing something new).
+
+**ONE CLASS NEEDS A MACHINE RATHER THAN A DATE, AND ITS MACHINE IS WRITTEN AND
+SCHEDULED NOWHERE.** Of the 46 precinct files, **38 carry `pop2020`** — they are
+dissolved from the Census 2020 voting-district fabric, a snapshot that goes
+silently wrong the day a clerk consolidates, and `CLAUDE.md` records that
+happening three times (McDonough's drift, Christian re-precincting after 2020,
+Vermilion consolidating 84 census precincts to 38 current ones). The other 8 come
+from a county's own current layer and re-read themselves.
+`scripts/isbe_precinct_fabric.py` was built for exactly this: all 102 election
+authorities from one host, compared election-to-election rather than against the
+shipped layer, with the two normalisations measured. **The only thing any
+workflow runs is its `--selftest`** (`smoke-test.yml:994`), which proves the
+parser offline and asks the question of nobody. A cadence cell cannot substitute:
+a clerk consolidates when a clerk decides to, so this row's honest content is a
+scheduled comparison that opens an issue.
+
+**AND ONE READING I GOT WRONG, CAUGHT BY THE CODE RATHER THAN BY A GATE.** Eight
+county outlines ship for counties whose slug appears nowhere in `il/index.html`
+as a quoted string — Bureau, Champaign, Fayette, Jasper, Lawrence, Marion, Piatt,
+Pope, every one of them unserved — and I had them written down as dead files in
+the precache list. They are not. The loader's own comment at `il/index.html:6271`
+says why: "The `<slug>-county-outline.json` naming convention IS the contract
+here, so a gap can reference any county whose outline ships without this needing
+a per-county branch." The slug comes from `coverage-gaps.json`, and all eight are
+in gap records, so the gaps panel draws them. **A runtime slug can come from a
+DATA file, so "no code path can produce it" is not a conclusion a grep of the app
+can reach** — the same class as the concatenated-URL miss above, one step
+further out.
+
+**Nothing written yet, which is what stage 1 asked.** The one decision before the
+file gets built is in Open questions below.
+
 **2026-09-23, later. Adam said "merge 1125 then 1127". Both are in — `02abf6f`
 and `4a785724` — and getting the second one there cost three commits that are
 worth more than the change.**
@@ -939,6 +1039,47 @@ disagree on the clerk's first name — Jodie in the drafts, Kandi in the
 guidebook — and neither is guessed at.
 
 ## Open questions for Adam
+
+- **2026-09-25 — where Illinois's watch plan goes, and one fleet-wide
+  measurement fault it exposed. Neither is blocking; both want a yes before I
+  write the file.** Stage 1 of the assignment is in Status above.
+
+  **(1) The assignment says `il/WATCH.md`; three skills say that file must not
+  exist.** `expand/SKILL.md` names it as a path Illinois deliberately does not
+  have, `new-layer/SKILL.md` and `boundary-change/SKILL.md` both send an
+  Illinois row to the ROOT `WATCH.md`, and `validate_skills.py` treats a path a
+  skill names in order to say it is absent as the warning it is. The root file
+  is a real dated calendar and calls itself CHI's. Three courses:
+  **(a) extend the root file with the eleven class rows and teach
+  `build_eam_status.py` that Illinois's watch file is the root one** — one line
+  in the instrument (`docs` is already `.` for Illinois in
+  `generate_metro_files.INSTANCES`, so the convention is expressible), eleven
+  rows, nothing contradicted; **(b) create `il/WATCH.md`** — satisfies the
+  instrument untouched and leaves Illinois with two watch calendars and three
+  skills pointing at the other one, which is the two-readers-of-one-question
+  defect this repo has paid for repeatedly; **(c) move the root file to
+  `il/WATCH.md`** — one calendar again, but it contradicts the root-instance
+  convention that also governs `metro-worksheet.json`, `CLAUDE.md`, `README.md`
+  and `scripts/`, and needs three skills plus `validate_doc_counts.py` changed
+  in the same breath for no reader-visible gain. **I would take (a).**
+
+  **(2) The M bar's file surface misses most of the fleet's per-county files,
+  and Wisconsin's number is the one most wrong.** `build_eam_status.py` counts a
+  data file as part of an instance's surface when its basename appears literally
+  in that instance's `index.html`. Every instance fetches its per-county files
+  through a built URL instead (`"data/app/" + slug + "-county-outline.json"` and
+  friends), so measured today: **il misses 86 of 388, wi misses 215 of 262, ia
+  24 of 57, mi 31 of 53, ny 5, ca 1 — and in every instance 100% of the missed
+  files are named in that instance's `sw.js`**, whose URL lists are generated
+  from the worksheet. So the fix is to read the surface from the generated list
+  rather than from a regex over the app, and it needs no new file and no new
+  convention. **It will move four instances' published M column**, Wisconsin's
+  from 47 files measured to 262 plus its rosters — its "25 without a job" is
+  measured on 18% of its own data directory. **I would fix it in the same PR as
+  (1)**, because it is a root fleet script and Illinois runs from root, and
+  because leaving it means Illinois's own plan is written against a denominator
+  we know is wrong. Say otherwise and I will leave the instrument alone and note
+  the fault instead.
 
 - **The statewide library card credits the directory for a number the filing
   also publishes, on up to 138 cards.** `withLibraryOfficials` applies L2's
