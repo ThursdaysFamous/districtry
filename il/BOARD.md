@@ -40,6 +40,22 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-25. TWO CLAIMS I PUBLISHED THIS MORNING WERE FALSE, and `39210c7` is
+what made me re-check them — #1160.** I said `smoke-test.yml` has no
+`workflow_dispatch` (it has declared one since 2026-09-01) and that GitHub
+dropped a CI event for `3e5a487` (it did not). Both corrected below in the
+fourth pass's own paragraph, on #1150 in a comment, and in `CLAUDE.md` plus the
+steward skill so the next session gets the order right. The finding worth keeping
+is that **a real absence of checks is not automatically the expired PAT**: two
+pushes got no run, the two either side ran, and what separates them is that both
+silent heads conflicted with main while both that ran merged clean — four for
+four, measured with `git merge-tree`. The fix was the conflict, and merging main
+in is what made CI fire. `39210c7` ends a real absence at the token; #1160
+inserts the merge test ahead of it, ordered by branch kind, because a `bot/*`
+branch cut fresh from its run's SHA rarely conflicts and a session branch often
+does. **The method lesson is the one already on this board twice: an explanation
+that predicts nothing is a guess standing where a measurement was available.**
+
 **2026-09-25. #1150 IS MERGED and verified on the merged tree by content rather
 than from the PR body — eleven checks, all pass.** The BOM'd `Disallow: /` now
 refuses on main; the fixture ships with its BOM intact; ISBE's provenance entry
@@ -82,15 +98,30 @@ which is the remedy the drive-to-green rules name — and it conflicted on
 resolved by reading the diff, and all six other generated files were re-checked
 rather than trusted because the half that conflicts is the lucky half.
 
-**AND GITHUB DROPPED A CI EVENT, WHICH IS A STATE WORTH RECOGNISING.** `3e5a487`
-was in the PR's own commit list with the head moved, and **no run was created and
-the PR showed zero check runs for 35 minutes**, while another instance's PR got
-three runs off the same trigger in that window. `smoke-test.yml` has no
-`workflow_dispatch`, so there was nothing to dispatch, and an empty commit or a
-close-and-reopen is forbidden — correctly, but it means the only honest moves are
-to say so and to wait for a real push. **A HEAD WITH NO CHECKS READS EXACTLY LIKE
-A GREEN ONE at a glance**, which is the `BOT_PR_TOKEN` symptom `CLAUDE.md`
-already records, arriving this time on a human push rather than a bot's.
+**AND TWO PUSHES GOT NO CI RUN, WHICH WAS THE MERGE CONFLICT ABOVE AND NOT A
+DROPPED EVENT — CORRECTED 2026-09-25 as #1160.** This paragraph said "GITHUB
+DROPPED A CI EVENT", named one push, and asserted that `smoke-test.yml` has no
+`workflow_dispatch`. Every part of that is wrong. The file has declared
+`workflow_dispatch: {}` since 2026-09-01 (#650) — I read the `on:` block, found
+the two triggers I expected and stopped — and `39210c7` tells sessions to
+dispatch that very workflow, so the claim stood in contradiction to the rule.
+The absence covered TWO pushes (`3e5a487` at 08:27:02 and `94668fc` at 08:54:33)
+and was established the wrong way: my `actions_list` query passed
+`workflow_runs_filter`, which this build IGNORES, so it looked exhaustive and
+swept nothing. **Paged unfiltered and matched by `head_sha`, the four pushes
+split cleanly: the two silent heads CONFLICTED with main on
+`docs/ENDPOINT_INVENTORY.md` and the two that ran merged clean**, four for four
+under `git merge-tree --write-tree <head> <main's tip at that minute>`. A
+conflicted PR gives GitHub no merge ref to build a run against — that half is
+inference — but the remedy follows either way: merging main in is what made CI
+fire, so **the fix was the conflict, and the cause was in the paragraph directly
+above this one.** "GitHub dropped the event" explains nothing and predicts
+nothing, which is the tell that a guess has filled a gap where a measurement was
+available — the 79-of-100 failure one step removed. **A HEAD WITH NO CHECKS
+READS EXACTLY LIKE A GREEN ONE at a glance**, which stands; what changes is the
+order to test it in — a `bot/*` branch cut fresh from its run's own SHA rarely
+conflicts, so there `BOT_PR_TOKEN` is still first; a long-lived session branch
+often does, so there it is last.
 
 The reviewer's requested CLAUDE.md rule about enumerating the battery went into
 this PR rather than PR A, because this is where the mistake happened and the file
