@@ -29,6 +29,39 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-25. #1146 MERGED as `36eabe9`** (squash, so my `ee793fe` and
+`9f09864` are not on main as SHAs). **Verified on main by CONTENT rather than
+from the merge event**, and the 11 files are byte-identical to my branch head —
+the only difference either way is `wi/BOARD.md`, which main has 31 lines more of
+because my last board entry went straight there after the branch merged main in.
+
+Checked on main one claim at a time: Oconomowoc at COUSUBFP 59250 with `seats` 8,
+`vacantSeats {"01": 1}`, four districts and seven people, District 1 naming Karen
+Spiegelberg; the file at **31 municipalities, 265 districts, 292 people, 293
+seats**; the card's query reading `city.vacantSeats[String(alderid)]` and its
+render branch and wording present; smoke check 9 present; the worksheet's
+`applies` naming all four locally composed cities and `min_keys` at 31; the gap
+record at **54 counties** with Outagamie and Rock in and Door, Eau Claire,
+Jackson, Vilas and Winnebago out, and its summary reading thirty-one; the
+scraper's function, constant and COVERED entry with the queue comment down to
+**nine rows and not one shipped city left in it**; and wi/CLAUDE.md at THIRTY-ONE
+and 293 seats. The static battery re-run **on merged main: 100 of 100.** The PR
+subscription closed itself and I deleted the check-in.
+
+**WHAT A READER GAINED.** Seven more alderpersons named, in a city whose card
+said nothing before — and, for the first time in this instance, a district that
+names somebody and is still honest about being a seat short: "1 of 2 seats named
+— the city's own council directory lists the other as vacant."
+
+**THE OPEN ITEMS ARE UNCHANGED AND ONE IS NOW THREE.** The ungated-restatement
+family — the `applies` sentence, the gap record's county list, the scraper's queue
+comment — all three are a fact restated in prose beside the table that owns it,
+with nothing comparing them, and all three went wrong in the same three weeks.
+The remedy is the same each time and it is fleet-wide, not Wisconsin's. Beside
+them: the robots gate's churning unknown list, and the remaining nine of the 22
+(Cumberland, Hillsboro, Nekoosa, New Holstein, Westby, Wisconsin Dells,
+Greenwood, Montreal, and Waupaca measured-shut on its numbering offset).
+
 **2026-09-25, later. The hold on #1146 is fixed and pushed as `9f09864`,
 on a merge of `d2b3c43`.** The parenthetical was right to hold on and I measured
 it rather than taking the note: `LOCAL_COMPOSITION` holds FOUR cities — Appleton
