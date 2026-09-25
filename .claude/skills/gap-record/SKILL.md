@@ -140,6 +140,16 @@ require, which is what `generate_metro_files.py` is doing here. Then
 is deleted. The steward battery catches all three, so skipping them costs a
 cycle rather than a red CI; they are here so the cycle is not spent.
 
+**THE ORDER RULE IS NOT ABOUT THIS LIST.** `build_ia_gap_outlines.py` is the
+case this section happens to carry; the rule under it is general. A generator
+that READS a file must run AFTER every edit the change makes to that file,
+whether or not either one is in the gaps chain. On 2026-09-25 a change that
+registered a county in `ia/scripts/validate_sources.py` ran
+`build_endpoint_inventory.py` first, because this list is where the command
+sits — and the inventory reads that manifest, so it shipped drifted. Before
+running any generator here, ask what it reads and whether the change has
+finished editing it.
+
 **NAME THE SCRIPT, NEVER THE POSITION.** Every sentence here used to say "the
 last two", "the last three lines", "the last line above" — and this list GROWS,
 so each one silently came to mean a different command the next time it did. All

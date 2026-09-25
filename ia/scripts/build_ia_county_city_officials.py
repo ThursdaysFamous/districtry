@@ -19,6 +19,15 @@ the whole state. The answer was never a state office; it is the counties, one
 at a time, which is this project's own Knox lesson for the nth time: a level
 of government that has no answer is not evidence about the datum.
 
+SWEPT 2026-09-25, and that pass had missed one. All 99 counties were asked
+once, and ADAMS answers -- missed on 2026-09-05 for Jasper's reason a county
+over. That pass permuted hosts from each auditor's MAIL domain, and Adams'
+auditor mails from `adamscountyia.com` while the county publishes on
+`adamscounty.iowa.gov`, a host this repo's own data files already carried;
+sixteen counties differ that way. So THIRTEEN counties publish the page and TEN
+are current, naming 102 cities. The sweep is also the measured answer to "are
+there others": 99 asked, one more found, and it ships here.
+
 AND THE TWELFTH IS THAT LESSON AGAIN, ONE LEVEL DOWN. Jasper was very nearly
 recorded as unmeasurable: every host permuted from its auditor's MAIL domain
 failed, and `jaspercounty.iowa.gov` has no A record at all. Its site is
@@ -48,9 +57,9 @@ the next weekly run with nothing here to edit, and one that goes stale drops
 out the same way. This is the Mahaska posture from the board-chair roster:
 refusing loses a possibly-right answer, and that is the safe direction.
 
-WHAT THE 605 ACTUALLY ARE, SINCE "MAYOR, CLERK AND COUNCIL" UNDERSTATES IT
+WHAT THEY ACTUALLY ARE, SINCE "MAYOR, CLERK AND COUNCIL" UNDERSTATES IT
 ---------------------------------------------------------------------------
-487 council members, 98 mayors and 86 city clerk rows across 85 cities (Andrew
+507 council members, 102 mayors and 90 city clerk rows across 89 cities (Andrew
 publishes two) -- and 39 people who are none of those: 12 city administrators,
 10 city attorneys, 5 park commissioners, 5 park board members, 5 library
 trustees, a city manager and an administrative secretary.
@@ -61,17 +70,39 @@ card's block is headed CITY OFFICIALS and not a claim about who was elected.
 
 THE FLOOR IS EXPECTED TO FAIL, PERIODICALLY, BY DESIGN
 --------------------------------------------------------
-Exactly nine counties are current and MIN_COUNTIES is 9, so ONE county letting
+Exactly ten counties are current and MIN_COUNTIES is 10, so ONE county letting
 its page go stale fails this build -- not a collapse, one county. And every
-EVEN-YEAR JANUARY, when terms elected the previous November begin, all nine
+EVEN-YEAR JANUARY, when terms elected the previous November begin, all ten
 will briefly publish expired terms until each page is updated, so expect red
 for days or weeks each cycle. NEVER lower the floor to get past that: it is the
 only thing that makes a county quietly going stale visible.
 
+WHICH FIGURES HERE MOVE, WHICH MUST NOT, AND ONE THAT WAS NEVER RIGHT
+------------------------------------------------------------------------
+A figure tied to a DATE is history and must not move; a figure describing the
+file NOW has to track it. This docstring is a worked example of both halves,
+because when Adams joined on 2026-09-25 the word "nine" stood in five places
+and only two of them could change. The floor section above had to, since it
+restates MIN_COUNTIES fifty-five lines before a reader reaches the constant --
+and a docstring naming a constant reads as authoritative about it, which is
+what makes that copy the dangerous one. Three had to be left exactly as
+written: the 2026-09-05 paragraph is an account of what that sweep found, so it
+is appended to rather than rewritten; the currency signature names the nine
+counties whose four-year seats straddle 2027 and 2029, and Adams straddles 2028
+and 2030, so "ten" there would be FALSE; and the 2026-09-18 phone figure is
+dated, and survives anyway because Adams publishes no phone at all.
+
+The third kind has no date and was never right. This section's neighbour was
+headed "WHAT THE 605 ACTUALLY ARE" while its own body summed to 710 and the
+file shipped 710 officials in the same commit, so the count was wrong the day
+it was written and sat through two rebuilds unread. That is not drift, and it
+is why the heading now carries no number: nothing checks a count in a heading,
+and the ones that describe this file are measured where the build prints them.
+
 WHAT IS DELIBERATELY NOT CLAIMED
 ----------------------------------
 The seat ("Ward 3", "At Large") is carried where the county publishes it --
-104 of the 710 officials that ship, 117 across all twelve counties -- and no
+109 of the 738 officials that ship, 122 across all thirteen counties -- and no
 other Iowa source pairs a council member with a ward at all. It is NOT a district card and NOT geometry: this
 file names a person and the seat their own county says they hold, and the
 `city-ward` layer stays the three cities whose boundaries this app actually
