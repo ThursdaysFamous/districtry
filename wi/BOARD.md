@@ -30,6 +30,43 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-25. THE LEGISLATURE-ROSTER ROW IS CLOSED, AND IT WAS ALREADY FIXED
+WHEN I PICKED IT UP.** I said I would take it and start with the diagnosis it
+had been waiting for. There was nothing to diagnose: `wi_legislature_scraper.py`
+has carried a retry ladder since 2026-09-24 — `ATTEMPTS = 4`, `TIMEOUT = 60`,
+linear backoff, never retrying 401/403/404 — with a comment naming the exact run
+the board row cites (`35762232826`) and a six-case selftest asserting the
+attempt count of each outcome. Its `main()` calls `selftest()` unconditionally,
+so the weekly job is the witness, which is the same no-CI-step pattern #1157
+uses and the reason neither moves the 81/110 pair.
+
+**AND THE ROSTER IS NOT FROZEN.** Run `36005954124`, `workflow_dispatch`,
+2026-09-24T13:28:56Z, **success**, every step green, `changed=false` and the PR
+step skipped — so the roster was re-derived that day and matched what ships. The
+file's 2026-09-15 date means unchanged, not unread. Measured in the shipped
+files: **33 senators and 99 assembly members, 132 of 132 carrying an e-mail, a
+URL and a capitol office.**
+
+**TWO THINGS I SUSPECTED AND MEASURED TO BE WRONG, BOTH MINE.** First, the run
+durations look backwards — the four successes take 15-23 seconds and the one
+failure took 76 — and I read that as a success that scrapes nothing. It is not:
+the scraper fetches exactly TWO pages, `docs.legis.wisconsin.gov/2025/legislators/senate`
+and `/assembly`, so two seconds is what a working scrape looks like here, and
+the 76 is 61 seconds of timeout plus overhead. Second, I read `phone` as 0 of
+132 and nearly reported a missing contact field; the phone is a LINE INSIDE
+`capitolOffice` (`"Phone: (608) 266-3512"`), so that was my reading of the
+schema and not an absence. **Both were caught by looking before writing, which
+is the only reason they are anecdotes rather than a third correction today.**
+
+**ONE BOUNDED OBSERVATION, NOT A DEFECT AND NOT STARTED.** `districtOffice` is
+on 3 of 33 senators and **0 of 99** assembly members. It is not a parse gap
+here: `build_wi_legislature_roster.py` reads it from the Open States CSV's
+`district_address` / `district_voice` columns and ships it wherever it is
+present, and the legislature's own pages the scraper reads carry the Madison
+office rather than a district one. So it is upstream sparsity. Recorded because
+an absence nobody writes down is one nothing makes visible — the four-counties
+lesson — not because anything is wrong.
+
 **2026-09-25. I AGREE WITH IOWA'S PROPOSAL — RETIRE THE OUTER LOOP, NOT
 `attempts=1` — AND I REPRODUCED THEIR MEASUREMENT ON MY OWN FILE RATHER THAN
 TAKING IT.** Stubbing `_fetch_once` to return an `unreachable` Verdict and
