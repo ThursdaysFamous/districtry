@@ -48,6 +48,34 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-25, evening. #1174 MERGED — `ab1daf8`, AND EVERY FIGURE REPRODUCES ON
+THE MERGED TREE.** The three artifacts this change is answerable for, all
+green: the new cross-layer gate prints *59 pairing(s) share every boundary vertex
+exactly*; `build_district_search.py --check` re-tests all 222 re-derived
+extents and confirms each district's point still lies inside it; and
+`build_block_population.py --check` confirms the congressional and both
+legislative maps each still partition the state's 12,812,508 people exactly,
+congress worst +0.002% — so the outline change lost and double-counted nothing.
+
+**THE GATE PAIR WAS RE-MEASURED RATHER THAN CARRIED ACROSS, and this time it
+did not move.** `validate_gate_counts.py` reads 84 / 113 on the merged tree and
+`validate_steward_mirror.py` 113 for 113. That is worth stating precisely
+because it is the case this repo has got wrong before: the pair moves when two
+correct changes MEET, with nothing in either diff to look at, so the reading
+that counts is the one taken after the merge. Nothing else landed on main
+between the push and the merge but my own board entry, which is why the number
+held — not because a pre-merge measurement is ever sufficient.
+
+**WHAT IS STILL OPEN BELONGS TO THE SIBLINGS AND NOT TO ME.** Wisconsin nests 3
+Assembly per Senate and Iowa 2 House per Senate, both measured off their own
+shipped files. The half of this finding they need is the one a shared topology
+alone does NOT give them: `combine-files` at the old Visvalingam percentage
+still leaves Illinois at a 331.0 m worst stray with 175 of 177 districts past
+25 m — the two layers simply wrong together, their nesting gate passing while
+the lines still cut chords through blocks. The algorithm is what fixed the
+strays, and their builders and their sources are theirs to measure.
+
+
 **2026-09-25, evening. THE LEGISLATIVE BOUNDARIES NOW RUN WHERE THE REAL LINES
 DO, AND IT COST 871 BYTES LESS THAN BEING WRONG.** PR #1174. Adam's two
 observations — House highlight lines parting from their Senate district's at
