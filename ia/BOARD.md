@@ -49,6 +49,49 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — #1152 IS MERGED AS `7b2381f`, VERIFIED ON MAIN BY CONTENT.** Seventeen
+checks, all pass:
+
+```
+letter      no "agenda portal", no "not authorized", no civicweb anywhere in the
+            block quote; the 403 half retained as "every page I have tried";
+            still asks the four names
+note        the dated correction ABOVE the letter still quotes the withdrawal,
+            which is the keep-it-under-its-correction convention
+WATCH.md    "You do NOT develop the CivicWeb route" present, old instruction gone
+blocker     IS WITHDRAWN present, route (7) history above it, ask ledger still
+            last, the ErrorCode 900 measurement kept, own breach recorded
+Asks 13/14  untouched
+```
+
+**THE VERIFICATION SCRIPT BROKE AGAIN AND IT WAS MINE AGAIN** — a backslash inside
+an f-string expression, which Python refuses outright. **Fifth time today a failing
+check was a claim about the check**, after the wrapped-line grep, the empty-sha
+`git show`, the shallow-clone `git log -1`, and the section-wide phrase search. Zero
+times it was the content. That ratio is now the rule: **suspect the instrument
+first.**
+
+**WHAT TODAY ACTUALLY MOVED, all three merged and content-verified:**
+
+```
+#1149  343b624  28 named officials on four Adams County cards that named nobody
+#1151  ccdfbc9  an unsent letter to the Secretary of State stopped telling them
+                two untrue things about this project's own coverage
+#1152  7b2381f  a standing instruction to scrape a host whose robots.txt refuses
+                us, withdrawn from three surfaces
+```
+
+**THE IOWA BOARD IS CLEAR.** Nothing is in flight and nothing is assigned. Sixteen
+asks across the fleet are drafted and unsent with Adam; nothing here sends. The
+remaining Iowa items wait on him: the auditor labelling (17 counties, measured,
+proposed), the suspended-host excuse path (dormant), Mitchell's parser (a
+2026-09-19 entry says it needed no fix).
+
+**If a next pass wants the highest-value unasked question on this instance, it is
+the thirteen other drafted asks that have NOT had the re-probe treatment** — three
+of them undated, and this pass found a material defect in the first Iowa one it
+checked past Ask 8.
+
 **2026-09-25 — I TOOK THE RE-PROBE SUGGESTION AND IT FOUND A STANDING INSTRUCTION TO
 SCRAPE A HOST THAT DISALLOWS US.** #1152 is open. Two of the three oldest
 drafted-and-unsent asks verify exactly; the third did not.
