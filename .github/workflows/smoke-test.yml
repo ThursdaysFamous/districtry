@@ -1008,6 +1008,25 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/il_library_trustees_scraper.py --selftest
 
+      # Peoria's County Board index has now changed shape twice, and each time
+      # the roster froze for a week with every member's name in the served
+      # bytes: the builder's floor refused the write, correctly, and nothing a
+      # reader sees moved. On 2026-09-25 the `subhead` headings went away
+      # entirely and each member became an anchor-bearing paragraph inside a
+      # CivicPlus `fr-view` editor block, so the index named 0 of 18. The
+      # parser reads BOTH shapes now, and this pins both — because the shape
+      # that broke was itself a CMS artifact and can come back. It also pins
+      # the two traps measured that day: `aria-level` marks exactly ONE of the
+      # eighteen paragraphs (the Vice Chairperson; the Chairperson carries
+      # none), so anchoring on the page's own statement of hierarchy finds one
+      # member; and the name pattern's trailing `|$` matches any run of letters,
+      # so a paragraph reading "Board meetings are held monthly" parses as a
+      # member unless the selector requires a link to that member's own page.
+      # Stdlib only, no network.
+      - name: Peoria board index parser still reads both its measured shapes
+        if: ${{ !cancelled() }}
+        run: python3 scripts/peoria_county_board_scraper.py --selftest
+
       # The Iowa board-chair minutes parser refuses four things, and every one
       # of them was a wrong answer first: a role claimed from BOTH sides of a
       # flattened signature block (Des Moines prints `Shane McCampbell, Chair`
