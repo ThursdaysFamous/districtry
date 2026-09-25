@@ -46,6 +46,27 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-25. #1163 IS MERGED as `5a86c78` and verified on the merged tree by
+content — all four facts hold.** `validate_officeholder_names.py` prints
+`declared il/data/app/school-board-members.json +19 record(s) (2026-09-25)` and
+`il 8155`; the two `audit_declared` negative tests still fail, one on a declared
+path that names no file on the tree and one on `congress-roster.json`, whose
+declaration the gate refuses with "the declaration admits 17 record(s) and the
+walk already reached 17, so it adds nothing". Chicago's twenty elected school
+board seats are gated for the first time. The docstring's stale 1,592 is
+corrected, and the correction was made twice: 1,175 counts the nineteen this PR
+admits, and the remainder a reader wants is **1,156**.
+
+**THOSE 1,156 ARE LEFT UNDECLARED ON PURPOSE AND THIS IS WHERE THAT IS WRITTEN
+DOWN.** They are `wi/county-board-members.json` (1,096), `ny/council-members.json`
+(51), `wi/mpd-district-captains.json` (7) and `wi/wi-municipal-executives.json`
+(2) — every one of them a file whose shape belongs to a sibling session's state.
+A declaration is a claim that a path's records are people, and the mechanism only
+works if the person declaring has read the file's own shape; declaring four
+files across two instances I do not own would have put my reading of them into a
+gate that fails on somebody else's branch. The mechanism is there and the entry
+is four lines of `PERSON_PATHS` per file whenever those sessions want it.
+
 **2026-09-25. #1161 IS MERGED as `80f98c6` and verified on the merged tree by
 content — five checks, all pass.** `docs/EAM_STATUS.md` reads `il | EAM`; the nine
 class globs print their reach per pattern; `--selftest` prints 12 cadence cells,
