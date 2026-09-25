@@ -58,6 +58,7 @@ claims that must not be collapsed:
 import datetime
 import json
 import os
+import re
 import sys
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -345,6 +346,77 @@ def _city(members, districts=None, municipality="Testville", vacant=None,
     return c
 
 
+QUEUE_ANCHOR = "QUEUE ROWS FOLLOW"
+QUEUE_ROW = re.compile(r"^#\s{2,}(\S.*?\S)\s{2,}C \d+\s+https?://\S+\s*$", re.M)
+QUEUE_EMPTY = re.compile(r"^#\s{2,}QUEUE EMPTY\s*$", re.M)
+
+
+def check_queue_against_floors():
+    """No city the queue still lists may be one this builder already floors.
+
+    THE DEFECT THIS CATCHES SHIPPED FOR WEEKS. wi_alderperson_scraper.py keeps a
+    comment listing the councils nobody has built yet, with the page a 2026-09-05
+    sweep scored, so the next pass starts from a measurement rather than
+    repeating it. The rule beside it said an address leaves the queue in the
+    change that starts FETCHING it, and nothing said the reverse -- so the rows
+    stayed after their cities shipped, and on 2026-09-25 nine of its eighteen
+    rows named councils already in the roster. A queue that lists what shipped is
+    not a queue; it is a list telling the next pass to redo finished work.
+
+    A CHECK RATHER THAN A DERIVATION, and that was measured rather than assumed.
+    The obvious fix is to generate the queue from FLOORS's complement, and it
+    cannot be done: a queue row carries a NAME, a council size and a URL, while a
+    FLOORS entry is (name, districts, four floors) with NO URL anywhere. The
+    complement can say which cities remain; it cannot produce the row a reader
+    needs. So the queue stays authored and this compares it.
+
+    IT MUST NOT BE ABLE TO PASS VACUOUSLY, which is the whole risk in reading a
+    comment: reformat the block and zero rows parse, and a silent pass looks
+    exactly like a clean queue. So the anchor line must be present, and rows must
+    parse unless the block says EMPTY -- which is how the end state gets recorded
+    when the last city ships, rather than by deleting the block and leaving this
+    with nothing to read.
+    """
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                        "wi_alderperson_scraper.py")
+    with open(path, encoding="utf-8") as f:
+        src = f.read()
+    if QUEUE_ANCHOR not in src:
+        raise SystemExit(
+            "queue check: %r is gone from wi_alderperson_scraper.py, so this "
+            "check has nothing to read. Restore the anchor above the queue rows "
+            "or retire this check deliberately." % QUEUE_ANCHOR)
+    tail = src.split(QUEUE_ANCHOR, 1)[1]
+    rows = [m.group(1).strip() for m in QUEUE_ROW.finditer(tail)]
+    if not rows:
+        # THE SENTINEL IS A WHOLE LINE, and the first draft made it a substring
+        # -- which matched the INSTRUCTION telling an author to write it, four
+        # lines above where the rows are. So the check read its own
+        # documentation as the recorded end state and passed on a queue it could
+        # not see, which the negative test for exactly this case caught. A probe
+        # that can read its own declaration is measuring itself; this one wants a
+        # line that is the sentinel and nothing else, which no sentence about it
+        # can be.
+        if not QUEUE_EMPTY.search(tail):
+            raise SystemExit(
+                "queue check: the anchor is there and no queue row parsed. "
+                "Either the block was reformatted -- in which case this check "
+                "was about to pass on a queue it could not see -- or the last "
+                "city shipped, and that is recorded by putting a line reading "
+                "QUEUE EMPTY and nothing else where the rows were.")
+        print("  queue check: the queue is EMPTY and says so")
+        return []
+    shipped = {name for name, _d, _a, _b, _c, _e in FLOORS.values()}
+    stale = sorted(set(rows) & shipped)
+    if stale:
+        raise SystemExit(
+            "queue check: wi_alderperson_scraper.py still queues %d city/cities "
+            "this builder already floors -- %s. A row leaves the queue in the "
+            "same change that ships its city, the same step as adding its "
+            "constant." % (len(stale), ", ".join(stale)))
+    return rows
+
+
 def selftest():
     """Drive check_city with fixtures, one per count the list shape moved.
 
@@ -464,6 +536,11 @@ def selftest():
     want_fail("vacantSeats given zero", one, 2, (2, 0, 0, 0),
               {"01", "02"}, "whole number", vacant_seats={"01": 0})
 
+    # THE QUEUE IS PART OF THE SELFTEST rather than a separate step, for the
+    # reason main() gives about running selftest() on every build: a check with
+    # no caller is one that stops running the week somebody forgets it.
+    queued = check_queue_against_floors()
+
     if bad:
         for line in bad:
             print("  FAIL %s" % line)
@@ -472,7 +549,8 @@ def selftest():
     # COUNTED, never stated: an early draft of this line said 11 where ten cases
     # ran, which is the defect the rest of this file exists to prevent. It has
     # not been restated since, and this comment deliberately names no total.
-    print("selftest: %d case(s), 0 failures" % len(ran))
+    print("selftest: %d case(s), 0 failures; %d queued city/cities, none already "
+          "floored" % (len(ran), len(queued)))
 
 
 def main():
