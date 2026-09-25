@@ -31,6 +31,43 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-25. #1157 MERGED (`dcd3687`), AND #1158 HAD ALREADY DONE THE WORK I
+AGREED TO AN HOUR EARLIER.** Verified #1157 on main by content rather than from
+the merge event: `check_queue_against_floors` and the `QUEUE ROWS FOLLOW` anchor
+are both there, and `THE REMAINING NINE` survives only as a quotation inside the
+sentence explaining what the heading used to say, which is the correction-in-place
+posture working. Then `acafd1d` (#1158) turned out to be on main too, retiring
+BOTH outer robots loops — Iowa's and mine.
+
+**BOTH OF THE THINGS I FLAGGED WERE CARRIED**, and one better than I proposed.
+The `co.forest.wi.gov` cause comment moved to the `fetch_verdict` call site. The
+paragraph arguing `fetch_bytes`'s ladder is bounded now says "`unreachable` is
+re-asked `rp.RETRY_ATTEMPTS` times", with a note that the constant moved and the
+argument did not. And where my board entry only observed that the retired copy
+was the untested one, #1158 made it tested: the selftest stubs the reader, asks
+for a host that never answers, and asserts the read COUNT. **I negative-tested
+that rather than trusting it** — reinstating the loop fails `9 of 3` and exits 1,
+and the file was restored from a copy taken first.
+
+**A THIRD SENTENCE SURVIVED AND IS NOW #1159.** `_robots_verdict`'s docstring
+gave two reasons for not using `RobotsGate`: one User-Agent against this file's
+two, still true, and that "the retry below would have to reach into a gate's
+private cache to discard a verdict it wants to re-ask". There is no retry below
+any more. **A grep for the constant could not have found it**: the two sentences
+#1158 moved both NAME `ROBOTS_RETRIES`, while this one names what the loop DID,
+in the present tense. That is the generalisation worth keeping — **when a
+mechanism is retired, search for what it does as well as for its name** — and it
+is an addition rather than a correction, since #1158 claimed the constant's
+definition was gone and its history preserved, which is exactly what it did.
+
+**WHICH WAY IT MISLEADS IS WHY IT IS WORTH A CHANGE AT ALL.** It tells a reader
+arriving at that function that the function retries; the likeliest repair for a
+reader who then cannot find the retry is to put one back, which is the exact
+defect #1158's new assertion guards. A comment that invites the failure the gate
+below it catches is worse than one merely out of date. Comment only, nothing a
+reader downloads changes, four scraper selftests green (16/17/12/15) and 100 of
+100 static invocations, 0 failed.
+
 **2026-09-25. THE LEGISLATURE-ROSTER ROW IS CLOSED, AND IT WAS ALREADY FIXED
 WHEN I PICKED IT UP.** I said I would take it and start with the diagnosis it
 had been waiting for. There was nothing to diagnose: `wi_legislature_scraper.py`
