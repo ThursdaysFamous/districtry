@@ -38,5 +38,7 @@
     },
     cleanPoiAddress: cleanPoiAddress, // exposed so the smoke test can regression-guard the office-pin address cleaner (a recurring break point) without any network call
     splitBaseStyle: splitBaseStyle, // exposed so the smoke test can hold the ground/labels split and the street-name restyle to a fixture, with no CARTO fetch
+    matchBoundaryStreets: matchBoundaryStreets, // exposed so the smoke test can hold the boundary-street matcher to a fixture, with no CARTO fetch
+    boundaryStreets: function () { return { on: boundaryStreetsOn, available: !!baseLabels, names: boundaryStreetNames }; }, // which street names the boundary-street layer is showing, and their colours
     basemap: function () { return { kind: districtryTileKind, vector: baseIsVector, labels: !!baseLabels }; } // which basemap kind is live + which theme style it shows — the vector canvas has no tile <img> whose src a test could read
   };
