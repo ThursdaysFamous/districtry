@@ -75,17 +75,33 @@ reader.** The 540 per-file notes are the larger pool and the wrong first target,
 for the floor-versus-count reason above.
 
 **AND A DATE DOES NOT MAKE A FIGURE HISTORICAL — measured after your wake
-named the shape, and it corrects the exclusion I had written.** Ten of those 309
-fields carry a figure in the same clause as a date, six of them Michigan's.
-Michigan's `applies` says "statewide, all 1,581 records … measured 2026-09-04":
-the date is PROVENANCE, the figure describes the file NOW, and the day that file
-gains a record the sentence is wrong about the product — so it SHOULD track. A
-history entry's "through tranche 7 (2026-09-19)" describes a COMPLETED EVENT and
-must never move. Both put a number and a date in one clause and **no pattern
-separates them**; the claim's author always can. That is a third independent
-argument for a declaration, and it is the one my own first draft would have got
-wrong — I had excluded by "a date is nearby", which would have exempted six live
-Michigan claims from a gate they belong in.
+named the shape, then RE-MEASURED after review found my measurement did not say
+what my sentence said.** Michigan's `applies` reads "statewide, all 1,581 records
+… measured 2026-09-04": the date is PROVENANCE, the figure describes the file
+NOW, and the day that file gains a record the sentence is wrong about the product
+— so it SHOULD track. A history entry's "through tranche 7 (2026-09-19)"
+describes a COMPLETED EVENT and must never move. No pattern separates the two;
+the author always can. That much stands.
+
+**WHAT DID NOT, AND IT WAS WRONG IN BOTH DIRECTIONS THE SAME WAY MY OWN FINDINGS
+ARE.** I wrote that ten fields "carry a figure in the same clause as a date".
+Measured: **ten carry a dated CLAUSE — ia 2, mi 6, wi 2 — and ZERO of those
+clauses contain a figure.** Every one is a bare date stamp; the figure it is
+provenance for sits elsewhere in the same field, and nine of the ten fields state
+one anywhere at all. The tenth, `wi/layers[27].source.people`, states its count
+as the WORD "One ghost record" and carries no digit at all. **So the argument is
+stronger than I made it**: a digit pattern cannot locate the figure-and-date
+pairing at all, and misses a count spelled as a word, before it ever reaches the
+question of provenance against history.
+
+**AND I NAMED TWO INSTANCES OF THREE, OMITTING MY OWN.** The report said six
+Michigan and two Iowa and that "nothing in either instance is touched" — and
+**Wisconsin has two**, `layers[18].source.people` and `layers[27].source.people`.
+That section is what routes the follow-up, so as written Michigan and Iowa were
+told to declare and Wisconsin's two went unfixed. The cause is the shape this
+whole PR is about: `target_surface()` returned a count and a FOUR-ROW SAMPLE, so
+the split was invisible in the script's own output. It prints the per-instance
+split now, and no sample.
 
 **TWO OF MY THREE FINDINGS ARE NOT IN THIS MECHANISM AT ALL, and saying so is
 part of the report.** The gap record's county list is a LIST derived from two

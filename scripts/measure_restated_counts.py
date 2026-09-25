@@ -201,7 +201,7 @@ TARGET_FIELD = re.compile(r"layers\[\d+\]\.source\.(people|applies|answers)$")
 
 
 def target_surface(root):
-    """The reader-facing surface a gate would walk, and its date-tied members.
+    """The reader-facing surface a gate would walk, and its dated members.
 
     TWO THINGS THAT LOOK ALIKE AND ARE NOT, which is the distinction a gate
     could most easily get wrong. Michigan's `applies` says "statewide, all 1,581
@@ -209,14 +209,32 @@ def target_surface(root):
     describes the file NOW, so the day the file gains a record that sentence is
     wrong about the product and a gate should say so. A history entry's
     "through tranche 7 (2026-09-19)" describes a COMPLETED EVENT, and holding it
-    to today's file would demand the one edit that design forbids.
+    to today's file would demand the one edit that design forbids. No pattern
+    separates those two; a claim's author always can.
 
-    Both carry a date in the same clause as a number. No pattern separates them,
-    which is a third independent argument for a declaration: a claim's author
-    knows which of the two they are writing and a regex never will.
+    AND THE PATTERN CANNOT EVEN FIND THE PAIRING, which is worse than the first
+    draft of this function claimed and is a stronger argument for declaring.
+    DATED_CLAUSE finds a dated clause and never requires a figure inside it:
+    measured, ZERO of the ten matches contain one — every match is a bare date
+    stamp ("measured 2026-09-04", "as of 2026-09-12") while the figure it is
+    provenance FOR sits elsewhere in the same field. So the honest reading is
+    three numbers, not one, and they are returned separately rather than
+    collapsed into a sentence.
+
+    A COUNT SPELLED AS A WORD IS INVISIBLE HERE TOO. The tenth field states
+    "One ghost record", so it carries a dated clause and no digit at all -- a
+    fourth way a digit pattern misses this corpus.
+
+    RETURNS the surface size and three per-instance Counters, because the split
+    is what routes the follow-up and a four-row sample hid it: this function's
+    own caller reported six Michigan and two Iowa of ten and omitted Wisconsin's
+    two, on a change whose whole subject is a reader that cannot see what it is
+    reporting.
     """
-    fields = dated = 0
-    examples = []
+    fields = 0
+    dated = collections.Counter()
+    figure_in_clause = collections.Counter()
+    figure_in_field = collections.Counter()
     for tag, rel in sorted(INSTANCE_WORKSHEETS.items()):
         with io.open(os.path.join(root, rel), encoding="utf-8") as fh:
             worksheet = json.load(fh)
@@ -225,11 +243,17 @@ def target_surface(root):
                 continue
             fields += 1
             hit = DATED_CLAUSE.search(text)
-            if hit:
-                dated += 1
-                if len(examples) < 4:
-                    examples.append((tag, field, hit.group(0), text[:96]))
-    return fields, dated, examples
+            if not hit:
+                continue
+            dated[tag] += 1
+            before_date = hit.group(0).rsplit(hit.group(2), 1)[0]
+            if NUMBER.search(before_date):
+                figure_in_clause[tag] += 1
+            elsewhere = re.sub(r"20\d\d(?:-\d\d-\d\d)?", " ", text)
+            if [n for n in NUMBER.findall(elsewhere)
+                    if int(n.replace(",", "")) >= 2]:
+                figure_in_field[tag] += 1
+    return fields, dated, figure_in_clause, figure_in_field
 
 
 def main():
@@ -281,25 +305,38 @@ def main():
     print("  case FOR a declaration and against a sweep, on a corpus thirty times")
     print("  the one validate_gap_counts.py measured settling the same question.")
 
-    fields, dated, examples = target_surface(args.root)
+    fields, dated, in_clause, in_field = target_surface(args.root)
     with_candidates = sum(1 for r in kept if TARGET_FIELD.search(r["field"]))
+    def split(counter):
+        return ", ".join("%s %d" % (k, counter[k]) for k in sorted(counter)) or "none"
     print("\nTHE TARGET SURFACE — the three reader-facing source strings, which")
     print("render into every instance's sources.html matrix and Dataset graph")
     print("  %d fields in all; %d of them carry a candidate a gate could be told"
           % (fields, with_candidates))
-    print("  about, which is the number of declarations, not the number of fields.")
-    print("  %d carry a figure in the same clause as a DATE:" % dated)
-    for tag, field, clause, text in examples:
-        print("    %-3s %-40s %r" % (tag, field.split(".", 1)[-1], clause))
-        print("        %s" % text)
-    print("\n  AND A DATE DOES NOT MAKE A FIGURE HISTORICAL. Michigan's `applies`")
-    print("  says \"all 1,581 records ... measured 2026-09-04\": the date is")
-    print("  PROVENANCE, the figure describes the file NOW, and the day that file")
-    print("  gains a record the sentence is wrong about the product. A history")
-    print("  entry's \"through tranche 7 (2026-09-19)\" describes a COMPLETED")
-    print("  EVENT and must never move. Both put a number and a date in one")
-    print("  clause; no pattern tells them apart, and the claim's author always")
-    print("  can. That is the third independent argument for a declaration.")
+    print("  about, which is the number of declarations and not of fields.")
+    print("\n  THE SPLIT IS PRINTED, NOT SAMPLED, because it is what routes the")
+    print("  follow-up and a four-row sample hid it — this script's own report")
+    print("  named two instances of three and omitted the third, which was its")
+    print("  author's own.")
+    print("    fields carrying a dated clause        %-22s total %d"
+          % (split(dated), sum(dated.values())))
+    print("    ...with a figure INSIDE that clause   %-22s total %d"
+          % (split(in_clause), sum(in_clause.values())))
+    print("    ...stating a figure anywhere at all   %-22s total %d"
+          % (split(in_field), sum(in_field.values())))
+    print("\n  A DATE DOES NOT MAKE A FIGURE HISTORICAL. Michigan's `applies` says")
+    print("  \"all 1,581 records ... measured 2026-09-04\": the date is PROVENANCE,")
+    print("  the figure describes the file NOW, and the day that file gains a")
+    print("  record the sentence is wrong about the product. A history entry's")
+    print("  \"through tranche 7 (2026-09-19)\" describes a COMPLETED EVENT and must")
+    print("  never move. No pattern separates the two; the author always can.")
+    print("\n  AND THE PATTERN CANNOT EVEN FIND THE PAIRING: not one dated clause")
+    print("  contains the figure it is provenance for — every match is a bare date")
+    print("  stamp and the number sits elsewhere in the field. One field states")
+    print("  its count as the WORD \"One\" and carries no digit at all. So a digit")
+    print("  pattern misses this corpus in two further ways before it ever reaches")
+    print("  the question of provenance against history, which is why the subject")
+    print("  has to be declared rather than found.")
 
 
 if __name__ == "__main__":
