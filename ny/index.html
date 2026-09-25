@@ -2547,11 +2547,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .hover-popup { pointer-events: none; }
   /* ...and for EVERY part of it, not only the box: Leaflet's own stylesheet
      sets `pointer-events: auto` on .leaflet-popup-tip, which a parent's none
-     does not override. When the card flips below the cursor the tail points
-     up at exactly the cursor, so it took the click the map was meant to get
-     (2026-09-25). */
+     does not override (2026-09-25). */
   .hover-popup *,
   .hover-popup .leaflet-popup-tip { pointer-events: none; }
+  /* No tail. The card follows the cursor, so a tail pointing at it says
+     nothing the position does not, and flipped below the cursor it sat on
+     the cursor itself (2026-09-25). fenceHoverPopup keeps the card clear of
+     the cursor instead. */
+  .hover-popup .leaflet-popup-tip-container { display: none; }
   .hover-popup .leaflet-popup-content-wrapper {
     background: #fff;
     color: #111827;
@@ -2561,26 +2564,6 @@ svg.leaflet-image-layer.leaflet-interactive path {
     padding: 0;
   }
   .hover-popup .leaflet-popup-content { margin: 0; width: 324px; line-height: 1.3; }
-  .hover-popup .leaflet-popup-tip {
-    background: #fff;
-    box-shadow: none;
-    border-right: 1px solid rgba(0, 0, 0, 0.08);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  }
-  /* Flipped below the cursor when there isn't room above (see fenceHoverPopup).
-     The tail moves to the top edge and points up — the two borders that were
-     the outer sides pointing down become the other two. Only the tail moves:
-     `.leaflet-popup`'s own margins are deliberately NOT swapped, so the card's
-     geometry is identical in both modes and fenceHoverPopup can measure once
-     and correct once. The unused 20px below is bare margin — nothing renders
-     there. */
-  .hover-popup.hover-below .leaflet-popup-tip-container { top: -19px; }
-  .hover-popup.hover-below .leaflet-popup-tip {
-    border-right: 0;
-    border-bottom: 0;
-    border-left: 1px solid rgba(0, 0, 0, 0.08);
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
-  }
 
   /* One row per containing layer, broad→granular. The layer name is the grey
      LABEL and the officeholder is the primary line — the reverse of the old
@@ -3707,15 +3690,6 @@ svg.leaflet-image-layer.leaflet-interactive path {
     color: var(--ink);
     border-color: rgba(236, 233, 244, 0.12);
     box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7), 0 1px 3px rgba(0, 0, 0, 0.5);
-  }
-  [data-theme="dark"] .hover-popup .leaflet-popup-tip {
-    background: var(--panel);
-    border-right-color: rgba(236, 233, 244, 0.12);
-    border-bottom-color: rgba(236, 233, 244, 0.12);
-  }
-  [data-theme="dark"] .hover-popup.hover-below .leaflet-popup-tip {
-    border-left-color: rgba(236, 233, 244, 0.12);
-    border-top-color: rgba(236, 233, 244, 0.12);
   }
   [data-theme="dark"] .hover-row { border-bottom-color: rgba(236, 233, 244, 0.07); }
   [data-theme="dark"] .hover-dot-ring { background: var(--panel); border-color: rgba(236, 233, 244, 0.3); }
@@ -12813,13 +12787,14 @@ function initNycExplorer() {
     if (hoverPopup) hoverPopup.close(); // idempotent; removes it from the map if open
   }
 
-  // Leaflet's reserved tail strip (.leaflet-popup margin-bottom), the breathing
-  // room kept from the map edge, and how far the tail stays clear of the card's
-  // rounded corners.
+  // Leaflet's reserved tail strip (.leaflet-popup margin-bottom; the tail
+  // itself is hidden, so above the cursor this is bare space), the breathing
+  // room kept from the map edge, and how far below the cursor a flipped card
+  // starts — far enough to clear the pointer graphic, which hangs down and to
+  // the right of its hotspot, so the card never sits under the cursor.
   var HOVER_TIP = 20;
   var HOVER_EDGE = 8;
-  var HOVER_TAIL_INSET = 16;
-  var HOVER_TAIL_HALF = 20; // half of Leaflet's 40px tail container (its centering margin)
+  var HOVER_BELOW_GAP = 36;
   var HOVER_WIDTH = 324;    // the card width; must match .hover-popup .leaflet-popup-content
   var HOVER_OFFSET_X = 0;
   var HOVER_OFFSET_Y = -4;
@@ -12827,9 +12802,8 @@ function initNycExplorer() {
   // Keep the popup inside the map viewport. autoPan stays off by design —
   // panning the map during a hover would move the very thing being inspected,
   // and the popup follows the cursor, so it would chase itself — so instead of
-  // moving the MAP this moves the POPUP: clamp it horizontally, flip it below
-  // the cursor when there isn't room above, and slide the tail back so it still
-  // points at the spot being read.
+  // moving the MAP this moves the POPUP: clamp it horizontally, and flip it
+  // below the cursor when there isn't room above.
   //
   // Measured rather than computed from the anchor: Leaflet's own placement
   // already accounts for the tail strip, zoom animation and content size, so
@@ -12854,21 +12828,12 @@ function initNycExplorer() {
     var needed = box.height + HOVER_TIP + HOVER_EDGE;
     var below = (anchorY - frame.top) < needed && (frame.bottom - anchorY) > (anchorY - frame.top);
     var dy = 0;
-    if (below) dy = (anchorY + HOVER_TIP) - box.top;
+    if (below) dy = (anchorY + HOVER_BELOW_GAP) - box.top;
     else if (box.top < frame.top + HOVER_EDGE) dy = (frame.top + HOVER_EDGE) - box.top;
 
     el.classList.toggle("hover-below", below);
     hoverPopup.options.offset = L.point(HOVER_OFFSET_X + dx, HOVER_OFFSET_Y + dy);
     hoverPopup.update();
-
-    // The tail is centered on the popup, so a horizontal clamp drags it off the
-    // cursor; shift it back by the same amount, stopping short of the corners.
-    var tail = el.querySelector(".leaflet-popup-tip-container");
-    if (tail) {
-      var reach = Math.max(0, box.width / 2 - HOVER_TAIL_INSET);
-      var shift = Math.max(-reach, Math.min(reach, dx));
-      tail.style.marginLeft = (-HOVER_TAIL_HALF - shift) + "px";
-    }
   }
 
   function showHover(latlng, content) {

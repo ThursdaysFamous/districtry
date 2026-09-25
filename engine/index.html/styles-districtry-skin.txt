@@ -975,15 +975,6 @@
     border-color: rgba(236, 233, 244, 0.12);
     box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7), 0 1px 3px rgba(0, 0, 0, 0.5);
   }
-  [data-theme="dark"] .hover-popup .leaflet-popup-tip {
-    background: var(--panel);
-    border-right-color: rgba(236, 233, 244, 0.12);
-    border-bottom-color: rgba(236, 233, 244, 0.12);
-  }
-  [data-theme="dark"] .hover-popup.hover-below .leaflet-popup-tip {
-    border-left-color: rgba(236, 233, 244, 0.12);
-    border-top-color: rgba(236, 233, 244, 0.12);
-  }
   [data-theme="dark"] .hover-row { border-bottom-color: rgba(236, 233, 244, 0.07); }
   [data-theme="dark"] .hover-dot-ring { background: var(--panel); border-color: rgba(236, 233, 244, 0.3); }
   [data-theme="dark"] .hover-row-label,
