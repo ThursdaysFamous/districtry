@@ -50,6 +50,57 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — THE DOUBLE-RETRY IS MEASURED. PROPOSAL BELOW; NOTHING BUILT.**
+
+**The 9 reproduces.** Stubbing `_fetch_once` and counting, with the backoff zeroed so
+the number is attempts rather than seconds: **3** through `fetch_verdict` alone, **9**
+through either outer loop. Both loops are the identical pattern with identical
+reasoning — `unreachable` only, because a served file, an absent one and a refusal
+are all answers — and neither does anything the shared retry does not.
+
+**BUT THE COST DEPENDS ON HOW THE HOST FAILS, AND THAT SPLITS THE CASE IN TWO.**
+Computed from each file's own constants, then checked against a live host:
+
+```
+connect timeout, Muscatine's shape   wi 282s (4m42s)   ia 237s (3m57s)
+fast 5xx or TLS error, Bremer's       either   17.4s
+```
+
+**Bremer is the one paying it weekly, and it pays the cheap price.** Measured today,
+one request each at `attempts=1`: `bremercounty.iowa.gov/robots.txt` **HTTP 500 in
+0.62s**, `www.co.bremer.ia.us/robots.txt` **SSLError in 0.57s** — both `unreachable`,
+both retried nine times, for about 17s rather than 237s. So "up to four and a half
+minutes on one host" is exactly right for a host that TIMES OUT and roughly sixteen
+times too high for the failure this scrape actually meets every week. The expensive
+case is real and rare; the common case is cheap.
+
+**PROPOSAL: RETIRE THE TWO OUTER LOOPS RATHER THAN PASSING `attempts=1`.** Both were
+offered and this is the one my own PR's argument points at — the mechanism belongs in
+the shared reader because the defect is shared, and `attempts=1` would leave two
+files each keeping a second copy of a thing the reader now does, which is the
+two-readers-of-one-question defect this fleet keeps paying for. **Retiring them
+restores each file's exact pre-#1156 behaviour**: both outer loops sleep `2 **
+attempt` = 1s then 2s, which is the shared `RETRY_BACKOFF` exactly, so 3 attempts with
+the same spacing is what each file had before I touched anything.
+
+**WHAT MUST NOT BE DELETED WITH THEM.** Each loop's comment carries its own measured
+cause — Wisconsin's `co.forest.wi.gov`, which served its policy on 2026-09-12 and was
+unreachable for one minute on 2026-09-13; Iowa's Bremer 500 — and those move to the
+call site rather than going. **And neither file's own CACHE is in scope:** Wisconsin
+keeps its own dict keyed by (user-agent, url) because it sends TWO user-agents where
+`RobotsGate` is built with one, and that reason stands untouched; Iowa passes its own
+`ROBOTS_TIMEOUT = 25`, which `fetch_verdict` already honours. The retry is the only
+duplicated part.
+
+**SPLIT: `ia/` is mine, `wi/` is Wisconsin's to agree to**, as the manager set it. I
+propose both and touch Iowa's only until Wisconsin says yes. Its own change, not
+folded into anything else.
+
+**One thing I could not establish and it does not move the recommendation:** whether
+Wisconsin's 86-host scrape is serial. `import threading` is in the file and no
+`ThreadPoolExecutor` is; I did not chase it further, because the fix is the same
+either way and the wall-time figure above is per host rather than per run.
+
 **2026-09-25 — #1156 IS MERGED AS `1cf8b14`, VERIFIED ON MAIN BY CONTENT.** Thirteen
 checks, all pass:
 
