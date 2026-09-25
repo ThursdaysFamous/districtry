@@ -1015,8 +1015,9 @@ The card does not ship because a boundary that names nobody is half a card — a
 that would name the four ward members is out of reach from this project's server.
 
 **The recipient is an office mailbox, not a person.** `cityclerk@cityofmarion.org` is
-published by the city itself on every page of its own agenda portal; no name is guessed here
-because none is needed.
+accepted on its FORM — an office mailbox, which is this file's own test — and no name is
+guessed here because none is needed. Its recorded provenance was the city's agenda portal,
+and that citation is withdrawn below.
 
 **One thing to be careful about in the wording, and it is the reason this ask exists.** The
 city's website returns HTTP 403 to this project's server at the network edge, and its origin
@@ -1024,6 +1025,29 @@ answers one path with an explicit "IP … is not authorized". That is worth tell
 plainly — it is probably not deliberate, and they may want to know — but it must be said as
 a fact about our server's access, never as a complaint or a request to change their security
 posture. The ask is for the four names, not for an exemption.
+
+*RE-PROBED 2026-09-25, and one sentence was withdrawn from the letter.* The 403 half
+verifies exactly as written: `www.cityofmarion.org/` and `/government/city_council` both
+answer **403 from AkamaiGHost** to the districtry token, 412 and 441 bytes. The half that did
+not is the agenda portal. **`cityofmarion.civicweb.net` SERVES A 24,999-BYTE robots.txt WHOSE
+BINDING `*` GROUP IS `Disallow: /`**, matched on every path tried — so the letter's "your
+agenda portal is reachable, which is how I found this address" told a public office that this
+project had read a host that refuses automated clients. Reachable and permitted are different
+questions, and only the first was ever asked here. The sentence is gone, and with it the
+claim that the portal "does not appear to publish which ward each council member represents",
+which rested on the same read.
+
+The `/api` sub-claim — that one path names this server's IP as not authorized — is NOT
+restated to the city either. It is recorded in the gap blocker with its date and its exact
+`ErrorCode 900` body, which is where a measurement belongs; it did not reproduce on the two
+paths probed today, and a specific technical assertion about someone else's infrastructure
+should not go out on a measurement nobody re-ran.
+
+**This project also breached its own rule while finding that out**, and it is recorded rather
+than quietly fixed: the probe read robots.txt and fetched the portal root in one pass without
+gating the fetch on the answer, so one GET went to a host the gate had already refused. One
+request, nothing extracted, and no further fetch of that host. Read the verdict BEFORE the
+fetch in the same script, not beside it.
 
 > **Subject:** Marion's four ward council members — a quick question from a civic map
 >
@@ -1044,11 +1068,9 @@ posture. The ask is for the four names, not for an exemption.
 >
 > I should be straightforward about why: requests from my server to cityofmarion.org are
 > refused before they reach your site — I get an HTTP 403 from the site's content-delivery
-> layer on every page, and one path reports that my server's IP address is not authorized. I
-> mention it only so it is clear I am not asking you to do something I could look up myself;
-> I am not asking for an exception or for anything to be changed on your end. Your agenda
-> portal at cityofmarion.civicweb.net is reachable, which is how I found this address, but it
-> does not appear to publish which ward each council member represents.
+> layer on every page I have tried. I mention it only so it is clear I am not asking you to
+> do something I could look up myself; I am not asking for an exception or for anything to be
+> changed on your end.
 >
 > So the question is simply: **who currently represents each of Marion's four wards?** Four
 > names against Ward 1 to Ward 4 is all I need. If the council also has at-large members, I
