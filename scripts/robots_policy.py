@@ -149,6 +149,25 @@ class RobotsPolicy(object):
         decoded bytes, the selftest's fixture loader, and any future caller
         holding text already. One stripper, at the narrowest place that sees
         them all.
+
+        THE BLAST RADIUS WAS MEASURED RATHER THAN REASONED ABOUT, because the
+        defect is as old as this module and the question "what else did we read
+        backwards" has only one honest answer. All 295 hosts in
+        `user-agent-measurements.json` were asked for their robots.txt on
+        2026-09-25 — the one document no policy can govern, since a rule stated
+        inside a file cannot bind the fetch that reads it, and nothing else was
+        requested. SEVEN serve a BOM:
+
+          www.elections.il.gov, elections.il.gov   `Disallow: /` — REFUSE us
+          board./da./exec./rod.danecounty.gov,     `Disallow: /Account` — allow
+          danesheriff.com                           everything else
+
+        So the compliance cost was the ISBE pair and nothing else. The five Dane
+        County hosts are the case that proves the fix does not over-refuse in
+        the other direction: opening their group starts honouring a narrow rule
+        this project had been ignoring, and the only paths any scraper fetches
+        there are `/Supervisors` and the bare roots, so no working refresh
+        stops. A fix that begins obeying rules must be checked BOTH ways.
         """
         text = text.lstrip("\ufeff")
         group = None
