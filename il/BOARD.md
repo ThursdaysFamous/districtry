@@ -40,6 +40,28 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-25. #1150 IS MERGED and verified on the merged tree by content rather
+than from the PR body — eleven checks, all pass.** The BOM'd `Disallow: /` now
+refuses on main; the fixture ships with its BOM intact; ISBE's provenance entry
+carries `robots_declined` and NOT `blocked`; that entry makes ZERO `http_get`
+calls and reports OK while the rule stands; all three ISBE-fetching scrapers call
+the shared gate; and `il-county-clerks.json` still holds its 101 clerks, which is
+the half that matters to a reader — **the refusal stopped our fetching and
+unpublished nothing.**
+
+ISBE has been refusing this project since 12 June 2025 and the fleet's one robots
+reader called it permitted, because a UTF-8 byte-order mark made `_parse` open no
+group at all. Seven of 295 hosts serve a BOM; two are ISBE and refuse, five are
+Dane County and permit everything but `/Account`. The check-ins are stopped.
+
+**THE COST IS REAL AND IS NOT CLOSED**: the re-precincting tripwire is gone,
+because ISBE was the only source carrying all 102 election authorities and 38 of
+Illinois's 46 shipped precinct layers are a Census 2020 snapshot. The vendor-side
+replacement is the second open question below.
+
+Next: PR A (the `sw.js` surface + Illinois's root `WATCH.md`), on a branch cut
+fresh from main rather than stacked.
+
 **2026-09-25, sixth pass. I pushed a branch with the battery RED, and the cause
 is worth more than the push: MY RUNNER REPORTED THE FAILURE AND EXITED 0.**
 
