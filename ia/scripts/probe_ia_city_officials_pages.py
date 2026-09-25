@@ -51,6 +51,30 @@ established that reading a 404 on a path a site does not use as absence is a
 wrong-path error, not a measurement. What this artifact settles is the one
 question a builder needs -- does this county answer the CMS page the nine
 shipping counties answer -- and it names the rest as leads rather than verdicts.
+
+TWO SETS THAT ARE EASY TO CONFUSE, AND THE FIRST DRAFT OF THIS CHANGE CONFUSED
+THEM. The output's `caveats` block states both, measured, because a sentence
+naming the wrong one reaches a reader through the gap record's `wanted`.
+  * 24 is THE PAGE WAS NEVER ASKED -- 22 robots-refused plus 2 unreachable.
+    That is the honest bound on the remaining upside, because nothing was
+    requested from those counties at all.
+  * 57 is NO SITE HOST IN THE REPO, which is exactly `hostSource ==
+    "auditor-mail-domain"`: `pick_host` reaches the mail domain ONLY when the
+    repo knows no site host, so the two are one set by construction, and 51 of
+    them are among the 77 non-answers.
+They are different sizes and different claims, and 24 was written for both.
+
+THE REFUSAL TALLY IS ENTIRELY AN ARTIFACT OF PROBING A MAIL DOMAIN: not ONE of
+the 22 is on a host the repo knows. Only SIX are a county's own statement (five
+robots.txt answering 202, one serving a disallow); the other sixteen are a
+FAILED ROBOTS READ, which policy makes disallow-all and which nobody stated.
+Those sixteen are not one shape either -- nine other TLS failures, four
+connection resets, TWO PROXY 502s that are this sandbox's egress rather than
+the host (the docs.legis.wisconsin.gov distinction), and ONE
+`unable to get local issuer certificate`, which is the Coles/Gallatin/Vermilion
+incomplete-chain shape `scripts/probe_incomplete_tls_chains.py` exists for. A
+pinned intermediate by AIA would OPEN that host rather than refuse it, and never
+by disabling verification.
 """
 import json
 import os
