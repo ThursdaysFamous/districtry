@@ -38,20 +38,56 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — correcting my own tranche 8 entry below: "named here for the first time" is the
+wrong way round, and you caught it.** Measured against `origin/main`'s returns file before
+correcting, rather than taking your word for it:
+
+```
+155 Shiawassee  OLD returns and NEW members name the SAME SEVEN, character for character
+                Bill Johnson · Brad Howard · Cindy L. Garber · Gary Holzhausen
+                Gregory Brodeur · Josh Haley · Matthew Shepard
+```
+
+**All 22 seats moved SOURCE and not one is newly named.** Across the four counties: 17 of 22 names
+identical, 5 changed, and every one of the five is the same person under the spelling their own
+county uses — `Steven Sopocy`/`Steve Sopocy`, `Michael`/`Mike LaMotte`, `Charles F.`/`Charles
+Wiltse`, `Mark D.`/`Mark Surbrook`, and **`Rober DeMarois` → `Robert DeMarois`**, a truncated
+ballot name the county's own page fixes. **16 of the 22 gain an e-mail or a telephone**, which is
+the gain worth claiming and is not what I claimed.
+
+**"15 seats move" was wrong too**, in the same direction: 15 is Gratiot + Keweenaw + Ogemaw, and I
+wrote it as though Shiawassee's 7 were a different kind of change. They are the same kind. The
+sentence now says 22.
+
+**What the slip actually was.** Shiawassee's gap record said this app could not confirm the county
+had a WEBSITE; I read that as the county having no names here, and it never did — the returns
+roster has named all seven since 2026-09-22. **A record about a SOURCE is not a record about the
+DATA**, and I collapsed the two while writing the sentence that celebrated fixing it. Nothing false
+shipped to a reader: `shiawassee.html` correctly stops saying "who won each seat at the last
+election the state certified". This was the record, not the product — which is exactly where I have
+now made this class of error three times in two days, twice in entries that were themselves
+correcting somebody's stale claim.
+
+Fixed in the table and the prose below rather than rewritten, with this entry above them. The PR
+body is corrected too, and `mi/metro-worksheet.json`'s stale "35" with it — **there were two of
+those, not one**: the roster note that flows into `validate_index.py`, and the "Five of the 35 —
+Washtenaw, Bay, Manistee, Newaygo, Van Buren" line, whose five are all still in the cohort so only
+the denominator moved. The three date-tied 48s are untouched.
+
 **2026-09-24 — tranche 8: four of the five shut counties now name their own commissioners, and
 the fifth is recorded rather than chased.** Open as #1143. Your authorisation was one request each
 to the board page the county's own front page names; that is exactly what was spent.
 
 | county | seats | what changed for a reader |
 | --- | --- | --- |
-| **Shiawassee** | 7 | named here for the first time — its record said we could not confirm it had a website |
+| **Shiawassee** | 7 | the same seven names, now from a page the county maintains — its record said we could not confirm it had a website at all |
 | **Ogemaw** | 5 | a certified-2024 winner becomes a name the county maintains |
 | **Keweenaw** | 5 | same, with a telephone and an e-mail per seat |
 | **Gratiot** | 5 | same |
 
 `mi-commissioner-members.json` 48 counties to 52, `mi-commissioner-returns.json` 35 to 31, all 83
-still covered and still disjoint. **15 seats move from a certified election winner to a weekly
-re-read, and 7 are named at all for the first time.**
+still covered and still disjoint. **ALL 22 SEATS MOVE SOURCE** — from a certified election
+winner to a page the county maintains and this app re-reads weekly.
 
 **MONTMORENCY DID NOT SHIP AND I DID NOT WIDEN.** Its board page is 79,243 bytes of which every one
 of its 202 visible lines is a navigation item; it names the county nine times and no commissioner,
