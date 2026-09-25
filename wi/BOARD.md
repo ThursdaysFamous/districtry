@@ -30,6 +30,35 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-25. #1153 MERGED AS `f9c9780`, VERIFIED ON MAIN BY CONTENT.** The
+squash carried both files and every piece is there: the transport class in
+`fetch_bytes`, the linear 2/4/6 branch beside the untouched exponential 5/15/45
+ladder, the `opener` argument, `_fetch_retry_selftest` defined and wired into the
+`--selftest` line CI already runs, and `probe_user_agents.py`'s reserved-TLD
+skip. Re-run FROM MAIN: robots selftest 14 assertions, fetch-retry selftest 17,
+district-page selftest 15 cases; `validate_gate_counts` reads **81 / 110 (100 no
+browser, 10 Chromium)** with both invocation readings agreeing, the steward
+mirror **110 for 110**, and the user-agent probe back to OK at 295 hosts. The
+pair did not move, which is what a change touching no workflow should do —
+checked because the rule is to re-run it after every merge, not only after an
+edit that adds a gate.
+
+**THE ROSTER PR #1154 IS STILL OPEN and is not mine to merge.** It carries the
+72-county refresh the branch dispatch produced (`f097d5a7`, 70 files,
++2,975/-2,959) and its own `smoke` is green. It is a bot roster PR under the
+coordinating session's standing merge authority; I am reporting it, not merging
+it. Until it lands, `wi/data/app/county-board-members.json` on main still holds
+the 17 September reading — the job is unfrozen, the DATA is not yet refreshed,
+and those are two different claims.
+
+**WHAT IS LEFT OF THIS FINDING, unchanged and not started** (task #57):
+`wi_circuit_judges_scraper` wants the closed COA row's remedy rather than a
+ladder, because its host's failure is per-runner packet drops and its sibling
+already carries a ladder that its own docstring records cannot clear it; and
+`mps_school_board_scraper` wants a ladder plus a `--selftest` and a CI step,
+which moves the 81/110 pair and the steward mirror. Stage 2 of the
+restated-counts work is still proposed and awaiting a pick.
+
 **2026-09-25. THE FREEZE IS OVER, AND THE RUN THAT ENDED IT DOES NOT WITNESS THE
 FIX.** #1153 is open and green; dispatched on its branch, run `36126246755`
 (12m14s, success) read **72 of 72 counties, 1,590 seats (1,575 named, 15
