@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """
 Build data/app/wi-alderpersons.json from wi_alderperson_scraper.py's
-intermediate — the aldermanic-district card's roster for the 24 municipalities
-whose routes are verified (the six of 2026-08-26: Milwaukee, Madison, Green
-Bay, Kenosha, Racine, Waukesha; the twelve of 2026-09-05: Stevens Point,
-Menomonie, Manitowoc, Sheboygan, Superior, Portage, Viroqua, Menasha, Howard,
-Tomah, Eau Claire, Appleton; the five of that evening: New Berlin, Sturgeon
-Bay, Altoona, Eagle River, Germantown; and New Lisbon, 2026-09-06).
-Measured 2026-09-24: 240 districts, 240 alderpersons, no vacancy. The count
-this docstring carried said 18 municipalities and 208 seats, and Madison's
-District 1, recorded here as vacant, has since been filled.
+intermediate — the aldermanic-district card's roster for every municipality
+whose route is verified. FLOORS below is the list; it is not restated here,
+because a prose copy of it went stale twice (it said 24 municipalities and 240
+seats while the file held 30 and 285, and it enumerated 28 of the 30) and a
+second answer to a question with one is how this file's own gates get believed
+over the data. MEASURED 2026-09-25 by the run that wrote the file: 292
+alderpersons across 265 districts in 31 municipalities holding 293 seats — one
+more seat than people, because Oconomowoc's own directory lists one of District
+1's two seats as vacant.
 Keyed by COUSUBFP + zero-padded district id, the exact key pair the
 dissolved geometry carries, and CROSS-GATED against the shipped geometry
 file: a roster row naming a district the map does not draw fails the build,
@@ -30,10 +30,29 @@ shape any reader may rely on.
 
 TWO NUMBERS THAT COINCIDE TODAY AND WILL NOT. `districts` is how many districts
 the municipality's geometry draws, and is what the geometry cross-gate compares.
-`seats` is how many PEOPLE those districts elect, DERIVED here by counting the
-members rather than restated by hand. They are equal for all 24 municipalities
-in this file and diverge the day a multi-member council joins, which is why they
-are counted separately now rather than when it happens.
+`seats` is how many PEOPLE those districts elect, DERIVED here rather than
+restated by hand: the members counted, plus every district the city says is
+wholly vacant, plus every SEAT inside a named district the city says is vacant.
+They diverged on 2026-09-24 when the multi-member tranche landed.
+
+THE THREE THINGS A SOURCE CAN SAY ABOUT AN EMPTY SEAT, and they are different
+claims that must not be collapsed:
+
+  `vacantDistricts`  the city names NOBODY for a whole district and says it is
+                     vacant (Madison's District 1 at first build). The card says
+                     the district is vacant, because it has nothing else to say.
+  `vacantSeats`      a count per district of seats the city lists as vacant in a
+                     district that DOES name somebody — Oconomowoc's District 1,
+                     which seats two, names Karen Spiegelberg and prints
+                     `Vacanct` for the other. The card names the member and says
+                     the district is a seat short.
+  neither            the city seats two, names one and says nothing about the
+                     other. That is NOT `vacantSeats`: the city has made no
+                     statement about the seat, and a card reading "the city
+                     lists the other as vacant" would be a false statement about
+                     the city. Illinois's at-large card carries the honest shape
+                     for it (`seats`, rendering "1 of 2 seats not listed"), and
+                     nothing in Wisconsin needs it yet, so it is not built.
 """
 
 import datetime
@@ -134,6 +153,14 @@ FLOORS = {
     #     read from the text before its own label rather than by position.
     "07900": ("Black River Falls", 4, 8, 7, 7, 0),
     "55750": ("Neenah", 3, 9, 8, 8, 0),
+    # Oconomowoc, 2026-09-25. THE NAMED FLOOR IS SEVEN AGAINST EIGHT SEATS, and
+    # that is the point of it: the city's own directory lists District 1's second
+    # seat as vacant, so seven people hold eight seats and `vacantSeats` carries
+    # the difference. A floor may be exceeded, so the day the city fills the seat
+    # this passes at eight and the vacancy disappears from the file by itself.
+    # Every one of the seven has a mailbox and a direct phone; the floors are
+    # that measured count less one, as everywhere above.
+    "59250": ("Oconomowoc", 4, 7, 6, 6, 0),
 }
 
 
@@ -270,6 +297,22 @@ def check_city(name, districts, floors, c, geo_districts):
         raise SystemExit("%s: %d district(s) named + %d vacant does not cover "
                          "the %d the map draws"
                          % (name, len(ms), len(vacant), len(geo_districts)))
+    # `vacantSeats` COUNTS SEATS INSIDE A DISTRICT THAT NAMES SOMEBODY, which is
+    # a different statement from `vacantDistricts` above and is checked against a
+    # different thing: the district must be one the roster names people for, or
+    # the card renders a seat count beside no names at all. See this file's
+    # docstring for the three claims a source can make about an empty seat.
+    vacant_seats = c.get("vacantSeats") or {}
+    for district, n in sorted(vacant_seats.items()):
+        if district not in ms:
+            raise SystemExit("%s district %s lists vacant seats and names "
+                             "nobody — a district with no members at all is "
+                             "vacantDistricts, which the card reads differently"
+                             % (name, district))
+        if isinstance(n, bool) or not isinstance(n, int) or n < 1:
+            raise SystemExit("%s district %s: vacantSeats must be a whole "
+                             "number of seats, at least one (got %r)"
+                             % (name, district, n))
     # PEOPLE, flattened out of the per-district lists. len(ms) counts DISTRICTS
     # and is the wrong denominator for every one of these four.
     people = [m for lst in ms.values() for m in lst]
@@ -286,16 +329,19 @@ def check_city(name, districts, floors, c, geo_districts):
     # hand-kept table: how many people these districts elect is a property of
     # the roster just read, and a hand-kept copy of it is a second reader of
     # one question.
-    c["seats"] = len(people) + len(vacant)
+    c["seats"] = len(people) + len(vacant) + sum(vacant_seats.values())
     return len(people)
 
 
-def _city(members, districts=None, municipality="Testville", vacant=None):
+def _city(members, districts=None, municipality="Testville", vacant=None,
+          vacant_seats=None):
     c = {"municipality": municipality, "members": members,
          "districts": districts if districts is not None else len(members),
          "sourceUrl": "https://example.test/council"}
     if vacant is not None:
         c["vacantDistricts"] = vacant
+    if vacant_seats is not None:
+        c["vacantSeats"] = vacant_seats
     return c
 
 
@@ -310,9 +356,10 @@ def selftest():
     """
     bad, ran = [], []
 
-    def want_ok(label, members, districts, floors, geo, seats, vacant=None):
+    def want_ok(label, members, districts, floors, geo, seats, vacant=None,
+                vacant_seats=None):
         ran.append(label)
-        c = _city(members, districts, vacant=vacant)
+        c = _city(members, districts, vacant=vacant, vacant_seats=vacant_seats)
         try:
             check_city("Testville", districts, floors, c, set(geo))
         except SystemExit as e:
@@ -321,11 +368,13 @@ def selftest():
         if c["seats"] != seats:
             bad.append("%s: seats %r, expected %r" % (label, c["seats"], seats))
 
-    def want_fail(label, members, districts, floors, geo, expect, vacant=None):
+    def want_fail(label, members, districts, floors, geo, expect, vacant=None,
+                  vacant_seats=None):
         ran.append(label)
         try:
             check_city("Testville", districts, floors,
-                       _city(members, districts, vacant=vacant), set(geo))
+                       _city(members, districts, vacant=vacant,
+                             vacant_seats=vacant_seats), set(geo))
         except SystemExit as e:
             if expect not in str(e):
                 bad.append("%s: refused for the wrong reason: %s" % (label, e))
@@ -381,13 +430,48 @@ def selftest():
     want_ok("vacant district", {"01": [{"name": "A"}]}, 2, (1, 0, 0, 0),
             {"01", "02"}, 2, vacant=[2])
 
+    # 9. OCONOMOWOC'S SHAPE: a district that names somebody and is a seat short.
+    #    Two districts, two people, one vacant seat — three seats in all, which
+    #    neither the district count nor the people count gives on its own.
+    want_ok("a named district with a vacant seat", one, 2, (2, 0, 0, 0),
+            {"01", "02"}, 3, vacant_seats={"01": 1})
+
+    # 10. A VACANT SEAT MUST NOT PAPER OVER A LOST MEMBER. This is the failure
+    #     the field could most easily introduce: if the seat count satisfied the
+    #     floor, a city whose page dropped a member would ship short and pass,
+    #     because seats would still add up. The floor counts PEOPLE, so it does
+    #     not — two people against a floor of three fails whatever the vacancy
+    #     says.
+    want_fail("a vacant seat does not satisfy the named floor", one, 2,
+              (3, 0, 0, 0), {"01", "02"}, "only 2 named", vacant_seats={"01": 1})
+
+    # 11. A vacant seat in a district naming nobody is the OTHER claim, and the
+    #     card renders it in another place, so it is refused rather than guessed.
+    #     The fixture is the shape a confused scraper would actually emit: the
+    #     same district in vacantDistricts AND in vacantSeats. It has to cover
+    #     the geometry, or the coverage check above refuses it first for a
+    #     different and also correct reason — which is what the first draft of
+    #     this case did, proving nothing about the new guard.
+    want_fail("vacant seats in a district with no members", {"01": [{"name": "A"}]},
+              2, (1, 0, 0, 0), {"01", "02"}, "names nobody",
+              vacant=[2], vacant_seats={"02": 1})
+
+    # 12. The count is a count. `true` is an int in Python and would add 1 to
+    #     the seat total while meaning nothing, and a 0 would render "2 of 2
+    #     seats" with nothing vacant.
+    want_fail("vacantSeats given a boolean", one, 2, (2, 0, 0, 0),
+              {"01", "02"}, "whole number", vacant_seats={"01": True})
+    want_fail("vacantSeats given zero", one, 2, (2, 0, 0, 0),
+              {"01", "02"}, "whole number", vacant_seats={"01": 0})
+
     if bad:
         for line in bad:
             print("  FAIL %s" % line)
         raise SystemExit("selftest: %d of %d case(s) failed"
                          % (len(bad), len(ran)))
-    # COUNTED, never stated: the first draft of this line said 11 where ten
-    # cases run, which is the defect the rest of this file exists to prevent.
+    # COUNTED, never stated: an early draft of this line said 11 where ten cases
+    # ran, which is the defect the rest of this file exists to prevent. It has
+    # not been restated since, and this comment deliberately names no total.
     print("selftest: %d case(s), 0 failures" % len(ran))
 
 

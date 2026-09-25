@@ -11546,10 +11546,14 @@ function initWisconsinExplorer() {
    * composed LOCALLY: its county files every ward uncoded, and the city
    * clerk's own polling-locations page supplies the assignment under three
    * independent witnesses and a second edition of one of them (see the
-   * builder). The roster (wi-alderpersons.json, weekly CI) covers the 30
-   * municipalities with a
-   * verified witnessed route; the other 129 councils are a recorded gap, and
-   * their cards stay identity-only rather than guessing.
+   * builder). The roster (wi-alderpersons.json, weekly CI) covers the 31
+   * municipalities with a verified witnessed route; the other 128 councils are
+   * a recorded gap, and their cards stay identity-only rather than guessing.
+   * A district may seat more than one member and the card renders every one of
+   * them; where a city lists one of a district's seats as VACANT (Oconomowoc's
+   * District 1, which seats two and names one) the card says so beside the
+   * names, because rendering the one name alone reads as a district that seats
+   * one.
    * In the nine villages that elect trustees by district the officer is a
    * trustee, and the card says so. ---------- */
   var loadAldermanicDistricts = makeCached(function () {
@@ -11618,8 +11622,18 @@ function initWisconsinExplorer() {
           var n = parseInt(String(alderid), 10);
           vacant = city.vacantDistricts.indexOf(n) !== -1;
         }
+        // HOW MANY SEATS IN THIS DISTRICT THE CITY ITSELF LISTS AS VACANT, which
+        // is a different fact from vacantDistricts above: that one says a whole
+        // district has nobody, this one says a district that DOES name somebody
+        // is a seat short. Oconomowoc seats two per district, names one in
+        // District 1 and prints `Vacanct` for the other, and rendering the one
+        // name alone would say the district seats one.
+        var vacantSeats = 0;
+        if (city && city.vacantSeats && alderid != null) {
+          vacantSeats = parseInt(city.vacantSeats[String(alderid)], 10) || 0;
+        }
         return { seq: seq, props: props, city: city || null,
-                 members: members, vacant: vacant };
+                 members: members, vacant: vacant, vacantSeats: vacantSeats };
       });
     },
     cardIdentifier: function (result) {
@@ -11652,6 +11666,23 @@ function initWisconsinExplorer() {
           return person;
         });
         wrap.appendChild(renderPersonRows(people));
+        // A DISTRICT THAT IS A SEAT SHORT SAYS SO. Without this the card would
+        // render Oconomowoc's District 1 exactly as it renders a district that
+        // seats one person, which conceals a seat — the same concealment, one
+        // level down, that holding a list per district was built to end. The
+        // total is the roster's own arithmetic (named + vacant), never a number
+        // written here, and the wording claims only what the city published:
+        // its directory lists that seat as vacant.
+        if (result.vacantSeats > 0) {
+          var short = result.vacantSeats;
+          wrap.appendChild(renderFieldStack([
+            { label: "Seats",
+              value: people.length + " of " + (people.length + short)
+                     + " seats named — the city's own council directory lists "
+                     + (short === 1 ? "the other" : "the other " + short)
+                     + " as vacant." }
+          ]));
+        }
       } else if (result.vacant) {
         // Madison's District 1 at first build — the city's own directory
         // says vacant, so the card says vacant rather than nothing
