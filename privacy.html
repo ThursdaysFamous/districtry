@@ -542,7 +542,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
             <th scope="row"><a href="/il/">Illinois</a><small>/il/</small></th>
             <td>Google Analytics <code class="k">G-YPJ570LWJB</code><small>live host only (<code class="k">districtry.com</code>), never in an embed</small></td>
             <td><code class="k">https://districtry.goatcounter.com/count</code></td>
-            <td><code class="k">chi-school-type-filter</code><small>session</small> <code class="k">districtry-theme</code><small>kept</small></td>
+            <td><code class="k">chi-school-type-filter</code><small>session</small> <code class="k">districtry-boundary-streets</code><small>kept</small> <code class="k">districtry-theme</code><small>kept</small></td>
             <td>Photon / Komoot, Nominatim / OpenStreetMap</td>
             <td>19 layers</td>
           </tr>
@@ -550,7 +550,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
             <th scope="row"><a href="/ny/">New York</a><small>/ny/</small></th>
             <td>Google Analytics <code class="k">G-YPJ570LWJB</code><small>live host only (<code class="k">districtry.com</code>), never in an embed</small></td>
             <td><code class="k">https://districtry.goatcounter.com/count</code></td>
-            <td><code class="k">nyc-school-type-filter</code><small>session</small> <code class="k">districtry-theme</code><small>kept</small></td>
+            <td><code class="k">nyc-school-type-filter</code><small>session</small> <code class="k">districtry-boundary-streets</code><small>kept</small> <code class="k">districtry-theme</code><small>kept</small></td>
             <td>Photon / Komoot, GeoSearch / NYC Planning</td>
             <td>5 layers</td>
           </tr>
@@ -558,7 +558,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
             <th scope="row"><a href="/ca/">San Francisco</a><small>/ca/</small></th>
             <td><em>None.</em></td>
             <td><code class="k">https://districtry.goatcounter.com/count</code></td>
-            <td><code class="k">sf-school-type-filter</code><small>session</small> <code class="k">districtry-theme</code><small>kept</small></td>
+            <td><code class="k">sf-school-type-filter</code><small>session</small> <code class="k">districtry-boundary-streets</code><small>kept</small> <code class="k">districtry-theme</code><small>kept</small></td>
             <td>Photon / Komoot, Nominatim / OpenStreetMap</td>
             <td><em>None.</em></td>
           </tr>
@@ -566,7 +566,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
             <th scope="row"><a href="/wi/">Wisconsin</a><small>/wi/</small></th>
             <td><em>None.</em></td>
             <td><code class="k">https://districtry.goatcounter.com/count</code></td>
-            <td><code class="k">districtry-theme</code><small>kept</small></td>
+            <td><code class="k">districtry-boundary-streets</code><small>kept</small> <code class="k">districtry-theme</code><small>kept</small></td>
             <td>Photon / Komoot, Nominatim / OpenStreetMap</td>
             <td>6 layers</td>
           </tr>
@@ -574,7 +574,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
             <th scope="row"><a href="/ia/">Iowa</a><small>/ia/</small></th>
             <td><em>None.</em></td>
             <td><code class="k">https://districtry.goatcounter.com/count</code></td>
-            <td><code class="k">districtry-theme</code><small>kept</small></td>
+            <td><code class="k">districtry-boundary-streets</code><small>kept</small> <code class="k">districtry-theme</code><small>kept</small></td>
             <td>Photon / Komoot, Nominatim / OpenStreetMap</td>
             <td>3 layers</td>
           </tr>
@@ -582,7 +582,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
             <th scope="row"><a href="/mi/">Michigan</a><small>/mi/</small></th>
             <td><em>None.</em></td>
             <td><code class="k">https://districtry.goatcounter.com/count</code></td>
-            <td><code class="k">districtry-theme</code><small>kept</small></td>
+            <td><code class="k">districtry-boundary-streets</code><small>kept</small> <code class="k">districtry-theme</code><small>kept</small></td>
             <td>Photon / Komoot, Nominatim / OpenStreetMap</td>
             <td>5 layers</td>
           </tr>
@@ -595,6 +595,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
     <h2>What stays on your device</h2>
     <p>All of it is yours to clear at any time through your browser's &#34;clear site data&#34;.</p>
     <div class="card">
+      <p><strong>Boundary street names.</strong> If you switch the map's “Boundary streets” button off or back on, the choice is kept in <code class="k">localStorage</code> under <code class="k">districtry-boundary-streets</code> on Illinois, New York, San Francisco, Wisconsin, Iowa and Michigan. It is one word, and it never leaves your browser.</p>
       <p><strong>Light or dark.</strong> If you use the theme toggle, the choice is kept in <code class="k">localStorage</code> under <code class="k">districtry-theme</code> on Illinois, New York, San Francisco, Wisconsin, Iowa and Michigan, so the site does not flash white on your next visit. It is one word, and it never leaves your browser. The front door reads it and never writes it, which is how the choice follows you off the map.</p>
       <p><strong>One display preference, per app.</strong> The school layer's type filter is remembered in <code class="k">sessionStorage</code> under <code class="k">chi-school-type-filter</code> on Illinois. It is a handful of true/false switches, it is erased when you close the tab, and it never leaves your browser.</p>
       <p><strong>One display preference, per app.</strong> The school layer's type filter is remembered in <code class="k">sessionStorage</code> under <code class="k">nyc-school-type-filter</code> on New York. It is a handful of true/false switches, it is erased when you close the tab, and it never leaves your browser.</p>
@@ -704,7 +705,7 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
 
     <h3>GoatCounter</h3>
 
-    <p><a href="https://www.goatcounter.com/help/privacy" target="_blank" rel="noopener">GoatCounter</a> is cookieless and does not build a profile across sites. Every page on this site reports to a single GoatCounter site (<code class="k">districtry</code>) — the apps, the front door, and the text pages that answer one question or list one county’s board; the page path is what distinguishes them. Besides the page view, each app sends named events for: address-search, compare-stats-link/, compare-stats-print/, compare-stats-reopen/, compare-stats-row/, compare-stats/, compare-stop, compare/, copy-coordinates, district-search/ (only Illinois, the app that searches districts by name), embed-iframe, feedback-link, feedback-open/button, feedback-open/link, feedback-send/email, feedback-send/github, gaps-open, gaps-suggest/, gaps-why/, geolocate, geolocate-success, layer/, metro-portal-go/, more-item/, more-open, select, share-native, share-open, share-permalink. Exactly two of those — geolocate-success and select — carry coordinates, <strong>rounded to 2 decimal places</strong>. A page that is not an app — a county list, a question page, this one — sends the page view and nothing else. <strong>Nothing you type is ever sent to it.</strong></p>
+    <p><a href="https://www.goatcounter.com/help/privacy" target="_blank" rel="noopener">GoatCounter</a> is cookieless and does not build a profile across sites. Every page on this site reports to a single GoatCounter site (<code class="k">districtry</code>) — the apps, the front door, and the text pages that answer one question or list one county’s board; the page path is what distinguishes them. Besides the page view, each app sends named events for: address-search, boundary-streets/, compare-stats-link/, compare-stats-print/, compare-stats-reopen/, compare-stats-row/, compare-stats/, compare-stop, compare/, copy-coordinates, district-search/ (only Illinois, the app that searches districts by name), embed-iframe, feedback-link, feedback-open/button, feedback-open/link, feedback-send/email, feedback-send/github, gaps-open, gaps-suggest/, gaps-why/, geolocate, geolocate-success, layer/, metro-portal-go/, more-item/, more-open, select, share-native, share-open, share-permalink. Exactly two of those — geolocate-success and select — carry coordinates, <strong>rounded to 2 decimal places</strong>. A page that is not an app — a county list, a question page, this one — sends the page view and nothing else. <strong>Nothing you type is ever sent to it.</strong></p>
 
     <h3>Google Analytics</h3>
 

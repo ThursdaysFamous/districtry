@@ -317,7 +317,10 @@ def measure_address_list(src, name):
 # report form became openable by a link (#feedback): which way it was opened,
 # a link to it copied, and which way a report left. None carries what the
 # reader wrote — the text is in the address HASH, which analytics never sees.
-EXPECTED_EVENTS = ["address-search", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
+# `boundary-streets/on` and `boundary-streets/off` joined on 2026-09-25 with
+# the map's "Boundary streets" button (name the streets a selected district's
+# edge runs along). They record the switch and nothing about the map.
+EXPECTED_EVENTS = ["address-search", "boundary-streets/", "compare-stats-link/", "compare-stats-print/", "compare-stats-reopen/",
                    "compare-stats-row/", "compare-stats/", "compare-stop", "compare/",
                    "copy-coordinates", "district-search/", "embed-iframe", "feedback-link",
                    "feedback-open/button", "feedback-open/link", "feedback-send/email",
@@ -1039,6 +1042,12 @@ def render_storage_paragraphs(apps):
                 "kept in %s under %s on %s, so the site does not flash white on your next "
                 "visit. It is one word, and it never leaves your browser.%s</p>"
                 % (code(store), code(key), esc(joined(users)), carried))
+        elif key == "districtry-boundary-streets":
+            out.append(
+                "<p><strong>Boundary street names.</strong> If you switch the map's "
+                "\u201cBoundary streets\u201d button off or back on, the choice is kept in %s "
+                "under %s on %s. It is one word, and it never leaves your browser.</p>"
+                % (code(store), code(key), esc(joined(users))))
         else:
             out.append(
                 "<p><strong>%s.</strong> Stored in %s on %s. It never leaves your browser.</p>"

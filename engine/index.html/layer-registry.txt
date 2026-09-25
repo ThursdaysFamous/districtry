@@ -234,6 +234,7 @@
     rt.highlightedLayer = null;
     rt.highlightApplied = false; // next updateLayerHighlight must do a full sweep, not an incremental diff
     rt.highlightSignature = null;
+    scheduleBoundaryStreets(); // basemap: the streets this district's edge follows
     if (!rt.overlayLayer) return;
     rt.overlayLayer.eachLayer(function (subLayer) {
       if (subLayer.setStyle) subLayer.setStyle(baseStyleFor(mod, subLayer.feature));
@@ -290,6 +291,7 @@
     });
     rt.highlightApplied = true;
     rt.highlightSignature = signature;
+    scheduleBoundaryStreets(); // basemap: the streets this district's edge follows
   }
 
   /* ---------- optional per-module "point of interest" pin (e.g. a school's
