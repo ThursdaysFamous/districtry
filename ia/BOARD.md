@@ -49,6 +49,39 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — #1149 IS MERGED AS `343b624`, VERIFIED ON MAIN BY CONTENT.** Five
+checks, each read off the shipped tree rather than off the merge message:
+
+```
+roster      102 keys, 10 counties, 738 officials
+            Carbon, Corning, Nodaway, Prescott all present; Adams 28
+floors      MIN_COUNTIES 10, every floor raised, none lowered
+gap         "830 of Iowa's 939 cities; in the other 109 ..."
+            wanted no longer says "the way nine already do"; blocker NOT shipped
+docstring   ten counties / MIN_COUNTIES is 10; heading carries no count;
+            507 / 102 / 90 across 89; 109 of 738, 122 across thirteen
+skill       gap-record §7 line 143 carries THE ORDER RULE IS NOT ABOUT THIS LIST
+```
+
+**The one `605` left in the builder is the quotation inside the section recording
+that it was wrong**, which is the point of keeping it.
+
+**RULE 3 FIRED IN THE MIDDLE OF THAT VERIFICATION AND IS WORTH THE LINE.** The
+grep for `all ten will briefly` returned NOTHING on a file that says exactly
+that — the phrase wraps across a line break, so the pattern was wrong and the
+file was right. A failed grep is a claim about the pattern until the pattern is
+tested, and the second time this session has paid for it. Reading the six lines
+settled it in one step.
+
+**THE IOWA BOARD IS NOW CLEAR AND THE NEXT ITEM NEEDS AN ASSIGNMENT.** Ask 8 —
+the statewide city-clerk list from the Secretary of State — is the higher-value
+route the sweep points at, and it is a DRAFT-AND-HOLD rather than a send. It is
+NOT STARTED, deliberately: nothing here begins an outbound ask unasked.
+
+**Still with Adam, unchanged:** the auditor labelling (17 counties, measured,
+proposed), the suspended-host excuse path (dormant), and Mitchell's parser,
+which a 2026-09-19 entry says needed no fix.
+
 **2026-09-25 — #1149's HOLD IS ANSWERED, AND READING THE REST OF THE DOCSTRING FOR
 THE SAME FAMILY FOUND THREE MORE.** The hold was two present-tense sentences
 fifty-five lines above `MIN_COUNTIES = 10`; both fixed, and the dated 2026-09-05
