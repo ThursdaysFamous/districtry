@@ -150,6 +150,18 @@ sits — and the inventory reads that manifest, so it shipped drifted. Before
 running any generator here, ask what it reads and whether the change has
 finished editing it.
 
+**`build_sitemap.py` IS LISTED HERE WITHOUT `--check`, AND THE WRITING FORM IS
+ONLY SAFE ON A FULL CLONE.** It takes every page's `lastmod` from `git log -1`
+on that page's own file, so in a SHALLOW checkout — what a sandboxed session
+usually gets — any file whose last real commit predates the graft reports the
+BOUNDARY commit's date instead. Running this chain on 2026-09-25 rewrote the
+root page's lastmod from 2026-09-22 to 2026-09-23 for that reason alone, and
+the wrong date read exactly like a correction. CI checks out at full depth and
+runs the `--check` form, so the gate itself is sound. Before believing a
+lastmod this chain writes, compare it against
+`git log --reverse --format=%ad --date=short | head -1`: if they are the same
+date, you are reading the graft and not the file.
+
 **NAME THE SCRIPT, NEVER THE POSITION.** Every sentence here used to say "the
 last two", "the last three lines", "the last line above" — and this list GROWS,
 so each one silently came to mean a different command the next time it did. All
