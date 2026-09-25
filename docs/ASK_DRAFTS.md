@@ -2361,3 +2361,106 @@ The Clerk's own named county address, so the name vouches for it.
 - **No reply after the follow-up cadence** — record UNRESPONSIVE against the ask, not
   against the county. Nothing about the boundary or the members is blocked on this; it is
   one row on two cards.
+
+## Ask 30 — twelve Iowa counties: which supervisor holds which district
+
+> **NOT YET ASKED — DRAFTED 2026-09-25.** Twelve separate messages, one per county, each to
+> that county's Auditor. On send, change `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the
+> `ia-supervisor-district-seats` blocker in `docs/DATA_LAYER_GUIDEBOOK.md` AND in row 35 of
+> `ia/WATCH.md` — Iowa keeps the ledger in both, unlike Illinois. Record the date per county
+> if they go out on different days; twelve counties will not all answer at once.
+
+**This ask is twelve counties and not eighteen, and the narrowing is the point.** Of the
+eighteen in this record on 2026-09-24, six publish the supervisor-to-district join on their
+own board page. Four of those shipped that day — Butler, Chickasaw, Howard and Winnebago —
+and **Kossuth and Worth are refused by this project's own 1..N gate**, which is a question
+about their page rather than their records: Kossuth prints its districts rotated with each
+heading before the name it belongs to, Worth renders its roster twice, and a flat-text parse
+cannot settle either safely. Writing to those two to ask for something they already publish
+would be the wrong letter. **The twelve below publish it nowhere this project could find.**
+
+### What the app already has, and what it is missing
+
+The ask is for one fact, and it is worth saying plainly that it is the only one missing:
+
+* **The districts are drawn and they ship.** The Iowa Legislature's own
+  `CountySupervisorDistricts` layer gives every one of these twelve its 3 to 5 districts, and
+  a reader clicking inside one is correctly told which district they live in.
+* **The supervisors are named and they ship.** `ia-county-officers.json` carries each county's
+  three or five supervisors.
+* **Nothing published says which of those people holds which district.** So the card names the
+  board and cannot place any of them, and it says so in its own words rather than guessing.
+
+### The twelve, and what this client can and cannot read
+
+Measured 2026-09-24, re-measured at 23:45 UTC for the three this record had called
+unreachable. **Six serve this client and six do not**, and the six that do not are a fact
+about this client rather than about the county:
+
+| county | this client's access |
+|---|---|
+| Black Hawk, Calhoun, Cass, Ida, Washington | serves — fetched, and the page carries no join |
+| Sioux | **serves** — re-measured 2026-09-24, 200 with no crawl-delay and no Content-Signal |
+| Guthrie, Lee, Montgomery | 403 to this client |
+| Dickinson, Osceola, Palo Alto | HTTP 202, the captcha shape — an access control, never worked around |
+
+**A blocked page is not a blocked county.** All twelve can be written to, and the ask route is
+intact for every one of them; the table is here so the next reader knows which pages a machine
+could re-check and which only a person can.
+
+### Recipients — compiled at send, deliberately not here
+
+The recipient is each county's **Auditor**, Iowa's commissioner of elections under Iowa Code
+§47.2 and the office whose page publishes the district map — the same reasoning as Ask 14.
+
+**No auditor address exists anywhere in this repository, and the addresses that do exist are
+the wrong offices.** `ia-county-board-directory.json` carries county, plan, seats and a URL and
+no contact at all. `ia-county-officers.json` carries two to four verified addresses for every
+one of the twelve, but its keys are `countyAttorney`, `recorder`, `sheriff` and `treasurer`.
+Asking a Sheriff which supervisor holds District 3 is the wrong office.
+
+Iowa auditor mailboxes are patterned enough that one could be guessed, and **guessing is what
+this file exists to prevent**: a wrong address on an outbound ask is worse than no ask, the
+standard `docs/PRESS_LIST.md` already holds. So the addresses are read off each county's own
+site at send — twelve reads a person does in a browser in a few minutes, where this client can
+reach only six. That division is the honest one rather than a half-list of mixed provenance.
+
+### Draft
+
+> **Subject: <County> County supervisor districts — which supervisor represents which district?**
+>
+> Dear <name>,
+>
+> I run districtry, a free, non-commercial civic site that shows people which districts cover
+> the place they live and who represents them there. It covers all 99 Iowa counties.
+>
+> For <County> County the site already draws your supervisor districts, from the Legislature's
+> own published district layer, and it already names your supervisors. The one thing it cannot
+> tell a reader is which of those supervisors represents the district they are standing in, so
+> the page names the board and stops there rather than guessing.
+>
+> If your office has that pairing written down anywhere — a district number beside each
+> supervisor's name, in any form at all, including a sentence in a reply — I would be glad to
+> use it, with the county credited as the source. If the board is elected by district but your
+> office does not keep that list, that is a useful answer too and I will record it rather than
+> keep asking.
+>
+> I am not asking for anything that is not already public, and there is no cost or obligation
+> of any kind. If you would rather not, a one-line no is a complete answer.
+>
+> With thanks,
+> Adam Overberg
+> districtry — https://districtry.com/ia/
+
+### What each answer means
+
+- **A district beside each name** — the join ships for that county, the card places every
+  supervisor, and the county leaves this record. Four counties left it this way on 2026-09-24
+  by publishing it; this is the same outcome by a different route.
+- **"We elect by district but do not keep that list"** — a real answer and a closing one for
+  that county. Record it in the blocker and stop asking; the districts and the names still
+  ship, and the card's own wording is already correct.
+- **"We are not elected by district"** — then the record is wrong about that county and the
+  Legislature's own plan type is wrong with it, which is worth chasing on its own.
+- **No reply after the follow-up cadence** — record UNRESPONSIVE against the ask, per county,
+  never against the county. Nothing on the card is blocked on this; one row is.
