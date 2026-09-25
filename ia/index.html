@@ -4764,7 +4764,8 @@ function initIowaExplorer() {
    * From the map's zoom 13, with a point selected, the stretch of each
    * street that the highlighted district's boundary runs along is named in
    * that district's highlight colour, bolder and larger than the other
-   * street names, whatever the street's class — the ordinary layers name
+   * street names and in USPS abbreviations ("W North Ave", see
+   * abbreviateStreetName), whatever the street's class — the ordinary layers name
    * side streets only from zoom 16. The GL map counts zoom one level lower
    * than Leaflet (the bridge draws 512-pixel tiles), so the style says 12.
    * CARTO's tiles at that zoom carry only the main streets and a few side
@@ -4809,7 +4810,7 @@ function initIowaExplorer() {
       minzoom: BOUNDARY_STREET_MINZOOM - 1,
       layout: {
         "symbol-placement": "line",
-        "text-field": ["get", "name"],
+        "text-field": ["get", "label"],
         "text-font": ["Montserrat Bold", "Open Sans Bold", "Noto Sans Regular"],
         "text-size": { stops: [[12, 11], [15, 13], [17, 14]] },
         "text-letter-spacing": 0.03,
@@ -4822,6 +4823,45 @@ function initIowaExplorer() {
         "text-halo-width": 2
       }
     };
+  }
+  // The boundary-street labels print the name in the USPS abbreviations
+  // (Publication 28): a leading or trailing direction ("West" -> "W") and the
+  // street type ("Avenue" -> "Ave"). A word is shortened only in those two
+  // positions, and a direction only when a name is left beside it, so "North
+  // Avenue" (a street named North) prints "North Ave", "West North Avenue"
+  // prints "W North Ave", "North Broadway" prints "N Broadway", and "Avenue A"
+  // keeps its whole type. The ordinary street names are left as CARTO prints
+  // them.
+  var STREET_DIRECTIONS = {
+    north: "N", south: "S", east: "E", west: "W",
+    northeast: "NE", northwest: "NW", southeast: "SE", southwest: "SW"
+  };
+  var STREET_TYPES = {
+    avenue: "Ave", boulevard: "Blvd", circle: "Cir", court: "Ct", drive: "Dr",
+    expressway: "Expy", freeway: "Fwy", highway: "Hwy", lane: "Ln", parkway: "Pkwy",
+    place: "Pl", road: "Rd", square: "Sq", street: "St", terrace: "Ter", trail: "Trl"
+  };
+  function abbreviateStreetName(name) {
+    var words = String(name || "").split(/\s+/).filter(Boolean);
+    if (words.length < 2) return words.join(" ");
+    var lower = function (i) { return words[i].toLowerCase(); };
+    var first = 0, last = words.length - 1;
+    // a direction is shortened only when a NAME is left beside it, not just
+    // a street type: "North Broadway" -> "N Broadway", "North Avenue" stays
+    var nameLeft = function (from, to) {
+      if (to > from) return true;
+      return to === from && !STREET_TYPES[lower(from)];
+    };
+    if (STREET_DIRECTIONS[lower(last)] && nameLeft(first, last - 1)) {
+      words[last] = STREET_DIRECTIONS[lower(last)];
+      last -= 1;
+    }
+    if (STREET_DIRECTIONS[lower(first)] && nameLeft(first + 1, last)) {
+      words[first] = STREET_DIRECTIONS[lower(first)];
+      first += 1;
+    }
+    if (STREET_TYPES[lower(last)] && last > first) words[last] = STREET_TYPES[lower(last)];
+    return words.join(" ");
   }
   // roads: GeoJSON features with properties.name (LineString or
   // MultiLineString); targets: [{ color, geometry }] where geometry is a
@@ -4945,7 +4985,7 @@ function initIowaExplorer() {
     Object.keys(best).sort().forEach(function (nm) {
       names[nm] = best[nm].color;
       best[nm].stretches.forEach(function (coords) {
-        features.push({ type: "Feature", properties: { name: nm, color: best[nm].color },
+        features.push({ type: "Feature", properties: { name: nm, label: abbreviateStreetName(nm), color: best[nm].color },
                         geometry: { type: "LineString", coordinates: coords } });
       });
     });
@@ -13996,6 +14036,7 @@ function initIowaExplorer() {
     },
     cleanPoiAddress: cleanPoiAddress, // exposed so the smoke test can regression-guard the office-pin address cleaner (a recurring break point) without any network call
     splitBaseStyle: splitBaseStyle, // exposed so the smoke test can hold the ground/labels split and the street-name restyle to a fixture, with no CARTO fetch
+    abbreviateStreetName: abbreviateStreetName, // exposed so the smoke test can hold the boundary-street label abbreviations to a fixture
     matchBoundaryStreets: matchBoundaryStreets, // exposed so the smoke test can hold the boundary-street matcher to a fixture, with no CARTO fetch
     boundaryStreets: function () { return { on: boundaryStreetsOn, available: !!baseLabels, names: boundaryStreetNames }; }, // which street names the boundary-street layer is showing, and their colours
     basemap: function () { return { kind: districtryTileKind, vector: baseIsVector, labels: !!baseLabels }; } // which basemap kind is live + which theme style it shows — the vector canvas has no tile <img> whose src a test could read

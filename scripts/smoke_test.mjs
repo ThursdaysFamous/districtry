@@ -1523,14 +1523,22 @@ try {
       const longEast = Math.max.apply(null, r.features.filter((f) => f.properties.name === "Long St")
         .map((f) => Math.max.apply(null, f.geometry.coordinates.map((c) => c[0]))));
       const bsNow = window[n].boundaryStreets();
+      const ab = window[n].abbreviateStreetName;
+      const abbrev = ["West North Avenue", "North Avenue", "North Broadway", "Avenue A", "Lake Shore Drive North", "Dearborn Street Bikeway"]
+        .map((s) => ab(s)).join("|");
       return { names: Object.keys(r.names).sort().join(), color: r.names["Edge St"], longEast,
                allNamed: r.features.every((f) => f.properties.name && f.properties.color === "#123456"),
+               edgeLabel: (r.features.find((f) => f.properties.name === "Edge St") || { properties: {} }).properties.label,
+               abbrev,
                on: bsNow.on, available: bsNow.available,
                button: !!document.getElementById("boundary-streets-toggle") };
     }, EXPORTS_NAME);
     check("boundary streets: a street along the edge is named, one crossing it or a block away is not",
       bs.names === "Edge St,Long St" && bs.color === "#123456" && bs.allNamed,
       `names=${bs.names} color=${bs.color}`);
+    check("boundary streets: labels print USPS abbreviations, never shortening a name to its type",
+      bs.abbrev === "W North Ave|North Ave|N Broadway|Avenue A|Lake Shore Dr N|Dearborn Street Bikeway" &&
+      bs.edgeLabel === "Edge St", `${bs.abbrev} edge=${bs.edgeLabel}`);
     check("boundary streets: the labelled stretch ends near where the edge leaves the street",
       bs.longEast > -87.69 && bs.longEast < -87.686, `east end ${bs.longEast}`);
     check("boundary streets: the toggle exists exactly where the vector labels do",
