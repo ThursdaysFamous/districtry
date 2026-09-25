@@ -30,6 +30,59 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-25. STAGE 2 PART 1 IS OPEN AS #1157, AND IT IS THE ONE OF THE
+THREE FINDINGS THAT WANTED A CHECK RATHER THAN A DERIVATION.** `0d540ce`, one
+commit, two files, 91 insertions. `wi_alderperson_scraper.py`'s queue comment
+listed nine cities already in `FLOORS` — a queue telling the next pass to redo
+finished work — and `check_queue_against_floors()` in
+`build_wi_alderperson_roster.py` now fails naming any city in both.
+
+**THE DERIVATION WAS TRIED FIRST AND CANNOT BE DONE, which is the part worth
+recording.** #1147's stage-2 proposal said "the scraper queue comment derived
+from `FLOORS`'s complement". Measured: a queue row carries a name, a council
+size and a URL, while a `FLOORS` entry is `(name, districts, four floors)` with
+**no URL anywhere**. The complement can say which cities remain; it cannot
+produce the row a reader needs. So the queue stays authored and this compares
+it — which is the weaker of the two remedies the report named, chosen because
+the stronger one has nothing to read from.
+
+**IT RUNS IN `selftest()`, WHICH `main()` CALLS UNCONDITIONALLY**, so its
+standing witness is the weekly `update-wi-alderperson-roster` job rather than a
+CI step. That is deliberate: no step means the 81/110 pair and the steward
+mirror are untouched, and a check with no caller stops running the week somebody
+forgets it.
+
+**THE HEADING ABOVE THE ROWS CARRIED A COUNT AND THAT IS THE SAME FAMILY ONE
+LINE UP.** It read THE REMAINING NINE over nine rows — a number restated beside
+the list that owns it, stale the moment a city ships, checked by nothing. The
+rows are now the only statement of how many remain.
+
+**MY FIRST DRAFT COULD READ ITS OWN DOCUMENTATION.** When no row parses the
+check must tell a reformatted block from a genuinely empty queue, so it looks
+for a sentinel — and the first version searched for the SUBSTRING `EMPTY`, which
+matched the INSTRUCTION four lines above telling a future author to write it. It
+passed on a queue it could not see. The negative test for exactly that case
+caught it; the sentinel is a whole LINE now. Negative-tested four ways, each
+asserting the outcome: a shipped city re-queued FAILS naming Oconomowoc, the
+anchor renamed FAILS, the rows gone with no sentinel FAILS, and the rows gone
+with the sentinel on its own line PASSES and says the queue is empty.
+
+**100 of 100 static invocations green**, `BASE=origin/main`, plus the builder's
+own `selftest: 15 case(s), 0 failures; 9 queued city/cities, none already
+floored`. **And the battery count is a correction against me**: an ad-hoc
+extract I made earlier in the session reported "102 static invocations", and
+measured against the list derived from `validate_gate_counts`' own parse that
+file held **99** of the 100 — missing
+`python3 scripts/validate_gap_counts.py --selftest` — while its driver also
+admitted shell lines that are not invocations. 102 was neither the battery's
+size nor a subset of it. CLAUDE.md's rule is to enumerate through the gate or
+the steward skill and never through a pattern you write yourself; this is the
+second time in two days I have paid for ignoring it.
+
+**Nothing a reader downloads changes.** Parts 2 and 3 of the stage-2 proposal —
+the gap record's county list as a derivation from two moving files, and the
+~24–26 declarations over the 309-field surface — stay proposed and unstarted.
+
 **2026-09-25. THE RE-DISPATCH IS GREEN, THE LADDER FIRED IN CI, AND THE SEAT
 HELD. THE PATH THAT RAN IS THE RETRY, NOT THE CARRY-FORWARD.** Run
 `36135395315`, dispatched on main at 12:31:18, success in 12m19s. `WITNESS
