@@ -139,6 +139,35 @@ MIN_FILES_COMPARED = 40
 # watching, which is exactly what it exists to prevent.
 # ---------------------------------------------------------------------------
 ACCEPTED_DROPS = {
+    # MOVED, NOT DROPPED, 2026-09-24. These four Michigan counties left
+    # mi-commissioner-returns.json because they arrived in
+    # mi-commissioner-members.json, which is a BETTER source for the same
+    # seats: the returns file names whoever the state certified as elected in
+    # November 2024 and never claims currency, while the members file is the
+    # county's own board page, re-read weekly. Each county's board page was
+    # found at an address no earlier sweep had asked for -- Shiawassee 7 seats,
+    # Ogemaw 5, Keweenaw 5, Gratiot 5 -- and the two files are gated DISJOINT
+    # by build_mi_returns_roster.py, so a county cannot sit in both and the
+    # departure is the mechanism working rather than a source going quiet.
+    #
+    # THESE FOUR ENTRIES DO NOT SELF-RETIRE AND THAT IS CORRECT. The audit
+    # requires the file to exist and the source to still be absent, and both
+    # stay true for as long as the county has a real roster. If one ever comes
+    # BACK to the returns file its entry goes stale and should be deleted --
+    # which would mean the county's own page had stopped keying its board, and
+    # is worth being told about.
+    "mi/data/app/mi-commissioner-returns.json:057":
+        "Gratiot moved to mi-commissioner-members.json 2026-09-24 "
+        "(www.gratiotmi.com, 5 districts, the county's own board page)",
+    "mi/data/app/mi-commissioner-returns.json:083":
+        "Keweenaw moved to mi-commissioner-members.json 2026-09-24 "
+        "(www.keweenawcountyonline.org, 5 districts, the county's own board page)",
+    "mi/data/app/mi-commissioner-returns.json:129":
+        "Ogemaw moved to mi-commissioner-members.json 2026-09-24 "
+        "(www.ocmi.us, 5 districts, the county's own board page)",
+    "mi/data/app/mi-commissioner-returns.json:155":
+        "Shiawassee moved to mi-commissioner-members.json 2026-09-24 "
+        "(shiawassee.net, 7 districts, the county's own board page)",
     # Removed on purpose, 2026-08-28. Every one of the 17 plan 3 counties keyed
     # into this file publishes ONE phone number for its whole board -- measured,
     # exactly one distinct value per county across all 67 districts -- which is

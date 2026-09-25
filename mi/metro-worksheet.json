@@ -556,13 +556,6 @@
         "dynamic_reference": true
       },
       {
-        "file": "gratiot-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "note": "Gratiot County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Gratiot County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
-        "dynamic_reference": true
-      },
-      {
         "file": "huron-county-outline.json",
         "min_features": 1,
         "max_features": 1,
@@ -588,13 +581,6 @@
         "min_features": 1,
         "max_features": 1,
         "note": "Iron County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Iron County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
-        "dynamic_reference": true
-      },
-      {
-        "file": "keweenaw-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "note": "Keweenaw County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Keweenaw County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
         "dynamic_reference": true
       },
       {
@@ -661,24 +647,10 @@
         "dynamic_reference": true
       },
       {
-        "file": "ogemaw-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "note": "Ogemaw County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Ogemaw County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
-        "dynamic_reference": true
-      },
-      {
         "file": "ottawa-county-outline.json",
         "min_features": 1,
         "max_features": 1,
         "note": "Ottawa County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Ottawa County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
-        "dynamic_reference": true
-      },
-      {
-        "file": "shiawassee-county-outline.json",
-        "min_features": 1,
-        "max_features": 1,
-        "note": "Shiawassee County gap-location geometry — NOT a dispatched county and not a coverage test. No layer answers here; this ships so the Data gaps panel can tell a reader standing in Shiawassee County which recorded gap affects them. Without it `appliesHere` 404s while the panel's `mappable` flag is true, and the lede claims \"Nothing recorded is missing where you clicked\" inside a county whose board this app cannot answer. Built from TIGERweb's water-inclusive county fabric by mi/scripts/build_mi_gap_outlines.py at the same 25 m tolerance the coverage wash uses, so the two can never disagree about a boundary; verified by the Census's own internal point for every unserved county landing inside its own outline and outside all the others. The county list is DERIVED (all 83 minus those mi-commissioner-members.json covers), so a roster tranche retires this file on its own.",
         "dynamic_reference": true
       },
       {
@@ -755,18 +727,18 @@
       },
       {
         "file": "mi-commissioner-returns.json",
-        "min_keys": 33,
-        "note": "Commissioner NAMES for the 35 counties mi-commissioner-members.json does NOT reach, from the state district layer's own certified-returns column, built by mi/scripts/build_mi_returns_roster.py. THIS IS A DIFFERENT KIND OF ROSTER FROM THE FILE ABOVE AND EVERY RECORD SAYS SO: these are the winners the State of Michigan certified in the general election of 5 November 2024, not a list any county keeps current, so each record carries its own `lede` naming that election and the builder REFUSES TO WRITE a record without one. mi-commissioner-districts.json stays name-free and its BANNED_FIELDS guard is untouched — the 2026-09-03 decision to strip those columns off the BOUNDARY file stands. How stale the column is, measured 2026-09-22 on the 366 seats where the scraped roster gives a comparand: 234 identical, 104 the same surname in a different form (Dave/David, middle initials, diacritics, suffixes) and 28 a different surname, which a hand reading splits 18 naming a different person (4.9% of the 366), 9 misspelling the same person and 1 a missing space. Five of the 35 — Washtenaw, Bay, Manistee, Newaygo, Van Buren — do publish their own roster and only the parsing is hard, so each carries a `betterSource` note saying a scraper remains the better answer. min_keys is a floor that tolerates two counties leaving the cohort as they ship a real roster; it FALLS as counties move to the scraped file, which is the one direction it may move without a source change."
+        "min_keys": 29,
+        "note": "Commissioner NAMES for the 31 counties mi-commissioner-members.json does NOT reach, from the state district layer's own certified-returns column, built by mi/scripts/build_mi_returns_roster.py. THIS IS A DIFFERENT KIND OF ROSTER FROM THE FILE ABOVE AND EVERY RECORD SAYS SO: these are the winners the State of Michigan certified in the general election of 5 November 2024, not a list any county keeps current, so each record carries its own `lede` naming that election and the builder REFUSES TO WRITE a record without one. mi-commissioner-districts.json stays name-free and its BANNED_FIELDS guard is untouched — the 2026-09-03 decision to strip those columns off the BOUNDARY file stands. How stale the column is, measured 2026-09-22 on the 366 seats where the scraped roster gives a comparand: 234 identical, 104 the same surname in a different form (Dave/David, middle initials, diacritics, suffixes) and 28 a different surname, which a hand reading splits 18 naming a different person (4.9% of the 366), 9 misspelling the same person and 1 a missing space. Five of the 31 — Washtenaw, Bay, Manistee, Newaygo, Van Buren — do publish their own roster and only the parsing is hard, so each carries a `betterSource` note saying a scraper remains the better answer. min_keys is a floor that tolerates two counties leaving the cohort as they ship a real roster; it FALLS as counties move to the scraped file, which is the one direction it may move without a source change. MOVED 35 -> 31 on 2026-09-24 and this floor 33 -> 29 with it, when Gratiot, Keweenaw, Ogemaw and Shiawassee left this cohort for their own counties' board pages. That is the fall this note already described and it had not happened before."
       },
       {
         "file": "mi-commissioner-members.json",
-        "min_keys": 46,
-        "note": "Which commissioner holds each county commissioner district, keyed by 3-digit county FIPS — the same CountyFIPS mi-commissioner-districts.json carries. Built county by county from each county's own board page by mi/scripts/mi_commissioner_scraper.py + build_mi_commissioner_roster.py, refreshed weekly by update-mi-commissioner-roster.yml. IT ARRIVES IN TRANCHES and is not meant to reach 83: 48 counties and 366 of the 619 districts through tranche 7 (2026-09-19), which is 61.4% of Michigan's 10,077,331 people — Census 2020 on both sides of that fraction, because the district layer's own Population column sums to 10,007,596 and reads 0 for all seven of Cheboygan's districts. A county record may be SHORT, and `unnamedDistricts` names which district while `unnamedWhy` carries a per-district reason. FOUR ARE SHORT AND FOR THREE DIFFERENT REASONS, each stated in its own words on the card: Monroe's own directory row for District 2 names no commissioner; Ionia's and Clinton's board pages call District 3 and District 4 vacant, Clinton carrying its own Notice of Vacancy for that seat on the same page; and Lenawee District 5's row names Jim Daly where the same county's News Flash of 10 September 2026 announces his death, so two county surfaces disagree and nothing here names that seat. All four state which district on the card and on the county page rather than dropping it. min_keys is a floor that tolerates any two of the forty-eight going dark and refuses a collapse — raise it when a tranche lands, never lower it to get past a failure."
+        "min_keys": 50,
+        "note": "Which commissioner holds each county commissioner district, keyed by 3-digit county FIPS — the same CountyFIPS mi-commissioner-districts.json carries. Built county by county from each county's own board page by mi/scripts/mi_commissioner_scraper.py + build_mi_commissioner_roster.py, refreshed weekly by update-mi-commissioner-roster.yml. IT ARRIVES IN TRANCHES and is not meant to reach 83: 48 counties and 366 of the 619 districts through tranche 7 (2026-09-19), which is 61.4% of Michigan's 10,077,331 people — Census 2020 on both sides of that fraction, because the district layer's own Population column sums to 10,007,596 and reads 0 for all seven of Cheboygan's districts. A county record may be SHORT, and `unnamedDistricts` names which district while `unnamedWhy` carries a per-district reason. FOUR ARE SHORT AND FOR THREE DIFFERENT REASONS, each stated in its own words on the card: Monroe's own directory row for District 2 names no commissioner; Ionia's and Clinton's board pages call District 3 and District 4 vacant, Clinton carrying its own Notice of Vacancy for that seat on the same page; and Lenawee District 5's row names Jim Daly where the same county's News Flash of 10 September 2026 announces his death, so two county surfaces disagree and nothing here names that seat. All four state which district on the card and on the county page rather than dropping it. min_keys is a floor that tolerates any two of the forty-eight going dark and refuses a collapse — raise it when a tranche lands, never lower it to get past a failure. RAISED 46 -> 50 on 2026-09-24 with tranche 8: Shiawassee, Ogemaw, Keweenaw and Gratiot, 22 seats, each from a board page on a host no earlier sweep had asked for."
       }
     ]
   },
   "sw": {
-    "cache_name": "districtry-mi-shell-v14",
+    "cache_name": "districtry-mi-shell-v15",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
