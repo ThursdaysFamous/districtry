@@ -40,6 +40,51 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-25. PR A IS OPEN AS #1160 and the surface defect was worse than
+stage 1 reported.** The instrument kept every `data/app/*.json` whose BASENAME
+appears in its instance's `index.html`, and three Illinois loaders build their
+URL by concatenation, so it missed 86 of Illinois's 388 files, 215 of
+Wisconsin's 262, 24 of Iowa's 57, 31 of Michigan's 53, 5 of New York's 25 and 1
+of San Francisco's 14 — Wisconsin's whole per-county polling-place set and
+Illinois's county outlines among them. **The reader is now `sw.js`, and the
+choice was measured rather than assumed**: the worksheet's `data_files`, the two
+`sw.js` lists and a bare glob all give the same 388, because every link in the
+chain is gated — a stray `data/app` file was added to prove `validate_index.py`
+fails on it — so `sw.js` is read because it is the app's own statement about its
+fetches rather than an authoring surface or a directory listing. A missing list
+FAILS rather than emptying the surface, which is the byte-order-mark defect one
+level up: an instance with no files reads as fully maintained.
+
+**Illinois's WATCH.md is the root one, and reading `<tag>/WATCH.md` read nothing
+for it** — no gate could see that, because an empty plan list is what a state
+with no plans looks like. It now reports 2 files under a plan where it reported
+none. `il/data/app/population/` enters as ONE class row with its own declared
+kind (census block weights rot on the next decennial census and on nothing
+else), and **four code paths broke on a rel path ending in `/`** — including the
+`watch_rows` scan, so a WATCH.md row written for the folder would have counted
+for nothing while looking exactly like a plan, which is the trap PR B would have
+walked into. Effect: surface il 310→397, wi 47→262, ia 33→57, mi 22→53;
+without a job il 221→306, wi 25→240, ia 16→40, mi 14→45. No letters change,
+and nothing in the sibling instances is edited — their numbers move because the
+instrument stops under-reading them.
+
+**#1160 CARRIES TWO SUBJECTS AND SAYS SO**, because this session develops on one
+branch and a second PR would need a second one: the surface fix plus the
+two-line CI-diagnosis correction above. They are separate commits and the body
+offers the split. All 100 static invocations green through a runner gated on its
+own verdict, Illinois smoke and landing tests green, no served byte touched.
+
+**PR B's classes re-derived on the NEW surface** (305 unplanned, not 219): 101
+county outlines, 79 library districts, 46 county precinct layers, 37 board
+district files, 9 fire, 8 park, 6 precinct polling, 5 judicial subcircuits, 1
+city outline, 13 singletons and the census population class. Grouping is by
+CLOCK rather than by filename, because a WATCH.md row's whole job is to state a
+when — and one finding is already visible: several of the singletons
+(`coverage-gaps.json`, `metro-outline.json`, `il-county-board-offices.json`) are
+held by a `--check` in CI rather than by any schedule, and the guarantees are
+NOT the same file to file, so that is a row to write carefully rather than a
+category to claim.
+
 **2026-09-25. TWO CLAIMS I PUBLISHED THIS MORNING WERE FALSE, and `39210c7` is
 what made me re-check them — #1160.** I said `smoke-test.yml` has no
 `workflow_dispatch` (it has declared one since 2026-09-01) and that GitHub
