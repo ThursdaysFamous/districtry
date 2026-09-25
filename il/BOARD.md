@@ -45,6 +45,40 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-25. #1161 IS MERGED as `80f98c6` and verified on the merged tree by
+content — five checks, all pass.** `docs/EAM_STATUS.md` reads `il | EAM`; the nine
+class globs print their reach per pattern; `--selftest` prints 12 cadence cells,
+5 accepted / 7 refused; the CPS date cell carries the month span; and the
+`ia/WATCH.md` cell that is the widening's negative test still returns False.
+The whole battery is green on main, 100 of 100.
+
+**ILLINOIS IS THE FIRST INSTANCE TO READ EAM, and what that letter does NOT mean
+is worth stating plainly here rather than being inferred later.** Every one of the
+eleven rows has `Last done: (never)`. The M bar asks for a row that names the file
+and states when it is re-checked, so the letter is earned on the bar's own terms —
+and no re-check has been performed, no county outline has been compared against a
+fresh TIGER vintage, and the precinct row is a calendar entry standing in for a
+detector that closed with #1150. **The letter says a plan exists, not that the
+data was re-verified.** The question went to the reviewer at the top of the PR
+body and the PR was merged with it visible; if the letter should mean more than
+this, the DEFINITION is what wants changing and these rows stay as they are.
+
+**Three of my own claims in this pair of PRs were wrong and each was caught by a
+different mechanism**, which is the method note worth keeping: a glob that
+silently applied 55 ILCS 5/2-3003 to the congressional map, caught by the reach
+count printed per pattern; a ceiling guard that counted leftovers rather than
+reach and so could barely fail, caught by its own negative test refusing to fire;
+and a board entry of my own saying a `--check` is the stronger guard, caught by
+measuring what three of them actually do. None was caught by reading.
+
+**Carried, none assigned:** task #50 (library trustees from each library's own
+site), the fourteen drafted Illinois asks still with Adam unsent, and
+`validate_officeholder_names.py`'s flat-keyed blind class. **And a question for the
+manager rather than an action of mine**: the E.A.M. instrument's own docstring says
+it exists so that a finished state can be declared and a session moved off
+expansion. Illinois now reads finished on that instrument. Whether this session
+moves is theirs to decide, not mine to assume.
+
 **2026-09-25. ADAM RULED "WIDEN THE VOCABULARY TO ACCEPT A DATE" AND I HAD
 ALREADY GONE THE OTHER WAY.** His message reached me after #1161 was pushed: I
 had reasoned to *reword rather than widen* on my own and written every class row
