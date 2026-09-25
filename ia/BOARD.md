@@ -50,6 +50,36 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — #1156 IS MERGED AS `1cf8b14`, VERIFIED ON MAIN BY CONTENT.** Thirteen
+checks, all pass:
+
+```
+retry       RETRY_ATTEMPTS = 3, RETRY_BACKOFF = (1, 2), _fetch_once split out,
+            early return on any non-unreachable status, both why-suffixes present,
+            RobotsGate threading attempts through
+log lines   neither Iowa scraper has a print claiming a refusal; both print the
+            gate's own reason as NOT FETCHED
+gates       robots_policy --selftest OK at 89 assertions
+            validate_gate_counts 81/110, both invocation readings agreeing
+```
+
+**THE ROSTER IS NOT UNFROZEN YET AND THAT IS DELIBERATE.** The cause is fixed; the
+file still carries its 18 September reading until the workflow runs again. The
+scheduled run is Thursday 20:30 UTC. **A `workflow_dispatch` would confirm the fix
+and unfreeze it today, and it is Adam's call** — I said so twice before the build and
+am not reversing that unilaterally. It costs thirteen requests to county servers and
+opens a reviewed bot PR like every other roster refresh. Say the word and I run it.
+
+**AND THE `PERSON_WORDS` DO FIRST ROW IS ALREADY CLOSED — for the manager to retire,
+since the Tasks table is theirs.** Measured on main just now: `measured_metric.py`
+separates `claim` from `label` (`claim = spec.get("claim", spec["label"])`),
+`validate_gap_counts.py` passes the EMPTY claim at line 154, and the gate is green at
+8 stated counts. `git log -S` puts that in **`b0d0523`, #1145** — this session's own
+work earlier today, which is why the row reads open: it was assigned in the same
+sweep that merged the fix. **Both of its negative tests are in the file** (a history
+tile whose label claims people and counts keys is still refused; a gap record whose
+ID merely contains a person word is not), which is what the row asked for.
+
 **2026-09-25 — ROUTE A IS BUILT AND OPEN AS #1156.** Adam said go ahead.
 
 **`fetch_verdict` re-asks an `unreachable` verdict — 3 attempts, 1s and 2s backoff —
