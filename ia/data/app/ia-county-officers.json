@@ -1941,7 +1941,12 @@
  "19087": {
   "boardPhone": "(319) 385-0760",
   "county": "Henry",
-  "countyAttorneyWithheld": "the county directory names Darin Stater and the county attorney's own statewide directory names BECKY WILSON",
+  "countyAttorney": {
+   "email": "bwilson@henrycountyiowa.us",
+   "name": "Becky Wilson",
+   "party": "Republican",
+   "phone": "319-385-0752"
+  },
   "recorder": {
    "email": "lbuffington@henrycountyiowa.us",
    "name": "Lynnae Buffington",
