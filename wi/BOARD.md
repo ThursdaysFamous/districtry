@@ -32,6 +32,63 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-25. THE NESTING SYMPTOM IS REAL, IT IS NOT UPSTREAM, AND THE
+RETAIN-PERCENTAGE SWEEP ILLINOIS IS ABOUT TO RUN CANNOT FIX IT.** Reported
+rather than fixed, which is what was asked. Four measurements, each on the same
+two numbers — symmetric difference as a share of the Senate district, and the
+worst boundary offset (Hausdorff between the two boundaries, converted at the
+district's own latitude):
+
+| stage | median sym. diff | worst offset | exact pairings |
+|---|---|---|---|
+| TIGERweb source, unsimplified | **0.000000%** | **0.0 m** | **33 of 33** |
+| shipped (10% / 9%, separate runs) | 0.006905% | 418 m | 0 of 33 |
+| 10% / 10%, still separate runs | 0.002034% | 202 m | 0 of 33 |
+| 10%, ONE run, combined topology | **0.000000%** | **0.0 m** | **33 of 33** |
+
+**THE BRIEFING'S ALTERNATIVE PREMISE IS WRONG AND THE TREE SETTLES IT IN ONE
+READ.** It said Wisconsin's boundaries come from LTSB rather than TIGERweb, so
+the cause might be upstream. `wi/scripts/build_legislative_boundaries.py` fetches
+**TIGERweb** Legislative MapServer layers 1 and 2 — the same publisher as
+Illinois, the same builder shape, and the same two retain percentages, 10% for
+the Senate and 9% for the Assembly. LTSB is the supervisory/county-board layer,
+not the legislature. So the cause transfers exactly, and the source measurement
+above confirms it: nesting is exact before the build touches it.
+
+**EQUALISING THE PERCENTAGE IS NOT THE FIX, AND THAT IS THE FINDING WORTH
+HAVING BEFORE THE SWEEP RUNS.** At 10%/10% in separate runs the median improves
+3.4x and the worst offset halves, and **nothing becomes exact** — still 0 of 33,
+still 202 m. mapshaper builds topology within one file, so a shared edge
+simplified in two runs gets two vertex sets whatever the percentages are. The
+percentage is a second-order term; the separate runs are the cause. A sweep
+would buy a 3x reduction in a symptom and leave every pairing wrong.
+
+**WHAT DOES WORK, MEASURED**: `-i combine-files <senate> <assembly>` then one
+`-simplify` builds shared topology across both layers, and every pairing comes
+out exact at the SAME 10% the separate runs cannot reach. Cost is near-neutral —
+feature counts identical (34 and 100, the ZZ water pseudo-districts included),
+and **+15.2 KB gzipped across both files, +3.4%** (the Senate file gets
+*smaller*; the Assembly grows because 10% keeps more than 9% did).
+
+**MY WORST-OFFSET FIGURE IS 418 m WHERE THE BRIEFING SAYS ~595 m, AND I AM NOT
+ADOPTING THEIRS.** The median reproduces exactly (0.006905% against 0.0069%) and
+all 33 diverge, so we are looking at the same defect; the offsets differ because
+the metric does, and mine is stated with its method above rather than
+harmonised. Worth one line from Illinois on how theirs was taken.
+
+**TWO SYMPTOMS, TWO CAUSES, AND THEY SHOULD NOT BE CONFLATED.** The staircase
+cut into diagonal chords is the aggressive PERCENTAGE, which combined topology
+does not address — it is a separate question with a separate fix, and I have not
+measured it for Wisconsin. What I can say from the numbers above is that moving
+the Assembly from 9% to 10% raises its vertex count from 31,851 to 35,214, so the
+combined-topology fix happens to reduce that symptom slightly rather than
+worsening it.
+
+**NOTHING BUILT AND NOTHING PUSHED.** robots.txt for
+`tigerweb.geo.census.gov` was read first as the client the builder sends (bare
+curl): absent, 189 bytes of HTML, allow-all. Illinois should see this before
+spending the sweep.
+
 **2026-09-25. #1159 MERGED, VERIFIED ON MAIN BY CONTENT, AND THE BOARD IS
 CLEAR.** `_robots_verdict`'s docstring on main now states the one reason that
 survives #1158 and records the retired clause as history rather than as
