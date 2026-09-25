@@ -1,0 +1,161 @@
+name: Update Illinois library trustees
+
+# Weekly refresh of il/data/app/il-library-trustees.json — a board of trustees
+# read off each library's OWN website, for the statewide library layer's cards
+# that no Annual Financial Report answers for.
+#
+# WHY THERE IS A SECOND LIBRARY BOARD SOURCE AT ALL. Only a district-governed
+# library files an AFR, so update-il-library-district-officials.yml reaches the
+# districts and nobody else: a municipal library is covered by its city's or
+# village's report and a township library files as or within a township, whose
+# board is not the library's board. The library systems' shared directory (L2)
+# covers every library and publishes one administrator each, and its Staff List
+# and Annual Certifications both answer 403 behind a sign-in this project does
+# not work around. That left the trustees unanswered for every card outside the
+# districts, which is the open half of the statewide-library-officials gap. The
+# library itself is the only publisher left.
+#
+# THE POOL IS DERIVED, NEVER LISTED. The scraper reads the shipped boundary
+# files, the filings roster and the directory on every run and takes every card
+# that names no board and links a site, so a library that starts filing leaves
+# the pool by itself and one whose website disappears leaves it the same way.
+#
+# ROBOTS FIRST, THROUGH scripts/robots_policy.py, as the client that fetches,
+# before each host's first request, with a stated Crawl-delay honoured per host.
+# A refusal is recorded as a refusal and nothing is fetched from that host.
+#
+# THREE HOPS AT MOST per library: the home page, a link on it naming a board,
+# and — only where the home page names none — at most two same-origin
+# About-shaped pages, because a home page with no board link is not a library
+# that publishes no board. Around 300 paced requests across 170-odd hosts, so
+# this is a slow job by construction and takes an hour no other weekly job uses.
+#
+# NOTHING IS GUESSED. A library ships only where its page's own structure yields
+# a board between three and twelve names and the page's own words say the board
+# is that library's; everything else is reported unread. Five hosts carry more
+# than one library, one of them a library that contracts its service to a
+# neighbour, and a board is attributed there only when the page's words pick this
+# library over the other claimant. The parser's --selftest covers each shape and
+# each refusal, and CI runs it.
+#
+# A library redesigning its site is a real event, not a parse failure, so the
+# builder's floors sit under the measured values rather than at them.
+
+on:
+  schedule:
+    # Monday 10:00 UTC — three hours ahead of the roster wave and clear of the
+    # two other library jobs (Sunday 12:00 and Monday 11:00/12:00).
+    - cron: "0 10 * * 1"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI (a PR opened with the default GITHUB_TOKEN fires no workflows).
+      # Falls back to github.token when the secret is absent.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # FULL history, because this job regenerates sitemap.xml and
+          # build_sitemap.py reads each page's lastmod from that file's own last
+          # commit. A shallow clone dates every page today.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      # THE SCRAPER ITSELF IS STDLIB-ONLY and this line is still right: it reads
+      # the statewide dispatch table through il_library_district_officials_scraper,
+      # whose own closure reaches comptroller_afr, which imports requests at
+      # module scope. validate_workflow_deps.py is what caught the omission.
+      - name: Install scraper dependencies
+        run: pip install -c scripts/requirements.txt requests
+
+      # The parser's own fixtures, offline, before a single host is asked for a
+      # page: a regression in the reader must not be discovered by reading 170
+      # libraries' sites with it.
+      - name: Parser selftest
+        run: python3 scripts/il_library_trustees_scraper.py --selftest
+
+      - name: Read each library's own board page
+        run: |
+          python3 scripts/il_library_trustees_scraper.py \
+            --out /tmp/il_library_trustees_raw.json
+
+      - name: Rebuild roster data file
+        id: build
+        run: |
+          python3 scripts/build_il_library_trustees.py \
+            /tmp/il_library_trustees_raw.json
+
+      # Gate the regenerated data before it can reach a PR.
+      - name: Validate app + data files
+        run: |
+          python3 scripts/build_il_library_trustees.py \
+            /tmp/il_library_trustees_raw.json --check
+          python3 scripts/validate_index.py il/index.html
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- il/data/app/; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+          # The build step's one-line verdict on whether anything moved besides
+          # the `generated` stamp. A YAML env value, never interpolated into a
+          # shell command.
+          PR_BODY: |
+            Automated weekly refresh of the library trustees the statewide library layer's cards name from each library's own website, generated by `scripts/il_library_trustees_scraper.py` + `scripts/build_il_library_trustees.py`. These are the cards no Annual Financial Report answers for — municipal and township libraries, which file no report of their own. Every record carries the board page it was read from and the day it was read, and the card says both. Please review the diff before merging — this changes data about real people.
+
+            **What moved this week.** ${{ steps.build.outputs.changes }}
+        run: |
+          # Fixed branch (not per-run): an unmerged roster PR is refreshed in
+          # place by the force-push below instead of spawning a duplicate PR.
+          branch="bot/il-library-trustees-update"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut the branch from main's CURRENT tip, not from the checkout this
+          # run started with — a workflow-scope refusal otherwise when main
+          # moves mid-run. NOT depth-limited: a shallow fetch here would
+          # re-shallow the clone the checkout above deepened.
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          # REGENERATED HERE, AFTER THE CUT. il/library-district.html reads this
+          # roster's people through build_officeholder_tables.py, and
+          # build_county_pages.py's gate FAILS a workflow that rewrites a roster
+          # those pages read without regenerating them in the same run.
+          # Building before the cut leaves shared files dirty, where
+          # `git checkout -B` refuses to move onto main's new tip.
+          python3 scripts/build_officeholder_tables.py
+          python3 scripts/build_concept_pages.py
+          python3 scripts/build_about_page.py
+          python3 scripts/build_sitemap.py
+          git add il/data/app/il-library-trustees.json il/library-district.html about.html sitemap.xml
+          git commit -m "Update Illinois library trustees"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create \
+              --title "Update Illinois library trustees" \
+              --body "$PR_BODY" \
+              --base main \
+              --head "$branch"
+          else
+            # The force-push refreshed the branch; the BODY carries this run's
+            # what-moved line, so leaving it alone would put last week's summary
+            # in front of a reviewer reading this week's diff.
+            gh pr edit "$branch" --body "$PR_BODY"
+          fi

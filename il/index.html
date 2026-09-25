@@ -14039,6 +14039,22 @@ function initChiExplorer() {
   var loadIlLibraryContacts = makeCached(function () {
     return fetchJSONWithRetry("data/app/il-library-contacts.json", {}, 2);
   });
+  /* Trustees read off each library's OWN website, for the cards no Annual
+   * Financial Report answers for. Only a district-governed library files an
+   * AFR, so a municipal or township library's board appears in no filing at
+   * all, and the shared directory's staff list is behind a sign-in this
+   * project does not work around — the library itself is the only publisher
+   * left. Keyed by library name, the same key the other two use.
+   *
+   * IT NEVER COMPETES WITH A FILING. The scraper's pool is every card that
+   * names no board, derived from these same files on every run, so a library
+   * that starts filing leaves it by itself; build_il_library_trustees.py
+   * refuses a payload that overlaps the filings' boards and
+   * validate_index.py fails on an overlap too — three guards, so the stamp
+   * below can be a plain fill-the-gap rather than an arbitration. */
+  var loadIlLibraryTrustees = makeCached(function () {
+    return fetchJSONWithRetry("data/app/il-library-trustees.json", {}, 2);
+  });
   /* One stamper for both counties: the payloads are the same shape because
    * they come from the same filings, so only the roster file and the property
    * holding the district's name differ. */
@@ -14123,10 +14139,12 @@ function initChiExplorer() {
     return makeCached(function () {
       return Promise.all([
         stamped(),
-        loadIlLibraryContacts().catch(function () { return null; })
+        loadIlLibraryContacts().catch(function () { return null; }),
+        loadIlLibraryTrustees().catch(function () { return null; })
       ]).then(function (results) {
         var geojson = results[0];
         var byName = (results[1] && results[1].libraries) || {};
+        var trustees = (results[2] && results[2].libraries) || {};
         (geojson.features || []).forEach(function (f) {
           var props = f.properties || {};
           var extra = byName[String(props.library)];
@@ -14155,6 +14173,19 @@ function initChiExplorer() {
             added.push("telephone");
           }
           if (added.length) info.contactNote = libraryDirectoryNote(added);
+        });
+        // The library's own trustees, where the filing named no board. A
+        // filing is the better source — a document the library signed and
+        // filed with the State — so this only ever fills, and the two
+        // builders plus validate_index.py make an overlap impossible rather
+        // than letting this line arbitrate one silently.
+        (geojson.features || []).forEach(function (f) {
+          var props = f.properties || {};
+          var own = trustees[String(props.library)];
+          if (!own || !(own.board || []).length) return;
+          var info = props.dxOfficials = props.dxOfficials || {};
+          if ((info.board || []).length) return;
+          info.siteBoard = own;
         });
         return geojson;
       });
@@ -14286,6 +14317,37 @@ function initChiExplorer() {
     if (board.length) {
       frag.appendChild(renderSectionLabel("Board"));
       frag.appendChild(renderPersonRows(board.map(person)));
+    }
+    // THE LIBRARY'S OWN SITE, where no filing named a board. Only the library
+    // layer sets this and only in that case, so it can never sit beside the
+    // filing's board; it goes here rather than after the office rows because
+    // the card leads with people.
+    //
+    // ITS NOTE NAMES THE PAGE AND THE DAY IT WAS READ, and says neither more
+    // nor less. A website carries no fiscal year, so "as filed for 2025" has
+    // no counterpart here — what is checkable is which page said this and
+    // when we looked, and the page is linked so a reader can check it. It
+    // makes no claim about completeness either: unlike the AFR's four slots,
+    // a library listing its trustees has no reason to stop short, so a
+    // hedge would be inventing a doubt rather than recording one.
+    var site = info.siteBoard;
+    var siteBoard = site ? (site.board || []).filter(function (m) {
+      return m && m.name;
+    }) : [];
+    if (!board.length && siteBoard.length) {
+      frag.appendChild(renderSectionLabel("Board"));
+      frag.appendChild(renderPersonRows(siteBoard.map(person)));
+      // A LINK ROW RATHER THAN A NOTE, so the page the claim rests on is one
+      // click away: the card's `primaryLink` is already the library's own site
+      // and a reader checking a board wants the board's page, not the home
+      // page. renderLinkRow's documented shape is title/note/links, and this
+      // row wants the last two.
+      frag.appendChild(renderLinkRow({
+        note: "From the library's own website" +
+          (site.readOn ? ", read " + String(site.readOn) : "") + ".",
+        links: site.boardUrl
+          ? [{ label: "The board page", url: String(site.boardUrl) }] : null
+      }));
     }
     if (heads.length) {
       frag.appendChild(renderSectionLabel("Administration"));

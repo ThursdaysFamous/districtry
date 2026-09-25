@@ -41,11 +41,16 @@ stack made. (The first sweep read 203: 37 hosts had been probed at the first
 half of a URL split across two string literals, and 23 more at a directory a
 page sat under; not one re-probe moved a host INTO a refusal.) Per file
 (`probe_user_agents.py --inventory` prints this tally, re-derived from the tree
-and the artifact rather than remembered): 104 files send a browser string; 64
+and the artifact rather than remembered): 103 files send a browser string; 64
 of them reach only hosts that serve the token a full page, 22 more reach no
 host that refuses the token (one or more answered nothing or refused the
-`requests` stack), and 18 reach at least one host that refuses it -- and 283 of
-the 295 measured hosts are still reached by such a caller. THESE FIGURES ARE
+`requests` stack), and 17 reach at least one host that refuses it -- and 266 of
+the 295 measured hosts are still reached by such a caller. `fetch_stdlib` came
+OFF the browser-marker list on 2026-09-25, which is what moved these four: it is
+the CLIENT for two of the four rungs and sends whatever headers its caller
+passes, so naming it says nothing about the User-Agent. Two files were
+classified on it alone -- validate_sources.py and il_library_trustees_scraper.py
+-- and neither names a Chrome string, a hint set or the word Mozilla in code. THESE FIGURES ARE
 GATED: `probe_user_agents.py --check` parses them out of this docstring,
 CLAUDE.md and the guidebook and FAILS naming the current ones when any differs
 from the tree and the artifact, so renaming a scraper to the token moves them

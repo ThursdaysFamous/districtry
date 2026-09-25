@@ -802,6 +802,7 @@ def _join(names):
 
 SPECIAL_ROSTER = "il/data/app/il-special-district-officials.json"
 LIBRARY_ROSTER = "il/data/app/il-library-district-officials.json"
+LIBRARY_SITE_ROSTER = "il/data/app/il-library-trustees.json"
 
 
 def dispatch_counties(layer):
@@ -1039,16 +1040,27 @@ def park_district_page(tag, spec, worksheet):
 def library_district_page(tag, spec, worksheet):
     roster = load(LIBRARY_ROSTER)["libraries"]
     units = [(name, roster[name]) for name in sorted(roster, key=lambda s: s.lower())]
-    people = sum(len(afr_people(rec)) for _n, rec in units)
+    filed_people = sum(len(afr_people(rec)) for _n, rec in units)
     counties = dispatch_counties("library-district")
     districts = sum(1 for name, _r in units if "District" in name)
+    # THE SECOND PUBLISHER, and the page's own sentences have to stay true of
+    # both. Only a district-governed library files an annual report, so the
+    # municipal and township libraries appear in no filing at all and their
+    # trustees are read off the library's own website; both tables are on this
+    # page and neither claims the other's source.
+    site = load(LIBRARY_SITE_ROSTER)["libraries"]
+    site_people = sum(len(afr_people(rec)) for rec in site.values())
+    people = filed_people + site_people
 
     lede = dict(
         html='<p class="lede"><strong>A library district is a taxing body you live inside, '
              'with a board you elect.</strong> It is not a department of the village it is '
              'named after, and its trustees stand for election on their own. This names the '
-             '%d trustees and officers of the %d Illinois libraries that file an annual '
-             'report with the state.</p>' % (people, len(units)),
+             '%d trustees and officers of %d Illinois libraries — %d of them from the '
+             'annual report the library files with the state, and %d from the '
+             'library\'s own website, which is the only publisher for a library that '
+             'files no report of its own.</p>'
+             % (people, len(units) + len(site), filed_people, site_people),
         cta='    <a class="cta" href="./#layers=%s">Find your library district →</a>\n'
             '    <p class="cta-note">Opens the map with the library district layer on. '
             'Search your address or ZIP, or tap your location.</p>' % spec["layers"])
@@ -1060,10 +1072,11 @@ def library_district_page(tag, spec, worksheet):
         it is a district you live inside or a municipal library whose area is simply the
         village, the people its latest filing names, and its office and telephone.</p>
       <p>The map draws library boundaries in %(counties)d Illinois counties. This page names
-        the %(units)d libraries among them that file an annual report the state publishes. A
-        library the filings do not reach still draws on the map, and its card may still name an
-        administrator from the library systems' shared directory — this page is the filings,
-        not everything the map knows.</p>
+        %(units)d of them from the annual report the library files with the state and
+        %(site)d more from the library's own website. A library in neither table still draws
+        on the map, and its card may still name an administrator from the library systems'
+        shared directory — these are the two publishers that name a BOARD, not everything the
+        map knows.</p>
     </div>
   </section>
 
@@ -1080,7 +1093,19 @@ def library_district_page(tag, spec, worksheet):
       librarian, manager or accountant is staff the board employs.</p>
   </section>
 
-"""  % dict(counties=counties, units=len(units), districts=districts)
+  <section>
+    <h2>Where each name comes from</h2>
+    <p>A library <strong>district</strong> files an Annual Financial Report with the Illinois
+      Comptroller, and that filing names its board with the title the library itself filed. A
+      <strong>municipal</strong> or <strong>township</strong> library files no report of its
+      own — it is covered by its city's, village's or township's — so no filing names its
+      trustees, and the library's own website is the only publisher that does. The second
+      table below is read from that website, and every row names the page it came from and the
+      day it was read, because a website carries no fiscal year and that is the only claim a
+      reading of one can make.</p>
+  </section>
+
+"""  % dict(counties=counties, units=len(units), districts=districts, site=len(site))
     sections += office_table(units, "library", "libraries")
     sections += afr_provenance("library", LIBRARY_NAME_NOTE)
 
@@ -1090,8 +1115,10 @@ def library_district_page(tag, spec, worksheet):
                  "map.",
         desc="Your Illinois library district by address or ZIP — its trustees, its officers, "
              "and where to reach it.",
-        og="Find your Illinois library district by address or ZIP, and the %d people its own "
-           "filings name." % people,
+        # `people` now counts two publishers, so "its own filings name" would be
+        # false of the website-read half.
+        og="Find your Illinois library district by address or ZIP, and the %d people "
+           "its own filing or its own website names." % people,
         lede=lede, sections=sections, named=people)
 
 

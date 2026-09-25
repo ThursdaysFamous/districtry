@@ -541,6 +541,24 @@ def library_boards(data):
     return rows
 
 
+def library_site_boards(data):
+    """Illinois library trustees read off each library's OWN website.
+
+    Same shape as library_boards and a different publisher, which is why it is
+    a separate adapter and a separate section rather than a merge: that table's
+    own sentence says "as filed with the Comptroller", and these libraries file
+    no report at all — they are the municipal and township libraries a filing
+    cannot reach. Folding them in would make that sentence untrue for some of
+    its rows, the same reason the shared directory's administrators are kept out
+    of it.
+    """
+    rows = []
+    for name in sorted(data["libraries"], key=lambda s: s.lower()):
+        for person in afr_people(data["libraries"][name]):
+            rows.append((name, person))
+    return rows
+
+
 ADAPTERS = {
     "borough_officials": borough_officials,
     "supreme_justices": supreme_justices,
@@ -556,6 +574,7 @@ ADAPTERS = {
     "fire_districts": fire_districts,
     "park_districts": park_districts,
     "library_boards": library_boards,
+    "library_site_boards": library_site_boards,
 }
 
 
@@ -805,7 +824,21 @@ CITY_TABLES = [
                         unit="trustees and officers", prep="of",
                         body="the Illinois libraries that file with the Comptroller",
                         org_per_seat=True,
-                        heading="Who runs each library")]),
+                        heading="Who runs each library"),
+                   # A SECOND SECTION, not a second page and not a merge. These
+                   # are the libraries that file no Annual Financial Report —
+                   # municipal and township libraries, covered by their city's
+                   # or township's report — so they appear in no filing and
+                   # their trustees come from the library's own website. The
+                   # two sections' sentences name their own publishers.
+                   dict(roster="data/app/il-library-trustees.json",
+                        adapter="library_site_boards",
+                        seat="Library", holder="Trustee", role_label="Role",
+                        unit="trustees", prep="of",
+                        body="the Illinois libraries that publish their own "
+                             "trustees and file no financial report",
+                        org_per_seat=True,
+                        heading="Who runs each library that files no report")]),
 ]
 
 

@@ -993,6 +993,21 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/isbe_precinct_fabric.py --selftest
 
+      # The library board-page reader is the ONLY guard on what it publishes,
+      # and that is a measurement rather than a caution:
+      # validate_officeholder_names.py accepts both "No Overdue Fines" and
+      # "Strategic Plan" as names, and a draft of this parser shipped both as
+      # trustees. Its fixtures are one per shape measured on a real board page —
+      # name-then-role, role-then-name, "Role: Name, term expires", a trustee
+      # per heading, a board separated from the STAFF list by a bold label, and
+      # an election clause after the name — plus the refusals that matter more:
+      # a library whose site is a neighbour's, one page carrying two libraries'
+      # boards, a board under three names, one past twelve, and the two shared
+      # hosts whose pages DO say whose board they are. Stdlib only, no network.
+      - name: Library board-page reader still reads its measured shapes
+        if: ${{ !cancelled() }}
+        run: python3 scripts/il_library_trustees_scraper.py --selftest
+
       # The Iowa board-chair minutes parser refuses four things, and every one
       # of them was a wrong answer first: a role claimed from BOTH sides of a
       # flattened signature block (Des Moines prints `Shane McCampbell, Chair`

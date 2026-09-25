@@ -130,13 +130,13 @@ prose.
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |
 |---|---|---|---|
-| il | 129 | 388 | 6 |
+| il | 129 | 389 | 6 |
 | ny | 35 | 25 | 0 |
 | ca | 17 | 14 | 0 |
 | wi | 91 | 262 | 5 |
 | ia | 70 | 57 | 0 |
 | mi | 25 | 53 | 1 |
-| **total** | **367** | **799** | **12** |
+| **total** | **367** | **800** | **12** |
 
 **130 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
