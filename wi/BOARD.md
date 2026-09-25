@@ -28,6 +28,75 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-25. Oconomowoc ships, and a district can now say it is a seat
+short. #1146 open.** The last of the four cities measured shut on 2026-09-05 for
+seating two alderpersons per district, and the only one the list schema alone
+could not release. Its own page states the council's size — "eight Aldermen
+representing each of the City's four districts" — and its directory prints seven
+people plus one entry reading `Vacanct District 1`, the city's typo. So District
+1 seats two, names one and leaves one empty, and shipping the one name alone
+would have said the district seats one.
+
+`vacantSeats` is the field: a count per district of the seats a city ITSELF
+lists as vacant inside a district that names somebody. The card reads **"1 of 2
+seats named — the city's own council directory lists the other as vacant."**
+Verified in a browser at a real point in all four districts; 2, 3 and 4 render
+both their members and no such line, which is the control.
+
+**THREE CLAIMS THAT LOOK ALIKE.** `vacantDistricts` = nobody at all, for a whole
+district. `vacantSeats` = this seat is vacant, in a district that does name
+somebody. A city that seats two, names one and says NOTHING is NEITHER, and is
+deliberately not built — Illinois's at-large `seats` is the honest shape for it
+and a card saying "the city lists the other as vacant" about a seat the city
+never mentioned would be false. Written into the builder's docstring, because the
+next city will be one of the three.
+
+**THE READER'S NUMBERS.** 285 → **292 alderpersons** across 261 → **265
+districts** in 30 → **31 municipalities**, holding **293 seats**; councils with a
+district drawn and nobody named 129 → **128**; the fleet name gate reads wi
+**1,726**, from 1,719.
+
+**TWO RECORDS WERE ALREADY STALE AND ARE NOT THIS TRANCHE'S FAULT.**
+`wi/CLAUDE.md` said TWENTY-FOUR cities and 240 seats under a **2026-09-24 date it
+had already stopped holding** — three tranches behind — and the worksheet's
+roster note enumerated 28 of the 30 municipalities it counted. Neither enumerates
+them now; FLOORS in the builder is the list and the note is the measurement. The
+scraper's queue comment had the same shape in the other direction: eighteen rows,
+NINE of them cities that had shipped. A queue that lists what shipped is not a
+queue.
+
+**AND THE GAP RECORD'S COUNTY LIST WAS WRONG IN BOTH DIRECTIONS AT ONCE**,
+re-derived here 57 → 54. Five counties (Door, Eau Claire, Jackson, Vilas,
+Winnebago) had every districted municipality rostered and were still claiming a
+gap; two were missing — Outagamie for Kaukauna, Rock for Edgerton, whose geometry
+first shipped 2026-09-06 with nothing re-deriving the list after it. **Nothing in
+CI compares that list to the two files it is derived from**, which is why it went
+both ways silently. A gate is buildable (the derivation is 40 lines and needs no
+network) and I have not built one — it would touch every instance's gap records,
+not Wisconsin's.
+
+**WHAT IS OPEN, each scoped rather than vague:**
+
+  * **The county-list gate above.** Derivable offline from the shipped geometry
+    and roster against the county outlines; fleet-wide, so it is not a Wisconsin
+    change.
+  * **The robots gate's unknown list** — unchanged: measured churning 17 of 19
+    municipal hosts across three runs while those hosts serve their file 4 of 4
+    individually. Re-ask before listing, and pace by each host's own delay.
+  * **The remaining nine of the 22** the 2026-09-06 sweep matched, now the whole
+    of the queue comment: Cumberland, Hillsboro, Nekoosa, New Holstein, Westby,
+    Wisconsin Dells, Greenwood, Montreal, and Waupaca, which stays measured-shut
+    on its numbering offset (its page numbers districts 1-5 where LTSB keys
+    41-45, and nothing witnesses the correspondence).
+
+**ONE QUESTION FOR YOU, and it is a judgement about the public record rather
+than a measurement.** `wi/history.html`'s newest changelog entry is 2026-09-03,
+and since then the alderperson roster has gone from 6 municipalities to 31 and
+from 94 seats to 293 — the largest reader-facing Wisconsin change in that window,
+with no entry. The three earlier tranches added none either, so I have not
+started the practice mid-stream. Say the word and I will write one entry covering
+the lot, dated today and honest that it is a summary of four tranches.
+
 **2026-09-24. #1138 MERGED as `cd4e118`.** Verified on main: 30 municipalities,
 261 districts, **285 alderpersons**, with Black River Falls' four wards at two
 each and Neenah's three districts at three each.
