@@ -119,7 +119,19 @@ change admits 182 records in two files -- wi-alderpersons.json 175,
 mps-school-board-members.json 7 -- every one a person, with no false positive
 and no new finding.
 
-1,592 OFFICEHOLDERS ARE STILL OUTSIDE THIS GATE, AND THAT IS A MEASUREMENT.
+1,175 OFFICEHOLDERS ARE STILL OUTSIDE THIS GATE, AND THAT IS A MEASUREMENT.
+CORRECTED 2026-09-25 from the 1,592 this paragraph stated on 2026-09-22, which
+was stale in the harmless direction: two of the four files it named as the
+largest blind sets are now fully examined — `mi-commissioner-members.json` (185
+records) and `wi-county-officers.json` (442) — recovered by the same walk fix
+that landed with the figure. A number in a paragraph that calls itself a
+measurement is still stale when it stops reproducing, whichever way it moved.
+Illinois's own 19 are no longer among them: `il/data/app/school-board-members.json`
+is DECLARED in PERSON_PATHS below, which is the route out this paragraph named
+and did not build. What remains is `wi/data/app/county-board-members.json` 1,096
+(beside 479 the walk reaches in the same file), `ny/data/app/council-members.json`
+51, `wi/data/app/mpd-district-captains.json` 7 and
+`wi/data/app/wi-municipal-executives.json` 2.
 Before the walk fix it was 1,774 across 19 files; running why_not_a_name() over
 all of them found ZERO defective, so this is a guard hole rather than a shipped
 defect, and it is recorded here because the next pass would otherwise measure
@@ -479,13 +491,26 @@ def roster_files(root=REPO_ROOT):
                     yield os.path.relpath(os.path.join(directory, name), root)
 
 
-def person_records(payload):
-    """Yield (json path, record) for every person-shaped record in `payload`."""
+def person_records(payload, declared=()):
+    """Yield (json path, record) for every person-shaped record in `payload`.
+
+    `declared` is the path prefixes PERSON_PATHS names for this file, whose
+    child records are people by declaration rather than by shape — the one
+    case no predicate can decide.
+    """
     stack = [("", payload, None)]
     while stack:
         path, node, container = stack.pop()
         if isinstance(node, dict):
             mine = is_person_record(node, container)
+            if not mine and path in declared:
+                # The declared node itself is the collection; its VALUES are the
+                # people, so admit each child that carries a name rather than
+                # the collection.
+                for key, value in node.items():
+                    if isinstance(value, dict) and isinstance(value.get("name"), str):
+                        yield "%s.%s" % (path, key), value
+                continue
             if mine:
                 yield path, node
             # A dict under a person container is a KEYED COLLECTION -- a roster
@@ -502,6 +527,92 @@ def person_records(payload):
                 stack.append(("%s[%d]" % (path, i), value, container))
 
 
+# THE DECLARED PERSON-BEARING PATHS — the route out this file's docstring named
+# and did not build. A roster keyed by seat at the TOP level with no collection
+# name anywhere carries no structural signal for the walk, and NO PREDICATE CAN
+# SUPPLY ONE: a precinct, a polling place, a school site and a library all carry
+# {name, address, url}, so relaxing the shape test to reach the people admits
+# about 23,000 place records, 6,072 of them carrying digits their publishers
+# chose. Measured again 2026-09-25 while building this, and my own two attempts
+# at a predicate both mislabelled a file, which is the argument for a table
+# rather than against it: `ia-city-contact.json` scored PERSON on its telephone
+# where its `name` is a city ("Ackley"), and `municipal-officials.json` scored
+# neither where its top-level `name` is a municipality whose people the walk
+# already reaches under `board`/`officers`/`head`.
+#
+# So each entry is a judgement about one file, made by reading it: the rel path,
+# the json path under which its people sit ("" for the top-level dict's own
+# values), why, and the date. `audit_declared()` re-reads every entry on every
+# run and FAILS on one that has left the tree or admits nothing, the shape
+# ACCEPTED_NAMES and NOT_COUNTY_BOARDS already use here.
+#
+# ONLY ILLINOIS'S FILE IS DECLARED, DELIBERATELY. The fleet's remaining
+# flat-keyed officeholders are `wi/data/app/county-board-members.json` (1,096
+# supervisors, beside 479 the walk already reaches in the same file),
+# `ny/data/app/council-members.json` (51), `wi/data/app/mpd-district-captains.json`
+# (7) and `wi/data/app/wi-municipal-executives.json` (2) — 1,175 in total, and
+# examining them is not this session's to decide, because a declaration that
+# turns this gate red lands on that instance's next pull request and the per-file
+# judgement belongs to whoever knows that data.
+#
+# THAT 1,175 ALSO CORRECTS THE 1,592 THE DOCSTRING STATES, which was measured
+# 2026-09-22 and is stale in the harmless direction: two of the four files it
+# names as blind are now fully examined — `mi-commissioner-members.json` (185
+# records) and `wi-county-officers.json` (442) — recovered by the walk fix that
+# landed with it. A stale figure in a paragraph that calls itself a measurement
+# is still stale.
+PERSON_PATHS = {
+    "il/data/app/school-board-members.json": (
+        "",
+        "Chicago's elected school board, keyed by the boundary's own row number "
+        "with no collection name: {\"1\": {\"name\", \"email\", \"profileUrl\", "
+        "\"subDistrict\"}}. Nineteen named people this gate did not examine, on a "
+        "roster that stopped being hand-curated on 2026-09-23 and is now scraped "
+        "weekly from cpsboe.org — so a parse defect here would ship a wrong name "
+        "onto a card and an officeholder table with nothing looking at it.",
+        "2026-09-25"),
+}
+
+
+def declared_paths(rel):
+    """The json path prefixes under which `rel` is declared to hold people."""
+    entry = PERSON_PATHS.get(rel.replace(os.sep, "/"))
+    return () if entry is None else (entry[0],)
+
+
+def audit_declared(root=REPO_ROOT):
+    """A declared path FAILS when it is orphaned or admits nothing.
+
+    Same posture as ACCEPTED_NAMES below: an entry nothing re-checks is a
+    permanent claim about a file that may have changed shape underneath it.
+    """
+    problems = []
+    for rel, (prefix, why, date) in sorted(PERSON_PATHS.items()):
+        path = os.path.join(root, *rel.split("/"))
+        if not os.path.exists(path):
+            problems.append("%s is declared person-bearing and is not in the "
+                            "tree; drop the entry or restore the file" % rel)
+            continue
+        try:
+            with open(path, encoding="utf-8") as handle:
+                payload = json.load(handle)
+        except (OSError, ValueError) as exc:
+            problems.append("%s is declared person-bearing and does not read: "
+                            "%s" % (rel, exc))
+            continue
+        n = sum(1 for _ in person_records(payload, declared=(prefix,)))
+        base = sum(1 for _ in person_records(payload))
+        if n <= base:
+            problems.append("%s: the declaration admits %d record(s) and the "
+                            "walk already reached %d, so it adds nothing — the "
+                            "file has changed shape, or the entry was never "
+                            "needed" % (rel, n, base))
+        else:
+            print("  declared %-46s +%d record(s) (%s)"
+                  % (rel, n - base, date))
+    return problems
+
+
 def scan(root=REPO_ROOT):
     findings, examined, files = [], 0, 0
     per_instance = {}
@@ -515,7 +626,7 @@ def scan(root=REPO_ROOT):
             findings.append((rel, "", "", "unreadable: %s" % exc))
             continue
         files += 1
-        for path, record in person_records(payload):
+        for path, record in person_records(payload, declared_paths(rel)):
             examined += 1
             per_instance[tag] += 1
             reason = why_not_a_name(record["name"])
@@ -570,7 +681,7 @@ def main():
         sys.exit(1)
 
     findings, examined, files, per_instance = scan()
-    problems = audit_accepted()
+    problems = audit_accepted() + audit_declared()
 
     if args.report:
         for rel in sorted(set(f[0] for f in findings)):
