@@ -49,6 +49,7 @@ python3 scripts/build_coverage_gaps.py --check --metro iowa      --out ia/data/a
 python3 scripts/build_coverage_gaps.py --check --metro michigan  --out mi/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro nyc       --out ny/data/app/coverage-gaps.json
 python3 scripts/build_coverage_gaps.py --check --metro sf        --out ca/data/app/coverage-gaps.json
+python3 scripts/validate_gap_counts.py --selftest                 # the claim/label split, both directions, offline
 python3 scripts/validate_gap_counts.py                            # a number a record STATES vs the file it describes
 python3 mi/scripts/probe_mi_county_boards.py --check      # the MI board probe's artifact vs the tree
 python3 mi/scripts/build_mi_returns_roster.py --check     # MI certified-returns names all carry their provenance
