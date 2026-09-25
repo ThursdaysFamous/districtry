@@ -31,6 +31,37 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-25. #1159 MERGED, VERIFIED ON MAIN BY CONTENT, AND THE BOARD IS
+CLEAR.** `_robots_verdict`'s docstring on main now states the one reason that
+survives #1158 and records the retired clause as history rather than as
+mechanism. That closes the chain this session opened: #1153 ended the Buffalo
+freeze, #1155 fixed the real cause of the Lincoln hold, #1154 merged with the
+fleet's only withheld seat intact, #1157 shipped the queue check, #1158 retired
+both outer robots loops, and #1159 caught the one sentence #1158's sweep could
+not reach. Check-ins stood down.
+
+**THE METHOD IS THE ONLY THING WORTH CARRYING FORWARD, AND IT CUT BOTH WAYS
+TODAY.** Five diagnoses arrived confident and wrong — the manager's Buffalo
+"refusal" (bare stdlib urllib, not a refusal), the manager's
+`maxAllowableOffset` (innocent; one unchanged query eight times gave `22 /
+URLError / 400 / 22 / 400 / 22 / 400 / 22`), my own mirror-image probe of it,
+my restatement of a retracted CI claim on a file that already carried its
+correction, and my reading of the legislature roster's run durations as a
+vacuous success. Every one was settled by running the same thing twice and
+counting. **And two readings died before they became claims by the same
+method** — the "backwards" durations (the scraper fetches exactly two pages)
+and the "missing" phone field (a line inside `capitolOffice`).
+
+**THREE TESTS OF MINE TODAY COULD NOT HAVE FAILED, AND THAT IS THE SHARPER
+LESSON.** The battery extract that reported 102 was missing one of the 100 and
+admitting shell lines; the first queue-check sentinel matched its own
+instruction; and the first mergeability check used `git merge-tree`'s legacy
+three-argument form, **which always exits 0**. Each looked like verification
+and asked nothing. The remedy is the one the repo already states for gates —
+witness the failure — applied to a throwaway check as much as to a committed
+one: **if you cannot say what would have made it fail, you have not tested
+anything.**
+
 **2026-09-25. #1157 MERGED (`dcd3687`), AND #1158 HAD ALREADY DONE THE WORK I
 AGREED TO AN HOUR EARLIER.** Verified #1157 on main by content rather than from
 the merge event: `check_queue_against_floors` and the `QUEUE ROWS FOLLOW` anchor
