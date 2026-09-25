@@ -48,6 +48,50 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-25. PEORIA'S ROSTER IS UNFROZEN AND THE FIX IS PR #1171.** The
+Friday refresh failed at 19:10 UTC with the builder refusing to write — `the
+County Board Members index named only 0 of the 18 roster members` — and that
+refusal was right: the floor is not lowered, and nothing a reader sees moved,
+because the shipped file kept every name from its last good run. The builder
+wrote again with NO diff to that file, which is the whole result. The data was
+never wrong, only frozen.
+
+**THE PAGE WAS SERVING EVERY NAME THE WHOLE TIME.** Measured with this
+scraper's own client, robots read first and allowed: HTTP 200, 109,010 bytes,
+all 18 members in the served HTML. Not a block, not a fetch failure, not
+client-rendered. CivicPlus reflowed the page — `subhead`, the class the
+selector keyed on, now occurs ZERO times — and each member became an
+anchor-bearing paragraph in an `fr-view` editor block. The Edgar shape again:
+the page was fine and the parser was not.
+
+**BOTH SHAPES ARE READ NOW, not one swapped for the other**, because the
+heading shape was itself a CMS artifact and has moved once, so it can move
+back; a county mid-reflow must not lose half its board. Two traps are pinned
+with it. **`aria-level` IS NOT THE LEADERSHIP MARKER AND IT LOOKS LIKE ONE** —
+exactly one paragraph on the page carries `aria-level="2"`, the Vice
+Chairperson, while the Chairperson carries none, so anchoring on the page's own
+statement of hierarchy finds one member of eighteen. And **THE ANCHOR IS
+REQUIRED**: the name pattern ends in `|$`, so `Board meetings are held monthly`
+would parse as a member of that name and enter the set the builder's floor
+counts. The selftest — 7 offline checks, in CI and mirrored in the steward
+skill — pins both shapes, both at once, the prose, and the negative case that
+caused this. The gate pair is re-measured at 83 steps / 112 invocations, after
+the rebase rather than before it.
+
+**A LIMIT ON `get_check_runs` IS RECORDED, BECAUSE THIS SESSION NEARLY ACTED ON
+ONE.** CLAUDE.md's "a zero is a true zero" was measured against PR #5, whose
+run never existed and never would; it says nothing about a PR whose run is
+STARTING. Measured on #1167: it read `total_count: 0` while paging
+`actions_list` showed run 36184219899 already `in_progress` on the same head,
+and reads that run successful now. On a head pushed in the last few minutes,
+page for a run before concluding there is none.
+
+**#1167 WAS SQUASH-MERGED WHILE THIS WAS BEING WRITTEN**, so its head and the
+merge commit under it are dead history and the branch was restarted from main's
+tip with the one unmerged commit replayed. #1171 is a new pull request, not that
+one reopened. The Peoria workflow is dispatched on the branch rather than left
+for next Friday.
+
 **2026-09-25. TASK #50 IS DONE AND IS PR #1167 — 388 library trustees, read off
 each library's own website.** The last open half of
 `statewide-library-officials`. 53 libraries name a board from their own site, on
