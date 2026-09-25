@@ -49,6 +49,48 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — STAGE 2 IS OPEN AS #1149 AND IT IS THE HALF A READER SEES.** 28 named
+officials across Carbon, Corning, Nodaway and Prescott, where four Iowa cities
+named nobody yesterday. #1148 merged as `cc3c091`, verified on main by content —
+the artifact round-trips through `derive_caveats()`.
+
+**Adams was missed for Jasper's reason a county over.** The 2026-09-05 sweep took
+all 99 domains from each auditor's e-mail address; Adams' auditor mails from
+`adamscountyia.com` while the county's site is `adamscounty.iowa.gov`, a host
+this repo's own data files already carried. `MIN_COUNTIES` 9 → 10.
+
+**Every figure the join moved was re-measured rather than incremented**, because
+the worksheet note hand-carries a dozen: 98→102 cities, 710→738 officials,
+487→507 council, 86→90 clerk rows across 85→89 cities, 104→109 seats, 142→143
+e-mails, and the counties publishing no e-mail 4→5 and no phone 5→6. Adams'
+markup side was measured too — a `<b>` county, seven of thirteen, publishing no
+mailto and no telephone at all.
+
+**The gap's `wanted` is narrowed with the corrected bound.** It claimed more
+counties publish the way nine do; the sweep measured that all 99 were asked and
+one more does. The summary's 834/105 becomes **830/109, measured as a UNION**
+across the three rosters rather than by arithmetic — and the note's own figures
+had already disagreed with each other, saying 833 in one sentence while implying
+834 in another.
+
+**Ask 31 drafted, not sent**, to the Worth County Auditor: its page carries the
+same module with seven city blocks and nobody in it, so the question is about
+the page rather than the records and "it is unfinished" is a complete answer.
+It asks nothing to be compiled, which makes it better-founded than the usual ask.
+
+### Two consumer questions answered rather than assumed
+
+`build_county_pages.py` reads `ia-supervisor-members.json` and NOT this file, so
+the per-county pages are untouched. No history tile counts it either — Iowa's
+`history_page` carries `entries` only — so **the weekly workflow needs no new
+regenerate step**. What did need one is the monthly source gate, now carrying
+Adams as a thirteenth row.
+
+**And regenerating `ENDPOINT_INVENTORY.md` BEFORE adding that row left it
+drifted** — the §7 ordering lesson one step further out than §7 states it. The
+battery caught it; the rule generalises past the gaps chain to any generator
+that reads a file the same change edits.
+
 **2026-09-25 — THE 90-COUNTY SWEEP IS RUN AND REPORTED. The answer is ONE new
 county, and nine was very nearly all that exists on this route.** #1148 carries
 the artifact; stage 2 is deliberately not in it.
