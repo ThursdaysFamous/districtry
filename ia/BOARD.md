@@ -48,6 +48,48 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 (end of session) — #1145 MERGED and verified by content. The Iowa
+board has nothing open that is mine; awaiting an assignment.**
+
+Verified on main at `b0d0523` rather than by ancestry: `scripts/measured_metric.py`
+carries `claim = spec.get("claim", spec["label"]).lower()`,
+`scripts/validate_gap_counts.py` has `_selftest` and passes the empty claim at
+three call sites, and the `ia-municipal-officeholders` record carries its 939
+counts declaration. **The pair holds at 81/110 ON MAIN** — the check worth
+running after a merge rather than before it, since main's copy said 81/109 and a
+merge that took the named-step line silently at the wrong value is the exact
+failure `CLAUDE.md` records. Steward mirror 110 for 110, gap gate 8 declarations,
+selftest 0 failures.
+
+### Three PRs and three corrections
+
+Merged today: #1142 (the city-tier WATCH row), #1144 (Ask 30 drafted for the
+twelve counties, nothing sent), #1145 (the person-word gate defect). Three board
+entries went straight to main.
+
+**The corrections are the more useful half, and all three are the same shape —
+a conclusion that arrived wearing a measurement's authority.**
+
+1. I answered an Open questions bullet by measuring it, and that measurement had
+   been done on 2026-09-19 and recorded twenty lines up in this same Status
+   section. My sweep also omitted `ia-county-auditors.json`, the one Iowa file
+   where the switchboard shape is present, so the entry read as "Iowa is clean"
+   when it is not. Corrected in `96f7680`; the wrong entry stands beneath it.
+2. Re-deriving that finding against the WRONG COMPARAND gave 6 of 21 where the
+   answer is 17 of 91, because `ia-supervisor-members.json` covers only the
+   counties with a district join. I had the 6 in hand and was one step from
+   publishing it as a correction to the 17.
+3. Two verification greps came back empty on content that was correct, because
+   the em-dash in `NOT YET ASKED — DRAFTED` is multi-byte and the pattern matched
+   one byte of it.
+
+**What all three have in common is that checking cost seconds and the wrong
+conclusion would have shipped.** The habit is the one already on this board from
+2026-09-24 — re-run the thing that produced a claim before building on it — with
+one addition earned today: **that includes re-running it against the right
+comparand, and it includes reading your own Status before measuring what a
+bullet asks for.**
+
 **2026-09-25 — #1144 MERGED and verified by content; the gate fix is open as
 #1145.** Verified on main at `9d95a24` rather than by ancestry: Ask 30 at
 `docs/ASK_DRAFTS.md:2365`, and `NOT YET ASKED — DRAFTED 2026-09-25` in BOTH the
