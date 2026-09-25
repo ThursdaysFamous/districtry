@@ -238,6 +238,35 @@ to look at. It is never authoritative for their current status. Its cron says
 01:00 it is describing yesterday, and rows go stale within the day. Open the
 named workflow's own latest run before believing any row.
 
+## Reading whether a PR's checks ran
+
+**Adam's instruction, 2026-09-25: stop using `get_status`; page through
+`actions_list` instead.**
+
+`pull_request_read(method="get_status")` reads the commit-status API. This
+repository's smoke test is a **check run**, so that call returns
+`total_count: 0, statuses: []` for every pull request here, green ones
+included — measured that day against #1153, #1154, #1155 and #1156, all four
+of which had already gone green. It reports no error, so its silence reads as
+"no checks ran" when it means "this reader cannot see them".
+
+`actions_list`'s `event` and `branch` filters are **ignored in this build**, so
+a filtered query looks exhaustive and sweeps nothing. Page it instead
+(`perPage` with `page: 2, 3, …`) and match on `head_sha` yourself. A PR run
+carries `event: "pull_request"` and a `pull_requests: [<number>]` field, which
+is the confirmation; runs are newest-first, so a PR from an hour ago can sit
+three or four pages in.
+
+Never report that a check did not run without having paged far enough back to
+cover the push that would have started it. On 2026-09-25 this cost a false
+report to Adam that a lapsed `BOT_PR_TOKEN` might have every roster PR in the
+fleet merging without CI; the run had been green for an hour. **Absence of
+evidence from a reader that cannot see the thing is not evidence of absence.**
+
+Dispatching `smoke-test.yml` on a branch by hand (`workflow_dispatch`, which it
+declares) is the legitimate way to get a run when one genuinely did not fire.
+It is never an empty commit and never a close-and-reopen.
+
 ## Diagnosing a failed roster workflow
 
 - Diagnose from that run's own log, not from what the source does when you
