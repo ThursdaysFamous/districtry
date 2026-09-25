@@ -122,8 +122,15 @@ ALWAYS_AVAILABLE = {"setuptools", "pip", "pkg_resources"}
 # user-agent probe all import it. (A `robots_rules` entry lived here for
 # part of that day, for the `*`-only parser #887 lifted out of the
 # Wisconsin audit; that module was retired into this one the same day.)
-# Both are stdlib-only, which is why neither needs a pip line.
-FLEET_SHARED = {"undeliverable", "robots_policy"}
+# `arcgis_error` (2026-09-25) is the third and clears the same bar: an ArcGIS
+# service reports its failures IN THE BODY, as HTTP 200 with an `error`
+# member, and #809 measured six callers reading one as data and thirty-one
+# more blaming the county for it. What an ArcGIS error IS must not be
+# answered differently per instance, which is this list's own test.
+# All three are stdlib-only, which is why none needs a pip line --
+# arcgis_error bases its exception on requests.RequestException only WHERE
+# REQUESTS IS THERE, and on RuntimeError otherwise.
+FLEET_SHARED = {"undeliverable", "robots_policy", "arcgis_error"}
 ROOT_SCRIPTS = os.path.join(REPO_ROOT, "scripts")
 
 PIP_RE = re.compile(r"pip3?\s+install\s+([^\n]*)")

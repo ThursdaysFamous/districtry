@@ -1146,6 +1146,16 @@ sys.path.append(os.path.join(
     os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
     "scripts"))
 import robots_policy as rp                                       # noqa: E402
+# An ArcGIS failure arrives as HTTP 200 with an `error` member, and this is
+# the fleet's one reading of that (#809). Module scope, beside robots_policy:
+# validate_workflow_deps.py folds an ENTRY POINT's function-local imports in
+# too, because its functions run -- so a lazy import here would hide a real
+# runtime need rather than remove it, and this file is what three workflows
+# execute. It is stdlib-only, falling back to RuntimeError where requests is
+# absent, which is this workflow (verified by importing it with requests
+# hidden on 2026-09-25).
+from arcgis_error import (ArcGISServiceError,                    # noqa: E402
+                          raise_for_arcgis_error)
 
 # ROBOTS.TXT IS READ BEFORE THE FIRST FETCH OF EACH HOST (2026-09-13), which
 # until today this file did not do. CLAUDE.md states the rule and names the
@@ -1201,6 +1211,19 @@ import robots_policy as rp                                       # noqa: E402
 # pages their publishers had said not to.
 ROBOTS_TIMEOUT = 30
 ROBOTS_RETRIES = 3
+
+# _fetch_json's ladder. Deliberately LONGER than fetch_bytes's four: that one
+# reads county PAGES, where a failure costs one county's roster and the builder
+# refuses; this one reads the geometry WITNESS, where a failure publishes a
+# withheld seat. Eight is generous on purpose, and the arithmetic behind it is a
+# CALCULATION rather than a measurement: were the failures independent at the
+# observed 5-in-8, eight attempts would leave about 2% against 62% for one. The
+# run measured was `400 / 22 / 400 / 22 / URLError / 400 / 22 / 400`, which is
+# closer to ALTERNATING than to independent, and two attempts would do if it
+# alternates strictly. Eight covers both readings without asserting either.
+# The carry-forward below covers the remainder either way, because a retry can
+# only lower the odds of a wrong publication, never close them.
+JSON_ATTEMPTS = 8
 
 # A 403 ON ROBOTS.TXT MEANS DIFFERENT THINGS ON DIFFERENT KINDS OF HOST, and
 # CLAUDE.md draws the line: an ArcGIS FeatureServer answers 401/403 to
@@ -3134,6 +3157,156 @@ def _fetch_retry_selftest():
           "attempts it should" % len(ran))
 
 
+def _json_selftest():
+    """The JSON ladder and the carried verdict — offline, no network.
+
+    Written because both halves shipped wrong and neither was visible: a witness
+    that could not read PUBLISHED a withheld seat, and the function it read
+    through had no retry at all against a host that answers 3 requests in 8.
+    Case 8 is the one that proves carry-forward is not a trap.
+    """
+    ran, failures = [], []
+
+    def check(label, ok):
+        ran.append(label)
+        if not ok:
+            failures.append(label)
+
+    host = "https://json.selftest.invalid"
+    url = host + "/arcgis/rest/services/X/MapServer/0/query?f=json"
+    verdict = rp.classify(200, "User-agent: *\nAllow: /\n",
+                          final_url=host + "/robots.txt")
+    key = (headers_for(url)["User-Agent"], _robots_url(url))
+    with _ROBOTS_CACHE_LOCK:
+        _ROBOTS_CACHE[key] = verdict
+
+    slept = []
+    real_sleep = time.sleep
+    time.sleep = lambda n: slept.append(n)          # noqa: E731
+
+    class _Resp(object):
+        def __init__(self, payload):
+            self.payload = payload
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def read(self, *a):
+            return json.dumps(self.payload).encode()
+
+    def run(exc=None, payload=None, succeed_on=None):
+        n = [0]
+        del slept[:]
+
+        def stub(req, timeout=None, context=None):
+            n[0] += 1
+            if succeed_on is not None and n[0] >= succeed_on:
+                return _Resp({"features": [{"attributes": {"ok": 1}}]})
+            if payload is not None:
+                return _Resp(payload)
+            raise exc
+        try:
+            got = _fetch_json(url, opener=stub)
+        except Exception:                            # noqa: BLE001
+            got = None
+        return n[0], got, list(slept)
+
+    try:
+        import socket
+
+        # 1. A transport failure climbs the whole ladder, linearly.
+        n, got, waits = run(exc=socket.timeout("timed out"))
+        check("a timeout is retried to JSON_ATTEMPTS", n == JSON_ATTEMPTS)
+        check("the JSON ladder backs off linearly",
+              waits == [2.0 * (i + 1) for i in range(JSON_ATTEMPTS - 1)])
+        check("a timeout still raises when every attempt fails", got is None)
+
+        # 2. AN ARCGIS ERROR ARRIVES AS HTTP 200 and is a failure, not a
+        #    document. Before this it was RETURNED, and the witness read it as
+        #    zero features and reported "no districts on one side".
+        n, got, _ = run(payload={"error": {"code": 400,
+                                           "message": "Failed to execute query.",
+                                           "details": []}})
+        check("an ArcGIS in-body error is retried, not returned",
+              n == JSON_ATTEMPTS and got is None)
+
+        # 3. A refusal is not retried: 403 and 404 are the host answering.
+        for code in (403, 404):
+            n, _, waits = run(exc=urllib.error.HTTPError(url, code, "x", {}, None))
+            check("HTTP %d is asked exactly once" % code, n == 1 and waits == [])
+
+        # 4. THE LADDER RECOVERS — the case that makes retrying worth doing.
+        n, got, _ = run(exc=socket.timeout("timed out"), succeed_on=2)
+        check("a read that clears on the second attempt returns the payload",
+              n == 2 and (got or {}).get("features"))
+
+        # 5. Robots still decides first, and the transport is never called.
+        refused = rp.classify(200, "User-agent: *\nDisallow: /\n",
+                              final_url=host + "/robots.txt")
+        with _ROBOTS_CACHE_LOCK:
+            _ROBOTS_CACHE[key] = refused
+        hit = [0]
+
+        def counting(req, timeout=None, context=None):
+            hit[0] += 1
+            raise AssertionError("fetched a disallowed URL")
+        try:
+            _fetch_json(url, opener=counting)
+            check("a disallowed JSON URL is never fetched", False)
+        except RobotsRefused:
+            check("a disallowed JSON URL is never fetched", hit[0] == 0)
+        except Exception:                            # noqa: BLE001
+            check("a disallowed JSON URL raises RobotsRefused", False)
+    finally:
+        time.sleep = real_sleep
+        with _ROBOTS_CACHE_LOCK:
+            _ROBOTS_CACHE.pop(key, None)
+
+    # 6. The carried set is read off the SHIPPED roster, and Lincoln 21 is the
+    #    fleet's one withheld seat. This asserts against real data on purpose:
+    #    if that seat is ever cleared by a successful witness, this line is where
+    #    the change announces itself.
+    carried = _previously_withheld("55069")
+    check("the shipped roster still withholds Lincoln 21", carried == {21})
+    check("a county with nothing withheld carries nothing",
+          _previously_withheld("55011") == set())
+
+    # 7-8. THE TWO DIRECTIONS. A witness that cannot read carries the verdict;
+    #      one that RUNS and agrees clears it. Without case 8 this would be a
+    #      trap rather than a carry-forward.
+    spec = next(c for c in ARCGIS_COUNTIES if c["fips"] == "55069")
+    real_json = globals()["_fetch_json"]
+    try:
+        globals()["_fetch_json"] = lambda *a, **k: (_ for _ in ()).throw(
+            RuntimeError("stubbed outage"))
+        check("an unreadable witness carries the withheld seat forward",
+              district_geometry_witness(spec["fips"], spec["name"],
+                                        spec["layer"], spec["seats"]) == {21})
+
+        shipped = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                               "..", "data", "app",
+                               "county-supervisory-districts.json")
+        with open(shipped) as f:
+            same = [{"properties": {"SuperID_Numeric": x["properties"]["SUPERID"]},
+                     "geometry": x["geometry"]}
+                    for x in json.load(f)["features"]
+                    if x["properties"]["CNTY_FIPS"] == "55069"]
+        globals()["_fetch_json"] = lambda *a, **k: {"features": same}
+        check("a witness that RUNS and agrees carries nothing",
+              district_geometry_witness(spec["fips"], spec["name"],
+                                        spec["layer"], spec["seats"]) == set())
+    finally:
+        globals()["_fetch_json"] = real_json
+
+    if failures:
+        raise SystemExit("json selftest FAILED: " + "; ".join(failures))
+    print("json selftest: %d assertions, the ladder climbs and the verdict "
+          "carries" % len(ran))
+
+
 def _district_page_selftest():
     """Adams's route, on fixtures — offline, no network.
 
@@ -4829,15 +5002,77 @@ def scrape_framed_table_county(spec):
     return out
 
 
-def _fetch_json(url):
+def _fetch_json(url, attempts=JSON_ATTEMPTS, opener=None):
+    """One JSON endpoint, retried, with an ArcGIS in-body error treated as one.
+
+    TWO DEFECTS, BOTH MEASURED ON LINCOLN'S OWN SERVICE ON 2026-09-25.
+
+    IT HAD NO RETRY, where fetch_bytes has a four-attempt ladder. That is the
+    #1153 defect one level along, and it cost a withheld seat: Lincoln district
+    21 is the fleet's only seat the county and the state draw differently, so
+    district_geometry_witness withholds it -- and the witness stands aside on a
+    failed read, which PUBLISHES. maps.co.lincoln.wi.us answers about three
+    requests in eight. One unchanged query, eight times, gave
+    `400 / 22 / 400 / 22 / URLError / 400 / 22 / 400`, so a single attempt fails
+    most runs and #1154 shipped a name on ground this project measures as
+    unsettled.
+
+    THE PARAMETER WAS NOT THE CAUSE, and two of us read it that way. Asked four
+    ways one request each, the cases alternate in LOCKSTEP -- which is per-request
+    behaviour wearing a per-parameter disguise, because one request per case
+    confounds order with parameters. Two independent sweeps reached OPPOSITE
+    conclusions about which parameter was refused, and the control above settles
+    it: the query never changed. A re-run after changing an irrelevant parameter
+    has about a three-in-eight chance of looking causal.
+
+    AND AN ARCGIS FAILURE ARRIVES AS HTTP 200 WITH AN `error` MEMBER, which this
+    function returned as data. The witness then read zero features and reported
+    "no districts on one side" -- an error mis-reported as a missing side.
+    scripts/arcgis_error.py has existed for this since #809 and is used here
+    rather than re-decided.
+
+    The policy is fetch_bytes's, which is scraper_common.fetch's: retry a
+    transport failure, a 429, a 5xx and an ArcGIS in-body error; never retry
+    401/403/404, because a refused or moved page is not fixed by waiting. Linear
+    backoff for the same reason -- the failure guarded is a host that drops
+    requests, not one asking to be left alone. Every attempt pays the host's own
+    Crawl-delay, because `hold` wraps the REQUEST.
+
+    `opener` exists so the selftest can drive this with a stub transport.
+    """
     allowed, why = robots_says(url)
     if not allowed:
         raise RobotsRefused("%s: %s" % (url, why))
-    req = urllib.request.Request(url, headers=headers_for(url))
     ctx = ssl.create_default_context()
-    with ROBOTS_PACER.hold(url), \
-            urllib.request.urlopen(req, timeout=45, context=ctx) as r:
-        return json.load(r)
+    last = None
+    for attempt in range(attempts):
+        try:
+            req = urllib.request.Request(url, headers=headers_for(url))
+            with ROBOTS_PACER.hold(url), \
+                    (opener or urllib.request.urlopen)(
+                        req, timeout=45, context=ctx) as r:
+                payload = json.load(r)
+            # An ArcGIS error object is a FAILURE, not a document, and it is
+            # transient on this host -- so it is raised where the ladder can see
+            # it rather than returned to a caller that will read it as empty.
+            raise_for_arcgis_error(payload, url)
+            return payload
+        except RobotsRefused:
+            raise
+        except urllib.error.HTTPError as e:
+            last = e
+            if e.code in (401, 403, 404):
+                break
+        except (ArcGISServiceError, urllib.error.URLError, TimeoutError,
+                OSError, ValueError) as e:
+            last = e
+        if attempt == attempts - 1:
+            break
+        delay = 2.0 * (attempt + 1)
+        print("  wait %s from %s — retrying in %.0fs"
+              % (type(last).__name__, url, delay), file=sys.stderr)
+        time.sleep(delay)
+    raise RuntimeError("could not read %s (%s)" % (url, last))
 
 
 def _fold_person(name):
@@ -4913,6 +5148,34 @@ def _geo_contains(pt, geom):
     return False
 
 
+def _previously_withheld(fips):
+    """{district numbers} this county's SHIPPED roster currently withholds.
+
+    The shipped file is the record of the last SUCCESSFUL witness, which is what
+    makes it the right thing to carry forward -- not a cache of a failure. Keyed
+    `<5-digit county GEOID><2-digit district>`, the same key
+    check_roster_retention.py folds by.
+
+    A missing or unreadable file yields the empty set rather than raising: on a
+    first run for a new county there is nothing to carry, and this must never be
+    the reason a scrape fails.
+    """
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                        "..", "data", "app", "county-board-members.json")
+    try:
+        with open(path) as f:
+            shipped = json.load(f)
+    except Exception:               # noqa: BLE001 - absence is not a failure
+        return set()
+    out = set()
+    for key, rec in shipped.items():
+        if not key.startswith(fips) or not isinstance(rec, dict):
+            continue
+        if rec.get("withheld") and rec.get("district") is not None:
+            out.add(int(rec["district"]))
+    return out
+
+
 def district_geometry_witness(fips, county, layer, seats):
     """{disputed district numbers} — the county's own map against LTSB's.
 
@@ -4937,9 +5200,30 @@ def district_geometry_witness(fips, county, layer, seats):
         if not ltsb or not cty:
             raise RuntimeError("no districts on one side")
     except Exception as e:          # noqa: BLE001 - the witness, never the source
-        print("  WITNESS SKIPPED %-9s district geometry not read (%s) — the "
-              "roster ships unwitnessed this run" % (county, why_unfetched(e)), file=sys.stderr)
-        return set()
+        # AN UNREADABLE WITNESS CARRIES THE PREVIOUS VERDICT FORWARD RATHER THAN
+        # PUBLISHING, decided 2026-09-25. Standing aside returned an empty
+        # disputed set, so a failed read did not ship "unwitnessed" -- it shipped
+        # the county's own name for a seat the last successful run had WITHHELD.
+        # #1154 did exactly that with Lincoln 21, the fleet's only withheld seat.
+        #
+        # This is the preserve ruling's own shape (Adam, 2026-09-19). Its letter
+        # is that a source we cannot read never unpublishes what we hold; its
+        # mirror, which nobody had written down, is that it never publishes what
+        # we withheld. And the honesty rule settles the direction: where two
+        # publishers disagree, WITHHOLD, do not prefer -- a check that could not
+        # run has not resolved the disagreement.
+        #
+        # IT TRAPS NOTHING. A SUCCESSFUL measurement always replaces the carried
+        # verdict, so the day the county redraws to agree the seat clears on its
+        # own; only an unreadable witness leaves it as it was.
+        carried = _previously_withheld(fips)
+        print("  WITNESS SKIPPED %-9s district geometry not read (%s) — %s"
+              % (county, why_unfetched(e),
+                 ("carrying forward the withheld seat(s) %s from the last "
+                  "successful run" % sorted(carried)) if carried else
+                 "no seat was withheld last run, so nothing is carried"),
+              file=sys.stderr)
+        return carried
     if sorted(ltsb) != sorted(cty) != list(range(1, seats + 1)):
         raise RuntimeError(
             "%s: the shipped map draws districts %s and the county's own layer "
@@ -10133,6 +10417,7 @@ def main():
     if "--selftest" in sys.argv[1:]:
         _robots_selftest()
         _fetch_retry_selftest()
+        _json_selftest()
         _district_page_selftest()
         return
     argv = sys.argv[1:]
