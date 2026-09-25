@@ -119,8 +119,13 @@ change admits 182 records in two files -- wi-alderpersons.json 175,
 mps-school-board-members.json 7 -- every one a person, with no false positive
 and no new finding.
 
-1,175 OFFICEHOLDERS ARE STILL OUTSIDE THIS GATE, AND THAT IS A MEASUREMENT.
-CORRECTED 2026-09-25 from the 1,592 this paragraph stated on 2026-09-22, which
+1,156 OFFICEHOLDERS ARE STILL OUTSIDE THIS GATE, AND THAT IS A MEASUREMENT.
+1,175 WAS THE FIGURE BEFORE THIS CHANGE and it is kept here because the two are
+a different question: 1,175 is what the flat-keyed class held when it was
+re-measured, 1,156 is what is left once PERSON_PATHS declares Illinois's 19, and
+a first draft of this paragraph printed the larger one as the remainder while
+enumerating the smaller one three lines below — a total its own list disproved.
+Corrected 2026-09-25 from the 1,592 this paragraph stated on 2026-09-22, which
 was stale in the harmless direction: two of the four files it named as the
 largest blind sets are now fully examined — `mi-commissioner-members.json` (185
 records) and `wi-county-officers.json` (442) — recovered by the same walk fix
@@ -550,7 +555,8 @@ def person_records(payload, declared=()):
 # flat-keyed officeholders are `wi/data/app/county-board-members.json` (1,096
 # supervisors, beside 479 the walk already reaches in the same file),
 # `ny/data/app/council-members.json` (51), `wi/data/app/mpd-district-captains.json`
-# (7) and `wi/data/app/wi-municipal-executives.json` (2) — 1,175 in total, and
+# (7) and `wi/data/app/wi-municipal-executives.json` (2) — 1,156 in total, which
+# is 1,175 less the 19 this table declares, and
 # examining them is not this session's to decide, because a declaration that
 # turns this gate red lands on that instance's next pull request and the per-file
 # judgement belongs to whoever knows that data.
