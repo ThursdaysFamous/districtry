@@ -19,6 +19,7 @@ instance rather than the worst-maintained one.
 
 | task | state | opened | notes |
 |---|---|---|---|
+| **`update-peoria-county-board-roster.yml` FAILED at 19:10 — the members page reflowed its markup, and the builder's refusal is correct** | **assigned 2026-09-25, cause measured — the parser anchor is gone** | 2026-09-25 | Run `36178083032`, schedule, main: `peoria-board-roster: FAIL — the County Board Members index named only 0 of the 18 roster members (expected at least 17)`. The GIS half is fine (18 records with districts); the index half found nobody. **NOTHING CHANGED FOR A READER** — the builder refused to write, so all 18 districts still ship with names, e-mails, phones, parties and both roles. **MEASURED HERE with the scraper's own client** (`Mozilla/5.0 (compatible; districtry-roster/1.0)`), robots.txt read first through `robots_policy` and `served`, 2026-09-25 19:2x UTC: `GET https://www.peoriacounty.gov/755/County-Board-Members` → **200, 109,012 bytes**, and **every member name is still in the served HTML** (Williams, Coates, Duncan, Elsasser, Rieker all present). So this is not a block, not a fetch failure and not a client-rendered page. **MY OWN FIRST READING WAS WRONG AND THE CHECK CAUGHT IT**: the only `h2` on the page now reads "Loading", which I took for a JavaScript-rendered list — it is a CivicPlus SPLASH MODAL (`cp-Splash cp-Splash--modal is-open`) sitting over a page whose content is fully served. **THE ACTUAL CAUSE IS THE HEADING MARKUP.** `INDEX_HEADING_RE` wants `<h2|h3 class="…subhead1|subhead2…">`, and the string `subhead` now occurs **ZERO times** on that page. A member is now a paragraph inside a CivicPlus `widget editor` / `fr-view` block: `<p aria-level="2"><a href="…/565/Sharon-K-Williams"><strong>Sharon K. Williams, Vice Chairperson<br>District 1</strong></a></p>`, and a plain member the same without the `aria-level` — so the page states its own heading level as an ATTRIBUTE where it used to be a class. **The flattened text the parser matches on is unchanged** (`strip_tags` + `clean` still gives `Sharon K. Williams, Vice Chairperson District 1`), so `ROLE_RE` and the name regex want no edit; only the block selector does. Do not lower `MIN_INDEX_NAMES` — 0 of 18 is the guard working. This is the Edgar shape (page fine, parser broken after a site rebuild) for the second time, and the `aria-level` attribute is a more stable anchor than a CMS's class name if you want one. |
 | **#1163 MERGED — `5a86c78`. The +19 is right, and the reason it is not 20 is the finding** | **merged 2026-09-25** | 2026-09-25 | The declared-path table is the route your own docstring named and did not build, and it lands correctly: the total moves 13,075 → 13,094 and Illinois 8,136 → 8,155, which is the claimed +19 exactly; both negative tests reproduce (an orphan fails by name, and declaring `congress-roster.json` fails as `17 admitted, 17 already reached`); battery 100 of 100; one script, no served byte. **TWO THINGS I FOUND THAT THE BODY DOES NOT SAY.** (1) **The file holds TWENTY seats, not nineteen.** Seat 17 carries `role: "Vice President"`, so the walk's role arm had already admitted it before this change and the declaration adds the other nineteen. Your arithmetic is right; what is missing is why it is not twenty, and that mechanism is the whole subject of the change. (2) **The same file holds a TWENTY-FIRST person nobody examines.** Its `board` record carries `president: "Sean B. Harden"` — a name under a field called `president` rather than `name`, so it contributed nothing to the +19 and the word `president` appears nowhere in the script. **A declaration reaches a RECORD; it does not reach a name that is not in a name field.** That is one more shipped name with no guard on it, in the file this change was about, and it is yours to decide whether the fix is a field list or a second declaration shape. |
 | **#1161 MERGED — `80f98c6`. Both of Adam's rulings are in, and two follow-ups came out of my own checks** | **merged 2026-09-25; the EAM letter itself is Adam's question, not a hold** | 2026-09-25 | Reproduced rather than read, all of it. The **date guard is anchored correctly**: `ia/WATCH.md`'s `no fixed cadence (… mid-2026 …)` still fails both in isolation and through `watch_rows`, and Wisconsin, Iowa and Michigan keep exactly the row counts they had (13 / 10 / 1), so nothing was promoted anywhere. **All three class-glob guards fire**: a blanket `*-districts.json` FAILS at 139 of 397 and prints `0 of them claimed here`, which is the line proving the ceiling counts REACH rather than leftovers; `*-x.json` yields no glob; an unbackticked glob in prose yields none. `--selftest` carries 12 cadence cells, the battery is 100 of 100, and the diff is three files with no served byte. **The CPS row is worded to the span**, with the four-observation range inline, which is better than what I asked for. **TWO FOLLOW-UPS, NEITHER A FALSE CLAIM TODAY.** (1) **The Illinois section of the report now says nothing about the 305 files under a plan** — the EAM branch prints the letter, the maintenance sentence and the Mason note, and drops the `Under a WATCH.md plan (N)` bullet il carried at 3 on main, while Wisconsin's section still lists its nine by name. Measured: zero occurrences of "plan" in that block. So the document's strongest claim is the one place it stops showing its own basis, and a future reader cannot see from it that most of those plans have never been executed. Keep the summary in the EAM branch. (2) **The date guard accepts a PAST year**: `**2019**` and `2024 was the last time anyone looked` both read as a when, which no row in the tree does today — cheap to close by refusing a year already gone, or by printing it. Your call whether either is worth a change now. |
 | **ADAM ACCEPTS THE MONTH WORDING FOR THE CPS ROW — and the record says the honest wording is a month SPAN, not a month, which corrects my own instruction** | **ruled 2026-09-25, measured here** | 2026-09-25 | He accepted the path rather than widening the vocabulary for a season, so that row is settled without a second gate change. **But I told you to name "the month those datasets actually post", singular, and the root `WATCH.md` already disproves that one line below the row.** Its own edition table records four observed publications — `SY2223` 2022-10-03, `SY2324` 2023-08-24, `SY2425` 2024-09-20, `SY2526` 2025-09-02 — and the prose above them says CPS has published this layer every year since SY0607 **between late August and early October**. Four editions spanning 24 August to 3 October is a six-week window, so naming one month would be less true than what we already know, and would be the kind of precision a gate rewards and a reader cannot rely on. **So word it with the span the file itself states** — late August to early October, when the new `SYxxyy` datasets post — which the vocabulary ALREADY accepts on the month names, with no widening for that row at all and nothing invented: the dates come from the table underneath it. **Nothing else in that row moves.** Its `Last done` cell and the 2026-09-03 half-run note underneath are a dated record and stay exactly as they are. |
@@ -45,6 +46,65 @@ instance rather than the worst-maintained one.
 | 2 of 64 districted board cards name no office | open | 2026-09-15 | Down from 50 on 2026-09-06. The long tail. |
 
 ## Status — this session owns this section
+
+**2026-09-25. TASK #50 IS DONE AND IS PR #1167 — 388 library trustees, read off
+each library's own website.** The last open half of
+`statewide-library-officials`. 53 libraries name a board from their own site, on
+76 card features, 233 of the names with a role beside them; the layer goes from
+173 of 382 libraries naming a board to 226, and `validate_index.py` prints the
+pair with a gate that fails if any library is ever in both sources.
+
+**THE POOL WAS SMALLER THAN THE RECORD IMPLIED AND IS NOW DERIVED RATHER THAN
+GUESSED AT.** Not 373 and not 487 but 176 — every card that names no board and
+links a site — read on each run from the same dispatch table the builder checks
+against. A first draft globbed every `*-library-districts.json` while only 72 of
+the 88 counties drawing a library dispatch through `statewideLibraryEntry`, which
+would have shipped records for the builder's own orphan check to fail on.
+
+**THE FLEET'S NAMES GATE CANNOT BE THE GUARD ON THIS DATA, and that is the
+finding worth keeping.** `validate_officeholder_names.py` accepts both `No
+Overdue Fines` and `Strategic Plan` as names, and a draft of this parser shipped
+both as trustees — the first a marketing banner in the same `<div>` shape as the
+trustees above it, the second a linked document. So the parser carries three
+MEASURED rules instead of a stoplist that grows by anecdote: a word that never
+begins a real name (none of the 31 begins any of the fleet's 13,094), a candidate
+whose text appears nowhere on its page outside an `<a>` (two of 401, both
+labels), and a stoplist whose every entry rejects ZERO real names. A first
+draft's stoplist cost 60 real people, among them Trevor Ward, a trustee on the
+first board page it ever read. 67 offline checks, in CI.
+
+**FIVE HOSTS CARRY MORE THAN ONE LIBRARY AND ONLY ONE WAS ON RECORD.** The
+guidebook had Bloomington (Golden Prairie's board on its page); measuring found
+`annawanil.org`, `marshallillibrary.com`, `pekinpubliclibrary.org` and
+`silvislibrary.org` as well. Marshall Area against Marshall Public is the pair no
+distinctive-word test can split, since both names carry "marshall", and SILVIS'S
+PAGE CARRIES TWO LIBRARIES' BOARDS UNDER TWO IDENTICAL `Board of Trustees`
+LABELS — which a draft that unioned a page's sections (right for the four
+libraries listing officers under one heading and the rest under another) would
+have merged into a fifteen-name board.
+
+**THE SHIPPED FILE IS A FLOOR, NOT A MEASUREMENT, and it says so.** Two passes
+over the same pool an hour apart agreed on 51 libraries, which is the only reason
+the builder's floors are settable at all; the second took 13 rate limits the
+first did not, and this scraper's own earlier pass is the likeliest cause. A 429
+is retried with backoff now rather than believed, a fetch that failed carries the
+last-good record forward under your 2026-09-19 ruling, and Monday's run picks up
+the rest.
+
+**A GATE FOUND ONE THING BEYOND THE TASK and it is in the same PR.**
+`fetch_stdlib` came off `probe_user_agents.py`'s browser-marker list: it is the
+CLIENT for two of the four rungs and sends whatever headers its caller passes, so
+naming it says nothing about the User-Agent. Exactly two files were classified on
+that marker alone — `validate_sources.py`, which the module already records
+misreading once, and this new scraper — and neither names a Chrome string, a hint
+set or the word Mozilla anywhere in code. The four gated figures move 105/18/283
+to 103/17/266, restated in all three documents that carry them.
+
+**156 LIBRARIES STILL NAME NO TRUSTEE and the reasons are now measured rather
+than estimated**: 33 publish no website, and of the 123 that do, 42 link no board
+page, 26 have one that lists nobody, 33 could not be reached and 22 refuse this
+client in robots.txt. A page that loads and lists nobody is the honest end of
+this route, and nothing was worked around to get past one.
 
 **2026-09-25. #1163 IS MERGED as `5a86c78` and verified on the merged tree by
 content — all four facts hold.** `validate_officeholder_names.py` prints

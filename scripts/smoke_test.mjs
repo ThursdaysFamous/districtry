@@ -1482,13 +1482,16 @@ try {
         minor: byId(labels, "roadname_minor"),
         major: byId(labels, "roadname_major"),
         darkMajor: byId(dark, "roadname_major").paint["text-color"],
-        fixtureUntouched: fx.layers[2].minzoom === 16 && fx.layers[2].paint["text-color"] === "#838383",
+        fixtureUntouched: fx.layers[2].minzoom === 16 && fx.layers[2].paint["text-color"] === "#838383" &&
+          !fx.sources.boundary_streets,
+        boundarySource: !!(labels.sources.boundary_streets && labels.sources.boundary_streets.type === "geojson"),
         vector: window[n].basemap().vector, labelMap: window[n].basemap().labels,
         paneAbove: !!(pane && over && Number(getComputedStyle(pane).zIndex) > Number(getComputedStyle(over).zIndex)),
       };
     }, EXPORTS_NAME);
     check("the basemap splits into a ground map and a label map above it",
-      split.ground === "water" && split.labels === "place_town,roadname_minor,roadname_major" && split.fixtureUntouched,
+      split.ground === "water" && split.labels === "place_town,roadname_minor,roadname_major,boundary_streets" &&
+      split.boundarySource && split.fixtureUntouched,
       `ground=${split.ground} labels=${split.labels}`);
     check("street names are darker, a point larger and named one zoom sooner",
       split.minor.minzoom === 15 && split.minor.layout["text-size"] === 10 &&
@@ -1499,6 +1502,54 @@ try {
     check("the label map sits in a pane above the district overlays",
       !split.vector || (split.labelMap && split.paneAbove),
       `vector=${split.vector} labelMap=${split.labelMap} above=${split.paneAbove}`);
+
+    // Boundary streets: the matcher names a street the district's edge runs
+    // along, and not one that crosses the edge or runs a block away; the
+    // stretch it labels ends near where the edge leaves the street. Held to
+    // a fixture — a square district of about 830 x 1,110 m — so the answer
+    // does not depend on CARTO's tiles or any district source.
+    const bs = await page.evaluate((n) => {
+      const sq = { type: "Polygon", coordinates: [[[-87.70, 41.90], [-87.69, 41.90], [-87.69, 41.91], [-87.70, 41.91], [-87.70, 41.90]]] };
+      const road = (name, coords) => ({ type: "Feature", properties: { name }, geometry: { type: "LineString", coordinates: coords } });
+      const roads = [
+        road("Edge St", [[-87.69988, 41.899], [-87.69988, 41.911]]),     // 10 m inside the west edge
+        road("Cross St", [[-87.705, 41.905], [-87.695, 41.905]]),        // crosses the west edge
+        road("Near St", [[-87.69819, 41.899], [-87.69819, 41.911]]),     // 150 m inside it
+        road("Long St", [[-87.70, 41.90009], [-87.60, 41.90009]]),       // along the south edge, then 7 km past it
+        road("Tiny St", [[-87.6980, 41.91005], [-87.6973, 41.91005]]),   // 60 m along the north edge
+      ];
+      const r = window[n].matchBoundaryStreets(roads, [{ color: "#123456", geometry: sq }],
+        { lat: 41.905, zoom: 15, bbox: [-87.72, 41.89, -87.58, 41.92] });
+      const longEast = Math.max.apply(null, r.features.filter((f) => f.properties.name === "Long St")
+        .map((f) => Math.max.apply(null, f.geometry.coordinates.map((c) => c[0]))));
+      const bsNow = window[n].boundaryStreets();
+      return { names: Object.keys(r.names).sort().join(), color: r.names["Edge St"], longEast,
+               allNamed: r.features.every((f) => f.properties.name && f.properties.color === "#123456"),
+               on: bsNow.on, available: bsNow.available,
+               button: !!document.getElementById("boundary-streets-toggle") };
+    }, EXPORTS_NAME);
+    check("boundary streets: a street along the edge is named, one crossing it or a block away is not",
+      bs.names === "Edge St,Long St" && bs.color === "#123456" && bs.allNamed,
+      `names=${bs.names} color=${bs.color}`);
+    check("boundary streets: the labelled stretch ends near where the edge leaves the street",
+      bs.longEast > -87.69 && bs.longEast < -87.686, `east end ${bs.longEast}`);
+    check("boundary streets: the toggle exists exactly where the vector labels do",
+      bs.available === !!split.labelMap && bs.button === bs.available && bs.on === true,
+      `available=${bs.available} button=${bs.button} on=${bs.on}`);
+    if (bs.button) {
+      const off = await page.evaluate((n) => {
+        document.getElementById("boundary-streets-toggle").click();
+        const r = window[n].boundaryStreets();
+        const btn = document.getElementById("boundary-streets-toggle");
+        const out = { on: r.on, names: Object.keys(r.names).length, pressed: btn.getAttribute("aria-pressed"),
+                      stored: (() => { try { return localStorage.getItem("districtry-boundary-streets"); } catch (e) { return "?"; } })() };
+        btn.click();
+        return out;
+      }, EXPORTS_NAME);
+      check("boundary streets: switching it off clears the names and is remembered",
+        off.on === false && off.names === 0 && off.pressed === "false" && off.stored === "off",
+        JSON.stringify(off));
+    }
     await context.close();
   }
 

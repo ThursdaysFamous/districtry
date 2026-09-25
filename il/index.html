@@ -5275,8 +5275,197 @@ function initChiExplorer() {
     }
     return size;
   }
-  // part "ground" keeps every non-symbol layer; "labels" keeps every symbol
-  // layer and restyles the street names; "all" keeps both (no label map).
+  /* ---------- boundary streets: name the streets a district's edge follows ----------
+   * From the map's zoom 13, with a point selected, the stretch of each
+   * street that the highlighted district's boundary runs along is named in
+   * that district's highlight colour, bolder and larger than the other
+   * street names, whatever the street's class — the ordinary layers name
+   * side streets only from zoom 16. The GL map counts zoom one level lower
+   * than Leaflet (the bridge draws 512-pixel tiles), so the style says 12.
+   * CARTO's tiles at that zoom carry only the main streets and a few side
+   * streets; the rest arrive with the next zoom level's tiles. Every
+   * switched-on layer with a highlighted district contributes its own
+   * boundary; a street along two takes the colour of the one it follows
+   * further. The rest of the street keeps its ordinary name.
+   *
+   * The vector tiles know which roads exist and the district's geometry
+   * knows where its edge is; nothing says which road an edge follows, so
+   * it is MEASURED. A road counts as a boundary street when at least
+   * BOUNDARY_STREET_MIN_RUN metres of it lie within a tolerance of the edge
+   * AND run parallel to it (within about 25 degrees) — a street that
+   * crosses the boundary is near it only for a few metres and at the wrong
+   * angle, and one a block away is outside the tolerance. The tolerance is
+   * 25-45 m, which is wider than a road's centreline is from a boundary
+   * drawn along it and narrower than the shortest Chicago block. The
+   * stretch that is labelled runs past each end of the matched run by
+   * BOUNDARY_STREET_EXTEND_PX pixels at the current zoom (never less than
+   * BOUNDARY_STREET_EXTEND metres), because a one-block run is often
+   * shorter than the name printed along it, and a line label that does not
+   * fit is not drawn at all.
+   *
+   * The stretches are drawn by one symbol layer over a GeoJSON source at the
+   * top of the label map, so they are placed before every other label.
+   * Readers can switch it off (the "Boundary streets" button beside the
+   * hover toggle); the choice is kept in this browser. It exists only where
+   * the vector labels do. */
+  var BOUNDARY_STREET_LAYER = "boundary_streets";
+  var BOUNDARY_STREET_SOURCE = "boundary_streets";
+  var BOUNDARY_STREET_MINZOOM = 13;
+  var BOUNDARY_STREET_MIN_RUN = 120;
+  var BOUNDARY_STREET_EXTEND = 150;
+  var BOUNDARY_STREET_EXTEND_PX = 60;
+  var BOUNDARY_STREET_KEY = "districtry-boundary-streets";
+  var BOUNDARY_STREET_EMPTY = { type: "FeatureCollection", features: [] };
+  function boundaryStreetLayer(dark) {
+    return {
+      id: BOUNDARY_STREET_LAYER,
+      type: "symbol",
+      source: BOUNDARY_STREET_SOURCE,
+      minzoom: BOUNDARY_STREET_MINZOOM - 1,
+      layout: {
+        "symbol-placement": "line",
+        "text-field": ["get", "name"],
+        "text-font": ["Montserrat Bold", "Open Sans Bold", "Noto Sans Regular"],
+        "text-size": { stops: [[12, 11], [15, 13], [17, 14]] },
+        "text-letter-spacing": 0.03,
+        "symbol-spacing": 250,
+        "symbol-avoid-edges": false
+      },
+      paint: {
+        "text-color": ["get", "color"],
+        "text-halo-color": dark ? "#111111" : "#ffffff",
+        "text-halo-width": 2
+      }
+    };
+  }
+  // roads: GeoJSON features with properties.name (LineString or
+  // MultiLineString); targets: [{ color, geometry }] where geometry is a
+  // Polygon or MultiPolygon; view: { lat, zoom, bbox: [w, s, e, n] }.
+  // Returns { names: { streetName: colour }, features: [LineString features
+  // carrying name and color — the stretches to label] }.
+  function matchBoundaryStreets(roads, targets, view) {
+    var kx = 111320 * Math.cos(view.lat * Math.PI / 180), ky = 110574;
+    var mpp = 156543.03 * Math.cos(view.lat * Math.PI / 180) / Math.pow(2, view.zoom);
+    var tol = Math.min(45, Math.max(25, 5 * mpp));
+    var CELL = 100, PARALLEL = 0.9, STEP = 10;
+    var extend = Math.max(BOUNDARY_STREET_EXTEND, BOUNDARY_STREET_EXTEND_PX * mpp);
+    var w = view.bbox[0], s = view.bbox[1], e = view.bbox[2], n = view.bbox[3];
+    var padX = (tol + extend) / kx, padY = (tol + extend) / ky;
+    var best = {};
+    targets.forEach(function (target) {
+      var grid = {}, any = false;
+      var addSeg = function (a, b) {
+        if (Math.max(a[0], b[0]) < w - padX || Math.min(a[0], b[0]) > e + padX) return;
+        if (Math.max(a[1], b[1]) < s - padY || Math.min(a[1], b[1]) > n + padY) return;
+        var x1 = a[0] * kx, y1 = a[1] * ky, x2 = b[0] * kx, y2 = b[1] * ky;
+        var len = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+        if (!len) return;
+        var seg = [x1, y1, x2, y2, (x2 - x1) / len, (y2 - y1) / len, len];
+        var c0 = Math.floor((Math.min(x1, x2) - tol) / CELL), c1 = Math.floor((Math.max(x1, x2) + tol) / CELL);
+        var r0 = Math.floor((Math.min(y1, y2) - tol) / CELL), r1 = Math.floor((Math.max(y1, y2) + tol) / CELL);
+        for (var c = c0; c <= c1; c++) {
+          for (var r = r0; r <= r1; r++) {
+            (grid[c + ":" + r] || (grid[c + ":" + r] = [])).push(seg);
+            any = true;
+          }
+        }
+      };
+      var g = target.geometry;
+      var polys = !g ? [] : g.type === "Polygon" ? [g.coordinates] : g.type === "MultiPolygon" ? g.coordinates : [];
+      polys.forEach(function (rings) {
+        rings.forEach(function (ring) {
+          for (var i = 1; i < ring.length; i++) addSeg(ring[i - 1], ring[i]);
+        });
+      });
+      if (!any) return;
+      var onEdge = function (px, py, ux, uy) {
+        var cands = grid[Math.floor(px / CELL) + ":" + Math.floor(py / CELL)];
+        if (!cands) return false;
+        for (var j = 0; j < cands.length; j++) {
+          var sg = cands[j];
+          if (Math.abs(ux * sg[4] + uy * sg[5]) < PARALLEL) continue;
+          var t = Math.max(0, Math.min(sg[6], (px - sg[0]) * sg[4] + (py - sg[1]) * sg[5]));
+          var qx = sg[0] + sg[4] * t - px, qy = sg[1] + sg[5] * t - py;
+          if (qx * qx + qy * qy <= tol * tol) return true;
+        }
+        return false;
+      };
+      var runs = {}, stretches = {};
+      roads.forEach(function (road) {
+        var name = road.properties && road.properties.name;
+        var rg = road.geometry;
+        if (!name || !rg) return;
+        var lines = rg.type === "LineString" ? [rg.coordinates] : rg.type === "MultiLineString" ? rg.coordinates : [];
+        lines.forEach(function (line) {
+          // one sample per ~10 m: its start point, whether it lies along the
+          // edge, and a break wherever the line leaves the view
+          var starts = [], ends = [], hit = [], gap = [], at = [], along = 0;
+          for (var i = 1; i < line.length; i++) {
+            var a = line[i - 1], b = line[i];
+            var out = Math.max(a[0], b[0]) < w - padX || Math.min(a[0], b[0]) > e + padX ||
+                      Math.max(a[1], b[1]) < s - padY || Math.min(a[1], b[1]) > n + padY;
+            if (out) { if (hit.length) gap[hit.length - 1] = true; continue; }
+            var x1 = a[0] * kx, y1 = a[1] * ky, dx = b[0] * kx - x1, dy = b[1] * ky - y1;
+            var len = Math.sqrt(dx * dx + dy * dy);
+            if (!len) continue;
+            var steps = Math.min(500, Math.ceil(len / STEP)), stepLen = len / steps;
+            for (var k = 0; k < steps; k++) {
+              var f0 = k / steps, f1 = (k + 1) / steps, fm = (k + 0.5) / steps;
+              starts.push([a[0] + (b[0] - a[0]) * f0, a[1] + (b[1] - a[1]) * f0]);
+              ends.push([a[0] + (b[0] - a[0]) * f1, a[1] + (b[1] - a[1]) * f1]);
+              var matched = onEdge(x1 + dx * fm, y1 + dy * fm, dx / len, dy / len);
+              if (matched) runs[name] = (runs[name] || 0) + stepLen;
+              hit.push(matched);
+              gap.push(false);
+              at.push(along + stepLen * (k + 0.5));
+            }
+            along += len;
+          }
+          // widen every matched sample by `extend` metres along the road
+          // each way, never across a break, then cut the widened samples
+          // into stretches
+          var keep = [], last = -Infinity, m;
+          for (m = 0; m < hit.length; m++) {
+            if (hit[m]) last = at[m];
+            keep[m] = at[m] - last <= extend;
+            if (gap[m]) last = -Infinity;
+          }
+          last = Infinity;
+          for (m = hit.length - 1; m >= 0; m--) {
+            if (m < hit.length - 1 && gap[m]) last = Infinity;
+            if (hit[m]) last = at[m];
+            if (last - at[m] <= extend) keep[m] = true;
+          }
+          var cur = null;
+          for (m = 0; m < hit.length; m++) {
+            if (keep[m]) {
+              if (!cur) cur = [starts[m]];
+              cur.push(ends[m]);
+            }
+            if ((!keep[m] || gap[m] || m === hit.length - 1) && cur) {
+              if (cur.length > 2) (stretches[name] || (stretches[name] = [])).push(cur);
+              cur = null;
+            }
+          }
+        });
+      });
+      for (var name in runs) {
+        if (runs[name] < BOUNDARY_STREET_MIN_RUN) continue;
+        if (!best[name] || runs[name] > best[name].run) {
+          best[name] = { run: runs[name], color: target.color, stretches: stretches[name] || [] };
+        }
+      }
+    });
+    var names = {}, features = [];
+    Object.keys(best).sort().forEach(function (nm) {
+      names[nm] = best[nm].color;
+      best[nm].stretches.forEach(function (coords) {
+        features.push({ type: "Feature", properties: { name: nm, color: best[nm].color },
+                        geometry: { type: "LineString", coordinates: coords } });
+      });
+    });
+    return { names: names, features: features };
+  }
   function splitBaseStyle(style, part, dark) {
     var out = {};
     for (var k in style) if (Object.prototype.hasOwnProperty.call(style, k)) out[k] = style[k];
@@ -5302,6 +5491,12 @@ function initChiExplorer() {
       }
       out.layers.push(layer);
     });
+    if (part === "labels") {
+      out.sources = {};
+      for (var sk in style.sources || {}) out.sources[sk] = style.sources[sk];
+      out.sources[BOUNDARY_STREET_SOURCE] = { type: "geojson", data: BOUNDARY_STREET_EMPTY };
+      out.layers.push(boundaryStreetLayer(dark));
+    }
     return out;
   }
   var baseLabels = null;
@@ -5367,6 +5562,101 @@ function initChiExplorer() {
       subdomains: "abcd",
       attribution: BASE_ATTRIBUTION
     }).addTo(map);
+  }
+
+  /* boundary streets, the runtime half (see the section above splitBaseStyle) */
+  var boundaryStreetsOn = true;
+  try { boundaryStreetsOn = localStorage.getItem(BOUNDARY_STREET_KEY) !== "off"; } catch (e) {}
+  var boundaryStreetNames = {};
+  var boundaryStreetSig = "";
+  var boundaryStreetSource = null;
+  var boundaryStreetTimer = null;
+  function boundaryStreetTargets() {
+    var out = [];
+    if (typeof layers === "undefined") return out;
+    layers.forEach(function (mod) {
+      var rt = layerRuntime[mod.id];
+      if (!state.layersOn[mod.id] || !rt || !rt.highlightApplied || !rt.highlightedLayer) return;
+      var f = rt.highlightedLayer.feature;
+      if (!f || !f.geometry) return;
+      out.push({ color: highlightStyleFor(mod).color, geometry: f.geometry });
+    });
+    return out;
+  }
+  function applyBoundaryStreets(result) {
+    var gl = baseLabels && baseLabels.getMaplibreMap();
+    var src = gl && gl.getSource(BOUNDARY_STREET_SOURCE);
+    if (!src) return;
+    var sig = JSON.stringify(result.features);
+    if (sig === boundaryStreetSig && src === boundaryStreetSource) return;
+    boundaryStreetSig = sig;
+    boundaryStreetSource = src;
+    boundaryStreetNames = result.names;
+    src.setData({ type: "FeatureCollection", features: result.features });
+  }
+  function updateBoundaryStreets() {
+    boundaryStreetTimer = null;
+    var gl = baseLabels && baseLabels.getMaplibreMap();
+    if (!gl || !gl.getSource(BOUNDARY_STREET_SOURCE)) return;
+    var none = { names: {}, features: [] };
+    var zoom = map.getZoom();
+    var targets = boundaryStreetsOn && zoom >= BOUNDARY_STREET_MINZOOM ? boundaryStreetTargets() : [];
+    if (!targets.length) { applyBoundaryStreets(none); return; }
+    // the road names come from the same layer the ordinary street names use
+    var roadLayer = null;
+    (gl.getStyle().layers || []).forEach(function (l) {
+      if (!roadLayer && /^roadname_/.test(l.id)) roadLayer = l;
+    });
+    if (!roadLayer) { applyBoundaryStreets(none); return; }
+    var roads;
+    try {
+      roads = gl.querySourceFeatures(roadLayer.source, { sourceLayer: roadLayer["source-layer"] });
+    } catch (e) { return; }
+    var b = map.getBounds();
+    applyBoundaryStreets(matchBoundaryStreets(roads, targets, {
+      lat: map.getCenter().lat, zoom: zoom,
+      bbox: [b.getWest(), b.getSouth(), b.getEast(), b.getNorth()]
+    }));
+  }
+  function scheduleBoundaryStreets() {
+    if (!baseLabels) return;
+    if (boundaryStreetTimer) clearTimeout(boundaryStreetTimer);
+    boundaryStreetTimer = setTimeout(updateBoundaryStreets, 200);
+  }
+  if (baseLabels) {
+    var glLabels = baseLabels.getMaplibreMap();
+    map.on("moveend", scheduleBoundaryStreets);
+    // tiles arriving after a move carry roads the last pass could not see;
+    // a new style (a theme flip) arrives with an empty source of its own
+    glLabels.on("sourcedata", function (e) {
+      if (e && e.tile && e.sourceId !== BOUNDARY_STREET_SOURCE && boundaryStreetsOn &&
+          map.getZoom() >= BOUNDARY_STREET_MINZOOM) scheduleBoundaryStreets();
+    });
+    glLabels.on("styledata", function () {
+      var src = glLabels.getSource(BOUNDARY_STREET_SOURCE);
+      if (src && src !== boundaryStreetSource) scheduleBoundaryStreets();
+    });
+    var bsCorner = document.querySelector(".map-bottom-left");
+    if (bsCorner) {
+      var bsBtn = document.createElement("button");
+      bsBtn.type = "button";
+      bsBtn.className = "hover-toggle-btn";
+      bsBtn.id = "boundary-streets-toggle";
+      bsBtn.title = "Name the streets the selected district's boundary runs along, in its colour, from zoom 13";
+      var syncBsBtn = function () {
+        bsBtn.textContent = boundaryStreetsOn ? "Boundary streets: on" : "Boundary streets: off";
+        bsBtn.setAttribute("aria-pressed", boundaryStreetsOn ? "true" : "false");
+      };
+      syncBsBtn();
+      bsBtn.addEventListener("click", function () {
+        boundaryStreetsOn = !boundaryStreetsOn;
+        try { localStorage.setItem(BOUNDARY_STREET_KEY, boundaryStreetsOn ? "on" : "off"); } catch (e) {}
+        syncBsBtn();
+        trackEvent("boundary-streets/" + (boundaryStreetsOn ? "on" : "off"));
+        updateBoundaryStreets();
+      });
+      bsCorner.appendChild(bsBtn);
+    }
   }
 
   /* ---------- base-map tile-failure notice (R6) ----------
@@ -8037,6 +8327,7 @@ function initChiExplorer() {
     rt.highlightedLayer = null;
     rt.highlightApplied = false; // next updateLayerHighlight must do a full sweep, not an incremental diff
     rt.highlightSignature = null;
+    scheduleBoundaryStreets(); // basemap: the streets this district's edge follows
     if (!rt.overlayLayer) return;
     rt.overlayLayer.eachLayer(function (subLayer) {
       if (subLayer.setStyle) subLayer.setStyle(baseStyleFor(mod, subLayer.feature));
@@ -8093,6 +8384,7 @@ function initChiExplorer() {
     });
     rt.highlightApplied = true;
     rt.highlightSignature = signature;
+    scheduleBoundaryStreets(); // basemap: the streets this district's edge follows
   }
 
   /* ---------- optional per-module "point of interest" pin (e.g. a school's
@@ -32837,6 +33129,8 @@ function initChiExplorer() {
     },
     cleanPoiAddress: cleanPoiAddress, // exposed so the smoke test can regression-guard the office-pin address cleaner (a recurring break point) without any network call
     splitBaseStyle: splitBaseStyle, // exposed so the smoke test can hold the ground/labels split and the street-name restyle to a fixture, with no CARTO fetch
+    matchBoundaryStreets: matchBoundaryStreets, // exposed so the smoke test can hold the boundary-street matcher to a fixture, with no CARTO fetch
+    boundaryStreets: function () { return { on: boundaryStreetsOn, available: !!baseLabels, names: boundaryStreetNames }; }, // which street names the boundary-street layer is showing, and their colours
     basemap: function () { return { kind: districtryTileKind, vector: baseIsVector, labels: !!baseLabels }; } // which basemap kind is live + which theme style it shows — the vector canvas has no tile <img> whose src a test could read
   };
   /* ==== ENGINE:END exports ==== */
