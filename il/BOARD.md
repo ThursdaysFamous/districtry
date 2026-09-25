@@ -40,6 +40,41 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-25, sixth pass. I pushed a branch with the battery RED, and the cause
+is worth more than the push: MY RUNNER REPORTED THE FAILURE AND EXITED 0.**
+
+The loop printed `=== static failures: 1` and returned success, so
+`... && git commit && git push` fired on red. **A RUNNER THAT REPORTS FAILURES
+IT DOES NOT PROPAGATE IS WORSE THAN NO RUNNER** — it produces the paperwork of a
+check while removing its effect, and it defeats exactly the `&&` a careful person
+adds to be safe. Every runner ends on its own verdict now
+(`[ "$fails" -eq 0 ]`), and this is the second time today a throwaway script of
+mine was the defect rather than the thing it measured (the first labelled
+`population/index.json` by the wrong question).
+
+**The failure itself was not this branch's.** Four city records in Iowa's
+`ia-county-city-officials.json` read as VANISHED because MAIN GAINED THEM AFTER
+THIS BRANCH POINT, so `--base origin/main` saw them missing here. Merged main in,
+which is the remedy the drive-to-green rules name — and it conflicted on
+`docs/ENDPOINT_INVENTORY.md`, a GENERATED file, so it was regenerated rather than
+resolved by reading the diff, and all six other generated files were re-checked
+rather than trusted because the half that conflicts is the lucky half.
+
+**AND GITHUB DROPPED A CI EVENT, WHICH IS A STATE WORTH RECOGNISING.** `3e5a487`
+was in the PR's own commit list with the head moved, and **no run was created and
+the PR showed zero check runs for 35 minutes**, while another instance's PR got
+three runs off the same trigger in that window. `smoke-test.yml` has no
+`workflow_dispatch`, so there was nothing to dispatch, and an empty commit or a
+close-and-reopen is forbidden — correctly, but it means the only honest moves are
+to say so and to wait for a real push. **A HEAD WITH NO CHECKS READS EXACTLY LIKE
+A GREEN ONE at a glance**, which is the `BOT_PR_TOKEN` symptom `CLAUDE.md`
+already records, arriving this time on a human push rather than a bot's.
+
+The reviewer's requested CLAUDE.md rule about enumerating the battery went into
+this PR rather than PR A, because this is where the mistake happened and the file
+was already being edited here; deferring a lesson to a PR that does not exist yet
+is how lessons get lost.
+
 **2026-09-25, fifth pass. #1150 was HELD on review and the hold was right: my
 `blocked` entry inverted the REPORT and not the REQUEST, so the monthly source
 gate would have fetched the exact path ISBE asked us not to read — in the change
