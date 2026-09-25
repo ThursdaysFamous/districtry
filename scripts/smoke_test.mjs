@@ -1455,6 +1455,50 @@ try {
     check("dark mode repaints a live overlay from the derived palette",
       light.stroke === null || dark.stroke === null || light.stroke !== dark.stroke,
       `${light.stroke} -> ${dark.stroke}`);
+
+    // THE BASEMAP'S LABELS DRAW ABOVE THE DISTRICTS (2026-09-25): the style
+    // is split into a ground map in the tile pane and a label-only map in a
+    // pane above the overlays. The split and the street-name restyle are
+    // held to a fixture through the exported function, so no CARTO fetch is
+    // needed; the pane is checked only where the vector basemap booted.
+    const split = await page.evaluate((n) => {
+      const fx = { version: 8, sources: {}, layers: [
+        { id: "water", type: "fill" },
+        { id: "place_town", type: "symbol", layout: { "text-size": 12 } },
+        { id: "roadname_minor", type: "symbol", minzoom: 16,
+          layout: { "text-size": 9, "text-font": ["Montserrat Regular", "Open Sans Regular"] },
+          paint: { "text-color": "#838383" } },
+        { id: "roadname_major", type: "symbol", minzoom: 13,
+          layout: { "text-size": { stops: [[14, 10], [18, 12]] } }, paint: { "text-color": "#383838" } },
+      ] };
+      const f = window[n].splitBaseStyle;
+      const ground = f(fx, "ground", false), labels = f(fx, "labels", false), dark = f(fx, "labels", true);
+      const byId = (st, id) => st.layers.find((l) => l.id === id);
+      const pane = document.querySelector(".leaflet-dstBaseLabels-pane");
+      const over = document.querySelector(".leaflet-overlay-pane");
+      return {
+        ground: ground.layers.map((l) => l.id).join(),
+        labels: labels.layers.map((l) => l.id).join(),
+        minor: byId(labels, "roadname_minor"),
+        major: byId(labels, "roadname_major"),
+        darkMajor: byId(dark, "roadname_major").paint["text-color"],
+        fixtureUntouched: fx.layers[2].minzoom === 16 && fx.layers[2].paint["text-color"] === "#838383",
+        vector: window[n].basemap().vector, labelMap: window[n].basemap().labels,
+        paneAbove: !!(pane && over && Number(getComputedStyle(pane).zIndex) > Number(getComputedStyle(over).zIndex)),
+      };
+    }, EXPORTS_NAME);
+    check("the basemap splits into a ground map and a label map above it",
+      split.ground === "water" && split.labels === "place_town,roadname_minor,roadname_major" && split.fixtureUntouched,
+      `ground=${split.ground} labels=${split.labels}`);
+    check("street names are darker, a point larger and named one zoom sooner",
+      split.minor.minzoom === 15 && split.minor.layout["text-size"] === 10 &&
+      split.minor.layout["text-font"][0] === "Montserrat Medium" && split.minor.paint["text-color"] === "#3a3f4b" &&
+      split.major.minzoom === 13 && JSON.stringify(split.major.layout["text-size"].stops) === "[[14,11],[18,13]]" &&
+      split.darkMajor === "#e6e4ee",
+      JSON.stringify({ minor: split.minor, darkMajor: split.darkMajor }).slice(0, 160));
+    check("the label map sits in a pane above the district overlays",
+      !split.vector || (split.labelMap && split.paneAbove),
+      `vector=${split.vector} labelMap=${split.labelMap} above=${split.paneAbove}`);
     await context.close();
   }
 

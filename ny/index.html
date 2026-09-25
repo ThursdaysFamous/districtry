@@ -3732,6 +3732,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
      the overlays on a ground ~9 units darker than their derivation assumed */
   [data-theme="dark"] .leaflet-tile,
   [data-theme="dark"] .maplibregl-canvas { filter: brightness(1.35) saturate(0.92); }
+  /* the label map sets its own dark-theme ink (splitBaseStyle); brightening
+     it too would lift the halo off the names and wash the ink */
+  [data-theme="dark"] .leaflet-dstBaseLabels-pane .maplibregl-canvas { filter: none; }
+  /* the label map sits above the overlays, so it must never take a click
+     meant for a district underneath it */
+  .leaflet-dstBaseLabels-pane, .leaflet-dstBaseLabels-pane * { pointer-events: none !important; }
   [data-theme="dark"] .leaflet-bar a { background-color: var(--dst-raised); color: var(--ink); border-bottom-color: rgba(236, 233, 244, 0.12); }
   [data-theme="dark"] .leaflet-bar a:hover,
   [data-theme="dark"] .leaflet-bar a:focus { background-color: var(--dst-raised-hover); color: var(--ink); }
@@ -4835,31 +4841,125 @@ function initNycExplorer() {
       return !!(window.WebGL2RenderingContext && probe.getContext("webgl2"));
     } catch (e) { return false; }
   }
+  /* ---------- the basemap's LABELS draw above the districts ----------
+   * One GL map in the tile pane drew everything, so every street name sat
+   * UNDER the district fills and the selection highlight, and faded with
+   * each layer switched on. The style is now split in two: the ground (land,
+   * water, roads — every non-symbol layer) stays in the tile pane, and every
+   * symbol layer (street, place and water names, house numbers) draws in a
+   * second, transparent GL map in its own pane at 440 — above the overlays
+   * (400), below the district-name chips (rel-labels, 450) and the markers
+   * (600) — so no district colour covers a street name, and no chip, pin or
+   * popup is covered by one. ALL the symbols move, not only street names,
+   * because MapLibre places labels against the others in the same map, and
+   * split across two maps a street name would print over a place name.
+   *
+   * Street names are also restyled, both themes: CARTO's Positron paints
+   * them #838383 at 9-12px, and Dark Matter's major-road names are #383838
+   * on #111 — measured 2026-09-25, 1.4:1, all but invisible. They now use
+   * the style's own medium weight, a point larger, a dark (light: #3a3f4b)
+   * or light (dark: #e6e4ee) ink on a 1.5px halo, and the two smaller road
+   * classes are named one zoom level sooner (side streets from 15, secondary
+   * roads from 14).
+   *
+   * The cost is a second GL context and a second pass over the same vector
+   * tiles; a failure to build the label map is not a failure of the basemap
+   * — the ground map then keeps its own labels, exactly as before. */
+  var BASE_LABEL_PANE = "dstBaseLabels";
+  var BASE_EMPTY_STYLE = { version: 8, sources: {}, layers: [] };
+  var ROADNAME_SOONER = { roadname_minor: 1, roadname_sec: 1 };
+  function baseLabelSize(size) {
+    if (typeof size === "number") return size + 1;
+    if (size && size.stops) {
+      return { base: size.base, stops: size.stops.map(function (s) { return [s[0], s[1] + 1]; }) };
+    }
+    return size;
+  }
+  // part "ground" keeps every non-symbol layer; "labels" keeps every symbol
+  // layer and restyles the street names; "all" keeps both (no label map).
+  function splitBaseStyle(style, part, dark) {
+    var out = {};
+    for (var k in style) if (Object.prototype.hasOwnProperty.call(style, k)) out[k] = style[k];
+    out.layers = [];
+    (style.layers || []).forEach(function (layer) {
+      var isLabel = layer.type === "symbol";
+      if (part === "ground" && isLabel) return;
+      if (part === "labels" && !isLabel) return;
+      if (part === "labels" && /^roadname_/.test(layer.id)) {
+        var l = JSON.parse(JSON.stringify(layer));
+        if (ROADNAME_SOONER[l.id] && typeof l.minzoom === "number") l.minzoom -= ROADNAME_SOONER[l.id];
+        l.layout = l.layout || {};
+        if (l.layout["text-size"] !== undefined) l.layout["text-size"] = baseLabelSize(l.layout["text-size"]);
+        if (l.layout["text-font"] && l.layout["text-font"].length) {
+          l.layout["text-font"] = ["Montserrat Medium"].concat(l.layout["text-font"].slice(1));
+        }
+        l.paint = l.paint || {};
+        l.paint["text-color"] = dark ? "#e6e4ee" : "#3a3f4b";
+        l.paint["text-halo-color"] = dark ? "#111111" : "#ffffff";
+        l.paint["text-halo-width"] = 1.5;
+        out.layers.push(l);
+        return;
+      }
+      out.layers.push(layer);
+    });
+    return out;
+  }
+  var baseLabels = null;
+  // Both maps follow the theme through here, at boot and on every flip.
+  function setBaseStyles(kind) {
+    var dark = kind === "dark_all";
+    var groundPart = baseLabels ? "ground" : "all";
+    baseTiles.getMaplibreMap().setStyle(baseStyleUrl(kind), {
+      transformStyle: function (prev, next) { return splitBaseStyle(next, groundPart, dark); }
+    });
+    if (baseLabels) {
+      baseLabels.getMaplibreMap().setStyle(baseStyleUrl(kind), {
+        transformStyle: function (prev, next) { return splitBaseStyle(next, "labels", dark); }
+      });
+    }
+  }
+
   var baseIsVector = !!(window.maplibregl && L.maplibreGL && webgl2Available());
   var baseTiles;
+  // A GL layer that throws mid-addTo (a WebGL context the probe granted but
+  // the real canvas refused) is left half-registered — see the probe
+  // comment above. Unwind it by hand.
+  function unwindGLLayer(layer) {
+    try { map.off(layer.getEvents(), layer); } catch (e2) {}
+    try {
+      var glContainer = layer.getContainer && layer.getContainer();
+      if (glContainer && glContainer.parentNode) glContainer.parentNode.removeChild(glContainer);
+    } catch (e2) {}
+    try { delete map._layers[L.Util.stamp(layer)]; } catch (e2) {}
+    layer._map = null;
+  }
   if (baseIsVector) {
     try {
+      // the style arrives through setBaseStyles, which splits it; the empty
+      // style is only what the canvas holds for the moment before that
       baseTiles = L.maplibreGL({
-        style: baseStyleUrl("light_all"),
+        style: BASE_EMPTY_STYLE,
         attributionControl: { customAttribution: BASE_ATTRIBUTION }
       });
       baseTiles.addTo(map);
     } catch (e) {
-      // A throw mid-addTo (a WebGL context the probe granted but the real
-      // canvas refused) leaves the layer half-registered — see the probe
-      // comment above. Unwind by hand, then fall through to raster.
-      if (baseTiles) {
-        try { map.off(baseTiles.getEvents(), baseTiles); } catch (e2) {}
-        try {
-          var glContainer = baseTiles.getContainer && baseTiles.getContainer();
-          if (glContainer && glContainer.parentNode) glContainer.parentNode.removeChild(glContainer);
-        } catch (e2) {}
-        try { delete map._layers[L.Util.stamp(baseTiles)]; } catch (e2) {}
-        baseTiles._map = null;
-      }
+      if (baseTiles) unwindGLLayer(baseTiles);
       baseTiles = null;
       baseIsVector = false;
     }
+  }
+  if (baseIsVector) {
+    try {
+      var labelPane = map.createPane(BASE_LABEL_PANE);
+      labelPane.style.zIndex = "440";
+      labelPane.style.pointerEvents = "none";
+      baseLabels = L.maplibreGL({ style: BASE_EMPTY_STYLE, pane: BASE_LABEL_PANE, attributionControl: false });
+      baseLabels.addTo(map);
+    } catch (e) {
+      if (baseLabels) unwindGLLayer(baseLabels);
+      baseLabels = null;
+    }
+    setBaseStyles("light_all");
   }
   if (!baseIsVector) {
     baseTiles = L.tileLayer(baseRasterUrl("light_all"), {
@@ -4917,7 +5017,11 @@ function initNycExplorer() {
   function baseStyleRequested() { glStyleArrived = false; }
   if (baseIsVector) {
     var glBase = baseTiles.getMaplibreMap();
-    glBase.on("styledata", function () { glStyleArrived = true; });
+    glBase.on("styledata", function () {
+      // the empty placeholder style has no layers; only the real one counts
+      var st = glBase.getStyle();
+      if (st && st.layers && st.layers.length) glStyleArrived = true;
+    });
     glBase.on("error", function () {
       if (!glStyleArrived) {
         if (!tileBannerDismissed && tileBanner) tileBanner.hidden = false;
@@ -13653,7 +13757,8 @@ function initNycExplorer() {
       }));
     },
     cleanPoiAddress: cleanPoiAddress, // exposed so the smoke test can regression-guard the office-pin address cleaner (a recurring break point) without any network call
-    basemap: function () { return { kind: districtryTileKind, vector: baseIsVector }; } // which basemap kind is live + which theme style it shows — the vector canvas has no tile <img> whose src a test could read
+    splitBaseStyle: splitBaseStyle, // exposed so the smoke test can hold the ground/labels split and the street-name restyle to a fixture, with no CARTO fetch
+    basemap: function () { return { kind: districtryTileKind, vector: baseIsVector, labels: !!baseLabels }; } // which basemap kind is live + which theme style it shows — the vector canvas has no tile <img> whose src a test could read
   };
   /* ==== ENGINE:END exports ==== */
   window.ChiExplorer = EXPLORER_EXPORTS;
@@ -13771,7 +13876,7 @@ function initNycExplorer() {
              pre-arrival fast path is what surfaces it (see the tile-failure
              notice block) */
           baseStyleRequested();
-          glTheme.setStyle(baseStyleUrl(kind));
+          setBaseStyles(kind);
         }
       } else {
         baseTiles.setUrl(baseRasterUrl(kind));

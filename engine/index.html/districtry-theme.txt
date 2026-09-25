@@ -78,7 +78,7 @@
              pre-arrival fast path is what surfaces it (see the tile-failure
              notice block) */
           baseStyleRequested();
-          glTheme.setStyle(baseStyleUrl(kind));
+          setBaseStyles(kind);
         }
       } else {
         baseTiles.setUrl(baseRasterUrl(kind));
