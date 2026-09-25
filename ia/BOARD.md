@@ -51,6 +51,61 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — IOWA'S LEGISLATIVE NESTING: THE SOURCE IS EXACT, THE CAUSE IS OURS, AND A
+RETAIN-PERCENTAGE SWEEP CANNOT FIX IT.** Nothing in the tree changed and no tolerance was
+touched; this is the measurement the check-in asked for.
+
+**THE SOURCE NESTS EXACTLY.** Fetched both chambers from TIGERweb through `build_legislative_boundaries.py`'s
+own query — layer 1 and 2, `STATE='19'`, `outSR=4326&geometryPrecision=6` — and paired Senate N
+with House 2N-1 and 2N: **0 m Hausdorff and 0.0000% symmetric difference on all fifty pairs.**
+So this is not upstream, and the same result is the CONTROL ON THE PAIRING: a wrong 2N-1/2N
+assumption could not produce fifty exact matches.
+
+**THE SHIPPED FILES REPRODUCE FROM THAT SOURCE EXACTLY**, through the builder's own two mapshaper
+runs at 10% and 9%: 40 of 50 pairs over 25 m, median symmetric difference 0.0095%, worst 775.3 m
+at D25/D26, best 12.315 m at D3 — every digit identical to measuring the shipped files
+themselves. The cause is entirely inside the builder.
+
+**MATCHING THE PERCENTAGE HELPS AND DOES NOT FIX IT**, which is the finding Illinois needs before
+it finishes sweeping. Separate runs at 10% and 10%: 40 pairs → **15**, median 0.0095% →
+0.0008%, worst 775 m → **113 m**. Better by an order of magnitude and still not nesting. The
+reason is that Visvalingam retains a percentage of vertices PER FILE, so "10%" is a different
+threshold in a 50-district file than in a 100-district one, and `keep-shapes` is per-file too.
+**No percentage makes two independent topology builds agree.**
+
+**ONE COMBINED RUN RESTORES EXACT NESTING.** Both chambers concatenated into one layer, one
+topology build, one `-simplify visvalingam keep-shapes 10%`, then split back by chamber:
+**0 m and 0.0000% on all fifty pairs.** Payload, raw/gzipped: senate 287,653/89,051 →
+313,144/**84,445** (gzip SMALLER), house 357,186/108,604 → 429,078/**113,809**. Net **+0.6 KB
+gzipped** for both chambers.
+
+**IT IS NOT FREE AND THE TRADE IS WORTH STATING.** Measured as each simplified district's
+Hausdorff from its own source district: senate median 79 → 90 m (worse), house median 90 → 74 m
+(better), senate worst 333 m unchanged, house worst **775 → 332 m**. So one run buys exact
+nesting and a much better house layer for slightly coarser senate districts.
+
+**THE TWO SYMPTOMS ADAM SAW ARE ONE DEFECT.** The fidelity loss is real on Iowa — the median
+district boundary sits **79-90 m** from its source, p90 186-203 m — and the nesting error is the
+worst case of it rather than a separate drift: **H50 and H51 each stray 775 m** from source at
+9%, and their shared boundary IS the Senate 25/26 line, where the senate layer at 10% strays only
+186 m and 332 m. The pair's 778 m is the HOUSE layer's own error, not a symmetric drift between
+two files.
+
+**MY WORST FIGURE DOES NOT REPRODUCE THE 849 m I WAS GIVEN, AND I RULED OUT THE TWO CAUSES I
+COULD.** I measure **775.3 m** in a local equirectangular frame and **778.4 m** geodesically on
+the same vertex pair (-93.643139,42.057399 → -93.647724,42.063516). Not the discrete-Hausdorff
+approximation: `densify=0.01` returns 775.3 m unchanged. Not my planar frame: the geodesic agrees
+within 0.4%. What the 849 measured is NOT established, and the two measurements agree on
+everything that matters — the median share to two digits (0.0095% against 0.0093%) and the
+divergent-pair count within two.
+
+**WHAT IS NOT DESIGNED IS THE BUILDER CHANGE.** My combined run merged both chambers into ONE
+layer and split them afterwards, which is not what the builder ships — it writes two files with
+different field sets (`SLDU` against `SLDL`) and different `min_features` guards, and `us-house`
+is a third target in the same script that nests inside neither. Proving the topology approach
+works is not the same as proving the mapshaper invocation a builder would use. Held for Illinois's
+answer as instructed.
+
 **2026-09-25 — #1158 MERGED AS `acafd1d`; BOTH OUTER LOOPS ARE GONE FROM MAIN.** Verified by
 content rather than by the merge event: no `ROBOTS_RETRIES` assignment and no
 `for attempt in range(ROBOTS_RETRIES…)` remains in either file — the four textual matches
