@@ -40,6 +40,61 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-25, later. Checking whether the precinct tripwire could be scheduled
+found that ISBE refuses this project and has since June 2025, and that the
+fleet's one robots.txt reader was turning that refusal into a permission. #1150.
+It also corrects the report below: the tripwire row I recommended is closed.**
+
+`www.elections.il.gov/robots.txt` is 29 bytes — a UTF-8 byte-order mark, then
+`User-agent: *` and `Disallow: /` — with `Last-Modified: Thu, 12 Jun 2025
+06:39:17 GMT`. Confirmed from two clients against the origin's own headers
+(Cloudflare edge, the site's own CSP, a NetScaler `Via`, IIS's scrambled
+`Cteonnt-Length: 29`), so it is the origin's file and not this sandbox's proxy —
+the check `CLAUDE.md` demands before recording a host, and it mattered here.
+
+**`﻿` IS NOT WHITESPACE TO `str.lstrip()`.** So `robots_policy._parse` read
+a field named `﻿user-agent`, opened no group at all, left the `Disallow: /`
+belonging to nothing, and answered `(True, 'no group binds this client')` for
+every path on the host. That is the wyomingmi failure class — a group that
+silently fails to BIND — inside the module written to end it, and worse in
+direction: that one permitted a directory, this one permitted a host that had
+been refusing us for over a year. **The three defects this module has ever had
+are all a group failing to bind and none is a rule misread once a group is open,
+so `no group binds this client` on a file that plainly has one is the shape to
+distrust.**
+
+**AND THE MEASUREMENT WAS ALREADY IN THE REPOSITORY.**
+`user-agent-measurements.json` has said since 2026-09-13 that a group binds this
+client on that host with one rule. Taken, filed, never read — this fleet's own
+recurring defect, on the one class of measurement where the cost is compliance
+rather than a wrong number.
+
+**What stops, and what does not.** Three files fetched ISBE and now decline at
+`scraper_common.require_robots_allowed`: the WEEKLY `il_county_clerk_scraper.py`,
+`isbe_county_officers_scraper.py`, `isbe_precinct_fabric.py`. **A CITATION IS NOT
+A FETCH** — three builders write an `elections.il.gov` `resultsUrl`/`mapUrl` into
+their output and never request it, and the cards link the host; all of it stays,
+because robots.txt governs crawling and not linking. My own first reading said
+"six callers read it" and measuring which ones actually fetch corrected it to
+three. **Nothing is unpublished**: `il-county-clerks.json` keeps its 101 clerks
+under Adam's preserve ruling, and the weekly job now stops before the fetch
+rather than shipping an empty file.
+
+**THE CORRECTION TO THE REPORT BELOW.** Its strongest recommendation was a
+scheduled comparison from `isbe_precinct_fabric.py`, the one class of the 410
+that needs a machine rather than a date. **That route is closed** — ISBE was the
+only source carrying all 102 election authorities. The finding underneath it
+stands and gets worse rather than better: 38 of the 46 precinct files are a
+Census 2020 snapshot, a clerk consolidates when a clerk decides to, and there is
+now nothing statewide to detect it. The three results vendors carry 34, 13 and 17
+counties and are unaffected, so a partial tripwire is buildable from them; that
+is a smaller answer than the one I recommended this morning and it is the honest
+one. The module's `--selftest` stays in CI, offline, for the day a route reopens.
+
+**The rest of the report below is unaffected** — the 221's reproduction, the 86
+files the surface misses, and where Illinois's `WATCH.md` lives are all
+independent of this.
+
 **2026-09-25. Stage 1 of the `WATCH.md` assignment: the 221 reproduces exactly,
 and the instrument that produced it understates by 86 files and reads the wrong
 path for this instance. Both corrections point the same way — there is more
@@ -1039,6 +1094,38 @@ disagree on the clerk's first name — Jodie in the drafts, Kandi in the
 guidebook — and neither is guessed at.
 
 ## Open questions for Adam
+
+- **2026-09-25 — ISBE refuses this project, so the county-clerk roster has no
+  route and 46 precinct layers have no statewide tripwire. BLOCKING for the
+  precinct half; the clerk half needs a decision, not a blocker.** The measurement
+  and what #1150 already does are in Status above. Two things are left open.
+
+  **(a) `il-county-clerks.json` has no refresh any more.** The weekly job stops at
+  the gate, and the 101 clerks it last read are preserved and carried forward, so
+  no reader loses an answer — but the file is now as current as its last
+  successful run and will drift as clerks turn over. Three courses.
+  **(i) Ask ISBE.** Their robots.txt is a blanket `Disallow: /` with no group for
+  anyone, which is the shape a site publishes without thinking about civic reuse
+  rather than one aimed at us; a short note asking whether a named group could be
+  added, or the directory offered as a download, is exactly the ask route this
+  project already runs with clerks. It costs one e-mail and it is the only course
+  that reopens the whole host, including the precinct tripwire. **I would take
+  this, and I would draft it and hold it — nothing is sent by a session.**
+  **(ii) Rebuild the roster from the 102 counties' own clerk pages**, which this
+  repo already reaches for other facts. Real work, and it trades one refusing host
+  for 102 that mostly permit. **(iii) Let it stand** on the preserved records with
+  a dated note. Honest, and it decays.
+
+  **(b) The precinct tripwire needs a smaller replacement, and I would build it.**
+  38 of Illinois's 46 shipped precinct layers are dissolved from Census 2020
+  voting districts; a county clerk consolidates whenever a clerk decides to, and
+  as of today nothing detects it. The three results vendors carry 34, 13 and 17
+  counties between them, so a vendor-side comparison covers a real fraction rather
+  than all 102 — worth building, and worth stating on the coverage record that the
+  counties no vendor carries have **no** drift detection at all rather than
+  letting the old "ISBE covers everything" sentence stand. This is the largest
+  correctness exposure Illinois has right now: a precinct card can be silently
+  wrong and no gate in the repo would know.
 
 - **2026-09-25 — where Illinois's watch plan goes, and one fleet-wide
   measurement fault it exposed. Neither is blocking; both want a yes before I
