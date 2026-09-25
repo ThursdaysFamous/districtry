@@ -243,6 +243,9 @@ named workflow's own latest run before believing any row.
 **Adam's instruction, 2026-09-25: stop using `get_status`; page through
 `actions_list` instead.**
 
+**Corrected the same day: there IS a reader that sees check runs — `pull_request_read`'s `get_check_runs` method, found by the Michigan session.** Ask it first. Verified on #1157: `get_status` answered `total_count: 0, pending` while `get_check_runs` returned the smoke run with `conclusion: success` and the same run id the paging had found. Its limit is stated rather than assumed — every call made against it so far was on a PR that HAD a run, so a ZERO from it is
+untested, and the paging below remains what establishes a genuine ABSENCE.
+
 `pull_request_read(method="get_status")` reads the commit-status API. This
 repository's smoke test is a **check run**, so that call returns
 `total_count: 0, statuses: []` for every pull request here, green ones
