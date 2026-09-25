@@ -49,6 +49,55 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — BOTH ITEMS OFFERED TO ME WERE ALREADY DONE, AND SAYING SO IS THE
+WORK.** Ask 8 has been drafted since 2026-09-03 with its recipient corrected on
+2026-09-04, and the gap-record §7 skill carry merged inside #1149 at line 143.
+Writing either again would have produced a duplicate that looked like progress.
+**Rule 1 — grep the record before building what an assignment asks for — and it
+is the second time today it paid.**
+
+**WHAT WAS ACTUALLY WORTH DOING IS #1151: Ask 8's letter says two things that are
+measurably false, and it is unsent, so they would be said to a public official on
+the day it goes.** An unsent draft is not history.
+
+```
+"carries an office phone and website for each"
+    939 cities, 927 telephones, 531 websites
+"outside Des Moines and Waterloo ... cannot name a single"
+    names officials in 109 of 939; Cedar Rapids missing from the sentence too
+```
+
+**The first is wrong in the gap blocker as well, and there it contradicts itself
+in consecutive sentences** — the League table's own 935 and 536, then "all 939
+cities now carry their own office phone and website" two hundred characters
+later. Appended, disproved sentence left in place. That is the THIRD figure this
+month whose own supporting numbers sat beside it unread, after Jackson's canvass
+arithmetic and #1149's `605` heading.
+
+**Correcting the second makes the ask stronger, not weaker.** "109 of 939, and the
+830 is what I am asking for" is checkable where "cannot name a single one" was
+not, and the letter now carries what the draft could not: all 99 counties asked
+once, ten publish, which is what makes the Secretary of State the right recipient
+rather than the next ninety.
+
+**Re-probed before the draft was touched**, per the skill's own rule that a
+redesigned site often starts publishing the thing: four sos.iowa.gov pages with
+the districtry token, no browser string, all 200, robots allowing each, ZERO
+occurrences of "clerk". `/city-elections` is new since the 2026-09-03 read and
+carries none either. **Nothing is sent; the ledger stays `NOT YET ASKED —
+DRAFTED`.**
+
+**THE SHALLOW CLONE GAVE ME THREE CONFIDENT WRONG ANSWERS TODAY AND IS NOW A
+STANDING RULE.** `a6ca829` is the oldest reachable commit here, so (a) a file's
+`git log -1` returns the GRAFT date, not its own, (b) "this file first appeared
+on 2026-09-23" is what every long-lived file looks like, and (c) running
+`build_sitemap.py` WITHOUT `--check` therefore writes wrong `lastmod` dates —
+it rewrote the root page 2026-09-22 → 2026-09-23 and the wrong date read exactly
+like a correction. Reverted, and written into gap-record §7 with the one-line
+test. CI checks out at full depth, so the gate was never at risk. **In this
+sandbox, a date read from git history is a claim about the clone until the graft
+boundary is checked.**
+
 **2026-09-25 — #1149 IS MERGED AS `343b624`, VERIFIED ON MAIN BY CONTENT.** Five
 checks, each read off the shipped tree rather than off the merge message:
 
