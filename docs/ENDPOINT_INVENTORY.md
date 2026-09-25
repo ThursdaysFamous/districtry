@@ -140,10 +140,14 @@ prose.
 
 **129 distinct source hosts** across the six manifests. Each instance's
 `validate_sources.py` is the authority — it carries every dataset id and
-provenance URL the build depends on, and is machine-checked monthly. A
-`blocked` entry means the source is *measured* as refusing this client, and
-the check **inverts** for it: unreachable is expected, reachable again is
-the signal a human can act on.
+provenance URL the build depends on, and is machine-checked monthly. Two
+entry classes mean the source refuses this client, and the check
+**inverts** for both: the refusal is expected and its LIFTING is the signal
+a human can act on. They differ in whether anything is fetched. A
+`blocked` entry was measured unreachable and IS re-probed, because probing
+is how you learn an outage ended. A `robots_declined` entry is a host whose
+own robots.txt asks this client not to read it, and is NEVER fetched — the
+request is the thing being asked for, so only robots.txt is re-read.
 
 ## 3. Terms
 

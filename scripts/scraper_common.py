@@ -172,9 +172,13 @@ def require_robots_allowed(url, user_agent, headers=None, label=None):
     without asking is not yet in breach of anything it read, and is the next
     thing to fix". On 2026-09-25 that came due: www.elections.il.gov publishes
     `User-agent: * / Disallow: /`, `Last-Modified: Thu, 12 Jun 2025`, so ISBE had
-    been refusing this project for over a year while six files here read it, none
-    of them asking. This is the seam they ask through, so the rule has one
-    reading rather than one per caller.
+    been refusing this project for over a year while SIX FILES REFERENCED IT AND
+    THREE FETCHED IT, none of the three asking. Both halves of that sentence are
+    load-bearing and an earlier draft of it said only "six ... read it": the
+    other three write an `elections.il.gov` `resultsUrl`/`mapUrl` into their
+    output as provenance and never request it, so A CITATION IS NOT A FETCH and
+    nothing about them changes. This is the seam the three ask through, so the
+    rule has one reading rather than one per caller.
 
     IT RAISES RATHER THAN RETURNING FALSE. A refusal that a caller can carry on
     past is a refusal the caller will carry on past — on a rushed edit, in an
