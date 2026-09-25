@@ -1503,12 +1503,13 @@ try {
       !split.vector || (split.labelMap && split.paneAbove),
       `vector=${split.vector} labelMap=${split.labelMap} above=${split.paneAbove}`);
 
-    // The hover card never takes the mouse. It follows the cursor and, near
-    // the top of the map, flips below it with its tail pointing up at the
-    // cursor — and Leaflet's own stylesheet gives that tail pointer-events:
-    // auto, so it took the click the map was meant to get. Built from the
-    // real class names under the real stylesheets (Leaflet's included),
-    // every part of the card must compute to none, in both placements.
+    // The hover card never takes the mouse and carries no tail. It follows
+    // the cursor and, near the top of the map, flips below it; its tail then
+    // pointed up at exactly the cursor, and Leaflet's own stylesheet gives
+    // that tail pointer-events: auto, so it took the click the map was meant
+    // to get. Built from the real class names under the real stylesheets
+    // (Leaflet's included), every part of the card must compute to none and
+    // the tail must not display, in both placements.
     const hoverPE = await page.evaluate(() => {
       const out = [];
       ["", " hover-below"].forEach((flip) => {
@@ -1522,11 +1523,14 @@ try {
           const pe = getComputedStyle(el).pointerEvents;
           if (pe !== "none") out.push(el.className + flip + "=" + pe);
         });
+        // the card carries no tail at all (2026-09-25)
+        const tail = getComputedStyle(pop.querySelector(".leaflet-popup-tip-container")).display;
+        if (tail !== "none") out.push("tail" + flip + " display=" + tail);
         pop.remove();
       });
       return out;
     });
-    check("the hover card, tail included, never takes the mouse from the map",
+    check("the hover card has no tail and never takes the mouse from the map",
       hoverPE.length === 0, hoverPE.join(", ") || "every part none");
 
     // Boundary streets: the matcher names a street the district's edge runs

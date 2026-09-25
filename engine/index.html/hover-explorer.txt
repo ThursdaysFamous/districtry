@@ -258,13 +258,14 @@
     if (hoverPopup) hoverPopup.close(); // idempotent; removes it from the map if open
   }
 
-  // Leaflet's reserved tail strip (.leaflet-popup margin-bottom), the breathing
-  // room kept from the map edge, and how far the tail stays clear of the card's
-  // rounded corners.
+  // Leaflet's reserved tail strip (.leaflet-popup margin-bottom; the tail
+  // itself is hidden, so above the cursor this is bare space), the breathing
+  // room kept from the map edge, and how far below the cursor a flipped card
+  // starts — far enough to clear the pointer graphic, which hangs down and to
+  // the right of its hotspot, so the card never sits under the cursor.
   var HOVER_TIP = 20;
   var HOVER_EDGE = 8;
-  var HOVER_TAIL_INSET = 16;
-  var HOVER_TAIL_HALF = 20; // half of Leaflet's 40px tail container (its centering margin)
+  var HOVER_BELOW_GAP = 36;
   var HOVER_WIDTH = 324;    // the card width; must match .hover-popup .leaflet-popup-content
   var HOVER_OFFSET_X = 0;
   var HOVER_OFFSET_Y = -4;
@@ -272,9 +273,8 @@
   // Keep the popup inside the map viewport. autoPan stays off by design —
   // panning the map during a hover would move the very thing being inspected,
   // and the popup follows the cursor, so it would chase itself — so instead of
-  // moving the MAP this moves the POPUP: clamp it horizontally, flip it below
-  // the cursor when there isn't room above, and slide the tail back so it still
-  // points at the spot being read.
+  // moving the MAP this moves the POPUP: clamp it horizontally, and flip it
+  // below the cursor when there isn't room above.
   //
   // Measured rather than computed from the anchor: Leaflet's own placement
   // already accounts for the tail strip, zoom animation and content size, so
@@ -299,21 +299,12 @@
     var needed = box.height + HOVER_TIP + HOVER_EDGE;
     var below = (anchorY - frame.top) < needed && (frame.bottom - anchorY) > (anchorY - frame.top);
     var dy = 0;
-    if (below) dy = (anchorY + HOVER_TIP) - box.top;
+    if (below) dy = (anchorY + HOVER_BELOW_GAP) - box.top;
     else if (box.top < frame.top + HOVER_EDGE) dy = (frame.top + HOVER_EDGE) - box.top;
 
     el.classList.toggle("hover-below", below);
     hoverPopup.options.offset = L.point(HOVER_OFFSET_X + dx, HOVER_OFFSET_Y + dy);
     hoverPopup.update();
-
-    // The tail is centered on the popup, so a horizontal clamp drags it off the
-    // cursor; shift it back by the same amount, stopping short of the corners.
-    var tail = el.querySelector(".leaflet-popup-tip-container");
-    if (tail) {
-      var reach = Math.max(0, box.width / 2 - HOVER_TAIL_INSET);
-      var shift = Math.max(-reach, Math.min(reach, dx));
-      tail.style.marginLeft = (-HOVER_TAIL_HALF - shift) + "px";
-    }
   }
 
   function showHover(latlng, content) {
