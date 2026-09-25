@@ -92,9 +92,12 @@ more current than what ships, not stale.
 robots.txt answering 202, one `Disallow: /`. The other sixteen are a FAILED
 ROBOTS READ, which policy makes disallow-all, correctly, and which is not a
 statement by anybody; they are mostly TLS failures on legacy domains. And **51 of
-the 77 non-answers were probed only on the auditor mail domain**, 24 of those
-counties having no site host in the repo at all, so those negatives are about a
-mail domain and not a county. `Decatur → grm.net` is that at its clearest.
+the 77 non-answers were probed only on the auditor mail domain**, so those
+negatives are about a mail domain and not a county — `pick_host` reaches the mail
+domain ONLY when the repo knows no site host, so that is the same set by
+construction, and it is **57** counties in all. **NOT ONE of the 22 refusals is
+on a repo-known host**, which strengthens the caveat rather than qualifying it:
+the refusal tally is entirely an artifact of probing a mail domain. `Decatur → grm.net` is that at its clearest.
 My sweep asked ONE path where the earlier one followed about eight pages per
 county, so for the 53 `no-page` counties the earlier negative is still the
 stronger one. What this adds is the artifact, the host fix that found Adams, and
@@ -115,13 +118,41 @@ two readers of one question, and the cheap one was wrong.**
 **A measured negative is a result and this is one.** The gap's `wanted` — "more
 counties publishing their cities' officials the way nine already do" — is now
 bounded rather than open-ended: one more does, one has the module empty, and the
-remaining upside on this route is the 24 counties whose only known address is a
-mail domain. That points the effort at **Ask 8**, the Secretary of State, which
+remaining upside on this route is the **24 counties whose page was NEVER ASKED**
+— 22 refused at robots, 2 unreachable. That points the effort at **Ask 8**, the Secretary of State, which
 this board already calls the highest-value ask.
 
 **Stage 2 is not in #1148**: building Adams in, raising `MIN_COUNTIES` 9 → 10,
 and narrowing `wanted`. The floor is raised when a county joins and never lowered
 to get past one going stale.
+
+**CORRECTED 2026-09-25 on review, and the correction is a sharper bound than what
+it replaces.** Both sentences above said **24** and named a different set each
+time. 24 is robots-refused plus unreachable — the counties whose page was never
+requested — and that is the only subset of the verdicts giving 24. "No site host
+in the repo" is `hostSource == auditor-mail-domain`, which is **57**, of which 51
+are non-answers. Three measurements went in with the fix: no refusal is on a
+repo-known host; **Ida and Webster failed with a proxy 502, which is this
+vantage's egress and not the host**, so "mostly TLS failures" folded two in
+wrongly; and **`wrightco.iowa.gov` fails with `unable to get local issuer
+certificate`**, the Coles/Gallatin/Vermilion incomplete-chain shape, where the
+2026-09-05 record says its own chain probe found none — so one of those two
+statements has moved and the sweep row is the newer one. All of it is in the
+artifact's `caveats` block rather than only in prose, because stage 2 narrows the
+gap's `wanted` and that is where a wrong description reaches a reader.
+
+**AND I REPORTED A FULL BATTERY OFF A SLICE.** The PR said all 94 static gates
+pass; the workflow's list is 110 invocations, 100 of them needing no browser. My
+runner cut `smoke-test.yml` at `actions/setup-node` — the boundary that defines
+the NAMED-STEP count, not the invocation list — which dropped the **six
+per-instance `validate_index.py` runs, the merge gate itself**; a second defect
+in the same runner dropped `node scripts/esri_rings_test.mjs` on a "node without
+`--check` means browser" heuristic, which is the exact misclassification
+`CLAUDE.md` already records. All seven were run and pass, so nothing was
+concealed — but **a slice is a remembered subset**, which is the rule this repo
+states and I broke. The manager's own runner was missing the two
+`validate_gap_counts.py` invocations in the same week, which is what prompted the
+question rather than an assumption.
 
 **No ungated prose restatement turned up in Iowa on this pass** — the figure a
 gate would want here is `MIN_COUNTIES`, and `build_ia_county_city_officials.py`
