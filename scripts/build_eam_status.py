@@ -340,6 +340,15 @@ def selftest():
     fifth correction was the classifier, so the classifier gets one.
     """
     bad = 0
+    for cell, want, why in WHEN_CASES:
+        got = states_a_when(cell)
+        if got != want:
+            bad += 1
+            print("  WHEN  %-58s want=%s got=%s  (%s)"
+                  % (cell[:58], want, got, why))
+    print("  WHEN  %d cadence-cell case(s), %d accepted / %d refused"
+          % (len(WHEN_CASES), sum(1 for _, w, _ in WHEN_CASES if w),
+             sum(1 for _, w, _ in WHEN_CASES if not w)))
     for rel, want, why in SHAPE_CASES:
         path = os.path.join(REPO_ROOT, rel)
         if not os.path.exists(path):
@@ -356,7 +365,8 @@ def selftest():
                  else "expected %s" % want))
     if bad:
         fail("%d shape case(s) failed" % bad)
-    print("build-eam-status: selftest OK — %d shape case(s)" % len(SHAPE_CASES))
+    print("build-eam-status: selftest OK — %d shape case(s), %d cadence cell(s)"
+          % (len(SHAPE_CASES), len(WHEN_CASES)))
 
 
 def check_geometry_names_nobody():
@@ -515,6 +525,56 @@ WHEN = re.compile(r"(?i)\b(dail|week|month|quarter|semiannual|semi-annual|annual
 # nothing.
 SAME_AS_ABOVE = re.compile(r"(?i)^\W*same\b")
 
+# A DATE IS A WHEN, AND ONLY WHERE THE CELL LEADS WITH IT (Adam's ruling,
+# 2026-09-25: "widen the vocabulary to accept a date"). A year — with or without
+# a quarter or a range — is a MORE specific commitment than `annually`, and
+# rejecting it forced a row to be worded vaguer than what the project actually
+# knows: the root WATCH.md's `**2029 Q4**`, `**2031 Q2**`, `**2031–2032**` and
+# `**2032–2033**` are all real plans, and the identical set is in `ny/WATCH.md`
+# and `ca/WATCH.md`, so this is a fleet rule that reaches only `il` today
+# because the report reads four instances.
+#
+# ANCHORED AT THE START OF THE CELL, `**` AND ALL, BECAUSE A BARE `\b20\d\d\b`
+# IS TOO LOOSE AND THE CELL IT BREAKS IS NAMED: `ia/WATCH.md` line 53 reads
+# "Iowa specifically, no fixed cadence (the Legislature's own ArcGIS org has
+# already revised this boundary once, mid-2026, ...)" — a cell that states
+# outright that it has NO cadence, which a year matched anywhere inside it would
+# silently promote to a plan. The date has to be the cell's OWN commitment
+# rather than a numeral somewhere in its prose, and that Iowa cell still failing
+# is the negative test this clause is worth nothing without. `WHEN_CASES` below
+# ships it, with the five other phrases that must keep failing.
+WHEN_DATE = re.compile(r"^\W*20\d\d\b")
+
+
+def states_a_when(cell):
+    """True when a cadence cell commits to a time, by vocabulary or by date."""
+    return bool(WHEN.search(cell) or WHEN_DATE.match(cell))
+
+
+# (cell, should it count as a when, why this case is here). Each is a REAL cell
+# from a WATCH.md in this tree or a phrase the ruling deliberately leaves out.
+WHEN_CASES = (
+    ("**2029 Q4**", True, "root WATCH.md's pre-cycle dry read — a date, no vocabulary word"),
+    ("**2031 Q2**", True, "P.L. 94-171 delivery; the same cell is in ny/ and ca/"),
+    ("**2031\u20132032**", True, "a RANGE is still the cell's own commitment"),
+    ("**2032\u20132033**", True, "municipal remaps"),
+    ("**2031**, when TIGERweb publishes 2030 census blocks", True,
+     "matched twice over — the anchored date and the word census"),
+    ("Iowa specifically, no fixed cadence (the Legislature's own ArcGIS org has "
+     "already revised this boundary once, mid-2026, ...)", False,
+     "ia/WATCH.md line 53 — THE negative test: says it has no cadence, and a "
+     "year matched anywhere inside would promote it to a plan"),
+    ("Rolling, post-enactment", False, "states a trigger shape, not a when"),
+    ("Per-body, ad hoc", False, "ad hoc is the absence of a cadence"),
+    ("Ad hoc", False, "same, standing alone"),
+    ("no fixed cadence", False, "says so in words"),
+    ("Before each election", False,
+     "an election has no fixed date; a row wanting this names the months"),
+    ("Every PR, by CI", False,
+     "a gate is not a cadence — and a --check proves a file matches its inputs, "
+     "never that the inputs are current"),
+)
+
 
 # ILLINOIS'S WATCH FILE IS THE ROOT ONE, and reading `<tag>/WATCH.md` for
 # every state meant reading NOTHING for the instance that carries most of the
@@ -562,7 +622,7 @@ def watch_rows(tag):
         if not cells or set(cells[0]) <= set("-: "):
             continue
         when = None
-        if WHEN.search(cells[0]):
+        if states_a_when(cells[0]):
             when = cells[0]
             last_when = when
         elif SAME_AS_ABOVE.match(cells[0]) and last_when:
