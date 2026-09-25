@@ -48,6 +48,34 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — #1144 MERGED and verified by content; the gate fix is open as
+#1145.** Verified on main at `9d95a24` rather than by ancestry: Ask 30 at
+`docs/ASK_DRAFTS.md:2365`, and `NOT YET ASKED — DRAFTED 2026-09-25` in BOTH the
+`ia-supervisor-district-seats` blocker and `ia/WATCH.md` row 35. Nothing has been
+sent; the ledger reads `ASKED <date>` only on the day it goes.
+
+**Two of my verification greps came back empty and the content was fine both
+times.** The em-dash in `NOT YET ASKED — DRAFTED` is multi-byte, and a `.` in the
+pattern matched one byte of it; a second attempt broke on shell quoting. Read
+with the builder's own regex and parsed as JSON, all three checks pass. Checking
+before concluding is the only reason that did not become a second false
+correction an hour after the first one — **a failed grep is a claim about the
+pattern until the pattern has been tested.**
+
+**#1145 — `measure_metric`'s person-word check was reading the record's ID
+instead of its claim, and failed in both directions.** A gap id names an
+ABSENCE, so `ia-municipal-officeholders` was refused unless it declared that 939
+CITY contact rows name people (18 ids across four instances trip the same way),
+while `ia-board-chair`'s 38 genuinely-named chairs passed unchecked because
+"chair" is not in the word list. The claim now comes from a `claim` key
+defaulting to `label`, so all four history pages come back byte-identical;
+`naming` now DRIVES the comparison rather than being ignored when no person word
+appears, which is a trap I would have shipped had I fixed only what was named.
+Four selftest assertions cover both directions of the defect and both directions
+of the fix. Pair 81/110 re-measured after the cherry-pick AND after the rebase;
+all 94 static gates pass; the guidebook auto-merge was verified by content on
+both sides.
+
 **2026-09-25 (later) — CORRECTION to the entry below: I re-measured something
 this board had already measured six days earlier, and recorded twenty lines
 further down its own Status section.** The entry below stands as written; this
