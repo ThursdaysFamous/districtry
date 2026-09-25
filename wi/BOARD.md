@@ -28,6 +28,37 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-25, later. The hold on #1146 is fixed and pushed as `9f09864`,
+on a merge of `d2b3c43`.** The parenthetical was right to hold on and I measured
+it rather than taking the note: `LOCAL_COMPOSITION` holds FOUR cities — Appleton
+15 districts, Berlin 6, Kaukauna 4, Edgerton 3 — and the shipped geometry carries
+159 distinct COUSUBFP of which those four are locally composed and 155 come from
+the counties' filings. The string said "155 … plus Appleton", which is 156. It
+now names all four with their counts, so **a reader can check 155 + 4 = 159 on
+the page** rather than taking two numbers on trust; both `wi/sources.html` copies
+(the matrix cell and the Dataset node's `spatialCoverage`) come from that one
+worksheet key.
+
+**THAT IS THE CHEAP HALF AND I SAID SO ON THE PR.** Nothing derives the sentence
+from `LOCAL_COMPOSITION`, so it is the same shape as the two findings already
+recorded — a fact restated in prose beside the table that owns it, with nothing
+comparing them. **Three of that family are now on the record and none has a
+gate**: this sentence, the gap record's county list (57 → 54, wrong in both
+directions at once), and the scraper's queue comment (nine shipped cities still
+listed). The common remedy is small and the same each time — derive, or compare
+in CI — and it is a fleet-wide change rather than a Wisconsin one.
+
+Battery on the merged tree: **100 of 100** no-browser gate invocations and nine
+of the ten browser gates. `validate_gate_counts.py` reads **81/110** after the
+merge, Iowa's new gap gate included — re-run after the merge, not only after an
+edit, which is the rule that catches the pair moving when two correct changes
+meet. `page_consistency_test.mjs` still exits 1 here and its failure set is
+unchanged in shape: 87 lines, every one the "no console errors" check with
+`ERR_CERT_AUTHORITY_INVALID`, zero non-cert, with il's and mi's sources pages
+failing identically to wi's though only wi's is touched. **The count moving 99 →
+87 between runs on near-identical trees is the tell** that it tracks which page
+loses the race with the intercepted counter script.
+
 **2026-09-25. Oconomowoc ships, and a district can now say it is a seat
 short. #1146 open.** The last of the four cities measured shut on 2026-09-05 for
 seating two alderpersons per district, and the only one the list schema alone
