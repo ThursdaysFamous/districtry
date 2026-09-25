@@ -44,6 +44,42 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-25. ADAM RULED "WIDEN THE VOCABULARY TO ACCEPT A DATE" AND I HAD
+ALREADY GONE THE OTHER WAY.** His message reached me after #1161 was pushed: I
+had reasoned to *reword rather than widen* on my own and written every class row
+to fit the existing vocabulary, which answers the question and is not the answer
+he gave. The widening is now #1161's own commit (`f3e94a5`), in this module
+rather than the manager's, for the conflict reason their brief gave — a third
+same-day instance of that defect avoided rather than paid for.
+
+**ANCHORED AT THE START OF THE CELL, and their named cell is the SHIPPED negative
+test.** `ia/WATCH.md` line 53 states outright that it has no cadence and mentions
+`mid-2026` in its prose, so a bare `\b20\d\d\b` would have promoted "no fixed
+cadence" to a plan. Verified against the actual line rather than a paraphrase:
+`states_a_when` returns False. **The tests ship rather than living in a shell** —
+`WHEN_CASES`, twelve cells, five accepted and seven refused, `--selftest` printing
+the split so the clause cannot quietly stop meaning anything.
+
+**NO INSTANCE'S FIGURES MOVE and that was measured, not assumed**: il 397/all,
+wi 262/240, ia 57/40, mi 53/45. The date-only cells name no `.json` file, so the
+widening contributes no plans today; what it buys is that those four checkpoint
+rows become readable the moment one names a file, and the identical set is in
+`ny/WATCH.md` and `ca/WATCH.md`, neither touched.
+
+**The manager's correction of their own brief was already in the rows** — the CPS
+cell reads the month SPAN from the four publications in the table underneath it,
+not the single month their first message asked for. Their escape hatch went
+unused because the span was both honest and already valid, and they were right
+that the two changes are independent: that cell holds no date, so a date widening
+leaves it rejected either way.
+
+**#1161 IS WAITING ON ITS REVIEWER WITH ONE QUESTION THAT IS NOT MINE**: it takes
+Illinois to `EAM` on eleven rows whose `Last done` is every one `(never)`. The M
+bar asks for a row that names the file and states a when, so it passes on the
+bar's own terms — and if a plan nobody has run should not count, the DEFINITION
+wants revisiting rather than the rows. Better that the letter be rejected than
+that I write vaguer rows to avoid claiming it.
+
 **2026-09-25. #1160 MERGED and verified on the merged tree — 397/305/3 for
 Illinois, the corrected figures, instrument green. PR B IS OPEN AS #1161 and it
 takes Illinois to EAM, the first instance to reach it.** Flagged at the top of
