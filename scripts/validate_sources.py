@@ -470,9 +470,28 @@ PROVENANCE = [
     {"layer": "Illinois county clerks (roster)",
      "app_file": "il-county-clerks.json",
      "source_url": "https://www.elections.il.gov/ElectionOperations/ElectionAuthorities.aspx",
+     "blocked": "ROBOTS-REFUSED, measured 2026-09-25. www.elections.il.gov/robots.txt "
+                "is 29 bytes — a UTF-8 byte-order mark, then `User-agent: *` and "
+                "`Disallow: /` — with `Last-Modified: Thu, 12 Jun 2025 06:39:17 GMT`, "
+                "confirmed from two clients against the origin's own headers. No group "
+                "names any client, so the `*` group binds this project fully. The "
+                "refusal went unseen because the BOM stopped robots_policy._parse "
+                "opening the group at all, so a full refusal read as `no group binds "
+                "this client`; that is fixed, with ISBE's own bytes as a fixture. This "
+                "row is INVERTED like the others: not fetching is the expected state, "
+                "and the WARN is the day the rule lifts, because that is when "
+                "automation could resume. UNLIKE the other blocked entries this one is "
+                "a POLICY and not an outage — the pages serve fine to a browser — so "
+                "it is never worked around, and the weekly job now declines at the "
+                "gate rather than fetching",
      "note": "Scraped weekly from ISBE's election-authority directory "
-             "(il_county_clerk_scraper.py); Peoria deliberately absent (its "
-             "authority is the appointed county election commission)."},
+             "(il_county_clerk_scraper.py) until 2026-09-25, when that host's "
+             "robots.txt was read correctly for the first time and refuses us. The "
+             "101 clerks already fetched are PRESERVED and carried forward — a "
+             "refusal stops the fetch and never unpublishes what we have (Adam, "
+             "2026-09-19) — so the file keeps its last-good records and its own read "
+             "stamp. Peoria deliberately absent (its authority is the appointed "
+             "county election commission)."},
     {"layer": "Suburban municipal governing bodies (roster)",
      "app_file": "municipal-officials.json",
      "source_url": "https://www.cookcountyclerkil.gov/elections/directory-elected-officials",

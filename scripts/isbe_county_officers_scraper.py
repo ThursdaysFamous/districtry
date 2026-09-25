@@ -87,7 +87,7 @@ import sys
 
 import pymupdf
 import requests
-from scraper_common import make_fail, UA_CHROME_WIN_124  # noqa: E402  (shared machinery — do not fork)
+from scraper_common import make_fail, require_robots_allowed, UA_CHROME_WIN_124  # noqa: E402  (shared machinery — do not fork)
 
 SOURCE_URL = "https://elections.il.gov/Downloads/ElectionOperations/PDF/coofficers.pdf"
 SOURCE_PAGE = "https://elections.il.gov/ElectionOperations/CountyOfficials.aspx"
@@ -147,6 +147,14 @@ def warn(msg):
 
 def fetch_pdf():
     """The document's bytes, or a loud failure. Never a partial file."""
+    # ISBE refuses this project: www.elections.il.gov/robots.txt is a
+    # BOM'd `User-agent: * / Disallow: /`, Last-Modified 2025-06-12, measured
+    # 2026-09-25. The full record is in scripts/il_county_clerk_scraper.py's
+    # main() and in scripts/robots_policy.py's `_parse`, whose BOM defect is why
+    # a year-old refusal read as a permission. Nothing is fetched from this host;
+    # files already built from it keep their records (CLAUDE.md, Adam 2026-09-19).
+    require_robots_allowed(SOURCE_URL, HEADERS["User-Agent"], headers=HEADERS,
+                           label="isbe-county-officers")
     last = None
     for attempt in range(1, FETCH_ATTEMPTS + 1):
         try:

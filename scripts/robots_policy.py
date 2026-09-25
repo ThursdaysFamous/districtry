@@ -128,6 +128,29 @@ class RobotsPolicy(object):
 
     # --- parsing -----------------------------------------------------------
     def _parse(self, text):
+        """Turn robots.txt text into groups.
+
+        A LEADING BYTE-ORDER MARK IS STRIPPED FIRST, AND THAT ONE LINE IS THE
+        WHOLE FIX FOR A DEFECT THAT TURNED A SITE-WIDE REFUSAL INTO A BLANKET
+        PERMISSION. Measured 2026-09-25: www.elections.il.gov/robots.txt
+        serves 29 bytes, `\xef\xbb\xbfUser-agent: *\r\nDisallow: /`. Decoded as
+        plain UTF-8 the first line is `\ufeffUser-agent: *`, whose field name is
+        `\ufeffuser-agent` rather than `user-agent`, so no group ever opened, the
+        `Disallow: /` under it belonged to no group, and `decide()` answered
+        `(True, 'no group binds this client')`. The Illinois State Board of
+        Elections was refusing this project fully and the fleet's one reader was
+        reporting every path permitted — the failure mode this module was written
+        to end, in this module. `\ufeff` is not whitespace to `str.lstrip()`, so
+        no amount of stripping whitespace reaches it.
+
+        It is stripped HERE rather than at a fetch site because this is the point
+        every construction path passes through: `classify` on both of
+        `fetch_verdict`'s clients, `probe_user_agents.read_robots` with its own
+        decoded bytes, the selftest's fixture loader, and any future caller
+        holding text already. One stripper, at the narrowest place that sees
+        them all.
+        """
+        text = text.lstrip("\ufeff")
         group = None
         in_agent_run = False
         for lineno, raw in enumerate(text.splitlines(), 1):
@@ -345,7 +368,14 @@ def _html_shape(text):
 
 
 def classify(http_status, body, final_url=None, error=None):
-    """Turn a robots.txt response into a Verdict. Pure, so it is testable."""
+    """Turn a robots.txt response into a Verdict. Pure, so it is testable.
+
+    A leading byte-order mark is stripped in `RobotsPolicy._parse`, which is
+    where the defect described there would otherwise bite; a BOM before `<html`
+    still reaches `_html_shape`'s substring tests, so nothing is needed here.
+    Measured
+    2026-09-25 on ISBE — see `_parse`.
+    """
     if error is not None:
         return Verdict("unreachable", "robots.txt unreachable: %s" % error, final_url=final_url)
     if http_status == 200 and body is not None and body.strip():
@@ -810,6 +840,36 @@ def _selftest():
               "own robots.txt: /llms.txt must be fetchable — it is the guide "
               "this file points at")
 
+    # A BYTE-ORDER MARK MUST NOT SILENCE A GROUP (added 2026-09-25, off a live
+    # reading of ISBE). The fixture is www.elections.il.gov's own 29 bytes,
+    # byte for byte: `\xef\xbb\xbf` then `User-agent: *` then `Disallow: /`. It
+    # is loaded with `encoding="utf-8"` deliberately, NOT `utf-8-sig`, because
+    # the fixture's whole job is to hand the parser the BOM a fetch hands it.
+    # Before the strip in `_parse` this file parsed zero groups and answered
+    # `(True, 'no group binds this client')` for every path — a state-wide
+    # election authority's full refusal read as a full permission.
+    ua = "districtry/1.0 (+https://districtry.com/il/)"
+    isbe = load("www.elections.il.gov.txt")
+    check(isbe.catch_all_group_count() == 1,
+          "ISBE: a BOM must not stop the `*` group opening (%d groups)"
+          % isbe.catch_all_group_count())
+    ok, why = isbe.decide(ua, "/Downloads/ElectionOperations/ElectionResults/"
+                              "ByOffice/100/100-1-PRESIDENT.csv")
+    check(not ok, "ISBE: `Disallow: /` must refuse the results archive (%s)" % why)
+    check("Disallow: /" in why, "ISBE: why must name the rule that refused (%s)" % why)
+    check(not isbe.allows(ua, "/"), "ISBE: `Disallow: /` must refuse the root too")
+    # The same bytes through the fetch funnel, which is the path a scraper takes.
+    with open(os.path.join(fixtures, "www.elections.il.gov.txt"),
+              encoding="utf-8") as f:
+        v = classify(200, f.read(), final_url="https://h/robots.txt")
+    check(v.status == "served", "ISBE: 29 bytes of robots.txt is a served policy")
+    check(v.allows(ua, "/ElectionOperations/ElectionVoteTotals.aspx")[0] is False,
+          "ISBE: classify() must refuse too — the fetch path is the one that matters")
+    # The host is written without a scheme everywhere in this file, and
+    # `final_url` uses the placeholder the cases below already use: probe_user_agents
+    # reads URL literals out of a source file and fetches them as written, so a real
+    # https:// URL here would enrol this module as a caller of every host it names.
+
     if failures:
         for f in failures:
             print("robots_policy --selftest: FAIL — " + f, file=sys.stderr)
@@ -850,7 +910,7 @@ def _selftest():
     check(v.allows(ua, "https://h/admin/")[0] is False, "and its rules still bind")
     check(v.allows(ua, "https://h/board/")[0] is True, "and its allows still allow")
 
-    print("robots_policy --selftest: OK — 3 fixtures + this site's own "
+    print("robots_policy --selftest: OK — 4 fixtures + this site's own "
           "robots.txt + the pacer + the not-a-robots-txt cases, %d assertions"
           % _count_checks())
 
@@ -858,13 +918,15 @@ def _selftest():
 def _count_checks():
     # The number of check() calls above; kept as a literal so the OK line
     # cannot claim a count the code does not make. 48 on the three saved
-    # robots.txt files, 5 on the pacer, 10 on bodies that are not a
-    # robots.txt at all, and 20 on this site's own robots.txt
-    # (one structural, nine agents x two, plus /llms.txt). COUNTED BY RUNNING
-    # IT rather than by reading the source: the file-missing check() is a call
-    # in the source that the normal path never executes, and a first draft of
-    # this literal said 74 for exactly that reason.
-    return 83
+    # robots.txt files, 6 on ISBE's BOM fixture (added 2026-09-25 — four on the
+    # parsed policy, two through `classify`, because the fetch path is the one a
+    # scraper takes), 5 on the pacer, 10 on bodies that are not a robots.txt at
+    # all, and 20 on this site's own robots.txt (one structural, nine agents x
+    # two, plus /llms.txt). COUNTED BY RUNNING IT rather than by reading the
+    # source: the file-missing check() is a call in the source that the normal
+    # path never executes, and a first draft of this literal said 74 for exactly
+    # that reason.
+    return 89
 
 
 if __name__ == "__main__":

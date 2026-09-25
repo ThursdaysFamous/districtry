@@ -162,6 +162,46 @@ def fetch_stdlib(url, headers=None, timeout=30):
     return body.decode("utf-8", "replace")
 
 
+def require_robots_allowed(url, user_agent, headers=None, label=None):
+    """Stop the process unless this client may fetch `url` under the host's own
+    robots.txt. Returns the reason when permitted, so a caller can log it.
+
+    WHY A SHARED HELPER AND NOT A LINE IN EACH SCRAPER. CLAUDE.md's rule is that
+    robots.txt is read before the first fetch of a host, and measured 2026-09-12
+    it was enacted by seven files out of a hundred-odd — "a scraper that fetches
+    without asking is not yet in breach of anything it read, and is the next
+    thing to fix". On 2026-09-25 that came due: www.elections.il.gov publishes
+    `User-agent: * / Disallow: /`, `Last-Modified: Thu, 12 Jun 2025`, so ISBE had
+    been refusing this project for over a year while six files here read it, none
+    of them asking. This is the seam they ask through, so the rule has one
+    reading rather than one per caller.
+
+    IT RAISES RATHER THAN RETURNING FALSE. A refusal that a caller can carry on
+    past is a refusal the caller will carry on past — on a rushed edit, in an
+    `except`, or because the return value reads like a warning. The only correct
+    response to a `*` Disallow is not to fetch, so that is the only response this
+    offers. CLAUDE.md: "A `*` group that disallows binds this project fully."
+
+    It is NOT wired into `fetch()` or `fetch_stdlib()`, deliberately. Those two
+    are called by most of the fleet's scrapers against hosts whose policies have
+    never been read here; switching enforcement on inside them would stop an
+    unmeasured number of working refreshes in one commit, which is a different
+    change from obeying a refusal this project has measured. Adopt this per
+    caller, with the measurement recorded, the way the user-agent rungs were.
+    """
+    from robots_policy import RobotsGate  # scripts/ sibling; stdlib-only
+
+    fail = make_fail(label or "robots")
+    ok, why = RobotsGate(None, user_agent, headers=headers).allows(url)
+    if not ok:
+        fail("%s refuses this client: %s. Nothing is fetched from it. A refusal "
+             "stops the FETCH and never unpublishes what we already have "
+             "(CLAUDE.md, Adam's ruling of 2026-09-19), so any file already "
+             "built from this host keeps its last-good records and its own "
+             "read stamp." % (url, why))
+    return why
+
+
 def make_fail(label):
     """The fleet's one failure voice: '<label>: FAIL — <msg>' to stderr, exit 1.
 
