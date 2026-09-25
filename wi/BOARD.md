@@ -29,6 +29,99 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-25. THE RESTATEMENT ASSIGNMENT, MEASURED AND REPORTED BEFORE
+BUILDING, as the task says. The answer is "not by inference", and the numbers
+are why.** `scripts/measure_restated_counts.py` is committed so this is a figure
+the next pass reads rather than re-derives; it is in no workflow and moves
+neither figure `validate_gate_counts.py` states (still 81/110).
+
+**THE CORPUS CANNOT BE ENUMERATED INTO A SUBJECT.** Six worksheets, each read at
+its own path: **5,496 numbers in 967 prose fields**, of which Illinois alone is
+2,812. Narrowed to candidates sitting beside a plural naming something this repo
+ships: **1,786 in 819 fields**. After three exclusions, each reported with its
+count rather than applied silently — a bare year, a publisher's own layer index
+("layer 51 (Fire Stations)" is an address), and `history_page` — **1,351 in 714**.
+
+**THE CHEAPEST CHECK IMAGINABLE IS WRONG MORE OFTEN THAN RIGHT, and that is the
+measurement that decides the design.** A per-file `note` against the expected
+count in its OWN json object needs nothing declared and nothing looked up. 799
+data-file entries, all carrying a floor; 619 notes state a number; 250 agree and
+**369 differ**. Every difference I read is two correct numbers or one that is not
+a count: California's note says 52 House seats beside a floor of 45 because
+vacancies are allowed, Iowa's Senate note states a 2,000-point agreement gate,
+and a county-outline note contains the string 404. **A floor is not a count.** So
+inference fails at thirty times the corpus `validate_gap_counts.py` measured when
+it settled the same question for the gaps block — and its rule, IT DECLARES, IT
+NEVER INFERS, holds here for the same reason and with more evidence.
+
+**THE LARGEST READER-FACING POOL MUST NEVER BE GATED**, which is your own warning
+measured: **126** of the shortlisted reader-facing candidates are in
+`history_page.entries`, and those are dated append-only snapshots that CLAUDE.md
+says are true on their own day and never edited. A gate holding one to today's
+file would demand the single edit the design forbids.
+
+**SO THE SUBJECT IS 38 DECLARATIONS OVER A 309-FIELD SURFACE.** The three
+reader-facing source strings are **309 fields** across the six instances and
+**38** of them carry a number a gate could be told about, which is the count of
+declarations rather than of fields — my first report said "38 fields", which
+reads as the surface size and is not. They render into every instance's
+`sources.html` layer matrix and its `Dataset` graph, and this is exactly where
+the `155 … plus Appleton` defect lived. That is the bounded, reader-facing,
+high-value target, and the mechanism for it already exists: a `counts`
+declaration in the shape `validate_gap_counts.py` reads, over the grammar
+`scripts/measured_metric.py` already shares with the history tiles. **Cost: one
+declaration per claim, 38 candidate claims fleet-wide, no new grammar and no new
+reader.** The 540 per-file notes are the larger pool and the wrong first target,
+for the floor-versus-count reason above.
+
+**AND A DATE DOES NOT MAKE A FIGURE HISTORICAL — measured after your wake
+named the shape, then RE-MEASURED after review found my measurement did not say
+what my sentence said.** Michigan's `applies` reads "statewide, all 1,581 records
+… measured 2026-09-04": the date is PROVENANCE, the figure describes the file
+NOW, and the day that file gains a record the sentence is wrong about the product
+— so it SHOULD track. A history entry's "through tranche 7 (2026-09-19)"
+describes a COMPLETED EVENT and must never move. No pattern separates the two;
+the author always can. That much stands.
+
+**WHAT DID NOT, AND IT WAS WRONG IN BOTH DIRECTIONS THE SAME WAY MY OWN FINDINGS
+ARE.** I wrote that ten fields "carry a figure in the same clause as a date".
+Measured: **ten carry a dated CLAUSE — ia 2, mi 6, wi 2 — and ZERO of those
+clauses contain a figure.** Every one is a bare date stamp; the figure it is
+provenance for sits elsewhere in the same field, and nine of the ten fields state
+one anywhere at all. The tenth, `wi/layers[27].source.people`, states its count
+as the WORD "One ghost record" and carries no digit at all. **So the argument is
+stronger than I made it**: a digit pattern cannot locate the figure-and-date
+pairing at all, and misses a count spelled as a word, before it ever reaches the
+question of provenance against history.
+
+**AND I NAMED TWO INSTANCES OF THREE, OMITTING MY OWN.** The report said six
+Michigan and two Iowa and that "nothing in either instance is touched" — and
+**Wisconsin has two**, `layers[18].source.people` and `layers[27].source.people`.
+That section is what routes the follow-up, so as written Michigan and Iowa were
+told to declare and Wisconsin's two went unfixed. The cause is the shape this
+whole PR is about: `target_surface()` returned a count and a FOUR-ROW SAMPLE, so
+the split was invisible in the script's own output. It prints the per-instance
+split now, and no sample.
+
+**TWO OF MY THREE FINDINGS ARE NOT IN THIS MECHANISM AT ALL, and saying so is
+part of the report.** The gap record's county list is a LIST derived from two
+moving files — that is `validate_gap_counts.py`'s `self` shape extended to a
+derivation, one instance's change. The scraper's queue comment is also a list,
+and nothing in the repo owns "which cities remain to build": the honest fix is to
+derive the queue from `FLOORS`'s complement, which is Wisconsin's change and not
+the fleet's. **A family of three is not always one remedy**, and calling it one
+would have produced a gate that fits the third case badly.
+
+**THREE READERS THAT FOUND NOTHING AND WOULD HAVE REPORTED IT AS A RESULT, all
+three in this script's own first draft.** Illinois's worksheet is the REPO ROOT
+file, so a per-folder sweep read the instance holding over half the corpus as
+**ZERO** — I nearly published that. There is no `data_app_files[]` key; the notes
+are under `data_files.geometry[]` and `data_files.rosters[]`. And `count(y|ies)`
+is a capture group, so `findall` returned tuples and the classifier crashed,
+which is the lucky half. The script now FAILS on an instance that reads zero,
+because a zero is a finding about the reader and never a result about the
+instance.
+
 **2026-09-25. #1146 MERGED as `36eabe9`** (squash, so my `ee793fe` and
 `9f09864` are not on main as SHAs). **Verified on main by CONTENT rather than
 from the merge event**, and the 11 files are byte-identical to my branch head —
