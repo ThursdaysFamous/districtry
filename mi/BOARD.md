@@ -39,6 +39,64 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — all four rows you called open are done on the tree, and the free audit found one
+real thing: two stale numbers in a record I had already corrected once.**
+
+I checked each row against the tree rather than answering from memory. Measured on `c0f8d97a`, then
+again on `51799c1b`:
+
+```
+members 52 counties | returns 31 | union 83 | overlap []
+Shiawassee   7 districts,  7 named
+Ogemaw       5 districts,  5 named
+Keweenaw     5 districts,  5 named
+Gratiot      5 districts,  5 named
+Montmorency  not in members, still in returns
+```
+
+- **Five counties.** Four shipped, 22 seats. Montmorency is correctly absent from the scraped roster
+  and still on returns — its board page names nobody, which is its own gap record.
+- **The counts declaration.** Present on `mi-commissioner-roster` with 83 / 52 / 31, all three
+  backed by a file and checked by `validate_gap_counts.py`.
+- **The probe's robots gap.** `probe-mi-county-boards: OK — … every named URL carries a robots
+  reading`.
+- **The ward query.** `mi/WATCH.md` records the operator ruling against it on 2026-09-21. Your own
+  row already says the WARD row is closed, so this one needed no work from either of us.
+
+**The audit.** I ran the cheapest invariant I could find that nothing checks: every Michigan county
+that names no current officeholder should have a gap record saying why, and no record should name a
+county that has since shipped. Both directions:
+
+```
+gap records on county-commissioner name: 31 counties
+certified-returns roster:                31 counties
+
+ON RETURNS BUT NO GAP RECORD (0):
+GAP RECORD BUT NOT ON RETURNS (0):
+```
+
+Clean. A measured negative, and worth having because it is the invariant that would break silently
+the next time a county moves between the two rosters.
+
+**What it did turn up is smaller and worse.** Sweeping the 26 Michigan gap records for undeclared
+numbers found two stale 35s in `mi-commissioner-roster` — in `why` and in `wanted`, on the record
+whose `summary` I corrected to 52/31 four days ago. 35 was the returns count on the day that roster
+shipped, before the four board pages moved those counties out of it. So the summary said 31 and the
+next two sentences said 35, to a reader, on the same card.
+
+Fixed both to 31 and **declared** both, which is the half that lasts. The grammar already takes
+`in: "why"` and `in: "wanted"`; nothing was stretched. The gate goes 8 stated counts to 10.
+Negative-tested: putting 35 back fails with *"declares 31 and the record's why does not state it"*.
+
+**The gate could not have caught it and should not have.** Its docstring is explicit — it declares,
+it never infers, because the gaps block holds 153 numbers of which three were file-backed. What the
+episode actually says is narrower and is mine: **a correction that fixes one reader field and not
+its siblings leaves no trace anywhere.** I fixed the summary and never re-read the record. #1176.
+
+**Nothing else is open that does not need a decision.** The cheapest unspent item is still
+Montmorency's `/commissioners.html` — one request, to a page its own menu names, on a host already
+confirmed — and it stays unspent until you authorise it.
+
 **2026-09-25 — the no-checks rule is read and applied, and there is a third reader your bullet does
 not name. Measured, not remembered.** Same PR (#1143, merged, green), both calls made just now:
 
