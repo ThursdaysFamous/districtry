@@ -51,6 +51,7 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+<<<<<<< Updated upstream
 **2026-09-25 — IOWA'S LEGISLATIVE NESTING: THE SOURCE IS EXACT, THE CAUSE IS OURS, AND A
 RETAIN-PERCENTAGE SWEEP CANNOT FIX IT.** Nothing in the tree changed and no tolerance was
 touched; this is the measurement the check-in asked for.
@@ -121,6 +122,45 @@ different field sets (`SLDU` against `SLDL`) and different `min_features` guards
 is a third target in the same script that nests inside neither. Proving the topology approach
 works is not the same as proving the mapshaper invocation a builder would use. Held for Illinois's
 answer as instructed.
+=======
+**2026-09-25 — #1173 FIXED AND PUSHED (`892dac4`); I PICKED THE DERIVED FORM AND AM NOT LANDING IT
+IN A RED-PR FIX, AND THE REASON IS MEASURED.** The record now reads 43 of 99 and 56, verified from
+the files rather than from the gate's message — 43 chair keys, 99 officers, complement 56, every
+chair naming somebody, five counties gained (O'Brien, Osceola, Palo Alto, Plymouth, Union) and none
+lost — with every file that reads the block regenerated and only Iowa's panel file moving.
+
+**THE SELFTEST WAS THE LARGER HALF.** Two of its four cases asserted against LIVE shipped files
+(`== 38` on the chair roster, `== 939` on ia-city-contact), so a successful refresh broke the
+gate's own proof of correctness, and the second was one new Iowa city from doing the same. Both now
+run against a two-file fixture in a temp directory. **The fixture counts are 7 and 3 because no
+real file in the fleet holds either**, so pointing the cases back at the tree fails rather than
+passing by luck — proved empirically as well: with both live files hidden the selftest passes, and
+with the `claim` split reverted case B fails, which is the regression it exists for.
+
+**ON THE STANDING FIX, I PICKED OPTION 1 (a form the gate derives) AND MEASURED WHY OPTION 2 IS
+UNSAFE.** A workflow that rewrites the record's numbers needs to know which numbers in a reader
+field are file-backed, and `validate_gap_counts.py`'s own docstring already establishes that such
+an enumeration cannot be got right — two readers of the same corpus answered 152 and 153. I
+reproduced that immediately on the four records that carry a declaration: **Michigan's field
+contains `2024,`, which is a YEAR**, and **Iowa's municipal field states 830 and 109 while only
+939 is declared**, so a rewriter that moved 939 would leave a sentence that does not add up, with
+the gate still green because the other two are invisible to it. A mechanical prose rewriter is the
+wrong answer and the evidence is in the corpus rather than in an argument.
+
+**WHAT I DID NOT BUILD, AND WHY IT IS NOT MINE ALONE.** The derived form puts a token in the
+authored field and resolves it in `build_coverage_gaps.render()`, which also moves the READER_MAX
+validation onto resolved text and changes this gate's subject — shared machinery behind all six
+instances' `--check` runs. **Four records carry a declaration and three of them refresh weekly, in
+two instances**: Michigan's 52/31 will go red exactly this way the week one of its counties starts
+being read from its own board page. So it wants one shape rather than three, which is the same
+coordination call the nesting fix wants and the second time today a change has landed in that
+position. **Until it exists the next chair refresh goes red again** — two numbers and a regenerate,
+and the gate's FAIL line names them.
+
+**ALSO RECORDED: 830 AND 109 ARE UNDECLARED IN A FIELD THE GATE ALREADY READS.** That is a real hole
+rather than a design choice — 830 is the complement form the gate supports through `of` — and
+closing it needs establishing which file gives 109, which is research rather than this change.
+>>>>>>> Stashed changes
 
 **2026-09-25 — #1158 MERGED AS `acafd1d`; BOTH OUTER LOOPS ARE GONE FROM MAIN.** Verified by
 content rather than by the merge event: no `ROBOTS_RETRIES` assignment and no
