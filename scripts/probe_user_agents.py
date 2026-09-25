@@ -180,6 +180,15 @@ SKIP_HOST_RE = re.compile(r"""(?x)
   | ^(www\.)?(districtry\.com|chidistricts\.com)$
   | ^(www\.)?(schema\.org|w3\.org|creativecommons\.org|opensource\.org)$
   | ^(localhost|example\.com|example\.org|example\.gov)$
+    # RFC 2606 / RFC 6761 RESERVE THESE FOUR TLDs SO THEY CAN NEVER RESOLVE, and
+    # this repo uses them on purpose: a worksheet with no Socrata portal sets a
+    # `.invalid` host, and a scraper's offline selftest drives its own fetch
+    # against one. Before 2026-09-25 they were not skipped, so adding a
+    # selftest to wi_county_board_scraper.py made this gate report a
+    # browser-string file reaching an unmeasured host -- and moved the
+    # files_refuses figure it holds three documents to, because that file left
+    # the bucket it belonged in. A name that cannot resolve is never a fetch.
+  | (^|\.)(invalid|test|localhost|example)$
   | ^(web\.archive\.org|archive\.org)$
   | (^|\.)(sectigo\.com|usertrust\.com|godaddy\.com|digicert\.com|entrust\.net
           |amazontrust\.com|pki\.goog|letsencrypt\.org)$
