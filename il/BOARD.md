@@ -48,6 +48,28 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-25, later. #1171 IS MERGED AS `66d5ed4` AND VERIFIED ON THE MERGED
+TREE BY CONTENT.** The selftest prints its 7 checks; the gate pair holds at 83
+named steps / 112 invocations; the steward mirror answers 112 for 112; CI
+carries the step named "Peoria board index parser still reads both its measured
+shapes" and the skill carries its line.
+
+**THE STRONGEST CONFIRMATION IS A FILE THAT DID NOT MOVE.**
+`il/data/app/peoria-county-board-members.json` was last written by `a9ae4cd`,
+a press-list change from long before any of this, and the merge commit touches
+exactly four files with that one not among them. So the roster a reader sees is
+byte-identical to what it was while the workflow was failing — which is the
+whole point: the refusal protected the data, the page was serving all 18 names
+the entire time, and nothing about the county was ever wrong. Only the selector
+was.
+
+**THE GATE PAIR WAS RE-MEASURED AFTER THE MERGE RATHER THAN BEFORE IT**, and
+two other PRs (#1170 and #1172, the hover-card fixes) landed in between,
+touching `scripts/smoke_test.mjs`. They added no CI step, so 83/112 still holds
+— but that is a measurement rather than an assumption, and it is the case
+CLAUDE.md records as the one where two correct branches meet and both become
+wrong with nothing in either diff to look at.
+
 **2026-09-25. PEORIA'S ROSTER IS UNFROZEN AND THE FIX IS PR #1171.** The
 Friday refresh failed at 19:10 UTC with the builder refusing to write — `the
 County Board Members index named only 0 of the 18 roster members` — and that
