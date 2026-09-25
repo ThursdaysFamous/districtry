@@ -30,6 +30,46 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-25. THE RE-DISPATCH IS GREEN, THE LADDER FIRED IN CI, AND THE SEAT
+HELD. THE PATH THAT RAN IS THE RETRY, NOT THE CARRY-FORWARD.** Run
+`36135395315`, dispatched on main at 12:31:18, success in 12m19s. `WITNESS
+SKIPPED` and `carrying forward` appear NOWHERE in the log, so the carry-forward
+was not exercised; what ran is the ladder, and this is its first evidence against
+a real host in CI.
+
+**ONE RETRY LINE, AND IT IS ON THE QUERY THE FIX WAS NOT WRITTEN FOR:**
+`wait ArcGISServiceError from maps.co.lincoln.wi.us/…&returnGeometry=false&f=json
+— retrying in 2s`, which is the NAMES query, not the witness query. It recovered
+on the second attempt. **That retry prevented a different failure than the one it
+was built for**, and the code path is plain: before this, `_fetch_json` returned
+that error payload as data, `scrape_arcgis_county` would have read zero features
+and raised `Lincoln: layer resolved 0 of 22 districts`, Lincoln would have
+resolved nothing, and the builder would have refused exactly as it did for
+Buffalo — a second frozen week, from a county nobody was watching. Stated as a
+reading of the shipped code path rather than as something re-run.
+
+**THE WITNESS THEN RAN AND WITHHELD FROM A LIVE MEASUREMENT**: `witness Lincoln
+21/22 districts drawn the same by the county and the state (mean agreement
+97.3%)`, `DISPUTED Lincoln district 21: only 48% of its ground is district 21 on
+the county's own map — the seat is WITHHELD, not preferred`, `ok Lincoln 22
+seats`. Totals: **72 counties, 1,590 seats (1,574 named, 15 vacant, 1
+withheld)** — against the held run's `1,575 named, 15 vacant` with no withheld
+line at all. The withheld seat is back in the count.
+
+**VERIFIED IN THE FILE, NOT THE LOG.** On the bot branch `5506921` carries
+`withheld: true`, its `withheldWhy`, `readOn: 2026-09-25` and NO name, and it is
+the only withheld seat in the roster. The substantive changes against main are
+now exactly **two** — Green Lake 7 Michael Starshak to vacant, Shawano 5 vacant
+to Katharine Jacob — because Lincoln 21 is no longer a change; Buffalo's 14 seats
+with district 14 vacant are present.
+
+**#1154 WAS REFRESHED IN PLACE AND THERE IS NO SUCCESSOR PR TO WAIT FOR**, which
+corrects the expectation in the brief. Head `f097d5a7` → `4c16d1b4`, base
+`08729d8`, 68 files, one commit, updated 12:43:38. The workflow uses a FIXED bot
+branch and creates a PR only when none is open for it, so the corrected data
+lands on #1154 itself and the hold resolves there rather than on a new PR that
+supersedes it. Its CI is running on the new head. Still not mine to merge.
+
 **2026-09-25. #1155 MERGED AS `518b4bb`, VERIFIED ON MAIN BY CONTENT, AND THE
 ROSTER JOB IS RE-DISPATCHED.** All nine pieces are on main: the `_fetch_json`
 ladder and its `JSON_ATTEMPTS = 8`, the `arcgis_error` import at module scope and
