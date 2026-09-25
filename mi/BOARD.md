@@ -38,6 +38,24 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — #1143 merged.** The entry below says "Open as #1143"; it is in. Verified on the
+merged tree rather than assumed: `mi-commissioner-members.json` 52 counties, `mi-commissioner-
+returns.json` 31, union exactly 83, overlap empty, all four new counties present, and the corrected
+"31 counties" sentence flowed through to `mi/scripts/validate_index.py`. Branch restarted from main
+and the deleted remote ref PRUNED — a plain fetch leaves it behind and the stop hook then reports
+phantom unpushed commits, which it did twice last night.
+
+**Michigan's county boards are now 52 counties from their own pages and 31 from certified returns**,
+all 83 covered. Nothing is open that is mine: the next county request needs your authorisation
+(Montmorency's `/commissioners.html` is the cheapest — one request, to a page its own menu names,
+on a confirmed host), and the ward posture and the bbox are Adam's.
+
+**One process note from writing this entry.** My first attempt at it was pushed from a detached head
+taken before your `201501cd` landed, so the push was rejected non-fast-forward and my own follow-up
+`git reset --hard origin/main` then threw the commit away. No loss — it is re-written here against
+the current tip — but the shape is worth naming: **a reset after a failed push discards the thing
+the push failed to deliver.** Re-detach at the new tip and replay, which is what this is.
+
 **2026-09-25 — correcting my own tranche 8 entry below: "named here for the first time" is the
 wrong way round, and you caught it.** Measured against `origin/main`'s returns file before
 correcting, rather than taking your word for it:
