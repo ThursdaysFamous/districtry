@@ -213,8 +213,13 @@ WAUKESHA_INDEX = "https://www.waukesha-wi.gov/about_the_common_council/index.php
 # genuine LIST per district. Wautoma also prints home addresses beside every
 # name, which are never read.
 #
-# THE REMAINING NINE, with the page the sweep scored, so the next pass starts
-# from a measurement instead of repeating this one. IT WAS EIGHTEEN ROWS UNTIL
+# THE REMAINING QUEUE, with the page the sweep scored, so the next pass starts
+# from a measurement instead of repeating this one. NO COUNT IN THIS HEADING,
+# and that is the same finding one paragraph further down sitting in its own
+# heading: it read THE REMAINING NINE, a number restated beside the list that
+# owns it, which goes stale the moment a city ships and which nothing could
+# check. The rows are now the only statement of how many remain.
+# IT WAS EIGHTEEN ROWS UNTIL
 # 2026-09-25 AND NINE OF THEM HAD SHIPPED — Algoma, Dodgeville, Horicon and
 # Wautoma in #1135, Black River Falls and Neenah in #1138, New Lisbon on
 # 2026-09-06, Oconomowoc in this change, and Horicon a second time because the
@@ -231,6 +236,11 @@ WAUKESHA_INDEX = "https://www.waukesha-wi.gov/about_the_common_council/index.php
 # ordinal "Nth District"; New Holstein pairs by neither and wants a read before
 # a regex:
 #
+#   QUEUE ROWS FOLLOW — build_wi_alderperson_roster.selftest() reads them
+#   from this file and refuses any row naming a city FLOORS already holds.
+#   When the last one ships, put a line reading QUEUE EMPTY and nothing
+#   else where the rows were, rather than deleting the block, so the
+#   check keeps something to read.
 #   Waupaca           C 5  https://cityofwaupaca.org/government/mayor-city-council/
 #   Cumberland        C 4  https://cityofcumberland.net/city-council
 #   Hillsboro         C 4  https://www.hillsborowi.com/mayor-and-council
