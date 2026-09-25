@@ -66,6 +66,25 @@ outline ships, from `coverage-gaps.json` — so "no code path can produce this
 file" is not a conclusion a grep of the app can reach. That is why the surface
 test was wrong in the first place, so it belongs beside the fix.
 
+**PR A's figures are already measured**, prototyped offline with the same
+independent reader that reproduced the current 221, so the PR body carries them
+rather than discovering them:
+
+| instance | surface today | unplanned today | surface after | unplanned after |
+|---|---|---|---|---|
+| il | 302 | 221 | 491 | **408** |
+| wi | 47 | 25 | 262 | **240** |
+| ia | 33 | 16 | 57 | **40** |
+| mi | 22 | 14 | 53 | **45** |
+
+Illinois lands on 408 rather than 410 because reading the root `WATCH.md` moves
+`district-search.json` and `early-voting-sites.json` into planned. The eight
+adapter roster paths outside `data/app` stay in the surface as they are today, so
+the shipped figure will be a little above 491; it is computed in the code rather
+than carried from here. **Wisconsin's is the one to look at** — 25 to 240 — and
+its newly visible files are 92 boundary and 148 structure, which is a different
+mix from Illinois's and is Wisconsin's to read, not mine.
+
 **PR B — the rows**, eleven of them on the root `WATCH.md`, from the class table
 below, starting from 219 rather than 221.
 
