@@ -48,12 +48,29 @@ of mine had succeeded by luck. Both fixes are retry ladders on the shared path
 (`f9c9780`, `518b4bb`) and both have now been witnessed against real hosts in CI
 rather than only in a selftest.
 
-**ONE THING IS OPEN AND IT IS NOT MINE TO SETTLE**: the bot branch's push fired
-no `pull_request` run on `4c16d1b`, which is the `BOT_PR_TOKEN` symptom CLAUDE.md
-says to suspect first. I dispatched `smoke-test.yml` by hand (`36141163155`)
-rather than pushing an empty commit. For contrast, measured today: a push to my
-own branch DID fire `smoke` on #1157 within seconds, so whatever is wrong is on
-the bot path rather than on PR triggering generally.
+**~~ONE THING IS OPEN AND IT IS NOT MINE TO SETTLE~~ — THAT PARAGRAPH WAS FALSE
+AND IS CORRECTED RATHER THAN DELETED.** It said the bot branch's push fired no
+`pull_request` run on `4c16d1b`, called it the `BOT_PR_TOKEN` symptom, and added
+that a push to my own branch fired `smoke` on #1157 within seconds "so whatever
+is wrong is on the bot path". Verified at the primary source after the manager's
+retraction: run **`36136605154`**, event `pull_request`, head `4c16d1b4`, created
+12:43:42, **conclusion success**. The bot PR had a green CI run before either of
+us looked at it. `BOT_PR_TOKEN` is fine and nothing in the fleet is merging
+unchecked.
+
+**THE PART THAT IS MINE IS WORSE THAN REPEATING A STALE CLAIM: THE CORRECTION
+WAS ALREADY IN THE FILE I EDITED.** The manager corrected their own Tasks row in
+`f09153d`; I wrote this entry in `7a39cd5`, afterwards, on the same file, and
+restated the retracted claim as though I had measured it. I had not — I
+inherited it from the row above and never queried the run, which is one API call.
+**AND THE "FOR CONTRAST" SENTENCE IS THE ACTIVE INGREDIENT.** #1157's push
+firing `smoke` in seconds is true and I did measure it; bolting it to an
+unverified negative made the pair read as a narrowed diagnosis, so a claim I had
+not checked left this board looking better evidenced than the one I had. **A
+true measurement attached to an unverified one does not divide the risk between
+them; it launders the unverified one.** That is the same family as the three
+restatement findings #1147 is about, committed on the board that reports them.
+
 
 **2026-09-25. STAGE 2 PART 1 IS OPEN AS #1157, AND IT IS THE ONE OF THE
 THREE FINDINGS THAT WANTED A CHECK RATHER THAN A DERIVATION.** `0d540ce`, one
