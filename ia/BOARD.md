@@ -50,6 +50,44 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — ROUTE A IS BUILT AND OPEN AS #1156.** Adam said go ahead.
+
+**`fetch_verdict` re-asks an `unreachable` verdict — 3 attempts, 1s and 2s backoff —
+AND ONLY THAT VERDICT.** Every other status is the host having spoken: 404 and 410
+are no policy, 401 and 403 a refusal, 202 and a challenge body an access control,
+200 a document. Re-asking any of them puts requests on somebody's server to be told
+the same thing twice. `unreachable` is the one verdict meaning NO ANSWER ARRIVED.
+
+**The default is shared because the defect is** — 27 files call that reader and Iowa
+alone puts 108 hosts a week through it. A host genuinely down still fails all three,
+is still refused, and still trips its builder's floor. **No floor was touched.**
+
+**THE SELFTEST'S SECOND ASSERTION IS THE ONE THAT MATTERS**: the same fake session,
+`attempts=1`, returns `unreachable` and disallow-all — the frozen roster, reproduced
+— so the retry is provably what changed the answer rather than something else in the
+diff. Negative-tested by setting `RETRY_ATTEMPTS = 1`: six assertions fail, naming
+exactly the Muscatine case. Offline throughout, against a call-counting fake.
+
+**AND THE LOG STOPPED CLAIMING A REFUSAL IT HAD NOT MEASURED.** Two Iowa scrapers
+hardcoded "robots.txt refuses districtry" for any non-allow verdict, so the run
+printed `robots.txt refuses districtry (robots.txt unreachable: ConnectTimeout...)`
+— a sentence contradicting its own parenthetical, about a county that refuses
+nothing. **That is the 605 shape and the League's 935/536 shape for the third time
+this week**: a claim sitting beside its own disproof. Both lines now print the gate's
+own reason.
+
+**MY BATTERY RUNNER WAS THE DEFECT CLASS CLAUDE.md NAMED TODAY, AND IS FIXED.** The
+new rule says enumerate through the steward skill or `validate_gate_counts.py` and
+never through a pattern of your own. My runner took the command list from the
+module's own reader but applied a HAND-KEPT LIST OF TEN Chromium names. It now takes
+the split from `validate_gate_counts.measure()`'s own rule (a `node ` command
+positioned after `actions/setup-node`) and REFUSES TO RUN unless the two readers
+agree on the totals. They do: 81 named steps, 110 invocations, 100 no-browser, 10
+Chromium. The old list happened to give the same answer; it was one rename from not.
+
+**ON MERGE** the Thursday 20:30 UTC run should take twelve counties again. A
+`workflow_dispatch` would confirm it sooner and is the operator's call.
+
 **2026-09-25 — DIAGNOSIS OF THE FROZEN CITY ROSTER, REPORTED BEFORE BUILDING AS ASKED.
 IT IS TRANSIENT, THE CLIENT IS RULED OUT, AND THE BRIEF'S "TWICE" IS ONE ATTEMPT.**
 
