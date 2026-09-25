@@ -1281,10 +1281,23 @@ def _robots_verdict(url):
     """One robots.txt read per (client, host), cached for the run.
 
     scripts/robots_policy.RobotsGate does the caching and locking part of this
-    and is NOT used, for one reason: it is built with a single User-Agent and
-    this file sends two, so there would be a gate per client and the retry
-    below would have to reach into a gate's private cache to discard a verdict
-    it wants to re-ask. A dict and a lock here is less code than that.
+    and is NOT used, for one reason that survives #1158: it is built with a
+    single User-Agent and this file sends two, so there would be a gate per
+    client and something would still have to pick the right one per URL --
+    which is what the `(ua, robots url)` key below does in one dict.
+
+    THIS DOCSTRING GAVE A SECOND REASON UNTIL 2026-09-25 AND IT NAMED THE LOOP
+    #1158 RETIRED: that a gate's private cache would have to be reached into to
+    discard a verdict "the retry below" wanted to re-ask. There is no retry
+    below any more -- one `rp.fetch_verdict` call and no loop -- so the clause
+    described a mechanism that had left the function. It is the third sentence
+    in this file reasoning from that loop; #1158 correctly moved the other two
+    and this one reads as present tense rather than history, which is why a
+    grep for the constant did not surface it. Worth removing rather than
+    leaving: it told a reader arriving at this function that it retries, and
+    the likeliest repair for a reader who then cannot find the retry is to put
+    one back -- the exact defect the read-counting assertion in selftest() now
+    catches.
     """
     # THE POLICY IS READ WITH THE HEADER SET THE CRAWL SENDS. Reading it with
     # only User-Agent + Accept measures a different client from the one that
