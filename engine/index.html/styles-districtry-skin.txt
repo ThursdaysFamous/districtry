@@ -1006,6 +1006,12 @@
      the overlays on a ground ~9 units darker than their derivation assumed */
   [data-theme="dark"] .leaflet-tile,
   [data-theme="dark"] .maplibregl-canvas { filter: brightness(1.35) saturate(0.92); }
+  /* the label map sets its own dark-theme ink (splitBaseStyle); brightening
+     it too would lift the halo off the names and wash the ink */
+  [data-theme="dark"] .leaflet-dstBaseLabels-pane .maplibregl-canvas { filter: none; }
+  /* the label map sits above the overlays, so it must never take a click
+     meant for a district underneath it */
+  .leaflet-dstBaseLabels-pane, .leaflet-dstBaseLabels-pane * { pointer-events: none !important; }
   [data-theme="dark"] .leaflet-bar a { background-color: var(--dst-raised); color: var(--ink); border-bottom-color: rgba(236, 233, 244, 0.12); }
   [data-theme="dark"] .leaflet-bar a:hover,
   [data-theme="dark"] .leaflet-bar a:focus { background-color: var(--dst-raised-hover); color: var(--ink); }
