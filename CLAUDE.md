@@ -133,6 +133,20 @@ reading of #942 gave. And a `^node` match that allows a word boundary also catch
 `node-version: "20"`, the setup-node INPUT rather than a command, which adds a phantom
 no-browser invocation.
 
+**AND ENUMERATE THE BATTERY THROUGH THE STEWARD SKILL OR `validate_gate_counts.py`, NEVER
+THROUGH A PATTERN YOU WRITE YOURSELF.** Three sessions reported a complete battery on 2026-09-25
+and all three were short, by three different wrong methods: 98 of 100 from a hand-kept list, 94
+from slicing the job at the wrong boundary, and 79 from a `run: python3` match anchored to the
+start of a line, **which silently skips every multi-line `run: |` block** — 21 invocations in one
+grep, including all six `build_coverage_gaps.py --check` runs and the four
+`build_metro_outline.py --check` runs. The existing rule above ("run the workflow's own command
+list, never a remembered subset") did not prevent any of the three, and the reason is worth
+stating: it warns against REMEMBERING a subset, and a pattern you just wrote does not feel like
+remembering — it feels like reading the file. It is not. The skill mirrors the list exactly and
+`scripts/validate_steward_mirror.py` gates that it does; `validate_gate_counts.py`'s `measure()`
+is the second honest reader, since it exists to parse this workflow correctly. An extraction of
+your own devising is the defect, not the shortcut.
+
 Re-measure rather than increment: the pair moves when ANYTHING merges, not only when you add a
 gate, and it moved seven times in two days — 42/66 against a tree two merges old, then 43/67,
 then 43/68 when #927 added a tenth Chromium run an hour later, then 45/70, then 46/71, then
