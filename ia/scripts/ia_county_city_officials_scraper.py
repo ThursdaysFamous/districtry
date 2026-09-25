@@ -120,6 +120,15 @@ TIMEOUT = 45
 # not disappear from a roster nobody is watching. Re-run the sweep in the gap
 # blocker to look for new ones; a twelfth county is an entry, not a code change.
 COUNTIES = [
+    # ADAMS WAS MISSED BY THE 2026-09-05 SWEEP FOR JASPER'S REASON, one county
+    # over. That sweep took all 99 domains from the auditor's e-mail address, and
+    # Adams' auditor mails from `adamscountyia.com`; the county's site is
+    # `adamscounty.iowa.gov`, which this repo's own data files already carried.
+    # Found 2026-09-25 by `probe_ia_city_officials_pages.py`, whose artifact
+    # records that SIXTEEN counties' repo-known host differs from their auditor
+    # mail domain. Its terms end 2028 and 2030 — later than the nine that were
+    # already shipping, so it passes the currency gate on its own dates.
+    ("19003", "Adams", "https://adamscounty.iowa.gov/about/elected_officials/city/"),
     ("19015", "Boone", "https://boonecounty.iowa.gov/about/elected_officials/city/"),
     ("19033", "Cerro Gordo", "https://cerrogordo.gov/about/elected_officials/city/"),
     ("19047", "Crawford", "https://www.crawfordcounty.iowa.gov/about/elected_officials/city/"),

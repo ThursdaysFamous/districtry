@@ -876,6 +876,65 @@
    }
   ]
  },
+ "1910585": {
+  "city": "Carbon",
+  "members": [
+   {
+    "county": "Adams",
+    "name": "Marti Gebbie",
+    "role": "City Clerk"
+   },
+   {
+    "county": "Adams",
+    "name": "John Gebbie",
+    "role": "Mayor",
+    "termEnds": "2028",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Anthony Colella",
+    "role": "City Council",
+    "termEnds": "2028",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Cathy Jones",
+    "role": "City Council",
+    "termEnds": "2028",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Mike Kempton",
+    "role": "City Council",
+    "termEnds": "2028",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Donna Rochau",
+    "role": "City Council",
+    "termEnds": "2028",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Dwight Sunderman",
+    "role": "City Council",
+    "termEnds": "2028",
+    "termLength": "2 Years"
+   }
+  ],
+  "officeAddress": "1201 Grove Ave. Carbon, IA 50841-1144",
+  "sources": [
+   {
+    "county": "Adams",
+    "url": "https://adamscounty.iowa.gov/about/elected_officials/city/"
+   }
+  ]
+ },
  "1912900": {
   "city": "Charter Oak",
   "members": [
@@ -1163,6 +1222,72 @@
    {
     "county": "Muscatine",
     "url": "https://muscatinecountyiowa.gov/about/elected_officials/city/"
+   }
+  ]
+ },
+ "1916500": {
+  "city": "Corning",
+  "members": [
+   {
+    "county": "Adams",
+    "name": "Michelle Birt",
+    "role": "City Clerk"
+   },
+   {
+    "county": "Adams",
+    "name": "Chris Gilbert",
+    "role": "Mayor",
+    "termEnds": "2028",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Dalton Davis",
+    "role": "City Council",
+    "seat": "At Large",
+    "termEnds": "2030",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Adam Goodvin",
+    "role": "City Council",
+    "seat": "At Large",
+    "termEnds": "2028",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Kenya Haffner",
+    "role": "City Council",
+    "seat": "At Large",
+    "status": "Appointed to Fill Vacancy until Election",
+    "termEnds": "2030",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Janice Mercer Leonard",
+    "role": "City Council",
+    "seat": "At Large",
+    "termEnds": "2028",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Bert Peckham",
+    "role": "City Council",
+    "seat": "At Large",
+    "termEnds": "2028",
+    "termLength": "4 Years"
+   }
+  ],
+  "officeAddress": "601 6th St. Corning, IA 50841-1503",
+  "officePhone": "(641) 322-4230",
+  "sources": [
+   {
+    "county": "Adams",
+    "url": "https://adamscounty.iowa.gov/about/elected_officials/city/"
    }
   ]
  },
@@ -3851,6 +3976,66 @@
    }
   ]
  },
+ "1956865": {
+  "city": "Nodaway",
+  "members": [
+   {
+    "county": "Adams",
+    "name": "Lori Shires",
+    "role": "City Clerk"
+   },
+   {
+    "county": "Adams",
+    "name": "Patricia A. Shipley",
+    "role": "Mayor",
+    "termEnds": "2028",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Clifford Baldwin",
+    "role": "City Council",
+    "termEnds": "2028",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Brenda Dunn",
+    "role": "City Council",
+    "termEnds": "2028",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Fred Graf",
+    "role": "City Council",
+    "termEnds": "2028",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Becky Poen",
+    "role": "City Council",
+    "termEnds": "2028",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Gary Poen",
+    "role": "City Council",
+    "termEnds": "2028",
+    "termLength": "2 Years"
+   }
+  ],
+  "officeAddress": "P.O. Box 348 Nodaway, IA 50841",
+  "officePhone": "(712) 785-3261",
+  "sources": [
+   {
+    "county": "Adams",
+    "url": "https://adamscounty.iowa.gov/about/elected_officials/city/"
+   }
+  ]
+ },
  "1957225": {
   "city": "North English",
   "members": [
@@ -4507,6 +4692,66 @@
    {
     "county": "Jasper",
     "url": "https://jaspercountyelections.iowa.gov/elected_officials/city/"
+   }
+  ]
+ },
+ "1964560": {
+  "city": "Prescott",
+  "members": [
+   {
+    "county": "Adams",
+    "name": "Michelle Birt",
+    "role": "City Clerk"
+   },
+   {
+    "county": "Adams",
+    "name": "Jolene Hinrichs",
+    "role": "Mayor",
+    "termEnds": "2028",
+    "termLength": "2 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Connor Blazek",
+    "role": "City Council",
+    "termEnds": "2028",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Don Gee",
+    "role": "City Council",
+    "termEnds": "2030",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Kim Reed",
+    "role": "City Council",
+    "termEnds": "2028",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Emily Riedel",
+    "role": "City Council",
+    "termEnds": "2030",
+    "termLength": "4 Years"
+   },
+   {
+    "county": "Adams",
+    "name": "Shyla Walter",
+    "role": "City Council",
+    "termEnds": "2030",
+    "termLength": "4 Years"
+   }
+  ],
+  "officeAddress": "P.O. Box 109 Prescott, IA 50859-0109",
+  "officePhone": "(641) 344-4153",
+  "sources": [
+   {
+    "county": "Adams",
+    "url": "https://adamscounty.iowa.gov/about/elected_officials/city/"
    }
   ]
  },

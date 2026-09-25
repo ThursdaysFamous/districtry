@@ -537,16 +537,34 @@ PROVENANCE = [
             "the sweep and not of the city."
         ),
     },
-    # THE COUNTY-PUBLISHED CITY OFFICIALS -- 9 counties, 98 cities, 710 people.
+    # THE COUNTY-PUBLISHED CITY OFFICIALS -- 10 counties, 102 cities, 738 people.
     # This is the route ia-municipal-officeholders recorded as NOT YET PROBED:
     # the county auditors, Iowa's statutory commissioners of elections under
-    # Iowa Code 47.2. Twelve counties publish a full city-officials page and
-    # ALL TWELVE ARE LISTED HERE, including the three the builder currently refuses
+    # Iowa Code 47.2. Thirteen counties publish a full city-officials page and
+    # ALL THIRTEEN ARE LISTED HERE, including the three the builder currently refuses
     # -- Sac, Shelby and Winnebago still publish terms that ended in January
     # 2026. They are registered deliberately: their pages are exactly what a
     # monthly human look should re-check, because one of them updating is how
     # this file gains a county, and this validator is the only surface that
     # asks about them at all.
+    {
+        "layer": "municipality",
+        "app_file": "ia-county-city-officials.json",
+        "source_url": "https://adamscounty.iowa.gov/about/elected_officials/city/",
+        "note": (
+            "Adams County's four cities -- Carbon, Corning, Nodaway and Prescott -- 28 "
+            "officials. FOUND 2026-09-25, AND IT WAS MISSED FOR JASPER'S REASON ONE "
+            "COUNTY OVER: the 2026-09-05 sweep took all 99 domains from each auditor's "
+            "e-mail address, and this county's auditor mails from adamscountyia.com "
+            "while the county's site is adamscounty.iowa.gov, a host this repo's own "
+            "data files already carried. ia/scripts/probe_ia_city_officials_pages.py "
+            "records that SIXTEEN counties differ that way. Its roles sit in a <b> "
+            "inside the name's own div, as Boone's do, and it publishes NO mailto "
+            "anchor and NO telephone at all, so its 28 rows are names and roles only. "
+            "Its terms end 2028 and 2030 -- later than any of the nine that were "
+            "already shipping, so it is the furthest of the ten from the currency gate."
+        ),
+    },
     {
         "layer": "municipality",
         "app_file": "ia-county-city-officials.json",
