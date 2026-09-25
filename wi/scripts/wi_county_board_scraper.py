@@ -2662,7 +2662,7 @@ def vacant_districts(lines, seats, strategy="after"):
     return out
 
 
-def fetch_bytes(url, headers=None, timeout=45, attempts=4):
+def fetch_bytes(url, headers=None, timeout=45, attempts=4, opener=None):
     """Raw bytes plus THE URL THAT ANSWERED, which is not always the one asked.
 
     Kenosha's directory is addressed by a stable county page id that 302s to
@@ -2690,6 +2690,12 @@ def fetch_bytes(url, headers=None, timeout=45, attempts=4):
     The `allow_lax_tls` parameter is gone rather than repaired. It was never
     consulted inside the loop, so `fetch_archived`'s `allow_lax_tls=False` had
     no effect and the flag read as a control while controlling nothing.
+
+    `opener` exists so _fetch_retry_selftest() can drive this with a stub
+    transport. It is an argument rather than a monkeypatch for the reason
+    wi_legislature_scraper.fetch records: the alternative is a test that reaches
+    into the module, replaces a name, and has to remember to put it back -- and
+    the one that forgets leaves every later call stubbed.
 
     MEASURED BEFORE REMOVING, because a fallback that protects a real host is
     not dead code. Every host this module names was asked with a strict context
@@ -2728,7 +2734,8 @@ def fetch_bytes(url, headers=None, timeout=45, attempts=4):
                 # Crawl-delay governs requests: one `with` around the loop would
                 # pace the first attempt and let the retries go back to back.
                 with ROBOTS_PACER.hold(url), \
-                        urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
+                        (opener or urllib.request.urlopen)(
+                            req, timeout=timeout, context=ctx) as r:
                     body = r.read()
                     # urllib never unwraps gzip. Both header sets ask for
                     # identity today and ARCHIVE_UA asks for nothing, so this is
@@ -2743,14 +2750,67 @@ def fetch_bytes(url, headers=None, timeout=45, attempts=4):
                     break           # a wait fixes this; a second TLS context cannot
             except Exception as e:  # noqa: BLE001 - reachability probe
                 last = e
-        waitable = isinstance(last, urllib.error.HTTPError) and (
+        http_wait = isinstance(last, urllib.error.HTTPError) and (
             last.code == 429 or last.code >= 500)
-        if not waitable or attempt == attempts - 1:
+        # A TIMEOUT IS NEITHER A REFUSAL NOR A MOVED PAGE, and until 2026-09-25
+        # it was treated as both. `attempts=4` was spent only on the HTTP rungs
+        # above, so every transport failure got ONE try: measured by stubbing
+        # the transport, a read timeout, a `URLError: timed out` and a
+        # connection reset each made 1 attempt against 4 for a 500 and a 429.
+        # THAT FROZE A ROSTER FOR A WEEK. Run 36042252781 (2026-09-24,
+        # scheduled) read 71 of 72 counties and lost Buffalo to one 45 s read
+        # timeout, so build_wi_county_board_roster.py correctly refused to ship
+        # a county-shaped hole and county-board-members.json kept its 17
+        # September names until somebody noticed. NOT A REFUSAL, and the run's
+        # own log says so: it prints `Crawl-delay honoured: buffalocountywi.gov
+        # 10 s`, so the policy was read and paced to before the page was asked
+        # for. Asked five times from a sandbox the same week the page answered
+        # HTTP 200 with 402,766 bytes every time, 0.60-2.72 s.
+        #
+        # THE POLICY IS scripts/scraper_common.fetch's, restated rather than
+        # imported: retry a timeout and a transport error, retry 429 and 5xx,
+        # never retry 401/403/404 because a refused or moved page is not fixed
+        # by waiting. That helper needs `requests` (this workflow installs
+        # pdfplumber and pypdf and nothing else), returns a requests Response
+        # where this returns (bytes, resolved_url), and knows nothing of the
+        # robots gate, the HostPacer hold, gzip or Retry-After.
+        # wi_legislature_scraper.fetch reached the same conclusion for the same
+        # failure on 2026-09-24 and its comment records it.
+        #
+        # THE BACKOFF IS LINEAR HERE AND EXPONENTIAL ABOVE, deliberately. 429
+        # asks to be left alone and says for how long; a host that hung for 45
+        # seconds is not asking for anything, and an exponential curve spends
+        # the job's time waiting rather than asking again.
+        #
+        # WHAT IT COSTS IS BOUNDED BY AN EARLIER STAGE. This scrape is serial
+        # over 72 counties, so a retry on every host would be expensive -- but
+        # a runner that has lost the network fails at the robots read first,
+        # where `unreachable` is re-asked ROBOTS_RETRIES times and then filed as
+        # disallow-all under RFC 9309, raising RobotsRefused before any page is
+        # fetched. So this ladder is only ever climbed by a host that SERVES its
+        # policy and then hangs, which is Buffalo's shape.
+        #
+        # An `ssl.SSLError` is an OSError and is retried with the rest. It costs
+        # three extra handshakes on a host that would fail anyway, which is
+        # cheaper than a branch for a case this module has measured does not
+        # exist: all 75 reachable hosts completed strict TLS verification on
+        # 2026-09-13. `http.client.HTTPException` (an incomplete read) is NOT in
+        # this class -- it has not been seen here, and a wider net is a wider
+        # claim than the measurement supports.
+        transport = isinstance(last, (urllib.error.URLError, TimeoutError,
+                                      OSError)) \
+            and not isinstance(last, urllib.error.HTTPError)
+        if not (http_wait or transport) or attempt == attempts - 1:
             break
-        after = (last.headers.get("Retry-After") or "").strip()
-        delay = min(float(after), 30.0) if after.isdigit() else 5.0 * 3 ** attempt
-        print("  wait HTTP %d from %s — retrying in %.0fs"
-              % (last.code, url, delay), file=sys.stderr)
+        if http_wait:
+            after = (last.headers.get("Retry-After") or "").strip()
+            delay = min(float(after), 30.0) if after.isdigit() else 5.0 * 3 ** attempt
+            print("  wait HTTP %d from %s — retrying in %.0fs"
+                  % (last.code, url, delay), file=sys.stderr)
+        else:
+            delay = 2.0 * (attempt + 1)
+            print("  wait %s from %s — retrying in %.0fs"
+                  % (type(last).__name__, url, delay), file=sys.stderr)
         time.sleep(delay)
     raise RuntimeError("could not fetch %s (%s)" % (url, last))
 
@@ -2932,6 +2992,146 @@ def _robots_selftest():
     if failures:
         raise SystemExit("robots selftest FAILED: " + "; ".join(failures))
     print("robots selftest: %d assertions, the decision holds" % len(ran))
+
+
+def _fetch_retry_selftest():
+    """How many attempts each failure kind gets, and how long between them.
+
+    OFFLINE. The transport is a stub that raises what is being tested; the only
+    thing reached into is time.sleep, recorded rather than waited so the six
+    cases cost no wall clock and so the BACKOFF SHAPE can be asserted as well as
+    the count. The robots verdict is SEEDED into the real cache rather than
+    stubbed, so the gate that decides whether a fetch may happen at all is the
+    shipped one.
+
+    WRITTEN BECAUSE THE COUNT WAS NEVER THE ONE THE SIGNATURE ADVERTISED.
+    `attempts=4` was spent only on 429 and 5xx, so the three transport failures
+    got one try each, and nothing said so: the loop reads as a four-attempt
+    ladder and behaved as a one-attempt one for every failure that is not an
+    HTTP status. Case 7 is the load-bearing one -- a ladder that retries and
+    never recovers is not a fix, so the stub succeeds on the second attempt and
+    the body must come back.
+    """
+    ran, failures = [], []
+
+    def check(label, ok):
+        ran.append(label)
+        if not ok:
+            failures.append(label)
+
+    host = "https://retry.selftest.invalid"
+    url = host + "/board"
+    # A real Verdict off the shipped classifier: served, allows everything, no
+    # Crawl-delay, so ROBOTS_PACER holds for 0 s and nothing here is paced.
+    verdict = rp.classify(200, "User-agent: *\nAllow: /\n",
+                          final_url=host + "/robots.txt")
+    key = (headers_for(url)["User-Agent"], _robots_url(url))
+    with _ROBOTS_CACHE_LOCK:
+        _ROBOTS_CACHE[key] = verdict
+
+    slept = []
+    real_sleep = time.sleep
+    time.sleep = lambda n: slept.append(n)          # noqa: E731
+
+    class _Resp(object):
+        headers = {}
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def read(self):
+            return b"<html>ok</html>"
+
+        def geturl(self):
+            return url
+
+    def run(exc, succeed_on=None):
+        """Attempts made, and the body if one came back."""
+        n = [0]
+        del slept[:]
+
+        def stub(req, timeout=None, context=None):
+            n[0] += 1
+            if succeed_on is not None and n[0] >= succeed_on:
+                return _Resp()
+            raise exc
+        try:
+            body = fetch_bytes(url, opener=stub)[0]
+        except Exception:                            # noqa: BLE001
+            body = None
+        return n[0], body, list(slept)
+
+    try:
+        import socket
+
+        # 1-3. The three shapes measured in CI and in a sandbox on 2026-09-25:
+        #      Buffalo's read timeout, the legislature's URLError timeout, and a
+        #      reset. Each got ONE attempt before this change.
+        for label, exc in (
+                ("a read timeout", socket.timeout("The read operation timed out")),
+                ("a URLError timeout",
+                 urllib.error.URLError(socket.timeout("timed out"))),
+                ("a connection reset",
+                 ConnectionResetError(104, "Connection reset by peer"))):
+            n, body, waits = run(exc)
+            check("%s is retried to the full four attempts" % label, n == 4)
+            check("%s backs off linearly" % label, waits == [2.0, 4.0, 6.0])
+            check("%s still raises when every attempt fails" % label, body is None)
+
+        # 4. A REFUSAL IS NOT RETRIED, and this is the half a wider net would
+        #    break: 403 is the host answering, and asking again is both useless
+        #    and rude. 404 and 401 take the same path.
+        n, _, waits = run(urllib.error.HTTPError(url, 403, "Forbidden", {}, None))
+        check("403 is asked exactly once", n == 1)
+        check("403 waits for nothing", waits == [])
+
+        # 5-6. The HTTP rungs keep the ladder they already had -- exponential,
+        #      because 429 asks to be left alone and a 5xx is a server in
+        #      trouble, where a host that hung is asking for nothing.
+        for code in (429, 500):
+            n, _, waits = run(urllib.error.HTTPError(
+                url, code, "x", {}, io.BytesIO(b"")))
+            check("HTTP %d keeps its four attempts" % code, n == 4)
+            check("HTTP %d keeps its exponential backoff" % code,
+                  waits == [5.0, 15.0, 45.0])
+
+        # 7. THE RETRY RECOVERS. Everything above proves it asks again; this is
+        #    the case that proves asking again is worth doing.
+        n, body, _ = run(socket.timeout("timed out"), succeed_on=2)
+        check("a timeout that clears on the second attempt returns the page",
+              n == 2 and body == b"<html>ok</html>")
+
+        # 8. A REFUSAL STILL STOPS THE FETCH DEAD. The ladder must not have
+        #    given robots a way in: a disallowed URL raises before any attempt.
+        refused = rp.classify(200, "User-agent: *\nDisallow: /\n",
+                              final_url=host + "/robots.txt")
+        with _ROBOTS_CACHE_LOCK:
+            _ROBOTS_CACHE[key] = refused
+        n = [0]
+
+        def counting(req, timeout=None, context=None):
+            n[0] += 1
+            raise AssertionError("fetched a disallowed URL")
+        try:
+            fetch_bytes(url, opener=counting)
+            check("a disallowed URL is never fetched", False)
+        except RobotsRefused:
+            check("a disallowed URL is never fetched", n[0] == 0)
+        except Exception:                            # noqa: BLE001
+            check("a disallowed URL raises RobotsRefused, not something else",
+                  False)
+    finally:
+        time.sleep = real_sleep
+        with _ROBOTS_CACHE_LOCK:
+            _ROBOTS_CACHE.pop(key, None)
+
+    if failures:
+        raise SystemExit("fetch-retry selftest FAILED: " + "; ".join(failures))
+    print("fetch-retry selftest: %d assertions, every failure kind gets the "
+          "attempts it should" % len(ran))
 
 
 def _district_page_selftest():
@@ -9932,6 +10132,7 @@ SINGLE_COUNTY_CARRIERS = (
 def main():
     if "--selftest" in sys.argv[1:]:
         _robots_selftest()
+        _fetch_retry_selftest()
         _district_page_selftest()
         return
     argv = sys.argv[1:]
