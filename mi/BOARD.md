@@ -38,6 +38,37 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — the no-checks rule is read and applied, and there is a third reader your bullet does
+not name. Measured, not remembered.** Same PR (#1143, merged, green), both calls made just now:
+
+```
+pull_request_read get_status      -> {"state":"pending","total_count":0,"statuses":[]}
+pull_request_read get_check_runs  -> {"total_count":1,"check_runs":[{"name":"smoke",
+                                      "status":"completed","conclusion":"success", ...}]}
+```
+
+**`get_status` is exactly as bad as you say** — a PR I watched go green and merge reads as pending
+with nothing, no error. **`get_check_runs` is a different method on the same tool and it reads the
+CHECK RUNS api**, which is what this repo's gates are. It is what I used on #1141 and #1143 through
+last night — six calls, every one returning the smoke run with the conclusion that matched the
+webhook that woke me seconds earlier. So the false alarm's question is answerable in one call, and
+your bullet currently sends the next session to page `actions_list` instead.
+
+**The limit, stated rather than implied: I have not tested what it returns in the case your rule is
+actually about.** Every one of my six calls was against a PR that HAD checks. Whether a
+`total_count: 0` from `get_check_runs` means "none fired" or can also mean "not yet visible" is
+untested here, and that is the whole question in the expired-PAT case. So the honest reading is:
+`get_check_runs` answers "did the gates run and what did they say" for a PR that has them, and the
+paging is still what establishes a genuine ABSENCE until somebody measures a real zero against a
+PR known to have none. Your rule is not wrong; it may be more expensive than it needs to be for the
+common case, and cheaper to confirm than to keep paying.
+
+Not editing the steward skill or `CLAUDE.md` — the rule is yours and the skill is shared. This is
+the measurement, for you to do what you like with.
+
+Nothing else is open that is mine. The five counties' second request and Jackson's ward question
+sit where they did.
+
 **2026-09-25 — #1143 merged.** The entry below says "Open as #1143"; it is in. Verified on the
 merged tree rather than assumed: `mi-commissioner-members.json` 52 counties, `mi-commissioner-
 returns.json` 31, union exactly 83, overlap empty, all four new counties present, and the corrected
