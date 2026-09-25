@@ -30,6 +30,90 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-25. BUFFALO IS NOT A REFUSAL, AND THE FAILING RUN'S OWN LOG SAYS SO.**
+Diagnosis first, as asked; nothing built yet. Three measurements, none of them a
+reading of a comment.
+
+**THE 403 IN THE BRIEF IS THE BARE STDLIB DEFAULT USER-AGENT — a client this
+scraper never sends.** `https://www.buffalocountywi.gov/robots.txt`, asked three
+ways from this sandbox on 2026-09-25: no headers at all (`Python-urllib/3.x`)
+**HTTP 403**; the token plus Accept **HTTP 200, 142 bytes**; the token plus the
+seven headers `headers_for()` actually sends **HTTP 200, 142 bytes**. Buffalo is
+not in `TOKEN_REFUSED_HOSTS`, so its crawl client is `HONEST_UA`, and
+`fetch_verdict` with those headers returns `served` and **allows the board
+page**. This is the exact artefact `wi_county_board_scraper.py` already records:
+#944 listed five hosts in `ROBOTS_REFUSED_PENDING` and every one was a fact
+about the gate rather than the host, because the gate sent two headers where the
+crawl sends seven. That list is empty today for that reason.
+
+**AND CI GOT PAST ROBOTS IN THE VERY RUN THAT FAILED.** Run `36042252781`'s own
+log prints `Crawl-delay honoured: buffalocountywi.gov 10 s` — so the runner read
+Buffalo's policy, parsed its 10 s delay and paced to it, then timed out on the
+PAGE. The same log reads `71/72 counties, 1576 seats, 1 county/counties missed`.
+The refusal reading is closed by the failing run's own evidence, not by my
+vantage.
+
+**THE PAGE IS HEALTHY FROM HERE.** Five timed reads with the crawl's headers,
+paced at the host's own 10 s: **HTTP 200, 402,766 bytes every time, 0.60 s to
+2.72 s**. A 45 s read timeout against a host that answers in under three
+seconds is transient.
+
+**THE CAUSE IS THAT `attempts=4` IS NOT SPENT ON A TIMEOUT, MEASURED BY
+STUBBING THE TRANSPORT** rather than by reading the loop. `fetch_bytes` sets
+`waitable = isinstance(last, HTTPError) and (429 or >= 500)` and breaks
+otherwise, so: read timeout **1 attempt**, `URLError: timed out` **1 attempt**,
+connection reset **1 attempt**, HTTP 403 **1 attempt**, HTTP 500 **4**, HTTP 429
+**4**. The 403 at one attempt is correct and deliberate — a refusal is not fixed
+by waiting — and the three transport rows are the defect.
+
+**PER-WORKFLOW OR SHARED PATH: THE POLICY IS SHARED AND THE CODE IS NOT.**
+`wi/scripts` has no shared fetch; each scraper carries its own. Exercised the
+same way, **7 of the 10 Wisconsin scrapers already retry a read timeout and 3 do
+not** — `wi_county_board_scraper.fetch_bytes`, `wi_circuit_judges_scraper.fetch`
+and `mps_school_board_scraper.fetch`. `scripts/scraper_common.fetch` states the
+fleet's policy (retry a timeout, a transport error, 429 and 5xx; never
+401/403/404) and cannot be imported here: it needs `requests`, this workflow
+installs `pdfplumber pypdf` and nothing else, and it returns a `requests`
+response where `fetch_bytes` returns `(bytes, resolved_url)` and must keep
+robots-first, the `HostPacer` hold, gzip and `Retry-After`. `wi_legislature_
+scraper.py` reached that same conclusion on 2026-09-24 and wrote it down. So:
+**port the policy into each of the three, not a new shared module.**
+
+**TWO OF THE THREE HAVE ALREADY FROZEN A ROSTER ON IT.** County board,
+`36042252781`, 2026-09-24. **Circuit court, `34697791129`, 2026-09-12,
+`urllib.error.URLError: <urlopen error timed out>`** — the same shape, and that
+scraper still has no retry; it was answered with a user-agent change (#946's
+wicourts work) and the timeout blindness was never touched. MPS is the third and
+has not failed yet.
+
+**THE LEGISLATURE ROW IS STALE IN BOTH HALVES AND THE DECISION IT LEAVES OPEN IS
+ALREADY MADE.** The retry shipped in **#1133 `71e09b9`**, with a six-case
+selftest asserting the attempt count per failure kind, and its comment carries
+the reasoning this diagnosis independently reproduces. And the job is not
+frozen: run **`36005954124`, 2026-09-24T13:29, dispatch, main, success** — step
+4 scraped in **2 s** where the 09-22 run died at 61 s, and the PR step was
+SKIPPED because nothing changed, so the roster was re-verified rather than left
+unread. So the answer to "retry inside the run, or dispatch" is that this repo
+chose retry a day ago, for this exact failure, in Wisconsin.
+
+**ONE THING THE FIX MUST NOT COST, and it is already bounded.** The scrape is
+SERIAL over 72 counties, so a retry on every host would be expensive — except
+that a network-wide failure is absorbed one stage earlier: an `unreachable`
+robots read is re-asked up to `ROBOTS_RETRIES` and then filed as disallow-all
+under RFC 9309, which raises `RobotsRefused` and never reaches the page fetch.
+So the retry's marginal cost falls only on hosts that SERVE robots.txt and then
+hang on the page, which is Buffalo's shape and is rare. The backoff will be
+linear rather than the existing exponential, for the reason
+`wi_legislature_scraper.py` records: the failure being guarded is a host that
+hung for a full minute, and an exponential curve spends the job's time waiting
+rather than asking again. 429 and 5xx keep the exponential ladder and
+`Retry-After` untouched.
+
+**NOT DONE AND NOT PROPOSED:** no `--allow-drop`, no floor lowered, nothing
+worked around, and no re-dispatch of the red job before the fix — a green
+dispatch would only prove the host was up this hour, which I have already
+measured, and would hide the defect for another week.
+
 **2026-09-25. STAGE 2 PROPOSED, NOT BUILT — and one of the three wants a
 different remedy than the report sketched, which you invited me to say.** Three
 mechanism facts decide it, each measured rather than assumed.
