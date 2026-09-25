@@ -50,6 +50,82 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — DIAGNOSIS OF THE FROZEN CITY ROSTER, REPORTED BEFORE BUILDING AS ASKED.
+IT IS TRANSIENT, THE CLIENT IS RULED OUT, AND THE BRIEF'S "TWICE" IS ONE ATTEMPT.**
+
+**MEASURED WITH THE WORKFLOW'S OWN CLIENT** — `requests.Session`, the scraper's own
+`districtry/1.0 (+https://districtry.com/ia/)`, through the shared
+`robots_gate.RobotsGate`, the exact path the run takes:
+
+```
+GET https://muscatinecountyiowa.gov/robots.txt   HTTP 404 in 0.95s
+gate verdict  ALLOW — "no robots.txt (HTTP 404, allow all)"   status 'absent'
+```
+
+So the difference between CI and this vantage is the ROUTE, not the code: the
+manager's stdlib read (404 in 0.9s, twice) and this one through `requests` plus the
+gate agree exactly. **404 IS THIS HOST'S NORMAL ANSWER, ON FOUR DATED WITNESSES** —
+the scraper's own 2026-09-05 probe ("across all twelve county hosts: ELEVEN serve no
+robots.txt at all"), `ia/scripts/robots_gate.py`'s 2026-09-12 sweep of 108 hosts
+("50 answering 404"), the manager's two reads at 10:30 today, and this one.
+
+**CORRECTION TO THE BRIEF: THE READ WAS ATTEMPTED ONCE, NOT TWICE.** Run
+`36071911988` prints the identical error text at 23:17:51 (inline, as the county is
+skipped) and again at 23:17:59 (the end-of-run `did not yield` summary re-printing
+the stored reason). `RobotsGate` caches per host under a lock, so one fetch was made.
+**That is the one detail that matters for the verdict**: "twice" would mean a retry
+had already happened and failed, which is the single reading that argues AGAINST a
+transient. It did not happen.
+
+**AND A 30-SECOND CONNECT TIMEOUT TO A HOST THAT CONNECTS IN 0.95s IS A NETWORK-PATH
+EVENT.** `ConnectTimeout` is a failure to establish TCP — not a slow page, not a
+refusal, not a policy. Nothing about the host's answer changed.
+
+**THE CAUSE IS THAT `fetch_verdict` HAS NO RETRY, AND 27 FILES SHARE IT.** One
+attempt; any exception becomes `unreachable`, which is disallow-all by RFC 9309
+§2.3.1.4 and correct as a READING. What is wrong is deciding it on ONE SAMPLE of a
+connect attempt, for a verdict whose failure mode is to refuse. Counted today, 27
+files across `ia/`, `mi/`, `wi/` and `scripts/` call that reader; Iowa alone puts 108
+hosts a week through it.
+
+**TAKING ROUTE A — retry the robots read before believing `unreachable`. And the
+brief's attribution of it needs one correction, which is why the mechanism is worth
+naming precisely.** CLAUDE.md says "Wisconsin re-asks an `unreachable` verdict before
+believing it" and points at the municipal-executives builder. That file does no
+re-asking: `carry_forward()` is purely a CARRY, keyed on the `unreachable` status,
+stamping `carriedFrom` and keeping the date the carry BEGAN so a second bad run does
+not reset the clock. **Wisconsin's actual retry is its generic fetch ladder** —
+`wi/scripts/build_rusd_school_board_districts.py:fetch()`, four tries with
+`sleep(2*(i+1))` backoff, whose docstring is this exact failure in one line: *"The
+instance's standard ladder — a single un-retried timeout is what left two of these
+workflows never once green."* So the fleet runs BOTH mechanisms at TWO LAYERS —
+retry at the fetch, carry at the build — and they are complementary rather than the
+alternatives the brief frames them as.
+
+**WHY NOT ROUTE B FOR THIS FAILURE.** Adam's 2026-09-19 ruling is about not
+UNPUBLISHING what we legitimately fetched when a source goes dark. Muscatine has not
+gone dark; it answers in under a second. A carry would state truthfully that the data
+is from an earlier read and leave the cause untouched for the other 26 callers. And a
+carry keyed on `unreachable` cannot tell a 30-second blip from a host that has STARTED
+refusing us with a 5xx on robots.txt — also disallow-all. Retrying first makes that
+distinction real: a host that fails four spaced attempts is a genuine event the floor
+should surface, and one that answers on the second never was.
+
+**WHAT ROUTE A DOES NOT FIX, SAID PLAINLY.** A host genuinely unreachable for a whole
+run still fails the retry, the county is still skipped, and the floor still refuses at
+9 of 10. That is the floor doing its job and the manager's own ruling that the refusal
+is right. **Route B stays the right instrument for a source that has genuinely gone
+dark** — a different event, and a separate change if Iowa wants it.
+
+**ONE SIDE FINDING:** `muscatinecountyiowa.gov` has NO entry in
+`user-agent-measurements.json`, so a host a weekly scraper reads carries no recorded
+measurement. `probe_user_agents.py --check` does not catch it because that gate fails
+only on a BROWSER-STRING file reaching an unmeasured host, and this scraper sends the
+token.
+
+**NOTHING BUILT YET.** Awaiting the manager's go, per the row's own instruction to
+report the diagnosis first.
+
 **2026-09-25 — #1152 IS MERGED AS `7b2381f`, VERIFIED ON MAIN BY CONTENT.** Seventeen
 checks, all pass:
 
