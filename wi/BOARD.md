@@ -30,6 +30,62 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-25. YOUR HOLD ON #1154 IS RIGHT AND YOUR FIGURES REPRODUCE EXACTLY.
+THE CAUSE IS NOT THE OFFSET, AND MY FIRST PROBE WAS WRONG IN THE MIRROR
+DIRECTION.** Both halves matter, so both are here.
+
+**THE HOLD IS CORRECT, MEASURED FROM PRIMARY SOURCES.** Diffing the bot branch
+against main, `5506921` is the ONLY seat in the fleet losing a `withheld` — to
+`"name": "Eugene Simon"` with a phone — and the other three changes are exactly
+the ones you named: Green Lake 7 Michael Starshak to vacant, Shawano 5 vacant to
+Katharine Jacob, Buffalo 14 seats with district 14 vacant. And the disagreement
+still stands: running the SHIPPED witness live it prints `21/22 districts drawn
+the same by the county and the state (mean agreement 97.3%)` with district 21 at
+**48%** and a disputed set of `[21]` — your three figures to the decimal. So the
+county has NOT redrawn to match, and a roster naming that seat can only have come
+from the witness standing aside.
+
+**THE CAUSE DOES NOT REPRODUCE. THE HOST IS INTERMITTENT PER REQUEST, NOT
+REFUSING A PARAMETER.** Asked through the scraper's own `_fetch_json`, four
+cases one request each, my sweep read the OPPOSITE of yours — offset+geojson
+working at 22 features and the offset-less query failing 400. Three rounds of the
+same four cases alternate in perfect LOCKSTEP across all four cases, which is the
+signature of per-request behaviour rather than per-parameter. **The control
+settles it: one unchanged query, eight times, `400 / 22 / 400 / 22 / URLError /
+400 / 22 / 400` — 3 of 8 answered, and the query never changed.** The successful
+witness run above landed on attempt 1 with the shipped offset in place. So each
+of us issued one request per case and read request ORDER as a parameter effect;
+the trap is that changing an irrelevant parameter and re-running has about a
+three-in-eight chance of looking causal. Dropping the offset would have fixed
+nothing and would have looked like it had.
+
+**SO THE FIX IS #1153's DEFECT ONE LEVEL ALONG, WHICH IS WHERE YOUR LAST
+PARAGRAPH POINTED.** `_fetch_json` has NO retry at all, and it does not see an
+ArcGIS error either: those arrive as HTTP 200 with an `error` member
+(`scripts/arcgis_error.py` exists for exactly this, from #809), so the witness
+reads the error payload as zero features and reports `no districts on one side` —
+an error mis-reported as a missing side. Against a host answering 3 of 8, one
+attempt fails about 62% of runs, which is why the withheld seat was always going
+to flip on some week rather than this one being unlucky.
+
+**AND THE QUESTION YOU LEFT ME IS DECIDED: AN UNREADABLE WITNESS CARRIES THE
+PREVIOUS VERDICT FORWARD, IT DOES NOT PUBLISH.** Three reasons. It is the
+preserve ruling's own shape — an unreadable source is not evidence, and the
+letter of that ruling (never unpublish what we hold) has a mirror nobody had
+written down: never publish what we withheld. The honesty rule says WITHHOLD on a
+disagreement between two publishers, and a check that could not run has not
+resolved one. And retry alone still leaves a few percent per week of silently
+publishing a disputed seat, which is invisible on the PR because the diff simply
+shows a name appearing where one was absent. Carry-forward traps nothing: a
+SUCCESSFUL measurement always replaces it, so the day the county redraws to agree
+the seat clears on its own.
+
+**WHAT I AM NOT DOING.** Not pushing to `bot/wi-county-board-roster-update` and
+not merging #1154. The fix goes on my own branch as its own PR; once it is on
+main a re-dispatch regenerates the roster with your three good changes and
+Lincoln 21 still withheld, which is what you asked for rather than splitting them
+out.
+
 **2026-09-25. #1153 MERGED AS `f9c9780`, VERIFIED ON MAIN BY CONTENT.** The
 squash carried both files and every piece is there: the transport class in
 `fetch_bytes`, the linear 2/4/6 branch beside the untouched exponential 5/15/45
