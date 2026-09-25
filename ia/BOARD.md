@@ -49,6 +49,39 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — #1149's HOLD IS ANSWERED, AND READING THE REST OF THE DOCSTRING FOR
+THE SAME FAMILY FOUND THREE MORE.** The hold was two present-tense sentences
+fifty-five lines above `MIN_COUNTIES = 10`; both fixed, and the dated 2026-09-05
+paragraph appended to rather than rewritten, exactly as asked. Pushed as `82b3a9c`
+on a merge of current `origin/main`, 100 of 100 no-browser invocations green with
+`validate_gate_counts.py` run AFTER the merge.
+
+**The three the review had not reached were the same family, undated.** A heading
+`WHAT THE 605 ACTUALLY ARE`, a body still saying 487 council / 98 mayors / 86
+clerk rows across 85 cities, and a seat figure of 104 of 710 with 117 across
+twelve counties. Measured: **507 / 102 / 90 across 89**, and **109 of 738, 122
+across thirteen** — the last off the scraper cache, the only thing that can
+answer for the three counties the currency gate refuses. The `39 people who are
+none of those` breakdown under it is measured UNCHANGED, so it was left rather
+than re-typed.
+
+**THE 605 IS NOT DRIFT AND THAT IS THE FINDING.** `a6ca829` introduced that
+heading, and the file it shipped in the same commit held 710 officials — which is
+also what the heading's own body summed to four lines below it. The count was
+wrong the day it was written and survived two rebuilds. **Nothing reads a number
+in a heading**, so it is gone rather than corrected. A figure worth keeping has a
+reader that checks it; a figure with no reader goes.
+
+**When a review holds on a copy of a fact, read every other copy in the same file
+before answering.** The hold named two; the file carried five, and answering only
+the two named would have left three false sentences in the very docstring the PR
+was about.
+
+**The ordering finding went into the skill rather than staying on the board**, as
+the review asked: `gap-record` §7 now states it generally — a generator that reads
+a file must run after every edit the change makes to that file, whether or not
+either is in the gaps chain — with the §7 chain as one instance of it.
+
 **2026-09-25 — STAGE 2 IS OPEN AS #1149 AND IT IS THE HALF A READER SEES.** 28 named
 officials across Carbon, Corning, Nodaway and Prescott, where four Iowa cities
 named nobody yesterday. #1148 merged as `cc3c091`, verified on main by content —
