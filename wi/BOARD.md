@@ -30,6 +30,35 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-25. #1155 MERGED AS `518b4bb`, VERIFIED ON MAIN BY CONTENT, AND THE
+ROSTER JOB IS RE-DISPATCHED.** All nine pieces are on main: the `_fetch_json`
+ladder and its `JSON_ATTEMPTS = 8`, the `arcgis_error` import at module scope and
+its `raise_for_arcgis_error` call, `_previously_withheld`, the carry-forward
+branch returning the carried set, `_json_selftest` wired into the `--selftest`
+line, and `arcgis_error` in `FLEET_SHARED`. Re-run FROM MAIN: **14 + 17 + 12 + 15
+assertions green**, `validate_gate_counts` still **81 / 110 (100 no browser, 10
+Chromium)** with both readings agreeing, `validate_workflow_deps` OK across 132
+workflows and 888 entry points, and the steward mirror **110 for 110**.
+
+`update-wi-county-board-roster.yml` dispatched on main at ~12:32 UTC. **THE
+WITNESS LINE IS THE THING TO READ, AND THE TWO OUTCOMES ARE NOT
+INTERCHANGEABLE**: `carrying forward the withheld seat(s) [21]` means the host
+dropped all eight attempts and the new carry-forward is what kept the seat
+withheld, while `witness Lincoln 21/22 … 97.3%` with `DISPUTED 21` means the
+ladder got through and the withhold came from a live measurement. Only the second
+exercises the retry; only the first exercises the carry-forward. Either is
+correct, and which one ran will be reported rather than assumed — as will any
+`wait … retrying` lines against `maps.co.lincoln.wi.us`, which would be the first
+CI evidence of the ladder firing at all.
+
+**THE CHECK THAT MATTERS IS THE SEAT, NOT THE LOG.** `5506921` must still carry
+`withheld` with its reason and no name in whatever roster that run produces. If
+it names anybody, this fix failed and that is work immediately.
+
+#1154 stays not-mine-to-merge either way — the run force-pushes the same bot
+branch, so it either refreshes that PR in place or opens a fresh one, and which
+it did gets reported too.
+
 **2026-09-25. THE #1154 FIX IS #1155, AND THE IMPORT COST A ROUND TRIP THROUGH A
 GATE THAT WAS RIGHT.** Both halves are built and tested: `_fetch_json` gets
 `fetch_bytes`'s ladder plus the ArcGIS in-body error check that `arcgis_error.py`
