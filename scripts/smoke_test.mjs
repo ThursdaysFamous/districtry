@@ -732,8 +732,19 @@ try {
   // 1f. COMPARISON STATS. With Congress pinned at the Loop and the State
   //     House on, the pinned card carries "Stats", and the screen it opens
   //     counts people from the shipped Census block files: IL-7 holds
-  //     753,676 (drawn to 753,677; the one person is the simplified outline),
-  //     every House district it lists is a real overlap, and the House map
+  //     753,659 (drawn to 753,677; the 18 people are the simplified outline).
+  //     This read 753,676 until 2026-09-25, when the legislative geometry moved
+  //     to Douglas-Peucker simplified as ONE family, and the value is a fixture
+  //     of whatever outline ships rather than a fact about the district. The
+  //     swap was MEASURED before this number was changed, because updating an
+  //     expected value to make a test pass is only honest if the new value is
+  //     the better one: summing the same block files through both outlines, the
+  //     old one was a mean 3.3 people off each district's ideal (worst 14) and
+  //     the new one is 3.9 (worst 18), while both assign every block exactly
+  //     once. So the new outline is a touch worse at this and 18.6x truer to
+  //     where the boundary actually runs, and IL-7's old one-person miss was
+  //     luck rather than accuracy.
+  //     Every House district it lists is a real overlap, and the House map
   //     covers all of it, so no share of it is left unassigned. Every file
   //     involved ships in data/app, so this needs no live service. The use is
   //     counted by the PINNED layer, once.
@@ -763,7 +774,7 @@ try {
         events: (window.__gcEvents || []).filter((v) => v && v.event).map((v) => v.path),
       }));
       check("the stats screen counts the compared district's people from the block files",
-        stats.open && /^753,676 people · \d+ sq mi$/.test(stats.totals), stats.totals);
+        stats.open && /^753,659 people · \d+ sq mi$/.test(stats.totals), stats.totals);
       check("the stats screen lists each overlapping district with its share of people",
         stats.rows >= 10 && stats.people.length === stats.rows && stats.people.every((t) => /^People: .* of its [\d,]+ are in IL-7/.test(t)),
         `${stats.rows} row(s); first: ${stats.people[0]}`);

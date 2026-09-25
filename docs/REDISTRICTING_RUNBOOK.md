@@ -233,8 +233,24 @@ represents them TODAY; showing not-yet-effective districts is a correctness bug,
      so it needed no rebuild at all, only the vintage pin in ny/scripts/validate_sources.py. Check
      WHICH KIND a roll is before assuming a rebuild), update the
      `LAYERS` dict in `build_legislative_boundaries.py` (TIGERweb layer index, district field,
-     `min_features`), re-run it (same ≥99.5% / zero-topology-break gate), and **update the
+     `min_features`), re-run it, and **update the
      `data_files.geometry` feature counts in `metro-worksheet.json`** so `validate_index.py` matches.
+     **RE-RUN IT FOR THE WHOLE FAMILY, NEVER ONE CHAMBER** (changed 2026-09-25): all three chambers
+     are simplified in ONE mapshaper run, because two IL House districts make up one IL Senate
+     district and mapshaper builds topology within one file — simplifying a chamber alone is exactly
+     what makes the shared edge diverge, which it did for weeks (55 of 59 pairings with a Senate
+     vertex more than 25 m off any House line, worst 210 m, visible as two highlight lines parting at
+     zoom 16). The builder now takes no chamber argument for that reason, and
+     `build_legislative_boundaries.py --check` is the offline CI gate on the shipped files.
+     Three gates run before it writes: the per-layer ≥99.5% / zero-topology-break point sample, the
+     cross-layer nesting (exact, no tolerance), and a fidelity ceiling of 25 m on how far the true
+     boundary may stray from the line drawn for it.
+     **AND THE CACHE-FIRST BUMP IS A WORKSHEET EDIT, NOT A HAND EDIT TO `sw.js`**: `CACHE_NAME` sits
+     inside a GENERATED region, so change `cache_name` in `metro-worksheet.json` and re-run
+     `generate_metro_files.py`, or `check_cache_version.py` fails the merge and a returning visitor
+     keeps the old geometry. Rebuilding this geometry also moves `il/data/app/district-search.json`,
+     which stores each district's extent and an interior point — re-run
+     `build_district_search.py` in the same change or its `--check` fails on the stale extents.
      Because the geometry is now static, a redistricting that once "just worked" via live TIGERweb now
      **requires this manual rebuild** — otherwise the app ships the old maps. (The officeholder rosters
      are unaffected — still weekly.)

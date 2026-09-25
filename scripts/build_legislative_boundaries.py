@@ -20,11 +20,52 @@ CI — re-run it on redistricting (see docs/REDISTRICTING_RUNBOOK.md). The
 officeholder ROSTERS (congress-roster / il-senate-members / il-house-members)
 are separate and still refresh weekly; only the geometry is built here.
 
-Simplification is topology-aware mapshaper (Visvalingam, keep-shapes), the same
-tool + protocol build_embedded_boundaries.py uses, and the result is validated
-against the pre-simplification fetch on the project's 2,000-random-point
-point-in-district protocol before anything is written (no point may land in two
-districts; classification must agree). If validation fails, nothing is written.
+SIMPLIFICATION SIMPLIFIES ALL THREE CHAMBERS IN ONE MAPSHAPER RUN, and both
+halves of that sentence are load-bearing. Until 2026-09-25 each chamber was
+simplified on its own file at its own retain percentage (congress 12%, senate
+10%, house 9%), and that broke a hierarchy TIGER guarantees exactly: two IL
+House districts make up one IL Senate district, so Senate N's outer edge IS the
+outer edge of House 2N-1 + 2N. mapshaper builds topology WITHIN one file, so two
+files simplified in separate runs cannot keep a shared edge identical. Measured
+on the shipped files: 55 of 59 pairings had a Senate vertex more than 25 m off
+any House line, worst 210 m, and a reader at zoom 16 saw the two highlight lines
+diverge. The SOURCE nests perfectly -- 0.0000% area disagreement, every Senate
+vertex 0.0 m from a House line -- so every metre of it was introduced here.
+`combine-files` puts the three layers in ONE dataset, which makes a shared edge
+ONE arc simplified once, and the nesting comes out exact again.
+
+AND THE ALGORITHM IS DOUGLAS-PEUCKER RATHER THAN VISVALINGAM, which is the other
+half and was measured rather than assumed. Visvalingam thresholds triangle AREA,
+which does not bound how far the drawn line strays from the true one: successive
+below-threshold removals compound, and that is precisely how a boundary that
+runs as a STAIRCASE along a street grid gets replaced by a diagonal chord cut
+across a city block through the houses. Measured on the shipped files, the true
+line strayed up to 331 m from the line drawn for it, and 176 of 177 districts
+were over 25 m. Sharing one topology does NOT fix that -- measured, full state,
+combine-files at the old 10%: still 331 m worst and 175 of 177 over 25 m, the
+two layers simply wrong together. Douglas-Peucker thresholds perpendicular
+DEVIATION, so it spends vertices where deviation demands them instead of where
+triangles happen to be large. At interval=15 the statewide worst stray is 17.8 m
+with 0 of 177 districts over 25 m, and all three files together are 453.4 KB
+gzipped against the old 454.2 KB -- an 18x fidelity improvement for 0.8 KB LESS
+than the three separate Visvalingam runs. Reaching the same fidelity by raising
+Visvalingam's retain percentage costs 3.0-3.5x the download.
+
+Three gates run before anything is written, and each answers a question the
+others cannot:
+  * validate()       -- per layer, the project's 2,000-random-point
+                        point-in-district protocol against the pre-simplification
+                        fetch (no point in two districts; classification agrees).
+  * check_nesting()  -- ACROSS layers: every Senate boundary vertex must be a
+                        vertex of its own two House districts, EXACTLY. Under a
+                        shared topology the Senate ring is built from House arcs
+                        so this holds at zero tolerance; under separate runs it
+                        failed on 59 of 59. No geometry and no network, which is
+                        why --check can run it in CI on the shipped files.
+  * check_fidelity() -- against the SOURCE: no point on the true boundary may lie
+                        further than FIDELITY_MAX_M from the line drawn for it.
+                        Needs the fetch, so it is build-time only.
+If any gate fails, nothing is written.
 
 Property fields are trimmed to what the app reads so the file stays small:
 extractDistrictNumber() keys on the numeric field (SLDU/SLDL) or, for congress,
@@ -37,11 +78,17 @@ Prerequisites: curl (fetch, works through an HTTPS proxy) and Node.js (mapshaper
 via `npx mapshaper@<pinned>`).
 
 Usage:
-    python3 scripts/build_legislative_boundaries.py            # build all three
-    python3 scripts/build_legislative_boundaries.py congress   # one chamber
+    python3 scripts/build_legislative_boundaries.py          # fetch + rebuild all three
+    python3 scripts/build_legislative_boundaries.py --check   # offline: the nesting
+                                                              # gate on the SHIPPED files
+
+THERE IS NO PER-CHAMBER BUILD ANY MORE, and that is the point rather than a
+regression: rebuilding one chamber alone is exactly what breaks the nesting, so
+the family is the unit. `--check` needs no network and is the CI gate.
 """
 
 import json
+import math
 import os
 import random
 import subprocess
@@ -60,8 +107,11 @@ IL_FIPS = "17"
 #             extractDistrictNumber (SLDU/SLDL directly; congress via the NAME
 #             fallback since TIGERweb ships CD120, not the app's cd### names).
 #   out:      the data/app file index.html fetches for this layer
-#   simplify: mapshaper Visvalingam retain % (topology-aware, keep-shapes)
 #   min_features: count guard — refuse to write a suspiciously short result
+# There is deliberately NO per-layer simplify setting: the whole family is
+# simplified in ONE run at ONE setting (SIMPLIFY below), because a shared edge
+# can only survive identically if both layers came off the same topology at the
+# same threshold. Three percentages is what broke the nesting.
 LAYERS = {
     "congress": {
         "layer": 0,
@@ -76,26 +126,49 @@ LAYERS = {
         # Measured 2026-09-03.
         "fields": ["CD120", "NAME", "BASENAME", "GEOID", "STATE"],
         "out": "congress-districts.json",
-        "simplify": "12%",
         "min_features": 17,  # 17 IL congressional districts (+ a ZZ water pseudo-district)
     },
     "il-senate": {
         "layer": 1,
         "fields": ["SLDU", "NAME", "BASENAME", "GEOID", "STATE"],
         "out": "il-senate-districts.json",
-        "simplify": "10%",
         "min_features": 59,  # 59 IL Senate districts (+ ZZ)
     },
     "il-house": {
         "layer": 2,
         "fields": ["SLDL", "NAME", "BASENAME", "GEOID", "STATE"],
         "out": "il-house-districts.json",
-        "simplify": "9%",
         "min_features": 118,  # 118 IL House districts (+ ZZ)
     },
 }
 PRECISION = "0.000001"  # 6 decimals ~= 0.11 m — the precision the app requests live
 VALIDATION_KEY = "GEOID"  # unique per district, preserved through simplification
+
+# ONE simplification setting for the whole family. Douglas-Peucker with an
+# absolute interval, not Visvalingam with a retain percentage — see the module
+# docstring for the measurement. `interval` is a distance, so it means the same
+# thing after a redistricting changes the vertex count, where a percentage does
+# not.
+SIMPLIFY = ["dp", "keep-shapes", "interval=15"]
+
+# The fidelity ceiling, in metres: no point on the true boundary may lie further
+# than this from the line drawn for it. MEASURED rather than picked. The true
+# line's own staircase step -- how far it runs before it turns -- is a median
+# 17.9 m over the 191 source segments around 41.9455,-87.7313, the neighbourhood
+# where the defect was first reported, so 25 m is about one step: the drawn line
+# cannot cut off more than roughly a single step of the real one. SIMPLIFY
+# delivers a statewide worst of 17.8 m with 0 of 177 districts over 25 m
+# (measured 2026-09-25), which leaves ~40% headroom so a redistricting can move
+# the geometry without failing the build for no reader-visible reason.
+FIDELITY_MAX_M = 25.0
+
+# Which chambers nest, and how. IL House districts 2N-1 and 2N together make up
+# IL Senate district N, so Senate N's outer edge is theirs and the two layers
+# must agree on it exactly. CONGRESS IS DELIBERATELY ABSENT: 17 congressional
+# districts stand in no whole-number relation to 59 Senate districts, so there is
+# no rule to check and pairing them anyway produces a meaningless "offset" rather
+# than a finding.
+NESTING = [("il-senate", "il-house", 2)]
 
 
 def fetch_tiger(layer, fields):
@@ -123,15 +196,193 @@ def fetch_tiger(layer, fields):
     return geo
 
 
-def run_mapshaper(source_path, simplify, out_path):
+def run_mapshaper_family(source_paths, out_dir):
+    """Simplify EVERY chamber in one run, so a shared edge is one arc.
+
+    `combine-files` reads the inputs into a single dataset, which is what makes
+    mapshaper dedupe an edge two layers both draw into ONE arc; simplification
+    then removes the same vertices from it for both. `target=*` writes every
+    layer back out, one file per input, each keeping its own fields. Output file
+    names come from the input base names, so the caller names its temp inputs
+    after the chamber and maps them back.
+    """
     subprocess.run(
-        [
-            "npx", "-y", MAPSHAPER, source_path,
-            "-simplify", "visvalingam", "keep-shapes", simplify,
-            "-o", "precision=" + PRECISION, "format=geojson", out_path,
-        ],
+        ["npx", "-y", MAPSHAPER] + list(source_paths) + ["combine-files",
+         "-simplify"] + SIMPLIFY + [
+         "-o", "precision=" + PRECISION, "format=geojson", "target=*", out_dir],
         check=True, cwd=REPO_ROOT,
     )
+
+
+# --- the cross-layer gate: no geometry, no network --------------------------
+def _vertex_set(geom):
+    pts = set()
+    if geom["type"] == "Polygon":
+        rings = geom["coordinates"]
+    elif geom["type"] == "MultiPolygon":
+        rings = [r for poly in geom["coordinates"] for r in poly]
+    else:
+        return pts
+    for r in rings:
+        for pt in r:
+            pts.add((pt[0], pt[1]))
+    return pts
+
+
+def _by_basename(features):
+    return {(f["properties"].get("BASENAME") or "").strip(): f for f in features}
+
+
+def check_nesting(built):
+    """Every Senate boundary vertex must be a vertex of its own two House districts.
+
+    Under one shared topology the Senate ring is assembled FROM House arcs, so
+    this holds with no tolerance at all — which is what makes it a good gate:
+    there is no epsilon to tune and no way for it to pass weakly. Measured
+    2026-09-25, it holds on 59 of 59 pairings when the family is simplified
+    together and fails on 59 of 59 when each chamber is simplified alone.
+    """
+    problems = []
+    checked = 0
+    for upper, lower, per in NESTING:
+        if upper not in built or lower not in built:
+            continue
+        up = _by_basename(built[upper]["features"])
+        lo = _by_basename(built[lower]["features"])
+        for key, feat in sorted(up.items()):
+            if not key.isdigit():
+                continue
+            n = int(key)
+            kids = [str(per * (n - 1) + i + 1) for i in range(per)]
+            if any(k not in lo for k in kids):
+                problems.append("%s %s: %s missing from %s"
+                                % (upper, key, [k for k in kids if k not in lo], lower))
+                continue
+            checked += 1
+            child = set()
+            for k in kids:
+                child |= _vertex_set(lo[k]["geometry"])
+            stray = _vertex_set(feat["geometry"]) - child
+            if stray:
+                problems.append(
+                    "%s %s has %d vertex/vertices that are on no %s district (%s); "
+                    "the layers were not simplified from one topology"
+                    % (upper, key, len(stray), lower, " + ".join(kids)))
+    if not checked:
+        return False, "no nesting pairings were checked — NESTING or the fetch is wrong"
+    if problems:
+        return False, "%d pairing(s) broken; first: %s" % (len(problems), problems[0])
+    return True, "%d pairing(s) share every boundary vertex exactly" % checked
+
+
+# --- the fidelity gate: how far the TRUE line strays from the drawn one -----
+def _mscale(lat):
+    return (111320.0 * math.cos(math.radians(lat)), 110540.0)
+
+
+def _seg_dist_m(p, a, b, sx, sy):
+    px, py = p[0] * sx, p[1] * sy
+    ax, ay = a[0] * sx, a[1] * sy
+    bx, by = b[0] * sx, b[1] * sy
+    dx, dy = bx - ax, by - ay
+    d2 = dx * dx + dy * dy
+    if d2 == 0:
+        return math.hypot(px - ax, py - ay)
+    t = ((px - ax) * dx + (py - ay) * dy) / d2
+    t = 0.0 if t < 0 else (1.0 if t > 1 else t)
+    return math.hypot(px - (ax + t * dx), py - (ay + t * dy))
+
+
+def _rings(geom):
+    if geom["type"] == "Polygon":
+        return list(geom["coordinates"])
+    if geom["type"] == "MultiPolygon":
+        return [r for poly in geom["coordinates"] for r in poly]
+    return []
+
+
+def _index_segments(rings, cell=0.01):
+    grid = {}
+    for r in rings:
+        for i in range(len(r) - 1):
+            a, b = (r[i][0], r[i][1]), (r[i + 1][0], r[i + 1][1])
+            x0, x1 = sorted((a[0], b[0]))
+            y0, y1 = sorted((a[1], b[1]))
+            for gx in range(int(math.floor(x0 / cell)), int(math.floor(x1 / cell)) + 1):
+                for gy in range(int(math.floor(y0 / cell)), int(math.floor(y1 / cell)) + 1):
+                    grid.setdefault((gx, gy), []).append((a, b))
+    return grid, cell
+
+
+def _dist_to_drawn(p, grid, cell, sx, sy):
+    gx, gy = int(math.floor(p[0] / cell)), int(math.floor(p[1] / cell))
+    best = float("inf")
+    rad = 0
+    while rad <= 4:
+        for i in range(gx - rad, gx + rad + 1):
+            for j in range(gy - rad, gy + rad + 1):
+                if rad and abs(i - gx) != rad and abs(j - gy) != rad:
+                    continue
+                for a, b in grid.get((i, j), ()):
+                    d = _seg_dist_m(p, a, b, sx, sy)
+                    if d < best:
+                        best = d
+        # one band past the first hit, so a nearer segment just outside the
+        # band that produced it cannot be missed
+        if best < float("inf") and rad >= 1:
+            break
+        rad += 1
+    return best
+
+
+def check_fidelity(source_features, drawn_features, limit=None):
+    """No point on the TRUE boundary may lie further than `limit` from the drawn line.
+
+    The direction matters and the obvious one gates nothing: simplification KEEPS
+    a subset of the source vertices, so every drawn vertex already sits on the
+    source line and measuring drawn -> source answers ~0 by construction. What a
+    reader sees is the true line straying from the chord drawn in its place, so
+    that is what this measures.
+    """
+    limit = FIDELITY_MAX_M if limit is None else limit
+    src = _by_basename(source_features)
+    drawn = _by_basename(drawn_features)
+    worst, where, wkey = 0.0, None, None
+    over = 0
+    for key, sf in src.items():
+        if key not in drawn:
+            continue
+        dr = _rings(drawn[key]["geometry"])
+        sr = _rings(sf["geometry"])
+        if not dr or not sr:
+            continue
+        sx, sy = _mscale(sr[0][0][1])
+        grid, cell = _index_segments(dr)
+        dworst = 0.0
+        dwhere = None
+        for r in sr:
+            for pt in r:
+                d = _dist_to_drawn((pt[0], pt[1]), grid, cell, sx, sy)
+                if d > dworst:
+                    dworst, dwhere = d, (pt[0], pt[1])
+        if dworst > limit:
+            over += 1
+        if dworst > worst:
+            worst, where, wkey = dworst, dwhere, key
+    # TIGER ships one pseudo-district per chamber for the water area, whose
+    # BASENAME is prose ("State Senate Districts not defined") rather than a
+    # number. It is a real shipped feature and is held to the same ceiling, but
+    # naming it "district State Senate Districts not defined" reads as a bug in
+    # the gate, so say what it is.
+    def _name(key):
+        return ("district %s" % key) if (key or "").isdigit() else (
+            "the water pseudo-district (%s)" % key)
+
+    if over:
+        return False, ("%d district(s) stray further than %.0f m from the true line; "
+                       "worst is %s at %.1f m (%.5f,%.5f)"
+                       % (over, limit, _name(wkey), worst, where[1], where[0]))
+    return True, "worst stray %.1f m, %s; ceiling %.0f m" % (worst, _name(wkey), limit)
 
 
 # --- point-in-polygon mirroring index.html's even-odd test (so validation
@@ -232,51 +483,113 @@ def validate(source_features, simplified_features, key_prop, samples=2000, seed=
     return True, "%d/%d (%.2f%%) agreement, 0 overlaps" % (agree, samples, pct)
 
 
-def build_chamber(name, cfg):
-    source = fetch_tiger(cfg["layer"], cfg["fields"])
-    if len(source["features"]) < cfg["min_features"]:
-        raise RuntimeError(
-            "%s: only %d features fetched (need >= %d) — refusing to write"
-            % (name, len(source["features"]), cfg["min_features"])
-        )
+def build_family():
+    """Fetch every chamber, simplify them as ONE topology, gate, then write."""
+    source = {}
+    for name, cfg in LAYERS.items():
+        geo = fetch_tiger(cfg["layer"], cfg["fields"])
+        if len(geo["features"]) < cfg["min_features"]:
+            raise RuntimeError(
+                "%s: only %d features fetched (need >= %d) — refusing to write"
+                % (name, len(geo["features"]), cfg["min_features"]))
+        source[name] = geo
 
     with tempfile.TemporaryDirectory() as tmp:
-        src_path = os.path.join(tmp, name + "-src.geojson")
-        with open(src_path, "w") as f:
-            json.dump(source, f)
-        out_tmp = os.path.join(tmp, name + ".geojson")
-        run_mapshaper(src_path, cfg["simplify"], out_tmp)
-        with open(out_tmp) as f:
-            simplified = json.load(f)
+        paths = []
+        for name, geo in source.items():
+            sp = os.path.join(tmp, name + ".geojson")
+            with open(sp, "w") as f:
+                json.dump(geo, f)
+            paths.append(sp)
+        out_dir = os.path.join(tmp, "out")
+        os.makedirs(out_dir)
+        run_mapshaper_family(paths, out_dir + os.sep)
+        built = {}
+        for name in source:
+            op = os.path.join(out_dir, name + ".json")
+            if not os.path.exists(op):
+                raise RuntimeError(
+                    "%s: mapshaper wrote no output for this chamber (looked for %s) — "
+                    "combine-files names outputs after the inputs, so a renamed temp "
+                    "input silently drops a layer" % (name, op))
+            with open(op) as f:
+                built[name] = json.load(f)
 
-    ok, msg = validate(source["features"], simplified["features"], VALIDATION_KEY)
+    # gate 1, per layer: the project's point-in-district protocol vs the fetch
+    for name in sorted(built):
+        ok, msg = validate(source[name]["features"], built[name]["features"], VALIDATION_KEY)
+        if not ok:
+            raise RuntimeError("%s validation failed: %s" % (name, msg))
+        print("  %-10s %s" % (name, msg), file=sys.stderr)
+
+    # gate 2, across layers: the nesting TIGER guarantees
+    ok, msg = check_nesting(built)
     if not ok:
-        raise RuntimeError("%s validation failed: %s" % (name, msg))
+        raise RuntimeError("nesting check failed: %s" % msg)
+    print("  nesting    %s" % msg, file=sys.stderr)
 
-    compact = json.dumps(simplified, separators=(",", ":"))
-    if json.loads(compact) != simplified:
-        raise RuntimeError("%s round-trip mismatch before writing" % name)
+    # gate 3, against the source: how far the true line strays from the drawn one
+    for name in sorted(built):
+        ok, msg = check_fidelity(source[name]["features"], built[name]["features"])
+        if not ok:
+            raise RuntimeError("%s fidelity check failed: %s" % (name, msg))
+        print("  %-10s %s" % (name, msg), file=sys.stderr)
 
     os.makedirs(APP_DATA_DIR, exist_ok=True)
-    out_path = os.path.join(APP_DATA_DIR, cfg["out"])
-    with open(out_path, "w") as f:
-        f.write(compact)
+    for name, cfg in LAYERS.items():
+        compact = json.dumps(built[name], separators=(",", ":"))
+        if json.loads(compact) != built[name]:
+            raise RuntimeError("%s round-trip mismatch before writing" % name)
+        with open(os.path.join(APP_DATA_DIR, cfg["out"]), "w") as f:
+            f.write(compact)
+        print("%s -> data/app/%s: %d districts, %d bytes (%s, 6dp)"
+              % (name, cfg["out"], len(built[name]["features"]), len(compact),
+                 " ".join(SIMPLIFY)), file=sys.stderr)
+    print("REMEMBER: these are CACHE-FIRST files. Bump `cache_name` in "
+          "metro-worksheet.json and re-run generate_metro_files.py, or a "
+          "returning visitor keeps the old geometry.", file=sys.stderr)
 
-    print(
-        "%s -> data/app/%s: %d districts; %s; %d bytes (%s retain, 6dp)"
-        % (name, cfg["out"], len(simplified["features"]), msg, len(compact), cfg["simplify"]),
-        file=sys.stderr,
-    )
+
+def check_shipped():
+    """Offline: the nesting gate on the files in data/app. This is the CI gate.
+
+    It needs no network and no source fetch, because the nesting is a relation
+    BETWEEN two shipped layers — which is exactly the regression a per-chamber
+    rebuild would reintroduce. The fidelity gate cannot run here: it needs the
+    TIGER fetch to compare against, so it is build-time only.
+    """
+    built = {}
+    for name, cfg in LAYERS.items():
+        path = os.path.join(APP_DATA_DIR, cfg["out"])
+        if not os.path.exists(path):
+            print("build-legislative-boundaries: FAIL — %s is missing" % cfg["out"],
+                  file=sys.stderr)
+            return 1
+        with open(path) as f:
+            built[name] = json.load(f)
+    ok, msg = check_nesting(built)
+    if not ok:
+        print("build-legislative-boundaries: FAIL — %s\n"
+              "  Rebuild the WHOLE family (python3 scripts/build_legislative_boundaries.py); "
+              "simplifying one chamber alone is what breaks this." % msg, file=sys.stderr)
+        return 1
+    print("build-legislative-boundaries: OK — %s" % msg)
+    return 0
 
 
 def main():
-    targets = sys.argv[1:] or list(LAYERS)
-    unknown = [t for t in targets if t not in LAYERS]
-    if unknown:
-        print("unknown chamber(s): %s; known: %s" % (unknown, list(LAYERS)), file=sys.stderr)
+    args = sys.argv[1:]
+    if "--check" in args:
+        sys.exit(check_shipped())
+    if args:
+        print("unexpected argument(s): %s\n"
+              "This builder has no per-chamber mode: rebuilding one chamber alone is "
+              "what breaks the House/Senate nesting, so the family is the unit.\n"
+              "  (no args) fetch and rebuild all three\n"
+              "  --check   offline nesting gate on the shipped files"
+              % args, file=sys.stderr)
         sys.exit(1)
-    for name in targets:
-        build_chamber(name, LAYERS[name])
+    build_family()
 
 
 if __name__ == "__main__":
