@@ -2495,6 +2495,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
      cards a click would open. Per-layer color is inline (JS can't be in CSS);
      everything structural lives here. ---- */
   .hover-popup { pointer-events: none; }
+  /* ...and for EVERY part of it, not only the box: Leaflet's own stylesheet
+     sets `pointer-events: auto` on .leaflet-popup-tip, which a parent's none
+     does not override. When the card flips below the cursor the tail points
+     up at exactly the cursor, so it took the click the map was meant to get
+     (2026-09-25). */
+  .hover-popup *,
+  .hover-popup .leaflet-popup-tip { pointer-events: none; }
   .hover-popup .leaflet-popup-content-wrapper {
     background: #fff;
     color: #111827;

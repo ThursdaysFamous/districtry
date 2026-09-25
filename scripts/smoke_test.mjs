@@ -1503,6 +1503,32 @@ try {
       !split.vector || (split.labelMap && split.paneAbove),
       `vector=${split.vector} labelMap=${split.labelMap} above=${split.paneAbove}`);
 
+    // The hover card never takes the mouse. It follows the cursor and, near
+    // the top of the map, flips below it with its tail pointing up at the
+    // cursor — and Leaflet's own stylesheet gives that tail pointer-events:
+    // auto, so it took the click the map was meant to get. Built from the
+    // real class names under the real stylesheets (Leaflet's included),
+    // every part of the card must compute to none, in both placements.
+    const hoverPE = await page.evaluate(() => {
+      const out = [];
+      ["", " hover-below"].forEach((flip) => {
+        const pop = document.createElement("div");
+        pop.className = "leaflet-popup hover-popup" + flip;
+        pop.innerHTML = '<div class="leaflet-popup-content-wrapper"><div class="leaflet-popup-content">' +
+          '<div class="hover-snapshot"><div class="hover-row">x</div></div></div></div>' +
+          '<div class="leaflet-popup-tip-container"><div class="leaflet-popup-tip"></div></div>';
+        document.querySelector(".leaflet-popup-pane").appendChild(pop);
+        [pop].concat([].slice.call(pop.querySelectorAll("*"))).forEach((el) => {
+          const pe = getComputedStyle(el).pointerEvents;
+          if (pe !== "none") out.push(el.className + flip + "=" + pe);
+        });
+        pop.remove();
+      });
+      return out;
+    });
+    check("the hover card, tail included, never takes the mouse from the map",
+      hoverPE.length === 0, hoverPE.join(", ") || "every part none");
+
     // Boundary streets: the matcher names a street the district's edge runs
     // along, and not one that crosses the edge or runs a block away; the
     // stretch it labels ends near where the edge leaves the street. Held to
