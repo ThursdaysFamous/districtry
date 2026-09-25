@@ -50,6 +50,51 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 — THE CITY ROSTER REFRESHES AGAIN, AND THE RUN DOES NOT PROVE THE RETRY
+FIRED.**
+
+Dispatched `update-ia-county-city-officials-roster.yml` by hand at Adam's instruction:
+run `36144018468`, `workflow_dispatch` on `main` at `0488761`, which carries `1cf8b14`
+(#1156). **SUCCESS**, 13:54:59 → 13:55:49 UTC. **Muscatine fetched normally** —
+`cities=8 officials=61 seats=7` — and no county printed a NOT FETCHED line, so #1156's
+new wording went unexercised as well. All thirteen counties swept; the builder kept
+**10 current against `MIN_COUNTIES = 10`** after dropping Sac (26 of 61 officials
+publishing an ended term), Shelby (38 of 77) and Winnebago (22 of 51). The previous
+run, `36071911988` on 2026-09-24, had refused at 8.
+
+**WHAT THIS RUN DOES NOT SHOW IS THAT THE RETRY FIRED.** The gate annotates `why` with
+`(on attempt N of M)` only when `N > 1`, and the scraper prints `why` only on failure,
+so a retried success is silent by construction. **The timing settles it the other way:**
+the scrape step ran **39 seconds for 13 counties** over a serial loop that sleeps 0.5s
+between them — 12 sleeps and 26 fetches inside those 39 seconds — which leaves no room
+for even one 30-second connect timeout. **Muscatine answered on the first attempt.**
+What was measured is that the host is answering again. The retry's witness stays the six
+assertions in `robots_policy.py --selftest`; a run that never needed the fix cannot
+corroborate it, and reporting it as confirmation would be the shape I was corrected for
+earlier today — a real measurement carrying an unverified one.
+
+**THE FILE DID NOT CHANGE, WHICH MEANS THE SHIPPED ROSTER WAS NEVER STALE.**
+`git diff --quiet` found the rebuild byte-identical to what ships, so step 9 skipped and
+no bot PR opened. The shipped file was written by `343b624` (#1149) at 02:29 today and
+already carries Muscatine's 8 cities and 61 officials. So the 2026-09-24 failure cost a
+refresh and cost no reader an answer — which is what a count guard refusing to write is
+supposed to cost. The board row's "the shipped file keeps its 18 September reading" was
+true when written and stopped being true when #1149 merged four hours later.
+
+**THE MARGIN IS ZERO AND THAT IS NOT A DEFECT.** 10 of 10 exactly. One more county
+failing to fetch, or one more crossing the expired-term threshold, refuses the write
+again — by design, since `MIN_COUNTIES` tracks the current count so a county quietly
+going stale is visible. **The remedy is never the floor.** The retry addressed the one
+cause that was never staleness; everything else here is the guard working.
+
+**WISCONSIN HAS AGREED TO THE OUTER-LOOP RETIREMENT** (`cc2253f`), reproducing the 9 on
+their own file and adding two things I had not: a SECOND comment dies with the loop —
+the one arguing the page ladder is bounded because `unreachable` is re-asked
+`ROBOTS_RETRIES` times, which must be restated against `RETRY_ATTEMPTS` — and the copy
+being retired is the untested one, which is a better argument for retiring than for
+`attempts=1`. They held rather than built it, since #1157 is open on their only branch.
+**Still unstarted, and still its own change.**
+
 **2026-09-25 — THE DOUBLE-RETRY IS MEASURED. PROPOSAL BELOW; NOTHING BUILT.**
 
 **The 9 reproduces.** Stubbing `_fetch_once` and counting, with the backoff zeroed so
