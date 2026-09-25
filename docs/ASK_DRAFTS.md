@@ -2464,3 +2464,62 @@ reach only six. That division is the honest one rather than a half-list of mixed
   Legislature's own plan type is wrong with it, which is worth chasing on its own.
 - **No reply after the follow-up cadence** — record UNRESPONSIVE against the ask, per county,
   never against the county. Nothing on the card is blocked on this; one row is.
+
+## Ask 31 — Worth County Auditor: the city-officials page is published and empty
+
+> **NOT YET ASKED — DRAFTED 2026-09-25.** One message, to the Worth County Auditor. On send,
+> change `NOT YET ASKED — DRAFTED` to `ASKED <date>` in the `ia-municipal-officeholders`
+> blocker in `docs/DATA_LAYER_GUIDEBOOK.md` AND in `ia/WATCH.md` — Iowa keeps the ledger in
+> both, unlike Illinois.
+
+**This is a better-founded ask than the usual one, and the difference is worth stating.** The
+standard ask puts a question to a county that publishes nothing: would you send us a list. This
+one puts a question to a county that has already built the page. Measured 2026-09-25 by
+`ia/scripts/probe_ia_city_officials_pages.py`, Worth's city-officials page answers with **seven
+per-city blocks and seven role headings and not one name** — the same content-management module
+the ten counties that do publish use, with nobody filled in. So the question is about the page
+rather than about the county's records, and the answer may be as short as "it is not finished".
+
+**It is not a request to build anything.** Ten Iowa counties publish exactly this page for every
+city inside them, and Worth has the same page. If it is unfinished, saying so is a complete
+answer and closes the question; if it is finished and simply renders empty to us, that is a fault
+worth their knowing about.
+
+### The draft
+
+> Subject: Your city officials page
+>
+> Hello,
+>
+> I run districtry, a free, non-commercial civic map that shows people which districts they live
+> in and who represents them there. Iowa's counties are the only place that publishes city
+> officials in any consistent form, and ten of them do — Adams, Boone, Cerro Gordo, Crawford,
+> Iowa, Jackson, Jasper, Keokuk, Marion and Muscatine each list the mayor, clerk and council for
+> every city inside the county, and the site shows those names on the map for the cities they
+> cover.
+>
+> Worth County has that same page, and when I load it I see the layout for seven cities with the
+> headings for each role, and no names in it. I wanted to ask rather than assume: is that page
+> still being filled in, or is it finished and not displaying correctly?
+>
+> If it is unfinished, that is a complete answer and I will leave it alone. If it should be
+> showing names, the empty result is something you would probably want to know about.
+>
+> I am not asking you to compile anything for me — only whether that page is meant to have
+> content in it yet.
+>
+> Thank you for your time.
+>
+> Adam Overberg
+> districtry.com
+
+### What each answer means
+
+| answer | what it settles |
+|---|---|
+| "still being filled in" | The route stays open and this county is a re-check rather than an ask. Record it and re-probe on a later sweep. |
+| "it is finished" | A real display fault on their side, and worth one reply saying what we see. Their fix ships to a reader by itself on the next weekly run. |
+| no reply after the follow-up cadence | `UNRESPONSIVE` in the ledger, and the county stays in the sweep artifact as a scaffold. |
+
+**Worth is the only county in the sweep with this shape**, so this ask does not generalise to a
+tranche. If a later sweep finds more, they can go together.

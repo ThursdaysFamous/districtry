@@ -101,30 +101,33 @@ OUT_PATH = os.path.join(APP, "ia-county-city-officials.json")
 CONTACT = os.path.join(APP, "ia-city-contact.json")
 CITY_OWN = os.path.join(APP, "ia-city-officials.json")
 
-# Measured 2026-09-05 on the NINE current counties, after the expired-term gate
-# and after the address test below: 98 distinct cities, 710 officials, 98 of 98
-# naming a mayor, 85 naming a clerk, 104 carrying a seat, 142 e-mails and 116
-# phones. The floors sit just under each measurement -- close enough that a
-# source quietly dropping a field fails here, loose enough that ordinary
-# turnover does not.
+# Re-measured 2026-09-25 on the TEN current counties, after the expired-term
+# gate and after the address test below: 102 distinct cities, 738 officials,
+# 102 of 102 naming a mayor, 89 naming a clerk, 109 carrying a seat, 143
+# e-mails and 116 phones. The floors sit just under each measurement -- close
+# enough that a source quietly dropping a field fails here, loose enough that
+# ordinary turnover does not.
 #
 # MIN_COUNTIES TRACKS THE CURRENT COUNT ON PURPOSE. It was 8 when eight were
-# current and is 9 now that Jasper ships, because the property worth keeping is
-# that ONE county going stale fails this build loudly. A floor left behind the
-# count would let the first county quietly drop out, which is the whole thing
-# the gate exists to prevent. Raise it when a county joins; never lower it to
-# get past a county going stale.
-MIN_COUNTIES = 9
-MIN_CITIES = 92
-MIN_OFFICIALS = 650
-MIN_MAYORS = 92               # measured 98 of 98. North English straddles the
+# current, 9 when Jasper shipped, and is 10 now that ADAMS does, because the
+# property worth keeping is that ONE county going stale fails this build
+# loudly. A floor left behind the count would let the first county quietly drop
+# out, which is the whole thing the gate exists to prevent. Raise it when a
+# county joins; never lower it to get past a county going stale -- and expect
+# it to fail every even-year January, when terms elected the previous November
+# begin and each page publishes an expired term until it is updated.
+MIN_COUNTIES = 10
+MIN_CITIES = 96
+MIN_OFFICIALS = 680
+MIN_MAYORS = 96               # measured 102 of 102. North English straddles the
                               # Iowa/Keokuk line: its mayor and council come
                               # from Iowa County's page and its clerk from
                               # Keokuk's, so the merge is what makes it whole.
-MIN_EMAILS = 125              # measured 142; FOUR of the nine publish none
-                              # (Iowa, Jackson, Keokuk, Muscatine)
-MIN_PHONES = 100              # measured 116; FIVE of the nine publish none
-                              # (Cerro Gordo, Iowa, Jackson, Keokuk, Muscatine)
+MIN_EMAILS = 125              # measured 143; FIVE of the ten publish none
+                              # (Adams, Iowa, Jackson, Keokuk, Muscatine)
+MIN_PHONES = 100              # measured 116; SIX of the ten publish none
+                              # (Adams, Cerro Gordo, Iowa, Jackson, Keokuk,
+                              # Muscatine)
 
 # Lifted unchanged in behaviour from build_ia_city_officials.py, which lifted it
 # from build_ia_county_officers.py: an address ships only if the officeholder's
