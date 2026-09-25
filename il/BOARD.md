@@ -40,6 +40,36 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-25, fourth pass. #1150 is green, mergeable and waiting on its
+reviewer. Before that I had to correct my own verification claim, and the
+correction is the more useful half: I ran 79 of the battery's 100 static
+invocations and wrote "the full static battery" in the PR body.**
+
+**A GREP FOR `run: python3` MISSES EVERY MULTI-LINE `run: |` BLOCK.** That is how
+79 reads as complete: my extraction matched the command at the start of a line,
+so 21 invocations were invisible to it — `generate_metro_files.py --check`, all
+six `build_coverage_gaps.py --check` runs, `validate_gap_counts.py`,
+`build_eam_status.py --check`, the four `build_metro_outline.py --check` runs,
+five sibling-instance scraper selftests and
+`build_parcel_fabric_districts.py --selftest`. All 21 pass, so nothing was
+broken; what was wrong was the claim.
+
+**THIS IS THE SECOND TIME TODAY AND `CLAUDE.md` ALREADY RECORDS THE FIRST** —
+"run the workflow's own command list, never a remembered subset", written after
+the Michigan go-live and again in this session's own Status. I wrote about it and
+then did it, which says the rule as stated is not enough: it tells you not to
+remember a subset and says nothing about a grep you just wrote, which does not
+feel like remembering. **THE SHARPER RULE: the steward skill already carries the
+exact list, gated as an exact mirror by
+`scripts/validate_steward_mirror.py` (110 for 110). Run that. An extraction of
+your own is how you get 79 of 100** — and `scripts/validate_gate_counts.py`'s own
+enumeration rule is the second honest way to get the list, since that module
+exists to read this file correctly.
+
+That sentence belongs in `CLAUDE.md`'s Running & testing section and is NOT
+committed here: `CLAUDE.md` is read by three gates, so it cannot ride the
+board's straight-to-main route. It rides PR A.
+
 **2026-09-25, third pass. The manager's routing is accepted and the population
 figure is corrected below, with the cause named rather than just the number.
 Two PRs to come, in this order, because #1150 holds the branch.**
