@@ -427,7 +427,7 @@ def classify(http_status, body, final_url=None, error=None):
                    final_url=final_url, http_status=http_status)
 
 
-def fetch_verdict(robots_url, user_agent, timeout=30, session=None, headers=None):
+def _fetch_once(robots_url, user_agent, timeout=30, session=None, headers=None):
     """GET one robots.txt and classify it. `session` may be a requests.Session;
     without one the stdlib client is used so this module stays stdlib-only.
 
@@ -463,6 +463,70 @@ def fetch_verdict(robots_url, user_agent, timeout=30, session=None, headers=None
         return classify(None, None, error="%s: %s" % (type(exc).__name__, exc))
 
 
+# A ROBOTS READ THAT NEVER ARRIVED IS NOT THE HOST'S ANSWER, AND ONE SAMPLE OF A
+# CONNECT ATTEMPT IS NOT A MEASUREMENT OF A POLICY. Added 2026-09-25 after
+# `update-ia-county-city-officials-roster.yml` froze Iowa's city roster for a
+# week on a single ConnectTimeout: run 36071911988 read
+# muscatinecountyiowa.gov/robots.txt ONCE, waited the full 30 s for a TCP
+# connection that never opened, and took `unreachable` -> disallow-all as the
+# county's answer. Measured the next morning with that workflow's own client
+# (requests.Session, the scraper's districtry token, this gate): HTTP 404 in
+# 0.95 s. The host publishes no robots.txt and never has -- this scraper's own
+# 2026-09-05 probe recorded eleven of its twelve county hosts serving none, and
+# ia/scripts/robots_gate.py's 2026-09-12 sweep counted 50 of 108 answering 404.
+# A 30-second CONNECT timeout to a host that connects in under a second is a
+# network-path event, not a policy.
+#
+# ONLY `unreachable` IS RETRIED, AND THAT IS THE WHOLE RULE. Every other status
+# is the host having SPOKEN: 404 and 410 are no policy, 401 and 403 are a
+# refusal to this client, 202 and a challenge body are an access control, 200 is
+# a document. Re-asking any of them would put requests on somebody's server to
+# be told the same thing again. `unreachable` is the one verdict that means no
+# answer arrived -- a network, TLS or DNS failure, or a 5xx, which RFC 9309
+# §2.3.1.4 files together and which are transient by construction (a 502 and a
+# 503 both say "not right now" rather than "no").
+#
+# THE DEFAULT IS SHARED ON PURPOSE. 27 files across ia/, mi/, wi/ and scripts/
+# call this reader; Iowa alone puts 108 hosts a week through it. Fixing one
+# builder's output would have left every other caller one blip from the same
+# freeze. A host that is genuinely down still fails all three attempts, is still
+# refused, and still trips whatever floor its builder sets -- which is the floor
+# doing its job. What changes is only that a transient stops counting as a
+# policy.
+RETRY_ATTEMPTS = 3
+RETRY_BACKOFF = (1, 2)      # seconds before attempts 2 and 3
+
+
+def fetch_verdict(robots_url, user_agent, timeout=30, session=None, headers=None,
+                  attempts=None):
+    """GET one robots.txt and classify it, re-asking an `unreachable` verdict.
+
+    Returns the first verdict that is not `unreachable`, or the last one tried.
+    A verdict that took more than one attempt SAYS SO in its `why`, so a caller
+    that prints its reason reports what actually happened rather than a bare
+    timeout; a `RobotsGate` caches whatever comes back, so the attempts are
+    spent once per host per run and never per path.
+
+    `attempts` defaults to RETRY_ATTEMPTS. Passing 1 restores the single read
+    this function did before 2026-09-25, which is what the self-test uses to
+    prove the retry is what changed the answer.
+    """
+    attempts = RETRY_ATTEMPTS if attempts is None else max(1, int(attempts))
+    verdict = None
+    for i in range(attempts):
+        if i:
+            time.sleep(RETRY_BACKOFF[min(i - 1, len(RETRY_BACKOFF) - 1)])
+        verdict = _fetch_once(robots_url, user_agent, timeout=timeout,
+                              session=session, headers=headers)
+        if verdict.status != "unreachable":
+            if i:
+                verdict.why = "%s (on attempt %d of %d)" % (verdict.why, i + 1, attempts)
+            return verdict
+    if attempts > 1:
+        verdict.why = "%s (unchanged after %d attempts)" % (verdict.why, attempts)
+    return verdict
+
+
 class RobotsGate(object):
     """One robots.txt fetch per host, cached for the run, thread-safe.
 
@@ -477,7 +541,7 @@ class RobotsGate(object):
     many workers ask at the same moment.
     """
 
-    def __init__(self, session, user_agent, timeout=30, headers=None):
+    def __init__(self, session, user_agent, timeout=30, headers=None, attempts=None):
         self._session = session
         self._ua = user_agent
         self._timeout = timeout
@@ -487,6 +551,10 @@ class RobotsGate(object):
         # differently. Optional and additive: a caller that passes nothing
         # keeps the two-header behaviour every existing caller has.
         self._headers = headers
+        # Re-ask an `unreachable` robots read before believing it; see
+        # fetch_verdict. Cached like any other verdict, so a host costs its
+        # attempts once per run however many paths are asked about.
+        self._attempts = attempts
         self._cache = {}
         self._lock = threading.Lock()
 
@@ -498,7 +566,8 @@ class RobotsGate(object):
         with self._lock:
             if root not in self._cache:
                 self._cache[root] = fetch_verdict(root, self._ua, self._timeout,
-                                                  self._session, self._headers)
+                                                  self._session, self._headers,
+                                                  attempts=self._attempts)
             return self._cache[root]
 
     def allows(self, url):
@@ -766,6 +835,80 @@ def _selftest():
     check(v.allows(ua, "https://h/public")[0], "served -> allowed path allowed")
     check(classify(202, "").allows(ua, "https://h/")[0] is False, "challenge -> not fetched")
     check(classify(503, "").allows(ua, "https://h/")[0] is False, "unreachable -> not fetched")
+
+    # --- fetch_verdict's retry: proven with a fake session and no network ---
+    # The Muscatine case, reproduced. A fake session counts its calls, so each
+    # claim is about how many requests were actually made and not only about
+    # the answer. Backoff is zeroed for the run; the arithmetic is the same at
+    # one and two seconds.
+    class _Resp(object):
+        def __init__(self, status, text, url):
+            self.status_code, self.text, self.url = status, text, url
+
+    class _FakeSession(object):
+        """Raises `fail_first` times, then answers with `then`."""
+        def __init__(self, fail_first, then=(404, "")):
+            self.fail_first, self.then, self.calls = fail_first, then, 0
+
+        def get(self, url, headers=None, timeout=None, allow_redirects=True):
+            self.calls += 1
+            if self.calls <= self.fail_first:
+                raise OSError("Connection to %s timed out. (connect timeout=30)" % url)
+            return _Resp(self.then[0], self.then[1], url)
+
+    ROBOTS = "https://muscatinecountyiowa.gov/robots.txt"
+    _backoff = RETRY_BACKOFF
+    globals()["RETRY_BACKOFF"] = (0, 0)
+    try:
+        # 1. THE FAILURE THAT FROZE THE ROSTER: one timeout, then the host's real
+        #    404. Before this retry the first attempt was the answer.
+        fake = _FakeSession(fail_first=1)
+        v = fetch_verdict(ROBOTS, ua, session=fake)
+        check(v.status == "absent" and fake.calls == 2,
+              "one transient then 404 -> absent after 2 calls (got %s in %d)"
+              % (v.status, fake.calls))
+        check("attempt 2 of 3" in v.why,
+              "a verdict that took more than one attempt says so (%s)" % v.why)
+        check(v.allows(ua, "https://muscatinecountyiowa.gov/about/")[0] is True,
+              "and the path the scraper reads is allowed")
+
+        # 2. THE NEGATIVE THAT PROVES THE RETRY IS WHAT CHANGED IT. Same fake,
+        #    one attempt: the pre-2026-09-25 behaviour, and the frozen roster.
+        fake = _FakeSession(fail_first=1)
+        v1 = fetch_verdict(ROBOTS, ua, session=fake, attempts=1)
+        check(v1.status == "unreachable" and fake.calls == 1,
+              "the same host read ONCE is unreachable -- the old behaviour")
+        check(v1.allows(ua, "https://muscatinecountyiowa.gov/about/")[0] is False,
+              "which is disallow-all, which is what skipped the county")
+
+        # 3. AN ANSWER IS NEVER RE-ASKED. Each of these spoke on the first call.
+        for status, expect in ((404, "absent"), (403, "refused"), (202, "challenge"),
+                               (200, "served")):
+            body = "User-agent: *\nDisallow: /x\n" if status == 200 else ""
+            fake = _FakeSession(fail_first=0, then=(status, body))
+            v = fetch_verdict(ROBOTS, ua, session=fake)
+            check(v.status == expect and fake.calls == 1,
+                  "HTTP %d -> %s on ONE call, never re-asked (got %s in %d)"
+                  % (status, expect, v.status, fake.calls))
+
+        # 4. A 5xx IS unreachable AND IS RETRIED -- RFC 9309 §2.3.1.4 files it
+        #    with a network failure, and a 502 says "not right now", not "no".
+        fake = _FakeSession(fail_first=0, then=(503, ""))
+        v = fetch_verdict(ROBOTS, ua, session=fake)
+        check(v.status == "unreachable" and fake.calls == 3,
+              "a 5xx is retried to the cap (got %d calls)" % fake.calls)
+        check("unchanged after 3 attempts" in v.why,
+              "and a verdict that failed every attempt says how many (%s)" % v.why)
+
+        # 5. THE GATE SPENDS THE ATTEMPTS ONCE PER HOST, NOT PER PATH.
+        fake = _FakeSession(fail_first=1)
+        gate = RobotsGate(fake, ua)
+        gate.allows("https://muscatinecountyiowa.gov/a")
+        gate.allows("https://muscatinecountyiowa.gov/b")
+        check(fake.calls == 2,
+              "a cached verdict costs its attempts once per host (got %d)" % fake.calls)
+    finally:
+        globals()["RETRY_BACKOFF"] = _backoff
 
     # --- HostPacer: the three claims, proven with threads and no network ----
     # Small delays so this stays under a second; the arithmetic is the same at

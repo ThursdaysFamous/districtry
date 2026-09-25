@@ -260,12 +260,18 @@ def main():
     for fips, county, url in COUNTIES:
         allowed, why = gate.allows(url)
         if not allowed:
-            # The county's own robots.txt refuses this agent, so its page is
-            # never requested. The entry STAYS in COUNTIES: the check runs
-            # weekly, so a county that changes its file re-enters by itself.
-            failed.append((county, "robots.txt refuses districtry (%s)" % why))
-            print("  %-14s SKIPPED — robots.txt refuses districtry (%s)"
-                  % (county, why), file=sys.stderr)
+            # NOT FETCHED, AND THE REASON IS THE GATE'S RATHER THAN A GUESS.
+            # This line used to open "robots.txt refuses districtry" whatever the
+            # verdict was, and on 2026-09-24 it printed
+            #   robots.txt refuses districtry (robots.txt unreachable: ConnectTimeout...)
+            # for a host that publishes no robots.txt at all and answers 404 in
+            # under a second -- a sentence contradicting its own parenthetical.
+            # `unreachable` means no answer arrived; `refused` means one did and
+            # it said no. Only the gate knows which, so only the gate says.
+            # The entry STAYS in COUNTIES: the check runs weekly, so a county
+            # whose verdict changes re-enters by itself.
+            failed.append((county, "not fetched — %s" % why))
+            print("  %-14s NOT FETCHED — %s" % (county, why), file=sys.stderr)
             continue
         try:
             cities = scrape(session, url)
