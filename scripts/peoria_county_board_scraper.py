@@ -142,6 +142,61 @@ def fetch_roster_layer(session):
 INDEX_HEADING_RE = re.compile(
     r'(?is)<h([23])\b[^>]*class="[^"]*\bsubhead[12]\b[^"]*"[^>]*>(.*?)</h\1>')
 
+# THE PAGE REFLOWED ON 2026-09-25 AND THE HEADINGS WENT AWAY ENTIRELY, which
+# froze this roster: `subhead` occurs ZERO times on the served page now, so the
+# pattern above matched nothing, the index named 0 of 18 members and the
+# builder refused to write. The refusal was correct and nothing a reader sees
+# moved; what broke is only the block selector.
+#
+# Measured the same day with this scraper's own client, robots.txt read first
+# through robots_policy and allowed: HTTP 200, 109,010 bytes, every member name
+# in the served HTML. So not a block, not a fetch failure, not client-rendered.
+# The page is CivicPlus and each member is now a paragraph in a `fr-view`
+# editor block:
+#
+#     <div class="fr-view">
+#       <p><a href="…/615/James-C-Dillon"><strong>James C. Dillon,
+#          Chairperson<br>District 5</strong></a></p><p><img …></p>
+#     </div>
+#
+# EIGHTEEN fr-view blocks, EIGHTEEN anchor-bearing paragraphs, all 18 members
+# and both roles, districts 1-18 complete.
+#
+# `aria-level` IS NOT THE LEADERSHIP MARKER, and it looks like one. Exactly one
+# paragraph on the page carries `aria-level="2"` — Williams, the Vice
+# Chairperson — and Dillon, the Chairperson, carries none, so anchoring on that
+# attribute finds ONE member of eighteen. It is a WYSIWYG artifact of whoever
+# last edited that entry, the same class of noise the inline `style=` and the
+# empty `<a class="subhead1 subhead2">` were under the old shape.
+#
+# THE ANCHOR IS REQUIRED, and that is what keeps prose out. The name pattern
+# downstream ends in `|$`, so it matches any run of letters and spaces — a
+# paragraph reading "Board meetings are held monthly" would parse as a member
+# named exactly that and enter `listed`, which is the set the builder's floor
+# counts. A link to the member's own page is the page's own statement that the
+# paragraph names a member, so it is what the selector asks for.
+#
+# BOTH SHAPES ARE READ, not one swapped for the other: the heading shape was
+# itself a CMS artifact that moved once already, so it can move back.
+INDEX_EDITOR_BLOCK_RE = re.compile(r'(?is)<div class="fr-view">(.*?)</div>')
+INDEX_EDITOR_ENTRY_RE = re.compile(r"(?is)<p\b[^>]*>(.*?)</p>")
+INDEX_ENTRY_ANCHOR_RE = re.compile(r"(?i)<a\s[^>]*href=")
+
+
+def index_blocks(text):
+    """Every HTML fragment on the index that may name one member.
+
+    Returns raw fragments, flattened and matched by the caller: a fragment that
+    is not a member simply fails the name pattern, which is how the six empty
+    `subhead` blocks were already tolerated.
+    """
+    blocks = [block for _level, block in INDEX_HEADING_RE.findall(text)]
+    for editor in INDEX_EDITOR_BLOCK_RE.findall(text):
+        for para in INDEX_EDITOR_ENTRY_RE.findall(editor):
+            if INDEX_ENTRY_ANCHOR_RE.search(para):
+                blocks.append(para)
+    return blocks
+
 
 def fetch_index_roles(session):
     """Index page -> {name_key: role}, plus the set of names it lists. Roles
@@ -154,7 +209,7 @@ def fetch_index_roles(session):
     r = session.get(INDEX_URL, headers=UA, timeout=60)
     r.raise_for_status()
     roles, listed = {}, set()
-    for _level, block in INDEX_HEADING_RE.findall(r.text):
+    for block in index_blocks(r.text):
         text = clean(strip_tags(block))
         m = re.match(r"([A-Za-z][A-Za-z.'\-\s]+?),?\s*(?:Chairperson|Vice\s+Chairperson|District\s+\d+|$)", text)
         if not m:
@@ -245,5 +300,112 @@ def main():
         print(out)
 
 
+# --------------------------------------------------------------- selftest ---
+
+# One fixture per shape this index has been MEASURED in, because the shape has
+# now changed under us twice and each time the roster froze for a week with the
+# page serving every name. This is the Edgar shape a second time: the page was
+# fine and the parser was not.
+EDITOR_SHAPE = """
+<div class="widget editor pageStyles narrow"><div class="fr-view">
+  <p><a href="https://www.peoriacounty.gov/615/James-C-Dillon"><strong>James C.
+     Dillon, Chairperson<br>District 5</strong></a></p><p><img src="/x"></p>
+</div></div>
+<div class="widget editor pageStyles narrow"><div class="fr-view">
+  <p aria-level="2"><a href="https://www.peoriacounty.gov/565/Sharon-K-Williams"><strong>Sharon
+     K. Williams, Vice Chairperson<br>District 1</strong></a></p><p><img src="/y"></p>
+</div></div>
+<div class="widget editor pageStyles narrow"><div class="fr-view">
+  <p><a href="https://www.peoriacounty.gov/635/Brian-Elsasser"><strong>Brian
+     Elsasser<br>District 14</strong></a></p><p><img src="/z"></p>
+</div></div>
+"""
+
+# The shape the page served until 2026-09-25, with the artifacts that were
+# measured on it: the doubled space in the class, the inline style, and the
+# empty anchor carrying BOTH class names inside the h2.
+HEADING_SHAPE = """
+<h2 class="  subhead1"><a style="box-sizing: inherit;"
+   href="/615/James-C-Dillon">James C. Dillon,&nbsp;</a><br><a
+   href="/615/James-C-Dillon">Chairperson<br>District 5</a>
+   <a class="subhead1 subhead2"></a></h2>
+<h3 class="subhead2"><a href="/635/Brian-Elsasser">Brian Elsasser<br>District 14</a></h3>
+<h3 class="subhead2"></h3>
+"""
+
+# Prose inside an editor block, which the name pattern's trailing `|$` matches
+# as a member named exactly that. The anchor requirement is the only thing
+# keeping it out of `listed`, and `listed` is what the builder's floor counts.
+PROSE_SHAPE = """
+<div class="fr-view">
+  <p>Board meetings are held monthly</p>
+  <p>County Board Members</p>
+</div>
+"""
+
+
+def read_blocks(text):
+    """(names, roles) the index parser would take from this markup."""
+    names, roles = [], {}
+    for block in index_blocks(text):
+        flat = clean(strip_tags(block))
+        m = re.match(r"([A-Za-z][A-Za-z.'\-\s]+?),?\s*"
+                     r"(?:Chairperson|Vice\s+Chairperson|District\s+\d+|$)", flat)
+        if not m:
+            continue
+        key = name_key(m.group(1))
+        if not key:
+            continue
+        names.append(key)
+        role = ROLE_RE.search(flat)
+        if role:
+            roles[key] = re.sub(r"\s+", "-", role.group(1))
+    return names, roles
+
+
+def selftest():
+    problems = checks = 0
+
+    def want(label, got, expected):
+        nonlocal problems, checks
+        checks += 1
+        if got != expected:
+            problems += 1
+            print("  FAIL %-34s expected %r\n%s got      %r"
+                  % (label, expected, " " * 41, got))
+
+    names, roles = read_blocks(EDITOR_SHAPE)
+    # `name_key` returns a (first, last) tuple, not a slug — the keys below are
+    # what it actually produces, checked rather than guessed at.
+    want("editor shape names", names,
+         [("james", "dillon"), ("sharon", "williams"), ("brian", "elsasser")])
+    want("editor shape roles", roles,
+         {("james", "dillon"): "Chairperson",
+          ("sharon", "williams"): "Vice-Chairperson"})
+
+    names, roles = read_blocks(HEADING_SHAPE)
+    want("heading shape names", names, [("james", "dillon"), ("brian", "elsasser")])
+    want("heading shape roles", roles, {("james", "dillon"): "Chairperson"})
+
+    # Both at once: a page mid-reflow must not double-count or lose either.
+    names, _roles = read_blocks(HEADING_SHAPE + EDITOR_SHAPE)
+    want("both shapes on one page", sorted(set(names)),
+         [("brian", "elsasser"), ("james", "dillon"), ("sharon", "williams")])
+
+    names, roles = read_blocks(PROSE_SHAPE)
+    want("prose names nobody", names, [])
+
+    # The failure this fix is for: the live page with no `subhead` anywhere.
+    want("heading shape alone finds nobody in the editor markup",
+         [b for _l, b in INDEX_HEADING_RE.findall(EDITOR_SHAPE)], [])
+
+    print("peoria-board-scraper selftest: %s — %d check(s)%s"
+          % ("FAIL" if problems else "OK", checks,
+             ", %d problem(s)" % problems if problems else ""))
+    return 1 if problems else 0
+
+
 if __name__ == "__main__":
+    if "--selftest" in sys.argv[1:]:
+        sys.exit(selftest())
     main()
