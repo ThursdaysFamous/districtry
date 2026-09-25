@@ -47,6 +47,65 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-25. TASK #50 IS DONE AND IS PR #1167 — 388 library trustees, read off
+each library's own website.** The last open half of
+`statewide-library-officials`. 53 libraries name a board from their own site, on
+76 card features, 233 of the names with a role beside them; the layer goes from
+173 of 382 libraries naming a board to 226, and `validate_index.py` prints the
+pair with a gate that fails if any library is ever in both sources.
+
+**THE POOL WAS SMALLER THAN THE RECORD IMPLIED AND IS NOW DERIVED RATHER THAN
+GUESSED AT.** Not 373 and not 487 but 176 — every card that names no board and
+links a site — read on each run from the same dispatch table the builder checks
+against. A first draft globbed every `*-library-districts.json` while only 72 of
+the 88 counties drawing a library dispatch through `statewideLibraryEntry`, which
+would have shipped records for the builder's own orphan check to fail on.
+
+**THE FLEET'S NAMES GATE CANNOT BE THE GUARD ON THIS DATA, and that is the
+finding worth keeping.** `validate_officeholder_names.py` accepts both `No
+Overdue Fines` and `Strategic Plan` as names, and a draft of this parser shipped
+both as trustees — the first a marketing banner in the same `<div>` shape as the
+trustees above it, the second a linked document. So the parser carries three
+MEASURED rules instead of a stoplist that grows by anecdote: a word that never
+begins a real name (none of the 31 begins any of the fleet's 13,094), a candidate
+whose text appears nowhere on its page outside an `<a>` (two of 401, both
+labels), and a stoplist whose every entry rejects ZERO real names. A first
+draft's stoplist cost 60 real people, among them Trevor Ward, a trustee on the
+first board page it ever read. 67 offline checks, in CI.
+
+**FIVE HOSTS CARRY MORE THAN ONE LIBRARY AND ONLY ONE WAS ON RECORD.** The
+guidebook had Bloomington (Golden Prairie's board on its page); measuring found
+`annawanil.org`, `marshallillibrary.com`, `pekinpubliclibrary.org` and
+`silvislibrary.org` as well. Marshall Area against Marshall Public is the pair no
+distinctive-word test can split, since both names carry "marshall", and SILVIS'S
+PAGE CARRIES TWO LIBRARIES' BOARDS UNDER TWO IDENTICAL `Board of Trustees`
+LABELS — which a draft that unioned a page's sections (right for the four
+libraries listing officers under one heading and the rest under another) would
+have merged into a fifteen-name board.
+
+**THE SHIPPED FILE IS A FLOOR, NOT A MEASUREMENT, and it says so.** Two passes
+over the same pool an hour apart agreed on 51 libraries, which is the only reason
+the builder's floors are settable at all; the second took 13 rate limits the
+first did not, and this scraper's own earlier pass is the likeliest cause. A 429
+is retried with backoff now rather than believed, a fetch that failed carries the
+last-good record forward under your 2026-09-19 ruling, and Monday's run picks up
+the rest.
+
+**A GATE FOUND ONE THING BEYOND THE TASK and it is in the same PR.**
+`fetch_stdlib` came off `probe_user_agents.py`'s browser-marker list: it is the
+CLIENT for two of the four rungs and sends whatever headers its caller passes, so
+naming it says nothing about the User-Agent. Exactly two files were classified on
+that marker alone — `validate_sources.py`, which the module already records
+misreading once, and this new scraper — and neither names a Chrome string, a hint
+set or the word Mozilla anywhere in code. The four gated figures move 105/18/283
+to 103/17/266, restated in all three documents that carry them.
+
+**156 LIBRARIES STILL NAME NO TRUSTEE and the reasons are now measured rather
+than estimated**: 33 publish no website, and of the 123 that do, 42 link no board
+page, 26 have one that lists nobody, 33 could not be reached and 22 refuse this
+client in robots.txt. A page that loads and lists nobody is the honest end of
+this route, and nothing was worked around to get past one.
+
 **2026-09-25. #1163 IS MERGED as `5a86c78` and verified on the merged tree by
 content — all four facts hold.** `validate_officeholder_names.py` prints
 `declared il/data/app/school-board-members.json +19 record(s) (2026-09-25)` and
