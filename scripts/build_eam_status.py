@@ -29,10 +29,12 @@ county publishers control (ruled by Adam, 2026-09-22):
 
   MAINTAINED  Every data file THE APP READS is under a stated plan — a
               SCHEDULED job that REWRITES it, a SCHEDULED WATCHER on its
-              source, or a `<tag>/WATCH.md` row that names it and states WHEN
-              it is re-checked. A file under none of those decays silently,
-              because every count guard still passes on one nobody is
-              refreshing.
+              source, or a WATCH.md row that names it and states WHEN it is
+              re-checked. A file under none of those decays silently, because
+              every count guard still passes on one nobody is refreshing.
+              The watch file is `<tag>/WATCH.md` for five instances and the
+              REPO ROOT's for Illinois, which has none of its own and never
+              did — see WATCH_FILE.
 
               THE SURFACE IS THE APP'S, NOT THE PAGES'. The first version
               measured only the roster files the per-county pages read, and
@@ -256,6 +258,13 @@ def shape_of(path):
     `data/app` today, and `check_geometry_names_nobody()` re-measures that on
     every run rather than trusting this sentence.
     """
+    rel = os.path.relpath(path, REPO_ROOT)
+    if os.path.isdir(path):
+        kind = PREFIX_KIND.get(rel.replace(os.sep, "/") + "/")
+        if not kind:
+            fail("%s is a directory on the surface with no PREFIX_CLASSES "
+                 "entry, so its kind would be guessed." % rel)
+        return (kind, len(glob.glob(os.path.join(path, "*.json"))))
     try:
         with open(path, encoding="utf-8") as fh:
             doc = json.load(fh)
@@ -436,10 +445,19 @@ def staged_paths():
 
 
 def refreshed_by(rel_path, staged):
-    """The scheduled workflows that stage `rel_path`, by file or by directory."""
+    """The scheduled workflows that stage `rel_path`, by file or by directory.
+
+    THE MATCH RUNS BOTH WAYS because a surface entry can itself be a folder
+    (PREFIX_CLASSES). A workflow that stages `il/data/app/` refreshes a class
+    under it, and a workflow that stages one file inside the class refreshes the
+    class — testing only the first direction would report a folder as
+    unrefreshed while a job rewrote its contents every week.
+    """
     hits = []
     for token, workflow in staged:
-        if rel_path == token or rel_path.startswith(token.rstrip("/") + "/"):
+        if (rel_path == token
+                or rel_path.startswith(token.rstrip("/") + "/")
+                or (rel_path.endswith("/") and token.startswith(rel_path))):
             hits.append(workflow)
     return sorted(set(hits))
 
@@ -461,10 +479,17 @@ def watcher_texts():
 
 
 def watched_by(rel_path, watchers=None):
-    """The scheduled watchers naming `rel_path`."""
+    """The scheduled watchers naming `rel_path`.
+
+    A folder class is searched for with AND without its trailing slash: this
+    module writes `il/data/app/population/` and a workflow naming the same
+    folder is as likely to write it bare.
+    """
     if watchers is None:
         watchers = watcher_texts()
-    return sorted({rel for rel, text in watchers if rel_path in text})
+    forms = {rel_path, rel_path.rstrip("/")}
+    return sorted({rel for rel, text in watchers
+                   if any(f in text for f in forms)})
 
 
 # A WATCH.md row counts only if it states WHEN. A cadence or a trigger is a
@@ -491,9 +516,23 @@ WHEN = re.compile(r"(?i)\b(dail|week|month|quarter|semiannual|semi-annual|annual
 SAME_AS_ABOVE = re.compile(r"(?i)^\W*same\b")
 
 
+# ILLINOIS'S WATCH FILE IS THE ROOT ONE, and reading `<tag>/WATCH.md` for
+# every state meant reading NOTHING for the instance that carries most of the
+# fleet's files. Five instances ship `<tag>/WATCH.md`; Illinois does not and
+# never did, because it was the only instance when that file was written, so
+# its rows — the CPS attendance-dataset drill, the district-search index, the
+# LTSB filing — sit at the repo root. The instrument therefore reported every
+# Illinois file as unplanned whether or not a row named it, and no gate could
+# see the difference: an empty `planned_rows` is what a state with no plans
+# looks like. Keyed by tag rather than by "root if the per-tag file is absent",
+# so a new instance that forgets its WATCH.md reads as having none rather than
+# silently inheriting Illinois's.
+WATCH_FILE = {"il": "WATCH.md"}
+
+
 def watch_rows(tag):
     """{filename: the WATCH.md row's cadence cell} for rows that state a when."""
-    path = os.path.join(REPO_ROOT, tag, "WATCH.md")
+    path = os.path.join(REPO_ROOT, WATCH_FILE.get(tag, os.path.join(tag, "WATCH.md")))
     if not os.path.exists(path):
         return {}
     out, last_when = {}, None
@@ -513,6 +552,112 @@ def watch_rows(tag):
             continue
         for name in re.findall(r"[A-Za-z0-9_.-]+\.json", line):
             out.setdefault(name, when)
+        # A FOLDER CLASS CARRIES NO FILENAME, so the `.json` scan above cannot
+        # see it and a row written for one would count for nothing while
+        # looking exactly like a plan. Matched on the class's own rel path,
+        # with or without its trailing slash.
+        for rel in PREFIX_KIND:
+            if rel in line or rel.rstrip("/") in line:
+                out.setdefault(rel, when)
+    return out
+
+
+# THE APP'S OWN STATEMENT OF WHICH FILES IT FETCHES IS `sw.js`, AND THE
+# INSTRUMENT USED TO RE-DERIVE IT WRONG. The first version kept every
+# `<tag>/data/app/*.json` whose BASENAME appears in that instance's
+# `index.html`, and three of Illinois's loaders build their URL by
+# concatenation — `"data/app/" + slug + "-county-outline.json"` — so no literal
+# ever appears for the file they fetch. Measured 2026-09-25, that filter missed
+# 86 of Illinois's 388 files, 215 of Wisconsin's 262, 24 of Iowa's 57, 31 of
+# Michigan's 53, 5 of New York's 25 and 1 of San Francisco's 14. The files it
+# dropped are not marginal: Wisconsin's whole per-county polling-place set and
+# Illinois's county outlines, the geometry the gaps panel tests a pin against.
+#
+# A RUNTIME SLUG CAN COME FROM A DATA FILE, which is why no amount of reading
+# the app more cleverly would have fixed this. The gaps panel draws any county
+# whose outline ships, and the slugs it asks for come from `coverage-gaps.json`
+# — so eight Illinois outlines (Bureau, Champaign, Fayette, Jasper, Lawrence,
+# Marion, Piatt, Pope) are fetched for counties no layer serves, and "no code
+# path in index.html can produce this name" is not a conclusion a grep of
+# index.html can reach. That reading cost this module a false "dead files"
+# finding before it was caught by reading the loader.
+#
+# So ask the app. `sw.js` splits `data/app` in two — cache-first geometry and
+# network-first rosters — and every instance's own `validate_index.py` fails
+# when a `data/app` file is in neither list or in both, so the two lists ARE
+# the directory, held equal per instance by a gate that runs on every PR.
+# `validate_index.py` is also the honest reader of the question this filter was
+# badly answering: it checks the literal reference and carries
+# DYNAMIC_REFERENCE, 98 files each with a note saying which slug builds its
+# URL. Nothing here re-derives that. The worksheet's `data_files` and a bare
+# glob of the directory both give the same 388 today, and the three agree
+# because each link in the chain is gated; `sw.js` is read rather than either
+# because it is the app's statement about its own fetches rather than an
+# authoring surface or an inventory of a folder.
+SW_LIST = re.compile(r"const (GEOMETRY_URLS|ROSTER_URLS) = \[(.*?)\n\];", re.S)
+SW_ENTRY = re.compile(r'"\./(data/app/[^"/]+\.json)"')
+
+
+def app_data_files(tag):
+    """Every flat `<tag>/data/app/*.json` the instance's own sw.js fetches."""
+    path = os.path.join(REPO_ROOT, tag, "sw.js")
+    if not os.path.exists(path):
+        return []
+    src = open(path, encoding="utf-8").read()
+    found, out = set(), []
+    for name, body in SW_LIST.findall(src):
+        found.add(name)
+        out += ["%s/%s" % (tag, u) for u in SW_ENTRY.findall(body)]
+    # A READER THAT SILENTLY MATCHES NOTHING IS THE FAILURE THIS MODULE IS
+    # FIXING, one level up: `robots_policy` answered "no group binds this
+    # client" for a year because a byte-order mark stopped its parser opening a
+    # group, and every path read as permitted. A renamed list here would empty
+    # an instance's surface and report it fully maintained, so say so loudly.
+    missing = {"GEOMETRY_URLS", "ROSTER_URLS"} - found
+    if missing:
+        fail("%s/sw.js: no %s list found. The surface would be silently short, "
+             "and an instance with no files reads as fully maintained."
+             % (tag, " or ".join(sorted(missing))))
+    return out
+
+
+# A FOLDER SERVED BY PREFIX IS ONE CLASS, NOT N FILES. `il/data/app/population/`
+# holds 103 files — one per county plus an index — that `sw.js` serves by URL
+# prefix rather than by listing, deliberately: precaching 6.6 MB for a feature
+# most readers never open is the wrong trade, so the folder sits below the flat
+# surface where `validate_index.py`'s one-list rule does not reach. Reading the
+# sw.js lists alone would therefore drop all 103 without saying so, which is
+# the defect above wearing a different hat. They enter as ONE row because they
+# are one build, one gate and one clock: `scripts/build_block_population.py`
+# writes every one of them from a single census vintage, so a plan that covers
+# the folder covers each file and 103 rows would be 103 copies of one fact.
+# THE KIND IS DECLARED HERE AND NOT READ, because no shape can be read off a
+# folder, and the folder's clock is neither of the two the report already knows.
+# Census 2020 block weights do not rot on reapportionment (the blocks are the
+# census's, not a district plan's) and not on link rot; they are superseded by
+# the next decennial census and by nothing else, which is a date rather than a
+# cadence and so belongs on WATCH.md rather than in a weekly job.
+PREFIX_CLASSES = {
+    "il": [("il/data/app/population/", "census",
+            "scripts/build_block_population.py")],
+}
+PREFIX_KIND = {rel: kind for rows in PREFIX_CLASSES.values()
+               for rel, kind, _ in rows}
+
+
+def prefix_classes(tag):
+    out = []
+    for rel, _kind, builder in PREFIX_CLASSES.get(tag, ()):
+        d = os.path.join(REPO_ROOT, rel)
+        if not os.path.isdir(d):
+            fail("%s is recorded as a prefix-served class and is not in the "
+                 "tree. Drop the entry or restore the folder." % rel)
+        if not glob.glob(os.path.join(d, "*.json")):
+            fail("%s holds no .json files; the class describes nothing." % rel)
+        if not os.path.exists(os.path.join(REPO_ROOT, builder)):
+            fail("%s names %s as its builder and that file is not in the tree."
+                 % (rel, builder))
+        out.append(rel)
     return out
 
 
@@ -555,13 +700,9 @@ def measure(counties, paths, B):
         # districts it is derived from and the file the whole county-board card
         # is drawn on. A bar that fails the restatement and passes the source
         # is not measuring what it claims to.
-        app = os.path.join(REPO_ROOT, tag, "index.html")
-        index_html = open(app, encoding="utf-8").read() if os.path.exists(app) else ""
         surface = sorted(
             {os.path.relpath(p, REPO_ROOT) for p in set(paths.get(tag, ()))} |
-            {os.path.relpath(f, REPO_ROOT)
-             for f in glob.glob(os.path.join(REPO_ROOT, tag, "data", "app", "*.json"))
-             if os.path.basename(f) in index_html})
+            set(app_data_files(tag)) | set(prefix_classes(tag)))
 
         planned_rows = watch_rows(tag)
         unmaintained, watched, planned = [], [], []
@@ -572,7 +713,11 @@ def measure(counties, paths, B):
             if hits:
                 watched.append((rel, hits[0]))
                 continue
-            when = planned_rows.get(os.path.basename(rel))
+            # A folder class is keyed by its own path; `os.path.basename` of a
+            # path ending in "/" is the empty string, which would look up
+            # nothing and read as unplanned forever.
+            when = planned_rows.get(rel if rel.endswith("/")
+                                    else os.path.basename(rel))
             if when:
                 planned.append((rel, when))
                 continue
@@ -671,17 +816,19 @@ def render(rows):
             out.append("- **Under a WATCH.md plan (%d):** re-checked on a "
                        "stated cadence rather than by a job — %s"
                        % (len(r["planned"]),
-                          ", ".join("`%s`" % os.path.basename(x) for x, _ in r["planned"])))
+                          ", ".join("`%s`" % (x if x.endswith("/")
+                                                 else os.path.basename(x))
+                                    for x, _ in r["planned"])))
         if not r["M"]:
             by = {}
             for _, kind, _ in r["unmaintained"]:
                 by[kind] = by.get(kind, 0) + 1
             out.append("- **Maintained: no.** %d file(s) under no scheduled job "
                        "at all, neither rewriting nor watching — %d boundary, "
-                       "%d structure, **%d naming people**. %s"
+                       "%d census, %d structure, **%d naming people**. %s"
                        % (len(r["unmaintained"]),
-                          by.get("geometry", 0), by.get("structure", 0),
-                          by.get("roster", 0),
+                          by.get("geometry", 0), by.get("census", 0),
+                          by.get("structure", 0), by.get("roster", 0),
                           "No officeholder is going stale here; what these want "
                           "is a stated re-check cadence, not a weekly scraper."
                           if not by.get("roster") else
@@ -699,6 +846,12 @@ def render(rows):
                                "be a guaranteed no-op; what it wants is a "
                                "`WATCH.md` row stating when the lines are "
                                "re-checked." % (rel, n))
+                elif kind == "census":
+                    out.append("  - `%s` — **%d** file(s), served by URL prefix "
+                               "rather than listed, naming nobody. It is "
+                               "superseded by the next decennial census and by "
+                               "nothing else, so what it wants is a `WATCH.md` "
+                               "row carrying that date." % (rel, n))
                 else:
                     out.append("  - `%s` — names nobody; it carries structure "
                                "(seat counts, addresses, links). Slower to "
