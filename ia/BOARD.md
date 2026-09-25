@@ -48,6 +48,64 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-25 (later) — CORRECTION to the entry below: I re-measured something
+this board had already measured six days earlier, and recorded twenty lines
+further down its own Status section.** The entry below stands as written; this
+is what is wrong with it.
+
+**The measurement was already done on 2026-09-19 and its result is in this
+file.** That entry reads "`ia-county-officers.json` is clean, and the finding is
+one file over", with all four of its sub-results — and it went further than
+mine, naming `ia-county-auditors.json` as the file where the shape actually is.
+I read the Open questions section, saw a question, and measured it. I did not
+read the Status section above it. `gap-record/SKILL.md` §2 is "Before writing,
+read your own records", and it exists for exactly this.
+
+**The entry below is also WRONG BY OMISSION, which is the part that matters.**
+It says the files that have the several-named-people-one-body shape "were swept
+in the same run, and all four are clean". Four were. The fifth,
+`ia-county-auditors.json`, is the one with hits, and my sweep never opened it —
+so a reader of that entry would conclude Iowa is clean on this question, and
+Iowa is not.
+
+**Re-derived today, with the comparand stated, because the 2026-09-19 figure
+needed re-deriving too: 17 of 91 testable auditors carry their county's own
+board line.** The comparand is `ia-county-officers.json`'s `boardPhone`, which
+91 of 99 counties carry. The 2026-09-19 entry said **17 of 89** — the hit count
+reproduces exactly and the denominator moved by two, two counties having gained
+a board line since. Allamakee, Butler, Calhoun, Cedar, Chickasaw, Clay, Jasper,
+Kossuth, Lyon, Montgomery, O'Brien, Osceola, Pocahontas, Sioux, Van Buren,
+Webster, Winnebago. Nothing about the finding has changed: Iowa Code 331.504
+makes the auditor clerk to the board, so the number is right and only its
+RENDERING is misleading, and the fix is still the label that is waiting on a yes.
+
+**THE COMPARAND TRAP IS THE REUSABLE PART, and I walked into it first.** Asked
+of `ia-supervisor-members.json`'s `boardPhone` instead, the same question
+answers **6 of 21** — because that file covers only the 21 counties with a
+district join. Both are true readings of different populations, and where the
+two files both carry a board line they agree 21 and differ 0, so the 6 is a
+subset of the 17 rather than a contradiction. I had the 6 in hand and was one
+step from publishing it as a correction to the 17. **A cross-file measurement is
+only as meaningful as the file it is compared against, so the denominator ships
+with the number or the number says nothing.**
+
+**What survives from the run below** is one thing the 2026-09-19 entry did not
+cover: `ia-county-city-officials.json`, 710 named people across 98 member lists,
+where three numbers are shared by two named people each and every record in all
+three carries `phoneIsOffice: true`, with both inverse tests at zero — no
+unflagged sharer, and no number equal to the body's own `officePhone` printed as
+a personal line. That file enacts the rule at field level and is clean.
+
+**The board contradicted itself for six days and nothing could see it.** Status
+said measured-and-clean on 2026-09-19; Open questions said never-measured until
+today. The bullet should have been struck the day the measurement landed. This
+repo gates code against code and prose against the files it describes, and
+**nothing compares a board's Open questions against its own Status** — which is
+the same two-readers-of-one-question shape `CLAUDE.md` names as this fleet's
+recurring defect, one level out from the code. I am not proposing a gate for it;
+the cheap fix is to strike the question in the same commit that answers it, and
+to grep Status before measuring anything a bullet asks for.
+
 **2026-09-25 — the phone-number question is ANSWERED and it dissolves, and what
 makes it worth writing up is that it asked about the one Iowa file that cannot
 have the defect.** Measured today on the shipped files, offline, nothing
