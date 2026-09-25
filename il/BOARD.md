@@ -41,6 +41,42 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-25. PR B's DESIGN is settled and it is smaller than the brief assumed:
+the rows CITE a clock that already exists rather than stating one.**
+`docs/REDISTRICTING_RUNBOOK.md` carries a per-layer blast-radius table with an
+EXPOSURE CLASS and an enacting authority for every Illinois layer family, and it
+covers every class the 305 unplanned files fall into — county outlines under
+"County / township / municipality (statewide): annexation-driven, rolling;
+TIGERweb vintages", the fire/park/library/precinct families under
+"Administrative / per-election", board districts under "Decennial-municipal",
+subcircuits under "Statutory, rare". **So a WATCH.md row that reasoned out its
+own clock would be a second reader of a question the runbook already answers**,
+which is the defect this repo keeps paying for. `WATCH.md` is "when to look" and
+the runbook is "what to do"; the row states the cadence and names the runbook
+row, and nothing is restated.
+
+**THE 13 SINGLETONS ARE TWO DIFFERENT KINDS AND ONLY ONE WANTS A DATE.** Five of
+them are DERIVED and carry a `--check` in CI that rebuilds or verifies them on
+every PR (`coverage-gaps.json`, `metro-outline.json`, `il-state-outline.json`,
+`municipal-ward-coverage.json`, `il-county-board-offices.json`), which is a
+stronger drift guard than any watcher — and says NOTHING about the source
+moving, so the row has to separate the two guarantees rather than claim the
+`--check` as a plan. The rest are the decennial legislative and court maps, whose
+clock is the 2031 row this file already carries.
+
+**AND THE CENSUS POPULATION CLASS NEEDS NO ROW AT ALL** — the 2031 TIGERweb row
+already names it, which PR A's `watch_rows` fix is what revealed.
+
+**ONE DECISION IS HELD FOR THE OPERATOR RATHER THAN TAKEN.** The instrument's
+`WHEN` vocabulary accepts "census" and "annual" and REJECTS four real date cells
+in this same file: `**2029 Q4**`, `**2031 Q2**`, `**2031–2032**` and "Late
+summer, when the new `SYxxyy` CPS attendance datasets post" — the CPS drill row,
+which the file itself calls the load-bearing habit. A bare year, or a year and a
+quarter, is a more specific when than "annually". Widening a gate's vocabulary is
+a decision and its own docstring records that it was already widened once for a
+stated reason, so it is flagged on #1160 and not done there; it decides how PR
+B's rows must be WORDED, so PR B waits on it rather than writing rows twice.
+
 **2026-09-25. PR A IS OPEN AS #1160 and the surface defect was worse than
 stage 1 reported.** The instrument kept every `data/app/*.json` whose BASENAME
 appears in its instance's `index.html`, and three Illinois loaders build their
