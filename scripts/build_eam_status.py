@@ -530,12 +530,31 @@ SAME_AS_ABOVE = re.compile(r"(?i)^\W*same\b")
 WATCH_FILE = {"il": "WATCH.md"}
 
 
+# A CLASS ROW NAMES A PATTERN, BECAUSE A ROW CANNOT NAME 101 FILES. Illinois
+# carries 101 `<county>-county-outline.json`, 79 library-district files and 46
+# precinct layers, and every file in each of those sets has ONE clock — the
+# TIGER vintage roll, an annexation, a re-precincting. Writing them out would
+# be 234 lines restating three facts, which is the shape this report exists to
+# replace, so a row may name its class as a glob inside backticks.
+#
+# THREE THINGS KEEP IT FROM BECOMING A BLANKET. The glob must be written
+# `*-<suffix>.json` in backticks, so prose cannot match by accident and a bare
+# `*.json` is not expressible. The suffix must be at least six characters, so
+# `*-x.json` cannot stand in for everything. And `measure()` FAILS when one
+# pattern covers more than a third of an instance's surface, because a single
+# cadence claimed over that many files is a statement about several different
+# clocks — fire, park, library and board districts do not move together — and
+# prints every pattern's match count on each run so a widening one is visible
+# before it reaches that ceiling.
+CLASS_GLOB = re.compile(r"`\*-([A-Za-z0-9_-]{6,}\.json)`")
+
+
 def watch_rows(tag):
-    """{filename: the WATCH.md row's cadence cell} for rows that state a when."""
+    """({filename: cadence}, [(pattern, cadence)]) for rows that state a when."""
     path = os.path.join(REPO_ROOT, WATCH_FILE.get(tag, os.path.join(tag, "WATCH.md")))
     if not os.path.exists(path):
-        return {}
-    out, last_when = {}, None
+        return {}, []
+    out, globs, last_when = {}, [], None
     for line in open(path, encoding="utf-8"):
         if not line.lstrip().startswith("|"):
             continue
@@ -550,6 +569,9 @@ def watch_rows(tag):
             when = "%s (%s)" % (cells[0], last_when)
         if not when:
             continue
+        for suffix in CLASS_GLOB.findall(line):
+            globs.append((re.compile(r"^[A-Za-z0-9_-]+-%s$" % re.escape(suffix)),
+                          "*-" + suffix, when))
         for name in re.findall(r"[A-Za-z0-9_.-]+\.json", line):
             out.setdefault(name, when)
         # A FOLDER CLASS CARRIES NO FILENAME, so the `.json` scan above cannot
@@ -559,7 +581,7 @@ def watch_rows(tag):
         for rel in PREFIX_KIND:
             if rel in line or rel.rstrip("/") in line:
                 out.setdefault(rel, when)
-    return out
+    return out, globs
 
 
 # THE APP'S OWN STATEMENT OF WHICH FILES IT FETCHES IS `sw.js`, AND THE
@@ -704,7 +726,18 @@ def measure(counties, paths, B):
             {os.path.relpath(p, REPO_ROOT) for p in set(paths.get(tag, ()))} |
             set(app_data_files(tag)) | set(prefix_classes(tag)))
 
-        planned_rows = watch_rows(tag)
+        planned_rows, class_globs = watch_rows(tag)
+        # THE CEILING COUNTS WHAT A PATTERN COULD MATCH, NEVER WHAT IT WAS LEFT,
+        # and the first version counted the leftovers — which made it nearly
+        # vacuous, caught by its own negative test. The lookup below breaks on
+        # the FIRST matching row, so a blanket `*-districts.json` written under
+        # the narrow rows only ever claimed the files they had not taken, and a
+        # guard reading those claims would have passed it. Counted against the
+        # whole surface instead, a blanket is a blanket wherever it sits.
+        glob_reach = {label: sum(1 for r in surface
+                                 if rx.match(os.path.basename(r) or r))
+                      for rx, label, _ in class_globs}
+        glob_hits = {label: 0 for _, label, _ in class_globs}
         unmaintained, watched, planned = [], [], []
         for rel in surface:
             if refreshed_by(rel, staged):
@@ -716,8 +749,13 @@ def measure(counties, paths, B):
             # A folder class is keyed by its own path; `os.path.basename` of a
             # path ending in "/" is the empty string, which would look up
             # nothing and read as unplanned forever.
-            when = planned_rows.get(rel if rel.endswith("/")
-                                    else os.path.basename(rel))
+            base = rel if rel.endswith("/") else os.path.basename(rel)
+            when = planned_rows.get(base)
+            if not when:
+                for rx, label, cadence in class_globs:
+                    if rx.match(base):
+                        when, glob_hits[label] = cadence, glob_hits[label] + 1
+                        break
             if when:
                 planned.append((rel, when))
                 continue
@@ -726,6 +764,19 @@ def measure(counties, paths, B):
             # output: a directory of seat counts contributes no districts, so
             # the adapter view cannot tell it from an empty one.
             unmaintained.append((rel,) + shape_of(os.path.join(REPO_ROOT, rel)))
+
+        for label, reach in sorted(glob_reach.items()):
+            claimed = glob_hits[label]
+            print("build-eam-status: %s — WATCH.md class `%s` matches %d file(s)"
+                  "%s" % (tag, label, reach,
+                          "" if claimed == reach
+                          else ", %d of them claimed here (the rest by an "
+                               "earlier row)" % claimed))
+            if reach > len(surface) // 3:
+                fail("%s: WATCH.md class `%s` matches %d of %d files on the "
+                     "surface. One cadence over more than a third of an "
+                     "instance is a claim about several different clocks; "
+                     "split the row." % (tag, label, reach, len(surface)))
 
         rows.append(dict(
             tag=tag, total=total, ring=ring,
