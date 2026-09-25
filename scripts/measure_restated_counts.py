@@ -194,6 +194,44 @@ def note_vs_declared(root):
     return entries, comparable, agree, differ, silent, examples
 
 
+# A figure tied to a date, the shape Michigan's own PR named on 2026-09-25.
+DATED_CLAUSE = re.compile(r"(measured|as of|through|since)\s[^.;]{0,60}?"
+                          r"(20\d\d-\d\d-\d\d|20\d\d)", re.I)
+TARGET_FIELD = re.compile(r"layers\[\d+\]\.source\.(people|applies|answers)$")
+
+
+def target_surface(root):
+    """The reader-facing surface a gate would walk, and its date-tied members.
+
+    TWO THINGS THAT LOOK ALIKE AND ARE NOT, which is the distinction a gate
+    could most easily get wrong. Michigan's `applies` says "statewide, all 1,581
+    records ... measured 2026-09-04": the date is PROVENANCE and the figure
+    describes the file NOW, so the day the file gains a record that sentence is
+    wrong about the product and a gate should say so. A history entry's
+    "through tranche 7 (2026-09-19)" describes a COMPLETED EVENT, and holding it
+    to today's file would demand the one edit that design forbids.
+
+    Both carry a date in the same clause as a number. No pattern separates them,
+    which is a third independent argument for a declaration: a claim's author
+    knows which of the two they are writing and a regex never will.
+    """
+    fields = dated = 0
+    examples = []
+    for tag, rel in sorted(INSTANCE_WORKSHEETS.items()):
+        with io.open(os.path.join(root, rel), encoding="utf-8") as fh:
+            worksheet = json.load(fh)
+        for field, text in prose_fields(worksheet):
+            if not TARGET_FIELD.search(field):
+                continue
+            fields += 1
+            hit = DATED_CLAUSE.search(text)
+            if hit:
+                dated += 1
+                if len(examples) < 4:
+                    examples.append((tag, field, hit.group(0), text[:96]))
+    return fields, dated, examples
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--root", default=REPO_ROOT)
@@ -242,6 +280,26 @@ def main():
     print("  file it would be checked against share one json object. That is the")
     print("  case FOR a declaration and against a sweep, on a corpus thirty times")
     print("  the one validate_gap_counts.py measured settling the same question.")
+
+    fields, dated, examples = target_surface(args.root)
+    with_candidates = sum(1 for r in kept if TARGET_FIELD.search(r["field"]))
+    print("\nTHE TARGET SURFACE — the three reader-facing source strings, which")
+    print("render into every instance's sources.html matrix and Dataset graph")
+    print("  %d fields in all; %d of them carry a candidate a gate could be told"
+          % (fields, with_candidates))
+    print("  about, which is the number of declarations, not the number of fields.")
+    print("  %d carry a figure in the same clause as a DATE:" % dated)
+    for tag, field, clause, text in examples:
+        print("    %-3s %-40s %r" % (tag, field.split(".", 1)[-1], clause))
+        print("        %s" % text)
+    print("\n  AND A DATE DOES NOT MAKE A FIGURE HISTORICAL. Michigan's `applies`")
+    print("  says \"all 1,581 records ... measured 2026-09-04\": the date is")
+    print("  PROVENANCE, the figure describes the file NOW, and the day that file")
+    print("  gains a record the sentence is wrong about the product. A history")
+    print("  entry's \"through tranche 7 (2026-09-19)\" describes a COMPLETED")
+    print("  EVENT and must never move. Both put a number and a date in one")
+    print("  clause; no pattern tells them apart, and the claim's author always")
+    print("  can. That is the third independent argument for a declaration.")
 
 
 if __name__ == "__main__":

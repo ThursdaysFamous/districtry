@@ -60,9 +60,12 @@ measured: **126** of the shortlisted reader-facing candidates are in
 says are true on their own day and never edited. A gate holding one to today's
 file would demand the single edit the design forbids.
 
-**SO THE SUBJECT IS 38 FIELDS, NOT THOUSANDS.** `layers[].source.people` (18),
-`.applies` (12) and `.answers` (8) — the strings that render into every
-instance's `sources.html` layer matrix and its `Dataset` graph, and exactly where
+**SO THE SUBJECT IS 38 DECLARATIONS OVER A 309-FIELD SURFACE.** The three
+reader-facing source strings are **309 fields** across the six instances and
+**38** of them carry a number a gate could be told about, which is the count of
+declarations rather than of fields — my first report said "38 fields", which
+reads as the surface size and is not. They render into every instance's
+`sources.html` layer matrix and its `Dataset` graph, and this is exactly where
 the `155 … plus Appleton` defect lived. That is the bounded, reader-facing,
 high-value target, and the mechanism for it already exists: a `counts`
 declaration in the shape `validate_gap_counts.py` reads, over the grammar
@@ -70,6 +73,19 @@ declaration in the shape `validate_gap_counts.py` reads, over the grammar
 declaration per claim, 38 candidate claims fleet-wide, no new grammar and no new
 reader.** The 540 per-file notes are the larger pool and the wrong first target,
 for the floor-versus-count reason above.
+
+**AND A DATE DOES NOT MAKE A FIGURE HISTORICAL — measured after your wake
+named the shape, and it corrects the exclusion I had written.** Ten of those 309
+fields carry a figure in the same clause as a date, six of them Michigan's.
+Michigan's `applies` says "statewide, all 1,581 records … measured 2026-09-04":
+the date is PROVENANCE, the figure describes the file NOW, and the day that file
+gains a record the sentence is wrong about the product — so it SHOULD track. A
+history entry's "through tranche 7 (2026-09-19)" describes a COMPLETED EVENT and
+must never move. Both put a number and a date in one clause and **no pattern
+separates them**; the claim's author always can. That is a third independent
+argument for a declaration, and it is the one my own first draft would have got
+wrong — I had excluded by "a date is nearby", which would have exempted six live
+Michigan claims from a gate they belong in.
 
 **TWO OF MY THREE FINDINGS ARE NOT IN THIS MECHANISM AT ALL, and saying so is
 part of the report.** The gap record's county list is a LIST derived from two
