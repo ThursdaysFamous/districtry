@@ -53,6 +53,123 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-26 — THE NESTING FIX IS BUILT AND OPEN AS #1189, AND THE ALGORITHM HALF WAS THE WHOLE
+THING.** Iowa Code 42.3 composes each senatorial district out of two representative districts, and
+the shipped map did not agree. Measured on the FULL STATE, 154 districts, because the brief warned
+a small input would lie and it would have:
+
+```
+shape                                   nesting      worst stray   over 25 m   gzipped
+separate runs, Visvalingam (shipped)    50/50 broken     775.2 m   147 of 154  222,251
+ONE combine-files run, Visvalingam 10%   0/50 broken     333.2 m   146 of 154  226,266
+ONE combine-files run, dp interval=15    0/50 broken      19.1 m     0 of 154  229,918
+```
+
+**THE MIDDLE ROW IS THE ONE WORTH HAVING MEASURED.** combine-files alone makes the nesting exact
+and moves the diagonals by almost nothing — 146 of 154 districts still over 25 m, the two layers
+wrong together. Had I stopped at the nesting gate going green I would have shipped a fix that
+looked complete and left the defect Adam actually saw.
+
+**THE CEILING IS IOWA'S OWN AND MY FIRST TWO DERIVATIONS OF IT WERE WRONG.** The quantity is the
+true line's staircase step. Averaging over 1 km of cities I named answered 31-113 m depending on
+which city, so it measured my choice of city. Ranking ~1 km cells by RAW SEGMENT DENSITY answered
+4-18 m, and looking at what those cells were is what killed it: the densest cells in a TIGER
+district file are river meanders and finely digitised corporate limits, not street grids, so that
+ceiling would have been calibrated on the Mississippi. **A structural definition is not
+automatically the right one — check what it selected.** What works is defining the step as the
+shape itself: a segment whose turn to the next is a right angle, counted only in cells holding at
+least twenty such turns, since one right angle is a field corner and twenty in a square kilometre
+is a grid. Median 43.4 m (house) and 43.9 m (senate), so `FIDELITY_MAX_M = 45.0`.
+
+**I VALIDATED THE METHOD AGAINST ILLINOIS BEFORE TRUSTING IT HERE**, which is the step that makes
+the 45 defensible rather than merely different: run unchanged on Illinois's own House layer it
+answers 19.7 m against the 17.9 m Illinois measured by hand around the reported neighbourhood.
+Iowa's step really is 2.2x Illinois's. And the looser ceiling is not vacuous — at 45 m the OLD
+geometry still fails 81 of 100 House districts.
+
+**THE COST DISAGREES IN SIGN WITH ITSELF DEPENDING ON THE COMPARISON, AND ONE OF THE TWO IS
+CONFOUNDED.** Holding the fetch fixed the algorithm costs +7,667 bytes gzipped (+3.4%); comparing
+the files this PR ships against the ones it replaces answers -4,433. The second is not the
+algorithm's: TIGERweb returns features in an order that varies between fetches, mapshaper preserves
+it, and gzip compresses neighbouring districts better when they sit together — so the SAME geometry
+at the SAME settings gzips 5,504 bytes differently for the Senate depending only on that order. I
+established that rather than assuming it: re-running the old settings on today's fetch reproduces
+the shipped Senate file's raw length TO THE BYTE and 48 of its 50 districts' vertex sets exactly,
+while gzipping 5,504 smaller. **The order effect is larger than the effect being measured**, so a
+before-and-after on the committed files cannot be used to state this cost. I had written the +3.4%
+into the docstring as "the cost" before measuring the other one, which would have been a figure
+with no method — this morning's lesson, one file later.
+
+Five negative tests: the old shape fails, the shipped files pass, one chamber swapped back fails,
+an empty `NESTING` fails rather than passing vacuously, and the fidelity gate fails the old
+geometry. 104 of 104 static invocations green, Iowa's browser gate green with every anchor
+unchanged (us-house 4, ia-senate 26, ia-house 52 — itself a nesting pair, so the anchors
+independently agree with the rule). Pair re-measured, not incremented: 85/114, mirror 114 for 114.
+
+**AND I WALKED INTO A TRAP THE STEWARD SKILL NAMES IN SO MANY WORDS.** It says not to `pkill -f`
+the server from a shell whose own command line contains the pattern; I put `pkill -f "http.server
+8000"` at the head of a compound command ending in `git commit`, killed my own shell at exit 144,
+and committed nothing. Same shape as the `stash pop` before a `commit` I paid for yesterday: **a
+compound command must not begin with something that can kill the shell.** Nothing was lost because
+nothing had run, which is the only reason it cost one minute rather than a confused diff.
+
+**2026-09-26 — THE DERIVED-COUNT FORM, DESIGNED AND NOT BUILT, FOR THE MANAGER AND MICHIGAN TO
+READ.** Written against the real machinery rather than sketched, and it is smaller than I proposed
+yesterday because the measuring code is already extracted.
+
+**THE SHAPE, which is the manager's ruling rather than mine: derive FROM a declaration, never
+instead of one.** A `counts` entry gains a `name`; an authored reader field writes `{name}` where
+the number goes; the entry loses `value` entirely, so no number is typed anywhere; and
+`build_coverage_gaps.render()` resolves each token from that entry's own measurement and ships the
+resolved text. The question being asked stays visible in the declaration, which is the whole point
+— today's Illinois 382 had three defensible answers and a bare token would have rendered one of
+them forever with nobody able to see which.
+
+**BRACES ARE COLLISION-FREE, MEASURED:** across all 155 records in the fleet, not one reader field
+contains `{`, `}` or `<<`.
+
+**WHAT IT COSTS IN SHARED MACHINERY IS ONE MOVE, NOT TWO.** `measure_metric` already lives in
+`scripts/measured_metric.py`, stdlib, imported by `validate_gap_counts.py` — so the builder can
+measure without a new dependency. The `files`/`combine`/`overlap` resolution does NOT: it lives in
+`validate_gap_counts.combined()`, and the builder needs it, so that function moves to
+`measured_metric.py` and both read one copy. Leaving a second copy in the builder is precisely the
+two-readers-of-one-question defect this fleet keeps paying for.
+
+**THE THREE REFUSALS THE MANAGER NAMED**, each the vacuous-pass class turned on itself: a token
+referencing no declaration FAILS; a declaration referenced by no token AND matching no number in
+the prose FAILS; `READER_MAX` moves onto the RESOLVED text and FAILS with the measured length
+rather than truncating. The second is also the migration path — all 15 existing declarations match
+a number in their prose, so they keep passing untouched while records move over one at a time.
+
+**THREE I WOULD ADD, EACH FOR A FAILURE THE FIRST THREE CANNOT SEE.** A `name` used twice in one
+record FAILS, or one token silently takes whichever entry the iteration reaches first. A resolution
+whose output is byte-identical to the authored text FAILS, which catches a token mistyped in a way
+that still parses and substitutes nothing. And the builder's `--check` must compare RESOLVED bytes,
+which it does by construction — worth stating because `check_shipped()`'s existing negative test
+(proving `counts` reaches no reader) stays valid unchanged: the allowlist in `FIELD_ORDER` is what
+keeps the declaration out, and it is the summary that ships.
+
+**ONE THING I WILL NOT SOLVE SPECULATIVELY, STATED SO IT IS NOT DISCOVERED LATER.** 19 reader-field
+numbers across the fleet are written with a thousands comma, and `standalone()` matches bare digits
+only — so a count of 1,000 or more CANNOT BE DECLARED TODAY AT ALL. Every one of the 15 current
+declarations is under 1000, so this is latent rather than live. The derived form has to decide, and
+my recommendation is that the TOKEN carries its format (`{name:,}`) rather than the fleet settling
+one rule, because these are prose fields in six instances' voices and a single rule would rewrite
+sentences this change is not about.
+
+**AND IT BUYS ONE SIMPLIFICATION WORTH NAMING:** `mi-commissioner-roster` declares the same value
+31 three times over, in `summary`, `why` and `wanted`. Under named declarations that is ONE
+declaration referenced from three fields, so Michigan's record gets smaller rather than larger.
+
+Scope, counted off the block rather than added up in prose: **15 declarations across 4 records in
+3 instances — chicago 1, iowa 9, michigan 5**, plus 6 `build_coverage_gaps.py --check` runs,
+`validate_gap_counts.py` and its `--selftest`. Iowa's nine are `ia-board-chair` 3,
+`ia-municipal-officeholders` 5 and `ia-supervisor-district-seats` 1, the last being the one that
+already trips the absent-field refusal. (I first wrote "iowa 8 — plus ia-supervisor-district-seats",
+which totals right and states the per-instance figure wrong, and the check I ran before committing
+this entry is what caught it. Count the thing; do not add it up in a sentence.) Nothing is built and
+nothing is pushed for this.
+
 **2026-09-26 — THE 830/109 HOLE IS CLOSED BY SOMEBODY ELSE'S CHANGE, AND VERIFYING IT ESTABLISHED
 THAT MY OWN #1149 WROTE THOSE TWO NUMBERS BY APPLYING A DELTA RATHER THAN RECOUNTING.** I was told
 Michigan's `1daf568` now declares Iowa's figures, with numbers — 106 and 833 — that disagreed with
