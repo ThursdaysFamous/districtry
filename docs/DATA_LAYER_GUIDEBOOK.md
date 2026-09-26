@@ -3079,6 +3079,102 @@ file with no further simplification); `ny-state-outline.json` and
 water-inclusive geometry disagrees with the state's shoreline-clipped fabric by
 design; and `ny-school-districts.json` is drawn independently of municipal lines.
 
+## Tompkins County's legislature, proven before anything was built (measured 2026-09-26)
+
+New York's county tier starts on one county, and the manager's ruling was that its
+FORM be proven from a certified document first, because the first county settles a
+pattern the other 56 inherit and "the county looks easy" is not a reason to skip
+the order. New York governs its counties three ways — a **county legislature**
+elected from districts, a **board of supervisors** made of the towns' own
+supervisors sitting ex officio, and Otsego's board of representatives — and those
+are not variations on one shape: a legislature county needs geometry and a
+dispatch entry, a board-of-supervisors county needs neither, because the seat IS
+the town and the statewide municipality layer already draws it.
+
+**TOMPKINS IS A 16-DISTRICT COUNTY LEGISLATURE, ONE MEMBER PER DISTRICT**, proven
+three independent ways, and the certified one is first.
+
+**1. The county Board of Elections' own certified-results database.**
+`electionhistory.tompkinscountyny.gov` — "Elections Database | Tompkins County
+Board of Elections … A searchable database of historical election information, all
+from official source documents" — robots.txt `User-agent: * / Disallow:` (an empty
+Disallow, allow all) to `districtry/1.0 (+https://districtry.com/ny/)` on
+2026-09-26. Its own office list, read out of the search page's embedded data,
+settles the form in one line:
+
+  * **`County Legislator`, group `County`, 39 contests** across 2019-2026.
+  * **`Supervisor`, group `Local`, 31 contests** — a SEPARATE office, classified
+    local. That pairing is the discriminator: in a board-of-supervisors county the
+    town Supervisor IS the county board seat, and here the county's own election
+    authority files them as two different offices.
+  * Its source-document list names **"November 2, 2021 General Election County
+    Legislator 5 Results"** — a DISTRICT-SUFFIXED county-legislature contest — and
+    **"November 4, 2025 General Election Official Results.pdf"**, the certified
+    file for the election that seated the current sixteen.
+  * 33 elections listed, 2019 Mar to 2026 Jun. Legislators appear in the 2021 and
+    2025 Generals and in neither 2024 nor 2026, which is a four-year term on the
+    odd-year cycle; 16 districts over two cycles plus specials accounts for the 39.
+
+**THE CERTIFIED PDFs THEMSELVES CANNOT BE FETCHED AND THE REASON IS A REFUSAL,
+not an outage.** The database serves its files from a different host,
+`tompkinsny.elstats2.civera.com`, whose robots.txt reads, verbatim:
+
+    # Robots.txt
+    # Instructions to crawlers
+    # Dev/staging/pre-prod: block all
+    User-agent: *
+    Disallow: /
+
+A `*` group that disallows binds this project fully, so no file was fetched from
+it — the vendor's own comment calls it a staging host. The database's own PAGES
+are on the allowed county host and are the route; anything this project needs
+from a Tompkins canvass comes from there, never from the file host.
+
+**2. The county's own GIS, which also carries the population witness.**
+`LegislativeDistrictBoundaries` (item `881285a45a6541979dde335fe57a689b`, service
+`services.arcgis.com/oJbAAWNInLrxvF0A`), `access: public`, `licenseInfo` opening
+"Open to the Public", `accessInformation` "Tompkins County ITS GIS Division,
+Tompkins County Board of Elections and Tompkins 2012 Independent Redistricting
+Committee", modified 2026-02-04. One layer, `LigisDistNew`, **16 polygons**,
+EPSG:2261, carrying `LegDist`, `TOTAL` (population), `TARGET_DEV`, `Member`, `URL`
+and a `Census2020` link to the county's own summary report. The populations run
+**6,468 to 6,780** and sum to **105,740** — Tompkins County's Census 2020 count —
+against a 6,609 ideal, so the worst deviation is 2.6%. A population-apportioned
+single-member plan is what a legislature is and what a board of supervisors is
+not, and the county publishes the deviation itself.
+
+**3. The county's own Legislature page** lists District No. 1 through District
+No. 16 with one Legislator each.
+
+**THE COLES TEST PASSES 16 OF 16, so the roster is NOT the Coles shape.** Before
+taking the "roster rides the layer" route, the layer's name column is compared
+against the county's own board page, because Coles's layer got six of twelve wrong.
+Tompkins agrees person for person on all sixteen districts; the only differences
+are the form of the name, and the PAGE carries the fuller one — Travis L. Brooks
+for Travis Brooks, Deborah Dawson for Deb Dawson, Gregory N. Mezey for Greg Mezey,
+Randy B. Brown for Randy Brown. So **geometry from the service, people from the
+page** (the Edgar rule), with the layer's `Member` column kept as a free weekly
+drift witness: the two must keep agreeing, and a build that reads both gets that
+check for nothing.
+
+**TWO PROBES WORTH NOT REPEATING.** The county publishes per-town specimen ballots
+for the CURRENT cycle only — the seven 2026 General ballots carry Governor,
+Comptroller, Attorney General, Congress 19, Assembly 125, County Clerk and County
+Sheriff and **no county-legislature contest at all**, which proves the odd-year
+cycle and nothing about the form; the same path with 2025, 2023 or 2021 in it
+returns the site's 404 page. And the county's Laserfiche repository
+(`lfweb.tompkins-co.org`, robots 404 → allow all) is a JavaScript application
+whose folder-listing endpoint, `FolderListingService.aspx/GetFolderListing2`,
+answers `BADLOGIN` without a session; the elections database above made it
+unnecessary rather than worth pursuing.
+
+**WHAT IS STILL NOT SETTLED, and is not guessed at.** The board-of-supervisors
+reference county is unchosen — it should be picked by which county publishes a
+maintained supervisor roster, which is a measurement nobody has taken — and
+Otsego's board of representatives is its own case until its own page says
+otherwise. Neither is asserted here. The layer registration itself is the
+new-layer procedure's question and not this measurement's.
+
 ## The board card's location row, and a column that outlived its own document (2026-09-06)
 
 **THE GAP.** `county-board-office-addresses` was Illinois's largest card-order gap: of 63
