@@ -41,6 +41,63 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-26 — the widening is merged and live (#1183, `1daf568c`). Two things measured after it
+landed: it DOES express Illinois's 226, and their 53 cannot be declared at all.**
+
+Built to your three constraints, plus a fourth I added: an entry names exactly one of `self`,
+`file` or `files`, because two would be resolved by whichever branch is tested first — a rule no
+reader could see from the entry. Iowa's 106 and 833 are declared with no prose touched, so all five
+of that record's numbers are gated where three were.
+
+**I got the overlap rationale wrong first and caught it re-reading my own diff while CI ran.** Both
+the docstring and the failure message said a union over overlapping sources double-counts. That is
+FALSE of this code: `combined` measures a true union, so it cannot. What an overlap actually breaks
+is the AUTHOR'S ARITHMETIC — both records reached their number by adding two counts, valid only
+while the sides are disjoint — and, the part no value check can see, an overlap can appear WITHOUT
+MOVING THE UNION, leaving the number right while the sources quietly stop meaning what they meant.
+The guard survives; the reason for it was wrong, and a comment asserting what the code does not do
+is the defect this fleet keeps paying for. Fixed in commit 2, along with a no-op ternary and a
+combine-only key on a non-combine entry doing nothing — a guard that does nothing reads exactly
+like a guard that is held. I also updated the PR body, which was still carrying the false reason.
+
+**MEASURED AFTER THE MERGE, AND THE TIMING IS THE POINT.** Illinois's revised record (#1185)
+merged at 12:37:25 and the widening at 12:49:41 — TWELVE MINUTES LATER — so they could not have
+used it. Tested against their record as it now stands:
+
+```
+ok   chicago/statewide-library-officials counts[1]: summary states 226
+       union of il-library-district-officials.json + il-library-trustees.json
+       on `board`, under `libraries`  ->  173 + 53, overlap 0
+```
+
+So their 226 is declarable today and is not declared. That is theirs to take or leave; I have not
+touched their record.
+
+**AND THE SAME TEST FOUND AN ADJACENT GAP I DID NOT ANTICIPATE.** Their 53 cannot be declared by
+anything in the grammar:
+
+```
+FAIL — counts[2]: the summary states 53, the source holds 3
+```
+
+`keys` reads the file's TOP level, which is `generated` / `libraries` / `source`, and `under`
+exists only on the combine, which requires two or more files. **A SINGLE FILE WHOSE RECORDS NEST
+UNDER A KEY HAS NO PATH AT ALL.** The fix is small — allow `under` on a `file` + `metric` entry —
+but it is a third widening and the shape of decision you already ruled on once ("a second combine
+is a decision somebody makes, not a default"), so I am reporting it rather than building it. Say
+the word either way.
+
+**Tests, since a selftest that cannot go red proves nothing:** seven new hermetic cases on a temp
+fixture, counts 11/5/2/14 chosen because no real file holds them. Breaking the overlap comparison
+reds 2, breaking the absent-field refusal reds 1, restored 0. Six refusals negative-tested against
+the real Iowa entry. One self-inflicted defect: the commit-2 case first shipped a SyntaxError,
+`global failures` after the name was already assigned in `_selftest`'s scope.
+
+**Your method note is the durable part of this.** I read three disagreeing answers as noise in my
+own reading and stopped; the move that settles it is asking what each number would be the answer
+TO. I used it deliberately here — the 226 and the 53 are two different questions about the same
+file, and only one of them has an answer the grammar can state.
+
 **2026-09-26 — Illinois's library record: 226 and 53 are EXACT and my doubt was my own wrong field.
 382 I still cannot confirm, and the reason is worth more than the number.**
 
