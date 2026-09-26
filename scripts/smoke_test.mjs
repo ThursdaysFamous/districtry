@@ -1496,13 +1496,19 @@ try {
         fixtureUntouched: fx.layers[2].minzoom === 16 && fx.layers[2].paint["text-color"] === "#838383" &&
           !fx.sources.boundary_streets,
         boundarySource: !!(labels.sources.boundary_streets && labels.sources.boundary_streets.type === "geojson"),
+        // the stretch blocker sits just above the ordinary road names, takes
+        // up room and draws nothing
+        blockInvisible: (function (b) {
+          return !!b && b.paint["text-opacity"] === 0 && b.layout["text-allow-overlap"] === true &&
+            b.source === "boundary_streets";
+        })(byId(labels, "boundary_streets_block")),
         vector: window[n].basemap().vector, labelMap: window[n].basemap().labels,
         paneAbove: !!(pane && over && Number(getComputedStyle(pane).zIndex) > Number(getComputedStyle(over).zIndex)),
       };
     }, EXPORTS_NAME);
     check("the basemap splits into a ground map and a label map above it",
-      split.ground === "water" && split.labels === "place_town,roadname_minor,roadname_major,boundary_streets" &&
-      split.boundarySource && split.fixtureUntouched,
+      split.ground === "water" && split.labels === "place_town,roadname_minor,roadname_major,boundary_streets_block,boundary_streets" &&
+      split.boundarySource && split.fixtureUntouched && split.blockInvisible,
       `ground=${split.ground} labels=${split.labels}`);
     check("street names are darker, a point larger and named one zoom sooner",
       split.minor.minzoom === 15 && split.minor.layout["text-size"] === 10 &&
@@ -1598,6 +1604,38 @@ try {
       check("boundary streets: switching it off clears the names and is remembered",
         off.on === false && off.names === 0 && off.pressed === "false" && off.stored === "off",
         JSON.stringify(off));
+    }
+
+    // Boundary streets on REAL tiles: what the label map renders, counted
+    // label by label along every stretch on screen (the app's own
+    // boundaryStreetLabels walks each stretch every 4 px and asks the label
+    // map what is drawn there). A matched street must print its name in the
+    // district's colour and never ALSO in the ordinary grey inside that
+    // stretch: the two layers place labels at different points along one
+    // road and do not collide, which printed both until the invisible
+    // stretch blocker (2026-09-25). The fixture above cannot see this; only
+    // placed labels can. Needs CARTO's tiles and WebGL, so it is skipped,
+    // and says so, where either is missing.
+    if (bs.button) {
+      const live = await booted(context, `${BASE}#point=41.9505,-87.7210&layers=il-house,il-senate&zoom=16`);
+      const got = await live.waitForFunction((n) => window[n] && window[n].boundaryStreets &&
+        Object.keys(window[n].boundaryStreets().names).length > 0, EXPORTS_NAME, { timeout: QUERY_TIMEOUT })
+        .then(() => true).catch(() => false);
+      if (!got) {
+        console.log("  SKIP  boundary streets on real tiles — no street matched (CARTO's tiles did not arrive)");
+      } else {
+        await live.waitForTimeout(3000);
+        const m = await live.evaluate((n) => window[n].boundaryStreetLabels(), EXPORTS_NAME);
+        const rows = Object.keys(m || {}).map((k) => ({ name: k, ...m[k] }));
+        const coloured = rows.reduce((a, r) => a + r.coloured, 0);
+        const doubled = rows.filter((r) => r.ordinary > 0);
+        check("boundary streets on real tiles: matched streets render their coloured labels",
+          coloured > 0, `${coloured} coloured labels across ${rows.length} streets`);
+        check("boundary streets on real tiles: no matched street also prints its grey name inside its stretch",
+          doubled.length === 0,
+          doubled.length ? doubled.map((r) => `${r.name} (${r.ordinary} grey, ${r.coloured} coloured)`).join("; ")
+            : rows.map((r) => `${r.name.replace(/^(North|South|East|West) /, "")} ${r.coloured}`).join(", "));
+      }
     }
     await context.close();
   }

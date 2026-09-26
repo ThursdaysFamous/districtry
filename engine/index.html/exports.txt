@@ -41,5 +41,6 @@
     abbreviateStreetName: abbreviateStreetName, // exposed so the smoke test can hold the boundary-street label abbreviations to a fixture
     matchBoundaryStreets: matchBoundaryStreets, // exposed so the smoke test can hold the boundary-street matcher to a fixture, with no CARTO fetch
     boundaryStreets: function () { return { on: boundaryStreetsOn, available: !!baseLabels, names: boundaryStreetNames }; }, // which street names the boundary-street layer is showing, and their colours
+    boundaryStreetLabels: function () { return measureBoundaryStreetLabels(); }, // per boundary street: its coloured labels on screen, and any ordinary copy of its name printed inside the stretch
     basemap: function () { return { kind: districtryTileKind, vector: baseIsVector, labels: !!baseLabels }; } // which basemap kind is live + which theme style it shows — the vector canvas has no tile <img> whose src a test could read
   };
