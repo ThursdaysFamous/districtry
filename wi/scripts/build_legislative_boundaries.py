@@ -116,16 +116,22 @@ others cannot:
                         instance in the fleet where a ring went at all.
 If any gate fails, nothing is written.
 
-WISCONSIN HAS NO `--check`, unlike Illinois's and Iowa's builders, so nothing in
-CI re-asks the nesting question about the SHIPPED files -- check_nesting() needs
-no network and could. That is a known gap recorded here rather than closed in the
-change that found it.
+`--check` IS THE CI GATE, and it closes the gap the change that added these gates
+recorded rather than closed: until 2026-09-26 this builder took no arguments at
+all, so nothing in CI re-asked the nesting question about the SHIPPED files, where
+Illinois's and Iowa's builders both did. It runs the two halves that need no
+fetch -- the nesting relation between the two shipped layers, and each declared
+dropped ring's AFTER answer re-derived from the shipped bytes at the interior point
+the declaration records. It cannot see an UNDECLARED drop or any BEFORE answer,
+because both need the source; check_shipped()'s own docstring says so rather than
+leaving a reader to assume a green check means the declarations are complete.
 
 Prerequisites: curl (fetch, works through an HTTPS proxy) and Node.js
 (mapshaper via `npx mapshaper@<pinned>`).
 
 Usage:
-    python3 wi/scripts/build_legislative_boundaries.py    # both chambers, together
+    python3 wi/scripts/build_legislative_boundaries.py            # both chambers
+    python3 wi/scripts/build_legislative_boundaries.py --check    # offline CI gate
 
 IT TAKES NO ARGUMENTS. Rebuilding one chamber on its own is the defect the
 combined run exists to fix, so main() refuses any argument rather than quietly
@@ -307,6 +313,15 @@ ACCEPTED_DROPPED_RINGS = [
         # setting avoids it, and it is 31.7 m2 of open water rather than the
         # 590 m2 of Cudahy lakefront that interval=8 and coarser also lose.
         "lat": 45.41074, "lng": -86.85963, "verts": 6, "m2": 31.7,
+        # A point PROVABLY INSIDE the ring, measured at build time and re-used by
+        # `--check`, which has no source to scan. Six decimals: the sixth is about
+        # 0.1 m here, so it is well inside a ring 7.5 m across. FOUR would not be
+        # -- at 45.41 N the fourth decimal is 11.05 m of latitude and 7.81 m of
+        # longitude, so rounding to it displaces a point by up to 5.53 m and
+        # 3.91 m, comparable to this ring's half-width. The unrounded centroid
+        # (45.410745,-86.859628) is inside; the ROUNDED one is not, which is the
+        # whole of the mistake this entry corrects.
+        "interior": {"lat": 45.410736, "lng": -86.859659},
         "features": ["wi-assembly:1", "wi-assembly:State House Districts not defined",
                      "wi-senate:1", "wi-senate:State Senate Districts not defined"],
         "answer_before": {"wi-senate": ["1"], "wi-assembly": ["1"]},
@@ -704,13 +719,28 @@ def check_dropped_rings(found, sources, built):
                 "answer_after must each name exactly those chambers"
                 % (g["centre"][1], g["centre"][0], ", ".join(g["chambers"])))
             continue
-        pt = _ring_interior_point(g["ring"])
-        if pt is None:
+        # THE DECLARED point is the test point, not a freshly scanned one, because
+        # `--check` has no source ring to scan and must re-ask the same question
+        # offline. It is proved to be inside the ring here, which is the half that
+        # cannot be done offline.
+        pt = None
+        if e.get("interior"):
+            pt = (e["interior"]["lng"], e["interior"]["lat"])
+            if not _point_in_ring(pt, g["ring"]):
+                problems.append(
+                    "the ring at %.5f,%.5f declares an interior point at %.6f,%.6f "
+                    "that is NOT inside it — a rounded centroid is the usual cause"
+                    % (g["centre"][1], g["centre"][0], pt[1], pt[0]))
+                continue
+        else:
+            scanned = _ring_interior_point(g["ring"])
             problems.append(
-                "the ring at %.5f,%.5f is too thin to place a point inside, so its "
-                "reader answers cannot be verified — it must not be declared with "
-                "answers this gate cannot check"
-                % (g["centre"][1], g["centre"][0]))
+                "the ring at %.5f,%.5f declares no interior point, so --check "
+                "cannot re-ask its reader answers offline; record "
+                '"interior": {"lat": %s, "lng": %s}'
+                % (g["centre"][1], g["centre"][0],
+                   ("%.6f" % scanned[1]) if scanned else "?",
+                   ("%.6f" % scanned[0]) if scanned else "?"))
             continue
         for chamber in g["chambers"]:
             got = {
@@ -950,11 +980,105 @@ def build_family():
           "the old outlines.", file=sys.stderr)
 
 
+def check_shipped():
+    """Offline: the two halves that need no fetch, on the files in data/app.
+
+    This is the CI gate, and it exists because a correct file with no gate watching
+    it is one rebuild away from being wrong quietly -- which is exactly what this
+    builder's own history demonstrates, since the 2.9 km stray shipped for months
+    with every gate green.
+
+    WHAT IT ASKS:
+      * the NESTING relation BETWEEN the two shipped layers, which is the
+        regression a per-chamber rebuild would reintroduce and which needs nothing
+        but the two files;
+      * each declared dropped ring's AFTER answer, re-derived from the shipped
+        bytes at the interior point the declaration records -- so a rebuild that
+        stopped dropping a declared ring, or dropped it into a different district,
+        fails here rather than at the next operator build.
+
+    WHAT IT CANNOT ASK, STATED RATHER THAN IMPLIED. Both need the TIGER source:
+    whether a ring is still being dropped AT ALL (an undeclared drop is invisible
+    offline, because nothing here knows what the true boundary carries), and every
+    declaration's BEFORE answer. Those stay build-time, in check_fidelity() and
+    check_dropped_rings(). So a green `--check` means the shipped files still nest
+    and still say what the declarations claim they say -- not that the declarations
+    are complete.
+
+    A THIRD BLIND SPOT, FOUND BY NEGATIVE-TESTING THIS FUNCTION: it cannot tell that
+    a declared interior point is actually INSIDE its ring. Rounded back to four
+    decimals -- the exact defect the Door County entry corrects -- the point falls
+    outside the ring and still passes here, because the water pseudo-district it
+    lands in is what the declaration says a reader reads. Only the build path can
+    catch that, and it does: check_dropped_rings() refuses a declared point that
+    _point_in_ring rejects.
+    """
+    built = {}
+    for name in FAMILY:
+        path = os.path.join(APP_DATA_DIR, LAYERS[name]["out"])
+        if not os.path.exists(path):
+            print("build-legislative-boundaries: FAIL — %s is missing"
+                  % LAYERS[name]["out"], file=sys.stderr)
+            return 1
+        with open(path) as f:
+            built[name] = json.load(f)
+
+    ok, msg = check_nesting(built)
+    if not ok:
+        print("build-legislative-boundaries: FAIL — %s\n"
+              "  Rebuild the WHOLE family (python3 wi/scripts/build_legislative_boundaries.py); "
+              "simplifying one chamber alone is what breaks this." % msg, file=sys.stderr)
+        return 1
+
+    problems = []
+    for e in ACCEPTED_DROPPED_RINGS:
+        if not e.get("interior"):
+            problems.append(
+                "the declaration at %.5f,%.5f records no interior point, so its "
+                "reader answer cannot be re-asked offline" % (e["lat"], e["lng"]))
+            continue
+        pt = (e["interior"]["lng"], e["interior"]["lat"])
+        for chamber in sorted(e["answer_after"]):
+            if chamber not in built:
+                problems.append(
+                    "the declaration at %.5f,%.5f names chamber %s, which this "
+                    "builder does not build" % (e["lat"], e["lng"], chamber))
+                continue
+            got = sorted(_districts_at(
+                _model(built[chamber]["features"], "BASENAME"), pt))
+            want = sorted(e["answer_after"][chamber] or [])
+            if got != want:
+                problems.append(
+                    "the declaration at %.5f,%.5f says a reader at %.6f,%.6f reads "
+                    "%s in the shipped %s, and the shipped file says %s"
+                    % (e["lat"], e["lng"], pt[1], pt[0], want, chamber,
+                       got or ["no district"]))
+    if problems:
+        print("build-legislative-boundaries: FAIL — %s\n"
+              "  A declared dropped ring no longer reads the way it is declared to. "
+              "Rebuild and re-measure rather than editing the declaration to match."
+              % "; ".join(problems), file=sys.stderr)
+        return 1
+
+    print("build-legislative-boundaries: OK — %s; %d declared dropped ring(s) still "
+          "read as declared in the shipped files (offline: nesting and the AFTER "
+          "answers only — an undeclared drop and every BEFORE answer need the source)"
+          % (msg, len(ACCEPTED_DROPPED_RINGS)))
+    return 0
+
+
 def main():
-    if sys.argv[1:]:
-        print("this builder takes no arguments: both chambers are simplified in "
-              "ONE run so a shared edge is one arc, and rebuilding one alone is "
-              "the defect that shape exists to fix.", file=sys.stderr)
+    args = sys.argv[1:]
+    if "--check" in args and len(args) == 1:
+        sys.exit(check_shipped())
+    if args:
+        print("unexpected argument(s): %s\n"
+              "This builder has no per-chamber mode: both chambers are simplified in "
+              "ONE run so a shared edge is one arc, and rebuilding one alone is the "
+              "defect that shape exists to fix.\n"
+              "  (no args) fetch and rebuild both chambers\n"
+              "  --check   offline gate on the shipped files (nesting + the declared "
+              "dropped rings' after answers)" % args, file=sys.stderr)
         sys.exit(1)
     build_family()
 

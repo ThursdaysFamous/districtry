@@ -1203,6 +1203,20 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 ia/scripts/build_legislative_boundaries.py --check
 
+      # The third instance with the relation, and the one whose break was worst:
+      # Wis. Const. art. IV s. 5 makes Assembly 3N-2, 3N-1 and 3N one Senate
+      # district N, and all 33 pairings were broken with strays up to 2.9 km
+      # (#1193). Wisconsin's --check does one thing the other two do not, because
+      # it is the only instance where simplification DROPS a ring: beside the
+      # nesting it re-derives each declared dropped ring's after-answer from the
+      # shipped bytes, at an interior point the declaration records. What it
+      # cannot see needs the TIGER source and is named in its own docstring — an
+      # UNDECLARED drop, every before-answer, and whether a declared interior
+      # point is really inside its ring.
+      - name: WI Assembly districts still tile their Senate district exactly
+        if: ${{ !cancelled() }}
+        run: python3 wi/scripts/build_legislative_boundaries.py --check
+
       # Nine Illinois data files carry a top-level `generated` stamp, so each
       # weekly workflow opens a bot PR whether or not an officeholder moved.
       # The stamp is right and stays; what the nine builders now print beside it
