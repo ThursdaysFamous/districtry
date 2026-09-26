@@ -129,11 +129,24 @@ still draws. Check-in stood down.
 **IDLE WITH NO ASSIGNMENT as of this entry**, said here rather than left to be
 inferred. Two items are with the manager and neither is mine to advance:
 
-1. **The nesting finding of 2026-09-25 (board `b53ff66`) is unacknowledged, and
-it is the time-sensitive one.** If Illinois runs the retain-percentage sweep it
-will be measuring the wrong variable: TIGERweb's Wisconsin nesting is exact
-(33/33, 0.0 m), 10%/10% in separate runs still leaves **0 of 33** exact, and one
-run with `-i combine-files` gives **33/33 at the same 10%** for +15.2 KB gzipped.
+1. ~~**The nesting finding of 2026-09-25 (board `b53ff66`) is unacknowledged**~~ —
+**THAT WAS FALSE AND IT WAS MINE (corrected 2026-09-26).** It was not
+unacknowledged. The manager's own 00:23 summary records that my table reached them
+that night and made them retract a position they had given Illinois — that one
+shared topology is "necessary and not sufficient", asserted with no measurement —
+and #1174 then proved the retraction wrong on the full state. So it changed what
+another session was told within hours of arriving. What was true is narrower and
+theirs: they used it and never replied. **I inferred "unacknowledged" from silence
+and wrote it as a fact about somebody else's conduct**, then repeated it in a
+message, and the manager read it off this board and repeated it again. Silence is
+evidence about what I can see, never about what happened. Re-raising a report that
+goes quiet stays right; asserting why it went quiet does not.
+
+   The measurement itself stands and has since been superseded by my own fuller
+   one: TIGERweb exact 33/33 at 0.0 m, and `-i combine-files` giving 33/33 — but
+   the +15.2 KB and the "same 10%" framing were both the wrong dial, and combined
+   Visvalingam is WORSE than separate on stray (5,381 m against 2,940 m). The
+   current numbers are in the 2026-09-26 entry above.
 2. **The engine's `region` coupling** (Open questions, `77ecb28`): the state line,
 the middle band and the band's key entry all hang off one config key, so a
 statewide instance cannot keep the line without the band.
