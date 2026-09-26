@@ -44,6 +44,49 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, ITEM 3 MEASURED BUT NOT BUILT — recorded here because the
+measurement is what a reclaimed container loses.** Nothing is committed for it:
+one branch stands and #1184 is waiting to merge, so item 3 starts on a branch
+restarted from main after that. Both roster defects are now traced to the line
+that produces them, which is the part worth keeping.
+
+**THE SIX NAMES, and `role` is the free key.** `ny/data/app/council-members.json`
+has 51 records carrying exactly two keys, `name` and `office`, and six names begin
+with a leadership office: District 5 "Speaker Julie Menin", 7 "Majority Leader
+Shaun Abreu", 27 "Deputy Speaker Dr. Nantasha Williams", 48 "Minority Whip Inna
+Vernikov", 49 "Majority Whip Kamillah M. Hanks", 50 "Minority Leader David Carr".
+**`office` is the district office ADDRESS, not the leadership office**, so a title
+moved into `office` would overwrite an address — `role` is the key to add.
+
+**THE CAUSE IS IN `clean_name()`**, `ny/scripts/council_scraper.py:29`. It strips
+only photo-alt SUFFIXES (`head shot`, `headshot`, `photo`, `portrait`), and the
+Council's own photo alt text carries the office as a PREFIX. So the fix is a
+prefix match over that closed set of six offices, writing the match to `role` and
+the remainder to `name` — never a general "strip leading capitalised words",
+which would eat part of a real name.
+
+**DISTRICT 27'S ADDRESS IS A COVID NOTICE WITH THE ADDRESS AT THE END**: "Due to
+the recent COVID surge, our district office is currently open by appointment only.
+Contact my office directly to schedule your appointment today. 172-12 Linden
+Boulevard St. Albans, NY 11434". **The cause is that `district_office()` bounds
+the END of the block and never the START** — `OFFICE_END` cuts the phone/second-
+office noise and `ZIP_RE` ends it after the ZIP, so the address's tail is already
+right; the notice sits in front of it. Its one guard rejects a string with no
+digits or no letters, and a notice has plenty of both. The fix is to take the
+address from its own beginning: a house number (digits, hyphens allowed for
+"172-12") followed by a street name, anchored at the LAST such start inside the
+bounded block. **The verification is fixed by that shape** — all 50 other
+addresses must come out byte-identical and only District 27 may change.
+
+**THE FIVE FALSE `sources.html` ROWS ARE NOT RE-MEASURED YET** and will be
+measured before they are touched, not recalled.
+
+**And the `PERSON_PATHS` scoping stands as the manager stated it**: the
+name-gate's refusal of a leading office must apply to person records only, because
+`mi/data/app/mi-precincts.json` ships "Speaker Township, Precinct 1" and Michigan
+has a township named Speaker. A fleet-wide prefix refusal would reject a real
+place name.
+
 **2026-09-26, THE TWO COMMANDS WERE ALREADY FIXED WHEN THE MANAGER NAMED THEM,
 AND THE BRANCH IS NOW MERGED WITH MAIN.** `fce83d7` carried both — `build_sitemap.py`
 regenerated to 394 URLs and `ny/faq.html`'s description trimmed 199 → 153 at the
