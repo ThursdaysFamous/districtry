@@ -102,12 +102,12 @@ GEOMETRY_FILES = {
     "manhattan-county-outline.json": (1, 1),  # Manhattan containment outline (ny/scripts/build_ny_borough_outlines.py, sliced from borough-boundaries.json) — lets a Data gaps record name this borough so the panel leads with the gaps that apply here.
     "queens-county-outline.json": (1, 1),  # Queens containment outline (ny/scripts/build_ny_borough_outlines.py, sliced from borough-boundaries.json) — lets a Data gaps record name this borough so the panel leads with the gaps that apply here.
     "staten-island-county-outline.json": (1, 1),  # Staten Island containment outline (ny/scripts/build_ny_borough_outlines.py, sliced from borough-boundaries.json) — lets a Data gaps record name this borough so the panel leads with the gaps that apply here.
-    "judicial-districts.json": (13, 13),  # All thirteen New York judicial districts, dissolved from the state county fabric on the Judiciary Law section 140 table by ny/scripts/build_ny_judicial_districts.py. Replaces the five-borough crosswalk file.
-    "ny-counties.json": (62, 62),  # New York's 62 counties from the state's own Civil Boundaries service, carrying the NYC flag that marks the five counties with no county government (ny/scripts/build_ny_counties.py). Shoreline-clipped, so it disagrees with the water-inclusive coverage ring at the coast by design.
+    "judicial-districts.json": (13, 13),  # All thirteen New York judicial districts, dissolved from the SHIPPED ny-counties.json on the Judiciary Law section 140 table by ny/scripts/build_ny_judicial_districts.py, with no further simplification -- so every vertex here is a vertex of that file and the two layers draw one line rather than two. Rebuild it after ny-counties.json; validate_index.py fails the merge if they stop sharing vertices. Replaces the five-borough crosswalk file.
+    "ny-counties.json": (62, 62),  # New York's 62 counties from the state's own Civil Boundaries service, carrying the NYC flag that marks the five counties with no county government. Built with the town and village layers in ONE mapshaper run (ny/scripts/build_ny_civil_boundaries.py), because the county layer is the publisher's own dissolve of the town layer -- 98.4% of its source vertices ARE town vertices -- and three separate runs drew the shared line up to 310 m apart. Shoreline-clipped, so it disagrees with the water-inclusive coverage ring at the coast by design.
     "ny-school-districts.json": (713, 713),  # The ORDINARY tier: 713 of the 716 school districts dissolved from the state's 936 polygon rows on SED_CODE_1 (ny/scripts/build_ny_school_districts.py). The 936 against the Census Bureau's 680 reconciles exactly: 33 New York City rows, 220 multipart and duplicate-code rows, 3 special-act districts. The other 3 are the central high school districts, split into their own file because no point resolved to them while they sat behind their own components in this one; measured 2026-09-26, these 713 have ZERO overlapping pairs under an exhaustive sweep.
     "ny-central-hs-districts.json": (3, 3),  # The UPPER tier: the three central high school districts, each entirely made of its component districts (Bellmore-Merrick, Sewanhaka Central, Valley Stream Central), split out by containment because nothing the state publishes marks the tier — two carry a blank SED code and the third carries its own component's. Mutually disjoint, measured 2026-09-26.
-    "ny-cities-towns.json": (995, 995),  # New York's 62 cities and 933 towns, which together tile the state (ny/scripts/build_ny_municipalities.py).
-    "ny-villages.json": (532, 532),  # New York's 532 villages, which sit INSIDE towns rather than beside them, so this is a nested layer and not part of the tiling.
+    "ny-cities-towns.json": (995, 995),  # New York's 62 cities and 933 towns, which together tile the state. One of the three layers ny/scripts/build_ny_civil_boundaries.py simplifies in a single shared topology with Douglas-Peucker at a 25 m interval.
+    "ny-villages.json": (532, 532),  # New York's 532 villages, which sit INSIDE towns rather than beside them, so this is a nested layer and not part of the tiling. The state draws it independently of the town layer (9 of 145,280 source vertices are shared), so a shared topology cannot align the seven coterminous town/village governments and the 25 m Douglas-Peucker interval is what bounds them: measured 2026-09-26, six of the seven went from 78-320 m apart to 16-26 m, against the publisher's own 1 m. Woodbury's 1,484 m disagreement is the publisher's and ships as measured.
     "municipal-court-districts.json": (28, 28),
     "congress-districts.json": (26, 26),  # 26 NY U.S. House districts; pre-built from TIGERweb by scripts/build_legislative_boundaries.py (R2-2)
     "state-senate-districts.json": (63, 63),  # 63 NY State Senate districts; pre-built from TIGERweb layer 1
@@ -294,6 +294,79 @@ def check_school_district_tiers(app_dir):
              "central high school districts would answer nobody again")
 
 
+def check_shared_civil_edges(app_dir):
+    """The layers that share a line must still SHARE ITS VERTICES.
+
+    New York's county layer is the publisher's own dissolve of its town layer --
+    measured 2026-09-26, 98.4% of county vertices at source ARE town vertices --
+    and its 13 judicial districts are unions of whole counties. So a shared edge
+    is one line, and under one mapshaper topology it is one arc simplified once,
+    which makes the SAME vertices appear in both files. That is what this checks,
+    and it needs no source, no network and no geometry library: set arithmetic on
+    the coordinates.
+
+    It is the cheap half. The geometric half -- how far each drawn line strays
+    from the publisher's own, and that the two built layers agree to 0.0 m on
+    every stretch the publisher draws once -- needs the 28 MB fetch and is
+    ny/scripts/build_ny_civil_boundaries.py's own gate at build time.
+
+    WHY IT IS WORTH A MERGE GATE: the tree that shipped until 2026-09-26 built
+    these three files in three separate mapshaper runs, which cannot produce one
+    shared arc, and only 52.2% of county vertices were still town vertices while
+    the two files drew the same line up to 310 m apart. Every other gate in this
+    file was green on that tree, including the 2,000-point classification, which
+    cannot see WHERE a line is. The judicial file missed by exactly one vertex,
+    which is the kind of margin only an exact test finds.
+    """
+    counties = os.path.join(app_dir, "ny-counties.json")
+    towns = os.path.join(app_dir, "ny-cities-towns.json")
+    judicial = os.path.join(app_dir, "judicial-districts.json")
+    for path in (counties, towns, judicial):
+        if not os.path.exists(path):
+            fail("shared civil edges: %s is missing" % os.path.basename(path))
+
+    def verts(path):
+        out = set()
+        for f in json.load(open(path))["features"]:
+            geom = f.get("geometry")
+            if not geom:
+                continue
+
+            def walk(c):
+                if c and isinstance(c[0], (int, float)):
+                    out.add((c[0], c[1]))
+                else:
+                    for x in c:
+                        walk(x)
+
+            walk(geom["coordinates"])
+        return out
+
+    cv, tv, jv = verts(counties), verts(towns), verts(judicial)
+    if not cv or not tv or not jv:
+        fail("shared civil edges: one of the three files carries no vertices")
+
+    # The five boroughs' mutual boundaries exist in the county layer and in no
+    # town (New York City is ONE row of the town layer), so the county share is
+    # a floor near the source's own 98.4% rather than 100%.
+    share = 100.0 * len(cv & tv) / len(cv)
+    if share < 97.0:
+        fail("shared civil edges: only %.2f%% of ny-counties.json's %d vertices are "
+             "also vertices of ny-cities-towns.json (floor 97.0%%, the source's own "
+             "figure is 98.4%%, three separate mapshaper runs gave 52.2%%) — rebuild "
+             "both with ny/scripts/build_ny_civil_boundaries.py, which simplifies "
+             "them in ONE run" % (share, len(cv)))
+
+    # A judicial district is a dissolve of the SHIPPED counties with no further
+    # simplification, so this one is exact with no tolerance.
+    stray = jv - cv
+    if stray:
+        fail("shared civil edges: %d of judicial-districts.json's %d vertices are not "
+             "vertices of ny-counties.json (e.g. %r) — rebuild it with "
+             "ny/scripts/build_ny_judicial_districts.py AFTER ny-counties.json, which "
+             "it dissolves" % (len(stray), len(jv), sorted(stray)[:2]))
+
+
 def main():
     path = sys.argv[1] if len(sys.argv) > 1 else "index.html"
     if not os.path.exists(path):
@@ -307,6 +380,9 @@ def main():
 
     # 0a. the two school-district tiers still partition one source
     check_school_district_tiers(os.path.join(os.path.dirname(os.path.abspath(path)), "data", "app"))
+
+    # 0a2. the layers that share a line still share its vertices
+    check_shared_civil_edges(app_dir)
 
     # 0b. METRO_EXPLORERS config list is sane (metro-portal easter egg)
     n_metros = check_metro_explorers(html)

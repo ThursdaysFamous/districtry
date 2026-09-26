@@ -14,8 +14,10 @@ here deletes it, since deleting it is app-wiring, not this script's job.
 New York Judiciary Law section 140 defines 13 judicial districts as unions of
 whole counties. This script embeds the county-FIPS-to-district table as a
 literal (COUNTY_DISTRICT below), and dissolves the state's county geometry on
-it - fetch counties -> attach district -> dissolve -> simplify -> validate ->
-write data/app/judicial-districts.json.
+it - read the shipped county fabric -> attach district -> dissolve -> validate
+-> write data/app/judicial-districts.json. There is no simplify step, and that
+is the whole of the 2026-09-26 change: see "Source for the county geometry"
+below.
 
 Provenance for COUNTY_DISTRICT: the statute text actually read on 2026-09-18
 was https://newyork.public.law/laws/n.y._judiciary_law_section_140 (title
@@ -43,35 +45,55 @@ county_name_by_fips at build time and refuses to write if any of the 62 no
 longer match, because a name drift the join itself cannot see is a change
 this project has not verified.
 
-Source for the county geometry: the same NYS_Civil_Boundaries/FeatureServer/2
-layer ny/scripts/build_ny_counties.py reads (see that script's docstring for
-the shoreline-clip / EPSG:26918 trap - this script requests outSR=4326 the
-same way). This script does its own fetch rather than importing the sibling
-script, matching the fleet convention that an instance's scripts do not
-import across each other's fetch paths.
+Source for the county geometry: data/app/ny-counties.json, the file
+ny/scripts/build_ny_civil_boundaries.py writes. THIS SCRIPT USED TO DO ITS OWN
+FETCH OF NYS_Civil_Boundaries/FeatureServer/2 AND SIMPLIFY IT AGAIN AT 15%, and
+that was the defect: a judicial district is a union of WHOLE COUNTIES, so its
+boundary is made of county lines, and simplifying the same source twice in two
+mapshaper runs cannot produce the same line twice. Measured 2026-09-26 on the
+shipped files, 99.98% of judicial vertices were still also county vertices and
+the two disagreed by up to 11.2 m - small, because both runs used identical
+settings on identical input, and pure luck rather than a property of the
+pipeline. Reading the shipped county fabric and dissolving it with NO further
+simplification makes the nesting exact by construction: a judicial boundary is
+literally a union of the arcs that ship in ny-counties.json, and
+check_vertices_are_county_vertices() below refuses the build if a single vertex
+is not one. It also retires a duplicate 4 MB fetch of a layer the sibling
+builder already reads, which that builder's own docstring had been complaining
+about since 2026-09-18.
+
+THE COST IS A BUILD-ORDER DEPENDENCY AND IT IS STATED RATHER THAN HIDDEN: this
+script now reads a built file, so ny-counties.json must be rebuilt first and
+this file rebuilt in the same change. ny/scripts/validate_index.py fails the
+merge gate if the two files stop sharing vertices, which is what makes the
+dependency enforced rather than remembered. The shoreline-clip / EPSG:26918
+trap is unchanged and is recorded in build_ny_civil_boundaries.py's docstring.
 
 Dissolve: mapshaper's -dissolve merges the county polygons sharing a district
 number into one feature per district and drops the internal county-to-county
 edges, which is what "unions of whole counties" means as geometry - a
 district made of several counties should render as one region, not as its
-component counties glued together with visible seams. Simplification
-afterward is topology-aware mapshaper (Visvalingam, keep-shapes), pinned to
-mapshaper@0.6.102, same as every other boundary builder here. Validation
-re-classifies 2,000 random points across the measured state envelope against
-BOTH the raw county-to-district mapping and the dissolved-and-simplified
-result, and refuses to write on disagreement or on any point landing in two
-districts - this checks the whole pipeline (dissolve AND simplify), not
-simplify alone.
+component counties glued together with visible seams. THERE IS NO
+SIMPLIFICATION STEP: the county geometry this reads is already simplified, and
+simplifying a dissolve of it again is what put the two layers' lines up to
+11.2 m apart. mapshaper is still pinned to mapshaper@0.6.102, for the dissolve.
+Validation re-classifies 2,000 random points across the measured state envelope
+against BOTH the county-to-district mapping and the dissolved result, and
+refuses to write on disagreement or on any point landing in two districts. That
+now checks the DISSOLVE alone, which is all there is left to check here -
+whether the geometry itself is faithful to the publisher is
+build_ny_civil_boundaries.py's gate, on the file this reads.
 
 Card: no roster. A New York Supreme Court justice is elected countywide (or,
 for the 5th and 8th districts' at-large seats, district-wide) to a 14-year
 term; there is no clean machine-readable per-district roster, so the card
 links to nycourts.gov rather than guessing a name.
 
-Prerequisites: curl (fetch, works through an HTTPS proxy) and Node.js
-(mapshaper via `npx mapshaper@<pinned>`).
+Prerequisites: Node.js (mapshaper via `npx mapshaper@<pinned>`) and a built
+data/app/ny-counties.json. No network.
 
 Usage:
+    python3 ny/scripts/build_ny_civil_boundaries.py     # first: writes ny-counties.json
     python3 ny/scripts/build_ny_judicial_districts.py
 """
 
@@ -85,10 +107,7 @@ import tempfile
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
 MAPSHAPER = "mapshaper@0.6.102"  # pinned for reproducible output (fleet convention)
-COUNTIES_LAYER = (
-    "https://gisservices.its.ny.gov/arcgis/rest/services/"
-    "NYS_Civil_Boundaries/FeatureServer/2"
-)
+COUNTIES_FILE = os.path.join(APP_DATA_DIR, "ny-counties.json")
 
 OUT_FILE = "judicial-districts.json"
 # NO RAW SOURCE SNAPSHOT IS WRITTEN, and that is a decision rather than an
@@ -100,8 +119,8 @@ OUT_FILE = "judicial-districts.json"
 # builder's guards are what make a run reproducible: it refuses to write
 # unless the source still returns exactly what it expects, and the source is a
 # public service this project can re-fetch. ny/scripts/build_ny_school_districts.py
-# and ny/scripts/build_ny_municipalities.py made the same call for the same reason.
-SIMPLIFY = "15%"  # matches ny/scripts/build_embedded_boundaries.py's boundary retain rate
+# and ny/scripts/build_ny_civil_boundaries.py made the same call for the same
+# reason. Since 2026-09-26 this builder fetches nothing at all.
 PRECISION = "0.000001"  # 6 decimals ~= 0.11 m, the precision the app requests live
 EXPECTED_COUNTIES = 62
 EXPECTED_DISTRICTS = 13
@@ -169,27 +188,65 @@ BOROUGH_DISTRICT_BASELINE = {
 }
 
 
-def fetch_counties():
-    """Fetch every New York county's NAME, FIPS_CODE and geometry in
-    EPSG:4326. Uses curl so it works through an HTTPS proxy (as in the Claude
-    Code sandbox)."""
-    url = (
-        COUNTIES_LAYER + "/query"
-        "?where=1%3D1"
-        "&outFields=NAME,FIPS_CODE"
-        "&outSR=4326&geometryPrecision=6&f=geojson"
-    )
-    out = subprocess.run(
-        ["curl", "-sS", "--fail", "--max-time", "300", url],
-        check=True, capture_output=True,
-    ).stdout
-    geo = json.loads(out)
+def read_shipped_counties():
+    """Read the county fabric ny/scripts/build_ny_civil_boundaries.py writes.
+
+    A judicial district is a union of WHOLE counties, so its boundary is made of
+    county lines; dissolving the SHIPPED county geometry is what makes the two
+    layers' lines the same line rather than two drawings of one. See the module
+    docstring for the 11.2 m disagreement this replaced."""
+    if not os.path.exists(COUNTIES_FILE):
+        raise RuntimeError(
+            "judicial-districts: data/app/ny-counties.json is not there. Run "
+            "`python3 ny/scripts/build_ny_civil_boundaries.py` first -- this "
+            "builder dissolves that file and no longer fetches the county layer."
+        )
+    with open(COUNTIES_FILE) as fh:
+        geo = json.load(fh)
     feats = geo.get("features") or []
     if not feats:
-        raise RuntimeError("NYS_Civil_Boundaries Counties layer returned no features")
-    if geo.get("exceededTransferLimit"):
-        raise RuntimeError("NYS_Civil_Boundaries Counties layer hit the transfer cap - needs paging")
+        raise RuntimeError("judicial-districts: data/app/ny-counties.json carries no features")
     return geo
+
+
+def county_vertices(features):
+    """Every vertex of a set of features, as a set of (lng, lat) pairs."""
+    out = set()
+    for f in features:
+        geom = f.get("geometry")
+        if not geom:
+            continue
+
+        def walk(c):
+            if c and isinstance(c[0], (int, float)):
+                out.add((c[0], c[1]))
+            else:
+                for x in c:
+                    walk(x)
+
+        walk(geom["coordinates"])
+    return out
+
+
+def check_vertices_are_county_vertices(result_feats, county_feats):
+    """EVERY judicial vertex must be a county vertex, with no tolerance.
+
+    This is the gate the whole 2026-09-26 change is for. A district assembled
+    from county arcs and simplified no further can only be made of the counties'
+    own vertices; a single vertex that is not one means something re-derived the
+    geometry, and the two layers will draw one line twice. Measured on the files
+    this replaced: 6,207 of 6,208, i.e. it failed by one vertex."""
+    cv = county_vertices(county_feats)
+    jv = county_vertices(result_feats)
+    stray = jv - cv
+    if stray:
+        raise RuntimeError(
+            "judicial-districts: %d of %d vertices are not vertices of "
+            "data/app/ny-counties.json (e.g. %r) -- the dissolve must be of the "
+            "SHIPPED county geometry with no further simplification. Refusing to write."
+            % (len(stray), len(jv), sorted(stray)[:3])
+        )
+    return len(jv), len(cv)
 
 
 def read_current_shipped_baseline(path):
@@ -243,13 +300,15 @@ def read_current_shipped_baseline(path):
         )
 
 
-def run_mapshaper_dissolve(source_path, simplify, out_path):
+def run_mapshaper_dissolve(source_path, out_path):
+    """Dissolve only. NO -simplify: the input is already the shipped county
+    geometry, and simplifying a dissolve of it again is the defect this builder
+    retired on 2026-09-26 (module docstring)."""
     subprocess.run(
         [
             "npx", "-y", MAPSHAPER, source_path,
             "-dissolve", "district",
             "calc=counties=collect(county);county_fips=collect(county_fips)",
-            "-simplify", "visvalingam", "keep-shapes", simplify,
             "-o", "precision=" + PRECISION, "format=geojson", out_path,
         ],
         check=True, cwd=REPO_ROOT,
@@ -328,12 +387,16 @@ def _state_bbox(features):
 
 
 def validate(source_with_district, result_features, samples=2000, seed=2024):
-    """Refuse the build unless the dissolve-and-simplify pipeline preserves
-    district classification over the state envelope vs. classifying the raw
-    counties directly through COUNTY_DISTRICT - the fleet's 2,000
-    uniform-random-point protocol, checking the whole pipeline rather than
-    only the simplify step. Any point landing in two result districts is a
-    topology break."""
+    """Refuse the build unless the DISSOLVE preserves district classification
+    over the state envelope vs. classifying the counties directly through
+    COUNTY_DISTRICT - the fleet's 2,000 uniform-random-point protocol. Any point
+    landing in two result districts is a topology break.
+
+    ITS SUBJECT NARROWED ON 2026-09-26 and this docstring says so rather than
+    keeping a claim that had stopped being true: it used to say it checked "the
+    whole pipeline (dissolve AND simplify)", and there is no simplify step here
+    any more. Whether the geometry is faithful to the publisher is
+    build_ny_civil_boundaries.py's gate, on the very file this dissolves."""
     state_bbox = _state_bbox(source_with_district)
     src = _model(source_with_district, "district")
     new = _model(result_features, "district")
@@ -407,7 +470,7 @@ def main():
             % (sorted(lookup_districts), EXPECTED_DISTRICTS)
         )
 
-    source = fetch_counties()
+    source = read_shipped_counties()
     feats = source["features"]
 
     n = len(feats)
@@ -469,7 +532,7 @@ def main():
         with open(src_path, "w") as f:
             json.dump({"type": "FeatureCollection", "features": source_with_district}, f)
         out_tmp = os.path.join(tmp, "judicial-districts.geojson")
-        run_mapshaper_dissolve(src_path, SIMPLIFY, out_tmp)
+        run_mapshaper_dissolve(src_path, out_tmp)
         with open(out_tmp) as f:
             dissolved = json.load(f)
 
@@ -523,6 +586,11 @@ def main():
 
     check_borough_placement(result_feats)
 
+    # The nesting gate: every vertex of every district must be a vertex of the
+    # county fabric it was dissolved from. Exact, no tolerance -- see the
+    # function's own docstring for why that is available here at all.
+    n_jud_verts, n_county_verts = check_vertices_are_county_vertices(result_feats, feats)
+
 
     compact = json.dumps(dissolved, separators=(",", ":"))
     if json.loads(compact) != dissolved:
@@ -536,12 +604,13 @@ def main():
     print(
         "judicial-districts -> data/app/%s: %d districts over %d counties "
         "(statewide, computed); state envelope measured lng %.3f..%.3f lat "
-        "%.3f..%.3f; %s; %d bytes (%s retain, %s precision); the file it "
+        "%.3f..%.3f; %s; %d bytes (dissolve only, no simplify, %s precision); "
+        "all %d vertices are among ny-counties.json's %d; the file it "
         "replaced on the day this shipped was the 15,948-byte five-borough "
         "crosswalk (measured 2026-09-18 on origin/main). %s"
         % (OUT_FILE, len(result_feats), EXPECTED_COUNTIES, state_bbox["minLng"],
            state_bbox["maxLng"], state_bbox["minLat"], state_bbox["maxLat"],
-           msg, new_size, SIMPLIFY, PRECISION,
+           msg, new_size, PRECISION, n_jud_verts, n_county_verts,
            ("Previous file on disk: %d bytes." % old_size) if old_size is not None
            else "No prior file on disk."),
         file=sys.stderr,

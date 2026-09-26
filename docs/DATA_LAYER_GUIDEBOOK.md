@@ -2950,6 +2950,103 @@ shipped apps request, fetches each both ways, and prints the table. It is an ope
 command rather than a CI gate: it needs 178 live county services, and a gate that needs a
 third party up fails on somebody else's schedule.
 
+## A line the publisher draws once, drawn three times (measured 2026-09-26)
+
+New York's county, town and village layers come off one service, and two of the
+three relationships between them are **nesting**: a county is the publisher's
+own dissolve of its towns, and a judicial district is a union of whole counties.
+Until 2026-09-26 this repo built each file in its **own mapshaper run** at its
+own retain percentage — counties 15%, cities and towns 5%, villages 5%, the
+judicial dissolve 15%. mapshaper builds topology WITHIN one dataset, so a line
+two files share cannot survive identically across two runs, and it did not.
+
+**What was measured, against the publisher's own geometry rather than against
+another built file:**
+
+| relationship | exact vertex share at SOURCE | in the shipped files | how far apart the two drew one line |
+|---|---|---|---|
+| county → town | **98.4%** (89,310 of 90,772) | **52.2%** | up to **310.0 m**, 8.4% of coincident vertices over 25 m |
+| judicial → county | n/a (a dissolve of counties) | 99.98% — short by **one vertex** | up to 11.2 m |
+| village → town | **0.0%** (9 of 145,280) | 0.0% | up to 48.1 m |
+
+**The village row is the one that changes the design.** New York draws its
+village layer independently of its town layer, tracing the same line with
+different vertices, so there is no shared arc for `combine-files` to find and a
+shared topology cannot align them. The seven coterminous town/village
+governments are the visible case — one government, two boundary files:
+
+| village | town | source IoU | shipped IoU | one topology, dp 25 m |
+|---|---|---|---|---|
+| Harrison | Harrison | 0.999528 | 0.988897 | 0.999060 |
+| Scarsdale | Scarsdale | 0.999373 | 0.986026 | 0.997620 |
+| Mount Kisco | Mount Kisco | 0.998832 | 0.973003 | 0.996843 |
+| Green Island | Green Island | 0.998572 | 0.962904 | 0.993200 |
+| Kiryas Joel | Palm Tree | 0.998273 | 0.960264 | 0.993777 |
+| East Rochester | East Rochester | 0.997440 | 0.928951 | 0.997038 |
+| Woodbury | Woodbury | 0.986137 | 0.985000 | 0.986019 |
+
+Discrete Hausdorff between the two boundaries went from 78–320 m to 16–26 m for
+six of the seven. **Woodbury is the publisher's own 1,484 m disagreement** and
+ships as measured; smoothing it would be this repo inventing a line the state
+does not draw. (An earlier measurement of this table on `ny/BOARD.md` used
+village-vertex-to-town-line rather than Hausdorff and gave 93–329 m for the
+shipped files. Same ranking, same conclusion, different metric; this table's
+numbers are the ones reproduced by the builder's own gates.)
+
+**So the fix is TWO changes and either alone is insufficient, which is the same
+pair Illinois found for its legislative chambers on 2026-09-25.**
+`combine-files` puts all three layers in one topology, which makes the shared
+county/town arcs exact (0.0 m, measured on all 14,778 coincident vertices) and
+does nothing whatever for the villages. **Douglas-Peucker instead of
+Visvalingam** is what bounds those, because DP thresholds perpendicular
+DEVIATION where Visvalingam thresholds triangle AREA and successive
+below-threshold removals compound with no bound on how far the drawn line
+strays. As the share of the publisher's own vertices more than 25 m from the
+line drawn in their place:
+
+| layer | Visvalingam (shipped) | dp interval=25 |
+|---|---|---|
+| counties | 131.3 m worst, 0.42% over 25 m | 26.2 m worst, 0.006% |
+| cities and towns | 320.7 m worst, 9.52% over 25 m | 26.2 m worst, 0.003% |
+| villages | **1,604.8 m worst, 31.28% over 25 m** | 190.8 m worst, 0.023% |
+
+**AN ABSOLUTE INTERVAL RATHER THAN A PERCENTAGE, and that is not a preference.**
+mapshaper's retain percentage is relative to the whole dataset's vertex count,
+so it means something different the moment a layer joins or leaves a run — which
+is exactly what combining three files does. It is also why a small-input test of
+such a builder lies: Illinois measured a 4 m stray on three districts through
+`combine-files` against 331 m on the full state at the same percentage.
+
+**interval=25 was chosen because at that value the change is FREE.** The four
+cache-first files a first visit precaches go from 738,250 to 735,339 gzipped
+bytes — 2,911 **smaller** — while every fidelity number above improves.
+interval=15 buys a 17–21 m worst stray for +163,068 gzipped bytes (+22.1%);
+interval=30 fails the fidelity gate at 1.9% of vertices over 25 m. The raw bytes
+go UP (+61 KB) and the gzipped bytes go DOWN, which is the same direction
+Illinois's three chambers moved.
+
+**THE GATE THAT WAS GREEN THROUGHOUT IS THE LESSON.** Every one of these defects
+passed the fleet's 2,000-uniform-random-point classification — 99.90% to 100%
+agreement, zero overlaps — because that protocol asks whether a point lands in
+the RIGHT feature and cannot ask where a line IS. A villages file whose drawn
+line ran 1.6 km from the publisher's own answered 99.95%. So the builder now
+carries a fidelity gate measured in the reader's own direction (the true line
+leaving the chord, never the reverse, which is ~0 by construction because
+simplification keeps a subset of source vertices), and `ny/scripts/validate_index.py`
+carries the cross-layer half as a merge gate: **under one topology a vertex on a
+shared arc IS the same vertex in both files, so the check is set arithmetic on
+coordinates** — offline, stdlib, no source needed. It fails the tree that shipped
+until this change at 52.17%, and the judicial file by its one vertex.
+
+**Where to look for the same shape.** Two layers in one instance that share a
+line, built by two scripts or two runs. In New York the remaining pairs were
+measured and are not worth changing: `judicial-districts.json` against
+`ny-counties.json` is now exact by construction (it dissolves the shipped county
+file with no further simplification); `ny-state-outline.json` and
+`metro-outline.json` are **Census TIGERweb**, a different publisher whose
+water-inclusive geometry disagrees with the state's shoreline-clipped fabric by
+design; and `ny-school-districts.json` is drawn independently of municipal lines.
+
 ## The board card's location row, and a column that outlived its own document (2026-09-06)
 
 **THE GAP.** `county-board-office-addresses` was Illinois's largest card-order gap: of 63
