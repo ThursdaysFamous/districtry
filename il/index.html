@@ -5320,6 +5320,28 @@ function initChiExplorer() {
       }
     };
   }
+  // The ordinary name of a boundary street would otherwise print inside the
+  // coloured stretch as well, wherever the coloured label left room: the two
+  // are placed at different points along the same road and do not collide.
+  // So an invisible one-letter label ("M") is laid along each stretch, repeated
+  // every few pixels and allowed to overlap itself, below the coloured layer
+  // and above the ordinary road names. It is short so that it fits right up
+  // to the stretch's ends, where a label as long as the street's name would
+  // not be placed and would leave the ends uncovered. MapLibre places labels from the top
+  // layer down and transparent text still takes up room, so the coloured
+  // name is placed first and the ordinary one finds the whole stretch taken;
+  // beyond the stretch it prints as before. Place and point-of-interest
+  // names sit above it and are not affected.
+  var BOUNDARY_STREET_BLOCK_LAYER = "boundary_streets_block";
+  function boundaryStreetBlockLayer() {
+    var l = boundaryStreetLayer(false);
+    l.id = BOUNDARY_STREET_BLOCK_LAYER;
+    l.layout["text-field"] = "M";
+    l.layout["symbol-spacing"] = 4;
+    l.layout["text-allow-overlap"] = true;
+    l.paint = { "text-opacity": 0 };
+    return l;
+  }
   // The boundary-street labels print the name in the USPS abbreviations
   // (Publication 28): a leading or trailing direction ("West" -> "W") and the
   // street type ("Avenue" -> "Ave"). A word is shortened only in those two
@@ -5516,6 +5538,9 @@ function initChiExplorer() {
       out.sources = {};
       for (var sk in style.sources || {}) out.sources[sk] = style.sources[sk];
       out.sources[BOUNDARY_STREET_SOURCE] = { type: "geojson", data: BOUNDARY_STREET_EMPTY };
+      var lastRoadName = -1;
+      out.layers.forEach(function (l, i) { if (/^roadname_/.test(l.id)) lastRoadName = i; });
+      out.layers.splice(lastRoadName + 1, 0, boundaryStreetBlockLayer());
       out.layers.push(boundaryStreetLayer(dark));
     }
     return out;
@@ -5592,6 +5617,48 @@ function initChiExplorer() {
   var boundaryStreetSig = "";
   var boundaryStreetSource = null;
   var boundaryStreetTimer = null;
+  var boundaryStreetFeatures = [];
+  // What the label map actually drew along each stretch, for the smoke test:
+  // it walks every stretch on screen every 4 px and asks the label map which
+  // road names are rendered there. A run of consecutive hits is one label.
+  // "coloured" counts the stretch's own labels and "ordinary" counts the
+  // grey name of the same street printed inside the stretch, which should be
+  // none.
+  function measureBoundaryStreetLabels() {
+    var gl = baseLabels && baseLabels.getMaplibreMap();
+    if (!gl) return null;
+    var grey = (gl.getStyle().layers || []).filter(function (l) { return /^roadname_/.test(l.id); })
+      .map(function (l) { return l.id; });
+    var ids = grey.concat([BOUNDARY_STREET_LAYER]);
+    var canvas = gl.getCanvas(), w = canvas.clientWidth, h = canvas.clientHeight;
+    var out = {};
+    boundaryStreetFeatures.forEach(function (f) {
+      var nm = f.properties.name;
+      var rec = out[nm] || (out[nm] = { coloured: 0, ordinary: 0, samples: 0 });
+      var pts = f.geometry.coordinates.map(function (c) { return gl.project(c); });
+      var inCol = false, inGrey = false;
+      for (var i = 1; i < pts.length; i++) {
+        var a = pts[i - 1], b = pts[i];
+        var len = Math.sqrt((b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y));
+        var n = Math.max(1, Math.ceil(len / 4));
+        for (var j = 0; j < n; j++) {
+          var x = a.x + (b.x - a.x) * j / n, y = a.y + (b.y - a.y) * j / n;
+          if (x < 0 || y < 0 || x > w || y > h) { inCol = inGrey = false; continue; }
+          rec.samples++;
+          var hits = gl.queryRenderedFeatures([[x - 2, y - 2], [x + 2, y + 2]], { layers: ids });
+          var col = false, gr = false;
+          hits.forEach(function (hf) {
+            if (hf.layer.id === BOUNDARY_STREET_LAYER) { if (hf.properties.name === nm) col = true; }
+            else if (hf.properties.name === nm) gr = true;
+          });
+          if (col && !inCol) rec.coloured++;
+          if (gr && !inGrey) rec.ordinary++;
+          inCol = col; inGrey = gr;
+        }
+      }
+    });
+    return out;
+  }
   function boundaryStreetTargets() {
     var out = [];
     if (typeof layers === "undefined") return out;
@@ -5613,6 +5680,7 @@ function initChiExplorer() {
     boundaryStreetSig = sig;
     boundaryStreetSource = src;
     boundaryStreetNames = result.names;
+    boundaryStreetFeatures = result.features;
     src.setData({ type: "FeatureCollection", features: result.features });
   }
   function updateBoundaryStreets() {
@@ -33144,6 +33212,7 @@ function initChiExplorer() {
     abbreviateStreetName: abbreviateStreetName, // exposed so the smoke test can hold the boundary-street label abbreviations to a fixture
     matchBoundaryStreets: matchBoundaryStreets, // exposed so the smoke test can hold the boundary-street matcher to a fixture, with no CARTO fetch
     boundaryStreets: function () { return { on: boundaryStreetsOn, available: !!baseLabels, names: boundaryStreetNames }; }, // which street names the boundary-street layer is showing, and their colours
+    boundaryStreetLabels: function () { return measureBoundaryStreetLabels(); }, // per boundary street: its coloured labels on screen, and any ordinary copy of its name printed inside the stretch
     basemap: function () { return { kind: districtryTileKind, vector: baseIsVector, labels: !!baseLabels }; } // which basemap kind is live + which theme style it shows — the vector canvas has no tile <img> whose src a test could read
   };
   /* ==== ENGINE:END exports ==== */
