@@ -51,6 +51,62 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-26 — THE 830/109 HOLE IS CLOSED BY SOMEBODY ELSE'S CHANGE, AND VERIFYING IT ESTABLISHED
+THAT MY OWN #1149 WROTE THOSE TWO NUMBERS BY APPLYING A DELTA RATHER THAN RECOUNTING.** I was told
+Michigan's `1daf568` now declares Iowa's figures, with numbers — 106 and 833 — that disagreed with
+the 109 and 830 I recorded yesterday. Both halves check out, and the disagreement is mine.
+
+**WHAT IS TRUE ON MAIN NOW, MEASURED FROM THE FILES RATHER THAN FROM THE GATE'S MESSAGE.**
+`1daf568` (#1183) is an ancestor of `2c9e836`. The record's summary was REWRITTEN, not extended: it
+reads "833 of Iowa's 939 cities. In the other 106, ten counties publish the officials for 102 and 4
+cities publish their own", and all five of those numbers are now declared — 939 and 102 and 4 as
+`keys`, then 106 as a `combine: "union"` over the two roster files on `field: "members"`, and 833 as
+that same union with `of: 939`. Counted straight off the shipped files: county 102, city 4, union
+106, contact 939, complement 833. **I checked the two things a union can get wrong and neither is
+wrong here** — the two files are DISJOINT (no city named by both, so the union is also the sum, which
+is why the arithmetic reads as if it could not fail) and all 106 are inside the 939, so the
+complement is a complement of the right denominator. Gate `OK — 15 stated count(s) agree`, selftest
+`0 failure(s)`.
+
+**SO THE HOLE I RECORDED YESTERDAY IS CLOSED, AND IT WAS NOT THE HOLE I DESCRIBED.** I wrote that
+830 and 109 "remain undeclared in a field the gate already reads", which was true of the
+declarations and false about the numbers: **830 and 109 were wrong, not merely ungated.** Measured at
+`343b624` itself — the commit that wrote them — the files gave 106 and 833, and neither source file
+has moved since in any way that changes a count (`ia-city-contact.json` last at `a6ca829`,
+`ia-county-city-officials.json` at `343b624`, `ia-city-officials.json` at `eed8091`, a seat change
+that left the key count at 4). They were wrong the moment they were written.
+
+**HOW THEY CAME TO BE WRONG IS THE PART WORTH KEEPING, BECAUSE THE SIGNATURE IS LEGIBLE.** Before my
+change the record said 834/105; after it, 830/109. Adams added four cities. **Both numbers moved by
+exactly ±4 and both kept an identical pre-existing 3-city error** — at `a6ca829` the true pair was
+102/837 against a stated 834/105 — which is what applying a delta looks like from the outside and
+what recounting cannot look like. It is in a PR titled *every figure the sweep moved is
+re-measured*, and my own board entry for it says "**The 830 / 109 is a real UNION and I counted it
+independently** … that is the figure I most expected to be arithmetic." I did the arithmetic on the
+delta and called it a count. **A number reached by adjusting the number that was there is not a
+measurement, whatever it is labelled**, and the tell is available before the fact: my walk-through
+reproduced the stated 109 by adding 102 + 4 + 3 — and those "one each from Des Moines, Cedar Rapids
+and Waterloo" are three cities I never found in a file, because they are not in one.
+
+**THE CORRECTION AND THE GATE WERE BOTH SOMEBODY ELSE'S.** `25351d4` (#1181) caught it and counted
+independently; `1daf568` (#1183) put all five figures under the gate, which is the durable half —
+the union form did not exist until that change, so the two numbers could not have been declared on
+the day they were written even had they been right. I read #1181's commit message before writing
+this so my record would not contradict theirs; it notes Iowa's board has no open work on this
+record, which I agree with.
+
+**ONE THING IS NOT ESTABLISHABLE AND I AM NOT GUESSING AT IT.** The 3-city error predates my change
+and `a6ca829` is listed in this checkout's own `.git/shallow`, so it has no parent here and where
+those three cities came from cannot be traced from this vantage. I am recording the boundary rather
+than an explanation.
+
+**THE ENTRY BELOW STAYS AS WRITTEN AND IS CORRECTED HERE.** Yesterday's `#1173` entry says in three
+places that 830 and 109 are undeclared — the paragraph headed ALSO RECORDED most explicitly, which
+calls it "a real hole rather than a design choice". The hole was real and the numbers named in it
+were wrong; both are now fixed on main by other people's changes. The one sentence in that entry
+that survives intact is the one it was evidence for: a mechanical prose rewriter would have moved
+939 and left the rest, which is still the argument against option 2.
+
 **2026-09-25 — #1173 MERGED AS `8961e65`; THE PANEL NOW SAYS 43 AND 56.** Verified on main by
 content rather than by the merge event: the shipped `ia/data/app/coverage-gaps.json` carries the
 43-of-99 and 56 wording, the `counts` declaration still reaches no reader, the chair roster holds
