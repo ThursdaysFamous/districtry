@@ -54,8 +54,8 @@ const SHELL_URLS = [
 
 // Boundary geometry (data/app/*.json, fetched lazily on first toggle).
 // Boundaries change ~once a decade, so serve them cache-first (instant, and
-// works offline) and refresh in the background. Precached at install so
-// those layers work offline.
+// works offline once used) and refresh in the background. Cached the first
+// time a layer uses them, never at install (sw-handlers, PRECACHE_URLS).
 const GEOMETRY_URLS = [
   "./data/app/supervisor-districts.json",
   "./data/app/san-francisco-county-outline.json",
@@ -82,7 +82,16 @@ const ROSTER_URLS = [
 /* ==== METRO:END sw-config ==== */
 
 /* ==== ENGINE:BEGIN sw-handlers ==== */
-const PRECACHE_URLS = SHELL_URLS.concat(GEOMETRY_URLS);
+// ONLY THE SHELL IS INSTALLED. Boundary files are cached the first time a
+// layer uses them (cacheFirst, below) and never before. Until 2026-09-26 the
+// install handler also fetched every file in GEOMETRY_URLS: 9.8 MB gzipped for
+// Wisconsin, 4.3 MB Illinois, 2.7 MB Iowa, 2.1 MB Michigan, 1.5 MB New York,
+// on every visitor's first load, starting as the app booted and sharing the
+// connection with the reader's first cards, for layers most readers never
+// switch on (docs/OPTIMIZATION_PLAYBOOK.md §10, finding 4). The cost is
+// offline: a layer never opened is not on the device. GEOMETRY_URLS still
+// decides the STRATEGY — cache-first — which is all it is read for now.
+const PRECACHE_URLS = SHELL_URLS;
 
 function inList(href, list) {
   return list.some((url) => new URL(url, self.registration.scope).href === href);

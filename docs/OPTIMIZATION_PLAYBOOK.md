@@ -1031,3 +1031,58 @@ TIGERweb point query from a fixture and never answers the statewide request,
 and requires the municipality card to answer and its district to be lit while
 the full drawing is still absent. It fails with the provisional highlight
 removed.
+
+### Phase 2 shipped: boundary files are cached on first use, not at install (2026-09-26)
+
+`PRECACHE_URLS` in the engine's `sw-handlers` block is now `SHELL_URLS` alone.
+`GEOMETRY_URLS` still decides that a boundary file is served cache-first; it no
+longer decides that it is downloaded before anyone asks for it. The worker
+still claims the page as soon as it activates, and activation is now quick
+because the install fetches only the shell, so a layer switched on during the
+first visit is cached then.
+
+Measured on a first visit with the service worker allowed, counting every
+`data/app` file the server sent in the 25 s after the page loaded (gzipped, as
+GitHub Pages serves it):
+
+| App | Before | After |
+|---|---|---|
+| wi | 101 files, 9.90 MB | 2 files, 0.13 MB |
+| il | 298 files, 4.34 MB | 2 files, 0.07 MB |
+| ia | 42 files, 2.70 MB | 1 file, 0.04 MB |
+| mi | 45 files, 2.10 MB | 1 file, 0.02 MB |
+| ny | 20 files, 1.45 MB | 2 files, 0.02 MB |
+| ca | 8 files, 0.07 MB | 1 file, 0.01 MB |
+
+The files left are the ones each app reads at boot: the coverage outline that
+draws the map's coverage wash, plus the state outline where an app paints a
+statewide band (il, ny, wi), and San Francisco's supervisor districts.
+
+**What it costs is offline use of a layer never opened.** Tested on Wisconsin
+by stopping the web server: the layer opened while online still answers from
+the cache, and a layer never opened shows its error card. A first test used
+Playwright's `setOffline`, and both layers answered; that switch does not
+reach a service worker's own requests in Chromium, so the worker had simply
+fetched the file. The test that counts is the one with the server stopped.
+The privacy page says what is stored and when.
+
+**A returning visitor keeps whatever an older worker precached** until the next
+`CACHE_NAME` bump replaces that cache, which is harmless, so no bump was made
+for this change.
+
+`scripts/smoke_test.mjs` check 2k allows the worker, which no other check
+does, and requires that every `data/app` file the worker fetched on a first
+visit is one the page asked for; it fails on the tree before this change,
+naming 294 installed files. A service worker's own requests reach Playwright
+only with `PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS` set, which the test
+sets before launching the browser; without it the worker's requests are
+invisible and a check would pass for that reason, so the check also requires
+that the worker took control and was seen fetching.
+
+**Still open, and now next in line:** `cacheFirst` fetches the file again in
+the background every time a cached boundary file is used, so a returning
+visitor downloads each layer they open on every visit. `check_cache_version.py`
+now fails a change that edits a cache-first file without a `CACHE_NAME` bump,
+which is the safety net that revalidation was standing in for. Serving
+boundary files from the cache without revalidating would save those bytes; it
+is the fonts' `cacheOnlyElseNetwork` policy, and it was not changed here.
