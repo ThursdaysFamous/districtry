@@ -169,6 +169,52 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-26 21:35 — a first visit to the Wisconsin map downloaded 9.9 MB it almost never needed. Now it downloads 0.13 MB.**
+
+**What changed for a reader, and it is the biggest thing merged today.** Every
+first-time visitor was silently downloading the whole boundary set in the
+background while their first cards were still loading — **9.90 MB gzipped in
+Wisconsin, 4.34 MB in Illinois**, for layers most readers never switch on, sharing
+the connection with the answer they were actually waiting for. A first visit now
+sends **0.13 MB and 0.07 MB**, and a boundary file is fetched the first time
+someone actually opens that layer (#1197). On a slow or metered connection that is
+the difference between a map that answers and one that crawls.
+
+The change is ONE LINE in the engine, with the numbers and the cost written beside
+it, and all six instances' copies are byte-identical. **The cost is real and was
+narrowed rather than dropped**: a layer never opened is not available offline, and
+they proved it by stopping the server — the layer opened while online still
+answered, the layer never opened showed its error card. The privacy page moved with
+it, from "stores the app shell, boundary files and rosters" to the shell on first
+visit and each layer's file when that layer is first switched on, so "works
+offline" became "those layers work offline". A page whose whole standard is saying
+what is actually stored narrowed its own claim rather than staying comfortable.
+
+**And it retires the cost objection to Wisconsin's interval=7 that I escalated to
+Adam this evening.** The +74.3% was a charge on every first load only because those
+files were precached; it is now paid by readers who open a chamber. I ruled without
+leaning on this landing and said so at the time, which is the test I wanted — the
+ruling is simply better off now.
+
+**WISCONSIN'S TWO CHAMBERS NOW AGREE ON THEIR SHARED LINE** (#1193): all 33
+pairings were off by up to 2.9 km and 0 are now, verified on main keyed on SLDU and
+SLDL. Its state legislative boundaries no longer cut diagonally through blocks.
+
+**AND WISCONSIN REFUSED A SENTENCE I ASKED FOR, WHICH IS THE BEST THING THAT
+HAPPENED TODAY.** My ruling told it to publish "interval=7 changes no reader's
+answer anywhere" as the claim the ruling rested on. It tested that instead and it is
+FALSE: the Door County ring's loss moves an answer, 610 of 900 points provably
+inside it. Its earlier no-effect reading had tested the ring's centroid rounded to
+four decimals, and I checked the arithmetic — at that latitude the fourth decimal is
+11.05 m of latitude and 7.81 m of longitude against a ring 7.5 m by 6.6 m, so the
+rounded point lands outside the ring and samples the water around it. **Rounding a
+test point can put it outside the thing being tested.** The ruling stands and its
+stated reason is corrected in the merge: interval=7's one loss is unavoidable at
+every interval from 4 to 15 and sits in open water, where interval=10's additional
+loss is avoidable and on land. A manager asking for a specific claim is not evidence
+for the claim, and a session that tests it instead is worth more than one that
+publishes it.
+
 **2026-09-26 20:45 — Nassau County readers were getting one of their two school districts; now they get both.**
 
 **What changed for a reader.** Eleven districts in Nassau County run their own
