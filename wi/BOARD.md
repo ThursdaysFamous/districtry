@@ -34,6 +34,77 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-26 (later still). THE DROPPED-RING QUESTION ASKED OF THE LAYER THAT NAMES
+PEOPLE: THE SUPERVISORY TILING LOSES 642 RINGS, TWO DOOR COUNTY ISLETS ANSWER NO
+DISTRICT AT ALL, AND ITS OWN 10,000-POINT GATE IS BLIND BY A FACTOR OF 137.**
+Held on the chambers, so I asked the same question of the other Wisconsin builders
+that run `keep-shapes` — there are four, and three still use Visvalingam
+percentages: aldermanic 25%, NG911 8%, **supervisory 9% over 1,589 districts, each
+of which names a supervisor**. Source fetched through the builder's OWN
+`fetch_layer` so the request is the one it makes; `robots_policy` read
+services1.arcgis.com first as the fetching client (absent, allow all — the host
+serves HTML at that path). Rings compared on the builder's own `SUPER_FIPS`, and
+dropped rings identified BY IDENTITY.
+
+| | source | shipped | net difference | gone by IDENTITY |
+|---|---|---|---|---|
+| outer rings (PARTS) | 2,288 | 2,140 | 148 | **134** |
+| inner rings (HOLES) | 847 | 327 | 520 | **510** |
+
+**The two counts answer different questions and I am quoting both rather than
+picking one.** The net difference is one file's ring total minus the other's, which
+nets a ring lost in one district against a ring gained in another and includes the
+one shipped key the source does not have. The identity count is per ring: a SOURCE
+ring none of whose own vertices survived. 644 rings are gone by identity, of which
+two are Trempealeau's, so **642**.
+
+**THE HEADLINE AREA IS MY OWN COMPARISON'S ARTIFACT AND THE REAL ONE IS 0.124 km2.**
+The dropped parts total 69.25 km2 and 69.19 km2 of that is Trempealeau alone — the
+one county the builder DELIBERATELY takes from the county's own service because
+LTSB's file merges two of its districts, so its shipped geometry is a different
+drawing under different keys and my identity test read the substitution as a loss.
+A point LTSB calls Trempealeau 17 answers Trempealeau 15 in the shipped file, which
+is the documented substitution rather than a dropped ring. Excluding it:
+
+- **510 holes, 0.056 km2 in total**, median **1 m2**, largest 2,000 m2.
+- **132 parts, 0.068 km2 in total**, largest 3,500 m2.
+
+**WHAT A READER GETS, TESTED AT AN INTERIOR POINT OF THE FIVE LARGEST OF EACH KIND**
+(the app's own even-odd test, source against shipped):
+
+- A dropped HOLE hands the reader the SURROUNDING district: 43.5605,-88.9220 answers
+  **Dodge 03** in the source and **Dodge 01** shipped; Richland 20 becomes Richland
+  21; Kenosha 15 becomes Kenosha 14. Each is a sliver of about 2,000 m2, and each
+  would put a neighbouring supervisor's name on the card.
+- A dropped PART can leave the reader with NOTHING: **45.0691,-87.2824 answers Door
+  16 in the source and no district at all shipped**, and 44.8799,-87.4258 the same
+  for Door 05 — 2,600 m2 and 2,300 m2 islets in the Door archipelago, where small
+  islands are real ground rather than a shoreline digitising artifact. That is the
+  Cudahy case again on a layer where the card names a person.
+
+**AND THE BUILDER'S GATE CANNOT SEE ANY OF IT, BY CONSTRUCTION RATHER THAN BY LUCK.**
+`validate()` samples 10,000 uniform in-state points and fails if simplification
+introduces overlap beyond the source's own — a good check, and the affected ground is
+0.1236 km2 of Wisconsin's 169,635, which is **7.3 parts in ten million**: 10,000
+points expect **0.0073 hits**, and about **1.37 million** would be needed to expect
+one. The chambers' `validate()` was blind to a 2.9 km stray because a thin band is
+thin; this one is blind because the area is small. **Uniform-point sampling cannot
+see a dropped ring at all, whatever the count, and adding points is not the remedy.**
+
+**THIS SHARPENS THE HELD DECISION RATHER THAN COMPETING WITH IT.** The chambers'
+choice between interval 7 and 10 turns on one 590 m2 patch; this layer already ships
+642 such patches under a percentage setting nobody has revisited, on the layer whose
+cards name 1,572 people. The remedy is the same in both places and is the gate
+proposed above — measure RINGS, not features, and make a dropped ring fail
+separately with the answer a reader gets before and after recorded beside it.
+
+**NOT MEASURED, AND SAYING SO RATHER THAN IMPLYING IT.** The aldermanic (25%, 866
+districts) and NG911 (8%, four tilings) layers are the same question unasked. Both
+are DISSOLVES, so their "source" is the unsimplified dissolve rather than a
+published layer, and asking costs a full-precision rebuild of each — which is why
+this pass stopped at the one layer whose source is a published service. The method
+is the same and the scratch script is reusable.
+
 **2026-09-26 (later). THE RULED 15 m CEILING HOLDS, THE COARSEST INTERVAL THAT
 MEETS IT IS 10, AND IT COSTS HALF OF WHAT I BUILT — BUT THE GATE AS PORTED CANNOT
 PASS 15 m AT ANY INTERVAL, AND THE REASON IS A READER-FACING DIFFERENCE BETWEEN
