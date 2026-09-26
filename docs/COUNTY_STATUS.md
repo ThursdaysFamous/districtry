@@ -25,19 +25,19 @@
 |---|---|---|---|---|---|
 | Adams | 17001 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district` | 3 — `adams-county-board-roster` (no-source); `fire-park-district-officers` (no-source); `quincy-ward-officeholders` (no-source) |
 | Alexander | 17003 | dispatch | at-large — County card | `library-district` | 2 — `alexander-precinct-geometry` (no-source); `statewide-library-officials` (no-source) |
-| Bond | 17005 | dispatch | no board layer — see gaps | `library-district` | 3 — `bond-county-board-districts` (no-source); `bond-precinct-geometry` (no-source); `statewide-library-officials` (no-source) |
+| Bond | 17005 | dispatch | no board layer — see gaps | `library-district` | 2 — `bond-county-board-districts` (no-source); `bond-precinct-geometry` (no-source) |
 | Boone | 17007 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 3 — `boone-fire-belvidere-city` (data-quality); `boone-fire-loves-park` (data-quality); `boone-fire-names` (data-quality) |
 | Brown | 17009 | dispatch | at-large — County card | `library-district` | 1 — `brown-precinct-geometry` (no-source) |
 | Calhoun | 17013 | dispatch | at-large — County card | `county-precinct`, `library-district` | none |
 | Carroll | 17015 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 4 — `carroll-special-districts` (no-source); `carroll-ward-geometry` (no-source); `library-governance-type` (data-quality); `statewide-library-officials` (no-source) |
 | Cass | 17017 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `pass9-ward-seats-without-maps` (no-source); `statewide-library-officials` (no-source) |
 | Christian | 17021 | dispatch | districted | `county-board` | 2 — `christian-county-board-roster` (no-source); `christian-precinct-geometry` (no-source) |
-| Clark | 17023 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 3 — `clark-board-contact` (data-quality); `clark-precinct-polling` (data-quality); `statewide-library-officials` (no-source) |
-| Clay | 17025 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
+| Clark | 17023 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `clark-board-contact` (data-quality); `clark-precinct-polling` (data-quality) |
+| Clay | 17025 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | none |
 | Clinton | 17027 | dispatch | districted | `county-board`, `library-district` | 3 — `clinton-precinct-geometry` (no-source); `county-board-office-addresses` (no-source); `statewide-library-officials` (no-source) |
 | Coles | 17029 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Cook | 17031 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | none |
-| Crawford | 17033 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | none |
+| Crawford | 17033 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Cumberland | 17035 | dispatch | no board layer — see gaps | `county-precinct`, `library-district` | 2 — `cumberland-county-board` (no-source); `statewide-library-officials` (no-source) |
 | De Witt | 17039 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `dewitt-township-officials` (data-quality); `statewide-library-officials` (no-source) |
 | DeKalb | 17037 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 1 — `blocked-crawlers` (blocked) |
@@ -53,12 +53,12 @@
 | Grundy | 17063 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district`, `park-district` | 3 — `grundy-special-district-boards` (data-quality); `morris-ward-geometry` (no-source); `municipal-website-dead-ends` (data-quality) |
 | Hamilton | 17065 | dispatch | at-large — County card | `county-precinct`, `fire-district`, `library-district` | 3 — `fire-park-district-officers` (no-source); `hamilton-municipal-officials` (no-source); `statewide-library-officials` (no-source) |
 | Hancock | 17067 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
-| Hardin | 17069 | dispatch | no board layer — see gaps | `county-precinct`, `library-district` | 2 — `hardin-county-board` (no-source); `statewide-library-officials` (no-source) |
+| Hardin | 17069 | dispatch | no board layer — see gaps | `county-precinct`, `library-district` | 1 — `hardin-county-board` (no-source) |
 | Henderson | 17071 | dispatch | no board layer — see gaps | `county-precinct` | 1 — `henderson-county-website` (no-source) |
 | Henry | 17073 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `pass9-ward-seats-without-maps` (no-source); `statewide-library-officials` (no-source) |
 | Iroquois | 17075 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `library-district` | 2 — `fire-park-district-officers` (no-source); `statewide-library-officials` (no-source) |
 | Jackson | 17077 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
-| Jefferson | 17081 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
+| Jefferson | 17081 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | none |
 | Jersey | 17083 | dispatch | no board layer — see gaps | `library-district` | 3 — `jersey-county-board-districts` (no-source); `jodaviess-jersey-precinct-geometry` (no-source); `statewide-library-officials` (no-source) |
 | Jo Daviess | 17085 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Johnson | 17087 | dispatch | no board layer — see gaps | `county-precinct`, `library-district` | 2 — `johnson-county-board` (no-source); `statewide-library-officials` (no-source) |
@@ -75,14 +75,14 @@
 | Macoupin | 17117 | dispatch | no board layer — see gaps | `county-precinct`, `library-district` | 4 — `macoupin-county-board-districts` (no-source); `macoupin-special-districts` (no-source); `macoupin-ward-geometry` (no-source); `statewide-library-officials` (no-source) |
 | Madison | 17119 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district`, `park-district` | 2 — `fire-park-district-officers` (no-source); `madison-ward-officials` (no-source) |
 | Marshall | 17123 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 3 — `library-governance-type` (data-quality); `statewide-library-officials` (no-source); `wenona-two-clerks-disagree` (data-quality) |
-| Mason | 17125 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `mason-precinct-vintage` (data-quality); `statewide-library-officials` (no-source) |
+| Mason | 17125 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `mason-precinct-vintage` (data-quality) |
 | Massac | 17127 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | McDonough | 17109 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | McHenry | 17111 | dispatch | districted | `county-board`, `county-precinct`, `fire-district`, `judicial-subcircuit`, `library-district` | 4 — `blocked-crawlers` (blocked); `fire-park-district-officers` (no-source); `mchenry-park-district` (no-source); `mchenry-ward-cities` (blocked) |
 | McLean | 17113 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 2 — `mclean-special-districts` (no-source); `statewide-library-officials` (no-source) |
 | Menard | 17129 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Mercer | 17131 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
-| Monroe | 17133 | dispatch | at-large — County card | `county-precinct`, `fire-district`, `library-district` | 2 — `fire-park-district-officers` (no-source); `statewide-library-officials` (no-source) |
+| Monroe | 17133 | dispatch | at-large — County card | `county-precinct`, `fire-district`, `library-district` | 1 — `fire-park-district-officers` (no-source) |
 | Montgomery | 17135 | dispatch | districted | `county-board`, `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Morgan | 17137 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
 | Moultrie | 17139 | dispatch | at-large — County card | `county-precinct`, `library-district` | 1 — `statewide-library-officials` (no-source) |
