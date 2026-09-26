@@ -130,6 +130,8 @@ FIELDS = ["SCHOOL_ID", "SCHOOLDIST", "SED_CODE_1", "POPULAR_NA", "SEDDIR_BOC"]
 EXPECTED_ROWS = 936  # measured 2026-09-18 (returnCountOnly and the fetch agree)
 EXPECTED_ENTITIES = 716  # measured 2026-09-18 -- see _derive_groups()
 OUT_FILE = "ny-school-districts.json"
+# The UPPER TIER, split out of the same fetch -- see split_tiers().
+UPPER_OUT_FILE = "ny-central-hs-districts.json"
 PRECISION = "0.000001"  # 6 decimals ~= 0.11 m, the precision the app requests live
 RETAIN_CANDIDATES = ["12%", "8%", "5%"]  # smallest passing one ships
 PASS_THRESHOLD = 99.5  # the fleet rule
@@ -407,6 +409,133 @@ def _derive_groups(feats):
     return num_entities, dup_codes
 
 
+
+# --------------------------------------------------------------- tier split
+# NEW YORK HAS TWO TIERS OF SCHOOL DISTRICT OVER THE SAME GROUND, and until
+# 2026-09-26 this file shipped them mixed into one layer where three of them
+# answered nobody. A central high school district is a school district in its
+# own right, with its own elected board, formed out of COMPONENT districts that
+# keep their own elected boards -- so a reader in Elmont is in Elmont UFSD for
+# K-6 and Sewanhaka Central for 7-12, and both have a board. The app resolves a
+# point with findFeatureContaining, which breaks on the FIRST containing feature
+# in file order; the three central districts sit at indices 649/659/660 behind
+# their components at 1, 3 and 32, so NO POINT IN NEW YORK resolved to any of
+# them. They were drawn, they were hoverable, and no card ever named them.
+#
+# NOTHING PUBLISHED IDENTIFIES THE TIER, measured 2026-09-26 against the service
+# itself rather than against this file's output:
+#   * SED_CODE_1 is a single SPACE on Bellmore-Merrick and Sewanhaka Central,
+#     and VALLEY STRM CENTRAL carries its own COMPONENT'S code (280230020000,
+#     the EXCEPTION_CODES collision above). Blank isolates nothing either: 6 of
+#     the 936 rows are blank.
+#   * INSSUBDE / INSTSUBYPE (institution sub-type) reads UNION FREE on Valley
+#     Stream Central -- its components' type -- and a space on the other two.
+#     AND ITS OBVIOUS READING IS THE TRAP: 411 of the 936 rows read CENTRAL,
+#     because a "central school district" is an ordinary New York district type
+#     and has nothing to do with a central HIGH SCHOOL district. ANGELICA-BELMONT
+#     reads CENTRAL and contains nothing.
+#   * SDLCODE is blank on the three and on four others; SEDDIR_BOC is 2890 on
+#     two of them, which is Nassau BOCES rather than a tier.
+# All 18 layers of NYS_Schools were listed the same day and none is a
+# central-high-school layer, so there is no cleaner source to read instead.
+#
+# SO THE KEY IS CONTAINMENT, and it is a clean cut rather than a threshold:
+# measured on the shipped geometry, exactly three districts are covered by
+# smaller districts and each is covered 100.000%, while the other 713 have ZERO
+# overlapping pairs under an exhaustive sweep. A central high school district is
+# by definition made of its components, which is the property tested here.
+UPPER_TIER_COVERED = 0.99      # a parent must be ~entirely made of its components
+UPPER_TIER_FLOOR = 0.01        # anything between the two is ambiguous -> refuse
+UPPER_TIER_SAMPLES = 400       # interior points per candidate
+EXPECTED_UPPER_TIER = 3        # measured 2026-09-26; a change here wants a human
+
+
+def _interior_points(geom, n, rng):
+    """n points uniformly inside `geom`, by rejection over its bbox."""
+    b = _bbox(geom)
+    pts = []
+    for _ in range(n * 400):
+        if len(pts) >= n:
+            break
+        pt = (rng.uniform(b[0], b[2]), rng.uniform(b[1], b[3]))
+        if _point_in_geometry(pt, geom):
+            pts.append(pt)
+    return pts
+
+
+def split_tiers(features, samples=UPPER_TIER_SAMPLES, seed=SEED):
+    """(ordinary, upper, report) -- split the districts by containment.
+
+    A district is UPPER TIER when its own interior is almost entirely covered by
+    OTHER, smaller districts in the same set. Candidates are pre-filtered by
+    bbox containment so the expensive interior test runs on a handful rather
+    than on 716^2 pairs.
+
+    REFUSES rather than guessing in three cases: a candidate whose coverage
+    lands between the floor and the ceiling (partly covered is neither tier), a
+    candidate whose interior cannot be sampled, and a set in which the upper
+    tier does not come out at EXPECTED_UPPER_TIER. The last is deliberately
+    strict: New York merging or dissolving a central high school district is a
+    real event and wants a person to look, not a silent re-partition.
+    """
+    rng = random.Random(seed)
+    bbs = [_bbox(f["geometry"]) for f in features]
+    names = [_norm(f["properties"].get("SCHOOLDIST")) or
+             _norm(f["properties"].get("POPULAR_NA")) for f in features]
+
+    def bbox_inside(inner, outer):
+        return (inner[0] >= outer[0] and inner[1] >= outer[1]
+                and inner[2] <= outer[2] and inner[3] <= outer[3])
+
+    upper_idx = []
+    report = []
+    for i, f in enumerate(features):
+        others = [j for j in range(len(features))
+                  if j != i and bbox_inside(bbs[j], bbs[i])]
+        if not others:
+            continue
+        pts = _interior_points(f["geometry"], samples, rng)
+        if len(pts) < samples:
+            raise RuntimeError(
+                "school-districts: could only sample %d of %d interior points "
+                "for %r -- refusing to split on an unmeasured candidate"
+                % (len(pts), samples, names[i]))
+        covered = 0
+        kids = set()
+        for pt in pts:
+            for j in others:
+                b = bbs[j]
+                if not (b[0] <= pt[0] <= b[2] and b[1] <= pt[1] <= b[3]):
+                    continue
+                if _point_in_geometry(pt, features[j]["geometry"]):
+                    covered += 1
+                    kids.add(names[j])
+                    break
+        share = covered / float(len(pts))
+        if share >= UPPER_TIER_COVERED:
+            upper_idx.append(i)
+            report.append((names[i], share, sorted(kids)))
+        elif share > UPPER_TIER_FLOOR:
+            raise RuntimeError(
+                "school-districts: %r is %.3f%% covered by other districts, "
+                "between the %.0f%% floor and the %.0f%% ceiling -- partly "
+                "covered is neither tier, so refusing to split. Components "
+                "found: %r" % (names[i], share * 100, UPPER_TIER_FLOOR * 100,
+                               UPPER_TIER_COVERED * 100, sorted(kids)))
+
+    if len(upper_idx) != EXPECTED_UPPER_TIER:
+        raise RuntimeError(
+            "school-districts: containment found %d upper-tier district(s), "
+            "expected %d -- refusing to write. Found: %r"
+            % (len(upper_idx), EXPECTED_UPPER_TIER,
+               [(n, round(s, 5), len(k)) for n, s, k in report]))
+
+    upper_set = set(upper_idx)
+    ordinary = [f for i, f in enumerate(features) if i not in upper_set]
+    upper = [features[i] for i in upper_idx]
+    return ordinary, upper, report
+
+
 def strip_for_shipping(features):
     out = []
     for f in features:
@@ -570,9 +699,7 @@ def main():
         raise RuntimeError("school-districts round-trip mismatch before writing")
 
     os.makedirs(APP_DATA_DIR, exist_ok=True)
-    out_path = os.path.join(APP_DATA_DIR, OUT_FILE)
-    with open(out_path, "w") as fh:
-        fh.write(chosen["compact"])
+    write_tiers(chosen["shipped"])
 
     print(
         "school-districts -> data/app/%s: %d entities from %d source rows "
@@ -587,5 +714,71 @@ def main():
     )
 
 
+def write_tiers(shipped, check=False):
+    """Split `shipped` by tier and write (or verify) both output files.
+
+    `check=True` writes nothing and returns the list of files whose bytes differ
+    from what the split produces, so the split is a drift gate on shipped
+    geometry with no network and no mapshaper -- which is how this change
+    exercised it without re-fetching 8.3 MB.
+    """
+    ordinary, upper, report = split_tiers(shipped["features"])
+    print("school-districts: tier split by containment -- %d ordinary, %d upper"
+          % (len(ordinary), len(upper)), file=sys.stderr)
+    for name, share, kids in sorted(report):
+        print("    upper: %-22s %7.3f%% covered by %d component(s): %s"
+              % (str(name)[:22], share * 100, len(kids),
+                 ", ".join(str(k)[:18] for k in kids)), file=sys.stderr)
+
+    drift = []
+    for out_file, feats in ((OUT_FILE, ordinary), (UPPER_OUT_FILE, upper)):
+        body = json.dumps({"type": "FeatureCollection", "features": feats},
+                          separators=(",", ":"))
+        path = os.path.join(APP_DATA_DIR, out_file)
+        if check:
+            have = open(path).read() if os.path.exists(path) else None
+            if have != body:
+                drift.append(out_file)
+            continue
+        with open(path, "w") as fh:
+            fh.write(body)
+        print("school-districts -> data/app/%s: %d entities, %d bytes"
+              % (out_file, len(feats), len(body)), file=sys.stderr)
+    return drift
+
+
+def split_shipped(check=False):
+    """Re-split the SHIPPED files, offline. Idempotent: it recombines both tiers
+    first, so running it after a split re-derives the same partition rather than
+    finding an upper tier of zero. A missing upper file reads as empty, which is
+    the state this mode was first run in."""
+    feats = []
+    for out_file in (OUT_FILE, UPPER_OUT_FILE):
+        path = os.path.join(APP_DATA_DIR, out_file)
+        if not os.path.exists(path):
+            if out_file == OUT_FILE:
+                raise SystemExit("school-districts: no data/app/%s to split" % out_file)
+            continue
+        feats.extend(json.load(open(path))["features"])
+    if len(feats) != EXPECTED_ENTITIES:
+        raise SystemExit(
+            "school-districts: the two shipped files hold %d entities together, "
+            "expected %d -- refusing to re-split"
+            % (len(feats), EXPECTED_ENTITIES))
+    drift = write_tiers({"type": "FeatureCollection", "features": feats}, check=check)
+    if check:
+        if drift:
+            raise SystemExit(
+                "school-districts: %s differ(s) from the tier split of the "
+                "shipped geometry -- re-run without --check"
+                % ", ".join(drift))
+        print("school-districts: OK -- both tier files match the split of the "
+              "shipped geometry (%d entities)" % len(feats), file=sys.stderr)
+
+
 if __name__ == "__main__":
-    main()
+    argv = sys.argv[1:]
+    if "--split-only" in argv or "--check" in argv:
+        split_shipped(check="--check" in argv)
+    else:
+        main()

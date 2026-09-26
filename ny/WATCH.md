@@ -16,7 +16,7 @@ once. It called the runbook a "master in the Chicago repo; pointer stub here" an
 reader to keep this file "at repo root" — both true of the per-metro FORKS, which were
 retired at R2.1; there is one repository now and this file has never been at its root. And
 the instance it describes is no longer New York City: since 2026-09-18 fifteen of its
-thirty-three layers answer anywhere in the state.
+thirty-four layers answer anywhere in the state.
 
 ---
 
@@ -62,6 +62,7 @@ empty during an election period, check whether NYS ITS moved or renamed the serv
 | Rolling, post-enactment | Census TIGERweb publishes the new CD vintage (CD119 field → CD120) | **DONE 2026-09-03.** The watch worked — `ny/scripts/validate_sources.py` FAILed on the layer-name mismatch, which is what it was built for. Rebuilt on CD120 (26 districts, geometry unchanged — 5,000 points, 0 disagreements) and the manifest now expects the 120th and watches for the 121st. | ☑ |
 | Ad hoc | NYPD opens/merges precincts (administrative — the 116th Precinct opened Dec 2024, the first since 2013) | Rebuild `police-precinct`/`police-sector` geometry, re-verify anchors, confirm the commander scraper covers the new precinct page. | ☐ |
 | Ad hoc | DOE redraws Community School District lines (rare) or CEC structure changes | Re-verify `school-district` + `cec` (they share geometry). | ☐ |
+| Ad hoc | A central high school district is created, merged or dissolved — a school-district REORGANISATION under Education Law, which needs the component districts' own voters and is rarer than any redistricting here | `nys-central-hs-district` is split out of the statewide school file BY CONTAINMENT, because nothing NYSED publishes marks the tier. `ny/scripts/build_ny_school_districts.py` refuses to write unless the upper tier comes out at `EXPECTED_UPPER_TIER` (3), so this fires as a BUILD FAILURE rather than as silence — rebuild both files together, re-run the builder's `--check`, and update `EXPECTED_UPPER_TIER` and the two files' feature counts in `ny/metro-worksheet.json` only after reading what actually changed. | ☐ |
 | **2032–2033** (estimated from the 2020 cycle — the 2020-census ZCTAs reached TIGERweb about two years after the count; don't treat the year as firm) | Census publishes the ZCTA vintage built on the 2030 census | `nys-zip-code` is **live TIGERweb**, envelope-queried at runtime, so there is no file to rebuild — the work is confirming the layer index still holds ZCTAs and that the city's own `zip-code` (MODZCTA, a Socrata file) still answers inside New York City. The two are different tilings of the same ground and only one may answer a point. | ☐ |
 
 ---

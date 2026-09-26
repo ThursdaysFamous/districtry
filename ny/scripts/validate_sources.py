@@ -283,9 +283,26 @@ PROVENANCE = [
      "source_url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Schools/FeatureServer/18?f=json",
      "builder": os.path.join(REPO_ROOT, "scripts", "build_ny_school_districts.py"),
      "builder_ref": "NYS_Schools/FeatureServer/18",
-     "vintage": "716 districts, dissolved from the state's 936 polygon rows on SED_CODE_1",
+     "vintage": "713 ORDINARY districts, dissolved from the state's 936 polygon rows on SED_CODE_1",
      "expected_successor": "updated in place; an index reshuffle surfaces as unreachable",
-     "note": "The 936-to-680 reconciliation against TIGERweb is recorded in the builder's docstring."},
+     "note": "The 936-to-680 reconciliation against TIGERweb is recorded in the builder's docstring. ny-central-hs-districts.json rides the entry below, out of the same layer."},
+    # THE SAME SERVICE, A SECOND FILE, AND ITS OWN ENTRY ON PURPOSE. The three
+    # central high school districts are split out of layer 18 by CONTAINMENT
+    # because nothing that service publishes marks the tier (measured
+    # 2026-09-26: two carry a blank SED code and the third carries its own
+    # component's). One entry covering both files would report a single vintage
+    # for two tiers and hide the one figure worth watching here -- if New York
+    # merges or dissolves a central high school district, the builder's own
+    # EXPECTED_UPPER_TIER refuses the write and this row is what says which
+    # number moved.
+    {"layer": "NY central high school districts (upper school tier)",
+     "app_file": "ny-central-hs-districts.json",
+     "source_url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Schools/FeatureServer/18?f=json",
+     "builder": os.path.join(REPO_ROOT, "scripts", "build_ny_school_districts.py"),
+     "builder_ref": "NYS_Schools/FeatureServer/18",
+     "vintage": "3 central high school districts (Bellmore-Merrick, Sewanhaka Central, Valley Stream Central), split from the same 936 rows by containment",
+     "expected_successor": "updated in place; a fourth or a merger surfaces as the builder's EXPECTED_UPPER_TIER refusal, not here",
+     "note": "No SED code ships on this layer's cards: two of the three have none and Valley Stream Central carries its own component's."},
     # REWRITTEN at the 2026-09-19 go-live, and it had been describing a layer
     # that stopped shipping the day before. It said "5 NYC counties relabeled as
     # judicial districts 1/2/11/12/13", built from TIGERweb's State_County by
@@ -426,7 +443,7 @@ STATEWIDE_COUNTS = [
      "url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Schools/FeatureServer/18",
      "expected": 936,
      "means": "a district reorganised; this is the RAW row count, which the builder "
-              "dissolves to 716 districts on SED_CODE_1"},
+              "dissolves to 716 districts on SED_CODE_1, which ship as 713 in\n              ny-school-districts.json plus the 3 central high school\n              districts in ny-central-hs-districts.json"},
 ]
 
 FAIL, WARN, OK = "FAIL", "WARN", "OK"

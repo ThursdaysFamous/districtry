@@ -7892,6 +7892,7 @@ function initNycExplorer() {
   var LAYER_AREA_RANK = [
     "judicial-district",
     "county",            // 62 counties statewide. Inside the city a county IS a borough, which the borough layer already answers with the city's own names.
+    "nys-central-hs-district", // 3 central high school districts, each drawn OVER its own component districts — larger than the districts inside it, so it restacks beneath them and heads them in the hover list
     "nys-school-district", // 716 school districts statewide; the city's own 32 Community School Districts are a different concept and stay on their own layer
     "municipality",      // 995 cities and towns, which tile the state; villages sit inside towns and are their own layer
     "village",           // 532 villages, nested inside towns rather than beside them, so a point can be in both a village and its town
@@ -10226,6 +10227,54 @@ function initNycExplorer() {
    * are organised into, not one of these 716. ---------- */
   var loadNysSchoolDistricts = makeCached(function () {
     return fetchJSONWithRetry("data/app/ny-school-districts.json", {}, 2);
+  });
+
+  /* ---------- Central High School District (statewide, 3) --------------------
+   * NEW YORK HAS TWO TIERS OF SCHOOL DISTRICT OVER THE SAME GROUND, and until
+   * 2026-09-26 both shipped in one layer where these three answered NOBODY.
+   * Eleven districts in Nassau County run their own elementary schools and send
+   * their students to one of three CENTRAL HIGH SCHOOL DISTRICTS for high
+   * school; each of the fourteen elects its own board, so a reader in Elmont is
+   * in two school districts at once and both are a real answer.
+   *
+   * They were unreachable for a mechanical reason rather than a missing source:
+   * findFeatureContaining breaks on the FIRST containing feature in file order,
+   * and the three sat at indices 649/659/660 behind their own components at 1,
+   * 3 and 32. Their outlines drew and their names hovered; no card ever named
+   * one. The split is by CONTAINMENT, because nothing the state publishes marks
+   * the tier — the builder's split_tiers() records that measurement in full.
+   *
+   * NO STATE EDUCATION CODE ROW, and that is measured rather than an omission:
+   * two of the three carry no SED code at all and the third, Valley Stream
+   * Central, carries its own COMPONENT'S code (280230020000, shared with Valley
+   * Stream 30). A code row here would print an identifier belonging to a
+   * different district on one card in three. */
+  var loadNysCentralHsDistricts = makeCached(function () {
+    return fetchJSONWithRetry("data/app/ny-central-hs-districts.json", {}, 2);
+  });
+  /* Hides where no such district exists, which is everywhere but three areas of
+   * Nassau County. The test reads the layer's own file (1.7 KB, the same fetch
+   * the query makes) rather than a separate outline. */
+  function centralHsCoverage(point) {
+    return loadNysCentralHsDistricts().then(function (geojson) {
+      return !!findFeatureContaining(geojson, point);
+    });
+  }
+  registerPolygonLayer({
+    id: "nys-central-hs-district",
+    group: "schools",
+    label: "Central High School District",
+    coverage: centralHsCoverage,
+    loader: loadNysCentralHsDistricts,
+    style: { color: "#0A4D5C", weight: 2.5, fillColor: "#0A4D5C", fillOpacity: 0.05, dashArray: "10 4" },
+    fields: [
+      { name: "name", label: "District", keys: ["schooldist"], primary: true },
+      { label: "What it runs", value: "The high schools for several component districts, each of which runs its own elementary schools and elects its own board. The School District layer names the component district this point is in." },
+      { label: "Who runs it", value: "New York school boards are elected locally. No statewide roster of their members has been found, so this card names nobody." }
+    ],
+    primaryLink: function () {
+      return { label: "NYSED district directory", url: "https://www.nysed.gov/" };
+    }
   });
   registerPolygonLayer({
     id: "nys-school-district",
@@ -14379,17 +14428,17 @@ function initNycExplorer() {
      carries the method and the measurements behind it, and its --check fails
      when a layer colour moves and its dark counterpart does not. */
   /* ==== GENERATED:BEGIN dark-map-palette ==== */
-  var DST_DARK_MAP_COLORS = { "#0B5394": "#4CA1FB", "#0B7285": "#49BED8", "#14181C": "#696F76",
-    "#14532D": "#5AA872", "#155C4B": "#58AE96", "#1D3557": "#6689BA", "#1E7A8C": "#53C4DD",
-    "#1F5C3A": "#60AF7F", "#1F6F5C": "#5ABEA3", "#2E7D5B": "#63C99B", "#3A0CA3": "#8178FE",
-    "#4361EE": "#9BB4FD", "#457B9D": "#7AC1EF", "#4B2E83": "#9C79EF", "#4CA98F": "#70EAC8",
-    "#4E6E9C": "#89B4F3", "#5A6B7C": "#9BB2CA", "#5B2A86": "#B172F0", "#5FB49C": "#81F2D2",
-    "#6A3FA0": "#B886FE", "#6B4E8C": "#B992E7", "#6B7280": "#ADB6C9", "#7048E8": "#B0A7FE",
-    "#7A0A1C": "#E8595F", "#7A1E5C": "#E063B2", "#7A5901": "#CDA040", "#7A6A55": "#C4AF92",
-    "#7C2D12": "#E27451", "#7CC49B": "#9EFDC7", "#8A5A00": "#E09E3C", "#8C6A2E": "#DBAD5E",
-    "#8C6D3F": "#D9AF72", "#A15C00": "#F99B38", "#B3261E": "#FE8171", "#B5179E": "#FE79E3",
-    "#B8860B": "#FEC141", "#C2410C": "#FF9776", "#C8102E": "#FE8B89", "#E4572E": "#FDB5A0",
-    "#F72585": "#FDB1C7"};
+  var DST_DARK_MAP_COLORS = { "#0A4D5C": "#53A0B5", "#0B5394": "#4CA1FB", "#0B7285": "#49BED8",
+    "#14181C": "#696F76", "#14532D": "#5AA872", "#155C4B": "#58AE96", "#1D3557": "#6689BA",
+    "#1E7A8C": "#53C4DD", "#1F5C3A": "#60AF7F", "#1F6F5C": "#5ABEA3", "#2E7D5B": "#63C99B",
+    "#3A0CA3": "#8178FE", "#4361EE": "#9BB4FD", "#457B9D": "#7AC1EF", "#4B2E83": "#9C79EF",
+    "#4CA98F": "#70EAC8", "#4E6E9C": "#89B4F3", "#5A6B7C": "#9BB2CA", "#5B2A86": "#B172F0",
+    "#5FB49C": "#81F2D2", "#6A3FA0": "#B886FE", "#6B4E8C": "#B992E7", "#6B7280": "#ADB6C9",
+    "#7048E8": "#B0A7FE", "#7A0A1C": "#E8595F", "#7A1E5C": "#E063B2", "#7A5901": "#CDA040",
+    "#7A6A55": "#C4AF92", "#7C2D12": "#E27451", "#7CC49B": "#9EFDC7", "#8A5A00": "#E09E3C",
+    "#8C6A2E": "#DBAD5E", "#8C6D3F": "#D9AF72", "#A15C00": "#F99B38", "#B3261E": "#FE8171",
+    "#B5179E": "#FE79E3", "#B8860B": "#FEC141", "#C2410C": "#FF9776", "#C8102E": "#FE8B89",
+    "#E4572E": "#FDB5A0", "#F72585": "#FDB1C7"};
   /* ==== GENERATED:END dark-map-palette ==== */
   /* ==== ENGINE:BEGIN districtry-theme ==== */
   /* The theme controller and the wordmark fleet switch, shared for the same
