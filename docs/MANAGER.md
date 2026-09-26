@@ -272,7 +272,11 @@ only that workflow's runs: `resource_id` as the workflow FILENAME returned
 numeric workflow id returned the same 6; `page: 3` with `perPage: 3` returned
 that workflow's runs 2 and 1 rather than a mixture; and
 `workflow_runs_filter: {"event": "schedule"}` returned 5 of the 8, exactly the
-scheduled count. `total_count` is the workflow's own, never the repository's
+scheduled count; and `{"branch": "main"}` returned 1,619 of the repository's
+3,230 smoke runs with every row's `head_branch` `main`. That last one was
+measured AFTER this correction was first written — the header claimed both
+sentences while the first pass had tested only `event`, which is the same
+reaching past the evidence this entry exists to correct. `total_count` is the workflow's own, never the repository's
 3,200+, so the filter is server-side. **Whether the claim was ever true is NOT
 established** — it was written 2026-09-25 and the tool may have changed since,
 so this records what answers today rather than calling its author wrong. What
