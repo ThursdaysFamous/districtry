@@ -169,6 +169,241 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-26 20:30 — RULING on Wisconsin's interval: interval=7, and the deciding factor is not the bytes.**
+
+Wisconsin held its own #1193 and re-measured everything I asked for. The decision it
+came back with is far better framed than the one I escalated, and it turns on
+honesty rather than page weight.
+
+**What changed from what I told Adam.** Measuring stray on RETAINED rings only —
+correct, since simplification keeps a subset of source vertices, so a retained ring
+holds at least one exactly — the curve is:
+
+| interval | gz total | vs main | worst retained | dropped rings | reader effect |
+|---|---|---|---|---|---|
+| 7 | 772,998 | **+74.3%** | 7.9 m | 4 | **none anywhere** |
+| 10 | 623,218 | **+40.5%** | 12.1 m | 8 | ~590 m2 of Cudahy shoreline answers NO district |
+| 12 | 560,263 | +26.3% | 15.6 m | 8 | fails the 15 m ceiling |
+
+So the +74.3% I put in front of Adam is not the price of correctness — **+40.5% also
+meets the ruled ceiling.** The real choice is 176 KB gzipped against one
+house-lot-sized patch of Milwaukee-area lakefront.
+
+**I RULE interval=7, and the reason is that interval=10 introduces a FALSE ANSWER
+rather than a silence.** At interval 8 and coarser, about 590 m2 of the Cudahy
+lakefront leaves Senate 7 and Assembly 20 for no numbered district, and a reader
+standing there would be told they are inside no district in this layer. That is
+this project's own line: we may be silent, we may say we do not know, we do not tell
+someone they have no state legislator when they have two. **The size of the patch
+changes how many readers meet the error, not what kind of error it is**, and 176 KB
+is not a price I will pay in a reader being told something untrue about the ground
+they are standing on. interval=7 also clears the ceiling with margin (7.9 m against
+15) rather than sitting on it.
+
+**I am not ruling on the merged plan, and Wisconsin was right to flag that.** It
+found that `wi/sw.js` precaches both chamber files at install, so every first-load
+visitor pays whether or not they ever switch a chamber on, and that
+`docs/OPTIMIZATION_PLAYBOOK.md` §10 — merged this afternoon — plans exactly that
+precaching away. That would turn the whole cost into something only interested
+readers pay. **Phase 2 is a plan and not merged code, so the ruling does not lean on
+it**; it is a reason the cost is likely temporary, not a reason to discount it.
+Interval=7 would be my answer with or without it.
+
+**The dropped-ring mechanism is still needed, with one entry rather than two.** The
+Lake Michigan ring off Door County (6 vertices, 7.5 x 6.6 m) is dropped at EVERY
+interval 4 through 15 and sits in the water pseudo-district, so no reader's answer
+moves either way — but it must be declared rather than tolerated silently, in the
+`ACCEPTED_DROPS` shape: identity, the answer a reader gets before and after, a
+reason, a date, re-audited so an entry naming a ring that is no longer dropped
+fails. Wisconsin's insistence that the reader-answer field is load-bearing is right,
+and it is what separates the two rings: without it the gate either blocks interval=7
+over a ring that changes nothing or waves interval=10's real flip through.
+
+**Three measurements of Wisconsin's worth keeping.** `keep-shapes` prevents a SHAPE
+from disappearing and not a RING — both rings were dropped with it on and both
+features survived — so any state whose districts carry islands or shoreline slivers
+must measure rings rather than features. Its "median vertex step" has SIX answers
+from 12.43 to 19.30 m depending on chamber and whether the water row is counted, and
+the reading that matches the population the gate measures over is 13.59 m, of which
+the ruled 15 m is 1.10x — so the ceiling holds for a better reason than the one it
+was first given. And its first cost reading was +0.0%, because it gzipped the
+working tree against itself inside its own branch: **the baseline for a cost claim is
+`git show origin/main:<path>`.**
+
+**2026-09-26 19:45 — six New Yorkers got their own names back, and one address stopped being a COVID notice.**
+
+**What changed for a reader.** New York City's Council cards named six of the 51
+members with their leadership job welded onto the front of their name — "Speaker
+Julie Menin", "Minority Whip Inna Vernikov", "Deputy Speaker Dr. Nantasha
+Williams" and three more — and that string went out as the person's own name on
+the card, in the officeholder table and in the machine-readable data search
+engines read. All six now carry their name, with the post in its own field beside
+it. And District 27's office address was this, in full: "Due to the recent COVID
+surge, our district office is currently open by appointment only. Contact my
+office directly to schedule your appointment today. 172-12 Linden Boulevard St.
+Albans, NY 11434" — which reached the card, the map pin and the structured data as
+that member's postal address. It is now the address alone (#1190).
+
+**What I checked rather than took.** Exactly six names changed and the record count
+stayed 51, so nobody was dropped. **Exactly one office of the 51 moved** — District
+27's, which is the whole verification shape: the only address allowed to change is
+the one that was wrong. The six offices the Council deliberately labels ("East
+Harlem Office", "Bay Ridge District Office" and four more) all survive, and
+District 49's full address is intact rather than truncated to its room number,
+which is what the obvious fix would have done to it.
+
+**The gate behind it was negative-tested by me in both directions** — silent on the
+fixed tree, exit 1 naming all six on the base roster restored — and its three
+stated boundaries checked against the function directly rather than inferred from a
+green run: a person surnamed Speaker or Leader keeps their name, and the "Hon."
+the state courts print on two borough officials is not flagged.
+
+**One figure I chased because it looked like a hole and was not.** The run reports
+"+45 records" for a 51-member file, which reads as six members going unexamined —
+and six was exactly the number that had been wrong. The generic walk reaches 6 of
+the 51 and the declaration adds the other 45. 6 + 45 = 51, so every member is
+examined and the gate is honestly reporting what is NEW to it rather than the
+file's size. Worth recording because the coincidence of the two sixes is the kind
+that would have looked like a finding.
+
+**A weekly job had been fetching a city website 52 times at a fifth of a second
+having read no robots.txt at all** — zero references to it in the file on the base.
+It now reads the fleet's one reader and honours the ten-second delay the Council
+asks for, which costs about nine minutes of waiting once a week and nothing else.
+
+**Two claims on the provenance page were false in the direction that flatters us
+and are now measured.** It said the NYPD publishes no commander for "about four of
+the 78" precincts; all 78 are named today, and the card had no sentence for the
+absent case at all, so the row described a behaviour that did not exist. And it
+said cities and towns cover every part of New York with no gaps — the overlaps half
+is exactly right, and the missing word was **land**: a point out on Lake Erie,
+Lake Ontario or Long Island Sound is in neither.
+
+**2026-09-26 19:35 — RULING: the fidelity ceiling is the state's own median step, and Illinois's 1.40 was never a ratio anybody chose.**
+
+Iowa surfaced this and it is mine to settle. The fleet now derives one quantity
+three ways:
+
+| state | median step | ceiling | implied ratio | method used |
+|---|---|---|---|---|
+| Illinois | 17.9 m | 25.0 | 1.40 | rounded up to a round number |
+| Wisconsin (proposed) | 14.7 m | 20.0 | 1.36 | applied Illinois's 1.40 as a rule |
+| Iowa (#1189, shipped) | 43.4 m | 45.0 | 1.04 | rounded the step |
+
+**1.40 IS AN ARTIFACT OF ILLINOIS ROUNDING, NOT A DESIGNED RATIO**, and Illinois's
+own words in this file say so: "the true line's own staircase step ... is a median
+17.9 m ... **so 25 m is about one step**." It called 25 approximately one step. It
+never chose 1.4 of anything. Wisconsin read a ratio out of that rounding and
+applied it to its own step, which is copying Illinois's 25 m with one level of
+indirection in between.
+
+**THE RULE, AND WHY IT POINTS AT IOWA'S METHOD.** The gate exists to catch a drawn
+line that cut a corner off the true one. A stray of about one step means one corner
+was cut. Steps vary, so a ceiling ABOVE the median tolerates cutting more than one
+typical corner, and a ceiling at or just below it tolerates about one. So: **the
+ceiling is the state's own median step, rounded to a round number, and never more
+than about 1.1x it.** Iowa's 45 against 43.4 is that. Illinois's 25 against 17.9 is
+loose by this rule and is recorded as loose rather than churned — its ceiling is not
+load-bearing (its geometry comes in at 17.8 m and passes either way), so re-deriving
+it now buys nothing but a rebuild; whoever next touches that builder re-derives it.
+
+**I TOLD WISCONSIN THE RIGHT CONCLUSION FOR THE WRONG REASON AN HOUR AGO.** I wrote
+that 1.40 "is not a fleet ratio" and set 1.04 beside it as though both were chosen
+ratios, so "the ratio carries no information". Iowa's reading is sharper and
+correct: they are not two ratios, they are **two incompatible METHODS**, and Iowa
+never picked a ratio at all. The conclusion held — do not import Illinois's number —
+but a reader of my message would have learned the wrong thing about why.
+
+**THE CONSEQUENCE FOR WISCONSIN IS A STRICTER CEILING, AND IT INTERACTS WITH THE
+WATER RING.** Under this rule Wisconsin's 14.7 m step gives **15 m, not 20**. Its
+proposed interval=7 reports a 17.5 m worst stray — but that figure IS the dropped
+7-vertex ring in open Lake Michigan, which no interval fixes, so it is not a reason
+to prefer 7 over 8 either. **Its own land worst at each interval is what decides
+this, and nobody has measured it.** So the instruction is unchanged in shape and
+sharper in content: exclude the named ring, report the LAND worst for intervals 4
+through 15, and take the coarsest interval that meets 15 m. That may cost fewer
+bytes than interval=7, not more, because the ring may be the only thing that forced
+7 — which would make the page-weight decision smaller than the one I told Adam was
+coming.
+
+**Iowa's own note that its 1.04 is the STRICTER and therefore the safe direction to
+be wrong in is right** (1.40 applied to Iowa would give 60.8 m), and #1189 needs no
+change: a tighter ceiling can only refuse more.
+
+**Two Iowa measurements worth keeping.** Its water-ring check does not merely not
+arise — 154 source rings against 154 drawn, no district's ring count changed, every
+Iowa legislative district a single-ring polygon, and the worst point inland at
+42.12331,-92.41460. And both chambers' worst stray is the SAME 19.1 m at the SAME
+coordinate, which is a fourth independent confirmation of the shared topology: one
+arc, simplified once, straying identically in both layers.
+
+**And Iowa caught a timing defect of its own worth the fleet's attention**: it
+asserted a PR was waiting to be merged while holding a checkout that already
+contained the merge, because it read the PR state and then rebased. **A rebase onto
+main can carry in the very fact the entry is about to deny** — the read belongs
+after the rebase. Its third timing-of-a-read defect in two days, and the same family
+as the two figures it retracted: not a wrong measurement, a measurement taken at the
+wrong moment.
+
+**2026-09-26 19:30 — Iowa's legislative map is right now, and Wisconsin's fix needs a decision from Adam.**
+
+**What changed for a reader.** Iowa Code composes each state Senate district out of
+two House districts, so on the map the Senate line should sit exactly on the House
+line. It did not, on **all fifty pairings** — the worst off by 775 m, and 147 of
+154 districts drawn more than 25 m from where the real boundary runs, cutting
+diagonally through blocks instead of following streets. That is the same defect
+Adam reported on the Illinois map, in Iowa's own builder. It is fixed and live
+(#1189). Verified independently off the shipped files rather than from the report:
+50 of 50 pairings broken before, 0 of 50 after, and by area the House pair against
+its Senate district goes from a 0.2% worst disagreement to **0.000000% on all
+fifty**. Iowa's ground-truth point still classifies to Senate 26 / House 52 /
+US-House 4, and 2x(26-1)+2 = 52, so the rule holds at the anchor by a route that
+never touches the new gate.
+
+**The docs of record stopped teaching a false fact about Wisconsin** (#1188), which
+was the residue I should have caught before merging #1187 and caught on the
+post-merge check instead. The disproved sentence stays in place under a dated
+correction carrying the measurement, which is this project's convention and is
+worth more here than a clean rewrite.
+
+**A DECISION FOR ADAM, and it is a genuine trade rather than a defect.** Wisconsin
+has the same nesting defect and measured its fix on the full state. Its numbers are
+far worse than Iowa's or Illinois's to start with — a **median** 80.1 m stray with
+128 of 134 districts over 20 m — and the correct setting costs **+329,494 bytes
+gzipped, +74.3%**, on two cache-first files every first-load visitor downloads.
+Illinois's equivalent fix came out 871 bytes SMALLER, so there is no fleet-wide
+sign and I was wrong to predict the cost away. Wisconsin escalated it as an
+operator decision and that is right.
+
+**What I asked for before it goes up, so the trade is visible**: its curve stops at
+interval=8 while Illinois ships interval=15, so five more rows may make the
+decision disappear. And its 20 m ceiling was derived by importing Illinois's
+25/17.9 = 1.40 ratio, which is not a fleet constant — **Iowa's is 1.04** — and
+unlike Iowa's ceiling Wisconsin's is load-bearing: it admits interval=7 and rejects
+interval=8, a 57 KB difference in what a reader downloads. A number reached by
+analogy cannot carry that.
+
+**TWO STATES MEASURED THE SAME CHANGE AND GOT OPPOSITE SIGNS, which is the fleet
+finding of the evening.** Wisconsin's board told Iowa that combining the two
+chambers before switching algorithms "actively DEGRADES fidelity" — its own stray
+went 2,940 m to 5,381 m. Iowa's went **775.2 m to 333.2 m**, halved. Both are full
+states, same tool. So the generalisation is wrong in both directions and the
+correct lesson is stronger than either: because mapshaper's retain percentage is
+relative to the whole dataset, no state can reason about a percentage setting's
+fidelity at all, which is an argument for the algorithm change rather than a
+warning about the order of operations. Carried to both sessions with each other's
+table credited.
+
+**And the format question Iowa raised is ruled.** A declared count of 1,000 or more
+cannot be written at all today, because the matcher reads bare digits and 19 reader
+fields carry a thousands comma. Iowa proposed putting the format on the token; I
+ruled it onto the DECLARATION, required and failing the build at 1,000 or more, with
+no default in either direction — a default comma would be a fleet rule through the
+back door and a default bare would ship "1024" in six voices that may not want it.
+Iowa's separation-of-concerns argument was the better-reasoned one and I said so;
+what decided it is that token-level format lets one number render two ways inside
+one record, which reads as an error and would need its own gate.
+
 **2026-09-26 19:05 — #1187 merged, and a false sentence came off the Wisconsin map.**
 
 **What changed for a reader.** A reader on the Wisconsin map has been told, in the

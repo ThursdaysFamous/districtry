@@ -16,7 +16,8 @@
 "office": "420 Lexington Ave, Suite 650 New York, NY 10170"
 },
 "5": {
-"name": "Speaker Julie Menin",
+"name": "Julie Menin",
+"role": "Speaker",
 "office": "444 East 75th Street, Unit 1B New York, NY 10021"
 },
 "6": {
@@ -24,7 +25,8 @@
 "office": "563 Columbus Ave New York, NY 10024"
 },
 "7": {
-"name": "Majority Leader Shaun Abreu",
+"name": "Shaun Abreu",
+"role": "Majority Leader",
 "office": "1677 Amsterdam Ave New York, NY 10031"
 },
 "8": {
@@ -104,8 +106,9 @@
 "office": "37-04 Queens Boulevard, Suite 205 Long Island City, NY 11101"
 },
 "27": {
-"name": "Deputy Speaker Dr. Nantasha Williams",
-"office": "Due to the recent COVID surge, our district office is currently open by appointment only. Contact my office directly to schedule your appointment today. 172-12 Linden Boulevard St. Albans, NY 11434"
+"name": "Dr. Nantasha Williams",
+"role": "Deputy Speaker",
+"office": "172-12 Linden Boulevard St. Albans, NY 11434"
 },
 "28": {
 "name": "Ty Hankerson",
@@ -188,14 +191,17 @@
 "office": "Bay Ridge District Office 8203 3rd Avenue Brooklyn, NY 11209"
 },
 "48": {
-"name": "Minority Whip Inna Vernikov"
+"name": "Inna Vernikov",
+"role": "Minority Whip"
 },
 "49": {
-"name": "Majority Whip Kamillah M. Hanks",
+"name": "Kamillah M. Hanks",
+"role": "Majority Whip",
 "office": "130 Stuyvesant Place 6th Floor, Room 602 Staten Island, NY 10301"
 },
 "50": {
-"name": "Minority Leader David Carr",
+"name": "David Carr",
+"role": "Minority Leader",
 "office": "900 South Avenue, Suite 403 Staten Island, NY 10314"
 },
 "51": {

@@ -51,6 +51,13 @@ def main():
         name = (rec.get("name") or "").strip()
         if name:
             entry = {"name": name}
+            # The leadership post the scraper split off the name (Speaker,
+            # Majority Leader and the rest). `office` on these records is the
+            # district office ADDRESS, so the post has a key of its own rather
+            # than overwriting one.
+            role = (rec.get("role") or "").strip()
+            if role:
+                entry["role"] = role
             office = (rec.get("office") or "").strip()
             if office:
                 entry["office"] = office

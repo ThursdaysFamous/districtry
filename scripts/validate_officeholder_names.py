@@ -119,24 +119,29 @@ change admits 182 records in two files -- wi-alderpersons.json 175,
 mps-school-board-members.json 7 -- every one a person, with no false positive
 and no new finding.
 
-1,156 OFFICEHOLDERS ARE STILL OUTSIDE THIS GATE, AND THAT IS A MEASUREMENT.
-1,175 WAS THE FIGURE BEFORE THIS CHANGE and it is kept here because the two are
-a different question: 1,175 is what the flat-keyed class held when it was
-re-measured, 1,156 is what is left once PERSON_PATHS declares Illinois's 19, and
-a first draft of this paragraph printed the larger one as the remainder while
-enumerating the smaller one three lines below — a total its own list disproved.
+1,104 OFFICEHOLDERS ARE STILL OUTSIDE THIS GATE, AND THAT IS A MEASUREMENT.
+RE-MEASURED 2026-09-26 AND THE FIGURE THIS PARAGRAPH CARRIED DID NOT REPRODUCE:
+it said 1,156 where the four flat files hold 1,155 today, and named
+`wi/data/app/county-board-members.json` as 1,096 where the file answers 1,095 —
+off by one in both places, which is one supervisor leaving a roster. A count of
+other people's rosters goes stale on their schedule rather than on this repo's,
+so it is measured by subtraction from the walk rather than remembered: for each
+file, what declaring its top level admits, less what the walk already reaches.
+1,175 WAS THE FIGURE BEFORE ILLINOIS WAS DECLARED and is kept here because the
+two are a different question — 1,175 is what the flat-keyed class held when it
+was re-measured, and each declaration takes its file out of the remainder.
 Corrected 2026-09-25 from the 1,592 this paragraph stated on 2026-09-22, which
 was stale in the harmless direction: two of the four files it named as the
 largest blind sets are now fully examined — `mi-commissioner-members.json` (185
 records) and `wi-county-officers.json` (442) — recovered by the same walk fix
 that landed with the figure. A number in a paragraph that calls itself a
 measurement is still stale when it stops reproducing, whichever way it moved.
-Illinois's own 19 are no longer among them: `il/data/app/school-board-members.json`
-is DECLARED in PERSON_PATHS below, which is the route out this paragraph named
-and did not build. What remains is `wi/data/app/county-board-members.json` 1,096
-(beside 479 the walk reaches in the same file), `ny/data/app/council-members.json`
-51, `wi/data/app/mpd-district-captains.json` 7 and
-`wi/data/app/wi-municipal-executives.json` 2.
+Illinois's 19 and New York's 51 are no longer among them:
+`il/data/app/school-board-members.json` and `ny/data/app/council-members.json`
+are both DECLARED in PERSON_PATHS below, which is the route out this paragraph
+named. What remains is `wi/data/app/county-board-members.json` 1,095 (beside 479
+the walk reaches in the same file), `wi/data/app/mpd-district-captains.json` 7
+and `wi/data/app/wi-municipal-executives.json` 2 (beside 6).
 Before the walk fix it was 1,774 across 19 files; running why_not_a_name() over
 all of them found ZERO defective, so this is a guard hole rather than a shipped
 defect, and it is recorded here because the next pass would otherwise measure
@@ -283,6 +288,52 @@ ACCEPTED_NAMES = {
 }
 
 
+# AN OFFICE IN FRONT OF A NAME, which every predicate above passes because it is
+# words and nothing else. Measured 2026-09-26: `ny/data/app/council-members.json`
+# shipped "Speaker Julie Menin", "Majority Leader Shaun Abreu", "Deputy Speaker
+# Dr. Nantasha Williams", "Minority Whip Inna Vernikov", "Majority Whip Kamillah
+# M. Hanks" and "Minority Leader David Carr" — six of 51 — because the scraper
+# stripped photo-alt SUFFIXES and the Council writes the post as a PREFIX. Those
+# are six cards naming a person whose name is not that person's name, with no
+# digit, no punctuation and nothing else for this function to catch.
+#
+# THE SET IS WIDE AND THAT WAS MEASURED, NOT ASSUMED. Run over every person name
+# the fleet ships — 14,638 names in 127 files, the four flat-keyed files admitted
+# for the sweep — these 40 offices flag exactly those six and nothing else: zero
+# false positives. So the rule covers the offices a roster's own `role` column
+# should be carrying, rather than only the six that happened to break.
+#
+# IT NEEDS TWO FURTHER WORDS, so a person actually surnamed Leader or Speaker is
+# not refused: the shape being caught is a post in front of a full name. And it
+# is a rule about PEOPLE, which this function already guarantees — its only
+# callers are this gate, over records person_records() selected, and Chicago's
+# school-board builder, over member names. Michigan ships a township called
+# SPEAKER ("Speaker Township, Precinct 1") and a rule applied to place records
+# would refuse it; `mi/data/app/mi-precincts.json` is a FeatureCollection and
+# yields zero person records, measured the same day.
+#
+# HONORIFICS ARE NOT IN IT, deliberately: `ny/data/app/borough-officials.json`
+# publishes its County Clerks as "Hon. Ischia Bravo" and "Hon. Nancy T. Sunshine",
+# which is how the state courts print them, and a gate that refused a published
+# honorific would be red on correct data.
+LEADING_OFFICES = (
+    "Speaker", "Deputy Speaker", "Majority Leader", "Minority Leader",
+    "Majority Whip", "Minority Whip", "Deputy Leader",
+    "Assistant Majority Leader", "Assistant Minority Leader",
+    "President Pro Tempore", "Pro Tempore",
+    "Mayor", "Deputy Mayor", "Alderman", "Alderwoman", "Alderperson",
+    "Councilman", "Councilwoman", "Council Member", "Councilmember",
+    "Supervisor", "Commissioner", "Trustee",
+    "Chairman", "Chairwoman", "Chairperson", "Chair", "Vice Chairman", "Vice Chair",
+    "Clerk", "Treasurer", "Sheriff", "Assessor", "Coroner", "Judge", "Justice",
+    "Comptroller", "Borough President", "District Attorney", "President",
+)
+LEADING_OFFICE_RE = re.compile(
+    r"^(%s)\s+\S+\s+\S+" % "|".join(
+        re.escape(o) for o in sorted(LEADING_OFFICES, key=len, reverse=True)),
+    re.I)
+
+
 def why_not_a_name(value):
     """Return why `value` cannot be a person's name, or None if it can be.
 
@@ -313,6 +364,9 @@ def why_not_a_name(value):
         return "no letters in it"
     if re.search(r"\d", text):
         return "digits in it"
+    office = LEADING_OFFICE_RE.match(text)
+    if office:
+        return "an office (%s) in front of the name" % office.group(1)
     return None
 
 
@@ -356,6 +410,24 @@ SELFTEST = [
     ("Vance Parker", None),
     ("Noneman", None),
     ("Openshaw", None),
+    # AN OFFICE IN FRONT OF A NAME, 2026-09-26. All six came off
+    # ny/data/app/council-members.json as it shipped; the honorifics and the
+    # one-word case are the boundaries the rule must NOT cross.
+    ("Speaker Julie Menin", "an office (Speaker) in front of the name"),
+    ("Majority Leader Shaun Abreu",
+     "an office (Majority Leader) in front of the name"),
+    # Longest office first, or this reads as Speaker with a member called Deputy.
+    ("Deputy Speaker Dr. Nantasha Williams",
+     "an office (Deputy Speaker) in front of the name"),
+    ("Minority Whip Inna Vernikov",
+     "an office (Minority Whip) in front of the name"),
+    # The state courts print their clerks this way and the roster ships it.
+    ("Hon. Ischia Bravo", None),
+    ("Hon. Nancy T. Sunshine", None),
+    # Two further words are required, so a person surnamed Leader or Speaker
+    # keeps their name.
+    ("Leader Smith", None),
+    ("Speaker Township", None),
 ]
 
 
@@ -551,19 +623,24 @@ def person_records(payload, declared=()):
 # run and FAILS on one that has left the tree or admits nothing, the shape
 # ACCEPTED_NAMES and NOT_COUNTY_BOARDS already use here.
 #
-# ONLY ILLINOIS'S FILE IS DECLARED, DELIBERATELY. The fleet's remaining
-# flat-keyed officeholders are `wi/data/app/county-board-members.json` (1,096
-# supervisors, beside 479 the walk already reaches in the same file),
-# `ny/data/app/council-members.json` (51), `wi/data/app/mpd-district-captains.json`
-# (7) and `wi/data/app/wi-municipal-executives.json` (2) — 1,156 in total, which
-# is 1,175 less the 19 this table declares, and
-# examining them is not this session's to decide, because a declaration that
-# turns this gate red lands on that instance's next pull request and the per-file
-# judgement belongs to whoever knows that data.
+# WISCONSIN'S THREE FILES ARE STILL UNDECLARED, AND THAT IS THEIR SESSION'S CALL.
+# Measured 2026-09-26: `wi/data/app/county-board-members.json` holds 1,095
+# supervisors outside the walk (beside 479 inside it),
+# `wi/data/app/mpd-district-captains.json` 7 and
+# `wi/data/app/wi-municipal-executives.json` 2 (beside 6) — 1,104 in total.
+# A declaration that turns this gate red lands on that instance's next pull
+# request, and the per-file judgement belongs to whoever knows that data.
 #
-# THAT 1,175 ALSO CORRECTS THE 1,592 THE DOCSTRING STATES, which was measured
-# 2026-09-22 and is stale in the harmless direction: two of the four files it
-# names as blind are now fully examined — `mi-commissioner-members.json` (185
+# NEW YORK'S 51 WERE DECLARED ON 2026-09-26 BY THE SESSION THAT OWNS THEM, which
+# is the rule above working rather than an exception to it: the same change fixed
+# the parser that had put a leadership post in front of six of those names, so
+# the declaration and the data landed together and the gate went green on the
+# tree it was declared against. A declaration whose file is not fixed in the
+# same change is a red gate handed to somebody else.
+#
+# THE 1,175 THIS COMMENT USED TO QUOTE ALSO CORRECTS THE 1,592 IN THE DOCSTRING,
+# measured 2026-09-22 and stale in the harmless direction: two of the four files
+# it names as blind are now fully examined — `mi-commissioner-members.json` (185
 # records) and `wi-county-officers.json` (442) — recovered by the walk fix that
 # landed with it. A stale figure in a paragraph that calls itself a measurement
 # is still stale.
@@ -577,6 +654,17 @@ PERSON_PATHS = {
         "weekly from cpsboe.org — so a parse defect here would ship a wrong name "
         "onto a card and an officeholder table with nothing looking at it.",
         "2026-09-25"),
+    "ny/data/app/council-members.json": (
+        "",
+        "New York City's 51 Council Members, keyed by district with no collection "
+        "name: {\"5\": {\"name\", \"role\"?, \"office\"?}}. Declared in the change "
+        "that fixed the defect this gate could not see: the scraper's clean_name() "
+        "stripped photo-alt SUFFIXES only, and the Council writes a leadership post "
+        "as a PREFIX, so six of the 51 shipped a name that was not that person's "
+        "name — \"Speaker Julie Menin\", \"Deputy Speaker Dr. Nantasha Williams\" "
+        "and four more. Fifty-one named people, on a roster refreshed weekly, "
+        "reaching a card, an officeholder table and schema.org.",
+        "2026-09-26"),
 }
 
 

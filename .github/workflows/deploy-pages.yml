@@ -225,7 +225,7 @@ jobs:
             data/search-performance.json
             node_modules package.json package-lock.json
             engine metros.json metro-worksheet.json point-transmission.json
-            layer-sources.json
+            layer-sources.json layer-load.json
             user-agent-measurements.json
             schema CLAUDE.md
             _site

@@ -34,6 +34,272 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-26 (last tonight). THE BYTE OBJECTION I ESCALATED IS ABOUT TO STOP BEING
+TRUE, AND #1191 MERGED SAYING SO WHILE I WAS MEASURING.** My whole cost argument
+names one mechanism: `+329,549 gz` on two files `wi/sw.js` lists in `GEOMETRY_URLS`,
+which is precached at install, so **every first-load visitor downloads them whether
+they ever switch a chamber on** (verified on main tonight — both files are in that
+list and in neither of the other two). `docs/OPTIMIZATION_PLAYBOOK.md` §10, landed
+in `e18b334` this afternoon, plans to remove exactly that: **phase 2, "Fetch on first
+use — the service worker stops precaching boundary files at install and caches each
+one the first time it is used", target "first visit no longer downloads 1.5-9.8 MB in
+the background."** After that phase the interval's cost is paid by readers who ask
+for their legislative districts rather than by everyone, which is a much weaker
+objection than the one I put to Adam.
+
+Two more things in that document bear on the ruling and neither was written with this
+decision in mind, which is what makes them worth quoting. Its vector-tile trial
+accepts sub-metre disagreement between a tile and the full file **on the stated
+ground that "the shipped files are already further than that from the true line (the
+Illinois legislative outlines stray up to 17.8 m by design)"** — so both interval 7
+(7.9 m worst on retained rings) and interval 10 (12.1 m) sit inside the regime the
+tile plan already assumes, and neither setting argues for or against it. And its
+phase-3-to-6 tiling **keeps the full GeoJSON** — named for `compare-stats`,
+relationship outlines, boundary-street labels and hover — fetched on use rather than
+on toggle, with the tile archive 1.6-5x the gzipped file in git. So a finer interval
+never stops costing bytes; it stops costing them at FIRST LOAD, which is the cost
+the escalation was about.
+
+**I am not treating this as the ruling.** Phase 2 is a plan, not merged, and the
+choice is still the operator's. But the figure the choice was framed on has a dated,
+merged plan to retire it, and that belongs in front of whoever decides rather than
+being discovered afterwards.
+
+**2026-09-26 (later still). THE DROPPED-RING QUESTION ASKED OF THE LAYER THAT NAMES
+PEOPLE: THE SUPERVISORY TILING LOSES 642 RINGS, TWO DOOR COUNTY ISLETS ANSWER NO
+DISTRICT AT ALL, AND ITS OWN 10,000-POINT GATE IS BLIND BY A FACTOR OF 137.**
+Held on the chambers, so I asked the same question of the other Wisconsin builders
+that run `keep-shapes` — there are four, and three still use Visvalingam
+percentages: aldermanic 25%, NG911 8%, **supervisory 9% over 1,589 districts, each
+of which names a supervisor**. Source fetched through the builder's OWN
+`fetch_layer` so the request is the one it makes; `robots_policy` read
+services1.arcgis.com first as the fetching client (absent, allow all — the host
+serves HTML at that path). Rings compared on the builder's own `SUPER_FIPS`, and
+dropped rings identified BY IDENTITY.
+
+| | source | shipped | net difference | gone by IDENTITY |
+|---|---|---|---|---|
+| outer rings (PARTS) | 2,288 | 2,140 | 148 | **134** |
+| inner rings (HOLES) | 847 | 327 | 520 | **510** |
+
+**The two counts answer different questions and I am quoting both rather than
+picking one.** The net difference is one file's ring total minus the other's, which
+nets a ring lost in one district against a ring gained in another and includes the
+one shipped key the source does not have. The identity count is per ring: a SOURCE
+ring none of whose own vertices survived. 644 rings are gone by identity, of which
+two are Trempealeau's, so **642**.
+
+**THE HEADLINE AREA IS MY OWN COMPARISON'S ARTIFACT AND THE REAL ONE IS 0.124 km2.**
+The dropped parts total 69.25 km2 and 69.19 km2 of that is Trempealeau alone — the
+one county the builder DELIBERATELY takes from the county's own service because
+LTSB's file merges two of its districts, so its shipped geometry is a different
+drawing under different keys and my identity test read the substitution as a loss.
+A point LTSB calls Trempealeau 17 answers Trempealeau 15 in the shipped file, which
+is the documented substitution rather than a dropped ring. Excluding it:
+
+- **510 holes, 0.056 km2 in total**, median **1 m2**, largest 2,000 m2.
+- **132 parts, 0.068 km2 in total**, largest 3,500 m2.
+
+**WHAT A READER GETS, TESTED AT AN INTERIOR POINT OF THE FIVE LARGEST OF EACH KIND**
+(the app's own even-odd test, source against shipped):
+
+- A dropped HOLE hands the reader the SURROUNDING district: 43.5605,-88.9220 answers
+  **Dodge 03** in the source and **Dodge 01** shipped; Richland 20 becomes Richland
+  21; Kenosha 15 becomes Kenosha 14. Each is a sliver of about 2,000 m2, and each
+  would put a neighbouring supervisor's name on the card.
+- A dropped PART can leave the reader with NOTHING: **45.0691,-87.2824 answers Door
+  16 in the source and no district at all shipped**, and 44.8799,-87.4258 the same
+  for Door 05 — 2,600 m2 and 2,300 m2 islets in the Door archipelago, where small
+  islands are real ground rather than a shoreline digitising artifact. That is the
+  Cudahy case again on a layer where the card names a person.
+
+**AND THE BUILDER'S GATE CANNOT SEE ANY OF IT, BY CONSTRUCTION RATHER THAN BY LUCK.**
+`validate()` samples 10,000 uniform in-state points and fails if simplification
+introduces overlap beyond the source's own — a good check, and the affected ground is
+0.1236 km2 of Wisconsin's 169,635, which is **7.3 parts in ten million**: 10,000
+points expect **0.0073 hits**, and about **1.37 million** would be needed to expect
+one. The chambers' `validate()` was blind to a 2.9 km stray because a thin band is
+thin; this one is blind because the area is small. **Uniform-point sampling cannot
+see a dropped ring at all, whatever the count, and adding points is not the remedy.**
+
+**THIS SHARPENS THE HELD DECISION RATHER THAN COMPETING WITH IT.** The chambers'
+choice between interval 7 and 10 turns on one 590 m2 patch; this layer already ships
+642 such patches under a percentage setting nobody has revisited, on the layer whose
+cards name 1,572 people. The remedy is the same in both places and is the gate
+proposed above — measure RINGS, not features, and make a dropped ring fail
+separately with the answer a reader gets before and after recorded beside it.
+
+**NOT MEASURED, AND SAYING SO RATHER THAN IMPLYING IT.** The aldermanic (25%, 866
+districts) and NG911 (8%, four tilings) layers are the same question unasked. Both
+are DISSOLVES, so their "source" is the unsimplified dissolve rather than a
+published layer, and asking costs a full-precision rebuild of each — which is why
+this pass stopped at the one layer whose source is a published service. The method
+is the same and the scratch script is reusable.
+
+**2026-09-26 (later). THE RULED 15 m CEILING HOLDS, THE COARSEST INTERVAL THAT
+MEETS IT IS 10, AND IT COSTS HALF OF WHAT I BUILT — BUT THE GATE AS PORTED CANNOT
+PASS 15 m AT ANY INTERVAL, AND THE REASON IS A READER-FACING DIFFERENCE BETWEEN
+TWO DROPPED RINGS THAT A SINGLE STRAY NUMBER HIDES.** Same eight builds as the
+table above; what changed is the MEASUREMENT, not the build. Stray here is on
+RETAINED rings only, a ring counting as dropped when NONE of its own vertices
+survived (`min(distance) > 1.0 m`), since simplification keeps a subset of source
+vertices and so a retained ring always holds at least one exactly. Baseline is
+**main's** 443,449 gz.
+
+| interval | gz total | vs main | worst RETAINED | median | dropped rings |
+|---|---|---|---|---|---|
+| 4 | 1,061,245 | +139.3% | 5.2 m | 4.0 m | 4 |
+| 5 | 937,959 | +111.5% | 5.7 m | 5.0 m | 4 |
+| 6 | 845,390 | +90.6% | 7.7 m | 5.9 m | 4 |
+| 7 | 772,998 | +74.3% | 7.9 m | 6.9 m | 4 |
+| 8 | 715,774 | +61.4% | 11.1 m | 7.9 m | 8 |
+| **10** | **623,218** | **+40.5%** | **12.1 m** | **9.9 m** | **8** |
+| 12 | 560,263 | +26.3% | **15.6 m** | 11.9 m | 8 |
+| 15 | 490,424 | +10.6% | 20.0 m | 14.8 m | 8 |
+
+**THE PREDICTION WAS RIGHT: THE CEILING IS CHEAPER THAN MY BUILD, BY 149,780 gz.**
+interval=10 meets 15 m at 12.1 m; interval=12 fails at 15.6 m. So the coarsest
+passing setting costs **+40.5%** where my interval=7 costs +74.3%, and the page
+weight escalated to Adam is 146 KB gzipped rather than 322 KB.
+
+**1. THE 15 m IS RIGHT AND THE 14.7 m IT WAS DERIVED FROM IS ONE OF SIX ANSWERS.**
+"Wisconsin's own median vertex step" is not a single quantity, measured on the
+TIGERweb source both chambers carry: senate all rings **12.43 m**, assembly all
+rings **14.71 m**, both pooled **13.59 m**, senate without the water
+pseudo-district 15.66 m, assembly without it 19.30 m, both pooled without it
+17.63 m — a spread of 12.4 to 19.3 m for one phrase, and the 14.7 m is the
+ASSEMBLY ALONE with the water row counted. The reading that matches the
+population the fidelity gate measures over — both chambers, every ring, water row
+included — is **13.59 m**, and 15 m is **1.10x** it, so the ruled ceiling survives
+the correction for a different reason than the one given. It is worth stating
+which reading, because the pooled no-water reading would put the ceiling near 19 m
+and admit interval=12. **And a median step is NOT a floor on achievable stray**,
+which I had assumed while writing the scan: interval=4 reaches a 5.2 m worst
+against a 13.59 m median step, because dp thresholds PERPENDICULAR DEVIATION and a
+removed vertex offset by little from its neighbours' chord costs little however far
+apart they are.
+
+**2. THE TWO DROPPED RINGS ARE NOT THE SAME EVENT, AND ONLY A READER TEST
+SEPARATES THEM.** Both are tiny and neither is a stray the interval controls, so a
+metre count reads them alike. What a point inside each one ANSWERS does not:
+
+| dropped ring | size | dropped at | source | interval=7 | interval=10 |
+|---|---|---|---|---|---|
+| 45.4107,-86.8596 Lake Michigan off Door, at the Michigan water line | 6 verts, 7.5 x 6.6 m | **every interval 4-15** | water pseudo-district | water | water |
+| 42.9047,-87.8430 Cudahy lakefront | 5 verts, 18.2 x 32.3 m | **interval >= 8 only** | **Senate 7 / Assembly 20** | Senate 7 / Assembly 20 | **water pseudo-district** |
+
+Tested with the app's own even-odd point-in-polygon at each ring's own interior, in
+both chambers. So **intervals 4 through 7 change no reader's answer anywhere** —
+the only ring they lose answers the water row before and after — while
+**intervals 8 and coarser move about 590 m2 of the Cudahy shoreline out of Senate 7
+and Assembly 20 into no numbered district at all**, where the card's empty state
+would tell a reader they are inside no district in this layer. That is the ONLY
+reader-visible difference between interval 7 and interval 10, it is the size of a
+house lot, and it is a wrong answer about the ground rather than a silence.
+
+**3. SO THE GATE HAS TO SPLIT, AND AS PORTED IT CANNOT PASS 15 m AT ALL.**
+Illinois's `check_fidelity` measures every SOURCE vertex, dropped rings included,
+and has no dropped-ring concept — which has never mattered, because Illinois has
+no dropped rings and Iowa measured 154 source rings against 154 drawn. Wisconsin is
+the first instance where a ring goes, and the Door ring's own vertices sit
+17.4-19.9 m from the drawn line at EVERY interval 4-15, so an all-vertex reading
+puts the floor at ~20 m however fine the interval: the ceiling becomes a function
+of the smallest ring in the state rather than of line fidelity. **PROPOSED**, not
+built: stray measured on RETAINED rings against `FIDELITY_MAX_M = 15.0`, and a
+dropped ring failing SEPARATELY unless declared in an `ACCEPTED_DROPPED_RINGS`
+table in the `ACCEPTED_DROPS` shape this repo already uses — identity (centre,
+vertex count, area), the answer a reader gets before and after, a reason and a
+date, re-audited every run so an entry naming a ring that is no longer dropped
+FAILS as well. The reader-answer field is the load-bearing one: without it the gate
+either blocks interval=7 over a ring that changes nothing, or waves through
+interval=10's real flip.
+
+**4. `keep-shapes` PREVENTS A SHAPE FROM DISAPPEARING, NOT A RING — AND THAT IS
+FEATURE-LEVEL, WHICH IS WHY BOTH OF THESE WENT.** Measured rather than inferred:
+both rings were dropped with `keep-shapes` on, and both of their FEATURES survived
+intact. A multipolygon is one feature with several rings; once one ring survives,
+the feature has not disappeared and the guarantee is met, so every other ring is
+eligible for removal like any other geometry. Both of Wisconsin's dropped rings are
+detached parts whose main part is orders of magnitude larger, so `keep-shapes`
+never engages for them. Any state whose districts carry detached fragments —
+islands, shoreline slivers, a ward across a river — should expect this and measure
+rings rather than features.
+
+**5. THE COST BASELINE TRAP I NEARLY PUBLISHED.** The first read of these
+percentages was **+0.0%**, because the comparison was run inside the branch that had
+already rebuilt the two files: `wi/data/app/wi-*-districts.json` on this branch ARE
+the interval=7 output, so gzipping them measured the candidate against itself. The
+baseline for a cost claim is `git show origin/main:<path>`, never the working tree
+that changed the file. Same shape as a grep answering about the tree you are
+standing in.
+
+**WHAT I WANT RULED.** Both interval=7 and interval=10 meet the 15 m ceiling, so
+this is no longer a fidelity question — it is +34 percentage points of a cache-first
+download against one 590 m2 patch of the Cudahy shoreline answering "no district"
+instead of Senate 7. My recommendation is **interval=10**: the bytes are paid by
+every first-load visitor, the patch is on a shoreline where TIGERweb's own district
+and water rows already overlap each other, and at 12.1 m worst on retained rings
+the line itself is well inside the ceiling. I have not built it, and will not until
+this and Adam's page-weight answer come back. **All three corrections are in
+#1193's own BODY**, above the superseded numbers rather than only here, since the PR
+is what a reviewer reads and as first written it argued for a 20 m ceiling the
+ruling supersedes; its CI is green on `4a62a20` (smoke, run 36266524637) and it is
+marked HELD rather than closed, because the build itself is sound and is one of the
+two settings that meet the ceiling.
+
+**2026-09-26. THE REBUILD IS OPEN AS #1193, ALL THREE GATES GREEN ON THE REAL
+BUILD, AND THE COST IS THE ONE THING I WANT WEIGHED RATHER THAN ASSUMED.** Build
+output: `nesting: 33 pairing(s) share every boundary vertex exactly`, fidelity
+17.5 m and 17.4 m against a 20 m ceiling, validate 2000/2000 with 0 overlaps on
+both chambers. 104 of 104 static invocations.
+
+**`dp keep-shapes interval=7`, ceiling 20 m derived from Wisconsin's own 14.7 m
+median staircase step** (Milwaukee 14.5, Madison 15.2 agree, so no local sample
+was needed), at Illinois's 1.40 ratio. interval=7 is the cheapest setting reaching
+the irreducible worst; the curve is 4 → 19.9, 5 → 17.5, 6 → 17.5, 7 → 17.5,
+8 → 30.0.
+
+> **CORRECTED 2026-09-26 — THE 1.40 IS NOT A FLEET RATIO AND THE 14.7 m IS ONE
+> CHAMBER'S.** The manager ruled that 25/17.9 is an artifact of Illinois rounding
+> its own ceiling, not a transferable multiplier, so the ceiling is **15 m** — never
+> more than about 1.1x one median step. Re-measured, "Wisconsin's median step" has
+> six answers from 12.43 to 19.30 m and the 14.7 m is the ASSEMBLY alone with the
+> water pseudo-district counted; the reading matching the population the gate
+> measures over is 13.59 m, of which 15 m is 1.10x. And this curve is ALL-VERTEX, so
+> its 17.5 m floor is one dropped ring rather than the line: on retained rings the
+> same builds read 5.2 / 5.7 / 7.7 / 7.9 / 11.1 m, which makes **interval=10** the
+> coarsest setting meeting 15 m. See the 2026-09-26 (later) entry at the top.
+
+**THE COST IS +329,531 BYTES GZIPPED, +74.3%** (443,452 → 772,983) on cache-first
+geometry every first-load visitor downloads — measured after the build, and within
+37 bytes of what I predicted from the curve. Illinois's equivalent came out 871
+bytes SMALLER because its old files were far less aggressive than Wisconsin's.
+I shipped it with the cost stated in the builder's docstring, the PR body and
+here rather than holding the work for a ruling, because the PR is the reviewable
+artifact — but the trade against a median 80.1 m stray is the operator's, and a
+reviewer can decline it at merge time on the numbers.
+
+**TWO PORTING DEFECTS, BOTH CAUGHT BY GUARDS RATHER THAN BY CI.** mapshaper names
+each output after its INPUT and writes `.json` whatever `format=geojson` says, so
+the first run found no files — and the "did the combined run emit every layer"
+guard REFUSED rather than writing a half-built family, which is the whole point of
+having it. Then the ported gates referenced `_vertex_set` and `math`: the first
+because I sliced Illinois's block starting BELOW the helper it needed, the second
+because this builder never imported math and only function bodies reference it, so
+the module imported cleanly and would have failed at call time. **I found the
+second by resolving every global name the ported functions reference instead of
+patching the one the traceback named** — the traceback would have given me
+`_vertex_set` and left `math` for the next run.
+
+**AND MY FIRST MEASUREMENT OF THIS WAS VACUOUS, WHICH IS THE THIRD TIME TODAY.**
+Illinois's `check_fidelity` keys districts on `BASENAME`; my ad-hoc fetch requested
+`SLDU,NAME,GEOID,STATE` and omitted it, so every feature keyed to `""`, the check
+compared one district against one district, and the shipped files reported **0.0 m
+worst stray** — impossible for a simplified file, which is the only reason I looked.
+The dp rows in that run looked plausible because `interval` bounds deviation, which
+is exactly the lying-small-input trap the brief warned about. The builder itself
+always requested BASENAME; the error was only ever in my own probe.
+
 **2026-09-26. THE NESTING/FIDELITY REBUILD IS MEASURED AND NOT YET BUILT (#1188
 must merge first — one branch, serial). THREE THINGS IN THE BRIEF ARE WRONG FOR
 WISCONSIN and are worth carrying to Iowa before it repeats them.** Full state,
@@ -57,6 +323,12 @@ Madison 15.2 m over 2,871) — so unlike Illinois no local measurement was neede
 justify it. Illinois set 25 m against a 17.9 m step, a ratio of 1.40; 14.7 × 1.40 =
 20.6, so 20 m. interval=7 is the CHEAPEST setting reaching the irreducible worst.
 
+> **SUPERSEDED 2026-09-26 — THE CEILING IS 15 m AND THE SETTING IS interval=10.**
+> The 1.40 is Illinois rounding its own ceiling rather than a fleet ratio (ruled),
+> the 14.7 m is the Assembly alone, and the 17.5 m "irreducible worst" is a dropped
+> ring rather than the line. Both corrections are set out in the 2026-09-26 (later)
+> entry at the top; nothing was built on this proposal.
+
 **1. THE COST DOES NOT DISAPPEAR, AND THE BRIEF EXPECTED IT TO.** Illinois's dp
 files came out 871 bytes SMALLER gzipped. Wisconsin's correct setting costs
 **+329,494 bytes gzipped, +74.3%** (443,504 → 772,998) on two CACHE-FIRST files
@@ -73,6 +345,21 @@ combining two layers makes 10% retain proportionally less of each. "Necessary an
 not sufficient" understates it: for a percentage setting, combining actively
 DEGRADES fidelity. **Iowa will hit this if it combines before switching to dp.**
 
+> **CORRECTED 2026-09-26 — THE GENERALISATION AND THE PREDICTION ARE BOTH WRONG,
+> DISPROVED BY IOWA'S OWN MEASUREMENT (#1189).** Iowa's worst stray goes **775.2 m
+> separate to 333.2 m combined**, i.e. BETTER, where Wisconsin's goes 2,939.9 m to
+> 5,381.4 m. The mechanism named above is real and the prediction does not follow
+> from it, because neither state's pair is a controlled comparison: the separate
+> runs used a DIFFERENT percentage per chamber and the combined run uses one.
+> Iowa's separate were 12/10/9 against a combined single 10%, so its House went
+> from 9% to a 10% dataset share and GAINED detail; Wisconsin's separate were
+> 10%/9% over two layers, so its combined lost. **What combining does to fidelity
+> depends on which per-chamber percentages it replaces, and its direction cannot be
+> predicted across states** — which is a stronger argument for dp than the one this
+> entry made, since an absolute `interval` has no dataset share to redistribute and
+> so no sign to guess. Stated as one state's sweeping rule it would have sent Iowa
+> looking for a degradation it does not have.
+
 **3. THE WORST-STRAY FIGURE IS AN OPEN-WATER ARTIFACT AND A ZERO-TOLERANCE READING
 WOULD CHASE IT.** The 17.5 m floor is constant across intervals 5-7 because it is
 not set by the interval: Senate d1's source carries 17 rings and the drawn 16, and
@@ -83,6 +370,15 @@ county dissolve is water-inclusive, so it covers the lake and cannot arbitrate, 
 the filter changed nothing. So the numbers above are all-vertex and the offshore
 character of the single worst point is stated from the ring inspection rather than
 from a split I cannot measure with what the app ships.
+
+> **CORRECTED 2026-09-26 — THE SPLIT IS MEASURABLE AND IT IS NOT LAND AGAINST
+> WATER.** A dropped ring's consequence is what a point inside it ANSWERS, and the
+> app's own point-in-polygon settles that without any arbiter of land: this ring's
+> interior answers the water pseudo-district in the SOURCE and at every interval, so
+> it changes no reader's answer at all, while the second ring intervals >= 8 drop
+> moves 590 m2 of the Cudahy shoreline out of Senate 7. See the 2026-09-26 (later)
+> entry at the top. The "7-vertex" count here and the "6 verts" there are the same
+> ring — 7 coordinate pairs, the last repeating the first.
 
 **AND THE EXISTING `validate()` NEVER SAW ANY OF THIS.** 2,000 random points over
 Wisconsin almost never land in a thin band, so a 2.9 km stray with 128 of 134

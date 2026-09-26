@@ -45,6 +45,113 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, THE COTERMINOUS TOWN/VILLAGE DOUBLE-DRAW IS MEASURED, AND SIX OF THE
+SEVEN ARE OURS.** Nothing is built — #1195 holds the branch — but the measurement is
+what the next item needs, and it CORRECTS the answer an extrapolation would have
+given on the one number most likely to be quoted.
+
+New York has seven coterminous town/village governments in the shipped files, found
+by IoU > 0.90 between `ny-villages.json` and `ny-cities-towns.json`. Each was then
+measured against the STATE'S OWN full-precision geometry (NYS_Civil_Boundaries
+layers 6 and 7, fetched per name):
+
+| village | town | source IoU | shipped IoU | source m | shipped m |
+|---|---|---|---|---|---|
+| Harrison | Harrison | 0.999519 | 0.988897 | **0.9** | **139.7** |
+| Scarsdale | Scarsdale | 0.999383 | 0.986026 | **0.9** | **142.7** |
+| Mount Kisco | Mount Kisco | 0.998825 | 0.973003 | **0.9** | **328.9** |
+| Green Island | Green Island | 0.998560 | 0.962904 | **1.0** | **92.7** |
+| Kiryas Joel | Palm Tree | 0.998283 | 0.960264 | **0.9** | **259.3** |
+| East Rochester | East Rochester | 0.997428 | 0.928951 | **1.0** | **314.8** |
+| Woodbury | Woodbury | 0.986135 | 0.985000 | **1725.6** | 1331.7 |
+
+**SIX PAIRS AGREE TO WITHIN A METRE AT SOURCE AND SHIP 93 TO 329 METRES APART.**
+The publisher draws one line; this repo draws two, because
+`ny/scripts/build_ny_municipalities.py` loops `build_one` and calls mapshaper ONCE
+PER LAYER, and mapshaper builds topology within one file — so a shared edge cannot
+survive identically. It is the #1174 shape exactly, and the symptom is the same one
+Adam reported there: two highlight lines parting at zoom 16.
+
+**WOODBURY IS NOT OURS, AND THAT IS WHY THE OTHER SIX WERE FETCHED.** Its source
+Hausdorff is 1,725.6 m — LARGER than the 1,331.7 m it ships — and its source IoU is
+essentially its shipped one. The state genuinely draws Woodbury village and
+Woodbury town differently, and our simplification happens to reduce the gap.
+**Extrapolating from Harrison would have claimed all seven, including the single
+case where the claim is false and the largest figure in the table.** The worst
+separation this repo introduces is Mount Kisco's 329 m, not 1,332 m.
+
+**THE FIX IS ILLINOIS'S, AND ITS TRAP IS RECORDED THERE**: one shared topology
+(`combine-files`, so a shared edge is ONE arc simplified once) AND Douglas-Peucker
+instead of Visvalingam, because Visvalingam thresholds triangle AREA and does not
+bound how far the drawn line strays. Both halves, because the first alone looks
+sufficient and is not. **AND A SMALL-INPUT TEST WILL SAY OTHERWISE AND BE LYING**:
+mapshaper's retain percentage is relative to the whole dataset's vertex count, so
+seven pairs through `combine-files` will measure far better than 995 + 532 features
+do. Measure on the full fetch or not at all.
+
+One open question for whoever builds it: these two layers are 995 and 532 features
+from the SAME service, and `ny-counties.json` (62) is a third from the same family.
+Illinois combined three chambers because they nest exactly; here the villages sit
+INSIDE the towns rather than tiling with them, so the shared topology is the town
+outline and the village ring that traces part of it. Worth checking whether the
+county layer belongs in the same run before committing to a two-file combine.
+
+**2026-09-26, ITEM 4 IS OPEN AS #1195, AND ITS STATED PREMISE WAS WRONG — the
+design survived, the key did not.** The queue said "separate layers per tier,
+`SED_CODE_1` already encodes the tier". Separate layers is right and is what
+ships; the column does not encode anything, measured against the service rather
+than against the shipped file. Nothing published marks the tier: `SED_CODE_1` is a
+single SPACE on two of the three and its own COMPONENT'S code on the third,
+`INSSUBDE` reads `UNION FREE` on that third and **`CENTRAL` on 411 of the 936
+rows** (an ordinary New York district type, not this one — ANGELICA-BELMONT reads
+`CENTRAL` and contains nothing), `SDLCODE` is blank on the three and four others,
+and none of the service's 18 layers is a central-high-school layer. **THE KEY IS
+CONTAINMENT**: exactly three districts are covered by smaller ones, each covered
+100.000%, the other 713 with ZERO overlapping pairs under an exhaustive sweep and
+the three mutually disjoint.
+
+**THE PROTOCOL THAT WAS SUPPOSED TO CATCH THIS PASSED ON A COIN FLIP, and that is
+the finding worth keeping.** The builder gates every candidate simplification on
+2,000 points sampled over the state ENVELOPE — 35.88 deg², mostly ocean — and
+refuses any candidate with a single point in two entities. The three upper-tier
+districts are **0.010 deg²**, so the expected number of samples landing in them is
+**0.56** and the chance of seeing none is about **57%**. Its "0 overlaps" was not a
+measurement of disjointness; it was a measurement of how small the overlap is.
+After the split each layer is internally disjoint by exhaustive sweep, so the zero
+is now a fact. **A SAMPLED GATE OVER A LARGE ENVELOPE CANNOT SEE A SMALL FEATURE,
+and it reports that as a pass.**
+
+**NO GEOMETRY WAS RE-DERIVED AND THAT WAS THE RIGHT CALL.** A full rebuild needs an
+8.3 MB fetch and mapshaper over npx; instead `--split-only` recombines the shipped
+files and re-partitions them offline in 0.3 s, so every polygon keeps bytes that
+already passed the protocol, and `--check` makes the same code a drift gate with no
+network. It is idempotent and it REFUSES to re-split a set whose entity count has
+moved — which is why the negative test that deleted a district could not be papered
+over by re-running it.
+
+**THE NEW SMOKE ASSERTION WAS NEGATIVE-TESTED BY REPRODUCING THE ORIGINAL DEFECT**:
+pointing the new layer at the pre-split 716-feature file makes the upper card name
+ELMONT, which is exactly what shipped until today, and the check fails on it. The
+merge gate went into `ny/scripts/validate_index.py` rather than a new CI step, so
+`CLAUDE.md`'s gate-count pair is untouched — and the pair is **104/10** on main
+now, not 103/10, because another session added a gate while #1190 was in review.
+Re-derive that list per PR; do not reuse the previous run's.
+
+**FIVE DERIVED-COUNT GENERATORS FAILED THEIR OWN `--check` BEFORE I RAN THEM** —
+landing page, about.html, llms.txt, stats.json/COUNTY_STATUS and the endpoint
+inventory — which is the `new-layer` skill's warning holding exactly: a green
+worksheet `--check` says nothing about any of them. One stale figure also came out
+of `validate_doc_counts.py`'s OWN excuse text, whose reason said "ships 33".
+
+**Verified: 104 static gates run 0 failing; 9 of 10 browser invocations pass**, the
+tenth `page_consistency_test.mjs` at 100 failures all `ERR_CERT_AUTHORITY_INVALID`
+on `gc.zgo.at`, zero non-cert.
+
+**WHAT REMAINS IN THE QUEUE**: the coterminous town/village double-draw, and both
+gap records (the three unreachable school districts — now retired by this PR rather
+than recorded, so that one is off the list — and the county-clerk roster naming 2
+of 5 boroughs). Then the county tier.
+
 **2026-09-26, #1190 IS GREEN AND MERGEABLE — ready for review.** `smoke`
 completed `success` on head `60ffd1e` at 19:20:30 UTC, `mergeable_state: clean`,
 no review comments, two commits, +400/-122 across 9 files. It carries item 3
