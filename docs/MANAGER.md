@@ -397,6 +397,28 @@ reads it: ask of any pipeline what its warnings would do if the thing they
 warn about happened. When a count is short by an amount no source explains,
 ask whether some stage is treating the output as an input.
 
+**REGENERATE THE BATTERY LIST FROM THE TREE YOU ARE MEASURING, EVERY TIME.**
+The local battery runner derives its command list from `smoke-test.yml`, so a
+script generated for one PR is a REMEMBERED SUBSET the moment another PR adds a
+gate — and the gates a PR adds are exactly the ones that check its own claims.
+Measured 2026-09-26 on #1206: a list generated for #1201 ran 105 invocations and
+reported ALL GREEN on a tree whose real list is 107, the two missing being that
+PR's own `--check-shipped` and `--selftest`. The conclusion happened to survive
+re-running, which is the dangerous shape: a stale list does not fail, it answers
+confidently about less than you asked.
+
+Two things make it visible rather than trusted. The runner prints `ran N of N`,
+so **compare N against the PR's own claimed invocation count** and chase any
+disagreement rather than preferring your own number — that disagreement is the
+only signal a stale list gives. And `validate_gate_counts.py` states the pair
+from the tree under test, which is the second honest reader.
+
+This is the defect `CLAUDE.md` already names about enumerating the battery
+through a pattern you wrote yourself, one level out: the pattern was right and
+the LIST was old. Wisconsin hit the same thing in its own runner the same hour
+and caught it; the manager hit it after being told, which is why it is written
+here rather than remembered.
+
 ## What the manager decides alone, and what goes to Adam
 
 Alone: merging another session's non-data PR after verification and green CI;
