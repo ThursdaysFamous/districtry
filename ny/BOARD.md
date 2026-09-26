@@ -45,6 +45,69 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, THE DOUBLE-DRAW IS OPEN AS #1198, AND MY OWN PREMISE FOR IT WAS WRONG
+IN THE HALF THAT DECIDED THE DESIGN.** The entry below said the fix was Illinois's
+2026-09-25 pair — one shared topology plus Douglas-Peucker — and left open whether
+`ny-counties.json` belonged in the run. Measured, both answers moved.
+
+**The counties DO belong, and they are the bigger half of the defect.** A New York
+county is the publisher's OWN dissolve of its towns: 98.4% of county vertices at
+source (89,310 of 90,772) ARE town vertices, and in the shipped files only 52.2%
+still were, the two files drawing one line up to **310 m apart** with 8.4% of
+those vertices over 25 m. That is larger than the village case the queue item was
+about, and `combine-files` fixes it **exactly** — 0.0 m on all 14,778 coincident
+vertices.
+
+**AND THE SHARED TOPOLOGY DOES NOTHING FOR THE VILLAGES, which is the correction.**
+Only **9 of 145,280** village vertices are also a town vertex at source: the state
+draws that layer independently, tracing the same line with different vertices, so
+there is no shared arc for mapshaper to find. What bounds the seven coterminous
+town/village governments is the ALGORITHM alone — Douglas-Peucker's interval — and
+had I built only the topology half I would have shipped a change that did not
+touch the thing the item was raised for. Both halves were measured separately
+rather than taken from Illinois's record.
+
+**A THIRD PAIR WAS DEFECTIVE AND IS IN THE SAME CHANGE.** `judicial-districts.json`
+re-fetched the county layer and simplified it AGAIN at 15%; its near-exact
+agreement with the county file was two identical runs on identical input rather
+than a property of the pipeline, and it still missed by ONE vertex. It dissolves
+the shipped county file now with no simplify step, which makes it exact by
+construction, drops 89 KB, and retires a duplicate 4 MB fetch the sibling
+builder's own docstring had been complaining about since 2026-09-18.
+
+**interval=25 RATHER THAN 15, ON A MEASUREMENT I HAD NOT TAKEN WHEN I WROTE THE
+ENTRY BELOW.** The four cache-first files a first visit precaches go from 738,250
+to **735,339** gzipped bytes — 2,911 SMALLER — while every fidelity number
+improves: villages go from 1,604.8 m worst and 31.28% of the publisher's vertices
+over 25 m to 190.8 m and 0.023%. interval=15 buys a 17-21 m worst stray for
++163,068 gzipped bytes (+22.1%), which is a trade this layer does not need.
+
+**MY OWN FIGURES IN THE ENTRY BELOW USED A DIFFERENT METRIC AND THE PR SAYS SO.**
+That table's 93-329 m was village-vertex-to-town-line; #1198 reports discrete
+Hausdorff between the two boundaries, which is comparable across vertex counts
+where the one-directional measure flatters a coarse file. Same ranking, same
+conclusion, different numbers (78-320 m shipped, 16-26 m after). Woodbury is
+unchanged in both readings: 1,484 m at source, the publisher's own, and it ships
+as measured.
+
+**One finding outside the queue item, one row above the manifest entries the change
+had to edit:** `ny/scripts/validate_sources.py` claimed the NYS county entry
+covered `ny-state-outline.json` and `metro-outline.json` because they are
+"dissolved from the county fabric by the same builders". `build_metro_outline.py`
+contains ZERO references to NYS_Civil_Boundaries — both are Census TIGERweb, which
+is also why they disagree with the county layer at the shoreline by design — so
+that entry never covered all three and TIGERweb's State_County MapServer was
+watched by nothing for those two files. It has its own row now.
+
+**Verification:** 104 of 104 no-browser invocations green, enumerated through
+`validate_gate_counts.measure()` against `origin/main`; 9 of 10 browser
+invocations green; `page_consistency_test.mjs` is 85 failures, 85 of them
+`ERR_CERT_AUTHORITY_INVALID` on the console check and nothing else, the same
+sandbox TLS shape as #1195 (which saw 100 — the count is unstable, which is the
+tell). The gate-count pair is untouched at 85/114, because the new merge gate went
+inside the existing per-instance step. **Next on the queue after this merges: the
+county-clerk gap record** (the roster names a clerk in 2 of 5 boroughs).
+
 **2026-09-26, #1195 MERGED `ae554ad` — Nassau's upper-tier school districts answer a
 click now, and I verified it on main by content rather than on the branch.** `smoke`
 was `success` on head `2a42a26` (20:10:35 → 20:22:31 UTC), read through
