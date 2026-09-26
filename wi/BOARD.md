@@ -37,6 +37,84 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-26 (night). TASK #65 IS BUILT AND OPEN AS #1206, AND THE GATE'S FIRST
+ACT WAS TO FIND THAT THE SHIPPED SUPERVISORY MAP TELLS 73 READERS THE WRONG
+DISTRICT.** The ruled shape was right and I did not re-argue it: the answer and
+not the area, computed per dropped ring, only harms declared, default FAIL, one
+mechanism for every Wisconsin boundary builder (`wi/scripts/dropped_rings.py`).
+
+**WHAT THE MEASUREMENT FOUND.** `keep-shapes` protects a SHAPE and not a RING, so
+the shipped visvalingam 9% geometry loses 586 distinct rings, 73 of which change
+the district a reader is told they are in — the largest a 3,496 m2 patch answered
+Sheboygan 10 where the truth is Sheboygan 20, plus thirty-odd false silences in
+DOOR COUNTY up to 2,621 m2. Door is the county it would be: a peninsula with
+islands, so its districts carry detached parts. **The builder's own 10,000-point
+agreement gate is blind to all of it by construction** — the lost rings total
+0.0222 km2 of 169,635, about 0.0013 of one expected hit — which is why the answer
+test is a separate gate rather than a tightening of that one.
+
+**THE READER'S ANSWER IS ONE DISTRICT AND NOT THE SET, AND THAT IS WORTH A THIRD
+OF THE COUNT.** `findFeatureContaining` scans in file order and BREAKS ON THE
+FIRST MATCH, so a drop taking the set from {A,B,C} to {A} changes no reader's
+answer. Measured: 102 rings change the set, 73 change what a reader is told. **This
+instance's own `WATCH.md` row 57 established that in September** — quote 63 to a
+reader and 133 to a builder — **and the first version of my module measured the set
+anyway.** I found it by reading that row while looking for something else. The
+records had the answer and the code did not.
+
+**THE SETTING IS dp interval=4 AND THE BYTES ARE THE ONE NUMBER THAT IS NOT MINE.**
+586 rings / 73 harms at the shipped 9%; 377 / 2 at interval=4 for +38.6% (+402 KB
+gzipped); 413 / 15 at interval=7; 431 / 21 at interval=10. The manager approved
+interval=10 on a byte measurement taken before the harm measurement existed, and
+the ruling's own rule — a count that is not a handful means the interval is wrong,
+never a gate to widen — selects 4. I built 4, put the whole curve in the PR body,
+and said it is theirs to redirect at merge. Since #1197 the 402 KB falls only on
+readers who open this layer rather than on every first visit, which is the thing
+that changed since the approval.
+
+**FOUR DESIGN FINDINGS, EACH AFTER GETTING IT WRONG FIRST, AND THE FIRST IS THE
+ONE THAT MATTERED.** A BOUNDING-BOX GRID IS THE WRONG SAMPLER AND UNDERCOUNTS
+HARM SILENTLY: at 0.25 m one ring needed 15,597,792 cells and 157 of 464 still
+yielded nothing, including rings of 97.6 and 131.6 m2 that plainly have an inside.
+A scanline span's midpoint is inside by construction — 1,457 points for 464 rings —
+and the sampler only PROPOSES, `point_in_ring` decides, because 1.02% are
+rejected. A TARGET-DRIVEN SAMPLER MADE THE VERDICT WOBBLE (308 and 307 changing on
+one file), so nothing is target-driven. THE DEGENERACY BOUND IS DERIVED FROM THE
+SHIPPED COORDINATE PRECISION (one 6-decimal cell, 0.01 m2) after a bound fitted to
+the observed maximum was caught by its own gate — fitting a bound to the data is
+the same mistake as choosing a ceiling to fit the drops. AND SIX DECIMALS IS NOT
+ENOUGH FOR EVERY RING: a 0.04 m2 ring holds no 6-decimal interior point, so the
+precision rises per ring until the point is provably inside.
+
+**A THIRD ANSWER CLASS EXISTS THAT THE RULING DID NOT ANTICIPATE AND IT IS THE
+MAJORITY.** 229 of the 377 dropped rings are holes NO district covered, so dropping
+them moves a reader from "you are in no supervisory district" to the district
+surrounding them — a drop that REMOVES a false silence. Counted, not declared per
+ring, with the COUNT held exactly. It rests on an inference and the module says
+so: LTSB's geometry overlaps itself on 0.017% of its area, so gaps and overlaps are
+one stitching artefact — but a hole could be a deliberate void.
+
+**TWO THINGS I GOT WRONG AND CORRECTED, BOTH WORTH KEEPING.** I told the manager
+the three harms were in Brown, Grant and Fond du Lac; they are DOOR and LAFAYETTE
+(the third stopped being a harm under reader semantics). Read the county from the
+data, never from a FIPS by eye. And I told them a 1,572 m2 ring pair was dropped at
+every interval, inferring it from 5, 6 and 10 without checking 4, where it is
+RETAINED.
+
+**MY OWN BATTERY RUNNER HAD CACHED ITS LIST.** It read a 105-entry file and
+reported 105 of 105 green while skipping the two gates this change adds — the
+remembered-subset defect, in the helper written to avoid it. Re-derived, it is 107
+of 107, 0 failed. Pair re-measured 88/117, mirror 117 for 117, Wisconsin smoke
+green with every anchor unchanged, cache v41 to v42.
+
+**DELIBERATELY NOT IN IT, AND SAID SO RATHER THAN QUIETLY NARROWED**: the chambers
+migration onto this module, which the ruling asks for and which is next — stacking
+a refactor of three shipped files and a CI gate onto a change that moves this
+geometry doubles the review risk. And the aldermanic and NG911 dissolves, both on a
+visvalingam percentage, are recorded UNASKED beside their own `SIMPLIFY` rather
+than assumed clean; asking costs a full-precision rebuild each.
+
+
 **2026-09-26 (later still, after #1200 went green). FOUR FIGURES BEHIND TASK #57 ARE
 WRONG, THREE OF THEM IN THE TREE, AND THE DECISION THEY SUPPORT SURVIVES ANYWAY.**
 Researching #57 while #1200 waited on review, I went to check the premise rather
