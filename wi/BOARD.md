@@ -34,6 +34,37 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-26 (last tonight). THE BYTE OBJECTION I ESCALATED IS ABOUT TO STOP BEING
+TRUE, AND #1191 MERGED SAYING SO WHILE I WAS MEASURING.** My whole cost argument
+names one mechanism: `+329,549 gz` on two files `wi/sw.js` lists in `GEOMETRY_URLS`,
+which is precached at install, so **every first-load visitor downloads them whether
+they ever switch a chamber on** (verified on main tonight — both files are in that
+list and in neither of the other two). `docs/OPTIMIZATION_PLAYBOOK.md` §10, landed
+in `e18b334` this afternoon, plans to remove exactly that: **phase 2, "Fetch on first
+use — the service worker stops precaching boundary files at install and caches each
+one the first time it is used", target "first visit no longer downloads 1.5-9.8 MB in
+the background."** After that phase the interval's cost is paid by readers who ask
+for their legislative districts rather than by everyone, which is a much weaker
+objection than the one I put to Adam.
+
+Two more things in that document bear on the ruling and neither was written with this
+decision in mind, which is what makes them worth quoting. Its vector-tile trial
+accepts sub-metre disagreement between a tile and the full file **on the stated
+ground that "the shipped files are already further than that from the true line (the
+Illinois legislative outlines stray up to 17.8 m by design)"** — so both interval 7
+(7.9 m worst on retained rings) and interval 10 (12.1 m) sit inside the regime the
+tile plan already assumes, and neither setting argues for or against it. And its
+phase-3-to-6 tiling **keeps the full GeoJSON** — named for `compare-stats`,
+relationship outlines, boundary-street labels and hover — fetched on use rather than
+on toggle, with the tile archive 1.6-5x the gzipped file in git. So a finer interval
+never stops costing bytes; it stops costing them at FIRST LOAD, which is the cost
+the escalation was about.
+
+**I am not treating this as the ruling.** Phase 2 is a plan, not merged, and the
+choice is still the operator's. But the figure the choice was framed on has a dated,
+merged plan to retire it, and that belongs in front of whoever decides rather than
+being discovered afterwards.
+
 **2026-09-26 (later still). THE DROPPED-RING QUESTION ASKED OF THE LAYER THAT NAMES
 PEOPLE: THE SUPERVISORY TILING LOSES 642 RINGS, TWO DOOR COUNTY ISLETS ANSWER NO
 DISTRICT AT ALL, AND ITS OWN 10,000-POINT GATE IS BLIND BY A FACTOR OF 137.**
