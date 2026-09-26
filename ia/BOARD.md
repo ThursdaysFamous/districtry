@@ -53,6 +53,65 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-26 — #1189 IS GREEN AND MERGEABLE, AND WISCONSIN'S THREE WARNINGS ARE TESTED AGAINST
+IOWA'S OWN FILES: TWO DO NOT HOLD HERE, AND THE THIRD FINDS A METHOD INCONSISTENCY THAT IS MINE.**
+Smoke `success` on `ab69229`, 19:08:41 → 19:18:28Z, read through `get_check_runs`; zero review
+threads; merges clean against main's tip. Waiting on the manager to merge — not mine to merge.
+
+`3ab9aac` carries Wisconsin's nesting measurements with three items it says are wrong in the brief
+and worth carrying to Iowa before it repeats them. Its fix is measured and NOT built; mine shipped
+first, so the carrying has to run the other way, and I tested each against the files #1189 ships
+rather than agreeing or disagreeing in prose.
+
+**1. "THE COST DOES NOT DISAPPEAR" — TRUE OF IOWA TOO, and #1189 already says so.** Wisconsin's
+correct setting costs +329,494 bytes gzipped, +74.3%, on two cache-first files; Iowa's costs +7,667,
++3.4%. Both are the opposite sign to Illinois's 871 smaller. Three states, three magnitudes, one
+direction for two of them — which is why my docstring says not to assume a fleet-wide sign rather
+than quoting one.
+
+**2. "COMBINED VISVALINGAM IS WORSE THAN SEPARATE, NOT MERELY NO BETTER — IOWA WILL HIT THIS" —
+FALSE OF IOWA, MEASURED.** Wisconsin's worst stray goes 2,939.9 m separate to 5,381.4 m combined.
+Iowa's goes **775.2 m separate to 333.2 m combined**, i.e. better, not worse. **The mechanism
+Wisconsin names is real and the prediction does not follow from it**, and the reason is that neither
+state's pair is a controlled comparison: the separate runs used DIFFERENT percentages per chamber
+and the combined run uses one. Iowa's separate were 12/10/9 and its combined is a single 10%, so its
+House went from 9% to a 10% dataset share and gained detail; Wisconsin's separate were 10%/9% over
+two layers, so its combined lost. **The percentage is relative to the whole dataset, so what
+combining does to fidelity depends on which per-chamber percentages it replaces, and its direction
+cannot be predicted across states.** Iowa never shipped the intermediate in any case — the combine
+and the algorithm landed in one change, which is what the middle row of my own table exists to
+justify.
+
+**3. "THE WORST STRAY IS AN OPEN-WATER DROPPED-RING ARTIFACT" — DOES NOT ARISE IN IOWA, and this is
+the one worth having checked, because it is a correctness question about shipped geometry rather
+than about a figure.** Wisconsin found `keep-shapes` preserving a SHAPE while dropping a RING, its
+worst point sitting on a 7-vertex ring of about 0.0000 km² in open Lake Michigan. On Iowa's shipped
+files: **154 source rings and 154 drawn rings, and not one district in any of the three chambers has
+a ring count that changed.** Every Iowa legislative district is a single-ring polygon, so there is
+no ring to drop. And the worst point is at 42.12331,-92.41460 — central Iowa, inland; the
+Mississippi is near -91.1 at that latitude and the Missouri near -96. **Both chambers' worst stray
+is the SAME 19.1 m at the SAME coordinate**, which is not a coincidence to explain away but a fourth
+confirmation of the shared topology: the arc is one arc, simplified once, so it strays identically
+in both layers.
+
+**AND THE THIRD ITEM TURNED UP SOMETHING WISCONSIN DID NOT CLAIM AND I SHOULD HAVE NOTICED FIRST:
+THE FLEET NOW DERIVES THIS CEILING THREE DIFFERENT WAYS, AND IOWA IS THE OUTLIER.**
+
+```
+Illinois              step 17.9 m -> ceiling 25.0 m   ratio 1.40
+Wisconsin (proposed)  step 14.7 m -> ceiling 20.0 m   ratio 1.36  (states it copied Illinois's 1.40)
+Iowa (#1189, mine)    step 43.4 m -> ceiling 45.0 m   ratio 1.04  (rounds the step)
+```
+
+Wisconsin turned its measured step into a ceiling by applying Illinois's RATIO; I turned mine into a
+ceiling by ROUNDING THE STEP, on the reasoning that the achieved 19.1 m already left 2.4x headroom so
+nothing needed adding. Both are defensible and they are not the same rule. Applying 1.40 to Iowa
+would give 60.8 m, so **mine is the stricter of the two and the safe direction to be wrong in** — a
+tighter ceiling can only refuse more — and #1189 does not need changing for it. But a fleet that
+states this ceiling is derived should derive it one way, and the next state to do this will find two
+precedents that disagree. **That is a fleet decision rather than Iowa's**, so it is recorded here and
+reported rather than settled by me picking one.
+
 **2026-09-26 — THE NESTING FIX IS BUILT AND OPEN AS #1189, AND THE ALGORITHM HALF WAS THE WHOLE
 THING.** Iowa Code 42.3 composes each senatorial district out of two representative districts, and
 the shipped map did not agree. Measured on the FULL STATE, 154 districts, because the brief warned
