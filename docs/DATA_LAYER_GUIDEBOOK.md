@@ -1736,8 +1736,8 @@ detail into `blocker`.
       "layer": "borough",
       "summary": "3 of the 5 borough cards name no County Clerk.",
       "why": "The court system publishes each clerk's office and address but the incumbent's name in only two boroughs, and its site now answers this project with a challenge page rather than the page itself.",
-      "blocker": "MEASURED 2026-09-26 while auditing what the borough card names, against the shipped ny/data/app/borough-officials.json: a clerk is named in 2 of the 5 boroughs (Bronx ‘Hon. Ischia Bravo’, Brooklyn ‘Hon. Nancy T. Sunshine’) and not in Manhattan, Queens or Staten Island, which carry the office link and — bar Staten Island — an address. The upstream is the operator-maintained ny/scripts/borough_officials_source.json, whose own `_verified` note records the finding this gap rests on: County Clerks checked 2026-07-20 on each office's nycourts.gov page, where only Bronx and Kings publish the incumbent. NYC County Clerks are APPOINTED by the Appellate Division, so there is no certified election return to fall back on the way an Illinois county board has. THE COURT SYSTEM'S SITE IS NOW BEHIND A MANAGED CHALLENGE, so that 2026-07-20 route cannot be re-read at all: GET https://www.nycourts.gov/robots.txt with UA_ROSTER_BOT (scraper_common) on 2026-09-26 returned HTTP 403, 5,522 bytes, `server: cloudflare`, `cf-mitigated: challenge`, `accept-ch: Sec-CH-UA-*` and a ‘Just a moment...’ body. The proxy's CONNECT succeeded first, so the 403 is the site's and not this sandbox's, which is the check that distinguishes the two. A challenge is an access control and is never solved or worked around, so no per-office page was fetched. THE ARCHIVE RUNG IS CLOSED FROM THIS VANTAGE TOO: GET https://web.archive.org/robots.txt on 2026-09-26 reset the connection on all three attempts, and scripts/robots_policy.py reads a network failure on robots.txt as disallow-all, so nothing was fetched there either. Re-test it from a runner. A ROUTE THAT WAS NEVER TRIED IS OPEN AND THIS RECORD WOULD HAVE BEEN WRONG WITHOUT IT. The City of New York publishes its own staff directory, the Greenbook, as Socrata dataset mdcw-n682 on data.cityofnewyork.us — 66,221 rows, rowsUpdatedAt 2026-09-21, robots served and the path allowed to this client. Queried 2026-09-26 with the same token, `$where=division_name like 'County Clerk - %'` plus an office-title filter returns exactly ONE principal row per county, all five: New York — Milton Tingling; Kings — Nancy Sunshine; Bronx — Luis Diaz; Queens — Audrey Pheffer; Richmond — Stephen Fiala. Its addresses agree with the shipped ones (60 Centre St, 851 Grand Concourse, 360 Adams St), and Kings agrees on the name. So the three unnamed boroughs have a first-party government source that names them and no competing claim, and this is not a no-source gap. THE ONE THING THAT MUST NOT BE SMOOTHED: the two publishers DISAGREE on the Bronx. nycourts.gov gave Ischia Bravo when it was readable, the Greenbook gives Luis Diaz five days ago, and nothing this project can read settles which is current — both routes above are shut. That is a live question about a named person on a shipped card rather than an absence, so it is the operator's to decide and is NOT part of this record's `counties`; a reader in the Bronx sees a name and this record does not claim otherwise. WHAT WOULD CLOSE THIS: a decision to read the Greenbook as the borough card's clerk source, which is a builder change (borough_officials_source.json is a hand-verified operator file by design, so this is a pipeline question and not a paste), plus whatever settles the Bronx. NOT YET ASKED — the offices are reachable by telephone and the Greenbook prints one per clerk, but no e-mail has been drafted.",
-      "wanted": "Either office confirming who holds the post today. The city's own staff directory names a clerk in all five boroughs, which would fill these three, and it disagrees with the court page on a fourth — that one needs settling first.",
+      "blocker": "MEASURED 2026-09-26 while auditing what the borough card names, against the shipped ny/data/app/borough-officials.json: a clerk is named in 2 of the 5 boroughs (Bronx ‘Hon. Ischia Bravo’, Brooklyn ‘Hon. Nancy T. Sunshine’) and not in Manhattan, Queens or Staten Island, which carry the office link and — bar Staten Island — an address. The upstream is the operator-maintained ny/scripts/borough_officials_source.json, whose own `_verified` note records the finding this gap rests on: County Clerks checked 2026-07-20 on each office's nycourts.gov page, where only Bronx and Kings publish the incumbent. NYC County Clerks are APPOINTED by the Appellate Division, so there is no certified election return to fall back on the way an Illinois county board has. THE COURT SYSTEM'S SITE IS NOW BEHIND A MANAGED CHALLENGE, so that 2026-07-20 route cannot be re-read at all: GET https://www.nycourts.gov/robots.txt with UA_ROSTER_BOT (scraper_common) on 2026-09-26 returned HTTP 403, 5,522 bytes, `server: cloudflare`, `cf-mitigated: challenge`, `accept-ch: Sec-CH-UA-*` and a ‘Just a moment...’ body. The proxy's CONNECT succeeded first, so the 403 is the site's and not this sandbox's, which is the check that distinguishes the two. A challenge is an access control and is never solved or worked around, so no per-office page was fetched. THE ARCHIVE RUNG IS CLOSED FROM THIS VANTAGE TOO: GET https://web.archive.org/robots.txt on 2026-09-26 reset the connection on all three attempts, and scripts/robots_policy.py reads a network failure on robots.txt as disallow-all, so nothing was fetched there either. Re-test it from a runner. A ROUTE THAT WAS NEVER TRIED IS OPEN AND THIS RECORD WOULD HAVE BEEN WRONG WITHOUT IT. The City of New York publishes its own staff directory, the Greenbook, as Socrata dataset mdcw-n682 on data.cityofnewyork.us — 66,221 rows, rowsUpdatedAt 2026-09-21, robots served and the path allowed to this client. Queried 2026-09-26 with the same token, `$where=division_name like 'County Clerk - %'` plus an office-title filter returns exactly ONE principal row per county, all five: New York — Milton Tingling; Kings — Nancy Sunshine; Bronx — Luis Diaz; Queens — Audrey Pheffer; Richmond — Stephen Fiala. Its addresses agree with the shipped ones (60 Centre St, 851 Grand Concourse, 360 Adams St), and Kings agrees on the name. So the three unnamed boroughs have a first-party government source that names them and no competing claim, and this is not a no-source gap. THE ONE THING THAT MUST NOT BE SMOOTHED: the two publishers DISAGREE on the Bronx. nycourts.gov gave Ischia Bravo when it was readable and the Greenbook gives Luis Diaz, and nothing this project can read settles which is current — both routes above are shut. CORRECTED 2026-09-26, the same day, on the manager's review: this sentence read ‘the Greenbook gives Luis Diaz FIVE DAYS AGO’, and that claimed a currency the field does not establish. Socrata's rowsUpdatedAt is a DATASET stamp, not a ROW stamp — a 66,221-row staff directory republished on 2026-09-21 says only that SOME row changed then, and nothing whatever about when the Bronx row was last touched. So the DIRECTION of the disagreement is unestablished: a stale directory row beside a correct card fits this evidence exactly as well as the reverse does. That makes changing nothing more right rather than less, and it is recorded because as written the record handed a reader a false sense of which source is newer, which is the half that could produce a wrong edit to a live name. THE ROUTE THAT WOULD SETTLE IT IS AN ASK RATHER THAN A FETCH: the clerks' offices answer the telephone and the Greenbook prints one number per office, so it is a draft for docs/ASK_DRAFTS.md and not another probe of two shut hosts. That is a live question about a named person on a shipped card rather than an absence, so it is the operator's to decide and is NOT part of this record's `counties`; a reader in the Bronx sees a name and this record does not claim otherwise. WHAT WOULD CLOSE THIS: a decision to read the Greenbook as the borough card's clerk source, which is a builder change (borough_officials_source.json is a hand-verified operator file by design, so this is a pipeline question and not a paste), plus whatever settles the Bronx. NOT YET ASKED — the offices are reachable by telephone and the Greenbook prints one per clerk, but no e-mail has been drafted.",
+      "wanted": "Any of the three clerks' offices confirming who holds the post today. The city's own staff directory names a clerk in all five boroughs, which would fill these three, and it disagrees with the court page on a fourth.",
       "counts": [
         {
           "value": 3,
@@ -3078,6 +3078,102 @@ file with no further simplification); `ny-state-outline.json` and
 `metro-outline.json` are **Census TIGERweb**, a different publisher whose
 water-inclusive geometry disagrees with the state's shoreline-clipped fabric by
 design; and `ny-school-districts.json` is drawn independently of municipal lines.
+
+## Tompkins County's legislature, proven before anything was built (measured 2026-09-26)
+
+New York's county tier starts on one county, and the manager's ruling was that its
+FORM be proven from a certified document first, because the first county settles a
+pattern the other 56 inherit and "the county looks easy" is not a reason to skip
+the order. New York governs its counties three ways — a **county legislature**
+elected from districts, a **board of supervisors** made of the towns' own
+supervisors sitting ex officio, and Otsego's board of representatives — and those
+are not variations on one shape: a legislature county needs geometry and a
+dispatch entry, a board-of-supervisors county needs neither, because the seat IS
+the town and the statewide municipality layer already draws it.
+
+**TOMPKINS IS A 16-DISTRICT COUNTY LEGISLATURE, ONE MEMBER PER DISTRICT**, proven
+three independent ways, and the certified one is first.
+
+**1. The county Board of Elections' own certified-results database.**
+`electionhistory.tompkinscountyny.gov` — "Elections Database | Tompkins County
+Board of Elections … A searchable database of historical election information, all
+from official source documents" — robots.txt `User-agent: * / Disallow:` (an empty
+Disallow, allow all) to `districtry/1.0 (+https://districtry.com/ny/)` on
+2026-09-26. Its own office list, read out of the search page's embedded data,
+settles the form in one line:
+
+  * **`County Legislator`, group `County`, 39 contests** across 2019-2026.
+  * **`Supervisor`, group `Local`, 31 contests** — a SEPARATE office, classified
+    local. That pairing is the discriminator: in a board-of-supervisors county the
+    town Supervisor IS the county board seat, and here the county's own election
+    authority files them as two different offices.
+  * Its source-document list names **"November 2, 2021 General Election County
+    Legislator 5 Results"** — a DISTRICT-SUFFIXED county-legislature contest — and
+    **"November 4, 2025 General Election Official Results.pdf"**, the certified
+    file for the election that seated the current sixteen.
+  * 33 elections listed, 2019 Mar to 2026 Jun. Legislators appear in the 2021 and
+    2025 Generals and in neither 2024 nor 2026, which is a four-year term on the
+    odd-year cycle; 16 districts over two cycles plus specials accounts for the 39.
+
+**THE CERTIFIED PDFs THEMSELVES CANNOT BE FETCHED AND THE REASON IS A REFUSAL,
+not an outage.** The database serves its files from a different host,
+`tompkinsny.elstats2.civera.com`, whose robots.txt reads, verbatim:
+
+    # Robots.txt
+    # Instructions to crawlers
+    # Dev/staging/pre-prod: block all
+    User-agent: *
+    Disallow: /
+
+A `*` group that disallows binds this project fully, so no file was fetched from
+it — the vendor's own comment calls it a staging host. The database's own PAGES
+are on the allowed county host and are the route; anything this project needs
+from a Tompkins canvass comes from there, never from the file host.
+
+**2. The county's own GIS, which also carries the population witness.**
+`LegislativeDistrictBoundaries` (item `881285a45a6541979dde335fe57a689b`, service
+`services.arcgis.com/oJbAAWNInLrxvF0A`), `access: public`, `licenseInfo` opening
+"Open to the Public", `accessInformation` "Tompkins County ITS GIS Division,
+Tompkins County Board of Elections and Tompkins 2012 Independent Redistricting
+Committee", modified 2026-02-04. One layer, `LigisDistNew`, **16 polygons**,
+EPSG:2261, carrying `LegDist`, `TOTAL` (population), `TARGET_DEV`, `Member`, `URL`
+and a `Census2020` link to the county's own summary report. The populations run
+**6,468 to 6,780** and sum to **105,740** — Tompkins County's Census 2020 count —
+against a 6,609 ideal, so the worst deviation is 2.6%. A population-apportioned
+single-member plan is what a legislature is and what a board of supervisors is
+not, and the county publishes the deviation itself.
+
+**3. The county's own Legislature page** lists District No. 1 through District
+No. 16 with one Legislator each.
+
+**THE COLES TEST PASSES 16 OF 16, so the roster is NOT the Coles shape.** Before
+taking the "roster rides the layer" route, the layer's name column is compared
+against the county's own board page, because Coles's layer got six of twelve wrong.
+Tompkins agrees person for person on all sixteen districts; the only differences
+are the form of the name, and the PAGE carries the fuller one — Travis L. Brooks
+for Travis Brooks, Deborah Dawson for Deb Dawson, Gregory N. Mezey for Greg Mezey,
+Randy B. Brown for Randy Brown. So **geometry from the service, people from the
+page** (the Edgar rule), with the layer's `Member` column kept as a free weekly
+drift witness: the two must keep agreeing, and a build that reads both gets that
+check for nothing.
+
+**TWO PROBES WORTH NOT REPEATING.** The county publishes per-town specimen ballots
+for the CURRENT cycle only — the seven 2026 General ballots carry Governor,
+Comptroller, Attorney General, Congress 19, Assembly 125, County Clerk and County
+Sheriff and **no county-legislature contest at all**, which proves the odd-year
+cycle and nothing about the form; the same path with 2025, 2023 or 2021 in it
+returns the site's 404 page. And the county's Laserfiche repository
+(`lfweb.tompkins-co.org`, robots 404 → allow all) is a JavaScript application
+whose folder-listing endpoint, `FolderListingService.aspx/GetFolderListing2`,
+answers `BADLOGIN` without a session; the elections database above made it
+unnecessary rather than worth pursuing.
+
+**WHAT IS STILL NOT SETTLED, and is not guessed at.** The board-of-supervisors
+reference county is unchosen — it should be picked by which county publishes a
+maintained supervisor roster, which is a measurement nobody has taken — and
+Otsego's board of representatives is its own case until its own page says
+otherwise. Neither is asserted here. The layer registration itself is the
+new-layer procedure's question and not this measurement's.
 
 ## The board card's location row, and a column that outlived its own document (2026-09-06)
 
