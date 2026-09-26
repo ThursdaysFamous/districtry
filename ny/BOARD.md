@@ -44,6 +44,54 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, I WITHDRAW EVERY "103 GATES, 0 FAILURES" CLAIM I MADE TODAY: THE
+HARNESS RAN NOTHING.** #1184's CI failed twice and both failures were genuinely
+this change's. The reason I did not catch either is worse than either.
+
+My battery list was written with `print(kind, "\t", cmd)`, which puts a SPACE on
+each side of the tab, so a shell loop reading it with `IFS=$'\t'` got
+`kind="STATIC "` with a trailing space and `[ "$kind" = "STATIC" ]` was false on
+every one of the 113 lines. The loop body never executed, the failure counter
+stayed at zero, and it printed "static gates failing: 0". **I quoted that as
+"all 103 no-browser invocations, 0 failures" in three commit messages, two PR
+bodies, two comments, two entries on this board and two messages to the manager.
+All of those are withdrawn.** It is the vacuous-pass defect `CLAUDE.md` records
+in five other gates, committed by the step whose whole job was to prove the
+change sound, and nothing caught it because a harness is not a gate. The list is
+`KIND|command` now and the loop PRINTS how many gates it ran, so a run that
+executes nothing reports zero rather than green.
+
+**THE TWO REAL FAILURES, both from the prose sweep.** `validate_serp_lengths.py`:
+`ny/faq.html`'s new description was 199 characters against a 155 limit, shortened
+to 153 by trimming the FRONT per the gate's own advice, with all four copies
+moved together. `build_sitemap.py --check`: five `ny/` pages' `lastmod` three days
+behind — **and that gate cannot fail on an uncommitted edit**, because it takes
+each page's date from GIT HISTORY, so until the edit is committed the date it
+reads is the previous commit's and matches the sitemap exactly. Run it AFTER
+committing. Both fixed in `fce83d7`; re-run with the fixed harness, 103 static
+invocations executed and 0 failing, all ten browser invocations executed and only
+`page_consistency_test.mjs` failing.
+
+**THE MANAGER WAS ALSO RIGHT TO REFUSE MY "108 vs 142, environmental" FIGURE, and
+measuring it properly says something different from what I claimed.** On a
+`git worktree` of `origin/main` served beside this branch: this branch 106 then
+106, main 106 then **119** — the count is unstable on ONE tree with no code
+difference, so the earlier pair was two samples of a varying measurement rather
+than a difference between trees. The failing page SETS are unstable too: 73
+pages here against 70 on main, differing by eleven, of which **nine are pages
+neither tree changed**. What IS stable is the cause — 131 of 131 failures here
+and 133 of 133 on main are `net::ERR_CERT_AUTHORITY_INVALID` from `gc.zgo.at`. So
+the honest statement is one environmental cause, an unstable count that carries
+no signal about the diff, and CI as the only authority.
+
+**AND THE MANAGER'S DIAGNOSIS BY ELIMINATION WAS WRONG, WHICH IS WORTH RECORDING
+BECAUSE THE METHOD LOOKED SOUND.** Nine of ten browser invocations green locally
+pointed at `page_consistency_test.mjs`. It was never that gate: the job log
+downloads from `get_job_logs`'s own `logs_url` with a fresh SAS token, and the
+failures sit at lines 2959-3298 above the 300-line access log — my own band
+checks in four instances' smoke tests. Elimination is only as good as the local
+run it eliminates against, and mine was the vacuous one.
+
 **2026-09-26, THE COUNTY TIER'S SHAPE, FOR THE MANAGER TO READ BEFORE ANY OF IT
 IS BUILT.** Adam approved the tier; the manager required its shape here first.
 Nothing is built and no county is started. Everything below carries the client,
