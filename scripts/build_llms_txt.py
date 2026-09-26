@@ -69,12 +69,37 @@ SITE = "https://districtry.com"
 # because a new root page must not go missing for want of an edit here.
 ROOT_ORDER = ("privacy.html", "sponsorship.html", "traffic.html")
 
-# The one sentence the generator owns, because no file in the tree holds it.
-SUMMARY = ("Click a point, or type an address, and see every civic district "
-           "that covers it — and who holds those seats. Six instances across "
-           "Illinois, Wisconsin, Iowa, Michigan, New York City and San "
-           "Francisco. Every boundary and every name comes from a published "
-           "source and is cited to it.")
+# The prose the generator owns, because no file in the tree holds it. The two
+# FACTS inside it are not owned here and are filled from metros.json by
+# summary() below: this sentence said "Six instances across Illinois,
+# Wisconsin, Iowa, Michigan, New York City and San Francisco" while that
+# manifest's landing_name for ny had been "New York" since the go-live. So the
+# one file whose whole job is telling a client what this site is named one of
+# its instances in a form no page of it uses. A count and a list of places are
+# exactly what a generated file must not carry as literals.
+SUMMARY_TEMPLATE = ("Click a point, or type an address, and see every civic "
+                    "district that covers it — and who holds those seats. "
+                    "%(count)s instances across %(places)s. Every boundary and "
+                    "every name comes from a published source and is cited to it.")
+
+# Written out to twelve because "6 instances" reads as a log line; past that the
+# digit is used, which is honest rather than wrong.
+COUNT_WORDS = ("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven",
+               "Eight", "Nine", "Ten", "Eleven", "Twelve")
+
+
+def summary(fleet):
+    """The lede, with its count and its place names read off the manifest."""
+    places = [m["landing_name"] for m in fleet]
+    if not places:
+        fail("metros.json lists no instance, so there is nothing to summarise")
+    joined = (places[0] if len(places) == 1
+              else " and ".join([", ".join(places[:-1]), places[-1]]))
+    n = len(places)
+    return SUMMARY_TEMPLATE % {
+        "count": COUNT_WORDS[n] if n < len(COUNT_WORDS) else str(n),
+        "places": joined,
+    }
 
 
 def fail(msg):
@@ -223,7 +248,7 @@ def render():
     fleet = instances()
     sig = signal()
     root, by_tag, deep = sitemap_paths()
-    lines = ["# districtry", "", "> " + SUMMARY, ""]
+    lines = ["# districtry", "", "> " + summary(fleet), ""]
 
     lines.append("Free, no account, no tracking of individuals. The map runs in "
                  "the browser; what each page sends to whom is listed at "
