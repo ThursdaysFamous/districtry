@@ -33368,6 +33368,27 @@ function initChiExplorer() {
         sharesParentLoader: !!(parent && parent.overlay && mod.overlay && parent.overlay.load === mod.overlay.load)
       };
     },
+    // What scripts/probe_layer_load.mjs polls while one layer loads: whether
+    // its card has an answer yet, whether its boundaries are on the map, and
+    // whether the selected district is lit — the three moments a reader sees.
+    layerLoadState: function (id) {
+      var rt = layerRuntime[id];
+      if (!rt) return null;
+      var body = rt.cardBody, cls = (body && body.className) || "";
+      var card = !body ? "none"
+        : /state-off/.test(cls) ? "off"
+        : body.querySelector(".loading-row") ? "loading"
+        : /state-error/.test(cls) ? "error"
+        : /state-empty/.test(cls) ? "empty"
+        : "result";
+      return {
+        card: card,
+        relevant: rt.relevant !== false,
+        overlay: !!(rt.overlayLayer && map.hasLayer(rt.overlayLayer)),
+        highlight: !!rt.highlightApplied,
+        features: (rt.geojson && rt.geojson.features && rt.geojson.features.length) || 0
+      };
+    },
     loadCountyEntry: function (id, key) {
       var mod = getLayerById(id);
       var entry = mod && mod.countyEntries && mod.countyEntries.filter(function (e) { return e.key === key; })[0];
