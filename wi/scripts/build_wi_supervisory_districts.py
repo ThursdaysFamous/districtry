@@ -76,6 +76,8 @@ import subprocess
 import sys
 import tempfile
 
+import dropped_rings as drings
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
 OUT_NAME = "county-supervisory-districts.json"
@@ -106,10 +108,102 @@ EXPECT_DISTRICTS = 1589   # LTSB, July 2026 submission window
 EXPECT_COUNTIES = 72      # every Wisconsin county
 EXPECT_WARDS_MIN = 7000   # LTSB ward layer, ~7,161 as of July 2026
 
-SIMPLIFY = "9%"
+# DOUGLAS-PEUCKER AT A METRE INTERVAL, NOT A VISVALINGAM PERCENTAGE, AND THE
+# REASON IS THE ANSWER A READER GETS RATHER THAN THE FILE SIZE. Visvalingam
+# thresholds triangle AREA, which does not bound how far the drawn line strays,
+# and it drops far more rings: measured on the July 2026 filing, the visvalingam
+# 9% setting this replaces loses 586 distinct rings of which 73 CHANGE THE DISTRICT
+# A READER IS TOLD THEY ARE IN — the largest a 3,496 m2 patch answered Sheboygan 10
+# where the truth is Sheboygan 20, and thirty-odd false silences in DOOR COUNTY up
+# to 2,621 m2, which is the county it would be: a peninsula with islands, so its
+# districts carry detached parts for `keep-shapes` to drop. (Read the county from
+# the data and never from the FIPS by eye — 5502904 is Door 04, not Brown, and
+# this comment said Brown and Milwaukee before the names were looked up.)
+# `dropped_rings.py` is what measures that, and the whole curve is:
+#
+#     setting            rings   harms   gzipped vs the 9% file
+#     visvalingam 9%       586      73   --
+#     dp interval=4        377       2   +38.8%
+#     dp interval=7        413      15   +11.7%
+#     dp interval=10       431      21   -2.3%
+#
+# HARMS ARE COUNTED AS A READER IS ANSWERED, one district and not the set — see
+# `dropped_rings.py` for why, and for the 102-against-73 that distinction is worth
+# on this layer.
+#
+# interval=4 is the setting whose harms are few enough to declare one by one,
+# which is the bar this file now has to clear. IT COSTS +414 KB GZIPPED and that
+# is stated rather than buried: the trade is 99 fewer wrong answers for a third
+# again of a cache-first file. Since #1197 that file is cached the FIRST TIME A
+# LAYER USES IT rather than at install, so the bytes fall only on readers who
+# open the county-supervisory layer instead of on every first visit.
+SIMPLIFY = ["dp", "keep-shapes", "interval=4"]
+
+# Holes the simplifier closes that NO district covered — see dropped_rings.py for
+# why these are counted rather than declared one by one. The count is held
+# EXACTLY, so a rebuild that starts closing a different number stops and gets
+# read; it is written by the build rather than guessed, and the first run after a
+# new LTSB filing is expected to move it.
+GAP_CLOSED = 229
+
+# Rings whose loss changes the district a reader is told they are in. Written from
+# the builder's own gate output, never by hand — run the build, read the UNDECLARED
+# lines, and paste what it measured. Each FAILS when nothing matches it.
+ACCEPTED_DROPPED_RINGS = [
+    {
+        # DOOR COUNTY DISTRICT 4, a 36.75 m2 detached part in Lake Michigan off the
+        # peninsula. Door is the county this would be: it is a peninsula with
+        # islands, so its districts carry detached parts, and `keep-shapes` protects
+        # a SHAPE rather than a RING — once the mainland part survives, every islet
+        # is eligible for removal like any other geometry.
+        #
+        # A READER STANDING THERE IS TOLD DOOR 4 TODAY AND WOULD BE TOLD NOTHING,
+        # which is the false-silence half of the two harms this table is for. It is
+        # declared rather than avoided because no tested interval retains it and it
+        # is 36.75 m2 of open water; the alternative is a setting that costs the
+        # whole state a third again of a cache-first file for one islet.
+        "lat": 44.829563, "lng": -87.564510, "verts": 18, "m2": 36.75,
+        # Inside the ring at 6 decimals, checked rather than assumed — the build
+        # path refuses a point `point_in_ring` rejects, and `--check-shipped`
+        # re-derives the AFTER answer here without any source to scan.
+        "interior": {"lat": 44.829526, "lng": -87.564510, "decimals": 6},
+        "features": ["county-supervisory:5502904"],
+        "kind": "false-silence",
+        "answer_before": {"county-supervisory": ["5502904"]},
+        "answer_after": {"county-supervisory": []},
+        "why": "no tested dp interval from 4 to 25 retains it; 36.75 m2 of Lake "
+               "Michigan off the Door peninsula, and the answer it costs is "
+               "recorded above rather than claimed harmless",
+        "date": "2026-09-26",
+    },
+    {
+        # LAFAYETTE COUNTY, a 0.84 m2 sliver on the line between districts 3 and 7.
+        # BOTH DISTRICTS DREW IT, each with its own vertices, so it is two rings
+        # that coincide on the ground and differ byte for byte — one record naming
+        # both, which is why `dropped_rings._merge_coincident` exists. Before the
+        # merge this produced two harm records and no single declaration could
+        # satisfy either, because each named a different district.
+        #
+        # A reader is told Lafayette 3 today and would be told Lafayette 7. Which of
+        # the two is right is not something this build can know: the sliver is where
+        # the county's own submission overlaps itself, and LTSB's statewide geometry
+        # does that on 0.017% of its area. So the declaration records the move
+        # rather than asserting that either answer is the true one.
+        "lat": 42.669785, "lng": -90.129781, "verts": 5, "m2": 0.84,
+        "interior": {"lat": 42.669739, "lng": -90.129779, "decimals": 6},
+        "features": ["county-supervisory:5506503", "county-supervisory:5506507"],
+        "kind": "wrong-name",
+        "answer_before": {"county-supervisory": ["5506503"]},
+        "answer_after": {"county-supervisory": ["5506507"]},
+        "why": "0.84 m2 of self-overlap between two districts of one county, which "
+               "no interval resolves because the source disagrees with itself there",
+        "date": "2026-09-26",
+    },
+]
 PRECISION = "0.000001"    # 6 decimals ~= 0.11 m
 STATE_BBOX = {"minLng": -93.09, "minLat": 42.29, "maxLng": -86.04, "maxLat": 47.51}
 VALIDATION_KEY = "SUPER_FIPS"
+LAYER_NAME = "county-supervisory"  # the key answers are recorded under
 
 
 def _curl(url):
@@ -550,14 +644,77 @@ def validate(source_features, result_features, samples=10000, seed=2026):
 def run_mapshaper(source_path, out_path):
     subprocess.run(
         ["npx", "-y", MAPSHAPER, source_path,
-         "-simplify", "visvalingam", "keep-shapes", SIMPLIFY,
+         "-simplify"] + SIMPLIFY + [
          "-o", "precision=" + PRECISION, "format=geojson", out_path],
         check=True, cwd=REPO_ROOT,
     )
 
 
+def check_shipped():
+    """OFFLINE: each declared dropped ring's AFTER answer, re-derived from the
+    bytes this repository ships. No fetch, no simplifier, no source.
+
+    WHY IT EXISTS SEPARATELY FROM THE BUILD-TIME GATE. That gate compares the
+    full-precision source against the simplifier's output, so it can only run
+    where the source is — an operator build with a 40 MB fetch, never a pull
+    request. Without this, a rebuild that stopped dropping a declared ring, or
+    dropped it into a DIFFERENT district, would be caught at the next operator
+    build rather than by CI, and the declaration table could rot for months.
+
+    Three blind spots, named rather than implied:
+      * It cannot see an UNDECLARED drop. Only the source says which rings were
+        dropped, so a new harm is the build-time gate's to catch.
+      * It cannot re-derive any BEFORE answer, for the same reason. The "a reader
+        used to be told X" half of every declaration rests on the build.
+      * It cannot tell that a declared interior point is inside its RING — the
+        ring is not in the shipped file, that being the whole point. The build
+        path proves it with `point_in_ring`; here the point is only a place to
+        ask the shipped geometry a question.
+    """
+    path = os.path.join(APP_DATA_DIR, OUT_NAME)
+    with open(path) as f:
+        feats = json.load(f)["features"]
+    problems = []
+    mod = drings.model(feats, VALIDATION_KEY)
+    for d in ACCEPTED_DROPPED_RINGS:
+        for key in ("lat", "lng", "m2", "verts", "interior", "features", "kind",
+                    "answer_before", "answer_after", "why", "date"):
+            if key not in d:
+                problems.append("a declaration is missing %r" % key)
+        ip = d.get("interior") or {}
+        if not ip.get("lat") or not ip.get("lng"):
+            problems.append("declaration at %s,%s carries no interior point"
+                            % (d.get("lat"), d.get("lng")))
+            continue
+        if d.get("kind") not in drings.HARM_KINDS:
+            problems.append("declaration at %.6f,%.6f declares kind %r, which is "
+                            "not one of the harms this table is for"
+                            % (d["lat"], d["lng"], d.get("kind")))
+        got = list(drings.districts_at(mod, (ip["lng"], ip["lat"])))
+        want = sorted((d.get("answer_after") or {}).get(LAYER_NAME, []))
+        if got != want:
+            problems.append(
+                "at the declared interior point %.7f,%.7f the SHIPPED file answers "
+                "%s; the declaration says the reader would be answered %s"
+                % (ip["lat"], ip["lng"], got or ["NO DISTRICT"], want or ["NO DISTRICT"]))
+    if GAP_CLOSED is None and ACCEPTED_DROPPED_RINGS:
+        problems.append("GAP_CLOSED is unset, so nothing holds the number of "
+                        "coverage gaps this simplification closes")
+    if problems:
+        print("FAIL dropped-ring declarations: %s" % "; ".join(problems),
+              file=sys.stderr)
+        return 1
+    print("OK %d declared dropped ring(s); every AFTER answer re-derived from the "
+          "shipped %d features at its own interior point; GAP_CLOSED %s"
+          % (len(ACCEPTED_DROPPED_RINGS), len(feats), GAP_CLOSED), file=sys.stderr)
+    return 0
+
+
 def main():
-    check_only = "--check" in sys.argv[1:]
+    args = sys.argv[1:]
+    if "--check-shipped" in args:
+        sys.exit(check_shipped())
+    check_only = "--check" in args
 
     raw = fetch_layer(DISTRICTS, "GEOID,SUPER_FIPS,SUPERID,CNTY_FIPS,CNTY_NAME")
     if len(raw) != EXPECT_DISTRICTS:
@@ -596,6 +753,44 @@ def main():
     if not ok:
         raise RuntimeError("validation failed: %s" % msg)
 
+    # EVERY DROPPED RING IS ANSWER-TESTED, AND THE 10,000-POINT AGREEMENT CHECK
+    # ABOVE CANNOT SEE THEM. That check scatters points over the whole state, and
+    # the rings this loses total a fraction of a square kilometre — 0.0222 km2 of
+    # 169,635, so about 0.0013 of one expected hit. It is blind to them by
+    # construction, which is why the answer test is separate rather than a
+    # tightening of it.
+    records, dstats = drings.classify({
+        LAYER_NAME: {"source": feats, "drawn": simplified["features"],
+                     "key": VALIDATION_KEY}})
+    gap_closed = (dstats[drings.KIND_GAP_CLOSED] if GAP_CLOSED is None else GAP_CLOSED)
+    dok, dmsg = drings.check(records, dstats, ACCEPTED_DROPPED_RINGS, gap_closed)
+    print("dropped rings: %s" % dmsg, file=sys.stderr)
+    if GAP_CLOSED is None:
+        print("       GAP_CLOSED is unset, so the measured %d is accepted for this "
+              "run; set it in this file to hold the number" % gap_closed,
+              file=sys.stderr)
+    if not dok:
+        # THE FAILURE HANDS YOU THE TABLE RATHER THAN MAKING YOU DERIVE IT. Every
+        # field below is measured on this run — the interior point especially,
+        # which is carried at the precision that keeps it inside its own ring and
+        # cannot be worked out by eye.
+        print("\n--- measured declarations for ACCEPTED_DROPPED_RINGS ---",
+              file=sys.stderr)
+        print("GAP_CLOSED = %d" % dstats[drings.KIND_GAP_CLOSED], file=sys.stderr)
+        for r in records:
+            if not r["harm"]:
+                continue
+            print(json.dumps({
+                "lat": round(r["centre"][1], 6), "lng": round(r["centre"][0], 6),
+                "verts": r["verts"], "m2": round(r["m2"], 2),
+                "interior": r["interior"], "features": r["features"],
+                "kind": r["kind"],
+                "answer_before": {k: v["before"] for k, v in r["answers"].items()},
+                "answer_after": {k: v["after"] for k, v in r["answers"].items()},
+                "sampled": r["sampled"],
+            }, sort_keys=True), file=sys.stderr)
+        raise RuntimeError("dropped-ring gate failed: %s" % dmsg)
+
     compact = json.dumps(simplified, separators=(",", ":"))
     if json.loads(compact) != simplified:
         raise RuntimeError("round-trip mismatch before writing")
@@ -603,8 +798,8 @@ def main():
     out_path = os.path.join(APP_DATA_DIR, OUT_NAME)
     with open(out_path, "w") as f:
         f.write(compact)
-    print("county-supervisory-districts -> data/app/%s: %d features; %s; %d bytes (%s retain, 6dp)"
-          % (OUT_NAME, n, msg, len(compact), SIMPLIFY), file=sys.stderr)
+    print("county-supervisory-districts -> data/app/%s: %d features; %s; %d bytes (%s, 6dp)"
+          % (OUT_NAME, n, msg, len(compact), " ".join(SIMPLIFY)), file=sys.stderr)
 
     # WRITTEN LAST, so a sidecar on disk always describes a build that finished.
     # Only the three services THIS builder reads are pinned: a sidecar cannot
