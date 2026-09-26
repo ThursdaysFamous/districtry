@@ -169,6 +169,67 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-26 20:30 — RULING on Wisconsin's interval: interval=7, and the deciding factor is not the bytes.**
+
+Wisconsin held its own #1193 and re-measured everything I asked for. The decision it
+came back with is far better framed than the one I escalated, and it turns on
+honesty rather than page weight.
+
+**What changed from what I told Adam.** Measuring stray on RETAINED rings only —
+correct, since simplification keeps a subset of source vertices, so a retained ring
+holds at least one exactly — the curve is:
+
+| interval | gz total | vs main | worst retained | dropped rings | reader effect |
+|---|---|---|---|---|---|
+| 7 | 772,998 | **+74.3%** | 7.9 m | 4 | **none anywhere** |
+| 10 | 623,218 | **+40.5%** | 12.1 m | 8 | ~590 m2 of Cudahy shoreline answers NO district |
+| 12 | 560,263 | +26.3% | 15.6 m | 8 | fails the 15 m ceiling |
+
+So the +74.3% I put in front of Adam is not the price of correctness — **+40.5% also
+meets the ruled ceiling.** The real choice is 176 KB gzipped against one
+house-lot-sized patch of Milwaukee-area lakefront.
+
+**I RULE interval=7, and the reason is that interval=10 introduces a FALSE ANSWER
+rather than a silence.** At interval 8 and coarser, about 590 m2 of the Cudahy
+lakefront leaves Senate 7 and Assembly 20 for no numbered district, and a reader
+standing there would be told they are inside no district in this layer. That is
+this project's own line: we may be silent, we may say we do not know, we do not tell
+someone they have no state legislator when they have two. **The size of the patch
+changes how many readers meet the error, not what kind of error it is**, and 176 KB
+is not a price I will pay in a reader being told something untrue about the ground
+they are standing on. interval=7 also clears the ceiling with margin (7.9 m against
+15) rather than sitting on it.
+
+**I am not ruling on the merged plan, and Wisconsin was right to flag that.** It
+found that `wi/sw.js` precaches both chamber files at install, so every first-load
+visitor pays whether or not they ever switch a chamber on, and that
+`docs/OPTIMIZATION_PLAYBOOK.md` §10 — merged this afternoon — plans exactly that
+precaching away. That would turn the whole cost into something only interested
+readers pay. **Phase 2 is a plan and not merged code, so the ruling does not lean on
+it**; it is a reason the cost is likely temporary, not a reason to discount it.
+Interval=7 would be my answer with or without it.
+
+**The dropped-ring mechanism is still needed, with one entry rather than two.** The
+Lake Michigan ring off Door County (6 vertices, 7.5 x 6.6 m) is dropped at EVERY
+interval 4 through 15 and sits in the water pseudo-district, so no reader's answer
+moves either way — but it must be declared rather than tolerated silently, in the
+`ACCEPTED_DROPS` shape: identity, the answer a reader gets before and after, a
+reason, a date, re-audited so an entry naming a ring that is no longer dropped
+fails. Wisconsin's insistence that the reader-answer field is load-bearing is right,
+and it is what separates the two rings: without it the gate either blocks interval=7
+over a ring that changes nothing or waves interval=10's real flip through.
+
+**Three measurements of Wisconsin's worth keeping.** `keep-shapes` prevents a SHAPE
+from disappearing and not a RING — both rings were dropped with it on and both
+features survived — so any state whose districts carry islands or shoreline slivers
+must measure rings rather than features. Its "median vertex step" has SIX answers
+from 12.43 to 19.30 m depending on chamber and whether the water row is counted, and
+the reading that matches the population the gate measures over is 13.59 m, of which
+the ruled 15 m is 1.10x — so the ceiling holds for a better reason than the one it
+was first given. And its first cost reading was +0.0%, because it gzipped the
+working tree against itself inside its own branch: **the baseline for a cost claim is
+`git show origin/main:<path>`.**
+
 **2026-09-26 19:45 — six New Yorkers got their own names back, and one address stopped being a COVID notice.**
 
 **What changed for a reader.** New York City's Council cards named six of the 51
