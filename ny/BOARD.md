@@ -41,6 +41,117 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, THE COUNTY TIER'S SHAPE, FOR THE MANAGER TO READ BEFORE ANY OF IT
+IS BUILT.** Adam approved the tier; the manager required its shape here first.
+Nothing is built and no county is started. Everything below carries the client,
+the date and what came back, per §5.1's rule on the form of a record.
+
+**IT IS 57 COUNTIES, NOT 62, AND THE APP ALREADY SAYS WHY.** New York City's five
+counties have no county government of their own — the City governs them — which
+`ny/index.html`'s county card states rather than implying a board that does not
+exist. So the tier's ground is the 57 counties outside the city.
+
+**THE FIRST DECISION IS NOT WHICH COUNTY, IT IS WHICH FORM, because the two forms
+need completely different work and the first of each settles a pattern the rest
+inherit.** New York counties are governed in three forms, recorded in the app's
+own county-card comment: a **county legislature** elected from districts; a
+**board of supervisors** made of the towns' own supervisors sitting ex officio;
+and Otsego's **board of representatives**. Those are not variations on one shape:
+
+- A **legislature** county is districted, so it needs geometry per county and a
+  dispatch entry — the Illinois `county-board` shape exactly.
+- A **board-of-supervisors** county has no county district at all. The seat IS
+  the town, and the statewide `municipality` layer already draws every town. So
+  that county needs **no geometry, no dispatch entry and no toggle** — only
+  roster rows on a card that already answers there. This is the New York
+  analogue of Illinois's at-large counties riding the County card, and it is the
+  single most useful thing in this shape: a plan that treats all 57 as districted
+  would build geometry for counties that have none.
+- Otsego is its own case and is not assumed to be either until its own page says.
+
+**So the proposal is TWO reference counties, one per form, before any third.**
+
+**WHERE THE GEOMETRY COMES FROM — measured today, and the good news is not where
+it was expected.** All requests as `districtry/1.0 (+https://districtry.com/ny/)`,
+robots read first through `scripts/robots_policy.py`; `services6.arcgis.com`
+answers 403 on robots.txt (refused, allow by default — the ArcGIS-API case
+CLAUDE.md records), `www.arcgis.com`, `gis.ny.gov` and `data.gis.ny.gov` all
+serve and allow, and **`data.gis.ny.gov` states a 60-second Crawl-delay that
+binds this project**, which any build against it must honour per host.
+
+- **There is NO statewide layer of county legislative districts.** GET
+  `https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services?f=json`
+  on 2026-09-26 → 200, **49 services**. It carries `NYS_Assembly_Districts`,
+  `NYS_Senate_Districts`, `NYS_Congressional_Districts` and `US_Senate_Districts`
+  and **not one county legislative or supervisory district**. That is the single
+  route that would have made this one build instead of 57, and it is closed.
+- **There IS a complete statewide ELECTION DISTRICT fabric, which is better than
+  Illinois ever had.** `NYS_Elections_Districts_and_Polling_Locations/FeatureServer/4`
+  → 200, **13,335 polygons across all 62 counties** (Kings 1,403 down to
+  Hamilton 11), dated 6/12/25 in its own description, assembled by the state from
+  the NYC and county boards of elections. Its fields are `County`,
+  `Municipality`, `Election_District` and **nothing naming a legislative
+  district** — so it is the FABRIC and never the composition, which is exactly
+  the position Illinois's census voting districts put that state in. Illinois had
+  to test a census fabric against each county's names (the Jasper test); New York
+  is handed the counties' own election districts, already carrying the county and
+  municipality that name them.
+- **Its own description carries the caveat a dissolve has to answer**: the
+  districts "may not align with districts from neighboring cou[nties]". A
+  cross-county dissolve on this fabric will leave seams, so a county's legislative
+  districts must be dissolved WITHIN the county, never across the state at once.
+- **A few counties publish their own districts, and that route is per county.**
+  `arcgis.com/sharing/rest/search` on three queries → Tompkins County's own
+  "Current Legislative Districts with Census 2020 Population" (owner
+  `svetla.borovska_tompkinscounty`), which carries POPULATION and therefore its
+  own balance witness, plus two ambiguous `Legislative Districts 2024` items
+  whose owner does not name a county. So the Douglas/Richland route — enumerate
+  the county's ArcGIS ORG rather than reading its viewer — is the first thing to
+  try per county, ahead of any dissolve, because it costs one request and returns
+  geometry rather than a derivation.
+
+**WHERE THE NAMES COME FROM: the county's own page, per county, never a canvass.**
+This is the Edgar rule and it is not negotiable here — geometry comes from
+whatever proves the lines and people from whatever the county maintains as
+people. The app's own card comment records that no statewide roster of these
+seats has been found, and the card links the New York State Association of
+Counties, which is the honest floor. A canvass names who WON an election; a
+county's page names who holds the seat today.
+
+**THE FIRST COUNTY I WOULD PROPOSE, AND WHY NOT THE BIGGEST.** Tompkins, for the
+legislature form: it is the one county measured today to publish its own district
+geometry with population attached, so its build needs no dissolve and its balance
+is checkable against the same census the plan was drawn to. Its form must still be
+confirmed from the county's own page before anything ships — this board does not
+assert it. Starting with Erie or Monroe would cover more people first and would
+settle the pattern on a county whose publication nobody has measured. The
+board-of-supervisors reference county is NOT chosen yet, deliberately: it should
+be picked by which county publishes a maintained supervisor roster, which is a
+measurement I have not made.
+
+**WHAT THIS TIER COSTS THE ENGINE: nothing.** The three-way `pointInCoverage` on
+#1184 is the mechanism the tier needs from its first county onward — New York's
+coverage ring stops being the five boroughs and grows county by county, and the
+middle band already says "only the statewide layers answer there" for every
+county not yet joined. §1.6's new-concept test is the gate for the toggle itself:
+level + function is county/legislative, the election geometry is districted (so a
+consolidated concept layer rather than card rows), the dispatch dimension is the
+county, the officeholder story ships in the same change as the boundary, and the
+guidebook row goes in with it.
+
+**THE HONESTY RULE APPLIES TO THE TIER EXACTLY AS IT APPLIES TO A NAME**, which
+the manager stated and this shape adopts: a county whose districts cannot be
+sourced is a gap record naming the URL tried, the client, the date and what came
+back — never a hole in the map with nothing explaining it.
+
+**THREE THINGS I AM ASKING THE MANAGER TO RULE ON**, because each changes the
+build rather than the plan: (1) whether the board-of-supervisors counties ship as
+roster rows on the existing town card, as this shape proposes, or wait for a
+decision about a card of their own; (2) whether Tompkins is an acceptable first
+county on the grounds above, or the tier should start on a large county and pay
+for the measurement; and (3) whether the tier joins the coverage ring county by
+county as it goes, which makes the ring grow in visible steps, or in tranches.
+
 **2026-09-26, ITEM 2 OF THREE: NEW YORK'S PROSE CATCHES UP WITH ITS COVERAGE —
 on #1184 as `46a7655`.** Adam authorized all three fixes and the manager kept my
 order, so this is the second. #1042 changed what New York covers and left every
