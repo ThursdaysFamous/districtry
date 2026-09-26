@@ -34,6 +34,61 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-26. THE NESTING/FIDELITY REBUILD IS MEASURED AND NOT YET BUILT (#1188
+must merge first — one branch, serial). THREE THINGS IN THE BRIEF ARE WRONG FOR
+WISCONSIN and are worth carrying to Iowa before it repeats them.** Full state,
+Illinois's own `check_fidelity` imported rather than reimplemented; stray is every
+SOURCE vertex to the nearest DRAWN segment.
+
+| setting | gz total | worst stray | median | over 20 m | nesting |
+|---|---|---|---|---|---|
+| SHIPPED vis 10%/9% separate | 443,504 | **2,939.9 m** | 80.1 m | **128 of 134** | 0/33 |
+| vis 10% COMBINED | 459,279 | **5,381.4 m** | — | 128 of 134 | 33/33 |
+| dp interval=4 | 1,061,245 | 19.9 m | 4.0 m | 0 | 33/33 |
+| dp interval=5 | 937,959 | 17.5 m | 5.0 m | 0 | 33/33 |
+| dp interval=6 | 845,390 | 17.5 m | 6.0 m | 0 | 33/33 |
+| **dp interval=7** | **772,998** | **17.5 m** | **7.0 m** | **0** | **33/33** |
+| dp interval=8 | 715,774 | 30.0 m | 7.9 m | 4 | 33/33 |
+
+**PROPOSED: `dp keep-shapes interval=7`, ceiling 20 m.** The ceiling is derived, not
+copied: Wisconsin's own staircase step is a median **14.7 m** over 365,514 source
+segments statewide, and the two dense grids agree (Milwaukee 14.5 m over 4,834,
+Madison 15.2 m over 2,871) — so unlike Illinois no local measurement was needed to
+justify it. Illinois set 25 m against a 17.9 m step, a ratio of 1.40; 14.7 × 1.40 =
+20.6, so 20 m. interval=7 is the CHEAPEST setting reaching the irreducible worst.
+
+**1. THE COST DOES NOT DISAPPEAR, AND THE BRIEF EXPECTED IT TO.** Illinois's dp
+files came out 871 bytes SMALLER gzipped. Wisconsin's correct setting costs
+**+329,494 bytes gzipped, +74.3%** (443,504 → 772,998) on two CACHE-FIRST files
+every first-load visitor downloads. The diagnosis was right — my +15.2 KB was the
+price of the wrong dial — and the conclusion did not follow: Wisconsin's shipped
+files are far cruder than Illinois's ever were (median 80.1 m, not a 331 m worst),
+so correctness costs real bytes here. **That is a reader-facing trade for the
+operator, not for me**, and it is the one thing I want a decision on before
+shipping.
+
+**2. COMBINED VISVALINGAM IS WORSE THAN SEPARATE, NOT MERELY NO BETTER** — 5,381 m
+against 2,940 m. mapshaper's percentage is relative to the WHOLE dataset, so
+combining two layers makes 10% retain proportionally less of each. "Necessary and
+not sufficient" understates it: for a percentage setting, combining actively
+DEGRADES fidelity. **Iowa will hit this if it combines before switching to dp.**
+
+**3. THE WORST-STRAY FIGURE IS AN OPEN-WATER ARTIFACT AND A ZERO-TOLERANCE READING
+WOULD CHASE IT.** The 17.5 m floor is constant across intervals 5-7 because it is
+not set by the interval: Senate d1's source carries 17 rings and the drawn 16, and
+the worst point sits on the dropped one — a 7-vertex ring of ~0.0000 km² at
+45.4107,-86.8596, open Lake Michigan off Door County. The shipped 2,939.9 m is the
+same water boundary. **I tried to publish a land-only figure and could not**: the
+county dissolve is water-inclusive, so it covers the lake and cannot arbitrate, and
+the filter changed nothing. So the numbers above are all-vertex and the offshore
+character of the single worst point is stated from the ring inspection rather than
+from a split I cannot measure with what the app ships.
+
+**AND THE EXISTING `validate()` NEVER SAW ANY OF THIS.** 2,000 random points over
+Wisconsin almost never land in a thin band, so a 2.9 km stray with 128 of 134
+districts over 20 m passed the protocol every time. That is why a fidelity gate is
+the addition that matters, not a tighter count guard.
+
 **2026-09-26. THE THREE STALE DESCRIPTIONS ARE CORRECTED AND OPEN AS #1188, AND
 THE SHAPE OF THIS ONE IS WORTH MORE THAN THE FIX.** #1187 retired a caption for
 being false; three files went on describing it, and `CLAUDE.md`'s coverage-gaps
