@@ -32,6 +32,49 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-26. THE BAND QUESTION IS ANSWERED AND OPEN AS #1187: REWORDED, NOT
+RETIRED, AND THE CAPTION WAS FALSE RATHER THAN ODD.** Since #1184 the gaps panel
+leads with the band's own words, so a map-key caption became a sentence told to a
+reader about their point: "You clicked inside Wisconsin, outside the area this
+app covers in full. District shown, supervisor not named. The county doesn't
+publish who holds it."
+
+**NO WISCONSIN COUNTY MATCHES THAT.** All 72 publish; `county-board-members.json`
+is 1,591 seats, 1,574 named. The 15 vacant are the county saying nobody HOLDS the
+seat and the 1 withheld is two publishers disagreeing about a boundary — neither
+is a county declining to publish, and there is no third case.
+
+**WHAT THE BAND IS, MEASURED**: the strip between the 72-county dissolve (101 KB)
+and the state boundary (337 KB). Both cover 19.2447 deg², IoU **0.999937**, the
+dissolve fractionally the larger; the strip is **0.0031% of the state across
+2,125 disjoint slivers** running both ways, on the Lake Michigan and Lake
+Superior shorelines. A drafting difference between two files, never an unserved
+county. `inRegion` is computed only when `inCoverage === false`, so it fires in
+that sliver set and nowhere else — checked before treating it as small.
+
+**WHY OPTION 2 AND NOT OPTION 3, WHICH IS WHERE I DIFFER FROM THE BRIEF.**
+Dropping `region` makes the band unreachable and **also drops `c.glow` and
+`c.stateLine`** — Wisconsin's drawn state boundary — because `scope-mask` draws
+both only inside `if (region)`. That trades something every reader sees for
+something 0.0031% can meet. The strings are corrected and the line stays; the
+sub-caption answers the engine's own lead clause, which otherwise invites the
+wrong inference. 103 of 103 static invocations, 0 failed.
+
+**AND I NEARLY REPORTED THE OPPOSITE ON A STALE TREE.** Reading at `1067f76`, I
+found the quoted sentence nowhere and `region.label` used only by the map key,
+and was about to answer that the premise did not hold. #1184 had merged and my
+checkout was a day behind. **A grep answers about the tree you are standing in,
+not about main** — the same shape as today's other misses, and the reason to
+`git fetch` before measuring somebody else's claim about shared code.
+
+## Open questions
+
+**The engine couples three things to one `region` key** — the state line, the
+middle band, and the band's key entry — and an instance whose coverage IS its
+state wants the first without the other two. No config can express that today, so
+Wisconsin keeps a band it does not want in order to keep a line it does. It is an
+engine change and therefore a fleet decision, recorded rather than built.
+
 **2026-09-25. THE NESTING SYMPTOM IS REAL, IT IS NOT UPSTREAM, AND THE
 RETAIN-PERCENTAGE SWEEP ILLINOIS IS ABOUT TO RUN CANNOT FIX IT.** Reported
 rather than fixed, which is what was asked. Four measurements, each on the same
