@@ -743,8 +743,8 @@
     "outside": "Outside Wisconsin",
     "region": {
       "edge": "Wisconsin",
-      "label": "District shown, supervisor not named",
-      "sub": "The county doesn't publish who holds it"
+      "label": "The county outlines and the state boundary disagree here",
+      "sub": "Two map files drawn at different detail \u2014 every Wisconsin county is covered"
     }
   },
   "data_files": {
