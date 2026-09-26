@@ -3019,7 +3019,10 @@ such a builder lies: Illinois measured a 4 m stray on three districts through
 
 **interval=25 was chosen because at that value the change is FREE.** The four
 cache-first files a first visit precaches go from 738,250 to 735,339 gzipped
-bytes — 2,911 **smaller** — while every fidelity number above improves.
+bytes — 2,911 **smaller** — while every fidelity number above improves. (Since
+2026-09-26 a first visit precaches none of them — #1197 cached boundary files on
+first use — so those bytes are paid by a reader who switches the layers on rather
+than by every visitor. The comparison between the two intervals is unchanged.)
 interval=15 buys a 17–21 m worst stray for +163,068 gzipped bytes (+22.1%);
 interval=30 fails the fidelity gate at 1.9% of vertices over 25 m. The raw bytes
 go UP (+61 KB) and the gzipped bytes go DOWN, which is the same direction
@@ -8075,7 +8078,17 @@ OVERLAY, which draws and queries one county's file, and FALSE of the service wor
 `PRECACHE_URLS` is `SHELL_URLS.concat(GEOMETRY_URLS)` — an installing visitor
 background-fetches all 65 and the precache goes 13.09 MB to 14.22 MB. The county files still
 win, because 1.08 MB of them is less than the 2.35 MB one statewide file would have added;
-the win is simply smaller than that sentence implied. The code cost that argued for the statewide option turned out to be
+the win is simply smaller than that sentence implied. **BOTH READINGS WERE THEN OVERTAKEN ON
+2026-09-26, AND NEITHER BECAME TRUE.** Phase 2 of the load plan (#1197,
+`docs/OPTIMIZATION_PLAYBOOK.md` §10) made `PRECACHE_URLS` `SHELL_URLS` alone, so an installing
+visitor no longer fetches any county file and the 13.09 → 14.22 MB precache above no longer
+exists. That does not make "only the county you clicked is fetched" true, and the correction's
+own clause about the overlay was wrong too: the overlay is the union of every county entry
+(`loadUnion`), so switching the layer on fetches every county's file. Measured that day with
+`scripts/probe_layer_load.mjs` at the Loop: 79 `-library-districts.json` files, 515 KB gzipped,
+all starting at 3.8 s, after the card had answered, because #1196 loads the entries covering
+the point first and holds the rest until the card is in. So the cost is now paid by a reader
+who switches the library layer on, once, and by nobody else. The code cost that argued for the statewide option turned out to be
 mostly avoidable: the per-county shape is `<slug>-county-outline.json` +
 `<slug>-library-districts.json`, both named by CONTRACT, so `countyOutlineCoverage(slug)` and
 `countyLibraryLoader(slug)` replace ~280 lines of near-identical loader/coverage pairs and

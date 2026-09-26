@@ -72,11 +72,11 @@ Measured with `scripts/perf_profile.mjs` (the CDP harness, localized to SF's gro
 
 ### SF-1 — the Neighborhood geometry dominates the data payload *(top actionable; PENDING)*
 
-`sf-neighborhoods.json` is **34,867 bytes gzip — 48% of the entire `data/app` gzip total (72,434) and 4.7× the next-largest file** (police-districts, 9 KB). It sits in `sw.js` `GEOMETRY_URLS`, so it is ~half of the geometry the service worker precaches at install.
+`sf-neighborhoods.json` is **34,867 bytes gzip — 48% of the entire `data/app` gzip total (72,434) and 4.7× the next-largest file** (police-districts, 9 KB). It sits in `sw.js` `GEOMETRY_URLS`, so it was ~half of the geometry the service worker precached at install. **Since 2026-09-26 the worker precaches no geometry** (root `docs/OPTIMIZATION_PLAYBOOK.md` §10, phase 2): the file is fetched when a reader switches the Neighborhood layer on, so only those readers pay its size.
 
 *Cause:* SF's 41 Analysis Neighborhoods carry very detailed shoreline geometry; the full-precision source (`data/sf-neighborhoods.geojson`) is 1.8 MB, and even at the current 10% Visvalingam retain / 6-decimal precision it lands at 134 KB raw.
 
-*Recommendation:* re-simplify via `scripts/build_embedded_boundaries.py` with a tighter budget — a lower retain % and/or 5-decimal precision (~1.1 m, immaterial to a neighborhood boundary) — **re-validating the built-in gate**: ≥99.5% agreement with the full-precision source on the 2,000-random-point protocol, and zero points in two districts. Expected result: roughly halve the file (target ≈15–18 KB gzip), cutting the SW precache payload ~25%.
+*Recommendation:* re-simplify via `scripts/build_embedded_boundaries.py` with a tighter budget — a lower retain % and/or 5-decimal precision (~1.1 m, immaterial to a neighborhood boundary) — **re-validating the built-in gate**: ≥99.5% agreement with the full-precision source on the 2,000-random-point protocol, and zero points in two districts. Expected result: roughly halve the file (target ≈15–18 KB gzip). The saving this sentence originally claimed, the SW precache payload cut by ~25%, no longer exists since the precache holds no geometry; what remains is about 17–20 KB off the Neighborhood layer's first switch-on.
 
 *Why it's PENDING, not shipped in this pass:* neighborhood boundaries drive point-in-polygon classification on a public civic tool, so this ships **only if the 2,000-point gate holds** — accuracy over bytes. That warrants a deliberate re-generation + gate review (and an operator eye on the coast), not a drive-by inside an audit. The tooling is ready (`build_embedded_boundaries.py` + mapshaper) and the source is present.
 

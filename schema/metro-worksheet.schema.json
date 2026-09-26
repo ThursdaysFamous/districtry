@@ -78,7 +78,7 @@
       "properties": {
         "index": {"type": "string", "pattern": "^[a-z0-9-]+/index\\.json$"}
       },
-      "description": "OPTIONAL. Opts the instance into counting PEOPLE on the comparison stats screen. `index` is the data/app path of the per-county Census block population index scripts/build_block_population.py writes (`population/index.json`). The county files it names are served by the service worker's prefix rule, cached on first use and never precached, so neither the index nor the files belong in data_files. Absent = the stats screen compares by area only."
+      "description": "OPTIONAL. Opts the instance into counting PEOPLE on the comparison stats screen. `index` is the data/app path of the per-county Census block population index scripts/build_block_population.py writes (`population/index.json`). The county files it names are served by the service worker's prefix rule and cached on first use, like every boundary file since 2026-09-26; they are fetched by URL prefix rather than listed, so neither the index nor the files belong in data_files. Absent = the stats screen compares by area only."
     },
     "socrata_host": {
       "type": "string",
