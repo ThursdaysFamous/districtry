@@ -165,22 +165,20 @@
     "GARDNER FIRE": {
       "board": [
         {
-          "name": "Donald Pfeifer Jr",
+          "name": "Teresa Smith",
           "role": "Treasurer"
         }
       ],
       "comptrollerCode": "032/020/06",
-      "filedFor": "2025",
+      "filedFor": "2026",
       "heads": [
         {
-          "name": "Becky Pasternak",
+          "name": "Keith Howland",
           "role": "Administrator"
         }
       ],
       "kind": "fire",
       "office": {
-        "address": "PO BOX 181",
-        "city": "Gardner IL 60424",
         "email": "admin@gardnerfpd.com",
         "phone": "(815) 237-8806"
       }
@@ -412,7 +410,7 @@
       }
     }
   },
-  "generated": "2026-09-19T00:05:15Z",
+  "generated": "2026-09-26T00:29:11Z",
   "officialsPage": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/searchform/?SearchType=AFRSearch",
   "source": "Illinois Comptroller, Annual Financial Report — Contact Information",
   "sourceUrl": "https://illinoiscomptroller.gov/constituent-services/local-government/local-government-warehouse/"
