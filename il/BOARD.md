@@ -50,6 +50,38 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-26, AFTER #1185. NINETEEN LIBRARY CARDS NAME NO TRUSTEE AND NO GAP
+RECORD SAYS SO, and I found it by asking what the corrected record does NOT
+cover.** `statewide-library-officials` scopes to the 72 counties dispatching
+through `statewideLibraryEntry`. The library layer dispatches 91. The other 19
+counties read their own entry, and nothing in the gaps block is about their
+trustees: the only record naming any of them for this layer is
+`rock-island-andalusia-township-library`, which is one library's extent. This is
+the Cass/Greene/Scott/Moultrie shape — an absence with no refusal behind it and
+nothing on file to notice it.
+
+**MEASURED, AND MY FIRST PASS WAS WRONG BY THE SAME METHOD-ERROR I HAD JUST
+CORRECTED IN THE RECORD.** I joined against the two statewide rosters and got
+44 across seven counties. There is a THIRD source: Boone, Grundy, Kankakee,
+Peoria and Woodford publish their district officers in their own
+`<county>-district-officials.json`, and those name library boards. Joining all
+three gives **19 across five counties** — Kendall 9, Macon 4, Rock Island 3,
+Stark 2, Woodford 1 — with 22 named from the statewide rosters and 8 from a
+county's own file. Reading two of three sources and reporting the difference is
+exactly what produced 382, and I did it again inside an hour.
+
+**THE 19 ARE GENUINELY UNMATCHED RATHER THAN MERELY UNJOINABLE**, which mattered
+because several are truncated county-GIS labels (`PLANO COMM LIB DIST`,
+`OSWEGO LIBRARY DIST`) that looked like a naming problem. Tested by
+abbreviation-stripped key and by closest-match: not one joins a board source
+under a fuller name, the nearest candidates are unrelated libraries, and only
+Wyoming Public has a filing at all — which names no board. **One thing is NOT
+established**: Kendall's nine include Aurora, Joliet, Plainfield and Three
+Rivers, whose districts are headquartered in Kane and Will and merely reach into
+Kendall, so some may be reachable through their home counties rather than being
+absent everywhere. That is the first thing a record for this would have to say.
+
+
 **2026-09-26. #1185 MERGED — `cc1a846`, AND EVERY FIGURE RE-MEASURES ON THE
 MERGED TREE.** Through the repository's own reader rather than my earlier
 working copy: the denominator 373, named 226, unnamed 147, the `why` split 24
@@ -1835,6 +1867,32 @@ disagree on the clerk's first name — Jodie in the drafts, Kandi in the
 guidebook — and neither is guessed at.
 
 ## Open questions for Adam
+
+- **2026-09-26 — 19 library cards name no trustee and no gap record covers
+  them. Not blocking; it is a scope call, and I would write the record.** The
+  measurement is in Status above. `statewide-library-officials` now correctly
+  says 226 of 373 on the statewide route, and that correctness is what exposes
+  this: the 19 counties that dispatch their own library entry are outside every
+  library gap record there is, so a reader in Yorkville or Blue Mound is told
+  nothing about an absence the app has.
+
+  **(i) Write one gap record for the 19, which I would do.** It is a day's work
+  at most: the population is derived from the dispatch table the same way the
+  corrected record's is, so it cannot go stale by hand, and `counties` would
+  carry the five so `COUNTY_STATUS.md` names them. Its `blocker` would state the
+  Kendall nuance — four of those nine are Kane and Will districts reaching into
+  Kendall, so the record must not claim they are unnamed everywhere until that
+  is checked. Cost: one more record on a panel that already carries 104.
+  **(ii) Extend `statewide-library-officials` to all 91 counties instead.** I
+  would not: its numerator is the two statewide rosters, the other 19 counties'
+  people come from three further files, and one record whose denominator mixes
+  four sources is how 382 happened.
+  **(iii) Chase the trustees first and record only what stays open.** Honest,
+  but it leaves the absence unstated for however long the chase takes, and the
+  chase is the larger job.
+
+  I would take (i) and treat any trustees found afterwards as narrowing it.
+
 
 - **2026-09-25 — ISBE refuses this project, so the county-clerk roster has no
   route and 46 precinct layers have no statewide tripwire. BLOCKING for the
