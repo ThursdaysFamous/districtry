@@ -1281,13 +1281,13 @@
         "file": "wi-senate-districts.json",
         "min_features": 34,
         "max_features": 34,
-        "note": "The 33 State Senate districts plus TIGERweb's ZZ water pseudo-district, pre-built by wi/scripts/build_legislative_boundaries.py (2,000-point agreement gate)."
+        "note": "The 33 State Senate districts plus TIGERweb's ZZ water pseudo-district, pre-built with wi-assembly-districts.json in ONE mapshaper run by wi/scripts/build_legislative_boundaries.py, so the shared edges are one arc. Three gates: 2,000-point agreement, exact Senate/Assembly nesting, and a 20 m fidelity ceiling against the source."
       },
       {
         "file": "wi-assembly-districts.json",
         "min_features": 100,
         "max_features": 100,
-        "note": "The 99 State Assembly districts plus TIGERweb's ZZ water pseudo-district, pre-built by wi/scripts/build_legislative_boundaries.py (2,000-point agreement gate)."
+        "note": "The 99 State Assembly districts plus TIGERweb's ZZ water pseudo-district, pre-built with wi-senate-districts.json in ONE mapshaper run by wi/scripts/build_legislative_boundaries.py, so the shared edges are one arc. Three gates: 2,000-point agreement, exact Senate/Assembly nesting, and a 20 m fidelity ceiling against the source."
       },
       {
         "file": "county-supervisory-districts.json",
@@ -2378,7 +2378,7 @@
     ]
   },
   "sw": {
-    "cache_name": "districtry-wi-shell-v40",
+    "cache_name": "districtry-wi-shell-v41",
     "shell_urls": [
       "./",
       "./manifest.webmanifest",
