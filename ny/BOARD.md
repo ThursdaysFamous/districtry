@@ -45,6 +45,16 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, #1190 IS GREEN AND MERGEABLE — ready for review.** `smoke`
+completed `success` on head `60ffd1e` at 19:20:30 UTC, `mergeable_state: clean`,
+no review comments, two commits, +400/-122 across 9 files. It carries item 3
+whole: the five false `sources.html` rows, the six Council names and District
+27's office, the NYPD card's missing no-commander branch, Queens's stranded
+clerk telephone, the name gate's office-prefix refusal and New York's roster
+declared in `PERSON_PATHS`. Nothing on it is mine now; it waits on its reviewer.
+Item 4 starts on the same branch restarted from main the moment it merges, and
+its key is already measured in the entry below.
+
 **2026-09-26, ITEM 4'S KEY IS SETTLED AND IT IS NOT A COLUMN — measured against
 the state's own service, not against the shipped file.** #1190 is open so nothing
 is built; this is the measurement item 4 needed before code, and it closes the
