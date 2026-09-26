@@ -45,6 +45,38 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, #1195 MERGED `ae554ad` — Nassau's upper-tier school districts answer a
+click now, and I verified it on main by content rather than on the branch.** `smoke`
+was `success` on head `2a42a26` (20:10:35 → 20:22:31 UTC), read through
+`get_check_runs`; `get_status` answers `total_count: 0` for every pull request on
+this repository, because these gates are check runs and that reader cannot see one.
+Three commits, +489/−86 across 22 files. On `origin/main` afterwards: 34 layers in
+the worksheet, `nys-central-hs-district` at `area_rank` 3 in `schools`,
+`cache_name` at v18, both geometry entries present at 713/713 and 3/3, the app
+registering the layer twice over, and `ny-central-hs-districts.json` carrying
+exactly Bellmore-Merrick, Sewanhaka Central and VALLEY STRM CENTRAL.
+
+**ONE THING WORTH KEEPING FROM THE WAIT.** GitHub reported `mergeable_state:
+unknown` for as long as I watched it, and that was its cache rather than a
+conflict — `main` had moved twice since the PR opened and the field is not
+recomputed on a base change. `git merge-tree --write-tree <head> <main's tip>`
+answered in a second: exit 0, a written tree, no conflict line, against both tips
+I tested. This repository's rule runs the other way round — a PR that CONFLICTS
+gets no CI run at all, and the remedy is merging main in — so a PR that both ran
+and merge-tests clean is owed nothing, and merging main in to refresh a cached
+field would only rewrite the head a green run was taken on. **Do not read
+`mergeable_state` as an answer; measure the merge.**
+
+**NEXT: the coterminous town/village double-draw**, whose measurement is the entry
+below and whose fix is Illinois's of 2026-09-25 in both halves — one shared
+topology through `combine-files` AND Douglas-Peucker in place of Visvalingam,
+because the shared topology alone leaves the strays. Two things are settled before
+any code: whether `ny-counties.json` belongs in the same mapshaper run, since
+villages sit INSIDE towns rather than tiling them the way the three Illinois
+chambers nest; and that no small-input test can be believed about the retain
+percentage, which is dataset-relative. Woodbury stays out either way — its 1,725 m
+disagreement is the publisher's own and is not ours to simplify away.
+
 **2026-09-26, THE COTERMINOUS TOWN/VILLAGE DOUBLE-DRAW IS MEASURED, AND SIX OF THE
 SEVEN ARE OURS.** Nothing is built — #1195 holds the branch — but the measurement is
 what the next item needs, and it CORRECTS the answer an extrapolation would have
