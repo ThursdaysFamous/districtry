@@ -765,3 +765,198 @@ change about once a decade. The background refresh is a real safety net and
 `check_cache_version.py` is now the other one, so the trade is worth
 re-examining — but it was not changed here, because nothing has measured what
 the geometry set actually costs a returning visitor.
+
+---
+
+## 10. Round 5 — the layer load campaign: point first, then detail by zoom (2026-09-26)
+
+The operator asked for a load-optimization pass over every layer in every app,
+with two priorities: **the selected point loads first**, and **a layer's
+resolution rises as the reader zooms in**. The decisions taken before any
+measurement (2026-09-26): measure and plan first, then ship one phase per pull
+request; **vector tiles** for resolution by zoom; point-first covers **the card
+and the selected district's shape**; boundary files are **fetched on first use**
+rather than precached when an app is installed.
+
+### How it was measured
+
+`scripts/probe_layer_load.mjs` boots each app with the selected point and no
+layer on, lets it settle, switches ONE layer on and records three moments: the
+card has an answer, the selected district is lit, and the layer's shapes are on
+the map. It writes `layer-load.json` at the repo root (excluded from the
+deploy).
+
+**The network is Chromium's own throttling.** Every request the page makes is
+answered by a local HTTP/2 server the probe starts: this repo's files gzipped,
+as GitHub Pages serves them, and every other host's responses from a copy
+fetched once. After boot the page is throttled with DevTools' network
+conditions at Lighthouse's mobile "Slow 4G" profile (150 ms, 1.6 Mbps), which
+delays each response and streams every body through one shared downlink. What
+that leaves out: a server's own time to answer, connection setup to a new host
+(every host is served from one local origin) and the reader's CPU. So the times
+compare layers and phases with each other; they do not predict a stopwatch.
+
+**Two earlier drafts modelled the link in JavaScript, and the first one's
+numbers were published in this section and were wrong.** It queued responses
+one after another, so a 100 KB point query waited behind a 4 MB statewide
+download asked for a moment earlier, which no browser does. That invented a
+finding: that the statewide TIGERweb layers make their card wait for the whole
+state. They do not; their loaders already carry a point query and their cards
+answer in about a second (township 0.3-1.0 s). What they do wait for is the
+highlight (finding 2 below). The second draft shared the link fairly but
+released each body in one piece, so a slow download looked to the app like a
+stalled one. Real throttling has neither defect, and every figure below is
+from it.
+
+It selects the same points as the other two browser probes
+(`scripts/probe_points.mjs`): each app's worksheet anchor, plus Evanston for
+Illinois and City Hall for New York. The service worker is blocked, so the
+install-time precache (finding 4) is not in these numbers.
+
+### Baseline (2026-09-26, Slow 4G)
+
+228 pages; 181 measured a layer that applies at the selected point. "District
+lit" counts only boundary layers whose card had a result, since a station or
+school layer lights no district.
+
+| App | Card: median | Card: 90th percentile | Cards over 5 s | District lit: median | District lit: 90th percentile |
+|---|---|---|---|---|---|
+| il | 1.0 s | 7.7 s | 11 of 60 | 3.5 s | 15.8 s |
+| ny | 0.7 s | 7.3 s | 8 of 47 | 1.6 s | 8.4 s |
+| ca | 0.2 s | 1.1 s | 0 of 16 | 0.3 s | 1.9 s |
+| wi | 1.0 s | 7.8 s | 6 of 25 | 4.5 s | 8.0 s |
+| ia | 0.6 s | 3.7 s | 0 of 19 | 1.4 s | 5.0 s |
+| mi | 0.5 s | 2.5 s | 1 of 14 | 2.7 s | 11.8 s |
+
+The slowest:
+
+| Layer | Card | District lit | What it waited for |
+|---|---|---|---|
+| wi `school-district-unified` | error at 28.5 s | never | see finding 3 |
+| il `ward` (Loop) | 7.7 s | 26.2 s | the other municipalities' wards, 3.2 MB in 49 requests |
+| il `township` | 0.3-1.0 s | 21.6-21.8 s | the whole state from TIGERweb, 4.0 MB |
+| wi `county-subdivision` | 0.4 s | 21.6 s | the same, 4.0 MB |
+| il `county-board` | 7.2-7.5 s | 15.0-15.8 s | every county's districts and rosters, 2.6 MB in 125 requests |
+| il `municipality` | 1.4 s | 15.1-15.3 s | the whole state from TIGERweb, 2.8 MB |
+| il `library-district` | 11.5 s | not within 120 s | every county's library districts, 2.0 MB in 101 requests |
+| ia, mi `county-subdivision` | 0.2-0.3 s | 11.8-12.2 s | the whole state, 2.2 MB |
+| il, mi `school-district-unified` | 0.3-0.6 s | 9.8-9.9 s | the whole state, 1.8 MB |
+
+Two runs are recorded and not counted as findings, because the sandbox cannot
+reach the servers involved: il `county-precinct` at Evanston (114 of 201
+requests failed, card at 72 s) and ny `police-sector` at City Hall (14 of 16
+failed, error card).
+
+### Findings
+
+1. **A county-dispatched layer downloads every county at once when it is
+   switched on.** `county-board`, `ward` and `library-district` start every
+   county entry's geometry AND every county's hover roster together
+   (`loadUnion` and the composite `hoverOfficial.load` in the
+   `county-layer-dispatcher` block), and the one county the card needs shares
+   the connection with a hundred others. The dispatcher already narrows the
+   QUERY to the point's county; nothing narrowed the downloads.
+2. **A point query answers the card and lights nothing.** Where a loader
+   carries `.atPoint`, `queryFeatureAt` answers the card from a small spatial
+   query, and that answer includes the district's geometry, but the highlight
+   waits for the whole set. So the statewide layers show their card in about a
+   second and their district 10-22 s later.
+3. **Wisconsin's unified school districts never load on Slow 4G.** The file is
+   2.3 MB gzipped, and `fetchJSONWithRetry`'s 9 s limit covered the whole body:
+   11.8 s at 1.6 Mbps, so all three attempts are cancelled and the card shows
+   an error. No other shipped file in the fleet is over the line, but nothing
+   stopped the next one.
+4. **The first visit downloads every shipped boundary file in the background.**
+   The service worker's install handler precaches `GEOMETRY_URLS`: 9.8 MB
+   gzipped for Wisconsin, 4.3 MB Illinois, 2.7 MB Iowa, 2.1 MB Michigan,
+   1.5 MB New York, 60 KB San Francisco. It starts as the app boots and competes
+   with the reader's first cards. The probe blocks the worker, so this cost is
+   on top of the table above.
+5. **No layer's detail depends on zoom.** Every layer is fetched once, at one
+   level of detail, whatever the zoom. A reader looking at one block downloads
+   the whole state's boundaries to draw it.
+
+### The vector tile trial
+
+Four of the heaviest shipped layers were built with tippecanoe 2.49 into
+PMTiles archives (zoom 4-13, `--simplify-only-low-zooms`,
+`--detect-shared-borders`, no feature or size limit) and read back.
+
+**Bytes a reader downloads.** Tiles are read one screen at a time, 1200x800 px:
+
+| Layer | Today (gzip, whole file) | Screen of tiles at z9 | At z11 | At z13 | Tile under the point at z13 |
+|---|---|---|---|---|---|
+| wi `school-districts-unified` | 2,309 KB | 109 KB | 23 KB | 15 KB | under 1 KB |
+| mi `mi-precincts` | 1,338 KB | 234 KB | 28 KB | 14 KB | under 1 KB |
+| ia `ia-precincts` | 657 KB | 89 KB | 40 KB | 16 KB | 1 KB |
+| il `il-house-districts` | 195 KB | 29 KB | 20 KB | 9 KB | under 1 KB |
+
+The whole archives are 1.6 to 5 times larger than the gzipped file, because
+they hold every zoom level; no reader downloads all of it. GitHub Pages answers
+byte-range requests (HTTP 206, checked against districtry.com), which PMTiles
+needs.
+
+**Classification.** The tile under a point was compared with the full file for
+about 16,000 points placed deliberately near district edges, grouped by each
+point's distance from the edge:
+
+| Distance from the edge | wi school | il house | mi precincts | ia precincts |
+|---|---|---|---|---|
+| under 0.5 m | 59 of 305 differ | 76 of 329 | 64 of 307 | 70 of 308 |
+| 0.5-1 m | 0 of 235 | 1 of 200 | 0 of 225 | 0 of 215 |
+| 1 m or more | 0 of 3,347 | 0 of 3,367 | 0 of 3,406 | 0 of 3,433 |
+
+Every difference is within a metre of an edge, the step of the zoom 13 tile grid
+(extent 4096). The shipped files are already further than that from the true
+line (the Illinois legislative outlines stray up to 17.8 m by design), so the
+tile under the point can answer the card without changing any answer that
+means anything. A first run of this test placed its "10 m" points in a random
+direction from the edge, which put many of them on it; that read as a
+1% disagreement at 10 m and was the test's error, not the tiles'.
+
+### What tiles cost, stated before building them
+
+- **Everything that reads a whole layer's geometry still needs it.** The
+  comparison stats measure areas and populations, relationship outlines test
+  containment between layers, the boundary-street labels follow the lit
+  district's edge, and hover reads `rt.geojson` (`compare-stats`,
+  `relationship-pinning`, `basemap`, `hover-explorer`, the dispatcher and
+  `overlay-cards` all do). Those keep the full GeoJSON, fetched when one of
+  those features is used rather than when the layer is switched on. The repo
+  carries both forms.
+- **The renderer changes.** Overlays are Leaflet paths today. Tiles would be
+  drawn by MapLibre GL, which every app already loads for the basemap, in its
+  own pane between the basemap and the label map. The highlight, the fading of
+  the other districts, the fill scaling by layer count, the outline-only mode
+  and the stacking by district size all move to GL paint expressions and
+  feature state. The SVG drop shadow on the lit district does not survive.
+- **The raster fallback stays on GeoJSON.** A browser without WebGL already
+  falls back to raster basemap tiles; its overlays would keep today's path. Two
+  drawing paths are maintained from then on.
+- **The service worker cannot cache a range response in the Cache API.** Tiles
+  need their own cache keyed by tile.
+- **Tile archives are binary files in git**, 1.6-5 times the gzipped GeoJSON,
+  and every rebuild adds a full copy to history.
+- **Live sources cannot become tiles without being mirrored.** In Illinois,
+  29 of the 40 layers fetch their shapes live (`layer-sources.json`). The ones that change
+  about once a year (TIGERweb) can be mirrored into shipped tiles by a scheduled
+  build; the county services stay live and get zoom-dependent requests instead
+  (ArcGIS `maxAllowableOffset` and an envelope per tile, Socrata
+  `simplify_preserve_topology` with `within_box`).
+
+### Plan
+
+Each phase is one pull request, measured with the probe before and after.
+
+| Phase | What | Target |
+|---|---|---|
+| 1 | **Point first, no format change.** County-dispatched layers load the point's county first and the others after its card has answered; hover rosters wait for the card; a point query's district is lit as soon as it arrives; a download is cancelled only when it stops arriving, not when it is long. | il 90th percentile, card under 3 s and district lit under 5 s; wi school districts load |
+| 2 | **Fetch on first use.** The service worker stops precaching boundary files at install and caches each one the first time it is used. | first visit no longer downloads 1.5-9.8 MB in the background |
+| 3 | **Tile pipeline.** `scripts/build_vector_tiles.py` builds a PMTiles archive per shipped polygon layer, with the edge-distance classification test above as its gate. No app change. | archives built and gated for all six apps |
+| 4 | **GL overlay renderer, one layer.** Wisconsin's unified school districts drawn from tiles; card from the tile under the point; highlight, fade, opacity, stacking and hover ported; full GeoJSON on demand for the comparison stats, relationship outlines and boundary streets. | wi school districts: card under 1 s at any zoom |
+| 5 | **Every shipped polygon layer on tiles**, in all six apps. | draw bytes per screen under 250 KB at every zoom |
+| 6 | **Live sources.** Mirror the yearly TIGERweb sets into scheduled tile builds; give county services zoom-dependent requests. | no layer downloads a whole state to draw one screen |
+
+Phases 1 and 2 need no new tooling and address findings 1-4 directly; phases 3-6
+address finding 5, and with it the whole-state downloads behind finding 2's
+layers, which phase 1 only stops the reader from waiting on.

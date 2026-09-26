@@ -1,0 +1,7746 @@
+{
+ "measured": "2026-09-26",
+ "network": {
+  "method": "chromium",
+  "profile": "slow4g",
+  "rtt_ms": 150,
+  "downlink_bps": 1600000,
+  "bytes": "encoded body size as received (gzip -6 for this site and for every copied remote response)"
+ },
+ "apps": {
+  "ca": {
+   "points": [
+    {
+     "lat": 37.77927,
+     "lng": -122.41924
+    }
+   ],
+   "layers": {
+    "congress": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 253,
+      "card_state": "result",
+      "highlight_ms": 253,
+      "overlay_ms": 253,
+      "features": 6,
+      "requests": 2,
+      "bytes": 6199,
+      "bytes_before_card": 6199,
+      "requests_before_card": 2,
+      "local_bytes": 6199,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ca/data/app/congress-roster.json",
+        "bytes": 3682
+       },
+       {
+        "host": "(this site)",
+        "path": "/ca/data/app/congress-districts.json",
+        "bytes": 2517
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "ca-senate": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 231,
+      "card_state": "result",
+      "highlight_ms": 231,
+      "overlay_ms": 231,
+      "features": 4,
+      "requests": 2,
+      "bytes": 4846,
+      "bytes_before_card": 4846,
+      "requests_before_card": 2,
+      "local_bytes": 4846,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ca/data/app/ca-senate-districts.json",
+        "bytes": 2465
+       },
+       {
+        "host": "(this site)",
+        "path": "/ca/data/app/ca-senate-members.json",
+        "bytes": 2381
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "ca-assembly": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 227,
+      "card_state": "result",
+      "highlight_ms": 227,
+      "overlay_ms": 227,
+      "features": 8,
+      "requests": 2,
+      "bytes": 9154,
+      "bytes_before_card": 9154,
+      "requests_before_card": 2,
+      "local_bytes": 9154,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ca/data/app/ca-assembly-districts.json",
+        "bytes": 4974
+       },
+       {
+        "host": "(this site)",
+        "path": "/ca/data/app/ca-assembly-members.json",
+        "bytes": 4180
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "bart-director": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1012,
+      "card_state": "result",
+      "highlight_ms": 1012,
+      "overlay_ms": 1012,
+      "features": 9,
+      "requests": 2,
+      "bytes": 113222,
+      "bytes_before_card": 113222,
+      "requests_before_card": 2,
+      "local_bytes": 357,
+      "hosts": [
+       "(this site)",
+       "services.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services.arcgis.com",
+        "path": "/sqS7RNuF1BQinj5N/ArcGIS/rest/services/Board_of_Directors_District_Boundary_Viewer_Base_Data_WFL1/FeatureServer/2/query",
+        "bytes": 112865
+       },
+       {
+        "host": "(this site)",
+        "path": "/ca/data/app/bart-directors.json",
+        "bytes": 357
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "election-precinct": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1936,
+      "card_state": "result",
+      "highlight_ms": 1936,
+      "overlay_ms": 1936,
+      "features": 514,
+      "requests": 3,
+      "bytes": 298647,
+      "bytes_before_card": 298647,
+      "requests_before_card": 3,
+      "local_bytes": 263,
+      "hosts": [
+       "(this site)",
+       "data.sfgov.org"
+      ],
+      "largest": [
+       {
+        "host": "data.sfgov.org",
+        "path": "/api/v3/views/jg6x-23ig/query.geojson",
+        "bytes": 297974
+       },
+       {
+        "host": "data.sfgov.org",
+        "path": "/resource/jg6x-23ig.geojson",
+        "bytes": 410
+       },
+       {
+        "host": "(this site)",
+        "path": "/ca/data/app/sf-supervisor-members.json",
+        "bytes": 263
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "supervisor-district": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 185,
+      "card_state": "result",
+      "highlight_ms": 19,
+      "overlay_ms": 19,
+      "features": 11,
+      "requests": 1,
+      "bytes": 263,
+      "bytes_before_card": 263,
+      "requests_before_card": 1,
+      "local_bytes": 263,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ca/data/app/sf-supervisor-members.json",
+        "bytes": 263
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "police-district": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 266,
+      "card_state": "result",
+      "highlight_ms": 266,
+      "overlay_ms": 266,
+      "features": 10,
+      "requests": 1,
+      "bytes": 8887,
+      "bytes_before_card": 8887,
+      "requests_before_card": 1,
+      "local_bytes": 8887,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ca/data/app/police-districts.json",
+        "bytes": 8887
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "zip-code": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 297,
+      "card_state": "result",
+      "highlight_ms": 297,
+      "overlay_ms": 297,
+      "features": 65,
+      "requests": 1,
+      "bytes": 16173,
+      "bytes_before_card": 16173,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11/query",
+        "bytes": 16173
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "neighborhood": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 363,
+      "card_state": "result",
+      "highlight_ms": 363,
+      "overlay_ms": 363,
+      "features": 41,
+      "requests": 1,
+      "bytes": 34696,
+      "bytes_before_card": 34696,
+      "requests_before_card": 1,
+      "local_bytes": 34696,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ca/data/app/sf-neighborhoods.json",
+        "bytes": 34696
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "elementary-attendance-area": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1078,
+      "card_state": "result",
+      "highlight_ms": 1078,
+      "overlay_ms": 1078,
+      "features": 58,
+      "requests": 1,
+      "bytes": 129238,
+      "bytes_before_card": 129238,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "data.sfgov.org"
+      ],
+      "largest": [
+       {
+        "host": "data.sfgov.org",
+        "path": "/resource/e6tr-sxwg.geojson",
+        "bytes": 129238
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "police-station": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 226,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 226,
+      "features": 10,
+      "requests": 1,
+      "bytes": 895,
+      "bytes_before_card": 895,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "data.sfgov.org"
+      ],
+      "largest": [
+       {
+        "host": "data.sfgov.org",
+        "path": "/resource/rwdu-9wb2.geojson",
+        "bytes": 895
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "fire-station": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 197,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 197,
+      "features": 44,
+      "requests": 1,
+      "bytes": 3171,
+      "bytes_before_card": 3171,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "data.sfgov.org"
+      ],
+      "largest": [
+       {
+        "host": "data.sfgov.org",
+        "path": "/resource/nc68-ngbr.json",
+        "bytes": 3171
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "school-site": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 291,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 291,
+      "features": 232,
+      "requests": 1,
+      "bytes": 17700,
+      "bytes_before_card": 17700,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "data.sfgov.org"
+      ],
+      "largest": [
+       {
+        "host": "data.sfgov.org",
+        "path": "/resource/7e7j-59qk.json",
+        "bytes": 17700
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "post-office": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 236,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 236,
+      "features": 34,
+      "requests": 1,
+      "bytes": 1504,
+      "bytes_before_card": 1504,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "carto.nationalmap.gov"
+      ],
+      "largest": [
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/38/query",
+        "bytes": 1504
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "library": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 223,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 223,
+      "features": 28,
+      "requests": 1,
+      "bytes": 1945,
+      "bytes_before_card": 1945,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "data.sfgov.org"
+      ],
+      "largest": [
+       {
+        "host": "data.sfgov.org",
+        "path": "/resource/fhhu-wqa7.json",
+        "bytes": 1945
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "early-voting": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 233,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 233,
+      "features": 38,
+      "requests": 1,
+      "bytes": 2439,
+      "bytes_before_card": 2439,
+      "requests_before_card": 1,
+      "local_bytes": 2439,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ca/data/app/early-voting-sites.json",
+        "bytes": 2439
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ]
+   }
+  },
+  "ia": {
+   "points": [
+    {
+     "lat": 42.0494,
+     "lng": -92.9071
+    }
+   ],
+   "layers": {
+    "us-house": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 363,
+      "card_state": "result",
+      "highlight_ms": 363,
+      "overlay_ms": 363,
+      "features": 4,
+      "requests": 2,
+      "bytes": 31069,
+      "bytes_before_card": 31069,
+      "requests_before_card": 2,
+      "local_bytes": 31069,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/congress-districts.json",
+        "bytes": 30554
+       },
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/congress-roster.json",
+        "bytes": 515
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "ia-judicial-district": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 456,
+      "card_state": "result",
+      "highlight_ms": 456,
+      "overlay_ms": 456,
+      "features": 8,
+      "requests": 2,
+      "bytes": 42844,
+      "bytes_before_card": 42844,
+      "requests_before_card": 2,
+      "local_bytes": 42844,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-judicial-districts.json",
+        "bytes": 38019
+       },
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-judicial-judges.json",
+        "bytes": 4825
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "iowa-aea": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 439,
+      "card_state": "result",
+      "highlight_ms": 439,
+      "overlay_ms": 439,
+      "features": 9,
+      "requests": 1,
+      "bytes": 35231,
+      "bytes_before_card": 35231,
+      "requests_before_card": 1,
+      "local_bytes": 35231,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-aeas.json",
+        "bytes": 35231
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "ia-senate": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 631,
+      "card_state": "result",
+      "highlight_ms": 631,
+      "overlay_ms": 631,
+      "features": 50,
+      "requests": 2,
+      "bytes": 86251,
+      "bytes_before_card": 86251,
+      "requests_before_card": 2,
+      "local_bytes": 86251,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-senate-districts.json",
+        "bytes": 84617
+       },
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-senate-members.json",
+        "bytes": 1634
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "county": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 828,
+      "card_state": "result",
+      "highlight_ms": 828,
+      "overlay_ms": 828,
+      "features": 99,
+      "requests": 5,
+      "bytes": 113699,
+      "bytes_before_card": 113699,
+      "requests_before_card": 5,
+      "local_bytes": 113699,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/state-counties.json",
+        "bytes": 88180
+       },
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-county-officers.json",
+        "bytes": 15594
+       },
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-county-auditors.json",
+        "bytes": 6420
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "ia-house": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 764,
+      "card_state": "result",
+      "highlight_ms": 764,
+      "overlay_ms": 764,
+      "features": 100,
+      "requests": 2,
+      "bytes": 115055,
+      "bytes_before_card": 115055,
+      "requests_before_card": 2,
+      "local_bytes": 115055,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-house-districts.json",
+        "bytes": 112314
+       },
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-house-members.json",
+        "bytes": 2741
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "county-supervisor": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1056,
+      "card_state": "result",
+      "highlight_ms": 1056,
+      "overlay_ms": 1056,
+      "features": 272,
+      "requests": 3,
+      "bytes": 156120,
+      "bytes_before_card": 156120,
+      "requests_before_card": 3,
+      "local_bytes": 156120,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-supervisor-districts.json",
+        "bytes": 152497
+       },
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-supervisor-members.json",
+        "bytes": 1980
+       },
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-county-board-directory.json",
+        "bytes": 1643
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "school-district-unified": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1377,
+      "card_state": "result",
+      "highlight_ms": 1377,
+      "overlay_ms": 1377,
+      "features": 324,
+      "requests": 1,
+      "bytes": 220362,
+      "bytes_before_card": 220362,
+      "requests_before_card": 1,
+      "local_bytes": 220362,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-school-districts.json",
+        "bytes": 220362
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "school-director-district": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 4727,
+      "card_state": "result",
+      "highlight_ms": 4727,
+      "overlay_ms": 4727,
+      "features": 716,
+      "requests": 2,
+      "bytes": 887040,
+      "bytes_before_card": 887040,
+      "requests_before_card": 2,
+      "local_bytes": 887040,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-school-director-districts.json",
+        "bytes": 666701
+       },
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-school-districts.json",
+        "bytes": 220339
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "community-college": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1601,
+      "card_state": "result",
+      "highlight_ms": 1601,
+      "overlay_ms": 1601,
+      "features": 15,
+      "requests": 1,
+      "bytes": 270017,
+      "bytes_before_card": 270017,
+      "requests_before_card": 1,
+      "local_bytes": 270017,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-community-colleges.json",
+        "bytes": 270017
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "cc-director-district": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 2541,
+      "card_state": "result",
+      "highlight_ms": 2031,
+      "overlay_ms": 2031,
+      "features": 123,
+      "requests": 2,
+      "bytes": 452608,
+      "bytes_before_card": 452608,
+      "requests_before_card": 2,
+      "local_bytes": 452608,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-community-colleges.json",
+        "bytes": 269994
+       },
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-cc-director-districts.json",
+        "bytes": 182614
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "county-subdivision": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 218,
+      "card_state": "result",
+      "highlight_ms": 12184,
+      "overlay_ms": 12184,
+      "features": 1663,
+      "requests": 2,
+      "bytes": 2254839,
+      "bytes_before_card": 3257,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query",
+        "bytes": 2251582
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query",
+        "bytes": 3257
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "municipality": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 771,
+      "card_state": "result",
+      "highlight_ms": 4999,
+      "overlay_ms": 4999,
+      "features": 939,
+      "requests": 5,
+      "bytes": 840471,
+      "bytes_before_card": 39530,
+      "requests_before_card": 4,
+      "local_bytes": 34539,
+      "hosts": [
+       "(this site)",
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query",
+        "bytes": 800941
+       },
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-city-contact.json",
+        "bytes": 18232
+       },
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-county-city-officials.json",
+        "bytes": 15350
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "city-ward": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 14,
+      "requests": 0,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [],
+      "largest": [],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "zip-code": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 343,
+      "card_state": "result",
+      "highlight_ms": 3592,
+      "overlay_ms": 3592,
+      "features": 1443,
+      "requests": 2,
+      "bytes": 627496,
+      "bytes_before_card": 14118,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11/query",
+        "bytes": 613378
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11/query",
+        "bytes": 14118
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "precinct": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 3716,
+      "card_state": "result",
+      "highlight_ms": 3716,
+      "overlay_ms": 3716,
+      "features": 1660,
+      "requests": 1,
+      "bytes": 667912,
+      "bytes_before_card": 667912,
+      "requests_before_card": 1,
+      "local_bytes": 667912,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-precincts.json",
+        "bytes": 667912
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "police-station": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 297,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 297,
+      "features": 449,
+      "requests": 1,
+      "bytes": 15305,
+      "bytes_before_card": 15305,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "carto.nationalmap.gov"
+      ],
+      "largest": [
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/53/query",
+        "bytes": 15305
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "fire-station": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 447,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 447,
+      "features": 1262,
+      "requests": 1,
+      "bytes": 42964,
+      "bytes_before_card": 42964,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "carto.nationalmap.gov"
+      ],
+      "largest": [
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/51/query",
+        "bytes": 42964
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "school-site": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 447,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 447,
+      "features": 1321,
+      "requests": 1,
+      "bytes": 40277,
+      "bytes_before_card": 40277,
+      "requests_before_card": 1,
+      "local_bytes": 40277,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ia/data/app/ia-school-sites.json",
+        "bytes": 40277
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "post-office": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 410,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 410,
+      "features": 1170,
+      "requests": 1,
+      "bytes": 36580,
+      "bytes_before_card": 36580,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "carto.nationalmap.gov"
+      ],
+      "largest": [
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/38/query",
+        "bytes": 36580
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ]
+   }
+  },
+  "il": {
+   "points": [
+    {
+     "lat": 41.8825,
+     "lng": -87.6285
+    },
+    {
+     "lat": 42.0451,
+     "lng": -87.6877
+    }
+   ],
+   "layers": {
+    "il-supreme-court": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 490,
+      "card_state": "result",
+      "highlight_ms": 490,
+      "overlay_ms": 490,
+      "features": 5,
+      "requests": 2,
+      "bytes": 33105,
+      "bytes_before_card": 33105,
+      "requests_before_card": 2,
+      "local_bytes": 33105,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/il-supreme-court-districts.json",
+        "bytes": 31015
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/il-court-justices.json",
+        "bytes": 2090
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 376,
+      "card_state": "result",
+      "highlight_ms": 376,
+      "overlay_ms": 376,
+      "features": 5,
+      "requests": 2,
+      "bytes": 33105,
+      "bytes_before_card": 33105,
+      "requests_before_card": 2,
+      "local_bytes": 33105,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/il-supreme-court-districts.json",
+        "bytes": 31015
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/il-court-justices.json",
+        "bytes": 2090
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "congress": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 831,
+      "card_state": "result",
+      "highlight_ms": 831,
+      "overlay_ms": 831,
+      "features": 18,
+      "requests": 2,
+      "bytes": 112646,
+      "bytes_before_card": 112646,
+      "requests_before_card": 2,
+      "local_bytes": 112646,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/congress-districts.json",
+        "bytes": 111252
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/congress-roster.json",
+        "bytes": 1394
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1017,
+      "card_state": "result",
+      "highlight_ms": 1017,
+      "overlay_ms": 1017,
+      "features": 18,
+      "requests": 2,
+      "bytes": 112646,
+      "bytes_before_card": 112646,
+      "requests_before_card": 2,
+      "local_bytes": 112646,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/congress-districts.json",
+        "bytes": 111252
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/congress-roster.json",
+        "bytes": 1394
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "il-senate": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1132,
+      "card_state": "result",
+      "highlight_ms": 1132,
+      "overlay_ms": 1132,
+      "features": 60,
+      "requests": 2,
+      "bytes": 153313,
+      "bytes_before_card": 153313,
+      "requests_before_card": 2,
+      "local_bytes": 153313,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/il-senate-districts.json",
+        "bytes": 149323
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/il-senate-members.json",
+        "bytes": 3990
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1394,
+      "card_state": "result",
+      "highlight_ms": 1394,
+      "overlay_ms": 1394,
+      "features": 60,
+      "requests": 2,
+      "bytes": 153313,
+      "bytes_before_card": 153313,
+      "requests_before_card": 2,
+      "local_bytes": 153313,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/il-senate-districts.json",
+        "bytes": 149323
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/il-senate-members.json",
+        "bytes": 3990
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "il-house": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1261,
+      "card_state": "result",
+      "highlight_ms": 1261,
+      "overlay_ms": 1261,
+      "features": 119,
+      "requests": 2,
+      "bytes": 205493,
+      "bytes_before_card": 205493,
+      "requests_before_card": 2,
+      "local_bytes": 205493,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/il-house-districts.json",
+        "bytes": 198248
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/il-house-members.json",
+        "bytes": 7245
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1260,
+      "card_state": "result",
+      "highlight_ms": 1260,
+      "overlay_ms": 1260,
+      "features": 119,
+      "requests": 2,
+      "bytes": 205493,
+      "bytes_before_card": 205493,
+      "requests_before_card": 2,
+      "local_bytes": 205493,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/il-house-districts.json",
+        "bytes": 198248
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/il-house-members.json",
+        "bytes": 7245
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "county": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 502,
+      "card_state": "result",
+      "highlight_ms": 4569,
+      "overlay_ms": 4569,
+      "features": 102,
+      "requests": 4,
+      "bytes": 848466,
+      "bytes_before_card": 35788,
+      "requests_before_card": 3,
+      "local_bytes": 9470,
+      "hosts": [
+       "(this site)",
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query",
+        "bytes": 812678
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query",
+        "bytes": 26318
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/il-county-clerks.json",
+        "bytes": 5863
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 498,
+      "card_state": "result",
+      "highlight_ms": 4529,
+      "overlay_ms": 4529,
+      "features": 102,
+      "requests": 4,
+      "bytes": 848373,
+      "bytes_before_card": 35788,
+      "requests_before_card": 3,
+      "local_bytes": 9470,
+      "hosts": [
+       "(this site)",
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query",
+        "bytes": 812585
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query",
+        "bytes": 26318
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/il-county-clerks.json",
+        "bytes": 5863
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "mwrd": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 881,
+      "card_state": "result",
+      "highlight_ms": 881,
+      "overlay_ms": 881,
+      "features": 1,
+      "requests": 1,
+      "bytes": 133964,
+      "bytes_before_card": 133964,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "gis.cookcountyil.gov"
+      ],
+      "largest": [
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/politicalBoundary/MapServer/21/query",
+        "bytes": 133964
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 880,
+      "card_state": "result",
+      "highlight_ms": 880,
+      "overlay_ms": 880,
+      "features": 1,
+      "requests": 1,
+      "bytes": 133894,
+      "bytes_before_card": 133894,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "gis.cookcountyil.gov"
+      ],
+      "largest": [
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/politicalBoundary/MapServer/21/query",
+        "bytes": 133894
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "school-district-secondary": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/School/MapServer/1/query",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 271,
+      "card_state": "result",
+      "highlight_ms": 2686,
+      "overlay_ms": 2686,
+      "features": 105,
+      "requests": 2,
+      "bytes": 483905,
+      "bytes_before_card": 4520,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/School/MapServer/1/query",
+        "bytes": 479385
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/School/MapServer/1/query",
+        "bytes": 4520
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "school-district-unified": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 594,
+      "card_state": "result",
+      "highlight_ms": 9883,
+      "overlay_ms": 9883,
+      "features": 387,
+      "requests": 2,
+      "bytes": 1882575,
+      "bytes_before_card": 39417,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/School/MapServer/0/query",
+        "bytes": 1843158
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/School/MapServer/0/query",
+        "bytes": 39417
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 9681,
+      "card_state": "empty",
+      "highlight_ms": null,
+      "overlay_ms": 9681,
+      "features": 387,
+      "requests": 2,
+      "bytes": 1843331,
+      "bytes_before_card": 1843331,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/School/MapServer/0/query",
+        "bytes": 1843065
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/School/MapServer/0/query",
+        "bytes": 266
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "school-district-elementary": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/School/MapServer/2/query",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 218,
+      "card_state": "result",
+      "highlight_ms": 4745,
+      "overlay_ms": 4745,
+      "features": 371,
+      "requests": 2,
+      "bytes": 888447,
+      "bytes_before_card": 4529,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/School/MapServer/2/query",
+        "bytes": 883918
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/School/MapServer/2/query",
+        "bytes": 4529
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "township": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1017,
+      "card_state": "result",
+      "highlight_ms": 21829,
+      "overlay_ms": 21829,
+      "features": 1695,
+      "requests": 7,
+      "bytes": 4140175,
+      "bytes_before_card": 80145,
+      "requests_before_card": 5,
+      "local_bytes": 14451,
+      "hosts": [
+       "(this site)",
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query",
+        "bytes": 3247468
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query",
+        "bytes": 812562
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query",
+        "bytes": 39376
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 330,
+      "card_state": "result",
+      "highlight_ms": 21597,
+      "overlay_ms": 21597,
+      "features": 1695,
+      "requests": 7,
+      "bytes": 4105147,
+      "bytes_before_card": 13052,
+      "requests_before_card": 3,
+      "local_bytes": 14451,
+      "hosts": [
+       "(this site)",
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query",
+        "bytes": 3247375
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query",
+        "bytes": 812562
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query",
+        "bytes": 26318
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "municipality": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1439,
+      "card_state": "result",
+      "highlight_ms": 15051,
+      "overlay_ms": 15051,
+      "features": 1294,
+      "requests": 3,
+      "bytes": 2854029,
+      "bytes_before_card": 145250,
+      "requests_before_card": 2,
+      "local_bytes": 105615,
+      "hosts": [
+       "(this site)",
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query",
+        "bytes": 2708779
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/municipal-officials.json",
+        "bytes": 105615
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query",
+        "bytes": 39635
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1353,
+      "card_state": "result",
+      "highlight_ms": 15274,
+      "overlay_ms": 15274,
+      "features": 1294,
+      "requests": 3,
+      "bytes": 2818713,
+      "bytes_before_card": 110027,
+      "requests_before_card": 2,
+      "local_bytes": 105615,
+      "hosts": [
+       "(this site)",
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query",
+        "bytes": 2708686
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/municipal-officials.json",
+        "bytes": 105615
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query",
+        "bytes": 4412
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "judicial-subcircuit": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 4101,
+      "card_state": "result",
+      "highlight_ms": 4101,
+      "overlay_ms": 31,
+      "features": 65,
+      "requests": 7,
+      "bytes": 774657,
+      "bytes_before_card": 774657,
+      "requests_before_card": 7,
+      "local_bytes": 7753,
+      "hosts": [
+       "(this site)",
+       "gis.cookcountyil.gov",
+       "services.arcgis.com",
+       "services3.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/politicalBoundary/MapServer/5/query",
+        "bytes": 264252
+       },
+       {
+        "host": "services3.arcgis.com",
+        "path": "/HESxeTbDliKKvec2/arcgis/rest/services/LakeCounty_PoliticalBoundaries/FeatureServer/1/query",
+        "bytes": 230642
+       },
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/politicalBoundary/MapServer/27/query",
+        "bytes": 182288
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 4234,
+      "card_state": "result",
+      "highlight_ms": 4234,
+      "overlay_ms": 18,
+      "features": 65,
+      "requests": 7,
+      "bytes": 774610,
+      "bytes_before_card": 774610,
+      "requests_before_card": 7,
+      "local_bytes": 7753,
+      "hosts": [
+       "(this site)",
+       "gis.cookcountyil.gov",
+       "services.arcgis.com",
+       "services3.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/politicalBoundary/MapServer/5/query",
+        "bytes": 264252
+       },
+       {
+        "host": "services3.arcgis.com",
+        "path": "/HESxeTbDliKKvec2/arcgis/rest/services/LakeCounty_PoliticalBoundaries/FeatureServer/1/query",
+        "bytes": 230665
+       },
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/politicalBoundary/MapServer/27/query",
+        "bytes": 182288
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "county-board": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 7214,
+      "card_state": "result",
+      "highlight_ms": 15034,
+      "overlay_ms": 264,
+      "features": 577,
+      "requests": 125,
+      "bytes": 2703220,
+      "bytes_before_card": 607686,
+      "requests_before_card": 95,
+      "local_bytes": 833878,
+      "hosts": [
+       "(this site)",
+       "arcgispublicmap.co.st-clair.il.us",
+       "gis.cookcountyil.gov",
+       "gis.fultoncountyil.gov",
+       "gis.leecountyil.gov",
+       "gis.mcleancountyil.gov",
+       "gisportal.co.madison.il.us",
+       "k3gis.net",
+       "maps.boonecountyil.org",
+       "maps.co.kendall.il.us",
+       "maps.wingis.org",
+       "services.arcgis.com",
+       "services1.arcgis.com",
+       "services2.arcgis.com",
+       "services3.arcgis.com",
+       "services6.arcgis.com",
+       "services7.arcgis.com",
+       "services9.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/politicalBoundary/MapServer/9/query",
+        "bytes": 339781
+       },
+       {
+        "host": "services3.arcgis.com",
+        "path": "/HESxeTbDliKKvec2/arcgis/rest/services/LakeCounty_PoliticalBoundaries/FeatureServer/0/query",
+        "bytes": 263192
+       },
+       {
+        "host": "services.arcgis.com",
+        "path": "/l0M0OC6J9QAHCiGx/arcgis/rest/services/ElectionGeography_public/FeatureServer/2/query",
+        "bytes": 228181
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 3
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 7512,
+      "card_state": "result",
+      "highlight_ms": 15758,
+      "overlay_ms": 672,
+      "features": 577,
+      "requests": 127,
+      "bytes": 2695675,
+      "bytes_before_card": 577049,
+      "requests_before_card": 94,
+      "local_bytes": 833855,
+      "hosts": [
+       "(this site)",
+       "arcgispublicmap.co.st-clair.il.us",
+       "gis.cookcountyil.gov",
+       "gis.fultoncountyil.gov",
+       "gis.leecountyil.gov",
+       "gis.mcleancountyil.gov",
+       "gisportal.co.madison.il.us",
+       "k3gis.net",
+       "maps.boonecountyil.org",
+       "maps.co.kendall.il.us",
+       "maps.wingis.org",
+       "services.arcgis.com",
+       "services1.arcgis.com",
+       "services2.arcgis.com",
+       "services3.arcgis.com",
+       "services6.arcgis.com",
+       "services7.arcgis.com",
+       "services9.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/politicalBoundary/MapServer/9/query",
+        "bytes": 339804
+       },
+       {
+        "host": "services3.arcgis.com",
+        "path": "/HESxeTbDliKKvec2/arcgis/rest/services/LakeCounty_PoliticalBoundaries/FeatureServer/0/query",
+        "bytes": 263076
+       },
+       {
+        "host": "services.arcgis.com",
+        "path": "/l0M0OC6J9QAHCiGx/arcgis/rest/services/ElectionGeography_public/FeatureServer/2/query",
+        "bytes": 228181
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 5
+     }
+    ],
+    "ccbr": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 181,
+      "card_state": "result",
+      "highlight_ms": 20,
+      "overlay_ms": 20,
+      "features": 3,
+      "requests": 1,
+      "bytes": 291,
+      "bytes_before_card": 291,
+      "requests_before_card": 1,
+      "local_bytes": 291,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/ccbr-roster.json",
+        "bytes": 291
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 198,
+      "card_state": "result",
+      "highlight_ms": 40,
+      "overlay_ms": 40,
+      "features": 3,
+      "requests": 1,
+      "bytes": 291,
+      "bytes_before_card": 291,
+      "requests_before_card": 1,
+      "local_bytes": 291,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/ccbr-roster.json",
+        "bytes": 291
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "fire-district": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 4938,
+      "card_state": "empty",
+      "highlight_ms": null,
+      "overlay_ms": 3817,
+      "features": 598,
+      "requests": 31,
+      "bytes": 2208757,
+      "bytes_before_card": 324424,
+      "requests_before_card": 16,
+      "local_bytes": 302302,
+      "hosts": [
+       "(this site)",
+       "arcgispublicmap.co.st-clair.il.us",
+       "gis.leecountyil.gov",
+       "gisportal.co.madison.il.us",
+       "k3gis.net",
+       "services.arcgis.com",
+       "services1.arcgis.com",
+       "services3.arcgis.com",
+       "services6.arcgis.com",
+       "services7.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "gisportal.co.madison.il.us",
+        "path": "/servera/rest/services/MadCo/FireDistrictsWS/MapServer/0/query",
+        "bytes": 389455
+       },
+       {
+        "host": "arcgispublicmap.co.st-clair.il.us",
+        "path": "/server/rest/services/CentralSquare/DATA/MapServer/8/query",
+        "bytes": 362098
+       },
+       {
+        "host": "services.arcgis.com",
+        "path": "/fGsbyIOAuxHnF97m/arcgis/rest/services/Fire_District/FeatureServer/0/query",
+        "bytes": 213373
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 4207,
+      "card_state": "empty",
+      "highlight_ms": null,
+      "overlay_ms": 2925,
+      "features": 598,
+      "requests": 31,
+      "bytes": 2208687,
+      "bytes_before_card": 220163,
+      "requests_before_card": 13,
+      "local_bytes": 302302,
+      "hosts": [
+       "(this site)",
+       "arcgispublicmap.co.st-clair.il.us",
+       "gis.leecountyil.gov",
+       "gisportal.co.madison.il.us",
+       "k3gis.net",
+       "services.arcgis.com",
+       "services1.arcgis.com",
+       "services3.arcgis.com",
+       "services6.arcgis.com",
+       "services7.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "gisportal.co.madison.il.us",
+        "path": "/servera/rest/services/MadCo/FireDistrictsWS/MapServer/0/query",
+        "bytes": 389455
+       },
+       {
+        "host": "arcgispublicmap.co.st-clair.il.us",
+        "path": "/server/rest/services/CentralSquare/DATA/MapServer/8/query",
+        "bytes": 362098
+       },
+       {
+        "host": "services.arcgis.com",
+        "path": "/fGsbyIOAuxHnF97m/arcgis/rest/services/Fire_District/FeatureServer/0/query",
+        "bytes": 213373
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "dupage-county-special-police": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "services.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services.arcgis.com",
+        "path": "/neJvtQ4PXvnQ86MJ/arcgis/rest/services/Special_Police_Districts_/FeatureServer/13/query",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "services.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services.arcgis.com",
+        "path": "/neJvtQ4PXvnQ86MJ/arcgis/rest/services/Special_Police_Districts_/FeatureServer/13/query",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     }
+    ],
+    "park-district": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 6844,
+      "card_state": "result",
+      "highlight_ms": 6844,
+      "overlay_ms": 615,
+      "features": 248,
+      "requests": 25,
+      "bytes": 1267708,
+      "bytes_before_card": 1267708,
+      "requests_before_card": 25,
+      "local_bytes": 111377,
+      "hosts": [
+       "(this site)",
+       "gis.cookcountyil.gov",
+       "k3gis.net",
+       "services.arcgis.com",
+       "services1.arcgis.com",
+       "services3.arcgis.com",
+       "services7.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/politicalBoundary/MapServer/23/query",
+        "bytes": 515915
+       },
+       {
+        "host": "services3.arcgis.com",
+        "path": "/HESxeTbDliKKvec2/arcgis/rest/services/LakeCounty_TaxDistricts/FeatureServer/11/query",
+        "bytes": 248398
+       },
+       {
+        "host": "services.arcgis.com",
+        "path": "/fGsbyIOAuxHnF97m/arcgis/rest/services/Park_District/FeatureServer/0/query",
+        "bytes": 105881
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 6796,
+      "card_state": "empty",
+      "highlight_ms": null,
+      "overlay_ms": 617,
+      "features": 248,
+      "requests": 25,
+      "bytes": 1267638,
+      "bytes_before_card": 1267638,
+      "requests_before_card": 25,
+      "local_bytes": 111377,
+      "hosts": [
+       "(this site)",
+       "gis.cookcountyil.gov",
+       "k3gis.net",
+       "services.arcgis.com",
+       "services1.arcgis.com",
+       "services3.arcgis.com",
+       "services7.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/politicalBoundary/MapServer/23/query",
+        "bytes": 515845
+       },
+       {
+        "host": "services3.arcgis.com",
+        "path": "/HESxeTbDliKKvec2/arcgis/rest/services/LakeCounty_TaxDistricts/FeatureServer/11/query",
+        "bytes": 248398
+       },
+       {
+        "host": "services.arcgis.com",
+        "path": "/fGsbyIOAuxHnF97m/arcgis/rest/services/Park_District/FeatureServer/0/query",
+        "bytes": 105904
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "library-district": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 11474,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 552,
+      "features": 822,
+      "requests": 101,
+      "bytes": 2097674,
+      "bytes_before_card": 2097674,
+      "requests_before_card": 101,
+      "local_bytes": 561362,
+      "hosts": [
+       "(this site)",
+       "gis.cookcountyil.gov",
+       "k3gis.net",
+       "services.arcgis.com",
+       "services1.arcgis.com",
+       "services3.arcgis.com",
+       "services7.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/politicalBoundary/MapServer/19/query",
+        "bytes": 403236
+       },
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/politicalBoundary/MapServer/20/query",
+        "bytes": 239339
+       },
+       {
+        "host": "services.arcgis.com",
+        "path": "/Z0kKj2K728ngqqrp/arcgis/rest/services/MadCo_LibraryDistricts/FeatureServer/40/query",
+        "bytes": 206771
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 11516,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 447,
+      "features": 822,
+      "requests": 101,
+      "bytes": 2097604,
+      "bytes_before_card": 2097604,
+      "requests_before_card": 101,
+      "local_bytes": 561362,
+      "hosts": [
+       "(this site)",
+       "gis.cookcountyil.gov",
+       "k3gis.net",
+       "services.arcgis.com",
+       "services1.arcgis.com",
+       "services3.arcgis.com",
+       "services7.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/politicalBoundary/MapServer/19/query",
+        "bytes": 403236
+       },
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/politicalBoundary/MapServer/20/query",
+        "bytes": 239269
+       },
+       {
+        "host": "services.arcgis.com",
+        "path": "/Z0kKj2K728ngqqrp/arcgis/rest/services/MadCo_LibraryDistricts/FeatureServer/40/query",
+        "bytes": 206771
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "school-board": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 188,
+      "card_state": "result",
+      "highlight_ms": 18,
+      "overlay_ms": 18,
+      "features": 20,
+      "requests": 1,
+      "bytes": 863,
+      "bytes_before_card": 863,
+      "requests_before_card": 1,
+      "local_bytes": 863,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/school-board-members.json",
+        "bytes": 863
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 20,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/school-board-members.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     }
+    ],
+    "cps-hs-network": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1833,
+      "card_state": "result",
+      "highlight_ms": 2774,
+      "overlay_ms": 2774,
+      "features": 4,
+      "requests": 3,
+      "bytes": 464736,
+      "bytes_before_card": 144219,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofchicago.org"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/aupu-jt2g.geojson",
+        "bytes": 320517
+       },
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/aupu-jt2g.json",
+        "bytes": 73786
+       },
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/aupu-jt2g.geojson",
+        "bytes": 70433
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofchicago.org"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/aupu-jt2g.geojson",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     }
+    ],
+    "cps-network": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1230,
+      "card_state": "result",
+      "highlight_ms": 2729,
+      "overlay_ms": 2729,
+      "features": 13,
+      "requests": 3,
+      "bytes": 501655,
+      "bytes_before_card": 88673,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofchicago.org"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/pnta-kuqa.geojson",
+        "bytes": 412982
+       },
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/pnta-kuqa.geojson",
+        "bytes": 51021
+       },
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/pnta-kuqa.json",
+        "bytes": 37652
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofchicago.org"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/pnta-kuqa.geojson",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     }
+    ],
+    "ward": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 7658,
+      "card_state": "result",
+      "highlight_ms": 26175,
+      "overlay_ms": 909,
+      "features": 479,
+      "requests": 49,
+      "bytes": 3316082,
+      "bytes_before_card": 1082250,
+      "requests_before_card": 41,
+      "local_bytes": 105615,
+      "hosts": [
+       "(this site)",
+       "arcgispublicmap.co.st-clair.il.us",
+       "data.cityofchicago.org",
+       "gis.aurora.il.us",
+       "gis.cookcountyil.gov",
+       "gis.mcleancountyil.gov",
+       "gis.peoriacounty.gov",
+       "maps.boonecountyil.org",
+       "maps.cityofevanston.org",
+       "maps.co.kendall.il.us",
+       "maps.wingis.org",
+       "services.arcgis.com",
+       "services1.arcgis.com",
+       "services2.arcgis.com",
+       "services3.arcgis.com",
+       "services5.arcgis.com",
+       "services6.arcgis.com",
+       "services7.arcgis.com",
+       "services8.arcgis.com",
+       "services9.arcgis.com",
+       "webapps.bataviail.gov"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/p293-wvbd.geojson",
+        "bytes": 1272426
+       },
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/politicalBoundary/MapServer/22/query",
+        "bytes": 675829
+       },
+       {
+        "host": "services.arcgis.com",
+        "path": "/Z0kKj2K728ngqqrp/arcgis/rest/services/MadCo_Wards/FeatureServer/40/query",
+        "bytes": 187007
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 4
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 7638,
+      "card_state": "result",
+      "highlight_ms": 3461,
+      "overlay_ms": 659,
+      "features": 479,
+      "requests": 46,
+      "bytes": 3267446,
+      "bytes_before_card": 1132184,
+      "requests_before_card": 40,
+      "local_bytes": 105615,
+      "hosts": [
+       "(this site)",
+       "arcgispublicmap.co.st-clair.il.us",
+       "data.cityofchicago.org",
+       "gis.aurora.il.us",
+       "gis.cookcountyil.gov",
+       "gis.mcleancountyil.gov",
+       "gis.peoriacounty.gov",
+       "maps.boonecountyil.org",
+       "maps.cityofevanston.org",
+       "maps.co.kendall.il.us",
+       "maps.wingis.org",
+       "services.arcgis.com",
+       "services1.arcgis.com",
+       "services2.arcgis.com",
+       "services3.arcgis.com",
+       "services5.arcgis.com",
+       "services6.arcgis.com",
+       "services7.arcgis.com",
+       "services8.arcgis.com",
+       "services9.arcgis.com",
+       "webapps.bataviail.gov"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/p293-wvbd.geojson",
+        "bytes": 1272426
+       },
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/politicalBoundary/MapServer/22/query",
+        "bytes": 675829
+       },
+       {
+        "host": "services.arcgis.com",
+        "path": "/Z0kKj2K728ngqqrp/arcgis/rest/services/MadCo_Wards/FeatureServer/40/query",
+        "bytes": 187007
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 3
+     }
+    ],
+    "ward-precinct": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 815,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 63,
+      "bytes": 1370735,
+      "bytes_before_card": 6169,
+      "requests_before_card": 4,
+      "local_bytes": 105615,
+      "hosts": [
+       "(this site)",
+       "arcgispublicmap.co.st-clair.il.us",
+       "data.cityofchicago.org",
+       "gis.aurora.il.us",
+       "gis.cookcountyil.gov",
+       "gis.mcleancountyil.gov",
+       "gis.peoriacounty.gov",
+       "maps.boonecountyil.org",
+       "maps.cityofevanston.org",
+       "maps.co.kendall.il.us",
+       "maps.wingis.org",
+       "services.arcgis.com",
+       "services1.arcgis.com",
+       "services2.arcgis.com",
+       "services3.arcgis.com",
+       "services5.arcgis.com",
+       "services6.arcgis.com",
+       "services7.arcgis.com",
+       "services8.arcgis.com",
+       "services9.arcgis.com",
+       "webapps.bataviail.gov"
+      ],
+      "largest": [
+       {
+        "host": "services.arcgis.com",
+        "path": "/Z0kKj2K728ngqqrp/arcgis/rest/services/MadCo_Wards/FeatureServer/40/query",
+        "bytes": 187007
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/municipal-officials.json",
+        "bytes": 105615
+       },
+       {
+        "host": "maps.wingis.org",
+        "path": "/public/rest/services/ElectedOfficials/MapServer/20/query",
+        "bytes": 98570
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 18
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 44,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)",
+       "arcgispublicmap.co.st-clair.il.us",
+       "data.cityofchicago.org",
+       "gis.aurora.il.us",
+       "gis.cookcountyil.gov",
+       "gis.mcleancountyil.gov",
+       "gis.peoriacounty.gov",
+       "maps.boonecountyil.org",
+       "maps.cityofevanston.org",
+       "maps.co.kendall.il.us",
+       "maps.wingis.org",
+       "services.arcgis.com",
+       "services1.arcgis.com",
+       "services2.arcgis.com",
+       "services3.arcgis.com",
+       "services5.arcgis.com",
+       "services6.arcgis.com",
+       "services7.arcgis.com",
+       "services8.arcgis.com",
+       "services9.arcgis.com",
+       "webapps.bataviail.gov"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/i8fv-xe4b.geojson",
+        "bytes": 0
+       },
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/p293-wvbd.geojson",
+        "bytes": 0
+       },
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/politicalBoundary/MapServer/22/query",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 44,
+      "failed_requests": 0
+     }
+    ],
+    "police-district": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 327,
+      "card_state": "result",
+      "highlight_ms": 1083,
+      "overlay_ms": 1083,
+      "features": 22,
+      "requests": 4,
+      "bytes": 174990,
+      "bytes_before_card": 17811,
+      "requests_before_card": 3,
+      "local_bytes": 7288,
+      "hosts": [
+       "(this site)",
+       "services2.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services2.arcgis.com",
+        "path": "/t3tlzCPfmaQzSWAk/arcgis/rest/services/Police_District_Boundary_View/FeatureServer/0/query",
+        "bytes": 157179
+       },
+       {
+        "host": "services2.arcgis.com",
+        "path": "/t3tlzCPfmaQzSWAk/arcgis/rest/services/Police_District_Boundary_View/FeatureServer/0/query",
+        "bytes": 9351
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/cpd-district-info.json",
+        "bytes": 7288
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 2,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)",
+       "services2.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services2.arcgis.com",
+        "path": "/t3tlzCPfmaQzSWAk/arcgis/rest/services/Police_District_Boundary_View/FeatureServer/0/query",
+        "bytes": 0
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/cpd-district-info.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 2,
+      "failed_requests": 0
+     }
+    ],
+    "police-beat": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 229,
+      "card_state": "result",
+      "highlight_ms": 3428,
+      "overlay_ms": 3428,
+      "features": 274,
+      "requests": 6,
+      "bytes": 579277,
+      "bytes_before_card": 2267,
+      "requests_before_card": 2,
+      "local_bytes": 7288,
+      "hosts": [
+       "(this site)",
+       "services2.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services2.arcgis.com",
+        "path": "/t3tlzCPfmaQzSWAk/arcgis/rest/services/Police_Beat_Boundary/FeatureServer/0/query",
+        "bytes": 403308
+       },
+       {
+        "host": "services2.arcgis.com",
+        "path": "/t3tlzCPfmaQzSWAk/arcgis/rest/services/Police_District_Boundary_View/FeatureServer/0/query",
+        "bytes": 157063
+       },
+       {
+        "host": "services2.arcgis.com",
+        "path": "/t3tlzCPfmaQzSWAk/arcgis/rest/services/Police_District_Boundary_View/FeatureServer/0/query",
+        "bytes": 9351
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 3,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)",
+       "services2.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services2.arcgis.com",
+        "path": "/t3tlzCPfmaQzSWAk/arcgis/rest/services/Police_Beat_Boundary/FeatureServer/0/query",
+        "bytes": 0
+       },
+       {
+        "host": "services2.arcgis.com",
+        "path": "/t3tlzCPfmaQzSWAk/arcgis/rest/services/Police_District_Boundary_View/FeatureServer/0/query",
+        "bytes": 0
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/cpd-district-info.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 3,
+      "failed_requests": 0
+     }
+    ],
+    "ccpsa-district-council": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 326,
+      "card_state": "result",
+      "highlight_ms": 1075,
+      "overlay_ms": 1075,
+      "features": 22,
+      "requests": 3,
+      "bytes": 168268,
+      "bytes_before_card": 11089,
+      "requests_before_card": 2,
+      "local_bytes": 1738,
+      "hosts": [
+       "(this site)",
+       "services2.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services2.arcgis.com",
+        "path": "/t3tlzCPfmaQzSWAk/arcgis/rest/services/Police_District_Boundary_View/FeatureServer/0/query",
+        "bytes": 157179
+       },
+       {
+        "host": "services2.arcgis.com",
+        "path": "/t3tlzCPfmaQzSWAk/arcgis/rest/services/Police_District_Boundary_View/FeatureServer/0/query",
+        "bytes": 9351
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/ccpsa-district-councils.json",
+        "bytes": 1738
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 2,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)",
+       "services2.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services2.arcgis.com",
+        "path": "/t3tlzCPfmaQzSWAk/arcgis/rest/services/Police_District_Boundary_View/FeatureServer/0/query",
+        "bytes": 0
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/ccpsa-district-councils.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 2,
+      "failed_requests": 0
+     }
+    ],
+    "community-area": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 583,
+      "card_state": "result",
+      "highlight_ms": 4214,
+      "overlay_ms": 4214,
+      "features": 77,
+      "requests": 3,
+      "bytes": 749086,
+      "bytes_before_card": 22449,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofchicago.org"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/igwz-8jzy.geojson",
+        "bytes": 726637
+       },
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/igwz-8jzy.json",
+        "bytes": 13453
+       },
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/igwz-8jzy.geojson",
+        "bytes": 8996
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 77,
+      "requests": 0,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [],
+      "largest": [],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "zip-code": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 225,
+      "card_state": "result",
+      "highlight_ms": 5855,
+      "overlay_ms": 5855,
+      "features": 2184,
+      "requests": 2,
+      "bytes": 1086100,
+      "bytes_before_card": 848,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11/query",
+        "bytes": 1085252
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11/query",
+        "bytes": 848
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 227,
+      "card_state": "result",
+      "highlight_ms": 5840,
+      "overlay_ms": 5840,
+      "features": 2184,
+      "requests": 2,
+      "bytes": 1088684,
+      "bytes_before_card": 3525,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11/query",
+        "bytes": 1085159
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11/query",
+        "bytes": 3525
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "cps-high": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 10586,
+      "card_state": "result",
+      "highlight_ms": 13469,
+      "overlay_ms": 13469,
+      "features": 49,
+      "requests": 5,
+      "bytes": 740838,
+      "bytes_before_card": 46644,
+      "requests_before_card": 4,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofchicago.org"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/xg7c-d8rm.geojson",
+        "bytes": 694194
+       },
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/xg7c-d8rm.geojson",
+        "bytes": 42922
+       },
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/xg7c-d8rm.json",
+        "bytes": 3722
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 2
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofchicago.org"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/xg7c-d8rm.geojson",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     }
+    ],
+    "cps-middle": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 949,
+      "card_state": "empty",
+      "highlight_ms": null,
+      "overlay_ms": 949,
+      "features": 22,
+      "requests": 3,
+      "bytes": 105613,
+      "bytes_before_card": 105613,
+      "requests_before_card": 3,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofchicago.org"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/fyff-53xy.geojson",
+        "bytes": 101996
+       },
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/fyff-53xy.json",
+        "bytes": 3456
+       },
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/fyff-53xy.geojson",
+        "bytes": 161
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofchicago.org"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/fyff-53xy.geojson",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     }
+    ],
+    "county-precinct": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 109,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)",
+       "arcgispublicmap.co.st-clair.il.us",
+       "data.macoupincountyil.gov",
+       "gis.cookcountyil.gov",
+       "gis.fultoncountyil.gov",
+       "gis.lasallecounty.org",
+       "gis.leecountyil.gov",
+       "gis.mcleancountyil.gov",
+       "gisportal.co.madison.il.us",
+       "k3gis.net",
+       "maps.boonecountyil.org",
+       "maps.co.kendall.il.us",
+       "maps.grundyco.org",
+       "maps.wingis.org",
+       "services.arcgis.com",
+       "services1.arcgis.com",
+       "services2.arcgis.com",
+       "services3.arcgis.com",
+       "services5.arcgis.com",
+       "services6.arcgis.com",
+       "services7.arcgis.com",
+       "services9.arcgis.com",
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/precinctHistorical/MapServer/0/query",
+        "bytes": 0
+       },
+       {
+        "host": "services.arcgis.com",
+        "path": "/fGsbyIOAuxHnF97m/arcgis/rest/services/Precincts_2022/FeatureServer/1/query",
+        "bytes": 0
+       },
+       {
+        "host": "services.arcgis.com",
+        "path": "/neJvtQ4PXvnQ86MJ/arcgis/rest/services/Precincts_2024/FeatureServer/0/query",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 109,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 72012,
+      "card_state": "result",
+      "highlight_ms": 72012,
+      "overlay_ms": 743,
+      "features": 5867,
+      "requests": 201,
+      "bytes": 9959719,
+      "bytes_before_card": 6712367,
+      "requests_before_card": 200,
+      "local_bytes": 524691,
+      "hosts": [
+       "(this site)",
+       "arcgispublicmap.co.st-clair.il.us",
+       "data.macoupincountyil.gov",
+       "gis.cookcountyil.gov",
+       "gis.fultoncountyil.gov",
+       "gis.lasallecounty.org",
+       "gis.leecountyil.gov",
+       "gis.mcleancountyil.gov",
+       "gisportal.co.madison.il.us",
+       "k3gis.net",
+       "maps.boonecountyil.org",
+       "maps.co.kendall.il.us",
+       "maps.grundyco.org",
+       "maps.wingis.org",
+       "services.arcgis.com",
+       "services1.arcgis.com",
+       "services2.arcgis.com",
+       "services3.arcgis.com",
+       "services5.arcgis.com",
+       "services6.arcgis.com",
+       "services7.arcgis.com",
+       "services9.arcgis.com",
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query",
+        "bytes": 3247352
+       },
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/precinctHistorical/MapServer/0/query",
+        "bytes": 963475
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query",
+        "bytes": 812562
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 114
+     }
+    ],
+    "ssa": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 2882,
+      "card_state": "result",
+      "highlight_ms": 2882,
+      "overlay_ms": 2882,
+      "features": 58,
+      "requests": 2,
+      "bytes": 400430,
+      "bytes_before_card": 400430,
+      "requests_before_card": 2,
+      "local_bytes": 2544,
+      "hosts": [
+       "(this site)",
+       "data.cityofchicago.org"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/cmr6-dn8c.geojson",
+        "bytes": 397886
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/chicago-ssa-providers.json",
+        "bytes": 2544
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 2,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)",
+       "data.cityofchicago.org"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/cmr6-dn8c.geojson",
+        "bytes": 0
+       },
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/chicago-ssa-providers.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 2,
+      "failed_requests": 0
+     }
+    ],
+    "tif-district": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 4380,
+      "card_state": "empty",
+      "highlight_ms": null,
+      "overlay_ms": 4380,
+      "features": 418,
+      "requests": 1,
+      "bytes": 589618,
+      "bytes_before_card": 589618,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "gis.cookcountyil.gov"
+      ],
+      "largest": [
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/clerkTaxDistricts/MapServer/18/query",
+        "bytes": 589618
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 3279,
+      "card_state": "empty",
+      "highlight_ms": null,
+      "overlay_ms": 3279,
+      "features": 418,
+      "requests": 1,
+      "bytes": 589548,
+      "bytes_before_card": 589548,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "gis.cookcountyil.gov"
+      ],
+      "largest": [
+       {
+        "host": "gis.cookcountyil.gov",
+        "path": "/traditional/rest/services/clerkTaxDistricts/MapServer/18/query",
+        "bytes": 589548
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "cps-elementary": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 580,
+      "card_state": "result",
+      "highlight_ms": 8170,
+      "overlay_ms": 8170,
+      "features": 356,
+      "requests": 3,
+      "bytes": 1577598,
+      "bytes_before_card": 22979,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofchicago.org"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/x72b-38qv.geojson",
+        "bytes": 1554619
+       },
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/x72b-38qv.geojson",
+        "bytes": 19026
+       },
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/x72b-38qv.json",
+        "bytes": 3953
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofchicago.org"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/x72b-38qv.geojson",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     }
+    ],
+    "school-site": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1597,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 1597,
+      "features": 1016,
+      "requests": 1,
+      "bytes": 250677,
+      "bytes_before_card": 250677,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "services2.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services2.arcgis.com",
+        "path": "/t3tlzCPfmaQzSWAk/arcgis/rest/services/Schools/FeatureServer/0/query",
+        "bytes": 250677
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "services2.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services2.arcgis.com",
+        "path": "/t3tlzCPfmaQzSWAk/arcgis/rest/services/Schools/FeatureServer/0/query",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     }
+    ],
+    "police-station": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 634,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 634,
+      "features": 1148,
+      "requests": 1,
+      "bytes": 39512,
+      "bytes_before_card": 39512,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "carto.nationalmap.gov"
+      ],
+      "largest": [
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/53/query",
+        "bytes": 39512
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1021,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 1021,
+      "features": 1148,
+      "requests": 1,
+      "bytes": 39419,
+      "bytes_before_card": 39419,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "carto.nationalmap.gov"
+      ],
+      "largest": [
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/53/query",
+        "bytes": 39419
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "fire-station": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 991,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 991,
+      "features": 2820,
+      "requests": 2,
+      "bytes": 104858,
+      "bytes_before_card": 104858,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "carto.nationalmap.gov"
+      ],
+      "largest": [
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/51/query",
+        "bytes": 73620
+       },
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/51/query",
+        "bytes": 31238
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1019,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 1019,
+      "features": 2820,
+      "requests": 2,
+      "bytes": 104765,
+      "bytes_before_card": 104765,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "carto.nationalmap.gov"
+      ],
+      "largest": [
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/51/query",
+        "bytes": 73527
+       },
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/51/query",
+        "bytes": 31238
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "post-office": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 584,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 584,
+      "features": 1946,
+      "requests": 1,
+      "bytes": 63461,
+      "bytes_before_card": 63461,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "carto.nationalmap.gov"
+      ],
+      "largest": [
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/38/query",
+        "bytes": 63461
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 594,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 594,
+      "features": 1946,
+      "requests": 1,
+      "bytes": 63368,
+      "bytes_before_card": 63368,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "carto.nationalmap.gov"
+      ],
+      "largest": [
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/38/query",
+        "bytes": 63368
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "library": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 215,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 215,
+      "features": 82,
+      "requests": 1,
+      "bytes": 5304,
+      "bytes_before_card": 5304,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofchicago.org"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/x8fc-8rcq.geojson",
+        "bytes": 5304
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofchicago.org"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofchicago.org",
+        "path": "/resource/x8fc-8rcq.geojson",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     }
+    ],
+    "early-voting": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 226,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 226,
+      "features": 52,
+      "requests": 1,
+      "bytes": 2696,
+      "bytes_before_card": 2696,
+      "requests_before_card": 1,
+      "local_bytes": 2696,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/early-voting-sites.json",
+        "bytes": 2696
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/il/data/app/early-voting-sites.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     }
+    ]
+   }
+  },
+  "mi": {
+   "points": [
+    {
+     "lat": 42.7337,
+     "lng": -84.5553
+    }
+   ],
+   "layers": {
+    "us-house": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 385,
+      "card_state": "result",
+      "highlight_ms": 385,
+      "overlay_ms": 385,
+      "features": 13,
+      "requests": 2,
+      "bytes": 31507,
+      "bytes_before_card": 31507,
+      "requests_before_card": 2,
+      "local_bytes": 31507,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/mi/data/app/congress-districts.json",
+        "bytes": 30365
+       },
+       {
+        "host": "(this site)",
+        "path": "/mi/data/app/congress-roster.json",
+        "bytes": 1142
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "mi-senate": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 402,
+      "card_state": "result",
+      "highlight_ms": 402,
+      "overlay_ms": 402,
+      "features": 38,
+      "requests": 2,
+      "bytes": 42944,
+      "bytes_before_card": 42944,
+      "requests_before_card": 2,
+      "local_bytes": 42944,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/mi/data/app/mi-senate-districts.json",
+        "bytes": 41394
+       },
+       {
+        "host": "(this site)",
+        "path": "/mi/data/app/mi-senate-members.json",
+        "bytes": 1550
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "county": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 509,
+      "card_state": "result",
+      "highlight_ms": 509,
+      "overlay_ms": 509,
+      "features": 83,
+      "requests": 1,
+      "bytes": 54108,
+      "bytes_before_card": 54108,
+      "requests_before_card": 1,
+      "local_bytes": 54108,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/mi/data/app/state-counties.json",
+        "bytes": 54108
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "mi-house": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 533,
+      "card_state": "result",
+      "highlight_ms": 533,
+      "overlay_ms": 533,
+      "features": 110,
+      "requests": 2,
+      "bytes": 66645,
+      "bytes_before_card": 66645,
+      "requests_before_card": 2,
+      "local_bytes": 66645,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/mi/data/app/mi-house-districts.json",
+        "bytes": 63572
+       },
+       {
+        "host": "(this site)",
+        "path": "/mi/data/app/mi-house-members.json",
+        "bytes": 3073
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "school-district-unified": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 269,
+      "card_state": "result",
+      "highlight_ms": 9787,
+      "overlay_ms": 9787,
+      "features": 514,
+      "requests": 2,
+      "bytes": 1853566,
+      "bytes_before_card": 5207,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/School/MapServer/0/query",
+        "bytes": 1848359
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/School/MapServer/0/query",
+        "bytes": 5207
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "school-district-elementary": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 668,
+      "card_state": "empty",
+      "highlight_ms": null,
+      "overlay_ms": 668,
+      "features": 27,
+      "requests": 2,
+      "bytes": 34834,
+      "bytes_before_card": 34834,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/School/MapServer/2/query",
+        "bytes": 34533
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/School/MapServer/2/query",
+        "bytes": 301
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "county-commissioner": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 2531,
+      "card_state": "result",
+      "highlight_ms": 2531,
+      "overlay_ms": 2531,
+      "features": 619,
+      "requests": 3,
+      "bytes": 446947,
+      "bytes_before_card": 446947,
+      "requests_before_card": 3,
+      "local_bytes": 446947,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/mi/data/app/mi-commissioner-districts.json",
+        "bytes": 432575
+       },
+       {
+        "host": "(this site)",
+        "path": "/mi/data/app/mi-commissioner-members.json",
+        "bytes": 9928
+       },
+       {
+        "host": "(this site)",
+        "path": "/mi/data/app/mi-commissioner-returns.json",
+        "bytes": 4444
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "county-subdivision": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 266,
+      "card_state": "result",
+      "highlight_ms": 11764,
+      "overlay_ms": 11764,
+      "features": 1581,
+      "requests": 2,
+      "bytes": 2236310,
+      "bytes_before_card": 6373,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query",
+        "bytes": 2229937
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query",
+        "bytes": 6373
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "zip-code": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 225,
+      "card_state": "result",
+      "highlight_ms": 5882,
+      "overlay_ms": 5882,
+      "features": 2000,
+      "requests": 2,
+      "bytes": 1092643,
+      "bytes_before_card": 1324,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11/query",
+        "bytes": 1091319
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11/query",
+        "bytes": 1324
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "city-ward": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 33,
+      "requests": 0,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [],
+      "largest": [],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "precinct": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 7480,
+      "card_state": "result",
+      "highlight_ms": 7480,
+      "overlay_ms": 7480,
+      "features": 3895,
+      "requests": 1,
+      "bytes": 1356464,
+      "bytes_before_card": 1356464,
+      "requests_before_card": 1,
+      "local_bytes": 1356464,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/mi/data/app/mi-precincts.json",
+        "bytes": 1356464
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "municipality": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 306,
+      "card_state": "result",
+      "highlight_ms": 2937,
+      "overlay_ms": 2937,
+      "features": 533,
+      "requests": 2,
+      "bytes": 515023,
+      "bytes_before_card": 7688,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query",
+        "bytes": 507335
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query",
+        "bytes": 7688
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "police-station": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 489,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 489,
+      "features": 1290,
+      "requests": 1,
+      "bytes": 46336,
+      "bytes_before_card": 46336,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "carto.nationalmap.gov"
+      ],
+      "largest": [
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/53/query",
+        "bytes": 46336
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "fire-station": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1016,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 1016,
+      "features": 2838,
+      "requests": 2,
+      "bytes": 107069,
+      "bytes_before_card": 107069,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "carto.nationalmap.gov"
+      ],
+      "largest": [
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/51/query",
+        "bytes": 75057
+       },
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/51/query",
+        "bytes": 32012
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "post-office": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 570,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 570,
+      "features": 1799,
+      "requests": 1,
+      "bytes": 60756,
+      "bytes_before_card": 60756,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "carto.nationalmap.gov"
+      ],
+      "largest": [
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/38/query",
+        "bytes": 60756
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ]
+   }
+  },
+  "ny": {
+   "points": [
+    {
+     "lat": 42.65203,
+     "lng": -73.75731
+    },
+    {
+     "lat": 40.71274,
+     "lng": -74.00602
+    }
+   ],
+   "layers": {
+    "judicial-district": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 546,
+      "card_state": "result",
+      "highlight_ms": 546,
+      "overlay_ms": 546,
+      "features": 13,
+      "requests": 1,
+      "bytes": 72987,
+      "bytes_before_card": 72987,
+      "requests_before_card": 1,
+      "local_bytes": 72987,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/judicial-districts.json",
+        "bytes": 72987
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 545,
+      "card_state": "result",
+      "highlight_ms": 545,
+      "overlay_ms": 545,
+      "features": 13,
+      "requests": 1,
+      "bytes": 72987,
+      "bytes_before_card": 72987,
+      "requests_before_card": 1,
+      "local_bytes": 72987,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/judicial-districts.json",
+        "bytes": 72987
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "county": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1105,
+      "card_state": "result",
+      "highlight_ms": 1105,
+      "overlay_ms": 1105,
+      "features": 62,
+      "requests": 1,
+      "bytes": 181856,
+      "bytes_before_card": 181856,
+      "requests_before_card": 1,
+      "local_bytes": 181856,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/ny-counties.json",
+        "bytes": 181856
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1105,
+      "card_state": "result",
+      "highlight_ms": 1105,
+      "overlay_ms": 1105,
+      "features": 62,
+      "requests": 1,
+      "bytes": 181856,
+      "bytes_before_card": 181856,
+      "requests_before_card": 1,
+      "local_bytes": 181856,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/ny-counties.json",
+        "bytes": 181856
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "nys-school-district": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1463,
+      "card_state": "result",
+      "highlight_ms": 1463,
+      "overlay_ms": 1463,
+      "features": 716,
+      "requests": 1,
+      "bytes": 243276,
+      "bytes_before_card": 243276,
+      "requests_before_card": 1,
+      "local_bytes": 243276,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/ny-school-districts.json",
+        "bytes": 243276
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/ny-school-districts.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     }
+    ],
+    "municipality": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 2271,
+      "card_state": "result",
+      "highlight_ms": 2271,
+      "overlay_ms": 2271,
+      "features": 995,
+      "requests": 1,
+      "bytes": 393881,
+      "bytes_before_card": 393881,
+      "requests_before_card": 1,
+      "local_bytes": 393881,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/ny-cities-towns.json",
+        "bytes": 393881
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 2238,
+      "card_state": "result",
+      "highlight_ms": 2238,
+      "overlay_ms": 2238,
+      "features": 995,
+      "requests": 1,
+      "bytes": 393881,
+      "bytes_before_card": 393881,
+      "requests_before_card": 1,
+      "local_bytes": 393881,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/ny-cities-towns.json",
+        "bytes": 393881
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "village": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 653,
+      "card_state": "empty",
+      "highlight_ms": null,
+      "overlay_ms": 653,
+      "features": 532,
+      "requests": 1,
+      "bytes": 80407,
+      "bytes_before_card": 80407,
+      "requests_before_card": 1,
+      "local_bytes": 80407,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/ny-villages.json",
+        "bytes": 80407
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 609,
+      "card_state": "empty",
+      "highlight_ms": null,
+      "overlay_ms": 609,
+      "features": 532,
+      "requests": 1,
+      "bytes": 80407,
+      "bytes_before_card": 80407,
+      "requests_before_card": 1,
+      "local_bytes": 80407,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/ny-villages.json",
+        "bytes": 80407
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "borough": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 178,
+      "card_state": "empty",
+      "highlight_ms": null,
+      "overlay_ms": 21,
+      "features": 5,
+      "requests": 1,
+      "bytes": 648,
+      "bytes_before_card": 648,
+      "requests_before_card": 1,
+      "local_bytes": 648,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/borough-officials.json",
+        "bytes": 648
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 236,
+      "card_state": "result",
+      "highlight_ms": 28,
+      "overlay_ms": 28,
+      "features": 5,
+      "requests": 2,
+      "bytes": 1584,
+      "bytes_before_card": 648,
+      "requests_before_card": 1,
+      "local_bytes": 648,
+      "hosts": [
+       "(this site)",
+       "geosearch.planninglabs.nyc"
+      ],
+      "largest": [
+       {
+        "host": "geosearch.planninglabs.nyc",
+        "path": "/v2/search",
+        "bytes": 936
+       },
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/borough-officials.json",
+        "bytes": 648
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "borough-president": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 5,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/borough-officials.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 198,
+      "card_state": "result",
+      "highlight_ms": 40,
+      "overlay_ms": 40,
+      "features": 5,
+      "requests": 1,
+      "bytes": 648,
+      "bytes_before_card": 648,
+      "requests_before_card": 1,
+      "local_bytes": 648,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/borough-officials.json",
+        "bytes": 648
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "district-attorney": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 5,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/borough-officials.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 210,
+      "card_state": "result",
+      "highlight_ms": 40,
+      "overlay_ms": 40,
+      "features": 5,
+      "requests": 1,
+      "bytes": 648,
+      "bytes_before_card": 648,
+      "requests_before_card": 1,
+      "local_bytes": 648,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/borough-officials.json",
+        "bytes": 648
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "congress": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 533,
+      "card_state": "result",
+      "highlight_ms": 533,
+      "overlay_ms": 533,
+      "features": 26,
+      "requests": 3,
+      "bytes": 70120,
+      "bytes_before_card": 69176,
+      "requests_before_card": 2,
+      "local_bytes": 69176,
+      "hosts": [
+       "(this site)",
+       "geosearch.planninglabs.nyc"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/congress-districts.json",
+        "bytes": 67225
+       },
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/congress-roster.json",
+        "bytes": 1951
+       },
+       {
+        "host": "geosearch.planninglabs.nyc",
+        "path": "/v2/search",
+        "bytes": 944
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 539,
+      "card_state": "result",
+      "highlight_ms": 539,
+      "overlay_ms": 539,
+      "features": 26,
+      "requests": 3,
+      "bytes": 70109,
+      "bytes_before_card": 69176,
+      "requests_before_card": 2,
+      "local_bytes": 69176,
+      "hosts": [
+       "(this site)",
+       "geosearch.planninglabs.nyc"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/congress-districts.json",
+        "bytes": 67225
+       },
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/congress-roster.json",
+        "bytes": 1951
+       },
+       {
+        "host": "geosearch.planninglabs.nyc",
+        "path": "/v2/search",
+        "bytes": 933
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "municipal-court": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/municipal-court-districts.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 550,
+      "card_state": "result",
+      "highlight_ms": 550,
+      "overlay_ms": 550,
+      "features": 28,
+      "requests": 1,
+      "bytes": 73174,
+      "bytes_before_card": 73174,
+      "requests_before_card": 1,
+      "local_bytes": 73174,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/municipal-court-districts.json",
+        "bytes": 73174
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "state-senate": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 619,
+      "card_state": "result",
+      "highlight_ms": 619,
+      "overlay_ms": 619,
+      "features": 63,
+      "requests": 3,
+      "bytes": 85575,
+      "bytes_before_card": 84597,
+      "requests_before_card": 2,
+      "local_bytes": 84597,
+      "hosts": [
+       "(this site)",
+       "geosearch.planninglabs.nyc"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/state-senate-districts.json",
+        "bytes": 80154
+       },
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/ny-senate-members.json",
+        "bytes": 4443
+       },
+       {
+        "host": "geosearch.planninglabs.nyc",
+        "path": "/v2/search",
+        "bytes": 978
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 652,
+      "card_state": "result",
+      "highlight_ms": 652,
+      "overlay_ms": 652,
+      "features": 63,
+      "requests": 3,
+      "bytes": 85537,
+      "bytes_before_card": 84597,
+      "requests_before_card": 2,
+      "local_bytes": 84597,
+      "hosts": [
+       "(this site)",
+       "geosearch.planninglabs.nyc"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/state-senate-districts.json",
+        "bytes": 80154
+       },
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/ny-senate-members.json",
+        "bytes": 4443
+       },
+       {
+        "host": "geosearch.planninglabs.nyc",
+        "path": "/v2/search",
+        "bytes": 940
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "school-district": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/8ugf-3d8u.geojson",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 8397,
+      "card_state": "result",
+      "highlight_ms": 8397,
+      "overlay_ms": 8397,
+      "features": 33,
+      "requests": 1,
+      "bytes": 1342264,
+      "bytes_before_card": 1342264,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/8ugf-3d8u.geojson",
+        "bytes": 1342264
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "cec": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/8ugf-3d8u.geojson",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 7018,
+      "card_state": "result",
+      "highlight_ms": 7018,
+      "overlay_ms": 7018,
+      "features": 33,
+      "requests": 2,
+      "bytes": 1342341,
+      "bytes_before_card": 1342341,
+      "requests_before_card": 2,
+      "local_bytes": 77,
+      "hosts": [
+       "(this site)",
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/8ugf-3d8u.geojson",
+        "bytes": 1342264
+       },
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/cec-members.json",
+        "bytes": 77
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "fire-battalion": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "services5.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services5.arcgis.com",
+        "path": "/GfwWNkhOj9bNBqoJ/arcgis/rest/services/NYC_Fire_Battalions/FeatureServer/0/query",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 2918,
+      "card_state": "result",
+      "highlight_ms": 2918,
+      "overlay_ms": 2918,
+      "features": 49,
+      "requests": 1,
+      "bytes": 529070,
+      "bytes_before_card": 529070,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "services5.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services5.arcgis.com",
+        "path": "/GfwWNkhOj9bNBqoJ/arcgis/rest/services/NYC_Fire_Battalions/FeatureServer/0/query",
+        "bytes": 529070
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "council": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 2,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)",
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/872g-cjhh.geojson",
+        "bytes": 0
+       },
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/council-members.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 2,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 7211,
+      "card_state": "result",
+      "highlight_ms": 7211,
+      "overlay_ms": 7211,
+      "features": 51,
+      "requests": 3,
+      "bytes": 1387494,
+      "bytes_before_card": 1386631,
+      "requests_before_card": 2,
+      "local_bytes": 1955,
+      "hosts": [
+       "(this site)",
+       "data.cityofnewyork.us",
+       "geosearch.planninglabs.nyc"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/872g-cjhh.geojson",
+        "bytes": 1384676
+       },
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/council-members.json",
+        "bytes": 1955
+       },
+       {
+        "host": "geosearch.planninglabs.nyc",
+        "path": "/v2/search",
+        "bytes": 863
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "community-district": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 2,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/5crt-au7u.geojson",
+        "bytes": 0
+       },
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/ruf7-3wgc.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 2,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 7318,
+      "card_state": "result",
+      "highlight_ms": 7318,
+      "overlay_ms": 7318,
+      "features": 71,
+      "requests": 3,
+      "bytes": 1389979,
+      "bytes_before_card": 1389125,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofnewyork.us",
+       "geosearch.planninglabs.nyc"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/5crt-au7u.geojson",
+        "bytes": 1375831
+       },
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/ruf7-3wgc.json",
+        "bytes": 13294
+       },
+       {
+        "host": "geosearch.planninglabs.nyc",
+        "path": "/v2/search",
+        "bytes": 854
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "election-district": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 3,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)",
+       "services5.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services5.arcgis.com",
+        "path": "/GfwWNkhOj9bNBqoJ/arcgis/rest/services/NYC_Election_Districts/FeatureServer/0/query",
+        "bytes": 0
+       },
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/state-assembly-districts.json",
+        "bytes": 0
+       },
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/ny-assembly-members.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 3,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 7555,
+      "card_state": "result",
+      "highlight_ms": 7555,
+      "overlay_ms": 7555,
+      "features": 4214,
+      "requests": 8,
+      "bytes": 1225198,
+      "bytes_before_card": 1225198,
+      "requests_before_card": 8,
+      "local_bytes": 114864,
+      "hosts": [
+       "(this site)",
+       "geosearch.planninglabs.nyc",
+       "services5.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services5.arcgis.com",
+        "path": "/GfwWNkhOj9bNBqoJ/arcgis/rest/services/NYC_Election_Districts/FeatureServer/0/query",
+        "bytes": 343256
+       },
+       {
+        "host": "services5.arcgis.com",
+        "path": "/GfwWNkhOj9bNBqoJ/arcgis/rest/services/NYC_Election_Districts/FeatureServer/0/query",
+        "bytes": 336240
+       },
+       {
+        "host": "services5.arcgis.com",
+        "path": "/GfwWNkhOj9bNBqoJ/arcgis/rest/services/NYC_Election_Districts/FeatureServer/0/query",
+        "bytes": 206940
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "state-assembly": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 799,
+      "card_state": "result",
+      "highlight_ms": 799,
+      "overlay_ms": 799,
+      "features": 150,
+      "requests": 2,
+      "bytes": 114864,
+      "bytes_before_card": 114864,
+      "requests_before_card": 2,
+      "local_bytes": 114864,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/state-assembly-districts.json",
+        "bytes": 106229
+       },
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/ny-assembly-members.json",
+        "bytes": 8635
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 766,
+      "card_state": "result",
+      "highlight_ms": 766,
+      "overlay_ms": 766,
+      "features": 150,
+      "requests": 3,
+      "bytes": 115796,
+      "bytes_before_card": 114864,
+      "requests_before_card": 2,
+      "local_bytes": 114864,
+      "hosts": [
+       "(this site)",
+       "geosearch.planninglabs.nyc"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/state-assembly-districts.json",
+        "bytes": 106229
+       },
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/ny-assembly-members.json",
+        "bytes": 8635
+       },
+       {
+        "host": "geosearch.planninglabs.nyc",
+        "path": "/v2/search",
+        "bytes": 932
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "police-sector": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 3,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)",
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/5rqd-h5ci.geojson",
+        "bytes": 0
+       },
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/y76i-bdw7.geojson",
+        "bytes": 0
+       },
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/nypd-precinct-info.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 3,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 65516,
+      "card_state": "error",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 16,
+      "bytes": 13169,
+      "bytes_before_card": 13169,
+      "requests_before_card": 16,
+      "local_bytes": 1660,
+      "hosts": [
+       "(this site)",
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/ji82-xba5.json",
+        "bytes": 11509
+       },
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/nypd-precinct-info.json",
+        "bytes": 1660
+       },
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/5rqd-h5ci.geojson",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 14
+     }
+    ],
+    "police-precinct": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 2,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)",
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/y76i-bdw7.geojson",
+        "bytes": 0
+       },
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/nypd-precinct-info.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 2,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 7244,
+      "card_state": "result",
+      "highlight_ms": 7244,
+      "overlay_ms": 7244,
+      "features": 78,
+      "requests": 4,
+      "bytes": 1390126,
+      "bytes_before_card": 1389265,
+      "requests_before_card": 3,
+      "local_bytes": 1660,
+      "hosts": [
+       "(this site)",
+       "data.cityofnewyork.us",
+       "geosearch.planninglabs.nyc"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/y76i-bdw7.geojson",
+        "bytes": 1376096
+       },
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/ji82-xba5.json",
+        "bytes": 11509
+       },
+       {
+        "host": "(this site)",
+        "path": "/ny/data/app/nypd-precinct-info.json",
+        "bytes": 1660
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "nys-zip-code": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 226,
+      "card_state": "result",
+      "highlight_ms": 8894,
+      "overlay_ms": 8894,
+      "features": 3833,
+      "requests": 2,
+      "bytes": 1654602,
+      "bytes_before_card": 1992,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11/query",
+        "bytes": 1652610
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11/query",
+        "bytes": 1992
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11/query",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     }
+    ],
+    "zip-code": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/pri4-ifjk.geojson",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 375,
+      "card_state": "result",
+      "highlight_ms": 5914,
+      "overlay_ms": 5914,
+      "features": 178,
+      "requests": 3,
+      "bytes": 1126504,
+      "bytes_before_card": 2780,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/pri4-ifjk.geojson",
+        "bytes": 1123724
+       },
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/pri4-ifjk.json",
+        "bytes": 1428
+       },
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/pri4-ifjk.geojson",
+        "bytes": 1352
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "neighborhood": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/9nt8-h7nd.geojson",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 8660,
+      "card_state": "result",
+      "highlight_ms": 8660,
+      "overlay_ms": 8660,
+      "features": 262,
+      "requests": 1,
+      "bytes": 1590487,
+      "bytes_before_card": 1590487,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/9nt8-h7nd.geojson",
+        "bytes": 1590487
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "hs-zone": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/ruu9-egea.geojson",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 752,
+      "card_state": "result",
+      "highlight_ms": 1796,
+      "overlay_ms": 1796,
+      "features": 80,
+      "requests": 3,
+      "bytes": 317925,
+      "bytes_before_card": 24680,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/ruu9-egea.geojson",
+        "bytes": 293245
+       },
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/ruu9-egea.geojson",
+        "bytes": 14189
+       },
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/ruu9-egea.json",
+        "bytes": 10491
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "ms-zone": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/t26j-jbq7.geojson",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 443,
+      "card_state": "result",
+      "highlight_ms": 2539,
+      "overlay_ms": 2539,
+      "features": 279,
+      "requests": 3,
+      "bytes": 456515,
+      "bytes_before_card": 7781,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/t26j-jbq7.geojson",
+        "bytes": 448734
+       },
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/t26j-jbq7.geojson",
+        "bytes": 7091
+       },
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/t26j-jbq7.json",
+        "bytes": 690
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "es-zone": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/cmjf-yawu.geojson",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 388,
+      "card_state": "result",
+      "highlight_ms": 4112,
+      "overlay_ms": 4112,
+      "features": 770,
+      "requests": 3,
+      "bytes": 751712,
+      "bytes_before_card": 1965,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/cmjf-yawu.geojson",
+        "bytes": 749747
+       },
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/cmjf-yawu.geojson",
+        "bytes": 1306
+       },
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/cmjf-yawu.json",
+        "bytes": 659
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "school-site": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 2770,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 2770,
+      "features": 6747,
+      "requests": 8,
+      "bytes": 287013,
+      "bytes_before_card": 287013,
+      "requests_before_card": 8,
+      "local_bytes": 0,
+      "hosts": [
+       "services6.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Schools/FeatureServer/3/query",
+        "bytes": 44813
+       },
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Schools/FeatureServer/2/query",
+        "bytes": 43138
+       },
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Schools/FeatureServer/2/query",
+        "bytes": 42872
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 2693,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 2693,
+      "features": 6747,
+      "requests": 8,
+      "bytes": 286990,
+      "bytes_before_card": 286990,
+      "requests_before_card": 8,
+      "local_bytes": 0,
+      "hosts": [
+       "services6.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Schools/FeatureServer/3/query",
+        "bytes": 44813
+       },
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Schools/FeatureServer/2/query",
+        "bytes": 43115
+       },
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Schools/FeatureServer/2/query",
+        "bytes": 42872
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "police-station": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/ji82-xba5.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 235,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 235,
+      "features": 80,
+      "requests": 1,
+      "bytes": 11602,
+      "bytes_before_card": 11602,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofnewyork.us"
+      ],
+      "largest": [
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/ji82-xba5.json",
+        "bytes": 11602
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "fire-station": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1319,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 1319,
+      "features": 2966,
+      "requests": 3,
+      "bytes": 130944,
+      "bytes_before_card": 130944,
+      "requests_before_card": 3,
+      "local_bytes": 0,
+      "hosts": [
+       "services6.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/FireStations/FeatureServer/0/query",
+        "bytes": 47076
+       },
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/FireStations/FeatureServer/0/query",
+        "bytes": 42536
+       },
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/FireStations/FeatureServer/0/query",
+        "bytes": 41332
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1292,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 1292,
+      "features": 2966,
+      "requests": 3,
+      "bytes": 130944,
+      "bytes_before_card": 130944,
+      "requests_before_card": 3,
+      "local_bytes": 0,
+      "hosts": [
+       "services6.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/FireStations/FeatureServer/0/query",
+        "bytes": 47053
+       },
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/FireStations/FeatureServer/0/query",
+        "bytes": 42559
+       },
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/FireStations/FeatureServer/0/query",
+        "bytes": 41332
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "post-office": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 557,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 557,
+      "features": 1832,
+      "requests": 1,
+      "bytes": 60399,
+      "bytes_before_card": 60399,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "carto.nationalmap.gov"
+      ],
+      "largest": [
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/38/query",
+        "bytes": 60399
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 567,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 567,
+      "features": 1832,
+      "requests": 1,
+      "bytes": 60399,
+      "bytes_before_card": 60399,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "carto.nationalmap.gov"
+      ],
+      "largest": [
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/38/query",
+        "bytes": 60399
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "library": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 509,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 509,
+      "features": 975,
+      "requests": 2,
+      "bytes": 50051,
+      "bytes_before_card": 50051,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofnewyork.us",
+       "gisservices.its.ny.gov"
+      ],
+      "largest": [
+       {
+        "host": "gisservices.its.ny.gov",
+        "path": "/arcgis/rest/services/NYS_Schools/FeatureServer/15/query",
+        "bytes": 32454
+       },
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/feuq-due4.geojson",
+        "bytes": 17597
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 480,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 480,
+      "features": 975,
+      "requests": 2,
+      "bytes": 50051,
+      "bytes_before_card": 50051,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "data.cityofnewyork.us",
+       "gisservices.its.ny.gov"
+      ],
+      "largest": [
+       {
+        "host": "gisservices.its.ny.gov",
+        "path": "/arcgis/rest/services/NYS_Schools/FeatureServer/15/query",
+        "bytes": 32454
+       },
+       {
+        "host": "data.cityofnewyork.us",
+        "path": "/resource/feuq-due4.geojson",
+        "bytes": 17597
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "early-voting": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 327,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 327,
+      "features": 409,
+      "requests": 2,
+      "bytes": 18106,
+      "bytes_before_card": 18106,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "services6.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer/0/query",
+        "bytes": 11439
+       },
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer/1/query",
+        "bytes": 6667
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 323,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 323,
+      "features": 409,
+      "requests": 2,
+      "bytes": 18106,
+      "bytes_before_card": 18106,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "services6.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer/0/query",
+        "bytes": 11439
+       },
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer/1/query",
+        "bytes": 6667
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "polling-place": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1913,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 1913,
+      "features": 4869,
+      "requests": 6,
+      "bytes": 161706,
+      "bytes_before_card": 161706,
+      "requests_before_card": 6,
+      "local_bytes": 0,
+      "hosts": [
+       "services6.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer/2/query",
+        "bytes": 35742
+       },
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer/2/query",
+        "bytes": 33880
+       },
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer/2/query",
+        "bytes": 32694
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     },
+     {
+      "point": 1,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1800,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 1800,
+      "features": 4869,
+      "requests": 6,
+      "bytes": 161706,
+      "bytes_before_card": 161706,
+      "requests_before_card": 6,
+      "local_bytes": 0,
+      "hosts": [
+       "services6.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer/2/query",
+        "bytes": 35742
+       },
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer/2/query",
+        "bytes": 33880
+       },
+       {
+        "host": "services6.arcgis.com",
+        "path": "/EbVsqZ18sv1kVJ3k/arcgis/rest/services/NYS_Elections_Districts_and_Polling_Locations/FeatureServer/2/query",
+        "bytes": 32694
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ]
+   }
+  },
+  "wi": {
+   "points": [
+    {
+     "lat": 44.89804,
+     "lng": -89.75782
+    }
+   ],
+   "layers": {
+    "wi-court-of-appeals": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 992,
+      "card_state": "result",
+      "highlight_ms": 992,
+      "overlay_ms": 992,
+      "features": 4,
+      "requests": 2,
+      "bytes": 160741,
+      "bytes_before_card": 160741,
+      "requests_before_card": 2,
+      "local_bytes": 160741,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/wi-court-of-appeals-districts.json",
+        "bytes": 160123
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/wi-court-of-appeals-roster.json",
+        "bytes": 618
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "us-house": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 433,
+      "card_state": "result",
+      "highlight_ms": 433,
+      "overlay_ms": 433,
+      "features": 8,
+      "requests": 2,
+      "bytes": 46420,
+      "bytes_before_card": 46420,
+      "requests_before_card": 2,
+      "local_bytes": 46420,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/congress-districts.json",
+        "bytes": 45622
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/congress-roster.json",
+        "bytes": 798
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "wtcs-district": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 603,
+      "card_state": "result",
+      "highlight_ms": 603,
+      "overlay_ms": 603,
+      "features": 16,
+      "requests": 1,
+      "bytes": 78062,
+      "bytes_before_card": 78062,
+      "requests_before_card": 1,
+      "local_bytes": 78062,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/wtcs-districts.json",
+        "bytes": 78062
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "wi-senate": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1271,
+      "card_state": "result",
+      "highlight_ms": 1271,
+      "overlay_ms": 1271,
+      "features": 34,
+      "requests": 2,
+      "bytes": 207974,
+      "bytes_before_card": 207974,
+      "requests_before_card": 2,
+      "local_bytes": 207974,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/wi-senate-districts.json",
+        "bytes": 206346
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/wi-senate-members.json",
+        "bytes": 1628
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "wi-assembly": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 1392,
+      "card_state": "result",
+      "highlight_ms": 1392,
+      "overlay_ms": 1392,
+      "features": 100,
+      "requests": 2,
+      "bytes": 236187,
+      "bytes_before_card": 236187,
+      "requests_before_card": 2,
+      "local_bytes": 236187,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/wi-assembly-districts.json",
+        "bytes": 231969
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/wi-assembly-members.json",
+        "bytes": 4218
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "wi-circuit-court": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 2813,
+      "card_state": "result",
+      "highlight_ms": 2813,
+      "overlay_ms": 2813,
+      "features": 69,
+      "requests": 2,
+      "bytes": 509198,
+      "bytes_before_card": 509198,
+      "requests_before_card": 2,
+      "local_bytes": 509198,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/wi-circuit-courts.json",
+        "bytes": 499900
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/wi-circuit-judges.json",
+        "bytes": 9298
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "county": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 2950,
+      "card_state": "result",
+      "highlight_ms": 2950,
+      "overlay_ms": 2950,
+      "features": 72,
+      "requests": 4,
+      "bytes": 529963,
+      "bytes_before_card": 529963,
+      "requests_before_card": 4,
+      "local_bytes": 529963,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/state-counties.json",
+        "bytes": 509282
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/wi-county-officers.json",
+        "bytes": 12783
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/wi-county-clerks.json",
+        "bytes": 6621
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "psap-area": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 4691,
+      "card_state": "result",
+      "highlight_ms": 4459,
+      "overlay_ms": 4459,
+      "features": 95,
+      "requests": 2,
+      "bytes": 887818,
+      "bytes_before_card": 887818,
+      "requests_before_card": 2,
+      "local_bytes": 887818,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/state-counties.json",
+        "bytes": 509259
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/psap-areas.json",
+        "bytes": 378559
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "school-district-secondary": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 504,
+      "card_state": "empty",
+      "highlight_ms": null,
+      "overlay_ms": 504,
+      "features": 10,
+      "requests": 2,
+      "bytes": 59447,
+      "bytes_before_card": 59447,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/School/MapServer/1/query",
+        "bytes": 59181
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/School/MapServer/1/query",
+        "bytes": 266
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "school-district-unified": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 28541,
+      "card_state": "error",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 3,
+      "bytes": 0,
+      "bytes_before_card": 0,
+      "requests_before_card": 3,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/school-districts-unified.json",
+        "bytes": 0
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/school-districts-unified.json",
+        "bytes": 0
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/school-districts-unified.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 3
+     }
+    ],
+    "school-district-elementary": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 768,
+      "card_state": "empty",
+      "highlight_ms": null,
+      "overlay_ms": 768,
+      "features": 43,
+      "requests": 2,
+      "bytes": 110704,
+      "bytes_before_card": 110704,
+      "requests_before_card": 2,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/School/MapServer/2/query",
+        "bytes": 110438
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/School/MapServer/2/query",
+        "bytes": 266
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "ems-service": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 6631,
+      "card_state": "result",
+      "highlight_ms": 6631,
+      "overlay_ms": 6631,
+      "features": 580,
+      "requests": 2,
+      "bytes": 1260249,
+      "bytes_before_card": 1260249,
+      "requests_before_card": 2,
+      "local_bytes": 1260249,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/ems-service-areas.json",
+        "bytes": 750990
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/state-counties.json",
+        "bytes": 509259
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "law-service": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 8048,
+      "card_state": "result",
+      "highlight_ms": 8048,
+      "overlay_ms": 8048,
+      "features": 639,
+      "requests": 2,
+      "bytes": 1534062,
+      "bytes_before_card": 1534062,
+      "requests_before_card": 2,
+      "local_bytes": 1534062,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/law-service-areas.json",
+        "bytes": 1024803
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/state-counties.json",
+        "bytes": 509259
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "fire-service": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 7777,
+      "card_state": "result",
+      "highlight_ms": 7777,
+      "overlay_ms": 7777,
+      "features": 1046,
+      "requests": 2,
+      "bytes": 1465704,
+      "bytes_before_card": 1465704,
+      "requests_before_card": 2,
+      "local_bytes": 1465704,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/fire-service-areas.json",
+        "bytes": 956445
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/state-counties.json",
+        "bytes": 509259
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "county-board": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 5924,
+      "card_state": "result",
+      "highlight_ms": 5924,
+      "overlay_ms": 5924,
+      "features": 1590,
+      "requests": 3,
+      "bytes": 1106450,
+      "bytes_before_card": 1106450,
+      "requests_before_card": 3,
+      "local_bytes": 1106450,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/county-supervisory-districts.json",
+        "bytes": 1061966
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/county-board-members.json",
+        "bytes": 42707
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/county-board-directory.json",
+        "bytes": 1777
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "county-subdivision": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 438,
+      "card_state": "result",
+      "highlight_ms": 21598,
+      "overlay_ms": 21598,
+      "features": 1925,
+      "requests": 3,
+      "bytes": 4140993,
+      "bytes_before_card": 4191,
+      "requests_before_card": 2,
+      "local_bytes": 1816,
+      "hosts": [
+       "(this site)",
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query",
+        "bytes": 4136802
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query",
+        "bytes": 2375
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/town-clerks-073.json",
+        "bytes": 1816
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "municipality": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 7489,
+      "card_state": "empty",
+      "highlight_ms": null,
+      "overlay_ms": 7489,
+      "features": 608,
+      "requests": 5,
+      "bytes": 1368118,
+      "bytes_before_card": 1368118,
+      "requests_before_card": 5,
+      "local_bytes": 45071,
+      "hosts": [
+       "(this site)",
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query",
+        "bytes": 1322750
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/wi-municipal-clerks.json",
+        "bytes": 37803
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/wi-municipal-facts.json",
+        "bytes": 5938
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "zip-code": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 224,
+      "card_state": "result",
+      "highlight_ms": 5080,
+      "overlay_ms": 5080,
+      "features": 1406,
+      "requests": 2,
+      "bytes": 946319,
+      "bytes_before_card": 5860,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "tigerweb.geo.census.gov"
+      ],
+      "largest": [
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11/query",
+        "bytes": 940459
+       },
+       {
+        "host": "tigerweb.geo.census.gov",
+        "path": "/arcgis/rest/services/TIGERweb/PUMA_TAD_TAZ_UGA_ZCTA/MapServer/11/query",
+        "bytes": 5860
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "mpd-district": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/mpd-districts.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     }
+    ],
+    "mps-school-board": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 17,
+      "requests": 0,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [],
+      "largest": [],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "mpd-squad-area": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 2,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/mpd-squad-areas.json",
+        "bytes": 0
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/mpd-districts.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 2,
+      "failed_requests": 0
+     }
+    ],
+    "aldermanic-district": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 3353,
+      "card_state": "empty",
+      "highlight_ms": null,
+      "overlay_ms": 3353,
+      "features": 866,
+      "requests": 2,
+      "bytes": 610748,
+      "bytes_before_card": 610748,
+      "requests_before_card": 2,
+      "local_bytes": 610748,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/aldermanic-districts.json",
+        "bytes": 602813
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/wi-alderpersons.json",
+        "bytes": 7935
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "ward": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 423,
+      "card_state": "result",
+      "highlight_ms": 4652,
+      "overlay_ms": 4652,
+      "features": 7161,
+      "requests": 6,
+      "bytes": 712821,
+      "bytes_before_card": 5784,
+      "requests_before_card": 2,
+      "local_bytes": 3292,
+      "hosts": [
+       "(this site)",
+       "services1.arcgis.com"
+      ],
+      "largest": [
+       {
+        "host": "services1.arcgis.com",
+        "path": "/FDsAtKBk8Hy4cAH0/arcgis/rest/services/WI_Municipal_Wards_Current/FeatureServer/0/query",
+        "bytes": 207357
+       },
+       {
+        "host": "services1.arcgis.com",
+        "path": "/FDsAtKBk8Hy4cAH0/arcgis/rest/services/WI_Municipal_Wards_Current/FeatureServer/0/query",
+        "bytes": 204122
+       },
+       {
+        "host": "services1.arcgis.com",
+        "path": "/FDsAtKBk8Hy4cAH0/arcgis/rest/services/WI_Municipal_Wards_Current/FeatureServer/0/query",
+        "bytes": 182925
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "milwaukee-neighborhoods": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/milwaukee-neighborhoods.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     }
+    ],
+    "madison-neighborhood-assoc": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 1,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/madison-neighborhood-assocs.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 1,
+      "failed_requests": 0
+     }
+    ],
+    "tid-district": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": false,
+      "card_ms": null,
+      "card_state": "loading",
+      "highlight_ms": null,
+      "overlay_ms": null,
+      "features": 0,
+      "requests": 2,
+      "bytes": 0,
+      "bytes_before_card": null,
+      "requests_before_card": null,
+      "local_bytes": 0,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/tid-districts.json",
+        "bytes": 0
+       },
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/madison-tid-districts.json",
+        "bytes": 0
+       }
+      ],
+      "unfinished": 2,
+      "failed_requests": 0
+     }
+    ],
+    "police-station": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 479,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 479,
+      "features": 728,
+      "requests": 1,
+      "bytes": 25188,
+      "bytes_before_card": 25188,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "carto.nationalmap.gov"
+      ],
+      "largest": [
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/53/query",
+        "bytes": 25188
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "fire-station": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 535,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 535,
+      "features": 1548,
+      "requests": 1,
+      "bytes": 55839,
+      "bytes_before_card": 55839,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "carto.nationalmap.gov"
+      ],
+      "largest": [
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/51/query",
+        "bytes": 55839
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "school-site": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 822,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 822,
+      "features": 2966,
+      "requests": 1,
+      "bytes": 102007,
+      "bytes_before_card": 102007,
+      "requests_before_card": 1,
+      "local_bytes": 102007,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/school-sites.json",
+        "bytes": 102007
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "library": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 316,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 316,
+      "features": 482,
+      "requests": 1,
+      "bytes": 20952,
+      "bytes_before_card": 20952,
+      "requests_before_card": 1,
+      "local_bytes": 20952,
+      "hosts": [
+       "(this site)"
+      ],
+      "largest": [
+       {
+        "host": "(this site)",
+        "path": "/wi/data/app/library-sites.json",
+        "bytes": 20952
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ],
+    "post-office": [
+     {
+      "point": 0,
+      "error": null,
+      "relevant": true,
+      "card_ms": 406,
+      "card_state": "result",
+      "highlight_ms": null,
+      "overlay_ms": 406,
+      "features": 1107,
+      "requests": 1,
+      "bytes": 36784,
+      "bytes_before_card": 36784,
+      "requests_before_card": 1,
+      "local_bytes": 0,
+      "hosts": [
+       "carto.nationalmap.gov"
+      ],
+      "largest": [
+       {
+        "host": "carto.nationalmap.gov",
+        "path": "/arcgis/rest/services/structures/MapServer/38/query",
+        "bytes": 36784
+       }
+      ],
+      "unfinished": 0,
+      "failed_requests": 0
+     }
+    ]
+   }
+  }
+ }
+}
