@@ -53,6 +53,41 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-26 — THE CEILING METHOD IS RULED (root board `ee9d9ce`), IOWA'S SHIPPED 45 m COMPLIES
+MEASURED, AND MY OWN BOARD'S "OPEN FLEET DECISION" IS NOW STALE.** The rule: the ceiling is the
+state's own median step, rounded to a round number, never more than about 1.1x it. Checked against
+what #1189 shipped rather than assumed — 45.0 against ia-house's 43.4 m is a ratio of **1.037** and
+against ia-senate's 43.9 m **1.025**, so both sit inside a 1.1x bound of 47.74 and 48.29 m. Nothing
+to change, which the ruling says too.
+
+**THE PART I HAD WRONG WAS THE FRAME, NOT THE NUMBER.** I reported three ratios side by side as
+though the fleet had picked three, which invited reading 1.04 as my chosen ratio. The ruling's
+correction is that 1.40 was never a design at all: Illinois's own words are that its median step is
+17.9 m "so 25 m is about one step", which is a ROUNDING to a round number, and 1.40 is the artifact
+of it. So there were two methods and one of them did not exist — Wisconsin applying 1.40 was
+copying Illinois's 25 m with an indirection in between. **Presenting derived quantities as if they
+were the choices is its own kind of wrong statement**, and it is the third time this week the defect
+has been in how a measurement was FRAMED rather than in the measurement.
+
+**ONE THING THE RULING LEAVES IN MY FILE, OFFERED AND NOT DONE.** The builder's docstring states
+the DERIVATION — the median steps, the structural method, the two wrong derivations, and "45 m is
+about one Iowa step" — and does not state the RULE, because the rule was made after #1189 merged:
+measured just now, `1.1` and "round number" appear nowhere in it. So the next reader can reproduce
+Iowa's number and cannot see the bound it has to satisfy, which is the drift class this project
+gates everywhere else. It is one sentence. **I have not written it**: nothing is assigned to me, the
+rule lives on the root board where the ruling put it, and a self-authorised commit to a
+just-merged builder is not mine to make. It goes in whenever something next touches that file — or
+sooner if the manager wants it — and this entry is the record so it is not rediscovered.
+
+Illinois's 25 against 17.9 is loose under the new rule and is recorded as loose rather than rebuilt,
+which is right and is explicitly not mine: its ceiling is not load-bearing at 17.8 m achieved, and
+Illinois is another session's branch. Wisconsin's target moves to 15 m, and its 17.5 m "irreducible
+worst" turns out to be the dropped Lake Michigan ring, which no interval moves — so that figure
+never distinguished interval 7 from 8, and the ruling may make its change cheaper rather than
+dearer. Both are recorded here as context, not as work.
+
+Idle, as instructed.
+
 **2026-09-26 — #1189 IS MERGED AS `ccdb383`, VERIFIED ON MAIN BY CONTENT; THE FORMAT QUESTION IS
 RULED AGAINST MY RECOMMENDATION AND THE RULING IS BETTER; AND MY OWN PREVIOUS ENTRY WAS THREE
 MINUTES STALE ABOUT THE THING IT WAS ABOUT.**
