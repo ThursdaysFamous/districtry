@@ -78,10 +78,20 @@ every first-load visitor pays it whether or not they ever switch a chamber on.
 Illinois's equivalent change came out 871 bytes SMALLER because its old files were
 far less aggressive than Wisconsin's; here correctness costs real bytes, and that
 trade is worth stating next to a median stray of 80.1 m on the boundaries a reader
-is standing beside. docs/OPTIMIZATION_PLAYBOOK.md section 10 plans (phase 2) to
-stop precaching boundary files at install, which would make this cost fall on
-readers who ask for a chamber rather than on everyone -- a plan, not code, so it
-is a reason the cost is probably temporary and not a reason to discount it.
+is standing beside.
+
+AND THE "EVERY FIRST-LOAD VISITOR" HALF OF THAT STOPPED BEING TRUE HOURS AFTER IT
+WAS WRITTEN. It said docs/OPTIMIZATION_PLAYBOOK.md section 10 PLANNED (phase 2) to
+stop precaching boundary files at install, and called it "a plan, not code, so it
+is a reason the cost is probably temporary and not a reason to discount it". It is
+code: #1197 (2026-09-26) sets `PRECACHE_URLS = SHELL_URLS` in wi/sw.js, so the
+install handler no longer fetches GEOMETRY_URLS and a boundary file is cached the
+first time a layer uses it. The bytes above are unchanged -- they are still what the
+two files weigh -- and who pays them is not: a reader who never switches a chamber
+on never downloads either file, and cannot read them offline either, which the
+privacy page states. The interval ruling was deliberately made WITHOUT leaning on
+the plan, so nothing about interval=7 turns on this; what needed correcting is a
+comment that went on calling something a plan after it shipped.
 
 Four gates run before anything is written, and each answers a question the
 others cannot:
