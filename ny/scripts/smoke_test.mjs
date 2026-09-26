@@ -277,12 +277,33 @@ try {
     // points, because the second keeps the first honest — the band sentence must
     // not appear in Connecticut, where the statewide layers genuinely do not
     // answer.
+    //
+    // BOTH WAIT FOR THE WASH TO PAINT. The panel's point tests read the rings
+    // the wash retained, and a null from either falls through to wording that
+    // claims neither, so selecting a point first asserts against the app's
+    // "we cannot tell yet" state. CI caught exactly that on the first draft.
+    // Any path in the scope-mask pane means the coverage rings were retained;
+    // `dst-glow` is created only in the branch that also retains the region.
+    async function washPainted(needRegion) {
+      return page.waitForFunction((wantGlow) => {
+        const pane = document.querySelector(".leaflet-pane.leaflet-scope-mask-pane");
+        if (!pane || !pane.querySelector("path")) return false;
+        return wantGlow ? !!pane.querySelector("path.dst-glow") : true;
+      }, needRegion, { timeout: QUERY_TIMEOUT }).then(() => true, () => false);
+    }
+    const washReady = await washPainted(true);
+    check("the wash painted its region band, so the band wording can be read",
+      washReady, washReady ? "scope-mask pane carries dst-glow" :
+      "no dst-glow in the scope-mask pane — the region band never painted");
     await page.evaluate((p) => window.NycExplorer.setSelectedPoint(p[0], p[1]),
       POINT.split(",").map(Number));
     const band = await openGaps();
+    // The band's MEANING comes from this instance's own COVERAGE_KEY.region.label
+    // rather than from a literal here, because it differs per instance —
+    // Wisconsin's same band reads "District shown, supervisor not named".
     check("gaps lede names the coverage band upstate (statewide layers answer, city layers do not)",
-      /inside New York but outside the area this app covers in full/.test(band.lede) &&
-      /only the statewide layers answer there/.test(band.lede) &&
+      /inside New York, outside the area this app covers in full/.test(band.lede) &&
+      band.lede.indexOf("Statewide layers only") !== -1 &&
       !/nothing there can be answered yet/.test(band.lede),
       JSON.stringify(band.lede));
     await page.evaluate((p) => window.NycExplorer.setSelectedPoint(p[0], p[1]),
@@ -290,8 +311,7 @@ try {
     const beyond = await openGaps();
     check("gaps lede claims no coverage band outside New York State",
       /nothing there can be answered yet/.test(beyond.lede) &&
-      !/covers in full/.test(beyond.lede) && !/statewide layers answer there/.test(beyond.lede),
-      JSON.stringify(beyond.lede));
+      !/covers in full/.test(beyond.lede), JSON.stringify(beyond.lede));
 
     await context.close();
   }

@@ -7524,6 +7524,48 @@ York records `ny-statewide-election-districts` — a gap explicitly about the
 state outside the city. It says "Here is everything that is recorded as
 missing, and why" now, which is what the list is.
 
+**TWO THINGS WERE WRONG IN THE FIRST DRAFT AND NEITHER WAS FOUND BY A GATE.**
+
+**The band's MEANING was hardcoded where only its NAME was read from the config,
+and that made the sentence false in Wisconsin.** The draft read
+`COVERAGE_KEY.region.edge` for the region's name and then asserted, in the
+engine's own words, "only the statewide layers answer there". Wisconsin passes
+its state outline to `drawOutOfScopeMask` and declares `COVERAGE_KEY.region`, so
+the three-way lede reaches it — and its band is not Illinois's. Its own key reads
+**"District shown, supervisor not named / The county doesn't publish who holds
+it"**: the band is where a county's districts ARE drawn and its supervisors are
+not named. So `label` and `sub` are read from the config beside `edge`, and
+measured at a border sliver the lede now reads "You clicked inside Wisconsin,
+outside the area this app covers in full. District shown, supervisor not named.
+The county doesn't publish who holds it." **The lesson is narrower than "read
+from config": the draft DID read the name from config and invented the claim, so
+the rule is that every part of a per-instance statement is per-instance.** Found
+by the manager session on review, not by any gate, and not by the eight browser
+assertions either — Wisconsin's own assertion probes its `NEGATIVE_POINT`, which
+is outside the state, where there is correctly no band at all.
+
+**And Wisconsin pins no band probe point, which is a measurement rather than an
+omission.** Its coverage ring and its state outline are separate files tracing
+the same border, so its band is slivers along it — 3 of 192,470 grid points — and
+a fixture that thin breaks on the next simplification. A sliver was found for the
+one-off verification by testing the state outline's own VERTICES against the
+coverage rings rather than by sampling a grid, which is both faster and lands
+exactly where a sliver can be.
+
+**THE ASSERTIONS THEMSELVES WERE TIMING-DEPENDENT AND CI CAUGHT IT.** The panel's
+two point tests read the rings the wash retained, and a null from either
+correctly falls through to wording that claims neither — so a check that selects
+a point before the wash has loaded is asserting against the app's "we cannot tell
+yet" state. In this sandbox the vendored libraries make the wash first up and all
+eight passed; on a CI runner Illinois draws it at `whenIdle` behind two CDN
+fetches, and the lede read "Here is everything that is missing and why", the
+mask-not-loaded branch. Every check now waits first, on exact signals: **any path
+in the `scope-mask` pane means the coverage rings were retained, and `dst-glow`
+is created ONLY in the branch that also retains the region polygons**, so waiting
+for the glow is waiting for precisely the state the band assertion needs. A wash
+that never paints FAILS with that stated, rather than passing or skipping, because
+its geometry is same-origin and small.
+
 **MEASURED IN A BROWSER, BOTH WAYS, IN ALL SIX APPS**, because nothing static
 can see this: the sentence is assembled at runtime from a point test against
 geometry the wash fetched, so it appears in no generated diff and no

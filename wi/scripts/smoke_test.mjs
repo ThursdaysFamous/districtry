@@ -274,24 +274,44 @@ try {
       `${cold.hrefs.length} links`);
 
     // ==== TEMPLATE:BEGIN smoke-coverage-band ====
-    // THIS INSTANCE PAINTS NO MIDDLE BAND, AND THAT IS THE CLAIM ASSERTED HERE.
-    // The gaps lede answers three ways since 2026-09-26 — inside the covered
-    // area, inside a wider region whose statewide layers still answer, or
-    // outside both — and the middle answer exists only where the app hands
-    // drawOutOfScopeMask a region geometry. This one hands it none, so the wash
-    // has two bands and the lede must keep saying "nothing there can be
-    // answered yet" beyond the covered area. Asserted rather than assumed
-    // because the engine block is one shared copy: a change that started
-    // retaining a region unconditionally would have this app claiming its
-    // statewide layers answer somewhere they do not, and nothing static could
-    // see it — the sentence is assembled at runtime from a point test.
-    await page.evaluate(({ n, p }) => window[n].setSelectedPoint(p[0], p[1]),
-      { n: EXPORTS_NAME, p: NEGATIVE_POINT.split(",").map(Number) });
-    const beyond = await openGaps();
-    check("gaps lede claims no coverage band, which this instance does not paint",
-      /nothing there can be answered yet/.test(beyond.lede) &&
-      !/covers in full/.test(beyond.lede) && !/statewide layers answer there/.test(beyond.lede),
-      JSON.stringify(beyond.lede));
+    // THIS INSTANCE DOES PAINT A MIDDLE BAND, AND ITS BAND MEANS SOMETHING ELSE.
+    // Wisconsin passes its state outline to drawOutOfScopeMask and declares
+    // COVERAGE_KEY.region, so the three-way lede reaches it — but its band is
+    // not Illinois's. Its own key reads "District shown, supervisor not named /
+    // The county doesn't publish who holds it", where Illinois's reads
+    // "Statewide layers only", so the engine reads those words from the config
+    // rather than asserting any of its own. A first draft of that engine change
+    // hardcoded "only the statewide layers answer there" and would have told a
+    // Wisconsin reader something false; this instance is the reason it does not.
+    //
+    // NO BAND PROBE POINT IS PINNED HERE, and that is a measurement rather than
+    // an omission: Wisconsin's coverage ring and its state outline are separate
+    // files that trace the same border, so the band is slivers along it — 3 of
+    // 192,470 grid points, measured 2026-09-26. A fixture that thin is a fixture
+    // that breaks on the next simplification, so what is asserted here is the
+    // half that holds: at the negative point, outside the state altogether,
+    // there is no band and the lede must say nothing answers there.
+    //
+    // IT WAITS FOR THE WASH FIRST, because a null coverage test correctly falls
+    // through to wording that claims neither — which is what CI caught on this
+    // check's first draft.
+    async function washPainted() {
+      return page.waitForFunction(() => {
+        const pane = document.querySelector(".leaflet-pane.leaflet-scope-mask-pane");
+        return !!(pane && pane.querySelector("path"));
+      }, null, { timeout: QUERY_TIMEOUT }).then(() => true, () => false);
+    }
+    if (await washPainted()) {
+      await page.evaluate(({ n, p }) => window[n].setSelectedPoint(p[0], p[1]),
+        { n: EXPORTS_NAME, p: NEGATIVE_POINT.split(",").map(Number) });
+      const beyond = await openGaps();
+      check("gaps lede claims no coverage band at the negative point",
+        /nothing there can be answered yet/.test(beyond.lede) &&
+        !/covers in full/.test(beyond.lede), JSON.stringify(beyond.lede));
+    } else {
+      check("gaps lede claims no coverage band at the negative point", false,
+        "the wash never painted, so the panel's coverage test could only answer unknown");
+    }
     // ==== TEMPLATE:END smoke-coverage-band ====
 
     await context.close();

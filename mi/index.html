@@ -6302,15 +6302,30 @@ function initMichiganExplorer() {
       } catch (e) { return null; }
     }
 
-    /* The region's own name, read from the SAME config the map key reads
-     * (COVERAGE_KEY.region.edge, through the key's own typeof guard). Naming it
-     * here instead would be two copies of one word, and the panel and the key
-     * are describing the same band a few hundred pixels apart. Empty string
-     * where an instance paints the band without naming it, which the sentence
-     * below is written to survive. */
-    function regionBandName() {
+    /* The band's own words, read from the SAME config the map key reads
+     * (COVERAGE_KEY.region, through the key's own typeof guard) — its NAME from
+     * `edge`, and WHAT IT MEANS from `label` and `sub`. Naming them here would
+     * be two copies of one phrase, and the panel and the key describe the same
+     * band a few hundred pixels apart.
+     *
+     * THE MEANING HAD TO COME FROM THE CONFIG TOO, AND A FIRST DRAFT GOT THAT
+     * WRONG. It took the name from here and then asserted, in its own words,
+     * that "only the statewide layers answer there" — true of Illinois and New
+     * York and FALSE of Wisconsin, whose band is where a county's districts ARE
+     * drawn and its supervisors are not named. Its key says so exactly:
+     * "District shown, supervisor not named". A band's meaning is a fact about
+     * the instance, so the one place that states it is the one place it is read
+     * from. Where an instance paints the band and names nothing, the sentence
+     * below says only that the point is outside full coverage, which is true
+     * everywhere, and invents no claim about what answers there. */
+    function regionBand() {
       var ck = typeof COVERAGE_KEY !== "undefined" ? COVERAGE_KEY : null;
-      return (ck && ck.region && ck.region.edge) || "";
+      var r = (ck && ck.region) || null;
+      return {
+        name: (r && r.edge) || "",
+        label: (r && r.label) || "",
+        sub: (r && r.sub) || ""
+      };
     }
 
     /* Which of a gap's counties contain the selected point. Resolves to false
@@ -6490,12 +6505,16 @@ function initMichiganExplorer() {
          * does not reach yet has a gap record of its own (measured 2026-09-26,
          * all of them), so replacing it would have traded a specific true
          * answer for a general one. */
-        var bandName = inRegion === true ? regionBandName() : "";
-        var bandNote = inRegion === true
-          ? "You clicked " + (bandName ? "inside " + bandName + " but " : "") +
-            "outside the area this app covers in full, so only the statewide layers answer " +
-            "there. "
-          : "";
+        var band = inRegion === true ? regionBand() : null;
+        var bandNote = "";
+        if (band) {
+          bandNote = "You clicked " + (band.name ? "inside " + band.name + ", " : "") +
+            "outside the area this app covers in full. ";
+          // The key's own caption, verbatim, and its sub-caption after it. Both
+          // are written without trailing punctuation, so the full stops are ours.
+          if (band.label) bandNote += band.label + ". ";
+          if (band.label && band.sub) bandNote += band.sub + ". ";
+        }
         var lede = cardEl("p", "gaps-lede");
         if (here.length) {
           // Two endings for one count rather than one ending for both: after the

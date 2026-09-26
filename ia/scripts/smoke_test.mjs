@@ -280,22 +280,37 @@ try {
     // ==== TEMPLATE:BEGIN smoke-coverage-band ====
     // THIS INSTANCE PAINTS NO MIDDLE BAND, AND THAT IS THE CLAIM ASSERTED HERE.
     // The gaps lede answers three ways since 2026-09-26 — inside the covered
-    // area, inside a wider region whose statewide layers still answer, or
-    // outside both — and the middle answer exists only where the app hands
+    // area, inside a wider region whose own key says what still answers there,
+    // or outside both — and the middle answer exists only where the app hands
     // drawOutOfScopeMask a region geometry. This one hands it none, so the wash
     // has two bands and the lede must keep saying "nothing there can be
     // answered yet" beyond the covered area. Asserted rather than assumed
     // because the engine block is one shared copy: a change that started
-    // retaining a region unconditionally would have this app claiming its
-    // statewide layers answer somewhere they do not, and nothing static could
-    // see it — the sentence is assembled at runtime from a point test.
-    await page.evaluate(({ n, p }) => window[n].setSelectedPoint(p[0], p[1]),
-      { n: EXPORTS_NAME, p: NEGATIVE_POINT.split(",").map(Number) });
-    const beyond = await openGaps();
-    check("gaps lede claims no coverage band, which this instance does not paint",
-      /nothing there can be answered yet/.test(beyond.lede) &&
-      !/covers in full/.test(beyond.lede) && !/statewide layers answer there/.test(beyond.lede),
-      JSON.stringify(beyond.lede));
+    // retaining a region unconditionally would have this app claiming something
+    // answers where nothing does, and nothing static could see it — the
+    // sentence is assembled at runtime from a point test.
+    //
+    // IT WAITS FOR THE WASH FIRST. A null coverage test correctly falls through
+    // to wording that claims neither, so a point selected before the wash has
+    // loaded asserts against the app's "we cannot tell yet" state — which is
+    // what CI caught on this check's first draft.
+    async function washPainted() {
+      return page.waitForFunction(() => {
+        const pane = document.querySelector(".leaflet-pane.leaflet-scope-mask-pane");
+        return !!(pane && pane.querySelector("path"));
+      }, null, { timeout: QUERY_TIMEOUT }).then(() => true, () => false);
+    }
+    if (await washPainted()) {
+      await page.evaluate(({ n, p }) => window[n].setSelectedPoint(p[0], p[1]),
+        { n: EXPORTS_NAME, p: NEGATIVE_POINT.split(",").map(Number) });
+      const beyond = await openGaps();
+      check("gaps lede claims no coverage band at the negative point",
+        /nothing there can be answered yet/.test(beyond.lede) &&
+        !/covers in full/.test(beyond.lede), JSON.stringify(beyond.lede));
+    } else {
+      check("gaps lede claims no coverage band at the negative point", false,
+        "the wash never painted, so the panel's coverage test could only answer unknown");
+    }
     // ==== TEMPLATE:END smoke-coverage-band ====
 
     await context.close();

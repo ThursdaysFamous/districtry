@@ -73,7 +73,11 @@ const GAP_PROBE = { county: "kankakee", label: "Kankakee", lat: 41.1254, lng: -8
 // it, which is the word the panel is required to use, because the map key a few
 // hundred pixels away already uses it. An instance that paints no middle band
 // sets this to null and the span below asserts only that it claims none.
-const BAND_PROBE = { region: "Illinois", label: "Princeton, Bureau County", lat: 41.3681, lng: -89.4648 };
+const BAND_PROBE = { region: "Illinois", label: "Princeton, Bureau County",
+                     // COVERAGE_KEY.region.label for this instance — the words the map
+                     // key prints for the band, which the lede must print too.
+                     label_says: "Statewide layers only",
+                     lat: 41.3681, lng: -89.4648 };
 // Point-move probe (check 2): a second point in a DIFFERENT district of the
 // first anchor layer than the ground-truth POINT, exercising the
 // incremental-restyle fast path. district is the expected identifier there.
@@ -318,7 +322,31 @@ try {
     // middle-band sentence must appear where the band is and must NOT appear
     // outside the region, or the app would be telling a reader in Indiana that
     // Illinois's statewide layers answer where they clicked.
+    //
+    // AND BOTH HALVES WAIT FOR THE WASH TO PAINT, WHICH THE FIRST DRAFT DID NOT
+    // AND CI CAUGHT. The panel's point tests read the rings the wash retained,
+    // and a null from either one correctly falls through to wording that claims
+    // neither — so a test that selects a point before the wash has loaded is
+    // asserting against the app's "we cannot tell yet" state. In this sandbox
+    // the wash was always up first and both checks passed; on a CI runner
+    // Illinois draws it at whenIdle behind two CDN fetches and the lede read
+    // "Here is everything that is missing and why", the mask-not-loaded branch.
+    // The signals are exact: any path in the scope-mask pane means the coverage
+    // rings were retained, and the `dst-glow` line is created ONLY in the branch
+    // that also retains the region polygons.
+    async function washPainted(needRegion) {
+      return page.waitForFunction((wantGlow) => {
+        const pane = document.querySelector(".leaflet-pane.leaflet-scope-mask-pane");
+        if (!pane || !pane.querySelector("path")) return false;
+        return wantGlow ? !!pane.querySelector("path.dst-glow") : true;
+      }, needRegion, { timeout: QUERY_TIMEOUT }).then(() => true, () => false);
+    }
     if (BAND_PROBE) {
+      const ready = await washPainted(true);
+      check(`the wash painted its region band, so the band wording can be read (${BAND_PROBE.region})`,
+        ready, ready ? "scope-mask pane carries dst-glow" :
+        "no dst-glow in the scope-mask pane — the region band never painted, so the " +
+        "two checks below would assert against the app's unknown-coverage wording");
       await page.evaluate(({ n, lat, lng }) => window[n].setSelectedPoint(lat, lng),
         { n: EXPORTS_NAME, lat: BAND_PROBE.lat, lng: BAND_PROBE.lng });
       const band = await openGaps();
@@ -327,19 +355,29 @@ try {
       // so replacing it would trade a specific true answer for a general one.
       // Both must be in the lede, which is why this probe point is a county
       // that HAS such a record rather than an arbitrary spot in the band.
+      //
+      // WHAT THE BAND MEANS IS READ FROM THIS INSTANCE'S OWN COVERAGE_KEY rather
+      // than asserted here, because it differs per instance: Illinois's band is
+      // "Statewide layers only" and Wisconsin's is "District shown, supervisor
+      // not named". A literal here would have passed while the engine told a
+      // Wisconsin reader something false.
       check(`gaps lede names the coverage band (${BAND_PROBE.label})`,
-        band.lede.indexOf("inside " + BAND_PROBE.region + " but outside the area this app covers in full") !== -1 &&
-        /only the statewide layers answer there/.test(band.lede) &&
+        band.lede.indexOf("inside " + BAND_PROBE.region + ", outside the area this app covers in full") !== -1 &&
+        band.lede.indexOf(BAND_PROBE.label_says) !== -1 &&
         !/nothing there can be answered yet/.test(band.lede),
         JSON.stringify(band.lede));
     }
-    await page.evaluate(({ n, p }) => window[n].setSelectedPoint(p[0], p[1]),
-      { n: EXPORTS_NAME, p: NEGATIVE_POINT.split(",").map(Number) });
-    const beyond = await openGaps();
-    check("gaps lede claims no coverage band outside the region",
-      /nothing there can be answered yet/.test(beyond.lede) &&
-      !/covers in full/.test(beyond.lede) && !/statewide layers answer there/.test(beyond.lede),
-      JSON.stringify(beyond.lede));
+    if (await washPainted(false)) {
+      await page.evaluate(({ n, p }) => window[n].setSelectedPoint(p[0], p[1]),
+        { n: EXPORTS_NAME, p: NEGATIVE_POINT.split(",").map(Number) });
+      const beyond = await openGaps();
+      check("gaps lede claims no coverage band outside the region",
+        /nothing there can be answered yet/.test(beyond.lede) &&
+        !/covers in full/.test(beyond.lede), JSON.stringify(beyond.lede));
+    } else {
+      check("gaps lede claims no coverage band outside the region", false,
+        "the wash never painted, so the panel's coverage test could only answer unknown");
+    }
     // ==== TEMPLATE:END smoke-coverage-band ====
 
     await context.close();
