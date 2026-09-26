@@ -45,6 +45,24 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, #1198 IS GREEN AND MERGES CLEAN — ready for review.** `smoke`
+completed `success` on head `c88977e` (21:31:46 → 21:43:49 UTC), read through
+`get_check_runs`. No review threads. `git merge-tree --write-tree` against main's
+tip `bf9627b` exits 0 with no conflict line, which is the reading to trust here —
+`mergeable_state` was `unknown` for the whole of #1195's life because main kept
+moving, and it is a cache rather than an answer. 16 files, +1,116/−757.
+
+Nothing on it is mine now: CI is green on the current head, the merge is clean and
+no thread waits on me, which is the only state this project's drive-to-green rules
+let wait on a reviewer. **Flagged because there is no reachable peer session to
+message** — `ListAgents` reports none — and because holding a green PR costs this
+session its whole queue rather than one item.
+
+**Next when it merges:** restart the branch from `origin/main` (prune first — the
+remote branch is DELETED on merge, so `--force-with-lease` fails with "stale info"
+until `git remote prune origin`), then the county-clerk gap record, then the county
+tier on the three rulings at `b116e7d`.
+
 **2026-09-26, THE DOUBLE-DRAW IS OPEN AS #1198, AND MY OWN PREMISE FOR IT WAS WRONG
 IN THE HALF THAT DECIDED THE DESIGN.** The entry below said the fix was Illinois's
 2026-09-25 pair — one shared topology plus Douglas-Peucker — and left open whether
