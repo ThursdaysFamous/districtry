@@ -45,6 +45,12 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, #1201 IS GREEN AND MERGES CLEAN — ready for review.** `smoke` completed
+`success` on head `94b39ad` (22:47:14 → 22:59:17 UTC); no review threads;
+`git merge-tree` against main's tip `408689b` exits clean. The substance is in the
+entry below — the clerk gap record, the Greenbook route, and the Bronx conflict that
+is Adam's to rule on. Flagged because no peer session is reachable to message.
+
 **2026-09-26, THE COUNTY-CLERK GAP IS OPEN AS #1201 — AND IT TURNED UP A DECISION
 THAT IS NOT MINE, ABOUT A NAMED PERSON ON A LIVE CARD.** Writing the record meant
 re-measuring it, and the re-measurement found a route nobody had tried. **Flagging
