@@ -213,6 +213,7 @@ try {
         const b = document.getElementById("gaps-body");
         return {
           items: b.querySelectorAll(".gap-item").length,
+          lede: (b.querySelector(".gaps-lede") || {}).textContent || "",
           sections: Array.from(b.querySelectorAll(".gaps-section-label")).map((e) => e.textContent),
           hrefs: Array.from(b.querySelectorAll(".gap-suggest")).map((a) => a.getAttribute("href")),
         };
@@ -260,6 +261,37 @@ try {
       warm.items === expected && clicked.length === 1 &&
       warm.sections.length > 1 && /Where you clicked3$/.test(clicked[0]),
       `${warm.items}/${expected} items, sections=${JSON.stringify(warm.sections)}`);
+
+    // THE THREE BANDS OF THE WASH, IN THE PANEL'S OWN WORDS — and this instance
+    // is the one where getting it wrong was worst. The lede answered two ways
+    // until 2026-09-26: inside the covered area, or outside it, where it said
+    // "nothing there can be answered yet". New York's covered area is the five
+    // boroughs and its statewide tier answers in all 62 counties, so every
+    // upstate reader — the whole state by area — was told nothing could be
+    // answered where they clicked while the county, municipality, school
+    // district, ZIP, congressional and both legislative cards answered it.
+    //
+    // Asserted in a browser because nothing static can see it: the sentence is
+    // assembled at runtime from a point test against geometry the wash fetched,
+    // so it appears in no generated diff and no --check. And asserted at BOTH
+    // points, because the second keeps the first honest — the band sentence must
+    // not appear in Connecticut, where the statewide layers genuinely do not
+    // answer.
+    await page.evaluate((p) => window.NycExplorer.setSelectedPoint(p[0], p[1]),
+      POINT.split(",").map(Number));
+    const band = await openGaps();
+    check("gaps lede names the coverage band upstate (statewide layers answer, city layers do not)",
+      /inside New York but outside the area this app covers in full/.test(band.lede) &&
+      /only the statewide layers answer there/.test(band.lede) &&
+      !/nothing there can be answered yet/.test(band.lede),
+      JSON.stringify(band.lede));
+    await page.evaluate((p) => window.NycExplorer.setSelectedPoint(p[0], p[1]),
+      NEGATIVE_POINT.split(",").map(Number));
+    const beyond = await openGaps();
+    check("gaps lede claims no coverage band outside New York State",
+      /nothing there can be answered yet/.test(beyond.lede) &&
+      !/covers in full/.test(beyond.lede) && !/statewide layers answer there/.test(beyond.lede),
+      JSON.stringify(beyond.lede));
 
     await context.close();
   }

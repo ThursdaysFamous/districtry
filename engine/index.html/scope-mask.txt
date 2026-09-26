@@ -118,6 +118,17 @@
   // fail safe, never as "outside".
   var coverageMaskRings = null;
 
+  // And the REGION's polygons in the same [lng,lat] form, retained for the same
+  // reason and with one difference that matters: regionOuterRing below keeps
+  // only the largest outer ring, which is right for drawing one boundary line
+  // and wrong for a point test, because a region with a detached part would
+  // report points on it as outside itself. So this keeps every polygon and
+  // every hole. null until the wash actually PAINTS a region band — an
+  // instance that declares no region, and one whose region fails to load, both
+  // leave it null, and a consumer reads null as "this instance has no middle
+  // band" rather than as "outside the region".
+  var coverageRegionPolys = null;
+
   // The wash's own layers land on districtryCoverageLayers, which is declared
   // with the theme controller that restyles them (ENGINE districtry-theme) —
   // the skin darkens the out-of-coverage band on a dark ground where it greys
@@ -129,6 +140,26 @@
     var out = [];
     for (var i = 0; i < ring.length; i++) out.push([ring[i][1], ring[i][0]]);
     return out;
+  }
+
+  // Every polygon of the region geometry as its own ring list — outer ring
+  // first, holes after, which is what pointInGeometry wants for a MultiPolygon.
+  // Unlike regionOuterRing this discards nothing: it answers "is this point in
+  // the region", where dropping an island or filling a hole is a wrong answer
+  // rather than a simplified drawing.
+  function regionPolygons(geo) {
+    var feats = (geo && geo.features) || [];
+    var out = [];
+    for (var f = 0; f < feats.length; f++) {
+      var geom = feats[f].geometry;
+      if (!geom) continue;
+      var polys = geom.type === "Polygon" ? [geom.coordinates]
+                : geom.type === "MultiPolygon" ? geom.coordinates : [];
+      for (var p = 0; p < polys.length; p++) {
+        if (polys[p] && polys[p].length) out.push(polys[p]);
+      }
+    }
+    return out.length ? out : null;
   }
 
   // The region's outer boundary as one Leaflet ring, or null. Only the LARGEST
@@ -285,6 +316,10 @@
          render. The widths and the blur class stay: those are geometry, and
          the skin has no opinion about them. */
       if (region) {
+        // Retained for the gaps panel, and set HERE rather than beside the
+        // ring above so the panel can only describe a middle band the map
+        // actually drew — the same rule buildCoverageKey follows for the key.
+        coverageRegionPolys = regionPolygons(regionGeo);
         // Three bands. Leaflet fills even-odd, so each polygon's later rings
         // read as holes: world minus the region is everything outside it, and
         // the region minus the coverage rings is the strip between.

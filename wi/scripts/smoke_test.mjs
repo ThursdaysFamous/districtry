@@ -273,6 +273,26 @@ try {
       cold.hrefs.every((h) => /template=source-submission\.yml/.test(h) && /[?&]gap_id=/.test(h)),
       `${cold.hrefs.length} links`);
 
+    // ==== TEMPLATE:BEGIN smoke-coverage-band ====
+    // THIS INSTANCE PAINTS NO MIDDLE BAND, AND THAT IS THE CLAIM ASSERTED HERE.
+    // The gaps lede answers three ways since 2026-09-26 — inside the covered
+    // area, inside a wider region whose statewide layers still answer, or
+    // outside both — and the middle answer exists only where the app hands
+    // drawOutOfScopeMask a region geometry. This one hands it none, so the wash
+    // has two bands and the lede must keep saying "nothing there can be
+    // answered yet" beyond the covered area. Asserted rather than assumed
+    // because the engine block is one shared copy: a change that started
+    // retaining a region unconditionally would have this app claiming its
+    // statewide layers answer somewhere they do not, and nothing static could
+    // see it — the sentence is assembled at runtime from a point test.
+    await page.evaluate(({ n, p }) => window[n].setSelectedPoint(p[0], p[1]),
+      { n: EXPORTS_NAME, p: NEGATIVE_POINT.split(",").map(Number) });
+    const beyond = await openGaps();
+    check("gaps lede claims no coverage band, which this instance does not paint",
+      /nothing there can be answered yet/.test(beyond.lede) &&
+      !/covers in full/.test(beyond.lede) && !/statewide layers answer there/.test(beyond.lede),
+      JSON.stringify(beyond.lede));
+    // ==== TEMPLATE:END smoke-coverage-band ====
 
     await context.close();
   }

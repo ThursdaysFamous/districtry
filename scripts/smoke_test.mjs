@@ -67,6 +67,13 @@ const GEOCODER_STUB_FEATURE = {
 // Gaps-panel location probe (check 1a): a point in a county that shipped gap
 // records name, so the panel must lead with that county's own gaps there.
 const GAP_PROBE = { county: "kankakee", label: "Kankakee", lat: 41.1254, lng: -87.8487 };
+// Coverage-band probe (check 1a): a point inside the REGION whose statewide
+// layers answer but outside the 93-county area the county-level layers reach —
+// the wash's middle band. `region` is the name COVERAGE_KEY.region.edge gives
+// it, which is the word the panel is required to use, because the map key a few
+// hundred pixels away already uses it. An instance that paints no middle band
+// sets this to null and the span below asserts only that it claims none.
+const BAND_PROBE = { region: "Illinois", label: "Princeton, Bureau County", lat: 41.3681, lng: -89.4648 };
 // Point-move probe (check 2): a second point in a DIFFERENT district of the
 // first anchor layer than the ground-truth POINT, exercising the
 // incremental-restyle fast path. district is the expected identifier there.
@@ -296,6 +303,44 @@ try {
       `groups=${JSON.stringify(warm.groups.map((g) => g.label))} ` +
       `here=${warm.groups[0] && warm.groups[0].items}/${probeGaps} total=${warm.items}`);
     // ==== TEMPLATE:END smoke-gap-probe ====
+
+    // ==== TEMPLATE:BEGIN smoke-coverage-band ====
+    // THE THREE BANDS OF THE WASH, IN THE PANEL'S OWN WORDS. The lede used to
+    // answer two ways — inside the covered area or outside it — and outside it
+    // said "nothing there can be answered yet", which is true beyond the state
+    // line and FALSE in the Illinois counties the county-level layers do not
+    // reach yet, where county, township, municipality, school district and ZIP
+    // all answer. Asserted in a browser because nothing static can see it:
+    // the sentence is assembled at runtime from a point test against geometry
+    // the wash fetched, so it appears in no generated diff and no --check.
+    //
+    // Two halves, and the second is the one that keeps the first honest: the
+    // middle-band sentence must appear where the band is and must NOT appear
+    // outside the region, or the app would be telling a reader in Indiana that
+    // Illinois's statewide layers answer where they clicked.
+    if (BAND_PROBE) {
+      await page.evaluate(({ n, lat, lng }) => window[n].setSelectedPoint(lat, lng),
+        { n: EXPORTS_NAME, lat: BAND_PROBE.lat, lng: BAND_PROBE.lng });
+      const band = await openGaps();
+      // The band sentence LEADS the "where you clicked" sentence rather than
+      // replacing it: every one of those counties has a gap record of its own,
+      // so replacing it would trade a specific true answer for a general one.
+      // Both must be in the lede, which is why this probe point is a county
+      // that HAS such a record rather than an arbitrary spot in the band.
+      check(`gaps lede names the coverage band (${BAND_PROBE.label})`,
+        band.lede.indexOf("inside " + BAND_PROBE.region + " but outside the area this app covers in full") !== -1 &&
+        /only the statewide layers answer there/.test(band.lede) &&
+        !/nothing there can be answered yet/.test(band.lede),
+        JSON.stringify(band.lede));
+    }
+    await page.evaluate(({ n, p }) => window[n].setSelectedPoint(p[0], p[1]),
+      { n: EXPORTS_NAME, p: NEGATIVE_POINT.split(",").map(Number) });
+    const beyond = await openGaps();
+    check("gaps lede claims no coverage band outside the region",
+      /nothing there can be answered yet/.test(beyond.lede) &&
+      !/covers in full/.test(beyond.lede) && !/statewide layers answer there/.test(beyond.lede),
+      JSON.stringify(beyond.lede));
+    // ==== TEMPLATE:END smoke-coverage-band ====
 
     await context.close();
   }
