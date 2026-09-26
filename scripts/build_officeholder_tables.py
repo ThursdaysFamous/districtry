@@ -588,6 +588,12 @@ CITY_TABLES = [
     dict(tag="ny", page="council-district.html", worksheet="ny/metro-worksheet.json",
          sections=[dict(roster="data/app/council-members.json",
                         seat="District", holder="Council Member",
+                        # The six leadership posts the Council writes in front of
+                        # a member's name, which council_scraper.py splits off
+                        # into `role` (2026-09-26) rather than shipping as part of
+                        # the name. The column appears because the roster carries
+                        # the field, the way every other derived column does.
+                        role_label="Role",
                         office_label="District office",
                         body="the New York City Council", org="New York City Council",
                         heading="Who represents each Council district")]),
