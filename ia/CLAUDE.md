@@ -112,7 +112,12 @@ state-template machinery before this instance existed): `metro-outline.json` (th
 outline for the coverage wash, `ia/scripts/build_metro_outline.py`), `state-counties.json`
 (`ia/scripts/build_state_counties.py`), `congress-districts.json`, `ia-senate-districts.json`
 and `ia-house-districts.json` (`ia/scripts/build_legislative_boundaries.py` — statewide
-TIGERweb, mapshaper-simplified, refused unless the 2,000-random-point agreement gate passes).
+TIGERweb, and ALL THREE simplified in ONE mapshaper run, because two Iowa House districts make
+up one Iowa Senate district (Code 42.3) and a shared edge only survives identically if both
+layers came off one topology; that builder takes no per-chamber argument for exactly that
+reason, and refuses to write unless three gates pass — the 2,000-random-point agreement gate
+per layer, an exact cross-layer nesting check, and a fidelity ceiling measured against the
+source. Its `--check` re-runs the nesting half offline in CI).
 Rosters: `congress-roster.json` (`ia/scripts/build_congress_roster.py`, from
 unitedstates/congress-legislators) and `ia-{senate,house}-members.json`
 (`ia/scripts/build_ia_legislature_roster.py`, from Open States `ia.csv` enriched by
