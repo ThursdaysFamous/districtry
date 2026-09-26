@@ -169,6 +169,65 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-26 19:30 — Iowa's legislative map is right now, and Wisconsin's fix needs a decision from Adam.**
+
+**What changed for a reader.** Iowa Code composes each state Senate district out of
+two House districts, so on the map the Senate line should sit exactly on the House
+line. It did not, on **all fifty pairings** — the worst off by 775 m, and 147 of
+154 districts drawn more than 25 m from where the real boundary runs, cutting
+diagonally through blocks instead of following streets. That is the same defect
+Adam reported on the Illinois map, in Iowa's own builder. It is fixed and live
+(#1189). Verified independently off the shipped files rather than from the report:
+50 of 50 pairings broken before, 0 of 50 after, and by area the House pair against
+its Senate district goes from a 0.2% worst disagreement to **0.000000% on all
+fifty**. Iowa's ground-truth point still classifies to Senate 26 / House 52 /
+US-House 4, and 2x(26-1)+2 = 52, so the rule holds at the anchor by a route that
+never touches the new gate.
+
+**The docs of record stopped teaching a false fact about Wisconsin** (#1188), which
+was the residue I should have caught before merging #1187 and caught on the
+post-merge check instead. The disproved sentence stays in place under a dated
+correction carrying the measurement, which is this project's convention and is
+worth more here than a clean rewrite.
+
+**A DECISION FOR ADAM, and it is a genuine trade rather than a defect.** Wisconsin
+has the same nesting defect and measured its fix on the full state. Its numbers are
+far worse than Iowa's or Illinois's to start with — a **median** 80.1 m stray with
+128 of 134 districts over 20 m — and the correct setting costs **+329,494 bytes
+gzipped, +74.3%**, on two cache-first files every first-load visitor downloads.
+Illinois's equivalent fix came out 871 bytes SMALLER, so there is no fleet-wide
+sign and I was wrong to predict the cost away. Wisconsin escalated it as an
+operator decision and that is right.
+
+**What I asked for before it goes up, so the trade is visible**: its curve stops at
+interval=8 while Illinois ships interval=15, so five more rows may make the
+decision disappear. And its 20 m ceiling was derived by importing Illinois's
+25/17.9 = 1.40 ratio, which is not a fleet constant — **Iowa's is 1.04** — and
+unlike Iowa's ceiling Wisconsin's is load-bearing: it admits interval=7 and rejects
+interval=8, a 57 KB difference in what a reader downloads. A number reached by
+analogy cannot carry that.
+
+**TWO STATES MEASURED THE SAME CHANGE AND GOT OPPOSITE SIGNS, which is the fleet
+finding of the evening.** Wisconsin's board told Iowa that combining the two
+chambers before switching algorithms "actively DEGRADES fidelity" — its own stray
+went 2,940 m to 5,381 m. Iowa's went **775.2 m to 333.2 m**, halved. Both are full
+states, same tool. So the generalisation is wrong in both directions and the
+correct lesson is stronger than either: because mapshaper's retain percentage is
+relative to the whole dataset, no state can reason about a percentage setting's
+fidelity at all, which is an argument for the algorithm change rather than a
+warning about the order of operations. Carried to both sessions with each other's
+table credited.
+
+**And the format question Iowa raised is ruled.** A declared count of 1,000 or more
+cannot be written at all today, because the matcher reads bare digits and 19 reader
+fields carry a thousands comma. Iowa proposed putting the format on the token; I
+ruled it onto the DECLARATION, required and failing the build at 1,000 or more, with
+no default in either direction — a default comma would be a fleet rule through the
+back door and a default bare would ship "1024" in six voices that may not want it.
+Iowa's separation-of-concerns argument was the better-reasoned one and I said so;
+what decided it is that token-level format lets one number render two ways inside
+one record, which reads as an error and would need its own gate.
+
 **2026-09-26 19:05 — #1187 merged, and a false sentence came off the Wisconsin map.**
 
 **What changed for a reader.** A reader on the Wisconsin map has been told, in the
