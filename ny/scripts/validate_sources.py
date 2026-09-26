@@ -259,25 +259,49 @@ PROVENANCE = [
     # five files and gave them no manifest entry, so nothing watched the two
     # services the whole statewide tier rests on — and this file's app-to-
     # manifest check is ONE-DIRECTIONAL, so it could never have reported the
-    # absence. ny-state-outline.json and metro-outline.json are dissolved from
-    # the county fabric by the same builders, so watching the county service
-    # covers them too.
+    # absence. THAT COMMENT USED TO SAY ny-state-outline.json and
+    # metro-outline.json "are dissolved from the county fabric by the same
+    # builders, so watching the county service covers them too", AND THAT WAS
+    # FALSE (corrected 2026-09-26). ny/scripts/build_metro_outline.py contains
+    # zero references to NYS_Civil_Boundaries: both files come from Census
+    # TIGERweb (State_County layer 1 and States layer 0), a different publisher
+    # entirely, which is also why this instance's county edges and those two
+    # rings disagree at the shoreline BY DESIGN. So one entry could never have
+    # covered all three, and TIGERweb's county/state fabric was watched by
+    # nothing for them; it has its own entry below.
     {"layer": "NY counties (offline anchor)",
      "app_file": "ny-counties.json",
      "source_url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Civil_Boundaries/FeatureServer/2?f=json",
-     "builder": os.path.join(REPO_ROOT, "scripts", "build_ny_counties.py"),
+     "builder": os.path.join(REPO_ROOT, "scripts", "build_ny_civil_boundaries.py"),
      "builder_ref": "NYS_Civil_Boundaries/FeatureServer/2",
      "vintage": "62 counties, NYS ITS Civil Boundaries, publication date March 2026",
      "expected_successor": "updated in place; a service rename surfaces as unreachable",
-     "note": "Also the input for ny-state-outline.json and metro-outline.json, so this one entry covers all three."},
+     "note": "Also the input for judicial-districts.json, which dissolves the SHIPPED county file rather than re-fetching this layer, so that file rides this entry. ny-state-outline.json and metro-outline.json do NOT: they are TIGERweb, one entry below."},
     {"layer": "NY cities, towns and villages (offline anchor)",
      "app_file": "ny-cities-towns.json",
      "source_url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Civil_Boundaries/FeatureServer?f=json",
-     "builder": os.path.join(REPO_ROOT, "scripts", "build_ny_municipalities.py"),
+     "builder": os.path.join(REPO_ROOT, "scripts", "build_ny_civil_boundaries.py"),
      "builder_ref": "NYS_Civil_Boundaries/FeatureServer",
      "vintage": "995 cities and towns (layer 6) and 532 villages (layer 7)",
      "expected_successor": "updated in place; a service rename surfaces as unreachable",
-     "note": "One builder writes both files; ny-villages.json rides this entry."},
+     "note": "One builder writes all three civil-boundary files in ONE mapshaper run, so ny-villages.json and ny-counties.json come out of the same topology; ny-villages.json rides this entry."},
+    # THE TWO OUTLINE FILES, AND THEIR OWN PUBLISHER. Added 2026-09-26 on the
+    # correction above: these are water-inclusive Census geometry, not the
+    # state's shoreline-clipped fabric, and nothing watched them. One entry
+    # covers both because one builder writes both from the same MapServer.
+    {"layer": "NY coverage ring and state outline (offline anchor, TIGERweb)",
+     "app_file": "metro-outline.json",
+     "source_url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1?f=json",
+     "builder": os.path.join(REPO_ROOT, "scripts", "build_metro_outline.py"),
+     # The ref is the CONTIGUOUS half of the builder's URL literal: it writes
+     # "…/services/TIGERweb/" and "State_County/MapServer/1/query" as two
+     # adjacent string literals, so a fuller ref would fail this substring guard
+     # with nothing actually wrong -- the adjacent-string-literals trap
+     # scripts/probe_user_agents.py records for URL inventories.
+     "builder_ref": "State_County/MapServer",
+     "vintage": "the 5 boroughs dissolved for the coverage ring; the whole state for the region band",
+     "expected_successor": "TIGERweb rolls its vintage yearly; a layer-index reshuffle surfaces as unreachable",
+     "note": "ny-state-outline.json rides this entry, out of layer 0 (States) on the same MapServer. Water-inclusive, so it disagrees with ny-counties.json at the shoreline by design."},
     {"layer": "NY school districts (offline anchor)",
      "app_file": "ny-school-districts.json",
      "source_url": "https://gisservices.its.ny.gov/arcgis/rest/services/NYS_Schools/FeatureServer/18?f=json",

@@ -99,10 +99,10 @@ two of that ONE entity's own rows must read as agreement, not as an
 overlap -- see _entities_at() below.
 
 NO RAW SNAPSHOT IS KEPT under data/source/. The unpaged fetch is 8,339,502
-bytes (measured 2026-09-18) -- an order of magnitude past ny-counties.json's
-source snapshot and closer to the 20.6 MB / 3.7 MB fetches
-build_ny_municipalities.py explicitly declines to snapshot for the same
-reason. This script follows that precedent rather than build_ny_counties.py's.
+bytes (measured 2026-09-18) -- closer to the 4 MB / 20.6 MB / 3.7 MB fetches
+build_ny_civil_boundaries.py explicitly declines to snapshot for the same
+reason. Every New York boundary builder now makes that call; the 2026-09-18
+version of this paragraph contrasted two siblings that have since become one.
 
 Prerequisites: curl (fetch, works through an HTTPS proxy) and Node.js
 (mapshaper via `npx mapshaper@<pinned>`).
