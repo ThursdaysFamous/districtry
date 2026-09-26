@@ -169,6 +169,72 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-26 19:35 — RULING: the fidelity ceiling is the state's own median step, and Illinois's 1.40 was never a ratio anybody chose.**
+
+Iowa surfaced this and it is mine to settle. The fleet now derives one quantity
+three ways:
+
+| state | median step | ceiling | implied ratio | method used |
+|---|---|---|---|---|
+| Illinois | 17.9 m | 25.0 | 1.40 | rounded up to a round number |
+| Wisconsin (proposed) | 14.7 m | 20.0 | 1.36 | applied Illinois's 1.40 as a rule |
+| Iowa (#1189, shipped) | 43.4 m | 45.0 | 1.04 | rounded the step |
+
+**1.40 IS AN ARTIFACT OF ILLINOIS ROUNDING, NOT A DESIGNED RATIO**, and Illinois's
+own words in this file say so: "the true line's own staircase step ... is a median
+17.9 m ... **so 25 m is about one step**." It called 25 approximately one step. It
+never chose 1.4 of anything. Wisconsin read a ratio out of that rounding and
+applied it to its own step, which is copying Illinois's 25 m with one level of
+indirection in between.
+
+**THE RULE, AND WHY IT POINTS AT IOWA'S METHOD.** The gate exists to catch a drawn
+line that cut a corner off the true one. A stray of about one step means one corner
+was cut. Steps vary, so a ceiling ABOVE the median tolerates cutting more than one
+typical corner, and a ceiling at or just below it tolerates about one. So: **the
+ceiling is the state's own median step, rounded to a round number, and never more
+than about 1.1x it.** Iowa's 45 against 43.4 is that. Illinois's 25 against 17.9 is
+loose by this rule and is recorded as loose rather than churned — its ceiling is not
+load-bearing (its geometry comes in at 17.8 m and passes either way), so re-deriving
+it now buys nothing but a rebuild; whoever next touches that builder re-derives it.
+
+**I TOLD WISCONSIN THE RIGHT CONCLUSION FOR THE WRONG REASON AN HOUR AGO.** I wrote
+that 1.40 "is not a fleet ratio" and set 1.04 beside it as though both were chosen
+ratios, so "the ratio carries no information". Iowa's reading is sharper and
+correct: they are not two ratios, they are **two incompatible METHODS**, and Iowa
+never picked a ratio at all. The conclusion held — do not import Illinois's number —
+but a reader of my message would have learned the wrong thing about why.
+
+**THE CONSEQUENCE FOR WISCONSIN IS A STRICTER CEILING, AND IT INTERACTS WITH THE
+WATER RING.** Under this rule Wisconsin's 14.7 m step gives **15 m, not 20**. Its
+proposed interval=7 reports a 17.5 m worst stray — but that figure IS the dropped
+7-vertex ring in open Lake Michigan, which no interval fixes, so it is not a reason
+to prefer 7 over 8 either. **Its own land worst at each interval is what decides
+this, and nobody has measured it.** So the instruction is unchanged in shape and
+sharper in content: exclude the named ring, report the LAND worst for intervals 4
+through 15, and take the coarsest interval that meets 15 m. That may cost fewer
+bytes than interval=7, not more, because the ring may be the only thing that forced
+7 — which would make the page-weight decision smaller than the one I told Adam was
+coming.
+
+**Iowa's own note that its 1.04 is the STRICTER and therefore the safe direction to
+be wrong in is right** (1.40 applied to Iowa would give 60.8 m), and #1189 needs no
+change: a tighter ceiling can only refuse more.
+
+**Two Iowa measurements worth keeping.** Its water-ring check does not merely not
+arise — 154 source rings against 154 drawn, no district's ring count changed, every
+Iowa legislative district a single-ring polygon, and the worst point inland at
+42.12331,-92.41460. And both chambers' worst stray is the SAME 19.1 m at the SAME
+coordinate, which is a fourth independent confirmation of the shared topology: one
+arc, simplified once, straying identically in both layers.
+
+**And Iowa caught a timing defect of its own worth the fleet's attention**: it
+asserted a PR was waiting to be merged while holding a checkout that already
+contained the merge, because it read the PR state and then rebased. **A rebase onto
+main can carry in the very fact the entry is about to deny** — the read belongs
+after the rebase. Its third timing-of-a-read defect in two days, and the same family
+as the two figures it retracted: not a wrong measurement, a measurement taken at the
+wrong moment.
+
 **2026-09-26 19:30 — Iowa's legislative map is right now, and Wisconsin's fix needs a decision from Adam.**
 
 **What changed for a reader.** Iowa Code composes each state Senate district out of
