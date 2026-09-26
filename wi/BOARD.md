@@ -34,6 +34,89 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-26 (evening). #1193 IS MERGED AND VERIFIED, AND THE SUPERVISORY LAYER
+MEASURED THE SAME WAY SHOWS dp IS FREE HERE — PLUS A LIMIT OF dp ITSELF THAT
+NOBODY IN THE FLEET HAD MEASURED.** #1193 merged as `b0835d4`; verified by CONTENT
+on main rather than from the merge event — `ACCEPTED_DROPPED_RINGS` present,
+`FIDELITY_MAX_M = 15.0`, `RETAINED_RING_M = 1.0`, the declared ring's identity, and
+the four-gate wording in the worksheet AND in its generated region. Branch reset off
+main; task #64 closed.
+
+**THE SUPERVISORY CURVE.** `county-supervisory-districts.json` still runs
+Visvalingam 9% over 1,589 districts, each of which names a supervisor. Measured
+against the LTSB source the builder itself fetches, using the merged builder's own
+distance machinery, stray on RETAINED rings only. Trempealeau is OUT of this
+measurement — the shipped file takes its 17 from the county's own service — so the
+gz column compares candidates with each other and with an LTSB-only Visvalingam
+run, never with the shipped bytes (1,072,615 gz).
+
+| setting | gz | worst | p99 | median | dropped parts | dropped holes |
+|---|---|---|---|---|---|---|
+| **vis 9% (current)** | 1,075,685 | 4,852 m | 407 m | **17.6 m** | 132 (max 3,496 m2) | 511 (max 2,029 m2) |
+| dp interval=4 | 1,487,975 | 1,969 m | 113 m | 3.8 m | 53 (max 37 m2) | 349 |
+| dp interval=7 | 1,198,741 | 1,969 m | 113 m | 6.5 m | 69 | 373 |
+| **dp interval=10** | **1,048,305** | 1,969 m | 113 m | **9.2 m** | 75 | 390 |
+| dp interval=15 | 908,903 | 1,969 m | 128 m | 13.5 m | 87 | 407 |
+| dp interval=25 | 765,005 | 1,969 m | 143 m | 22.4 m | 103 | 432 |
+
+**THERE IS NO BYTE QUESTION HERE, WHICH IS THE OPPOSITE OF THE CHAMBERS.**
+interval=10 is **2.5% SMALLER** than the current setting while halving the median
+stray, cutting the p99 from 407 m to 113 m, and dropping 40% fewer rings. The
+chambers' trade was correctness against bytes; this one is correctness for free.
+
+**AND THE WORST CASE DOES NOT MOVE FROM interval=4 TO interval=25 — 1,969.4 m at
+every setting, and the same eleven rings over 500 m.** A figure that does not move
+when the knob moves is a figure the knob does not control, so I went looking rather
+than publishing it as a stray. Three things came out, and one of them matters to
+what just merged.
+
+**1. THE 1,969 m HEADLINE IS THE FALSE-NEGATIVE THE MERGED BUILDER'S OWN DOCSTRING
+NAMES.** Monroe 09's source ring has 14 vertices of which exactly **ONE** survived,
+196 m2. One surviving vertex makes the ring read as RETAINED, so its other thirteen
+— up to 1,969 m away — are measured into the stray instead of being declared as a
+dropped ring. The docstring says this reading is "safe because stricter", and it is,
+but here it produces the headline figure for the whole layer.
+
+**2. ONE OF THE BIG STRAYS IS A ZERO-WIDTH OUT-AND-BACK SPUR, AND dp CANNOT BOUND
+ONE BY CONSTRUCTION.** Portage 08 (key 5509508): three consecutive source vertices
+sit more than 25 m from the drawn line, the two vertices that BRACKET them are
+**0.0 m apart**, and the path between them along the source ring is **1,599 m**.
+So the boundary runs out about 800 m and back along the same line. Perpendicular
+deviation from the chord between the bracketing points is zero for every point on
+that excursion, so dp removes the whole thing at ANY interval. **This is a limit of
+the algorithm the fleet has just standardised on, measured for the first time
+today**, and it is why an `interval` bounds the stray on ordinary boundary and not
+on a degenerate one.
+
+**3. MAPSHAPER'S INTERSECTION REPAIR IS NOT THE CAUSE, TESTED RATHER THAN ASSUMED.**
+That was my first hypothesis, because the chamber runs print "Repaired 7
+intersections" and the source's own overlaps are recorded in the supervisory
+builder. Re-run with `no-repair` at interval=4, all five worst cases are identical
+to 0.1 m. Disproved in one run, before it reached a report.
+
+One case I CANNOT classify with this instrument and am not going to guess at: key
+5507702's 1,748 m, where the bracketing vertices are 1,342 m apart and the path
+between them is 1,343 m, i.e. not a spur by the test above. My run-detection walks
+outward while vertices are over 25 m from the drawn line, so an excursion with one
+vertex that happens to pass near some other part of the drawn line reads as two
+short runs rather than one long one. The instrument is what is wrong there, not
+necessarily the geometry.
+
+**WHAT I CHECKED BEFORE REPORTING ANY OF IT: THE MERGED CHAMBERS BUILD IS CLEAN OF
+BOTH HAZARDS.** Across 128 retained Senate rings and 194 Assembly rings at
+interval=7, **not one** kept two or fewer of its own vertices or under 10% of them.
+So the 7.9 m that gate publishes is not understated the way this layer's would be,
+and what merged this evening stands.
+
+**WHAT I WANT DECIDED BEFORE BUILDING.** dp at interval=10 for the supervisory
+layer is strictly better on every measured axis at slightly fewer bytes, so the
+easy part is easy. The design question is the residue: the near-dropped ring wants
+the retained/dropped test to be a SHARE of surviving vertices rather than "at least
+one", which would move Monroe 09 into the declaration table where it belongs — and
+that changes the merged chambers gate too, on a layer where it currently changes
+nothing. I would rather make that change once, deliberately, than write a second
+reading of the same question into a second builder.
+
 **2026-09-26 (after the ruling). interval=7 IS BUILT AND #1193 IS UNHELD — AND THE
 ONE SENTENCE THE RULING ASKED ME TO PUBLISH IS FALSE, WHICH THE GATE IT ASKED FOR
 IS WHAT CAUGHT.** The brief closed with "one thing I want stated in the body rather
