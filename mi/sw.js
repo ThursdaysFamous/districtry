@@ -113,7 +113,7 @@ const ROSTER_URLS = [
 
 /* ==== ENGINE:BEGIN sw-handlers ==== */
 // ONLY THE SHELL IS INSTALLED. Boundary files are cached the first time a
-// layer uses them (cacheFirst, below) and never before. Until 2026-09-26 the
+// layer uses them (cacheOnlyElseNetwork, below) and never before. Until 2026-09-26 the
 // install handler also fetched every file in GEOMETRY_URLS: 9.8 MB gzipped for
 // Wisconsin, 4.3 MB Illinois, 2.7 MB Iowa, 2.1 MB Michigan, 1.5 MB New York,
 // on every visitor's first load, starting as the app booted and sharing the
@@ -181,39 +181,32 @@ function networkFirst(request) {
     .catch(() => caches.match(request));
 }
 
-// Cache-first with background revalidation: serve the cached copy instantly
-// (or fetch it the first time), and quietly refresh the cache for next time.
-function cacheFirst(request) {
-  return caches.match(request).then((cached) => {
-    const network = fetch(request)
-      .then((response) => {
-        if (response.ok) {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
-        }
-        return response;
-      })
-      .catch(() => cached);
-    return cached || network;
-  });
-}
-
 // Cache-first with NO revalidation, for files whose bytes cannot change under a
-// fixed URL. cacheFirst() above fires its network fetch on every hit — it
-// serves the cached copy instantly and re-downloads in the background — so it
-// buys latency and never bytes. That is the right trade for boundary geometry,
-// where the background refresh is the safety net against a missed CACHE_NAME
-// bump. It is waste for a font: a committed binary that changes approximately
-// never, re-downloaded on every visit for the life of the app.
+// fixed URL without a CACHE_NAME bump: boundary geometry, self-hosted fonts and
+// the Census block populations. A hit is served from the cache and nothing
+// crosses the network; a miss is fetched and cached.
 //
-// Here the CACHE_NAME bump is the whole invalidation mechanism, and
-// check_cache_version.py fails the build when one of these files changes
-// without it. A miss still goes to the network.
+// Boundary geometry used a cacheFirst() that fired a network fetch on EVERY
+// hit, serving the cached copy and re-downloading it in the background, so a
+// returning visitor paid the full download of every layer they opened on
+// every visit — measured 2026-09-26 on /il/ with six layers on, all six files
+// fetched again on the second visit and on each one after. That refresh was
+// standing in for a missed CACHE_NAME bump, and check_cache_version.py now
+// fails any change that edits one of these files without one, so the bump is
+// the whole invalidation mechanism. The fonts took this policy on 2026-09-12
+// for the same reason.
+//
+// The miss asks with cache: "no-cache", so the browser's HTTP cache is
+// revalidated rather than trusted. A copy the HTTP cache picked up in the
+// minutes before a deploy (GitHub Pages serves max-age=600) would otherwise be
+// stored under the NEW cache name and, with no background refresh to replace
+// it, stay there until the next bump. Revalidating costs a 304 when the file
+// is unchanged and nothing when the HTTP cache holds no copy.
 function cacheOnlyElseNetwork(request) {
   return caches.match(request).then(
     (cached) =>
       cached ||
-      fetch(request).then((response) => {
+      fetch(new Request(request, { cache: "no-cache" })).then((response) => {
         if (response.ok) {
           const clone = response.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
@@ -246,9 +239,11 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Boundary geometry: ~static, so cache-first for instant toggles + offline.
+  // Boundary geometry: changes only with a CACHE_NAME bump, so served from the
+  // cache without revalidation, for instant toggles, offline use, and no bytes
+  // on a repeat visit.
   if (inList(href, GEOMETRY_URLS)) {
-    event.respondWith(cacheFirst(event.request));
+    event.respondWith(cacheOnlyElseNetwork(event.request));
     return;
   }
 
@@ -268,11 +263,10 @@ self.addEventListener("fetch", (event) => {
   // is precached here: the first visit pays the network exactly as it does
   // today, and the repeat visit pays nothing.
   //
-  // cacheOnlyElseNetwork and not cacheFirst, for the reason given on that
-  // function: cacheFirst revalidates on every hit, so it would have served the
-  // font instantly and still spent the 134 KB. An earlier draft of this branch
-  // used it and the comment claimed the bytes were saved; the repeat-visit
-  // probe showed all six still crossing the wire.
+  // cacheOnlyElseNetwork and not a revalidating cache-first: the latter would
+  // have served the font instantly and still spent the 134 KB. An earlier draft
+  // of this branch did that and its comment claimed the bytes were saved; the
+  // repeat-visit probe showed all six still crossing the wire.
   //
   // Scoped to this registration, so a sibling instance's fonts/ is left to its
   // own worker -- CacheStorage is per-origin and this origin serves six apps.
