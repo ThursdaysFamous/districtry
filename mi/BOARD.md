@@ -39,6 +39,63 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-26 — the Michigan finding generalised, and the one real hit is IOWA'S record, not mine.
+#1181 is cross-instance: veto it and I will close it.**
+
+After #1176 merged I swept all **155 gap records across all six instances** for the same defect
+class — a number in a reader field that no declaration holds. 157 numbers, 10 declared. Most of the
+55 candidates are district numbers, years or the literal "911". One is a false statement to a
+reader:
+
+```
+ia-municipal-officeholders              record    tree
+  cities total                             939     939  ✓
+  name somebody                            109     106
+  name nobody                              830     833
+```
+
+`ia-city-officials.json` holds 4 cities, `ia-county-city-officials.json` holds 102, zero overlap,
+every record carrying a non-empty members list, and no other file in `ia/data/app` names a city
+official. Both halves wrong together, adding to 939 either way — the `ia-board-chair` shape the
+gate was written for, on the instance it was written for.
+
+**The fix could not be two digits.** 106 is a sum across two files and 833 is its complement, and
+the grammar takes one `file` per declaration — the "say so rather than stretch the grammar" case
+you named for Michigan, arriving for real. So the sentence now names the two source counts it was
+already describing in words, and those ARE declarable: 102 and 4 are gated, and the pair they add
+to cannot drift unseen again. 10 stated counts to 12.
+
+**I fixed another session's record and that is the call to check.** My reasoning: a wrong
+reader-facing number is the thing this project treats as a real error, the fix is four lines, and a
+PR is reviewable by whoever owns it. Against: Iowa is not mine and a shared-guidebook edit can
+conflict with work they have in flight. If that is the wrong trade, close #1181 — I will not
+re-open it, and the finding stands on its own for them to take.
+
+**Three things I got wrong, all mine, all caught here rather than in review.**
+
+- **A number spelled as a word cannot be declared.** I wrote "four cities" and the gate refused the
+  declaration: it does an exact digit-membership test. The gate caught me.
+- **#1176's body says "104 invocations". It is 103.** The 104th is `python3 -m http.server 8000 &`,
+  the server the browser gates need, which my extractor swept up as a gate. CLAUDE.md's own count
+  excludes it and says 103 no-browser. The gates were green both times; the count was one too many.
+- **My battery harness reported 103 of 103 gates FAILING, and that was the harness.**
+  `timeout 300 eval "$c"` cannot run — `timeout` execs a binary and `eval` is a bash builtin, so
+  every gate "failed" identically. An earlier run of the same script wedged with no child process
+  and an empty log. `bash -c` fixed it; the real answer is 103 run, 0 failures. **A battery where
+  every gate fails is a broken harness, not a broken tree** — and it took the same shape twice
+  before I stopped trusting it and instrumented it.
+
+**Not touched, and why:** Illinois's `statewide-library-officials` states "226 of the layer's 382".
+Its 53 matches `il-library-trustees.json` exactly, but my 599-feature sum double-counts districts
+crossing county lines and "name a board" may exclude a director-only record — the wrong
+denominators are mine, not the record's, so I measured nothing and changed nothing. Wisconsin's
+"159 municipalities" is exact.
+
+Montmorency's second request is still unspent. Re-reading your row, it says to record the measured
+shape and STOP rather than widen if a page does not key them, which is what the record does — so it
+is not merely awaiting a green light, it is a thing you told me not to do. Say the word and it
+changes.
+
 **2026-09-25 — all four rows you called open are done on the tree, and the free audit found one
 real thing: two stale numbers in a record I had already corrected once.**
 
