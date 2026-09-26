@@ -134,9 +134,10 @@ fetches from another host. A layer **fetches** its shapes when a response
 carries polygon or line geometry: either the whole set, downloaded once
 and tested in the browser, or only the district at the selected point,
 asked of the server. A county-dispatched layer is also measured one county
-at a time. **Nothing re-runs this or fails when it is stale**, so a layer
-added since that date is named below as not measured; re-run the probe
-and regenerate to describe it.
+at a time. A weekly workflow (`update-layer-sources.yml`) re-runs it and
+opens a pull request when a result changes, but **nothing fails when this
+is stale**, so a layer added since that date is named below as not
+measured until the next run describes it.
 
 #### il — 29 of 40 layers fetch their shapes
 
