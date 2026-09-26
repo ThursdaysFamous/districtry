@@ -106,6 +106,20 @@ geometry. 104 of 104 static invocations green, Iowa's browser gate green with ev
 unchanged (us-house 4, ia-senate 26, ia-house 52 — itself a nesting pair, so the anchors
 independently agree with the rule). Pair re-measured, not incremented: 85/114, mirror 114 for 114.
 
+**AND IT CORRECTS MY OWN 2026-09-25 DIAGNOSIS ON ONE FIGURE, WHICH IS THE ONE THE MANAGER ASKED TO
+HEAR ABOUT EARLY.** That entry reported the combine-files change as **net 1.7 KB SMALLER** for
+senate + house. Re-measured today it reproduces TO THE BYTE — shipped 197,616 gzipped against
+combine-files-Visvalingam 195,825, which is -1,791 — so the arithmetic was right and the question
+was wrong: it compared the SHIPPED files against a FRESH run, which mixes the change with
+TIGERweb's feature order. Held on one fetch with the order fixed, that same combine-only change
+costs **+10,309 bytes** on senate + house. **A 12 KB swing between two framings of one
+measurement**, and the smaller-sounding one is the confounded one. My entry did say the cost
+"varies by state and is not one figure", which was true and not the half that mattered: it varies
+by FETCH, inside one state, by more than it varies with the change being measured. Nothing shipped
+on the strength of the -1.7 KB, so this cost nothing beyond the record — but it is the same shape
+as this morning's 830/109, one day and one subject apart: **a figure is only as good as the
+question it answers, and "smaller" was the answer to a question nobody had asked.**
+
 **AND I WALKED INTO A TRAP THE STEWARD SKILL NAMES IN SO MANY WORDS.** It says not to `pkill -f`
 the server from a shell whose own command line contains the pattern; I put `pkill -f "http.server
 8000"` at the head of a compound command ending in `git commit`, killed my own shell at exit 144,
