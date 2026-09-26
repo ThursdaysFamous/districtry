@@ -34,6 +34,48 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-26. THE REBUILD IS OPEN AS #1193, ALL THREE GATES GREEN ON THE REAL
+BUILD, AND THE COST IS THE ONE THING I WANT WEIGHED RATHER THAN ASSUMED.** Build
+output: `nesting: 33 pairing(s) share every boundary vertex exactly`, fidelity
+17.5 m and 17.4 m against a 20 m ceiling, validate 2000/2000 with 0 overlaps on
+both chambers. 104 of 104 static invocations.
+
+**`dp keep-shapes interval=7`, ceiling 20 m derived from Wisconsin's own 14.7 m
+median staircase step** (Milwaukee 14.5, Madison 15.2 agree, so no local sample
+was needed), at Illinois's 1.40 ratio. interval=7 is the cheapest setting reaching
+the irreducible worst; the curve is 4 → 19.9, 5 → 17.5, 6 → 17.5, 7 → 17.5,
+8 → 30.0.
+
+**THE COST IS +329,531 BYTES GZIPPED, +74.3%** (443,452 → 772,983) on cache-first
+geometry every first-load visitor downloads — measured after the build, and within
+37 bytes of what I predicted from the curve. Illinois's equivalent came out 871
+bytes SMALLER because its old files were far less aggressive than Wisconsin's.
+I shipped it with the cost stated in the builder's docstring, the PR body and
+here rather than holding the work for a ruling, because the PR is the reviewable
+artifact — but the trade against a median 80.1 m stray is the operator's, and a
+reviewer can decline it at merge time on the numbers.
+
+**TWO PORTING DEFECTS, BOTH CAUGHT BY GUARDS RATHER THAN BY CI.** mapshaper names
+each output after its INPUT and writes `.json` whatever `format=geojson` says, so
+the first run found no files — and the "did the combined run emit every layer"
+guard REFUSED rather than writing a half-built family, which is the whole point of
+having it. Then the ported gates referenced `_vertex_set` and `math`: the first
+because I sliced Illinois's block starting BELOW the helper it needed, the second
+because this builder never imported math and only function bodies reference it, so
+the module imported cleanly and would have failed at call time. **I found the
+second by resolving every global name the ported functions reference instead of
+patching the one the traceback named** — the traceback would have given me
+`_vertex_set` and left `math` for the next run.
+
+**AND MY FIRST MEASUREMENT OF THIS WAS VACUOUS, WHICH IS THE THIRD TIME TODAY.**
+Illinois's `check_fidelity` keys districts on `BASENAME`; my ad-hoc fetch requested
+`SLDU,NAME,GEOID,STATE` and omitted it, so every feature keyed to `""`, the check
+compared one district against one district, and the shipped files reported **0.0 m
+worst stray** — impossible for a simplified file, which is the only reason I looked.
+The dp rows in that run looked plausible because `interval` bounds deviation, which
+is exactly the lying-small-input trap the brief warned about. The builder itself
+always requested BASENAME; the error was only ever in my own probe.
+
 **2026-09-26. THE NESTING/FIDELITY REBUILD IS MEASURED AND NOT YET BUILT (#1188
 must merge first — one branch, serial). THREE THINGS IN THE BRIEF ARE WRONG FOR
 WISCONSIN and are worth carrying to Iowa before it repeats them.** Full state,
