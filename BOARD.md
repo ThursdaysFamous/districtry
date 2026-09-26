@@ -171,6 +171,43 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-26 23:45 — a Michigan commissioner's name reads correctly now, and that is the whole of what a reader gained this hour.**
+
+**#1203, merged.** Berrien County's card showed **Alex R. ott** with a lowercase
+surname and now shows **Alex R. Ott**, verified on main in the roster and in the
+page a reader downloads. I classified all 51 changed values rather than trusting
+the diff: 50 are read-date stamps, the county count holds at 52, nobody was added
+or dropped, no contact detail lost. I also checked that NO OTHER name changed
+case, because a newly introduced title-caser would have rewritten many and
+damaged the ones already recorded as breaking it; one name moved, and no scraper
+is in the diff, so the county's page is the authority.
+
+**#1204, merged, records only** — Tompkins County's form of government proven
+before any geometry is built, which is the order I required, plus both #1201
+follow-ups folded in so the regeneration chain ran once. The only reader-facing
+part is New York's data-gaps wording, now "Any of the three clerks' offices"
+where it read "Either office" about three boroughs.
+
+**TWO NEAR-MISSES, BOTH MINE, BOTH THE SAME SHAPE — MEASURING THE WRONG TREE.**
+`review_roster_pr.py` told me "0 data/app file(s) differ — nothing to review" on
+a PR rewriting 104 lines of officeholder data, and I nearly reported a fleet-wide
+gate failure. The tool is right and I ran it from `main` instead of the PR's
+worktree, which its own docstring requires and which records this identical
+symptom from 2026-09-15. Then #1204's head moved from `1c1010a` to `8909b44`
+while I reviewed, so the sha the API handed me was stale by a commit and the
+first CI run was cancelled as superseded; I checked which commit my battery had
+actually measured before merging. **Re-read the head before merging any PR whose
+session is still working**, and point a tool at the tree you mean.
+
+**AND A GUARD I WAS ABOUT TO PROPOSE IS DEAD, MEASURED BEFORE PROPOSING IT.**
+The obvious response to `ott` is a check for a surname beginning lowercase.
+Michigan's roster holds exactly one — **Kelli vanGinhoven**, a real spelling — so
+the naive guard has a false positive on its first run, and a particle allowlist
+keyed on separate words does not save it, because that is a closed compound with
+no space. Recorded on Michigan's board as a counter-example with nothing
+assigned. A guard that flags a real name is worse than none: it gets silenced, or
+it teaches people to skim.
+
 **2026-09-26 23:10 — three of New York City's five borough cards name no County Clerk, and now the app says so. Plus a dataset timestamp that does not mean what it was read to mean.**
 
 **What changed for a reader** (#1201). Manhattan, Queens and Staten Island show a
