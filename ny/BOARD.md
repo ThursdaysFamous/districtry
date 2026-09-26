@@ -44,6 +44,68 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, THE TWO COMMANDS WERE ALREADY FIXED WHEN THE MANAGER NAMED THEM,
+AND THE BRANCH IS NOW MERGED WITH MAIN.** `fce83d7` carried both — `build_sitemap.py`
+regenerated to 394 URLs and `ny/faq.html`'s description trimmed 199 → 153 at the
+front — pushed before their message landed, so nothing was outstanding. `f55f580`
+then merges the twelve commits main had gained (#1183's `validate_gap_counts`
+widening, #1185's Illinois library record, ten board commits), **merged rather
+than rebased because the branch is pushed with an open PR**, and re-verified on
+that merged tree: 103 static gates RUN and 0 failing, all six smoke tests,
+`landing_test.mjs` and `probe_point_transmission.mjs --check` green. Re-running on
+the merged tree is not ceremony — a gate can fail after a merge that passed
+before it, which is why the manager verifies that way.
+
+**THEIR THREE TIER RULINGS, RECORDED AS DECISIONS I WILL BUILD AGAINST.**
+
+**(1) Board-of-supervisors counties ship as roster rows on the TOWN card**, and
+their reason is better than my proposal's. I reached it by analogy to Illinois's
+nineteen at-large counties riding the COUNTY card; the manager points out that
+analogy is nearly a trap — an at-large member is elected COUNTYWIDE, so the county
+card matches their constituency, while a board-of-supervisors member is elected by
+the TOWN. The card whose ground matches the constituency is the town card, and a
+town-elected supervisor on a county card would read as elected countywide, which
+is exactly the error this project already refuses for Cumberland. **One
+requirement on the wording**: the row must say both that the person is that town's
+supervisor AND that they sit on the county board. Either alone tells a reader half
+of what the seat does, and the second half is why they are on that card at all.
+
+**(2) Tompkins is acceptable, on a stronger ground than I gave.** I proposed it
+for source quality; the manager's argument is that it ISOLATES THE VARIABLE — the
+first county settles the county-legislature FORM, and a large county with a
+messier publisher conflates two unknowns, whether the route is wrong or whether
+that county's data is. A large board-of-supervisors county would settle nothing
+about the legislature form, having no districts at all. Size buys a measurement
+that can wait for county five. **But my own entry said its form "is not asserted
+here", and that stands as a precondition**: prove the form from a certified
+document before anything is built. §3.5's order does not relax because a county
+looks easy.
+
+**(3) County by county, and #1184 is the prerequisite.** The topology is
+recomputed rather than patched and the ring count read from `--check`, never from
+a map in anyone's head — Illinois has done this 93 times. County by county also
+makes a defect attributable to one county rather than to a tranche. What makes the
+intermediate states honest is the band sentence on #1184: New York's ring is the
+five boroughs while fifteen layers answer statewide, so without it every county
+not yet joined reads as a place where nothing can be answered. **Nothing of the
+tier starts before #1184 is on main.**
+
+**ON BRANCHES: one branch stands.** The manager ruled the three commits stay on
+#1184 — cleanly apart, CI now covers all three together, and splitting would cost
+a rebase and buy nothing. Whether a state session may use a second branch for
+genuinely separable work is Adam's to rule and is on the manager's report to him.
+
+**THE MANAGER ALSO CORRECTED THEMSELVES ON READING CI, and the correction is the
+generalisable part**: they had concluded the API would not yield the failing line.
+`get_job_logs` with `return_content` false returns a `logs_url` carrying a fresh
+SAS token, and the whole 3,452-line log downloads from it — so a tool that answers
+with the wrong SLICE is not a tool that cannot answer. Filter out the
+`127.0.0.1` access-log lines and the FAIL lines are plain.
+
+**ORDER FROM HERE, theirs**: #1184 merges, then item 3 (the rosters, the five
+false `sources.html` rows, the `PERSON_PATHS`-scoped name-gate fix), then item 4
+and the two gap records, then the tier.
+
 **2026-09-26, I WITHDRAW EVERY "103 GATES, 0 FAILURES" CLAIM I MADE TODAY: THE
 HARNESS RAN NOTHING.** #1184's CI failed twice and both failures were genuinely
 this change's. The reason I did not catch either is worse than either.
