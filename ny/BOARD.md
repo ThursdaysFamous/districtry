@@ -40,6 +40,61 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, ITEM 2 OF THREE: NEW YORK'S PROSE CATCHES UP WITH ITS COVERAGE —
+on #1184 as `46a7655`.** Adam authorized all three fixes and the manager kept my
+order, so this is the second. #1042 changed what New York covers and left every
+sentence describing a city app; measured on the shipped tree seven days after
+the commit that lifted the bounds, `permalink_gate` spans the whole state
+(40.33-45.17 N, 79.91-71.52 W) while the prose, the structured data, the FAQ and
+the README still said New York City.
+
+**WHICH LAYERS ANSWER UPSTATE IS MEASURED AND THAT MATTERED TWICE.** Booted in
+Chromium at City Hall and at downtown Albany, reading each toggle's own hidden
+ancestor: **15 of 33 answer at Albany** — county, city or town, statewide school
+district and ZCTA, judicial district, U.S. House, both State Legislature
+chambers, and the nearest-N post office, library, firehouse, school site,
+early-voting and Election Day poll site — and 18 stand down. **Seventeen of
+those 18 are city-only and the eighteenth is the statewide Village layer**,
+standing down because Albany is a city rather than a village; a first draft of
+the README called all 18 city-only and the probe is what caught it. Before that,
+a regex read of `coverage:` declarations answered wrongly on seven layers,
+county and congress and both chambers among them — the "a pattern you write
+yourself" defect this repo already records twice — so it was thrown away rather
+than published.
+
+**WHAT WAS WRONG, IN ONE PLACE EACH.** All three `brand.jsonld` fields (the
+`head` block beside them was already correct, which is why nothing looked
+wrong); `feedback_subject`, a GENERATED region; 33 strings naming the app
+"districtry New York City" across five pages while `brand.app_name` has read
+"districtry New York" since the go-live; the FAQ's school-district answer
+claiming "the New York City school district", its "What district am I in?"
+listing only city layers, and its borough-president answer reading as statewide;
+`llms.txt`'s lede; `ny/README.md`'s two false claims; the map's accessible name;
+the empty-state lede; and `ny/sources.html`'s heading. **Three surfaces keep the
+old string on purpose** — the traffic data, `DEV_PROCESS_ASSESSMENT.md` and this
+board — because each is a dated record rather than a claim.
+
+**TWO THINGS WORTH KEEPING BEYOND THIS PR.** The FAQ gained a tenth question,
+"I'm not in New York City. What does this show me?", because a FAQ with no
+statewide question still reads as a city app after every sentence in it is
+correct; its prose and its FAQPage graph are held to each other question by
+question, 10 for 10. And `llms.txt`'s generator carried its own drift inside a
+comment that explained it away — "the one sentence the generator owns, because
+no file in the tree holds it" — when the COUNT and the PLACE NAMES in that
+sentence are both in `metros.json`. They are read from it now, so a new state
+reaches the lede by being registered.
+
+**ONE PROCESS NOTE FOR THE MANAGER.** The instruction was separate PRs per fix.
+My standing instructions name one designated branch and forbid pushing to
+another without explicit permission, so both commits ride #1184, cleanly apart
+and either cherry-pickable. Splitting them needs that permission.
+
+**STILL UNSTARTED**: item 3 (the rosters, the five false `sources.html` rows and
+the `PERSON_PATHS`-scoped name-gate fix), item 4 (the three unreachable school
+boards as separate layers per tier), the coterminous town/village double-draw,
+both gap records, and the county tier's SHAPE — which goes on this board for the
+manager to read before any of the tier is built.
+
 **2026-09-26, THE GAPS LEDE ANSWERS THREE WAYS — PR #1184 — AND THE
 VERIFICATION IT WAS BUILT ON WAS WRONG ABOUT ILLINOIS.** The manager's reply
 settled the engine string as the first item and verified it live in two apps,
