@@ -49,6 +49,57 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-26. THE LIBRARY RECORD'S 382 WAS FALSE, AND THE RECORD'S OWN BLOCKER
+SAID SO IN FOUR PLACES.** PR #1185. The statewide route draws 373 libraries, of
+which 226 name a board and 147 do not, and the Data gaps panel was telling
+readers 382 and 156. Measured through `shipped_cards(statewide_library_counties())`
+— the function both library scrapers already share, rather than a key list of my
+own — and the manager's three figures all reproduce exactly: 599 features summed
+across the 79 boundary files, 416 distinct names across all 79, 373 across the 72
+counties dispatched through `statewideLibraryEntry`. 382 is none of them.
+
+**THE ARGUMENT FOR 373 NEEDED A SECOND LEG AND THE MANAGER'S FIRST ONE DOES NOT
+CARRY IT.** All 226 named libraries sit inside BOTH candidate populations,
+because the 373 are a subset of the 416, so "numerator and denominator are the
+same population" is necessary and not sufficient — it is equally true of 416.
+What settles it is the record's own `counties` array: every county it listed is
+on the statewide route and none is one of the 19 that dispatch their own
+per-county file. And no figure phrased as "the layer's N libraries" can be true
+offline at all, because twelve further counties on the layer ship no boundary
+file and load live.
+
+**TWO CORRECTIONS THE CHECK-IN DID NOT NAME, both the same one-pass measurement
+and both reader-facing.** The `counties` array was wrong in BOTH directions:
+only 62 counties hold a library that still names no trustee, seven were listed
+where every library now names a board, and CRAWFORD was missing while holding
+Robinson Public Library District — which files a report naming its director and
+no board, so it is present in the officials file with an EMPTY board rather than
+absent, the one shape a present-or-absent test reads as answered. That array
+drives 68 rows of `COUNTY_STATUS.md`, now 62. And the `why` field's 33 and 123
+are the SAME population partitioned, not the different one the check-in
+expected: they sum to the stale 156, and of the 147 unnamed, 123 publish a
+website and 24 do not.
+
+**WHAT IS GATED IS ONE NUMBER OF FOUR, AND THE BLOCKER SAYS WHICH.** A `counts`
+declaration holds the 62 to the length of `counties` through `self`. The 226,
+373 and 147 cannot be expressed in that grammar — 373 is a distinct-name count
+across 72 files, 226 a union of subsets of two others, where `measured_metric.py`
+reads one file's top level — and they move every Monday when the trustees
+refresh reads more boards, which is the `ia-board-chair` shape exactly. The fix
+is the derive-at-render mechanism already chosen for that record and the
+counts-grammar widening approved for Michigan; both are owned elsewhere and
+nothing here duplicates them. Leaving three ungated numbers looking like the one
+gated number is the failure this record just demonstrated, so the blocker names
+which is which.
+
+**ONE NOTE FOR IOWA, NOT ACTED ON.** `ia/scripts/build_ia_gap_outlines.py`
+re-stamps `ia-county-internal-points.json`'s `measured` date on every run: it
+wrote 2026-09-26 over byte-identical data in the same run that reported "wrote 0
+new outline(s)". I reverted it rather than carry another instance's file, but a
+re-measured stamp from a run that measured nothing is worth a look by whoever
+owns it.
+
+
 **2026-09-25, evening. #1174 MERGED — `ab1daf8`, AND EVERY FIGURE REPRODUCES ON
 THE MERGED TREE.** The three artifacts this change is answerable for, all
 green: the new cross-layer gate prints *59 pairing(s) share every boundary vertex
