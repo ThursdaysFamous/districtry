@@ -34,6 +34,57 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-26 (after the ruling). interval=7 IS BUILT AND #1193 IS UNHELD — AND THE
+ONE SENTENCE THE RULING ASKED ME TO PUBLISH IS FALSE, WHICH THE GATE IT ASKED FOR
+IS WHAT CAUGHT.** The brief closed with "one thing I want stated in the body rather
+than left implicit: that interval=7 changes no reader's answer anywhere, which is
+the positive claim the ruling rests on. You measured it; say it." **It is not in
+the body, because I measured it wrong.**
+
+**THE DOOR COUNTY RING'S LOSS DOES MOVE A READER'S ANSWER.** 610 of 900 points
+provably inside it read **district 1** in the source and the **water
+pseudo-district** in the shipped file, in BOTH chambers. It is an OUTER ring — a
+separate PART of district 1, not a hole — 7.5 m by 6.6 m, 31.7 m2, and it is
+dropped at every interval from 4 to 15. **The cause of my error is one line long:
+I tested the ring's centroid ROUNDED TO FOUR DECIMALS**, which is about 5 m in
+longitude at that latitude and therefore OUTSIDE a ring 7.5 m across, so the test
+measured the surrounding water and answered "water before, water after". The gate
+found it within a minute of being asked to verify the field rather than record it.
+
+So the honest claim for interval=7 is that it loses ONE 31.7 m2 patch of open Lake
+Michigan that NO measured setting keeps, not that it loses nothing — and what
+separates it from interval=10 is that interval=10 loses that ring AND Cudahy's
+590 m2 of shoreline. **The ruling's decision survives its reasoning's error**: the
+comparison was never "none against one", it was "one against two", and the one it
+adds is 18 times larger and on a populated shoreline rather than in open water.
+I said so in the body rather than publishing the sentence I was asked for.
+
+**WHAT THE GATE REFUSES, EIGHT WAYS, ALL NEGATIVE-TESTED**: an undeclared dropped
+ring; an orphaned declaration; an area wrong by 90% at the same place and vertex
+count; a feature list half missing; `answer_after` claiming nothing moved;
+`answer_before` omitting a chamber the ring is dropped in; a wrong vertex count;
+and the truthful baseline passing. The answers are declared PER CHAMBER because
+one ring's after-answer differs by chamber — Senate 1 leaves for the Senate water
+row and Assembly 1 for the ASSEMBLY water row, different strings — so testing one
+and assuming the other leaves half of each declaration unchecked.
+
+**THE CEILING IS 15.0 ON RETAINED RINGS AND THE STATEWIDE WORST IS 7.9 m** in both
+chambers. The shipped geometry is BYTE-IDENTICAL to the first build — same
+settings, same source, so the rebuild rewrote nothing and `cache_name` v41 stands.
+
+**TWO PROCESS THINGS WORTH KEEPING.** A comment inside a GENERATED region is not a
+comment you may edit: my first pass hand-edited the four-gate wording into
+`wi/scripts/validate_index.py` and `generate_metro_files --check` failed on it, so
+it moved to the worksheet's two `note` fields where it belongs. And the branch
+needed main merged in for a REAL reason rather than hygiene: #1190 added a `role`
+field to `ny/data/app/council-members.json` after this branch's base, so
+`check_roster_retention` correctly reported the field vanishing from the tree it
+was handed — a true statement about my tree and a false one about my change,
+which is the two-branches-each-right shape in the gate that exists to catch it.
+
+104 of 104 no-browser invocations green after the merge, `BASE=origin/main`, pair
+85/114, steward mirror 114 for 114, the Wisconsin smoke test green in Chromium.
+
 **2026-09-26 (last tonight). THE BYTE OBJECTION I ESCALATED IS ABOUT TO STOP BEING
 TRUE, AND #1191 MERGED SAYING SO WHILE I WAS MEASURING.** My whole cost argument
 names one mechanism: `+329,549 gz` on two files `wi/sw.js` lists in `GEOMETRY_URLS`,
