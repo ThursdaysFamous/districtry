@@ -40,6 +40,58 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, THE GAPS LEDE ANSWERS THREE WAYS — PR #1184 — AND THE
+VERIFICATION IT WAS BUILT ON WAS WRONG ABOUT ILLINOIS.** The manager's reply
+settled the engine string as the first item and verified it live in two apps,
+New York and Illinois in its unserved counties. Measured on the shipped tree,
+**it was live in New York alone**: sampling Illinois's state outline on a
+0.02-degree grid gives 3,636 points inside the state and outside the 93-county
+coverage dissolve, and every single one falls inside an unserved county whose
+own `<slug>-county-outline.json` ships and which carries a gap record. So
+`appliesHere` matches there, the "Where you clicked" branch wins, and the
+defective sentence never rendered in Illinois at all. The error is mine as much
+as the manager's — I reported the finding as fleet-wide, was corrected to two
+apps, and neither of us checked whether the second app could reach the branch.
+
+**THAT CHANGED THE DESIGN RATHER THAN SHRINKING IT.** The brief was to let
+`pointInCoverage` answer three ways, with the middle answer REPLACING today's
+wording. Replacing it would have changed nothing in Illinois, because the branch
+that fires there is a different one. So the band sentence LEADS the "where you
+clicked" sentence instead of replacing it, and Illinois gains what it was always
+missing: a reader in Princeton is now told that only the statewide layers answer
+there, beside the specific gap record that already applied. The largest absence
+in that band is not any one recorded gap — it is the whole county-level tier,
+and the panel had never said so.
+
+**WHAT SHIPPED.** `coverageRegionPolys` retained beside `coverageMaskRings`, set
+where the region band is PAINTED rather than where its geometry loads so the
+panel can only describe a band the map drew; `pointInRegion` on the same
+true/false/null contract, null meaning "no middle band here", which is what the
+four regionless apps get, so their wording is unchanged by construction; the
+region's NAME read from `COVERAGE_KEY.region.edge`, the config the map key
+reads, never a second copy; and `regionPolygons` keeping every polygon where
+`regionOuterRing` keeps one ring, because a point test that inherits a drawing
+compromise puts a reader on a detached part outside the region. One further
+false claim went with it: the old closing "These are the gaps recorded inside
+the covered area" is about the LIST and New York records one gap outside it.
+
+**EIGHT BROWSER ASSERTIONS, NEGATIVE-TESTED THREE WAYS.** The band sentence at
+New York's Albany anchor and at Princeton, and its ABSENCE at every instance's
+own `NEGATIVE_POINT` — the half that keeps the first honest, since a
+middle-band sentence in Connecticut or Indiana is the same lie pointing the
+other way. Forcing `pointInRegion` to null fails the two band checks and passes
+the six absence checks; forcing it to true fails the absence checks; and
+emptying `regionBandName()` confirmed the unnamed-band wording, which San
+Francisco also exercises for real. All 103 no-browser gates, all six smoke
+tests, `landing_test.mjs`, both fleet probes: green. `page_consistency_test.mjs`
+is red on this sandbox's TLS interception of `gc.zgo.at` — 108 failures with
+this change, 142 without it.
+
+**THE OTHER FOUR ITEMS THE MANAGER ORDERED ARE UNSTARTED**: the prose sweep as
+one PR, the rosters plus the five false `sources.html` rows, the three
+unreachable school boards as a layer-design change, and the coterminous
+town/village double-draw. The two unwritten gap records are still unwritten.
+
 **2026-09-26, A READER-FACING AUDIT OF /ny/: 22 CONFIRMED FINDINGS, 19 DISTINCT
 DEFECTS, NOTHING BUILT.** Run at the manager's request to name the biggest thing
 a reader is missing or being told wrongly. Five independent lenses over the
