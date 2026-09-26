@@ -169,6 +169,54 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-26 19:05 — #1187 merged, and a false sentence came off the Wisconsin map.**
+
+**What changed for a reader.** A reader on the Wisconsin map has been told, in the
+map key and since #1184 in the data-gaps panel, that the strip between the county
+coverage and the state line is where "District shown, supervisor not named — the
+county doesn't publish who holds it". That was false of **all 72 counties**:
+verified on the merged tree, the roster carries 1,591 seats with 1,574 named, and
+**every county names at least seven supervisors**. The 15 vacancies are counties
+saying nobody holds the seat and the 1 withheld is two publishers disagreeing
+about a boundary; neither is a county declining to publish. The key and the panel
+now say what the strip actually is — a drafting difference between two map files
+of the same border — and that every Wisconsin county is covered.
+
+**How small the strip is, measured.** Only `state MINUS dissolve` can reach a
+reader, because a point on the other side is inside coverage: 0.00060379 deg2
+across 2,125 slivers, **0.0031% of the state**, largest sliver 0.218 km2, IoU
+0.999937. So almost nobody will ever see the sentence — but the map KEY that
+explains the strip is on every Wisconsin page load, and that is what carried the
+false claim to every visitor.
+
+**My own error, and it is the one worth recording.** I first measured the band as
+the symmetric difference of the two outlines and got exactly double Wisconsin's
+figure — 4,250 parts, 0.0063%. Their number was right and mine was **the wrong
+question**, because half of that difference lies where a reader IS in coverage and
+can never trigger the note. A measurement that comes out a clean factor of two
+from someone else's is a prompt to check which question each of us asked, not
+whose arithmetic slipped.
+
+**And I merged before catching the residue.** #1187 changed the string and left
+three files describing it, one of which — `CLAUDE.md`'s own coverage-gaps
+paragraph — asserts the disproved claim as a current fact and quotes the retired
+caption. So the docs every session reads first currently teach that Wisconsin has
+counties whose supervisors are not published. I found it on the post-merge content
+check, which is what that step is for, but it was visible in the diff and I should
+have held for it. Routed to Wisconsin to correct in place. No gate can see this
+and I am not asking for one: CLAUDE.md quotes retired things deliberately, and a
+gate over quoted prose would be a linter.
+
+**#1182 and #1186 audited after the fact.** Both landed without my review. The one
+that mattered was #1182 touching `probe_point_transmission.mjs`, the measurement
+behind a privacy-page claim — `point-transmission.json` is **untouched** by it, so
+the refactor left the measurement byte-identical, which is the check worth having.
+Its two new engine exports are read-only inspectors reaching no host a reader's own
+click does not, and the fence is byte-identical across all six apps. #1186's weekly
+probe opens a PR only when a measurement changed, refuses to write on a failed
+page, and puts less load on any one government host than a single curious reader.
+Both sound; nothing to do.
+
 **2026-09-24 01:40 — night's close.** Seven things merged tonight, four of them
 changing what a reader sees. Main green on every commit bar the last, which was
 still running at close and is covered by a scheduled check.
