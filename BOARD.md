@@ -171,6 +171,42 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-26 23:10 — three of New York City's five borough cards name no County Clerk, and now the app says so. Plus a dataset timestamp that does not mean what it was read to mean.**
+
+**What changed for a reader** (#1201). Manhattan, Queens and Staten Island show a
+County Clerk's office and address with **nobody's name on it**, and until tonight
+nothing on the site said that was a known gap rather than an oversight. It is
+recorded now and shows in the Data gaps panel. Verified on the merged tree off
+the shipped file rather than from the body: a clerk is named in the Bronx and
+Brooklyn and in none of the other three, so 3 of 5 holds, and both numbers the
+record states are gated against the tree.
+
+**NO NAME ON ANY CARD CHANGED, AND THAT IS THE IMPORTANT PART.** The session
+found that two government publishers disagree about who the Bronx County Clerk
+is — the court system's page said one person when it was last readable in July,
+the city's own staff directory says another — and rather than pick one, it
+changed nothing, escalated it, and deliberately left the Bronx out of the
+record's own county list so the panel claims nothing about it. That is exactly
+right on a named person.
+
+**AND THE EVIDENCE READS DIFFERENTLY THAN IT LOOKED, WHICH I CAUGHT IN REVIEW.**
+The case for the city directory being the fresher source rested on its being
+updated five days ago. That figure is `rowsUpdatedAt`, which is a **dataset**
+stamp: a 66,221-row directory republished five days ago says nothing about when
+the Bronx row was last touched. So the direction of the disagreement is
+unestablished — a stale directory row beside a correct card fits the evidence
+just as well as the reverse — and the honest move is still to ask the office.
+Routed, with the recommendation that this land in the record before anybody acts
+on it.
+
+**Both of tonight's other merges were documents catching up with Thursday's
+download change, and one corrected me** (#1202). I had told that session the
+guidebook's old sentence "only the county you clicked is fetched" became true
+again once boundary files stopped being downloaded on first visit. It did not:
+the layer's loader is a union over every county, so switching it on still fetches
+all of them — 79 files, 515 KB, measured. Neither reading was ever true, and the
+session I briefed wrongly is the one that found it.
+
 **2026-09-26 22:40 — New York's village boundaries were drawn up to 1.6 km from where the state draws them. They are now drawn once, with the counties and towns, and agree.**
 
 **What changed for a reader** (#1198). New York's county, town and village layers
