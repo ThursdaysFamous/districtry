@@ -45,6 +45,57 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, THE COTERMINOUS TOWN/VILLAGE DOUBLE-DRAW IS MEASURED, AND SIX OF THE
+SEVEN ARE OURS.** Nothing is built — #1195 holds the branch — but the measurement is
+what the next item needs, and it CORRECTS the answer an extrapolation would have
+given on the one number most likely to be quoted.
+
+New York has seven coterminous town/village governments in the shipped files, found
+by IoU > 0.90 between `ny-villages.json` and `ny-cities-towns.json`. Each was then
+measured against the STATE'S OWN full-precision geometry (NYS_Civil_Boundaries
+layers 6 and 7, fetched per name):
+
+| village | town | source IoU | shipped IoU | source m | shipped m |
+|---|---|---|---|---|---|
+| Harrison | Harrison | 0.999519 | 0.988897 | **0.9** | **139.7** |
+| Scarsdale | Scarsdale | 0.999383 | 0.986026 | **0.9** | **142.7** |
+| Mount Kisco | Mount Kisco | 0.998825 | 0.973003 | **0.9** | **328.9** |
+| Green Island | Green Island | 0.998560 | 0.962904 | **1.0** | **92.7** |
+| Kiryas Joel | Palm Tree | 0.998283 | 0.960264 | **0.9** | **259.3** |
+| East Rochester | East Rochester | 0.997428 | 0.928951 | **1.0** | **314.8** |
+| Woodbury | Woodbury | 0.986135 | 0.985000 | **1725.6** | 1331.7 |
+
+**SIX PAIRS AGREE TO WITHIN A METRE AT SOURCE AND SHIP 93 TO 329 METRES APART.**
+The publisher draws one line; this repo draws two, because
+`ny/scripts/build_ny_municipalities.py` loops `build_one` and calls mapshaper ONCE
+PER LAYER, and mapshaper builds topology within one file — so a shared edge cannot
+survive identically. It is the #1174 shape exactly, and the symptom is the same one
+Adam reported there: two highlight lines parting at zoom 16.
+
+**WOODBURY IS NOT OURS, AND THAT IS WHY THE OTHER SIX WERE FETCHED.** Its source
+Hausdorff is 1,725.6 m — LARGER than the 1,331.7 m it ships — and its source IoU is
+essentially its shipped one. The state genuinely draws Woodbury village and
+Woodbury town differently, and our simplification happens to reduce the gap.
+**Extrapolating from Harrison would have claimed all seven, including the single
+case where the claim is false and the largest figure in the table.** The worst
+separation this repo introduces is Mount Kisco's 329 m, not 1,332 m.
+
+**THE FIX IS ILLINOIS'S, AND ITS TRAP IS RECORDED THERE**: one shared topology
+(`combine-files`, so a shared edge is ONE arc simplified once) AND Douglas-Peucker
+instead of Visvalingam, because Visvalingam thresholds triangle AREA and does not
+bound how far the drawn line strays. Both halves, because the first alone looks
+sufficient and is not. **AND A SMALL-INPUT TEST WILL SAY OTHERWISE AND BE LYING**:
+mapshaper's retain percentage is relative to the whole dataset's vertex count, so
+seven pairs through `combine-files` will measure far better than 995 + 532 features
+do. Measure on the full fetch or not at all.
+
+One open question for whoever builds it: these two layers are 995 and 532 features
+from the SAME service, and `ny-counties.json` (62) is a third from the same family.
+Illinois combined three chambers because they nest exactly; here the villages sit
+INSIDE the towns rather than tiling with them, so the shared topology is the town
+outline and the village ring that traces part of it. Worth checking whether the
+county layer belongs in the same run before committing to a two-file combine.
+
 **2026-09-26, ITEM 4 IS OPEN AS #1195, AND ITS STATED PREMISE WAS WRONG — the
 design survived, the key did not.** The queue said "separate layers per tier,
 `SED_CODE_1` already encodes the tier". Separate layers is right and is what
