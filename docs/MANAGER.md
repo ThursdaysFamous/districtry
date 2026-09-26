@@ -264,6 +264,25 @@ it with one workflow's id returns every workflow's runs interleaved, so match
 `head_sha` yourself and read each row's `path` or `name` to tell which workflow
 it is.
 
+**THAT DOES NOT REPRODUCE — IT FILTERS CORRECTLY** (measured 2026-09-26; the
+paragraph above is kept because this file keeps a disproved claim under its
+correction). Five calls across two Wisconsin roster workflows, each answering
+only that workflow's runs: `resource_id` as the workflow FILENAME returned
+`total_count` 8 and 6 with every row's `path` that file; `resource_id` as the
+numeric workflow id returned the same 6; `page: 3` with `perPage: 3` returned
+that workflow's runs 2 and 1 rather than a mixture; and
+`workflow_runs_filter: {"event": "schedule"}` returned 5 of the 8, exactly the
+scheduled count. `total_count` is the workflow's own, never the repository's
+3,200+, so the filter is server-side. **Whether the claim was ever true is NOT
+established** — it was written 2026-09-25 and the tool may have changed since,
+so this records what answers today rather than calling its author wrong. What
+IS established is what the instruction cost: it sent every session to page
+thousands of runs matching `head_sha` by hand, and that is the method the
+manager was using the day it reported a fleet-wide CI outage that did not
+exist. **One filtered call per workflow is the cheap read.** Keep the paging
+for the case the filter cannot answer — a PR's own run, where you know the
+`head_sha` and not the workflow.
+
 `pull_request_read(method="get_status")` reads the commit-status API. This
 repository's smoke test is a **check run**, so that call returns
 `total_count: 0, statuses: []` for every pull request here, green ones
