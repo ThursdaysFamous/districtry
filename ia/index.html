@@ -4559,7 +4559,30 @@ function initIowaExplorer() {
   /* ---------- fetch JSON with retry + timeout. The abort timer stays armed
    * through the body read, not just the headers — every caller parses JSON,
    * and a response that stalls mid-body would otherwise hang its layer's
-   * "Loading…" card forever with the cached loader pinning the hung promise. ---------- */
+   * "Loading…" card forever with the cached loader pinning the hung promise.
+   *
+   * THE TIMER MEASURES SILENCE, NOT DURATION, once the body is arriving. It
+   * used to be a budget for the whole response, which cancels a download
+   * that is slow but working: Wisconsin's unified school districts are a
+   * 2.3 MB file, 11.8 s at Lighthouse's Slow 4G, so all three attempts were
+   * cancelled at 9 s and the layer could never load on that connection
+   * (measured 2026-09-26). Now the timer covers the wait for the headers and
+   * then restarts with every chunk of body, so a stalled response still
+   * fails after timeoutMs of silence and a long one finishes. A browser with
+   * no streaming body reader keeps the whole-response budget. ---------- */
+  function readJSONBody(res, rearm) {
+    if (!res.body || !res.body.getReader || typeof TextDecoder === "undefined") return res.json();
+    var reader = res.body.getReader(), decoder = new TextDecoder(), text = "";
+    function pump() {
+      return reader.read().then(function (chunk) {
+        if (chunk.done) { text += decoder.decode(); return JSON.parse(text); }
+        rearm();
+        text += decoder.decode(chunk.value, { stream: true });
+        return pump();
+      });
+    }
+    return pump();
+  }
   function fetchJSONWithRetry(url, opts, retries) {
     opts = opts || {};
     retries = retries === undefined ? 2 : retries;
@@ -4568,10 +4591,14 @@ function initIowaExplorer() {
     function attempt(remaining) {
       var controller = new AbortController();
       var timer = setTimeout(function () { controller.abort(); }, timeoutMs);
+      function rearm() {
+        clearTimeout(timer);
+        timer = setTimeout(function () { controller.abort(); }, timeoutMs);
+      }
       return fetch(url, Object.assign({}, opts, { signal: controller.signal }))
         .then(function (res) {
           if (!res.ok) throw new Error("HTTP " + res.status);
-          return res.json();
+          return readJSONBody(res, rearm);
         })
         .then(function (json) {
           clearTimeout(timer);
@@ -4595,7 +4622,10 @@ function initIowaExplorer() {
    * boundaries). Those payloads can't finish inside the 9 s default on a slow
    * mobile link, so every attempt aborts mid-body and the layer can never
    * load; a larger budget lets a slow-but-working download complete. Small
-   * layers (police districts/stations, Socrata rosters) keep the 9 s default. ---------- */
+   * layers (police districts/stations, Socrata rosters) keep the 9 s default.
+   * Since 2026-09-26 a body that keeps arriving is never cut off (above), so
+   * this budget now governs the wait for a slow server's first byte and any
+   * silence mid-body. ---------- */
   var REMOTE_GEOJSON_TIMEOUT_MS = 30000;
 
   /* ==== ENGINE:END fetch-retry ==== */
@@ -7738,6 +7768,9 @@ function initIowaExplorer() {
       // signature is unchanged, a point move only restyles the two paths whose
       // role flips instead of re-styling every path in the layer.
       highlightApplied: false, highlightSignature: null,
+      // the selected district drawn from a point-first answer while the full
+      // set downloads (showProvisionalHighlight), or null
+      provisionalLayer: null,
       // prefetched officeholder roster (see hoverOfficial + prefetchHoverRoster):
       // loaded in the background on toggle-on so the hover popup can name the
       // representative without a network request as the cursor moves.
@@ -7757,7 +7790,13 @@ function initIowaExplorer() {
       // while the full boundary download is still in flight — this is how
       // the overlay-load failure path knows a verified answer is on display
       // and must not be replaced by a boundaries error (see onLayerToggled).
-      resultSeq: null
+      resultSeq: null,
+      // the current selection's card, settled either way (runLayerQuery);
+      // what afterCard waits on before background work for this layer starts
+      cardPromise: null,
+      // the first overlay load's promise (onLayerToggled), which the hover
+      // roster prefetch waits for
+      overlayPromise: null
     };
   }
 
@@ -7955,8 +7994,44 @@ function initIowaExplorer() {
     };
   }
 
+  /* ---------- the selected district, lit before its layer has loaded. A
+   * point-first query (queryFeatureAt) answers the card from a small spatial
+   * query while the full boundary set is still downloading, and that answer
+   * carries the district's own geometry. Until now it lit nothing: the
+   * highlight needs the full set, so a statewide layer showed its card in a
+   * second and its district twenty seconds later (measured 2026-09-26, il
+   * township on Slow 4G: card 0.4-1.0 s, district 21 s). This draws that one
+   * district in the highlight style on its own; the full highlight replaces
+   * it the moment the layer's boundaries are in. It is drawn only for the
+   * point it was answered for, so it can never outline a district the
+   * selected point is not in. ---------- */
+  function clearProvisionalHighlight(mod) {
+    var rt = layerRuntime[mod.id];
+    if (rt.provisionalLayer) { map.removeLayer(rt.provisionalLayer); rt.provisionalLayer = null; }
+  }
+  function showProvisionalHighlight(mod) {
+    var rt = layerRuntime[mod.id];
+    // a layer whose overlay loader is not the one its query asked (the county
+    // dispatcher's union) names its point answer itself
+    var answer = mod.pointAnswer ? mod.pointAnswer()
+      : (mod.overlay && mod.overlay.load && mod.overlay.load.pointAnswer);
+    if (!answer || answer.point !== state.selectedPoint || !state.layersOn[mod.id] || rt.relevant === false) return;
+    if (rt.provisionalLayer && rt.provisionalLayer.dxPoint === answer.point) return;
+    clearProvisionalHighlight(mod);
+    rt.provisionalLayer = L.geoJSON(answer.feature, {
+      style: Object.assign({}, baseStyleFor(mod) || {}, highlightStyleFor(mod)),
+      interactive: false
+    });
+    rt.provisionalLayer.dxPoint = answer.point;
+    rt.provisionalLayer.addTo(map);
+    rt.provisionalLayer.eachLayer(function (subLayer) {
+      if (subLayer._path) subLayer._path.classList.add(HIGHLIGHT_CLASS);
+    });
+  }
+
   function clearLayerHighlight(mod) {
     var rt = layerRuntime[mod.id];
+    clearProvisionalHighlight(mod);
     rt.highlightedLayer = null;
     rt.highlightApplied = false; // next updateLayerHighlight must do a full sweep, not an incremental diff
     rt.highlightSignature = null;
@@ -7975,7 +8050,12 @@ function initIowaExplorer() {
     // the one a click happens to land inside would defeat the type coloring, so
     // skip the highlight/fade sweep and just keep the per-feature base styling.
     if (mod.overlay && mod.overlay.styleForFeature) { clearLayerHighlight(mod); return; }
-    if (!rt.overlayLayer || !rt.geojson || !state.selectedPoint) { clearLayerHighlight(mod); return; }
+    if (!rt.overlayLayer || !rt.geojson || !state.selectedPoint) {
+      clearLayerHighlight(mod);
+      showProvisionalHighlight(mod); // the point answer's district, until the full set is in
+      return;
+    }
+    clearProvisionalHighlight(mod);
     var feature = findFeatureContaining(rt.geojson, state.selectedPoint);
     if (!feature) { clearLayerHighlight(mod); return; }
 
@@ -8504,7 +8584,8 @@ function initIowaExplorer() {
       reorderActiveLayers();
     } else if (!rt.overlayLoaded) {
       rt.overlayLoaded = true; // mark immediately to avoid duplicate loads on rapid toggling
-      mod.overlay.load()
+      rt.overlayPromise = mod.overlay.load();
+      rt.overlayPromise
         .then(function (geojson) {
           rt.geojson = geojson;
           rt.overlayLayer = buildOverlayLayer(mod, geojson);
@@ -8553,7 +8634,17 @@ function initIowaExplorer() {
     }
 
     runLayerQuery(mod);
-    prefetchHoverRoster(mod); // background-load this layer's officeholder roster for the hover popup
+    // background-load this layer's officeholder roster for the hover popup,
+    // once the card AND the layer's first boundaries have had the connection
+    // to themselves. Waiting for the card alone was measured and was not
+    // enough: il county-board's hover data for sixty counties then started
+    // at 0.5 s and slowed Cook's own 340 KB of districts from about 2 s to
+    // 7.5 s, which kept the reader's district unlit for as long.
+    var overlayReady = rt.geojson || !rt.overlayPromise ? Promise.resolve()
+      : rt.overlayPromise.then(null, function () {});
+    afterCard(mod, function () {
+      overlayReady.then(function () { prefetchHoverRoster(mod); });
+    });
     if (mod.onToggle) mod.onToggle(true); // let a layer react to being turned on (e.g. a sub-layer restyling its parent)
   }
 
@@ -8882,24 +8973,49 @@ function initIowaExplorer() {
   function runLayerQuery(mod) {
     if (!state.selectedPoint || !state.layersOn[mod.id]) return;
     var seq = state.sequence;
-    if (!mod.coverage) { runLayerQueryAt(mod, seq); return; } // no coverage test: exactly the pre-relevance path
-    // Invalidate the card BEFORE awaiting the coverage test — a new selection
-    // must never leave the previous point's districts on display while a slow
-    // (or failing, ~28s retry schedule) coverage source settles. If the layer
-    // then resolves irrelevant, the loading card sits inside the hidden block.
-    setCardLoading(mod);
-    layerRelevance(mod, seq).then(function (relevant) {
-      if (seq !== state.sequence) return;  // stale — a newer point was selected while the test ran
-      if (!state.layersOn[mod.id]) return; // toggled off while the test ran
-      setLayerRelevant(mod, relevant);
-      if (relevant) runLayerQueryAt(mod, seq);
-      // out of coverage: block/card/overlay are hidden — no query, no fetch
-    });
+    var done;
+    if (!mod.coverage) done = runLayerQueryAt(mod, seq); // no coverage test: exactly the pre-relevance path
+    else {
+      // Invalidate the card BEFORE awaiting the coverage test — a new selection
+      // must never leave the previous point's districts on display while a slow
+      // (or failing, ~28s retry schedule) coverage source settles. If the layer
+      // then resolves irrelevant, the loading card sits inside the hidden block.
+      setCardLoading(mod);
+      done = layerRelevance(mod, seq).then(function (relevant) {
+        if (seq !== state.sequence) return;  // stale — a newer point was selected while the test ran
+        if (!state.layersOn[mod.id]) return; // toggled off while the test ran
+        setLayerRelevant(mod, relevant);
+        if (relevant) return runLayerQueryAt(mod, seq);
+        // out of coverage: block/card/overlay are hidden — no query, no fetch
+      });
+    }
+    // what afterCard waits on: this selection's card, answered or failed
+    layerRuntime[mod.id].cardPromise = Promise.resolve(done).then(null, function () {});
+  }
+
+  /* ---------- the selected point's card goes first. Work a layer does for
+   * everywhere else — the other counties' boundaries, the officeholder
+   * lists the hover popup reads — used to start the moment the layer was
+   * switched on and share the reader's connection with the one request the
+   * card was waiting for: il county-board's card took 7.4 s on Slow 4G while
+   * 2.7 MB for 100-odd other counties downloaded beside it (measured
+   * 2026-09-26). afterCard(mod, fn) runs fn once this selection's card has
+   * settled, answered or failed, and never later than AFTER_CARD_MAX_MS, so a
+   * card that hangs cannot keep the rest of the layer from loading. With no
+   * point selected there is no card to wait for and fn runs at once. ---------- */
+  var AFTER_CARD_MAX_MS = 8000;
+  function afterCard(mod, fn) {
+    var pending = state.selectedPoint && layerRuntime[mod.id].cardPromise;
+    if (!pending) { fn(); return; }
+    var ran = false;
+    function run() { if (!ran) { ran = true; fn(); } }
+    pending.then(run);
+    setTimeout(run, AFTER_CARD_MAX_MS);
   }
 
   function runLayerQueryAt(mod, seq) {
     setCardLoading(mod);
-    Promise.resolve()
+    return Promise.resolve()
       .then(function () { return mod.query(state.selectedPoint, seq); })
       .then(function (result) {
         if (seq !== state.sequence) return; // stale — a newer point was selected meanwhile
@@ -9656,6 +9772,11 @@ function initIowaExplorer() {
     full.then(null, function () {});
     return load.atPoint(point).then(function (geojson) {
       var feature = findFeatureContaining(geojson, point);
+      // Kept on the loader so the highlight pass can light this district
+      // before the full set arrives (showProvisionalHighlight). Keyed by the
+      // point object, which setSelectedPoint mints fresh per selection, so a
+      // later selection can never be lit with an earlier answer.
+      if (feature) load.pointAnswer = { point: point, feature: feature };
       return feature || fromFull();
     }, fromFull);
   }
@@ -11520,8 +11641,8 @@ function initIowaExplorer() {
       return new Promise(function (resolve, reject) {
         var resolved = false, pending = entries.length, anySuccess = false;
         if (!pending) { reject(new Error(opts.label + ": no source responded")); return; }
-        entries.forEach(function (entry) {
-          entry.loadGeometry().then(function (geojson) {
+        function loadEntry(entry) {
+          return entry.loadGeometry().then(function (geojson) {
             var wrapped = (geojson.features || []).map(function (f) {
               return { type: "Feature", geometry: f.geometry, properties: f.properties, dxCounty: entry.key };
             });
@@ -11535,6 +11656,25 @@ function initIowaExplorer() {
               pending--;
               if (!pending && !anySuccess) reject(new Error(opts.label + ": no source responded"));
             });
+        }
+        // THE SELECTED POINT'S COUNTY FIRST. Every entry used to start at
+        // once, so the one county the card and the highlight need shared the
+        // connection with every other county's download: il county-board's
+        // card took 7.4 s and its district 15 s on Slow 4G while 2.7 MB for
+        // the rest of the state arrived beside them (measured 2026-09-26).
+        // Now the entries whose coverage holds the point load first, and the
+        // rest start once those have settled AND the card has answered
+        // (afterCard, which gives up waiting after a few seconds). The same
+        // cheap coverage test the query path uses picks them. With no point
+        // selected, or none of the entries covering it, everything starts
+        // at once as before.
+        var point = state.selectedPoint;
+        (point ? coverageMatches(point) : Promise.resolve({ matches: [] })).then(function (r) {
+          if (!r.matches.length) { entries.forEach(loadEntry); return; }
+          var rest = entries.filter(function (entry) { return r.matches.indexOf(entry) === -1; });
+          Promise.all(r.matches.map(loadEntry)).then(function () {
+            afterCard(spec, function () { rest.forEach(loadEntry); });
+          });
         });
       });
     }
@@ -11632,6 +11772,16 @@ function initIowaExplorer() {
         return entry && entry.hoverName ? entry.hoverName(feature) : null;
       },
       overlay: { load: loadUnion, style: opts.style },
+      // the selected district from whichever entry answered the card
+      // point-first (queryFeatureAt keeps it on that entry's own loader), so
+      // it can be lit before the entry's whole set has joined the union
+      pointAnswer: function () {
+        for (var i = 0; i < entries.length; i++) {
+          var answer = entries[i].loadGeometry && entries[i].loadGeometry.pointAnswer;
+          if (answer && answer.point === state.selectedPoint) return answer;
+        }
+        return null;
+      },
       // Dispatch by CONTAINMENT, not coverage: the footprints are disjoint, so
       // at most one county's query returns a hit. A downed county is skipped
       // while the others still resolve; if nothing matched and a county
@@ -14252,7 +14402,7 @@ function initIowaExplorer() {
         card: card,
         relevant: rt.relevant !== false,
         overlay: !!(rt.overlayLayer && map.hasLayer(rt.overlayLayer)),
-        highlight: !!rt.highlightApplied,
+        highlight: !!rt.highlightApplied || !!rt.provisionalLayer,
         features: (rt.geojson && rt.geojson.features && rt.geojson.features.length) || 0
       };
     },

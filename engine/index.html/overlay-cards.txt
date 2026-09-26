@@ -356,7 +356,8 @@
       reorderActiveLayers();
     } else if (!rt.overlayLoaded) {
       rt.overlayLoaded = true; // mark immediately to avoid duplicate loads on rapid toggling
-      mod.overlay.load()
+      rt.overlayPromise = mod.overlay.load();
+      rt.overlayPromise
         .then(function (geojson) {
           rt.geojson = geojson;
           rt.overlayLayer = buildOverlayLayer(mod, geojson);
@@ -405,7 +406,17 @@
     }
 
     runLayerQuery(mod);
-    prefetchHoverRoster(mod); // background-load this layer's officeholder roster for the hover popup
+    // background-load this layer's officeholder roster for the hover popup,
+    // once the card AND the layer's first boundaries have had the connection
+    // to themselves. Waiting for the card alone was measured and was not
+    // enough: il county-board's hover data for sixty counties then started
+    // at 0.5 s and slowed Cook's own 340 KB of districts from about 2 s to
+    // 7.5 s, which kept the reader's district unlit for as long.
+    var overlayReady = rt.geojson || !rt.overlayPromise ? Promise.resolve()
+      : rt.overlayPromise.then(null, function () {});
+    afterCard(mod, function () {
+      overlayReady.then(function () { prefetchHoverRoster(mod); });
+    });
     if (mod.onToggle) mod.onToggle(true); // let a layer react to being turned on (e.g. a sub-layer restyling its parent)
   }
 
@@ -734,24 +745,49 @@
   function runLayerQuery(mod) {
     if (!state.selectedPoint || !state.layersOn[mod.id]) return;
     var seq = state.sequence;
-    if (!mod.coverage) { runLayerQueryAt(mod, seq); return; } // no coverage test: exactly the pre-relevance path
-    // Invalidate the card BEFORE awaiting the coverage test — a new selection
-    // must never leave the previous point's districts on display while a slow
-    // (or failing, ~28s retry schedule) coverage source settles. If the layer
-    // then resolves irrelevant, the loading card sits inside the hidden block.
-    setCardLoading(mod);
-    layerRelevance(mod, seq).then(function (relevant) {
-      if (seq !== state.sequence) return;  // stale — a newer point was selected while the test ran
-      if (!state.layersOn[mod.id]) return; // toggled off while the test ran
-      setLayerRelevant(mod, relevant);
-      if (relevant) runLayerQueryAt(mod, seq);
-      // out of coverage: block/card/overlay are hidden — no query, no fetch
-    });
+    var done;
+    if (!mod.coverage) done = runLayerQueryAt(mod, seq); // no coverage test: exactly the pre-relevance path
+    else {
+      // Invalidate the card BEFORE awaiting the coverage test — a new selection
+      // must never leave the previous point's districts on display while a slow
+      // (or failing, ~28s retry schedule) coverage source settles. If the layer
+      // then resolves irrelevant, the loading card sits inside the hidden block.
+      setCardLoading(mod);
+      done = layerRelevance(mod, seq).then(function (relevant) {
+        if (seq !== state.sequence) return;  // stale — a newer point was selected while the test ran
+        if (!state.layersOn[mod.id]) return; // toggled off while the test ran
+        setLayerRelevant(mod, relevant);
+        if (relevant) return runLayerQueryAt(mod, seq);
+        // out of coverage: block/card/overlay are hidden — no query, no fetch
+      });
+    }
+    // what afterCard waits on: this selection's card, answered or failed
+    layerRuntime[mod.id].cardPromise = Promise.resolve(done).then(null, function () {});
+  }
+
+  /* ---------- the selected point's card goes first. Work a layer does for
+   * everywhere else — the other counties' boundaries, the officeholder
+   * lists the hover popup reads — used to start the moment the layer was
+   * switched on and share the reader's connection with the one request the
+   * card was waiting for: il county-board's card took 7.4 s on Slow 4G while
+   * 2.7 MB for 100-odd other counties downloaded beside it (measured
+   * 2026-09-26). afterCard(mod, fn) runs fn once this selection's card has
+   * settled, answered or failed, and never later than AFTER_CARD_MAX_MS, so a
+   * card that hangs cannot keep the rest of the layer from loading. With no
+   * point selected there is no card to wait for and fn runs at once. ---------- */
+  var AFTER_CARD_MAX_MS = 8000;
+  function afterCard(mod, fn) {
+    var pending = state.selectedPoint && layerRuntime[mod.id].cardPromise;
+    if (!pending) { fn(); return; }
+    var ran = false;
+    function run() { if (!ran) { ran = true; fn(); } }
+    pending.then(run);
+    setTimeout(run, AFTER_CARD_MAX_MS);
   }
 
   function runLayerQueryAt(mod, seq) {
     setCardLoading(mod);
-    Promise.resolve()
+    return Promise.resolve()
       .then(function () { return mod.query(state.selectedPoint, seq); })
       .then(function (result) {
         if (seq !== state.sequence) return; // stale — a newer point was selected meanwhile

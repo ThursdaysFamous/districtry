@@ -1390,6 +1390,49 @@ try {
     await context.close();
   }
 
+  // 2j. THE SELECTED DISTRICT IS LIT FROM THE POINT ANSWER. A statewide layer
+  //     answers its card from a small point query while the whole state is
+  //     still downloading, and that answer carries the district's geometry;
+  //     until 2026-09-26 the district stayed unlit until the statewide set
+  //     arrived, 15-22 s later on Slow 4G. Here every TIGERweb point query is
+  //     answered from a fixture square around the Loop and every statewide
+  //     request is HELD, never answered, so the check can only pass if the
+  //     card and the highlight come from the point answer alone — and it
+  //     refuses to pass unless the statewide set was in fact asked for and the
+  //     layer's full drawing is in fact still absent.
+  {
+    const [plat, plng] = POINT.split(",").map(Number);
+    const ring = [[plng - 0.01, plat - 0.01], [plng - 0.01, plat + 0.01], [plng + 0.01, plat + 0.01],
+      [plng + 0.01, plat - 0.01], [plng - 0.01, plat - 0.01]];
+    const fixture = { geometryType: "esriGeometryPolygon", features: [{
+      attributes: { GEOID: "1714000", NAME: "Chicago city", BASENAME: "Chicago", STATE: "17", LSADC: "25" },
+      geometry: { rings: [ring] } }] };
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    let held = 0, answered = 0;
+    const page = await booted(context, `${BASE}#point=${POINT}&layers=municipality`, async (p) => {
+      await p.route("**/tigerweb.geo.census.gov/**", (route) => {
+        if (/esriGeometryPoint/.test(route.request().url())) {
+          answered += 1;
+          return route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(fixture) });
+        }
+        held += 1; // the statewide set: left unanswered for the whole check
+      });
+    });
+    await page
+      .waitForFunction((ns) => {
+        const s = window[ns].layerLoadState("municipality");
+        return s && s.card === "result" && s.highlight;
+      }, EXPORTS_NAME, { timeout: QUERY_TIMEOUT })
+      .catch(() => {});
+    const res = await page.evaluate((ns) => window[ns].layerLoadState("municipality"), EXPORTS_NAME);
+    check(
+      "a point query's district is lit before its layer's statewide set arrives",
+      !!res && res.card === "result" && res.highlight && !res.overlay && held > 0 && answered > 0,
+      JSON.stringify({ ...res, statewide_held: held, point_answered: answered })
+    );
+    await context.close();
+  }
+
   // ==== TEMPLATE:BEGIN smoke-failure-isolation ====
   // 3. A failing data source degrades to that layer's error card + Retry, in
   //    isolation — the app's per-layer failure-isolation rule. (Named on two

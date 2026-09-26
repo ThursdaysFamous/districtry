@@ -83,6 +83,11 @@
     full.then(null, function () {});
     return load.atPoint(point).then(function (geojson) {
       var feature = findFeatureContaining(geojson, point);
+      // Kept on the loader so the highlight pass can light this district
+      // before the full set arrives (showProvisionalHighlight). Keyed by the
+      // point object, which setSelectedPoint mints fresh per selection, so a
+      // later selection can never be lit with an earlier answer.
+      if (feature) load.pointAnswer = { point: point, feature: feature };
       return feature || fromFull();
     }, fromFull);
   }
