@@ -39,9 +39,10 @@
 // depends on where the reader is could fetch more elsewhere (county entries
 // excepted). A source that does not answer from where the probe runs is
 // recorded under `unanswered` rather than guessed at. And the answer is a
-// snapshot: nothing re-runs this or fails when it is stale. The endpoint
-// inventory prints the date it was measured and names any layer the worksheet
-// declares that the file does not describe.
+// snapshot. .github/workflows/update-layer-sources.yml re-runs it weekly and
+// opens a pull request when a result changes, but nothing FAILS when it is
+// stale: the endpoint inventory prints the date it was measured and names any
+// layer the worksheet declares that the file does not describe.
 //
 //     python3 -m http.server 8000                 # serve the repo first
 //     node scripts/probe_layer_sources.mjs        # measure every instance (~20 min)

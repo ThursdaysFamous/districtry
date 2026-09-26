@@ -3798,6 +3798,11 @@
       "file": "update-il-library-trustees.yml",
       "purpose": "A board of trustees read off each library's OWN website, for the statewide library layer's cards no Annual Financial Report answers for. Only a district-governed library files an AFR, so Sunday 12:00's job reaches the districts and nobody else — a municipal library is covered by its city's or village's report and a township library files as or within a township, whose board is not the library's board — and L2's staff lists and annual certifications are both behind a sign-in that is not worked around. The library itself is the only publisher left. THE POOL IS DERIVED on every run from the shipped boundary files, the filings roster and the directory: every card that names no board and links a site, so a library that starts filing leaves the pool by itself. robots.txt is read through scripts/robots_policy.py as the client that fetches, before each host's first request, with a stated Crawl-delay honoured per host; a refusal is recorded as a refusal and nothing is fetched from that host. Three hops at most per library — the home page, a link on it naming a board, and only where the home page names none at most two same-origin About pages, because a home page with no board link is not a library that publishes no board — around 300 paced requests across 170-odd hosts. NOTHING IS GUESSED: a library ships only where its page yields a board between three and twelve names and the page's own words say the board is that library's, and five hosts carry more than one library, one of them contracting its service to a neighbour. The parser's --selftest runs offline before a single host is asked for a page, and in CI. Monday 10:00 UTC, three hours ahead of the roster wave and clear of the two other library jobs",
       "schedule": "Mon 10:00 UTC"
+    },
+    {
+      "file": "update-layer-sources.yml",
+      "purpose": "Where each layer's shapes come from, fleet-wide (browser probe -> layer-sources.json + the endpoint inventory's table); PR only when a result changes",
+      "schedule": "Sun 09:17 UTC"
     }
   ],
   "geocoder": {

@@ -1,0 +1,128 @@
+name: Update layer sources
+
+# Weekly re-measurement of where each layer's shapes come from
+# (scripts/probe_layer_sources.mjs -> layer-sources.json -> the per-layer table
+# in docs/ENDPOINT_INVENTORY.md). Opens a PR, never commits to main.
+#
+# A PR opens ONLY WHEN WHAT WAS MEASURED CHANGED. The artifact carries the date
+# it was measured, so comparing the files as bytes would open a PR every week
+# for a new date alone; the comparison below drops that one key. A week in
+# which a layer starts or stops fetching from another host, a host changes, or
+# a county entry moves between live and shipped is a PR; a quiet week is not.
+#
+# THE PROBE IS NOT RE-RUN ON THE BRANCH. A roster job re-runs its scraper on a
+# fresh copy of main before committing; this measurement takes 20 minutes or
+# more against live government servers, so it is carried across to main's tip
+# instead and the inventory is regenerated there. A layer added to main while
+# the probe ran is named in the table as not measured, which is what the
+# inventory already does with a stale file.
+#
+# A RED RUN MEANS A PAGE FAILED TO LOAD OR A PROBE STEP ERRORED: the probe
+# refuses to write rather than record a smaller answer. scripts/
+# check_roster_workflow_health.py discovers this workflow like any other and
+# reports it when it stays red.
+
+on:
+  schedule:
+    - cron: "17 9 * * 0" # Sunday 09:17 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  PLAYWRIGHT_VERSION: "1.56.1"
+
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      # Pushed and PR-opened as BOT_PR_TOKEN so the resulting PR actually runs
+      # CI; a PR opened with the default GITHUB_TOKEN fires no workflows.
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BOT_PR_TOKEN || github.token }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # The same cache and phase budgets as smoke-test.yml's browser job,
+      # which carries the story of why each exists.
+      - name: Cache Playwright Chromium
+        id: pw-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ env.PLAYWRIGHT_VERSION }}-${{ runner.os }}
+      - name: Install Playwright + Chromium
+        timeout-minutes: 15
+        run: |
+          retry() {
+            local attempts=$1 budget=$2; shift 2
+            for i in $(seq 1 "$attempts"); do
+              timeout "$budget" "$@" && return 0
+              echo "::warning::attempt $i/$attempts of '$*' hung or failed"
+              sleep 5
+            done
+            echo "::error::'$*' failed $attempts time(s) at ${budget}s each"
+            return 1
+          }
+          retry 3 60 npm install "playwright@${PLAYWRIGHT_VERSION}"
+          sudo find /etc/apt/sources.list.d -maxdepth 1 -type f \
+               \( -name '*.list' -o -name '*.sources' \) \
+               -exec grep -q 'dl\.google\.com' {} \; -print -delete 2>/dev/null || true
+          retry 1 420 npx playwright install-deps chromium
+          if [ "${{ steps.pw-cache.outputs.cache-hit }}" != "true" ]; then
+            retry 2 300 npx playwright install chromium
+          fi
+
+      - name: Measure every layer's sources
+        timeout-minutes: 90
+        run: |
+          python3 -m http.server 8000 >/dev/null 2>&1 &
+          for i in $(seq 1 30); do curl -sf -o /dev/null http://localhost:8000/il/ && break; sleep 1; done
+          cp layer-sources.json "$RUNNER_TEMP/layer-sources.before.json"
+          node scripts/probe_layer_sources.mjs
+
+      - name: Check for changes
+        id: diff
+        run: |
+          python3 - "$RUNNER_TEMP/layer-sources.before.json" layer-sources.json <<'EOF' >> "$GITHUB_OUTPUT"
+          import json, sys
+          before, after = (json.load(open(p)) for p in sys.argv[1:3])
+          before.pop("measured", None); after.pop("measured", None)
+          print("changed=%s" % ("false" if before == after else "true"))
+          EOF
+          cat "$GITHUB_OUTPUT"
+
+      - name: Open or update pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PR_TOKEN || github.token }}
+        run: |
+          branch="bot/layer-sources-update"
+          cp layer-sources.json "$RUNNER_TEMP/layer-sources.after.json"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Cut from main's CURRENT tip rather than the checkout this run began
+          # with: the probe runs for tens of minutes, and a branch that also
+          # differs from main in .github/workflows/ reads to GitHub as a
+          # workflow update and is refused for a token without `workflow` scope.
+          git checkout -- layer-sources.json
+          git fetch origin main
+          git checkout -B "$branch" FETCH_HEAD
+          cp "$RUNNER_TEMP/layer-sources.after.json" layer-sources.json
+          python3 scripts/build_endpoint_inventory.py
+          git add layer-sources.json docs/ENDPOINT_INVENTORY.md
+          git commit -m "Update where each layer's shapes come from"
+          git push -u origin "$branch" --force
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create --title "Update where each layer's shapes come from" \
+              --body "Automated weekly re-measurement by \`scripts/probe_layer_sources.mjs\`: what changed is which hosts a layer's shapes come from, or whether a layer or county entry is fetched live or shipped. \`docs/ENDPOINT_INVENTORY.md\` is regenerated from it. Review the diff of \`layer-sources.json\` before merging." \
+              --base main --head "$branch"
+          fi

@@ -31,7 +31,8 @@ WHAT IT READS, AND FROM WHOM.
     Chromium and reading every response it fetches. NOT GATED on freshness, by
     the operator's decision of 2026-09-26: a full run is some 300 page loads
     against live government servers, too slow and too dependent on them for
-    every pull request. So the table prints the date it was measured, and a
+    every pull request. It runs weekly instead (update-layer-sources.yml),
+    opening a pull request only when a result changes. So the table prints the date it was measured, and a
     layer the worksheet declares that the file does not describe is NAMED as
     not measured rather than left out — the one thing this generator can say
     about staleness without a browser.
@@ -372,9 +373,10 @@ def render_layer_sources(w, tags, data):
     w("carries polygon or line geometry: either the whole set, downloaded once")
     w("and tested in the browser, or only the district at the selected point,")
     w("asked of the server. A county-dispatched layer is also measured one county")
-    w("at a time. **Nothing re-runs this or fails when it is stale**, so a layer")
-    w("added since that date is named below as not measured; re-run the probe")
-    w("and regenerate to describe it.")
+    w("at a time. A weekly workflow (`update-layer-sources.yml`) re-runs it and")
+    w("opens a pull request when a result changes, but **nothing fails when this")
+    w("is stale**, so a layer added since that date is named below as not")
+    w("measured until the next run describes it.")
     w("")
     for tag in tags:
         app = data["apps"].get(tag)
