@@ -277,12 +277,28 @@ try {
     // THIS INSTANCE DOES PAINT A MIDDLE BAND, AND ITS BAND MEANS SOMETHING ELSE.
     // Wisconsin passes its state outline to drawOutOfScopeMask and declares
     // COVERAGE_KEY.region, so the three-way lede reaches it — but its band is
-    // not Illinois's. Its own key reads "District shown, supervisor not named /
-    // The county doesn't publish who holds it", where Illinois's reads
-    // "Statewide layers only", so the engine reads those words from the config
-    // rather than asserting any of its own. A first draft of that engine change
-    // hardcoded "only the statewide layers answer there" and would have told a
-    // Wisconsin reader something false; this instance is the reason it does not.
+    // not Illinois's, where Illinois's key reads "Statewide layers only" — so the
+    // engine reads those words from the config rather than asserting any of its
+    // own. A first draft of that engine change hardcoded "only the statewide
+    // layers answer there" and would have told a Wisconsin reader something
+    // false; this instance is the reason it does not.
+    //
+    // CORRECTED 2026-09-26 (#1187), AND THE FIRST READING OF THIS BAND WAS
+    // WRONG TOO. This comment used to quote Wisconsin's key as "District shown,
+    // supervisor not named / The county doesn't publish who holds it" and
+    // explain the band as where a county's districts are drawn and its
+    // supervisors are not named. MEASURED, THAT IS TRUE OF NO WISCONSIN COUNTY:
+    // all 72 publish their boards, county-board-members.json carries 1,591
+    // seats with 1,574 named and every county names at least seven. The band is
+    // the strip between the 72-county dissolve and the state outline -- 2,125
+    // disjoint slivers, 0.0031% of the state, largest 0.218 km2, IoU 0.999937 --
+    // a drafting difference between two files. So the engine change was right to
+    // read the words from the config, and the words themselves were wrong; the
+    // key now reads "The county outlines and the state boundary disagree here /
+    // Two map files drawn at different detail -- every Wisconsin county is
+    // covered". The part worth keeping is that a confident, specific and false
+    // reading of this band survived a review and every gate, because a caption
+    // is not an assertion.
     //
     // NO BAND PROBE POINT IS PINNED HERE, and that is a measurement rather than
     // an omission: Wisconsin's coverage ring and its state outline are separate

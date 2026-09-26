@@ -7528,18 +7528,38 @@ and that made the sentence false in Wisconsin.** The draft read
 `COVERAGE_KEY.region.edge` for the region's name and then asserted, in the
 engine's own words, "only the statewide layers answer there". Wisconsin passes
 its state outline to `drawOutOfScopeMask` and declares `COVERAGE_KEY.region`, so
-the three-way lede reaches it — and its band is not Illinois's. Its own key reads
-**"District shown, supervisor not named / The county doesn't publish who holds
-it"**: the band is where a county's districts ARE drawn and its supervisors are
-not named. So `label` and `sub` are read from the config beside `edge`, and
-measured at a border sliver the lede now reads "You clicked inside Wisconsin,
-outside the area this app covers in full. District shown, supervisor not named.
-The county doesn't publish who holds it." **The lesson is narrower than "read
+the three-way lede reaches it — and its band is not Illinois's. So `label` and
+`sub` are read from the config beside `edge`, and the lede at a border sliver
+states the band per instance. **The lesson is narrower than "read
 from config": the draft DID read the name from config and invented the claim, so
 the rule is that every part of a per-instance statement is per-instance.** Found
 by the manager session on review, not by any gate, and not by the eight browser
 assertions either — Wisconsin's own assertion probes its `NEGATIVE_POINT`, which
 is outside the state, where there is correctly no band at all.
+
+**CORRECTED 2026-09-26 (#1187) — THE WORDS THIS PARAGRAPH QUOTED WERE THEMSELVES
+FALSE, WHICH IS A SECOND MISS ON THE SAME BAND.** It used to quote Wisconsin's
+key as "District shown, supervisor not named / The county doesn't publish who
+holds it" and explain the band as where a county's districts are drawn and its
+supervisors are not named, then print the rendered lede built from those words as
+what a reader sees at a border sliver. **That is true of no Wisconsin county.**
+All 72 publish their boards: `county-board-members.json` carries 1,591 seats with
+1,574 named, 15 vacant (the county saying nobody HOLDS the seat), 1 withheld (two
+publishers disagreeing about a boundary), and every county names at least seven
+supervisors. **What the band actually is, measured**: the strip between
+`metro-outline.json` (the 72-county dissolve) and `wi-state-outline.json` (the
+state boundary). Both cover 19.2447 deg², IoU 0.999937, the dissolve fractionally
+the larger; the reachable half — state minus dissolve, since a point on the other
+side is inside coverage and triggers nothing — is **0.0031% of the state across
+2,125 disjoint slivers**, largest 0.218 km², on the Lake Michigan and Lake
+Superior shorelines. A drafting difference between two files, never a county the
+local tier does not reach. The key now reads "The county outlines and the state
+boundary disagree here / Two map files drawn at different detail — every
+Wisconsin county is covered". **So the engine change above was right and its
+input was wrong**, and the finding worth keeping is that the original reading was
+confident, specific and false, and no gate could see it: a caption is not an
+assertion. Both misses on this band were caught on review rather than by CI, and
+the second was caught only after the first fix had shipped quoting it.
 
 **And Wisconsin pins no band probe point, which is a measurement rather than an
 omission.** Its coverage ring and its state outline are separate files tracing
