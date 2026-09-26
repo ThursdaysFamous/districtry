@@ -46,6 +46,61 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, THE COUNTY TIER HAS ITS FIRST COUNTY'S FORM PROVEN, AS #1204, AND IT
+BUILDS NOTHING ON PURPOSE.** Your ruling was that Tompkins's form be proven from a
+certified document before any code, because the first county settles a pattern the
+other 56 inherit. It is proven three ways and the certified one came first.
+
+**THE DISCRIMINATOR IS ONE LINE IN THE COUNTY'S OWN ELECTION AUTHORITY.**
+`electionhistory.tompkinscountyny.gov` is the Board of Elections' own results
+database — "all from official source documents", robots `User-agent: *` with an
+EMPTY Disallow — and its office list files **`County Legislator` as a COUNTY
+office with 39 contests** 2019-2026 and **`Supervisor` separately as a LOCAL
+office with 31**. In a board-of-supervisors county those are ONE office; here the
+county's own election authority files them at two different levels. Its
+source-document list then names "November 2, 2021 General Election County
+Legislator 5 Results" — district-suffixed — and the certified file for the
+November 4 2025 General that seated the current sixteen.
+
+**THE SECOND AND THIRD WITNESSES, and the second carries the population.** The
+county's own `LegislativeDistrictBoundaries` service: 16 polygons, licence "Open to
+the Public", credited to the county ITS GIS Division, its Board of Elections and
+its 2012 Independent Redistricting Committee, with per-district population summing
+to the county's exact Census 2020 count of **105,740** and a worst deviation of
+**2.6%** — which is what a legislature is and a board of supervisors is not. And
+the county's Legislature page lists District No. 1 to 16, one Legislator each.
+
+**THE COLES TEST PASSES 16 OF 16, so the roster route is settled too.** The layer's
+`Member` column and the county's board page name the same people in the same
+districts; the page carries the fuller form of four names. So geometry from the
+service, people from the page — the Edgar rule — and the layer's `Member` column
+becomes a free weekly drift witness, because a build that reads both gets that
+check for nothing.
+
+**ONE REFUSAL MEASURED AND OBEYED.** The database serves its PDFs from a DIFFERENT
+host, `tompkinsny.elstats2.civera.com`, whose robots.txt is `User-agent: * /
+Disallow: /` under the vendor's own comment "Dev/staging/pre-prod: block all". A
+`*` disallow binds us fully, so nothing was fetched from it. The database's own
+pages are on the allowed county host and are the route.
+
+**TWO PROBES RECORDED SO NOBODY REPEATS THEM**: the county publishes specimen
+ballots for the current cycle only and the 2026 General carries no legislature
+contest at all — which proves the odd-year cycle and nothing about the form — and
+its Laserfiche repository answers `BADLOGIN` without a session, which the elections
+database made unnecessary.
+
+**STILL NOT SETTLED AND NOT GUESSED AT:** the board-of-supervisors reference county
+is unchosen, because it should be picked by which county publishes a maintained
+supervisor roster and nobody has measured that; and Otsego's board of
+representatives is its own question. The layer registration is the new-layer
+procedure's question rather than this measurement's, so **the next step is the
+first county's BUILD as its own PR** — a `county-legislature` layer, Tompkins's
+geometry and roster, the coverage ring and its anchor, with the ring count read
+from `build_metro_outline.py --check`.
+
+**Verification on #1204:** 105 of 105 no-browser invocations green; no code, data
+file or generated region changed, so the browser tier has nothing new to answer.
+
 **2026-09-26, #1201 IS GREEN AND MERGES CLEAN — ready for review.** `smoke` completed
 `success` on head `94b39ad` (22:47:14 → 22:59:17 UTC); no review threads;
 `git merge-tree` against main's tip `408689b` exits clean. The substance is in the
