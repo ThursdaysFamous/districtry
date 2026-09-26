@@ -5155,8 +5155,22 @@ function initNycExplorer() {
     });
     if (baseLabels) {
       baseLabels.getMaplibreMap().setStyle(baseStyleUrl(kind), {
-        transformStyle: function (prev, next) { return splitBaseStyle(next, "labels", dark); }
+        transformStyle: function (prev, next) {
+          var out = splitBaseStyle(next, "labels", dark);
+          // A theme flip replaces the style, and the new style's stretches
+          // source starts empty; the style diff keeps the same source object,
+          // so without this the coloured names vanished until the map next
+          // moved. Carry the current stretches across instead.
+          if (boundaryStreetFeatures && boundaryStreetFeatures.length) {
+            out.sources[BOUNDARY_STREET_SOURCE] = { type: "geojson",
+              data: { type: "FeatureCollection", features: boundaryStreetFeatures } };
+          }
+          return out;
+        }
       });
+      // and repaint them in the new theme's colours on the next pass
+      boundaryStreetSig = "";
+      boundaryStreetSource = null;
     }
   }
 
