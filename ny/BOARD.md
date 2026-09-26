@@ -36,6 +36,131 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, A READER-FACING AUDIT OF /ny/: 22 CONFIRMED FINDINGS, 19 DISTINCT
+DEFECTS, NOTHING BUILT.** Run at the manager's request to name the biggest thing
+a reader is missing or being told wrongly. Five independent lenses over the
+shipped tree (nesting/tiling, what an upstate reader is told, the gap records
+against the tree, the rosters, the authored prose), each finding then attacked
+by a separate skeptic told to refute it. **2 findings were refuted and are not
+below**, including one of the sweep's own. Three defects were found TWICE by
+different lenses — the JSON-LD description, the map's accessible name, the five
+stale brand names — which is corroboration rather than three extra items, so 22
+confirmed findings are 19 distinct defects. No external host was fetched.
+
+**ONE CAUSE ACCOUNTS FOR ABOUT HALF: THE GO-LIVE (#1042) SWEPT THE CODE AND NOT
+THE WORDS.** It changed what New York covers, and the worksheet's brand keys, the
+authored prose, the FAQ and the coverage ring the gaps panel reads were all left
+describing a city app. This is the `metros.json` scope-line defect of 2026-09-23
+one level deeper and much wider — the same class, found by the same method, and
+the reason to state it as a cause rather than as nine separate items is that
+nine separate items is how it got here.
+
+**THE BIGGEST ONE IS IN SHARED CODE, SO IT IS WRONG IN ALL SIX APPS.**
+`engine/index.html/coverage-gaps.txt:241-242` tells a reader who clicks where
+`pointInCoverage` is false: "You clicked outside the area this app covers, so
+nothing there can be answered yet." For New York that fires across 57 of 62
+counties, because `drawOutOfScopeMask(loadMetroOutline, loadStateOutline)`
+(`ny/index.html:14003`) makes the coverage rings the FIVE BOROUGHS — measured,
+`metro-outline.json` spans [-74.259, 40.477, -73.700, 40.918] against
+`ny-state-outline.json`'s [-79.763, 40.477, -71.777, 45.016]. So the panel denies
+the app can answer while the map behind it is naming that reader's
+Representative, State Senator, Assemblymember, county, town, village and school
+district. Verified by me directly, not relayed. **It is an engine fence, so it is
+not New York's alone to fix** — recorded here and flagged to the manager rather
+than patched from this board.
+
+**A DIRECT BREACH OF THE HONESTY RULE, verified by me directly.** Six of 51
+records in `ny/data/app/council-members.json` carry a leadership office glued
+into the `name` field, which reaches the card, the hover popup and schema.org
+`Person.name`: District 5 "Speaker Julie Menin", 7 "Majority Leader Shaun
+Abreu", 27 "Deputy Speaker Dr. Nantasha Williams", 48 "Minority Whip Inna
+Vernikov", 49 "Majority Whip Kamillah M. Hanks", 50 "Minority Leader David
+Carr". Her name is Inna Vernikov. **`validate_officeholder_names.py` passes all
+six because they are name-SHAPED** — the gate's stated blind spot, exercised for
+the first time. The six prefixes are a closed set; the fix strips in
+`clean_name()` and carries the office in a `role` field rather than deleting it.
+
+**AND ONE MEMBER'S OFFICE ADDRESS IS A COVID NOTICE.** District 27's "District
+Office" ships the paragraph beginning "Due to the recent COVID surge, our
+district office is currently open by appointment only…" as the address — to the
+card, to the map-pin geocoder, and to schema.org as the member's postal address.
+The real address is the trailing `172-12 Linden Boulevard St. Albans, NY 11434`.
+
+**THE PROVENANCE PAGE CONTRADICTS THE CARDS IN FIVE PLACES**, which is the one
+page whose whole job is answering where an answer came from. Each is one
+`source.answers` string in `ny/metro-worksheet.json` plus a regenerate:
+fire-station denies a phone the card prints for ~96% of points and cites a
+dataset the layer stopped reading; the borough row says that card names nobody
+while it names the County Clerk; the precinct row promises the card marks an
+unpublished commander, a branch the card does not have (and the builder's floor
+lets 18 go missing silently); the school-district row says "the district that
+runs the public schools" where eleven sit inside three others; the municipality
+row says cities and towns cover the state with no gaps, against a measured 6.84%
+that has neither.
+
+**THE REST OF THE PROSE SWEEP**, all authored or worksheet strings: the shipped
+JSON-LD describes a New York City app four lines from an `areaServed` that says
+otherwise (`ny/index.html:61,83`, from the worksheet's `brand.jsonld`); the map's
+accessible name is "Map of New York City" (`ny/index.html:3910`) on a map opening
+on the whole state — the only description a screen-reader user gets; five
+authored pages still brand the instance "districtry New York City" across ~32
+occurrences, `ny/sources.html` among them, whose own matrix says fifteen layers
+answer statewide; `ny/faq.html` tells an upstate reader to pick an address to see
+"the New York City school district that covers it", in prose AND in FAQPage
+structured data, so it reaches search results; `llms.txt:3` calls the instance
+New York City 36 lines above its own section saying "statewide, 5 boroughs in
+depth"; `ny/README.md` still says the statewide layers are "built but not yet
+reachable" and splits the 33 layers 21/12 where the tree says 18/15; and the
+empty-state lede (`ny/index.html:3953`), the first sentence every reader sees,
+names six city layers and none of the fifteen that answer statewide.
+
+**ONE MORE UPSTATE PATH THE GO-LIVE REASONED ABOUT AND DID NOT CHANGE**: the
+office-pin geocoder is city-only and three STATEWIDE layers feed it upstate
+addresses, so an Albany reader's correct district-office address is geocoded
+against an index containing only New York City addresses, with no bound to reject
+a bad match. The card stays honest; the pin is absent or wrong. The #1055 shape
+again.
+
+**TWO GENUINE GEOMETRY DEFECTS, AND ONE IS THE #1174 SHAPE.**
+`ny-cities-towns.json` and `ny-villages.json` are simplified in SEPARATE
+mapshaper runs (`ny/scripts/build_ny_municipalities.py:375` loops `build_one`
+per layer), so the six coterminous town/villages are drawn as two different
+boundaries and a click in the sliver renders "Village: East Rochester" above
+"City or Town: Perinton". Exactly what Illinois fixed on 2026-09-25 by building
+the family as one topology. And `nys-school-district` ships the source's real
+two-tier structure: eleven Nassau elementary districts sit 100.0000% inside
+three central high school districts (VALLEY STRM CENTRAL, Sewanhaka Central,
+Bellmore-Merrick), each parent EXACTLY the union of its children, measured both
+with shapely and with the shipped engine block. **Because `findFeatureContaining`
+scans in file order and breaks on the first hit, and every child sits at a lower
+file index, those three features can never be returned by any click** — 289,704
+interior grid points plus 2,420 seam probes, parent returned 0 times. Three real
+school boards are unreachable. The builder's own overlap gate passes BY LUCK: 0
+overlaps at its shipped seed, 3 at 10k samples, 14 at 50k, 47 at 200k, and 21
+PASS / 19 FAIL across 40 seeds. **Both need New York's boundary data re-fetched
+(20.6 MB + 3.7 MB from gisservices.its.ny.gov), which this sandbox cannot do**,
+so neither is verifiable here and both are their own change.
+
+**WHERE EACH BELONGS, because they are not one kind of thing.** Most are wrong
+STATEMENTS and belong here as work and then in pull requests — recording a false
+sentence as a "gap" would file a bug as a feature the app lacks. **Two are real
+absences and are gap-record shaped**: the three unreachable school districts, and
+the county-clerk roster naming 2 of 5 boroughs with nothing served saying why.
+**One is the engine's**, above. Neither gap record is written yet; the four
+existing `ny/data/app/coverage-gaps.json` records are unchanged and were all
+re-verified as still true by this sweep.
+
+**NOTHING HAS BEEN BUILT, AND UNTIL THIS ENTRY NOTHING WAS RECORDED.** The
+findings existed only in one session's transcript and a scratch file in a
+container due to be reclaimed — which is the failure this project's own rule
+names ("a measurement filed in a backlog and nowhere else is a measurement the
+next pass repeats"), a step worse, since a backlog at least persists. Adam's
+standing instruction is that findings of this class go to this board and the
+manager is notified to review; that is what this entry is. Sequencing is the
+manager's and Adam's call, not this session's: my own recommendation is the
+engine string first (it is wrong in six apps and is one string), then the prose
+sweep as one PR, then the rosters and the five sources rows.
+
 **2026-09-23, the scope line. #1107 MERGED** as `b5f7af7`, on Adam's "Merge".
 Verified on `main` after the merge rather than on the branch: `metros.json`
 carries `statewide, 5 boroughs in depth`, the 90 python gates pass on the
