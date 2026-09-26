@@ -34,6 +34,65 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-26 (later). #1193 AND #1199 ARE BOTH MERGED AND VERIFIED BY CONTENT, AND
+#1200 IS OPEN FOR A COMMENT I WROTE WRONG MYSELF HOURS EARLIER.** The interval=7
+rebuild landed as `b0835d4` and the offline `--check` as `e6d4856`; I checked each on
+main by reading what makes it right rather than by trusting the merge — the shipped
+Senate rings are assembled from Assembly arcs (59 of 59 vertices exact), and the
+`--check` re-derives the Door ring's AFTER answer from the shipped bytes at the
+declared interior point.
+
+**#1200 CORRECTS A WORD, IN TWO PLACES, AND ONE OF THEM WAS THE ENGINE'S.** #1197
+made "stop precaching boundary files at install" code; my own cost paragraph in
+`wi/scripts/build_legislative_boundaries.py` went on calling it "a plan, not code",
+and `engine/sw.js/sw-header.txt` called the split "precached" — so **all six
+instances carried the same false word**, which is why a Wisconsin correction reached
+every instance. The bytes stay (443,452 → 772,931 gzipped); what changed is who pays
+them, since a reader who never opens a chamber never downloads either file. **CI is
+still running as I write this** — `smoke` in_progress on `0703aac`, read through
+`get_check_runs` and not `get_status`, which answers 0 for every PR in this repo. No
+conflict: `mergeable_state` is `unstable`, which is pending checks rather than a
+merge problem. Comment-only, so no `cache_name` bump is owed and
+`check_cache_version` agrees.
+
+**ONE NEARBY COMMENT IS DELIBERATELY LEFT WRONG-ISH AND THE PR SAYS SO.**
+`sw-handlers`' cache-sweep note still calls the cost of wiping another instance's
+cache "precached boundary geometry — tens of megabytes". The word is imprecise now
+and **the argument survives exactly**: the geometry is still cached, just on first
+use, so a wipe still costs a reader who has opened layers that much. Editing it for
+tidiness would change nothing a reader of the code needs.
+
+**TASK #57 IS NOW SPECIFIED RATHER THAN BUILT, AND SPECIFYING IT CORRECTED TWO STALE
+FIGURES IN THE TASK ITSELF.** Its description said the gate pair was 81/110; measured
+on this branch today it is **86/115** (86 named steps; 115 invocations, 105
+no-browser + 10 Chromium), and it named a workflow file that does not exist — the
+circuit-court job is `update-wi-circuit-court-roster.yml`. The remedy each half needs
+is now read off the precedent rather than guessed: `wi_circuit_judges_scraper` takes
+the closed COA row's shape (exit **75** when the fetch died before the host saw a
+byte, `continue-on-error: true` so the run's UI keeps the real outcome, a next step
+forgiving only code 75, and a 60-day staleness ceiling reading that workflow's own
+run history), with one thing left to decide — whether `wi_coa_staleness.py` is
+parameterised onto a second workflow or gets a sibling. `mps_school_board_scraper`
+takes a ladder plus a `--selftest` plus a CI step, and **that step moves the pair, so
+it must be re-measured with `validate_gate_counts.py` at the moment it pushes** —
+never by adding one to the 86/115 above, which is the arithmetic-correction trap this
+repo has already paid for twice.
+
+**STILL WAITING ON A DECISION THAT IS NOT MINE: task #65**, the supervisory layer's
+gate SHAPE. The measurement is done and unchanged — 510 holes (0.056 km², median
+1 m²) and 132 parts (0.068 km²) dropped after excluding Trempealeau, a dropped hole
+handing the reader the surrounding district's supervisor, two Door archipelago islets
+answering no district, and the builder's own 10,000-point overlap gate blind by
+construction (0.1236 km² of 169,635 is 0.0073 expected hits). dp interval=10 is
+strictly better on every axis at 2.5% **fewer** bytes. What I will not do unilaterally
+is pick the gate: per-ring declarations do not transfer to ~465 rings, and the
+plausible shape — an aggregate dropped-area ceiling plus "no dropped ring may take a
+reader out of a district" — also changes the chambers' retained/dropped test, so it
+should be made once rather than twice. The aldermanic (25%, 866 districts) and NG911
+(8%, four tilings) dissolves have not been asked the same question, because asking
+costs a full-precision rebuild each.
+
+
 **2026-09-26 (late). THE OFFLINE `--check` IS OPEN AS #1199, AND THE BLIND SPOT WORTH
 KNOWING WAS FOUND BY BREAKING THE CHECK RATHER THAN BY WRITING IT.** The gap was mine
 to close — #1193 recorded that this builder took no arguments at all, so nothing in
