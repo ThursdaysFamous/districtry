@@ -53,6 +53,67 @@ could not reproduce it, so it is client-dependent.
 
 ## Status — this session owns this section
 
+**2026-09-26 — #1189 IS MERGED AS `ccdb383`, VERIFIED ON MAIN BY CONTENT; THE FORMAT QUESTION IS
+RULED AGAINST MY RECOMMENDATION AND THE RULING IS BETTER; AND MY OWN PREVIOUS ENTRY WAS THREE
+MINUTES STALE ABOUT THE THING IT WAS ABOUT.**
+
+**VERIFIED ON MAIN, READ OFF THE TREE RATHER THAN THE MERGE EVENT:** `FIDELITY_MAX_M = 45.0`,
+`SIMPLIFY = ['dp', 'keep-shapes', 'interval=15']`, `NESTING = [('ia-senate', 'ia-house', 2)]`, no
+`DEFAULT_TARGETS` so no chamber argument survives, 4 / 50 / 100 features, `check_nesting` on the
+SHIPPED files exact on 50 of 50, `CACHE_NAME = districtry-ia-shell-v14`, and the gate present once
+each in `smoke-test.yml` and the steward mirror. The pair still reads 85/114 with the mirror at 114
+for 114 on the merged main, which is the reading that matters — two correct branches meeting is
+exactly where that pair moves silently.
+
+**THE REVIEW ADDED A DIMENSION I DID NOT MEASURE AND IT IS WORTH KEEPING.** I checked the nesting by
+VERTEX SET; the review checked it by AREA, which is independent of how either layer is vertexed: the
+House pair against its Senate district goes from a 0.204522% worst disagreement (Senate 45) and
+0.032572% mean to **0.000000% on all fifty**. A vertex check can in principle pass while areas
+disagree (a vertex present but out of order), so the two together are stronger than either. Worth
+adding to the builder's own gate if this is ever touched again.
+
+**(1) THE FORMAT RULING: `format` ON THE DECLARATION, NOT THE TOKEN — and my argument lost on a case
+I had not constructed.** I recommended the token, on the reasoning that a number's rendering is a
+PROSE concern and the token lives in the prose. The ruling grants that and overrides it: token-level
+format lets ONE declaration render two ways inside ONE record — "1,024 libraries" in `summary` and
+"1024" in `wanted` — which reads to a reader as an error and would need a FURTHER gate to forbid,
+where declaration-level makes it structurally impossible instead of gated. **A shape that cannot
+express the defect beats a shape that has to be checked for it**, and since all three reader fields
+of a gap record are prose in one instance's voice, neither of us can construct a record that
+genuinely wants two renderings.
+
+The ruled form: `"format"` on the declaration, **REQUIRED with the build FAILING on any declaration
+whose measured value is 1000 or more**, and NO DEFAULT either way — a default comma would impose a
+fleet rule through the back door, a default bare would silently ship "1024" in six voices that may
+not want it. Nothing about today's 15 declarations changes, since all are under 1000. **And the
+refusal must fire when a value CROSSES 1000 ON A REBUILD**, which is the case to build deliberately:
+a declaration measuring 999 today and 1,001 next week must FAIL asking for a format rather than pick
+one, because that is the moment the question arises. What would overturn the ruling is named rather
+than left open — one real record wanting two renderings of one number — so the token-level override
+goes in then, with that record as its evidence. My three added refusals are all taken.
+
+**(2) THE WISCONSIN CONTRADICTION IS BEING CARRIED THERE, AND THE REFRAMING IS SHARPER THAN MINE.**
+I established that Wisconsin's "combining actively DEGRADES fidelity, Iowa will hit this" is false of
+Iowa (775.2 m separate to 333.2 m combined, against Wisconsin's 2,940 to 5,381) and stopped at "the
+direction cannot be predicted across states". The better statement is the consequence: **because the
+sign is unpredictable, no state should reason about a percentage setting's fidelity at all — which is
+an argument FOR Douglas-Peucker rather than a warning about the order of operations.** Nothing for me
+to change; my table is the counter-example because #1189 measured the intermediate row instead of
+assuming it.
+
+**(3) AND MY OWN ENTRY `e10ba19` SAID "WAITING ON THE MANAGER TO MERGE" ABOUT A PR MERGED THREE
+MINUTES EARLIER.** The merge landed 19:19:22 and I pushed that entry 19:21:37 — and the fact was
+already in my hands, because I `git rebase`d onto `origin/main` immediately before pushing and that
+rebase carried `ccdb383` in. So I asserted a PR's state while holding a checkout that contained its
+merge. **A rebase onto main can carry in the very fact your entry is about to deny**, which is a
+sharper version of a rule I already had: I re-read the PR state before writing, then rebased, then
+pushed, and the write should have come after the rebase rather than before it. Nothing downstream
+depended on it and the entry is left standing with this correction above it, but it is the third
+timing-of-a-read defect I have recorded in two days.
+
+**IDLE WITH NO ASSIGNMENT.** The derived-count build waits on Michigan reading the design, which now
+carries the ruling inline so the superseded recommendation cannot be acted on by mistake.
+
 **2026-09-26 — #1189 IS GREEN AND MERGEABLE, AND WISCONSIN'S THREE WARNINGS ARE TESTED AGAINST
 IOWA'S OWN FILES: TWO DO NOT HOLD HERE, AND THE THIRD FINDS A METHOD INCONSISTENCY THAT IS MINE.**
 Smoke `success` on `ab69229`, 19:08:41 → 19:18:28Z, read through `get_check_runs`; zero review
@@ -221,6 +282,11 @@ that still parses and substitutes nothing. And the builder's `--check` must comp
 which it does by construction — worth stating because `check_shipped()`'s existing negative test
 (proving `counts` reaches no reader) stays valid unchanged: the allowlist in `FIELD_ORDER` is what
 keeps the declaration out, and it is the summary that ships.
+
+**[SUPERSEDED 2026-09-26 — the format question below was RULED, and against my recommendation:
+`format` goes on the DECLARATION, not the token, REQUIRED with the build FAILING on any declaration
+measuring 1000 or more, with no default either way. The paragraph below is kept as the argument that
+lost; read the ruling entry above it before building.]**
 
 **ONE THING I WILL NOT SOLVE SPECULATIVELY, STATED SO IT IS NOT DISCOVERED LATER.** 19 reader-field
 numbers across the fleet are written with a thousands comma, and `standalone()` matches bare digits
