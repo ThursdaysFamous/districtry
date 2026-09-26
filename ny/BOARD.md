@@ -46,6 +46,46 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, THE MANAGER'S rowsUpdatedAt CATCH IS RIGHT AND IT IS A RETRACTION, not
+a refinement.** Both follow-ups are on #1204 as `8909b44`, folded into the open PR so
+the regeneration chain ran once.
+
+**WHAT I GOT WRONG.** #1201's clerk record said "the Greenbook gives Luis Diaz five
+days ago". Socrata's `rowsUpdatedAt` is a DATASET stamp, not a ROW stamp: a
+66,221-row staff directory republished on 2026-09-21 says only that SOME row changed
+then, and nothing whatever about when the BRONX row was last touched. I read a
+dataset-level field as a row-level one and built a currency claim on it, about a
+named person on a live card. **So the DIRECTION of the disagreement is
+unestablished** — a stale directory row beside a correct card fits the evidence
+exactly as well as the reverse does — and the record said otherwise for the hours
+between the two PRs.
+
+The disproved sentence stays in place under its correction, and the record now names
+the route that would settle it: **an ask rather than a fetch**, because the clerks'
+offices answer the telephone and the Greenbook prints one number per office. That is
+a draft for `docs/ASK_DRAFTS.md`, not another probe of two hosts already measured
+shut. The second follow-up is in `wanted`, which opened "Either office" for a gap
+naming THREE boroughs; it reads "Any of the three clerks' offices" now and the
+trailing clause claiming the fourth "needs settling first" went with it, since the
+sentence above no longer claims to know which way.
+
+**THE GENERAL LESSON, because this is the second time this week I have taken a
+publisher's freshness field at face value.** A dataset-level timestamp bounds the
+dataset and nothing inside it. Before any sentence of mine says one source is newer
+than another, the field carrying that has to be at the same grain as the claim —
+and where no field is, the honest record is that the direction is unknown, which is
+also the record that cannot produce a wrong edit.
+
+**The recommendation on my earlier board entry stands but its second half now needs
+re-reading**: the Greenbook pipeline for the three UNCONTESTED seats is unaffected
+(no competing claim there, so no direction to establish), while the Bronx half was
+premised on the Greenbook being fresher and is not. Withholding the Bronx under
+Wisconsin's `withheld` shape remains right; preferring either name does not.
+
+**#1204 now carries both**: the Tompkins proof and these two corrections. 105 of 105
+no-browser invocations green after both commits, no cache bump owed, `--check` on the
+sitemap re-run after committing.
+
 **2026-09-26, THE COUNTY TIER HAS ITS FIRST COUNTY'S FORM PROVEN, AS #1204, AND IT
 BUILDS NOTHING ON PURPOSE.** Your ruling was that Tompkins's form be proven from a
 certified document before any code, because the first county settles a pattern the
