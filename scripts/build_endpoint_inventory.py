@@ -26,6 +26,15 @@ WHAT IT READS, AND FROM WHOM.
     and counting the hooks that FIRE. Not from any prose: CLAUDE.md's paragraph
     said `ny 4` while the artifact said 5, which is exactly why this reads the
     artifact.
+  * Where each layer's shapes come from — read from layer-sources.json, which
+    scripts/probe_layer_sources.mjs writes by switching each layer on alone in
+    Chromium and reading every response it fetches. NOT GATED on freshness, by
+    the operator's decision of 2026-09-26: a full run is some 300 page loads
+    against live government servers, too slow and too dependent on them for
+    every pull request. So the table prints the date it was measured, and a
+    layer the worksheet declares that the file does not describe is NAMED as
+    not measured rather than left out — the one thing this generator can say
+    about staleness without a browser.
   * Layer totals — each instance's own metro-worksheet.json.
   * Dataset counts — each instance's validate_sources.py manifest and its own
     data/app directory.
@@ -67,6 +76,7 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(REPO_ROOT, "docs", "ENDPOINT_INVENTORY.md")
 LICENCE = "LICENSE-DATA.md"
 TRANSMISSION = os.path.join(REPO_ROOT, "point-transmission.json")
+LAYER_SOURCES = os.path.join(REPO_ROOT, "layer-sources.json")
 
 URL_RE = re.compile(r'https?://([A-Za-z0-9._\-]+\.[A-Za-z]{2,})(/[^\s"\'`)>,\\]*)?')
 
@@ -321,6 +331,100 @@ def transmission(totals):
     return out
 
 
+def worksheet_layers(tag):
+    """The worksheet's layer ids and labels, in its own order."""
+    rel = "metro-worksheet.json" if tag == "il" else "%s/metro-worksheet.json" % tag
+    try:
+        w = json.loads(read(rel))
+    except ValueError as e:
+        fail("%s is not valid JSON: %s" % (rel, e))
+    return [(l["id"], l.get("label") or l["id"]) for l in (w.get("layers") or [])]
+
+
+SOURCE_KINDS = ("fetched", "shipped", "points", "unanswered", "not-loaded")
+
+
+def layer_sources():
+    """The probe's artifact, checked for the shape this generator reads."""
+    try:
+        data = json.loads(read(LAYER_SOURCES))
+    except (OSError, IOError):
+        fail("layer-sources.json is missing — run scripts/probe_layer_sources.mjs")
+    except ValueError as e:
+        fail("layer-sources.json is not valid JSON: %s" % e)
+    if not isinstance(data.get("apps"), dict) or not re.match(r"^\d{4}-\d{2}-\d{2}$", str(data.get("measured", ""))):
+        fail("layer-sources.json has no `apps` object or no `measured` date — the "
+             "artifact's shape moved and this generator reads it by those keys")
+    for tag, app in data["apps"].items():
+        for lid, rec in (app.get("layers") or {}).items():
+            if rec.get("source") not in SOURCE_KINDS:
+                fail("layer-sources.json: %s %s has source %r, not one of %s"
+                     % (tag, lid, rec.get("source"), ", ".join(SOURCE_KINDS)))
+    return data
+
+
+def render_layer_sources(w, tags, data):
+    w("### Where each layer's shapes come from")
+    w("")
+    w("Measured **%s** in a real browser by `scripts/probe_layer_sources.mjs`," % data["measured"])
+    w("which switches each layer on alone and reads every response the page")
+    w("fetches from another host. A layer **fetches** its shapes when a response")
+    w("carries polygon or line geometry: either the whole set, downloaded once")
+    w("and tested in the browser, or only the district at the selected point,")
+    w("asked of the server. A county-dispatched layer is also measured one county")
+    w("at a time. **Nothing re-runs this or fails when it is stale**, so a layer")
+    w("added since that date is named below as not measured; re-run the probe")
+    w("and regenerate to describe it.")
+    w("")
+    for tag in tags:
+        app = data["apps"].get(tag)
+        declared = worksheet_layers(tag)
+        if not app:
+            w("#### %s — not measured" % tag)
+            w("")
+            continue
+        recs = app.get("layers") or {}
+        label = dict(declared)
+        by = collections.defaultdict(list)
+        for lid, _l in declared:
+            by[recs[lid]["source"] if lid in recs else "unmeasured"].append(lid)
+        w("#### %s — %d of %d layers fetch their shapes" % (tag, len(by["fetched"]), len(declared)))
+        w("")
+        if by["fetched"]:
+            w("| layer | whole set from | at the selected point from |")
+            w("|---|---|---|")
+            for lid in by["fetched"]:
+                rec = recs[lid]
+                whole = ", ".join("`%s`" % h for h in rec["whole_set"]) or (
+                    "the same set as `%s`" % rec["via_parent"] if rec.get("via_parent") else "—")
+                at = ", ".join("`%s`" % h for h in rec["at_point"]) or "—"
+                c = rec.get("counties")
+                if c:
+                    # Counted per county on a page with no layer on, so the
+                    # hosts are the county entries' own; the layer-on page adds
+                    # nothing beyond them except an at-point query.
+                    hosts = sorted({h for e in c["live"] for h in e["hosts"]})
+                    whole = "%d of %d county sources, from %s; %d shipped with the app" % (
+                        len(c["live"]), len(c["live"]) + len(c["shipped"]) + len(c["failed"]),
+                        ", ".join("`%s`" % h for h in hosts), len(c["shipped"]))
+                    if c["failed"]:
+                        whole += "; %d did not answer the probe (%s)" % (
+                            len(c["failed"]), ", ".join(e["key"] for e in c["failed"]))
+                w("| %s (`%s`) | %s | %s |" % (label[lid], lid, whole, at))
+            w("")
+        for kind, text in (("shipped", "Drawn from this site's own files"),
+                           ("points", "Point layers (locations, not shapes)"),
+                           ("unanswered", "Source did not answer the probe"),
+                           ("not-loaded", "Not loaded at the measured points (coverage-gated)"),
+                           ("unmeasured", "**Not measured** — declared since the probe ran")):
+            if by[kind]:
+                w("- %s: %s." % (text, ", ".join("`%s`" % l for l in by[kind])))
+        if app.get("app_level"):
+            w("- Fetched by the app itself with no layer on, for its coverage tests: %s."
+              % ", ".join("`%s`" % h for h in app["app_level"]))
+        w("")
+
+
 def layer_totals():
     """{tag: len(worksheet layers)} — the same list that drives EXPECT_LAYER_IDS."""
     out = {}
@@ -405,6 +509,7 @@ def render():
     pins = library_pins()
     totals = layer_totals()
     sends = transmission(totals)
+    sources = layer_sources()
     counts = dataset_counts()
     cats = licence_sections()
 
@@ -475,6 +580,7 @@ def render():
     for tag in tags:
         w("| %s | %s | %d |" % (tag, sends.get(tag, "not measured"), totals[tag]))
     w("")
+    render_layer_sources(w, tags, sources)
     w("## 2. Build-time datasets")
     w("")
     w("| instance | manifest entries | shipped `data/app` files | sources measured as blocking |")

@@ -14778,6 +14778,42 @@ function initWisconsinExplorer() {
         });
       }));
     },
+    // What scripts/probe_layer_sources.mjs asks of a layer once it is on: the
+    // geometry types its own loader returned (so a point dataset is not counted
+    // as shapes) and, for a county-dispatched layer, its entry keys — each
+    // loaded one at a time through loadCountyEntry so its requests can be
+    // attributed to that county.
+    layerSources: function (id) {
+      var mod = getLayerById(id), rt = layerRuntime[id];
+      if (!mod) return null;
+      var types = {};
+      ((rt && rt.geojson && rt.geojson.features) || []).forEach(function (f) {
+        if (f && f.geometry && f.geometry.type) types[f.geometry.type] = true;
+      });
+      var parent = mod.subOf ? getLayerById(mod.subOf) : null;
+      return {
+        loaded: !!(rt && rt.geojson),
+        geometryTypes: Object.keys(types).sort(),
+        countyKeys: mod.countyEntries ? mod.countyEntries.map(function (e) { return e.key; }) : null,
+        // a sub-layer switches its parent on too, so the probe subtracts the
+        // parent's requests; one drawing the SAME loaded set as its parent
+        // makes no request of its own, and says so here
+        subOf: mod.subOf || null,
+        sharesParentLoader: !!(parent && parent.overlay && mod.overlay && parent.overlay.load === mod.overlay.load)
+      };
+    },
+    loadCountyEntry: function (id, key) {
+      var mod = getLayerById(id);
+      var entry = mod && mod.countyEntries && mod.countyEntries.filter(function (e) { return e.key === key; })[0];
+      if (!entry) return Promise.reject(new Error(id + " has no county entry " + key));
+      return Promise.resolve().then(function () { return entry.loadGeometry(); }).then(function (geojson) {
+        var types = {};
+        ((geojson && geojson.features) || []).forEach(function (f) {
+          if (f && f.geometry && f.geometry.type) types[f.geometry.type] = true;
+        });
+        return { features: ((geojson && geojson.features) || []).length, geometryTypes: Object.keys(types).sort() };
+      });
+    },
     cleanPoiAddress: cleanPoiAddress, // exposed so the smoke test can regression-guard the office-pin address cleaner (a recurring break point) without any network call
     splitBaseStyle: splitBaseStyle, // exposed so the smoke test can hold the ground/labels split and the street-name restyle to a fixture, with no CARTO fetch
     abbreviateStreetName: abbreviateStreetName, // exposed so the smoke test can hold the boundary-street label abbreviations to a fixture
