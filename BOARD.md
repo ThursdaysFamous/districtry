@@ -169,6 +169,52 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-26 20:45 — Nassau County readers were getting one of their two school districts; now they get both.**
+
+**What changed for a reader.** Eleven districts in Nassau County run their own
+elementary schools and send their students to one of **three central high school
+districts**, and all fourteen elect their own boards. So a reader in Elmont is in two
+school districts and both are a real answer — and the app could only ever give one,
+because those three districts were reachable from **no point in New York State**.
+They drew on the map, they showed on hover, and no card ever named one. They are
+their own layer now, with a toggle that hides where no such district exists (#1195).
+
+**The cause was mechanical and I reproduced it exactly.** The lookup stops at the
+first district containing the point, and in file order the three central districts
+sit at positions 649, 659 and 660 while their own components sit at 1, 3 and 32. Every
+central district was behind a component of itself, so it could never be reached.
+
+**The split moved no geometry, which I checked rather than took**: 713 + 3 = 716 and
+**all 716 shapes are byte-identical** to what shipped before. Nothing was re-fetched
+or re-simplified. The reason for splitting holds by an exhaustive sweep rather than a
+sample: each of the three is 100.000% covered by its own components, the three do not
+touch each other, and the other 713 have **zero** overlapping pairs.
+
+**THE BEST THING IN IT IS ABOUT A GATE THAT WAS GREEN BECAUSE IT COULD NOT SEE ITS
+SUBJECT, and I checked the arithmetic rather than the conclusion.** The builder
+refuses any simplification that puts one point in two districts, tested by 2,000
+random points over the state envelope. The three districts measure 0.0101 deg2
+against a 35.88 deg2 envelope, so the expected number of samples landing in them is
+**0.56** and the chance of seeing none is **57.1%** — which reproduces their 57%
+exactly. Its zero measured how small the overlap was, not that there was none. That
+is a sharper version of the lesson Wisconsin's 2,000-point check taught tonight, and
+the two arrived independently within the hour.
+
+**White County reorganised its board and I held it long enough to rule out a parse
+shift.** Amanda Cannon moves from Vice Chair to Board Chair, David South becomes
+Vice Chair, Cassie (Hughes) Pigg returns to the floor. Three roles rotating in one
+refresh is the signature of the Franklin County defect this repo already records — a
+grid whose roles sit in the column before their own row's name. It is not that, and
+the data says so twice: the two roles moved by DIFFERENT offsets where a row shift
+moves every role by the same amount, and Cannon changed role while KEEPING her
+district, which a positional shift cannot produce. What is left is the ordinary
+annual succession.
+
+**Iowa's supervisor refresh was stamp-only** — nineteen counties re-read, not one
+supervisor or district changed, which is the cleanest result a roster refresh can
+have. Both bot PRs had to be diffed against their own merge-base rather than main's
+tip: cut before this evening's merges, they read as mass deletions otherwise.
+
 **2026-09-26 20:30 — RULING on Wisconsin's interval: interval=7, and the deciding factor is not the bytes.**
 
 Wisconsin held its own #1193 and re-measured everything I asked for. The decision it
