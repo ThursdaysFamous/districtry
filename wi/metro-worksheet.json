@@ -1281,13 +1281,13 @@
         "file": "wi-senate-districts.json",
         "min_features": 34,
         "max_features": 34,
-        "note": "The 33 State Senate districts plus TIGERweb's ZZ water pseudo-district, pre-built with wi-assembly-districts.json in ONE mapshaper run by wi/scripts/build_legislative_boundaries.py, so the shared edges are one arc. Three gates: 2,000-point agreement, exact Senate/Assembly nesting, and a 20 m fidelity ceiling against the source."
+        "note": "The 33 State Senate districts plus TIGERweb's ZZ water pseudo-district, pre-built with wi-assembly-districts.json in ONE mapshaper run by wi/scripts/build_legislative_boundaries.py, so the shared edges are one arc. Four gates: 2,000-point agreement, exact Senate/Assembly nesting, a 15 m fidelity ceiling on RETAINED rings against the source, and every dropped ring declared with the answer a reader gets before and after."
       },
       {
         "file": "wi-assembly-districts.json",
         "min_features": 100,
         "max_features": 100,
-        "note": "The 99 State Assembly districts plus TIGERweb's ZZ water pseudo-district, pre-built with wi-senate-districts.json in ONE mapshaper run by wi/scripts/build_legislative_boundaries.py, so the shared edges are one arc. Three gates: 2,000-point agreement, exact Senate/Assembly nesting, and a 20 m fidelity ceiling against the source."
+        "note": "The 99 State Assembly districts plus TIGERweb's ZZ water pseudo-district, pre-built with wi-senate-districts.json in ONE mapshaper run by wi/scripts/build_legislative_boundaries.py, so the shared edges are one arc. Four gates: 2,000-point agreement, exact Senate/Assembly nesting, a 15 m fidelity ceiling on RETAINED rings against the source, and every dropped ring declared with the answer a reader gets before and after."
       },
       {
         "file": "county-supervisory-districts.json",
