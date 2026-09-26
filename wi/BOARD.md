@@ -34,6 +34,53 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-26 (late). THE OFFLINE `--check` IS OPEN AS #1199, AND THE BLIND SPOT WORTH
+KNOWING WAS FOUND BY BREAKING THE CHECK RATHER THAN BY WRITING IT.** The gap was mine
+to close — #1193 recorded that this builder took no arguments at all, so nothing in
+CI re-asked the nesting question about the shipped files where Illinois's and Iowa's
+both did.
+
+**WHAT IT ASKS, BOTH HALVES NEEDING NO FETCH**: the nesting relation between the two
+shipped layers, and each declared dropped ring's AFTER answer re-derived from the
+shipped bytes at an interior point the declaration now records. A rebuild that
+stopped dropping a declared ring, or dropped it into a different district, fails in
+CI rather than at the next operator build.
+
+**THE INTERIOR POINT IS A NEW FIELD AND IT IS VERIFIED ON BOTH PATHS** — the build
+path refuses a declared point `_point_in_ring` rejects, which offline cannot do;
+`--check` re-derives the answer at it. Recorded to SIX decimals with the arithmetic
+in the comment: at 45.41 N the fourth decimal is 11.05 m of latitude and 7.81 m of
+longitude against a ring 7.5 m by 6.6 m. **The UNROUNDED centroid is inside the ring
+and the rounded one is not**, which is a sharper statement of this afternoon's
+mistake than the one I first wrote — the centroid was a fine test point and rounding
+it is what broke it.
+
+**THREE BLIND SPOTS, AND THE THIRD CAME OUT OF THE NEGATIVE TESTS.** Offline it
+cannot see an UNDECLARED drop or any BEFORE answer, both needing the source — those
+were designed in and are in the docstring. The third was not designed in: **it cannot
+tell that a declared interior point is inside its ring.** Rounded back to four
+decimals the point falls outside and the check STILL PASSES, because the water
+pseudo-district it lands in is exactly what the declaration says a reader reads. I
+found that by running the defect through the new gate on purpose, and it is in the
+docstring as a blind spot rather than quietly relied on.
+
+Five negative tests: a chamber file restored to its pre-#1193 bytes fails all 33
+pairings; an `answer_after` claiming nothing moved fails; a missing interior point
+fails; a missing shipped file fails; the rounded point passes. Pair restated 85/114
+-> 86/115 with the steward skill given the same line, and here the two figures moved
+together by one each, which they do not always. 105 of 105 no-browser invocations
+green, `validate_skills` 815 pointers resolve, wi smoke green in Chromium. No shipped
+data file moves, so `cache_name` is untouched.
+
+**STILL WAITING ON A DECISION, unchanged**: the supervisory layer's gate SHAPE. dp at
+interval=10 is strictly better there at slightly fewer bytes, but ~465 rings drop
+even at the best setting, so per-ring declarations do not transfer and the layer
+needs a different instrument — plausibly an aggregate dropped-area ceiling plus the
+rule that no dropped ring may take a reader out of a district. Deciding it also
+touches the chambers' retained/dropped test, where a share-of-surviving-vertices
+rule would move a near-dropped ring into the declaration table; I would rather make
+that change once than write a second reading of one question into a second builder.
+
 **2026-09-26 (evening). #1193 IS MERGED AND VERIFIED, AND THE SUPERVISORY LAYER
 MEASURED THE SAME WAY SHOWS dp IS FREE HERE — PLUS A LIMIT OF dp ITSELF THAT
 NOBODY IN THE FLEET HAD MEASURED.** #1193 merged as `b0835d4`; verified by CONTENT
