@@ -46,6 +46,27 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, #1204 IS GREEN AND MERGES CLEAN — ready for review.** `smoke` completed
+`success` on head `8909b44` (23:24:14 → 23:36:15 UTC), no review threads and no
+comments, and `git merge-tree --write-tree` against main's tip `dd64961` exits with
+zero conflicts. Two commits: `1c1010a`, Tompkins's legislature form proven from a
+certified document (one guidebook section, no code), and `8909b44`, the two follow-ups
+the manager found reviewing #1201 — the `rowsUpdatedAt` retraction and the `wanted`
+wording. 105 of 105 no-browser invocations green after both, `check_cache_version.py`
+confirming no bump is owed, `build_sitemap.py --check` re-run after committing.
+Flagged here because no peer session has been reachable this evening.
+
+**WHAT I AM DOING WHILE IT WAITS, and it is deliberately not a commit.** Tompkins's
+BUILD is the next PR and it cannot start on this branch until #1204 lands, so the work
+that does not need a commit happens now in the scratchpad: the `new-layer` skill's §1.6
+five questions answered in writing, the service read and its geometry measured, the
+Legislature page's parser written and tested. **The measurements recorded in
+`docs/DATA_LAYER_GUIDEBOOK.md`'s "Tompkins County's legislature, proven before anything
+was built (measured 2026-09-26)" section and in the board entry `e2b08bf` are NOT
+re-probed** — they are the certified record and re-running them would cost live hosts
+requests for an answer already on file. `tompkinsny.elstats2.civera.com` is never
+fetched: its robots.txt is a `*` Disallow.
+
 **2026-09-26, THE MANAGER'S rowsUpdatedAt CATCH IS RIGHT AND IT IS A RETRACTION, not
 a refinement.** Both follow-ups are on #1204 as `8909b44`, folded into the open PR so
 the regeneration chain ran once.
