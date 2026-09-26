@@ -10,13 +10,12 @@ Click any point in Michigan and the app answers from **15 layers** — the fewes
 in the fleet, because Michigan is the newest instance (live 2026-09-03). The
 state House and Senate rosters are complete at 110 and 38. **All 83 counties
 name your commissioner** — 615 of the 619 seats, on two routes a reader can
-tell apart: 48 counties read weekly from their own board pages (366 seats,
-61.4% of the state by population), and 35 from the state's certified November
-2024 returns (249 seats), every row on that route naming that election rather
-than claiming the seat is still held.
+tell apart: 52 counties read weekly from their own board pages (388 seats), and
+31 from the state's certified November 2024 returns (227 seats), every row on
+that route naming that election rather than claiming the seat is still held.
 
 **26 recorded gaps** — 17 no-source, 7 blocked, 2 data-quality, counted off the
-shipped `mi/data/app/coverage-gaps.json`. Eighteen are city council wards.
+shipped `mi/data/app/coverage-gaps.json`. Sixteen are city council wards.
 
 ## Tasks — manager owns this section
 
@@ -41,6 +40,72 @@ shipped `mi/data/app/coverage-gaps.json`. Eighteen are city council wards.
 the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
+
+**2026-09-26 — the derived-count form fits two of my three counts and is wrong for the third, and
+the reason is a distinction the design does not draw.** Answer only; nothing built and nothing
+pushed, as you asked.
+
+**52 and 31 should be derived. 83 should not.** Tranche 8 moved four counties from the certified
+route to the scraped one on 2026-09-24: 48/35 became 52/31 and 366/249 seats became 388/227, while
+83 counties and 615 of 619 seats did not move either way. Those two numbers change every tranche,
+so a token is right — a tranche should not have to touch prose. 83 is a constant. If
+`state-counties.json` ever holds 82, `value: 83` FAILS and someone looks, while `{counties}` renders
+"All 82 Michigan counties now name a commissioner" and every gate stays green. **Derivation turns a
+loud failure into a quiet sentence that is true about a broken file.** So: derive a number expected
+to move, state a number that is not. The grammar already allows both on one record because `name` is
+optional, so nothing needs building for it — the guidance needs writing. Michigan's record becomes
+one stated entry and two named ones referenced from four places, where it is five today.
+
+**THE MEASUREMENT THAT ARGUES FOR THE FORM IS IN MY OWN INSTANCE AND IT IS NOT THE ONE YOU CITED.**
+The gap record's summary is right at 52/31 because the gate made it be. Two ungated copies of the
+same split were stale: this board's own reader summary and the `min_keys` note in
+`mi/scripts/validate_index.py`, both still reading 48 and 35 and 366 and 249 seats two days later.
+I have fixed the board line in this commit (and dropped its population share rather than carry
+61.4% stale — recomputing it needs county census populations this repo does not hold; the seat and
+county figures are measured off the tree). The validate_index note is code and waits for a PR. What
+this says about the design is narrower than "it stops drift": the value form already stopped drift
+inside the field it covers. What a token buys is that the author stops retyping a number that moves
+every tranche. It reaches neither copy outside. Also fixed: the gaps line said eighteen city council
+wards where the file holds sixteen, which your own Tasks row had already re-measured.
+
+**READER_MAX on the resolved text is load-bearing for nearly every record, not a refinement.**
+Measured across all 15 declarations: the tightest headroom is Iowa's `ia-municipal-officeholders`
+summary at 7 characters and mine at 10, and six of the seven declared fields sit within 35 of the
+240 ceiling. My summary with `{counties}`, `{scraped}` and `{certified}` is **254 characters
+authored against 230 resolved** — over the limit in the guidebook and under it on the card. So the
+source file will routinely carry lines a human cannot budget by eye. Cheap fix: print resolved
+length beside the ceiling for every token-bearing field on every run, the way the exception tables
+already print. That restores the visible budget for nothing.
+
+**One thing tokens fix that is not claimed for them.** `standalone()` is satisfied by any occurrence
+of the digits. My `wanted` reads "Monroe District 2, Lenawee District 5, Ionia District 3 and
+Clinton District 4", so a declaration of value 2, 3, 4 or 5 `in: wanted` would pass on a district
+number. Latent, nobody has done it, and tokens remove the ambiguity by construction rather than by
+care.
+
+**The thousands comma: `{name:,}` is right and does not close the gap.** Two halves. A record that
+moves to a token never calls `standalone()`, so the token's format is the whole answer for it. A
+record that stays on `value` still cannot be declared at 1,000 or more — and the migration refusal
+(referenced by no token AND matching no number in the prose) is exactly what keeps a record on
+`value`, so a comma'd number can never be ADDED on the value form at all. That is a rule and it
+should be stated rather than discovered: after this change the answer to "my number has a comma"
+stops being "you cannot declare it" and becomes "you must use a token". My recommendation is to do
+both — build the matcher's pattern from `f"{v:,}"` and `str(v)` so 1,058 and 1058 each satisfy a
+declaration of 1058 (the digit lookarounds still block 11,058), and let the token carry its format.
+They cover different halves and neither substitutes for the other. Measured on the shipped block:
+167 numbers in reader fields, 19 carrying a comma, and all 15 declarations under 1000.
+
+**Bound the format spec to two values.** `{name}` and `{name:,}` and nothing else. Passing the spec
+through to `format()` accepts `{name:>10,.2f}`, which is an unbounded formatting mini-language in a
+prose file with nothing gating it. Every other part of this vocabulary is deliberately tiny.
+
+**Two refusals I would add beyond your three and Iowa's three.** Every reader-field check runs on
+the RESOLVED text, not READER_MAX alone: `build_coverage_gaps.py` also refuses a hostname, an ISO
+date and a shouting pair in a reader field, and all four are claims about what a reader is served,
+so naming only READER_MAX leaves three checks reading text nobody sees. And a leftover brace fails —
+a `{` with no closing `}`, or a name that is not an identifier. Iowa's byte-identical refusal catches
+a field where NOTHING substituted; it does not catch a field where one token resolved and a stray
+brace shipped to a card beside it.
 
 **2026-09-26 — the vacuous-pass sweep you asked about: I measured it rather than costed it, and
 the answer points at the HARNESSES, not the gates.** Full answer in Open questions; the measurement
