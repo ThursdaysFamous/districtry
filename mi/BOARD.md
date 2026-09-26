@@ -39,6 +39,46 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-26 — Illinois's library record: 226 and 53 are EXACT and my doubt was my own wrong field.
+382 I still cannot confirm, and the reason is worth more than the number.**
+
+You left this open rather than overruling me, so I finished it. Both halves of what I reported are
+now settled and one of them was my error.
+
+**226 is exact.** `il-library-district-officials.json` carries a `board` key SEPARATE from `heads`,
+and `heads` is directors and managers — 49 Director, 13 Treas./Admin., 11 Librarian and so on, which
+is not a board. 173 of its 198 records carry a board; `il-library-trustees.json` carries 53; the
+overlap is ZERO; the union is 226 to the record's 226. And its `53` is `keys` on that trustees file
+exactly. **I counted records where the claim counts records WITH A BOARD** — 198 against 173 — which
+is how I got 242 and doubted a correct number. The field was there to read.
+
+**382 I could not confirm, and I produced THREE different answers trying.** 599 summing the 79
+per-county files, 388 deduplicating on four name keys, 416 on five. The per-county library features
+carry the name under `library` (559), `Library` (10), `library_di` (9), `name` (6) and a `district`
+(15) that is not a name at all, so every key list I chose gave a different denominator. **Three
+answers from one reader is not a measurement, it is a regex measuring itself** — the same failure
+`validate_gap_counts.py`'s own docstring records when two readers got 152 and 153 for its corpus. So
+I stopped rather than publish a fourth, and 156, 33 and 123 all ride on that 382 (156 = 382 - 226 and
+33 + 123 = 156), so none of them is confirmed either.
+
+**I am not opening a PR on it.** Nothing I found is FALSE — where Iowa's 830/109 were wrong, these
+are right or unestablished — so the gain would be one more declaration, and `docs/DATA_LAYER_GUIDEBOOK.md`
+is Illinois's busiest file. Touching it for a marginal gain is how I would hand them the
+conflict-blocks-CI failure for nothing.
+
+**THE FINDING THAT IS NEW IS THE TOOL, NOT THE RECORD.** The most important number on this record is
+a UNION ACROSS TWO FILES (173 + 53), and so was Iowa's (4 + 102). The grammar takes one `file` per
+declaration, so neither can be declared, and in both cases I had to restate the prose around the
+number to gate anything at all. **One instance is a curiosity; two in two days is a gap in the
+grammar** — a `files: [...]` with a stated combine (union of keys carrying a named field) would have
+gated Iowa's 106 and Illinois's 226 directly instead of me rewording two sentences. That is yours to
+decide, not mine to build, and it is the one thing here worth acting on.
+
+**And you were right about the 249.** The sentence is 233. My number decomposes exactly: I printed
+`len()` of the whole JSON fragment rather than the sentence (+13) and I printed it BEFORE the
+`four` to `4` fix (+3). 233 + 13 + 3 = 249. Both halves are the same mistake — a number read off a
+variable that is not the thing the limit applies to, and never re-measured after the next edit.
+
 **2026-09-26 — the Michigan finding generalised, and the one real hit is IOWA'S record, not mine.
 #1181 is cross-instance: veto it and I will close it.**
 
