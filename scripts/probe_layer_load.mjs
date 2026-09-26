@@ -1,58 +1,69 @@
-// Measure how each layer LOADS, in a real browser on a modelled slow network,
-// and write layer-load.json at the repo root: for every layer in every app,
-// how long a reader waits for the selected point's card, for the selected
-// district to light up and for the layer's shapes to be drawn, and how many
-// bytes arrive before each.
+// Measure how each layer LOADS, in a real browser on a throttled network, and
+// write layer-load.json at the repo root: for every layer in every app, how
+// long a reader waits for the selected point's card, for the selected district
+// to light up and for the layer's shapes to be drawn, and how many bytes
+// arrive before each.
 //
 // It is the baseline for the load-optimization plan in
 // docs/OPTIMIZATION_PLAYBOOK.md §10, and the same script measures each phase
 // after it ships, so a claimed saving is a difference between two runs of one
 // method rather than two methods.
 //
-// THE NETWORK IS MODELLED, NOT SAMPLED. A request's wait here would otherwise
-// be the sandbox's route to a county server, which says nothing about a
-// reader's. Every request made after the layer is switched on is held back by
-// a fixed model and then released: one round trip (RTT) plus its compressed
-// size over ONE shared downlink, so two large responses in parallel take as
-// long as they would on a real link. The default is Lighthouse's mobile
-// profile ("Slow 4G": 150 ms, 1.6 Mbps); PROFILE=fast is 40 ms and 10 Mbps.
-// What the model leaves out, stated rather than implied: the SERVER's own time
-// to answer (an ArcGIS query that takes a county server two seconds costs a
-// reader two seconds and costs nothing here), HTTP/2 multiplexing and
-// connection setup beyond one RTT, and the reader's CPU, which is this
-// machine's. So the times compare layers and phases with one another; they do
-// not predict a stopwatch.
+// THE NETWORK IS CHROMIUM'S OWN THROTTLING, NOT THE SANDBOX'S ROUTE. A request's
+// wait would otherwise be this machine's path to a county server, which says
+// nothing about a reader's. So every request the page makes is answered by a
+// local HTTP/2 server started here: the repo's own files served gzipped, as
+// GitHub Pages serves them, and every other host's responses from a copy
+// fetched once through Node. Once the app has booted, the page is throttled
+// with DevTools' network conditions — Lighthouse's mobile profile ("Slow 4G":
+// 150 ms, 1.6 Mbps; PROFILE=fast is 40 ms and 10 Mbps) — which delays each
+// response by the latency and streams every body through one shared downlink,
+// the way a phone on a slow connection receives it.
 //
-// COMPRESSED SIZE is gzip of the body at level 6. Our own host (GitHub Pages)
-// and the government ArcGIS and Socrata servers the apps read all compress
-// JSON; a server that does not would send more.
+// Two earlier drafts of this file modelled the link in JavaScript and were
+// wrong in ways worth recording. The first queued responses one after
+// another, so a 100 KB point query waited behind a 4 MB download asked for a
+// moment earlier, which no browser does; that invented a finding about the
+// statewide TIGERweb layers, whose point queries in fact answer in about a
+// second. The second shared the link fairly but released each body in one
+// piece at the end, so a slow download looked to the app like a stalled one.
+// Real throttling has neither defect.
 //
-// THE REAL RESPONSE IS FETCHED ONCE. Remote bodies are fetched through Node and
-// cached for the run; a measured page whose remote request had to wait on the
-// real network is measured again, so no recorded time includes the sandbox's
-// own route.
+// What it leaves out, stated rather than implied: the SERVER's own time to
+// answer (an ArcGIS query that takes a county server two seconds costs a
+// reader two seconds and costs nothing here), and the reader's CPU, which is
+// this machine's. So the times compare layers and phases with one another;
+// they do not predict a stopwatch. And every other host is served from ONE
+// local origin, so connection setup to a new host is not charged either.
+//
+// A REMOTE RESPONSE IS FETCHED ONCE. A measured page that had to wait on the
+// real network for one is measured again, so no recorded time includes the
+// sandbox's own route.
 //
 // WHAT A PAGE MEASURES. The app boots with the point selected and no layer on,
-// settles, and only then is the one layer switched on and the clock started —
-// so the boot's own fetches (coverage outlines, the gaps panel) are not
-// charged to the layer. The page is left until the card has an answer and the
-// shapes are drawn and nothing has been requested for 2 s, or 120 s.
+// unthrottled, and settles; only then is the page throttled, the one layer
+// switched on and the clock started — so the boot's own fetches (coverage
+// outlines, the gaps panel) are not charged to the layer. The page is left
+// until the card has an answer and the shapes are drawn and nothing has been
+// requested for 2 s, or 120 s.
 //
-//     python3 -m http.server 8000              # serve the repo first
-//     node scripts/probe_layer_load.mjs        # every app
+//     node scripts/probe_layer_load.mjs        # every app (it serves the repo itself)
 //     TAGS=il LAYERS=ward,congress node scripts/probe_layer_load.mjs
 //
 // In a sandbox whose Node reaches the network only through a proxy, run it with
-// NODE_USE_ENV_PROXY=1. BASE_URL overrides the server; CONC the page count.
+// NODE_USE_ENV_PROXY=1. CONC sets the page count. It needs openssl on the PATH
+// for the local server's throwaway certificate.
 
 import { chromium } from "playwright";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { execFileSync } from "node:child_process";
+import { existsSync, mkdtempSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { createSecureServer } from "node:http2";
+import { tmpdir } from "node:os";
+import { extname, join, normalize } from "node:path";
 import { gzipSync } from "node:zlib";
 import { ROOT, anchorOf, EXTRA_POINTS, instances, vendorDir } from "./probe_points.mjs";
 
 const OUT = join(ROOT, "layer-load.json");
-const BASE = (process.env.BASE_URL || "http://localhost:8000").replace(/\/+$/, "") + "/";
 const CONC = +(process.env.CONC || 6);
 const PROFILES = {
   slow4g: { rtt: 150, bps: 1.6e6 },
@@ -75,70 +86,87 @@ function layerIds(tag) {
   return [...m[1].matchAll(/"([^"]+)"/g)].map((x) => x[1]).filter((id) => !ONLY || ONLY.has(id));
 }
 
-const gz = (buf) => (buf && buf.length ? gzipSync(buf, { level: 6 }).length : 0);
+// ---- the local server ---------------------------------------------------------
+const TYPES = { ".json": "application/json", ".js": "application/javascript", ".mjs": "application/javascript",
+  ".css": "text/css", ".html": "text/html; charset=utf-8", ".svg": "image/svg+xml", ".png": "image/png",
+  ".woff2": "font/woff2", ".webmanifest": "application/manifest+json", ".txt": "text/plain" };
+const COMPRESS = new Set([".json", ".js", ".mjs", ".css", ".html", ".svg", ".txt", ".webmanifest"]);
+
+const files = new Map();
+function readRepo(pathname) {
+  if (!files.has(pathname)) {
+    let p = normalize(join(ROOT, decodeURIComponent(pathname)));
+    if (!p.startsWith(ROOT)) { files.set(pathname, null); return null; }
+    if (existsSync(p) && statSync(p).isDirectory()) p = join(p, "index.html");
+    if (!existsSync(p)) files.set(pathname, null);
+    else {
+      const buf = readFileSync(p);
+      const ext = extname(p);
+      files.set(pathname, { buf: COMPRESS.has(ext) ? gzipSync(buf, { level: 6 }) : buf,
+        gz: COMPRESS.has(ext), type: TYPES[ext] || "application/octet-stream" });
+    }
+  }
+  return files.get(pathname);
+}
 
 const remote = new Map();
-function fetchRemote(url, method, body, type) {
-  const key = method + " " + url + " " + (body || "");
-  let hit = remote.has(key);
-  if (!hit) {
+const coldPages = new Set();
+function fetchRemote(url, method, body, type, page) {
+  const key = method + " " + url + " " + (body ? body.toString("utf8") : "");
+  if (!remote.has(key)) {
+    if (page) coldPages.add(page);
     remote.set(key, (async () => {
       try {
-        const res = await fetch(url, { method, body: body || undefined,
-          headers: body ? { "content-type": type || "application/x-www-form-urlencoded" } : {},
+        const res = await fetch(url, { method, body: body && body.length ? body : undefined,
+          headers: body && body.length ? { "content-type": type || "application/x-www-form-urlencoded" } : {},
           signal: AbortSignal.timeout(45000) });
-        const buf = Buffer.from(await res.arrayBuffer());
-        return { status: res.status, buf, type: res.headers.get("content-type") || "", gz: gz(buf) };
+        const raw = Buffer.from(await res.arrayBuffer());
+        return { status: res.status, buf: gzipSync(raw, { level: 6 }), type: res.headers.get("content-type") || "application/json" };
       } catch (e) {
-        return { status: 0, buf: null, type: "", gz: 0, err: String(e).slice(0, 80) };
+        return { status: 0, err: String(e).slice(0, 80) };
       }
     })());
   }
-  return { hit, promise: remote.get(key) };
+  return remote.get(key);
 }
 
-const local = new Map();
-function readLocal(pathname) {
-  if (!local.has(pathname)) {
-    const p = join(ROOT, decodeURIComponent(pathname));
-    if (!existsSync(p)) local.set(pathname, null);
-    else { const buf = readFileSync(p); local.set(pathname, { buf, gz: gz(buf) }); }
+const certDir = mkdtempSync(join(tmpdir(), "probe-load-"));
+execFileSync("openssl", ["req", "-x509", "-newkey", "rsa:2048", "-nodes", "-days", "2",
+  "-keyout", join(certDir, "key.pem"), "-out", join(certDir, "cert.pem"), "-subj", "/CN=localhost"], { stdio: "ignore" });
+const server = createSecureServer({ key: readFileSync(join(certDir, "key.pem")),
+  cert: readFileSync(join(certDir, "cert.pem")), allowHTTP1: true }, async (req, res) => {
+  const cors = { "access-control-allow-origin": "*", "access-control-allow-headers": "*",
+    "access-control-allow-methods": "GET, POST, OPTIONS" };
+  if (req.method === "OPTIONS") { res.writeHead(204, cors); return res.end(); }
+  const u = new URL(req.url, "https://localhost");
+  if (u.pathname === "/__remote") {
+    const chunks = [];
+    for await (const c of req) chunks.push(c);
+    const r = await fetchRemote(u.searchParams.get("u"), req.method, Buffer.concat(chunks),
+      req.headers["content-type"], req.headers["x-probe-page"]);
+    if (!r.buf) { res.writeHead(502, cors); return res.end(); }
+    res.writeHead(r.status, { ...cors, "content-type": r.type, "content-encoding": "gzip" });
+    return res.end(r.buf);
   }
-  return local.get(pathname);
-}
+  const f = readRepo(u.pathname);
+  if (!f) { res.writeHead(404); return res.end(); }
+  res.writeHead(200, { "content-type": f.type, ...(f.gz ? { "content-encoding": "gzip" } : {}) });
+  res.end(f.buf);
+});
+await new Promise((r) => server.listen(0, "127.0.0.1", r));
+const ORIGIN = `https://localhost:${server.address().port}`;
 
-const typeOf = (p) => p.endsWith(".json") ? "application/json" : p.endsWith(".js") ? "application/javascript"
-  : p.endsWith(".css") ? "text/css" : p.endsWith(".html") ? "text/html" : "application/octet-stream";
-
+// ---- one page -----------------------------------------------------------------
+let pageSeq = 0;
 async function wire(page, tag, net) {
   const dir = vendorDir(tag);
-  const origin = new URL(BASE).origin;
-  // One downlink per page: a response starts arriving one RTT after it was
-  // asked for, and cannot finish before the link has delivered everything
-  // queued ahead of it.
-  let linkFree = 0;
-  function hold(bytes) {
-    const now = Date.now();
-    const start = now + NET.rtt;
-    const finish = Math.max(start, linkFree) + (bytes * 8 * 1000) / NET.bps;
-    linkFree = finish;
-    return finish - now;
-  }
   await page.route(/^https?:\/\//, async (route) => {
     const req = route.request();
     const u = new URL(req.url());
-    const armed = net.armed;
-    const t = armed ? Date.now() - net.t0 : null;
-    if (u.origin === origin) {
-      const f = u.pathname.endsWith("/") ? null : readLocal(u.pathname);
-      if (!f || !armed) return route.continue();
-      const rec = { t, host: "(this site)", path: u.pathname, bytes: f.gz, done: null };
-      net.requests.push(rec);
-      await new Promise((r) => setTimeout(r, hold(f.gz)));
-      rec.done = Date.now() - net.t0;
-      return route.fulfill({ status: 200, body: f.buf, contentType: typeOf(u.pathname) });
-    }
+    if (u.origin === ORIGIN) return route.continue();
     if (/cdnjs\.cloudflare\.com$/.test(u.hostname)) {
+      // The sandbox's Chromium cannot reach cdnjs; the SessionStart hook vendors
+      // Leaflet and MapLibre per instance. Absent (CI), let it through.
       const f = u.pathname.split("/").pop();
       if (existsSync(join(dir, f)))
         return route.fulfill({ body: readFileSync(join(dir, f)),
@@ -146,50 +174,53 @@ async function wire(page, tag, net) {
       return route.continue();
     }
     if (SKIP_HOST.test(u.hostname)) return route.abort();
-    const { hit, promise } = fetchRemote(req.url(), req.method(), req.postData(), req.headers()["content-type"]);
-    if (!armed) {
-      const r = await promise;
-      if (!r.buf) return route.abort();
-      return route.fulfill({ status: r.status, body: r.buf,
-        headers: { "content-type": r.type || "application/json", "access-control-allow-origin": "*" } });
-    }
-    const rec = { t, host: u.hostname, path: u.pathname, bytes: 0, status: 0, done: null };
-    net.requests.push(rec);
-    const asked = Date.now();
-    const r = await promise;
-    if (!hit && Date.now() - asked > NET.rtt) net.cold = true; // waited on the real network: measure again
-    rec.bytes = r.gz; rec.status = r.status;
-    const wait = hold(r.gz) - (Date.now() - asked);
-    if (wait > 0) await new Promise((res) => setTimeout(res, wait));
-    rec.done = Date.now() - net.t0;
-    if (!r.buf) return route.abort();
-    return route.fulfill({ status: r.status, body: r.buf,
-      headers: { "content-type": r.type || "application/json", "access-control-allow-origin": "*" } });
+    return route.continue({ url: `${ORIGIN}/__remote?u=${encodeURIComponent(req.url())}`,
+      headers: { ...req.headers(), "x-probe-page": net.id } });
   });
+  page.on("request", (req) => {
+    if (!net.armed) return;
+    const u = new URL(req.url());
+    if (SKIP_HOST.test(u.hostname) || /cdnjs\.cloudflare\.com$/.test(u.hostname)) return;
+    net.byReq.set(req, net.requests.push({ t: Date.now() - net.t0,
+      host: u.origin === ORIGIN ? "(this site)" : u.hostname, path: u.pathname, bytes: 0, done: null }) - 1);
+  });
+  const finish = async (req, failed) => {
+    const i = net.byReq.get(req);
+    if (i === undefined) return;
+    const rec = net.requests[i];
+    rec.done = Date.now() - net.t0;
+    if (failed) rec.failed = true;
+    else try { rec.bytes = (await req.sizes()).responseBodySize; } catch { /* page closed */ }
+  };
+  page.on("requestfinished", (req) => finish(req, false));
+  page.on("requestfailed", (req) => finish(req, true));
 }
 
 const FIND_EXPORTS = "Object.keys(window).map((k) => window[k]).find((v) => v && typeof v === 'object' && typeof v.layerLoadState === 'function')";
 
-async function quiet(net, ms, max) {
-  const start = Date.now();
-  while (Date.now() - start < max) {
-    await new Promise((r) => setTimeout(r, 250));
-    const pending = net.requests.some((x) => x.done === null);
-    const last = net.requests.length ? Math.max(...net.requests.map((x) => x.done ?? Date.now() - net.t0)) + net.t0 : start;
-    if (!pending && Date.now() - last > ms && Date.now() - start > ms) return;
-  }
+async function quiet(page, ms, max) {
+  // Boot is unthrottled and unrecorded; wait for the network to go idle.
+  try { await page.waitForLoadState("networkidle", { timeout: max }); } catch { /* keep going */ }
+  await new Promise((r) => setTimeout(r, ms));
 }
 
 async function measureOnce(browser, job) {
-  const ctx = await browser.newContext({ serviceWorkers: "block", viewport: { width: 1200, height: 800 } });
+  const ctx = await browser.newContext({ serviceWorkers: "block", ignoreHTTPSErrors: true,
+    viewport: { width: 1200, height: 800 } });
   const page = await ctx.newPage();
-  const net = { armed: false, t0: 0, requests: [], cold: false };
+  const net = { id: String(++pageSeq), armed: false, t0: 0, requests: [], byReq: new Map() };
+  coldPages.delete(net.id);
   await wire(page, job.tag, net);
   const out = { error: null };
   try {
-    await page.goto(`${BASE}${job.tag}/#point=${job.pt.lat},${job.pt.lng}`, { waitUntil: "domcontentloaded" });
+    await page.goto(`${ORIGIN}/${job.tag}/#point=${job.pt.lat},${job.pt.lng}`, { waitUntil: "domcontentloaded" });
     await page.waitForFunction(`!!(${FIND_EXPORTS})`, null, { timeout: 45000 });
-    await quiet(net, 2000, 30000);
+    await quiet(page, 1500, 30000);
+    const cdp = await ctx.newCDPSession(page);
+    await cdp.send("Network.enable");
+    await cdp.send("Network.emulateNetworkConditions", { offline: false, latency: NET.rtt,
+      downloadThroughput: NET.bps / 8, uploadThroughput: 750000 / 8 });
+    coldPages.delete(net.id);
     net.armed = true;
     net.t0 = Date.now();
     const clicked = await page.evaluate((id) => {
@@ -216,6 +247,7 @@ async function measureOnce(browser, job) {
       }
       await new Promise((r) => setTimeout(r, 50));
     }
+    await new Promise((r) => setTimeout(r, 100)); // let the last sizes() settle
     const before = (t) => net.requests.filter((x) => t !== null && x.done !== null && x.done <= t);
     const sum = (rs) => rs.reduce((a, x) => a + x.bytes, 0);
     Object.assign(out, {
@@ -232,9 +264,10 @@ async function measureOnce(browser, job) {
       largest: net.requests.slice().sort((a, b) => b.bytes - a.bytes).slice(0, 3)
         .map((x) => ({ host: x.host, path: x.path.slice(0, 120), bytes: x.bytes })),
       unfinished: net.requests.filter((x) => x.done === null).length,
+      failed_requests: net.requests.filter((x) => x.failed).length,
     });
   } catch (e) { out.error = String(e).slice(0, 200); }
-  out.cold = net.cold;
+  out.cold = coldPages.has(net.id);
   await ctx.close();
   return out;
 }
@@ -242,7 +275,7 @@ async function measureOnce(browser, job) {
 async function visit(browser, job) {
   let r = await measureOnce(browser, job);
   // A remote response that had to come from the real network the first time
-  // is cached now; measure again so only the model decides the waits.
+  // is cached now; measure again so only the throttling decides the waits.
   if (r.cold && !r.error) r = await measureOnce(browser, job);
   return r;
 }
@@ -270,11 +303,12 @@ await Promise.all(Array.from({ length: CONC }, async () => {
   }
 }));
 await browser.close();
+server.close();
 console.log("");
 
 // ---- write ------------------------------------------------------------------
 const prior = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : { apps: {} };
-const sameMethod = prior.network && prior.network.profile === PROFILE_NAME;
+const sameMethod = prior.network && prior.network.profile === PROFILE_NAME && prior.network.method === "chromium";
 const apps = sameMethod ? { ...prior.apps } : {};
 for (const tag of TAGS) {
   const layers = ONLY && apps[tag] ? { ...apps[tag].layers } : {};
@@ -288,7 +322,8 @@ for (const tag of TAGS) {
 if (problems) { console.log(`probe-layer-load: ${problems} problem(s) — refusing to write.`); process.exit(1); }
 const doc = {
   measured: new Date().toISOString().slice(0, 10),
-  network: { profile: PROFILE_NAME, rtt_ms: NET.rtt, downlink_bps: NET.bps, bytes: "gzip -6 of each body" },
+  network: { method: "chromium", profile: PROFILE_NAME, rtt_ms: NET.rtt, downlink_bps: NET.bps,
+    bytes: "encoded body size as received (gzip -6 for this site and for every copied remote response)" },
   apps: Object.fromEntries(Object.keys(apps).sort().map((k) => [k, apps[k]])),
 };
 writeFileSync(OUT, JSON.stringify(doc, null, 1) + "\n");
