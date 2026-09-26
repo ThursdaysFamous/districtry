@@ -7,8 +7,10 @@
 //
 // The config section below is this fork's METRO block (docs/ENGINE_SYNC.md):
 // a per-city cache name, the shell assets, and the fork's data/app/*.json
-// files split by caching policy — ~static boundary geometry (cache-first,
-// precached) vs officeholder rosters (network-first, never stale). Every file
+// files split by caching policy — ~static boundary geometry (cache-first, cached
+// the FIRST TIME A LAYER USES IT rather than at install, which #1197 changed on
+// 2026-09-26 and this comment went on describing the old way) vs officeholder
+// rosters (network-first, never stale). Every file
 // under data/app/ must appear in exactly one of the two data lists;
 // validate_index.py enforces it. The handler logic below the config is shared
 // engine and stays byte-identical across every metro fork.
