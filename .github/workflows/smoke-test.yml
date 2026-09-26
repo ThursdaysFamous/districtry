@@ -1189,6 +1189,20 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/build_legislative_boundaries.py --check
 
+      # The same relation, the same defect, a different state. Iowa Code 42.3
+      # composes each senatorial district out of two representative districts,
+      # so this is the same exact-vertex question as the step above — and Iowa
+      # had the same break for the same reason, measured 2026-09-26 on the full
+      # state: all FIFTY pairings had Senate vertices lying on no House line,
+      # the worst pairing 93 of them, because each chamber was simplified in its
+      # own mapshaper run at its own retain percentage. Two instances needing
+      # the same gate is why it is a step each rather than one sweep: each
+      # builder owns its own NESTING table and its own chambers, and a shared
+      # runner would have to be told which files belong to which state anyway.
+      - name: IA House districts still tile their Senate district exactly
+        if: ${{ !cancelled() }}
+        run: python3 ia/scripts/build_legislative_boundaries.py --check
+
       # Nine Illinois data files carry a top-level `generated` stamp, so each
       # weekly workflow opens a bot PR whether or not an officeholder moved.
       # The stamp is right and stays; what the nine builders now print beside it

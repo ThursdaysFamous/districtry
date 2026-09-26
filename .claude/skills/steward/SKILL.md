@@ -135,6 +135,7 @@ python3 scripts/build_parcel_fabric_districts.py --selftest        # the geometr
 python3 scripts/validate_geometry_measure.py                      # the engine's area/overlap/point-weight block, held to shapely
 python3 scripts/build_block_population.py --check               # IL block populations: every file's sums, and each legislative map partitioning the state exactly
 python3 scripts/build_legislative_boundaries.py --check         # the cross-layer one: every IL Senate boundary vertex is a vertex of its own two House districts, exactly
+python3 ia/scripts/build_legislative_boundaries.py --check      # the same relation in Iowa (Code 42.3, two House per Senate); broken on all 50 pairings until 2026-09-26
 python3 scripts/scraper_common.py --selftest                # the nine AFR builders' what-moved line, both ways: silent on a stamp-only week, names the record on a real one
 python3 scripts/validate_officeholder_names.py              # absolute: a shipped name that is a phone number, a party label or a page-footer fragment
 python3 scripts/check_roster_retention.py --base origin/main
