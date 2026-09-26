@@ -35,6 +35,59 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-26 (later still, after #1200 went green). FOUR FIGURES BEHIND TASK #57 ARE
+WRONG, THREE OF THEM IN THE TREE, AND THE DECISION THEY SUPPORT SURVIVES ANYWAY.**
+Researching #57 while #1200 waited on review, I went to check the premise rather
+than the plan, and the premise does not say what the record claims.
+
+**THE CITED RUN IS THE WRONG RUN, THE WRONG WORKFLOW AND THE WRONG DURATION.** The
+task read "run 34697791129 spent 2m39s proving" that a ladder cannot clear this
+failure. Measured: `34697791129` is the CIRCUIT-COURT job's own failure, **~57
+seconds** (13:55:51→13:56:48 on 09-12), a SINGLE `urlopen` at line 89 raising
+`<urlopen error timed out>`, exit 1 — one attempt, no ladder. The 2m39s run is
+`34699564969`, the APPEALS job, 14:32:04→14:34:43, which is three tries at 45 s
+plus 2 s and 4 s sleeps. Two manual dispatches 36 minutes apart on one day, which
+is how they came to be one sentence. **The conflation matters because it makes the
+appeals finding look as though it had been measured on this job.** It has not:
+this file has never had a ladder, so no second attempt has ever been tried here.
+
+**THE CONCLUSION STILL HOLDS, ON THE OTHER EVIDENCE.** `wi_circuit_judges_scraper.py`'s
+header already carries the real measurement — curl from a failing runner returns
+`host_ip` EMPTY at `connect=0.000s`, so packets are DROPPED rather than refused,
+and "which runner a job draws is the whole variable" — and already states the
+remedy, "the remedy for a failed run is to RE-RUN it", having ruled out three
+routes so nobody builds them. All attempts in one job share one egress address, so
+a ladder cannot clear a dropped runner whatever the job's success rate. No
+in-process ladder, as agreed; the reason is the egress argument and never that run.
+
+**AND BOTH RUN-RATE FIGURES IN THAT HEADER ARE NOW STALE, PLUS THE SENTENCE A
+CEILING RESTS ON.** It says "appeals is 2 green of 7 and circuit court 4 of 5".
+Counted off the full run lists: **appeals 3 of 8 overall, 1 of 5 scheduled;
+circuit court 5 of 6 overall, 5 of 5 scheduled**, its one failure being that
+manual dispatch. **Appeals' 2026-09-23 scheduled run SUCCEEDED, which is its first
+scheduled success** — so `wi_coa_staleness.py`'s "succeeds on roughly two runs in
+seven", the sentence its 6% risk estimate for a 60-day window is derived from, is
+stale too. I counted with a script rather than by eye, which is how I caught
+myself: reading the list I had appeals at 4 of 8, and it is 3. **A run-rate in a
+comment decays every week by construction, and nothing here gates one.**
+
+**ONE THING TO WEIGH BEFORE (a) IS BUILT, WHICH IS NOT MINE TO DECIDE.**
+Forgiveness is a remedy for a job that cannot get green, and on these numbers
+circuit court is green on every scheduled run while appeals is green on one of
+five. Giving the healthy job exit-75 forgiveness opens exactly the hole
+`wi_coa_staleness.py`'s own docstring names — a job that is green whenever it
+cannot ask will stay green forever if it never asks again — so the staleness
+ceiling has to land in the SAME change, not after it. `wi_coa_staleness.py` also
+takes `WORKFLOW` as a module CONSTANT, so (a) either parameterises it or adds a
+sibling; parameterising keeps one reader of the run-history API and one selftest,
+and a sibling is the two-readers defect this repo keeps paying for.
+
+**THE THREE TREE-SIDE FIGURES ARE NOT FIXED HERE AND THAT IS THE BRANCH, NOT A
+JUDGEMENT.** #1200 is open on my only branch, so the corrections ride the change
+that builds #57. Reported to the manager and written onto the task as well, so the
+fix is not waiting on this paragraph being re-read.
+
+
 **2026-09-26 (later). #1193 AND #1199 ARE BOTH MERGED AND VERIFIED BY CONTENT, AND
 #1200 IS OPEN FOR A COMMENT I WROTE WRONG MYSELF HOURS EARLIER.** The interval=7
 rebuild landed as `b0835d4` and the offline `--check` as `e6d4856`; I checked each on
