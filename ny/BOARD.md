@@ -45,6 +45,75 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, THE FIVE FALSE `sources.html` ROWS ARE MEASURED, AND THE RECORD OF
+THEM WAS WRONG IN TWO PLACES.** Measured against the shipped tree rather than
+restated, which is why this entry exists: one of the five is HALF true and the
+record had called it wholly false, and its number does not reproduce either.
+Each row is one string in `ny/metro-worksheet.json` plus a regenerate.
+
+1. **`fire-station.people` — false twice over.** It says "The city's firehouse
+   dataset carries no phone number, which is a gap at the source rather than
+   something the card withholds." This layer does not read the city's dataset:
+   `loadFireStations` reads `services6.arcgis.com/EbVsqZ18sv1kVJ3k/…/FireStations/0`,
+   the STATE's layer, and the card's own `item()` appends the phone to the note.
+   The instance's `nyc-amenity-phones` gap record was already narrowed to
+   libraries, so the provenance page is the last copy of a retired claim —
+   **two readers of one question, again.** The replacement carries no percentage:
+   a note with a number in it is one that rots.
+2. **`borough.people` — false.** It says borough-wide officeholders "are
+   surfaced on the Borough President and District Attorney cards rather than
+   here", and this card names the **County Clerk**, badged and noted
+   "appointed", with the office address and a link to it. Measured on
+   `borough-officials.json`: a clerk NAME ships for **2 of 5** boroughs (Bronx,
+   Brooklyn), an address for **4 of 5** (not Staten Island).
+3. **`police-precinct.people` — false in both of its claims.** "Where the NYPD
+   publishes no commander the card says so rather than guessing": the render is
+   `if (result.commander)` with **no else**, so the card omits the row in
+   silence. "about four of the 78 at any time": measured today,
+   `nypd-precinct-info.json` names a commander for **78 of 78** — and
+   `MIN_COMMANDERS = 60` in `build_nypd_roster.py` lets **18** go missing
+   without the builder refusing to write.
+4. **`nys-school-district.answers` — false for 14 districts, and it names
+   item 4's real defect.** "Outside New York City this is the district that runs
+   the public schools and elects a board": **11 districts sit >98% inside 3
+   central high school districts** — Bellmore-Merrick (4), Sewanhaka Central (4)
+   and Valley Stream Central (3) — so in those places two districts run the
+   schools and two boards are elected.
+5. **`municipality.answers` — HALF true, and the half the record got wrong is
+   the one it was surest of.** "Cities and towns together cover every part of
+   New York with no gaps and no overlaps." **Overlaps measured: 0 pairs, 0
+   area**, so that half is exactly right and must not be retracted. The gap is
+   **7.113% of the state outline** (the record said 6.84%), and it is water:
+   **98.7% of it is two pieces, Lake Ontario and Lake Erie**, and almost all the
+   rest is the Atlantic and Long Island Sound; 535 seam slivers together are
+   **0.0097%** of it. So the missing word is LAND, not a retraction. **THE
+   RECORD HAD BOTH HALVES FALSE AND A NUMBER THAT DOES NOT REPRODUCE, WHICH IS
+   WHY THE INSTRUCTION WAS TO MEASURE.**
+
+**ITEM 4'S STATED PREMISE DOES NOT HOLD: `SED_CODE_1` CANNOT IDENTIFY THE TIER
+FOR THE THREE DISTRICTS IT IS MEANT TO SEPARATE.** Two of the three central high
+school districts carry `SED_CODE_1: None` (Bellmore-Merrick, Sewanhaka Central),
+and the third COLLIDES with one of its own components — VALLEY STRM CENTRAL and
+VALLEY STR HEMP 30 both ship `280230020000`. A second collision exists
+elsewhere (CHEEKTOWAGA-SLOAN and CHEEKTOWAGA, `140701060000`), and 4 of the 716
+features carry no code at all. Whatever separates the tiers, it is not that
+column alone.
+
+**AND THE THREE ARE UNREACHABLE FOR A MEASURED REASON, not an inferred one.**
+`findFeatureContaining` breaks on the FIRST containing feature in file order.
+The three central districts sit at feature indices 649, 659 and 660; their
+components sit at 1, 3, 32 and so on. Measured at a representative point inside
+each of BELLMORE, ELMONT and VALLEY STR HEMP 30, the containing set in file
+order is `[component, central]` every time, so **no point in New York resolves to
+any of the three.** They ship and answer nobody.
+
+**TWO CODE DEFECTS FOUND WHILE MEASURING, both the stranded-data shape.** The
+NYPD card has no no-commander branch, above. And **Queens's County Clerk phone
+never renders**: `borough-officials.json` carries `(718) 298-0601` for Queens
+with no clerk name, and the card hangs the phone on the person row, which is
+guarded by `if (clerk && clerk.name)` — so a published telephone number is in
+the shipped file and on no card.
+
 **2026-09-26, ITEM 3 MEASURED BUT NOT BUILT — recorded here because the
 measurement is what a reclaimed container loses.** Nothing is committed for it:
 one branch stands and #1184 is waiting to merge, so item 3 starts on a branch
