@@ -158,7 +158,7 @@
       "area_rank": 3,
       "rank_note": "716 school districts statewide; the city's own 32 Community School Districts are a different concept and stay on their own layer",
       "source": {
-        "answers": "Which New York school district contains the point. Outside New York City this is the district that runs the public schools and elects a board; inside the city the Community School District layer answers instead.",
+        "answers": "Which New York school district contains the point. Outside New York City this is the district the point sits in, which elects its own board; inside the city the Community School District layer answers instead. Eleven districts on Long Island sit inside three central high school districts, which run the high schools for all of them, and this layer names only the smaller district.",
         "boundary": [
           {
             "label": "New York State Education Department school district boundaries, published through NYS Information Technology Services, dissolved to one polygon per district and shipped with the app",
@@ -176,7 +176,7 @@
       "area_rank": 4,
       "rank_note": "995 cities and towns, which tile the state; villages sit inside towns and are their own layer",
       "source": {
-        "answers": "Which city or town contains the point. Cities and towns together cover every part of New York with no gaps and no overlaps.",
+        "answers": "Which city or town contains the point. Cities and towns together cover every part of New York's land with no gaps and no overlaps; a point out on Lake Erie, Lake Ontario or Long Island Sound is in neither.",
         "boundary": [
           {
             "label": "New York State Civil Boundaries, the combined cities and towns layer published by NYS Information Technology Services Geospatial Services, pre-built and shipped with the app",
@@ -223,7 +223,7 @@
             "url": "https://data.cityofnewyork.us/d/gthc-hcne"
           }
         ],
-        "people": "Borough-wide officeholders ship with the app and are surfaced on the Borough President and District Attorney cards rather than here.",
+        "people": "The card names the borough's County Clerk, who is appointed rather than elected, where the state courts' own directory publishes one — two of the five boroughs today. The Borough President and the District Attorney are elected and have cards of their own.",
         "applies": "New York City."
       }
     },
@@ -495,7 +495,7 @@
             "url": "https://data.cityofnewyork.us/d/y76i-bdw7"
           }
         ],
-        "people": "Commanding officers are re-scraped weekly from the NYPD's own precinct pages. Where the NYPD publishes no commander the card says so rather than guessing — about four of the 78 at any time.",
+        "people": "Commanding officers are re-scraped weekly from the NYPD's own precinct pages. Where the NYPD publishes none, the card says the precinct is listed without a commander rather than guessing.",
         "applies": "New York City."
       }
     },
@@ -657,7 +657,7 @@
             "url": "https://services6.arcgis.com/EbVsqZ18sv1kVJ3k/arcgis/rest/services/FireStations/FeatureServer/0"
           }
         ],
-        "people": "No roster is joined. The city's firehouse dataset carries no phone number, which is a gap at the source rather than something the card withholds.",
+        "people": "No roster is joined — a firehouse has no single officeholder to name. The state's layer carries a telephone number for most stations and the card prints it beside the address.",
         "applies": "All of New York State."
       }
     },
