@@ -168,6 +168,16 @@ def measured(record, entry, where):
         return None
     if "files" in entry:
         return combined(entry, where)
+    stray = [k for k in ("combine", "field", "under", "overlap") if k in entry]
+    if stray:
+        # A combine-only key on a `file` or `self` entry does NOTHING, and an
+        # `overlap` that does nothing reads exactly like a guard that is held.
+        # That is the same silent-no-op class the absent-field refusal exists
+        # for, one level out.
+        fail("%s: declares %s without `files`, where %s no effect at all"
+             % (where, " and ".join(repr(k) for k in stray),
+                "they have" if len(stray) > 1 else "it has"))
+        return None
     if "self" in entry:
         key = entry["self"]
         if key not in record:
@@ -263,10 +273,21 @@ def combined(entry, where, root=None):
 
     THE GRAMMAR IS DELIBERATELY ONE COMBINE. `union` is what two records in two
     days needed — Iowa's 4 + 102 named cities and Illinois's 173 + 53 libraries
-    naming a board — and each is only correct because the two sides are
-    DISJOINT. A silent overlap turns a union into a double count, which is the
-    same defect the union exists to fix one level up, so an overlap must be
-    declared before it is allowed.
+    naming a board.
+
+    WHAT THE OVERLAP GUARD ACTUALLY BUYS, stated precisely because the obvious
+    rationale is wrong about this code: the measurement below is a TRUE union
+    of key sets, so it never double-counts and an undeclared overlap could not
+    make it. The author's arithmetic is what overlaps break. Both records got
+    their number by adding two counts in their head, and that addition is only
+    right while the sides are disjoint. Two things follow. A value that stops
+    matching is caught by the value check anyway, but with a message about the
+    prose rather than about the cause. And an overlap can APPEAR WITHOUT MOVING
+    THE UNION — one file gaining a key the other already had, while another key
+    arrives elsewhere — which no value check can see, because the number is
+    still right and the sources have quietly stopped meaning what they meant.
+    So the overlap is declared, and a change to it is a failure a reader can
+    act on.
     """
     root = REPO_ROOT if root is None else root
     files = entry["files"]
@@ -301,10 +322,10 @@ def combined(entry, where, root=None):
     declared = entry.get("overlap", 0)
     if len(overlap) != declared:
         fail("%s: the named files share %d key(s) carrying %r and the entry "
-             "declares %d — a union over overlapping sources double-counts "
-             "unless the overlap is stated%s"
-             % (where, len(overlap), field, declared,
-                "" if overlap else ""))
+             "declares %d — the union itself is measured and stays right, but "
+             "the prose number was reached by adding the sides together, which "
+             "only holds while they are disjoint. State the overlap."
+             % (where, len(overlap), field, declared))
         return None
 
     union = set()
@@ -489,6 +510,26 @@ def _selftest():
                          "files": [A, "%s/gone.json" % inst]})
         check(val is None and any("not in the tree" in m for m in said),
               "a combine naming a path that has left the tree is refused")
+
+        # A combine-only key on a `file` entry does nothing, and an `overlap`
+        # that does nothing reads exactly like a guard that is held. Checked
+        # through measured(), because that is where the branch lives.
+        def run_measured(entry):
+            """measured() with a recording fail; returns its messages."""
+            global failures
+            keep, failures = failures, []
+            try:
+                measured({}, entry, "selftest")
+            except Stop:
+                pass
+            said, failures = failures, keep
+            return said
+
+        said = run_measured({"file": "%s/a.json" % inst, "metric": "keys",
+                             "overlap": 2})
+        check(any("without `files`" in m for m in said),
+              "a combine-only key on a non-combine entry is refused rather "
+              "than silently doing nothing")
 
     print("selftest: %d failure(s)" % len(failures), file=sys.stderr)
     return 1 if failures else 0
