@@ -36,6 +36,8 @@ reported as:
     SILENT   — old enough to have run, and never has
     DISABLED — switched off, so it is not refreshing anything
     NEW      — added too recently for its cron to have fired (not a problem)
+    ON-DEMAND— it declares no schedule at all, so it has no cadence to be late
+               against; watched for a red run and never for staleness
     OK       — succeeded within its cadence
 
 FAILING and STALE overlap constantly and that is intentional: failing once is a
@@ -62,6 +64,21 @@ reported as NEW and never as a problem. It also carries `state`, which is worth
 watching for its own reason: GitHub disables scheduled workflows after 60 days
 of repository inactivity, and a disabled workflow is not failing, not stale, and
 not running.
+
+A WORKFLOW WITH NO SCHEDULE CANNOT BE STALE, and verify-google-api-access.yml is
+why this verdict exists. It is a MANUAL diagnostic — `on: workflow_dispatch` and
+nothing else, run by hand after rotating the Google key — and `cadence_days`
+returns None for a file with no cron, which the staleness clock then read as the
+7-day default: `limit = (cadence or 7) * 2 + 2`. So it went STALE 16 days after
+its last hand-run, held the tracking issue open on a row nobody could clear
+except by dispatching a diagnostic for no reason, and that is exactly the
+wallpaper this file's own closing step warns about — an issue that never closes
+is one the next real failure lands on unread. A cron-less workflow is reported
+ON-DEMAND instead: still FAILING if its latest run failed, because a dispatch
+that errors is a real credential problem, and never stale, because there is no
+schedule to be late for. The test is the workflow's own trigger set rather than a
+name on a list, so the next manual diagnostic is classified right on the day it
+ships.
 
 NO EXPECTED-FAILURE LIST, AND THAT IS A MEASUREMENT NOT AN OVERSIGHT. The two
 counties known to block every automated client — Kendall and McHenry — do NOT
@@ -221,6 +238,8 @@ def classify(runs, cadence, now, created=None, state=None, code_at=None):
         if young:
             return ("NEW", "added %d day(s) ago; its cron has not come round yet"
                     % (now - created).days)
+        if cadence is None:
+            return ("ON-DEMAND", "no schedule — run by hand; never dispatched")
         return ("SILENT", "no completed run on record")
 
     latest = completed[0]
@@ -246,6 +265,11 @@ def classify(runs, cadence, now, created=None, state=None, code_at=None):
                     "that run — the next scheduled run is the first to test it"
                     % code_at.date().isoformat())
         return ("FAILING", detail)
+    # No cron at all: there is no cadence to be late against, so the staleness
+    # clock above (which defaults a cron-less file to 7 days) says nothing.
+    if cadence is None:
+        return ("ON-DEMAND", "no schedule — run by hand; last success %s"
+                % ("never" if age is None else "%d days ago" % age))
     if stale and young:
         return ("NEW", "added %d day(s) ago; not enough history to judge"
                 % (now - created).days)
@@ -322,11 +346,13 @@ def main():
         rows.append((verdict, fn, name, detail, url))
 
     order = {"FAILING": 0, "DISABLED": 1, "STALE": 2, "SILENT": 3,
-             "UNPROVEN": 4, "NEW": 5, "OK": 6}
+             "UNPROVEN": 4, "NEW": 5, "ON-DEMAND": 6, "OK": 7}
     rows.sort(key=lambda r: (order[r[0]], r[1]))
     # NEW is reported for context but never counts as something to act on — a
     # county that shipped this week has done nothing wrong.
-    bad = [r for r in rows if r[0] not in ("OK", "NEW")]
+    # ON-DEMAND joins NEW as reported-for-context: a hand-run diagnostic that has
+    # not been hand-run is not a frozen roster and must not hold the issue open.
+    bad = [r for r in rows if r[0] not in ("OK", "NEW", "ON-DEMAND")]
     # UNPROVEN is shown but never fails the check: the fix is already in the
     # tree and the next scheduled run is what settles it.
     status = "fail" if any(r[0] in ("FAILING", "DISABLED") for r in rows) else (
@@ -336,9 +362,10 @@ def main():
     tally = lambda v: sum(1 for r in rows if r[0] == v)                # noqa: E731
     lines.append("Watched %d refresh workflow(s): %d OK, %d failing, %d disabled, "
                  "%d stale, %d never run, %d awaiting a first run after a fix, "
-                 "%d too new to judge.%s" % (
+                 "%d too new to judge, %d run by hand.%s" % (
                      len(rows), tally("OK"), tally("FAILING"), tally("DISABLED"),
                      tally("STALE"), tally("SILENT"), tally("UNPROVEN"), tally("NEW"),
+                     tally("ON-DEMAND"),
                      " %d unreadable." % len(unreadable) if unreadable else ""))
     lines.append("")
     if bad:
