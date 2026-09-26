@@ -1722,6 +1722,35 @@ detail into `blocker`.
       "why": "Each council publishes its own members on its own site, and there is no single list covering all thirty-two, so this app has nothing it can read for every district.",
       "blocker": "MEASURED 2026-09-19 from the shipped tree and the scraper. ny/data/app/cec-members.json is the literal empty object and has never held a record; the card degrades to the council page and names nobody, which is the honest behaviour and is why no gate fired. The scraper (ny/scripts/cec_scraper.py) records the cause: the Department of Education DECENTRALISED the member listings across thirty-two independent council sites — cec3.org, cec14.org, several Department of Education Google Sites — with no uniform URL pattern and no dataset on the city's open-data portal, so its discovery walk finds nothing and build_cec_roster.py keeps the placeholder. THE PRECISE WORDING MATTERS AND WAS GOT WRONG FIRST: an earlier note in this repository said the source \"is gone\". It is not. The members ARE published, on thirty-two sites, and are simply not reachable by one scraper — which is a different blocker with a different fix, and \"gone\" would have justified deleting the weekly job rather than pointing it somewhere. ny-update-cec-roster.yml still installs Playwright and Chromium every Wednesday to run that walk. NOT YET ASKED.",
       "wanted": "One list of Community Education Council members covering all thirty-two districts, or the thirty-two council sites named in one place so each can be read."
+    },
+    {
+      "id": "nyc-county-clerk-names",
+      "concept": "County Clerk",
+      "area": "New York City",
+      "counties": [
+        "manhattan",
+        "queens",
+        "staten-island"
+      ],
+      "kind": "data-quality",
+      "layer": "borough",
+      "summary": "3 of the 5 borough cards name no County Clerk.",
+      "why": "The court system publishes each clerk's office and address but the incumbent's name in only two boroughs, and its site now answers this project with a challenge page rather than the page itself.",
+      "blocker": "MEASURED 2026-09-26 while auditing what the borough card names, against the shipped ny/data/app/borough-officials.json: a clerk is named in 2 of the 5 boroughs (Bronx ‘Hon. Ischia Bravo’, Brooklyn ‘Hon. Nancy T. Sunshine’) and not in Manhattan, Queens or Staten Island, which carry the office link and — bar Staten Island — an address. The upstream is the operator-maintained ny/scripts/borough_officials_source.json, whose own `_verified` note records the finding this gap rests on: County Clerks checked 2026-07-20 on each office's nycourts.gov page, where only Bronx and Kings publish the incumbent. NYC County Clerks are APPOINTED by the Appellate Division, so there is no certified election return to fall back on the way an Illinois county board has. THE COURT SYSTEM'S SITE IS NOW BEHIND A MANAGED CHALLENGE, so that 2026-07-20 route cannot be re-read at all: GET https://www.nycourts.gov/robots.txt with UA_ROSTER_BOT (scraper_common) on 2026-09-26 returned HTTP 403, 5,522 bytes, `server: cloudflare`, `cf-mitigated: challenge`, `accept-ch: Sec-CH-UA-*` and a ‘Just a moment...’ body. The proxy's CONNECT succeeded first, so the 403 is the site's and not this sandbox's, which is the check that distinguishes the two. A challenge is an access control and is never solved or worked around, so no per-office page was fetched. THE ARCHIVE RUNG IS CLOSED FROM THIS VANTAGE TOO: GET https://web.archive.org/robots.txt on 2026-09-26 reset the connection on all three attempts, and scripts/robots_policy.py reads a network failure on robots.txt as disallow-all, so nothing was fetched there either. Re-test it from a runner. A ROUTE THAT WAS NEVER TRIED IS OPEN AND THIS RECORD WOULD HAVE BEEN WRONG WITHOUT IT. The City of New York publishes its own staff directory, the Greenbook, as Socrata dataset mdcw-n682 on data.cityofnewyork.us — 66,221 rows, rowsUpdatedAt 2026-09-21, robots served and the path allowed to this client. Queried 2026-09-26 with the same token, `$where=division_name like 'County Clerk - %'` plus an office-title filter returns exactly ONE principal row per county, all five: New York — Milton Tingling; Kings — Nancy Sunshine; Bronx — Luis Diaz; Queens — Audrey Pheffer; Richmond — Stephen Fiala. Its addresses agree with the shipped ones (60 Centre St, 851 Grand Concourse, 360 Adams St), and Kings agrees on the name. So the three unnamed boroughs have a first-party government source that names them and no competing claim, and this is not a no-source gap. THE ONE THING THAT MUST NOT BE SMOOTHED: the two publishers DISAGREE on the Bronx. nycourts.gov gave Ischia Bravo when it was readable, the Greenbook gives Luis Diaz five days ago, and nothing this project can read settles which is current — both routes above are shut. That is a live question about a named person on a shipped card rather than an absence, so it is the operator's to decide and is NOT part of this record's `counties`; a reader in the Bronx sees a name and this record does not claim otherwise. WHAT WOULD CLOSE THIS: a decision to read the Greenbook as the borough card's clerk source, which is a builder change (borough_officials_source.json is a hand-verified operator file by design, so this is a pipeline question and not a paste), plus whatever settles the Bronx. NOT YET ASKED — the offices are reachable by telephone and the Greenbook prints one per clerk, but no e-mail has been drafted.",
+      "wanted": "Either office confirming who holds the post today. The city's own staff directory names a clerk in all five boroughs, which would fill these three, and it disagrees with the court page on a fourth — that one needs settling first.",
+      "counts": [
+        {
+          "value": 3,
+          "in": "summary",
+          "self": "counties"
+        },
+        {
+          "value": 5,
+          "in": "summary",
+          "file": "ny/data/app/borough-officials.json",
+          "metric": "keys"
+        }
+      ]
     }
   ],
   "sf": [
