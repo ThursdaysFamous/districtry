@@ -229,11 +229,13 @@ OWNER_HELD_COUNTS = [
     # file; this session flags it and does not edit it. The claim sits in the
     # `angle` for City & State New York, wave 4, which carries no `sent` key —
     # so it is UNSENT, and 27 is the number a journalist would be handed for an
-    # app that ships 33. It reaches no reader through docs/PRESS_LIST.md, which
+    # app that has shipped more since (the live figure is in this gate's own
+    # output, which is why it is not restated here). It reaches no reader through
+    # docs/PRESS_LIST.md, which
     # does not render the `angle` field.
     {"path": "docs/press-list.json", "name": "NYC", "count": 27,
      "reason": "Unsent wave-4 pitch (City & State New York) understating the app at 27 "
-               "layers; ships 33. The press list is the operator's file — flagged on "
+               "layers. The press list is the operator's file — flagged on "
                "ny/BOARD.md, not edited here",
      "recorded": "2026-09-21"},
 ]

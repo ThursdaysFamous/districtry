@@ -58,7 +58,7 @@ const OFFLINE = ["judicial-district", "county", "nys-school-district", "municipa
 const EXPECT_DISTRICT = { "judicial-district": "3", "county": "Albany", "nys-school-district": "ALBANY", "municipality": "Albany" };
 const NEGATIVE_POINT = "41.76370,-72.68510"; // Downtown Hartford, Connecticut — outside New York State and 66 km from the nearest geometry this instance ships. NOT a water point: the county, school-district, cities-towns, villages and three legislative files are all water-inclusive off Long Island and in Lake Ontario, so a mid-Sound or mid-lake click is positive, not negative
 const APP_NAME = "districtry New York";
-const EXPECT_LAYERS = 33; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
+const EXPECT_LAYERS = 34; // Threads 1–4: full roster (+ council, community-district, congress, state senate/assembly, election-district, borough-president, district-attorney) + 3 amenity nearest-point layers (post-office, library, early-voting)
 // ==== GENERATED:END smoke-config ====
 const POINT2 = "40.69354,-73.98963"; // Brooklyn Borough Hall (Brooklyn) — the re-classify hop stays fork test code
 // THE CITY GROUND TRUTH SURVIVES THE GO-LIVE AS FORK TEST CODE. The worksheet's
@@ -346,6 +346,42 @@ try {
 
     const muniLayer = await cardText(page, "municipality");
     check(`municipality classifies the anchor (${EXPECT_DISTRICT["municipality"]})`, !muniLayer.error && new RegExp(EXPECT_DISTRICT["municipality"]).test(muniLayer.text) && /city/i.test(muniLayer.text), muniLayer.text.slice(0, 70));
+    await context.close();
+  }
+
+  // 2a. BOTH SCHOOL-DISTRICT TIERS ANSWER AT ONE POINT, which is the check the
+  //     original defect would have failed. New York's three central high school
+  //     districts shipped inside the statewide school-district file until
+  //     2026-09-26 and NO POINT RESOLVED TO ANY OF THEM: findFeatureContaining
+  //     takes the FIRST containing feature in file order and they sat at indices
+  //     649/659/660, behind their own components at 1, 3 and 32. Their outlines
+  //     drew and their names hovered, so nothing on screen looked wrong.
+  //
+  //     Asserted at a point inside Elmont, which is inside Sewanhaka Central:
+  //     the ordinary layer must name ELMONT and the upper layer must name
+  //     Sewanhaka Central, at the SAME point. Either half alone would pass a
+  //     tree where the split had silently collapsed back into one file — the
+  //     lower card would still say ELMONT — so both are read together.
+  //
+  //     AND THE UPPER CARD MUST NOT PRINT A STATE EDUCATION CODE. Two of the
+  //     three carry none and Valley Stream Central carries its own COMPONENT'S
+  //     code, so a code row would print another district's identifier on one
+  //     card in three; the layer ships no such field and this holds it to that.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const TIER_POINT = "40.70301,-73.70613";   // inside Elmont UFSD, inside Sewanhaka Central
+    const page = await booted(context,
+      `${BASE}#point=${TIER_POINT}&layers=nys-school-district,nys-central-hs-district`);
+
+    const lower = await cardText(page, "nys-school-district");
+    const upper = await cardText(page, "nys-central-hs-district");
+    check("both school-district tiers answer one point (Elmont inside Sewanhaka Central)",
+      !lower.error && !upper.error &&
+      /ELMONT/i.test(lower.text) && /Sewanhaka Central/i.test(upper.text),
+      `lower=${lower.text.slice(0, 40)} | upper=${upper.text.slice(0, 40)}`);
+    check("the central high school district card prints no state education code",
+      !/State education code/i.test(upper.text) && !/\b\d{12}\b/.test(upper.text),
+      upper.text.slice(0, 80));
     await context.close();
   }
 

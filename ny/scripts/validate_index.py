@@ -81,13 +81,14 @@ MIN_REGISTER_LAYER = 5
 # count above — this per-id list is the direct module-loss guard. Emitted in
 # LAYER_AREA_RANK order; check 5 keeps the two naming the same set.
 EXPECT_LAYER_IDS = [
-    "judicial-district", "county", "nys-school-district", "municipality",
-    "village", "borough", "borough-president", "district-attorney",
-    "congress", "municipal-court", "state-senate", "school-district", "cec",
-    "fire-battalion", "council", "community-district", "election-district",
-    "state-assembly", "police-sector", "police-precinct", "nys-zip-code",
-    "zip-code", "neighborhood", "hs-zone", "ms-zone", "es-zone",
-    "school-site", "police-station", "fire-station", "post-office", "library",
+    "judicial-district", "county", "nys-central-hs-district",
+    "nys-school-district", "municipality", "village", "borough",
+    "borough-president", "district-attorney", "congress", "municipal-court",
+    "state-senate", "school-district", "cec", "fire-battalion", "council",
+    "community-district", "election-district", "state-assembly",
+    "police-sector", "police-precinct", "nys-zip-code", "zip-code",
+    "neighborhood", "hs-zone", "ms-zone", "es-zone", "school-site",
+    "police-station", "fire-station", "post-office", "library",
     "early-voting", "polling-place",
 ]
 
@@ -103,7 +104,8 @@ GEOMETRY_FILES = {
     "staten-island-county-outline.json": (1, 1),  # Staten Island containment outline (ny/scripts/build_ny_borough_outlines.py, sliced from borough-boundaries.json) — lets a Data gaps record name this borough so the panel leads with the gaps that apply here.
     "judicial-districts.json": (13, 13),  # All thirteen New York judicial districts, dissolved from the state county fabric on the Judiciary Law section 140 table by ny/scripts/build_ny_judicial_districts.py. Replaces the five-borough crosswalk file.
     "ny-counties.json": (62, 62),  # New York's 62 counties from the state's own Civil Boundaries service, carrying the NYC flag that marks the five counties with no county government (ny/scripts/build_ny_counties.py). Shoreline-clipped, so it disagrees with the water-inclusive coverage ring at the coast by design.
-    "ny-school-districts.json": (716, 716),  # 716 school districts statewide, dissolved from the state's 936 polygon rows on SED_CODE_1 (ny/scripts/build_ny_school_districts.py). The 936 against the Census Bureau's 680 reconciles exactly: 33 New York City rows, 220 multipart and duplicate-code rows, 3 special-act districts.
+    "ny-school-districts.json": (713, 713),  # The ORDINARY tier: 713 of the 716 school districts dissolved from the state's 936 polygon rows on SED_CODE_1 (ny/scripts/build_ny_school_districts.py). The 936 against the Census Bureau's 680 reconciles exactly: 33 New York City rows, 220 multipart and duplicate-code rows, 3 special-act districts. The other 3 are the central high school districts, split into their own file because no point resolved to them while they sat behind their own components in this one; measured 2026-09-26, these 713 have ZERO overlapping pairs under an exhaustive sweep.
+    "ny-central-hs-districts.json": (3, 3),  # The UPPER tier: the three central high school districts, each entirely made of its component districts (Bellmore-Merrick, Sewanhaka Central, Valley Stream Central), split out by containment because nothing the state publishes marks the tier — two carry a blank SED code and the third carries its own component's. Mutually disjoint, measured 2026-09-26.
     "ny-cities-towns.json": (995, 995),  # New York's 62 cities and 933 towns, which together tile the state (ny/scripts/build_ny_municipalities.py).
     "ny-villages.json": (532, 532),  # New York's 532 villages, which sit INSIDE towns rather than beside them, so this is a nested layer and not part of the tiling.
     "municipal-court-districts.json": (28, 28),
@@ -250,6 +252,48 @@ def check_metro_explorers(html):
     return len(ids)
 
 
+
+def check_school_district_tiers(app_dir):
+    """The two school-district tiers must stay a PARTITION of one source.
+
+    New York's central high school districts ship in their own file because no
+    point resolved to them while they sat behind their own components in the
+    statewide file (findFeatureContaining takes the FIRST containing feature in
+    file order). The split is derived by containment in
+    ny/scripts/build_ny_school_districts.py, so two things have to keep holding
+    and neither is checked by the feature counts above: no district may appear in
+    both files, and the upper tier must be exactly the districts that contain
+    others.
+
+    This is the cheap half — set arithmetic on the names, offline and stdlib.
+    The geometric half (each upper district ~entirely covered by its components,
+    the two tiers internally disjoint) is the builder's own `--check`, which
+    re-splits the shipped geometry and compares bytes.
+    """
+    lower = os.path.join(app_dir, "ny-school-districts.json")
+    upper = os.path.join(app_dir, "ny-central-hs-districts.json")
+    for path in (lower, upper):
+        if not os.path.exists(path):
+            fail("school-district tiers: %s is missing" % os.path.basename(path))
+
+    def names(path):
+        feats = json.load(open(path))["features"]
+        return [f.get("properties", {}).get("SCHOOLDIST") for f in feats]
+
+    lo, up = names(lower), names(upper)
+    both = sorted(set(n for n in lo if n in set(up)))
+    if both:
+        fail("school-district tiers: %d district(s) appear in BOTH files (%s) "
+             "— the tiers must partition the source, or one point answers twice"
+             % (len(both), ", ".join(str(b) for b in both[:5])))
+    if len(set(up)) != len(up):
+        fail("school-district tiers: the upper tier repeats a district name (%r)"
+             % (up,))
+    if not up:
+        fail("school-district tiers: the upper-tier file is empty — the three "
+             "central high school districts would answer nobody again")
+
+
 def main():
     path = sys.argv[1] if len(sys.argv) > 1 else "index.html"
     if not os.path.exists(path):
@@ -260,6 +304,9 @@ def main():
 
     # 0. ENGINE fences are structurally sound (docs/ENGINE_SYNC.md)
     check_engine_markers(html)
+
+    # 0a. the two school-district tiers still partition one source
+    check_school_district_tiers(os.path.join(os.path.dirname(os.path.abspath(path)), "data", "app"))
 
     # 0b. METRO_EXPLORERS config list is sane (metro-portal easter egg)
     n_metros = check_metro_explorers(html)
