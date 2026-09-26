@@ -45,6 +45,62 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, THE COUNTY-CLERK GAP IS OPEN AS #1201 — AND IT TURNED UP A DECISION
+THAT IS NOT MINE, ABOUT A NAMED PERSON ON A LIVE CARD.** Writing the record meant
+re-measuring it, and the re-measurement found a route nobody had tried. **Flagging
+it here because it is exactly the class my standing instructions send to the
+board**, and because no peer session is reachable to message.
+
+**The measurement.** `ny/data/app/borough-officials.json` names a County Clerk in
+2 of the 5 boroughs — Bronx and Brooklyn. Manhattan, Queens and Staten Island
+carry the office link and, bar Staten Island, an address, and no name. NYC County
+Clerks are APPOINTED by the Appellate Division, so there is no certified election
+return to fall back on the way an Illinois county board has.
+
+**The route that route rested on is now shut.** The operator's 2026-07-20
+verification read each office's nycourts.gov page and found only Bronx and Kings
+publish the incumbent. That page cannot be re-read at all: its robots.txt answers
+403 with `server: cloudflare`, `cf-mitigated: challenge` and a "Just a moment..."
+body — the proxy's CONNECT succeeded first, so the 403 is the site's and not this
+sandbox's. A managed challenge is an access control and nothing here worked around
+it. The Internet Archive rung is shut from this vantage too (robots.txt reset on
+all three attempts, which `robots_policy` reads as disallow-all), so that is worth
+re-testing from a runner.
+
+**AND A ROUTE NOBODY HAD TRIED IS OPEN.** The City of New York publishes its own
+staff directory, the Greenbook, as Socrata `mdcw-n682` — 66,221 rows, updated
+2026-09-21, robots served and the path allowed. It carries exactly ONE principal
+row per county and names all five: New York — Milton Tingling; Queens — Audrey
+Pheffer; Richmond — Stephen Fiala; Kings — Nancy Sunshine (agreeing with the
+shipped name); Bronx — **Luis Diaz**. Its addresses agree with the shipped ones.
+So the record ships as `data-quality` with a first-party route open rather than as
+a no-source gap, which is the record it would have been had I not looked.
+
+**THE DECISION, AND IT IS ADAM'S.** The two publishers DISAGREE on the Bronx:
+nycourts.gov gave Ischia Bravo when it was readable, the Greenbook gives Luis Diaz
+five days ago, and nothing this project can read settles which is current because
+both routes above are shut. The card ships a name today, so this is not an absence
+— it is a live question about whether a reader in the Bronx is being shown the
+wrong person. **I changed no shipped name and put it in no gap record's
+`counties`**, because choosing between two official publishers on a named
+individual is not mine to do and the honesty rule is what it is.
+
+**MY RECOMMENDATION, since a survey is worth less than a call.** Read the Greenbook
+as the borough card's clerk source, in a pipeline rather than a paste — three of
+the five seats have NO competing claim, so filling them is not adjudicating
+anything, and a maintained city dataset beats a hand-verified file whose source
+went behind a challenge. Hold the Bronx back under Wisconsin's `withheld` shape,
+with a printed reason saying two official directories disagree, until someone can
+ask the office. That needs a ruling on two points: whether the Greenbook may be
+the source at all, and whether `withheld` is the right treatment for a seat that
+currently ships a name.
+
+**Verification on #1201:** 105 of 105 no-browser invocations green (the pair moved
+to 86/115 — re-derived, not reused); 9 of 10 browser invocations green;
+`page_consistency_test.mjs` is 85 failures, all `ERR_CERT_AUTHORITY_INVALID`. The
+NY smoke test's clicked-section fixture moves 3 → 4 because City Hall is in
+Manhattan and the new record correctly matches there.
+
 **2026-09-26, #1198 IS GREEN AND MERGES CLEAN — ready for review.** `smoke`
 completed `success` on head `c88977e` (21:31:46 → 21:43:49 UTC), read through
 `get_check_runs`. No review threads. `git merge-tree --write-tree` against main's
