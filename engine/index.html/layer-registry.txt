@@ -12,6 +12,9 @@
       // signature is unchanged, a point move only restyles the two paths whose
       // role flips instead of re-styling every path in the layer.
       highlightApplied: false, highlightSignature: null,
+      // the selected district drawn from a point-first answer while the full
+      // set downloads (showProvisionalHighlight), or null
+      provisionalLayer: null,
       // prefetched officeholder roster (see hoverOfficial + prefetchHoverRoster):
       // loaded in the background on toggle-on so the hover popup can name the
       // representative without a network request as the cursor moves.
@@ -31,7 +34,13 @@
       // while the full boundary download is still in flight — this is how
       // the overlay-load failure path knows a verified answer is on display
       // and must not be replaced by a boundaries error (see onLayerToggled).
-      resultSeq: null
+      resultSeq: null,
+      // the current selection's card, settled either way (runLayerQuery);
+      // what afterCard waits on before background work for this layer starts
+      cardPromise: null,
+      // the first overlay load's promise (onLayerToggled), which the hover
+      // roster prefetch waits for
+      overlayPromise: null
     };
   }
 
@@ -229,8 +238,44 @@
     };
   }
 
+  /* ---------- the selected district, lit before its layer has loaded. A
+   * point-first query (queryFeatureAt) answers the card from a small spatial
+   * query while the full boundary set is still downloading, and that answer
+   * carries the district's own geometry. Until now it lit nothing: the
+   * highlight needs the full set, so a statewide layer showed its card in a
+   * second and its district twenty seconds later (measured 2026-09-26, il
+   * township on Slow 4G: card 0.4-1.0 s, district 21 s). This draws that one
+   * district in the highlight style on its own; the full highlight replaces
+   * it the moment the layer's boundaries are in. It is drawn only for the
+   * point it was answered for, so it can never outline a district the
+   * selected point is not in. ---------- */
+  function clearProvisionalHighlight(mod) {
+    var rt = layerRuntime[mod.id];
+    if (rt.provisionalLayer) { map.removeLayer(rt.provisionalLayer); rt.provisionalLayer = null; }
+  }
+  function showProvisionalHighlight(mod) {
+    var rt = layerRuntime[mod.id];
+    // a layer whose overlay loader is not the one its query asked (the county
+    // dispatcher's union) names its point answer itself
+    var answer = mod.pointAnswer ? mod.pointAnswer()
+      : (mod.overlay && mod.overlay.load && mod.overlay.load.pointAnswer);
+    if (!answer || answer.point !== state.selectedPoint || !state.layersOn[mod.id] || rt.relevant === false) return;
+    if (rt.provisionalLayer && rt.provisionalLayer.dxPoint === answer.point) return;
+    clearProvisionalHighlight(mod);
+    rt.provisionalLayer = L.geoJSON(answer.feature, {
+      style: Object.assign({}, baseStyleFor(mod) || {}, highlightStyleFor(mod)),
+      interactive: false
+    });
+    rt.provisionalLayer.dxPoint = answer.point;
+    rt.provisionalLayer.addTo(map);
+    rt.provisionalLayer.eachLayer(function (subLayer) {
+      if (subLayer._path) subLayer._path.classList.add(HIGHLIGHT_CLASS);
+    });
+  }
+
   function clearLayerHighlight(mod) {
     var rt = layerRuntime[mod.id];
+    clearProvisionalHighlight(mod);
     rt.highlightedLayer = null;
     rt.highlightApplied = false; // next updateLayerHighlight must do a full sweep, not an incremental diff
     rt.highlightSignature = null;
@@ -249,7 +294,12 @@
     // the one a click happens to land inside would defeat the type coloring, so
     // skip the highlight/fade sweep and just keep the per-feature base styling.
     if (mod.overlay && mod.overlay.styleForFeature) { clearLayerHighlight(mod); return; }
-    if (!rt.overlayLayer || !rt.geojson || !state.selectedPoint) { clearLayerHighlight(mod); return; }
+    if (!rt.overlayLayer || !rt.geojson || !state.selectedPoint) {
+      clearLayerHighlight(mod);
+      showProvisionalHighlight(mod); // the point answer's district, until the full set is in
+      return;
+    }
+    clearProvisionalHighlight(mod);
     var feature = findFeatureContaining(rt.geojson, state.selectedPoint);
     if (!feature) { clearLayerHighlight(mod); return; }
 

@@ -51,7 +51,10 @@
 //     TAGS=il LAYERS=ward,congress node scripts/probe_layer_load.mjs
 //
 // In a sandbox whose Node reaches the network only through a proxy, run it with
-// NODE_USE_ENV_PROXY=1. CONC sets the page count. It needs openssl on the PATH
+// NODE_USE_ENV_PROXY=1. CONC sets the page count. For looking at one layer:
+// SHOTS=<dir> saves a screenshot the moment the district lights and another
+// when the page is done, ZOOM=<n> opens the map at that zoom, and TRACE=1
+// writes every request's start, finish, size and path into the output. It needs openssl on the PATH
 // for the local server's throwaway certificate.
 
 import { chromium } from "playwright";
@@ -211,9 +214,10 @@ async function measureOnce(browser, job) {
   const net = { id: String(++pageSeq), armed: false, t0: 0, requests: [], byReq: new Map() };
   coldPages.delete(net.id);
   await wire(page, job.tag, net);
+  if (process.env.TRACE) page.on('console', (m) => { if (m.text().startsWith('DBG')) console.log(m.text(), 't0', net.t0); });
   const out = { error: null };
   try {
-    await page.goto(`${ORIGIN}/${job.tag}/#point=${job.pt.lat},${job.pt.lng}`, { waitUntil: "domcontentloaded" });
+    await page.goto(`${ORIGIN}/${job.tag}/#point=${job.pt.lat},${job.pt.lng}${process.env.ZOOM ? "&zoom=" + process.env.ZOOM : ""}`, { waitUntil: "domcontentloaded" });
     await page.waitForFunction(`!!(${FIND_EXPORTS})`, null, { timeout: 45000 });
     await quiet(page, 1500, 30000);
     const cdp = await ctx.newCDPSession(page);
@@ -238,7 +242,10 @@ async function measureOnce(browser, job) {
       last = s;
       if (s) {
         if (seen.card === null && s.card !== "loading" && s.card !== "off" && s.card !== "none") { seen.card = t; seen.cardState = s.card; }
-        if (seen.highlight === null && s.highlight) seen.highlight = t;
+        if (seen.highlight === null && s.highlight) {
+          seen.highlight = t;
+          if (process.env.SHOTS) await page.screenshot({ path: join(process.env.SHOTS, `${job.tag}-${job.id}-${job.pi}-lit.png`) });
+        }
         if (seen.overlay === null && s.overlay) seen.overlay = t;
         if (!s.relevant) break;
         const pending = net.requests.some((x) => x.done === null);
@@ -247,6 +254,7 @@ async function measureOnce(browser, job) {
       }
       await new Promise((r) => setTimeout(r, 50));
     }
+    if (process.env.SHOTS) await page.screenshot({ path: join(process.env.SHOTS, `${job.tag}-${job.id}-${job.pi}-end.png`) });
     await new Promise((r) => setTimeout(r, 100)); // let the last sizes() settle
     const before = (t) => net.requests.filter((x) => t !== null && x.done !== null && x.done <= t);
     const sum = (rs) => rs.reduce((a, x) => a + x.bytes, 0);
@@ -265,6 +273,7 @@ async function measureOnce(browser, job) {
         .map((x) => ({ host: x.host, path: x.path.slice(0, 120), bytes: x.bytes })),
       unfinished: net.requests.filter((x) => x.done === null).length,
       failed_requests: net.requests.filter((x) => x.failed).length,
+      ...(process.env.TRACE ? { trace: net.requests.map((x) => [x.t, x.done, x.bytes, x.host, x.path.slice(0, 90)]) } : {}),
     });
   } catch (e) { out.error = String(e).slice(0, 200); }
   out.cold = coldPages.has(net.id);

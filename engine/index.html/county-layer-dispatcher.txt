@@ -56,8 +56,8 @@
       return new Promise(function (resolve, reject) {
         var resolved = false, pending = entries.length, anySuccess = false;
         if (!pending) { reject(new Error(opts.label + ": no source responded")); return; }
-        entries.forEach(function (entry) {
-          entry.loadGeometry().then(function (geojson) {
+        function loadEntry(entry) {
+          return entry.loadGeometry().then(function (geojson) {
             var wrapped = (geojson.features || []).map(function (f) {
               return { type: "Feature", geometry: f.geometry, properties: f.properties, dxCounty: entry.key };
             });
@@ -71,6 +71,25 @@
               pending--;
               if (!pending && !anySuccess) reject(new Error(opts.label + ": no source responded"));
             });
+        }
+        // THE SELECTED POINT'S COUNTY FIRST. Every entry used to start at
+        // once, so the one county the card and the highlight need shared the
+        // connection with every other county's download: il county-board's
+        // card took 7.4 s and its district 15 s on Slow 4G while 2.7 MB for
+        // the rest of the state arrived beside them (measured 2026-09-26).
+        // Now the entries whose coverage holds the point load first, and the
+        // rest start once those have settled AND the card has answered
+        // (afterCard, which gives up waiting after a few seconds). The same
+        // cheap coverage test the query path uses picks them. With no point
+        // selected, or none of the entries covering it, everything starts
+        // at once as before.
+        var point = state.selectedPoint;
+        (point ? coverageMatches(point) : Promise.resolve({ matches: [] })).then(function (r) {
+          if (!r.matches.length) { entries.forEach(loadEntry); return; }
+          var rest = entries.filter(function (entry) { return r.matches.indexOf(entry) === -1; });
+          Promise.all(r.matches.map(loadEntry)).then(function () {
+            afterCard(spec, function () { rest.forEach(loadEntry); });
+          });
         });
       });
     }
@@ -168,6 +187,16 @@
         return entry && entry.hoverName ? entry.hoverName(feature) : null;
       },
       overlay: { load: loadUnion, style: opts.style },
+      // the selected district from whichever entry answered the card
+      // point-first (queryFeatureAt keeps it on that entry's own loader), so
+      // it can be lit before the entry's whole set has joined the union
+      pointAnswer: function () {
+        for (var i = 0; i < entries.length; i++) {
+          var answer = entries[i].loadGeometry && entries[i].loadGeometry.pointAnswer;
+          if (answer && answer.point === state.selectedPoint) return answer;
+        }
+        return null;
+      },
       // Dispatch by CONTAINMENT, not coverage: the footprints are disjoint, so
       // at most one county's query returns a hit. A downed county is skipped
       // while the others still resolve; if nothing matched and a county

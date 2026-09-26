@@ -960,3 +960,74 @@ Each phase is one pull request, measured with the probe before and after.
 Phases 1 and 2 need no new tooling and address findings 1-4 directly; phases 3-6
 address finding 5, and with it the whole-state downloads behind finding 2's
 layers, which phase 1 only stops the reader from waiting on.
+
+### Phase 1 shipped: point first, no format change (2026-09-26)
+
+Four changes, all in the engine, so all six apps have them:
+
+- **The district is lit from the point answer.** `queryFeatureAt` keeps the
+  feature a point query returned on its loader (`load.pointAnswer`, keyed by the
+  selection's point object), and `updateLayerHighlight` draws it in the
+  highlight style while the layer's full set is still downloading
+  (`showProvisionalHighlight`); the full highlight replaces it when the set
+  arrives. The county dispatcher names the answering entry's point answer
+  (`pointAnswer`), since its overlay loader is the union rather than the loader
+  the query asked. It is drawn only for the point it was answered for.
+- **A county-dispatched layer loads the selected point's county first.**
+  `loadUnion` starts the entries whose coverage holds the point, and the rest
+  only once those have settled and the card has answered.
+- **Background work waits for the card.** `afterCard(mod, fn)` runs `fn` once
+  the current selection's card has settled, answered or failed, and never later
+  than 8 s. The hover-roster prefetch waits for the card AND the layer's first
+  boundaries: waiting for the card alone was measured and was not enough,
+  because il county-board's hover data for sixty counties then slowed Cook's
+  own 340 KB of districts from about 2 s to 7.5 s.
+- **A download is cancelled when it stops arriving, not when it is long.**
+  `fetchJSONWithRetry`'s timer covers the wait for the headers and then
+  restarts with every chunk of the body.
+
+Before → after, the same probe on the same points (Slow 4G):
+
+| App | Card: 90th percentile | Cards over 5 s | District lit: median | District lit: 90th percentile |
+|---|---|---|---|---|
+| il | 7.7 s → 3.4 s | 11 → 2 of 60 | 3.5 s → 0.7 s | 15.8 s → 2.3 s |
+| ny | 7.3 s → 7.3 s | 8 → 8 of 47 | 1.6 s → 0.8 s | 8.4 s → 7.3 s |
+| ca | 1.1 s → 1.1 s | 0 → 0 of 16 | 0.3 s → 0.3 s | 1.9 s → 1.9 s |
+| wi | 7.8 s → 7.8 s | 6 → 6 of 25 | 4.5 s → 2.1 s | 8.0 s → 8.1 s |
+| ia | 3.7 s → 3.7 s | 0 → 0 of 19 | 1.4 s → 0.8 s | 5.0 s → 3.7 s |
+| mi | 2.5 s → 2.5 s | 1 → 1 of 14 | 2.7 s → 0.4 s | 11.8 s → 7.5 s |
+
+| Layer | Card | District lit |
+|---|---|---|
+| il `county-board` | 7.2-7.5 s → 0.5 s | 15.0-15.8 s → 0.5 s |
+| il `ward` (Loop) | 7.7 s → 2.0 s | 26.2 s → 2.0 s |
+| il `township` | 0.3-1.0 s → 0.4-1.0 s | 21.6-21.8 s → 0.4-1.0 s |
+| il `municipality` | 1.3-1.4 s → 1.3-1.9 s | 15.1-15.3 s → 1.3-1.9 s |
+| wi `county-subdivision` | 0.4 s → 0.4 s | 21.6 s → 0.4 s |
+| ia, mi `county-subdivision` | 0.2-0.3 s → 0.2-0.3 s | 11.8-12.2 s → 0.2-0.3 s |
+| wi `school-district-unified` | error at 28.5 s → 12.7 s | never → 12.7 s |
+| il `library-district` | 11.5 s → 4.1-4.4 s | not lit, before or after (below) |
+
+Recorded, not counted:
+
+- **Four layers looked slower in the six-page run** (il `il-house` 1.3 → 2.0 s,
+  `mwrd` 0.9 → 1.4 s, `municipality`'s card, `ccbr`). Re-measured one page at
+  a time on both trees, each is the same to within 30 ms, so the run's six pages
+  on four cores were the cause, not the change.
+- **il `library-district` lights nothing at the Loop or in Evanston, before and
+  after**, because both points are in a municipal library FUND, a second tiling
+  the layer answers from and does not draw. Nothing is missing from the
+  loading; there is no drawn district to light.
+- **The medians that did not move** are layers that were already point-first
+  or small; what is left in the 90th percentiles is mostly whole files this
+  site ships (wi's unified school districts take 12.7 s because the file is
+  2.3 MB) and the live county services' own sizes, which phases 3-6 address.
+- The il `county-precinct` and ny `police-sector` rows that failed in the
+  baseline both answered this time; the sandbox's reach to those servers
+  varies, and neither row is counted as a change.
+
+`scripts/smoke_test.mjs` check 2j holds the first change: it answers every
+TIGERweb point query from a fixture and never answers the statewide request,
+and requires the municipality card to answer and its district to be lit while
+the full drawing is still absent. It fails with the provisional highlight
+removed.

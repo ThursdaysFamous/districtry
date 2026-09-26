@@ -77,7 +77,7 @@
         card: card,
         relevant: rt.relevant !== false,
         overlay: !!(rt.overlayLayer && map.hasLayer(rt.overlayLayer)),
-        highlight: !!rt.highlightApplied,
+        highlight: !!rt.highlightApplied || !!rt.provisionalLayer,
         features: (rt.geojson && rt.geojson.features && rt.geojson.features.length) || 0
       };
     },

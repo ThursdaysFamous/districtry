@@ -1,7 +1,30 @@
   /* ---------- fetch JSON with retry + timeout. The abort timer stays armed
    * through the body read, not just the headers — every caller parses JSON,
    * and a response that stalls mid-body would otherwise hang its layer's
-   * "Loading…" card forever with the cached loader pinning the hung promise. ---------- */
+   * "Loading…" card forever with the cached loader pinning the hung promise.
+   *
+   * THE TIMER MEASURES SILENCE, NOT DURATION, once the body is arriving. It
+   * used to be a budget for the whole response, which cancels a download
+   * that is slow but working: Wisconsin's unified school districts are a
+   * 2.3 MB file, 11.8 s at Lighthouse's Slow 4G, so all three attempts were
+   * cancelled at 9 s and the layer could never load on that connection
+   * (measured 2026-09-26). Now the timer covers the wait for the headers and
+   * then restarts with every chunk of body, so a stalled response still
+   * fails after timeoutMs of silence and a long one finishes. A browser with
+   * no streaming body reader keeps the whole-response budget. ---------- */
+  function readJSONBody(res, rearm) {
+    if (!res.body || !res.body.getReader || typeof TextDecoder === "undefined") return res.json();
+    var reader = res.body.getReader(), decoder = new TextDecoder(), text = "";
+    function pump() {
+      return reader.read().then(function (chunk) {
+        if (chunk.done) { text += decoder.decode(); return JSON.parse(text); }
+        rearm();
+        text += decoder.decode(chunk.value, { stream: true });
+        return pump();
+      });
+    }
+    return pump();
+  }
   function fetchJSONWithRetry(url, opts, retries) {
     opts = opts || {};
     retries = retries === undefined ? 2 : retries;
@@ -10,10 +33,14 @@
     function attempt(remaining) {
       var controller = new AbortController();
       var timer = setTimeout(function () { controller.abort(); }, timeoutMs);
+      function rearm() {
+        clearTimeout(timer);
+        timer = setTimeout(function () { controller.abort(); }, timeoutMs);
+      }
       return fetch(url, Object.assign({}, opts, { signal: controller.signal }))
         .then(function (res) {
           if (!res.ok) throw new Error("HTTP " + res.status);
-          return res.json();
+          return readJSONBody(res, rearm);
         })
         .then(function (json) {
           clearTimeout(timer);
@@ -37,6 +64,9 @@
    * boundaries). Those payloads can't finish inside the 9 s default on a slow
    * mobile link, so every attempt aborts mid-body and the layer can never
    * load; a larger budget lets a slow-but-working download complete. Small
-   * layers (police districts/stations, Socrata rosters) keep the 9 s default. ---------- */
+   * layers (police districts/stations, Socrata rosters) keep the 9 s default.
+   * Since 2026-09-26 a body that keeps arriving is never cut off (above), so
+   * this budget now governs the wait for a slow server's first byte and any
+   * silence mid-body. ---------- */
   var REMOTE_GEOJSON_TIMEOUT_MS = 30000;
 
