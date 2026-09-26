@@ -49,6 +49,42 @@ instance rather than the worst-maintained one.
 
 ## Status — this session owns this section
 
+**2026-09-26. #1185 MERGED — `cc1a846`, AND EVERY FIGURE RE-MEASURES ON THE
+MERGED TREE.** Through the repository's own reader rather than my earlier
+working copy: the denominator 373, named 226, unnamed 147, the `why` split 24
+and 123, and 62 counties holding an unnamed library — all six exactly as
+shipped. `build_coverage_gaps.py --check` agrees with the guidebook,
+`validate_gap_counts.py` reads 13 stated counts agreeing with their files (the
+new `self`-on-`counties` declaration among them), and `COUNTY_STATUS.md` names
+the gap on exactly 62 rows with Crawford present and none of the seven dropped
+counties left. The gate pair re-measures at 84 / 113; nothing merged since the
+branch point touched `smoke-test.yml` or the steward skill.
+
+**WHAT IS WORTH CARRYING FORWARD IS NOT THE NUMBER.** Two things outlast it.
+The record's own `blocker` said 373 four times and 382 never, so the record
+contradicted itself with the false figure in the only field a reader is served —
+a maintainer's log agreeing with the measurement while the summary did not is a
+shape no gate in this repo can see. And 72 of the 79 boundary files carry
+`properties ['library','type']` while seven each use a different key, so a
+reader keyed on one spelling returns ZERO names for the rest silently and
+without failing, which is why one question produced three answers. Anything
+new that reads those files inherits that trap; `shipped_cards` escapes it only
+because it reads the 72 statewide counties alone and FAILS on a feature with no
+`library` name rather than skipping it.
+
+**THREE OF THE FOUR CORRECTED NUMBERS REMAIN UNGATED AND THE BLOCKER SAYS SO.**
+226, 373 and 147 cannot be expressed in the counts grammar — one is a
+distinct-name count across 72 files, another a union of subsets of two — and
+they move every Monday when `update-il-library-trustees.yml` reads more boards,
+which is the `ia-board-chair` shape: a weekly refresh that goes stale precisely
+when it succeeds, and that workflow regenerates the officeholder tables, the
+concept pages, `about.html` and the sitemap but not this block. The
+derive-at-render fix and the grammar widening are both owned elsewhere and
+unbuilt, so I built no third mechanism and recorded which numbers a gate holds
+and which it does not, because three ungated numbers that look like the gated
+one is the failure this record had just demonstrated.
+
+
 **2026-09-26. THE LIBRARY RECORD'S 382 WAS FALSE, AND THE RECORD'S OWN BLOCKER
 SAID SO IN FOUR PLACES.** PR #1185. The statewide route draws 373 libraries, of
 which 226 name a board and 147 do not, and the Data gaps panel was telling
