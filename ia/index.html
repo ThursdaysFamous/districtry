@@ -5443,6 +5443,17 @@ function initIowaExplorer() {
   // fail safe, never as "outside".
   var coverageMaskRings = null;
 
+  // And the REGION's polygons in the same [lng,lat] form, retained for the same
+  // reason and with one difference that matters: regionOuterRing below keeps
+  // only the largest outer ring, which is right for drawing one boundary line
+  // and wrong for a point test, because a region with a detached part would
+  // report points on it as outside itself. So this keeps every polygon and
+  // every hole. null until the wash actually PAINTS a region band — an
+  // instance that declares no region, and one whose region fails to load, both
+  // leave it null, and a consumer reads null as "this instance has no middle
+  // band" rather than as "outside the region".
+  var coverageRegionPolys = null;
+
   // The wash's own layers land on districtryCoverageLayers, which is declared
   // with the theme controller that restyles them (ENGINE districtry-theme) —
   // the skin darkens the out-of-coverage band on a dark ground where it greys
@@ -5454,6 +5465,26 @@ function initIowaExplorer() {
     var out = [];
     for (var i = 0; i < ring.length; i++) out.push([ring[i][1], ring[i][0]]);
     return out;
+  }
+
+  // Every polygon of the region geometry as its own ring list — outer ring
+  // first, holes after, which is what pointInGeometry wants for a MultiPolygon.
+  // Unlike regionOuterRing this discards nothing: it answers "is this point in
+  // the region", where dropping an island or filling a hole is a wrong answer
+  // rather than a simplified drawing.
+  function regionPolygons(geo) {
+    var feats = (geo && geo.features) || [];
+    var out = [];
+    for (var f = 0; f < feats.length; f++) {
+      var geom = feats[f].geometry;
+      if (!geom) continue;
+      var polys = geom.type === "Polygon" ? [geom.coordinates]
+                : geom.type === "MultiPolygon" ? geom.coordinates : [];
+      for (var p = 0; p < polys.length; p++) {
+        if (polys[p] && polys[p].length) out.push(polys[p]);
+      }
+    }
+    return out.length ? out : null;
   }
 
   // The region's outer boundary as one Leaflet ring, or null. Only the LARGEST
@@ -5610,6 +5641,10 @@ function initIowaExplorer() {
          render. The widths and the blur class stay: those are geometry, and
          the skin has no opinion about them. */
       if (region) {
+        // Retained for the gaps panel, and set HERE rather than beside the
+        // ring above so the panel can only describe a middle band the map
+        // actually drew — the same rule buildCoverageKey follows for the key.
+        coverageRegionPolys = regionPolygons(regionGeo);
         // Three bands. Leaflet fills even-odd, so each polygon's later rings
         // read as holes: world minus the region is everything outside it, and
         // the region minus the coverage rings is the strip between.
@@ -6248,6 +6283,51 @@ function initIowaExplorer() {
       } catch (e) { return null; }
     }
 
+    /* And whether it sits inside the WIDER REGION whose statewide layers still
+     * answer — the wash's middle band, kept as coverageRegionPolys by the same
+     * draw. Same true / false / null contract, and null covers two cases that
+     * want the same treatment: this instance paints no middle band at all
+     * (five of the six), or the region geometry never loaded. Either way the
+     * caller falls back to the two-way answer it gave before this existed.
+     *
+     * The two tests together are what let the lede tell "the statewide answers
+     * work where you clicked, the local ones do not reach it yet" apart from
+     * "nothing here can be answered at all". They are different facts and a
+     * reader can act on them differently: the first says wait for a county to
+     * be sourced, the second says this app is not for that place. */
+    function pointInRegion(point) {
+      if (!point || !coverageRegionPolys || !coverageRegionPolys.length) return null;
+      try {
+        return pointInGeometry(point, { type: "MultiPolygon", coordinates: coverageRegionPolys });
+      } catch (e) { return null; }
+    }
+
+    /* The band's own words, read from the SAME config the map key reads
+     * (COVERAGE_KEY.region, through the key's own typeof guard) — its NAME from
+     * `edge`, and WHAT IT MEANS from `label` and `sub`. Naming them here would
+     * be two copies of one phrase, and the panel and the key describe the same
+     * band a few hundred pixels apart.
+     *
+     * THE MEANING HAD TO COME FROM THE CONFIG TOO, AND A FIRST DRAFT GOT THAT
+     * WRONG. It took the name from here and then asserted, in its own words,
+     * that "only the statewide layers answer there" — true of Illinois and New
+     * York and FALSE of Wisconsin, whose band is where a county's districts ARE
+     * drawn and its supervisors are not named. Its key says so exactly:
+     * "District shown, supervisor not named". A band's meaning is a fact about
+     * the instance, so the one place that states it is the one place it is read
+     * from. Where an instance paints the band and names nothing, the sentence
+     * below says only that the point is outside full coverage, which is true
+     * everywhere, and invents no claim about what answers there. */
+    function regionBand() {
+      var ck = typeof COVERAGE_KEY !== "undefined" ? COVERAGE_KEY : null;
+      var r = (ck && ck.region) || null;
+      return {
+        name: (r && r.edge) || "",
+        label: (r && r.label) || "",
+        sub: (r && r.sub) || ""
+      };
+    }
+
     /* Which of a gap's counties contain the selected point. Resolves to false
      * for a gap with no counties (nothing to test) and treats an outline that
      * fails to load as "not here" — a gap still appears in the everywhere list,
@@ -6400,18 +6480,61 @@ function initIowaExplorer() {
         //    gaps simply are not mappable.
         //  - a point OUTSIDE the covered area is never told nothing is missing
         //    there: out there EVERYTHING is.
-        //  - pointInCoverage's null (mask not loaded) falls through to the
-        //    wording that claims neither.
+        //  - but "nothing there can be answered yet" is only true outside the
+        //    WIDER REGION. Between the two — the Illinois counties the county
+        //    layers do not reach yet, New York State outside the city — the
+        //    statewide layers answer and the county-level ones do not, so that
+        //    band gets its own sentence
+        //    and the flat refusal is kept for points outside the region.
+        //  - pointInCoverage's and pointInRegion's null (mask not loaded, or an
+        //    instance with no middle band at all) fall through to the wording
+        //    that claims neither, which is what every branch said before the
+        //    middle band was distinguished.
         var mappable = rows.some(function (r) { return (r.gap.counties || []).length > 0; });
         var inCoverage = point ? pointInCoverage(point) : null;
+        // Asked only when the point is outside full coverage, which is the only
+        // place the middle band can be, and answerable only by an instance that
+        // paints one. Everywhere else it is null and nothing below reads it.
+        var inRegion = (point && inCoverage === false) ? pointInRegion(point) : null;
+        /* THE MIDDLE BAND IS STATED WHEREVER THE READER IS IN IT, including
+         * ahead of the "here" sentence, because the biggest thing missing there
+         * is not any one recorded gap — it is the whole county-level tier, which
+         * the map key says and this panel did not. It LEADS that sentence rather
+         * than replacing it: a gap that applies where they clicked is still the
+         * more specific answer, and every Illinois county the county-level tier
+         * does not reach yet has a gap record of its own (measured 2026-09-26,
+         * all of them), so replacing it would have traded a specific true
+         * answer for a general one. */
+        var band = inRegion === true ? regionBand() : null;
+        var bandNote = "";
+        if (band) {
+          bandNote = "You clicked " + (band.name ? "inside " + band.name + ", " : "") +
+            "outside the area this app covers in full. ";
+          // The key's own caption, verbatim, and its sub-caption after it. Both
+          // are written without trailing punctuation, so the full stops are ours.
+          if (band.label) bandNote += band.label + ". ";
+          if (band.label && band.sub) bandNote += band.sub + ". ";
+        }
         var lede = cardEl("p", "gaps-lede");
         if (here.length) {
-          lede.textContent = here.length === 1
-            ? "One recorded gap affects the spot you clicked. Everything else is grouped below."
-            : here.length + " recorded gaps affect the spot you clicked. Everything else is grouped below.";
+          // Two endings for one count rather than one ending for both: after the
+          // band sentence, "the spot you clicked" would be the third clause in a
+          // row to say it.
+          var affect = here.length === 1
+            ? "One recorded gap affects"
+            : here.length + " recorded gaps affect";
+          lede.textContent = bandNote
+            ? bandNote + affect + " that spot as well. Everything else is grouped below."
+            : affect + " the spot you clicked. Everything else is grouped below.";
+        } else if (point && inRegion === true) {
+          lede.textContent = bandNote + "Here is everything that is recorded as missing, and why.";
         } else if (point && inCoverage === false) {
+          // The second sentence used to read "These are the gaps recorded inside
+          // the covered area", which is a claim about the LIST and was false
+          // wherever a gap is recorded outside it — New York records one about
+          // the state outside the city. It says what the list is instead.
           lede.textContent = "You clicked outside the area this app covers, so nothing there can be " +
-            "answered yet. These are the gaps recorded inside the covered area.";
+            "answered yet. Here is everything that is recorded as missing, and why.";
         } else if (point && mappable && inCoverage === true) {
           lede.textContent = "Nothing recorded is missing where you clicked. These are the gaps elsewhere.";
         } else if (point) {

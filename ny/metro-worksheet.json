@@ -7,16 +7,16 @@
   "socrata_host": "https://data.cityofnewyork.us",
   "socrata_app_token": "mde4YTGz0w7M4jDhUJ7WVn85W",
   "repo_issues": "https://github.com/ThursdaysFamous/districtry/issues/new",
-  "feedback_subject": "districtry New York City feedback",
+  "feedback_subject": "districtry New York feedback",
   "verified_date": "September 11, 2026",
   "brand": {
     "app_name": "districtry New York",
     "product_name": "districtry",
     "instance_tag": "ny",
     "jsonld": {
-      "site_description": "Find every civic district that covers a point or address in New York City, and who represents you there.",
-      "app_description": "Click any point in New York City, or search an address, to see every civic district that contains it — City Council district, community board, NYPD precinct and sector, community school district, borough, U.S. House, and New York State Senate and Assembly districts — and who represents you.",
-      "keywords": "NYC City Council district map, what council district am I in, NYPD precinct, community board, community school district, New York State Assembly district, New York State Senate district, congressional district, who represents me NYC",
+      "site_description": "Find every civic district that covers a point or address in New York, and who represents you there.",
+      "app_description": "Click any point in New York, or search an address, to see every civic district that contains it — anywhere in the state, your county, city or town, school district, judicial district, U.S. House district and both State Legislature chambers; inside New York City, also your City Council district, community board, NYPD precinct and sector and community school district — and who represents you in each one.",
+      "keywords": "what district am I in New York, who represents me New York, New York county map, what town am I in, New York school district lookup, judicial district New York, New York State Assembly district, New York State Senate district, congressional district, NYC City Council district map, what council district am I in, NYPD precinct, community board, community school district",
       "area_served": { "state": "New York" }
     },
     "tagline": "Click the map for every district you're in, and who represents you.",

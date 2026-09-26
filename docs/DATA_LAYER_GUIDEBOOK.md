@@ -7458,6 +7458,124 @@ LISTS, so the SF builder's first `--check` failed against the file it had
 just written. It compares the serialized form now — worth remembering for any
 future builder that takes geometry from shapely rather than from `json.load`.
 
+### "Nothing there can be answered yet" was false in two apps, and the gaps lede now answers three ways (2026-09-26)
+
+The entry above closes with "a click in Newark reads *You clicked outside the
+area this app covers*", which was an accurate reading of the string and said
+nothing about whether the string was TRUE. In New York it was not. That app's
+covered area is the five boroughs and its statewide tier answers in all 62
+counties, so every upstate reader — the whole state by area — was told nothing
+could be answered where they clicked while the county, municipality, school
+district, ZIP, congressional and both legislative cards answered it.
+
+**THE LEDE ANSWERED TWO WAYS AND THE WASH DREW THREE BANDS.** `scope-mask`
+has painted a middle band since Illinois shipped it: everything outside the
+coverage geometry is washed, and an instance whose full coverage is a proper
+subset of a wider region its statewide layers still answer passes that region
+as a second argument and gets a lighter strip between the two, labelled
+`Statewide layers only` in the map key. The gaps panel's own test,
+`pointInCoverage`, only ever asked the inner question, so the two surfaces
+disagreed a few hundred pixels apart — the key said the statewide layers
+answer and the panel said nothing did.
+
+**THE FIX RETAINS THE REGION BESIDE THE COVERAGE RINGS.** `coverageRegionPolys`
+is set where the region band is PAINTED rather than where its geometry loads,
+so the panel can only describe a band the map actually drew — the rule
+`buildCoverageKey` already follows for the key. `pointInRegion` answers
+true / false / null on the same contract as `pointInCoverage`, and null covers
+both "this instance paints no middle band" and "the geometry never loaded", so
+the four regionless apps are untouched by construction. **The region's name is
+read from `COVERAGE_KEY.region.edge`, the same config the key reads**, because
+two copies of one word a few hundred pixels apart is how the panel and the key
+came to disagree in the first place.
+
+**IT KEEPS EVERY POLYGON WHERE THE DRAWING KEEPS ONE RING.** `regionOuterRing`
+deliberately takes only the largest outer ring — a region with offshore islands
+would otherwise draw a glow round each one — and inheriting that for a point
+test would report a reader on a detached part as outside the region entirely.
+`regionPolygons` discards nothing. Measured on the shipped files it changes no
+answer today (New York's state outline is one 1,326-vertex polygon plus two
+7-and-8-vertex islands that are inside the city's coverage anyway), which is
+exactly why it had to be decided on the geometry rather than on the current
+data.
+
+**AND THE MIDDLE-BAND SENTENCE LEADS THE "WHERE YOU CLICKED" SENTENCE RATHER
+THAN REPLACING IT — which is the half the plan for this change got wrong.**
+The reasoning handed over said the defective string was live in New York and in
+Illinois's unserved counties. Measured, it is live in New York ALONE: sampling
+Illinois's state outline on a 0.02-degree grid gives 3,636 points inside the
+state and outside the 93-county coverage dissolve, and every single one falls
+inside one of the unserved counties' own `<slug>-county-outline.json`, each of
+which carries a gap record — so `appliesHere` matches, the "Where you clicked"
+branch wins, and that sentence never rendered in Illinois at all. Replacing it
+would have changed nothing there. Leading it does: a reader in Princeton now
+reads "You clicked inside Illinois but outside the area this app covers in
+full, so only the statewide layers answer there. One recorded gap affects that
+spot as well." The largest absence in that band is not any one recorded gap, it
+is the whole county-level tier, and the panel had never said so.
+
+**A CLOSING CLAIM ABOUT THE LIST WAS FALSE IN THE SAME SENTENCE.** The
+out-of-coverage lede ended "These are the gaps recorded inside the covered
+area", which is a claim about the LIST rather than about the point, and New
+York records `ny-statewide-election-districts` — a gap explicitly about the
+state outside the city. It says "Here is everything that is recorded as
+missing, and why" now, which is what the list is.
+
+**TWO THINGS WERE WRONG IN THE FIRST DRAFT AND NEITHER WAS FOUND BY A GATE.**
+
+**The band's MEANING was hardcoded where only its NAME was read from the config,
+and that made the sentence false in Wisconsin.** The draft read
+`COVERAGE_KEY.region.edge` for the region's name and then asserted, in the
+engine's own words, "only the statewide layers answer there". Wisconsin passes
+its state outline to `drawOutOfScopeMask` and declares `COVERAGE_KEY.region`, so
+the three-way lede reaches it — and its band is not Illinois's. Its own key reads
+**"District shown, supervisor not named / The county doesn't publish who holds
+it"**: the band is where a county's districts ARE drawn and its supervisors are
+not named. So `label` and `sub` are read from the config beside `edge`, and
+measured at a border sliver the lede now reads "You clicked inside Wisconsin,
+outside the area this app covers in full. District shown, supervisor not named.
+The county doesn't publish who holds it." **The lesson is narrower than "read
+from config": the draft DID read the name from config and invented the claim, so
+the rule is that every part of a per-instance statement is per-instance.** Found
+by the manager session on review, not by any gate, and not by the eight browser
+assertions either — Wisconsin's own assertion probes its `NEGATIVE_POINT`, which
+is outside the state, where there is correctly no band at all.
+
+**And Wisconsin pins no band probe point, which is a measurement rather than an
+omission.** Its coverage ring and its state outline are separate files tracing
+the same border, so its band is slivers along it — 3 of 192,470 grid points — and
+a fixture that thin breaks on the next simplification. A sliver was found for the
+one-off verification by testing the state outline's own VERTICES against the
+coverage rings rather than by sampling a grid, which is both faster and lands
+exactly where a sliver can be.
+
+**THE ASSERTIONS THEMSELVES WERE TIMING-DEPENDENT AND CI CAUGHT IT.** The panel's
+two point tests read the rings the wash retained, and a null from either
+correctly falls through to wording that claims neither — so a check that selects
+a point before the wash has loaded is asserting against the app's "we cannot tell
+yet" state. In this sandbox the vendored libraries make the wash first up and all
+eight passed; on a CI runner Illinois draws it at `whenIdle` behind two CDN
+fetches, and the lede read "Here is everything that is missing and why", the
+mask-not-loaded branch. Every check now waits first, on exact signals: **any path
+in the `scope-mask` pane means the coverage rings were retained, and `dst-glow`
+is created ONLY in the branch that also retains the region polygons**, so waiting
+for the glow is waiting for precisely the state the band assertion needs. A wash
+that never paints FAILS with that stated, rather than passing or skipping, because
+its geometry is same-origin and small.
+
+**MEASURED IN A BROWSER, BOTH WAYS, IN ALL SIX APPS**, because nothing static
+can see this: the sentence is assembled at runtime from a point test against
+geometry the wash fetched, so it appears in no generated diff and no
+byte-equality `--check`. Eight assertions ship — the band sentence at New
+York's Albany anchor and at Princeton in Bureau County, and its ABSENCE at
+every instance's own `NEGATIVE_POINT`, which is the half that keeps the first
+honest. Negative-tested three ways: forcing `pointInRegion` to null fails the
+two band checks and passes the six absence checks, forcing it to true fails the
+absence checks, and emptying `regionBandName()` was run to confirm the sentence
+still reads correctly for an instance that paints the band without naming it
+(San Francisco declares `COVERAGE_KEY` with no `region`, so that path is
+exercised on the real tree rather than only in a perturbation).
+
 ### Wisconsin phase-3 candidates, every source verified (recorded 2026-08-25)
 
 The first Wisconsin backlog entries, all deferred from the phase-2 plan

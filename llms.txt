@@ -1,6 +1,6 @@
 # districtry
 
-> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. Six instances across Illinois, Wisconsin, Iowa, Michigan, New York City and San Francisco. Every boundary and every name comes from a published source and is cited to it.
+> Click a point, or type an address, and see every civic district that covers it — and who holds those seats. Six instances across Illinois, New York, San Francisco, Wisconsin, Iowa and Michigan. Every boundary and every name comes from a published source and is cited to it.
 
 Free, no account, no tracking of individuals. The map runs in the browser; what each page sends to whom is listed at https://districtry.com/privacy.html.
 
@@ -48,7 +48,7 @@ Counties, towns and villages, school and judicial districts across the state, pl
 - [What NYPD precinct am I in?](https://districtry.com/ny/police-precinct.html)
 - [Sources & data layers](https://districtry.com/ny/sources.html)
 - [Who is my NY state legislator?](https://districtry.com/ny/state-legislature.html)
-- [NYC district questions](https://districtry.com/ny/faq.html)
+- [New York district questions](https://districtry.com/ny/faq.html)
 
 ## San Francisco
 
