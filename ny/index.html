@@ -10177,14 +10177,27 @@ function initNycExplorer() {
         note: noteBits.length ? noteBits.join(" · ") : null
       }));
       var clerk = result.clerk;
+      var phoneOnPerson = false;
       if (clerk && clerk.name) {
         // appointed, not elected — the badge note keeps the card honest
         var person = { name: String(clerk.name), badge: "County Clerk", note: "appointed" };
-        if (clerk.phone) person.phone = String(clerk.phone);
+        if (clerk.phone) { person.phone = String(clerk.phone); phoneOnPerson = true; }
         wrap.appendChild(renderPersonRows([person]));
       }
-      if (clerk && clerk.address) {
-        wrap.appendChild(renderOfficeGroup({ offices: [{ label: "Clerk's Office", lines: [String(clerk.address)] }] }));
+      if (clerk && (clerk.address || clerk.phone)) {
+        // THE PHONE RODE THE PERSON ROW AND QUEENS HAS NO NAMED CLERK, so its
+        // published (718) 298-0601 was in the shipped roster and on no card.
+        // Measured 2026-09-26: borough-officials.json names a clerk in 2 of the
+        // 5 boroughs and carries an address in 4, so the office block is the
+        // only row three boroughs can get, and a telephone belongs on it when
+        // no person row carried it.
+        wrap.appendChild(renderOfficeGroup({
+          offices: [{
+            label: "Clerk's Office",
+            lines: clerk.address ? [String(clerk.address)] : [],
+            phone: (!phoneOnPerson && clerk.phone) ? String(clerk.phone) : null
+          }]
+        }));
       }
       return wrap;
     },
@@ -10811,6 +10824,19 @@ function initNycExplorer() {
       var wrap = cardEl("div", "card-flush");
       if (result.commander) {
         wrap.appendChild(renderPersonRows([{ name: String(result.commander), badge: "Commanding Officer" }]));
+      } else {
+        // A CARD THAT OMITS A ROW SAYS NOTHING, AND THE PROVENANCE PAGE SAID IT
+        // SAID SOMETHING. sources.html claimed "where the NYPD publishes no
+        // commander the card says so rather than guessing", and this branch did
+        // not exist — the row was simply absent, which a reader cannot tell from
+        // a precinct nobody commands or from a layer that never joins a roster.
+        // build_nypd_roster.py's MIN_COMMANDERS is 60 against 78 precincts, so
+        // up to 18 can go missing with the builder still writing; the fleet's
+        // wording for this is Illinois's "No member listed in the county's
+        // directory" (boardDirectoryShortfallNote).
+        wrap.appendChild(renderBodyIntro({
+          note: "No commanding officer listed on the NYPD's precinct page"
+        }));
       }
       if (result.stationAddress || result.phone) {
         var stationLines = [];
