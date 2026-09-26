@@ -34,6 +34,36 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-26. THE THREE STALE DESCRIPTIONS ARE CORRECTED AND OPEN AS #1188, AND
+THE SHAPE OF THIS ONE IS WORTH MORE THAN THE FIX.** #1187 retired a caption for
+being false; three files went on describing it, and `CLAUDE.md`'s coverage-gaps
+paragraph asserted the disproved claim as a CURRENT FACT — so the file every
+session reads first was teaching that Wisconsin has counties whose supervisors are
+not published. The guidebook printed the rendered lede built from those words, and
+`wi/scripts/smoke_test.mjs` explained the old key beside its band assertion. All
+three corrected IN PLACE under dated corrections naming #1187, each carrying the
+measurement rather than the verdict alone.
+
+**THE ENGINE CHANGE WAS RIGHT AND ITS INPUT WAS WRONG.** Reading the band's
+meaning from per-instance config is correct; the words it read were false. So a
+confident, specific, false reading of this band survived a review, a merge and
+every gate — and was then quoted into three files by the fix for a DIFFERENT
+defect in the same sentence. Twice on one band, both caught on review, neither
+catchable by CI because a caption is not an assertion. No gate proposed: this file
+quotes retired strings on purpose throughout, and a check that every quoted string
+still exists would fight the convention.
+
+**THE MANAGER'S VERIFICATION FOUND THE TIGHTEST FORM OF MY OWN FINDING AND I HAD
+NOT MADE IT**: every Wisconsin county names at least seven supervisors, minimum 7
+at Menominee. My argument ran through the 15 vacant and the 1 withheld; the
+per-county floor settles it without needing either. Their band figure also
+corrects their own first measurement — 0.0063% across 4,250 parts was the
+symmetric difference, double the reachable half, because only `state MINUS
+dissolve` can trigger the note. 0.0031%, 2,125 parts, largest 0.218 km²,
+reproduces to the part.
+
+103 of 103 static invocations, 0 failed. Nothing a reader downloads changes.
+
 **2026-09-26. #1187 MERGED, VERIFIED ON MAIN BY CONTENT.** The shipped caption
 reads "The county outlines and the state boundary disagree here / Two map files
 drawn at different detail — every Wisconsin county is covered", and the worksheet
@@ -90,11 +120,24 @@ not about main** — the same shape as today's other misses, and the reason to
 
 ## Open questions
 
-**The engine couples three things to one `region` key** — the state line, the
-middle band, and the band's key entry — and an instance whose coverage IS its
-state wants the first without the other two. No config can express that today, so
-Wisconsin keeps a band it does not want in order to keep a line it does. It is an
-engine change and therefore a fleet decision, recorded rather than built.
+**The engine couples the state line to the middle band** — and an instance whose
+coverage IS its state wants the first without the second. **CORRECTED 2026-09-26:
+this entry used to say the coupling is to one `region` KEY, and it is not.**
+`scope-mask` line 318 gates `c.glow` and `c.stateLine` on the region GEOMETRY
+(`regionOuterRing(regionGeo)`); line 343's `if (ck && ck.region)` is a separate
+inner gate for the key rows. So dropping `COVERAGE_KEY.region` leaves the line
+drawn and the band unlabelled, and only dropping the GEOMETRY loses the line.
+Whoever picks this up would have looked in the wrong place. The manager's
+correction, not mine.
+
+**A third config-only option therefore existed and #1187 did not name it**:
+`generate_metro_files.py` guards with `if "region" in ck:`, so a worksheet may
+omit `region` entirely. That keeps the line, empties the key rows, and leaves the
+panel on the engine's bare lead clause. It is not obviously better — the manager
+measured that the two surfaces want opposite things, since the key row is seen on
+every page load while the panel sentence fires in 0.0031% of the state — but
+#1187's body implied the config space was more constrained than it is. The
+decoupling is a fleet decision and the manager is carrying it; not mine to build.
 
 **2026-09-25. THE NESTING SYMPTOM IS REAL, IT IS NOT UPSTREAM, AND THE
 RETAIN-PERCENTAGE SWEEP ILLINOIS IS ABOUT TO RUN CANNOT FIX IT.** Reported
