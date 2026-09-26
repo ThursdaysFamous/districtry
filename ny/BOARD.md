@@ -45,6 +45,49 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, ITEM 4'S KEY IS SETTLED AND IT IS NOT A COLUMN — measured against
+the state's own service, not against the shipped file.** #1190 is open so nothing
+is built; this is the measurement item 4 needed before code, and it closes the
+question the entry above opened.
+
+**NO PUBLISHED FIELD IDENTIFIES THE TIER.** `NYS_Schools/FeatureServer/18` carries
+22 fields, five of them plausible, and every one fails:
+
+* **`SED_CODE_1`** — two of the three central districts (Bellmore-Merrick,
+  Sewanhaka Central) carry a single SPACE, and Valley Stream Central carries its
+  own COMPONENT'S code, `280230020000`, the same value VALLEY STR HEMP 30 ships.
+  A blank-code test isolates nothing either: **6 of the 936 rows are blank.**
+* **`INSSUBDE` / `INSTSUBYPE`** (institution sub-type) — Valley Stream Central
+  reads `UNION FREE` / 2.0, which is its components' type, and the other two read
+  a single space. **AND THE OBVIOUS READING OF THIS FIELD IS THE TRAP: 411 of the
+  936 rows read `CENTRAL`**, because a "central school district" is an ordinary
+  New York district type and has nothing to do with a central HIGH SCHOOL
+  district. ANGELICA-BELMONT reads `CENTRAL` and contains nothing. Keying on it
+  would flag 411 districts where three are upper-tier.
+* **`SDLCODE`** — every component has one (280225, 280207, 280216 …); the three
+  have a space or an empty string, and so do 7 rows in all.
+* **`SEDDIR_BOC`** is `2890` on both blank rows, which is Nassau BOCES rather
+  than a tier marker.
+
+**AND THE SERVICE PUBLISHES NO SEPARATE LAYER FOR THEM.** All 18 layers were
+listed: Schools K-12, Public, Private, Charter, BOCES, District Offices,
+Libraries, BOCES Districts and the rest. **Layer 18 is the only school-district
+layer and it holds both tiers mixed.** So item 4 cannot be a second dispatch
+entry reading a cleaner source; there is no cleaner source.
+
+**THE KEY IS CONTAINMENT, DERIVED AT BUILD TIME**, and it is the only test that
+answers for all three: each of the three fully contains other districts of the
+same layer — 11 inside 3, every one at more than 98% of its own area. A name
+ending "Central" is a corroborating witness and can never be the key, for the
+411-row reason above.
+
+**WHAT THIS DOES NOT SETTLE** is how the app should then answer. The layer's
+`findFeatureContaining` returns the FIRST containing feature in file order, so a
+point on Long Island is in two districts and the app must either name both or
+name the finer one and say the other exists. That is a card-shape decision rather
+than a data one, and it is the next thing to decide — with the measurement now in
+hand rather than a premise that does not hold.
+
 **2026-09-26, ITEM 3 IS SHIPPED AS #1190 — two commits, and the measurement
 changed the fix twice.** The five `sources.html` rows and both roster defects are
 in it, verified against the live Council pages rather than a replay: 51 records
