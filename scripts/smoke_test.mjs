@@ -1635,6 +1635,19 @@ try {
           doubled.length === 0,
           doubled.length ? doubled.map((r) => `${r.name} (${r.ordinary} grey, ${r.coloured} coloured)`).join("; ")
             : rows.map((r) => `${r.name.replace(/^(North|South|East|West) /, "")} ${r.coloured}`).join(", "));
+        // A theme flip replaces the label map's style, and until 2026-09-26
+        // the new style's stretches source started empty and stayed empty
+        // until the map next moved: every coloured name vanished on the flip.
+        await live.evaluate((n) => window[n].setTheme("dark", false), EXPORTS_NAME);
+        await live.waitForTimeout(5000);
+        const md = await live.evaluate((n) => window[n].boundaryStreetLabels(), EXPORTS_NAME);
+        const drows = Object.keys(md || {}).map((k) => ({ name: k, ...md[k] }));
+        const dcol = drows.reduce((a, r) => a + r.coloured, 0);
+        const ddoubled = drows.filter((r) => r.ordinary > 0);
+        check("boundary streets on real tiles: the coloured names survive a theme flip, still without a grey copy",
+          dcol > 0 && ddoubled.length === 0,
+          `${dcol} coloured labels after the flip (${coloured} before)` +
+            (ddoubled.length ? "; doubled: " + ddoubled.map((r) => r.name).join(", ") : ""));
       }
     }
     await context.close();
