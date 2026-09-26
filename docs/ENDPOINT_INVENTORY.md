@@ -126,6 +126,128 @@ prose.
 | ia | 3 | 20 |
 | mi | 5 | 15 |
 
+### Where each layer's shapes come from
+
+Measured **2026-09-26** in a real browser by `scripts/probe_layer_sources.mjs`,
+which switches each layer on alone and reads every response the page
+fetches from another host. A layer **fetches** its shapes when a response
+carries polygon or line geometry: either the whole set, downloaded once
+and tested in the browser, or only the district at the selected point,
+asked of the server. A county-dispatched layer is also measured one county
+at a time. **Nothing re-runs this or fails when it is stale**, so a layer
+added since that date is named below as not measured; re-run the probe
+and regenerate to describe it.
+
+#### il — 29 of 40 layers fetch their shapes
+
+| layer | whole set from | at the selected point from |
+|---|---|---|
+| County (`county`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| Water Reclamation District (MWRD) (`mwrd`) | `gis.cookcountyil.gov` | — |
+| High School District (`school-district-secondary`) | `tigerweb.geo.census.gov` | — |
+| Unified School District (`school-district-unified`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| Elementary School District (`school-district-elementary`) | `tigerweb.geo.census.gov` | — |
+| Township / County Subdivision (`township`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| Municipality (`municipality`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| Judicial Subcircuit (`judicial-subcircuit`) | 4 of 9 county sources, from `gis.cookcountyil.gov`, `services.arcgis.com`, `services3.arcgis.com`; 5 shipped with the app | — |
+| County Board District (`county-board`) | 27 of 64 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.boonecountyil.org`, `maps.co.kendall.il.us`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`; 37 shipped with the app | — |
+| Fire Protection District (`fire-district`) | 17 of 26 county sources, from `arcgispublicmap.co.st-clair.il.us`, `gis.leecountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`; 9 shipped with the app | — |
+| DuPage Special Police District (`dupage-county-special-police`) | `services.arcgis.com` | — |
+| Park District (`park-district`) | 10 of 18 county sources, from `gis.cookcountyil.gov`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services7.arcgis.com`; 8 shipped with the app | — |
+| Library District (`library-district`) | 12 of 91 county sources, from `gis.cookcountyil.gov`, `k3gis.net`, `services.arcgis.com`, `services1.arcgis.com`, `services3.arcgis.com`, `services7.arcgis.com`; 79 shipped with the app | — |
+| CPS Network (High School, admin office) (`cps-hs-network`) | `data.cityofchicago.org` | `data.cityofchicago.org` |
+| CPS Network (K-8, admin office) (`cps-network`) | `data.cityofchicago.org` | `data.cityofchicago.org` |
+| City Ward (`ward`) | 28 of 28 county sources, from `arcgispublicmap.co.st-clair.il.us`, `data.cityofchicago.org`, `gis.aurora.il.us`, `gis.cookcountyil.gov`, `gis.mcleancountyil.gov`, `gis.peoriacounty.gov`, `maps.boonecountyil.org`, `maps.cityofevanston.org`, `maps.co.kendall.il.us`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services5.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services8.arcgis.com`, `services9.arcgis.com`, `webapps.bataviail.gov`; 0 shipped with the app | `data.cityofchicago.org` |
+| Ward Precinct (`ward-precinct`) | `data.cityofchicago.org` | `data.cityofchicago.org` |
+| Police District (`police-district`) | `services2.arcgis.com` | `services2.arcgis.com` |
+| Police Beat (`police-beat`) | `services2.arcgis.com` | `services2.arcgis.com` |
+| CCPSA District Council (`ccpsa-district-council`) | `services2.arcgis.com` | — |
+| Community Area (`community-area`) | `data.cityofchicago.org` | — |
+| ZIP Code (`zip-code`) | — | `tigerweb.geo.census.gov` |
+| CPS High School Zone (`cps-high`) | `data.cityofchicago.org` | `data.cityofchicago.org` |
+| CPS Middle School Zone (`cps-middle`) | `data.cityofchicago.org` | — |
+| Voting Precinct (`county-precinct`) | 37 of 83 county sources, from `arcgispublicmap.co.st-clair.il.us`, `data.macoupincountyil.gov`, `gis.cookcountyil.gov`, `gis.fultoncountyil.gov`, `gis.lasallecounty.org`, `gis.leecountyil.gov`, `gis.mcleancountyil.gov`, `gisportal.co.madison.il.us`, `k3gis.net`, `maps.boonecountyil.org`, `maps.co.kendall.il.us`, `maps.grundyco.org`, `maps.wingis.org`, `services.arcgis.com`, `services1.arcgis.com`, `services2.arcgis.com`, `services3.arcgis.com`, `services5.arcgis.com`, `services6.arcgis.com`, `services7.arcgis.com`, `services9.arcgis.com`, `tigerweb.geo.census.gov`; 46 shipped with the app | — |
+| Special Service Area (`ssa`) | `data.cityofchicago.org` | — |
+| TIF District (`tif-district`) | `gis.cookcountyil.gov` | — |
+| CPS Elementary School Zone (`cps-elementary`) | `data.cityofchicago.org` | `data.cityofchicago.org` |
+| School Location (all, incl. private, nearest N) (`school-site`) | `services2.arcgis.com` | — |
+
+- Drawn from this site's own files: `il-supreme-court`, `congress`, `il-senate`, `il-house`, `ccbr`, `school-board`.
+- Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`, `library`, `early-voting`.
+- Fetched by the app itself with no layer on, for its coverage tests: `data.cityofchicago.org`, `tigerweb.geo.census.gov`.
+
+#### ny — 14 of 33 layers fetch their shapes
+
+| layer | whole set from | at the selected point from |
+|---|---|---|
+| Community School District (`school-district`) | `data.cityofnewyork.us` | — |
+| Community Education Council (`cec`) | `data.cityofnewyork.us` | — |
+| FDNY Battalion (`fire-battalion`) | `services5.arcgis.com` | — |
+| City Council District (`council`) | `data.cityofnewyork.us` | — |
+| Community District / Board (`community-district`) | `data.cityofnewyork.us` | — |
+| Election District (`election-district`) | `services5.arcgis.com` | — |
+| NYPD Sector (`police-sector`) | `data.cityofnewyork.us` | — |
+| NYPD Precinct (`police-precinct`) | `data.cityofnewyork.us` | — |
+| ZIP Code (MODZCTA) (`zip-code`) | `data.cityofnewyork.us` | `data.cityofnewyork.us` |
+| ZIP Code (`nys-zip-code`) | — | `tigerweb.geo.census.gov` |
+| Neighborhood (NTA) (`neighborhood`) | `data.cityofnewyork.us` | — |
+| High School Zone (`hs-zone`) | `data.cityofnewyork.us` | `data.cityofnewyork.us` |
+| Middle School Zone (`ms-zone`) | `data.cityofnewyork.us` | `data.cityofnewyork.us` |
+| Elementary School Zone (`es-zone`) | `data.cityofnewyork.us` | `data.cityofnewyork.us` |
+
+- Drawn from this site's own files: `county`, `nys-school-district`, `municipality`, `village`, `borough`, `judicial-district`, `borough-president`, `district-attorney`, `congress`, `municipal-court`, `state-senate`, `state-assembly`.
+- Point layers (locations, not shapes): `school-site`, `police-station`, `fire-station`, `post-office`, `library`, `early-voting`, `polling-place`.
+
+#### ca — 4 of 16 layers fetch their shapes
+
+| layer | whole set from | at the selected point from |
+|---|---|---|
+| BART Director District (`bart-director`) | `services.arcgis.com` | — |
+| Election Precinct (`election-precinct`) | `data.sfgov.org` | — |
+| ZIP Code (`zip-code`) | — | `tigerweb.geo.census.gov` |
+| Elementary Attendance Area (`elementary-attendance-area`) | `data.sfgov.org` | — |
+
+- Drawn from this site's own files: `congress`, `ca-senate`, `ca-assembly`, `supervisor-district`, `police-district`, `neighborhood`.
+- Point layers (locations, not shapes): `police-station`, `fire-station`, `school-site`, `post-office`, `library`, `early-voting`.
+
+#### wi — 6 of 31 layers fetch their shapes
+
+| layer | whole set from | at the selected point from |
+|---|---|---|
+| School District (Union High) (`school-district-secondary`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| School District (Elementary) (`school-district-elementary`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| County Subdivision (`county-subdivision`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| City or Village (`municipality`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| ZIP Code (`zip-code`) | — | `tigerweb.geo.census.gov` |
+| Municipal Ward (`ward`) | `services1.arcgis.com` | `services1.arcgis.com` |
+
+- Drawn from this site's own files: `wi-court-of-appeals`, `us-house`, `wtcs-district`, `wi-senate`, `wi-assembly`, `wi-circuit-court`, `county`, `psap-area`, `school-district-unified`, `ems-service`, `law-service`, `fire-service`, `county-board`, `mpd-district`, `mps-school-board`, `mpd-squad-area`, `aldermanic-district`, `milwaukee-neighborhoods`, `tid-district`, `madison-neighborhood-assoc`.
+- Point layers (locations, not shapes): `police-station`, `fire-station`, `school-site`, `library`, `post-office`.
+
+#### ia — 3 of 20 layers fetch their shapes
+
+| layer | whole set from | at the selected point from |
+|---|---|---|
+| County Subdivision (`county-subdivision`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| City (`municipality`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| ZIP Code (`zip-code`) | — | `tigerweb.geo.census.gov` |
+
+- Drawn from this site's own files: `us-house`, `ia-judicial-district`, `iowa-aea`, `ia-senate`, `county`, `ia-house`, `county-supervisor`, `school-district-unified`, `school-director-district`, `community-college`, `cc-director-district`, `city-ward`, `precinct`.
+- Point layers (locations, not shapes): `police-station`, `fire-station`, `school-site`, `post-office`.
+
+#### mi — 5 of 15 layers fetch their shapes
+
+| layer | whole set from | at the selected point from |
+|---|---|---|
+| School District (Unified) (`school-district-unified`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| School District (Elementary) (`school-district-elementary`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| Township or City (`county-subdivision`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+| ZIP Code (`zip-code`) | — | `tigerweb.geo.census.gov` |
+| City or Village (`municipality`) | `tigerweb.geo.census.gov` | `tigerweb.geo.census.gov` |
+
+- Drawn from this site's own files: `us-house`, `mi-senate`, `county`, `mi-house`, `county-commissioner`, `city-ward`, `precinct`.
+- Point layers (locations, not shapes): `police-station`, `fire-station`, `post-office`.
+
 ## 2. Build-time datasets
 
 | instance | manifest entries | shipped `data/app` files | sources measured as blocking |

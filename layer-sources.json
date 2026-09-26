@@ -1,0 +1,3106 @@
+{
+ "measured": "2026-09-26",
+ "apps": {
+  "ca": {
+   "points": [
+    {
+     "lat": 37.77927,
+     "lng": -122.41924
+    }
+   ],
+   "app_level": [],
+   "layers": {
+    "congress": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "ca-senate": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "ca-assembly": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "bart-director": {
+     "whole_set": [
+      "services.arcgis.com"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "election-precinct": {
+     "whole_set": [
+      "data.sfgov.org"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "sub_of": "supervisor-district",
+     "source": "fetched"
+    },
+    "supervisor-district": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "police-district": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "zip-code": {
+     "whole_set": [],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "neighborhood": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "elementary-attendance-area": {
+     "whole_set": [
+      "data.sfgov.org"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "police-station": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "data.sfgov.org"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "fire-station": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "data.sfgov.org"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "school-site": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "data.sfgov.org"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "post-office": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "carto.nationalmap.gov"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "library": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "early-voting": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    }
+   }
+  },
+  "ia": {
+   "points": [
+    {
+     "lat": 42.0494,
+     "lng": -92.9071
+    }
+   ],
+   "app_level": [],
+   "layers": {
+    "us-house": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "ia-judicial-district": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "iowa-aea": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "ia-senate": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "county": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "ia-house": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "county-supervisor": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "school-district-unified": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "school-director-district": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "sub_of": "school-district-unified",
+     "source": "shipped"
+    },
+    "community-college": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "cc-director-district": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "sub_of": "community-college",
+     "source": "shipped"
+    },
+    "county-subdivision": {
+     "whole_set": [
+      "tigerweb.geo.census.gov"
+     ],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "sub_of": "county",
+     "source": "fetched"
+    },
+    "municipality": {
+     "whole_set": [
+      "tigerweb.geo.census.gov"
+     ],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "city-ward": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "counties": {
+      "live": [],
+      "shipped": [
+       "des-moines",
+       "waterloo",
+       "cedar-rapids"
+      ],
+      "failed": []
+     },
+     "source": "shipped"
+    },
+    "zip-code": {
+     "whole_set": [],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "precinct": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "police-station": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "carto.nationalmap.gov"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "fire-station": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "carto.nationalmap.gov"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "school-site": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "post-office": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "carto.nationalmap.gov"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    }
+   }
+  },
+  "il": {
+   "points": [
+    {
+     "lat": 41.8825,
+     "lng": -87.6285
+    },
+    {
+     "lat": 42.0451,
+     "lng": -87.6877
+    }
+   ],
+   "app_level": [
+    "data.cityofchicago.org",
+    "tigerweb.geo.census.gov"
+   ],
+   "layers": {
+    "il-supreme-court": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "congress": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "il-senate": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "il-house": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "county": {
+     "whole_set": [
+      "tigerweb.geo.census.gov"
+     ],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "mwrd": {
+     "whole_set": [
+      "gis.cookcountyil.gov"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "school-district-secondary": {
+     "whole_set": [
+      "tigerweb.geo.census.gov"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "school-district-unified": {
+     "whole_set": [
+      "tigerweb.geo.census.gov"
+     ],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "school-district-elementary": {
+     "whole_set": [
+      "tigerweb.geo.census.gov"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "township": {
+     "whole_set": [
+      "tigerweb.geo.census.gov"
+     ],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "sub_of": "county",
+     "source": "fetched"
+    },
+    "municipality": {
+     "whole_set": [
+      "tigerweb.geo.census.gov"
+     ],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "judicial-subcircuit": {
+     "whole_set": [
+      "gis.cookcountyil.gov",
+      "services.arcgis.com",
+      "services3.arcgis.com"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "counties": {
+      "live": [
+       {
+        "key": "cook",
+        "hosts": [
+         "gis.cookcountyil.gov"
+        ]
+       },
+       {
+        "key": "will",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "dupage",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "lake",
+        "hosts": [
+         "services3.arcgis.com"
+        ]
+       }
+      ],
+      "shipped": [
+       "kane",
+       "mchenry",
+       "winnebago",
+       "madison",
+       "sangamon"
+      ],
+      "failed": []
+     },
+     "source": "fetched"
+    },
+    "county-board": {
+     "whole_set": [
+      "arcgispublicmap.co.st-clair.il.us",
+      "gis.cookcountyil.gov",
+      "gis.fultoncountyil.gov",
+      "gis.leecountyil.gov",
+      "gis.mcleancountyil.gov",
+      "gisportal.co.madison.il.us",
+      "k3gis.net",
+      "maps.boonecountyil.org",
+      "maps.co.kendall.il.us",
+      "maps.wingis.org",
+      "services.arcgis.com",
+      "services1.arcgis.com",
+      "services2.arcgis.com",
+      "services3.arcgis.com",
+      "services6.arcgis.com",
+      "services7.arcgis.com",
+      "services9.arcgis.com"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "counties": {
+      "live": [
+       {
+        "key": "cook",
+        "hosts": [
+         "gis.cookcountyil.gov"
+        ]
+       },
+       {
+        "key": "will",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "dupage",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "lake",
+        "hosts": [
+         "services3.arcgis.com"
+        ]
+       },
+       {
+        "key": "kane",
+        "hosts": [
+         "services1.arcgis.com"
+        ]
+       },
+       {
+        "key": "mchenry",
+        "hosts": [
+         "services1.arcgis.com"
+        ]
+       },
+       {
+        "key": "kendall",
+        "hosts": [
+         "maps.co.kendall.il.us"
+        ]
+       },
+       {
+        "key": "kankakee",
+        "hosts": [
+         "k3gis.net"
+        ]
+       },
+       {
+        "key": "winnebago",
+        "hosts": [
+         "maps.wingis.org"
+        ]
+       },
+       {
+        "key": "mclean",
+        "hosts": [
+         "gis.mcleancountyil.gov"
+        ]
+       },
+       {
+        "key": "logan",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "sangamon",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "madison",
+        "hosts": [
+         "gisportal.co.madison.il.us"
+        ]
+       },
+       {
+        "key": "st-clair",
+        "hosts": [
+         "arcgispublicmap.co.st-clair.il.us"
+        ]
+       },
+       {
+        "key": "dekalb",
+        "hosts": [
+         "services7.arcgis.com"
+        ]
+       },
+       {
+        "key": "lee",
+        "hosts": [
+         "gis.leecountyil.gov"
+        ]
+       },
+       {
+        "key": "whiteside",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "rock-island",
+        "hosts": [
+         "services9.arcgis.com"
+        ]
+       },
+       {
+        "key": "boone",
+        "hosts": [
+         "maps.boonecountyil.org"
+        ]
+       },
+       {
+        "key": "macon",
+        "hosts": [
+         "services1.arcgis.com"
+        ]
+       },
+       {
+        "key": "coles",
+        "hosts": [
+         "services2.arcgis.com"
+        ]
+       },
+       {
+        "key": "peoria",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "tazewell",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "adams",
+        "hosts": [
+         "services3.arcgis.com"
+        ]
+       },
+       {
+        "key": "fulton",
+        "hosts": [
+         "gis.fultoncountyil.gov"
+        ]
+       },
+       {
+        "key": "iroquois",
+        "hosts": [
+         "services6.arcgis.com"
+        ]
+       },
+       {
+        "key": "effingham",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       }
+      ],
+      "shipped": [
+       "lasalle",
+       "livingston",
+       "woodford",
+       "ogle",
+       "stephenson",
+       "carroll",
+       "grundy",
+       "henry",
+       "jefferson",
+       "menard",
+       "montgomery",
+       "shelby",
+       "white",
+       "jo-daviess",
+       "knox",
+       "clark",
+       "crawford",
+       "richland",
+       "wayne",
+       "clay",
+       "jackson",
+       "douglas",
+       "vermilion",
+       "mercer",
+       "edgar",
+       "franklin",
+       "clinton",
+       "hancock",
+       "warren",
+       "mcdonough",
+       "stark",
+       "dewitt",
+       "washington",
+       "cass",
+       "marshall",
+       "mason",
+       "christian"
+      ],
+      "failed": []
+     },
+     "source": "fetched"
+    },
+    "ccbr": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "fire-district": {
+     "whole_set": [
+      "arcgispublicmap.co.st-clair.il.us",
+      "gis.leecountyil.gov",
+      "gisportal.co.madison.il.us",
+      "k3gis.net",
+      "services.arcgis.com",
+      "services1.arcgis.com",
+      "services3.arcgis.com",
+      "services6.arcgis.com",
+      "services7.arcgis.com"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "counties": {
+      "live": [
+       {
+        "key": "will",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "dupage",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "lake",
+        "hosts": [
+         "services3.arcgis.com"
+        ]
+       },
+       {
+        "key": "kane",
+        "hosts": [
+         "services1.arcgis.com"
+        ]
+       },
+       {
+        "key": "mchenry",
+        "hosts": [
+         "services1.arcgis.com"
+        ]
+       },
+       {
+        "key": "kankakee",
+        "hosts": [
+         "k3gis.net"
+        ]
+       },
+       {
+        "key": "madison",
+        "hosts": [
+         "gisportal.co.madison.il.us"
+        ]
+       },
+       {
+        "key": "dekalb",
+        "hosts": [
+         "services7.arcgis.com"
+        ]
+       },
+       {
+        "key": "lee",
+        "hosts": [
+         "gis.leecountyil.gov"
+        ]
+       },
+       {
+        "key": "adams",
+        "hosts": [
+         "services3.arcgis.com"
+        ]
+       },
+       {
+        "key": "iroquois",
+        "hosts": [
+         "services6.arcgis.com"
+        ]
+       },
+       {
+        "key": "peoria",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "sangamon",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "st-clair",
+        "hosts": [
+         "arcgispublicmap.co.st-clair.il.us"
+        ]
+       },
+       {
+        "key": "effingham",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "hamilton",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "monroe",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       }
+      ],
+      "shipped": [
+       "cook",
+       "kendall",
+       "rock-island",
+       "stephenson",
+       "boone",
+       "stark",
+       "macon",
+       "woodford",
+       "grundy"
+      ],
+      "failed": []
+     },
+     "source": "fetched"
+    },
+    "dupage-county-special-police": {
+     "whole_set": [
+      "services.arcgis.com"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "park-district": {
+     "whole_set": [
+      "gis.cookcountyil.gov",
+      "k3gis.net",
+      "services.arcgis.com",
+      "services1.arcgis.com",
+      "services3.arcgis.com",
+      "services7.arcgis.com"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "counties": {
+      "live": [
+       {
+        "key": "cook",
+        "hosts": [
+         "gis.cookcountyil.gov"
+        ]
+       },
+       {
+        "key": "will",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "dupage",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "lake",
+        "hosts": [
+         "services3.arcgis.com"
+        ]
+       },
+       {
+        "key": "kane",
+        "hosts": [
+         "services1.arcgis.com"
+        ]
+       },
+       {
+        "key": "kankakee",
+        "hosts": [
+         "k3gis.net"
+        ]
+       },
+       {
+        "key": "madison",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "dekalb",
+        "hosts": [
+         "services7.arcgis.com"
+        ]
+       },
+       {
+        "key": "peoria",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "effingham",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       }
+      ],
+      "shipped": [
+       "kendall",
+       "rock-island",
+       "boone",
+       "stark",
+       "logan",
+       "macon",
+       "grundy",
+       "woodford"
+      ],
+      "failed": []
+     },
+     "source": "fetched"
+    },
+    "library-district": {
+     "whole_set": [
+      "gis.cookcountyil.gov",
+      "k3gis.net",
+      "services.arcgis.com",
+      "services1.arcgis.com",
+      "services3.arcgis.com",
+      "services7.arcgis.com"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "counties": {
+      "live": [
+       {
+        "key": "cook",
+        "hosts": [
+         "gis.cookcountyil.gov"
+        ]
+       },
+       {
+        "key": "will",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "dupage",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "lake",
+        "hosts": [
+         "services3.arcgis.com"
+        ]
+       },
+       {
+        "key": "kane",
+        "hosts": [
+         "services1.arcgis.com"
+        ]
+       },
+       {
+        "key": "mchenry",
+        "hosts": [
+         "services1.arcgis.com"
+        ]
+       },
+       {
+        "key": "adams",
+        "hosts": [
+         "services3.arcgis.com"
+        ]
+       },
+       {
+        "key": "kankakee",
+        "hosts": [
+         "k3gis.net"
+        ]
+       },
+       {
+        "key": "madison",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "dekalb",
+        "hosts": [
+         "services7.arcgis.com"
+        ]
+       },
+       {
+        "key": "peoria",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "effingham",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       }
+      ],
+      "shipped": [
+       "kendall",
+       "carroll",
+       "macoupin",
+       "lee",
+       "randolph",
+       "sangamon",
+       "st-clair",
+       "stephenson",
+       "woodford",
+       "grundy",
+       "rock-island",
+       "boone",
+       "stark",
+       "macon",
+       "alexander",
+       "bond",
+       "brown",
+       "calhoun",
+       "cass",
+       "clark",
+       "clay",
+       "clinton",
+       "coles",
+       "crawford",
+       "cumberland",
+       "dewitt",
+       "douglas",
+       "edgar",
+       "edwards",
+       "franklin",
+       "fulton",
+       "gallatin",
+       "greene",
+       "hamilton",
+       "hancock",
+       "hardin",
+       "henry",
+       "iroquois",
+       "jackson",
+       "jefferson",
+       "jersey",
+       "jo-daviess",
+       "johnson",
+       "knox",
+       "lasalle",
+       "livingston",
+       "logan",
+       "marshall",
+       "mason",
+       "massac",
+       "mcdonough",
+       "mclean",
+       "menard",
+       "mercer",
+       "monroe",
+       "montgomery",
+       "morgan",
+       "moultrie",
+       "ogle",
+       "perry",
+       "pike",
+       "pulaski",
+       "putnam",
+       "richland",
+       "saline",
+       "schuyler",
+       "scott",
+       "shelby",
+       "tazewell",
+       "union",
+       "vermilion",
+       "wabash",
+       "warren",
+       "washington",
+       "wayne",
+       "white",
+       "whiteside",
+       "williamson",
+       "winnebago"
+      ],
+      "failed": []
+     },
+     "source": "fetched"
+    },
+    "school-board": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "cps-hs-network": {
+     "whole_set": [
+      "data.cityofchicago.org"
+     ],
+     "at_point": [
+      "data.cityofchicago.org"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "cps-network": {
+     "whole_set": [
+      "data.cityofchicago.org"
+     ],
+     "at_point": [
+      "data.cityofchicago.org"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "ward": {
+     "whole_set": [
+      "arcgispublicmap.co.st-clair.il.us",
+      "data.cityofchicago.org",
+      "gis.aurora.il.us",
+      "gis.cookcountyil.gov",
+      "gis.mcleancountyil.gov",
+      "gis.peoriacounty.gov",
+      "maps.boonecountyil.org",
+      "maps.cityofevanston.org",
+      "maps.co.kendall.il.us",
+      "maps.wingis.org",
+      "services.arcgis.com",
+      "services1.arcgis.com",
+      "services2.arcgis.com",
+      "services3.arcgis.com",
+      "services5.arcgis.com",
+      "services6.arcgis.com",
+      "services7.arcgis.com",
+      "services8.arcgis.com",
+      "services9.arcgis.com",
+      "webapps.bataviail.gov"
+     ],
+     "at_point": [
+      "data.cityofchicago.org"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "counties": {
+      "live": [
+       {
+        "key": "chicago",
+        "hosts": [
+         "data.cityofchicago.org"
+        ]
+       },
+       {
+        "key": "cook-suburban",
+        "hosts": [
+         "gis.cookcountyil.gov"
+        ]
+       },
+       {
+        "key": "evanston",
+        "hosts": [
+         "maps.cityofevanston.org"
+        ]
+       },
+       {
+        "key": "will",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "aurora",
+        "hosts": [
+         "gis.aurora.il.us"
+        ]
+       },
+       {
+        "key": "rockford",
+        "hosts": [
+         "maps.wingis.org"
+        ]
+       },
+       {
+        "key": "rock-island",
+        "hosts": [
+         "services.arcgis.com",
+         "services2.arcgis.com",
+         "services9.arcgis.com"
+        ]
+       },
+       {
+        "key": "dekalb",
+        "hosts": [
+         "services7.arcgis.com"
+        ]
+       },
+       {
+        "key": "galesburg",
+        "hosts": [
+         "services1.arcgis.com"
+        ]
+       },
+       {
+        "key": "mendota",
+        "hosts": [
+         "services6.arcgis.com"
+        ]
+       },
+       {
+        "key": "quincy",
+        "hosts": [
+         "services3.arcgis.com"
+        ]
+       },
+       {
+        "key": "berwyn",
+        "hosts": [
+         "services7.arcgis.com"
+        ]
+       },
+       {
+        "key": "lake-cities",
+        "hosts": [
+         "services5.arcgis.com",
+         "services8.arcgis.com"
+        ]
+       },
+       {
+        "key": "belvidere",
+        "hosts": [
+         "maps.boonecountyil.org"
+        ]
+       },
+       {
+        "key": "kane-cities",
+        "hosts": [
+         "services2.arcgis.com",
+         "services6.arcgis.com",
+         "webapps.bataviail.gov"
+        ]
+       },
+       {
+        "key": "dupage-cities",
+        "hosts": [
+         "services1.arcgis.com"
+        ]
+       },
+       {
+        "key": "mchenry-city",
+        "hosts": [
+         "services7.arcgis.com"
+        ]
+       },
+       {
+        "key": "madison-cities",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "kendall-cities",
+        "hosts": [
+         "maps.co.kendall.il.us"
+        ]
+       },
+       {
+        "key": "pontiac",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "mclean-cities",
+        "hosts": [
+         "gis.mcleancountyil.gov"
+        ]
+       },
+       {
+        "key": "lincoln",
+        "hosts": [
+         "services5.arcgis.com"
+        ]
+       },
+       {
+        "key": "springfield",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "freeport",
+        "hosts": [
+         "services2.arcgis.com"
+        ]
+       },
+       {
+        "key": "st-clair-cities",
+        "hosts": [
+         "arcgispublicmap.co.st-clair.il.us"
+        ]
+       },
+       {
+        "key": "whiteside-cities",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "peoria-city",
+        "hosts": [
+         "services1.arcgis.com"
+        ]
+       },
+       {
+        "key": "elmwood",
+        "hosts": [
+         "gis.peoriacounty.gov"
+        ]
+       }
+      ],
+      "shipped": [],
+      "failed": []
+     },
+     "source": "fetched"
+    },
+    "ward-precinct": {
+     "whole_set": [
+      "data.cityofchicago.org"
+     ],
+     "at_point": [
+      "data.cityofchicago.org"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "sub_of": "ward",
+     "source": "fetched"
+    },
+    "police-district": {
+     "whole_set": [
+      "services2.arcgis.com"
+     ],
+     "at_point": [
+      "services2.arcgis.com"
+     ],
+     "points_from": [
+      "services2.arcgis.com"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "police-beat": {
+     "whole_set": [
+      "services2.arcgis.com"
+     ],
+     "at_point": [
+      "services2.arcgis.com"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "sub_of": "police-district",
+     "source": "fetched"
+    },
+    "ccpsa-district-council": {
+     "whole_set": [
+      "services2.arcgis.com"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "community-area": {
+     "whole_set": [
+      "data.cityofchicago.org"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "zip-code": {
+     "whole_set": [],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "cps-high": {
+     "whole_set": [
+      "data.cityofchicago.org"
+     ],
+     "at_point": [
+      "data.cityofchicago.org"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "cps-middle": {
+     "whole_set": [
+      "data.cityofchicago.org"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "county-precinct": {
+     "whole_set": [
+      "arcgispublicmap.co.st-clair.il.us",
+      "data.macoupincountyil.gov",
+      "gis.cookcountyil.gov",
+      "gis.fultoncountyil.gov",
+      "gis.lasallecounty.org",
+      "gis.leecountyil.gov",
+      "gis.mcleancountyil.gov",
+      "gisportal.co.madison.il.us",
+      "k3gis.net",
+      "maps.boonecountyil.org",
+      "maps.co.kendall.il.us",
+      "maps.grundyco.org",
+      "maps.wingis.org",
+      "services.arcgis.com",
+      "services1.arcgis.com",
+      "services2.arcgis.com",
+      "services3.arcgis.com",
+      "services5.arcgis.com",
+      "services6.arcgis.com",
+      "services7.arcgis.com",
+      "services9.arcgis.com",
+      "tigerweb.geo.census.gov"
+     ],
+     "at_point": [],
+     "points_from": [
+      "gis.lasallecounty.org",
+      "gis.mcleancountyil.gov",
+      "gisportal.co.madison.il.us",
+      "maps.grundyco.org",
+      "services.arcgis.com",
+      "services1.arcgis.com",
+      "services2.arcgis.com",
+      "services6.arcgis.com"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "counties": {
+      "live": [
+       {
+        "key": "cook",
+        "hosts": [
+         "gis.cookcountyil.gov"
+        ]
+       },
+       {
+        "key": "will",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "dupage",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "lake",
+        "hosts": [
+         "services3.arcgis.com"
+        ]
+       },
+       {
+        "key": "kane",
+        "hosts": [
+         "services1.arcgis.com"
+        ]
+       },
+       {
+        "key": "mchenry",
+        "hosts": [
+         "services1.arcgis.com"
+        ]
+       },
+       {
+        "key": "kendall",
+        "hosts": [
+         "maps.co.kendall.il.us"
+        ]
+       },
+       {
+        "key": "lasalle",
+        "hosts": [
+         "gis.lasallecounty.org"
+        ]
+       },
+       {
+        "key": "kankakee",
+        "hosts": [
+         "k3gis.net"
+        ]
+       },
+       {
+        "key": "boone",
+        "hosts": [
+         "maps.boonecountyil.org"
+        ]
+       },
+       {
+        "key": "grundy",
+        "hosts": [
+         "maps.grundyco.org"
+        ]
+       },
+       {
+        "key": "macoupin",
+        "hosts": [
+         "data.macoupincountyil.gov"
+        ]
+       },
+       {
+        "key": "madison",
+        "hosts": [
+         "gisportal.co.madison.il.us"
+        ]
+       },
+       {
+        "key": "st-clair",
+        "hosts": [
+         "arcgispublicmap.co.st-clair.il.us"
+        ]
+       },
+       {
+        "key": "winnebago",
+        "hosts": [
+         "maps.wingis.org"
+        ]
+       },
+       {
+        "key": "dekalb",
+        "hosts": [
+         "services7.arcgis.com"
+        ]
+       },
+       {
+        "key": "lee",
+        "hosts": [
+         "gis.leecountyil.gov"
+        ]
+       },
+       {
+        "key": "whiteside",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "rock-island",
+        "hosts": [
+         "services9.arcgis.com"
+        ]
+       },
+       {
+        "key": "mclean",
+        "hosts": [
+         "gis.mcleancountyil.gov"
+        ]
+       },
+       {
+        "key": "logan",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "sangamon",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "carroll",
+        "hosts": [
+         "tigerweb.geo.census.gov"
+        ]
+       },
+       {
+        "key": "woodford",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "peoria",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "tazewell",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "adams",
+        "hosts": [
+         "services3.arcgis.com"
+        ]
+       },
+       {
+        "key": "fulton",
+        "hosts": [
+         "gis.fultoncountyil.gov"
+        ]
+       },
+       {
+        "key": "macon",
+        "hosts": [
+         "services1.arcgis.com"
+        ]
+       },
+       {
+        "key": "iroquois",
+        "hosts": [
+         "services6.arcgis.com"
+        ]
+       },
+       {
+        "key": "monroe",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "randolph",
+        "hosts": [
+         "services5.arcgis.com"
+        ]
+       },
+       {
+        "key": "dewitt",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "effingham",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "hamilton",
+        "hosts": [
+         "services.arcgis.com"
+        ]
+       },
+       {
+        "key": "coles",
+        "hosts": [
+         "services2.arcgis.com"
+        ]
+       },
+       {
+        "key": "morgan",
+        "hosts": [
+         "services3.arcgis.com"
+        ]
+       }
+      ],
+      "shipped": [
+       "mcdonough",
+       "jefferson",
+       "henry",
+       "montgomery",
+       "ogle",
+       "stephenson",
+       "stark",
+       "white",
+       "clark",
+       "crawford",
+       "richland",
+       "wayne",
+       "jackson",
+       "shelby",
+       "warren",
+       "hancock",
+       "douglas",
+       "mercer",
+       "edgar",
+       "franklin",
+       "calhoun",
+       "jo-daviess",
+       "gallatin",
+       "putnam",
+       "marshall",
+       "livingston",
+       "cumberland",
+       "johnson",
+       "perry",
+       "pulaski",
+       "hardin",
+       "cass",
+       "greene",
+       "scott",
+       "moultrie",
+       "menard",
+       "schuyler",
+       "clay",
+       "edwards",
+       "henderson",
+       "mason",
+       "massac",
+       "pike",
+       "saline",
+       "union",
+       "wabash"
+      ],
+      "failed": []
+     },
+     "sub_of": "township",
+     "source": "fetched"
+    },
+    "ssa": {
+     "whole_set": [
+      "data.cityofchicago.org"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "tif-district": {
+     "whole_set": [
+      "gis.cookcountyil.gov"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "cps-elementary": {
+     "whole_set": [
+      "data.cityofchicago.org"
+     ],
+     "at_point": [
+      "data.cityofchicago.org"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "school-site": {
+     "whole_set": [
+      "services2.arcgis.com"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "police-station": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "carto.nationalmap.gov"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "fire-station": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "carto.nationalmap.gov"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "post-office": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "carto.nationalmap.gov"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "library": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "data.cityofchicago.org"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "early-voting": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    }
+   }
+  },
+  "mi": {
+   "points": [
+    {
+     "lat": 42.7337,
+     "lng": -84.5553
+    }
+   ],
+   "app_level": [],
+   "layers": {
+    "us-house": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "mi-senate": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "county": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "mi-house": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "school-district-unified": {
+     "whole_set": [
+      "tigerweb.geo.census.gov"
+     ],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "school-district-elementary": {
+     "whole_set": [
+      "tigerweb.geo.census.gov"
+     ],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "county-commissioner": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "county-subdivision": {
+     "whole_set": [
+      "tigerweb.geo.census.gov"
+     ],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "sub_of": "county",
+     "source": "fetched"
+    },
+    "zip-code": {
+     "whole_set": [],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "city-ward": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "counties": {
+      "live": [],
+      "shipped": [
+       "detroit",
+       "warren",
+       "grand-rapids",
+       "flint",
+       "rochester-hills",
+       "battle-creek"
+      ],
+      "failed": []
+     },
+     "source": "shipped"
+    },
+    "precinct": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "municipality": {
+     "whole_set": [
+      "tigerweb.geo.census.gov"
+     ],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "police-station": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "carto.nationalmap.gov"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "fire-station": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "carto.nationalmap.gov"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "post-office": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "carto.nationalmap.gov"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    }
+   }
+  },
+  "ny": {
+   "points": [
+    {
+     "lat": 42.65203,
+     "lng": -73.75731
+    },
+    {
+     "lat": 40.71274,
+     "lng": -74.00602
+    }
+   ],
+   "app_level": [],
+   "layers": {
+    "judicial-district": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "county": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "nys-school-district": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "municipality": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "village": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "sub_of": "municipality",
+     "source": "shipped"
+    },
+    "borough": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "geosearch.planninglabs.nyc"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "shipped"
+    },
+    "borough-president": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "shipped"
+    },
+    "district-attorney": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "shipped"
+    },
+    "congress": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "geosearch.planninglabs.nyc"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "municipal-court": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "state-senate": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "geosearch.planninglabs.nyc"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "school-district": {
+     "whole_set": [
+      "data.cityofnewyork.us"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "cec": {
+     "whole_set": [
+      "data.cityofnewyork.us"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "fire-battalion": {
+     "whole_set": [
+      "services5.arcgis.com"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "council": {
+     "whole_set": [
+      "data.cityofnewyork.us"
+     ],
+     "at_point": [],
+     "points_from": [
+      "geosearch.planninglabs.nyc"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "community-district": {
+     "whole_set": [
+      "data.cityofnewyork.us"
+     ],
+     "at_point": [],
+     "points_from": [
+      "data.cityofnewyork.us",
+      "geosearch.planninglabs.nyc"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "election-district": {
+     "whole_set": [
+      "services5.arcgis.com"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "sub_of": "state-assembly",
+     "source": "fetched"
+    },
+    "state-assembly": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "geosearch.planninglabs.nyc"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "police-sector": {
+     "whole_set": [
+      "data.cityofnewyork.us"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "sub_of": "police-precinct",
+     "source": "fetched"
+    },
+    "police-precinct": {
+     "whole_set": [
+      "data.cityofnewyork.us"
+     ],
+     "at_point": [],
+     "points_from": [
+      "geosearch.planninglabs.nyc"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "nys-zip-code": {
+     "whole_set": [],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "zip-code": {
+     "whole_set": [
+      "data.cityofnewyork.us"
+     ],
+     "at_point": [
+      "data.cityofnewyork.us"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "neighborhood": {
+     "whole_set": [
+      "data.cityofnewyork.us"
+     ],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "hs-zone": {
+     "whole_set": [
+      "data.cityofnewyork.us"
+     ],
+     "at_point": [
+      "data.cityofnewyork.us"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "ms-zone": {
+     "whole_set": [
+      "data.cityofnewyork.us"
+     ],
+     "at_point": [
+      "data.cityofnewyork.us"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "es-zone": {
+     "whole_set": [
+      "data.cityofnewyork.us"
+     ],
+     "at_point": [
+      "data.cityofnewyork.us"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon"
+     ],
+     "source": "fetched"
+    },
+    "school-site": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "services6.arcgis.com"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "police-station": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "fire-station": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "services6.arcgis.com"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "post-office": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "carto.nationalmap.gov"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "library": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "data.cityofnewyork.us",
+      "gisservices.its.ny.gov"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "early-voting": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "services6.arcgis.com"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "polling-place": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "services6.arcgis.com"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    }
+   }
+  },
+  "wi": {
+   "points": [
+    {
+     "lat": 44.89804,
+     "lng": -89.75782
+    }
+   ],
+   "app_level": [],
+   "layers": {
+    "wi-court-of-appeals": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "us-house": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "wtcs-district": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "wi-senate": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "wi-assembly": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "wi-circuit-court": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "county": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "psap-area": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "school-district-secondary": {
+     "whole_set": [
+      "tigerweb.geo.census.gov"
+     ],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "school-district-unified": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "school-district-elementary": {
+     "whole_set": [
+      "tigerweb.geo.census.gov"
+     ],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "ems-service": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "law-service": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "fire-service": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "county-board": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "county-subdivision": {
+     "whole_set": [
+      "tigerweb.geo.census.gov"
+     ],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "sub_of": "county",
+     "source": "fetched"
+    },
+    "municipality": {
+     "whole_set": [
+      "tigerweb.geo.census.gov"
+     ],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "zip-code": {
+     "whole_set": [],
+     "at_point": [
+      "tigerweb.geo.census.gov"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "fetched"
+    },
+    "mpd-district": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "mps-school-board": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "mpd-squad-area": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "sub_of": "mpd-district",
+     "source": "shipped"
+    },
+    "aldermanic-district": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "ward": {
+     "whole_set": [
+      "services1.arcgis.com"
+     ],
+     "at_point": [
+      "services1.arcgis.com"
+     ],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [],
+     "sub_of": "county-subdivision",
+     "source": "fetched"
+    },
+    "milwaukee-neighborhoods": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "madison-neighborhood-assoc": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "tid-district": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "MultiPolygon",
+      "Polygon"
+     ],
+     "source": "shipped"
+    },
+    "police-station": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "carto.nationalmap.gov"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "fire-station": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "carto.nationalmap.gov"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "school-site": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "library": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    },
+    "post-office": {
+     "whole_set": [],
+     "at_point": [],
+     "points_from": [
+      "carto.nationalmap.gov"
+     ],
+     "unanswered": [],
+     "loaded_geometry": [
+      "Point"
+     ],
+     "source": "points"
+    }
+   }
+  }
+ }
+}
