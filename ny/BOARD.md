@@ -45,6 +45,62 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, ITEM 4 IS OPEN AS #1195, AND ITS STATED PREMISE WAS WRONG — the
+design survived, the key did not.** The queue said "separate layers per tier,
+`SED_CODE_1` already encodes the tier". Separate layers is right and is what
+ships; the column does not encode anything, measured against the service rather
+than against the shipped file. Nothing published marks the tier: `SED_CODE_1` is a
+single SPACE on two of the three and its own COMPONENT'S code on the third,
+`INSSUBDE` reads `UNION FREE` on that third and **`CENTRAL` on 411 of the 936
+rows** (an ordinary New York district type, not this one — ANGELICA-BELMONT reads
+`CENTRAL` and contains nothing), `SDLCODE` is blank on the three and four others,
+and none of the service's 18 layers is a central-high-school layer. **THE KEY IS
+CONTAINMENT**: exactly three districts are covered by smaller ones, each covered
+100.000%, the other 713 with ZERO overlapping pairs under an exhaustive sweep and
+the three mutually disjoint.
+
+**THE PROTOCOL THAT WAS SUPPOSED TO CATCH THIS PASSED ON A COIN FLIP, and that is
+the finding worth keeping.** The builder gates every candidate simplification on
+2,000 points sampled over the state ENVELOPE — 35.88 deg², mostly ocean — and
+refuses any candidate with a single point in two entities. The three upper-tier
+districts are **0.010 deg²**, so the expected number of samples landing in them is
+**0.56** and the chance of seeing none is about **57%**. Its "0 overlaps" was not a
+measurement of disjointness; it was a measurement of how small the overlap is.
+After the split each layer is internally disjoint by exhaustive sweep, so the zero
+is now a fact. **A SAMPLED GATE OVER A LARGE ENVELOPE CANNOT SEE A SMALL FEATURE,
+and it reports that as a pass.**
+
+**NO GEOMETRY WAS RE-DERIVED AND THAT WAS THE RIGHT CALL.** A full rebuild needs an
+8.3 MB fetch and mapshaper over npx; instead `--split-only` recombines the shipped
+files and re-partitions them offline in 0.3 s, so every polygon keeps bytes that
+already passed the protocol, and `--check` makes the same code a drift gate with no
+network. It is idempotent and it REFUSES to re-split a set whose entity count has
+moved — which is why the negative test that deleted a district could not be papered
+over by re-running it.
+
+**THE NEW SMOKE ASSERTION WAS NEGATIVE-TESTED BY REPRODUCING THE ORIGINAL DEFECT**:
+pointing the new layer at the pre-split 716-feature file makes the upper card name
+ELMONT, which is exactly what shipped until today, and the check fails on it. The
+merge gate went into `ny/scripts/validate_index.py` rather than a new CI step, so
+`CLAUDE.md`'s gate-count pair is untouched — and the pair is **104/10** on main
+now, not 103/10, because another session added a gate while #1190 was in review.
+Re-derive that list per PR; do not reuse the previous run's.
+
+**FIVE DERIVED-COUNT GENERATORS FAILED THEIR OWN `--check` BEFORE I RAN THEM** —
+landing page, about.html, llms.txt, stats.json/COUNTY_STATUS and the endpoint
+inventory — which is the `new-layer` skill's warning holding exactly: a green
+worksheet `--check` says nothing about any of them. One stale figure also came out
+of `validate_doc_counts.py`'s OWN excuse text, whose reason said "ships 33".
+
+**Verified: 104 static gates run 0 failing; 9 of 10 browser invocations pass**, the
+tenth `page_consistency_test.mjs` at 100 failures all `ERR_CERT_AUTHORITY_INVALID`
+on `gc.zgo.at`, zero non-cert.
+
+**WHAT REMAINS IN THE QUEUE**: the coterminous town/village double-draw, and both
+gap records (the three unreachable school districts — now retired by this PR rather
+than recorded, so that one is off the list — and the county-clerk roster naming 2
+of 5 boroughs). Then the county tier.
+
 **2026-09-26, #1190 IS GREEN AND MERGEABLE — ready for review.** `smoke`
 completed `success` on head `60ffd1e` at 19:20:30 UTC, `mergeable_state: clean`,
 no review comments, two commits, +400/-122 across 9 files. It carries item 3
