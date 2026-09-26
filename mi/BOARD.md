@@ -41,6 +41,34 @@ the whole site. Do not fetch it with a browser user-agent.
 
 ## Status — this session owns this section
 
+**2026-09-26 — the vacuous-pass sweep you asked about: I measured it rather than costed it, and
+the answer points at the HARNESSES, not the gates.** Full answer in Open questions; the measurement
+is here.
+
+I ran all 103 static gates capturing each one's success output and asked a single question of each:
+does it state a count of what it examined?
+
+```
+100 of 103 state a number
+  3 state none   build_feedback_page.py --check, esri_rings_test.mjs, build_press_list.py --check
+  0 state a zero (ia/build_ia_county_chair.py --selftest was my "first number" heuristic
+                  catching a 0 in earlier output; it states 21 cases)
+```
+
+**So the repo's gates are already largely self-reporting, and the three exceptions are not the NY
+shape.** All three are byte-comparison checks where a count means little: "OK — current", "OK:
+PRESS_LIST.md matches press-list.json", and a per-check PASS list with no total. Two of them do
+carry the OTHER hazard — the beautiful, correct, EMPTY artefact that `build_county_pages.py`
+already solved by reading its pages back — but that is a different defect from passing without
+looking.
+
+**AND I CHECKED MY OWN HARNESS FIRST, WHICH IS WHERE THIS BELONGED.** With no input it reports
+`ran=0`, not 103, and this morning's `timeout eval` bug proved every one of the 103 genuinely
+executes, because all 103 failed individually. But it has a real hole one step over: `battery3.sh`
+reads a CACHED `cmds.txt` it never regenerates, so a change to the steward skill between runs would
+have it running a stale list under a confident count. Checked today — cached and fresh are
+identical, 104 lines each, so every figure I have reported is honest. The hole stands.
+
 **2026-09-26 — the widening is merged and live (#1183, `1daf568c`). Two things measured after it
 landed: it DOES express Illinois's 226, and their 53 cannot be declared at all.**
 
@@ -1481,6 +1509,40 @@ Two corrections to my own last report:
   share above has the census on both sides.
 
 ## Open questions for Adam
+**2026-09-26 — is a fleet-wide sweep for vacuous-pass gates worth running? MEASURED: no, and the
+leverage is somewhere else.** The manager asked, since I keep finding this class. I measured
+before proposing.
+
+**What I measured** (15 minutes, no fetches): all 103 static gates run with their success output
+captured. 100 state a count of what they examined. Three state none, and all three are
+byte-comparison checks where a count means little. None is the NY shape.
+
+**What the day's three actual failures have in common is that NOT ONE WAS A REPO GATE.** NY's
+harness reported 103 gates having run zero of 113 lines. Mine wedged with an empty log, and then
+reported 103 of 103 FAILING because `timeout 300 eval "$c"` cannot run — `timeout` execs a binary
+and `eval` is a bash builtin. Three wrong answers today, all from agent-written battery runners,
+none from anything in `scripts/`.
+
+**So the options, with what each costs.**
+
+1. **A meta-gate that mutates each gate and requires it to fail.** Strongest, and it is 103 separate
+   pieces of work — designing the mutation IS the work, per gate. Weeks. It would also not have
+   caught any of today's three.
+2. **A permanent gate asserting every gate states a nonzero count.** Cheap to write, and it needs a
+   per-gate table of what "nothing" means for the three that legitimately state none — the
+   hand-kept list this repo distrusts, guarding a class that is already 100 of 103 clean.
+3. **Put the battery RUNNER in the steward skill.** `CLAUDE.md` already says to enumerate the
+   battery through the skill and never through a pattern you write yourself. It says how to
+   ENUMERATE and not how to RUN, so every session writes its own runner, and three of those were
+   wrong today. A committed `scripts/run_battery.sh` — regenerating its list each run, printing
+   per-gate progress, failing when the list is empty or shorter than `validate_gate_counts`'s own
+   figure — costs an afternoon and closes the class where the class actually lives.
+
+**I would pick 3, and I would not do 1 or 2.** The measurement says the gates are fine and the
+runners are not. It also fixes my own cached-list hole as a side effect rather than by my
+remembering. It is fleet machinery, so it is not another instance's data, but it touches how every
+session verifies work, which makes it yours to say yes to rather than mine to take.
+
 **2026-09-22 — #1086's commit 2 is unsuperseded, on no path to main, and I promised not to
 re-push it. Does it come back?** What it is: fourteen `mi/WATCH.md` rows naming the data file
 each already-clocked row governs, and three `PROVENANCE` entries in
