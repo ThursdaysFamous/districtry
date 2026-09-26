@@ -121,20 +121,42 @@ EXPECT_WARDS_MIN = 7000   # LTSB ward layer, ~7,161 as of July 2026
 # this comment said Brown and Milwaukee before the names were looked up.)
 # `dropped_rings.py` is what measures that, and the whole curve is:
 #
-#     setting            rings   harms   gzipped vs the 9% file
-#     visvalingam 9%       586      73   --
-#     dp interval=4        377       2   +38.8%
-#     dp interval=7        413      15   +11.7%
-#     dp interval=10       431      21   -2.3%
+#     setting          harms   harmed area   largest   >=100 m2   >=1000 m2   gzipped
+#     visvalingam 9%      73     67,185 m2   3,496 m2        65          31   --
+#     dp interval=4        2         38 m2      37 m2         0           0   +38.6%
+#     dp interval=5        8      1,967 m2   1,572 m2         2           1   +27.2%
+#     dp interval=6        9      2,140 m2   1,572 m2         3           1   +18.5%
+#     dp interval=7       15      4,246 m2   1,572 m2         9           1   +11.7%
+#     dp interval=10      21      7,082 m2   1,572 m2        15           2   -2.3%
+#
+# THE AREA COLUMNS ARE WHY interval=4 AND NOT 7, AND THE COUNT ALONE COULD NOT
+# HAVE SETTLED IT. A harm in a 0.84 m2 sliver and a harm in a lobe a reader can
+# stand in are both `1` to a counter and are not the same thing to a reader,
+# because nobody selects a point inside a square metre. THE DECIDING OBJECT IS ONE
+# RING: 1,571.98 m2 at 43.893508,-91.190077, about 40 m by 40 m on land in La
+# Crosse County, where a reader is told La Crosse 18 and the truth is La Crosse 19.
+# It is dropped at every interval from 5 to 25 and RETAINED at 4. Interval=4's two
+# remaining harms are a 36.8 m2 Door County water islet and a 0.84 m2 Lafayette
+# self-overlap; NOTHING over 100 m2 survives, where interval=7 leaves nine such and
+# interval=10 fifteen.
+#
+# This instance already decides these by magnitude rather than by count: Lincoln's
+# disputed lobe was WITHHELD because it was a majority of its district, and
+# Ashland's ward-18 difference SHIPPED at 3.8% of its. Same question, same answer.
+# Population-weighting would be better and is not available — this instance
+# declares no `population` index — so area is the honest proxy and is named as one.
 #
 # HARMS ARE COUNTED AS A READER IS ANSWERED, one district and not the set — see
 # `dropped_rings.py` for why, and for the 102-against-73 that distinction is worth
 # on this layer.
 #
 # interval=4 is the setting whose harms are few enough to declare one by one,
-# which is the bar this file now has to clear. IT COSTS +414 KB GZIPPED and that
-# is stated rather than buried: the trade is 99 fewer wrong answers for a third
-# again of a cache-first file. Since #1197 that file is cached the FIRST TIME A
+# which is the bar this file now has to clear. IT COSTS +402 KB GZIPPED and that
+# is stated rather than buried: the trade is 71 fewer wrong answers — 73 down to
+# 2 — for a third again of a cache-first file. (Both figures in this sentence were
+# wrong on first writing: +414 KB was an estimate off a cached source rather than
+# the +402 measured against `git show origin/main:`, and "99" was the difference
+# between SET-comparison counts that the reader-answer fix retired.) Since #1197 that file is cached the FIRST TIME A
 # LAYER USES IT rather than at install, so the bytes fall only on readers who
 # open the county-supervisory layer instead of on every first visit.
 SIMPLIFY = ["dp", "keep-shapes", "interval=4"]
@@ -144,6 +166,16 @@ SIMPLIFY = ["dp", "keep-shapes", "interval=4"]
 # EXACTLY, so a rebuild that starts closing a different number stops and gets
 # read; it is written by the build rather than guessed, and the first run after a
 # new LTSB filing is expected to move it.
+#
+# THE "STITCHING ARTEFACT RATHER THAN A DELIBERATE VOID" READING IS MEASURED AND
+# NOT MERELY ARGUED, and the test is COMPLEXITY as well as size: a real void — a
+# lake, an airfield, a non-jurisdictional parcel — would be both large and finely
+# traced. On these 229 rings the two are ANTI-CORRELATED. The largest is 1,153 m2
+# with FOUR vertices, a quadrilateral; the most complex are 54, 49 and 37 vertices
+# and every one of those is under 6 m2, sub-metre wiggles between two finely-drawn
+# Waukesha wards. Of the 19 rings at or above 100 m2, eleven are triangles or
+# quadrilaterals and the most complex has 28. Median area 1.54 m2. Not one ring is
+# both large and complex, which is what a deliberate void would be.
 GAP_CLOSED = 229
 
 # Rings whose loss changes the district a reader is told they are in. Written from
