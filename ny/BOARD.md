@@ -45,6 +45,77 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-26, ITEM 3 IS SHIPPED AS #1190 — two commits, and the measurement
+changed the fix twice.** The five `sources.html` rows and both roster defects are
+in it, verified against the live Council pages rather than a replay: 51 records
+in and out, six names corrected, six roles added, **50 of 51 offices
+BYTE-IDENTICAL with District 27 the only one that moved.** 103 static gates run,
+0 failing; 9 of 10 browser invocations pass, the tenth `page_consistency_test.mjs`
+red on this sandbox's `gc.zgo.at` certificate interception with zero non-cert
+failures on any page.
+
+**THE FIX THE RECORD PRESCRIBED WOULD HAVE BEEN WRONG TWICE, and only measuring
+the 51 pages showed it.** The board said to anchor District 27's address at the
+LAST house-number start. That truncates District 49's `130 Stuyvesant Place 6th
+Floor, Room 602 Staten Island, NY 10301` to `602 Staten Island`. And cutting to
+the FIRST one — the obvious correction — strips **six legitimate office LABELS**
+the Council publishes on purpose (`East Harlem Office:`, `Gun Hill Road District
+Office`, `Rockaway Office:`, `Howard Beach Office:`, `Rochdale Village/South
+Jamaica Office (East)`, `Bay Ridge District Office`) and drops two of them to
+`None` outright, because `165-38A Baisley Blvd.` has a letter glued to its number
+and `8203 3rd Avenue` is digits-space-digit. What ships drops a prefix only when
+it is a SENTENCE and is NOT an office label — both tests, because either alone
+gets it wrong. **A fix prescribed from a record is a hypothesis; the document is
+the authority.**
+
+**A COMPLIANCE DEFECT WAS FOUND ON THE WAY IN AND IS FIXED WITH IT.**
+`council.nyc.gov` publishes **`Crawl-delay: 10`**, and `council_scraper.py` slept
+0.2 seconds across 52 requests in a weekly scheduled job **having read no
+robots.txt at all** — the state CLAUDE.md calls "the next thing to fix". It now
+goes through the fleet's one reader with a `HostPacer`, prints the honoured delay
+so it cannot be told from an ignored one, and raises on a refusal rather than
+returning a falsy value. The cost is about nine minutes of waiting in a weekly
+job. **Reading a host's robots.txt is also how you learn what it asks for**: the
+delay was there the whole time and nothing had looked.
+
+**THE NAME GATE NOW CATCHES THIS CLASS, over a set measured rather than assumed.**
+`why_not_a_name()` passed all six names — they are words and nothing else. It
+refuses an office in front of a name now, and the set is 40 offices wide because a
+sweep over **14,638 person names in 127 files** flags exactly those six and
+nothing else: zero false positives. Two further words are required so a person
+surnamed Leader keeps their name, honorifics are excluded because
+`borough-officials.json` ships `Hon. Ischia Bravo` as the courts print it, and the
+rule reaches only person records — Michigan's Speaker Township is in a
+FeatureCollection that yields none. `ny/data/app/council-members.json` is DECLARED
+in `PERSON_PATHS`, in the change that fixes it, which is that file's own rule
+(a declaration whose data is not fixed in the same change is a red gate handed to
+somebody else). The remainder is re-measured at 1,104; the docstring's 1,156 was
+one out, and its 1,096 for Wisconsin's file was one out too.
+
+**WHAT ITEM 4 NOW HAS, MEASURED, AND ONE HALF OF ITS PREMISE IS WRONG.** The
+three central high school districts are unreachable for a measured reason:
+`findFeatureContaining` breaks on the FIRST containing feature in file order, the
+three sit at indices 649/659/660 behind their components at 1/3/32, and at a
+representative point inside BELLMORE, ELMONT and VALLEY STR HEMP 30 the containing
+set is `[component, central]` every time. **`SED_CODE_1` CANNOT SEPARATE THE
+TIERS**, which is what item 4 was to be built on: two of the three carry `None`
+(Bellmore-Merrick, Sewanhaka Central) and the third COLLIDES with one of its own
+components — `VALLEY STRM CENTRAL` and `VALLEY STR HEMP 30` both ship
+`280230020000`. A second collision exists elsewhere (`CHEEKTOWAGA-SLOAN` and
+`CHEEKTOWAGA`, `140701060000`) and 4 of the 716 features carry no code at all.
+Whatever separates the tiers, it is not that column, so item 4 needs a different
+key before it needs code — the name pair (a `-CENTRAL`/`CENTRAL` district
+containing others) is what the geometry actually shows.
+
+**AND THE CLERK GAP RECORD IS MORE CLEARLY OWED THAN IT WAS.** `borough.people`
+now states in prose that the roster names a clerk in 2 of the 5 boroughs; a
+bounded absence a row admits should be findable in the gaps panel too. Left to its
+own queued item rather than widened into #1190, because one branch means
+sequential PRs and a held PR now costs this session its whole queue.
+
+**ITEM 4 STARTS WHEN #1190 MERGES**, on the same branch restarted from main —
+Adam's one-branch-per-state ruling, as recorded above.
+
 **2026-09-26, THE FIVE FALSE `sources.html` ROWS ARE MEASURED, AND THE RECORD OF
 THEM WAS WRONG IN TWO PLACES.** Measured against the shipped tree rather than
 restated, which is why this entry exists: one of the five is HALF true and the
