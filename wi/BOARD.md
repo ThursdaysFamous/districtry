@@ -138,7 +138,12 @@ instead of Senate 7. My recommendation is **interval=10**: the bytes are paid by
 every first-load visitor, the patch is on a shoreline where TIGERweb's own district
 and water rows already overlap each other, and at 12.1 m worst on retained rings
 the line itself is well inside the ceiling. I have not built it, and will not until
-this and Adam's page-weight answer come back.
+this and Adam's page-weight answer come back. **All three corrections are in
+#1193's own BODY**, above the superseded numbers rather than only here, since the PR
+is what a reviewer reads and as first written it argued for a 20 m ceiling the
+ruling supersedes; its CI is green on `4a62a20` (smoke, run 36266524637) and it is
+marked HELD rather than closed, because the build itself is sound and is one of the
+two settings that meet the ceiling.
 
 **2026-09-26. THE REBUILD IS OPEN AS #1193, ALL THREE GATES GREEN ON THE REAL
 BUILD, AND THE COST IS THE ONE THING I WANT WEIGHED RATHER THAN ASSUMED.** Build
