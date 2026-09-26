@@ -1453,8 +1453,9 @@ PRIVACY_BODY = """
     <p>All of it is yours to clear at any time through your browser's &#34;clear site data&#34;.</p>
     <div class="card">
       %(storage)s
-      <p><strong>A cache of each app's own files.</strong> A service worker stores the app shell,
-        boundary files and officeholder rosters locally so the map loads fast and works offline.
+      <p><strong>A cache of each app's own files.</strong> A service worker stores the app shell
+        when you first visit, and each layer's boundary file and officeholder roster the first
+        time you switch that layer on, so the map loads fast and those layers work offline.
         It holds published public data — district shapes and rosters — not anything about you.</p>
       <p><strong>No app here sets a cookie of its own.</strong> Google Analytics, where it runs,
         sets its own.</p>

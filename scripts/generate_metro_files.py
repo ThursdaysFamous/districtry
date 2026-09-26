@@ -309,8 +309,8 @@ def render_sw_metro_config(w):
     a("")
     a("// Boundary geometry (data/app/*.json, fetched lazily on first toggle).")
     a("// Boundaries change ~once a decade, so serve them cache-first (instant, and")
-    a("// works offline) and refresh in the background. Precached at install so")
-    a("// those layers work offline.")
+    a("// works offline once used) and refresh in the background. Cached the first")
+    a("// time a layer uses them, never at install (sw-handlers, PRECACHE_URLS).")
     a("const GEOMETRY_URLS = [")
     for g in w["data_files"]["geometry"]:
         a("  %s," % js_str("./data/app/" + g["file"]))

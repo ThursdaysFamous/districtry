@@ -600,8 +600,9 @@ td small, th small { display: block; color: var(--faint); font-size: 12px;
       <p><strong>One display preference, per app.</strong> The school layer's type filter is remembered in <code class="k">sessionStorage</code> under <code class="k">chi-school-type-filter</code> on Illinois. It is a handful of true/false switches, it is erased when you close the tab, and it never leaves your browser.</p>
       <p><strong>One display preference, per app.</strong> The school layer's type filter is remembered in <code class="k">sessionStorage</code> under <code class="k">nyc-school-type-filter</code> on New York. It is a handful of true/false switches, it is erased when you close the tab, and it never leaves your browser.</p>
       <p><strong>One display preference, per app.</strong> The school layer's type filter is remembered in <code class="k">sessionStorage</code> under <code class="k">sf-school-type-filter</code> on San Francisco. It is a handful of true/false switches, it is erased when you close the tab, and it never leaves your browser.</p>
-      <p><strong>A cache of each app's own files.</strong> A service worker stores the app shell,
-        boundary files and officeholder rosters locally so the map loads fast and works offline.
+      <p><strong>A cache of each app's own files.</strong> A service worker stores the app shell
+        when you first visit, and each layer's boundary file and officeholder roster the first
+        time you switch that layer on, so the map loads fast and those layers work offline.
         It holds published public data — district shapes and rosters — not anything about you.</p>
       <p><strong>No app here sets a cookie of its own.</strong> Google Analytics, where it runs,
         sets its own.</p>

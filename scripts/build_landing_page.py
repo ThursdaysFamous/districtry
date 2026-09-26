@@ -815,7 +815,7 @@ def build():
    narrow for the reasons R2.3 recorded: unregister only the registration scoped
    to this origin's root (an unfiltered sweep would kill the /il/ app's own
    worker), and delete only the exact legacy cache name (CacheStorage is
-   per-ORIGIN, so a prefix sweep would wipe an instance's ~30 MB precache).
+   per-ORIGIN, so a prefix sweep would wipe every instance's cached boundary files).
 
    This runs in <head> before the body paints, so a forwarded visit never
    flashes the landing page. */

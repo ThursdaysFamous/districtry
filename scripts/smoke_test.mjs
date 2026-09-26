@@ -182,6 +182,9 @@ async function cardText(page, id) {
   }, id);
 }
 
+// A service worker's own requests reach Playwright only behind this flag, and
+// check 2k counts them. Read at launch, so it is set here rather than in the job.
+process.env.PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS = "1";
 const browser = await chromium.launch();
 try {
   // 1. App boots and registers every layer.
@@ -1429,6 +1432,39 @@ try {
       "a point query's district is lit before its layer's statewide set arrives",
       !!res && res.card === "result" && res.highlight && !res.overlay && held > 0 && answered > 0,
       JSON.stringify({ ...res, statewide_held: held, point_answered: answered })
+    );
+    await context.close();
+  }
+
+  // 2k. A FIRST VISIT INSTALLS NO BOUNDARY FILE. Until 2026-09-26 the service
+  //     worker's install handler fetched every file in GEOMETRY_URLS — 296 of
+  //     them for this app, 4.3 MB gzipped — while the reader's first cards
+  //     loaded. It now installs the shell and caches a boundary file the first
+  //     time a layer uses it. This is the one check here that ALLOWS the
+  //     worker, and it holds that every data/app file the worker fetched is
+  //     one the page itself asked for, so a boot fetch passing through the
+  //     worker is allowed and an install-time fetch of the whole list is not.
+  //     It refuses to pass unless the worker took control of the page and was
+  //     seen fetching something, so it cannot pass with the worker's requests
+  //     simply invisible.
+  {
+    const context = await browser.newContext();
+    const byWorker = [], byPage = new Set();
+    context.on("request", (r) => {
+      const path = new URL(r.url()).pathname;
+      if (r.serviceWorker()) byWorker.push(path);
+      else if (/\/data\/app\//.test(path)) byPage.add(path);
+    });
+    const page = await booted(context, BASE);
+    const controlled = await page
+      .waitForFunction(() => !!(navigator.serviceWorker && navigator.serviceWorker.controller), null, { timeout: QUERY_TIMEOUT })
+      .then(() => true, () => false);
+    await page.waitForTimeout(3000);
+    const installed = byWorker.filter((p) => /\/data\/app\//.test(p) && !byPage.has(p));
+    check(
+      "a first visit's service worker fetches no boundary file the page did not ask for",
+      controlled && byWorker.length > 0 && installed.length === 0,
+      JSON.stringify({ controlled, worker_requests: byWorker.length, unrequested_data_files: installed.length, first: installed.slice(0, 3) })
     );
     await context.close();
   }
