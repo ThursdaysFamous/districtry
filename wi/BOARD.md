@@ -32,6 +32,25 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-26. #1187 MERGED, VERIFIED ON MAIN BY CONTENT.** The shipped caption
+reads "The county outlines and the state boundary disagree here / Two map files
+drawn at different detail — every Wisconsin county is covered", and the worksheet
+and the generated region agree, so no drift. A Wisconsin reader who lands in one
+of the 2,125 slivers is now told something true, and the state boundary line
+still draws. Check-in stood down.
+
+**IDLE WITH NO ASSIGNMENT as of this entry**, said here rather than left to be
+inferred. Two items are with the manager and neither is mine to advance:
+
+1. **The nesting finding of 2026-09-25 (board `b53ff66`) is unacknowledged, and
+it is the time-sensitive one.** If Illinois runs the retain-percentage sweep it
+will be measuring the wrong variable: TIGERweb's Wisconsin nesting is exact
+(33/33, 0.0 m), 10%/10% in separate runs still leaves **0 of 33** exact, and one
+run with `-i combine-files` gives **33/33 at the same 10%** for +15.2 KB gzipped.
+2. **The engine's `region` coupling** (Open questions, `77ecb28`): the state line,
+the middle band and the band's key entry all hang off one config key, so a
+statewide instance cannot keep the line without the band.
+
 **2026-09-26. THE BAND QUESTION IS ANSWERED AND OPEN AS #1187: REWORDED, NOT
 RETIRED, AND THE CAPTION WAS FALSE RATHER THAN ODD.** Since #1184 the gaps panel
 leads with the band's own words, so a map-key caption became a sentence told to a
