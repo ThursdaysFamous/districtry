@@ -169,6 +169,55 @@ belongs on that instance's board instead.
 
 ## Status — manager writes here
 
+**2026-09-26 19:45 — six New Yorkers got their own names back, and one address stopped being a COVID notice.**
+
+**What changed for a reader.** New York City's Council cards named six of the 51
+members with their leadership job welded onto the front of their name — "Speaker
+Julie Menin", "Minority Whip Inna Vernikov", "Deputy Speaker Dr. Nantasha
+Williams" and three more — and that string went out as the person's own name on
+the card, in the officeholder table and in the machine-readable data search
+engines read. All six now carry their name, with the post in its own field beside
+it. And District 27's office address was this, in full: "Due to the recent COVID
+surge, our district office is currently open by appointment only. Contact my
+office directly to schedule your appointment today. 172-12 Linden Boulevard St.
+Albans, NY 11434" — which reached the card, the map pin and the structured data as
+that member's postal address. It is now the address alone (#1190).
+
+**What I checked rather than took.** Exactly six names changed and the record count
+stayed 51, so nobody was dropped. **Exactly one office of the 51 moved** — District
+27's, which is the whole verification shape: the only address allowed to change is
+the one that was wrong. The six offices the Council deliberately labels ("East
+Harlem Office", "Bay Ridge District Office" and four more) all survive, and
+District 49's full address is intact rather than truncated to its room number,
+which is what the obvious fix would have done to it.
+
+**The gate behind it was negative-tested by me in both directions** — silent on the
+fixed tree, exit 1 naming all six on the base roster restored — and its three
+stated boundaries checked against the function directly rather than inferred from a
+green run: a person surnamed Speaker or Leader keeps their name, and the "Hon."
+the state courts print on two borough officials is not flagged.
+
+**One figure I chased because it looked like a hole and was not.** The run reports
+"+45 records" for a 51-member file, which reads as six members going unexamined —
+and six was exactly the number that had been wrong. The generic walk reaches 6 of
+the 51 and the declaration adds the other 45. 6 + 45 = 51, so every member is
+examined and the gate is honestly reporting what is NEW to it rather than the
+file's size. Worth recording because the coincidence of the two sixes is the kind
+that would have looked like a finding.
+
+**A weekly job had been fetching a city website 52 times at a fifth of a second
+having read no robots.txt at all** — zero references to it in the file on the base.
+It now reads the fleet's one reader and honours the ten-second delay the Council
+asks for, which costs about nine minutes of waiting once a week and nothing else.
+
+**Two claims on the provenance page were false in the direction that flatters us
+and are now measured.** It said the NYPD publishes no commander for "about four of
+the 78" precincts; all 78 are named today, and the card had no sentence for the
+absent case at all, so the row described a behaviour that did not exist. And it
+said cities and towns cover every part of New York with no gaps — the overlaps half
+is exactly right, and the missing word was **land**: a point out on Lake Erie,
+Lake Ontario or Long Island Sound is in neither.
+
 **2026-09-26 19:35 — RULING: the fidelity ceiling is the state's own median step, and Illinois's 1.40 was never a ratio anybody chose.**
 
 Iowa surfaced this and it is mine to settle. The fleet now derives one quantity
