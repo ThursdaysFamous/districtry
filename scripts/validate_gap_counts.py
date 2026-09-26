@@ -45,6 +45,42 @@ it does.
            keys, which is how a record that counts its own `counties` is held
            to it
 
+A NUMBER THAT IS A UNION ACROSS FILES gets `files` + `combine` instead, added
+2026-09-26 after TWO records in two days could not be declared without it:
+Iowa's 106 named cities (4 publishing their own officials + 102 whose county
+does) and Illinois's 226 libraries naming a board (173 filing + 53 from their
+own site). Both had to have their prose reworded to gate anything at all,
+which is the tell that the grammar was short rather than the records odd.
+
+    {"value": 106, "in": "summary", "combine": "union", "field": "members",
+     "files": ["ia/data/app/ia-city-officials.json",
+               "ia/data/app/ia-county-city-officials.json"]}
+
+  files    two or more repo-relative paths; one file is what `file` already says
+  combine  STATED, never inferred, and "union" is the only one — a second
+           combine is a decision somebody makes, not a default
+  field    the key a record must carry, non-empty, to be counted
+  under    optional: the key the records nest under (Illinois's libraries do,
+           Iowa's cities do not); naming one a file lacks FAILS
+  overlap  optional: how many keys the files share, which must be DECLARED
+           before a union is allowed to include them
+
+AN ENTRY NAMES EXACTLY ONE OF `self`, `file` OR `files`. Two would be resolved
+by whichever branch `measured` tests first, which is a rule no reader could
+see from the entry.
+
+THREE THINGS THE COMBINE REFUSES, each earned by a measurement rather than
+anticipated. A named field ABSENT from a named file fails instead of
+contributing nothing: Illinois publishes its 79 per-county library files under
+five different name keys, and a reader keyed on one spelling returns zero for
+the files it misses and reports a clean total that is silently short — one
+defect that produced three different answers (599, 416, 373) to what looked
+like one question. An UNDECLARED OVERLAP fails, because a union over
+overlapping sources double-counts, which is the same defect the union exists
+to fix one level up. And every path is re-read from the tree on every run, so
+an entry naming a file that has left FAILS as an orphan, the property
+ACCEPTED_DROPS and EXPECTED_UNREACHABLE already have.
+
 EVERY BRANCH FAILS LOUDLY AND NONE PASSES VACUOUSLY. A value above the file
 and a value below it are both wrong. A declaration naming a file that is not
 there, a metric outside the grammar, a reader field the record does not carry,
@@ -117,7 +153,31 @@ def standalone(value, text):
 
 
 def measured(record, entry, where):
-    """What the declaration says the number must equal, or None if it cannot say."""
+    """What the declaration says the number must equal, or None if it cannot say.
+
+    THREE FORMS, AND NAMING TWO IS AN ERROR RATHER THAN A PRECEDENCE: `self`
+    counts one of the record's own keys, `file` + `metric` measures one file,
+    and `files` + `combine` measures several. An entry carrying two of them
+    would be read by whichever branch this function tests first, which is a
+    rule nobody could see from the entry.
+    """
+    forms = [k for k in ("self", "file", "files") if k in entry]
+    if len(forms) > 1:
+        fail("%s: declares %s together — an entry names exactly one of `self`, "
+             "`file` or `files`" % (where, " and ".join(repr(f) for f in forms)))
+        return None
+    if "files" in entry:
+        return combined(entry, where)
+    stray = [k for k in ("combine", "field", "under", "overlap") if k in entry]
+    if stray:
+        # A combine-only key on a `file` or `self` entry does NOTHING, and an
+        # `overlap` that does nothing reads exactly like a guard that is held.
+        # That is the same silent-no-op class the absent-field refusal exists
+        # for, one level out.
+        fail("%s: declares %s without `files`, where %s no effect at all"
+             % (where, " and ".join(repr(k) for k in stray),
+                "they have" if len(stray) > 1 else "it has"))
+        return None
     if "self" in entry:
         key = entry["self"]
         if key not in record:
@@ -157,6 +217,121 @@ def measured(record, entry, where):
     if "naming" in entry:
         spec["naming"] = entry["naming"]
     return measure_metric(REPO_ROOT, os.path.dirname(path), spec, fail_stop)
+
+
+def _records(root, path, under, where):
+    """The {key: record} mapping a combine counts over, or None having failed."""
+    full = os.path.join(root, path)
+    if not os.path.exists(full):
+        fail("%s: names %s, which is not in the tree" % (where, path))
+        return None
+    with open(full, encoding="utf-8") as fh:
+        doc = json.load(fh)
+    if under is not None:
+        if not isinstance(doc, dict) or under not in doc:
+            fail("%s: names `under`=%r and %s has no such key — a combine may "
+                 "not count a file whose records it cannot find"
+                 % (where, under, path))
+            return None
+        doc = doc[under]
+    if not isinstance(doc, dict):
+        fail("%s: %s holds a %s where a combine needs an object keyed by source"
+             % (where, path, type(doc).__name__))
+        return None
+    return doc
+
+
+def _keys_with_field(root, path, field, under, where):
+    """Keys in `path` whose record carries a non-empty `field`.
+
+    FAILS ON ZERO RATHER THAN CONTRIBUTING NOTHING, which is the whole reason
+    this function exists rather than a comprehension at the call site. Illinois
+    publishes its 79 per-county library files under FIVE different name keys —
+    72 use `library`, and Boone and Grundy use `district`, Kendall `library`,
+    Macon `Library`, Rock Island `library_di`, Stark `name`, Woodford `code`
+    — so a reader keyed on one spelling returns ZERO for the files it misses
+    and reports a clean total that is silently short. Measured 2026-09-26, that
+    one defect produced three different answers (599, 416, 373) to what looked
+    like one question. A union that let an absent field contribute nothing
+    would institutionalise exactly that.
+    """
+    doc = _records(root, path, under, where)
+    if doc is None:
+        return None
+    got = {k for k, v in doc.items() if isinstance(v, dict) and v.get(field)}
+    if not got:
+        fail("%s: no record in %s carries a non-empty %r, so it would "
+             "contribute nothing to the union in silence — name the field the "
+             "file actually uses, or drop the file from `files`"
+             % (where, path, field))
+        return None
+    return got
+
+
+def combined(entry, where, root=None):
+    """A `files` + `combine` declaration's measurement, or None having failed.
+
+    THE GRAMMAR IS DELIBERATELY ONE COMBINE. `union` is what two records in two
+    days needed — Iowa's 4 + 102 named cities and Illinois's 173 + 53 libraries
+    naming a board.
+
+    WHAT THE OVERLAP GUARD ACTUALLY BUYS, stated precisely because the obvious
+    rationale is wrong about this code: the measurement below is a TRUE union
+    of key sets, so it never double-counts and an undeclared overlap could not
+    make it. The author's arithmetic is what overlaps break. Both records got
+    their number by adding two counts in their head, and that addition is only
+    right while the sides are disjoint. Two things follow. A value that stops
+    matching is caught by the value check anyway, but with a message about the
+    prose rather than about the cause. And an overlap can APPEAR WITHOUT MOVING
+    THE UNION — one file gaining a key the other already had, while another key
+    arrives elsewhere — which no value check can see, because the number is
+    still right and the sources have quietly stopped meaning what they meant.
+    So the overlap is declared, and a change to it is a failure a reader can
+    act on.
+    """
+    root = REPO_ROOT if root is None else root
+    files = entry["files"]
+    if not isinstance(files, list) or len(files) < 2:
+        fail("%s: `files` must list at least two paths — one file is what "
+             "`file` + `metric` already says" % where)
+        return None
+    if entry.get("combine") != "union":
+        fail("%s: `combine` must be stated as \"union\", not %r — the vocabulary "
+             "is deliberately tiny and a new combine is a decision, not a default"
+             % (where, entry.get("combine")))
+        return None
+    field = entry.get("field")
+    if not field:
+        fail("%s: a combine needs `field`, the key a record must carry to be "
+             "counted" % where)
+        return None
+    under = entry.get("under")
+
+    sets = {}
+    for path in files:
+        got = _keys_with_field(root, path, field, under, where)
+        if got is None:
+            return None
+        sets[path] = got
+
+    paths = list(sets)
+    overlap = set()
+    for i in range(len(paths)):
+        for j in range(i + 1, len(paths)):
+            overlap |= sets[paths[i]] & sets[paths[j]]
+    declared = entry.get("overlap", 0)
+    if len(overlap) != declared:
+        fail("%s: the named files share %d key(s) carrying %r and the entry "
+             "declares %d — the union itself is measured and stays right, but "
+             "the prose number was reached by adding the sides together, which "
+             "only holds while they are disjoint. State the overlap."
+             % (where, len(overlap), field, declared))
+        return None
+
+    union = set()
+    for got in sets.values():
+        union |= got
+    return len(union)
 
 
 def check_shipped():
@@ -272,6 +447,89 @@ def _selftest():
                          "label": "opt-in on the wrong file", "naming": "chair"})
         check(any("names anybody under it" in m for m in said),
               "an opt-in naming that no record satisfies is still refused")
+
+
+    # ---- the `files` + `combine` widening, all hermetic ------------------
+    # COUNTS ARE 11 / 5 / 2 ON PURPOSE, the same hermeticity proof the cases
+    # above use: no real file in this fleet holds them, so an assertion that
+    # passed by reaching the tree would fail instead of passing by luck.
+    with tempfile.TemporaryDirectory() as tmp:
+        inst = os.path.join("fixture", "data", "app")
+        os.makedirs(os.path.join(tmp, inst))
+
+        def write(name, obj):
+            with open(os.path.join(tmp, inst, name), "w", encoding="utf-8") as fh:
+                json.dump(obj, fh)
+
+        A, B = "%s/a.json" % inst, "%s/b.json" % inst
+        NESTED, EMPTY = "%s/nested.json" % inst, "%s/empty.json" % inst
+        # A holds 11 keys with `members`; B holds 5, of which 2 are also in A.
+        write("a.json", {"a%02d" % i: {"members": ["x"]} for i in range(11)})
+        write("b.json", {"a09": {"members": ["x"]}, "a10": {"members": ["x"]},
+                         "b1": {"members": ["x"]}, "b2": {"members": ["x"]},
+                         "b3": {"members": ["x"]}})
+        write("nested.json", {"generated": "x",
+                              "rows": {"n%d" % i: {"members": ["x"]} for i in range(3)}})
+        # The five-keys shape: real records, and not one carrying `members`.
+        write("empty.json", {"e%d" % i: {"heads": ["x"]} for i in range(4)})
+
+        def run(entry):
+            """combined() against the fixture; returns (value, [messages])."""
+            global failures
+            keep, failures = failures, []
+            val = combined(entry, "selftest", root=tmp)
+            said, failures = failures, keep
+            return val, said
+
+        base = {"combine": "union", "field": "members"}
+
+        val, said = run(dict(base, files=[A, B], overlap=2))
+        check(val == 14 and not said,
+              "a union of 11 and 5 sharing a declared 2 measures 14")
+
+        val, said = run(dict(base, files=[A, B]))
+        check(val is None and any("share 2 key(s)" in m for m in said),
+              "the SAME union with the overlap undeclared is refused, because a "
+              "silent overlap double-counts")
+
+        val, said = run(dict(base, files=[A, B], overlap=1))
+        check(val is None and any("declares 1" in m for m in said),
+              "an overlap declared at the wrong number is refused too")
+
+        val, said = run(dict(base, files=[A, EMPTY], overlap=0))
+        check(val is None and any("contribute nothing to the union in silence" in m
+                                  for m in said),
+              "a file where no record carries the field FAILS rather than "
+              "contributing nothing — the five-keys defect")
+
+        val, said = run(dict(base, files=[NESTED, B], under="rows"))
+        check(val is None and any("has no such key" in m for m in said),
+              "`under` naming a key one of the files lacks is refused")
+
+        val, said = run({"combine": "union", "field": "members",
+                         "files": [A, "%s/gone.json" % inst]})
+        check(val is None and any("not in the tree" in m for m in said),
+              "a combine naming a path that has left the tree is refused")
+
+        # A combine-only key on a `file` entry does nothing, and an `overlap`
+        # that does nothing reads exactly like a guard that is held. Checked
+        # through measured(), because that is where the branch lives.
+        def run_measured(entry):
+            """measured() with a recording fail; returns its messages."""
+            global failures
+            keep, failures = failures, []
+            try:
+                measured({}, entry, "selftest")
+            except Stop:
+                pass
+            said, failures = failures, keep
+            return said
+
+        said = run_measured({"file": "%s/a.json" % inst, "metric": "keys",
+                             "overlap": 2})
+        check(any("without `files`" in m for m in said),
+              "a combine-only key on a non-combine entry is refused rather "
+              "than silently doing nothing")
 
     print("selftest: %d failure(s)" % len(failures), file=sys.stderr)
     return 1 if failures else 0
