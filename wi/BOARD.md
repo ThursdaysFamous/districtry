@@ -199,6 +199,17 @@ choice is still the operator's. But the figure the choice was framed on has a da
 merged plan to retire it, and that belongs in front of whoever decides rather than
 being discovered afterwards.
 
+> **CORRECTED 2026-09-26 (evening) — PHASE 2 IS CODE NOW, MERGED AS #1197**
+> (`62b69de`, "Cache boundary files on first use instead of installing them all on
+> the first visit): `wi/sw.js` sets `PRECACHE_URLS = SHELL_URLS` and caches boundary
+> files the first time a layer uses them, so the +74.3% no longer falls on every
+> first-load visitor — only on readers who switch a chamber on. The ruling was
+> deliberately made without leaning on the plan, so interval=7 is unaffected; what
+> was stale is this entry. `wi/scripts/build_legislative_boundaries.py`'s cost
+> paragraph still calls it "a plan, not code" and is the same correction one file
+> over, folded into the next Wisconsin change rather than opened as a PR of its
+> own.
+
 **2026-09-26 (later still). THE DROPPED-RING QUESTION ASKED OF THE LAYER THAT NAMES
 PEOPLE: THE SUPERVISORY TILING LOSES 642 RINGS, TWO DOOR COUNTY ISLETS ANSWER NO
 DISTRICT AT ALL, AND ITS OWN 10,000-POINT GATE IS BLIND BY A FACTOR OF 137.**
