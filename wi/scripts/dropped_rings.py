@@ -405,6 +405,100 @@ def interior_points(ring, max_pts=SCANLINE_MAX_POINTS):
 # what was dropped, and what it costs a reader
 # --------------------------------------------------------------------------
 
+def source_step_m(src_by_key, dropped_sigs=()):
+    """How far the TRUE line runs before it turns, per segment, in metres.
+
+    THE CEILING A FIDELITY GATE HOLDS TO IS DERIVED FROM THIS AND NEVER BORROWED.
+    Illinois's 25 m came from the median length of the source line's own segments
+    around one neighbourhood of a street grid, and a Wisconsin county's 911 filing
+    seam is not that geometry. A number carried over from another layer family is a
+    number nobody measured here.
+
+    Returns the sorted list of segment lengths on RETAINED rings, which is the set
+    `measure_stray` reports on, so the ceiling and the measurement describe the
+    same lines.
+    """
+    out = []
+    for key, geom in src_by_key.items():
+        for r in rings(geom):
+            if ring_signature(r) in dropped_sigs:
+                continue
+            if len(r) < 2:
+                continue
+            sx, sy = mscale(r[0][1])
+            for i in range(len(r) - 1):
+                a, b = r[i], r[i + 1]
+                d = math.hypot((b[0] - a[0]) * sx, (b[1] - a[1]) * sy)
+                if d > 0:
+                    out.append(d)
+    out.sort()
+    return out
+
+
+def measure_stray(src_by_key, drawn_by_key, dropped_sigs=()):
+    """How far the TRUE line strays from the chord drawn in its place, per key.
+
+    THE DIRECTION MATTERS AND THE OBVIOUS ONE GATES NOTHING: simplification KEEPS a
+    subset of the source vertices, so every drawn vertex already sits on the source
+    line and measuring drawn -> source answers ~0 by construction. What a reader
+    sees is the true line straying from the chord drawn for it, so that is what is
+    measured here — source vertex to nearest DRAWN segment.
+
+    AND ON RETAINED RINGS ONLY. A ring none of whose own vertices survived is not a
+    stray an interval controls; it is a shape that is gone, and `classify` measures
+    it as an ANSWER instead. Pooling the two makes the ceiling a function of the
+    smallest ring in the state — measured on the chambers layer, that read 17.5 m
+    against a 15 m ceiling on a ring that was not there at all. WHICH RINGS THOSE
+    ARE IS THE CALLER'S ANSWER, in `dropped_sigs` from `classify`, so the two gates
+    agree about the dropped set by construction rather than by coincidence.
+
+    Returns (per_key, stats). `per_key` maps key -> {"worst", "at"}; `stats` carries
+    the pooled distribution (`all` sorted, plus `worst`, `worst_key`, `worst_at`)
+    and `dropped`, the number of rings skipped.
+    """
+    per_key = {}
+    pooled = []
+    dropped = 0
+    worst, wkey, wat = 0.0, None, None
+    for key, sgeom in src_by_key.items():
+        if key not in drawn_by_key:
+            continue
+        dr = rings(drawn_by_key[key])
+        sr = rings(sgeom)
+        if not dr or not sr:
+            continue
+        sx, sy = mscale(sr[0][0][1])
+        grid, cell = index_segments(dr)
+        kworst, kat = 0.0, None
+        for r in sr:
+            if ring_signature(r) in dropped_sigs:
+                dropped += 1
+                continue
+            for pt in r:
+                d = dist_to_drawn((pt[0], pt[1]), grid, cell, sx, sy)
+                pooled.append(d)
+                if d > kworst:
+                    kworst, kat = d, (pt[0], pt[1])
+        per_key[key] = {"worst": kworst, "at": kat}
+        if kworst > worst:
+            worst, wkey, wat = kworst, key, kat
+    pooled.sort()
+    return per_key, {"all": pooled, "worst": worst, "worst_key": wkey,
+                     "worst_at": wat, "dropped": dropped}
+
+
+def pct(sorted_vals, q):
+    """The q-th percentile (0..100) of an already-sorted list, or 0.0 if empty."""
+    if not sorted_vals:
+        return 0.0
+    if len(sorted_vals) == 1:
+        return sorted_vals[0]
+    i = (len(sorted_vals) - 1) * (q / 100.0)
+    lo = int(math.floor(i))
+    hi = min(lo + 1, len(sorted_vals) - 1)
+    return sorted_vals[lo] + (sorted_vals[hi] - sorted_vals[lo]) * (i - lo)
+
+
 def _by_key(features, key_prop):
     return {f["properties"].get(key_prop): f
             for f in features if f.get("geometry")}
@@ -1134,6 +1228,60 @@ def _selftest():
     ok, msg = check(recs, st, [dict(good, why="a %d-vertex sliver" % good["verts"])],
                     st[KIND_GAP_CLOSED])
     ck("a `why` agreeing on its vertex count passes", ok, msg)
+
+    # 9c. the stray measurement: DIRECTION, the dropped-ring skip, and the step.
+    #
+    # A known answer by construction: the source's bottom edge carries one extra
+    # vertex pushed 0.0002 deg south of the straight edge the drawn ring keeps, so
+    # the true line strays from the chord by exactly that in metres.
+    BUMP_DY = 0.0002
+    sxx, syy = mscale(44.0)
+    expect_m = BUMP_DY * syy
+    src_ring = [[-89.00, 44.00], [-88.995, 44.00 - BUMP_DY], [-88.99, 44.00],
+                [-88.99, 44.01], [-89.00, 44.01], [-89.00, 44.00]]
+    drawn_ring = [[-89.00, 44.00], [-88.99, 44.00],
+                  [-88.99, 44.01], [-89.00, 44.01], [-89.00, 44.00]]
+    S = {"A": _poly(src_ring)}
+    D = {"A": _poly(drawn_ring)}
+    sper, sst = measure_stray(S, D)
+    ck("the stray is the TRUE line's distance from the drawn chord",
+       abs(sst["worst"] - expect_m) < 0.05,
+       "measured %.3f m, expected %.3f m" % (sst["worst"], expect_m))
+
+    # THE OBVIOUS DIRECTION GATES NOTHING, and this is that claim as a test:
+    # simplification keeps a SUBSET of the source vertices, so every drawn vertex
+    # already lies on the source line and drawn -> source answers ~0 whatever the
+    # setting. A gate measuring that way would pass anything.
+    _per2, st2 = measure_stray(D, S)
+    ck("measured the other way round it answers ~0, which is why it is not measured that way",
+       st2["worst"] < 0.01, "got %.4f m" % st2["worst"])
+
+    # A DROPPED RING MUST NOT BE MEASURED INTO THE STRAY. On the chambers layer
+    # that mistake read 17.5 m against a 15 m ceiling on a ring that was not
+    # there at all, so both halves are asserted: skipped when the caller names it,
+    # and wildly over when it does not.
+    HOLE2 = _sq(-88.996, 44.004, 0.001, 0.001)
+    S2 = {"A": _poly(src_ring, HOLE2)}
+    _per3, st3 = measure_stray(S2, D, dropped_sigs={ring_signature(HOLE2)})
+    ck("a ring the caller calls dropped is skipped, not measured as stray",
+       abs(st3["worst"] - expect_m) < 0.05 and st3["dropped"] == 1,
+       "worst %.3f m, dropped %d" % (st3["worst"], st3["dropped"]))
+    _per4, st4 = measure_stray(S2, D)
+    ck("and pooling it instead blows the measurement up",
+       st4["worst"] > expect_m * 3,
+       "worst %.3f m against the real %.3f m" % (st4["worst"], expect_m))
+
+    steps = source_step_m(S2, dropped_sigs={ring_signature(HOLE2)})
+    ck("the step distribution covers the retained ring's own segments only",
+       len(steps) == len(src_ring) - 1 and steps == sorted(steps),
+       "got %d segment(s) for a %d-vertex ring" % (len(steps), len(src_ring)))
+
+    ck("pct reads the ends and the middle of a sorted list",
+       pct([], 50) == 0.0 and pct([5.0], 99) == 5.0
+       and pct([0.0, 1.0, 2.0, 3.0, 4.0], 0) == 0.0
+       and pct([0.0, 1.0, 2.0, 3.0, 4.0], 100) == 4.0
+       and abs(pct([0.0, 1.0, 2.0, 3.0, 4.0], 50) - 2.0) < 1e-9,
+       "pct misread")
 
     # 10. an orphan declaration fails, and the gap-closed count is held
     orphan = dict(good)
