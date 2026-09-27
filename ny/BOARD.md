@@ -49,6 +49,70 @@ Illinois work belongs to Illinois.
 
 ## Status — this session owns this section
 
+**2026-09-27, LATER — #1214 MERGED. I then went after the board-of-supervisors
+reference county and DID NOT GET IT. What I got instead is the route to it, two
+reusable measurements, and a method of my own disproved three times on one page — which
+is the part worth your time, because it is the fourth instance today of one error.**
+
+**THE REFERENCE COUNTY IS STILL UNCHOSEN AND I AM NOT GUESSING IT.** The criterion this
+board already set is "which county publishes a maintained supervisor roster". I could not
+answer it, for a stated reason rather than for want of trying.
+
+**WHAT IS NOW MEASURED AND SHOULD NOT BE REDONE.**
+
+1. **The domain route exists and is authoritative.** No per-county form list existed
+   anywhere in this repo and New York has no `il-county-clerks.json` equivalent, so the
+   first problem was county WEBSITES — and permuting county names is what the Cumberland
+   correction forbids. NYSAC, the counties' own association, publishes them at
+   `/about-us/county-facts/`: **56 of 62 counties**, found from its sitemap rather than a
+   guessed path (two guesses 404'd first). The six misses are exactly the five boroughs,
+   which have no county government and are correctly absent, **plus St Lawrence**.
+2. **St Lawrence's spelling is now a two-source disagreement, not a hypothesis.** NYSAC
+   writes "St. Lawrence"; `ny-counties.json` (NYS ITS Civil Boundaries) writes
+   "St Lawrence". #1214's adapter already records the question in its docstring; it now
+   has a second publisher on the other side, and the county's own site is the tiebreak.
+3. **NYSAC does not state the FORM** — zero mentions of "Board of Supervisors", "County
+   Legislature" or "Board of Representatives" across either page. So the form comes from
+   each county's own site, and it works: on a 12-county sample, five name a **board of
+   supervisors** on their own homepage (Delaware, Essex, Hamilton, Schoharie, Warren), one
+   a **legislature** (Genesee), and four serve a real page that names no body on the
+   homepage (Cattaraugus, Columbia, Washington, Wyoming).
+4. **THE SGCAPTCHA 202 PATTERN IS IN NEW YORK TOO.** Allegany and Seneca answer **HTTP 202
+   with a 168-byte `sgcaptcha` meta-refresh** — the Union and Williamson shape CLAUDE.md
+   already records, "202 is never a document", and a captcha is an access control that is
+   never worked around. Two of twelve in a small sample, so the census should expect it.
+   Recording them as "names no body" would have been a false record about a county.
+
+**THE METHOD FINDING, AND IT IS THE REASON I STOPPED.** To rank the five supervisors
+counties I counted e-mails, telephones and "Town of X" strings on each county's own board
+page. Schoharie led on all three and I nearly recorded it. It was wrong three times over,
+on the same page: the first count read **JavaScript** (a Revize colour map with a "Town of
+Gilboa" entry), the second read **CSS**, and after stripping both, the 21 towns and 24
+telephones that survived turned out to be the site's **NAVIGATION MENU** — a link per town
+and a Villages list beneath it, with no supervisor named anywhere near them. The page is a
+Revize `staff_directory` template, so the roster is rendered somewhere I did not reach.
+**A pattern count over a county page measures the template, not the roster.**
+
+**THAT IS THE SAME ERROR FOUR TIMES TODAY AND I WANT IT ON THE RECORD AS A TENDENCY
+RATHER THAN AS THREE COINCIDENCES**: the battery figure I re-RAN instead of re-DERIVING;
+the registration mechanism I restated from my own sentence instead of running the gate's
+predicates, which you then took into your note; the `git add` sweep that read 63 of 64
+workflows as vacuous because my probe demanded a trailing slash the fleet does not write;
+and this. Every one was asserting from a pattern I had just written rather than from the
+thing itself, and every one was caught by a control I could have skipped. Three of the
+four I caught before publishing; the second I did not.
+
+**THE NEXT METHOD, NAMED SO IT IS NOT REDISCOVERED.** Read the roster, do not count it:
+Schoharie's Revize `staff_directory` has its own endpoint, and the board's own minutes name
+supervisors by town (the Knox roll-call route this project already uses). Delaware's board
+link is a **PDF upload** rather than a page, which is its own shape. Warren has 27
+telephones and only three towns, so it is contact-rich and not town-keyed.
+
+**KEPT, NOT SHIPPED.** The 56-county name-to-website mapping is in the scratchpad, not in
+`data/`, because nothing builds from it yet and 56 URLs nothing checks is the state
+`validate_card_links.py` exists to prevent. It belongs in `ny/data/source/` the day a
+builder reads it.
+
 **2026-09-27 — #1209 MERGED, THE ROSTER JOB RAN CLEAN ON ITS FIRST DISPATCH, AND THE
 CRAWLABLE PAGE IS #1214, GREEN. The finding worth your time is that my own record
 under-scoped the work by four edits, and every one of the four was found by a gate
