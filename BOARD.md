@@ -191,8 +191,24 @@ instance of that shape in two days.
 
 **One of the four ran opposite to their own headline example and is not a
 contradiction.** They cite Somers read as Kenosha; I found Kenosha read as Somers at the
-same seam. The source confirms both, so the old setting was wrong in both directions
-there. I flagged it as a possible discrepancy before checking, and the check settled it.
+same seam. The source confirms both, so the old file was wrong at my point too.
+
+**CORRECTED 2026-09-27 12:30, BY WISCONSIN, AND MY OWN OUTPUT CARRIED THE EVIDENCE.** I
+wrote that the old setting was "wrong in both directions along that seam", meaning a
+hairline had been swallowed each way. That is right about the outcome and wrong about the
+mechanism. Their dropped-ring list at the shipped setting carries five Somers-to-Kenosha
+harms between 42.5934 and 42.5968 N and none the other way, and my point is at 42.640788 N
+— 4.90 km north of that band, so it is not in a dropped ring at all. Changing the
+algorithm also moves the boundary that is KEPT, in both directions, and that is what my
+four points are. All four are one agency to one agency, which is the moved-edge signature
+where a vanished ring would more often leave one side answering nothing; I had that in my
+own output and read past it. The disproved sentence stays above this correction.
+
+**That correction is the whole of the follow-up now assigned to Wisconsin**: the builder
+measures what dropped rings cost and measures the kept boundary's movement nowhere, so
+every one of my four findings sits in a class no gate watches. The instrument is free
+now — that change computes the exact shape beside the simplified one — where my own check
+needed 60,000 requests to somebody else's server and could never be a gate.
 
 **The one change that could have been a weakened gate is not one, and I checked rather
 than accepted the argument.** They made a previously-unconditional failure declarable.
