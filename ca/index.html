@@ -8953,6 +8953,11 @@ function initSFExplorer() {
       }).then(null, function () { /* the district stays unlit; the card is unaffected */ });
     }
     rt.overlayLayer.setSelected(id, live);
+    // nothing lit from the tiles or the live part yet: a live county's point
+    // query may already have answered, and its district is lit from that
+    // answer while the county's whole set downloads, as on the Leaflet path
+    if (id == null && !live) showProvisionalHighlight(mod);
+    else clearProvisionalHighlight(mod);
     rt.highlightApplied = id != null || !!live;
     rt.highlightSignature = rt.highlightApplied ? highlightSignature(rt) : null;
     if (live) {

@@ -95,8 +95,12 @@
         // at once as before.
         var point = state.selectedPoint;
         (point ? coverageMatches(point) : Promise.resolve({ matches: [] })).then(function (r) {
+          if (!r.matches.length) { list.forEach(loadEntry); return; }
           var first = r.matches.filter(function (entry) { return list.indexOf(entry) !== -1; });
-          if (!first.length) { list.forEach(loadEntry); return; }
+          // the point's county is not in this list (a layer drawn from tiles
+          // holds it, and its card reads the tile): the whole list is the
+          // rest, and waits for the card like any rest
+          if (!first.length) { afterCard(spec, function () { list.forEach(loadEntry); }); return; }
           var rest = list.filter(function (entry) { return first.indexOf(entry) === -1; });
           Promise.all(first.map(loadEntry)).then(function () {
             afterCard(spec, function () { rest.forEach(loadEntry); });
