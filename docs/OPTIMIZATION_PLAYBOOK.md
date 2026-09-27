@@ -1556,3 +1556,65 @@ Still live after 6a: the six ZIP layers, the city portals and the county
 servers. `build_vector_tiles.py --committed` now defers the sixteen mirrored
 archives to the mirror's own check, since they have no shipped file to be held
 to.
+
+### Phase 6b: the six ZIP layers, at full detail and in-state only (2026-09-27)
+
+The six ZIP layers (`zip-code` in il, ia, mi, wi and ca, and New York's
+`nys-zip-code`) are mirrored by the same script, as `ZIP_MIRRORS` rows. They
+differ from 6a's in three ways, and each is in the code:
+
+- **They are fetched by a box, not a state filter.** TIGERweb's ZCTA layer has
+  no STATE field, because a ZCTA can cross a state line, so every app asks for
+  the ZCTAs intersecting a bounding box. Each row carries that app's own box
+  constant, and `--check` fails when the constant in `index.html` stops
+  matching.
+- **They are at full detail** (the operator's choice). The apps' whole-set
+  loader asks the server for a ~55 m simplification, because the raw set is
+  about 40 MB a state. The archive is built from the raw set, so a card read
+  from the tile answers from the ZCTA as the Census drew it. The server cannot
+  answer a state's box whole at full detail: Illinois's 2,184 ZCTAs returned
+  HTTP 500. So the mirror pages 250 at a time and refuses a set that does not
+  add up to the server's own count.
+- **They are in-state only** (the operator's choice). A box around a state
+  holds its neighbours' ZCTAs too. A ZCTA is kept only where it overlaps the
+  app's own state (TIGERweb's States layer) by more than about 100 m², so one
+  that only touches the state line is dropped. New York's box lost exactly the
+  2,007 ZCTAs from New Jersey, Connecticut, Pennsylvania, Massachusetts and
+  Vermont that had been counted by prefix before the build. The cost: a
+  reader who clicks outside the state gets no ZIP card where the live layer
+  answered one. Inside the state every answer is unchanged.
+
+| App | Kept | Dropped | Archive | Full box would be |
+|---|---|---|---|---|
+| Illinois | 1,397 | 787 | 5.55 MB | 9.91 MB |
+| Iowa | 972 | 471 | 3.94 MB | 6.18 MB |
+| Michigan | 993 | 1,007 | 4.97 MB | 9.98 MB |
+| Wisconsin | 783 | 623 | 5.41 MB | 9.18 MB |
+| New York | 1,826 | 2,007 | 7.72 MB | 15.59 MB |
+| San Francisco | 65 | 0 | 0.16 MB | 0.16 MB |
+| **All six** | | | **27.8 MB** | **51.0 MB** |
+
+The app's 55 m simplification would have made Illinois's archive 5.4 MB
+rather than 9.9 at full detail (measured), so in-state full detail costs about
+what the whole box would at the app's simplification.
+
+**THE CARD PROBE'S REFERENCE IS THE ARCHIVE'S SOURCE, NOT THE APP'S WHOLE
+SET.** `probe_tile_cards.mjs` compares a card from the tile with a card from
+the layer's whole set. For these layers the app's whole set is the coarser
+55 m version, which would disagree near every edge because the tile is the
+more accurate. So the probe answers the app's whole-set request with the
+mirror's own full-detail, in-state set, and places points only in the ZCTAs
+the archive kept (`kept` in `tiger-mirror.json`, one comma-joined string per
+layer). Run that way on all six, every card from the tile matched: 298 points,
+none differing and none errored.
+
+Point transmission on a first click (`point-transmission.json`): Illinois
+13 → 12, Iowa 1 → 0, Michigan 1 → 0, Wisconsin 2 → 1, New York 5 → 4, San
+Francisco 0. Iowa and Michigan now send no reader's point to any server.
+
+Still live after 6b: the city portals and the county servers. The three
+portals' terms were read on 2026-09-27: New York City's allow any use; San
+Francisco's place no restriction on redistribution; Chicago's allow use on
+condition that the app displays the City's disclaimer, now on
+`il/sources.html` (#1232). BART's director districts state no licence and a
+contractor's copyright, so they stay live.

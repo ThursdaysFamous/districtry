@@ -11484,6 +11484,7 @@ function initNycExplorer() {
   };
   registerPolygonLayer({
     id: "nys-zip-code",
+    tiles: "data/app/tiles/nys-zip-code.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "ZIP Code",
     coverage: outsideNycCoverage,
