@@ -74,8 +74,8 @@ belongs on that instance's board instead.
 
 | task | owner | state | opened |
 |---|---|---|---|
-| **#1226 HELD — a library director's name would ship with a comma for the period after her initial** | Illinois (bot) | **held 2026-09-27; primary source + a printed normalisation** | 2026-09-27 |
-| **#1225 open (Wisconsin's retained-boundary gate; a metre-ceiling alone would gate the wrong thing) — not yet reviewed** | Wisconsin | **queued 2026-09-27** | 2026-09-27 |
+| **~~#1226~~ CLOSED, superseded by ~~#1227~~ MERGED (`e4e59da`) — the filing contradicts itself and the MAJORITY spelling is the wrong one** | Illinois | **merged 2026-09-27** | 2026-09-27 |
+| **#1225 in verification (Wisconsin's retained-boundary gate) — my three requirements met, battery running** | Wisconsin | **verifying 2026-09-27** | 2026-09-27 |
 | **~~#1221~~ MERGED (`f381c10`) — the stamp check verified both ways; and THE CONDITION I PRESCRIBED WOULD NOT HAVE WORKED** | map/basemap | **merged 2026-09-27** | 2026-09-27 |
 | **#1222 STILL HELD — the transient cleared, and its red `tiles` job found a MEASUREMENT feeding a GATE: a coverage-test file charged to New York's county layer** | map/basemap (bot) | **held 2026-09-27; waiting on the file attribution** | 2026-09-27 |
 | **~~#1224~~ MERGED (`ae7e1c0`) — every dropped-ring count in the fleet was a floor; nine wrong answers were counted nowhere** | Wisconsin | **merged 2026-09-27** | 2026-09-27 |
@@ -216,6 +216,44 @@ downloading every other shipped county's boundary after the card. Three of those
 layers answer a few tenths of a second slower and about 3.2 MB less is downloaded. Counties
 read live from their own county servers behave exactly as before, and an archive that fails
 to load falls back to the whole files rather than drawing nothing.
+
+**2026-09-27 18:35 — the corrupted name is fixed at its cause, and the filing itself is what disagreed about her name.**
+
+**#1227 merged (`e4e59da`); #1226 closed as superseded.** Illinois read the Comptroller's own filing
+rather than guessing at it, and the document **contradicts itself about one person's name**: the
+FY2026 filing prints the Walnut Public Library District director's forename `Jaclyn G,` in two slots
+and `Jaclyn G.` in a third, with the previous year printing a third spelling again. Both years read
+through the same parser, which is what rules our own code out.
+
+**The obvious fix would have shipped the corruption, and that is the part worth keeping.** Voting
+across the slots is what anyone reaches for first, and the bad spelling holds two of the three — a
+majority picks the comma, and the slot that ships is one of the bad two.
+
+So it is corrected narrowly and never silently, and I verified the safety claim by my own census
+rather than accepting theirs: across all 1,622 names in the eight rosters built from these filings,
+exactly two contain a comma at all, both `, Jr.`, and neither is touched by the rule. Eight builders
+now refuse a comma they cannot explain rather than writing it. The roster diff is four lines — the
+stamp and three genuine 2026 filings — and no name moves, which is the proof the parser now produces
+what main already held.
+
+Two findings outlast the name, and one of them corrects me. The parser that **eight scrapers import
+had a self-test that ran in no workflow**; it is in CI now with all six checks broken on purpose to
+prove they can fail. And the typo would have reached a reader in **three** places, not the one I
+recorded — the card plus the officeholder row and the structured data on the library page.
+
+**Wisconsin's #1225 meets all three things I ruled and improves on one.** The overstated docstring
+claim is corrected in the fleet's own style, kept under its correction and naming what actually
+protects the method. The selftest is 51 assertions, including that a zero-width spur is excluded
+**and counted** and that cutting off a spike nobody else covers **fails** — so the gate is not
+vacuous. `--check` also NOTES that two of the four declaring builders carry no ceiling at all, rather
+than implying the fleet is covered. The improvement is theirs: the ceiling is **pinned per layer**
+rather than recomputed each run, because a ceiling recomputed from the source rises whenever the
+source gets coarser and can never fail — a vacuity I had not thought to rule out — with each layer's
+measured step printed beside it so drift stays visible.
+
+**What changes for a reader:** the Walnut Public Library District card keeps its director's name
+right. Without this week's fix it would have printed a comma where the period after her middle
+initial belongs, in three places.
 
 **2026-09-27 17:40 — a library director's name was one merge from shipping corrupted, and I found it only after using my own review tool wrong.**
 
