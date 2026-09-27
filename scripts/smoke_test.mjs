@@ -1765,8 +1765,7 @@ try {
     const page = await booted(context, `${BASE}#point=${POINT}&layers=${OFFLINE[0]}`);
     await page.waitForFunction(() => !!window[EXPORTS_NAME] && !!window[EXPORTS_NAME].setTheme,
       null, { timeout: QUERY_TIMEOUT }).catch(() => {});
-    const read = () => page.evaluate(({ n, id: OFFLINE0 }) => {
-      const path = document.querySelector("#map path");
+    const read = () => page.evaluate(({ n }) => {
       // The vector basemap is a GL canvas with no tile <img> whose src names
       // its style, so the basemap kind comes from the debug namespace; the
       // raster-fallback img sampler stays for a boot that fell back.
@@ -1777,17 +1776,57 @@ try {
         meta: document.querySelector('meta[name="theme-color"]')?.content,
         tiles: (document.querySelector(".leaflet-tile-pane img")?.src || "").match(/(light|dark)_all/)?.[1]
           || (base ? (base.kind === "dark_all" ? "dark" : "light") : null),
-        // the anchor layer's own outline colour, read from the app: it is
-        // drawn on the tile canvas since phase 5, so there is no SVG path
-        stroke: window[n] && window[n].overlayColor ? window[n].overlayColor(OFFLINE0) : (path ? path.getAttribute("stroke") : null),
       };
-    }, { n: EXPORTS_NAME, id: OFFLINE[0] });
+    }, { n: EXPORTS_NAME });
+
+    // A NULL READ IS A FAILURE TO MEASURE, NOT A PASS (2026-09-27). The overlay
+    // assertion below used to short-circuit on either side being null, so a run
+    // where the anchor's overlay had not painted PASSED without comparing
+    // anything — a gate that can only be vacuous, which is the shape this
+    // project keeps finding. `overlayColor` returns null three ways: the layer
+    // has no overlay yet, it is drawn from tiles and the GL line layer is not
+    // built, or its Leaflet path carries no colour; all three mean this check
+    // learned nothing. So each side is POLLED to a bound instead of sampled
+    // after a fixed sleep, and a side that never answers FAILS naming which.
+    // The old SVG-path fallback is gone with it: `overlayColor` is an engine
+    // export in every instance, and reading `#map path` is what let the same
+    // assertion in ca/ measure the scope mask instead of a district (fixed
+    // there in #1234) — dead code that can answer wrongly is not free.
+    // MEASURED on this instance over five boots: the light colour first reads
+    // non-null at 6-302 ms and the dark repaint lands 2-81 ms after the flip,
+    // so QUERY_TIMEOUT is slack rather than tight. It is the bound because it
+    // is already tuned for a cold CI runner, where MapLibre comes from the CDN
+    // and the anchor is a PMTiles archive. Polling for a dark value that
+    // DIFFERS is deliberate: waiting only for non-null samples the race and
+    // reads the light colour straight back.
+    // A THROW IS ALSO A FAILURE TO MEASURE. This script is one try/finally with
+    // no catch, so an exception exits with a stack instead of naming a check —
+    // and the poll below asks the page up to QUERY_TIMEOUT/50 times where the
+    // old code asked twice. An `overlayColor` that throws is a finding about
+    // the app, so it is reported as THIS check failing, with the message.
+    let overlayError = null;
+    const overlay = () => page.evaluate(({ n, id }) =>
+      (window[n] && window[n].overlayColor ? window[n].overlayColor(id) : null),
+      { n: EXPORTS_NAME, id: OFFLINE[0] })
+      .catch((e) => { overlayError = String((e && e.message) || e).split("\n")[0]; return null; });
+    const settleOverlay = async (want) => {
+      const t0 = Date.now();
+      for (;;) {
+        const v = await overlay();
+        if (want(v)) return v;
+        if (Date.now() - t0 > QUERY_TIMEOUT) return v;
+        await page.waitForTimeout(50);
+      }
+    };
+
     await page.evaluate((n) => window[n].setTheme("light", false), EXPORTS_NAME);
     await page.waitForTimeout(400);
     const light = await read();
+    const lightStroke = await settleOverlay((v) => v !== null);
     await page.evaluate((n) => window[n].setTheme("dark", false), EXPORTS_NAME);
     await page.waitForTimeout(600);
     const dark = await read();
+    const darkStroke = await settleOverlay((v) => v !== null && v !== lightStroke);
 
     check("dark mode flips the theme attribute and the painted ground",
       light.attr === "light" && dark.attr === "dark" && light.ground !== dark.ground,
@@ -1799,8 +1838,15 @@ try {
       light.tiles === null || dark.tiles === null || (light.tiles === "light" && dark.tiles === "dark"),
       `${light.tiles} -> ${dark.tiles}`);
     check("dark mode repaints a live overlay from the derived palette",
-      light.stroke === null || dark.stroke === null || light.stroke !== dark.stroke,
-      `${light.stroke} -> ${dark.stroke}`);
+      lightStroke !== null && darkStroke !== null && lightStroke !== darkStroke,
+      lightStroke === null
+        ? `${OFFLINE[0]} never reported an overlay colour in ${QUERY_TIMEOUT} ms — nothing was measured` +
+          (overlayError ? ` (overlayColor threw: ${overlayError})` : "")
+        : darkStroke === null
+          ? `${lightStroke} -> null: the overlay stopped reporting a colour after the flip`
+          : lightStroke === darkStroke
+            ? `${lightStroke} unchanged by the flip`
+            : `${lightStroke} -> ${darkStroke}`);
 
     // THE BASEMAP'S LABELS DRAW ABOVE THE DISTRICTS (2026-09-25): the style
     // is split into a ground map in the tile pane and a label-only map in a
