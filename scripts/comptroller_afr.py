@@ -269,6 +269,115 @@ def _surname(name):
     return parts[-1] if parts else ""
 
 
+# A COMMA THE FILER TYPED WHERE A MIDDLE INITIAL'S PERIOD BELONGS, and the
+# only character substitution this module makes to a filed name.
+#
+# MEASURED ON THE FILING THAT FORCED IT (2026-09-27, Walnut Public Library
+# District, 006/030/10). Its FY2026 contact table prints the Director's forename
+# cell three times and does not agree with itself: `Jaclyn G,` in slots A and C
+# and `Jaclyn G.` in slot D. FY2025 printed a THIRD spelling, `Jaclyn G` with no
+# punctuation at all, in that same slot D. So the comma is the Comptroller's
+# document and not this parser -- both years were read through this same code --
+# and one person has been filed three ways across two filings.
+#
+# WHY NOT VOTE ACROSS THE SLOTS, which is the obvious alternative and is wrong
+# here: the corrupted spelling holds TWO of the three populated slots and a
+# majority would ship it. Nor is "take the slot that looks right" available --
+# slot D is in BOARD_ONLY_SLOTS for the measured duplicate-trap reasons above, so
+# a head filed there is deliberately never read, and reopening that to win a
+# character back would readmit 27 measured duplicates.
+#
+# THE RULE IS THEREFORE NARROW AND DECLARED. A comma is rewritten ONLY where it
+# sits immediately after a single capital letter that itself sits between a
+# given name and a surname. It does not touch a suffix comma, which is the only
+# legitimate comma this source files: measured across the 1,622 names in the
+# eight AFR-derived rosters on 2026-09-27, exactly two carry a comma at all --
+# `Juan Martinez, Jr.` and `John Shea, Jr.` -- and neither matches this pattern.
+# It does not touch a surname-first value either (`Auter, Tara`), which is a
+# different defect with its own remedy in the Vermilion scraper.
+#
+# IT IS NEVER SILENT. Every rewrite appends a warning naming both spellings, and
+# the weekly run prints its warnings, which is the condition Adam's rule sets for
+# correcting a published name at all.
+MIDDLE_INITIAL_COMMA = re.compile(r"^(?P<given>.+?)\s+(?P<initial>[A-Z]),\s+(?P<rest>\S.*)$")
+
+# A comma this module will not rewrite and will not ship: anything after it that
+# is not one of the suffixes the source genuinely files. `suspect_name` is the
+# builders' backstop, not a fixer -- it names the value and lets the caller
+# refuse, the way the count guards refuse rather than write.
+NAME_SUFFIXES = {"jr", "sr", "ii", "iii", "iv", "v", "phd", "md", "esq", "cpa"}
+
+
+def normalise_filed_name(name, unit_label, warnings):
+    """A filed name with a middle initial's comma restored to a period.
+
+    Returns the name unchanged when the pattern does not match. Appends a
+    warning naming both spellings when it does, so no correction is silent.
+    """
+    m = MIDDLE_INITIAL_COMMA.match(name or "")
+    if not m:
+        return name
+    fixed = "%s %s. %s" % (m.group("given"), m.group("initial"), m.group("rest"))
+    # ONE LINE PER CORRECTION, NOT ONE PER READ. Every slot's name is built
+    # twice -- once for the witness table and once for slot_person -- and a unit
+    # can file the same person in three slots, so an unguarded append printed one
+    # correction up to six times and read as six separate defects.
+    said = ("%s: filed name %r carries a comma after the middle initial; "
+            "shipped as %r" % (unit_label, name, fixed))
+    if said not in warnings:
+        warnings.append(said)
+    return fixed
+
+
+def suspect_name(name):
+    """Why a name must not ship, or None.
+
+    The one shape checked is a comma whose right-hand side is not a filed
+    suffix, because `normalise_filed_name` has already restored the middle
+    initial's period and any comma left over is unexplained.
+    """
+    if "," not in (name or ""):
+        return None
+    tail = name.split(",", 1)[1].strip().rstrip(".").lower()
+    if tail.split(" ")[0] in NAME_SUFFIXES:
+        return None
+    return ("a comma that is not a filed suffix, so the surname or the middle "
+            "initial is not as the filer typed it")
+
+
+def suspect_names_in(payload):
+    """[(where, name, why)] for every name in a payload that must not ship.
+
+    A WALKER RATHER THAN A LOOP PER BUILDER. The eight rosters this parser feeds
+    nest their officers three different ways -- the library file keys them by
+    library, five county files by district, and the special-district file by
+    county then layer then name -- so a per-builder loop would be eight copies of
+    one question, which is where this fleet's recurring defect starts. This walks
+    whatever shape it is given and names the path it found the value at.
+
+    `where` is the dotted path to the officer's own record, so a refusal names
+    the district and the group rather than only the person.
+    """
+    found = []
+
+    def walk(node, path):
+        if isinstance(node, dict):
+            name = node.get("name")
+            if isinstance(name, str) and name.strip():
+                why = suspect_name(name)
+                if why:
+                    found.append((path or "payload", name, why))
+            for key, value in node.items():
+                if key != "name":
+                    walk(value, "%s.%s" % (path, key) if path else str(key))
+        elif isinstance(node, list):
+            for i, item in enumerate(node):
+                walk(item, "%s[%d]" % (path, i))
+
+    walk(payload, "")
+    return found
+
+
 def unit_tokens(unit_label):
     """The unit's own name words, for testing whether a domain is the unit's.
 
@@ -422,7 +531,17 @@ def contact_block(session, code, unit_label, warnings):
 
     # EVERY SLOT IS READ, because each carries its own filer's details and the
     # one the unit can be shown to own is not always slot A.
-    filers = [{"name": " ".join(x for x in (names[2 * i], names[2 * i + 1]) if x).strip(),
+    def filed_name(i):
+        """Slot i's name as filed, with a middle initial's comma restored.
+
+        BOTH READERS OF THE NAME GO THROUGH HERE -- the witness table below and
+        slot_person() -- because a name corrected in one and not the other would
+        make `already_named` and the witnessing disagree about one person.
+        """
+        joined = " ".join(x for x in (names[2 * i], names[2 * i + 1]) if x).strip()
+        return normalise_filed_name(joined, unit_label, warnings)
+
+    filers = [{"name": filed_name(i),
                "street": cell(unlabelled, 0, i),
                "city": cell(unlabelled, 1, i),
                "region": cell(unlabelled, 2, i),
@@ -590,7 +709,7 @@ def contact_block(session, code, unit_label, warnings):
     telephone = witnessed("phone")
 
     def slot_person(slot):
-        name = " ".join(x for x in (names[2 * slot], names[2 * slot + 1]) if x).strip()
+        name = filed_name(slot)
         title = (titles[slot] or "").strip()
         if not name or not title:
             return None, None, None
@@ -689,13 +808,14 @@ def _selftest():
     PACE = 0
     latest_fiscal_year = lambda session, code: 2026
 
-    def markup(city):
+    def markup(city, name_row=None):
         def tr(cells):
             return "<tr>" + "".join("<td>%s</td>" % c for c in cells) + "</tr>"
         return "<table>" + "".join([
             tr(["Contact Person", "Chief Executive Officer",
                 "Chief Financial Officer", "Purchasing Agent"]),
-            tr(["Ann", "Joyce", "Nate", "Brown", "Pat", "Reed", "Dee", "Fox"]),
+            tr(name_row or
+               ["Ann", "Joyce", "Nate", "Brown", "Pat", "Reed", "Dee", "Fox"]),
             tr(["Contact Person", "President", "Treasurer", "Purchasing Agent"]),
             tr(["4631 N Overhill"] * SLOTS),
             tr([city] * SLOTS),
@@ -705,11 +825,12 @@ def _selftest():
         ]) + "</table>"
 
     class _Session(object):
-        def __init__(self, city):
+        def __init__(self, city, name_row=None):
             self.city = city
+            self.name_row = name_row
 
         def post(self, *a, **k):
-            body = markup(self.city)
+            body = markup(self.city, self.name_row)
 
             class _R(object):
                 text = body
@@ -718,10 +839,22 @@ def _selftest():
                     pass
             return _R()
 
-    def run(code, city):
+    def run(code, city, name_row=None):
         warnings = []
-        block = contact_block(_Session(city), code, "SELFTEST UNIT", warnings)
+        block = contact_block(_Session(city, name_row), code, "SELFTEST UNIT",
+                              warnings)
         return (block or {}).get("city"), warnings
+
+    def officers(name_row):
+        """(the officers shipped, the warnings) for one name row.
+
+        Drives the REAL contact_block rather than calling the normaliser, so a
+        name corrected in one of its two readers and not the other fails here.
+        """
+        warnings = []
+        block = contact_block(_Session("Norridge", name_row), "016/999/99",
+                              "SELFTEST UNIT", warnings)
+        return [o[1]["name"] for o in (block or {}).get("officers") or []], warnings
 
     failed = []
 
@@ -745,6 +878,33 @@ def _selftest():
     check("leaves an unlisted unit alone", city, "Harwood Heights IL 60706")
     check("says nothing about it", [w for w in warned if "LOCALITY" in w], [])
 
+    # THE MIDDLE-INITIAL COMMA, in all four directions. The real filing that
+    # forced it (Walnut Public Library District FY2026) puts the comma in the
+    # CFO slot, which is a published slot, so that is the slot driven here.
+    got, warned = officers(["Jaclyn G,", "Trujillo", "Brenda", "Helms",
+                            "Jaclyn G,", "Trujillo", "Dee", "Fox"])
+    check("ships the middle initial's comma as a period",
+          [n for n in got if "Trujillo" in n], ["Jaclyn G. Trujillo"])
+    check("never ships the comma spelling",
+          any("Jaclyn G," in n for n in got), False)
+    check("prints the correction it made",
+          len([w for w in warned if "comma after the middle initial" in w]), 1)
+
+    # SLOT C, a PUBLISHED slot whose fixture title is Treasurer. A first draft
+    # put this in slot A and the check failed for the right reason: A is in
+    # BOARD_ONLY_SLOTS, so a name filed there ships only under a board title.
+    got, _ = officers(["Ann", "Joyce", "Brenda", "Helms",
+                       "Juan", "Martinez, Jr.", "Dee", "Fox"])
+    check("leaves a filed suffix comma alone",
+          [n for n in got if "Martinez" in n], ["Juan Martinez, Jr."])
+    check("and does not call a filed suffix suspect",
+          suspect_name("Juan Martinez, Jr."), None)
+
+    check("calls an unexplained comma suspect",
+          suspect_name("Jaclyn G, Trujillo") is not None, True)
+    check("calls a surname-first value suspect",
+          suspect_name("Auter, Tara") is not None, True)
+
     if failed:
         print("")
         print("%d CHECK(S) FAILED" % len(failed))
@@ -752,7 +912,8 @@ def _selftest():
             print("  " + f)
         return 1
     print("")
-    print("OK - LOCALITY_CORRECTIONS behaves in all three directions")
+    print("OK - LOCALITY_CORRECTIONS behaves in all three directions, and the "
+          "middle-initial comma is corrected, printed, and never guessed")
     return 0
 
 

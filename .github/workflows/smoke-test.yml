@@ -1275,6 +1275,17 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/scraper_common.py --selftest
 
+      # The AFR parser's own proof, which EXISTED AND RAN NOWHERE until
+      # 2026-09-27. It drives contact_block over fixture markup and covers the
+      # only two places this module overrides a filing: LOCALITY_CORRECTIONS in
+      # all three directions, and the middle initial's comma restored to a
+      # period, printed once, with a filed suffix comma left alone. Eight
+      # scrapers import that parser, so a regression in it reaches eight weekly
+      # rosters. Stdlib only, no network.
+      - name: The AFR parser still corrects only what it declares
+        if: ${{ !cancelled() }}
+        run: python3 scripts/comptroller_afr.py --selftest
+
       # The retention gate below asks whether a field is still PUBLISHED. This
       # one asks whether the value in it is still a person. On 2026-09-04 the
       # weekly municipal refresh replaced all 122 of Rock Island County's

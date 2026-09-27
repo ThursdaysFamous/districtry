@@ -44,6 +44,8 @@ import json
 import os
 import sys
 
+from comptroller_afr import suspect_names_in  # noqa: E402  (shared -- do not fork)
+
 import sys as _sys, os as _os
 _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
 from scraper_common import substantive_changes, emit_changes_output  # noqa: E402  (shared machinery — do not fork)
@@ -150,6 +152,18 @@ def main():
         problems.append("no fiscal year on: %s" % ", ".join(undated))
     if nobody:
         problems.append("names no officer of any kind: %s" % ", ".join(nobody))
+
+    # A NAME THIS SOURCE FILED IN A SHAPE NOBODY TYPED IS REFUSED, NOT SHIPPED.
+    # comptroller_afr.normalise_filed_name has already restored a middle
+    # initial's comma to its period and printed that it did, so a comma left
+    # over is unexplained. #1226: Walnut Public Library District's FY2026 filing
+    # prints its Director as `Jaclyn G,` in two of three populated slots, and a
+    # reader is better served by last week's correct spelling than this week's
+    # broken one. A filed suffix comma (`, Jr.`) is admitted -- `John Shea, Jr.`
+    # in this very file is the one that measures.
+    for where, name, why in suspect_names_in(counties):
+        problems.append("%s: %r has %s" % (where, name, why))
+
     if problems:
         for p in problems:
             print("  %s" % p, file=sys.stderr)
