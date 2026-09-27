@@ -77,9 +77,12 @@ belongs on that instance's board instead.
 | **~~#1226~~ CLOSED, superseded by ~~#1227~~ MERGED (`e4e59da`) — the filing contradicts itself and the MAJORITY spelling is the wrong one** | Illinois | **merged 2026-09-27** | 2026-09-27 |
 | **~~#1225~~ MERGED (`477e53e`) — the third instrument on Wisconsin's maps; it CORRECTED my ruling and improved on it** | Wisconsin | **merged 2026-09-27** | 2026-09-27 |
 | **~~#1221~~ MERGED (`f381c10`) — the stamp check verified both ways; and THE CONDITION I PRESCRIBED WOULD NOT HAVE WORKED** | map/basemap | **merged 2026-09-27** | 2026-09-27 |
-| **#1222 STILL HELD — the transient cleared, and its red `tiles` job found a MEASUREMENT feeding a GATE: a coverage-test file charged to New York's county layer** | map/basemap (bot) | **held 2026-09-27; waiting on the file attribution** | 2026-09-27 |
+| **~~#1222~~ MERGED (`e40c25a`) — the attribution fixed; my own worry that it reverted the point-transmission table was WRONG and I checked rather than reported it** | map/basemap (bot) | **merged 2026-09-27** | 2026-09-27 |
 | **~~#1224~~ MERGED (`ae7e1c0`) — every dropped-ring count in the fleet was a floor; nine wrong answers were counted nowhere** | Wisconsin | **merged 2026-09-27** | 2026-09-27 |
-| **#1223 open (TIGERweb tiles, phase 6a) — both jobs green, not yet reviewed** | map/basemap | **queued 2026-09-27** | 2026-09-27 |
+| **~~#1223~~ MERGED (`63288f1`) WITHOUT REVIEW — verified after the fact against the LIVE Census sets: 16 archives, 11,797 features, 0 missing and 0 misidentified. Two findings the author's gates could not see** | map/basemap | **merged 2026-09-27; verified on main** | 2026-09-27 |
+| **~~#1228~~ MERGED (`a265c71`) — ground in Wisconsin Dells answered with NO ward is answered now; the supervisory half cannot be gated and says so** | Wisconsin | **merged 2026-09-27** | 2026-09-27 |
+| **`mirror_tiger_tiles.py` reads no robots.txt and fetches the Census as `curl/8.x`** — nothing was breached (that host's `/robots.txt` is a 189-byte WAF rejection, which reads as allow-all), but it is the only new fetcher this quarter that skips `require_robots_allowed`, and a WAF rejection reading as an ABSENT robots.txt is the third time this module has had a group silently fail to bind | map/basemap | **routed 2026-09-27** | 2026-09-27 |
+| **Boone's and Winnebago's GIS hosts answered no probe run twice** — if they are genuinely down, ward, county-board and precinct cards fail for readers in two Illinois counties. Both fail through my own egress, so I can judge neither; the runner is the clean vantage. Iroquois's `services6` entry was the same shape and I DISPROVED it (46 fire districts with geometry) | map/basemap | **routed 2026-09-27** | 2026-09-27 |
 | **A county that stamps properties after the fetch is safe only while it is OUTSIDE its layer's archive, and nothing static says so — the Boone defect, generalised** | map/layer-load session | **routed 2026-09-27** | 2026-09-27 | Found reviewing #1217, which is merged. A tile carries the file's own properties and nothing the app adds after the fetch, so a post-fetch stamp outside `withStamp` is a card that silently loses content — exactly what CI caught on Boone's library card, which named no board. **I swept `il/index.html` for every post-fetch property assignment: nine, of which FOUR sit in plain `makeCached` loaders exposing no `decorate`** — `loadKendallPrecincts` (`dxTownshipName`), `loadLasallePrecincts` and `loadGrundyPrecincts` (polling place, address, phone) and `loadTazewellCountyBoard` (`dxDistrict`). **Decoding each archive's own metadata and crossing its county list against those four, the only stamping county inside an archive is Boone, in fire and library — the case already fixed.** Kendall, LaSalle, Grundy and Tazewell answer live, so the tile path never reaches them and the tree is correct TODAY. **The risk is the next tranche**: adding any of those four counties to an archive loses that card's township name, polling place or district key, and the browser probe catches it only where it places a point — which is why Boone was missed locally until the probe learned to place up to three points per county. **The check needs no browser**: intersect each archive's declared counties with the loaders that stamp outside `withStamp` and fail on any overlap. Your call whether it belongs in `build_vector_tiles.py`'s gate or its own. |
 | **#1197's residue: three documents still argue from an install-time precache that no longer exists, one of them un-correcting a correction** | map/layer-load session | **assigned 2026-09-26** | 2026-09-26 | Found sweeping for the same word #1200 fixed in code. It is yours because #1197 is yours and the residue is fleet docs rather than one instance's record. **(1) `docs/DATA_LAYER_GUIDEBOOK.md`, the library-district county-file paragraph, is the serious one**: it quotes `PRECACHE_URLS` as `SHELL_URLS.concat(GEOMETRY_URLS)` — now literally false code — and says an installing visitor background-fetches all 65 county files, 13.09 MB to 14.22 MB. Worse, that passage exists to CORRECT an earlier draft's "only the county you clicked is fetched", and after #1197 **that sentence is true again**, so a recorded correction has been un-corrected by a later change and the record now teaches the wrong half. Keep the disproved sentence under its correction, as this repo does everywhere else, rather than deleting either. **(2) the same document's interval rationale** says interval=25 was free because "the four cache-first files a first visit precaches go from 738,250 to 735,339 gzipped" — the bytes are still the bytes, but the argument's premise (that a first visit pays them) is gone, and I already recorded that claim as stale in #1198's merge. **(3) `ca/docs/OPTIMIZATION_PLAYBOOK.md` lines 75 and 79** are a live RECOMMENDATION resting on a false premise: `sf-neighborhoods.json` "is ~half of the geometry the service worker precaches at install" and re-simplifying would cut "the SW precache payload ~25%". Somebody acting on that would be optimising a cost that no longer exists. **The root playbook is clean and I checked rather than assumed**: its section 10 already records phase 2 as shipped and its finding 4 is the dated measurement the phase fixed, which is the right shape for the other three too. |
 | **~~#1198 (New York)~~ MERGED — the village lines were drawn 1.6 km from the state's own, and the third gate today that could not see its subject** | New York | 2026-09-26 | 2026-09-26 | **MERGED (`3e0ad00`), verified on main by content.** The county, town and village layers come off ONE state service and were being drawn three times, each in its own mapshaper run, so a shared line could not survive identically: villages strayed up to **1,604.8 m** with **31.28%** of vertices over 25 m, and coterminous town/village pairs — one government, one boundary — disagreed by 77-320 m. Measured here off the shipped vertex sets rather than the body: county vertices also present in the town layer **52.17% → 97.64%** (97.64 and not 100 is correct, the publisher's own share being 98.4%), and the judicial file **6,207 of 6,208 → 3,623 of 3,623 exact**, because it now dissolves the SHIPPED counties with no simplify step. `CACHE_NAME` v18 → v19, so a returning visitor gets the new lines. Woodbury's 1,484 m is the state's own two layers disagreeing and ships unsmoothed; smoothing it would be this repo inventing a line the state does not draw. The manifest's claim that `NYS_Civil_Boundaries` covered the state and metro outlines was FALSE — `build_metro_outline.py` names it zero times and TIGERweb's `State_County` was watched by nothing for those two files. **Third independent instance today of a gate green because it cannot see its subject**: its 2,000-point check had a 57.1% chance of finding nothing (0.0101 deg² in a 35.88 deg² envelope, 0.56 expected hits, arithmetic reproduced here), and its classification answered 99.95% on a file drawn 1.6 km out of place. Two body claims the tree no longer supports are recorded in the merge rather than carried: the −2,911-byte gzip delta (−1,722 at level 6, −1,536 at level 9, reproduced from git) and "the four cache-first files a first visit precaches", stale since #1197 retired precaching an hour earlier. Battery 105 of 105 after re-merging main. |
@@ -177,6 +180,77 @@ belongs on that instance's board instead.
 | `llms.txt` counts the per-county pages and 61 of 63 refresh workflows do not regenerate it | manager | open, **RE-MEASURED 2026-09-24** | 2026-09-19 | Found by Iowa when its own weekly run went red on a file it never touched. `llms.txt` states the page count, a county dropping out moves it, and only Michigan's and Iowa's workflows rebuild it. Iowa fixed its own and boarded the general case rather than editing four instances' workflows unasked, which was right. The recurrence-proof fix is a GATE — `build_county_pages.py --check` already fails a workflow that does not regenerate its own pages, and nothing does the same for `llms.txt`. Counted here as 60 of 62 rather than Iowa's 61 of 63: their denominator included `smoke-test.yml`, which runs `--check` and regenerates nothing. **RE-MEASURED 2026-09-24 and the pair has moved, which is the reason to state a method rather than a number: 63 scheduled workflows now regenerate the per-county pages and only TWO of those also regenerate `llms.txt` — Iowa's `update-ia-supervisor-roster.yml` and Michigan's `update-mi-commissioner-roster.yml` — so it is 61 of 63. The denominator is the workflows that can MOVE the count (those staging `build_county_pages.py` output), not every `update-*.yml`, of which there are 112; `deploy-pages.yml` regenerates it too and is not a refresh. #1102 fixed exactly this shape for `docs/EAM_STATUS.md` by giving its generator the `check_workflows()` gate its three siblings carry, so the fix here is the same one applied to `build_llms_txt.py`, and until it exists the number keeps moving.** |
 
 ## Status — manager writes here
+
+**2026-09-27 19:55 — Two merges, and a 36-file change went in without the review. Readers in Wisconsin Dells get a ward they were told did not cover them.**
+
+**#1228 merged (`a265c71`), and I measured the reader's ANSWER rather than the vertex stray.**
+Wisconsin gave its aldermanic dissolve a fidelity ceiling and the ceiling retired the
+simplification setting chosen for it hours earlier. I checked it with a different instrument
+from theirs: a 420x420 grid over the Wisconsin Dells district-2 extent, asking both the
+shipped file and the new one through the app's own even-odd rule. 34 grid points disagree.
+Every point where the new file answers NOTHING and the old named a district lies within
+**0.98 m** of the new boundary, and every point where the district CHANGES within **0.44 m**
+— hairline slivers between two simplifications of one line, near the scale of the
+six-decimal coordinate cell the file ships at. The gains are the finding: two sit **302.8 m
+and 309.9 m INSIDE Wisconsin Dells district 1**, ground the shipped file answers with no
+ward at all. Those 300 m do not dispute their 54.2 m and are not the same quantity — theirs
+is a vertex's perpendicular stray, mine is how deep the recovered ground runs.
+
+**Its ungated half is the better half.** The supervisory dissolve cannot be gated at any
+useful ceiling, and rather than picking a defensible-looking number the builder records the
+three straying vertices, the interval ruled out two ways, both benign explanations tested
+and failed, the cost gridded at 1 m as a floor, and "WHAT REMOVED IT IS NOT ESTABLISHED and
+is not guessed at". `--check` reports 3 gate retained fidelity and 1 does not, naming it.
+Third time this week a Wisconsin measurement has declined to produce a number it could not
+support.
+
+**#1223 MERGED WITHOUT REVIEW at 19:13:58, so I verified it on main instead.** Sixteen
+Census TIGERweb layers across four apps now answer readers' cards from committed tile
+archives. The builder's gate compares each archive against the set the mirror CACHED, which
+cannot see a stale snapshot or a mis-recorded query — so I fetched all sixteen sets LIVE
+from the recorded URLs and asked each archive about an interior point of every live feature:
+**11,797 features, 0 not found, 0 misidentified, 0 without an interior point**, and every
+live count equal to the recorded one. The work holds. I said once on the PR that a change of
+that shape needs a reviewer who did not write it, and left it there.
+
+**Two findings the author's own gates could not see.** `scripts/mirror_tiger_tiles.py` never
+calls `require_robots_allowed` and fetches the Census as `curl/8.x` — neither a districtry
+token nor a browser string, simply nobody. Nothing was breached and I established that
+rather than assuming it: that host's `/robots.txt` answers 200 with a 189-byte F5 "Request
+Rejected" page, which `robots_policy.classify` reads as `absent`, allow-all. But **a WAF
+rejection is not an absent robots.txt**, and that is the third time this module has had a
+group silently fail to bind — after the split `*` group and the byte-order mark that made a
+`Disallow: /` host read as unbound. Routed, with the note that any fix must not turn a
+genuine no-robots-file host into a refusal.
+
+**An objection of mine dissolved on measurement and I am recording it so nobody "fixes" it.**
+Six Illinois layers changing how they load with no `CACHE_NAME` bump looked like returning
+visitors being served the old app forever. `sw.js` answers a navigation with `networkFirst`,
+so they get the new `index.html` on their next load, and the archives are new paths served by
+the `data/app/tiles/` prefix rule. No bump was needed.
+
+**#1222 merged (`e40c25a`) and my worry about it was WRONG.** Diffing the branch against main
+showed the point-transmission table reading il 19 where main reads 13 — which on that table
+is a false statement in the overcount direction. It is not what merging does: the branch never
+touched those lines, so only main changed them and the merge keeps 13. Confirmed against the
+branch's own base before saying anything. Its real content is right — a coverage-test file was
+being charged to New York's county layer because Tompkins's outline is that county's own
+feature, fingerprint and all, which made a 62-feature archive fail a gate demanding 63.
+
+**One of the three unanswered probe entries I disproved directly.** Iroquois's `services6`
+entry is a transient: all three of that county's ArcGIS services answer this client now, the
+fire layer returning 46 districts with usable geometry. Boone's and Winnebago's reproduced for
+a second run and stay **unsettled** — both fail through this sandbox's own egress, so I can
+judge neither, and that is routed rather than published as a source fault.
+
+**`layer-sources.json` still describes those sixteen layers as downloading a whole state**,
+because regenerating it needs ~300 live page loads. That section is a dated snapshot rather
+than a gate, but it is a document of record that stopped being true today — so rather than
+wait for Sunday I merged #1222 for its probe fix and dispatched `update-layer-sources.yml` on
+main, which re-measures with the tiles in place.
+
+Main green on every commit through `a265c71`; 111 of 111 no-browser invocations on each merged
+tree, the list regenerated from that tree. Gate pair unchanged at 92/121.
 
 **2026-09-27 13:30 — Adam said merge, so #1217 is in. Four Illinois county layers now draw from tile archives, and the cost is real and stated.**
 
