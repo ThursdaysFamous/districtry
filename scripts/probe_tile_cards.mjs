@@ -205,7 +205,11 @@ try {
           for (let offset = 0; ; ) {
             const url = rec.page_size
               ? `${rec.query}&resultOffset=${offset}&resultRecordCount=${rec.page_size}` : rec.query;
-            const page = JSON.parse(execFileSync("curl", ["-sS", "--fail", "--retry", "3", "--max-time", "300",
+            // --retry-all-errors: without it curl's --retry skips a reset
+            // connection (exit 35), which is how a CI run lost ia:municipality
+            // on 2026-09-27 with three retries unspent.
+            const page = JSON.parse(execFileSync("curl", ["-sS", "--fail", "--retry", "3", "--retry-all-errors",
+              "--retry-delay", "5", "--max-time", "300",
               "-A", "districtry tiger-tile mirror (+https://districtry.com/)", url], { maxBuffer: 1 << 30 }));
             const got = page.features || [];
             if (rec.page_size && !referenceSet) referenceSet = Object.assign({}, page, { features: [] });

@@ -255,7 +255,9 @@ fs.writeFileSync(process.argv[5], JSON.stringify(fc));
 
 
 def fetch(url, dest):
-    got = subprocess.run(["curl", "-sS", "--fail", "--retry", "3", "--retry-delay", "5",
+    # --retry-all-errors: plain --retry skips a reset connection (curl exit 35),
+    # which the Census server does to a runner often enough to fail a CI run.
+    got = subprocess.run(["curl", "-sS", "--fail", "--retry", "3", "--retry-all-errors", "--retry-delay", "5",
                           "--max-time", "300", "-A", USER_AGENT, "-o", dest, url],
                          capture_output=True, text=True)
     if got.returncode != 0:
