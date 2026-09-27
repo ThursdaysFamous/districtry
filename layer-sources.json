@@ -3324,8 +3324,7 @@
     },
     "county": {
      "files": [
-      "/ny/data/app/ny-counties.json",
-      "/ny/data/app/tompkins-county-outline.json"
+      "/ny/data/app/ny-counties.json"
      ],
      "whole_set": [],
      "at_point": [],
