@@ -938,7 +938,7 @@ direction from the edge, which put many of them on it; that read as a
   need their own cache keyed by tile.
 - **Tile archives are binary files in git**, 1.6-5 times the gzipped GeoJSON,
   and every rebuild adds a full copy to history. (Measured on the whole fleet
-  in phase 3: 5.4 times, 3.5-10 times by app. See below.)
+  in phase 3: 5.3 times, 3.5-10 times by app. See below.)
 - **Live sources cannot become tiles without being mirrored.** In Illinois,
   29 of the 40 layers fetch their shapes live (`layer-sources.json`). The ones that change
   about once a year (TIGERweb) can be mirrored into shipped tiles by a scheduled
@@ -1153,8 +1153,8 @@ shipped; one mostly fetched live (Illinois `county` draws two shipped outlines
 beside a Census set) waits for phase 6. A county-dispatched layer is one
 archive, its shipped counties together, with the county key on each feature.
 
-**Measured on the whole fleet:** 71 archives, 19,128 features, 18.9 MB of
-gzipped source and 101.6 MB of archives, built and gated in 3 minutes 25
+**Measured on the whole fleet:** 71 archives, 19,128 features, 19.3 MB of
+gzipped source and 102.0 MB of archives, built and gated in 3 minutes 25
 seconds with four at a time (11 minutes one at a time).
 
 | App | Archives | Source, gzipped | Archives | Ratio |
@@ -1164,9 +1164,9 @@ seconds with four at a time (11 minutes one at a time).
 | il | 12 | 3.6 MB | 12.7 MB | 3.5x |
 | mi | 7 | 1.9 MB | 16.9 MB | 8.7x |
 | ny | 13 | 1.5 MB | 13.8 MB | 9.3x |
-| wi | 20 | 9.3 MB | 33.3 MB | 3.6x |
+| wi | 20 | 9.7 MB | 33.8 MB | 3.5x |
 
-**That is 5.4 times the source, not the 1.6-5 times the trial above
+**That is 5.3 times the source, not the 1.6-5 times the trial above
 predicted.** The trial's four layers were dense files; a layer of a few large
 districts (Iowa's four congressional districts: 31 KB to 431 KB) pays for
 thousands of zoom-13 tiles over mostly empty interiors. It does not change
@@ -1180,8 +1180,8 @@ tile format has no arrays, objects or null, so an array is written as JSON text
 and parsed back, and a source string that already reads as JSON fails the
 build rather than being decoded wrongly. And about 2,000 points per archive,
 placed within 20 m of an edge, are answered by the app's own even-odd rule from
-the tile and from the file: across the fleet **0 of 120,756 points a metre or
-more from every edge disagree**, and 2,351 of 21,244 under a metre do, the
+the tile and from the file: across the fleet **0 of 120,658 points a metre or
+more from every edge disagree**, and 2,334 of 21,342 under a metre do, the
 zoom-13 grid step.
 
 **Two faults the first full run found, both tippecanoe reading geometry
@@ -1201,7 +1201,16 @@ differently from the app,** and ten archives failed until they were fixed:
   than 0.01 degrees is split before tiling, which brings them within about
   3 cm.
 
-Both were caught by the gate and neither by inspection. Broken on purpose the
+Both were caught by the gate and neither by inspection. **A third was in the
+gate itself** and was caught reading the app's point-in-polygon code for
+phase 4: the app counts a point inside a MultiPolygon when ANY part holds it,
+while the builder took the even-odd of every ring across all parts, which
+calls a part lying inside another part a hole. The gate asked the file with
+the same wrong rule, so it agreed with the tiles and passed. Measured on the
+fleet, 70 features are shaped that way (68 Michigan precincts, one Wisconsin
+law-service area, one 911 area), and a point inside each nested part is now
+tested and answers as the app does; the file's answer comes from the app's
+rule, and each part's even-odd area is unioned rather than XOR'd. Broken on purpose the
 same day, it failed a build capped at zoom 10 (17 disagreements beyond a metre
 in one layer) and one with the name property dropped.
 

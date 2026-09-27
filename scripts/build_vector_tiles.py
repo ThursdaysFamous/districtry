@@ -45,9 +45,10 @@ THE GATE. Each archive is read back and held to the file it was built from:
      already looks like an array or object, so a file where one does FAILS
      rather than being decoded wrongly.
   2. A POINT'S ANSWER IS THE SAME. Points are placed near district edges on
-     purpose, where tiles and the file can disagree, and each is answered twice
-     by the app's own even-odd rule: from the zoom-13 tile under it and from
-     the whole file. The answer is the SET of features containing the point,
+     purpose, where tiles and the file can disagree, and each is answered twice:
+     from the whole file by the app's own rule (even-odd within a Polygon, any
+     part of a MultiPolygon), and from the zoom-13 tile under it by even-odd
+     across the tile feature's rings, which is how the app will read a tile. The answer is the SET of features containing the point,
      because several layers overlap. A disagreement at a point one metre or
      more from every edge FAILS. Under a metre they are counted and printed:
      zoom 13's grid step is about a metre, and the shipped files already stray
@@ -198,9 +199,25 @@ def rings_of(geom):
     return [r for poly in geom["coordinates"] for r in poly]
 
 
+def parts_of(geom):
+    """A Polygon or MultiPolygon as a list of parts, each a list of rings."""
+    if geom["type"] == "Polygon":
+        return [geom["coordinates"]]
+    return list(geom["coordinates"])
+
+
+def app_inside(x, y, geom):
+    """The app's pointInGeometry exactly: even-odd across the rings of a
+    Polygon, and a MultiPolygon holds the point when ANY part does. The parts
+    are OR'd, not XOR'd, so a part lying inside another part is not a hole."""
+    return any(even_odd(x, y, rings) for rings in parts_of(geom))
+
+
 def even_odd(x, y, rings):
-    """The app's pointInGeometry rule: inside when a ray crosses an odd
-    number of edges over all rings, so a hole is a hole whatever its winding."""
+    """Even-odd across a list of rings: inside when a ray crosses an odd
+    number of edges, so a hole is a hole whatever its winding. The app's rule
+    for one Polygon (see app_inside for a MultiPolygon), and the rule applied
+    to a decoded tile feature, whose rings the builder made valid."""
     inside = False
     for ring in rings:
         n = len(ring)
@@ -229,23 +246,23 @@ def even_odd_region(geom):
     tippecanoe decides which ring is a hole by its WINDING, as the tile format
     requires, while the app ignores winding and counts crossings — so a source
     ring meant as a hole but wound like an outer ring (a Stephenson County fire
-    district carries fourteen) is filled in the tile and empty on the card, and
-    a MultiPolygon part lying inside another part is a hole to the app and an
-    overlap to tippecanoe. The symmetric difference of every ring, each taken
-    as a filled polygon, IS the even-odd area whatever the winding, so it is
-    what is tiled; the gate still asks the ORIGINAL rings for the answer."""
+    district carries fourteen) is filled in the tile and empty on the card.
+    Within one Polygon the symmetric difference of its rings, each taken as a
+    filled polygon, IS the even-odd area whatever the winding; a MultiPolygon
+    is the UNION of its parts' areas, because the app counts a point inside
+    when any part holds it. That is what is tiled; the gate still asks the
+    ORIGINAL geometry for the answer (app_inside)."""
     import shapely
     from shapely.geometry import Polygon, mapping
-    parts = []
-    for ring in rings_of(geom):
-        if len(ring) < 4:
-            continue
-        poly = shapely.segmentize(shapely.make_valid(Polygon(ring)), MAX_EDGE_DEG)
-        parts.append(poly)
-    if not parts:
+    areas = []
+    for rings in parts_of(geom):
+        polys = [shapely.segmentize(shapely.make_valid(Polygon(r)), MAX_EDGE_DEG)
+                 for r in rings if len(r) >= 4]
+        if polys:
+            areas.append(shapely.make_valid(shapely.symmetric_difference_all(polys)))
+    if not areas:
         return None
-    region = shapely.symmetric_difference_all(parts)
-    region = shapely.make_valid(region)
+    region = shapely.make_valid(shapely.union_all(areas))
     polys = [g for g in getattr(region, "geoms", [region]) if g.geom_type in POLYGON_TYPES]
     flat = []
     for g in polys:
@@ -418,12 +435,12 @@ def gate(tag, layer, feats, archive_path, n_points, seed):
     mshapes = [transform(s, to_merc) for s in shapes]
     bounds = [s.boundary for s in mshapes]
     tree = STRtree(mshapes)
-    rings = [rings_of(f["geometry"]) for f in feats]
+    geoms = [f["geometry"] for f in feats]
 
     def full_answer(lng, lat):
         mx, my = merc(lng, lat)
         cand = tree.query(Point(mx, my))
-        return {int(j) for j in cand if even_odd(lng, lat, rings[j])}
+        return {int(j) for j in cand if app_inside(lng, lat, geoms[j])}
 
     def edge_distance_m(lng, lat):
         mx, my = merc(lng, lat)
