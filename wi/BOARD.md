@@ -48,6 +48,59 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (later). #1224 is GREEN. #72's ceiling measured, and the naive ceiling would be
+either vacuous or wrong — reporting before writing one, per the pre-committed rule.**
+
+**THE CLASSIFY FIX MOVED THE STRAY TOO, AND BY MORE THAN THE COUNTS.** The ems layer's raw worst
+stray on retained rings was 2,759.9 m on the board table above; it is **70.0 m** now, with no
+setting changed. The ring carrying that vertex was a vanished ring the old any-vertex test read as
+retained — so the worst stray this instrument ever reported was also a floor, in the direction that
+makes a ceiling look unreachable.
+
+**THE EARLIER BOARD TABLE AND TODAY'S DISTRIBUTION ARE DIFFERENT QUANTITIES and both are right.**
+That table is one worst per FEATURE (1,046 agencies on fire), which is the unit a ceiling fails.
+`measure_stray`'s pooled list is one value per VERTEX, and its median is 0.000 because most source
+vertices survive and sit on the drawn line by construction. A "median stray" of 0.086 and of 0.000
+are answers to two questions; naming which is the whole difference between a derivation and a
+number.
+
+**MEASURED, four layers, 3.95M source vertices, dp settings as shipped:** 79 vertices stray over
+2 m. **16 are ZERO-WIDTH SPURS** — the vertex's two ring neighbours coincide, so the ring is
+narrower there than the 0.111 m coordinate cell the file ships at, it encloses no area, and its
+"stray" is the length of a spur rather than a boundary. That is the exclusion as a measured
+PREDICATE rather than a pinned list, and it clears the fire layer entirely (both its over-2 m
+vertices are spurs, 109.8 m and 16.6 m). psap's 53 all sit at 2.00-2.39 m against its own
+interval=2, which is the setting doing what it says.
+
+**SEVEN VERTICES SURVIVE BOTH, AND NOT ONE COSTS A READER AN UNDECLARED ANSWER.** Five on law
+(125.9, 58.3, 58.3, 30.9, 28.6 m) and two on ems (70.0, 69.9 m), each with a span of 1.7 to 58.3 m,
+so each is real geometry rather than an artefact. Swept 288 points over a disc out to each vertex's
+own stray distance, asking the SOURCE features and the DRAWN features what agency answers: six
+disagree NOWHERE, and the seventh's four disagreeing points all lie **inside the 3.22 m2 ring this
+builder already declares**, 4.3 to 18.9 m from that declaration's own interior point. Two
+instruments, one harm.
+
+**SO A METRE-CEILING HERE WOULD BE A PROXY FOR THE WRONG THING.** Derived from these layers' own
+geometry it lands near one median source step, 2.45-3.43 m; at that value it fails law's five and
+ems's two, every one of which costs nobody anything. Set high enough to pass them it is 126 m and
+gates nothing. **The quantity worth failing on is the ANSWER, and that is what `classify` plus the
+declarations already hold.** So the gate I will write couples the two rather than choosing between
+them: over-ceiling vertices are a failure UNLESS their own neighbourhood is answered identically or
+lies inside a declared ring, with both excluded counts PRINTED every run. That keeps a real ceiling
+(a chord cut across ground that changes hands fails at one step) without failing on geometry that
+costs no reader.
+
+Two instrument defects found and fixed while measuring, both mine, both worth keeping: `_by_key`
+maps key -> FEATURE and both stray functions want key -> GEOMETRY, and handing them a feature
+returns an empty ring list with **no error at all**; and the builder rewrites `f["properties"]`
+after `classify` returns, on the same objects, so a spy that does not deep-copy loses the KEY and
+reads every dict as one unkeyed group. Also `pgrep -f <script>.py` matches the polling shell's OWN
+command line, so a wait loop reports a finished job as still running indefinitely.
+
+**`measure_stray` AND THE CHAMBERS BUILDER'S `check_fidelity` ARE TWO READERS OF ONE QUESTION.**
+Measured on the real chambers data they agree to 0.0001 m (7.8904 and 7.8905 m against the gate's
+printed 7.9 m). Recorded rather than fixed here: moving the chambers gate onto the shared
+measurement is its own change, not the NG911 gate's.
 **2026-09-27 (late). #72's classify fix and all four re-measured floors are PR #1224. The
 ceiling is still unwritten and comes next, per the ruling's ORDER.**
 
