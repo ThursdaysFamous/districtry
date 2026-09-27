@@ -40,6 +40,71 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (02:40). #57(c) WAS NOT A WORDING FIX: the Court of Appeals staleness guard
+reset its own clock every week, so its 60-day ceiling could never be reached. Committed
+locally as `9456ebf` and HELD, because #1213 still occupies the branch.**
+
+The task was "state the risk figure with its population", and the figure turned out to be
+the least of it. `wi_coa_staleness.py` exists because #1040 forgives the wicourts.gov
+connect timeout, and a job that is green whenever it cannot ask stays green forever if it
+stops asking. The guard asked the API for this workflow's last **successful** run — and the
+forgiven run the guard executes inside concludes success as well. So every forgiven run
+reset the clock the next one reads: weekly forgiveness pins the measured age at about seven
+days and the ceiling is unreachable. **#1040 introduced the guard and the same change
+removed the condition it measures.**
+
+**MEASURED END TO END, on this repository's own history, not reasoned from the docs.**
+`update-mchenry-county-board-roster` run 8 (2026-08-28) had a scrape step that genuinely
+failed — its dependent step fired on `if: steps.scrape.outcome == 'failure'`, which is the
+only reason the failure is knowable at all — and the API reported that step's `conclusion`
+as **"success"**, the job as success, and a `?status=success` query **returned the run**. So
+a continue-on-error step's own conclusion can never be the signal. In the same payload its
+conditional rebuild step reads **"skipped"**, unmasked, and that is the only difference the
+API will show.
+
+**THE COST IS OBSERVABLE ON A LIVE WORKFLOW.** McHenry has the same forgive-then-skip
+shape, and four consecutive runs — 2026-07-30, 08-20, 08-28, 09-03 — concluded success with
+their rebuild step SKIPPED. On 09-03 a conclusion-based reading answered "6.7 days" while
+nothing in that workflow's successful history had reached the county at all.
+
+The fix reads each successful run's own `Rebuild the Court of Appeals roster` step and
+accepts the run only where it RAN, and **gates that coupling rather than trusting it**: both
+`--selftest` and the live run read the workflow and fail if the step is renamed or stops
+being conditional on the scrape's exit code, because either would empty the guard the way
+the conclusion reading already had. Not finding a verification inside the page bound reports
+as unmeasured rather than as staleness, keeping the existing posture on unmeasurable things.
+
+**THE FIGURE NOW STATES ITS POPULATION, and the old one was right arithmetic on a
+denominator no reader could identify.** "Roughly two runs in seven" and "about 6%" were
+correct — 2 of the 7 runs that existed on 2026-09-19 had reached the court, and (1-2/7)^8 is
+6.8% — and it omitted that **0 of 4 SCHEDULED runs had then ever succeeded**, which is the
+denominator a weekly ceiling is about. Re-measured over all 8 runs: **3 of 8 reached the
+court, 1 of 5 scheduled**, so eight weekly attempts in a 60-day window give **2.3%
+all-runs and 16.8% scheduled-only**. The scheduled figure governs and is stated plainly; the
+ceiling **stays at 60** rather than being raised to make a red rarer. And it is an order of
+magnitude, not a confidence interval: **all five failures are the same
+`URLError: <urlopen error timed out>`**, five for five from the run logs, so the trials are
+not independent.
+
+**ONE THING RECORDED AND NOT FIXED, as task #68.**
+`scripts/check_roster_workflow_health.py:246` classifies every roster workflow by
+`conclusion == "success"`, and **seven** workflows here have the forgive-then-skip shape, so
+its OK verdicts carry the same blind spot — which makes the root board's "125 OK, 0 failing"
+weaker than it reads. Teaching it seven verify-step names is a design question rather than a
+line, so it is its own change.
+
+`wi/WATCH.md`'s wicourts row said the job "staying red on #387 is the honest state", written
+the day before #1040 made that false; corrected, with the re-measured rates beside it.
+
+**Verified:** 13 selftest cases; every new guard negative-tested against a passing control in
+a faithful tree (a renamed step, a dropped `if:`, the classifier pointed at the masked scrape
+step, and a classifier counting "skipped" as a pass — each failing alone and loudly); live
+run 1.1 s against the real history; **107 of 107** no-browser gates; Wisconsin's Chromium
+smoke test. No app or data file touched; gate pair unchanged at 88/117.
+
+**#1213 is green** (`smoke` success 01:58Z), `mergeable_state` clean, and merges clean
+against main at `2def072` — awaiting its reviewer. #57(c) pushes the moment it lands.
+
 **2026-09-27 (01:45). #1211 MERGED as `02dae76`, verified on main by content, and #57(b) IS
 OPEN AS #1213 — where my own scoping was wrong THREE TIMES and every correction came from
 running something instead of grepping for it.**
