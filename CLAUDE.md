@@ -82,8 +82,8 @@ Chicago District Explorer: a single-file, dependency-light web app. Click a poin
 This list undercounts what actually runs, and **the figure is stated WITH ITS METHOD AND ITS
 DATE**, because successive counts disagreed and no reader could tell which counting rule any of
 them used. MEASURED 2026-09-27 on this branch, AFTER its last edit: a static gate is
-one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **92**;
-counted instead as script invocations the whole battery is **121 — 111 that need no browser and
+one NAMED step in the `smoke` job ahead of the `actions/setup-node` step, which is **93**;
+counted instead as script invocations the whole battery is **122 — 112 that need no browser and
 10 that boot Chromium** (a Playwright smoke test per instance `il`/`ca`/`ny`/`wi`/`ia`/`mi`,
 2 root-page tests, and the two fleet-wide probes for point transmission and contrast pairs), the
 per-instance `validate_index.py` runs included, and excluding the two `npx playwright install`
@@ -111,6 +111,11 @@ merged the NAMED-STEP line SILENTLY at 65, because both sides wrote 65 and the m
 was caught at all. So run `validate_gate_counts.py` after every merge or rebase into a branch
 that touches the battery, not only after an edit that adds a gate — the pair moves when two
 correct changes meet, with nothing in either diff to look at.
+
+The 92/121 this paragraph carried earlier on 2026-09-27 was one step and one invocation behind the
+93/122 that replaced it: `validate_qr_code.py` holds the engine's new QR block to an independent
+encoder, and CI gained a step to run it. That step's `run:` is two lines — a `pip install` and the
+gate — and only the gate counts, which is why the pair moved by one and not two.
 
 The 90/119 this paragraph carried earlier on 2026-09-27 was one step and one invocation behind the
 91/120 that replaced it: `dropped_rings.py` gained a `--check` reading every declaration's `why`
