@@ -349,6 +349,18 @@ LOCAL_COMPOSITION = {
 # 9% (the supervisory build's retain) measured 99.675% agreement here — city
 # districts are small, so the same retain cuts proportionally deeper; 25%
 # clears the 99.9% bar with the file still compact.
+# THE DROPPED-RING QUESTION HAS NOT BEEN ASKED OF THIS LAYER, AND THAT IS
+# RECORDED RATHER THAN ASSUMED CLEAN. `wi/scripts/dropped_rings.py` measures what
+# a simplification setting costs a reader: on the county-supervisory layer, a
+# visvalingam PERCENTAGE of this shape dropped 640 distinct rings of which 102
+# changed the district a reader is told they are in, where Douglas-Peucker at a
+# metre interval dropped 377 and changed 3. That is a property of the algorithm
+# rather than of that one layer, so the same is likely here and is NOT measured.
+#
+# Asking costs a full-precision rebuild — the gate compares the source against the
+# simplifier's output, so it needs the whole pre-simplification dissolve — which is
+# why it was not folded into the change that built the mechanism. Whoever next
+# touches this setting should run it.
 SIMPLIFY = "25%"
 PRECISION = "0.000001"
 UNCODED = ("", "00", "0000")
