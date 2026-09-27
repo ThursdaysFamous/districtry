@@ -75,7 +75,7 @@ belongs on that instance's board instead.
 | task | owner | state | opened |
 |---|---|---|---|
 | **~~#1226~~ CLOSED, superseded by ~~#1227~~ MERGED (`e4e59da`) — the filing contradicts itself and the MAJORITY spelling is the wrong one** | Illinois | **merged 2026-09-27** | 2026-09-27 |
-| **#1225 in verification (Wisconsin's retained-boundary gate) — my three requirements met, battery running** | Wisconsin | **verifying 2026-09-27** | 2026-09-27 |
+| **~~#1225~~ MERGED (`477e53e`) — the third instrument on Wisconsin's maps; it CORRECTED my ruling and improved on it** | Wisconsin | **merged 2026-09-27** | 2026-09-27 |
 | **~~#1221~~ MERGED (`f381c10`) — the stamp check verified both ways; and THE CONDITION I PRESCRIBED WOULD NOT HAVE WORKED** | map/basemap | **merged 2026-09-27** | 2026-09-27 |
 | **#1222 STILL HELD — the transient cleared, and its red `tiles` job found a MEASUREMENT feeding a GATE: a coverage-test file charged to New York's county layer** | map/basemap (bot) | **held 2026-09-27; waiting on the file attribution** | 2026-09-27 |
 | **~~#1224~~ MERGED (`ae7e1c0`) — every dropped-ring count in the fleet was a floor; nine wrong answers were counted nowhere** | Wisconsin | **merged 2026-09-27** | 2026-09-27 |
