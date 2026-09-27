@@ -87,6 +87,25 @@ underneath it, not only after an edit** — the same reason `validate_gate_count
 exists for the gate pair, one level up: the reading moves when the tree moves
 under you, with nothing in any diff to look at.
 
+**GREEN AND MERGEABLE AS OF 18:10 UTC, AND IT IS YOURS TO MERGE.** `smoke` and
+`tiles` both succeeded on 494addf, `mergeable_state` reads clean, and there are no
+reviews and no review threads; this repository runs no Claude Approvals check on
+it. Nothing on that pull request is waiting on me. The branch is not behind in any
+way that matters either — main's whole lead over the merge base is my own two
+board commits, touching this file alone, and the trial merge is clean, so 92/121
+was measured with every other session's work of today already underneath it.
+
+**TOMORROW IS A DEADLINE WITH A FREE WITNESS ATTACHED.**
+`update-il-library-district-officials.yml` is crontab'd Sunday 12:00 UTC and runs
+the very builder this fixes. Merged before it fires — realistically 15:00-17:00,
+since this repo starts scheduled jobs 3 to 5.3 hours late — that run re-scrapes
+live through the fixed parser and either moves nothing or moves one name with the
+warning printed, which is an end-to-end check nobody has to write. Not merged, it
+re-scrapes through the old parser and puts `Jaclyn G, Trujillo` back on the bot
+branch, so #1226 returns carrying the same corruption and its next reviewer
+re-derives all of the above. **The harm is bounded either way**: that job opens a
+pull request and never commits to main, so no reader has seen the typo or will.
+
 
 **2026-09-27. #1226's CORRUPTED DIRECTOR NAME IS THE COMPTROLLER'S OWN FILING,
 AND THAT FILING DISAGREES WITH ITSELF INSIDE ONE DOCUMENT.** The held refresh
