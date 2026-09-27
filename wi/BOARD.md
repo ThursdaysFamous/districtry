@@ -42,6 +42,65 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (04:30). #1216 is GREEN, CLEAN and THREAD-FREE and waits on its reviewer. Task #68 is
+BUILT AND VERIFIED BUT DELIBERATELY UNPUSHED, because #1216 owns the designated branch and adding to
+it would widen a PR that is already green.** Patch held at `t68/task68-final.patch`, 880 lines over 6
+files. Nothing is merged by me.
+
+**#1216 verified from its own state rather than the notice**: `get_check_runs` (never `get_status`)
+reads `smoke` success on run `36291620367`, `mergeable_state` clean, `merge-tree` clean against
+main's current `11d56bd` after main moved twice, zero review threads.
+
+**#68's FIX WENT INTO THE MODULE BOTH CONSUMERS ALREADY READ**, not a second reader in the health
+script — `workflow_run_evidence.py`'s own docstring had recorded this limitation as adjacent and
+unfixed. `verify_step` derives the step whose running proves a workflow did its work; `run_did_work`
+reads whether it ran. `check_roster_workflow_health.py` uses it for the staleness clock, and
+`fleet_status.py` — which has the SAME blind spot and which the task never mentioned — qualifies its
+reported conclusion with it. Swept across all 136 workflow files the derivation finds exactly six,
+with no false positives anywhere, and watch-mason correctly finds none because it rebuilds nothing.
+
+**THE TASK'S OWN FIGURE WAS WRONG AND SO WAS MINE, IN DIFFERENT DIRECTIONS.** Its "5 of 7" for the
+naive derivation is 6 of 7, measured by RUNNING the derivation rather than reading the files; only
+the Court of Appeals workflow is right, and by luck, its reporter sitting after its rebuild.
+#1216's body is corrected with the method stated. Then my own replay figures: an earlier hand
+comparison gave McHenry 5 flips and Kendall 6, which double-counted dates whose latest run had
+FAILED and read FAILING under both readings. Replaying `classify` itself over each prefix of the
+real history gives **4 and 5, nine in all** — every one from OK, during a stretch when NEITHER
+county had ever been reached. The code-driven number is the one that ships.
+
+**AND RE-READING MY OWN WIRING KILLED ITS FIRST VERDICT.** It reported UNMEASURED whenever no
+verified run was found inside the page bound — but eight successful runs that rebuilt nothing PROVE
+about eight weeks of not refreshing, so that is a measurement of staleness and UNMEASURED was
+WEAKER than the truth. It carries a floor now: past the cadence limit it reads STALE ("refreshed
+nothing for at least 58 days"), inside it UNMEASURED.
+
+**NO VERDICT IS WRONG TODAY, and that is stated rather than dressed up.** DeKalb's clock reads 8
+days against a conclusion-based 1 and both sit inside its limit, so this removes a blind spot
+rather than correcting a live row. 14 of 56 successful runs across the six had rebuilt nothing.
+
+**CI HAD NEVER RUN THE HEALTH SCRIPT AT ALL** — it is a workflow's own script — so its verdict logic
+shipped untested, which is the same shape as the defect it now catches one level up. Added
+`--selftest` (16 assertions) and wired it in. **PAIR RE-DERIVED, NOT INCREMENTED: 89/118 to 90/119**
+(109 no-browser, 10 Chromium), all three CLAUDE.md claims updated, both `validate_gate_counts.py`
+and `validate_steward_mirror.py` OK.
+
+**Verified**: 31 + 16 selftest assertions, **11 negative tests each failing alone against a passing
+control**, **110 of 110** no-browser gates, and Illinois's Chromium smoke test all-pass. A first
+ablation of the two derivation guards reported both as changing nothing, because each masked the
+other; redone properly, each is load-bearing for a different real shape.
+
+**Two items are blocked on #1216 merging** and are recorded on task #68 rather than guessed at:
+`wi_coa_staleness.py` still carries its own copy of the classifier (#1216 added it, so it does not
+exist on main to import from), and #1216's commit adds a CLAUDE.md bullet that this change makes
+false. Both land in the same follow-up, which will be a NEW PR since a merged one cannot track it.
+
+**One live finding, spun off as task #69 rather than fixed here**: the single FAILING row in the
+roster-health report is `update-county-clerk-roster.yml`, and it fails for the RIGHT reason —
+`il_county_clerk_scraper.py` declines ISBE's 29-byte `Disallow: /`. A correct refusal reported as a
+broken refresh will hold #387 open for ever, which is the wallpaper that file's own docstring warns
+about. Forgiving the step would make it green while refreshing nothing, which is the exact defect
+#68 and #1216 exist to close, so the remedy needs deciding rather than reaching for.
+
 **2026-09-27 (03:35). #1213 MERGED as `0b9ca9a`, verified on main by content, and #57(c) IS OPEN AS
 [#1216](https://github.com/ThursdaysFamous/districtry/pull/1216). Task #57 is complete.**
 
