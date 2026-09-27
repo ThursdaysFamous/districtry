@@ -127,10 +127,23 @@ ALWAYS_AVAILABLE = {"setuptools", "pip", "pkg_resources"}
 # member, and #809 measured six callers reading one as data and thirty-one
 # more blaming the county for it. What an ArcGIS error IS must not be
 # answered differently per instance, which is this list's own test.
-# All three are stdlib-only, which is why none needs a pip line --
+# `scraper_common` (2026-09-27) is the fourth, added when the first Wisconsin
+# caller imported it. It clears this list's own test twice over: the five pinned
+# Chrome strings and `UA_ROSTER_BOT` are the fleet's user-agent vocabulary, whose
+# figures `probe_user_agents.py --check` gates across three documents, and
+# `require_robots_allowed` is the seam CLAUDE.md names -- "this is the seam the
+# three ask through, so the rule has one reading rather than one per caller",
+# which is the `robots_policy` argument one level up. Two Wisconsin scrapers
+# RESTATE its fetch policy in comments today rather than importing it, which is
+# the two-readers shape this repo keeps paying for; the fix is for them to import
+# it, and that needs this entry.
+# All four are stdlib-only, which is why none needs a pip line --
 # arcgis_error bases its exception on requests.RequestException only WHERE
-# REQUESTS IS THERE, and on RuntimeError otherwise.
-FLEET_SHARED = {"undeliverable", "robots_policy", "arcgis_error"}
+# REQUESTS IS THERE, and on RuntimeError otherwise, and scraper_common's own
+# docstring names THIS GATE as the reason `requests` is imported inside fetch()
+# (verified by AST on introduction: json, os, sys, time at module scope; requests
+# and robots_policy both function-local).
+FLEET_SHARED = {"undeliverable", "robots_policy", "arcgis_error", "scraper_common"}
 ROOT_SCRIPTS = os.path.join(REPO_ROOT, "scripts")
 
 PIP_RE = re.compile(r"pip3?\s+install\s+([^\n]*)")
@@ -228,12 +241,27 @@ def module_scope_imports(path, include_local=False):
     return mods
 
 
-def closure(entry, scripts_dir):
+def closure(entry, scripts_dir, as_entry=True):
     """Every module in `scripts_dir` reachable from entry via module-scope imports.
 
     The entry point is read with its function-local imports included, because
     running a script runs its functions; everything it merely imports is read at
     module scope only.
+
+    `as_entry=False` IS WHAT THE FLEET_SHARED RECURSION PASSES, and it is a fix
+    rather than an option (2026-09-27). That branch called this function with the
+    shared module as its own `entry`, which made `include_local` true for it — so
+    a LIBRARY's function-local third-party imports were collected as hard
+    requirements, which is the opposite of the sentence above. The distinction is
+    real: an entry's functions run because the workflow runs the script, while a
+    library's run only if something calls them, and this walker cannot tell which.
+    `scripts/scraper_common.py` imports `requests` inside `fetch()` and its own
+    docstring names THIS GATE as the reason; the recursion defeated that, and
+    demanded `requests` in the pip line of a weekly workflow whose scraper uses
+    stdlib urllib and was measured importing and self-testing with `requests`
+    blocked. Nothing revealed it until then because `scraper_common` is the first
+    module in FLEET_SHARED with any function-local third-party import — the other
+    three have none, checked by AST when this was fixed.
 
     `scripts_dir` is the instance's own directory: a sibling import inside
     ny/scripts/ resolves against ny/scripts/, never against Chicago's root
@@ -253,7 +281,8 @@ def closure(entry, scripts_dir):
         path = os.path.join(scripts_dir, name + ".py")
         if not os.path.exists(path):
             continue
-        for mod in module_scope_imports(path, include_local=(name == entry)):
+        for mod in module_scope_imports(path,
+                                        include_local=(as_entry and name == entry)):
             if mod in sys.stdlib_module_names or mod in ALWAYS_AVAILABLE:
                 continue
             if os.path.exists(os.path.join(scripts_dir, mod + ".py")):
@@ -263,7 +292,7 @@ def closure(entry, scripts_dir):
                 # A declared shared module, reached only because this instance
                 # has no file of that name. Walked in the ROOT tree so its own
                 # third-party imports are still checked.
-                sub_seen, sub_third = closure(mod, ROOT_SCRIPTS)
+                sub_seen, sub_third = closure(mod, ROOT_SCRIPTS, as_entry=False)
                 seen |= {"%s (root)" % n for n in sub_seen}
                 third_party |= sub_third
             else:

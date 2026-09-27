@@ -5801,7 +5801,7 @@
    "verdict": "token-ok",
    "note": "requests+token HTTP 200, 127456 bytes",
    "callers": {
-    "wi/scripts/mps_school_board_scraper.py": "browser",
+    "wi/scripts/mps_school_board_scraper.py": "self",
     "wi/scripts/validate_sources.py": "both"
    }
   },
@@ -6669,5 +6669,5 @@
    }
   }
  },
- "callers_refreshed": "2026-09-25"
+ "callers_refreshed": "2026-09-27"
 }
