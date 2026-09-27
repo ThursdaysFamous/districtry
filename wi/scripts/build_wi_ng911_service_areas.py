@@ -120,6 +120,7 @@ sys.path.insert(0, SCRIPT_DIR)
 from build_wi_supervisory_districts import (  # noqa: E402
     fetch_layer, _model, _districts_at, _bbox, _point_in_geometry,
     _curl, MAPSHAPER, STATE_BBOX)
+import dropped_rings as drings  # noqa: E402
 
 REPO_ROOT = os.path.dirname(SCRIPT_DIR)
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
@@ -171,23 +172,412 @@ UNFILED = {
 EXPECT_PROVISIONING = 72   # 71 counties + the City of Milwaukee; Langlade absent
 NO_PROVISIONING = "langlade"
 
-# THE DROPPED-RING QUESTION HAS NOT BEEN ASKED OF THIS LAYER, AND THAT IS
-# RECORDED RATHER THAN ASSUMED CLEAN. `wi/scripts/dropped_rings.py` measures what
-# a simplification setting costs a reader: on the county-supervisory layer, a
-# visvalingam PERCENTAGE of this shape dropped 640 distinct rings of which 102
-# changed the district a reader is told they are in, where Douglas-Peucker at a
-# metre interval dropped 377 and changed 3. That is a property of the algorithm
-# rather than of that one layer, so the same is likely here and is NOT measured.
+# THE DROPPED-RING QUESTION WAS ASKED OF ALL FOUR LAYERS ON 2026-09-27, AND THE
+# ANSWER WAS THE WORST IN THE FLEET. The comment that stood here said the
+# question was unasked and that visvalingam was likely costing readers answers,
+# on the county-supervisory layer's evidence. It was, by a wide margin. At the
+# `8%` this constant used to hold, measured against the full-precision dissolve
+# of the same fetch:
 #
-# Asking costs a full-precision rebuild — the gate compares the source against the
-# simplifier's output, so it needs the whole pre-simplification dissolve — which is
-# why it was not folded into the change that built the mechanism. Whoever next
-# touches this setting should run it.
-SIMPLIFY = "8%"
+#     layer  dropped rings  answers changed   of which wrong-name
+#     fire        229              64                 36
+#     law         389             296                264
+#     psap         37              28                  5
+#     ems         195              44                 19
+#
+# 432 rings across the four layers changed the agency a reader is told answers at
+# their point, and EVERY ONE OF THOSE FOUR BUILDS REPORTED 4000/4000 (100.000%)
+# NAME-SET AGREEMENT. That gate scatters 4,000 points over the whole state and
+# the rings are slivers along county-filing seams, so it is blind to them by
+# construction — the same blindness `wi/WATCH.md` row 58 records on this very
+# layer, where a 20,000-point sample saw nothing while a rebuild had changed 397
+# features. A sample cannot find a sliver; only asking each dropped ring what it
+# answers can.
+#
+# THE WRONG-NAME HALF IS WHY THIS MATTERS MORE HERE THAN ON A DISTRICT LAYER.
+# On the supervisory and aldermanic layers a dropped ring mostly took a reader's
+# answer away. Here a neighbour fills it, so a reader is told the WRONG fire
+# department, the WRONG police agency, the WRONG 911 answering point: Somers Fire
+# & Rescue read as Kenosha Fire, the Oneida Nation's own police department read as
+# City of Green Bay PD, Wausau PD read as the Marathon County Sheriff.
+#
+# DOUGLAS-PEUCKER AT A METRE INTERVAL IS THE FIX, and the algorithm rather than
+# the dial is what does the work — the finding `build_legislative_boundaries.py`
+# already records. Visvalingam thresholds triangle AREA, which does not bound how
+# far the drawn line strays and drops a small ring outright; dp thresholds
+# perpendicular DEVIATION. Measured on the same fetch (gzipped bytes, which is
+# what a reader downloads):
+#
+#     layer  setting              dropped  changed  gzipped
+#     fire   visvalingam 8%           229       64   963,658
+#     fire   dp interval=1            157        1 1,920,288
+#     law    visvalingam 8%           389      296 1,031,353
+#     law    dp interval=1            103       16 2,222,125
+#     psap   visvalingam 8%            37       28   381,488
+#     psap   dp interval=2              7        0   503,747
+#     ems    visvalingam 8%           195       44   756,603
+#     ems    dp interval=1            142        0 1,535,934
+#
+# THE SETTING IS PER LAYER BECAUSE THE RULE IS MEASURED PER LAYER, never pooled.
+# Size breaks a tie only among settings that tie on EVERY instrument — answers
+# changed, the dissolve+simplify name-set agreement, and the independent
+# server point gate — and psap is the one layer where that happens: interval=1
+# and interval=2 both change NO answer there, so the smaller wins. Nothing ties
+# on the other three, so their answer-count decides alone. The full table,
+# including intervals 2, 4 and 7 for every layer, is in the pull request that
+# made this change and summarised in `wi/WATCH.md`.
+#
+# ONE TABLE, AND THE LABEL IS DERIVED FROM IT. A label beside the arguments is a
+# second copy of one fact and would eventually disagree with what mapshaper was
+# actually given, which is the defect this repository keeps paying for; the
+# reader-facing string is built from the arguments instead.
+# KEY separator; never appears in either field. It sits ABOVE the
+# declaration tables because those write agency KEYs with it rather than
+# with a raw escape, which is the difference between a reader seeing
+# "Madison PD" and seeing "Madison PD\x1fwww.cityofmadison.com".
+SEP = "\x1f"
+
+SIMPLIFY = {
+    "fire": ["dp", "keep-shapes", "interval=1"],
+    "law": ["dp", "keep-shapes", "interval=1"],
+    "psap": ["dp", "keep-shapes", "interval=2"],
+    "ems": ["dp", "keep-shapes", "interval=1"],
+}
+
+
+def simplify_label(name):
+    return " ".join(a for a in SIMPLIFY[name] if a != "keep-shapes")
+
+
+# Holes that NO agency covered and the drawn output now fills, per layer, pinned
+# exactly. `dropped_rings` argues why these are not declared one by one and why
+# it is still an inference; the count is held so a rebuild that closes a
+# different number of them stops and gets read. These move with the setting —
+# measured at the settings above.
+GAP_CLOSED = {"fire": 78, "law": 53, "psap": 6, "ems": 75}
+
+# Every dropped ring that changes the agency a reader is told answers at their
+# point, declared one by one, per layer. `drings.check` FAILS the build on an
+# undeclared harm and on a declaration that matches no ring, and the failure
+# path below prints the measured rows to paste here.
+#
+# EACH `interior` IS WRITTEN AT ITS OWN `decimals` AND NOT AT SIX. These rings are
+# hairlines under a metre wide, and `dropped_rings.interior_at_precision` RAISES
+# the precision for a ring six decimals cannot hold a point inside — seven of
+# these seventeen need seven decimals and one needs eight. A generator that
+# formatted every coordinate to six undid that silently and put the point outside
+# its own ring; the gate caught all seven, which is what it is for, but the next
+# person regenerating this table should copy the measured value rather than
+# reformat it.
+ACCEPTED_DROPPED_RINGS = {
+    "fire": [
+        # THE ONLY RING THE FIRE LAYER LOSES, AND ITS LIMIT IS THE OUTPUT
+        # PRECISION RATHER THAN AN UNTURNED DIAL. A 3-vertex triangle 15.19 m
+        # long whose middle vertex sits 0.175 m off the line between the other
+        # two -- measured, and the same number two ways (twice the area over the
+        # longest side). dp thresholds perpendicular DEVIATION, so any interval
+        # at or above 0.18 m removes that vertex and the ring goes with it; at
+        # interval=0.5 this file is 23 per cent larger gzipped and loses exactly
+        # the same ring. Keeping it would need an interval finer than 1.6 of the
+        # 6-decimal coordinate cells this file ships at (0.079 m x 0.111 m here),
+        # which is asking the simplifier to preserve something the output format
+        # cannot reliably carry.
+        #
+        # THE GROUND IS IN WAUSAU CITY AND MARATHON COUNTY FILES IT UNDER THE TOWN
+        # OF TEXAS'S DEPARTMENT, which is context and not a justification: fire
+        # response does not follow a municipal boundary, so the answer a reader
+        # now gets is not "actually right" -- it is the county's own filing lost
+        # to a seam.
+        {
+            "lat": 45.002763, "lng": -89.621292, "verts": 3, "m2": 1.33,
+            "interior": {"lat": 45.002760, "lng": -89.621249, "decimals": 6},
+            "features": ["fire:Texas Fire Department" + SEP + "marathoncounty.gov"],
+            "kind": "wrong-name",
+            "answer_before": {"fire": ["Texas Fire Department" + SEP + "marathoncounty.gov"]},
+            "answer_after": {"fire": ["Wausau Fire Department" + SEP + "marathoncounty.gov"]},
+            "why": "1.33 m2 in Wausau city, dry land by TIGER's areal hydrography "
+                   "(four controls answered first), a hairline averaging 0.17 m "
+                   "wide over a 15 m span; a reader is answered Wausau Fire "
+                   "Department where the filing says Texas Fire Department",
+            "date": "2026-09-27",
+        },
+    ],
+    "law": [
+        # SEVEN RINGS IN DANE COUNTY, all between the City of Madison's own law
+        # zone and whatever abuts it -- the county Sheriff, Shorewood Hills PD,
+        # University PD, the State Patrol. Every one is a hairline: mean widths
+        # 0.002 m to 0.61 m, over spans of 1.6 m to 155 m. These are two
+        # publishers' pen strokes not meeting, rather than ground anyone occupies
+        # as a place, and they are declared one by one anyway because this
+        # module's own rule is that AREA DOES NOT DECIDE -- a 0.008 m2 sliver and
+        # a 2,162 m2 one both cost a reader exactly one wrong answer.
+        #
+        # ONE OF THEM IS IN A CREEK AND SAYS SO. Sixteen of the seventeen rings
+        # this builder declares are dry land; the 1.11 m2 one at
+        # 43.056617,-89.404710 is inside Wingra Creek by TIGER's own areal
+        # hydrography. That is why the surface is measured per ring rather than
+        # asserted once for the group -- asserting it would have been wrong here.
+        {
+            "lat": 43.028317, "lng": -89.258280, "verts": 4, "m2": 9.38,
+            "interior": {"lat": 43.027875, "lng": -89.257558, "decimals": 6},
+            "features": ["law:Madison PD" + SEP + "www.cityofmadison.com"],
+            "kind": "wrong-name",
+            "answer_before": {"law": ["Madison PD" + SEP + "www.cityofmadison.com"]},
+            "answer_after": {"law": ["Sheriff" + SEP + "countyofdane.com"]},
+            "why": "9.38 m2 in Blooming Grove town, dry land by TIGER's areal "
+                   "hydrography (four controls answered first), a hairline "
+                   "averaging 0.13 m wide over a 140 m span; a reader is answered "
+                   "Sheriff where the filing says Madison PD",
+            "date": "2026-09-27",
+        },
+        {
+            "lat": 43.083697, "lng": -89.446041, "verts": 10, "m2": 9.19,
+            "interior": {"lat": 43.083286, "lng": -89.446049, "decimals": 6},
+            "features": ["law:Madison PD" + SEP + "www.cityofmadison.com"],
+            "kind": "wrong-name",
+            "answer_before": {"law": ["Madison PD" + SEP + "www.cityofmadison.com"]},
+            "answer_after": {"law": ["Shorewood Hills PD" + SEP + "www.shorewood-hills.org"]},
+            "why": "9.19 m2 in Madison city, dry land by TIGER's areal hydrography "
+                   "(four controls answered first), 10 vertices and no span "
+                   "measured; a reader is answered Shorewood Hills PD where the "
+                   "filing says Madison PD",
+            "date": "2026-09-27",
+        },
+        {
+            "lat": 43.063883, "lng": -89.542776, "verts": 3, "m2": 8.55,
+            "interior": {"lat": 43.063885, "lng": -89.542254, "decimals": 6},
+            "features": ["law:Madison PD" + SEP + "www.cityofmadison.com"],
+            "kind": "wrong-name",
+            "answer_before": {"law": ["Madison PD" + SEP + "www.cityofmadison.com"]},
+            "answer_after": {"law": ["University PD" + SEP + "uwpd.wisc.edu"]},
+            "why": "8.55 m2 in Middleton town, dry land by TIGER's areal "
+                   "hydrography (four controls answered first), a hairline "
+                   "averaging 0.11 m wide over a 155 m span; a reader is answered "
+                   "University PD where the filing says Madison PD",
+            "date": "2026-09-27",
+        },
+        {
+            "lat": 43.067606, "lng": -89.543814, "verts": 4, "m2": 3.54,
+            "interior": {"lat": 43.0676055, "lng": -89.5441608, "decimals": 7},
+            "features": ["law:Madison PD" + SEP + "www.cityofmadison.com"],
+            "kind": "wrong-name",
+            "answer_before": {"law": ["Madison PD" + SEP + "www.cityofmadison.com"]},
+            "answer_after": {"law": ["Sheriff" + SEP + "countyofdane.com"]},
+            "why": "3.54 m2 in Madison city, dry land by TIGER's areal hydrography "
+                   "(four controls answered first), a hairline averaging 0.07 m "
+                   "wide over a 99 m span; a reader is answered Sheriff where the "
+                   "filing says Madison PD",
+            "date": "2026-09-27",
+        },
+        {
+            "lat": 43.056617, "lng": -89.404710, "verts": 4, "m2": 1.11,
+            "interior": {"lat": 43.056602, "lng": -89.404711, "decimals": 6},
+            "features": ["law:Madison PD" + SEP + "www.cityofmadison.com"],
+            "kind": "wrong-name",
+            "answer_before": {"law": ["Madison PD" + SEP + "www.cityofmadison.com"]},
+            "answer_after": {"law": ["Sheriff" + SEP + "countyofdane.com"]},
+            "why": "1.11 m2 in Madison city, and it is WATER: TIGER's areal "
+                   "hydrography puts it in Wingra Crk, a hairline averaging 0.61 m "
+                   "wide over a 4 m span; a reader is answered Sheriff where the "
+                   "filing says Madison PD",
+            "date": "2026-09-27",
+        },
+        {
+            "lat": 43.149518, "lng": -89.305004, "verts": 3, "m2": 0.03,
+            "interior": {"lat": 43.1495145, "lng": -89.3050019, "decimals": 7},
+            "features": ["law:Madison PD" + SEP + "www.cityofmadison.com"],
+            "kind": "wrong-name",
+            "answer_before": {"law": ["Madison PD" + SEP + "www.cityofmadison.com"]},
+            "answer_after": {"law": ["Sheriff" + SEP + "countyofdane.com"]},
+            "why": "0.03 m2 in Madison city, dry land by TIGER's areal hydrography "
+                   "(four controls answered first), a hairline averaging 0.04 m "
+                   "wide over a 2 m span; a reader is answered Sheriff where the "
+                   "filing says Madison PD",
+            "date": "2026-09-27",
+        },
+        {
+            "lat": 43.148152, "lng": -89.304200, "verts": 3, "m2": 0.01,
+            "interior": {"lat": 43.14814900, "lng": -89.30419804, "decimals": 8},
+            "features": ["law:Madison PD" + SEP + "www.cityofmadison.com"],
+            "kind": "wrong-name",
+            "answer_before": {"law": ["Madison PD" + SEP + "www.cityofmadison.com"]},
+            "answer_after": {"law": ["State Patrol" + SEP + "wsp.wi.gov"]},
+            "why": "0.01 m2 in Madison city, dry land by TIGER's areal hydrography "
+                   "(four controls answered first), a hairline averaging 0.01 m "
+                   "wide over a 2 m span; a reader is answered State Patrol where "
+                   "the filing says Madison PD",
+            "date": "2026-09-27",
+        },
+        # NINE RINGS IN BROWN COUNTY, around the seam where the Hobart-Lawrence,
+        # Ashwaubenon, Oneida Nation and Green Bay law zones meet. FOUR OF THEM
+        # ARE MIXED -- the SOURCE answers two or three ways at different points
+        # inside one ring, because three of those agencies' filings overlap
+        # there -- so each declares every pair it shows rather than one of them.
+        # No interval resolves that: the simplifier did not author the ambiguity,
+        # the filings did. `dropped_rings.check` refused a mixed ring outright
+        # until 2026-09-27, which is what made this layer undeclarable; it is
+        # declarable now and still refuses one described with a single pair.
+        #
+        # GOING FINER BUYS ALMOST NOTHING HERE, MEASURED. At dp interval=0.5 the
+        # law layer changes 15 answers against 16 at interval=1, with the same
+        # four mixed rings -- so at most one of these sixteen is recoverable, for
+        # 505 KB more gzipped on a file a reader fetches only to pin a
+        # comparison. At the visvalingam 8 per cent this builder shipped until
+        # today it changed 296, and TWELVE were mixed.
+        {
+            "lat": 44.500180, "lng": -88.137851, "verts": 3, "m2": 2.34,
+            "interior": {"lat": 44.499304, "lng": -88.137861, "decimals": 6},
+            "features": ["law:Hobart-Lawrence Police Department Law Zone HL1" + SEP + "browncountywi.gov"],
+            "kind": "wrong-name",
+            "answer_before": {"law": ["Hobart-Lawrence Police Department Law Zone HL1" + SEP + "browncountywi.gov"]},
+            "answer_after": {"law": ["City of Green Bay Police Department Law Zone GBA1" + SEP + "browncountywi.gov"]},
+            "why": "2.34 m2 in Hobart village, dry land by TIGER's areal "
+                   "hydrography (four controls answered first), a hairline "
+                   "averaging 0.01 m wide over a 319 m span; a reader is answered "
+                   "City of Green Bay Police Department Law Zone GBA1 where the "
+                   "filing says Hobart-Lawrence Police Department Law Zone HL1",
+            "date": "2026-09-27",
+        },
+        {
+            "lat": 44.527479, "lng": -88.146430, "verts": 4, "m2": 1.72,
+            "interior": {"lat": 44.527449, "lng": -88.146487, "decimals": 6},
+            "features": ["law:Hobart-Lawrence Police Department Law Zone HL1" + SEP + "browncountywi.gov", "law:Oneida Police Department Law Zone HLOB" + SEP + "browncountywi.gov"],
+            "kind": "wrong-name",
+            "answer_before": {"law": ["Hobart-Lawrence Police Department Law Zone HL1" + SEP + "browncountywi.gov"]},
+            "answer_after": {"law": ["Oneida Police Department Law Zone HLOB" + SEP + "browncountywi.gov"]},
+            "why": "1.72 m2 in Hobart village, dry land by TIGER's areal "
+                   "hydrography (four controls answered first), a hairline "
+                   "averaging 0.18 m wide over a 19 m span; a reader is answered "
+                   "Oneida Police Department Law Zone HLOB where the filing says "
+                   "Hobart-Lawrence Police Department Law Zone HL1",
+            "date": "2026-09-27",
+        },
+        {
+            "lat": 44.445904, "lng": -88.133036, "verts": 5, "m2": 0.63,
+            "interior": {"lat": 44.445835, "lng": -88.133040, "decimals": 6},
+            "features": ["law:Hobart-Lawrence Police Department Law Zone HL2" + SEP + "browncountywi.gov"],
+            "kind": "wrong-name",
+            "answer_pairs": {"law": [
+                {"before": ["Ashwaubenon Public Safety Law Zone ASW" + SEP + "browncountywi.gov"],
+                 "after": ["Oneida Police Department Law Zone HLOB" + SEP + "browncountywi.gov"]},
+                {"before": ["Hobart-Lawrence Police Department Law Zone HL2" + SEP + "browncountywi.gov"],
+                 "after": ["Oneida Police Department Law Zone HLOB" + SEP + "browncountywi.gov"]},
+            ]},
+            "why": "0.63 m2 in Hobart village, dry land by TIGER's areal "
+                   "hydrography (four controls answered first), a hairline "
+                   "averaging 0.07 m wide over a 19 m span; the source answers 2 "
+                   "ways inside it, so every pair is declared here rather than one "
+                   "of them chosen",
+            "date": "2026-09-27",
+        },
+        {
+            "lat": 44.446505, "lng": -88.132941, "verts": 10, "m2": 0.29,
+            "interior": {"lat": 44.446495, "lng": -88.132944, "decimals": 6},
+            "features": ["law:Hobart-Lawrence Police Department Law Zone HL2" + SEP + "browncountywi.gov"],
+            "kind": "wrong-name",
+            "answer_pairs": {"law": [
+                {"before": ["Ashwaubenon Public Safety Law Zone ASW" + SEP + "browncountywi.gov"],
+                 "after": ["Oneida Police Department Law Zone HLOB" + SEP + "browncountywi.gov"]},
+                {"before": ["Hobart-Lawrence Police Department Law Zone HL2" + SEP + "browncountywi.gov"],
+                 "after": ["Ashwaubenon Public Safety Law Zone ASW" + SEP + "browncountywi.gov"]},
+                {"before": ["Hobart-Lawrence Police Department Law Zone HL2" + SEP + "browncountywi.gov"],
+                 "after": ["Oneida Police Department Law Zone HLOB" + SEP + "browncountywi.gov"]},
+            ]},
+            "why": "0.29 m2 in Hobart village, dry land by TIGER's areal "
+                   "hydrography (four controls answered first), 10 vertices and no "
+                   "span measured; the source answers 3 ways inside it, so every "
+                   "pair is declared here rather than one of them chosen",
+            "date": "2026-09-27",
+        },
+        {
+            "lat": 44.535119, "lng": -88.122052, "verts": 3, "m2": 0.10,
+            "interior": {"lat": 44.5351175, "lng": -88.1223406, "decimals": 7},
+            "features": ["law:Hobart-Lawrence Police Department Law Zone HL1" + SEP + "browncountywi.gov"],
+            "kind": "wrong-name",
+            "answer_before": {"law": ["City of Green Bay Police Department Law Zone GBA1" + SEP + "browncountywi.gov"]},
+            "answer_after": {"law": ["Oneida Police Department Law Zone HLOB" + SEP + "browncountywi.gov"]},
+            "why": "0.10 m2 in Green Bay city, dry land by TIGER's areal "
+                   "hydrography (four controls answered first), a hairline "
+                   "averaging 0.00 m wide over a 125 m span; a reader is answered "
+                   "Oneida Police Department Law Zone HLOB where the filing says "
+                   "City of Green Bay Police Department Law Zone GBA1",
+            "date": "2026-09-27",
+        },
+        {
+            "lat": 44.446223, "lng": -88.133003, "verts": 3, "m2": 0.03,
+            "interior": {"lat": 44.446228, "lng": -88.133002, "decimals": 6},
+            "features": ["law:Hobart-Lawrence Police Department Law Zone HL2" + SEP + "browncountywi.gov"],
+            "kind": "wrong-name",
+            "answer_before": {"law": ["Hobart-Lawrence Police Department Law Zone HL2" + SEP + "browncountywi.gov"]},
+            "answer_after": {"law": ["Oneida Police Department Law Zone HLOB" + SEP + "browncountywi.gov"]},
+            "why": "0.03 m2 in Hobart village, dry land by TIGER's areal "
+                   "hydrography (four controls answered first), a hairline "
+                   "averaging 0.03 m wide over a 2 m span; a reader is answered "
+                   "Oneida Police Department Law Zone HLOB where the filing says "
+                   "Hobart-Lawrence Police Department Law Zone HL2",
+            "date": "2026-09-27",
+        },
+        {
+            "lat": 44.446711, "lng": -88.132879, "verts": 7, "m2": 0.03,
+            "interior": {"lat": 44.4466985, "lng": -88.1328829, "decimals": 7},
+            "features": ["law:Hobart-Lawrence Police Department Law Zone HL2" + SEP + "browncountywi.gov"],
+            "kind": "wrong-name",
+            "answer_pairs": {"law": [
+                {"before": ["Ashwaubenon Public Safety Law Zone ASW" + SEP + "browncountywi.gov"],
+                 "after": ["Oneida Police Department Law Zone HLOB" + SEP + "browncountywi.gov"]},
+                {"before": ["Hobart-Lawrence Police Department Law Zone HL2" + SEP + "browncountywi.gov"],
+                 "after": ["Ashwaubenon Public Safety Law Zone ASW" + SEP + "browncountywi.gov"]},
+            ]},
+            "why": "0.03 m2 in Hobart village, dry land by TIGER's areal "
+                   "hydrography (four controls answered first), a hairline "
+                   "averaging 0.02 m wide over a 3 m span; the source answers 2 "
+                   "ways inside it, so every pair is declared here rather than one "
+                   "of them chosen",
+            "date": "2026-09-27",
+        },
+        {
+            "lat": 44.445775, "lng": -88.133042, "verts": 3, "m2": 0.01,
+            "interior": {"lat": 44.4457662, "lng": -88.1330419, "decimals": 7},
+            "features": ["law:Hobart-Lawrence Police Department Law Zone HL2" + SEP + "browncountywi.gov"],
+            "kind": "wrong-name",
+            "answer_before": {"law": ["Hobart-Lawrence Police Department Law Zone HL2" + SEP + "browncountywi.gov"]},
+            "answer_after": {"law": ["Ashwaubenon Public Safety Law Zone ASW" + SEP + "browncountywi.gov"]},
+            "why": "0.01 m2 in Hobart village, dry land by TIGER's areal "
+                   "hydrography (four controls answered first), a hairline "
+                   "averaging 0.00 m wide over a 9 m span; a reader is answered "
+                   "Ashwaubenon Public Safety Law Zone ASW where the filing says "
+                   "Hobart-Lawrence Police Department Law Zone HL2",
+            "date": "2026-09-27",
+        },
+        {
+            "lat": 44.446640, "lng": -88.132903, "verts": 5, "m2": 0.01,
+            "interior": {"lat": 44.4466345, "lng": -88.1329045, "decimals": 7},
+            "features": ["law:Hobart-Lawrence Police Department Law Zone HL2" + SEP + "browncountywi.gov"],
+            "kind": "wrong-name",
+            "answer_pairs": {"law": [
+                {"before": ["Ashwaubenon Public Safety Law Zone ASW" + SEP + "browncountywi.gov"],
+                 "after": ["Oneida Police Department Law Zone HLOB" + SEP + "browncountywi.gov"]},
+                {"before": ["Hobart-Lawrence Police Department Law Zone HL2" + SEP + "browncountywi.gov"],
+                 "after": ["Oneida Police Department Law Zone HLOB" + SEP + "browncountywi.gov"]},
+            ]},
+            "why": "0.01 m2 in Hobart village, dry land by TIGER's areal "
+                   "hydrography (four controls answered first), a hairline "
+                   "averaging 0.01 m wide over a 2 m span; the source answers 2 "
+                   "ways inside it, so every pair is declared here rather than one "
+                   "of them chosen",
+            "date": "2026-09-27",
+        },
+    ],
+    # PSAP AND EMS DECLARE NOTHING, AND THAT IS A MEASUREMENT RATHER THAN AN
+    # OMISSION: at the settings above, NO dropped ring changes any answer on
+    # either layer. At visvalingam 8 per cent psap changed 28 answers (23 of them
+    # readers told NO answering point answers where one does) and ems 44.
+    "psap": [],
+    "ems": [],
+}
 PRECISION = "0.000001"     # 6 decimals ~= 0.11 m
 COVERAGE_SAMPLES = 40      # per provisioning polygon, seeded
 VALIDATE_SAMPLES = 4000    # statewide dissolve+simplify agreement gate
-SEP = "\x1f"               # KEY separator; never appears in either field
 
 
 def fetch_retry(url, fields, attempts=3):
@@ -407,27 +797,77 @@ def build(layer, check_only):
         src_path = os.path.join(tmp, layer["name"] + "-src.geojson")
         with open(src_path, "w") as f:
             json.dump({"type": "FeatureCollection", "features": feats}, f)
-        out_tmp = os.path.join(tmp, layer["name"] + ".geojson")
-        subprocess.run(
-            # -dissolve, NEVER -dissolve2: dissolve2 flattens the layer into
-            # a shared-topology mosaic and assigns each face to ONE group,
-            # which silently deletes the real concurrent-jurisdiction
-            # overlaps the law layer carries (a sheriff and a municipal PD
-            # both filed over ~0.5% of points) — measured as a 98.750%
-            # name-set agreement before the swap, 100.000% after it.
-            ["npx", "-y", MAPSHAPER, src_path,
-             "-dissolve", "KEY", "copy-fields=NAME",
-             "-simplify", "visvalingam", "keep-shapes", SIMPLIFY,
-             "-o", "precision=" + PRECISION, "format=geojson", out_tmp],
-            check=True, cwd=REPO_ROOT)
-        with open(out_tmp) as f:
-            dissolved = json.load(f)
+        def _mapshaper(extra, out):
+            subprocess.run(
+                # -dissolve, NEVER -dissolve2: dissolve2 flattens the layer into
+                # a shared-topology mosaic and assigns each face to ONE group,
+                # which silently deletes the real concurrent-jurisdiction
+                # overlaps the law layer carries (a sheriff and a municipal PD
+                # both filed over ~0.5% of points) — measured as a 98.750%
+                # name-set agreement before the swap, 100.000% after it. BOTH
+                # calls below keep it, so the full-precision comparand and the
+                # shipped output differ in the simplification and nothing else.
+                ["npx", "-y", MAPSHAPER, src_path,
+                 "-dissolve", "KEY", "copy-fields=NAME"] + extra
+                + ["-o", "precision=" + PRECISION, "format=geojson", out],
+                check=True, cwd=REPO_ROOT)
+            with open(out) as f:
+                return json.load(f)
+
+        source = _mapshaper([], os.path.join(tmp, layer["name"] + "-full.geojson"))
+        dissolved = _mapshaper(["-simplify"] + SIMPLIFY[layer["name"]],
+                               os.path.join(tmp, layer["name"] + ".geojson"))
 
     out_feats = dissolved["features"]
     if len(out_feats) != len(keys):
         raise RuntimeError("%s: dissolve produced %d features, expected %d"
                            % (layer["name"], len(out_feats), len(keys)))
+    src_feats = source["features"]
+    if len(src_feats) != len(keys):
+        raise RuntimeError("%s: the full-precision dissolve produced %d features, "
+                           "expected %d — the comparand must be the same partition "
+                           "as the output or every dropped ring is spurious"
+                           % (layer["name"], len(src_feats), len(keys)))
+
+    # BOTH SIDES ARE SORTED BY KEY BEFORE THE RINGS ARE MEASURED, and on these
+    # layers that is load-bearing rather than tidiness. `dropped_rings` asks what
+    # a READER is told, and the app's `findFeatureContaining` breaks on the first
+    # match — so where a sheriff and a municipal PD both filed over one point the
+    # answer is whichever comes first in the file. Sorting the shipped output
+    # alone would compare the reader's real answer against an arbitrary
+    # mapshaper ordering and attribute the difference to the simplification.
     out_feats.sort(key=lambda f: f["properties"]["KEY"])
+    src_feats.sort(key=lambda f: f["properties"]["KEY"])
+
+    # CLASSIFY BEFORE THE PROPERTY STRIP BELOW. KEY is the only field that
+    # identifies an agency on both sides, and the strip drops it.
+    records, dstats = drings.classify({
+        layer["name"]: {"source": src_feats, "drawn": out_feats, "key": "KEY"}})
+    dok, dmsg = drings.check(records, dstats,
+                             ACCEPTED_DROPPED_RINGS[layer["name"]],
+                             GAP_CLOSED[layer["name"]])
+    print("%s dropped rings: %s" % (layer["name"], dmsg), file=sys.stderr)
+    if not dok:
+        print("\n--- measured rows for %s in ACCEPTED_DROPPED_RINGS ---"
+              % layer["name"], file=sys.stderr)
+        print("GAP_CLOSED[%r] = %d" % (layer["name"], dstats[drings.KIND_GAP_CLOSED]),
+              file=sys.stderr)
+        for r in records:
+            if r.get("harm"):
+                print("  %s" % json.dumps(
+                    {k: r[k] for k in ("m2", "verts", "centre", "interior",
+                                       "features", "kind", "answers")
+                     if k in r}, sort_keys=True), file=sys.stderr)
+                # A FEW-VERTEX RING'S OWN COORDINATES, so a declaration can STATE
+                # its shape rather than infer one from an area. Most of these are
+                # triangles a fraction of a metre wide between two counties'
+                # filings, and "1.33 m2 over 3 vertices" does not tell a reader
+                # whether that is a pinprick or a hairline 30 m long.
+                if r.get("verts", 99) <= 8 and r.get("ring"):
+                    print("      ring %s" % json.dumps(r["ring"]), file=sys.stderr)
+        raise RuntimeError("%s: dropped-ring check failed: %s"
+                           % (layer["name"], dmsg))
+
     for f in out_feats:
         f["properties"] = {"NAME": f["properties"]["NAME"]}
 
@@ -438,8 +878,9 @@ def build(layer, check_only):
     path = os.path.join(APP_DATA_DIR, layer["out"])
     with open(path, "w") as f:
         f.write(compact)
-    print("%s: wrote %s — %d agency areas, %d bytes; %s"
-          % (layer["name"], layer["out"], len(out_feats), len(compact), msg),
+    print("%s: wrote %s — %d agency areas, %d bytes; %s (%s, 6dp)"
+          % (layer["name"], layer["out"], len(out_feats), len(compact), msg,
+             simplify_label(layer["name"])),
           file=sys.stderr)
     return feats, len(out_feats), total
 
