@@ -112,6 +112,9 @@
         .then(parseTileDirectory);
       return h;
     });
+    // an archive that could not be opened is forgotten, so a Retry asks again
+    // rather than being handed the same failure
+    header.then(null, function () { if (tileArchives[url] === archive) delete tileArchives[url]; });
     function directory(offset, length) {
       if (!dirs[offset]) {
         dirs[offset] = get(offset, length).then(function (buf) {
@@ -274,6 +277,13 @@
       var z = h.maxZoom, t = tileXYFor(point.lng, point.lat, z);
       return archive.getTile(z, t.x, t.y).then(function (bytes) {
         var decoded = bytes ? decodeTileLayer(bytes, "d") : { extent: 4096, features: [] };
+        // in the order the whole file holds them (`_s` the source file in
+        // the order the app loads the files, `_i` the feature within it): a
+        // card that takes the first district holding the point, where
+        // districts overlap, must take the same one the file gives it
+        decoded.features.sort(function (a, b) {
+          return ((a.properties._s || 0) - (b.properties._s || 0)) || ((a.properties._i || 0) - (b.properties._i || 0));
+        });
         return {
           type: "FeatureCollection",
           features: decoded.features.map(function (f) {

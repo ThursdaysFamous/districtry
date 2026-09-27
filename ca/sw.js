@@ -193,16 +193,27 @@ function cacheOnlyElseNetwork(request) {
 // cached under its own key and handed back as the 206 the page asked for.
 // Cache-only-else-network like the other boundary data: an archive's bytes
 // change only with a CACHE_NAME bump, which check_cache_version.py enforces
-// for everything under data/app/tiles/. A server that ignores Range answers
-// 200 with the whole file, which is passed through uncached; the page slices
-// it (engine vector-tiles block).
+// for everything under data/app/tiles/. A server that ignores Range (python's
+// http.server, which the smoke tests use) answers 200 with the whole file:
+// that is cached under the archive's own URL and every later range is cut
+// from it, so a repeat visit and offline use work on either kind of server.
 function rangeKey(request) {
   const url = new URL(request.url);
   url.searchParams.set("dxrange", request.headers.get("range"));
   return url.href;
 }
+function partial(body, type, from, to, total) {
+  return new Response(body, {
+    status: 206,
+    headers: {
+      "Content-Type": type || "application/octet-stream",
+      "Content-Range": "bytes " + from + "-" + to + "/" + total
+    }
+  });
+}
 function cachedRange(request) {
   const key = rangeKey(request);
+  const m = /bytes=(\d+)-(\d+)/.exec(request.headers.get("range") || "");
   return caches.match(key).then((hit) => {
     if (hit) {
       return hit.arrayBuffer().then((body) => new Response(body, {
@@ -213,20 +224,30 @@ function cachedRange(request) {
         }
       }));
     }
-    return fetch(request).then((response) => {
-      if (response.status === 206) {
-        const clone = response.clone();
-        clone.arrayBuffer().then((body) =>
-          caches.open(CACHE_NAME).then((cache) => cache.put(key, new Response(body, {
-            status: 200,
-            headers: {
-              "Content-Type": clone.headers.get("Content-Type") || "application/octet-stream",
-              "X-Content-Range": clone.headers.get("Content-Range") || ""
-            }
-          })))
-        );
+    return caches.match(request.url).then((whole) => {
+      if (whole && m) {
+        return whole.arrayBuffer().then((buf) => {
+          const from = +m[1], to = Math.min(+m[2], buf.byteLength - 1);
+          return partial(buf.slice(from, to + 1), whole.headers.get("Content-Type"), from, to, buf.byteLength);
+        });
       }
-      return response;
+      return fetch(request).then((response) => {
+        const clone = response.clone();
+        if (response.status === 206) {
+          clone.arrayBuffer().then((body) =>
+            caches.open(CACHE_NAME).then((cache) => cache.put(key, new Response(body, {
+              status: 200,
+              headers: {
+                "Content-Type": clone.headers.get("Content-Type") || "application/octet-stream",
+                "X-Content-Range": clone.headers.get("Content-Range") || ""
+              }
+            })))
+          );
+        } else if (response.ok) {
+          caches.open(CACHE_NAME).then((cache) => cache.put(request.url, clone));
+        }
+        return response;
+      });
     });
   });
 }

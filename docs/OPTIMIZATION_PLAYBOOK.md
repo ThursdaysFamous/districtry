@@ -1307,3 +1307,109 @@ features until a comparison asks, so `probe_layer_sources.mjs` would have
 matched no file to it and the builder would have lost the layer. The probe
 now calls `loadWholeFile` for a layer whose `layerSources()` reports `tiles`,
 and records the archive beside the file.
+
+### Phase 5 (5a) shipped: every shipped polygon layer drawn from tiles (2026-09-27)
+
+Sixty-three layers across the six apps are now drawn and answered from their
+archives — every polygon layer whose shapes the app ships, except the
+county-dispatched ones (below). Each registration gained one line,
+`tiles: "data/app/tiles/<layer id>.pmtiles"`, and the factories and the three
+bespoke loaders that share a file between layers (Wisconsin's NG911 pair,
+New York's borough offices, and the layers drawing the borough, supervisor or
+neighborhood-association file) forward it.
+
+**THE DEEPEST ZOOM IS 12, the operator's ruling.** Built to zoom 13 the
+archives came to 102.0 MB across the fleet and to 58.4 MB at zoom 12, both
+passing the gate at their own grid step; the map draws closer than 12 by
+scaling the zoom-12 tiles. The 63 archives committed here are 55.8 MB. The
+edge tolerance of the gate moved from 1 m to 2 m with it, because zoom 12's
+grid step is about two metres.
+
+**Measured with `scripts/probe_layer_load.mjs` on Slow 4G**, every tiled layer
+at its app's anchor, with and without its `tiles:` line (69 runs):
+
+| | Whole file | Tiles |
+|---|---|---|
+| Bytes, all layers | 16.3 MB | 1.6 MB |
+| Card, 90th percentile | 4.7 s | 1.0 s |
+| Card, slowest | 8.1 s | 1.43 s |
+
+**Small layers got slower, and that is recorded rather than hidden.** A layer
+whose whole file is a few kilobytes answered in 0.22-0.39 s from it (San
+Francisco's, one at a time) and answers in 0.59-0.66 s from tiles, because the
+first read of an archive is its 16 KB header and directory and only then the
+tile. Reading a smaller header first would save one of those round trips for
+small archives and cost a second one for large ones; it was not changed. On a
+repeat visit the service worker holds both.
+
+**THE CARD IS NOW HELD TO THE FILE IN A BROWSER** (`scripts/probe_tile_cards.mjs`,
+in `vector-tiles.yml`). The builder's gate proves the tile and the file carry
+the same districts; it cannot prove the card is the same, because the card is
+each layer's own query code. The probe boots each app, one fresh page per
+layer, and asks the app (`tileCardCheck`, engine `exports`) to run the layer's
+query at the same points from the tile and then from the whole file: pairs of
+points 3-25 m either side of randomly chosen edges, plus points inside
+districts, seeded. It fails on a card that differs, an error, or a card that
+was answered some other way than from the tile. All 63 pass. It found four
+defects before they shipped, each a way the tile path and the file path
+disagreed:
+
+- **Overlapping districts came back in a different order.** A tile holds its
+  features in tippecanoe's order, and a layer whose districts overlap takes
+  the first one containing the point, so Iowa's school-director districts,
+  Michigan's precincts and Wisconsin's TIDs named a different district from
+  tiles than from the file. The decoder now sorts a tile's features by the
+  source file and feature index the builder stamps on each (`_s`, `_i`), and
+  the probe records a layer's files in the order the app loads them, so `_s`
+  means the same thing on both sides.
+- **A property the loader adds was missing.** Wisconsin's MPS board loader
+  stamps `board` on each feature after the fetch; a tile built from the file
+  alone did not carry it. The builder's `LOADER_ADDS` table adds it, and the
+  gate reads it back.
+- **Some cards answered from a boot file and drew no highlight.** Illinois's
+  school-board and Board of Review layers share a file the app loads at boot
+  for its coverage tests, so the query found it cached and never read the
+  tile, and the tile canvas had nothing to light. `queryFeatureAt` now asks
+  the tile first whenever the layer has one, and the probe fails a card not
+  answered from tiles.
+- **A loader shared by several layers knew only one archive.** New York's
+  borough file backs three layers; `registerLayer` now records every archive a
+  loader serves (`load.tileMods`) so each layer's card reads its own.
+
+**A failed archive now says so in the card.** An archive that cannot be read
+used to leave a silent empty map; the tile canvas now puts the layer's
+standard error, with Retry, in its card, and a header that failed to load is
+forgotten so Retry fetches it again. The Illinois and New York smoke tests
+refuse the archive beside the file in their failure checks.
+
+**The service worker keeps a whole archive when the server sends one.** A
+server that ignores Range (Python's `http.server`) answers 200 with the whole
+archive; the worker stored nothing for that, so every read went to the
+network. It now stores the 200 under the archive's URL and answers later
+ranges by slicing it, and a 206 under its range key as before.
+
+**Privacy.** A zoom-12 tile is about 7 km on a side at these latitudes, so the
+privacy page's GitHub Pages row now says the host learns which square of about
+7 km was selected, in every app.
+
+**Guards added.** `build_vector_tiles.py --committed` and
+`validate_vector_tiles.py` run their archives in parallel (about 1m17s each for
+63, from about 5 min). `check_cache_version.py` asks for a `CACHE_NAME` bump
+only when a cache-first file is MODIFIED, since an added file is not in any
+returning visitor's cache (Wisconsin's cache moved anyway, because its school
+archive was rebuilt at zoom 12). `vector-tiles.yml` now also runs on changes
+to any app's `index.html` or the engine, since a registration or a query
+change can break the card without touching an archive.
+
+**Not yet on tiles (phase 5b).** The county-dispatched layers — Illinois's
+county board, county precinct, fire, park and library districts and judicial
+subcircuits, the Iowa and Michigan city-ward layers, and New York's county
+legislature (Tompkins, which landed on main the same day) — read one file per
+county and some counties live, so their archive needs the county key on every
+feature and a dispatch that picks the tile path per county. Phase 6 is the
+live sources.
+
+**The stacking note from phase 4 still holds, and now matters less.** A
+tile-drawn layer sits below every Leaflet-drawn layer; with every shipped
+polygon layer on the canvas, the Leaflet layers left above it are the live
+sources and the county-dispatched layers.

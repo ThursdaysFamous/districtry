@@ -7771,6 +7771,15 @@ function initWisconsinExplorer() {
 
   function registerLayer(mod) {
     layers.push(mod);
+    // a layer drawn from a vector-tile archive: its boundary loader answers
+    // a point from the tile under it (queryFeatureAt, featureSetAt)
+    // (several layers can share one loader, as New York's borough, borough
+    // president and district attorney do: each is lit from the one answer)
+    if (mod.tiles && mod.overlay && mod.overlay.load) {
+      var tl = mod.overlay.load;
+      if (!tl.tileMod) tl.tileMod = mod;
+      (tl.tileMods = tl.tileMods || []).push(mod);
+    }
     layerRuntime[mod.id] = {
       overlayLayer: null, overlayLoaded: false, cardBody: null, geojson: null,
       highlightedLayer: null, poiMarker: null, block: null, pinBtn: null,
@@ -8259,6 +8268,9 @@ function initWisconsinExplorer() {
         .then(parseTileDirectory);
       return h;
     });
+    // an archive that could not be opened is forgotten, so a Retry asks again
+    // rather than being handed the same failure
+    header.then(null, function () { if (tileArchives[url] === archive) delete tileArchives[url]; });
     function directory(offset, length) {
       if (!dirs[offset]) {
         dirs[offset] = get(offset, length).then(function (buf) {
@@ -8421,6 +8433,13 @@ function initWisconsinExplorer() {
       var z = h.maxZoom, t = tileXYFor(point.lng, point.lat, z);
       return archive.getTile(z, t.x, t.y).then(function (bytes) {
         var decoded = bytes ? decodeTileLayer(bytes, "d") : { extent: 4096, features: [] };
+        // in the order the whole file holds them (`_s` the source file in
+        // the order the app loads the files, `_i` the feature within it): a
+        // card that takes the first district holding the point, where
+        // districts overlap, must take the same one the file gives it
+        decoded.features.sort(function (a, b) {
+          return ((a.properties._s || 0) - (b.properties._s || 0)) || ((a.properties._i || 0) - (b.properties._i || 0));
+        });
         return {
           type: "FeatureCollection",
           features: decoded.features.map(function (f) {
@@ -8480,21 +8499,48 @@ function initWisconsinExplorer() {
     return openTileArchive(new URL(mod.tiles, document.baseURI).href);
   }
 
-  // The card's feature: from the whole file when it is already in memory
-  // (a comparison fetched it), otherwise from the tile under the point. A
-  // failed tile read falls back to the whole file, so the card still answers.
+  // The card's feature, from the tile under the point — even when the whole
+  // file is in memory (a comparison fetched it, or the app loads it at boot):
+  // the highlight lights the district by the tile's feature id, which only a
+  // tile answer carries, and scripts/probe_tile_cards.mjs holds the two
+  // answers equal. A failed tile read falls back to the whole file, so the
+  // card still answers.
   function tileFeatureAt(mod, load, point) {
-    var cached = load.cached ? load.cached() : null;
-    if (cached) return Promise.resolve(findFeatureContaining(cached, point));
     var rt = layerRuntime[mod.id];
     return tileFeaturesAt(tileArchiveFor(mod), point).then(function (fc) {
       var feature = findFeatureContaining(fc, point);
       rt.tileAnswer = { point: point, feature: feature };
+      tileAnswerShared(load, rt.tileAnswer);
       return feature;
     }, function (err) {
       console.warn("[" + mod.id + "] tile read failed, loading the whole file:", err);
       return load().then(function (geojson) { return findFeatureContaining(geojson, point); });
     });
+  }
+
+  // Every feature near the point, for a layer that reads more than the one
+  // district holding it (overlapping service areas, several associations at
+  // one spot): the tile under the point when the loader's layer is drawn
+  // from tiles, otherwise the whole file, exactly as before. The tile holds
+  // every feature crossing it, so each one containing the point is there.
+  function featureSetAt(load, point) {
+    var mod = load.tileMod;
+    if (!mod || !tileCardAvailable(mod)) return load();
+    return tileFeaturesAt(tileArchiveFor(mod), point).then(function (fc) {
+      layerRuntime[mod.id].tileAnswer = { point: point, feature: findFeatureContaining(fc, point) };
+      tileAnswerShared(load, layerRuntime[mod.id].tileAnswer);
+      return fc;
+    }, function (err) {
+      console.warn("[" + mod.id + "] tile read failed, loading the whole file:", err);
+      return load();
+    });
+  }
+
+  // Every layer drawn from the same loader takes the same answer: their
+  // archives are built from the same file, so a feature's id is the same in
+  // each, and each lights it (updateTileHighlight).
+  function tileAnswerShared(load, answer) {
+    (load.tileMods || []).forEach(function (m) { layerRuntime[m.id].tileAnswer = answer; });
   }
 
   function tileDashArray(style) {
@@ -8609,7 +8655,17 @@ function initWisconsinExplorer() {
           self.restyle();
           reorderActiveLayers();
         });
-      }).catch(function (err) { console.error("[" + mod.id + "] tile overlay failed:", err); });
+      }).catch(function (err) {
+        console.error("[" + mod.id + "] tile overlay failed:", err);
+        // the Leaflet path's rule (onLayerToggled): never silent, and never
+        // over a verified answer already on the card for this selection
+        var rt = layerRuntime[mod.id];
+        if (self._dxOn && state.layersOn[mod.id] && rt.resultSeq !== state.sequence) {
+          setCardError(mod, "Couldn't load this layer's boundaries. It won't affect other layers.");
+        }
+        if (map.hasLayer(self)) map.removeLayer(self);
+        rt.overlayLayer = null; // Retry re-runs onLayerToggled, which makes a fresh one
+      });
       return this;
     },
     onRemove: function () {
@@ -10437,6 +10493,12 @@ function initWisconsinExplorer() {
    * neither hook takes exactly the pre-existing path (load, then contain),
    * which is what keeps this default-on safe for every layer. ---------- */
   function queryFeatureAt(load, point) {
+    // a loader whose layer is drawn from a vector-tile archive answers from
+    // the tile under the point and never starts the whole download
+    // (tile-overlay block); registerLayer marks it. First, even when the whole
+    // file happens to be in memory: the highlight lights the district by the
+    // TILE's feature id, which only a tile answer carries
+    if (load.tileMod && tileCardAvailable(load.tileMod)) return tileFeatureAt(load.tileMod, load, point);
     var cached = load.cached ? load.cached() : null;
     if (cached) return Promise.resolve(findFeatureContaining(cached, point));
     // fire (or join) the shared full download either way — the overlay and
@@ -10507,9 +10569,7 @@ function initWisconsinExplorer() {
       // spatial point query does, while the full set downloads for the
       // overlay; every other loader takes the load-then-contain path verbatim
       query: function (point, seq) {
-        var mod = getLayerById(opts.id);
-        var found = tileCardAvailable(mod) ? tileFeatureAt(mod, load, point) : queryFeatureAt(load, point);
-        return found.then(function (feature) {
+        return queryFeatureAt(load, point).then(function (feature) {
           if (!feature) return null;
           var props = feature.properties || {};
           var result = { seq: seq };
@@ -11056,6 +11116,7 @@ function initWisconsinExplorer() {
         return extractDistrictNumber(feature.properties || {}, opts.districtFields);
       },
       overlay: { load: loadChamber, style: opts.style },
+      tiles: opts.tiles, // optional vector-tile archive (tile-overlay block)
       // boundary resolution is point-first by default (queryFeatureAt); the
       // roster stays a whole-file fetch — it's the small half of the join
       query: function (point, seq) {
@@ -11324,6 +11385,7 @@ function initWisconsinExplorer() {
 
   registerLayer({
     id: "county",
+    tiles: "data/app/tiles/county.pmtiles", // vector tiles (engine tile-overlay block)
     group: "geography",
     label: "County",
     overlay: {
@@ -11678,6 +11740,7 @@ function initWisconsinExplorer() {
 
   registerLayer({
     id: "county-board",
+    tiles: "data/app/tiles/county-board.pmtiles", // vector tiles (engine tile-overlay block)
     group: "political",
     label: "County Board District",
     overlay: {
@@ -11904,6 +11967,7 @@ function initWisconsinExplorer() {
 
   registerLayer({
     id: "wi-court-of-appeals",
+    tiles: "data/app/tiles/wi-court-of-appeals.pmtiles", // vector tiles (engine tile-overlay block)
     group: "political",
     label: "Court of Appeals District",
     overlay: {
@@ -11999,6 +12063,7 @@ function initWisconsinExplorer() {
 
   registerLayer({
     id: "wi-circuit-court",
+    tiles: "data/app/tiles/wi-circuit-court.pmtiles", // vector tiles (engine tile-overlay block)
     group: "political",
     label: "Circuit Court",
     overlay: {
@@ -12849,6 +12914,7 @@ function initWisconsinExplorer() {
 
   registerIlgaChamber({
     id: "us-house",
+    tiles: "data/app/tiles/us-house.pmtiles", // vector tiles (engine tile-overlay block)
     label: "U.S. House",
     layerIndex: 0, // fallback only — loadDistricts (pre-built) is used when present
     loadDistricts: loadCongressDistricts,
@@ -12886,6 +12952,7 @@ function initWisconsinExplorer() {
 
   registerIlgaChamber({
     id: "wi-senate",
+    tiles: "data/app/tiles/wi-senate.pmtiles", // vector tiles (engine tile-overlay block)
     label: "Wisconsin State Senate District",
     layerIndex: 1, // TIGERweb SLDU — fallback only; loadDistricts is used when present
     loadDistricts: loadWiSenateDistricts,
@@ -12899,6 +12966,7 @@ function initWisconsinExplorer() {
 
   registerIlgaChamber({
     id: "wi-assembly",
+    tiles: "data/app/tiles/wi-assembly.pmtiles", // vector tiles (engine tile-overlay block)
     label: "Wisconsin State Assembly District",
     layerIndex: 2, // TIGERweb SLDL — fallback only; loadDistricts is used when present
     loadDistricts: loadWiAssemblyDistricts,
@@ -12995,6 +13063,7 @@ function initWisconsinExplorer() {
 
   registerLayer({
     id: "aldermanic-district",
+    tiles: "data/app/tiles/aldermanic-district.pmtiles", // vector tiles (engine tile-overlay block)
     group: "political",
     label: "Aldermanic District",
     // deliberately NO subOf: districts do number within their municipality
@@ -13218,6 +13287,7 @@ function initWisconsinExplorer() {
 
   registerLayer({
     id: "mps-school-board",
+    tiles: "data/app/tiles/mps-school-board.pmtiles", // vector tiles (engine tile-overlay block)
     group: "schools",
     // The id stays `mps-school-board` because it is in shipped `layers=`
     // permalinks and in LAYER_SIDEBAR_RANK; the LABEL had to change, because
@@ -13355,6 +13425,7 @@ function initWisconsinExplorer() {
   });
   registerLayer({
     id: "wtcs-district",
+    tiles: "data/app/tiles/wtcs-district.pmtiles", // vector tiles (engine tile-overlay block)
     group: "schools",
     label: "Technical College District",
     hoverName: function (feature) {
@@ -13422,6 +13493,7 @@ function initWisconsinExplorer() {
 
   registerLayer({
     id: "mpd-district",
+    tiles: "data/app/tiles/mpd-district.pmtiles", // vector tiles (engine tile-overlay block)
     group: "safety",
     label: "Milwaukee Police District",
     coverage: milwaukeeCoverage,
@@ -13500,6 +13572,7 @@ function initWisconsinExplorer() {
 
   registerPolygonLayer({
     id: "milwaukee-neighborhoods",
+    tiles: "data/app/tiles/milwaukee-neighborhoods.pmtiles", // vector tiles (engine tile-overlay block)
     group: "geography",
     label: "Milwaukee Neighborhood",
     coverage: milwaukeeCoverage,
@@ -13526,6 +13599,7 @@ function initWisconsinExplorer() {
   });
   registerPolygonLayer({
     id: "mpd-squad-area",
+    tiles: "data/app/tiles/mpd-squad-area.pmtiles", // vector tiles (engine tile-overlay block)
     group: "safety",
     subOf: "mpd-district",
     label: "Milwaukee Police Squad Area",
@@ -13613,6 +13687,7 @@ function initWisconsinExplorer() {
   });
   registerPolygonLayer({
     id: "tid-district",
+    tiles: "data/app/tiles/tid-district.pmtiles", // vector tiles (engine tile-overlay block)
     group: "geography",
     label: "Tax Incremental District (TID)",
     coverage: function (point) {
@@ -13659,6 +13734,7 @@ function initWisconsinExplorer() {
   });
   registerLayer({
     id: "madison-neighborhood-assoc",
+    tiles: "data/app/tiles/madison-neighborhood-assoc.pmtiles", // vector tiles (engine tile-overlay block)
     group: "geography",
     label: "Neighborhood Association (Madison)",
     coverage: madisonCoverage,
@@ -13673,7 +13749,9 @@ function initWisconsinExplorer() {
       return v ? String(v) : null;
     },
     query: function (point, seq) {
-      return loadMadisonAssocs().then(function (geojson) {
+      // the tile under the point when drawn from tiles: every association
+      // crossing it is there, overlapping ones included
+      return featureSetAt(loadMadisonAssocs, point).then(function (geojson) {
         var assocs = [];
         var feats = (geojson && geojson.features) || [];
         for (var i = 0; i < feats.length; i++) {
@@ -13766,8 +13844,12 @@ function initWisconsinExplorer() {
         return v ? String(v) : null;
       },
       overlay: { load: opts.loader, style: opts.style },
+      tiles: opts.tiles, // vector tiles (engine tile-overlay block)
       query: function (point, seq) {
-        return Promise.all([opts.loader(), loadStateCounties()]).then(function (parts) {
+        // featureSetAt: the tile under the point where the layer is drawn
+        // from tiles (every overlapping service area crossing it is there),
+        // otherwise the whole file as before
+        return Promise.all([featureSetAt(opts.loader, point), featureSetAt(loadStateCounties, point)]).then(function (parts) {
           var names = [];
           var feats = (parts[0] && parts[0].features) || [];
           for (var i = 0; i < feats.length; i++) {
@@ -13815,6 +13897,7 @@ function initWisconsinExplorer() {
   }
   registerNg911ServiceLayer({
     id: "fire-service",
+    tiles: "data/app/tiles/fire-service.pmtiles", // vector tiles (engine tile-overlay block)
     label: "Fire Service Area",
     noun: "fire service",
     about: "A dispatch service area from the state's NG911 dataset — who responds here, not a taxing district and not an elected body.",
@@ -13824,6 +13907,7 @@ function initWisconsinExplorer() {
   });
   registerNg911ServiceLayer({
     id: "law-service",
+    tiles: "data/app/tiles/law-service.pmtiles", // vector tiles (engine tile-overlay block)
     label: "Law Enforcement Service Area",
     noun: "law-enforcement",
     about: "A dispatch service area from the state's NG911 dataset — who responds here, not a taxing district and not an elected body.",
@@ -13832,6 +13916,7 @@ function initWisconsinExplorer() {
   });
   registerNg911ServiceLayer({
     id: "ems-service",
+    tiles: "data/app/tiles/ems-service.pmtiles", // vector tiles (engine tile-overlay block)
     label: "EMS Service Area",
     noun: "EMS",
     about: "A dispatch service area from the state's NG911 dataset — the emergency medical service dispatched here, not a taxing district and not an elected body.",
@@ -13840,6 +13925,7 @@ function initWisconsinExplorer() {
   });
   registerNg911ServiceLayer({
     id: "psap-area",
+    tiles: "data/app/tiles/psap-area.pmtiles", // vector tiles (engine tile-overlay block)
     label: "911 Answering Point (PSAP)",
     noun: "911 answering-point",
     about: "The public safety answering point from the state's NG911 dataset — the dispatch center that answers a 911 call placed here, not a taxing district and not an elected body.",
@@ -15757,7 +15843,9 @@ function initWisconsinExplorer() {
         sharesParentLoader: !!(parent && parent.overlay && mod.overlay && parent.overlay.load === mod.overlay.load),
         // drawn from a vector-tile archive: its whole file is fetched only when
         // asked (loadWholeFile below), so the probe asks before reading
-        tiles: isTileDrawn(mod) ? mod.tiles : null,
+        // from the registration, not the overlay: a layer hidden at this
+        // point (mod.coverage) detaches its overlay and is still tiled
+        tiles: tileDrawAvailable(mod) ? mod.tiles : null,
         // one short key per loaded feature, so the probe can tell which of
         // this site's files the layer DRAWS: a file the app also loads at boot
         // is subtracted with the boot requests, and matching features finds it
@@ -15798,9 +15886,59 @@ function initWisconsinExplorer() {
       return { drawn: isTileDrawn(mod), selected: rt.tileSelectedId,
         edgeRuns: g && g.type === "MultiPolygon" && g.coordinates[0] ? g.coordinates[0].length : 0 };
     },
+    // A tile-drawn layer's own query at each point, answered first from its
+    // tiles and then from its whole file, as JSON with every `seq` and
+    // `geometry` dropped (a tile answer carries the piece of a district
+    // inside one tile, which is not what a card reads). What
+    // scripts/probe_tile_cards.mjs compares: the card a reader sees must be
+    // the same either way. The tile answers run first, while the whole file
+    // is not yet in memory, or the loader would answer them from it.
+    tileCardCheck: function (id, points) {
+      var mod = getLayerById(id), load = mod && mod.overlay && mod.overlay.load;
+      if (!load || !load.tileMod) return Promise.reject(new Error(id + " is not drawn from tiles"));
+      var rt = layerRuntime[id], viaTiles = [];
+      function run(out, record) {
+        return points.reduce(function (chain, p, i) {
+          return chain.then(function () {
+            if (record) rt.tileAnswer = null;
+            return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
+              out.push(r == null ? null : JSON.stringify(r, function (k, v) {
+                return k === "seq" || k === "geometry" ? undefined : v;
+              }));
+              // whether the tile path really answered: a query that reaches
+              // its boundaries some other way passes the comparison while
+              // downloading the whole file and lighting nothing
+              if (record) viaTiles.push(!!(rt.tileAnswer && rt.tileAnswer.point === p));
+            }, function (e) { out.push("error: " + String(e && e.message || e)); if (record) viaTiles.push(false); });
+          });
+        }, Promise.resolve());
+      }
+      var tiled = [], whole = [], keep = load.tileMod;
+      return run(tiled, true).then(function () {
+        load.tileMod = null;
+        return run(whole);
+      }).then(function () {
+        load.tileMod = keep;
+        return points.map(function (p, i) { return { point: p, tiles: tiled[i], file: whole[i], viaTiles: viaTiles[i] }; });
+      }, function (e) { load.tileMod = keep; throw e; });
+    },
+    // The colour a layer's outline is painted in right now, whichever way it
+    // is drawn: the tile canvas's paint, or a Leaflet path's stroke. What the
+    // smoke tests read to see the dark theme repaint a live overlay.
+    overlayColor: function (id) {
+      var mod = getLayerById(id), rt = layerRuntime[id];
+      if (!mod || !rt || !rt.overlayLayer) return null;
+      if (rt.overlayLayer.dxTiles) {
+        var gl = tileGLLayer && tileGLLayer.getMaplibreMap(), ids = tileIds(mod);
+        return gl && gl.getLayer(ids.line) ? gl.getPaintProperty(ids.line, "line-color") : null;
+      }
+      var color = null;
+      rt.overlayLayer.eachLayer(function (l) { if (!color && l.options && l.options.color) color = l.options.color; });
+      return color;
+    },
     loadWholeFile: function (id) {
       var mod = getLayerById(id);
-      if (!mod || !isTileDrawn(mod)) return Promise.resolve(false);
+      if (!mod || !tileDrawAvailable(mod)) return Promise.resolve(false);
       return ensureTileGeojson(mod).then(function () { return true; });
     },
     loadCountyEntry: function (id, key) {

@@ -5,18 +5,21 @@ the way the file it was built from answers.
 WHY. docs/OPTIMIZATION_PLAYBOOK.md §10, finding 5: a layer drawn from a shipped
 file downloads the whole state to draw one screen — 2.3 MB gzipped for
 Wisconsin's unified school districts — and draws it at one resolution whatever
-the zoom. A tile archive holds each layer at every zoom from 4 to 13, a screen
+the zoom. A tile archive holds each layer at every zoom from 4 to 12, a screen
 at a time, so a reader downloads what they look at and sees more detail the
-closer they zoom. This is phase 3 of that plan: the archives and their gate,
-and NO APP CHANGE. Nothing reads an archive yet.
+closer they zoom. Phase 3 of that plan built the archives and their gate;
+phases 4 and 5 moved the app onto them, and every layer registered with
+`tiles:` is now drawn and answered from its archive.
 
-WHAT IS COMMITTED. Nothing this script writes, until a layer's renderer ships
-(the operator's ruling, 2026-09-26). An archive is a binary 1.6-5 times the
+WHAT IS COMMITTED. Only the archive of a layer the app draws from tiles
+(the operator's ruling, 2026-09-26). An archive is a binary several times the
 gzipped file and every rebuild adds a full copy to git history, so each layer's
 archive is committed in the pull request that switches that layer to tiles.
-Until then the script builds into a temporary directory and throws it away,
-and what it keeps is the answer to one question: would these archives be
-correct? `--out DIR` keeps them.
+For any other layer the script builds into a temporary directory and throws it
+away, and what it keeps is the answer to one question: would these archives be
+correct? `--out DIR` keeps them. `--committed` holds the SHIPPED archives to
+today's files without tippecanoe, and requires the archives shipped and the
+layers registered with `tiles:` to be the same set.
 
 WHICH LAYERS. Every polygon layer drawn from this site's own files, in every
 app — not only the large ones, also the operator's ruling. Which files a layer
@@ -36,7 +39,7 @@ out.
 
 THE GATE. Each archive is read back and held to the file it was built from:
 
-  1. EVERY FEATURE IS IN THE ARCHIVE AT ZOOM 13, found at a point inside it
+  1. EVERY FEATURE IS IN THE ARCHIVE AT ITS DEEPEST ZOOM, found at a point inside it
      (shapely's point_on_surface), and its properties read back EXACTLY under
      one decoding rule. The tile format has no arrays, objects or null, so
      tippecanoe writes an array or object as its JSON text and drops a null;
@@ -47,23 +50,30 @@ THE GATE. Each archive is read back and held to the file it was built from:
   2. A POINT'S ANSWER IS THE SAME. Points are placed near district edges on
      purpose, where tiles and the file can disagree, and each is answered twice:
      from the whole file by the app's own rule (even-odd within a Polygon, any
-     part of a MultiPolygon), and from the zoom-13 tile under it by even-odd
+     part of a MultiPolygon), and from the deepest tile under it by even-odd
      across the tile feature's rings, which is how the app will read a tile. The answer is the SET of features containing the point,
-     because several layers overlap. A disagreement at a point one metre or
-     more from every edge FAILS. Under a metre they are counted and printed:
-     zoom 13's grid step is about a metre, and the shipped files already stray
-     further than that from the true line (the Illinois legislative outlines
-     by up to 17.8 m, by design), so an answer there means nothing. The trial
-     in §10 found every disagreement within a metre of an edge.
+     because several layers overlap. A disagreement at a point two metres or
+     more from every edge FAILS. Under two metres they are counted and
+     printed: zoom 12's grid step is about two metres, and the shipped files
+     already stray further than that from the true line (the Illinois
+     legislative outlines by up to 17.8 m, by design), so an answer there
+     means nothing.
+
+THE DEEPEST ZOOM IS 12 (the operator's ruling, 2026-09-27). The archives were
+first built to zoom 13 with a one-metre tolerance; measured across the fleet
+that day, zoom 13 came to 102.0 MB of archives and zoom 12 to 58.4 MB, with
+both passing the gate on every layer at their own grid step. The map still
+draws closer than zoom 12 by scaling the zoom-12 tiles.
 
 Distances are measured in Web Mercator metres times the cosine of the point's
 latitude, which is exact locally. The sample is seeded, so a run is
-repeatable; the archives themselves are not committed, so nothing depends on
-tippecanoe writing identical bytes twice.
+repeatable, and the gate reads an archive back rather than comparing its
+bytes, so nothing depends on tippecanoe writing identical bytes twice.
 
     python3 scripts/build_vector_tiles.py               # build and gate everything
     python3 scripts/build_vector_tiles.py --only wi:school-districts-unified --out build/tiles
     python3 scripts/build_vector_tiles.py --only il     # one app
+    python3 scripts/build_vector_tiles.py --committed   # the shipped archives
 
 Needs tippecanoe (2.49 measured) on PATH, and shapely, mapbox-vector-tile and
 pmtiles (scripts/requirements.txt).
@@ -84,11 +94,11 @@ import time
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SOURCES = os.path.join(REPO_ROOT, "layer-sources.json")
 
-MAX_ZOOM = 13
+MAX_ZOOM = 12
 MIN_ZOOM = 4
 LAYER_NAME = "d"
-# Tolerance for the edge test: the zoom-13 grid step. Stated in §10.
-EDGE_TOLERANCE_M = 1.0
+# Tolerance for the edge test: the zoom-12 grid step. Stated in §10.
+EDGE_TOLERANCE_M = 2.0
 # How far from an edge the sample points are placed.
 SAMPLE_RADIUS_M = 20.0
 POLYGON_TYPES = ("Polygon", "MultiPolygon")
@@ -102,7 +112,7 @@ MAX_EDGE_DEG = 0.01
 
 TIPPECANOE_ARGS = [
     "-Z%d" % MIN_ZOOM, "-z%d" % MAX_ZOOM,
-    # simplify at the lower zooms only, so zoom 13 carries every vertex the
+    # simplify at the lower zooms only, so the deepest zoom carries every vertex the
     # file carries and the card can be answered from it
     "--simplify-only-low-zooms",
     # districts share borders; simplify each shared edge once, so neighbours
@@ -111,6 +121,10 @@ TIPPECANOE_ARGS = [
     # never thin a layer's features to fit a tile: a district missing from a
     # tile is a wrong answer, not a lighter one
     "--no-feature-limit", "--no-tile-size-limit",
+    # keep every polygon however small: a sliver district missing from the
+    # deepest tile is a card with no answer (one Illinois library district's
+    # was dropped at zoom 12 without this, measured 2026-09-27)
+    "--no-tiny-polygon-reduction",
     "--force", "--quiet",
 ]
 
@@ -319,6 +333,23 @@ def same_props(src, got):
     return None
 
 
+# ---- what an app's loader adds ------------------------------------------------
+
+# Properties an app's loader ADDS to the features of one file after fetching
+# it, which the archive must carry too because the card reads them. Stated
+# here beside nothing else, and held to the app by scripts/probe_tile_cards.mjs,
+# which fails the moment a tiled card differs from the card the whole file
+# gives. Keyed (app, layer) -> {file: {property: value}}.
+LOADER_ADDS = {
+    # wi/index.html loadElectedBoardDistricts tags each feature with the
+    # board whose file it came from; the card, hover and roster read it
+    ("wi", "mps-school-board"): {
+        "wi/data/app/mps-school-board-districts.json": {"board": "mps"},
+        "wi/data/app/rusd-school-board-districts.json": {"board": "rusd"},
+    },
+}
+
+
 # ---- build ------------------------------------------------------------------
 
 def collect(tag, layer, pairs):
@@ -337,6 +368,7 @@ def collect(tag, layer, pairs):
                 skipped += 1
                 continue
             props = dict(f.get("properties") or {})
+            props.update(LOADER_ADDS.get((tag, layer), {}).get(rel, {}))
             for k, v in props.items():
                 if looks_like_json_container(v):
                     fail("%s:%s — %s feature %d has a string property %r that "
@@ -405,6 +437,12 @@ class Archive:
             self._cache[key] = (ext, feats)
         return self._cache[key]
 
+    def present(self, lng, lat):
+        """{id: properties} of every tile feature in the deepest tile under the point."""
+        x, y, fx, fy = tile_of(lng, lat, MAX_ZOOM)
+        ext, feats = self.tile(x, y)
+        return {fid: props for fid, rings, props in feats}
+
     def answer(self, lng, lat):
         """{id: properties} of every tile feature containing the point."""
         x, y, fx, fy = tile_of(lng, lat, MAX_ZOOM)
@@ -455,12 +493,17 @@ def gate(tag, layer, feats, archive_path, n_points, seed):
     arch = Archive(archive_path)
     problems = []
     try:
-        # 1. presence and properties, at a point inside each feature
+        # 1. presence and properties, in the deepest tile under a point
+        # inside each feature. PRESENCE, not containment: on a district a
+        # few metres wide the interior point can sit inside the grid-step
+        # tolerance of an edge (a 6 m strip of Franklin County's Crab Orchard
+        # library district put it 0.44 m from one), and whether a point that
+        # close answers is the edge test's question, not this one's
         for j, s in enumerate(shapes):
             p = s.point_on_surface()
-            got = arch.answer(p.x, p.y)
+            got = arch.present(p.x, p.y)
             if j not in got:
-                problems.append("feature %d (%s) is not in the zoom-13 tile under "
+                problems.append("feature %d (%s) is not in the deepest tile under "
                                 "a point inside it" % (j, label(feats[j])))
                 continue
             bad = same_props(feats[j]["_src"], {k: v for k, v in decode_props(got[j]).items()
@@ -577,7 +620,18 @@ def committed_archives():
     return shipped, registered
 
 
-def check_committed(n_points, seed):
+def _check_one(key, path, pairs, n_points, seed):
+    tag, layer = key
+    feats, files, _ = collect(tag, layer, pairs)
+    problems, st = gate(tag, layer, feats, path, n_points, seed)
+    lines = ["  %-4s  %s:%s (committed) — %d features; %d/%d points under %g m differ, %d/%d beyond"
+             % ("FAIL" if problems else "ok", tag, layer, len(feats), st["near_bad"], st["near"],
+                EDGE_TOLERANCE_M, st["far_bad"], st["far"])]
+    lines += ["          " + p for p in problems]
+    return lines, bool(problems)
+
+
+def check_committed(n_points, seed, n_jobs=1):
     """Hold every SHIPPED archive to the file it was built from, today. A
     change to a boundary file that forgets to rebuild its archive leaves the
     app drawing and answering from the old districts; this is what catches it,
@@ -592,19 +646,18 @@ def check_committed(n_points, seed):
         print("build-vector-tiles: OK — no app ships an archive yet")
         return
     jobs = {(t, l): pairs for t, l, pairs in plan([])}
+    for key in shipped:
+        if key not in jobs:
+            fail("%s:%s ships an archive but layer-sources.json names no shipped file for it" % key)
+    from concurrent.futures import ProcessPoolExecutor
     failed = 0
-    for (tag, layer), path in sorted(shipped.items()):
-        if (tag, layer) not in jobs:
-            fail("%s:%s ships an archive but layer-sources.json names no shipped file for it"
-                 % (tag, layer))
-        feats, files, _ = collect(tag, layer, jobs[(tag, layer)])
-        problems, st = gate(tag, layer, feats, path, n_points, seed)
-        print("  %-4s  %s:%s (committed) — %d features; %d/%d points under %g m differ, %d/%d beyond"
-              % ("FAIL" if problems else "ok", tag, layer, len(feats), st["near_bad"], st["near"],
-                 EDGE_TOLERANCE_M, st["far_bad"], st["far"]))
-        for p in problems:
-            print("          " + p)
-        failed += bool(problems)
+    with ProcessPoolExecutor(max_workers=max(1, n_jobs)) as pool:
+        futures = [pool.submit(_check_one, key, path, jobs[key], n_points, seed)
+                   for key, path in sorted(shipped.items())]
+        for fut in futures:
+            lines, bad = fut.result()
+            print("\n".join(lines), flush=True)
+            failed += bad
     if failed:
         fail("%d shipped archive(s) no longer answer as their files do — rebuild with "
              "--only <tag:layer> --out and copy the archive into <tag>/data/app/tiles/" % failed)
@@ -628,7 +681,7 @@ def main():
                     help="archives built at once (default: up to 4)")
     args = ap.parse_args()
     if args.committed:
-        check_committed(args.points, args.seed)
+        check_committed(args.points, args.seed, args.jobs)
         return
 
     jobs = plan(args.only)

@@ -42,9 +42,7 @@
       // spatial point query does, while the full set downloads for the
       // overlay; every other loader takes the load-then-contain path verbatim
       query: function (point, seq) {
-        var mod = getLayerById(opts.id);
-        var found = tileCardAvailable(mod) ? tileFeatureAt(mod, load, point) : queryFeatureAt(load, point);
-        return found.then(function (feature) {
+        return queryFeatureAt(load, point).then(function (feature) {
           if (!feature) return null;
           var props = feature.properties || {};
           var result = { seq: seq };

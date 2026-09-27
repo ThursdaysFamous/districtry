@@ -3,6 +3,15 @@
 
   function registerLayer(mod) {
     layers.push(mod);
+    // a layer drawn from a vector-tile archive: its boundary loader answers
+    // a point from the tile under it (queryFeatureAt, featureSetAt)
+    // (several layers can share one loader, as New York's borough, borough
+    // president and district attorney do: each is lit from the one answer)
+    if (mod.tiles && mod.overlay && mod.overlay.load) {
+      var tl = mod.overlay.load;
+      if (!tl.tileMod) tl.tileMod = mod;
+      (tl.tileMods = tl.tileMods || []).push(mod);
+    }
     layerRuntime[mod.id] = {
       overlayLayer: null, overlayLoaded: false, cardBody: null, geojson: null,
       highlightedLayer: null, poiMarker: null, block: null, pinBtn: null,
