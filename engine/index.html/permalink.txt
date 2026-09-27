@@ -187,6 +187,15 @@
       "?utm_source=share&utm_medium=link" + location.hash;
   }
 
+  // The QR's own URL. Same view, but `utm_medium=qr`, because a scan and a
+  // pasted link are different mediums and a feature nobody can measure is one
+  // nobody can evaluate.
+  function shareQrUrl() {
+    syncUrlHash();
+    return location.origin + location.pathname +
+      "?utm_source=share&utm_medium=qr" + location.hash;
+  }
+
   function buildEmbedSnippet() {
     syncUrlHash();
     // Canonical base, not location: a snippet grabbed on a preview/localhost
@@ -291,6 +300,54 @@
       note.textContent = "The link opens the map at this exact point, with the layers you have on.";
       popover.appendChild(note);
 
+      // THE QR IS NOT THEMED: dark modules on white with a white quiet zone in
+      // both tiers, because an inverted QR fails on many scanners. It is built
+      // through the DOM rather than as markup, and encoded here — no request is
+      // made and nothing is sent, which is the whole reason it is not an image
+      // from a QR service (see engine/index.html/qr-code.txt).
+      // A touch device keeps its platform share sheet, as the first thing in the
+      // popover rather than instead of it: the popover is now the one share
+      // surface everywhere, because the QR has to be reachable on a phone too
+      // and the OS sheet cannot host it. One extra tap for the native path is
+      // the cost, and it is the reason this row is first.
+      if (!hoverCapable && navigator.share) {
+        var nativeRow = document.createElement("div");
+        nativeRow.className = "share-popover-row share-popover-row-end";
+        var nativeBtn = document.createElement("button");
+        nativeBtn.type = "button";
+        nativeBtn.className = "share-popover-copy";
+        nativeBtn.textContent = "Share\u2026";
+        nativeBtn.addEventListener("click", function () {
+          trackEvent("share-native");
+          navigator.share({ title: appDisplayName(), url: shareLinkUrl() })
+            .catch(function () { /* dismissed, or the platform refused — nothing to undo */ });
+        });
+        nativeRow.appendChild(nativeBtn);
+        popover.appendChild(nativeRow);
+      }
+
+      var qrLabel = document.createElement("div");
+      qrLabel.className = "share-popover-label";
+      qrLabel.textContent = "Scan with a phone";
+      popover.appendChild(qrLabel);
+      var qrRow = document.createElement("div");
+      qrRow.className = "share-popover-qr";
+      var drawn = qrSvgElement(shareQrUrl(), { level: "M" });
+      if (drawn) {
+        drawn.element.setAttribute("aria-label", "QR code for this view");
+        qrRow.appendChild(drawn.element);
+        popover.appendChild(qrRow);
+        trackEvent("share-qr");
+      } else {
+        // Unreachable for any view this app can produce — the longest share URL
+        // measured 663 bytes against version 40's 2,953 — but a reader is told
+        // rather than shown an empty box if it ever happens.
+        var qrNote = document.createElement("p");
+        qrNote.className = "share-popover-note";
+        qrNote.textContent = "This view's link is too long for a QR code. Copy it instead.";
+        popover.appendChild(qrNote);
+      }
+
       var linkRow = document.createElement("div");
       linkRow.className = "share-popover-row";
       var linkInput = document.createElement("input");
@@ -351,15 +408,6 @@
     }
 
     btn.addEventListener("click", function () {
-      // Touch-first devices with a native share sheet get the platform
-      // surface (the expected mobile pattern); hover-capable devices get
-      // the popover. A dismissed sheet needs no cleanup.
-      if (!hoverCapable && navigator.share) {
-        trackEvent("share-native");
-        navigator.share({ title: appDisplayName(), url: shareLinkUrl() })
-          .catch(function () { /* user dismissed, or the platform refused — nothing to undo */ });
-        return;
-      }
       if (popover) closePopover(true); else openPopover();
     });
 

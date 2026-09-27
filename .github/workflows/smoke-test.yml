@@ -1187,6 +1187,18 @@ jobs:
         if: ${{ !cancelled() }}
         run: python3 scripts/validate_geometry_measure.py
 
+      # The engine's QR block turns a share permalink into a QR code in the
+      # reader's browser, hand written because a QR image API would take the
+      # payload — and so the reader's selected point — in the URL of an image
+      # request. This runs the block AS SHIPPED in Node and holds every one of
+      # the eight masks, at both error-correction levels, to `qrcode`'s matrix,
+      # then bounds the mask it picks by qrcode's own penalty scorer. Offline.
+      - name: The QR block still agrees with an independent encoder
+        if: ${{ !cancelled() }}
+        run: |
+          pip install -c scripts/requirements.txt qrcode
+          python3 scripts/validate_qr_code.py
+
       # Illinois's Census 2020 block populations, one file per county, which a
       # comparison of districts sums to say how many PEOPLE two districts
       # share. Each file's totals, count and extent must match index.json and

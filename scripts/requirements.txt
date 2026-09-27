@@ -134,3 +134,13 @@ mapbox-vector-tile==2.2.0
 pmtiles==3.8.1
 protobuf==6.33.6
 pyclipper==1.4.0
+
+# QR codes. The ENCODER ships in the engine (engine/index.html/qr-code.txt) and
+# is hand written, because every QR image API takes its payload in the URL of
+# the image request and our payload carries the reader's selected point. This is
+# the REFERENCE the gate holds that block to, matrix for matrix, and is used by
+# scripts/validate_qr_code.py only — nothing that ships imports it. `segno` is
+# deliberately NOT the reference: measured 2026-09-27 it emits a spurious 0x00
+# pad codeword whenever the bit stream is already byte-aligned, which in byte
+# mode it always is. The gate's docstring carries the measurement.
+qrcode==8.0

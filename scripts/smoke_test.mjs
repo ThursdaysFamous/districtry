@@ -815,6 +815,52 @@ try {
     await context.close();
   }
 
+  // 1i. THE SHARE POPOVER DRAWS A QR CODE, ENCODED HERE. Clicking Share opens
+  //     the popover on every screen size now (the native sheet is its first row
+  //     on a touch device rather than replacing it, because the OS sheet cannot
+  //     host a QR and the QR has to be reachable on a phone too). The code is
+  //     held to the URL it should carry, not merely counted: the QR payload is
+  //     the same view with `utm_medium=qr`, which differs from the copy-link
+  //     URL by two characters and so produces a DIFFERENT matrix, so a stale or
+  //     wrong payload fails rather than passing for having drawn something. The
+  //     white ground is asserted in the DARK theme, because an inverted QR fails
+  //     on many scanners and that is the one thing here that must not follow the
+  //     theme. Nothing is fetched to draw it, which is the whole reason the
+  //     encoder is ours: a QR service would take this permalink — and the
+  //     selected point at full precision inside it — in the URL of an image
+  //     request.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await booted(context, `${BASE}#point=41.88250,-87.62850&layers=congress`, async (p) => {
+      await p.route("**/gc.zgo.at/**", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
+      await p.addInitScript(() => {
+        window.__gcEvents = [];
+        window.goatcounter = { count: (vars) => window.__gcEvents.push(vars) };
+        document.documentElement.setAttribute("data-theme", "dark");
+      });
+    });
+    await page.click(".share-btn");
+    const drawn = await page.waitForFunction(() => {
+      const svg = document.querySelector(".share-popover-qr svg");
+      return svg ? { rects: (svg.querySelector("path").getAttribute("d").match(/h1v1h-1z/g) || []).length,
+                     ground: svg.querySelector("rect").getAttribute("fill") } : null;
+    }, null, { timeout: QUERY_TIMEOUT }).then((h) => h.jsonValue(), () => null);
+    const urls = await page.evaluate(() => window.ChiExplorer.shareUrls());
+    const expect = await page.evaluate((u) => window.ChiExplorer.qrDarkModules(u), urls.qr);
+    const otherPayload = await page.evaluate((u) => window.ChiExplorer.qrDarkModules(u), urls.link);
+    check("the share popover draws a QR of THIS view's qr-tagged link",
+      !!drawn && !!expect && drawn.rects === expect.dark && drawn.rects !== otherPayload.dark,
+      `drawn=${drawn && drawn.rects} qr=${expect && expect.dark} link=${otherPayload && otherPayload.dark} v=${expect && expect.version}`);
+    check("the QR payload carries utm_medium=qr and the same point and layers",
+      /[?&]utm_medium=qr(&|#)/.test(urls.qr) && /#point=41\.88250,-87\.62850/.test(urls.qr) && /layers=congress/.test(urls.qr),
+      urls.qr);
+    check("the QR keeps a white ground in the dark theme, so it still scans",
+      !!drawn && drawn.ground === "#ffffff", drawn && drawn.ground);
+    const events = await page.evaluate(() => (window.__gcEvents || []).filter((v) => v && v.event && /^share-qr$/.test(v.path)).map((v) => v.path));
+    check("drawing the QR is counted once", events.length === 1, JSON.stringify(events));
+    await context.close();
+  }
+
   // 1f. COMPARISON STATS. With Congress pinned at the Loop and the State
   //     House on, the pinned card carries "Stats", and the screen it opens
   //     counts people from the shipped Census block files: IL-7 holds
