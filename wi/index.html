@@ -16176,7 +16176,19 @@ function initWisconsinExplorer() {
                   }
                 }, function (e) {
                   out.push("error: " + String(e && e.message || e));
-                  if (record) { countyResults.push({ via: false, county: null, inArchive: false }); hovers.push(null); }
+                  if (!record) return;
+                  hovers.push(null);
+                  // A query that errored names no county, so ask the archive
+                  // itself: a tile feature under the point carries its county
+                  // key, and only a point no archived district holds can be a
+                  // live county's. Unreadable, it stays unknown (null), which
+                  // the probe never forgives as a live source's outage.
+                  return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
+                    var tf = findFeatureContaining(fc, p), c = tf && tf.properties ? tf.properties._c : null;
+                    countyResults.push({ via: false, county: c != null ? c : null, inArchive: c != null && !!keys[c] });
+                  }, function () {
+                    countyResults.push({ via: false, county: null, inArchive: null });
+                  });
                 });
               });
             }, Promise.resolve());

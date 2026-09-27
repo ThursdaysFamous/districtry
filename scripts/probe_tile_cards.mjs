@@ -239,7 +239,11 @@ try {
       // ("signal is aborted") where the other fails to connect ("Failed to
       // fetch"), which failed CI on 2026-09-27 at a southern live county. One
       // run erroring alone is still a difference, and stays in `bad`
-      const sameErr = (r) => county && /^error:/.test(r.tiles || "") && /^error:/.test(r.file || "");
+      // ... and ONLY for a point the archive does not hold: an archived
+      // county's both runs read this site's own files and tiles, so an error
+      // in both is a real failure, never somebody else's outage. A point whose
+      // archive status is unknown (null) is not forgiven either.
+      const sameErr = (r) => county && r.inArchive === false && /^error:/.test(r.tiles || "") && /^error:/.test(r.file || "");
       const bad = res.filter((r) => r.tiles !== r.file && !sameErr(r));
       const errs = res.filter((r) => !sameErr(r) && (/^error:/.test(r.tiles || "") || /^error:/.test(r.file || "") ||
         /^error:/.test(r.hoverTiles || "")));
