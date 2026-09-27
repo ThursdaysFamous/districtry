@@ -940,9 +940,15 @@ jobs:
       #
       # The second half is the ceiling that stops the forgiveness becoming a
       # hole: the staleness guard reads that workflow's own run history and
-      # fails once 60 days pass with no success. Its --selftest is the decision
-      # alone, against fixed dates — the API is never called here. Stdlib only,
-      # no network on either.
+      # fails once 60 days pass with no VERIFICATION — a run whose rebuild step
+      # ran, not merely one that concluded success, which a forgiven run also
+      # does. Its --selftest covers three things and never calls the API: the
+      # ceiling decision against fixed dates, the forgiven-run classifier over
+      # real API payload shapes (including a continue-on-error step's masked
+      # "success", which must not count), and the coupling itself — it reads
+      # the workflow and fails if that rebuild step is renamed or stops being
+      # conditional on the scrape's exit code, because either would empty the
+      # guard silently. Stdlib only, no network on either.
       - name: The Court of Appeals job forgives only an unreachable host, and not forever
         if: ${{ !cancelled() }}
         run: |

@@ -119,7 +119,7 @@ python3 scripts/probe_user_agents.py --selftest           # read_robots() over s
 python3 scripts/probe_user_agents.py --check              # user-agent measurements vs the tree; retired brands; unmeasured browser-string files; the figures CLAUDE.md, the guidebook and scraper_common.py quote
 python3 wi/scripts/build_wi_circuit_court_roster.py --selftest      # the circuit-court name join: three recoveries, and the collisions it must refuse
 python3 wi/scripts/wi_coa_scraper.py --selftest                    # the Court of Appeals scrape forgives ONE failure: 7 shapes forgiven as exit 75, 10 kept red
-python3 wi/scripts/wi_coa_staleness.py --selftest                  # and not forever: the 60-day ceiling's decision, against fixed dates
+python3 wi/scripts/wi_coa_staleness.py --selftest                  # and not forever: the 60-day ceiling, the forgiven-run classifier, and the workflow coupling it reads
 python3 wi/scripts/mps_school_board_scraper.py --selftest          # the MPS board scrape's eight guards on doctored pages; the parse matching MPS's live HTML is the weekly run's question
 python3 wi/scripts/validate_sources.py --selftest        # the LTSB filing watcher: a new filing (the layer is named for its window), a redraw at an unchanged count, a moved count
 python3 wi/scripts/wi_county_board_scraper.py --selftest            # the county board scrape's robots decision: a site-wide disallow refuses, an API host's 403 does not, 5xx and 202 refuse, and the Archive rung never routes round a disallow
