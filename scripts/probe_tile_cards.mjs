@@ -47,6 +47,7 @@
 // the day its county enters the archive, wherever the points happen to land.
 
 import { chromium } from "playwright";
+import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { ROOT, instances, vendorDir } from "./probe_points.mjs";
@@ -56,6 +57,8 @@ const PAIRS = +(process.env.POINTS || 20);
 const TAGS = process.env.TAGS ? process.env.TAGS.split(",") : instances();
 const ONLY = process.env.LAYERS ? new Set(process.env.LAYERS.split(",")) : null;
 const SOURCES = JSON.parse(readFileSync(join(ROOT, "layer-sources.json"), "utf8"));
+const MIRROR = existsSync(join(ROOT, "tiger-mirror.json"))
+  ? JSON.parse(readFileSync(join(ROOT, "tiger-mirror.json"), "utf8")).layers : {};
 
 const EDGE_TOLERANCE_M = 2; // scripts/build_vector_tiles.py's gate
 let seed = 13;
@@ -182,6 +185,22 @@ try {
         const p = join(ROOT, f.replace(/^\/+/, ""));
         return existsSync(p) ? (JSON.parse(readFileSync(p, "utf8")).features || []) : [];
       });
+      // a layer mirrored from a live source (scripts/mirror_tiger_tiles.py)
+      // ships no file: its points come from the set the record says was
+      // fetched, asked for again through curl (which honours a proxy where
+      // Node's fetch does not). Esri rings are enough to place points.
+      if (!feats.length && MIRROR[`${tag}:${id}`]) {
+        try {
+          const body = execFileSync("curl", ["-sS", "--fail", "--retry", "3", "--max-time", "300",
+            MIRROR[`${tag}:${id}`].query], { maxBuffer: 1 << 30 });
+          for (const f of JSON.parse(body).features || []) {
+            if (f.geometry && f.geometry.rings) feats.push({ geometry: { type: "Polygon", coordinates: f.geometry.rings } });
+          }
+        } catch (e) {
+          console.log(`  FAIL  ${tag}:${id} — could not fetch the mirrored set to place points: ${String(e).slice(0, 200)}`);
+          problems++; continue;
+        }
+      }
       if (!feats.length) { console.log(`  FAIL  ${tag}:${id} — layer-sources.json names no file to place points in`); problems++; continue; }
       seedFor(`${tag}:${id}`);
       const pts = pointsFor(feats);

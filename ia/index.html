@@ -12202,6 +12202,7 @@ function initIowaExplorer() {
 
   registerLayer({
     id: "county-subdivision",
+    tiles: "data/app/tiles/county-subdivision.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "County Subdivision",
     subOf: "county",
@@ -12353,6 +12354,7 @@ function initIowaExplorer() {
 
   registerLayer({
     id: "municipality",
+    tiles: "data/app/tiles/municipality.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "City",
     emptyNote: "This point is not in a city. Iowa's civil townships are " +

@@ -11682,6 +11682,7 @@ function initChiExplorer() {
 
   registerLayer({
     id: "county",
+    tiles: "data/app/tiles/county.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "County",
     overlay: {
@@ -11858,6 +11859,7 @@ function initChiExplorer() {
 
   registerLayer({
     id: "township",
+    tiles: "data/app/tiles/township.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     subOf: "county",
     label: "Township / County Subdivision",
@@ -12130,6 +12132,7 @@ function initChiExplorer() {
 
   registerLayer({
     id: "municipality",
+    tiles: "data/app/tiles/municipality.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "geography",
     label: "Municipality",
     overlay: {
@@ -12242,6 +12245,7 @@ function initChiExplorer() {
 
   registerPolygonLayer({
     id: "school-district-unified",
+    tiles: "data/app/tiles/school-district-unified.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "Unified School District",
     loader: loadIlSchoolUnified,
@@ -12262,6 +12266,7 @@ function initChiExplorer() {
 
   registerPolygonLayer({
     id: "school-district-secondary",
+    tiles: "data/app/tiles/school-district-secondary.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "High School District",
     loader: loadIlSchoolSecondary,
@@ -12277,6 +12282,7 @@ function initChiExplorer() {
 
   registerPolygonLayer({
     id: "school-district-elementary",
+    tiles: "data/app/tiles/school-district-elementary.pmtiles", // vector tiles mirrored from TIGERweb (scripts/mirror_tiger_tiles.py)
     group: "schools",
     label: "Elementary School District",
     loader: loadIlSchoolElementary,

@@ -22,6 +22,8 @@ on:
       - "*/data/app/*.json"
       - "*/data/app/tiles/**"
       - "layer-sources.json"
+      - "tiger-mirror.json"
+      - "scripts/mirror_tiger_tiles.py"
       - "engine/index.html/vector-tiles.txt"
       - "scripts/build_vector_tiles.py"
       - "scripts/validate_vector_tiles.py"
@@ -80,6 +82,13 @@ jobs:
       # answering from the old districts. No tippecanoe needed.
       - name: Every shipped archive answers as its file does today
         run: python3 scripts/build_vector_tiles.py --committed
+
+      # The archives mirrored from Census TIGERweb (phase 6) ship no file to be
+      # held to; they are held to the record of what was fetched and built,
+      # and to the app's own loader call, so the archive cannot come to hold
+      # a different layer or fields from the ones the card reads. Offline.
+      - name: Every mirrored archive is the one recorded, for the loader the app calls
+        run: python3 scripts/mirror_tiger_tiles.py --check
 
       # The app's own tile reader, run as shipped, against the Python decoders
       - name: The app's tile reader decodes the shipped archives as Python does
