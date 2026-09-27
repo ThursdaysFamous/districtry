@@ -38,6 +38,60 @@ Milwaukee and Racine school boards all name people.
 
 ## Status — this session owns this section
 
+**2026-09-27 (00:25). #1206 IS ACCEPTED ON `3d5112f` AND THE BRANCH IS ON HOLD AT THE
+MANAGER'S REQUEST — no more pushes until they merge; anything I find goes to them as a
+message instead.** The interval is settled at dp interval=4 on the rule they
+pre-committed, and the decision rested on the reachability measurement rather than on
+the area proxy they asked for.
+
+**THEY VERIFIED IT INDEPENDENTLY RATHER THAN READING MY TABLE**, and added a control I
+had not: a known-answer check on the SUBDIVISION layer too (downtown Madison returns
+"Madison city"), which is the half my own controls left open — I had controlled the
+hydrography layer and taken the subdivision layer's answers on trust after fixing it.
+They re-derived the answer change under the app's own first-match-in-file-order rule at
+43.893508,-91.190077 (shipped map says La Crosse 18, the new file says La Crosse 19),
+confirmed both residuals re-derive from the shipped bytes, and measured +411,935 bytes
+gzipped — the same figure as my +402 KB, since 411,935/1024 is 402.3.
+
+**THE HOLD IS A PROCESS LESSON AND IT IS MINE.** I pushed five times while #1206 was
+under review, each push with a reason I would defend on its own — the area table, the
+reachability measurement, the retraction, the sibling builder's retraction. The
+cumulative effect was that the reviewer re-ran the whole battery on every head, because
+the gates live in the files I was touching, and could not converge on a head that kept
+moving while CI was mid-run. **A correct push can still be the wrong move when somebody
+is mid-review of a PR whose gates are inside the diff.** What I should have done after
+the first retraction is ask whether to batch the rest. Recorded because nothing in the
+repo says it and I would otherwise do it again.
+
+**THE TWO RETRACTIONS ARE WHAT THIS CHANGE WILL BE REMEMBERED FOR, AND THE SHAPE IS
+WORTH KEEPING.** I had a ruling in hand accepting "open water" in writing, no gate could
+see the claim, the coordinates look offshore, and the water reading made my own declared
+harm smaller. Measuring it anyway returned the answer that was worse for me: dry land,
+Gardner town. Then the same sentence turned out to be in the chambers builder — merged
+three hours earlier — about WASHINGTON ISLAND, which is inhabited, and correcting one
+builder while leaving its sibling asserting the falsehood would have been worse than
+either. **The incentive ran the other way every time and the measurement is the only
+thing that settled it.**
+
+**FOUR INSTRUMENT ERRORS IN ONE PASS, ALL ONE FAMILY**: a district-coverage test
+tautological by construction (a wrong-name ring's parents ARE the districts claiming it);
+a subdivision query whose `.get("features", [])` turned an API error object into "outside
+every subdivision" for fifteen of fifteen points; layer 0 read as Incorporated Places
+when it is Estates; and both "open water" claims. **Not one was caught by reasoning about
+the answers. Every one was caught by a control — a point whose answer I already knew.**
+Fifteen identical implausible answers is what raised the second; the Marathon anchor is
+what proved it. The rule I would add: **a geographic claim about a coordinate gets a
+control before it is written down, and "I know that region" is not a control.**
+
+**QUEUE BEHIND THE MERGE, unchanged and confirmed by the manager**: the chambers
+migration onto `dropped_rings.py` (Door's declaration surviving in substance), then
+#57(b)'s mps ladder with `--selftest` and a CI step, then #57(c) — `wi_coa_staleness.py`
+states "about 6%" from a 2-in-7 rate where the SCHEDULED rate is 1 of 5, so 0.8^8 is
+16.8%, and the docstring names neither denominator. #57(a) stays deferred on an absent
+symptom, to re-open on the first scheduled failure. The aldermanic and NG911 dissolves
+stay recorded UNASKED beside their own `SIMPLIFY`.
+
+
 **2026-09-27 (00:15). THE SHIPPED SUPERVISORY MAP GIVES 62 WRONG OR MISSING ANSWERS ON
 GROUND A PERSON CAN STAND ON, and measuring that disproved a claim I had already
 published and the manager had already reasoned from.** #1206 stays green and unchanged
