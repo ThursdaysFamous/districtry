@@ -1490,3 +1490,69 @@ county scale, and it is recorded rather than tuned away.
 subcircuit (30 KB) cost less than an archive's first read. Iowa's and
 Michigan's city wards and New York's county legislature test coverage by
 loading each unit's whole file, so tiles would only add requests.
+
+### Phase 6a: the Census TIGERweb layers mirrored into tile archives (2026-09-27)
+
+Phase 6 is the layers still drawn from somebody else's server. Measured from
+`layer-sources.json` that day, they fall into four groups: sixteen Census
+TIGERweb layers that download a whole state (Illinois's county, township,
+municipality and three school-district layers; Iowa's two, Michigan's four and
+Wisconsin's four), the six ZIP layers that ask the Census about each point,
+the city open-data portals (Chicago, New York, San Francisco), and about thirty
+county GIS servers. The operator's aim is that every layer is drawn the same
+way; this is the first group, because its publisher is one, its data is public
+domain and it changes once a year.
+
+**THE ARCHIVE IS COMMITTED AND THE WHOLE SET IS NOT** (the operator's choice).
+`scripts/mirror_tiger_tiles.py` fetches each set exactly as the app does — Esri
+JSON at `geometryPrecision=5` with the app's STATE filter and field list —
+converts it with the engine's own `esriToGeoJSON`, run in Node from its block
+rather than re-implemented, because the server's GeoJSON export drops interior
+rings, builds the archive through `build_vector_tiles.py`'s own build and
+gate, and writes `tiger-mirror.json`: the query, the date, the feature count, a
+hash of the canonical data and a hash of the archive. The whole set is still
+fetched live, only when something needs it (the comparison stats, a pinned
+district's outlines, boundary-street labels, or an archive that cannot be
+read). Committing a simplified copy too would have roughly doubled the size.
+
+| | Sets fetched | Archives |
+|---|---|---|
+| Illinois (6) | 44.4 MB | 12.6 MB |
+| Iowa (2) | 14.2 MB | 4.7 MB |
+| Michigan (4) | 19.0 MB | 9.1 MB |
+| Wisconsin (4) | 25.6 MB | 7.2 MB |
+| **All 16** | **103.2 MB** | **33.6 MB** |
+
+Every archive passed the builder's gate: no point two metres or more from an
+edge answered differently from the fetched set. The card probe
+(`scripts/probe_tile_cards.mjs`, which now places a mirrored layer's points
+from the recorded query) found every one of the sixteen cards identical from
+tiles and from the live set, including the Illinois township and municipality
+cards, which join officeholders.
+
+**A FIRST CLICK NO LONGER SENDS THE POINT TO THE CENSUS.** These layers carried
+an `.atPoint` hook that asked TIGERweb which district holds the reader's point;
+the card now reads the tile under it from this site, and the hook is left only
+as the fallback when an archive cannot be read. Measured by
+`scripts/probe_point_transmission.mjs`, the layers sending a point on a first
+click went 19 → 13 in Illinois, 3 → 1 in Iowa, 5 → 1 in Michigan and 6 → 2 in
+Wisconsin, and the privacy page says so.
+
+**HOW IT STAYS TRUE.** `mirror_tiger_tiles.py --check` (offline, in
+`vector-tiles.yml`) fails when a mirrored layer is not registered with
+`tiles:`, when the app's own `tigerStatewideLoader` call no longer names the
+service, layer and fields the archive was built from, or when an archive's
+bytes are not the ones recorded — broken on purpose both ways, it names the
+layer and the fix. It cannot see the Census data change, so
+`update-tiger-tiles.yml` refetches every Sunday, rebuilds only a layer whose
+data hash moved, gates it, moves the service-worker cache name of each app
+whose archive it replaced (a replaced archive reaches a returning visitor only
+that way, and `check_cache_version.py` enforces it), and opens a pull request.
+**TIPPECANOE DOES NOT WRITE THE SAME BYTES TWICE** — rebuilding identical data
+gave a different archive hash — which is why the job compares the DATA hash
+and never rebuilds unchanged data: a weekly PR of noise otherwise.
+
+Still live after 6a: the six ZIP layers, the city portals and the county
+servers. `build_vector_tiles.py --committed` now defers the sixteen mirrored
+archives to the mirror's own check, since they have no shipped file to be held
+to.

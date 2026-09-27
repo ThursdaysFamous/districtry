@@ -1,0 +1,117 @@
+{
+  "_comment": "Written by scripts/mirror_tiger_tiles.py --refresh; held to the tree by its --check. One entry per Census TIGERweb layer mirrored into a tile archive.",
+  "layers": {
+    "ia:county-subdivision": {
+      "query": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query?where=STATE%3D%2719%27&outFields=GEOID,NAME,BASENAME,STATE,COUNTY,LSADC&outSR=4326&f=json&geometryPrecision=5",
+      "fetched": "2026-09-27",
+      "features": 1663,
+      "data_sha256": "a90e688a8358e9555f80cbf9e9a4e2441c33ffbdf0b00eb105644e9bc8b980e8",
+      "archive_sha256": "bc8b9d3ea0717c558697e243eae8c690edbc0feb2f6f1a733c1ff35e17ba2f9d"
+    },
+    "ia:municipality": {
+      "query": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query?where=STATE%3D%2719%27&outFields=GEOID,NAME,BASENAME,STATE&outSR=4326&f=json&geometryPrecision=5",
+      "fetched": "2026-09-27",
+      "features": 939,
+      "data_sha256": "f2eec9c19732b82141b47ce4bd9443f078808973bdb770b0cecb3022629070ce",
+      "archive_sha256": "eca81398f176b7b25e8074e5c9e13a0ff61cbf4566ee32aca841f703d6c13840"
+    },
+    "il:county": {
+      "query": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query?where=STATE%3D%2717%27&outFields=GEOID,NAME,BASENAME,STATE,LSADC&outSR=4326&f=json&geometryPrecision=5",
+      "fetched": "2026-09-27",
+      "features": 102,
+      "data_sha256": "4099cdfa1b02fe2d368605d8e76471c6f0b27de0485829061ba2decdabb39d4b",
+      "archive_sha256": "f2dfe0ad559e6821b1b75b97a3f294896e1822b4f8092c4eb63319cc764f07a5"
+    },
+    "il:municipality": {
+      "query": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query?where=STATE%3D%2717%27&outFields=GEOID,NAME,BASENAME,STATE,LSADC&outSR=4326&f=json&geometryPrecision=5",
+      "fetched": "2026-09-27",
+      "features": 1294,
+      "data_sha256": "50d928f064a4bec43ad7e26faf6e775896198e4b5fa5a3c3353ca5987a5e2a74",
+      "archive_sha256": "47d1830790434b0f38c31fd688cd87e8bc1fad0e9ac3aad54ae11b8cfb76210e"
+    },
+    "il:school-district-elementary": {
+      "query": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2/query?where=STATE%3D%2717%27&outFields=GEOID,NAME,STATE&outSR=4326&f=json&geometryPrecision=5",
+      "fetched": "2026-09-27",
+      "features": 371,
+      "data_sha256": "cabc8a6fc2c9d1339642fff5280300bb0467b198ac408766c15c71d622b0e18c",
+      "archive_sha256": "3749884afe369e64065603e6dcd57f801994964ab3506902a7423e142b4a4a22"
+    },
+    "il:school-district-secondary": {
+      "query": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1/query?where=STATE%3D%2717%27&outFields=GEOID,NAME,STATE&outSR=4326&f=json&geometryPrecision=5",
+      "fetched": "2026-09-27",
+      "features": 105,
+      "data_sha256": "55ca7aa73fda8b022e84ab35804afb9e22f38a3eebdd57542decbc8bf538ebe0",
+      "archive_sha256": "877cd8d7d04d851250622926aa8ae9ec7d89cb0fe1e157d28bab409f4c0deb02"
+    },
+    "il:school-district-unified": {
+      "query": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0/query?where=STATE%3D%2717%27&outFields=GEOID,NAME,STATE&outSR=4326&f=json&geometryPrecision=5",
+      "fetched": "2026-09-27",
+      "features": 387,
+      "data_sha256": "0254fdecb36e5673971cbf3be36f85b3c497ddd99985587d8ff4a5dd3024a680",
+      "archive_sha256": "fc0f6d9a29fab7acbd4ac898e7d7b8e0b1d1fd2393afc1176438e480f4153c1c"
+    },
+    "il:township": {
+      "query": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query?where=STATE%3D%2717%27&outFields=GEOID,NAME,BASENAME,STATE,COUNTY,LSADC&outSR=4326&f=json&geometryPrecision=5",
+      "fetched": "2026-09-27",
+      "features": 1695,
+      "data_sha256": "65c42b14cc17019329a40ab04674c194215681bf67bd409f486cd127c0434518",
+      "archive_sha256": "5a5eb533812572e30ff479c34e7059f618206dad08a43f074a9532c7a55315a9"
+    },
+    "mi:county-subdivision": {
+      "query": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query?where=STATE%3D%2726%27&outFields=GEOID,NAME,BASENAME,STATE,COUNTY,LSADC&outSR=4326&f=json&geometryPrecision=5",
+      "fetched": "2026-09-27",
+      "features": 1581,
+      "data_sha256": "894159d9b10dc77a0be1d92c6cd913eaf794ccd6d47aad4a0e5b0bd6333bffeb",
+      "archive_sha256": "5a212ceed6a3b60cec300795bccab12d95ef8238a1107652f71eddbae15ecb49"
+    },
+    "mi:municipality": {
+      "query": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query?where=STATE%3D%2726%27&outFields=GEOID,NAME,BASENAME,STATE,LSADC&outSR=4326&f=json&geometryPrecision=5",
+      "fetched": "2026-09-27",
+      "features": 533,
+      "data_sha256": "7c0ababfe5da09b51a528cf5b279d9564767e84a144402394a61756f7bee974f",
+      "archive_sha256": "6b5736ab0f01d777de81f92542c6e8143b952e949c4786b0bf8248d780ea0432"
+    },
+    "mi:school-district-elementary": {
+      "query": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2/query?where=STATE%3D%2726%27&outFields=GEOID,NAME,STATE,LOGRADE,HIGRADE&outSR=4326&f=json&geometryPrecision=5",
+      "fetched": "2026-09-27",
+      "features": 27,
+      "data_sha256": "190ce884b054e9ccb2efabe7004c75fe23a04725308b5a5366ee24c1ffd3fc04",
+      "archive_sha256": "0d86a45dde730c0909fb4ab0fa5934df98bc3ec1912c538c28ddb94b0cda503d"
+    },
+    "mi:school-district-unified": {
+      "query": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/0/query?where=STATE%3D%2726%27&outFields=GEOID,NAME,STATE,LOGRADE,HIGRADE&outSR=4326&f=json&geometryPrecision=5",
+      "fetched": "2026-09-27",
+      "features": 514,
+      "data_sha256": "5f16c7009fc371206bb0b68cbce3c3856baf71d865b75050e335adadfd8d6209",
+      "archive_sha256": "ef45936d3d1a4a2cc3a4afd2564fc5e189373cf49389862a3c3df419bac84803"
+    },
+    "wi:county-subdivision": {
+      "query": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/1/query?where=STATE%3D%2755%27&outFields=GEOID,NAME,BASENAME,STATE,COUNTY,LSADC&outSR=4326&f=json&geometryPrecision=5",
+      "fetched": "2026-09-27",
+      "features": 1925,
+      "data_sha256": "3b58a67952dc6ff2e8eff30dab6f514f1c61b3dc436e49491503a66991f90aff",
+      "archive_sha256": "87443ee5d8b20db84173cff6a803a076969ebaa37b651d7ad505df25695826be"
+    },
+    "wi:municipality": {
+      "query": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/4/query?where=STATE%3D%2755%27&outFields=GEOID,NAME,BASENAME,STATE,LSADC&outSR=4326&f=json&geometryPrecision=5",
+      "fetched": "2026-09-27",
+      "features": 608,
+      "data_sha256": "631ca55292132602000cdabec493279ce8052f0d34b5e3a4d467cec9f1284cce",
+      "archive_sha256": "33f02ece8c78350aa0250580777f9ddcc08a6d2ebc8a1551687b438047d2b787"
+    },
+    "wi:school-district-elementary": {
+      "query": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/2/query?where=STATE%3D%2755%27&outFields=GEOID,NAME,STATE&outSR=4326&f=json&geometryPrecision=5",
+      "fetched": "2026-09-27",
+      "features": 43,
+      "data_sha256": "07c6f5dc405bb9160d19274136797f2d93c304ffdf683d5a18ac31612eecc978",
+      "archive_sha256": "06990bb30616e54070cd7498b1f27bcd03845da88df09822f4f11ec015e04bac"
+    },
+    "wi:school-district-secondary": {
+      "query": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/School/MapServer/1/query?where=STATE%3D%2755%27&outFields=GEOID,NAME,STATE&outSR=4326&f=json&geometryPrecision=5",
+      "fetched": "2026-09-27",
+      "features": 10,
+      "data_sha256": "0a871e72b857b064f6955ba3f9a047f0a27fff51a83bdce34af09ceb99cdfc54",
+      "archive_sha256": "83cc6bb485c1bb05d3862ab5351aeec5604399b2eaf58f415d36f35de197c9a5"
+    }
+  }
+}
