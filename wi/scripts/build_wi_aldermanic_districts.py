@@ -72,6 +72,11 @@ sys.path.insert(0, SCRIPT_DIR)
 from build_wi_supervisory_districts import (  # noqa: E402
     _curl, fetch_layer, _model, _districts_at, LTSB_ORG, MAPSHAPER, STATE_BBOX,
     WARDS)
+import dropped_rings as drings  # noqa: E402  (shared reader — do not fork)
+
+# The layer name the dropped-ring records are keyed by. One layer here, but the
+# field is plural in `classify` because one ring can be dropped from several.
+LAYER_NAME = "aldermanic"
 
 REPO_ROOT = os.path.dirname(SCRIPT_DIR)
 APP_DATA_DIR = os.path.join(REPO_ROOT, "data", "app")
@@ -349,19 +354,119 @@ LOCAL_COMPOSITION = {
 # 9% (the supervisory build's retain) measured 99.675% agreement here — city
 # districts are small, so the same retain cuts proportionally deeper; 25%
 # clears the 99.9% bar with the file still compact.
-# THE DROPPED-RING QUESTION HAS NOT BEEN ASKED OF THIS LAYER, AND THAT IS
-# RECORDED RATHER THAN ASSUMED CLEAN. `wi/scripts/dropped_rings.py` measures what
-# a simplification setting costs a reader: on the county-supervisory layer, a
-# visvalingam PERCENTAGE of this shape dropped 640 distinct rings of which 102
-# changed the district a reader is told they are in, where Douglas-Peucker at a
-# metre interval dropped 377 and changed 3. That is a property of the algorithm
-# rather than of that one layer, so the same is likely here and is NOT measured.
+# THE DROPPED-RING QUESTION HAS NOW BEEN ASKED, and the block that used to stand
+# here said it had not been. Measured 2026-09-27 on the July 2026 filing, 866
+# districts over 1,442 source rings, every candidate setting run against the same
+# fetch and the same dissolve:
 #
-# Asking costs a full-precision rebuild — the gate compares the source against the
-# simplifier's output, so it needs the whole pre-simplification dissolve — which is
-# why it was not folded into the change that built the mechanism. Whoever next
-# touches this setting should run it.
-SIMPLIFY = "25%"
+#   setting                  rings  dropped  RING-HARM  POINTS  total  gzipped
+#   visvalingam 25%           1354       70          1       0      1  600,983  <- stays
+#   dp interval=1             1354       68          1       0      1  649,211
+#   dp interval=5             1349       73          1       4      5  417,512
+#   dp interval=15            1339       80          2   FAILS      -  319,702
+#
+# THE OUTCOME IS A MEASUREMENT AND NO SETTINGS CHANGE. visvalingam 25% ties
+# dp interval=1 at one changed answer and is 48,228 bytes smaller gzipped, so it
+# wins outright; dp interval=5 costs four more; dp interval=15 does not clear the
+# builder's own >=99.9% point-agreement gate at all (99.650%), so it was never
+# eligible however small it is.
+#
+# TWO INSTRUMENTS COUNT CHANGED ANSWERS AND ONE OF THEM ALMOST PICKED THE WRONG
+# SETTING. RING-HARM is a dropped ring that changes what a reader is told;
+# POINTS is `validate()`'s 4,000-point sample, which measures boundary
+# DISPLACEMENT and cannot see a 6 m2 ring. They are blind to each other in
+# opposite directions. Read alone, ring-harm ties three settings at 1 and the
+# file-size tiebreak picks dp interval=5 — which is what a first pass of this
+# change did, writing dp5 in and rebuilding before the point column existed. The
+# builder's own output caught it: 3996/4000 where the shipped setting reads
+# 4000/4000, printed on the line under the dropped-ring verdict. A TIEBREAK
+# APPLIED ON ONE INSTRUMENT IS NOT A TIEBREAK; count every changed answer first.
+#
+# GZIPPED IS THE COLUMN, NOT RAW, and it did not change the ordering here — but
+# `scripts/build_legislative_boundaries.py` records raw and gzipped disagreeing
+# in SIGN on its own files, so raw could not have settled it and measuring both
+# was the only way to know that.
+#
+# WHAT DID CHANGE IS THAT THE QUESTION IS NOW GATED. The dissolve and the
+# simplify are two mapshaper calls so there IS a source to compare against, and
+# every dropped ring is answer-tested on every run against the declaration below.
+SIMPLIFY = ["-simplify", "visvalingam", "keep-shapes", "25%"]
+SIMPLIFY_LABEL = "visvalingam 25%"
+
+# Rings the simplifier drops that CLOSE A GAP — ground no district covered before
+# or after — measured at the shipped setting rather than assumed. Held so the
+# number cannot drift silently; a change means the filing moved and wants reading.
+GAP_CLOSED = 67
+
+ACCEPTED_DROPPED_RINGS = [
+    {
+        # CITY OF WAUSAU DISTRICT 11, a 6.35 m2 ring of 4 vertices. Every setting drops
+        # it — visvalingam at 25%, which ships, and Douglas-Peucker at 1, 5 and
+        # 15 m — so the alternative is not a finer setting but a different
+        # simplifier, which is the same conclusion the supervisory layer's Door
+        # County ring reached.
+        #
+        # IT IS DRY LAND, MEASURED AND NOT INFERRED. TIGER's areal hydrography
+        # returns NO water polygon at EITHER the ring's centre or its interior
+        # point — both were read, because they are 50.6 m apart and one answer
+        # would not have covered the other — with three controls
+        # answering first: open Lake Michigan returns "Lk Michigan", Lake
+        # Winnebago returns "Lk Winnebago", and a point on land in downtown
+        # Wausau returns no water. That order matters — an API error is not an
+        # empty answer, and a default read as "no water" is how a failure becomes
+        # a confident finding.
+        #
+        # AND THE CENSUS PUTS IT IN MAINE VILLAGE, NOT IN WAUSAU. Its key is
+        # Wausau's (COUSUB 84475) and TIGER's county-subdivision layer answers
+        # Maine village (COUSUB 48225), the neighbouring municipality in the same
+        # county — so it is a disagreement between LTSB's ward fabric and the
+        # census's subdivision fabric over 6 m2, not an island and not water. A
+        # subdivision hit names a place and says nothing about the surface, which
+        # is why the hydrography above is the finding and this is context.
+        #
+        # IT IS A HAIRLINE, NOT A PATCH. Its centre and the interior point below
+        # are 50.6 m apart, so 6.35 m2 is spread along something around a hundred
+        # metres long — the shape a boundary disagreement makes, not a parcel. The
+        # WIDTH is deliberately not stated: it follows only if the interior point
+        # sits at one end, and nothing measured says it does.
+        #
+        # A READER STANDING THERE IS TOLD WAUSAU 11 TODAY AND WOULD BE TOLD
+        # NOTHING. That is the false-silence harm rather than a wrong name, and it
+        # is stated rather than called negligible: it is ground a person can be on.
+        #
+        # EVERY FIGURE HERE CAME OFF THE GATE, AND THE FIRST DRAFT OF THIS ENTRY
+        # GOT TWO OF THEM WRONG — and a THIRD copy of the first of them survived
+        # into review, inside `why` below, where the manager session caught it.
+        # `check()` validates `kind`, `features`, the two answers, `interior` and
+        # `m2`/`lat`/`lng`, and never reads `why` or `date`: so the gate corrected
+        # every copy it can see and left the one it cannot, in this same
+        # dictionary. `why` is the first field a maintainer reads to decide
+        # whether an entry still holds, and it is the field that carried "open
+        # Lake Michigan" through five copies elsewhere in this repo.
+        #
+        # THE 6.06 IN THE NEXT SENTENCE IS DELIBERATE — it names the first draft's
+        # error and must stay. It said 6.06 m2, read off a `%f`-rounded
+        # `0.000006 km2` rather than the measurement, and it put the INTERIOR
+        # point in `lat`/`lng`, where the matcher wants the RING's centre — 50.6 m
+        # away, so it matched no dropped ring and the check refused the build and
+        # printed the correct row. A declaration derived from a rounded display is
+        # the same defect as a correction derived by arithmetic.
+        "lat": 44.973516, "lng": -89.674842, "verts": 4, "m2": 6.35,
+        # Inside the ring at 6 decimals, from the gate rather than worked out by
+        # eye, and the point both hydrography reads were taken at.
+        "interior": {"lat": 44.973509, "lng": -89.675484, "decimals": 6},
+        "features": ["aldermanic:84475-11"],
+        "kind": "false-silence",
+        "answer_before": {"aldermanic": ["84475-11"]},
+        "answer_after": {"aldermanic": []},
+        "why": "no tested setting retains it — visvalingam 25% and dp at 1, 5 and "
+               "15 m all drop it; 6.35 m2 of DRY LAND measured against TIGER's "
+               "areal hydrography rather than guessed from the coordinates, which "
+               "the census places in Maine village though its key is Wausau's, "
+               "and the answer it costs is recorded above rather than called harmless",
+        "date": "2026-09-27",
+    },
+]
 PRECISION = "0.000001"
 UNCODED = ("", "00", "0000")
 
@@ -889,19 +994,26 @@ def main():
             "ALDERID": p["ALDERID"].strip(),
         }
 
+    # DISSOLVE AND SIMPLIFY ARE TWO CALLS, NOT ONE, AND THAT IS THE WHOLE REASON
+    # THE DROPPED-RING QUESTION COULD NOT BE ASKED BEFORE. One call produced only
+    # the simplified output, so there was nothing to compare it against; the gate
+    # needs the pre-simplification dissolve as its source. This is the shape
+    # `build_wi_supervisory_districts.py` already uses.
+    def _mapshaper(src, extra, out):
+        subprocess.run(
+            ["npx", "-y", MAPSHAPER, src,
+             "-dissolve2", "KEY", "copy-fields=COUSUBFP,MCD_NAME,CTV,ALDERID"]
+            + extra + ["-o", "precision=" + PRECISION, "format=geojson", out],
+            check=True, cwd=REPO_ROOT)
+        with open(out) as f:
+            return json.load(f)
+
     with tempfile.TemporaryDirectory() as tmp:
         src_path = os.path.join(tmp, "wards-src.geojson")
         with open(src_path, "w") as f:
             json.dump({"type": "FeatureCollection", "features": wards}, f)
-        out_tmp = os.path.join(tmp, "alder.geojson")
-        subprocess.run(
-            ["npx", "-y", MAPSHAPER, src_path,
-             "-dissolve2", "KEY", "copy-fields=COUSUBFP,MCD_NAME,CTV,ALDERID",
-             "-simplify", "visvalingam", "keep-shapes", SIMPLIFY,
-             "-o", "precision=" + PRECISION, "format=geojson", out_tmp],
-            check=True, cwd=REPO_ROOT)
-        with open(out_tmp) as f:
-            dissolved = json.load(f)
+        source = _mapshaper(src_path, [], os.path.join(tmp, "alder-src.geojson"))
+        dissolved = _mapshaper(src_path, SIMPLIFY, os.path.join(tmp, "alder.geojson"))
 
     feats = dissolved["features"]
     if len(feats) != len(shipped_keys):
@@ -916,6 +1028,27 @@ def main():
     if not ok:
         raise RuntimeError("validation failed: %s" % msg)
 
+    # EVERY DROPPED RING IS ANSWER-TESTED, AND THE 4,000-POINT CHECK ABOVE CANNOT
+    # SEE THEM. That check scatters points over 159 municipalities and the one
+    # ring that costs an answer is 6 m2, so it is blind to it by construction —
+    # which is exactly the mistake `wi/WATCH.md` row 58 records being made on the
+    # sibling NG911 layer, where a 20,000-point sample saw zero changed answers
+    # and the rebuild had changed 397 features.
+    records, dstats = drings.classify({
+        LAYER_NAME: {"source": source["features"], "drawn": feats, "key": "KEY"}})
+    dok, dmsg = drings.check(records, dstats, ACCEPTED_DROPPED_RINGS, GAP_CLOSED)
+    print("dropped rings: %s" % dmsg, file=sys.stderr)
+    if not dok:
+        print("\n--- measured declarations for ACCEPTED_DROPPED_RINGS ---",
+              file=sys.stderr)
+        print("GAP_CLOSED = %d" % dstats[drings.KIND_GAP_CLOSED], file=sys.stderr)
+        for r in records:
+            if r.get("harm"):
+                print("  %s" % json.dumps(
+                    {k: r[k] for k in ("m2", "interior", "features", "kind", "answers")
+                     if k in r}, sort_keys=True), file=sys.stderr)
+        raise RuntimeError("dropped-ring check failed: %s" % dmsg)
+
     feats.sort(key=lambda f: (f["properties"]["COUSUBFP"],
                               f["properties"]["ALDERID"]))
     compact = json.dumps({"type": "FeatureCollection", "features": feats},
@@ -925,7 +1058,7 @@ def main():
         f.write(compact)
     print("aldermanic-districts -> data/app/%s: %d districts, %d municipalities; %s; "
           "%d bytes (%s retain, 6dp)"
-          % (OUT_NAME, len(feats), len(shipped_mun), msg, len(compact), SIMPLIFY),
+          % (OUT_NAME, len(feats), len(shipped_mun), msg, len(compact), SIMPLIFY_LABEL),
           file=sys.stderr)
 
 
