@@ -123,10 +123,73 @@
     // scripts/probe_tile_cards.mjs compares: the card a reader sees must be
     // the same either way. The tile answers run first, while the whole file
     // is not yet in memory, or the loader would answer them from it.
+    //
+    // A county-dispatched layer turns its tiles off for the second run
+    // (mod.tilesOff), and each answer also says whether the county that
+    // answered is in the archive at all (`inArchive`): a live county, or a
+    // point just over a county line, is answered from its own source by
+    // design, and the probe does not count it against the tiles. It also
+    // compares the HOVER name: the canvas names a district from the tile's
+    // own properties, with nothing a loader stamps after its fetch, so a
+    // hover that reads a stamped property would differ from the file's.
     tileCardCheck: function (id, points) {
       var mod = getLayerById(id), load = mod && mod.overlay && mod.overlay.load;
       if (!load || !load.tileMod) return Promise.reject(new Error(id + " is not drawn from tiles"));
       var rt = layerRuntime[id], viaTiles = [];
+      if (mod.countyEntries) {
+        var countyResults = [], hovers = [];
+        var byKey = {};
+        mod.countyEntries.forEach(function (e) { byKey[e.key] = e; });
+        function hoverPair(p) {
+          return tileFeaturesAt(tileArchiveFor(mod), p).then(function (fc) {
+            var tf = findFeatureContaining(fc, p);
+            var key = tf && tf.properties._c, entry = key != null && byKey[key];
+            if (!entry || !entry.loadGeometry) return null;
+            var props = {};
+            for (var k in tf.properties) if (tf.properties.hasOwnProperty(k) && k !== "_c") props[k] = tf.properties[k];
+            var tiles = mod.hoverName({ type: "Feature", properties: props, dxCounty: key });
+            return Promise.resolve(entry.loadGeometry()).then(function (g) {
+              var ff = findFeatureContaining(g, p);
+              return { tiles: tiles, file: ff ? mod.hoverName({ type: "Feature", properties: ff.properties, dxCounty: key }) : null };
+            });
+          }).then(null, function (e) { return { tiles: "error: " + String(e && e.message || e), file: null }; });
+        }
+        return countyTileKeys(mod).then(function (keys) {
+          function runCounty(out, record) {
+            return points.reduce(function (chain, p, i) {
+              return chain.then(function () {
+                rt.tileAnswer = null;
+                return Promise.resolve().then(function () { return mod.query(p, -1 - i); }).then(function (r) {
+                  out.push(r == null ? null : JSON.stringify(r, function (k, v) {
+                    return k === "seq" || k === "geometry" ? undefined : v;
+                  }));
+                  if (record) {
+                    countyResults.push({ via: !!(rt.tileAnswer && rt.tileAnswer.point === p),
+                      county: r ? r.dxCounty : null, inArchive: !!(r && keys[r.dxCounty]) });
+                    return hoverPair(p).then(function (h) { hovers.push(h); });
+                  }
+                }, function (e) {
+                  out.push("error: " + String(e && e.message || e));
+                  if (record) { countyResults.push({ via: false, county: null, inArchive: false }); hovers.push(null); }
+                });
+              });
+            }, Promise.resolve());
+          }
+          var tiled = [], whole = [];
+          return runCounty(tiled, true).then(function () {
+            mod.tilesOff = true;
+            return runCounty(whole);
+          }).then(function () {
+            mod.tilesOff = false;
+            return points.map(function (p, i) {
+              var c = countyResults[i];
+              var h = hovers[i];
+              return { point: p, tiles: tiled[i], file: whole[i], viaTiles: c.via, county: c.county, inArchive: c.inArchive,
+                hoverTiles: h ? h.tiles : null, hoverFile: h ? h.file : null };
+            });
+          }, function (e) { mod.tilesOff = false; throw e; });
+        });
+      }
       function run(out, record) {
         return points.reduce(function (chain, p, i) {
           return chain.then(function () {

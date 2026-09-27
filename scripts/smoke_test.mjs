@@ -1134,19 +1134,32 @@ try {
   //     (a) other counties' boundaries are on the map well before it lands,
   //     (b) once it lands it is appended to the drawing and the selected
   //     point's own district — inside the delayed county — gets highlighted.
+  //     Stephenson is a shipped county, so county-board draws it from its
+  //     tile archive (docs/OPTIMIZATION_PLAYBOOK.md §10 phase 5b). This check
+  //     refuses the archive, which is also the check that a layer whose
+  //     archive fails falls back to its whole files (tile-overlay block,
+  //     redrawFromFile) rather than drawing nothing: the Leaflet union is
+  //     what draws here, and what still draws wherever WebGL does not.
   {
     const context = await browser.newContext({ serviceWorkers: "block" });
     const stragglerBody = readFileSync(join(INSTANCE_DIR, STRAGGLER_FILE), "utf8");
     const stragglerFeatures = JSON.parse(stragglerBody).features.length;
     const STRAGGLER_DELAY_MS = 8000;
-    // STRAGGLER_POINT sits inside a district of the delayed county's file
+    // STRAGGLER_POINT sits inside a district of the delayed county's file.
+    // The point is selected only once the layer is loading: a point selected
+    // first makes the union load its own county first (point-first,
+    // docs/OPTIMIZATION_PLAYBOOK.md §10), which is the stalled one, and this
+    // check is about every OTHER county drawing without waiting for it.
     const page = await booted(
       context,
-      `${BASE}#point=${STRAGGLER_POINT}&layers=county-board`,
-      (p) => p.route("**/" + STRAGGLER_FILE, async (r) => {
-        await new Promise((res) => setTimeout(res, STRAGGLER_DELAY_MS));
-        await r.fulfill({ status: 200, contentType: "application/json", body: stragglerBody });
-      })
+      `${BASE}#layers=county-board`,
+      async (p) => {
+        await p.route("**/data/app/tiles/county-board.pmtiles", (r) => r.fulfill({ status: 404, body: "" }));
+        await p.route("**/" + STRAGGLER_FILE, async (r) => {
+          await new Promise((res) => setTimeout(res, STRAGGLER_DELAY_MS));
+          await r.fulfill({ status: 200, contentType: "application/json", body: stragglerBody });
+        });
+      }
     );
     const overlayPathCount = () =>
       page.evaluate(() => document.querySelectorAll("#map .leaflet-overlay-pane path").length);
@@ -1163,6 +1176,8 @@ try {
       earlyPaths > 0,
       `${earlyPaths} paths within ${EARLY_BUDGET_MS}ms (straggler stalled ${STRAGGLER_DELAY_MS}ms)`
     );
+    const [slat, slng] = STRAGGLER_POINT.split(",").map(Number);
+    await page.evaluate(({ n, lat, lng }) => window[n].setSelectedPoint(lat, lng), { n: EXPORTS_NAME, lat: slat, lng: slng });
     // (b) the straggler is appended once it arrives — proven end-to-end by the
     // selection highlight, which can only appear after the delayed county's
     // features are BOTH in rt.geojson and drawn as paths (updateLayerHighlight
@@ -1181,6 +1196,45 @@ try {
     await context.close();
   }
   // ==== TEMPLATE:END smoke-straggler ====
+
+  // 2u. A county layer draws its SHIPPED counties from its tile archive
+  //     (docs/OPTIMIZATION_PLAYBOOK.md §10 phase 5b). At a point in
+  //     Stephenson County the county-board card answers, its district is lit
+  //     on the tile canvas, and no county's boundary FILE is downloaded —
+  //     neither Stephenson's for the card nor the other shipped counties'
+  //     for the map, which before phase 5b all downloaded once the card had
+  //     answered. Skipped, saying so, where the vector basemap did not boot
+  //     and there is no tile canvas to draw on.
+  {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const boundaryFiles = [];
+    const page = await booted(context, `${BASE}#point=${STRAGGLER_POINT}&layers=county-board`, async (p) => {
+      p.on("request", (r) => {
+        const path = new URL(r.url()).pathname;
+        // a county's board-district file; the school board's is a different
+        // layer's, which the app loads at boot for its city coverage test
+        if (/\/data\/app\/(?!school-board)[^/]*(board|commissioner)[^/]*districts\.json$/.test(path)) boundaryFiles.push(path.split("/").pop());
+      });
+    });
+    const state = await page
+      .waitForFunction((n) => {
+        const t = window[n].tileState("county-board"), l = window[n].layerLoadState("county-board");
+        if (!t || !l || l.card !== "result") return null;
+        return !t.drawn || t.selected != null ? { drawn: t.drawn, selected: t.selected } : null;
+      }, EXPORTS_NAME, { timeout: QUERY_TIMEOUT })
+      .then((h) => h.jsonValue(), () => null);
+    if (state && !state.drawn) {
+      console.log("  SKIP  county-board tile canvas: the vector basemap did not boot here");
+    } else {
+      await page.waitForTimeout(3000); // the rest of the layer's loading, which must not include a shipped county's file
+      check(
+        "a shipped county is answered and lit from the layer's tiles, with no county boundary file downloaded",
+        !!state && state.selected != null && boundaryFiles.length === 0,
+        `state=${JSON.stringify(state)} files=${boundaryFiles.join(", ") || "none"}`
+      );
+    }
+    await context.close();
+  }
 
   // 2e. Share control: the point chip carries ONE "Share" button whose popover
   //     serves the live campaign-tagged permalink, the embed snippet (tagged

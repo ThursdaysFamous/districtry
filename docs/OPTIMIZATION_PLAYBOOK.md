@@ -1413,3 +1413,72 @@ live sources.
 tile-drawn layer sits below every Leaflet-drawn layer; with every shipped
 polygon layer on the canvas, the Leaflet layers left above it are the live
 sources and the county-dispatched layers.
+
+### Phase 5b shipped: the shipped counties of four Illinois county layers drawn from tiles (2026-09-27)
+
+The operator chose to tile the SHIPPED counties of the county-dispatched
+layers and leave the live counties on Leaflet. Four Illinois layers carry an
+archive now: county board, county precinct, library and fire, about 1.1, 1.8,
+1.6 and 0.5 MB. Each archive holds only the counties whose boundaries ship;
+every feature carries its county key `_c`, and the archive's metadata lists
+the keys, written by `build_vector_tiles.py` with tippecanoe's `-N` and
+gated: the build fails when the listed keys and the keys on the features
+differ.
+
+**How a county is answered.** The dispatcher marks each entry's boundary
+loader with its layer and county (`load.tileCounty`). `queryFeatureAt`, and
+the new `featureSetAt` for queries that want every feature, read the tile
+under the point when that county is in the archive and the loader otherwise.
+116 Illinois queries that called their loader directly were moved onto
+`featureSetAt`. A live county is not in the archive and answers from its own
+server as before.
+
+**How it is drawn.** The tile canvas draws the archive, and the overlay's live
+part draws the live counties with Leaflet beside it, so one layer is drawn two
+ways at once. Selecting a district in a live county lights the Leaflet
+feature and fades the tiles; selecting one in the archive lights the tile.
+The live counties' boundaries wait for the card (`afterCard`), because a
+first draft loaded them at once and the fire card at a Cook point went from
+0.6 s to 5.8 s waiting behind them. A card answered from a live county now
+lights a provisional highlight from its own answer while the live part loads,
+because the same draft left Cook's county board unlit for 7.9 s.
+
+**A loader that adds properties after its fetch exposes the step as
+`decorate`.** A tile holds the file's properties and nothing the app adds, so
+`withStamp` wraps each stamping loader (fire, park and library officials, the
+library directory's contacts, Boone's district officials) and exposes the
+same step, which the tile path runs on the tile's features. **Boone's was
+missed** and was caught by CI, not locally: its library loader stamped the
+officials in a wrapper of its own, and the local run's random points never
+landed in Boone. The card probe now also places up to three points inside
+each county's own districts and fails if no county answers any of them, so a
+county's entry is always asked.
+
+**If an archive fails, the layer draws from its whole files for the session**
+(`redrawFromFile`), because a county layer's live counties still need drawing;
+smoke check 2d refuses the county-board archive to test exactly that. Check
+2u selects a point in Stephenson and requires the card and the highlight to
+come from tiles with no county boundary file downloaded.
+
+**Measured on Slow 4G** at the Loop, Evanston, Freeport and Carbondale, with
+and without the four `tiles:` lines:
+
+| Layer | Card, file → tiles | Bytes, file → tiles |
+|---|---|---|
+| County board | 0.34-0.54 s → 0.70-0.95 s | 2.70 → 1.88 MB |
+| County precinct | Carbondale 1.41 → 1.13 s; Loop 16.1 s either way | 11.07 → 9.5 MB |
+| Library | Cook 3.8 s either way; shipped points 0.44 → 1.24 s and 0.47 → 1.45 s | 2.1 → 1.59 MB |
+| Fire | 0.6 → 1.1 s | 2.2 → 2.0 MB |
+
+**Bytes went down, and most cards got slower by 0.3 to 1.0 s.** A shipped
+county's file is small, often smaller than the archive's 16 KB header and
+directory plus a tile, so reading the tile costs round trips the file did
+not. The bytes fall because a view no longer downloads every shipped county's
+file. The Loop precinct card is 16 s either way because Chicago's precincts
+are a live source. This is the phase-5a finding for small layers again, at
+county scale, and it is recorded rather than tuned away.
+
+**Not on tiles, and that is a measurement.** Park (70 KB of shipped files) and
+subcircuit (30 KB) cost less than an archive's first read. Iowa's and
+Michigan's city wards and New York's county legislature test coverage by
+loading each unit's whole file, so tiles would only add requests.

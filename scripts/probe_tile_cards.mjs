@@ -15,8 +15,11 @@
 // WHICH POINTS. For each layer, pairs of points either side of randomly chosen
 // district edges, 3-25 m out, so neighbouring districts are both asked, and a
 // few more well inside districts. The archives are gated to answer as the file
-// does at every point 2 m or more from an edge, so 3 m is the nearest honest
-// distance. Seeded, so a run is repeatable.
+// does at every point 2 m or more from an edge, so a point is kept only if it
+// is that far from EVERY edge: 3-25 m from the chosen edge can still be on
+// another one at a corner, and the first CI run of phase 5b failed five
+// layers on points 0.09-0.48 m from a second edge. Seeded PER LAYER, from the
+// layer's own name, so adding a layer does not move another layer's points.
 //
 // One fresh page per layer: a layer whose whole file is loaded answers every
 // later query from it, so a page shared between layers would stop testing the
@@ -27,6 +30,17 @@
 //     TAGS=wi LAYERS=county node scripts/probe_tile_cards.mjs
 //
 // BASE_URL overrides the server; POINTS the pairs per layer (default 20).
+//
+// A COUNTY-DISPATCHED LAYER (phase 5b) holds only its shipped counties in
+// its archive. Its points come from those counties' files, and each answer
+// says which county gave it and whether that county is in the archive: a
+// point over a county line into a live county, or a county whose entry calls
+// its loader directly, is answered from its own source by design and is
+// counted, not failed. What fails is a card or a HOVER name that differs:
+// the canvas names a district from the tile's own properties, with nothing a
+// loader adds after its fetch. EVERY county with a file of its own is also
+// asked at up to three points inside its districts, and fails if no county
+// answers any of them.
 
 import { chromium } from "playwright";
 import { existsSync, readFileSync } from "node:fs";
@@ -39,8 +53,33 @@ const TAGS = process.env.TAGS ? process.env.TAGS.split(",") : instances();
 const ONLY = process.env.LAYERS ? new Set(process.env.LAYERS.split(",")) : null;
 const SOURCES = JSON.parse(readFileSync(join(ROOT, "layer-sources.json"), "utf8"));
 
+const EDGE_TOLERANCE_M = 2; // scripts/build_vector_tiles.py's gate
 let seed = 13;
 function rnd() { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
+function seedFor(name) {
+  let h = 13;
+  for (const ch of name) h = (h * 31 + ch.charCodeAt(0)) % 2147483648;
+  seed = h;
+}
+// metres from the point to the nearest edge of any feature, in a local
+// equirectangular frame (exact enough at a few metres)
+function edgeDistanceM(pt, polys) {
+  const kx = 111320 * Math.cos(pt.lat * Math.PI / 180), ky = 110574;
+  let best = Infinity;
+  for (const f of polys) {
+    for (const ring of rings(f.geometry)) {
+      for (let i = 1; i < ring.length; i++) {
+        const ax = (ring[i - 1][0] - pt.lng) * kx, ay = (ring[i - 1][1] - pt.lat) * ky;
+        const bx = (ring[i][0] - pt.lng) * kx, by = (ring[i][1] - pt.lat) * ky;
+        const dx = bx - ax, dy = by - ay, len2 = dx * dx + dy * dy;
+        const t = len2 ? Math.max(0, Math.min(1, -(ax * dx + ay * dy) / len2)) : 0;
+        const d = Math.hypot(ax + t * dx, ay + t * dy);
+        if (d < best) best = d;
+      }
+    }
+  }
+  return best;
+}
 
 function rings(geom) {
   if (!geom) return [];
@@ -77,7 +116,42 @@ function pointsFor(features) {
     const v = ring[Math.floor(rnd() * ring.length)];
     out.push({ lng: (v[0] + cx) / 2, lat: (v[1] + cy) / 2 });
   }
-  return out;
+  const kept = out.filter((p) => edgeDistanceM(p, polys) >= EDGE_TOLERANCE_M);
+  kept.dropped = out.length - kept.length;
+  return kept;
+}
+
+function inRings(pt, rs) {
+  let inside = false;
+  for (const ring of rs) {
+    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+      const [xi, yi] = ring[i], [xj, yj] = ring[j];
+      if ((yi > pt.lat) !== (yj > pt.lat) && pt.lng < (xj - xi) * (pt.lat - yi) / (yj - yi) + xi) inside = !inside;
+    }
+  }
+  return inside;
+}
+
+// A point inside a district of EACH county, so every county's own entry is
+// asked at least once: random edge points reach only a few dozen counties, and
+// the first CI run with a fixed seed per layer failed on Boone, whose library
+// loader stamped its officials outside withStamp — a county the earlier seed
+// had never landed in.
+function countyPoint(features, all) {
+  const polys = features.filter((f) => rings(f.geometry).length);
+  for (let attempt = 0; attempt < 12 && polys.length; attempt++) {
+    const f = polys[Math.floor(rnd() * polys.length)];
+    const rs = f.geometry.type === "Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates;
+    const ring = rs[Math.floor(rnd() * rs.length)][0];
+    if (!ring || !ring.length) continue;
+    const cx = ring.reduce((a, p) => a + p[0], 0) / ring.length;
+    const cy = ring.reduce((a, p) => a + p[1], 0) / ring.length;
+    const v = ring[Math.floor(rnd() * ring.length)], t = 0.3 + rnd() * 0.6;
+    const pt = { lng: v[0] + (cx - v[0]) * t, lat: v[1] + (cy - v[1]) * t };
+    if (!rs.some((poly) => inRings(pt, poly))) continue;
+    if (edgeDistanceM(pt, all) >= EDGE_TOLERANCE_M) return pt;
+  }
+  return null;
 }
 
 function tiledLayers(tag) {
@@ -98,13 +172,32 @@ try {
     if (!layers.length) continue;
     for (const id of layers) {
       const rec = SOURCES.apps[tag] && SOURCES.apps[tag].layers[id];
-      const files = (rec && rec.files) || [];
+      const countyFiles = rec && rec.counties && rec.counties.files;
+      const files = countyFiles ? Object.values(countyFiles).flat() : ((rec && rec.files) || []);
       const feats = files.flatMap((f) => {
         const p = join(ROOT, f.replace(/^\/+/, ""));
         return existsSync(p) ? (JSON.parse(readFileSync(p, "utf8")).features || []) : [];
       });
       if (!feats.length) { console.log(`  FAIL  ${tag}:${id} — layer-sources.json names no file to place points in`); problems++; continue; }
+      seedFor(`${tag}:${id}`);
       const pts = pointsFor(feats);
+      // county key -> the index of its own point, for the check below
+      const countyAt = {};
+      if (countyFiles) {
+        const allPolys = feats.filter((f) => rings(f.geometry).length);
+        for (const [key, list] of Object.entries(countyFiles).sort(([a], [b]) => a.localeCompare(b))) {
+          const own = list.flatMap((f) => {
+            const p = join(ROOT, f.replace(/^\/+/, ""));
+            return existsSync(p) ? (JSON.parse(readFileSync(p, "utf8")).features || []) : [];
+          });
+          // three tries: a county's file can hold a district running over
+          // its line, and a point there is the neighbour's to answer
+          for (let n = 0; n < 3; n++) {
+            const pt = countyPoint(own, allPolys);
+            if (pt) { (countyAt[key] = countyAt[key] || []).push(pts.length); pts.push(pt); }
+          }
+        }
+      }
       const ctx = await browser.newContext({ serviceWorkers: "block" });
       const page = await ctx.newPage();
       const dir = vendorDir(tag);
@@ -128,18 +221,57 @@ try {
       }
       await ctx.close();
       const bad = res.filter((r) => r.tiles !== r.file);
+      const county = res.some((r) => "inArchive" in r);
       // the tile path must be what answered: a query reaching its boundaries
-      // another way compares equal while downloading the whole file
-      const notTiled = res.filter((r) => !r.viaTiles);
-      const errs = res.filter((r) => /^error:/.test(r.tiles || "") || /^error:/.test(r.file || ""));
+      // another way compares equal while downloading the whole file. For a
+      // county layer, only where the answering county's entry reads its
+      // boundaries through queryFeatureAt at all; the rest are counted below
+      const notTiled = county ? [] : res.filter((r) => !r.viaTiles);
+      const hoverBad = res.filter((r) => r.hoverTiles != null && r.hoverTiles !== r.hoverFile);
+      // a county layer's live counties answer from their own servers, so an
+      // error both runs share is that server, not the tiles; one run erroring
+      // alone is a difference, and counted above
+      const sameErr = (r) => county && r.tiles === r.file && /^error:/.test(r.tiles || "");
+      const errs = res.filter((r) => !sameErr(r) && (/^error:/.test(r.tiles || "") || /^error:/.test(r.file || "") ||
+        /^error:/.test(r.hoverTiles || "")));
+      const liveErrs = res.filter(sameErr);
       compared += res.length;
       answered += res.filter((r) => r.file && !/^error:/.test(r.file)).length;
       layersDone++;
-      const ok = !bad.length && !errs.length && !notTiled.length;
-      console.log(`  ${ok ? "ok  " : "FAIL"}  ${tag}:${id} — ${res.length} points, ${res.filter((r) => r.file).length} with a district, ` +
-        `${bad.length} differ, ${errs.length} errored, ${notTiled.length} not answered from tiles`);
+      // every county whose own file placed points must have answered one of
+      // them, or its entry was never asked; a county whose every point fell
+      // in a neighbour's ground is named, not failed — nothing differed there
+      const unasked = [], elsewhere = [];
+      for (const [key, idx] of Object.entries(countyAt)) {
+        if (idx.some((i) => res[i] && res[i].county === key)) continue;
+        const by = [...new Set(idx.map((i) => res[i] && res[i].county).filter(Boolean))];
+        if (by.length) elsewhere.push(`${key} (answered by ${by.join(", ")})`); else unasked.push(key);
+      }
+      const ok = !bad.length && !errs.length && !notTiled.length && !hoverBad.length && !unasked.length;
+      console.log(`  ${ok ? "ok  " : "FAIL"}  ${tag}:${id} — ${res.length} points (${pts.dropped} dropped within ${EDGE_TOLERANCE_M} m of an edge), ${res.filter((r) => r.file).length} with a district, ` +
+        `${bad.length} differ, ${errs.length} errored` +
+        (county ? `, ${hoverBad.length} hover names differ` : `, ${notTiled.length} not answered from tiles`));
+      if (county) {
+        const byCounty = {};
+        for (const r of res) {
+          if (!r.county) continue;
+          const c = byCounty[r.county] = byCounty[r.county] || { in: r.inArchive, tiles: 0, n: 0 };
+          c.n++; if (r.viaTiles) c.tiles++;
+        }
+        const archived = Object.entries(byCounty).filter(([, c]) => c.in);
+        const own = archived.filter(([, c]) => !c.tiles).map(([k]) => k);
+        console.log(`          ${archived.length} archived counties answered, ${archived.length - own.length} from tiles` +
+          (own.length ? `; from their own file (the entry reads its loader directly): ${own.join(", ")}` : "") +
+          `; ${Object.keys(byCounty).length - archived.length} live counties answered from their own source` +
+          (liveErrs.length ? `; ${liveErrs.length} point(s) errored the same way from both, a live source this run could not reach` : ""));
+      }
+      if (unasked.length) console.log(`          a point inside a district of these counties was answered by no county: ${unasked.join(", ")}`);
+      if (elsewhere.length) console.log(`          every point placed in these counties' files fell in a neighbour's ground: ${elsewhere.join("; ")}`);
       for (const r of [...bad, ...errs].slice(0, 3)) {
         console.log(`          ${r.point.lat.toFixed(6)},${r.point.lng.toFixed(6)}: tiles ${String(r.tiles).slice(0, 160)} | file ${String(r.file).slice(0, 160)}`);
+      }
+      for (const r of hoverBad.slice(0, 3)) {
+        console.log(`          ${r.point.lat.toFixed(6)},${r.point.lng.toFixed(6)}: hover from the tile ${r.hoverTiles} | from the file ${r.hoverFile}`);
       }
       if (!ok) problems++;
     }

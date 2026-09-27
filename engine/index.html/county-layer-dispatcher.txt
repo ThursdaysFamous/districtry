@@ -51,11 +51,21 @@
     // fetch actually FAILED: a merely slow county appends whenever it arrives,
     // while a failed one stays off the overlay until reload — its card/query
     // path (fetched per query, below) keeps working and keeps its own Retry.
-    function loadUnion() {
+    //
+    // `list` is the entries to load and `onAppend` what to do with each county
+    // after the first. A layer drawn from tiles (opts.tiles) loads the whole
+    // union only for a comparison and draws none of it (appendToUnion), and
+    // loads its LIVE counties alone for the map (spec.tileLive), where an
+    // empty list is simply no live county rather than a failure.
+    function loadUnion(list, onAppend, emptyOk) {
       var fc = { type: "FeatureCollection", features: [] };
       return new Promise(function (resolve, reject) {
-        var resolved = false, pending = entries.length, anySuccess = false;
-        if (!pending) { reject(new Error(opts.label + ": no source responded")); return; }
+        var resolved = false, pending = list.length, anySuccess = false;
+        if (!pending) {
+          if (emptyOk) resolve(fc);
+          else reject(new Error(opts.label + ": no source responded"));
+          return;
+        }
         function loadEntry(entry) {
           return entry.loadGeometry().then(function (geojson) {
             var wrapped = (geojson.features || []).map(function (f) {
@@ -64,7 +74,7 @@
             anySuccess = true;
             Array.prototype.push.apply(fc.features, wrapped);
             if (!resolved) { resolved = true; resolve(fc); }
-            else drawAppendedCountyFeatures(wrapped);
+            else onAppend(wrapped);
           }, function () { /* down county: absent from the drawing (tradeoff above) */ })
             .catch(function () { /* a drawing hiccup in one county must not skew the settle count */ })
             .then(function () {
@@ -85,13 +95,25 @@
         // at once as before.
         var point = state.selectedPoint;
         (point ? coverageMatches(point) : Promise.resolve({ matches: [] })).then(function (r) {
-          if (!r.matches.length) { entries.forEach(loadEntry); return; }
-          var rest = entries.filter(function (entry) { return r.matches.indexOf(entry) === -1; });
-          Promise.all(r.matches.map(loadEntry)).then(function () {
+          if (!r.matches.length) { list.forEach(loadEntry); return; }
+          var first = r.matches.filter(function (entry) { return list.indexOf(entry) !== -1; });
+          // the point's county is not in this list (a layer drawn from tiles
+          // holds it, and its card reads the tile): the whole list is the
+          // rest, and waits for the card like any rest
+          if (!first.length) { afterCard(spec, function () { list.forEach(loadEntry); }); return; }
+          var rest = list.filter(function (entry) { return first.indexOf(entry) === -1; });
+          Promise.all(first.map(loadEntry)).then(function () {
             afterCard(spec, function () { rest.forEach(loadEntry); });
           });
         });
       });
+    }
+
+    // A county landing after the first: onto the Leaflet union, unless the
+    // layer is drawn from tiles, which draw it already (or, for a live county,
+    // the tile overlay's own live part does)
+    function appendToUnion(features) {
+      if (!isTileDrawn(spec)) drawAppendedCountyFeatures(features);
     }
 
     // Draw one late-arriving county onto the already-built union overlay. Its
@@ -186,7 +208,7 @@
         var entry = byKey[feature.dxCounty];
         return entry && entry.hoverName ? entry.hoverName(feature) : null;
       },
-      overlay: { load: loadUnion, style: opts.style },
+      overlay: { load: function () { return loadUnion(entries, appendToUnion, false); }, style: opts.style },
       // the selected district from whichever entry answered the card
       // point-first (queryFeatureAt keeps it on that entry's own loader), so
       // it can be lit before the entry's whole set has joined the union
@@ -295,5 +317,22 @@
         }
       } : undefined
     };
+    // Drawn from a vector-tile archive of the counties whose boundaries the
+    // app ships (tile-overlay block, docs/OPTIMIZATION_PLAYBOOK.md §10 phase
+    // 5b). Each entry's boundary loader learns its layer and key, so a query
+    // through queryFeatureAt reads the tile; the live counties are loaded and
+    // drawn beside the tiles, point-first as the union is.
+    if (opts.tiles) {
+      spec.tiles = opts.tiles;
+      spec.tileLive = function (onAppend) {
+        return countyTileKeys(spec).then(function (keys) {
+          return loadUnion(entries.filter(function (entry) { return !keys[entry.key]; }), onAppend, true);
+        });
+      };
+      entries.forEach(function (entry) {
+        var load = entry.loadGeometry;
+        if (load && !load.tileCounty) load.tileCounty = { mod: spec, key: entry.key };
+      });
+    }
     registerLayer(spec);
   }
